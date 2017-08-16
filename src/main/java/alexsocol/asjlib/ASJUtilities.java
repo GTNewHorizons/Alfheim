@@ -62,6 +62,14 @@ public class ASJUtilities {
 		return item.getUnlocalizedName().substring(5);
 	}
 	
+	public static void registerBlock(Block block) {
+		GameRegistry.registerBlock(block, getBlockName(block));
+	}
+	
+	public static void registerItem(Item item) {
+		GameRegistry.registerItem(item, getItemName(item));
+	}
+	
 	/**
 	 * Returns String ID of the mod this block/item is registered in
 	 * @param stack ItemStack with block/item for analysis

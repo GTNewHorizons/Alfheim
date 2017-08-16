@@ -1,1 +1,7 @@
 tile.AlfheimPortal.name=Alfheim Portal Core
+tile.DragonstoneElvenOre.name=Dragonstone Ore
+tile.ElementiumElvenOre.name=Elementium Ore
+tile.QuartzElvenOre.name=Elven Quartz Ore
+tile.GoldElvenOre.name=Gold Ore
+
+itemGroup.Alfheim=Alfheim

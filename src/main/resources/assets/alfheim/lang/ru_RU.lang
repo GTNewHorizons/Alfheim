@@ -1,1 +1,7 @@
-tile.AlfheimPortal.name=���� ������� � ��������
+tile.AlfheimPortal.name=Ядро Портала В Альфхейм
+tile.DragonstoneElvenOre.name=Руда Камней Дракона
+tile.ElementiumElvenOre.name=Руда Элементия
+tile.QuartzElvenOre.name=Руда Эльфийского Кварца
+tile.GoldElvenOre.name=Золотая Руда
+
+itemGroup.Alfheim=Альвхейм
