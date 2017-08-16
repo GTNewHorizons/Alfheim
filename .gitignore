@@ -47,4 +47,23 @@ Temporary Items
 .apdisk
 
 # Just to disable all unnecessary files and folders
-/*
+
+/.gradle
+/.metadata
+/.settings
+/_GA
+/_GUNS
+/_MS
+/_OSM
+/_PG
+/_SCPC2R
+/_TCH
+/bin
+/build
+/eclipse
+/gradle
+/libs
+/.classpath
+/.project
+/compile.bat
+/refresh.bat

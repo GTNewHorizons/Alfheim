@@ -1,4 +1,4 @@
-package alfheim.core.utils;
+package alfheim.common.utils;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
