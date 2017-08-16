@@ -45,8 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-/bin
-/eclipse
-.classpath
-.project
-.settings/org.eclipse.ltk.core.refactoring.prefs
+
+# Just to disable all unnecessary files and folders
+/*
