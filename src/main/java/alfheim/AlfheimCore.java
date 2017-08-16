@@ -1,5 +1,12 @@
 package alfheim;
 
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.item.ModItems;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import alfheim.core.register.blocks.AlfheimBlocks;
+import alfheim.core.register.items.AlfheimItems;
+import alfheim.core.utils.AlfheimCreativeTabs;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -23,16 +30,25 @@ public class AlfheimCore {
     public static final String VERSION = major_version + "." + minor_version + "." + build_version;
     public static final String ASSET_PREFIX = "alfheim";
     
+    public static AlfheimCreativeTabs BlocksCreativeTabs;
+    public static AlfheimCreativeTabs ItemsCreativeTabs;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) 
     {
     	
+    	AlfheimBlocks.initialize();
+    	AlfheimItems.initialize();
     }
     
     @EventHandler
     public void init(FMLInitializationEvent event)
     { 
+    	BlocksCreativeTabs = new AlfheimCreativeTabs("AlfheimBlocks");
+    	BlocksCreativeTabs.setIconItemIndex(Item.getItemFromBlock(ModBlocks.alfPortal));
     	
+    	ItemsCreativeTabs = new AlfheimCreativeTabs("AlfheimItems");
+    	ItemsCreativeTabs.setIconItemIndex(ModItems.starSword);
     }
     
     @EventHandler
