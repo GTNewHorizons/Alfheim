@@ -1,7 +1,45 @@
 tile.AlfheimPortal.name=Alfheim Portal Core
 tile.DragonstoneElvenOre.name=Dragonstone Ore
 tile.ElementiumElvenOre.name=Elementium Ore
-tile.QuartzElvenOre.name=Elven Quartz Ore
+tile.ElvoriumBlock.name=Block of Elvorium
 tile.GoldElvenOre.name=Gold Ore
+tile.IffesalElvenOre.name=Iffesal Ore
+tile.ManaInfuser.name=Mana Infuser
+tile.MauftriumBlock.name=Block of Mauftrium
+tile.QuartzElvenOre.name=Elven Quartz Ore
+
+###############################################################################################################################
+
+item.ElvoriumIngot.name=Elvorium Ingot
+item.ElvoriumNugget.name=Elvorium Nugget
+item.IffesalDust.name=Iffesal Dust
+item.InfusedDreamwoodTwig.name=Infused Dreamwood Twig
+item.ManaElvenRing.name=Elvorium Mana Ring
+item.ManaElvenRingGreater.name=Mauftrium Mana Ring
+item.ManaInfusionCore.name=Mana Infusion Core
+item.ManaStone.name=Iffesal Mana Gem
+item.ManaStoneGreater.name=Primal Mana Gem
+item.manastorage.desc0=Stores up to %s manapools capacity!
+item.manastorage.desc1=Currently stored §b%s§7/§b%s§7 mana pts
+item.MauftriumIngot.name=Mauftrium Ingot
+item.MauftriumNugget.name=Mauftrium Nugget
+item.MuspelheimEssence.name=Muspelheim Essence
+item.MuspelheimPowerIngot.name=Muspelheim Power Ingot
+item.NiflheimEssence.name=Niflheim Essence
+item.NiflheimPowerIngot.name=Niflheim Power Ingot
+
+item.ElvoriumHelmet.name=Elvorium Helmet
+item.ElvoriumHelmetRevealing.name=Elvorium Helmet Of Revealing
+item.ElvoriumChestplate.name=Elvorium Chestplate
+item.ElvoriumLeggings.name=Elvorium Leggings
+item.ElvoriumBoots.name=Elvorium Boots
+
+###############################################################################################################################
+
+alfheim.armorset.elvorium.name=Royal Elven Will
+alfheim.armorset.elvorium.desc0=30% less mana cost on Mana Tools
+alfheim.armorset.elvorium.desc1=Rods have more powerfull effect
+alfheim.armorset.elvorium.desc2=Vis discount: 20% 
+alfheim.armorset.elvorium.desc3=Runic Shield +8
 
 itemGroup.Alfheim=Alfheim

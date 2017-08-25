@@ -1,16 +1,8 @@
 package alfheim;
 
-import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.item.ModItems;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
 import alfheim.common.proxy.CommonProxy;
 import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.registry.AlfheimItems;
 import alfheim.common.utils.AlfheimConfig;
-import alfheim.common.utils.AlfheimCreativeTabs;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -21,6 +13,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.config.Configuration;
 
 
 @Mod(

@@ -1,7 +1,45 @@
 tile.AlfheimPortal.name=Ядро Портала В Альфхейм
 tile.DragonstoneElvenOre.name=Руда Камней Дракона
 tile.ElementiumElvenOre.name=Руда Элементия
-tile.QuartzElvenOre.name=Руда Эльфийского Кварца
+tile.ElvoriumBlock.name=Блок Эльвория
 tile.GoldElvenOre.name=Золотая Руда
+tile.IffesalElvenOre.name=Руда Иффесалья
+tile.ManaInfuser.name=Мана-Наполнитель
+tile.MauftriumBlock.name=Блок Мауфтриума
+tile.QuartzElvenOre.name=Руда Эльфийского Кварца
+
+###############################################################################################################################
+
+item.ElvoriumIngot.name=Слиток Эльвория
+item.ElvoriumNugget.name=Самородок Эльвория
+item.IffesalDust.name=Пыль Иффесалья
+item.InfusedDreamwoodTwig.name=Зачарованная Ветка Древа Мечтаний
+item.ManaElvenRing.name=Кольцо Маны Из Эльвория
+item.ManaElvenRingGreater.name=Кольцо Маны Из Мауфтриума
+item.ManaInfusionCore.name=Ядро Мана-Наполнителя
+item.ManaStone.name=Камень Маны С Напылением Иффесалья
+item.ManaStoneGreater.name=Первородный Камень Маны
+item.manastorage.desc0=Хранит до %s ёмкоестей бассейна маны!
+item.manastorage.desc1=Содерит §b%s§7/§b%s§7 единиц маны
+item.MauftriumIngot.name=Слиток Мауфтриума
+item.MauftriumNugget.name=Самородок Мауфтриума
+item.MuspelheimEssence.name=Эссенция Муспельхейма
+item.MuspelheimPowerIngot.name=Слиток Силы Муспельхейма
+item.NiflheimEssence.name=Эссенция Нильфхейма
+item.NiflheimPowerIngot.name=Слиток Силы Нильфхейма
+
+item.ElvoriumHelmet.name=Шлем Из Эльвория
+item.ElvoriumHelmetRevealing.name=Шлем Откровения Из Эльвория
+item.ElvoriumChestplate.name=Нагрудник Из Эльвория
+item.ElvoriumLeggings.name=Поножи Из Эльвория
+item.ElvoriumBoots.name=Ботинки Из Эльвория
+
+###############################################################################################################################
+
+alfheim.armorset.elvorium.name=Эльфийская Королевская Воля
+alfheim.armorset.elvorium.desc0=На 30% меньше затрат маны на мана-инструменты 
+alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный эффект
+alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
+alfheim.armorset.elvorium.desc3=Рунный щит +8
 
 itemGroup.Alfheim=Альвхейм

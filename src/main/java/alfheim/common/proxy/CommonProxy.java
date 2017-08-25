@@ -5,6 +5,7 @@ import alfheim.common.event.CommonTickHandler;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRecipes;
+import alfheim.common.registry.AlfheimRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -14,6 +15,7 @@ public class CommonProxy {
     	AlfheimBlocks.init();
     	AlfheimItems.init();
 		AlfheimRecipes.init();
+		AlfheimRegistry.registerTileEntities();
 	}
 
 	public void registerRenderThings() {}

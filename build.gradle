@@ -17,8 +17,8 @@ buildscript {
 
 apply plugin: 'forge'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 sourceSets.main {
     java {
@@ -34,7 +34,7 @@ group= "main" // http://maven.apache.org/guides/mini/guide-naming-conventions.ht
 archivesBaseName = "Alfheim"
 
 minecraft {
-    version = "1.7.10-10.13.4.1614-1.7.10"
+    version = "1.7.10-10.13.4.1558-1.7.10"
     runDir = "eclipse/assets"
 }
 
