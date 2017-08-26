@@ -4,19 +4,37 @@ import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 
 import alfheim.common.items.ElvenItems;
+import alfheim.common.utils.IManaInfusionRecipe;
+import alfheim.common.utils.ManaInfusionRecipies;
 
 import static cpw.mods.fml.common.registry.GameRegistry.*;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.item.ModItems;
 
 public class AlfheimRecipes {
 	
 	public static void init() {
 		registerCraftingRecipes();
+		registerShapelessRecipies();
 		registerSmeltingRecipes();
+		registerManaInfusionRecipies();
+	}
+
+	public static void registerManaInfusionRecipies() {
+		ManaInfusionRecipies.addRecipe(new ItemStack(ModItems.manaResource, 1, 4), TilePool.MAX_MANA / 2,
+				new ItemStack[] {new ItemStack(ModItems.manaResource, 1, 0), new ItemStack(ModItems.manaResource, 1, 1), new ItemStack(ModItems.manaResource, 1, 2)});
+		ManaInfusionRecipies.addRecipe(new ItemStack(AlfheimItems.elvenItems, 1, 1), TilePool.MAX_MANA / 2,
+				new ItemStack[] {new ItemStack(ModItems.manaResource, 1, 7), new ItemStack(ModItems.manaResource, 1, 8), new ItemStack(ModItems.manaResource, 1, 9)});
+		ManaInfusionRecipies.addRecipe(new ItemStack(AlfheimItems.manaStone, 1, 1000) , TilePool.MAX_MANA,
+				new ItemStack[] {new ItemStack(AlfheimItems.elvenItems, 4, 9), new ItemStack(ModItems.manaResource, 1, 9)});
+		ManaInfusionRecipies.addRecipe(new ItemStack(AlfheimItems.manaStoneGreater, 1, 1000), TilePool.MAX_MANA * 4,
+				new ItemStack[] {new ItemStack(AlfheimItems.elvenItems, 2, 7), new ItemStack(AlfheimItems.elvenItems, 2, 8), new ItemStack(AlfheimItems.manaStone, 1, 1000)});
+		ManaInfusionRecipies.addRecipe(new ItemStack(AlfheimItems.elvenItems, 1, 3), TilePool.MAX_MANA,
+				new ItemStack[] {new ItemStack(AlfheimItems.elvenItems, 1, 4), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(ModItems.manaResource, 1, 4)});
 	}
 
 	public static void registerCraftingRecipes() {
@@ -73,7 +91,9 @@ public class AlfheimRecipes {
 			'S', AlfheimItems.manaStoneGreater,
 			'R', AlfheimItems.manaElvenRing,
 			'I', new ItemStack(AlfheimItems.elvenItems, 1, 2)});
-		
+	}
+
+	public static void registerShapelessRecipies() {
 		addShapelessRecipe(new ItemStack(AlfheimBlocks.elvoriumBlock),	 new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 1));
 		addShapelessRecipe(new ItemStack(AlfheimBlocks.mauftriumBlock),	 new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2), new ItemStack(AlfheimItems.elvenItems, 1, 2));
 		addShapelessRecipe(new ItemStack(AlfheimItems.elvenItems, 1, 1), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5), new ItemStack(AlfheimItems.elvenItems, 1, 5));
@@ -83,7 +103,6 @@ public class AlfheimRecipes {
 		addShapelessRecipe(new ItemStack(AlfheimItems.elvenItems, 9, 2), AlfheimBlocks.mauftriumBlock);
 		addShapelessRecipe(new ItemStack(AlfheimItems.elvenItems, 9, 5), new ItemStack(AlfheimItems.elvenItems, 1, 1));
 		addShapelessRecipe(new ItemStack(AlfheimItems.elvenItems, 9, 6), new ItemStack(AlfheimItems.elvenItems, 1, 2));
-
 	}
 	
 	public static void registerSmeltingRecipes() {

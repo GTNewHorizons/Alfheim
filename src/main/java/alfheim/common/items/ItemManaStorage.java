@@ -31,6 +31,7 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 		MAX_MANA = (int) (TilePool.MAX_MANA * maxManaCap);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setMaxDamage(1000);
+		this.setMaxStackSize(1);
 		this.setNoRepair();
 		this.setTextureName(ModInfo.MODID + ':' + name);
 		this.setUnlocalizedName(name);

@@ -7,7 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -42,5 +45,14 @@ public class ManaInfuser extends Block implements ITileEntityProvider {
 	@Override
 	public IIcon getIcon(int side, int meta) {
 		return side == 0 ? textures[0] : side == 1 ? (meta == 1 ? textures[2] : textures[1]) : textures[3];
+	}
+	
+	@Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote && player.isSneaking()) {
+			player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.AQUA + "Mana: " + ((ManaInfuserTileEntity) world.getTileEntity(x, y, z)).getCurrentMana()));
+			return true;
+		}
+		return false;
 	}
 }
