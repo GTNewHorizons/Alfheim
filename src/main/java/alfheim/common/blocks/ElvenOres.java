@@ -20,7 +20,7 @@ public class ElvenOres extends Block {
 
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal"};
 	public IIcon[] textures = new IIcon[names.length];
-	public Item[] drops = { ModItems.manaResource, Item.getItemFromBlock(AlfheimBlocks.elvenOres), ModItems.quartz, Item.getItemFromBlock(AlfheimBlocks.elvenOres), AlfheimItems.elvenItems };
+	public Item[] drops = { ModItems.manaResource, Item.getItemFromBlock(AlfheimBlocks.elvenOres), ModItems.quartz, Item.getItemFromBlock(AlfheimBlocks.elvenOres), AlfheimItems.elvenResource };
 	public int[] metas = {9, 1, 5, 3, 9};
 	
 	public ElvenOres() {

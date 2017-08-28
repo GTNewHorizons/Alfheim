@@ -56,7 +56,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 
 	@Override
 	public boolean getIsRepairable(ItemStack armor, ItemStack material) {
-		return material.getItem() == AlfheimItems.elvenItems && material.getItemDamage() == 1 ? true : super.getIsRepairable(armor, material);
+		return material.getItem() == AlfheimItems.elvenResource && material.getItemDamage() == 1 ? true : super.getIsRepairable(armor, material);
 	}
 
 	@Override

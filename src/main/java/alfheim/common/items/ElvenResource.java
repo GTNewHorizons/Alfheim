@@ -10,12 +10,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ElvenItems extends Item {
+public class ElvenResource extends Item {
 	
-	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "InfusedDreamwoodTwig" };
+	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig" };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
-	public ElvenItems() {
+	public ElvenResource() {
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHasSubtypes(true);
 		this.setUnlocalizedName("ElvenItems");
