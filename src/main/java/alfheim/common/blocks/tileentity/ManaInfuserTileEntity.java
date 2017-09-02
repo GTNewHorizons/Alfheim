@@ -61,7 +61,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 		if(hasValidPlatform()) {
 			List<EntityItem> items = getItems();
 			if(areItemsValid(items)) {
-				System.out.println("Mana: " + mana + "\tMana requested: " + manarequest + "\tResult: " + result.toString());
+				if (DEBUG) System.out.println("Mana: " + mana + "\tMana requested: " + manarequest + "\tResult: " + result.toString());
 				
 				removeMana = false;
 				ISparkEntity spark = getAttachedSpark();

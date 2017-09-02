@@ -1,7 +1,7 @@
 package alfheim.common.blocks;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ public class AlfheimPortal extends Block {
 	public AlfheimPortal() {
 		super(Material.wood);
 		this.setBlockName("AlfheimPortal");
-		this.setBlockTextureName(ModInfo.MODID + ":AlfheimPortal");
+		this.setBlockTextureName(Constants.MODID + ":AlfheimPortal");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHardness(1.0F);
 		this.setLightLevel(0.3F);
@@ -26,8 +26,8 @@ public class AlfheimPortal extends Block {
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		textures[0] = reg.registerIcon(ModInfo.MODID + ":AlfheimPortal");
-		textures[1] = reg.registerIcon(ModInfo.MODID + ":AlfheimPortalActive");
+		textures[0] = reg.registerIcon(Constants.MODID + ":AlfheimPortal");
+		textures[1] = reg.registerIcon(Constants.MODID + ":AlfheimPortalActive");
 	}
 	
 	@Override

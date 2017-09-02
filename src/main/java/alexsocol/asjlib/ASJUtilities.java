@@ -2,10 +2,14 @@ package alexsocol.asjlib;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -23,22 +27,16 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ObjectIntIdentityMap;
-import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
@@ -465,5 +463,65 @@ public class ASJUtilities {
 	 * */
 	public static String holdCtrl() {
 		return (StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl"));
+	}
+
+	/**
+	 * Adds new <i>ore</i> spawn to world generator
+	 * */
+	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
+		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
+		int veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk;
+		for (int i = 0; i < veins; i++) {
+			int posX = blockXPos + rand.nextInt(maxX);
+			int posY = minY + rand.nextInt(maxY - minY);
+			int posZ = blockZPos + rand.nextInt(maxZ);
+			(new WorldGenMinable(ore, meta, minVeinSize + rand.nextInt(maxVeinSize - minVeinSize + 1), replace)).generate(world, rand, posX, posY, posZ);
+		}
+	}
+	
+	public static int getDecColor(double r, double g, double b) {
+		return MathHelper.floor_double(r * 256 * 256 * 6 + g * 256 * 6 + b * 6 - 16777216);
+	}
+	
+	public static int makeRainbowFromTime(World world, int slowness) {
+		double time = world.getTotalWorldTime() % slowness, r = 0.0, g = 0.0, b = 0.0, mod = slowness / 6;
+		if (0.0 <= time && time < mod) {
+			r = mod;
+			g = time;
+		}
+		if (mod <= time && time < mod*2) {
+			g = mod;
+			r = mod*2 - time;
+		}
+		if (mod*2 <= time && time < mod*3) {
+			g = mod;
+			b = time - mod*2;
+		}
+		if (mod*3 <= time && time < mod*4) {
+			b = mod;
+			g = mod*4 - time;
+		}
+		if (mod*4 <= time && time < mod*5) {
+			b = mod;
+			r = time - mod*4;
+		}
+		if (mod*5 <= time && time < slowness) {
+			r = mod;
+			b = slowness - time;
+		}
+
+		return getDecColor(r, g, b);
+	}
+	
+	public static void fillGenHoles(World world, Block filler, int meta, int xmn, int xmx, int ystart, int zmn, int zmx, int radius) {
+		if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius == -1) return;
+		for (int i = xmn; i <= xmx; i++) {
+			for (int k = zmn; k <= zmx; k++) {
+				for (int j = ystart - 1; j >= 0 && world.isAirBlock(i, j, k); j--) {
+					if (radius != 0) if (Math.sqrt(Math.pow((((xmx - xmn) / 2) + xmn) - i, 2) + Math.pow((((zmx - zmn) / 2) + zmn) - k, 2)) > radius) continue;
+					world.setBlock(i, j, k, filler, meta, 3);
+				}
+			}	
+		}
 	}
 }

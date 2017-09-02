@@ -3,7 +3,7 @@ package alfheim.common.items;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,7 +33,7 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 		this.setMaxDamage(1000);
 		this.setMaxStackSize(1);
 		this.setNoRepair();
-		this.setTextureName(ModInfo.MODID + ':' + name);
+		this.setTextureName(Constants.MODID + ':' + name);
 		this.setUnlocalizedName(name);
 	}
 

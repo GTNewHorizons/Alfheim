@@ -3,10 +3,9 @@ package alfheim.common.items;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRegistry;
-import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,11 +19,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 public class ElementalArmor extends ItemArmor implements IManaUsingItem {
 
@@ -56,7 +54,7 @@ public class ElementalArmor extends ItemArmor implements IManaUsingItem {
 
 	@Override
 	public String getArmorTexture(ItemStack itemstack, Entity entity, int slot, String type) {
-		return ModInfo.MODID + ":textures/armor/ElementalArmor_" + ((armorType == 2) ? "1" : "0") + ".png";
+		return Constants.MODID + ":textures/armor/ElementalArmor_" + ((armorType == 2) ? "1" : "0") + ".png";
 	}
 	
 	@SideOnly(Side.CLIENT)

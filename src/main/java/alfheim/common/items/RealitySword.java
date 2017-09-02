@@ -3,7 +3,7 @@ package alfheim.common.items;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
 import alfheim.common.registry.AlfheimRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,7 +40,7 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
 		for (int i = 0; i < 5; i++)
-		textures[i] = reg.registerIcon(ModInfo.MODID + ":RealitySword" + i);
+		textures[i] = reg.registerIcon(Constants.MODID + ":RealitySword" + i);
 	}
 	
 	@Override

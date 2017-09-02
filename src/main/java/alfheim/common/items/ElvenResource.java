@@ -2,17 +2,24 @@ package alfheim.common.items;
 
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
+import alfheim.common.dimension.world.gen.structure.Arena;
+import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
 public class ElvenResource extends Item {
 	
-	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig" };
+	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "TestItem" };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ElvenResource() {
@@ -23,7 +30,7 @@ public class ElvenResource extends Item {
 	
 	public void registerIcons(IIconRegister iconRegister){
 		for (int i = 0; i < subItems.length; i++){
-			texture[i] = iconRegister.registerIcon(ModInfo.MODID + ":materials/" + subItems[i]);
+			texture[i] = iconRegister.registerIcon(Constants.MODID + ":materials/" + subItems[i]);
 		}
 	}
 
@@ -48,4 +55,17 @@ public class ElvenResource extends Item {
             list.add(new ItemStack(item, 1, i));
         }
     }
+    
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!world.isRemote && stack.getItemDamage() == subItems.length - 1) {
+			if (!player.isSneaking()) {
+				//ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, player.posX, 228.0D, player.posZ);
+				(new Arena()).generate(world, player.getRNG(), MathHelper.floor_double(player.posX), world.getTopSolidOrLiquidBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posZ)), MathHelper.floor_double(player.posZ));
+			} else {
+				player.addChatComponentMessage(new ChatComponentText("Current dimension id: " + player.dimension));
+			}
+		}
+		return stack;
+	}
 }

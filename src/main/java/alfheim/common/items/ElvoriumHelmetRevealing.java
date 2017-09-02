@@ -1,6 +1,6 @@
 package alfheim.common.items;
 
-import alfheim.ModInfo;
+import alfheim.Constants;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -30,6 +30,6 @@ public class ElvoriumHelmetRevealing extends ElvoriumHelmet implements IGoggles,
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
+		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
 	}
 }

@@ -19,25 +19,25 @@ import net.minecraftforge.common.config.Configuration;
 
 
 @Mod(
-		   modid = ModInfo.MODID,
-		   name = ModInfo.NAME,
-		   version = ModInfo.VERSION,
-		   guiFactory = ModInfo.MODID + ".client.gui.GUIFactory",
+		   modid = Constants.MODID,
+		   name = Constants.NAME,
+		   version = Constants.VERSION,
+		   guiFactory = Constants.MODID + ".client.gui.GUIFactory",
 		   dependencies = "required-after:Botania;"
 		)
 public class AlfheimCore {
 
-	@Instance(ModInfo.MODID)
+	@Instance(Constants.MODID)
 	public static AlfheimCore instance;
 
-	@SidedProxy(clientSide = ModInfo.MODID + ".client.proxy.ClientProxy", serverSide = ModInfo.MODID + ".common.proxy.CommonProxy")
+	@SidedProxy(clientSide = Constants.MODID + ".client.proxy.ClientProxy", serverSide = Constants.MODID + ".common.proxy.CommonProxy")
 	public static CommonProxy proxy;
     
 	public static Configuration config;
 	
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.modID.equals(ModInfo.MODID)) {
+		if (event.modID.equals(Constants.MODID)) {
 			AlfheimConfig.syncConfig();
 		}
 	}

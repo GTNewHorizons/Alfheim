@@ -6,6 +6,8 @@ tile.GoldElvenOre.name=Золотая Руда
 tile.IffesalElvenOre.name=Руда Иффесалья
 tile.ManaInfuser.name=Мана-Наполнитель
 tile.MauftriumBlock.name=Блок Мауфтриума
+tile.MuspelheimFire.name=Вечный Огонь Муспельхейма
+tile.NiflheimIce.name=Вечный Лёд Нифльхейма
 tile.QuartzElvenOre.name=Руда Эльфийского Кварца
 
 ###############################################################################################################################
@@ -25,9 +27,11 @@ item.MauftriumIngot.name=Слиток Мауфтриума
 item.MauftriumNugget.name=Самородок Мауфтриума
 item.MuspelheimEssence.name=Эссенция Муспельхейма
 item.MuspelheimPowerIngot.name=Слиток Силы Муспельхейма
+item.MuspelheimRod.name=Жезл Владык Муспельхейма
 item.MuspelheimRune.name=Руна Муспельхейма
 item.NiflheimEssence.name=Эссенция Нифльхейма
 item.NiflheimPowerIngot.name=Слиток Силы Нифльхейма
+item.NiflheimRod.name=Жезл Владык Нифльхейма
 item.NiflheimRune.name=Руна Нифльхейма
 item.PrimalRune.name=Руна Первоэлементов
 item.RealitySword.name=§rМеч Мироздания%s

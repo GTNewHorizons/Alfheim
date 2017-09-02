@@ -6,6 +6,8 @@ tile.GoldElvenOre.name=Gold Ore
 tile.IffesalElvenOre.name=Iffesal Ore
 tile.ManaInfuser.name=Mana Infuser
 tile.MauftriumBlock.name=Block of Mauftrium
+tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
+tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
 
 ###############################################################################################################################
@@ -25,9 +27,11 @@ item.MauftriumIngot.name=Mauftrium Ingot
 item.MauftriumNugget.name=Mauftrium Nugget
 item.MuspelheimEssence.name=Muspelheim Essence
 item.MuspelheimPowerIngot.name=Muspelheim Power Ingot
+item.MuspelheimRod.name=Muspelheim Overlord Rod
 item.MuspelheimRune.name=Muspelheim Rune
 item.NiflheimEssence.name=Niflheim Essence
 item.NiflheimPowerIngot.name=Niflheim Power Ingot
+item.NiflheimRod.name=Niflheim Overlord Rod
 item.NiflheimRune.name=Niflheim Rune
 item.PrimalRune.name=Primal Rune
 item.RealitySword.name=§rSword of Reality%s

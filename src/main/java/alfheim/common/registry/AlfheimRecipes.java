@@ -127,6 +127,6 @@ public class AlfheimRecipes {
 		BotaniaAPI.registerRuneAltarRecipe(new ItemStack(AlfheimItems.elvenResource, 1, 11), costTier3,
 				new Object[] {new ItemStack(ModItems.rune, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 7), new ItemStack(AlfheimItems.elvenResource, 1, 7)});
 		BotaniaAPI.registerRuneAltarRecipe(new ItemStack(AlfheimItems.elvenResource, 1, 12), costTier3,
-				new Object[] {new ItemStack(ModItems.rune, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 8), new ItemStack(AlfheimItems.elvenResource, 1, 8)});
+				new Object[] {new ItemStack(ModItems.rune, 1, 0), new ItemStack(AlfheimItems.elvenResource, 1, 8), new ItemStack(AlfheimItems.elvenResource, 1, 8)});
 	}
 }

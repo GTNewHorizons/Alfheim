@@ -24,7 +24,6 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import vazkii.botania.api.item.IAncientWillContainer;
-import vazkii.botania.api.item.IBaubleRender.Helper;
 import vazkii.botania.api.mana.IManaGivingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.IconHelper;
@@ -146,6 +145,7 @@ public class ElvoriumHelmet extends ElvoriumArmor implements IAncientWillContain
 	}
 	
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onPlayerRender(RenderPlayerEvent.Specials.Post event) {
 		if(event.entityLiving.getActivePotionEffect(Potion.invisibility) != null)
 			return;

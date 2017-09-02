@@ -7,7 +7,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.Constants;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRegistry;
 import cpw.mods.fml.common.Loader;
@@ -18,20 +18,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaDiscountArmor;
+import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.model.armor.ModelArmorManasteel;
 import vazkii.botania.common.core.handler.ConfigHandler;
+import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
@@ -51,7 +56,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/ElvoriumArmor.png" : slot == 2 ? LibResources.MODEL_MANASTEEL_1 : LibResources.MODEL_MANASTEEL_0;
+		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/ElvoriumArmor.png" : slot == 2 ? LibResources.MODEL_MANASTEEL_1 : LibResources.MODEL_MANASTEEL_0;
 	}
 
 	@Override
@@ -81,7 +86,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 
 		return armorset;
 	}
-
+	
 	@Override
 	public boolean hasArmorSetItem(EntityPlayer player, int i) {
 		ItemStack stack = player.inventory.armorInventory[3 - i];
@@ -101,7 +106,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
-		itemIcon = reg.registerIcon(ModInfo.MODID + ':' + this.getUnlocalizedName().substring(5));
+		itemIcon = reg.registerIcon(Constants.MODID + ':' + this.getUnlocalizedName().substring(5));
 	}
 	
 	@Override
@@ -126,9 +131,23 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	}
 	
 	@Override
+	public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5) {
+		if(player instanceof EntityPlayer)
+			onArmorTick(world, (EntityPlayer) player, stack);
+	}
+	
+	@Override
+	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+		super.onArmorTick(world, player, stack);
+		if (!stack.hasTagCompound()) stack.stackTagCompound = new NBTTagCompound();
+		if (player instanceof EntityPlayer) stack.stackTagCompound.setBoolean("SET", hasArmorSet((EntityPlayer) player));
+	}
+	
+	@Override
 	@Optional.Method(modid = "Thaumcraft")
-	public int getRunicCharge(ItemStack itemstack) {
-		return hasArmorSet(Minecraft.getMinecraft().thePlayer) ? 2 : 0;
+	public int getRunicCharge(ItemStack stack) {
+		if (!stack.hasTagCompound()) stack.stackTagCompound = new NBTTagCompound();
+		return stack.stackTagCompound.getBoolean("SET") ? 2 : 0;
 	}
 
 	@Override
