@@ -15,4 +15,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerKeyBinds() {}
+
+	@Override
+	public void initializeAndRegisterHandlers() {
+		super.initializeAndRegisterHandlers();
+	}
 }

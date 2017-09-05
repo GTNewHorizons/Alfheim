@@ -11,11 +11,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +39,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fluids.IFluidBlock;
 
 /**
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
@@ -517,11 +520,21 @@ public class ASJUtilities {
 		if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius == -1) return;
 		for (int i = xmn; i <= xmx; i++) {
 			for (int k = zmn; k <= zmx; k++) {
-				for (int j = ystart - 1; j >= 0 && world.isAirBlock(i, j, k); j--) {
+				for (int j = ystart - 1; j >= 0 && isBlockReplaceable(world.getBlock(i, j, k)); j--) {
 					if (radius != 0) if (Math.sqrt(Math.pow((((xmx - xmn) / 2) + xmn) - i, 2) + Math.pow((((zmx - zmn) / 2) + zmn) - k, 2)) > radius) continue;
 					world.setBlock(i, j, k, filler, meta, 3);
 				}
 			}	
 		}
+	}
+	
+	public static boolean isBlockReplaceable(Block block) {
+		return	block == Blocks.air						||
+				block == Blocks.snow_layer				||
+				block.getMaterial() == Material.plants	||
+				block.getMaterial() == Material.air		||
+				block.getMaterial() == Material.water	||
+				block.getMaterial() == Material.leaves	||
+				block.getMaterial() == Material.lava;
 	}
 }

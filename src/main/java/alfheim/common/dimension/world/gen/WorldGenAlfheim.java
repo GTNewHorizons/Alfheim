@@ -3,8 +3,9 @@ package alfheim.common.dimension.world.gen;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.dimension.world.gen.structure.Arena;
+import alfheim.common.dimension.world.gen.structure.ArenaStructure;
 import alfheim.common.dimension.world.gen.structure.DreamsTreeStructure;
+import alfheim.common.dimension.world.gen.structure.SpawnpointStructure;
 import alfheim.common.registry.AlfheimBlocks;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.init.Blocks;
@@ -17,6 +18,8 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		generateElvenOres(world, rand, chunkX*16, chunkZ*16);
+		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 65, -41);
+		if ((chunkX == 0 && chunkZ == 0) || (chunkX == 0 && chunkZ == -1) || (chunkX == -1 && chunkZ == 0) || (chunkX == -1 && chunkZ == -1)) return;
 		if (rand.nextInt(5) == 0) {
 			int x = chunkX*16 + rand.nextInt(16);
 			int z = chunkZ*16 + rand.nextInt(16);
@@ -30,7 +33,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (rand.nextInt(1000) == 0) {
 			int x = chunkX*16 + rand.nextInt(16);
 			int z = chunkZ*16 + rand.nextInt(16);
-			(new Arena()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
+			(new ArenaStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
 		}
 	}
 

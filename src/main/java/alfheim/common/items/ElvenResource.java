@@ -5,7 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.dimension.world.gen.structure.Arena;
+import alfheim.common.dimension.world.gen.structure.ArenaStructure;
 import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -61,7 +61,7 @@ public class ElvenResource extends Item {
 		if (!world.isRemote && stack.getItemDamage() == subItems.length - 1) {
 			if (!player.isSneaking()) {
 				//ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, player.posX, 228.0D, player.posZ);
-				(new Arena()).generate(world, player.getRNG(), MathHelper.floor_double(player.posX), world.getTopSolidOrLiquidBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posZ)), MathHelper.floor_double(player.posZ));
+				(new ArenaStructure()).generate(world, player.getRNG(), MathHelper.floor_double(player.posX), world.getTopSolidOrLiquidBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posZ)), MathHelper.floor_double(player.posZ));
 			} else {
 				player.addChatComponentMessage(new ChatComponentText("Current dimension id: " + player.dimension));
 			}

@@ -9,6 +9,9 @@ import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class AlfheimRegistry {
@@ -18,10 +21,14 @@ public class AlfheimRegistry {
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
 	
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
+	public static Achievement alfheim;
 	
 	public static void preInit() {
 		registerEntities();
 		registerTileEntities();
+		
+		alfheim = new Achievement("achievement.alfheim.name", "alfheim", 0, 0, new ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null).initIndependentStat().registerStat();
+		AchievementPage.registerAchievementPage(new AchievementPage("Alfheim", new Achievement[]{ alfheim }));
 	}
 	
 	public static void init() {
