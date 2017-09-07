@@ -88,6 +88,8 @@ public class AlfheimRecipes {
 	}
 
 	public static void registerShapelessRecipies() {
+		addShapelessRecipe(new ItemStack(ModBlocks.dreamwood), AlfheimBlocks.dreamLog);
+		
 		addShapelessRecipe(new ItemStack(AlfheimBlocks.elvoriumBlock),	 new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 1));
 		addShapelessRecipe(new ItemStack(AlfheimBlocks.mauftriumBlock),	 new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2), new ItemStack(AlfheimItems.elvenResource, 1, 2));
 		addShapelessRecipe(new ItemStack(AlfheimItems.elvenResource, 1, 1), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5), new ItemStack(AlfheimItems.elvenResource, 1, 5));

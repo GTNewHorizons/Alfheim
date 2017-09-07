@@ -5,6 +5,7 @@ import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -18,13 +19,12 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 
-@Mod(
-		   modid = Constants.MODID,
-		   name = Constants.NAME,
-		   version = Constants.VERSION,
-		   guiFactory = Constants.MODID + ".client.gui.GUIFactory",
-		   dependencies = "required-after:Botania;"
-		)
+@Mod(modid = Constants.MODID,
+	name = Constants.NAME,
+	version = Constants.VERSION,
+	guiFactory = Constants.MODID + ".client.gui.GUIFactory",
+	dependencies = "required-after:Botania;")
+
 public class AlfheimCore {
 
 	@Instance(Constants.MODID)
@@ -32,7 +32,8 @@ public class AlfheimCore {
 
 	@SidedProxy(clientSide = Constants.MODID + ".client.proxy.ClientProxy", serverSide = Constants.MODID + ".common.proxy.CommonProxy")
 	public static CommonProxy proxy;
-    
+
+	public static boolean enableElvenStory = false;
 	public static Configuration config;
 	
 	@SubscribeEvent
@@ -44,6 +45,8 @@ public class AlfheimCore {
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	enableElvenStory = Loader.isModLoaded("elvenstory");
+    	
 		FMLCommonHandler.instance().bus().register(AlfheimCore.instance);
 
 		config = new Configuration(event.getSuggestedConfigurationFile());
