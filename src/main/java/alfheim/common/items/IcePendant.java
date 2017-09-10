@@ -1,5 +1,6 @@
 package alfheim.common.items;
 
+import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
@@ -8,6 +9,7 @@ public class IcePendant extends ItemBauble {
 
 	public IcePendant() {
 		super("IcePendant");
+		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}
 
 	@Override

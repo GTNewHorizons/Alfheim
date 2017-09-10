@@ -6,6 +6,7 @@ import alexsocol.asjlib.IGlowingLayerBlock;
 import alexsocol.asjlib.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockLeaves;
@@ -41,7 +42,7 @@ public class DreamLeaves extends BlockLeaves implements IGlowingLayerBlock {
 	
 	@Override
 	public Item getItemDropped(int meta, Random rand, int p_149650_3_) {
-        return Item.getItemFromBlock(Blocks.bedrock);
+        return Item.getItemFromBlock(AlfheimBlocks.dreamSapling);
     }
 	
 	@Override

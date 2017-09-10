@@ -4,6 +4,8 @@ import java.util.Random;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.registry.AlfheimItems;
+import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -11,6 +13,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -64,6 +68,10 @@ public class PoisonIce extends Block {
 
     @Override
     public void onEntityWalking(World w, int x, int y, int z, Entity e) {
+    	if (e instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e;
+			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
+		}
     	if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
     		EntityLivingBase l = (EntityLivingBase) e;
     		l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
@@ -73,6 +81,10 @@ public class PoisonIce extends Block {
     
     @Override
     public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity e) {
+    	if (e instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e;
+			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
+		}
     	if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
     		EntityLivingBase l = (EntityLivingBase) e;
     		l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));

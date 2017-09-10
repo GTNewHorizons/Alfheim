@@ -54,10 +54,12 @@ public class DreamsTreeStructure {
 	}
 
 	public boolean generate(World world, Random rand, int x, int y, int z, Block log, Block leaves, int upmeta, int lrmeta, int fbmeta, int lvsmeta) {
-		if (!LocationIsValidSpawn(world, x + 7, y, z + 8)) {
+		x -= 7;
+		z -= 7;
+		if (!LocationIsValidSpawn(world, x + 7, y, z + 7)) {
 			return false;
 		}
-
+		
 		world.setBlock(x + 10, y + -3, z + 1, log, upmeta, 3);
 		world.setBlock(x + 3, y + -3, z + 2, log, upmeta, 3);
 		world.setBlock(x + 13, y + -3, z + 6, log, upmeta, 3);

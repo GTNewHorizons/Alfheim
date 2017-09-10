@@ -41,8 +41,8 @@ public class AlfheimItems {
 	public static Item rod = new Rod();
 	
 	// InDev
-	public static Item firePendant = new FirePendant();
-	public static Item icePendant = new IcePendant();
+	public static Item elfFirePendant = new FirePendant();
+	public static Item elfIcePendant = new IcePendant();
 	
 	public static void init() {
 		registration();

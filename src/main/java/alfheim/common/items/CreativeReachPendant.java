@@ -1,5 +1,6 @@
 package alfheim.common.items;
 
+import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ public class CreativeReachPendant extends ItemBauble {
 
 	public CreativeReachPendant() {
 		super("CreativeReachPendant");
+		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}
 
 	@Override

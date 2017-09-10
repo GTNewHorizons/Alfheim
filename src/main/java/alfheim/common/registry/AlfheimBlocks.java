@@ -11,6 +11,7 @@ import alfheim.Constants;
 import alfheim.common.blocks.AlfheimPortal;
 import alfheim.common.blocks.DreamLeaves;
 import alfheim.common.blocks.DreamLog;
+import alfheim.common.blocks.DreamSapling;
 import alfheim.common.blocks.ElvenOres;
 import alfheim.common.blocks.ManaInfuser;
 import alfheim.common.blocks.PoisonIce;
@@ -25,6 +26,7 @@ public class AlfheimBlocks {
 	public static Block alfheimPortal = new AlfheimPortal();
 	public static Block dreamLeaves = new DreamLeaves();
 	public static Block dreamLog = new DreamLog();
+	public static Block dreamSapling = new DreamSapling();
 	public static Block elvenOres = new ElvenOres();
 	public static Block elvoriumBlock = new BlockPattern(Constants.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 1, 5, "pickaxe", 1, 60, soundTypeMetal, true, true);
 	public static Block mauftriumBlock = new BlockPattern(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 1, 5, "pickaxe", 1, 60, soundTypeMetal, true, true);
@@ -43,10 +45,11 @@ public class AlfheimBlocks {
 		registerBlock(elvoriumBlock);
 		registerBlock(mauftriumBlock);
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));
-		registerBlock(dreamLog);
-		registerBlock(dreamLeaves);
 		registerBlock(poisonIce);
 		registerBlock(redFlame);
+		registerBlock(dreamLog);
+		registerBlock(dreamLeaves);
+		registerBlock(dreamSapling);
 	}
 
 	private static void registerOreDict() {
