@@ -1,4 +1,4 @@
-package alfheim.common.entity.render;
+package alfheim.client.entity.render;
 
 import alfheim.Constants;
 import net.minecraft.client.model.ModelBase;
@@ -6,9 +6,9 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class ElfRender extends RenderLiving {
+public class RenderEntityElf extends RenderLiving {
 
-    public ElfRender(ModelBase model, float shadowSize) {
+    public RenderEntityElf(ModelBase model, float shadowSize) {
         super(model, shadowSize);
     }
 

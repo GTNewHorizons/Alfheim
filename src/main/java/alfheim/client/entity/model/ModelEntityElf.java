@@ -1,4 +1,4 @@
-package alfheim.common.entity.model;
+package alfheim.client.entity.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -6,7 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ElfModel extends ModelBase {
+public class ModelEntityElf extends ModelBase {
 	ModelRenderer head;
 	ModelRenderer body;
 	ModelRenderer helmet;
@@ -42,7 +42,7 @@ public class ElfModel extends ModelBase {
 	ModelRenderer upperBelt;
 	ModelRenderer frontBag;
 
-	public ElfModel() {
+	public ModelEntityElf() {
 		textureWidth = 128;
 		textureHeight = 64;
 

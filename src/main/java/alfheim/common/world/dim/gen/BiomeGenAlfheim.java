@@ -1,4 +1,4 @@
-package alfheim.common.dimension.world.gen;
+package alfheim.common.world.dim.gen;
 
 import java.util.Random;
 

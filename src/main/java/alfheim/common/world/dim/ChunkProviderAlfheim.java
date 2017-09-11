@@ -1,10 +1,11 @@
-package alfheim.common.dimension;
+package alfheim.common.world.dim;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import vazkii.botania.common.block.ModBlocks;
+import alfheim.common.entity.EntityAlfheimPixie;
+import alfheim.common.entity.EntityElf;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
@@ -15,14 +16,15 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import vazkii.botania.common.block.ModBlocks;
 
 public class ChunkProviderAlfheim implements IChunkProvider
 {
@@ -382,13 +384,7 @@ public class ChunkProviderAlfheim implements IChunkProvider
 
 	@Override
 	public String makeString() {
-		return "Iceika";
-	}
-
-	@Override
-	public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
-		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(par2, par4);
-		return biomegenbase.getSpawnableList(par1EnumCreatureType);
+		return "Alfheim";
 	}
 
 	@Override
@@ -402,5 +398,29 @@ public class ChunkProviderAlfheim implements IChunkProvider
 	}
 
 	@Override
-	public void recreateStructures(int par1, int par2) { }
+	public void recreateStructures(int par1, int par2) {}
+
+	/*@Override
+	public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
+		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(par2, par4);
+		return biomegenbase.getSpawnableList(par1EnumCreatureType);
+	}*/
+
+	@Override
+	public List getPossibleCreatures(EnumCreatureType type, int i, int j, int k) {
+		if (type == EnumCreatureType.ambient) {
+			final List ambients = new ArrayList();
+
+			for (SpawnListEntry ambient : this.getAmbient()) {
+				ambients.add(ambient);
+			}
+
+			return ambients;
+		}
+		return null;
+	}
+	
+	public SpawnListEntry[] getAmbient() {
+		return new SpawnListEntry[] { new SpawnListEntry(EntityElf.class, 100, 1, 4), new SpawnListEntry(EntityAlfheimPixie.class, 10, 1, 1) };
+	}
 }

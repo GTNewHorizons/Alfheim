@@ -1,12 +1,13 @@
-package alfheim.common.dimension.world.gen;
+package alfheim.common.world.dim.gen;
 
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.dimension.world.gen.structure.ArenaStructure;
-import alfheim.common.dimension.world.gen.structure.DreamsTreeStructure;
-import alfheim.common.dimension.world.gen.structure.SpawnpointStructure;
 import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.world.dim.gen.structure.ArenaStructure;
+import alfheim.common.world.dim.gen.structure.DreamsTreeStructure;
+import alfheim.common.world.dim.gen.structure.SpawnpointStructure;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -17,6 +18,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
 		generateElvenOres(world, rand, chunkX*16, chunkZ*16);
 		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 65, -41);
 		if ((chunkX == 0 && chunkZ == 0) || (chunkX == 0 && chunkZ == -1) || (chunkX == -1 && chunkZ == 0) || (chunkX == -1 && chunkZ == -1)) return;

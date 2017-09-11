@@ -4,8 +4,8 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import alfheim.Constants;
-import alfheim.common.dimension.world.gen.BiomeGenAlfheim;
-import alfheim.common.dimension.WorldProviderAlfheim;
+import alfheim.common.world.dim.WorldProviderAlfheim;
+import alfheim.common.world.dim.gen.BiomeGenAlfheim;
 
 public class DimensionUtil {
 	

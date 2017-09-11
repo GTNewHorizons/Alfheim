@@ -1,5 +1,6 @@
-package alfheim.common.dimension;
+package alfheim.common.world.dim;
 
+import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.utils.DimensionUtil;
@@ -33,17 +34,31 @@ public class WorldProviderAlfheim extends WorldProvider {
 
     @Override
     public boolean isSurfaceWorld() {
-        return false;
+        return true;
     }
 
     @Override
     public float calculateCelestialAngle(long var1, float var3) {
-        return 0.1F;
+    	int j = (int)(var1 % 24000L);
+        float f1 = ((float)j + var3) / 24000.0F - 0.25F;
+
+        if (f1 < 0.0F) {
+            ++f1;
+        }
+
+        if (f1 > 1.0F) {
+            --f1;
+        }
+
+        float f2 = f1;
+        f1 = 1.0F - (float)((Math.cos((double)f1 * Math.PI) + 1.0D) / 2.0D);
+        f1 = f2 + (f1 - f2) / 3.0F;
+        return f1;
     }
 
     @Override
     public boolean canRespawnHere() {
-        return false;
+        return AlfheimCore.enableElvenStory;
     }
     
     @Override

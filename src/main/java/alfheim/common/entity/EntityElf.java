@@ -26,11 +26,11 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class ElfEntity extends EntityCreature implements IMerchant, INpc {
+public class EntityElf extends EntityCreature implements IMerchant, INpc {
 
     public int attackTimer;
     
-	public ElfEntity(World world) {
+	public EntityElf(World world) {
 		super(world);
 		this.setSize(0.6F, 1.8F);
         this.tasks.addTask(1, new EntityAIAttackOnCollide(this, 1.0D, true));
