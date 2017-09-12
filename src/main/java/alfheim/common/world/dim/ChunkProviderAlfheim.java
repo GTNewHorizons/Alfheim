@@ -24,7 +24,12 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import vazkii.botania.common.block.BlockModFlower;
 import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
+import vazkii.botania.common.block.tile.TileSpecialFlower;
+import vazkii.botania.common.core.handler.ConfigHandler;
+import vazkii.botania.common.lib.LibBlockNames;
 
 public class ChunkProviderAlfheim implements IChunkProvider
 {
@@ -421,6 +426,6 @@ public class ChunkProviderAlfheim implements IChunkProvider
 	}
 	
 	public SpawnListEntry[] getAmbient() {
-		return new SpawnListEntry[] { new SpawnListEntry(EntityElf.class, 100, 1, 4), new SpawnListEntry(EntityAlfheimPixie.class, 10, 1, 1) };
+		return new SpawnListEntry[] { new SpawnListEntry(EntityElf.class, 20, 4, 4), new SpawnListEntry(EntityAlfheimPixie.class, 10, 1, 1) };
 	}
 }

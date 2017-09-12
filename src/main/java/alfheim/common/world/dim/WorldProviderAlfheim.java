@@ -4,9 +4,11 @@ import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.utils.DimensionUtil;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
+import vazkii.botania.api.item.IFlowerlessWorld;
 
 public class WorldProviderAlfheim extends WorldProvider {
 

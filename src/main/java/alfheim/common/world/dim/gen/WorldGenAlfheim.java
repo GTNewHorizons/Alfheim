@@ -20,8 +20,8 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
 		generateElvenOres(world, rand, chunkX*16, chunkZ*16);
-		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 65, -41);
-		if ((chunkX == 0 && chunkZ == 0) || (chunkX == 0 && chunkZ == -1) || (chunkX == -1 && chunkZ == 0) || (chunkX == -1 && chunkZ == -1)) return;
+		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 64, -41);
+		if ((-3 < chunkX && chunkX < 3) && (-3 < chunkZ && chunkZ < 4)) return;
 		if (rand.nextInt(5) == 0) {
 			int x = chunkX*16 + rand.nextInt(16);
 			int z = chunkZ*16 + rand.nextInt(16);
@@ -32,6 +32,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 			int z = chunkZ*16 + rand.nextInt(16);
 			(new DreamsTreeStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
 		}
+		if ((-8 < chunkX && chunkX < -8) && (-8 < chunkZ && chunkZ < 8)) return;
 		if (rand.nextInt(1000) == 0) {
 			int x = chunkX*16 + rand.nextInt(16);
 			int z = chunkZ*16 + rand.nextInt(16);
