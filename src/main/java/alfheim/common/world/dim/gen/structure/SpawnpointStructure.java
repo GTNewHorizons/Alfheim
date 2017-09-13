@@ -5,10 +5,7 @@ package alfheim.common.world.dim.gen.structure;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
 import alfheim.common.registry.AlfheimBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -19914,7 +19911,7 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 11, y + 12, z + 41, ModBlocks.dreamwood, 5, 3);
 		world.setBlock(x + 12, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
 		
-		ASJUtilities.fillGenHoles(world, ModBlocks.altGrass, 0, x, x + 22, y, z, z + 42, 0);
+		ASJUtilities.fillGenHoles(world, AlfheimBlocks.elvenGrass, 0, x, x + 22, y, z, z + 42, 0);
 		
 		return true;
 	}

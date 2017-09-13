@@ -9,14 +9,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import vazkii.botania.common.block.ModBlocks;
-import net.minecraft.init.Blocks;
 
 public class DreamsTreeStructure {
 	
 	protected Block[] getValidSpawnBlocks() {
-		return new Block[] { ModBlocks.altGrass };
+		return new Block[] { AlfheimBlocks.elvenGrass };
 	}
 
 	public boolean LocationIsValidSpawn(World world, int x, int y, int z) {

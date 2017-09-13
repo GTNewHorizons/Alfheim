@@ -3,6 +3,7 @@ package alfheim.common.world.dim.gen.structure;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.registry.AlfheimBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -13,7 +14,7 @@ import vazkii.botania.common.block.ModFluffBlocks;
 
 public class ArenaStructure extends WorldGenerator {
 	protected Block[] GetValidSpawnBlocks() {
-		return new Block[] { ModBlocks.altGrass, };
+		return new Block[] { AlfheimBlocks.elvenGrass, };
 	}
 
 	public boolean LocationIsValidSpawn(World world, int x, int y, int z) {
@@ -2241,7 +2242,7 @@ public class ArenaStructure extends WorldGenerator {
 		world.setBlock(x + 34, y + 9, z + 32, ModFluffBlocks.livingrockWall, 0, 3);
 		world.setBlock(x + 6, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
 		world.setBlock(x + 32, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
-		ASJUtilities.fillGenHoles(world, ModBlocks.altGrass, 0, x, x + 40, y, z, z + 40, 22);
+		ASJUtilities.fillGenHoles(world, AlfheimBlocks.elvenGrass, 0, x, x + 40, y, z, z + 40, 22);
 		return true;
 
 	}

@@ -6,6 +6,8 @@ import java.util.Random;
 
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
+import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.world.dim.gen.BiomeGenAlfheim;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
@@ -24,12 +26,7 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import vazkii.botania.common.block.BlockModFlower;
 import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
-import vazkii.botania.common.block.tile.TileSpecialFlower;
-import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class ChunkProviderAlfheim implements IChunkProvider
 {
@@ -126,7 +123,7 @@ public class ChunkProviderAlfheim implements IChunkProvider
 									b[j3 += short1] = Blocks.water;
 								
 								else if(k2 * 8 + l2 < b0) 
-									b[j3 += short1] = ModBlocks.altGrass;
+									b[j3 += short1] = AlfheimBlocks.elvenGrass;
 								
 								else 
 									b[j3 += short1] = null;
@@ -361,12 +358,12 @@ public class ChunkProviderAlfheim implements IChunkProvider
 	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {
 		int var4 = par2 * 16;
 		int var5 = par3 * 16;
-		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
+		BiomeGenAlfheim biome = (BiomeGenAlfheim) this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
 		long p1 = this.rand.nextLong() / 2L * 2L + 1L;
 		long j1 = this.rand.nextLong() / 2L * 2L + 1L;
 		this.rand.setSeed(this.worldObj.getSeed());
 		this.rand.setSeed((long)par2 * p1 + (long)par3 * j1 ^ this.worldObj.getSeed());
-	
+		biome.decorate(worldObj, rand, par2, par3);
 	}
 
 	@Override

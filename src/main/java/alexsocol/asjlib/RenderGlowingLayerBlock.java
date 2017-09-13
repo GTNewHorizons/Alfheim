@@ -75,28 +75,25 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		Tessellator tes = Tessellator.instance;
-		tes.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 		renderer.renderStandardBlock(block, x, y, z);
 		tes.draw();
 		
-		tes.addTranslation(x, y, z);
 		GL11.glPushMatrix();
 
 		tes.startDrawingQuads();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		tes.setColorRGBA_F(1F, 1F, 1F, 1F);
-		if (((IGlowingLayerBlock)block).getGlowIcon(0, meta) != null && block.shouldSideBeRendered(world, x, y - 1, z, 0)) renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(0, meta));
-		if (((IGlowingLayerBlock)block).getGlowIcon(1, meta) != null && block.shouldSideBeRendered(world, x, y + 1, z, 1)) renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(1, meta));
-		if (((IGlowingLayerBlock)block).getGlowIcon(2, meta) != null && block.shouldSideBeRendered(world, x + 1, y, z, 2)) renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(2, meta));
-		if (((IGlowingLayerBlock)block).getGlowIcon(3, meta) != null && block.shouldSideBeRendered(world, x - 1, y, z, 3)) renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(3, meta));
-		if (((IGlowingLayerBlock)block).getGlowIcon(4, meta) != null && block.shouldSideBeRendered(world, x, y, z - 1, 4)) renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(4, meta));
-		if (((IGlowingLayerBlock)block).getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(0, meta) != null && block.shouldSideBeRendered(world, x, y - 1, z, 0)) renderer.renderFaceYNeg(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(0, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(1, meta) != null && block.shouldSideBeRendered(world, x, y + 1, z, 1)) renderer.renderFaceYPos(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(1, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(2, meta) != null && block.shouldSideBeRendered(world, x + 1, y, z, 2)) renderer.renderFaceXPos(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(2, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(3, meta) != null && block.shouldSideBeRendered(world, x - 1, y, z, 3)) renderer.renderFaceXNeg(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(3, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(4, meta) != null && block.shouldSideBeRendered(world, x, y, z - 1, 4)) renderer.renderFaceZNeg(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(4, meta));
+		if (((IGlowingLayerBlock)block).getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
 		tes.draw();
 				
         GL11.glPopMatrix();
         
 		tes.startDrawingQuads();
-		tes.addTranslation(-x, -y, -z);
 		return false;
 	}
 
