@@ -28,8 +28,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import vazkii.botania.common.block.ModBlocks;
 
-public class ChunkProviderAlfheim implements IChunkProvider
-{
+public class ChunkProviderAlfheim implements IChunkProvider {
 	private Random rand;
 	private NoiseGeneratorOctaves noiseGen1, noiseGen2, noiseGen3, noiseGen5, noiseGen6;
 	private NoiseGeneratorPerlin noiseGen4;
@@ -358,12 +357,11 @@ public class ChunkProviderAlfheim implements IChunkProvider
 	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {
 		int var4 = par2 * 16;
 		int var5 = par3 * 16;
-		BiomeGenAlfheim biome = (BiomeGenAlfheim) this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
+		BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
 		long p1 = this.rand.nextLong() / 2L * 2L + 1L;
 		long j1 = this.rand.nextLong() / 2L * 2L + 1L;
 		this.rand.setSeed(this.worldObj.getSeed());
 		this.rand.setSeed((long)par2 * p1 + (long)par3 * j1 ^ this.worldObj.getSeed());
-		biome.decorate(worldObj, rand, par2, par3);
 	}
 
 	@Override
