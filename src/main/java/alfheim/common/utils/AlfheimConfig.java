@@ -15,16 +15,23 @@ public class AlfheimConfig extends Configuration {
 
 	// DIMENSIONS
 	public static int dimensionIDAlfheim;
+	public static boolean enableAlfheimRespawn;
 
 	public static void syncConfig() {
 		List<String> propOrder = new ArrayList<String>();
 		try {
 			Property prop;
 
-			prop = AlfheimCore.config.get("dimensions", "dimensionIDAlfheim", -105);
+			prop = AlfheimCore.config.get("alfheim", "dimensionIDAlfheim", -105);
 			prop.comment = "Dimension ID for Alfheim";
-			prop.setLanguageKey("gc.configgui.dimensionIDAlfheim").setRequiresMcRestart(true);
+			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(true);
 			dimensionIDAlfheim = prop.getInt();
+			propOrder.add(prop.getName());
+			
+			prop = AlfheimCore.config.get("alfheim", "enableAlfheimRespawn", true);
+			prop.comment = "Set this to false to disable respawning in Alfheim";
+			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(false);
+			enableAlfheimRespawn = prop.getBoolean();
 			propOrder.add(prop.getName());
 
 			if (AlfheimCore.config.hasChanged()) {

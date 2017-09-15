@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class ElvenResource extends Item {
 	
-	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "TestItem" };
+	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ "TheRodOfTheDebug" };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ElvenResource() {

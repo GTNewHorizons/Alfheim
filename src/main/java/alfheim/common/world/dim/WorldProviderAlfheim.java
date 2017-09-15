@@ -57,7 +57,7 @@ public class WorldProviderAlfheim extends WorldProvider {
 
     @Override
     public boolean canRespawnHere() {
-        return AlfheimCore.enableElvenStory;
+        return AlfheimCore.enableElvenStory || AlfheimConfig.enableAlfheimRespawn;
     }
     
     @Override

@@ -6,7 +6,12 @@ import alexsocol.asjlib.ItemPattern;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.items.CreativeReachPendant;
+import alfheim.common.items.ElementalAirBoots;
 import alfheim.common.items.ElementalArmor;
+import alfheim.common.items.ElementalEarthChest;
+import alfheim.common.items.ElementalFireLeggings;
+import alfheim.common.items.ElementalWaterHelm;
+import alfheim.common.items.ElementalWaterHelmRevealing;
 import alfheim.common.items.ElvenResource;
 import alfheim.common.items.ElvoriumArmor;
 import alfheim.common.items.ElvoriumHelmet;
@@ -23,10 +28,11 @@ import vazkii.botania.common.item.ModItems;
 public class AlfheimItems {
 
 	public static Item creativeReachPendant = new CreativeReachPendant();
-	public static Item elementalLeggings = new ElementalArmor(2).setTextureName(Constants.MODID + ":ElementalLeggings").setUnlocalizedName("ElementalLeggings");
-	public static Item elementalChestplate = new ElementalArmor(1).setTextureName(Constants.MODID + ":ElementalChestplate").setUnlocalizedName("ElementalChestplate");
-	public static Item elementalHelmet = new ElementalArmor(0).setTextureName(Constants.MODID + ":ElementalHelmet").setUnlocalizedName("ElementalHelmet");
-	public static Item elementalBoots = new ElementalArmor(3).setTextureName(Constants.MODID + ":ElementalBoots").setUnlocalizedName("ElementalBoots");
+	public static Item elementalHelmet = new ElementalWaterHelm(); //.setTextureName(Constants.MODID + ":ElementalHelmet").setUnlocalizedName("ElementalHelmet");
+	public static Item elementalHelmetRevealing = new ElementalWaterHelmRevealing();
+	public static Item elementalLeggings = new ElementalFireLeggings(); //.setTextureName(Constants.MODID + ":ElementalLeggings").setUnlocalizedName("ElementalLeggings");
+	public static Item elementalChestplate = new ElementalEarthChest(); //.setTextureName(Constants.MODID + ":ElementalChestplate").setUnlocalizedName("ElementalChestplate");
+	public static Item elementalBoots = new ElementalAirBoots(); //.setTextureName(Constants.MODID + ":ElementalBoots").setUnlocalizedName("ElementalBoots");
 	public static Item elvenResource = new ElvenResource();
 	public static Item elvoriumHelmet = new ElvoriumHelmet();
 	public static Item elvoriumHelmetRevealing = new ElvoriumHelmetRevealing();

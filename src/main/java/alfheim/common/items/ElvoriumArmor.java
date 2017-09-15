@@ -56,7 +56,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/ElvoriumArmor.png" : slot == 2 ? LibResources.MODEL_MANASTEEL_1 : LibResources.MODEL_MANASTEEL_0;
+		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/armor/ElvoriumArmor.png" : slot == 2 ? LibResources.MODEL_MANASTEEL_1 : LibResources.MODEL_MANASTEEL_0;
 	}
 
 	@Override
