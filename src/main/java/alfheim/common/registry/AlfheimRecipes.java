@@ -6,8 +6,8 @@ import static cpw.mods.fml.common.registry.GameRegistry.*;
 import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 
-import alfheim.common.utils.HelmRevealingAlfheimRecipe;
-import alfheim.common.utils.ManaInfusionRecipies;
+import alfheim.common.crafting.HelmRevealingAlfheimRecipe;
+import alfheim.common.crafting.ManaInfusionRecipies;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

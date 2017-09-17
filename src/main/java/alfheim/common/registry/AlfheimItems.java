@@ -56,10 +56,6 @@ public class AlfheimItems {
 	}
 
 	private static void registration() {
-		registerItem(elementalHelmet);
-		registerItem(elementalChestplate);
-		registerItem(elementalLeggings);
-		registerItem(elementalBoots);
 		registerItem(realitySword);
 		registerItem(manaStone);
 		registerItem(manaStoneGreater);

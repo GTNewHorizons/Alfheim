@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Vector;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.crafting.IManaInfusionRecipe;
+import alfheim.common.crafting.ManaInfusionRecipies;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.registry.AlfheimItems;
-import alfheim.common.utils.IManaInfusionRecipe;
-import alfheim.common.utils.ManaInfusionRecipies;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -143,12 +143,12 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 	boolean areItemsValid(List<EntityItem> items) {
 		for (IManaInfusionRecipe recipe : ManaInfusionRecipies.recipes) {
 			if (DEBUG) System.out.println(recipe.toString());
-			if(items.size() != recipe.ingredients.size()) {
+			if(items.size() != recipe.getInputs().size()) {
 				if (DEBUG) System.out.println("Incorrect items amount (" + items.size() + "). Skipping this recipe.");
 				continue; // Odd items will mess up the infusion, less means not enough materials
 			}
 			
-			boolean[] equalitylist = new boolean[recipe.ingredients.size()]; // this array contains whether required ingredient is inside of AABB of infuser
+			boolean[] equalitylist = new boolean[recipe.getInputs().size()]; // this array contains whether required ingredient is inside of AABB of infuser
 			for (boolean b : equalitylist) b = false; // Setting every value to false
 			
 			if (DEBUG) System.out.println("Scanning entities...");
@@ -159,9 +159,9 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 				int size = stack.stackSize;
 				int meta = stack.getItemDamage();
 				if (DEBUG) System.out.println("Scanning recipe for stack...");
-				for (int i = 0; i < recipe.ingredients.size(); i++) {
+				for (int i = 0; i < recipe.getInputs().size(); i++) {
 					if (equalitylist[i]) continue;
-					ItemStack ing = recipe.ingredients.get(i);
+					ItemStack ing = (ItemStack) recipe.getInputs().get(i);
 					if (DEBUG) System.out.println("Ingredient: " + ing.toString());
 					if(ASJUtilities.isItemStackEqual(stack, ing) && stack.stackSize == ing.stackSize) {
 						if (DEBUG) System.out.println("Entity stack matches ingredient stack (" + stack.toString() + " = " + ing.toString() + ") Continuing scanning.");
@@ -186,7 +186,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 			if (flagAllEqual) { // I told you everything is fine
 				if (DEBUG) System.out.println("Everything matches. Sending item and mana cost to tile, returning true.");
 				manarequest = recipe.mana;
-				result = recipe.output;
+				result = recipe.getOutput();
 				return true;
 			}
 		}

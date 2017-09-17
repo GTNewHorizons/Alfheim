@@ -1,4 +1,4 @@
-package alfheim.common.utils;
+package alfheim.common.crafting;
 
 import alfheim.common.registry.AlfheimItems;
 import net.minecraft.inventory.InventoryCrafting;

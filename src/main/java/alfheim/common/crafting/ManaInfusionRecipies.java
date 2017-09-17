@@ -1,4 +1,4 @@
-package alfheim.common.utils;
+package alfheim.common.crafting;
 
 import java.util.Vector;
 
