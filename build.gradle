@@ -29,7 +29,7 @@ sourceSets.main {
     }
 }
 
-version = "0.0.1"
+version = "pre.ALPHA-1"
 group= "main" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Alfheim"
 

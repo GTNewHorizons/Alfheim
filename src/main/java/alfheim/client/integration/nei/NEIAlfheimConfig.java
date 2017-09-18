@@ -9,6 +9,7 @@ public class NEIAlfheimConfig implements IConfigureNEI {
 
 	@Override
 	public void loadConfig() {
+		Constants.debug("NEI config Loaded!");
 		API.registerRecipeHandler(new RecipeHandlerManaInfuser());
 		API.registerUsageHandler(new RecipeHandlerManaInfuser());
 	}

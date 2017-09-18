@@ -26,8 +26,10 @@ import net.minecraft.item.Item;
 import vazkii.botania.common.item.ModItems;
 
 public class AlfheimItems {
-
-	public static Item creativeReachPendant = new CreativeReachPendant();
+	
+	// There is some alphabetic mess cause Botania .setUnlocalizedName method includes registration,
+	// so I need to construct some items in odd places to get beautiful Creative Tab representation :D
+	
 	public static Item elementalHelmet = new ElementalWaterHelm(); //.setTextureName(Constants.MODID + ":ElementalHelmet").setUnlocalizedName("ElementalHelmet");
 	public static Item elementalHelmetRevealing = new ElementalWaterHelmRevealing();
 	public static Item elementalLeggings = new ElementalFireLeggings(); //.setTextureName(Constants.MODID + ":ElementalLeggings").setUnlocalizedName("ElementalLeggings");
@@ -39,16 +41,16 @@ public class AlfheimItems {
 	public static Item elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
 	public static Item elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
 	public static Item elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
+	public static Item elfFirePendant = new FirePendant();
+	public static Item elfIcePendant = new IcePendant();
+	public static Item creativeReachPendant = new CreativeReachPendant();
 	public static Item manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 	public static Item manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
 	public static Item manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
 	public static Item manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
 	public static Item realitySword = new RealitySword();
 	public static Item rod = new Rod();
-	
-	// InDev
-	public static Item elfFirePendant = new FirePendant();
-	public static Item elfIcePendant = new IcePendant();
+
 	
 	public static void init() {
 		registration();

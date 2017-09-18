@@ -13,7 +13,12 @@ public class Constants {
 	public static final String NAME = "Alfheim";
 	public static final String VERSION = major_version + "." + minor_version + "-" + build_version;
 	
+	public static final boolean DEV = true;
+
 	public static void debug(String message) { 
-		FMLRelaunchLog.log("[DEBUG] " + NAME, Level.INFO, message);
+		FMLRelaunchLog.log(NAME.toUpperCase().concat("-debug"), Level.INFO, message);
+	}
+	public static void log(String message) { 
+		FMLRelaunchLog.log(NAME.toUpperCase(), Level.INFO, message);
 	}
 }

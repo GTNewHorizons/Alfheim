@@ -6,6 +6,8 @@ import static cpw.mods.fml.common.registry.GameRegistry.*;
 import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 
+import alfheim.Constants;
+import alfheim.client.integration.nei.NEIAlfheimConfig;
 import alfheim.common.crafting.HelmRevealingAlfheimRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -29,6 +31,7 @@ public class AlfheimRecipes {
 		registerSmeltingRecipes();
 		registerManaInfusionRecipes();
 		registerRecipies();
+		if (Constants.DEV) (new NEIAlfheimConfig()).loadConfig();
 	}
 
 	/** 
@@ -272,7 +275,7 @@ public class AlfheimRecipes {
 		ManaInfusionRecipies.addRecipe(new ItemStack(manaStoneGreater, 1, 1000), TilePool.MAX_MANA * 4,
 			new ItemStack[] {new ItemStack(elvenResource, 2, 7), new ItemStack(elvenResource, 2, 8), new ItemStack(manaStone, 1, 1000)});
 		ManaInfusionRecipies.addRecipe(new ItemStack(elvenResource, 1, 2), TilePool.MAX_MANA,
-			new ItemStack[] {new ItemStack(elvenResource, 1, 4), new ItemStack(elvenResource, 1, 5), new ItemStack(manaResource, 1, 14)});
+			new ItemStack[] {new ItemStack(elvenResource, 1, 3), new ItemStack(elvenResource, 1, 4), new ItemStack(manaResource, 1, 14)});
 	}
 	
 	public static void registerRecipies() {

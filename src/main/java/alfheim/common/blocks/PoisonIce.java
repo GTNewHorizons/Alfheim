@@ -26,15 +26,12 @@ public class PoisonIce extends Block {
 
 	public PoisonIce() {
 		super(Material.packedIce);
-		final float mod = 0.01F;
+		final float mod = 0.001F;
 		this.setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod);
 		this.setBlockName("NiflheimIce");
         this.setBlockTextureName(Constants.MODID + ":NiflheimIce");
-        this.setCreativeTab(AlfheimCore.alfheimTab);
+        this.setBlockUnbreakable();
         this.setLightOpacity(0);
-        this.setHardness(5);
-        this.setHarvestLevel("pickaxe", 3);
-        this.setResistance(6000);
         this.setStepSound(soundTypeGlass);
         this.setTickRandomly(true);
 		this.slipperiness = 0.98F;

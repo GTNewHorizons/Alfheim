@@ -24,10 +24,11 @@ public class RedFlame extends BlockFire {
 	private IIcon[] icons;
 
 	public RedFlame() {
-		setBlockName("MuspelheimFire");
-		setLightLevel(1.0F);
-		setLightOpacity(0);
-		setHardness(0.0F);
+		this.setBlockName("MuspelheimFire");
+        this.setBlockUnbreakable();
+        this.setLightLevel(1.0F);
+        this.setLightOpacity(0);
+        this.setHardness(0.0F);
 	}
 
 	@Override

@@ -135,7 +135,7 @@ public class ASJUtilities {
 	public static boolean consumeItemStack(IInventory inventory, ItemStack stack) {
 	   if(getAmount(inventory, stack) >= stack.stackSize) {
 	      for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	         if(isItemStackEqual(inventory.getStackInSlot(i), stack)){
+	         if(isItemStackEqualData(inventory.getStackInSlot(i), stack)){
 	            int amount = Math.min(stack.stackSize, inventory.getStackInSlot(i).stackSize);
 	            if(amount > 0) {
 	               inventory.decrStackSize(i, amount);
@@ -159,11 +159,22 @@ public class ASJUtilities {
 	public static int getAmount(IInventory inventory, ItemStack stack) {
 	   int amount = 0;
 	   for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	      if(isItemStackEqual(inventory.getStackInSlot(i), stack)) {
+	      if(isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
 	         amount += inventory.getStackInSlot(i).stackSize;
 	      }
 	   }
 	   return amount;
+	}
+	
+
+	
+	/**
+	 * Checks if two itemstacks has same ID, size and metadata
+	 * @param stack1 First itemstack
+	 * @param stack2 Second itemstack
+	 */
+	public static boolean isItemStackEqual(ItemStack stack1, ItemStack stack2) {
+		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.stackSize == stack2.stackSize && stack1.getItemDamage() == stack2.getItemDamage());
 	}
 	
 	/**
@@ -171,7 +182,7 @@ public class ASJUtilities {
 	 * @param stack1 First itemstack
 	 * @param stack2 Second itemstack
 	 */
-	public static boolean isItemStackEqual(ItemStack stack1, ItemStack stack2) {
+	public static boolean isItemStackEqualData(ItemStack stack1, ItemStack stack2) {
 		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage());
 	}
 	

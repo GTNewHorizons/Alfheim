@@ -38,7 +38,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 	
 	public static final int MAX_MANA = TilePool.MAX_MANA * 8;
 
-	private static final int[][] QUART_BLOCK = {{1,0},{-1,0},{0,1},{0,-1}};
+	private static final int[][] QUARTZ_BLOCK = {{1,0},{-1,0},{0,1},{0,-1}};
 	private static final int[][] ELEMENTIUM_BLOCKS = {{1,1},{1,-1},{-1,1},{-1,-1}};
 	private static final String TAG_MANA = "mana";
 	int mana;
@@ -47,7 +47,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 
 	public static MultiblockSet makeMultiblockSet() {
 		Multiblock mb = new Multiblock();
-		for(int[] l : QUART_BLOCK) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 4);
+		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 4);
 		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 2);
 		mb.addComponent(0, 0, 0, AlfheimBlocks.manaInfuser, 0);
 		mb.setRenderOffset(0, 1, 0);
@@ -60,6 +60,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 
 		if(hasValidPlatform()) {
 			List<EntityItem> items = getItems();
+			if (mana <= 0 && blockMetadata != 0)  worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
 			if(areItemsValid(items)) {
 				if (DEBUG) System.out.println("Mana: " + mana + "\tMana requested: " + manarequest + "\tResult: " + result.toString());
 				
@@ -141,6 +142,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 	}
 
 	boolean areItemsValid(List<EntityItem> items) {
+		if (items.isEmpty()) return false;
 		for (IManaInfusionRecipe recipe : ManaInfusionRecipies.recipes) {
 			if (DEBUG) System.out.println(recipe.toString());
 			if(items.size() != recipe.getInputs().size()) {
@@ -156,18 +158,17 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 			for(EntityItem item : items) { // For every item in AABB
 				ItemStack stack = item.getEntityItem();
 				if (DEBUG) System.out.println("Entity stack: " + stack.toString());
-				int size = stack.stackSize;
-				int meta = stack.getItemDamage();
 				if (DEBUG) System.out.println("Scanning recipe for stack...");
 				for (int i = 0; i < recipe.getInputs().size(); i++) {
 					if (equalitylist[i]) continue;
 					ItemStack ing = (ItemStack) recipe.getInputs().get(i);
 					if (DEBUG) System.out.println("Ingredient: " + ing.toString());
-					if(ASJUtilities.isItemStackEqual(stack, ing) && stack.stackSize == ing.stackSize) {
+					if(ASJUtilities.isItemStackEqual(stack, ing)) {
 						if (DEBUG) System.out.println("Entity stack matches ingredient stack (" + stack.toString() + " = " + ing.toString() + ") Continuing scanning.");
 						equalitylist[i] = true; // Marking true for further processing
 						continue;
 					}
+					if (DEBUG) System.out.println("Entity stack DON'T match ingredient stack (" + stack.toString() + " = " + ing.toString() + ") Continuing scanning.");
 				}
 			}
 
@@ -177,8 +178,8 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 			for (boolean deflag : equalitylist) { // But let's check
 				flagAllEqual = deflag;
 				if (!flagAllEqual) {
-					if (DEBUG) System.out.println("Matching error. Continuing on...");
-					continue;// Oh no! Something went wrong!
+					if (DEBUG) System.out.println("Matching error. Breaking cycle!");
+					break; // Oh no! Something went wrong!
 				}
 				// Leaving to maybe do something else
 			}
@@ -196,7 +197,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 	}
 
 	boolean hasValidPlatform() {
-		return checkAll(QUART_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2);
+		return checkAll(QUARTZ_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2);
 	}
 
 	boolean checkAll(int[][] positions, Block block, int meta) {

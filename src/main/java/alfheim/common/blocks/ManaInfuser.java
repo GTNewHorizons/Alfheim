@@ -3,6 +3,8 @@ package alfheim.common.blocks;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
+import alfheim.common.crafting.IManaInfusionRecipe;
+import alfheim.common.crafting.ManaInfusionRecipies;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

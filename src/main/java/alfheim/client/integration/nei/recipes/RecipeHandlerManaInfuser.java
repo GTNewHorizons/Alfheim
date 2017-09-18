@@ -33,7 +33,7 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("alfheim.nei.manaInfuser");
+		return StatCollector.translateToLocal("tile.ManaInfuser.name");
 	}
 
 	@Override
