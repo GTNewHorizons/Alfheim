@@ -7,6 +7,7 @@ import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.registry.AlfheimItems;
+import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,7 +24,7 @@ public class ElvenOres extends Block {
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal" };
 	public IIcon[] textures = new IIcon[names.length];
 	public Item[] drops = { ModItems.manaResource, Item.getItemFromBlock(AlfheimBlocks.elvenOres), ModItems.quartz, Item.getItemFromBlock(AlfheimBlocks.elvenOres), AlfheimItems.elvenResource };
-	public int[] metas = {9, 1, 5, 3, 9};
+	public int[] metas = {9, 1, 5, 3, ElvenResourcesMetas.IffesalDust};
 	public Random rand = new Random();
 	
 	public ElvenOres() {

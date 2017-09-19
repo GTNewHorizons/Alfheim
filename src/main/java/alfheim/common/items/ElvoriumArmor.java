@@ -10,6 +10,7 @@ import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRegistry;
+import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
@@ -61,7 +62,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 
 	@Override
 	public boolean getIsRepairable(ItemStack armor, ItemStack material) {
-		return material.getItem() == AlfheimItems.elvenResource && material.getItemDamage() == 1 ? true : super.getIsRepairable(armor, material);
+		return material.getItem() == AlfheimItems.elvenResource && material.getItemDamage() == ElvenResourcesMetas.ElvoriumIngot ? true : super.getIsRepairable(armor, material);
 	}
 
 	@Override

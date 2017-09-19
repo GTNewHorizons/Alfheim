@@ -10,8 +10,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import vazkii.botania.api.internal.ShaderCallback;
+import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.model.ModelPixie;
+import vazkii.botania.common.entity.EntityPixie;
 
 public class RenderAlfheimPixie extends RenderLiving {
 
@@ -41,8 +43,10 @@ public class RenderAlfheimPixie extends RenderLiving {
 	}
 
 	@Override
-	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-		super.doRender(par1Entity, par2, par4, par6, par8, par9);
+	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
+		if (entity.isInvisible()) return;
+		GL11.glTranslated(0, -0.25, 0);
+		super.doRender(entity, x, y, z, yaw, pitch);
 	}
 
 	protected int setPixieBrightness(EntityAlfheimPixie pixie, int par2, float par3) {

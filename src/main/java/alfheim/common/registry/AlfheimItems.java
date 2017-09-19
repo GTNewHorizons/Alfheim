@@ -2,6 +2,8 @@ package alfheim.common.registry;
 
 import static alexsocol.asjlib.ASJUtilities.registerItem;
 
+import java.util.Vector;
+
 import alexsocol.asjlib.ItemPattern;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
@@ -69,5 +71,45 @@ public class AlfheimItems {
 
 	private static void oreDictRegistration() {
 		
+	}
+	
+	public static class ElvenResourcesMetas {
+		private static Vector<String> items = new Vector();
+		public static int
+		InterdimensionalGatewayCore,
+		ManaInfusionCore,
+		ElvoriumIngot,
+		MauftriumIngot,
+		MuspelheimPowerIngot,
+		NiflheimPowerIngot,
+		ElvoriumNugget,
+		MauftriumNugget,
+		MuspelheimEssence,
+		NiflheimEssence,
+		IffesalDust,
+		PrimalRune,
+		MuspelheimRune,
+		NiflheimRune,
+		TheRodOfTheDebug;
+		
+		static {
+			for (String item : ElvenResource.subItems) items.add(item);
+			
+			InterdimensionalGatewayCore = items.indexOf("InterdimensionalGatewayCore");
+			ManaInfusionCore = items.indexOf("ManaInfusionCore");
+			ElvoriumIngot = items.indexOf("ElvoriumIngot");
+			MauftriumIngot = items.indexOf("MauftriumIngot");
+			MuspelheimPowerIngot = items.indexOf("MuspelheimPowerIngot");
+			NiflheimPowerIngot = items.indexOf("NiflheimPowerIngot");
+			ElvoriumNugget = items.indexOf("ElvoriumNugget");
+			MauftriumNugget = items.indexOf("MauftriumNugget");
+			MuspelheimEssence = items.indexOf("MuspelheimEssence");
+			NiflheimEssence = items.indexOf("NiflheimEssence");
+			IffesalDust = items.indexOf("IffesalDust");
+			PrimalRune = items.indexOf("PrimalRune");
+			MuspelheimRune = items.indexOf("MuspelheimRune");
+			NiflheimRune = items.indexOf("NiflheimRune");
+			TheRodOfTheDebug = items.indexOf("TheRodOfTheDebug");
+		}
 	}
 }

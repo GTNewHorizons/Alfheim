@@ -6,6 +6,7 @@ import alfheim.common.crafting.IManaInfusionRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
 import alfheim.common.registry.AlfheimBlocks;
 import codechicken.nei.PositionedStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import vazkii.botania.api.BotaniaAPI;
@@ -44,7 +45,10 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 	@Override
 	public void drawBackground(int recipe) {
 		super.drawBackground(recipe);
-		HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75F, ((CachedManaInfuserRecipe) arecipes.get(recipe)).manaUsage, TilePool.MAX_MANA / 10);
+		int mana = ((CachedManaInfuserRecipe) arecipes.get(recipe)).manaUsage;
+		HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75F, mana, TilePool.MAX_MANA * 5);
+		Minecraft.getMinecraft().fontRenderer.drawString("" + mana, (168 - Minecraft.getMinecraft().fontRenderer.getStringWidth("" + mana)) / 2, 105, 0x0000FF);
+
 	}
 
 	@Override

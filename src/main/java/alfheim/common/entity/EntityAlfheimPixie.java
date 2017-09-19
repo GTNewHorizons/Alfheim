@@ -1,11 +1,14 @@
 package alfheim.common.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.entity.EntityFlyingCreature;
@@ -112,10 +115,10 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	
 	@Override
 	public void setDead() {
-        if (!this.worldObj.isRemote) this.worldObj.spawnEntityInWorld(this.entityDropItem(new ItemStack(ModItems.manaResource, 1, 8), 0));
+        if (!this.worldObj.isRemote && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot")) this.worldObj.spawnEntityInWorld(this.entityDropItem(new ItemStack(ModItems.manaResource, 1, 8), 0));
         this.isDead = true;
-        
-		if(worldObj.isRemote)
+
+        if(worldObj.isRemote)
 			for(int i = 0; i < 12; i++)
 				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5  + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1F, 0.25F, 0.9F, 1F + (float) Math.random() * 0.25F, 5);
 	}

@@ -5,6 +5,10 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
+import alfheim.common.registry.AlfheimAchievements;
+import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.world.dim.gen.structure.ArenaStructure;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,7 +23,7 @@ import net.minecraft.world.World;
 
 public class ElvenResource extends Item {
 	
-	public static final String[] subItems = new String[] { "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ "TheRodOfTheDebug" };
+	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ "TheRodOfTheDebug" };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ElvenResource() {
