@@ -39,7 +39,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fluids.IFluidBlock;
 
 /**
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
@@ -63,11 +62,11 @@ public class ASJUtilities {
 		return item.getUnlocalizedName().substring(5);
 	}
 	
-	public static void registerBlock(Block block) {
+	public static void register(Block block) {
 		GameRegistry.registerBlock(block, getBlockName(block));
 	}
 	
-	public static void registerItem(Item item) {
+	public static void register(Item item) {
 		GameRegistry.registerItem(item, getItemName(item));
 	}
 	
@@ -258,9 +257,9 @@ public class ASJUtilities {
 	/**
 	 * Removes <b>block</b> from GameRegistry
 	 * */
-	public static void unregisterBlock(Block block) {
+	/*public static void unregisterBlock(Block block) {
 		
-	}
+	}*/
 	
 	/**
 	 * Removes <b>item</b> from GameData
@@ -477,6 +476,10 @@ public class ASJUtilities {
 	 * */
 	public static String holdCtrl() {
 		return (StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl"));
+	}
+	
+	public static String creativeOnly() {
+		return StatCollector.translateToLocal("tooltip.creativeonly");
 	}
 
 	/**

@@ -2,6 +2,8 @@ package alfheim.client.blocks.render;
 
 import org.lwjgl.opengl.GL11;
 
+import alfheim.client.entity.render.RenderWings;
+import alfheim.client.render.ShaderHelperAlfheim;
 import alfheim.common.blocks.AlfheimPortal;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import net.minecraft.client.Minecraft;
@@ -10,7 +12,9 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import vazkii.botania.client.core.handler.ClientTickHandler;
+import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.common.block.BlockAlfPortal;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 
@@ -44,11 +48,15 @@ public class AlfheimPortalRender extends TileEntitySpecialRenderer {
 
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
-		renderIcon(0, 0, AlfheimPortal.textures[2], 3, 3, 240);
-
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glTranslated(0F, 0F, 0.5F);
+
+		ShaderHelperAlfheim.initShaders();
+		
+		ShaderHelperAlfheim.useShader(ShaderHelperAlfheim.forcefield);
 		renderIcon(0, 0, AlfheimPortal.textures[2], 3, 3, 240);
+		GL11.glTranslated(0, 0, 0.5);
+		renderIcon(0, 0, AlfheimPortal.textures[2], 3, 3, 240);
+		ShaderHelperAlfheim.releaseShader();
 
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
@@ -68,5 +76,4 @@ public class AlfheimPortalRender extends TileEntitySpecialRenderer {
 		tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0, par3Icon.getMinU(), par3Icon.getMinV());
 		tessellator.draw();
 	}
-
 }

@@ -8,15 +8,14 @@ import com.google.common.collect.Multimap;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.client.armor.model.ModelElvoriumArmor;
 import alfheim.common.registry.AlfheimItems;
-import alfheim.common.registry.AlfheimRegistry;
 import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.registry.AlfheimRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -32,12 +31,6 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaDiscountArmor;
-import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.client.core.helper.IconHelper;
-import vazkii.botania.client.lib.LibResources;
-import vazkii.botania.client.model.armor.ModelArmorManasteel;
-import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
@@ -51,13 +44,13 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped provideArmorModelForSlot(ItemStack stack, int slot) {
-		models[slot] = new ModelArmorManasteel(slot);
+		models[slot] = new ModelElvoriumArmor(slot);
 		return models[slot];
 	}
-
+	
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/armor/ElvoriumArmor.png" : slot == 2 ? LibResources.MODEL_MANASTEEL_1 : LibResources.MODEL_MANASTEEL_0;
+		return Constants.MODID + ":textures/model/armor/ElvoriumArmor.png";
 	}
 
 	@Override

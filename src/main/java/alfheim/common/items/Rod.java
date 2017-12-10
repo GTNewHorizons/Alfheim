@@ -27,6 +27,7 @@ public class Rod extends Item implements IManaUsingItem {
 	
 	public Rod() {
 		this.setCreativeTab(AlfheimCore.alfheimTab);
+		this.setFull3D();
 		this.setHasSubtypes(true);
 		this.setUnlocalizedName("Rod");
 	}

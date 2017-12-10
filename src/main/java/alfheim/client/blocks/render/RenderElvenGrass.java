@@ -35,8 +35,6 @@ public class RenderElvenGrass implements ISimpleBlockRenderingHandler {
 		tes.startDrawingQuads();
 		tes.setNormal(0.0F, 0.8F, 0.0F);
 		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, meta));
-		tes.setNormal(0.0F, 0.8F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, meta));
 		tes.setNormal(0.0F, 0.0F, 1.0F);
 		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(2, meta));
 		tes.setNormal(0.0F, 0.0F, -1.0F);
@@ -45,6 +43,10 @@ public class RenderElvenGrass implements ISimpleBlockRenderingHandler {
 		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, meta));
 		tes.setNormal(-0.5F, 0.0F, 0.0F);
 		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, meta));
+		tes.setNormal(0.0F, 0.8F, 0.0F);
+		//tes.setColorOpaque(0, 255, 0);
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, meta));
+		//tes.setColorOpaque(255, 255, 255);
 		tes.draw();
 		GL11.glPopMatrix();
 	}

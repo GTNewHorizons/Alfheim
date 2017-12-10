@@ -4,7 +4,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
 import alfheim.Constants;
-import alfheim.common.world.dim.WorldProviderAlfheim;
+import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import alfheim.common.world.dim.gen.BiomeGenAlfheim;
 
 public class DimensionUtil {
@@ -13,7 +13,6 @@ public class DimensionUtil {
 	
 	public static void init(){
 		addDimension(AlfheimConfig.dimensionIDAlfheim, WorldProviderAlfheim.class, false);
-		
 	}
 	
 	private static void addDimension(int id, Class<? extends WorldProvider> w, boolean keeploading){

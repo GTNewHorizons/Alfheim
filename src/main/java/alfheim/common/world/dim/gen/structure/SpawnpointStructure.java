@@ -5,6 +5,7 @@ package alfheim.common.world.dim.gen.structure;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
 import alfheim.common.registry.AlfheimBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -15,11 +16,12 @@ import vazkii.botania.common.block.ModFluffBlocks;
 public class SpawnpointStructure extends WorldGenerator {
 
 	public boolean generate(World world, Random rand, int x, int y, int z) {
-		generate01(world, rand, x, y, z);
+		if (!AlfheimCore.enableElvenStory) generate01(world, rand, x, y, z);
+		else generateStartBox(world, rand, x, y, z);
 		return true;
 	}
 
-	public boolean generate01(World world, Random rand, int x, int y, int z) {
+	public void generate01(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 0, y + 0, z + 0, Blocks.air, 0, 3);
 		world.setBlock(x + 1, y + 0, z + 0, Blocks.air, 0, 3);
 		world.setBlock(x + 2, y + 0, z + 0, Blocks.air, 0, 3);
@@ -1522,10 +1524,10 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 4, y + 1, z + 22, Blocks.air, 0, 3);
 
 		generate02(world, rand, x, y, z);
-		return true;
+		
 	}
 
-	public boolean generate02(World world, Random rand, int x, int y, int z) {
+	public void generate02(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 5, y + 1, z + 22, Blocks.air, 0, 3);
 		world.setBlock(x + 6, y + 1, z + 22, Blocks.air, 0, 3);
 		world.setBlock(x + 7, y + 1, z + 22, Blocks.air, 0, 3);
@@ -3028,11 +3030,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 9, y + 3, z + 1, Blocks.air, 0, 3);
 
 		generate03(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate03(World world, Random rand, int x, int y, int z) {
+	public void generate03(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 3, z + 1, Blocks.air, 0, 3);
 		world.setBlock(x + 11, y + 3, z + 1, Blocks.air, 0, 3);
 		world.setBlock(x + 12, y + 3, z + 1, Blocks.air, 0, 3);
@@ -4535,11 +4537,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 14, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
 
 		generate04(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate04(World world, Random rand, int x, int y, int z) {
+	public void generate04(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 15, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 16, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 17, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
@@ -6042,11 +6044,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 19, y + 6, z + 2, Blocks.air, 0, 3);
 
 		generate05(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate05(World world, Random rand, int x, int y, int z) {
+	public void generate05(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 20, y + 6, z + 2, Blocks.air, 0, 3);
 		world.setBlock(x + 21, y + 6, z + 2, Blocks.air, 0, 3);
 		world.setBlock(x + 22, y + 6, z + 2, Blocks.air, 0, 3);
@@ -7549,11 +7551,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 1, y + 7, z + 25, Blocks.air, 0, 3);
 
 		generate06(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate06(World world, Random rand, int x, int y, int z) {
+	public void generate06(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 2, y + 7, z + 25, Blocks.air, 0, 3);
 		world.setBlock(x + 3, y + 7, z + 25, Blocks.air, 0, 3);
 		world.setBlock(x + 4, y + 7, z + 25, Blocks.air, 0, 3);
@@ -9056,11 +9058,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 6, y + 9, z + 4, Blocks.air, 0, 3);
 
 		generate07(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate07(World world, Random rand, int x, int y, int z) {
+	public void generate07(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 7, y + 9, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 8, y + 9, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 9, y + 9, z + 4, Blocks.air, 0, 3);
@@ -10063,11 +10065,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 17, y + 10, z + 4, Blocks.air, 0, 3);
 
 		generate08(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate08(World world, Random rand, int x, int y, int z) {
+	public void generate08(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 18, y + 10, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 19, y + 10, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 20, y + 10, z + 4, Blocks.air, 0, 3);
@@ -11570,11 +11572,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 22, y + 11, z + 26, ModFluffBlocks.elfQuartz, 0, 3);
 
 		generate09(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate09(World world, Random rand, int x, int y, int z) {
+	public void generate09(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 0, y + 11, z + 27, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 1, y + 11, z + 27, Blocks.air, 0, 3);
 		world.setBlock(x + 2, y + 11, z + 27, Blocks.air, 0, 3);
@@ -13077,11 +13079,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 4, y + 13, z + 6, Blocks.air, 0, 3);
 
 		generate10(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate10(World world, Random rand, int x, int y, int z) {
+	public void generate10(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 5, y + 13, z + 6, Blocks.air, 0, 3);
 		world.setBlock(x + 6, y + 13, z + 6, Blocks.air, 0, 3);
 		world.setBlock(x + 7, y + 13, z + 6, Blocks.air, 0, 3);
@@ -14584,11 +14586,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 9, y + 14, z + 28, Blocks.air, 0, 3);
 
 		generate11(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate11(World world, Random rand, int x, int y, int z) {
+	public void generate11(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 14, z + 28, Blocks.air, 0, 3);
 		world.setBlock(x + 11, y + 14, z + 28, Blocks.air, 0, 3);
 		world.setBlock(x + 12, y + 14, z + 28, Blocks.air, 0, 3);
@@ -16091,11 +16093,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 14, y + 16, z + 7, Blocks.air, 0, 3);
 
 		generate12(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate12(World world, Random rand, int x, int y, int z) {
+	public void generate12(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 15, y + 16, z + 7, Blocks.air, 0, 3);
 		world.setBlock(x + 16, y + 16, z + 7, Blocks.air, 0, 3);
 		world.setBlock(x + 17, y + 16, z + 7, Blocks.air, 0, 3);
@@ -17598,11 +17600,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 19, y + 17, z + 29, Blocks.air, 0, 3);
 
 		generate13(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate13(World world, Random rand, int x, int y, int z) {
+	public void generate13(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 20, y + 17, z + 29, Blocks.air, 0, 3);
 		world.setBlock(x + 21, y + 17, z + 29, Blocks.air, 0, 3);
 		world.setBlock(x + 22, y + 17, z + 29, ModFluffBlocks.elfQuartz, 0, 3);
@@ -19105,11 +19107,11 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 1, y + 19, z + 9, Blocks.air, 0, 3);
 
 		generate14(world, rand, x, y, z);
-		return true;
+		
 
 	}
 
-	public boolean generate14(World world, Random rand, int x, int y, int z) {
+	public void generate14(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 2, y + 19, z + 9, Blocks.air, 0, 3);
 		world.setBlock(x + 3, y + 19, z + 9, Blocks.air, 0, 3);
 		world.setBlock(x + 4, y + 19, z + 9, Blocks.air, 0, 3);
@@ -19892,10 +19894,9 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 22, y + 19, z + 42, ModFluffBlocks.elfQuartzStairs, 1, 3);
 		
 		generate15(world, rand, x, y, z);
-		return true;
 	}
 	
-	public boolean generate15(World world, Random rand, int x, int y, int z) {
+	public void generate15(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
 		world.setBlock(x + 11, y + 8, z + 41, AlfheimBlocks.alfheimPortal, 1, 3);
 		world.setBlock(x + 12, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
@@ -19912,7 +19913,20 @@ public class SpawnpointStructure extends WorldGenerator {
 		world.setBlock(x + 12, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
 		
 		ASJUtilities.fillGenHoles(world, AlfheimBlocks.elvenGrass, 0, x, x + 22, y, z, z + 42, 0);
+	}
+	
+	public void generateStartBox(World world, Random rand, int x, int y, int z) {
+		world.setBlock(0, 255, 0, Blocks.obsidian, 0, 3);
+	
+		world.setBlock(1, 254, 0, Blocks.obsidian, 0, 3);
+		world.setBlock(1, 253, 0, Blocks.obsidian, 0, 3);
+		world.setBlock(-1, 254, 0, Blocks.obsidian, 0, 3);
+		world.setBlock(-1, 253, 0, Blocks.obsidian, 0, 3);
+		world.setBlock(0, 254, 1, Blocks.obsidian, 0, 3);
+		world.setBlock(0, 253, 1, Blocks.obsidian, 0, 3);
+		world.setBlock(0, 254, -1, Blocks.obsidian, 0, 3);
+		world.setBlock(0, 253, -1, Blocks.obsidian, 0, 3);
 		
-		return true;
+		world.setBlock(0, 252, 0, Blocks.glowstone, 0, 3);
 	}
 }

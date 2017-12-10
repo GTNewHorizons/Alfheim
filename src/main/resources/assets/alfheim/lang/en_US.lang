@@ -70,3 +70,10 @@ alfheim.armorset.elvorium.desc2=Vis discount: 20%
 alfheim.armorset.elvorium.desc3=Runic Shield +8
 
 itemGroup.Alfheim=Alfheim
+
+###############################################################################################################################
+
+elvenstory.welcome0=Welcome to Alfheim - [Elven Story] Mode!
+elvenstory.welcome1=Please, select one of the following races using "/race"
+elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAIT SITH§r, §ePOOKA§r, §2GNOME§r, §8LEPRECHAUN§r, §0SPRIGGAN§r, §bUNDINE§r, §5IMP§r
+elvenstory.commands.race.usage=/race <RACE>

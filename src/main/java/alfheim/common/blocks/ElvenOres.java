@@ -5,13 +5,13 @@ import java.util.Random;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -23,7 +23,7 @@ public class ElvenOres extends Block {
 
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal" };
 	public IIcon[] textures = new IIcon[names.length];
-	public Item[] drops = { ModItems.manaResource, Item.getItemFromBlock(AlfheimBlocks.elvenOres), ModItems.quartz, Item.getItemFromBlock(AlfheimBlocks.elvenOres), AlfheimItems.elvenResource };
+	public Item[] drops = { ModItems.manaResource, null, ModItems.quartz, null, AlfheimItems.elvenResource };
 	public int[] metas = {9, 1, 5, 3, ElvenResourcesMetas.IffesalDust};
 	public Random rand = new Random();
 	
@@ -53,16 +53,16 @@ public class ElvenOres extends Block {
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
+		if (meta == 1) this.setHarvestLevel("pickaxe", 1);
 		if (meta >= textures.length || meta < 0) return textures[0];
 		return textures[meta];
 	}
-
+	
 	@Override
 	public Item getItemDropped(int meta, Random rand, int fortune) {
-		Item drop = drops[meta];
-		if (meta >= drops.length || meta < 0) drop = drops[0];
-		System.out.println((drops[1] == null) + " - " + (drops[3] == null));
-		return drop;
+		if (meta >= drops.length || meta < 0) return drops[0];
+		if (drops[meta] == null) return Item.getItemFromBlock(this);
+		return drops[meta];
 	}
 	
 	@Override

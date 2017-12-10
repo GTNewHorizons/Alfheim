@@ -1,21 +1,50 @@
 package alfheim.client.event;
 
-import alfheim.common.world.dim.WorldProviderAlfheim;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+
+import alfheim.Constants;
+import alfheim.client.entity.render.RenderWings;
+import alfheim.client.utils.KeyBindingsUtils;
+import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 
 public class ClientEventHandler {
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	/** Someone told me that's this is the best way... */
-	public void onClientTick(ClientTickEvent event) {
+	/** Someone told me that this is the best way... */
+	public void onClientTick(ClientTickEvent e) {
 		WorldClient world = Minecraft.getMinecraft().theWorld;
 		if (world != null && world.provider instanceof WorldProviderAlfheim && world.provider.getSkyRenderer() == null) world.provider.setSkyRenderer(new SkyblockSkyRenderer());
+	}
+
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
+		EntityPlayer player = e.entityPlayer;
+		if(player.getActivePotionEffect(Potion.invisibility) != null) return;
+		RenderWings.render(e, player);
+		
+		if (player.getCommandSenderName().equals("AlexSocol")) ((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, new ResourceLocation(Constants.MODID, "textures/model/entity/AlexSocol.png"));
+	}
+	
+	@SubscribeEvent
+	public void onPlayerTick(PlayerTickEvent e) {
+		if (e.phase == TickEvent.Phase.START && e.side == Side.CLIENT) {
+			KeyBindingsUtils.parseKeybindings(e.player);
+		}
 	}
 }

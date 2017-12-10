@@ -4,13 +4,16 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRegistry;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +24,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 
@@ -75,7 +80,11 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5) {
-		if(player instanceof EntityPlayer && (0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5)) {
+		if (!stack.hasTagCompound()) {
+			stack.stackTagCompound = new NBTTagCompound();
+    		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+		}
+		if (player instanceof EntityPlayer && (0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5)) {
 			if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) player, 1, !world.isRemote)) {
 				stack.stackTagCompound.setInteger(TAGELEMENT, 0);
         		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
