@@ -2,6 +2,7 @@ package alfheim.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.entity.render.RenderWings;
 import alfheim.common.entity.EnumRace;

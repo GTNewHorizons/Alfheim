@@ -10,6 +10,7 @@ public class KeyBindingsUtils {
 	static boolean toggleFlight;
 	
 	public static void parseKeybindings(EntityPlayer player) {
+		if (AlfheimCore.enableElvenStory)
 		if (ClientProxy.keyFlight.isPressed() && !toggleFlight) {
 			toggleFlight = true;
 			AlfheimCore.network.sendToServer(new KeyBindMessage((byte) KeyBindingIDs.FLIGHT.ordinal(), false, 0));

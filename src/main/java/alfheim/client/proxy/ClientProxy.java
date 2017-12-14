@@ -2,6 +2,7 @@ package alfheim.client.proxy;
 
 import org.lwjgl.input.Keyboard;
 
+import alfheim.AlfheimCore;
 import alfheim.client.blocks.render.AlfheimPortalRender;
 import alfheim.client.blocks.render.TestBlockRender;
 import alfheim.client.entity.model.ModelEntityElf;
@@ -34,7 +35,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(AlfheimPortalTileEntity.class, new AlfheimPortalRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTestBlock.class, new TestBlockRender());
 		
-		ClientRegistry.registerKeyBinding(keyFlight);
+		if (AlfheimCore.enableElvenStory) ClientRegistry.registerKeyBinding(keyFlight);
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderAlfheimPixie());
@@ -50,7 +51,7 @@ public class ClientProxy extends CommonProxy {
 		super.initializeAndRegisterHandlers();
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		FMLCommonHandler.instance().bus().register(new ClientEventHandler());
-		MinecraftForge.EVENT_BUS.register(new RaceGUI(Minecraft.getMinecraft()));
+		if (AlfheimCore.enableElvenStory) MinecraftForge.EVENT_BUS.register(new RaceGUI(Minecraft.getMinecraft()));
 	}
 	
 	/**

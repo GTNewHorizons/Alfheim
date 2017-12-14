@@ -2,10 +2,13 @@ package alexsocol.asjlib;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -29,6 +32,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -38,6 +42,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 /**
@@ -45,6 +51,32 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * @author AlexSocol
  * */
 public class ASJUtilities {
+	
+	private static final ASJUtilities INSTANCE = new ASJUtilities();
+	private static ArrayList<String> blockIconsNames = new ArrayList<String>();
+	private static ArrayList<String> itemsIconsNames = new ArrayList<String>();
+	private static Map<String, IIcon> blockIcons = new HashMap<String, IIcon>();
+	private static Map<String, IIcon> itemsIcons = new HashMap<String, IIcon>();
+	
+	/**
+	 * Registers this like event handler to load icons
+	 * */
+	static {
+		MinecraftForge.EVENT_BUS.register(INSTANCE);
+	}
+	
+	/**
+	 * This will automatically register icons from lists
+	 * */
+	@SubscribeEvent
+    public void onTextureStitchEvent(TextureStitchEvent.Pre event) {
+        switch (event.map.getTextureType()) {
+        case 0: for(String s : blockIconsNames) blockIcons.put(s, event.map.registerIcon(s));
+        		break;
+        case 1: for(String s : itemsIconsNames) itemsIcons.put(s, event.map.registerIcon(s));
+        		break;
+        }
+    }
 	
 	/**
 	 * Returns the name of the block
@@ -528,6 +560,34 @@ public class ASJUtilities {
 		}
 
 		return getDecColor(r, g, b);
+	}
+	
+	/**
+	 * Registers IIcon for block. Call this in preInit
+	 * */
+	public static void registerBlockIcon(String name) {
+		blockIconsNames.add(name);
+	}
+
+	/**
+	 * Registers IIcon for item. Call this in preInit
+	 * */
+	public static void registerItemIcon(String name) {
+		itemsIconsNames.add(name);
+	}
+	
+	/**
+	 * Returns block IIcon registered with {@link registerBlockIcon} 
+	 * */
+	public static IIcon getBlockIcon(String name) {
+		return blockIcons.get(name);
+	}
+	
+	/**
+	 * Returns item IIcon registered with {@link registerItemIcon} 
+	 * */
+	public static IIcon getItemIcon(String name) {
+		return itemsIcons.get(name);
 	}
 	
 	public static void fillGenHoles(World world, Block filler, int meta, int xmn, int xmx, int ystart, int zmn, int zmx, int radius) {

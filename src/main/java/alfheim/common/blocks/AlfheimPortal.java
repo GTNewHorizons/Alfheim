@@ -1,8 +1,10 @@
 package alfheim.common.blocks;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
+import alfheim.common.items.ElvenResource;
 import alfheim.common.registry.AlfheimAchievements;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
@@ -58,8 +60,13 @@ public class AlfheimPortal extends Block implements ITileEntityProvider {
 	
 	@Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (world.provider.dimensionId == 0) if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == AlfheimItems.elvenResource && player.getCurrentEquippedItem().getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore) {} else return false;
-		
+		if (world.provider.dimensionId == 0)
+			if (player.getCurrentEquippedItem() != null
+			&&  player.getCurrentEquippedItem().getItem() == AlfheimItems.elvenResource
+			&&  player.getCurrentEquippedItem().getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore)
+				ASJUtilities.consumeItemStack(player.inventory,new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore));
+			else
+				return false;		
 
 		boolean did = ((AlfheimPortalTileEntity) world.getTileEntity(x, y, z)).onWanded();
 		if(did && player != null)

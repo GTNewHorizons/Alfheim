@@ -5,6 +5,7 @@ import java.io.IOException;
 import alfheim.common.command.CommandRace;
 import alfheim.common.network.KeyBindMessage;
 import alfheim.common.proxy.CommonProxy;
+import alfheim.common.registry.AlfheimAchievements;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
@@ -25,13 +26,14 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import vazkii.botania.common.core.BotaniaCreativeTab;
 
 
 @Mod(modid = Constants.MODID,
 	name = Constants.NAME,
 	version = Constants.VERSION,
 	guiFactory = Constants.MODID + ".client.gui.GUIFactory",
-	dependencies = "required-after:Botania;")
+	dependencies = "required-after:Botania;before:elvenstory")
 
 public class AlfheimCore {
 
@@ -74,19 +76,20 @@ public class AlfheimCore {
     	proxy.postInit();
     	proxy.registerKeyBinds();
     	proxy.registerRenderThings();
-    	
     }
 
     @EventHandler
 	public void starting(FMLServerStartingEvent event) throws IOException {
-    	AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
-    	event.registerServerCommand(new CommandRace());
+    	if (AlfheimCore.enableElvenStory) {
+    		AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
+    		event.registerServerCommand(new CommandRace());
+    	}
 	}
 
     public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal);
-		}
-	};
+    	@Override
+    	public Item getTabIconItem() {
+    		return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal);
+    	}
+    }.setNoTitle().setBackgroundImageName("Alfheim.png");
 }

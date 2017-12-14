@@ -1,10 +1,14 @@
 package alfheim.client.event;
 
+import java.lang.reflect.Field;
+
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
+import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.entity.render.RenderWings;
 import alfheim.client.utils.KeyBindingsUtils;
+import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -14,10 +18,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 
@@ -35,8 +41,8 @@ public class ClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
 		EntityPlayer player = e.entityPlayer;
-		if(player.getActivePotionEffect(Potion.invisibility) != null) return;
-		RenderWings.render(e, player);
+		if (player.getActivePotionEffect(Potion.invisibility) != null) return;
+		if (AlfheimCore.enableElvenStory) RenderWings.render(e, player);
 		
 		if (player.getCommandSenderName().equals("AlexSocol")) ((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, new ResourceLocation(Constants.MODID, "textures/model/entity/AlexSocol.png"));
 	}
@@ -46,5 +52,17 @@ public class ClientEventHandler {
 		if (e.phase == TickEvent.Phase.START && e.side == Side.CLIENT) {
 			KeyBindingsUtils.parseKeybindings(e.player);
 		}
+	}
+	
+	@SubscribeEvent
+	public void onGUIOpened(GuiOpenEvent e) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) onGameOver((GuiGameOver) e.gui);
+	}
+
+	private void onGameOver(GuiGameOver gui) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		if (Constants.DEV) return;
+		Field field_146347_a = gui.getClass().getDeclaredField("field_146347_a");
+		field_146347_a.setAccessible(true);
+		field_146347_a.setInt(gui, -AlfheimConfig.deathScreenAdditionalTime + 20);
 	}
 }

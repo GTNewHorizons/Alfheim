@@ -1,19 +1,12 @@
 package alfheim.common.utils;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.Level;
 
@@ -35,6 +28,8 @@ public class AlfheimConfig extends Configuration {
 	
 	// Elven Story
 	public static Vec3[] zones = new Vec3[9];
+	public static boolean prolongDeathScreen;
+	public static int deathScreenAdditionalTime;
 
 	public static void syncConfig() {
 		List<String> propOrder = new ArrayList<String>();
@@ -49,8 +44,20 @@ public class AlfheimConfig extends Configuration {
 			
 			prop = AlfheimCore.config.get("alfheim", "enableAlfheimRespawn", true);
 			prop.comment = "Set this to false to disable respawning in Alfheim";
-			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(false);
+			prop.setLanguageKey("alfheim.configgui.enableAlfheimRespawn").setRequiresMcRestart(false);
 			enableAlfheimRespawn = prop.getBoolean();
+			propOrder.add(prop.getName());
+			
+			prop = AlfheimCore.config.get("alfheim", "prolongDeathScreen", true);
+			prop.comment = "Set this to false to disable death screen prolongation";
+			prop.setLanguageKey("alfheim.configgui.prolongDeathScreen").setRequiresMcRestart(false);
+			prolongDeathScreen = prop.getBoolean();
+			propOrder.add(prop.getName());
+			
+			prop = AlfheimCore.config.get("alfheim", "deathScreenAdditionalTime", 12000);
+			prop.comment = "How longer (in ticks) \"Respawn\" button will be unavailable";
+			prop.setLanguageKey("alfheim.configgui.deathScreenAdditionalTime").setRequiresMcRestart(false);
+			deathScreenAdditionalTime = prop.getInt();
 			propOrder.add(prop.getName());
 
 			if (AlfheimCore.config.hasChanged()) {

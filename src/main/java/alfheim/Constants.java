@@ -19,25 +19,20 @@ public class Constants {
 	public static final boolean DEV = true;
 	public static final int WE_ID = 255;
 
-	public static final IAttribute RACE;
-	public static final IAttribute FLIGHT;
+	public static final IAttribute RACE = new BaseAttribute(Constants.MODID.toUpperCase() + ":RACE", 0) {
+		@Override
+		public double clampValue(double d) {
+			return d;
+		}
+	}.setShouldWatch(true);
 	
-	static {
-		RACE = new BaseAttribute(Constants.MODID.toUpperCase() + ":RACE", 0) {
-			@Override
-			public double clampValue(double d) {
-				return d;
-			}
-		}.setShouldWatch(true);
+	public static final IAttribute FLIGHT = new BaseAttribute(Constants.MODID.toUpperCase() + ":FLIGHT", 1200) { 
 		
-		FLIGHT = new BaseAttribute(Constants.MODID.toUpperCase() + ":FLIGHT", 1200) { 
-			
-			@Override
-			public double clampValue(double d) {
-				return Math.max(0, Math.min(12000, d));
-			}
-		}.setShouldWatch(true);
-	}
+		@Override
+		public double clampValue(double d) {
+			return Math.max(0, Math.min(12000, d));
+		}
+	}.setShouldWatch(true);
 	
 	public static void debug(String message) { 
 		FMLRelaunchLog.log(NAME.toUpperCase().concat("-debug"), Level.INFO, message);
