@@ -87,6 +87,7 @@ public class RenderWings {
 		drawRect(Tessellator.instance, getPlayerWingTexture(player));
 		GL11.glPopMatrix();
 
+		GL11.glColor4d(1, 1, 1, 1);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glDepthMask(true);
 		

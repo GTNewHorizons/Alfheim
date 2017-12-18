@@ -1,7 +1,7 @@
 package alfheim.client.entity.render;
 
-import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 import alfheim.common.entity.EntityAlfheimPixie;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -10,10 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import vazkii.botania.api.internal.ShaderCallback;
-import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.model.ModelPixie;
-import vazkii.botania.common.entity.EntityPixie;
 
 public class RenderAlfheimPixie extends RenderLiving {
 
@@ -22,12 +20,12 @@ public class RenderAlfheimPixie extends RenderLiving {
 		@Override
 		public void call(int shader) {
 			// Frag Uniforms
-			int disfigurationUniform = ARBShaderObjects.glGetUniformLocationARB(shader, "disfiguration");
-			ARBShaderObjects.glUniform1fARB(disfigurationUniform, 0.025F);
+			int disfigurationUniform = GL20.glGetUniformLocation(shader, "disfiguration");
+			GL20.glUniform1f(disfigurationUniform, 0.025F);
 
 			// Vert Uniforms
-			int grainIntensityUniform = ARBShaderObjects.glGetUniformLocationARB(shader, "grainIntensity");
-			ARBShaderObjects.glUniform1fARB(grainIntensityUniform, 0.05F);
+			int grainIntensityUniform = GL20.glGetUniformLocation(shader, "grainIntensity");
+			GL20.glUniform1f(grainIntensityUniform, 0.05F);
 		}
 	};
 

@@ -44,7 +44,7 @@ public class ClientEventHandler {
 		if (player.getActivePotionEffect(Potion.invisibility) != null) return;
 		if (AlfheimCore.enableElvenStory) RenderWings.render(e, player);
 		
-		if (player.getCommandSenderName().equals("AlexSocol")) ((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, new ResourceLocation(Constants.MODID, "textures/model/entity/AlexSocol.png"));
+		if (player.getCommandSenderName().equals("AlexSocol")) ClientOnEvents.onAuthorRendered(e);
 	}
 	
 	@SubscribeEvent
@@ -56,13 +56,6 @@ public class ClientEventHandler {
 	
 	@SubscribeEvent
 	public void onGUIOpened(GuiOpenEvent e) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) onGameOver((GuiGameOver) e.gui);
-	}
-
-	private void onGameOver(GuiGameOver gui) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		if (Constants.DEV) return;
-		Field field_146347_a = gui.getClass().getDeclaredField("field_146347_a");
-		field_146347_a.setAccessible(true);
-		field_146347_a.setInt(gui, -AlfheimConfig.deathScreenAdditionalTime + 20);
+		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) ClientOnEvents.onGameOver((GuiGameOver) e.gui);
 	}
 }
