@@ -1,13 +1,23 @@
 package alfheim.common.utils;
 
-import net.minecraft.entity.player.EntityPlayer;
+import alexsocol.asjlib.ASJUtilities;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class KeyBindingsUtils {
 	
-	public static void enableFlight(EntityPlayer player) {
+	public static void enableFlight(EntityPlayerMP player) {
 		if (player.capabilities.isCreativeMode) return;
 		player.capabilities.allowFlying = true;
 		player.capabilities.isFlying = !player.capabilities.isFlying;
 		player.sendPlayerAbilities();
 	}
+
+	public static void atack(EntityPlayerMP player) {
+		MovingObjectPosition mop = ASJUtilities.getMouseOver(player, 1.0F, player.theItemInWorldManager.getBlockReachDistance(), true);
+		if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null) {
+			player.attackTargetEntityWithCurrentItem(mop.entityHit);
+		}
+	} 
 }

@@ -44,9 +44,10 @@ public class KeyBindMessage implements IMessage {
 		@Override
 		public IMessage onMessage(KeyBindMessage packet, MessageContext message) {
 			EntityPlayerMP player = message.getServerHandler().playerEntity;
-
+			
 			switch (packet.action) {
 				case 0: KeyBindingsUtils.enableFlight(player); break;
+				case 1: KeyBindingsUtils.atack(player); break;
 			}
 			return null;
 		}

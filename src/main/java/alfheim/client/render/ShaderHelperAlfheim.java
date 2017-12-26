@@ -17,15 +17,19 @@ public final class ShaderHelperAlfheim {
 	private static final int VERT = GL20.GL_VERTEX_SHADER;
 	private static final int FRAG = GL20.GL_FRAGMENT_SHADER;
 
+	public static int fireball = 0;
 	public static int forcefield = 0;
 	public static int sphere = 0;
+	public static int star = 0;
 
 	public static void initShaders() {
 		if(!useShaders())
 			return;
 
+		fireball = createProgram("/assets/alfheim/shader/fireball.vert", "/assets/alfheim/shader/fireball.frag");
 		forcefield = createProgram(null, "/assets/alfheim/shader/forcefield.frag");
 		sphere = createProgram("/assets/alfheim/shader/fresnel.vert", "/assets/alfheim/shader/fresnel.frag");
+		star = createProgram(null, "/assets/alfheim/shader/star.frag");
 	}
 
 	public static void useShader(int proramID, ShaderCallback callback) {
@@ -111,7 +115,7 @@ public final class ShaderHelperAlfheim {
 	}
 
 	private static String getLogInfo(int obj) {
-		return GL20.glGetProgramInfoLog(obj, GL20.GL_INFO_LOG_LENGTH);
+		return GL20.glGetShaderInfoLog(obj, GL20.GL_INFO_LOG_LENGTH);
 	}
 
 	private static String readFileAsString(String filename) throws Exception {

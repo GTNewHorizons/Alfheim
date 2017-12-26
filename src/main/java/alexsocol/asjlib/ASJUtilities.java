@@ -349,7 +349,7 @@ public class ASJUtilities {
 	 * @param fasc Just put 1.0F there
 	 * @param dist Max distance for use
 	 * @param interact Can player interact with blocks (not sure)
-	 * @author Agravaine
+	 * @author timaxa007
 	 */
 	public static MovingObjectPosition getMouseOver(EntityLivingBase entity_base, float fasc, double dist, boolean interact) {
         if (entity_base == null || entity_base.worldObj == null) {

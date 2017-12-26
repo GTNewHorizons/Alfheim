@@ -2,9 +2,6 @@ package alfheim.client.blocks.render;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alfheim.Constants;
-import alfheim.client.entity.render.RenderWings;
-import alfheim.client.render.ShaderHelperAlfheim;
 import alfheim.common.blocks.AlfheimPortal;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import net.minecraft.client.Minecraft;
@@ -13,13 +10,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
 import vazkii.botania.client.core.handler.ClientTickHandler;
-import vazkii.botania.client.core.helper.ShaderHelper;
-import vazkii.botania.common.block.BlockAlfPortal;
-import vazkii.botania.common.block.tile.TileAlfPortal;
 
 public class AlfheimPortalRender extends TileEntitySpecialRenderer {
 
@@ -38,11 +29,10 @@ public class AlfheimPortalRender extends TileEntitySpecialRenderer {
 		glDisable(GL_CULL_FACE);
 		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60) * 0.5);
 
-		glTranslated(x, y, z);
-		glTranslatef(-1F, 1F, 0.25F);
+		glTranslated(x - 1, y + 1, z + 0.25);
 		if(meta == 2) {
-			glTranslatef(1.25F, 0F, 1.75F);
-			glRotatef(90F, 0F, 1F, 0F);
+			glTranslated(1.25, 0, 1.7);
+			glRotated(90, 0, 1, 0);
 		}
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
