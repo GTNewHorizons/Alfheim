@@ -53,13 +53,4 @@ public class ClientProxy extends CommonProxy {
 		FMLCommonHandler.instance().bus().register(new ClientEventHandler());
 		if (AlfheimCore.enableElvenStory) MinecraftForge.EVENT_BUS.register(new RaceGUI(Minecraft.getMinecraft()));
 	}
-	
-	/**
-	 * Returns a side-appropriate EntityPlayer for use during message handling
-	 * @author coolAlias
-	 */
-	@Override
-	public EntityPlayer getPlayerEntity(MessageContext ctx) {
-		return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
-	}
 }

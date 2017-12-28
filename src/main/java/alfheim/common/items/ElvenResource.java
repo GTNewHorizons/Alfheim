@@ -5,7 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.client.render.ShaderHelperAlfheim;
+import alfheim.common.entity.EnumRace;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class ElvenResource extends Item {
@@ -59,7 +60,7 @@ public class ElvenResource extends Item {
 		if (!world.isRemote && stack.getItemDamage() == subItems.length - 1) {
 			if (!player.isSneaking()) {
 				player.getEntityAttribute(Constants.RACE).setBaseValue((player.getEntityAttribute(Constants.RACE).getAttributeValue() + 1) % 11);
-				//player.addChatMessage(new ChatComponentText(MathHelper.floor_double(player.getEntityAttribute(Constants.RACE).getAttributeValue()) + " - " + EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).toString()));
+				player.addChatMessage(new ChatComponentText(MathHelper.floor_double(player.getEntityAttribute(Constants.RACE).getAttributeValue()) + " - " + EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).toString()));
 				//ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 				//(new ArenaStructure()).generate(world, player.getRNG(), MathHelper.floor_double(player.posX), world.getTopSolidOrLiquidBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posZ)), MathHelper.floor_double(player.posZ));
 			} else {

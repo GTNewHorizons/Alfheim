@@ -1,5 +1,7 @@
 package alfheim.common.event;
 
+import com.sun.javafx.geom.transform.BaseTransform.Degree;
+
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
@@ -18,8 +20,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 
 public class CommonEventHandler {
 	
@@ -68,9 +68,12 @@ public class CommonEventHandler {
 			if (AlfheimCore.enableElvenStory) {
 				if (player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() >= 0
 				&&	player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() <= Constants.FLIGHT.getDefaultValue()) {
-					if (player.capabilities.isFlying)	player.getAttributeMap().getAttributeInstance(Constants.FLIGHT)
-														.setBaseValue(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() - 1);
-					else								player.getAttributeMap().getAttributeInstance(Constants.FLIGHT)
+					if (player.capabilities.isFlying) {
+														player.getAttributeMap().getAttributeInstance(Constants.FLIGHT)
+														.setBaseValue(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() -
+														(player.isSprinting() ? 4 : (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) ? 2 : 1));
+					if (player.isSprinting()) player.moveFlying(0F, 1F, 0.01F);
+					} else								player.getAttributeMap().getAttributeInstance(Constants.FLIGHT)
 														.setBaseValue(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() + 
 														(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() < Constants.FLIGHT.getDefaultValue() ? 1 : 0));
 					
