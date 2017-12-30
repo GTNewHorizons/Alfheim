@@ -59,8 +59,8 @@ public class ElvenResource extends Item {
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!world.isRemote && stack.getItemDamage() == subItems.length - 1) {
 			if (!player.isSneaking()) {
-				player.getEntityAttribute(Constants.RACE).setBaseValue((player.getEntityAttribute(Constants.RACE).getAttributeValue() + 1) % 11);
-				player.addChatMessage(new ChatComponentText(MathHelper.floor_double(player.getEntityAttribute(Constants.RACE).getAttributeValue()) + " - " + EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).toString()));
+				EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
+				player.addChatMessage(new ChatComponentText(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString()));
 				//ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 				//(new ArenaStructure()).generate(world, player.getRNG(), MathHelper.floor_double(player.posX), world.getTopSolidOrLiquidBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posZ)), MathHelper.floor_double(player.posZ));
 			} else {

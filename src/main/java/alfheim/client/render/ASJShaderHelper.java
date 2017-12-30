@@ -7,40 +7,25 @@ import java.io.InputStreamReader;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import vazkii.botania.api.internal.ShaderCallback;
-import vazkii.botania.client.core.handler.ClientTickHandler;
-import vazkii.botania.common.core.handler.ConfigHandler;
 
-public final class ShaderHelperAlfheim {
+/**
+ * Almost all code is by Vazkii, I just ported it to GL20 and made lib-style
+ * */
+public final class ASJShaderHelper {
 
 	private static final int VERT = GL20.GL_VERTEX_SHADER;
 	private static final int FRAG = GL20.GL_FRAGMENT_SHADER;
 
-	public static int fireball = 0;
-	public static int forcefield = 0;
-	public static int sphere = 0;
-	public static int star = 0;
-
-	public static void initShaders() {
-		if(!useShaders())
-			return;
-
-		fireball = createProgram("/assets/alfheim/shader/fireball.vert", "/assets/alfheim/shader/fireball.frag");
-		forcefield = createProgram(null, "/assets/alfheim/shader/forcefield.frag");
-		sphere = createProgram("/assets/alfheim/shader/fresnel.vert", "/assets/alfheim/shader/fresnel.frag");
-		star = createProgram(null, "/assets/alfheim/shader/star.frag");
-	}
-
 	public static void useShader(int proramID, ShaderCallback callback) {
-		if(!useShaders())
-			return;
+		if(!OpenGlHelper.shadersSupported) return;
 
 		GL20.glUseProgram(proramID);
 
 		if(proramID != 0) {
 			int time = GL20.glGetUniformLocation(proramID, "time");
-			GL20.glUniform1f(time, ClientTickHandler.ticksInGame / 20.0F);
+			GL20.glUniform1f(time, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
 
 			if(callback != null)
 				callback.call(proramID);
@@ -55,13 +40,8 @@ public final class ShaderHelperAlfheim {
 		useShader(0);
 	}
 
-	public static boolean useShaders() {
-		return ConfigHandler.useShaders && OpenGlHelper.shadersSupported;
-	}
-
 	// Most of the code taken from the LWJGL wiki
 	// http://lwjgl.org/wiki/index.php?title=GLSL_Shaders_with_LWJGL
-
 	public static int createProgram(String vertLocaion, String fragLocation) {
 		int vertID = 0, fragID = 0, programID = 0;
 		if(vertLocaion != null)
@@ -120,7 +100,7 @@ public final class ShaderHelperAlfheim {
 
 	private static String readFileAsString(String filename) throws Exception {
 		StringBuilder source = new StringBuilder();
-		InputStream in = ShaderHelperAlfheim.class.getResourceAsStream(filename);
+		InputStream in = ASJShaderHelper.class.getResourceAsStream(filename);
 		Exception exception = null;
 		BufferedReader reader;
 
@@ -167,4 +147,9 @@ public final class ShaderHelperAlfheim {
 		return source.toString();
 	}
 
+	public static abstract class ShaderCallback {
+
+		public abstract void call(int shader);
+
+	}
 }

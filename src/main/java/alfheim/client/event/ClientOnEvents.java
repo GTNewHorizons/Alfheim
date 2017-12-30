@@ -1,28 +1,39 @@
 package alfheim.client.event;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_BACK;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_GREATER;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glAlphaFunc;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glScaled;
+import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.lang.reflect.Field;
-
-import org.lwjgl.opengl.*;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.Constants;
-import alfheim.client.render.ShaderHelperAlfheim;
+import alfheim.client.registry.AflheimClientRegistry;
+import alfheim.client.render.ASJShaderHelper;
 import alfheim.common.utils.AlfheimConfig;
-import cpw.mods.fml.common.FMLCommonHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Post;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-import vazkii.botania.api.internal.ShaderCallback;
 
 public class ClientOnEvents {
 
@@ -53,9 +64,9 @@ public class ClientOnEvents {
 		glScaled(1.25, 1.25, 1.25);
 		
 		//Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/shader/fireball.png"));
-		ShaderHelperAlfheim.useShader(ShaderHelperAlfheim.sphere);
+		ASJShaderHelper.useShader(AflheimClientRegistry.sphere);
 		sphere.renderAll();
-        ShaderHelperAlfheim.releaseShader();
+        ASJShaderHelper.releaseShader();
         
 		glEnable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);

@@ -10,7 +10,8 @@ import alfheim.client.entity.render.RenderAlfheimPixie;
 import alfheim.client.entity.render.RenderEntityElf;
 import alfheim.client.event.ClientEventHandler;
 import alfheim.client.gui.RaceGUI;
-import alfheim.client.render.ShaderHelperAlfheim;
+import alfheim.client.registry.AflheimClientRegistry;
+import alfheim.client.render.ASJShaderHelper;
 import alfheim.common.blocks.TestBlock.TileEntityTestBlock;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import alfheim.common.entity.EntityAlfheimPixie;
@@ -39,8 +40,8 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderAlfheimPixie());
-		
-		ShaderHelperAlfheim.initShaders();
+
+		AflheimClientRegistry.init();
 	}
 
 	@Override

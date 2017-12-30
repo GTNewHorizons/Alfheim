@@ -27,12 +27,10 @@ public class WorldGenAlfheim implements IWorldGenerator {
 
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		generateAlfheim(rand, chunkX, chunkZ, world);
+		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) generateAlfheim(rand, chunkX, chunkZ, world);
 	}
 
 	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
-		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
-		
 		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 64, -41);
 		generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);

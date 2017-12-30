@@ -6,6 +6,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.ToDoList;
+import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
 import alfheim.common.registry.AlfheimAchievements;
 import alfheim.common.utils.AlfheimConfig;
@@ -15,10 +16,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.stats.StatisticsFile;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class CommonEventHandler {
@@ -55,6 +59,11 @@ public class CommonEventHandler {
 		if (!AlfheimCore.enableElvenStory) return;
 		EnumRace r = EnumRace.fromDouble(((EntityPlayer) e.original).getEntityAttribute(Constants.RACE).getAttributeValue());
 		((EntityPlayer) e.entityPlayer).getEntityAttribute(Constants.RACE).setBaseValue(r.ordinal());
+	}
+	
+	@SubscribeEvent
+	public void onEntityAttacked(LivingAttackEvent e) {
+		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) e.setCanceled(true);
 	}
 	
 	@SubscribeEvent

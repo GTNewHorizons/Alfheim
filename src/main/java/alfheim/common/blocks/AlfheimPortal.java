@@ -81,19 +81,19 @@ public class AlfheimPortal extends Block implements ITileEntityProvider {
 	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) return;
+		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return;
 		super.breakBlock(world, x, y, z, block, meta);
     }
 	
 	@Override
 	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) return false;
+		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return false;
 		return super.removedByPlayer(world, player, x, y, z, willHarvest);
     }
 	
 	@Override
 	public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) return;
+		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return;
 		super.harvestBlock(world, player, x, y, z, meta);
 	}
 }

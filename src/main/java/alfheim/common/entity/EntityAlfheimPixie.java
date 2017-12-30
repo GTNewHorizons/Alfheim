@@ -66,9 +66,10 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
         return null;
     }
 
-	@Override
-    protected void dropFewItems(boolean hit, int looting) {
-    }
+	@Override 
+	protected void dropFewItems(boolean hit, int looting) { 
+		this.entityDropItem(new ItemStack(ModItems.manaResource, 1, 8), 0.0F); 
+	}
 	
 	@Override
 	protected void updateEntityActionState() {
@@ -115,9 +116,7 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	
 	@Override
 	public void setDead() {
-        if (!this.worldObj.isRemote && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot")) this.worldObj.spawnEntityInWorld(this.entityDropItem(new ItemStack(ModItems.manaResource, 1, 8), 0));
         this.isDead = true;
-
         if(worldObj.isRemote)
 			for(int i = 0; i < 12; i++)
 				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5  + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1F, 0.25F, 0.9F, 1F + (float) Math.random() * 0.25F, 5);

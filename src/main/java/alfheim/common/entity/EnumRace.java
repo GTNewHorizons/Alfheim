@@ -1,5 +1,7 @@
 package alfheim.common.entity;
 
+import alfheim.Constants;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 
 public enum EnumRace {
@@ -39,4 +41,20 @@ public enum EnumRace {
 		if (this == HUMAN) return "HUMAN";
 		return "";
 	}
-};
+	
+	public static EnumRace getRace(EntityPlayer player) {
+		return fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue());
+	}
+	
+	public static int getRaceID(EntityPlayer player) {
+		return fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal();
+	}
+	
+	public static void setRace(EntityPlayer player, EnumRace race) {
+		player.getEntityAttribute(Constants.RACE).setBaseValue(race.ordinal());
+	}
+	
+	public static void setRaceID(EntityPlayer player, double raceID) {
+		player.getEntityAttribute(Constants.RACE).setBaseValue(raceID);
+	}
+}; 

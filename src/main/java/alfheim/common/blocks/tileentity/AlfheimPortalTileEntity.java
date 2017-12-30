@@ -7,6 +7,8 @@ import java.util.Random;
 import com.google.common.base.Function;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
+import alfheim.common.entity.EnumRace;
 import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -114,9 +116,26 @@ public class AlfheimPortalTileEntity extends TileMod {
 						if (flag) {
 							ChunkCoordinates coords = player.getBedLocation(0);
 							if (coords == null) coords = MinecraftServer.getServer().worldServerForDimension(0).getSpawnPoint();
-							if (coords == null) coords = new ChunkCoordinates(0, 64, 0);
+							if (coords == null) coords = new ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0), 0);
+
+							if (this.xCoord != 0 || this.yCoord != 75 || this.zCoord != 0) {
+								this.worldObj.newExplosion(player, this.xCoord, this.yCoord, this.zCoord, 5, false, false);
+								this.worldObj.setBlockToAir(this.xCoord - 2, this.yCoord + 2, this.zCoord);
+								this.worldObj.setBlockToAir(this.xCoord + 2, this.yCoord + 2, this.zCoord);
+								this.worldObj.setBlockToAir(this.xCoord, this.yCoord + 4, this.zCoord);
+								
+								this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
+							}
+							
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX, coords.posY, coords.posZ);
-						} else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
+						} else {
+							if (AlfheimCore.enableElvenStory) {
+								int race = EnumRace.getRaceID(player) - 1;
+								if (0 <= race && race < 9) ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].xCoord, AlfheimConfig.zones[race].yCoord, AlfheimConfig.zones[race].zCoord);
+								else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
+							}
+							else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
+						}
 					}
 				if (ConfigHandler.elfPortalParticlesEnabled)
 					blockParticle(meta);
