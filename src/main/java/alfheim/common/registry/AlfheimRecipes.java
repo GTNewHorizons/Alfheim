@@ -8,18 +8,17 @@ import static net.minecraft.init.Items.*;
 import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 
+import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.integration.nei.NEIAlfheimConfig;
 import alfheim.common.crafting.HelmRevealingAlfheimRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
-import cpw.mods.fml.common.registry.GameRegistry;
+import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.mana.TilePool;
-import vazkii.botania.common.crafting.recipe.HelmRevealingRecipe;
 import vazkii.botania.common.item.ModItems;
 
 public class AlfheimRecipes {
@@ -53,12 +52,20 @@ public class AlfheimRecipes {
 
 	public static void registerCraftingRecipes() {
 		addShapedRecipe(new ItemStack(alfheimPortal, 2),
+		(AlfheimCore.enableElvenStory) ?
+			new Object[] {"DPD", "GSG", "DTD",
+			'D', dreamwood,
+			'G', glowstone_dust,
+			'P', new ItemStack(pylon, 1, 2),
+			'S', rainbowRod,
+			'T', manaInfuser
+		} :
 			new Object[] {"DPD", "GSG", "DTD",
 			'D', dreamwood,
 			'G', glowstone_dust,
 			'P', new ItemStack(manaResource, 1, 14),	// Gaia Ingot
 			'S', rainbowRod,
-			'T', ModBlocks.terraPlate
+			'T', terraPlate
 		});
 		
 		addShapedRecipe(new ItemStack(elementalHelmet),
@@ -225,7 +232,7 @@ public class AlfheimRecipes {
 			'D', new ItemStack(manaResource, 1, 9),		// Dragonstone
 			'I', new ItemStack(manaResource, 1, 7),		// Elementium
 			'R', rainbowRod,							// TODO seriously???
-			'S', new ItemStack(ModBlocks.livingrock, 1, 4),
+			'S', new ItemStack(livingrock, 1, 4),
 		});
 		
 		addShapedRecipe(new ItemStack(realitySword),
@@ -251,7 +258,7 @@ public class AlfheimRecipes {
 	}
 
 	public static void registerShapelessRecipes() {
-		addShapelessRecipe(new ItemStack(ModBlocks.dreamwood), dreamLog);
+		addShapelessRecipe(new ItemStack(dreamwood), dreamLog);
 		
 		if (Botania.thaumcraftLoaded) {
 			Item goggles = (Item) Item.itemRegistry.getObject("Thaumcraft:ItemGoggles");

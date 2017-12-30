@@ -118,7 +118,6 @@ public class ASJUtilities {
 	 * */
 	public static void sendToDimensionWithoutPortal(Entity entity, int dimTo, double x, double y, double z) {
 		if (entity instanceof EntityPlayerMP) {
-			System.out.println("Coords: " + x + ' ' + y + ' ' + z);
 			EntityPlayerMP player = (EntityPlayerMP) entity;
 	        WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
 	        player.mcServer.getConfigurationManager().transferPlayerToDimension(player, dimTo, new FreeTeleporter(worldTo, x, y, z));
@@ -514,6 +513,22 @@ public class ASJUtilities {
 		return StatCollector.translateToLocal("tooltip.creativeonly");
 	}
 
+	/**
+	 * @return map key for specified value if persist (null if none)
+	 * */
+	public static <K, V> K mapGetKey(Map<K, V> map, V v) {
+		for (Map.Entry<K, V> e : map.entrySet()) if (e.getValue().equals(v)) return e.getKey();
+		return null;
+	}
+	
+	/**
+	 * @return map key for specified value if persist (default if none)
+	 * */
+	public static <K, V> K mapGetKeyOrDefault(Map<K, V> map, V v, K def) {
+		for (Map.Entry<K, V> e : map.entrySet()) if (e.getValue().equals(v)) return e.getKey();
+		return def;
+	}
+	
 	/**
 	 * Adds new <i>ore</i> spawn to world generator
 	 * */
