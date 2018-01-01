@@ -110,7 +110,7 @@ public class AlfheimConfig extends Configuration {
 	
 	private static String writeStandardCoords(double angle) {
 		Vec3 v = mkVecLenRotMine(1000, angle);
-		return new String(MathHelper.floor_double(v.xCoord) + " : 64 : " + MathHelper.floor_double(v.zCoord) + "\n");
+		return new String(MathHelper.floor_double(v.xCoord) + " : 300 : " + MathHelper.floor_double(v.zCoord) + "\n");
 	}
 	
 	private static Vec3 makeVectorFromString(String s) {

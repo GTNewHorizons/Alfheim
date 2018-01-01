@@ -24,30 +24,12 @@ import vazkii.botania.common.item.ModItems;
 public class AlfheimRecipes {
 	
 	public static void init() {
-		registerTempRecipes();
 		registerCraftingRecipes();
 		registerShapelessRecipes();
 		registerSmeltingRecipes();
 		registerManaInfusionRecipes();
 		registerRecipies();
 		if (Constants.DEV) (new NEIAlfheimConfig()).loadConfig();
-	}
-
-	/** 
-	 * Registers temporal recipes for resources yet unavailable in survival
-	 * TODO Remove ASAP!!! */
-	private static void registerTempRecipes() {
-		addShapedRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
-			new Object[] {"GLG", "LGL", "GLG",
-			'G', new ItemStack(manaResource, 1, 5),	// Gaia Spirit
-			'L', lava_bucket
-		});
-		
-		addShapedRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence),
-			new Object[] {"GIG", "IGI", "GIG",
-			'G', new ItemStack(manaResource, 1, 5),	// Gaia Spirit
-			'I', ice
-		});
 	}
 
 	public static void registerCraftingRecipes() {
@@ -197,9 +179,16 @@ public class AlfheimRecipes {
 		});
 		
 		addShapedRecipe(new ItemStack(furnace),
-				new Object[] {"SSS", "S S", "SSS",
-				'S', livingcobble,
-			});
+			new Object[] {"SSS", "S S", "SSS",
+			'S', livingcobble,
+		});
+		
+		// IDK whether this is good source of glowstone or not
+		addShapedRecipe(new ItemStack(glowstone_dust),
+			new Object[] {"LLL", "LDL", "LLL",
+			'L', dreamLeaves,
+			'D', new ItemStack(manaResource, 1, 9)		// Dragonstone
+		});
 		
 		addShapedRecipe(new ItemStack(livingrockPickaxe),
 			new Object[] {"LLL", " S ", " S ",
@@ -282,12 +271,18 @@ public class AlfheimRecipes {
 	public static void registerSmeltingRecipes() {
 		addSmelting(new ItemStack(elvenOres, 1, 1), new ItemStack(manaResource, 1, 7), 1.0F);
 		addSmelting(new ItemStack(elvenOres, 1, 3), new ItemStack(gold_ingot, 1, 0), 1.0F);
-		addSmelting(elvenSand, new ItemStack(elvenGlass), 1.0F);
+		addSmelting(elvenSand, new ItemStack(elfGlass), 1.0F);
 	}
 
 	public static void registerManaInfusionRecipes() {
-		ManaInfusionRecipies.addRecipe(new ItemStack(elfGlass), 100,
-			new ItemStack[] {new ItemStack(ModItems.quartz, 1, 5), new ItemStack(elvenGlass)});
+		// Why is this here?
+		/*ManaInfusionRecipies.addRecipe(new ItemStack(elfGlass), 100,
+			new ItemStack[] {new ItemStack(ModItems.quartz, 1, 5), new ItemStack(elvenGlass)});*/
+		
+		ManaInfusionRecipies.addRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), TilePool.MAX_MANA / 10,
+			new ItemStack[] {new ItemStack(manaResource, 1, 5), new ItemStack(lava_bucket)});
+		ManaInfusionRecipies.addRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), TilePool.MAX_MANA / 10,
+			new ItemStack[] {new ItemStack(manaResource, 1, 5), new ItemStack(ice)});
 		ManaInfusionRecipies.addRecipe(new ItemStack(manaResource, 1, 4), TilePool.MAX_MANA / 2,
 			new ItemStack[] {new ItemStack(manaResource, 1, 0), new ItemStack(manaResource, 1, 1), new ItemStack(manaResource, 1, 2)});
 		ManaInfusionRecipies.addRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), TilePool.MAX_MANA / 2,

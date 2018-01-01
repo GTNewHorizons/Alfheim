@@ -5,8 +5,8 @@ import java.io.IOException;
 import alfheim.common.command.CommandRace;
 import alfheim.common.network.KeyBindMessage;
 import alfheim.common.proxy.CommonProxy;
-import alfheim.common.registry.AlfheimAchievements;
 import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.registry.lexicon.AlfheimCategory;
 import alfheim.common.utils.AlfheimConfig;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -26,7 +26,6 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
-import vazkii.botania.common.core.BotaniaCreativeTab;
 
 
 @Mod(modid = Constants.MODID,
@@ -76,6 +75,7 @@ public class AlfheimCore {
     	proxy.postInit();
     	proxy.registerKeyBinds();
     	proxy.registerRenderThings();
+    	AlfheimCategory.init();
     }
 
     @EventHandler

@@ -17,7 +17,6 @@ import alfheim.common.blocks.ElvenOres;
 import alfheim.common.blocks.ManaInfuser;
 import alfheim.common.blocks.PoisonIce;
 import alfheim.common.blocks.RedFlame;
-import alfheim.common.blocks.TestBlock;
 import alfheim.common.items.ItemBlockElvenOres;
 import clashsoft.cslib.minecraft.block.CSBlocks;
 import net.minecraft.block.Block;
@@ -27,13 +26,12 @@ import net.minecraft.item.ItemStack;
 
 public class AlfheimBlocks {
 	
-	public static final Block blockOfTesting = new TestBlock();
-	
 	public static Block alfheimPortal = new AlfheimPortal();
 	public static Block dreamLeaves = new DreamLeaves();
 	public static Block dreamLog = new DreamLog();
 	public static Block dreamSapling = new DreamSapling();
-	public static Block elvenGlass = new BlockPattern(Constants.MODID, Material.glass, "ElvenGlass", AlfheimCore.alfheimTab, 0, 255, 0.1F, null, 0, 30, soundTypeGlass, false, false);
+	// Why I made this???
+	// public static Block elvenGlass = new BlockPattern(Constants.MODID, Material.glass, "ElvenGlass", AlfheimCore.alfheimTab, 0, 255, 0.1F, null, 0, 30, soundTypeGlass, false, false);
 	public static Block elvenGrass = new ElvenGrass();
 	public static Block elvenOres = new ElvenOres();
 	public static Block elvenSand = new BlockPattern(Constants.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false);
@@ -54,7 +52,6 @@ public class AlfheimBlocks {
 		register(alfheimPortal);
 		register(elvoriumBlock);
 		register(mauftriumBlock);
-		register(elvenGlass);
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));
 		register(livingcobble);
 		register(elvenGrass);

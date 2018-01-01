@@ -2,6 +2,7 @@ package alfheim.common.blocks;
 
 import java.util.Random;
 
+import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.blocks.render.RenderElvenGrass;
 import alfheim.common.registry.AlfheimBlocks;
@@ -33,6 +34,8 @@ public class ElvenGrass extends Block implements IGrowable {
     public IIcon snowySide;
     @SideOnly(Side.CLIENT)
     public IIcon overlay;
+    
+    // why not...
     @SideOnly(Side.CLIENT)
 	public static Block grassCrutch = new ElvenGrassCrutch();
     
@@ -40,7 +43,7 @@ public class ElvenGrass extends Block implements IGrowable {
         super(Material.grass);
         this.setBlockName("ElvenGrass");
         this.setBlockTextureName(Constants.MODID + ":ElvenGrass");
-        this.setCreativeTab(CreativeTabs.tabBlock);
+        this.setCreativeTab(AlfheimCore.alfheimTab);
         this.setTickRandomly(true);
         this.setStepSound(soundTypeGrass);
     }
@@ -174,6 +177,11 @@ public class ElvenGrass extends Block implements IGrowable {
     	return (side != 1) ? super.shouldSideBeRendered(access, x, y, z, side) : false;
     }
     
+    
+    /**
+     * This is here because Alfheim team is too stupid to fix colored grass rendering
+     * Do not ever make such a bad code...
+     * */
     public static class ElvenGrassCrutch extends Block {
         
     	public ElvenGrassCrutch() {

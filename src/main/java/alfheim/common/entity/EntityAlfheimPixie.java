@@ -1,5 +1,7 @@
 package alfheim.common.entity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -128,4 +130,10 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 		
 		return super.getCanSpawnHere();
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public boolean isInRangeToRenderDist(double distance) {
+        return super.isInRangeToRenderDist(distance / 16.0);
+    }
 }

@@ -605,8 +605,13 @@ public class ASJUtilities {
 		return itemsIcons.get(name);
 	}
 	
+	
+	/**
+	 * Fills holes of worldgen (no more structures in mid-air)
+	 * @param radius Radius of cylinder-shaped gen hole (0 for square)
+	 * */
 	public static void fillGenHoles(World world, Block filler, int meta, int xmn, int xmx, int ystart, int zmn, int zmx, int radius) {
-		if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius == -1) return;
+		if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius < 0) return;
 		for (int i = xmn; i <= xmx; i++) {
 			for (int k = zmn; k <= zmx; k++) {
 				for (int j = ystart - 1; j >= 0 && isBlockReplaceable(world.getBlock(i, j, k)); j--) {

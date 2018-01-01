@@ -8,6 +8,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -21,11 +22,10 @@ public class RenderElvenGrass implements ISimpleBlockRenderingHandler {
 	static {
 		RenderingRegistry.registerBlockHandler(elvenGrassRendererID, new RenderElvenGrass());
 	}
-	
+
+	// I know that this is really bad code, but idk how to fix it in other way, so it'll stay like this for some time :P
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
-		// TODO try renderer.renderBlockAsItem(block, 1, 0.0F);
-		
 		GL11.glPushMatrix();
 		Tessellator tes = Tessellator.instance;
 		GL11.glRotatef(90, 0, 1, 0);
@@ -43,11 +43,23 @@ public class RenderElvenGrass implements ISimpleBlockRenderingHandler {
 		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, meta));
 		tes.setNormal(-0.5F, 0.0F, 0.0F);
 		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, meta));
-		tes.setNormal(0.0F, 0.8F, 0.0F);
-		//tes.setColorOpaque(0, 255, 0);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, meta));
-		//tes.setColorOpaque(255, 255, 255);
 		tes.draw();
+		
+		tes.startDrawingQuads();
+		tes.setColorOpaque_I(0x08F500);
+		tes.setNormal(0.0F, 0.8F, 0.0F);
+		renderer.renderFaceYPos(ElvenGrass.grassCrutch, 0.0D, 0.0D, 0.0D, ElvenGrass.grassCrutch.getIcon(1, meta));
+		tes.setNormal(0.0F, 0.0F, 1.0F);
+		renderer.renderFaceXPos(ElvenGrass.grassCrutch, 0.0D, 0.0D, 0.0D, ElvenGrass.grassCrutch.getIcon(2, meta));
+		tes.setNormal(0.0F, 0.0F, -1.0F);
+		renderer.renderFaceXNeg(ElvenGrass.grassCrutch, 0.0D, 0.0D, 0.0D, ElvenGrass.grassCrutch.getIcon(3, meta));
+		tes.setNormal(0.0F, 0.0F, 0.0F);
+		renderer.renderFaceZNeg(ElvenGrass.grassCrutch, 0.0D, 0.0D, 0.0D, ElvenGrass.grassCrutch.getIcon(4, meta));
+		tes.setNormal(-0.5F, 0.0F, 0.0F);
+		renderer.renderFaceZPos(ElvenGrass.grassCrutch, 0.0D, 0.0D, 0.0D, ElvenGrass.grassCrutch.getIcon(5, meta));
+		tes.setColorOpaque_I(0xFFFFFF);
+		tes.draw();
+		
 		GL11.glPopMatrix();
 	}
 
@@ -80,6 +92,7 @@ public class RenderElvenGrass implements ISimpleBlockRenderingHandler {
 		tes.startDrawingQuads();
 		return false;*/
 		
+		// If it works - don't touch it :D
 		renderer.renderStandardBlock(block, x, y, z);
 		renderer.renderStandardBlock(ElvenGrass.grassCrutch, x, y, z);
 		return true;

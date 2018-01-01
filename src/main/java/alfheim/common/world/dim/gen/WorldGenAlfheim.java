@@ -3,6 +3,7 @@ package alfheim.common.world.dim.gen;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.Constants;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.world.dim.gen.structure.ArenaStructure;
