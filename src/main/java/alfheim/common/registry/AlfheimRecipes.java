@@ -8,6 +8,8 @@ import static net.minecraft.init.Items.*;
 import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 
+import java.util.List;
+
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.integration.nei.NEIAlfheimConfig;
@@ -27,6 +29,14 @@ import vazkii.botania.common.block.tile.mana.TilePool;
 
 public class AlfheimRecipes {
 	
+	public static IManaInfusionRecipe recipeElvorium;
+	public static IManaInfusionRecipe recipeMuspelheimEssence;
+	public static IManaInfusionRecipe recipeNiflheimEssence;
+	public static IManaInfusionRecipe recipeTerrasteel;
+	public static IManaInfusionRecipe recipeMauftrium;
+	public static IManaInfusionRecipe recipeManaStone;
+	public static IManaInfusionRecipe recipeManaStoneGreater;
+	
 	public static IRecipe recipeAlfheimPortal;
 	public static IRecipe recipeEmentalHelmet;
 	public static IRecipe recipeEmentalChestplate;
@@ -36,35 +46,30 @@ public class AlfheimRecipes {
 	public static IRecipe recipeElvoriumChestplate;
 	public static IRecipe recipeElvoriumLeggings;
 	public static IRecipe recipeElvoriumBoots;
-	public static IRecipe recipeElfFirePendant;
-	public static IRecipe recipeElfIcePendant;
-	public static IRecipe recipeManaInfusionCore;
-	public static IRecipe recipeManaInfuser;
-	public static IRecipe recipeMuspelheimPowerIngot;
-	public static IRecipe recipeNiflheimPowerIngot;
-
-	public static RecipePureDaisy recipeDreamwood;
+	public static IRecipe recipeFurnace;
 	public static IRecipe recipeGlowstone;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
-	
-	public static RecipeElvenTrade recipeInterdimensional;
-	
-	public static IManaInfusionRecipe recipeElvorium;
-	public static IManaInfusionRecipe recipeMuspelheimEssence;
-	public static IManaInfusionRecipe recipeNiflheimEssence;
-	public static IManaInfusionRecipe recipeTerrasteel;
-	public static IManaInfusionRecipe recipeMauftrium;
-	public static IManaInfusionRecipe recipeManaStone;
-	public static IManaInfusionRecipe recipeManaStoneGreater;
-	public static RecipeRuneAltar recipeMuspelheimRune;
-	public static RecipeRuneAltar recipeNiflheimRune;
-	public static RecipeRuneAltar recipeRealityRune;
 	public static IRecipe recipeManaElvenRing;
 	public static IRecipe recipeManaElvenRingGreater1;
 	public static IRecipe recipeManaElvenRingGreater2;
+	public static IRecipe recipeManaInfusionCore;
+	public static IRecipe recipeManaInfuser;
+	public static IRecipe recipeMuspelheimPendant;
+	public static IRecipe recipeMuspelheimPowerIngot;
 	public static IRecipe recipeMuspelheimRod;
+	public static IRecipe recipeNiflheimPendant;
+	public static IRecipe recipeNiflheimPowerIngot;
 	public static IRecipe recipeNiflheimRod;
+	public static IRecipe recipeSword;
+
+	public static RecipeElvenTrade recipeInterdimensional;
+	
+	public static RecipePureDaisy recipeDreamwood;
+	
+	public static RecipeRuneAltar recipeMuspelheimRune;
+	public static RecipeRuneAltar recipeNiflheimRune;
+	public static RecipeRuneAltar recipeRealityRune;
 	
 	public static void init() {
 		registerCraftingRecipes();
@@ -149,7 +154,7 @@ public class AlfheimRecipes {
 			'R', new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune),
 			'P', lavaPendant
 		});
-		recipeElfFirePendant = BotaniaAPI.getLatestAddedRecipe();
+		recipeMuspelheimPendant = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapedRecipe(new ItemStack(elfIcePendant),
 			new Object[] {" N ", "NPN", "RN ",
@@ -157,7 +162,7 @@ public class AlfheimRecipes {
 			'R', new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune),
 			'P', icePendant
 		});
-		recipeElfIcePendant = BotaniaAPI.getLatestAddedRecipe();
+		recipeNiflheimPendant = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapedRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 			new Object[] {"PGP", "GDG", "PGP",
@@ -239,17 +244,15 @@ public class AlfheimRecipes {
 			new Object[] {"SSS", "S S", "SSS",
 			'S', livingcobble,
 		});
+		recipeFurnace = BotaniaAPI.getLatestAddedRecipe();
 		
 		// IDK whether this is good source of glowstone or not
-		if (AlfheimCore.enableElvenStory) {
-			addShapedRecipe(new ItemStack(glowstone_dust),
-			
-				new Object[] {"LLL", "LDL", "LLL",
-				'L', dreamLeaves,
-				'D', new ItemStack(manaResource, 1, 9)		// Dragonstone
-			});
-			recipeGlowstone = BotaniaAPI.getLatestAddedRecipe(); 
-		}
+		addShapedRecipe(new ItemStack(glowstone_dust),
+			new Object[] {"LLL", "LDL", "LLL",
+			'L', dreamLeaves,
+			'D', new ItemStack(manaResource, 1, 9)		// Dragonstone
+		});
+		recipeGlowstone = BotaniaAPI.getLatestAddedRecipe(); 
 		
 		addShapedRecipe(new ItemStack(livingrockPickaxe),
 			new Object[] {"LLL", " S ", " S ",
@@ -296,6 +299,7 @@ public class AlfheimRecipes {
 			'R', new ItemStack(elvenResource, 1, ElvenResourcesMetas.PrimalRune),
 			'S', new ItemStack(manaResource, 1, 3)
 		});
+		recipeSword = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapedRecipe(new ItemStack(rod, 1, 0),
 			new Object[] {" MR", " BM", "B  ",

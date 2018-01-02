@@ -49,8 +49,8 @@ public class AlfheimCategory {
 	public static LexiconEntry essences;
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elemSet;
-	public static LexiconEntry advMana;// Managems and Manarings
-	public static LexiconEntry ruling;	// Use power of other worlds (new pendants and rods)
+	public static LexiconEntry advMana;
+	public static LexiconEntry ruling;
 	public static LexiconEntry reality;// Control all the elements
 
 	public static LexiconEntry races;		// All about races and wings
@@ -158,6 +158,23 @@ public class AlfheimCategory {
 								 new PageCraftingRecipe("6", ringRecipes))
 				.setIcon(new ItemStack(AlfheimItems.manaStone));
 		
+		ruling	= new BLexiconEntry("ruling", categoryAlfheim);
+		List<IRecipe> rodRecipes = new ArrayList();
+		powerRecipes.add(AlfheimRecipes.recipeMuspelheimRod);
+		powerRecipes.add(AlfheimRecipes.recipeNiflheimRod);
+		List<IRecipe> amuletRecipes = new ArrayList();
+		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
+		powerRecipes.add(AlfheimRecipes.recipeNiflheimPendant);
+		ruling	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"), new PageText("1"),
+								 new PageCraftingRecipe("2", rodRecipes),
+								 new PageText("3"), new PageCraftingRecipe("4", amuletRecipes))
+				.setIcon(new ItemStack(AlfheimItems.rod));
 		
+		reality	= new BLexiconEntry("reality", categoryAlfheim);
+		reality	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"), new PageText("1"),
+								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
+				.setIcon(new ItemStack(AlfheimItems.realitySword));
 	}
 }
