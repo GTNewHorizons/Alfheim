@@ -1,7 +1,5 @@
 package alfheim.common.event;
 
-import com.sun.javafx.geom.transform.BaseTransform.Degree;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
@@ -22,7 +20,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class CommonEventHandler {

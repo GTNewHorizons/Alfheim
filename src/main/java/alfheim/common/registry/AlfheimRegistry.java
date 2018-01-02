@@ -2,17 +2,17 @@ package alfheim.common.registry;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.client.render.ASJShaderHelper;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
-import alfheim.common.world.dim.gen.WorldGenAlfheim;
+import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 
 public class AlfheimRegistry {
 	
@@ -20,6 +20,7 @@ public class AlfheimRegistry {
 	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 7, 5, 2}, 20);
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
+	public static final MultiblockSet elvenPortalMultiblock = AlfheimPortalTileEntity.makeMultiblockSet();
 	
 	public static void preInit() {
 		registerEntities();
@@ -36,7 +37,7 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerTileEntities() {
-		GameRegistry.registerTileEntity(ManaInfuserTileEntity.class, "ManaInfuser");
 		GameRegistry.registerTileEntity(AlfheimPortalTileEntity.class, "AlfheimPortal");
+		GameRegistry.registerTileEntity(ManaInfuserTileEntity.class, "ManaInfuser");
 	}
 }

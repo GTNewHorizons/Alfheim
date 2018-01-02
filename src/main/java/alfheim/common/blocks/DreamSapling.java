@@ -5,7 +5,7 @@ import java.util.Random;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.world.dim.gen.structure.DreamsTreeStructure;
+import alfheim.common.world.dim.alfheim.gen.structure.DreamsTreeStructure;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
@@ -46,7 +46,7 @@ public class DreamSapling extends BlockBush implements IGrowable {
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
 		int l = world.getBlockMetadata(x, y, z) & 7;
 		world.setBlock(x, y, z, Blocks.air, 0, 4);
-		if (!(new DreamsTreeStructure()).generate(world, rand, x, y, z, AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0)) {
+		if (!(new DreamsTreeStructure()).generate(world, rand, x, y, z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0)) {
 			world.setBlock(x, y, z, this, l, 4);
 		}
 	}

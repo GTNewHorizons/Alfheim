@@ -1,6 +1,6 @@
 //Schematic to java Structure by jajo_11 | inspired by "MITHION'S .SCHEMATIC TO JAVA CONVERTINGTOOL"
 
-package alfheim.common.world.dim.gen.structure;
+package alfheim.common.world.dim.alfheim.gen.structure;
 
 import java.util.Random;
 

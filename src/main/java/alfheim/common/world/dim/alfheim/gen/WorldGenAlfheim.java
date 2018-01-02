@@ -1,22 +1,18 @@
-package alfheim.common.world.dim.gen;
+package alfheim.common.world.dim.alfheim.gen;
 
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.Constants;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
-import alfheim.common.world.dim.gen.structure.ArenaStructure;
-import alfheim.common.world.dim.gen.structure.DreamsTreeStructure;
-import alfheim.common.world.dim.gen.structure.SpawnpointStructure;
+import alfheim.common.world.dim.alfheim.gen.structure.ArenaStructure;
+import alfheim.common.world.dim.alfheim.gen.structure.DreamsTreeStructure;
+import alfheim.common.world.dim.alfheim.gen.structure.SpawnpointStructure;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import sun.security.provider.ParameterCache;
 import vazkii.botania.common.block.BlockModFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
@@ -139,7 +135,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (rand.nextInt(10) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new DreamsTreeStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
+			(new DreamsTreeStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
 		}
 	}
 	

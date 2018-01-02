@@ -1,21 +1,17 @@
 package alfheim.common.blocks.tileentity;
 
 import java.util.List;
-import java.util.Vector;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.crafting.IManaInfusionRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
 import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.registry.AlfheimItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.api.lexicon.multiblock.Multiblock;
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
@@ -26,11 +22,8 @@ import vazkii.botania.api.mana.spark.SparkHelper;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
-import vazkii.botania.common.block.decor.quartz.BlockSpecialQuartz;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.block.tile.mana.TilePool;
-import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 

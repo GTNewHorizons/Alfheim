@@ -1,22 +1,22 @@
 package alfheim.common.crafting;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import alfheim.common.registry.AlfheimItems;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-import vazkii.botania.common.block.tile.mana.TilePool;
-import vazkii.botania.common.item.ModItems;
 
 public class ManaInfusionRecipies {
 	
-	public static Vector<IManaInfusionRecipe> recipes = new Vector<IManaInfusionRecipe>();
+	public static List<IManaInfusionRecipe> recipes = new ArrayList<IManaInfusionRecipe>();
 
-	public static void addRecipe(IManaInfusionRecipe rec) {
+	public static IManaInfusionRecipe addRecipe(IManaInfusionRecipe rec) {
 		recipes.add(rec);
+		return rec;
 	}
 	
-	public static void addRecipe(ItemStack result, int mana, ItemStack... ingredients) {
-		recipes.add(new IManaInfusionRecipe(mana, result, ingredients));
+	public static IManaInfusionRecipe addRecipe(ItemStack result, int mana, ItemStack... ingredients) {
+		IManaInfusionRecipe rec = new IManaInfusionRecipe(mana, result, ingredients);
+		recipes.add(rec);
+		return rec;
 	}
 }

@@ -1,4 +1,4 @@
-package alfheim.common.world.dim.gen;
+package alfheim.common.world.dim.alfheim.gen;
 
 import java.util.Random;
 
@@ -135,9 +135,9 @@ public class BiomeGenAlfheim extends BiomeGenBase {
 							blocks[index] = fillerBlock;
 							metas[index] = fillerMeta;
 
-							if (currentFillerDepth == 0 && fillerBlock == Blocks.sand) {
+							if (currentFillerDepth == 0 && fillerBlock == AlfheimBlocks.elvenSand) {
 								currentFillerDepth = rand.nextInt(4) + Math.max(0, y - (seaLevel - 1));
-								fillerBlock = Blocks.sandstone;
+								fillerBlock = Blocks.sandstone; // TODO add own sandstone
 								fillerMeta = 0;
 							}
 						}

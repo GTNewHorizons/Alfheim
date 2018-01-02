@@ -6,15 +6,15 @@ import java.util.Random;
 
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
-import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.world.dim.gen.BiomeGenAlfheim;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -121,8 +121,8 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 								else if(k2 * 8 + l2 < 64) 
 									b[j3 += short1] = Blocks.water;
 								
-								else if(k2 * 8 + l2 < b0) 
-									b[j3 += short1] = AlfheimBlocks.elvenGrass;
+								/*else if(k2 * 8 + l2 < b0) 
+									b[j3 += short1] = AlfheimBlocks.elvenGrass;*/
 								
 								else 
 									b[j3 += short1] = null;
@@ -177,7 +177,7 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 								b0 = 0;
 								block1 = ModBlocks.livingrock;
 							}
-							else if(l1 >= 59 && l1 <= 64) {
+							else if(l1 >= 59 && l1 <= 64 + 1) {
 								block = b.topBlock;
 								b0 = (byte)(b.field_150604_aj & 255);
 								block1 = b.fillerBlock;
@@ -355,13 +355,21 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 
 	@Override
 	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {
+		BlockFalling.fallInstantly = true;
 		int var4 = par2 * 16;
 		int var5 = par3 * 16;
 		BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
+		this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
 		long p1 = this.rand.nextLong() / 2L * 2L + 1L;
 		long j1 = this.rand.nextLong() / 2L * 2L + 1L;
+		
 		this.rand.setSeed(this.worldObj.getSeed());
 		this.rand.setSeed((long)par2 * p1 + (long)par3 * j1 ^ this.worldObj.getSeed());
+		
+		//new BiomeDecoratorAlfheim().decorate(worldObj, rand, var4, var5);
+		
+		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biome, var4 + 8, var5 + 8, 16, 16, this.rand);
+		BlockFalling.fallInstantly = false;
 	}
 
 	@Override

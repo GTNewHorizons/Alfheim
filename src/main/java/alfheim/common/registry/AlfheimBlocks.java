@@ -18,17 +18,15 @@ import alfheim.common.blocks.ManaInfuser;
 import alfheim.common.blocks.PoisonIce;
 import alfheim.common.blocks.RedFlame;
 import alfheim.common.items.ItemBlockElvenOres;
-import clashsoft.cslib.minecraft.block.CSBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 public class AlfheimBlocks {
 	
 	public static Block alfheimPortal = new AlfheimPortal();
 	public static Block dreamLeaves = new DreamLeaves();
-	public static Block dreamLog = new DreamLog();
+	public static Block dreamlog = new DreamLog();
 	public static Block dreamSapling = new DreamSapling();
 	// Why I made this???
 	// public static Block elvenGlass = new BlockPattern(Constants.MODID, Material.glass, "ElvenGlass", AlfheimCore.alfheimTab, 0, 255, 0.1F, null, 0, 30, soundTypeGlass, false, false);
@@ -56,7 +54,7 @@ public class AlfheimBlocks {
 		register(livingcobble);
 		register(elvenGrass);
 		register(elvenSand);
-		register(dreamLog);
+		register(dreamlog);
 		register(dreamLeaves);
 		register(dreamSapling);
 		register(poisonIce);

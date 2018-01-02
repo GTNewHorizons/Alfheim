@@ -9,6 +9,7 @@ import com.google.common.base.Function;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.entity.EnumRace;
+import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,7 +87,7 @@ public class AlfheimPortalTileEntity extends TileMod {
 		for (int[] p : POOL_POSITIONS)
 			mb.addComponent(-p[0], p[1] + 1, -p[2], ModBlocks.pool, 0);
 
-		mb.addComponent(0, 1, 0, ModBlocks.alfPortal, 0);
+		mb.addComponent(0, 1, 0, AlfheimBlocks.alfheimPortal, 0);
 		mb.setRenderOffset(0, -1, 0);
 
 		return mb.makeSet();

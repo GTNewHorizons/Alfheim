@@ -11,7 +11,7 @@ public class WorldProviderAlfheim extends WorldProvider {
 
     @Override
     public void registerWorldChunkManager() {
-        this.worldChunkMgr = new WorldChunkManagerHell(DimensionUtil.alfheimBiome, 0.5F);
+        this.worldChunkMgr = new WorldChunkManagerAlfheim(this.worldObj);
         this.dimensionId = AlfheimConfig.dimensionIDAlfheim;
         isHellWorld = false;
     }
