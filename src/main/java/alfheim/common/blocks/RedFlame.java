@@ -61,6 +61,7 @@ public class RedFlame extends BlockFire {
 			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant) return;
 		}
 		entity.setFire(200);
+		entity.setInWeb();
 	}
 
 	public void tryCatchFire(World world, int x, int y, int z, int side, Random rand, int meta, ForgeDirection face) {

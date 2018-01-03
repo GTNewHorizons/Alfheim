@@ -22,6 +22,7 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -44,7 +45,7 @@ public class ClientEventHandler {
 		if (player.getActivePotionEffect(Potion.invisibility) != null) return;
 		if (AlfheimCore.enableElvenStory) RenderWings.render(e, player);
 		
-		if (player.getCommandSenderName().equals("AlexSocol")) ClientOnEvents.onAuthorRendered(e);
+		ClientOnEvents.onContributorsRendered(e);
 	}
 	
 	@SubscribeEvent
@@ -57,5 +58,6 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public void onGUIOpened(GuiOpenEvent e) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) ClientOnEvents.onGameOver((GuiGameOver) e.gui);
+		
 	}
 }

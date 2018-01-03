@@ -29,7 +29,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.potion.Potion;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
@@ -630,5 +632,10 @@ public class ASJUtilities {
 				block.getMaterial() == Material.water	||
 				block.getMaterial() == Material.leaves	||
 				block.getMaterial() == Material.lava;
+	}
+
+	public static void sendToAllOnline(String message) {
+		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+        for (EntityPlayer online : list) online.addChatMessage(new ChatComponentText(message));
 	}
 }

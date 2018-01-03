@@ -137,7 +137,7 @@ public class BiomeGenAlfheim extends BiomeGenBase {
 
 							if (currentFillerDepth == 0 && fillerBlock == AlfheimBlocks.elvenSand) {
 								currentFillerDepth = rand.nextInt(4) + Math.max(0, y - (seaLevel - 1));
-								fillerBlock = Blocks.sandstone; // TODO add own sandstone
+								fillerBlock = ModBlocks.livingrock;
 								fillerMeta = 0;
 							}
 						}

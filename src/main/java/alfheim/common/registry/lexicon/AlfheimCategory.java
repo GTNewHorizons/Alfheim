@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alfheim.AlfheimCore;
+import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
 import alfheim.common.crafting.PageManaInfusorRecipe;
 import alfheim.common.crafting.PagePureDaisyRecipe;
 import alfheim.common.registry.AlfheimBlocks;
@@ -32,7 +33,6 @@ public class AlfheimCategory {
 	public static final KnowledgeType kt = (AlfheimCore.enableElvenStory) ? BotaniaAPI.basicKnowledge : BotaniaAPI.elvenKnowledge;
 	
 	public static LexiconCategory categoryAlfheim;
-	public static LexiconCategory categoryElvenStory;
 
 	/** Lore alfheim page */
 	public static LexiconEntry alfheim;
@@ -51,13 +51,12 @@ public class AlfheimCategory {
 	public static LexiconEntry elemSet;
 	public static LexiconEntry advMana;
 	public static LexiconEntry ruling;
-	public static LexiconEntry reality;// Control all the elements
+	public static LexiconEntry reality;
 
 	public static LexiconEntry races;		// All about races and wings
 	
 	public static void init() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("alfheim", 5));
-		BotaniaAPI.addCategory(categoryElvenStory = new BLexiconCategory("elvenstory", 5));
 		
 		alfheim	= new BLexiconEntry("alfheim", categoryAlfheim);
 		alfheim	.setPriority().setKnowledgeType(kt)
@@ -78,12 +77,13 @@ public class AlfheimCategory {
 		
 		worldgen= new BLexiconEntry("worldgen", categoryAlfheim);
 		worldgen.setKnowledgeType(kt)
-				.setLexiconPages(new PageText(AlfheimCore.enableElvenStory ? "0es" : "0"),
+				.setLexiconPages(new PageText("0"),
 								 new PagePureDaisyRecipe("1", AlfheimRecipes.recipeDreamwood),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeGlowstone),
 								 new PageText("3"),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeLivingcobble),
-								 new PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe))
+								 new PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe),
+								 new PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace))
 				.setIcon(new ItemStack(AlfheimBlocks.dreamLeaves));
 		
 		ores	= new BLexiconEntry("ores", categoryAlfheim);
@@ -101,8 +101,8 @@ public class AlfheimCategory {
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeManaInfusionCore),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeManaInfuser),
-								 new PageText("4"))
-								 //new PageMultiblock("5", ManaInfuserTileEntity.makeMultiblockSet())) // TODO fix this fucking crash!!! ManaInfuser in multiblock is null (SHUYA-LI, BLYAT?!)
+								 new PageText("4"),
+								 new PageMultiblock("5", ManaInfuserTileEntity.makeMultiblockSet()))
 				.setIcon(new ItemStack(AlfheimBlocks.manaInfuser));
 		
 		elvorium= new BLexiconEntry("elvorium", categoryAlfheim);
@@ -134,7 +134,7 @@ public class AlfheimCategory {
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeElvoriumLeggings),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeElvoriumBoots))
-				.setIcon(new ItemStack(AlfheimItems.elementalHelmet));
+				.setIcon(new ItemStack(AlfheimItems.elvoriumHelmet));
 		
 		elemSet	= new BLexiconEntry("elemSet", categoryAlfheim);
 		elemSet	.setKnowledgeType(kt)
@@ -147,8 +147,8 @@ public class AlfheimCategory {
 		
 		advMana	= new BLexiconEntry("advMana", categoryAlfheim);
 		List<IRecipe> ringRecipes = new ArrayList();
-		powerRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater1);
-		powerRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater2);
+		ringRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater1);
+		ringRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater2);
 		advMana	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),
@@ -160,11 +160,11 @@ public class AlfheimCategory {
 		
 		ruling	= new BLexiconEntry("ruling", categoryAlfheim);
 		List<IRecipe> rodRecipes = new ArrayList();
-		powerRecipes.add(AlfheimRecipes.recipeMuspelheimRod);
-		powerRecipes.add(AlfheimRecipes.recipeNiflheimRod);
+		rodRecipes.add(AlfheimRecipes.recipeMuspelheimRod);
+		rodRecipes.add(AlfheimRecipes.recipeNiflheimRod);
 		List<IRecipe> amuletRecipes = new ArrayList();
-		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
-		powerRecipes.add(AlfheimRecipes.recipeNiflheimPendant);
+		amuletRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
+		amuletRecipes.add(AlfheimRecipes.recipeNiflheimPendant);
 		ruling	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", rodRecipes),
@@ -176,5 +176,13 @@ public class AlfheimCategory {
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
 				.setIcon(new ItemStack(AlfheimItems.realitySword));
+		
+		if (AlfheimCore.enableElvenStory) addElvenStory();
+	}
+	
+	private static void addElvenStory() {
+		races	= new BLexiconEntry("races", categoryAlfheim);
+		races	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
+				.setLexiconPages(new PageText("0"));
 	}
 }

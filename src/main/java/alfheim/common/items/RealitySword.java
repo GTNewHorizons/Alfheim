@@ -1,5 +1,6 @@
 package alfheim.common.items;
 
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -7,36 +8,34 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRegistry;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class RealitySword extends ItemSword implements IManaUsingItem {
 
@@ -62,6 +61,7 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 		if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
     		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
 		return textures[stack.stackTagCompound.getInteger(TAGELEMENT)];
 	}
@@ -83,7 +83,7 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
         	if (stack.stackTagCompound.getInteger(TAGELEMENT) == 5) return stack;
         	if (merge(player.getCommandSenderName(), stack.getDisplayName()).equals("6BC74E0C93964462C7DA1C1EA29E1A95FFC1A89FECE0E6B15C0D0380C492D99A")) {
         		stack.stackTagCompound.setInteger(TAGELEMENT, 5);
-        		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", ""));
+        		stack.setStackDisplayName(StatCollector.translateToLocal("item.RealitySword.nameZ"));
         		return stack;
         	}
         	
@@ -138,12 +138,49 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
     		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
     		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
 		}
-		if (player instanceof EntityPlayer && (0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5)) {
-			if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) player, 1, !world.isRemote)) {
-				stack.stackTagCompound.setInteger(TAGELEMENT, 0);
-        		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
+		
+		if (world.isRemote) return;
+		
+		boolean flag = stack.stackTagCompound.getInteger(TAGELEMENT) == 5;
+		if (player instanceof EntityPlayer) {
+			if (0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5) {
+				if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) player, 1, !world.isRemote)) {
+					stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+	        		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
+				}
 			}
-		}	
+			
+			if (flag && !player.getCommandSenderName().equals("AlexSocol")) {
+				world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack.copy()));
+				((EntityPlayer) player).inventory.consumeInventoryItem(AlfheimItems.realitySword);
+				((EntityPlayer) player).setHealth(0);
+	            ((EntityPlayer) player).onDeath(DamageSource.outOfWorld);
+	            ASJUtilities.sendToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName())); 
+			}
+		} else if (flag && player instanceof EntityLivingBase) {
+			world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack.copy()));
+            stack.stackSize = 0;
+            
+			((EntityLivingBase) player).setHealth(0);
+			
+			try {
+				Method getDeathSound = EntityLivingBase.class.getClass().getDeclaredMethod("getDeathSound");
+				getDeathSound.setAccessible(true);
+				Method getSoundVolume = EntityLivingBase.class.getClass().getDeclaredMethod("getSoundVolume");
+				getSoundVolume.setAccessible(true);
+				Method getSoundPitch = EntityLivingBase.class.getClass().getDeclaredMethod("getSoundPitch");
+				getSoundPitch.setAccessible(true);
+				String s = (String) getDeathSound.invoke(((EntityLivingBase) player));
+				
+	            if (s != null) {
+	            	((EntityLivingBase) player).playSound(s, (Float) getSoundVolume.invoke(((EntityLivingBase) player)), (Float) getSoundPitch.invoke(((EntityLivingBase) player)));
+	            }
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+			
+            ((EntityLivingBase) player).onDeath(DamageSource.outOfWorld);
+		}
 	}
 	
 	@Override
@@ -151,10 +188,17 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
         if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
     		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
         
         int elem = stack.stackTagCompound.getInteger(TAGELEMENT);
-        switch (elem) {
+        useAbility(elem, attacker, target);
+        
+        return super.hitEntity(stack, target, attacker);
+    }
+	
+	private void useAbility(int i, EntityLivingBase attacker, EntityLivingBase target) {
+		switch (i) {
 	        case 1: {
 	        	Vec3 vec = attacker.getLookVec();
 	        	target.motionX = vec.xCoord * 1.5;
@@ -164,28 +208,28 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	        case 2: target.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 1)); break;
 	        case 3: target.setFire(5); break;
 	        case 4: target.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1)); break;
-	        default: return false;
-        }
-        
-        return super.hitEntity(stack, target, attacker);
-    }
+	        case 5: {
+	        	for (int a = 1; a < 5; a++) useAbility(a, attacker, target);
+	        	break;
+	        }
+		}
+	}
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
 		if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
     		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
 		
 		int elem = stack.stackTagCompound.getInteger(TAGELEMENT);
 		if (elem == 5) {
 			list.add(StatCollector.translateToLocal("item.RealitySword.descZ"));
+			list.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("item.RealitySword.descDIE"));
 			return;
 		}
 		
-		// TODO fix item name so renaming can be accomplished
-		// stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name" + elem)));
-
 		if (1 > elem || elem > 4) list.add(StatCollector.translateToLocal("item.RealitySword.desc0"));
 		switch (elem) {
 	        case 1: list.add(StatCollector.translateToLocal("item.RealitySword.desc1")); break;

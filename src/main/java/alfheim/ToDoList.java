@@ -2,12 +2,5 @@ package alfheim;
 
 public class ToDoList {
 	
-	public static final String[] tasks = {
-			"ЗАДОКУМЕНТИРОВАТЬ ВСЁ В ЛЕКСИКУ!!!",
-			"Генерация эльфийского песка на пляжах",
-			"Добавить свой песчанник",
-			"setInWeb() для огня Муспельхейма",
-			"Фикс мультиблока манаинфузера (см. Tasks в Eclipse)"
-//			"Добавить эльфийское дерево",
-	};
+	public static final String[] tasks = {};
 }

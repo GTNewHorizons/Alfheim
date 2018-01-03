@@ -3,6 +3,7 @@ package alfheim.common.blocks.tileentity;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.blocks.ManaInfuser;
 import alfheim.common.crafting.IManaInfusionRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
 import alfheim.common.registry.AlfheimBlocks;
@@ -40,7 +41,7 @@ public class ManaInfuserTileEntity extends TileMod implements ISparkAttachable {
 
 	public static MultiblockSet makeMultiblockSet() {
 		Multiblock mb = new Multiblock();
-		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 4);
+		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], ModFluffBlocks.elfQuartz, 0);
 		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 2);
 		mb.addComponent(0, 0, 0, AlfheimBlocks.manaInfuser, 0);
 		mb.setRenderOffset(0, 1, 0);

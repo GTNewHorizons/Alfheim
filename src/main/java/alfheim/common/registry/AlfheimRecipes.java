@@ -288,7 +288,7 @@ public class AlfheimRecipes {
 			'C', new ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 			'D', new ItemStack(manaResource, 1, 9),		// Dragonstone
 			'I', new ItemStack(manaResource, 1, 7),		// Elementium
-			'R', rainbowRod,							// TODO seriously???
+			'R', rainbowRod,
 			'S', new ItemStack(livingrock, 1, 4),
 		});
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe();

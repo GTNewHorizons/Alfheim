@@ -1,75 +1,96 @@
 package alfheim.client.event;
 
-import static org.lwjgl.opengl.GL11.GL_BACK;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
-import static org.lwjgl.opengl.GL11.GL_GREATER;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glAlphaFunc;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glCullFace;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glScaled;
-import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.lang.reflect.Field;
+import java.util.Random;
+
+import org.lwjgl.opengl.GL11;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.Constants;
-import alfheim.client.registry.AflheimClientRegistry;
-import alfheim.client.render.ASJShaderHelper;
 import alfheim.common.utils.AlfheimConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.model.ModelBook;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderEnchantmentTable;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Post;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+import vazkii.botania.client.core.helper.ShaderHelper;
+import vazkii.botania.client.lib.LibResources;
+import vazkii.botania.client.render.entity.RenderBabylonWeapon;
+import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
+import vazkii.botania.common.item.relic.ItemKingKey;
 
 public class ClientOnEvents {
 
-	private static final IModelCustom sphere = AdvancedModelLoader.loadModel(new ResourceLocation(Constants.MODID, "model/sphere.obj"));
 	private static final ResourceLocation skin = new ResourceLocation(Constants.MODID, "textures/model/entity/AlexSocol.png");
-	
+    private static final ResourceLocation book = new ResourceLocation("botania:textures/model/lexica.png");
+    private static final ResourceLocation babylon = new ResourceLocation(LibResources.MISC_BABYLON); 
+    
 	static void onGameOver(GuiGameOver gui) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (Constants.DEV) return;
 		Field field_146347_a = gui.getClass().getDeclaredField("field_146347_a");
 		field_146347_a.setAccessible(true);
-		field_146347_a.setInt(gui, -AlfheimConfig.deathScreenAdditionalTime + 20);
+		field_146347_a.setInt(gui, -Math.abs(AlfheimConfig.deathScreenAdditionalTime) + 20);
 	}
 
-	static void onAuthorRendered(Post e) {
+	static void onContributorsRendered(Post e) {
 		EntityPlayer player = e.entityPlayer;
-		((AbstractClientPlayer) player).func_152121_a(Type.SKIN, skin);
-		
-		glPushMatrix();
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glAlphaFunc(GL_GREATER, 0);
-		glDisable(GL_TEXTURE_2D);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
-		glRotated((player.worldObj.getTotalWorldTime() / 10.0) % 360, 0, 1, 0);
-		glTranslated(0, 0.5, 0);
-		glScaled(1.25, 1.25, 1.25);
-		
-		//Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/shader/fireball.png"));
-		ASJShaderHelper.useShader(AflheimClientRegistry.sphere);
-		sphere.renderAll();
-        ASJShaderHelper.releaseShader();
-        
-		glEnable(GL_TEXTURE_2D);
-		glDisable(GL_BLEND);
-		glPopMatrix();
+		if (player.getCommandSenderName().equals("AlexSocol")) {
+			((AbstractClientPlayer) player).func_152121_a(Type.SKIN, skin);
+			
+			GL11.glPushMatrix();
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glDisable(GL11.GL_CULL_FACE);
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+
+			Minecraft.getMinecraft().renderEngine.bindTexture(babylon);
+
+			GL11.glRotated(-90, 1, 0, 0);
+			GL11.glTranslated(0, -0.5, 0.2);
+			GL11.glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2) % 360, 0, 1, 0);
+			GL11.glScaled(2, 2, 2);
+
+			ShaderHelper.useShader(ShaderHelper.halo);
+			Tessellator tes = Tessellator.instance;
+			tes.startDrawingQuads();
+			tes.addVertexWithUV(-1, 0, -1, 0, 0);
+			tes.addVertexWithUV(-1, 0, 1, 0, 1);
+			tes.addVertexWithUV(1, 0, 1, 1, 1);
+			tes.addVertexWithUV(1, 0, -1, 1, 0);
+			tes.draw();
+			ShaderHelper.releaseShader();
+
+			GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glShadeModel(GL11.GL_FLAT);
+			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glPopMatrix();
+		}
+		if (player.getCommandSenderName().equals("DmitryWS")) {
+			glPushMatrix();
+			glEnable(GL_CULL_FACE);
+			float t = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + e.partialRenderTick;
+			glTranslated(0, -(0.9 + Math.sin(t / 20) * 0.025), 0);
+			glRotated(180, 1, 0, 0);
+			glRotated(-90, 0, 1, 0);
+			glRotated(60, 0, 0, 1);
+			Minecraft.getMinecraft().renderEngine.bindTexture(book);
+			ModelBook model = new ModelBook();
+			model.render((Entity)null, 0, 0, 0.95F, 1, 0.0F, 0.0625F);
+			glPopMatrix();
+		}
 	}
 }

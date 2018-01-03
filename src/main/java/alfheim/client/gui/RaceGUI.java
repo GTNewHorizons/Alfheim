@@ -1,8 +1,9 @@
 package alfheim.client.gui;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
-import alfheim.AlfheimCore;
+import java.lang.reflect.Field;
+
 import alfheim.Constants;
 import alfheim.client.entity.render.RenderWings;
 import alfheim.common.entity.EnumRace;
@@ -10,8 +11,9 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -31,13 +33,13 @@ public class RaceGUI extends Gui {
 	public void onOverlayRendering(RenderGameOverlayEvent event) {
 		if (event.isCancelable() || event.type != ElementType.CROSSHAIRS || EnumRace.fromDouble(mc.thePlayer.getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) return;
 		
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthMask(false);
-		GL11.glDisable(GL11.GL_ALPHA_TEST);
-		GL11.glScaled(0.1, 0.1, 1);
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DEPTH_TEST);
+		glDepthMask(false);
+		glDisable(GL_ALPHA_TEST);
+		glScaled(0.1, 0.1, 1);
 		
 		this.mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(this.mc.thePlayer));
 		this.drawTexturedModalRect(event.resolution.getScaledWidth() * 5 + (182 * 5) + 32, event.resolution.getScaledHeight() * 10 - 256 - 32, 0, 0, 256, 256);
@@ -47,8 +49,8 @@ public class RaceGUI extends Gui {
 
 		{
 			double mod = flightTime / Constants.FLIGHT.getDefaultValue();
-			GL11.glScaled(1152, 288, 1);
-			GL11.glTranslated(0.02, 0.02, 0);
+			glScaled(1152, 288, 1);
+			glTranslated(0.02, 0.02, 0);
 	        Tessellator tessellator = Tessellator.instance;
 	        tessellator.startDrawingQuads();
 	        
@@ -95,10 +97,10 @@ public class RaceGUI extends Gui {
 	        tessellator.draw();
 		}
 		
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		GL11.glDepthMask(true);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glPopMatrix();
+		glEnable(GL_ALPHA_TEST);
+		glDepthMask(true);
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+		glPopMatrix();
 	}
 }

@@ -1,9 +1,16 @@
+# tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
 tile.DragonstoneElvenOre.name=Dragonstone Ore
+tile.DreamLeaves.name=Dreamwood Leaves
+tile.DreamLog.name=Dreamwood Log
+tile.DreamSapling.name=Dreamwood Sapling
 tile.ElementiumElvenOre.name=Elementium Ore
+tile.ElvenGrass.name=Elven Grass
+tile.ElvenSand.name=Elven Sand
 tile.ElvoriumBlock.name=Block of Elvorium
 tile.GoldElvenOre.name=Gold Ore
 tile.IffesalElvenOre.name=Iffesal Ore
+tile.LivingCobble.name=Livingrock Cobblestone
 tile.ManaInfuser.name=Mana Infuser
 tile.MauftriumBlock.name=Block of Mauftrium
 tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
@@ -12,10 +19,29 @@ tile.QuartzElvenOre.name=Elven Quartz Ore
 
 ###############################################################################################################################
 
+# item..name=
+item.CreativeReachPendant.name=Creative Reach Pendant
+item.botania:ElementalAirBoots.name=Elemental Boots of Air
+item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
+item.botania:ElementalEarthChestplate.name=Elemental Chestplate of Earth
+item.botania:ElementalWaterHelmet.name=Elemental Helmet of Water
+item.botania:ElementalWaterHelmetRevealing.name=Elemental Revealing Helmet of Water
+item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
+item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
+item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
+item.ElementalArmor.desc4=Affined like a fish (§bWaterbreathin§7 + §bNightvision§7)
+item.ElvoriumBoots.name=Elvorium Boots
+item.ElvoriumChestplate.name=Elvorium Chestplate
+item.ElvoriumHelmet.name=Elvorium Helmet
+item.ElvoriumHelmetRevealing.name=Elvorium Helmet Of Revealing
 item.ElvoriumIngot.name=Elvorium Ingot
+item.ElvoriumLeggings.name=Elvorium Leggings
 item.ElvoriumNugget.name=Elvorium Nugget
+item.botania:FirePendant.name=Pendant Of Muspelheim Protection
+item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
-item.InfusedDreamwoodTwig.name=Infused Dreamwood Twig
+item.InterdimensionalGatewayCore.name=Interdimensional Gateway Core
+item.LivingrockPickaxe.name=Livingrock Pickaxe
 item.ManaElvenRing.name=Elvorium Mana Ring
 item.ManaElvenRingGreater.name=Mauftrium Mana Ring
 item.ManaInfusionCore.name=Mana Infusion Core
@@ -40,6 +66,7 @@ item.RealitySword.name1= (§eAir§f)
 item.RealitySword.name2= (§aEarth§f)
 item.RealitySword.name3= (§cFire§f)
 item.RealitySword.name4= (§bWater§f)
+item.RealitySword.nameZ=Sword of Creator
 item.RealitySword.desc0=Sneak+rclick to attune to one of the elements.
 item.RealitySword.desc1=Adds knockback to target.
 item.RealitySword.desc2=Poisons target.
@@ -47,20 +74,7 @@ item.RealitySword.desc3=Sets target on fire.
 item.RealitySword.desc4=Blinds target.
 item.RealitySword.desc5=Requires §n10§r§7 §bmana§7/tick.
 item.RealitySword.descZ=You've got a power!
-
-item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
-item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
-item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
-item.ElementalArmor.desc4=Affined like a fish (§bWaterbreathin§7 + §bNightvision§7)
-item.ElementalBoots.name=Elemental Boots of Air
-item.ElementalLeggings.name=Elemental Leggings of Fire
-item.ElementalChestplate.name=Elemental Chestplate of Earth
-item.ElementalHelmet.name=Elemental Helmet of Water
-item.ElvoriumHelmet.name=Elvorium Helmet
-item.ElvoriumHelmetRevealing.name=Elvorium Helmet Of Revealing
-item.ElvoriumChestplate.name=Elvorium Chestplate
-item.ElvoriumLeggings.name=Elvorium Leggings
-item.ElvoriumBoots.name=Elvorium Boots
+item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
 
 ###############################################################################################################################
 
