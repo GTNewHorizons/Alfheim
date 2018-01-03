@@ -6,6 +6,7 @@ import java.util.Random;
 
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
+import alfheim.common.world.dim.alfheim.gen.MapGenCavesAlfheim;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -42,6 +43,7 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 	private double[] gen1, gen2, gen3, gen4;
 	private int[][] ia = new int[32][32];
 	private ArrayList<WorldGenerator> lights, village, dungeons, rareHouses;
+	private final MapGenCavesAlfheim caveGenerator = new MapGenCavesAlfheim();
 
 	public ChunkProviderAlfheim(World par1World, long par2) {
 		this.worldObj = par1World;
@@ -234,7 +236,7 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 		this.generate(par1, par2, ablock);
 		this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
 		this.replaceBlocksForBiome(par1, par2, ablock, abyte, this.biomesForGeneration);
-		//this.caveGenerator.func_151539_a(this, this.worldObj, par1, par2, ablock);
+		caveGenerator.generate(this, this.worldObj, par1, par2, ablock, abyte);
 		Chunk chunk = new Chunk(this.worldObj, ablock, abyte, par1, par2);
 		byte[] abyte1 = chunk.getBiomeArray();
 
