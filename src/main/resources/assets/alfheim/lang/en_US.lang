@@ -85,10 +85,32 @@ alfheim.armorset.elvorium.desc2=Vis discount: 20%
 alfheim.armorset.elvorium.desc3=Runic Shield +8
 
 itemGroup.Alfheim=Alfheim
+achievement.alfheim=Alfheim
+achievement.alfheim.desc=Enter Alfheim
 
 ###############################################################################################################################
 
 elvenstory.welcome0=Welcome to Alfheim - [Elven Story] Mode!
 elvenstory.welcome1=Please, select one of the following races using "/race"
-elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAIT SITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
+elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
 elvenstory.commands.race.usage=/race <RACE>
+
+race.SALAMANDER.name=SALAMANDER
+race.SYLPH.name=SYLPH
+race.CAITSITH.name=CAITSITH
+race.POOKA.name=POOKA
+race.GNOME.name=GNOME
+race.LEPRECHAUN.name=LEPRECHAUN
+race.SPRIGGAN.name=SPRIGGAN
+race.UNDINE.name=UNDINE
+race.IMP.name=IMP
+
+race.SALAMANDER.reverse=SALAMANDER
+race.SYLPH.reverse=SYLPH
+race.CAITSITH.reverse=CAITSITH
+race.POOKA.reverse=POOKA
+race.GNOME.reverse=GNOME
+race.LEPRECHAUN.reverse=LEPRECHAUN
+race.SPRIGGAN.reverse=SPRIGGAN
+race.UNDINE.reverse=UNDINE
+race.IMP.reverse=IMP

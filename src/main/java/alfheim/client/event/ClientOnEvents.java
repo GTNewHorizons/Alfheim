@@ -5,8 +5,6 @@ import static org.lwjgl.opengl.GL11.*;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.Constants;
@@ -51,18 +49,18 @@ public class ClientOnEvents {
 		if (player.getCommandSenderName().equals("AlexSocol")) {
 			((AbstractClientPlayer) player).func_152121_a(Type.SKIN, skin);
 			
-			GL11.glPushMatrix();
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			GL11.glShadeModel(GL11.GL_SMOOTH);
+			glPushMatrix();
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDisable(GL_CULL_FACE);
+			glShadeModel(GL_SMOOTH);
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(babylon);
 
-			GL11.glRotated(-90, 1, 0, 0);
-			GL11.glTranslated(0, -0.5, 0.2);
-			GL11.glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2) % 360, 0, 1, 0);
-			GL11.glScaled(2, 2, 2);
+			glRotated(-90, 1, 0, 0);
+			glTranslated(0, -0.5, 0.2);
+			glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2) % 360, 0, 1, 0);
+			glScaled(2, 2, 2);
 
 			ShaderHelper.useShader(ShaderHelper.halo);
 			Tessellator tes = Tessellator.instance;
@@ -74,10 +72,10 @@ public class ClientOnEvents {
 			tes.draw();
 			ShaderHelper.releaseShader();
 
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glShadeModel(GL11.GL_FLAT);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glPopMatrix();
+			glEnable(GL_LIGHTING);
+			glShadeModel(GL_FLAT);
+			glEnable(GL_CULL_FACE);
+			glPopMatrix();
 		}
 		if (player.getCommandSenderName().equals("DmitryWS")) {
 			glPushMatrix();

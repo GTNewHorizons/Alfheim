@@ -226,7 +226,6 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 		int elem = stack.stackTagCompound.getInteger(TAGELEMENT);
 		if (elem == 5) {
 			list.add(StatCollector.translateToLocal("item.RealitySword.descZ"));
-			list.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("item.RealitySword.descDIE"));
 			return;
 		}
 		

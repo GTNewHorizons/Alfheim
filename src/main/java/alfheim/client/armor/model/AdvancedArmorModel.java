@@ -2,17 +2,20 @@ package alfheim.client.armor.model;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityGiantZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 
 public abstract class AdvancedArmorModel extends ModelBiped {
 	public int color = -1;//Раскраска брони в цвет.
-	private boolean usingParachute;
 	public abstract void pre();//До всех частей.
 	public abstract void post();//После всех частей.
 	public abstract void partHead();//Часть: Голова.
@@ -34,6 +37,30 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		this.bipedRightLeg.showModel = false;
 		
 		GL11.glPushMatrix();
+		
+		{
+			if(entity instanceof EntityLivingBase) {
+				EntityLivingBase living = (EntityLivingBase) entity;
+				isSneak = living != null ? living.isSneaking() : false;
+				
+				ItemStack itemstack = living.getHeldItem();
+				heldItemRight = itemstack != null ? 1 : 0;
+
+				if(entity instanceof EntityPlayer) {
+					EntityPlayer player = (EntityPlayer) entity;
+
+					aimedBow = false;
+					if (itemstack != null && player.getItemInUseCount() > 0) {
+						EnumAction enumaction = itemstack.getItemUseAction();
+	
+						if (enumaction == EnumAction.block)
+							heldItemRight = 3;
+						else if(enumaction == EnumAction.bow)
+							aimedBow = true;
+					}
+				}
+			}
+		}
 		
 		if (entity instanceof EntityZombie || entity instanceof EntitySkeleton || entity instanceof EntityGiantZombie) {
 			float f6 = MathHelper.sin(onGround * (float)Math.PI);

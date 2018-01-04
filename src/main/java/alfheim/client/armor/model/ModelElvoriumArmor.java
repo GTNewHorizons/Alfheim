@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import alfheim.Constants;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;

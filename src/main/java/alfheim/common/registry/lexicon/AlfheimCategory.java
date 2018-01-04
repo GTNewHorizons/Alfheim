@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alfheim.AlfheimCore;
+import alfheim.Constants;
+import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
 import alfheim.common.crafting.PageManaInfusorRecipe;
 import alfheim.common.crafting.PagePureDaisyRecipe;
@@ -53,7 +55,9 @@ public class AlfheimCategory {
 	public static LexiconEntry ruling;
 	public static LexiconEntry reality;
 
-	public static LexiconEntry races;		// All about races and wings
+	// Elven Story information
+	public static LexiconEntry es;
+	public static LexiconEntry races;
 	
 	public static void init() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("alfheim", 5));
@@ -72,7 +76,7 @@ public class AlfheimCategory {
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
 								 new PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
-								 new PageMultiblock("6", AlfheimRegistry.elvenPortalMultiblock),
+								 new PageMultiblock("6", AlfheimPortalTileEntity.makeMultiblockSet()),
 								 new PageText("7"), new PageText("8"));
 		
 		worldgen= new BLexiconEntry("worldgen", categoryAlfheim);
@@ -181,8 +185,13 @@ public class AlfheimCategory {
 	}
 	
 	private static void addElvenStory() {
+		Constants.log("Registering ES Pages!");
+		es		= new BLexiconEntry("es", categoryAlfheim);
+		es		.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
+				.setLexiconPages(new PageText("0"));
+		
 		races	= new BLexiconEntry("races", categoryAlfheim);
 		races	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
-				.setLexiconPages(new PageText("0"));
+				.setLexiconPages(new PageText("0"), new PageText("1"));
 	}
 }

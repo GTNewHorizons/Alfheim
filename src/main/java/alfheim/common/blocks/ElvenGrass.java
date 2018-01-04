@@ -36,7 +36,6 @@ public class ElvenGrass extends Block implements IGrowable {
     public IIcon overlay;
     
     // why not...
-    @SideOnly(Side.CLIENT)
 	public static Block grassCrutch = new ElvenGrassCrutch();
     
     public ElvenGrass() {

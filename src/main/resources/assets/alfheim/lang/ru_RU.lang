@@ -85,10 +85,32 @@ alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
 itemGroup.Alfheim=Альфхейм
+achievement.alfheim=Альфхейм
+achievement.alfheim.desc=Попасть Альфхейм
 
 ###############################################################################################################################
 
 elvenstory.welcome0=Добро пожаловать в Альфхейм - Режим [Эльфийская История]!
 elvenstory.welcome1=Пожалуйста, выберите одну из следующих рас, используя команду "/race"
-elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТ ШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИН§r, §5ИМП§r
+elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИН§r, §5ИМП§r
 elvenstory.commands.race.usage=/race <РАСА>
+
+race.SALAMANDER.name=САЛАМАНДР
+race.SYLPH.name=СИЛЬФ
+race.CAITSITH.name=КАЙТШИ
+race.POOKA.name=ПАК
+race.GNOME.name=ГНОМ
+race.LEPRECHAUN.name=ЛЕПРЕКОН
+race.SPRIGGAN.name=СПРИГГАН
+race.UNDINE.name=УНДИН
+race.IMP.name=ИМП
+
+race.САЛАМАНДР.reverse=SALAMANDER
+race.СИЛЬФ.reverse=SYLPH
+race.КАЙТШИ.reverse=CAITSITH
+race.ПАК.reverse=POOKA
+race.ГНОМ.reverse=GNOME
+race.ЛЕПРЕКОН.reverse=LEPRECHAUN
+race.СПРИГГАН.reverse=SPRIGGAN
+race.УНДИН.reverse=UNDINE
+race.ИМП.reverse=IMP

@@ -1,15 +1,17 @@
 package alfheim.common.command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.Constants;
-import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
+import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 
 public class CommandRace extends CommandBase {
 
@@ -50,8 +52,11 @@ public class CommandRace extends CommandBase {
 
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
-		if (sender instanceof EntityPlayer && EnumRace.fromDouble(((EntityPlayer) sender).getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) 
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, "SALAMANDER", "SYLPH", "CAITSITH", "POOKA", "GNOME", "LEPRECHAUN", "SPRIGGAN", "UNDINE", "IMP") : null;
+		if (sender instanceof EntityPlayer && args.length == 1 && EnumRace.fromDouble(((EntityPlayer) sender).getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) {
+			String[] ss = new String[9];
+			for (int i = 0; i < ss.length; i++) ss[i] = EnumRace.fromDouble(i + 1).localize();
+			return getListOfStringsMatchingLastWord(args, ss);
+		}
 		return null;
     }
 }

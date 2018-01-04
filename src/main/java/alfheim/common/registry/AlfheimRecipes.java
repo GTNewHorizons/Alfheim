@@ -17,6 +17,8 @@ import alfheim.common.crafting.HelmRevealingAlfheimRecipe;
 import alfheim.common.crafting.IManaInfusionRecipe;
 import alfheim.common.crafting.ManaInfusionRecipies;
 import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -77,7 +79,7 @@ public class AlfheimRecipes {
 		registerSmeltingRecipes();
 		registerManaInfusionRecipes();
 		registerRecipies();
-		if (Constants.DEV) (new NEIAlfheimConfig()).loadConfig();
+		if (Constants.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
 	}
 
 	public static void registerCraftingRecipes() {

@@ -13,6 +13,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -70,6 +71,7 @@ public class ASJUtilities {
 	/**
 	 * This will automatically register icons from lists
 	 * */
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
     public void onTextureStitchEvent(TextureStitchEvent.Pre event) {
         switch (event.map.getTextureType()) {

@@ -1,6 +1,8 @@
 package elvenstory;
 
-@cpw.mods.fml.common.Mod(dependencies = "required-after:alfheim", modid = "elvenstory", name = "Elven Story", version = "$$$")
+import cpw.mods.fml.common.Loader;
+
+@cpw.mods.fml.common.Mod(dependencies = "required-after:Botania;required-after:alfheim", modid = "elvenstory", name = "Elven Story", version = "$$$")
 public class ElvenStoryCore {
 	
 	@cpw.mods.fml.common.Mod.EventHandler

@@ -3,11 +3,13 @@ package alfheim.common.entity;
 import alfheim.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 
 public enum EnumRace {
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
 	
 	public static EnumRace fromString(String name) {
+		name = unlocalize(name);
 		if (name.equalsIgnoreCase("SALAMANDER")) return SALAMANDER; 
 		if (name.equalsIgnoreCase("SYLPH")) return SYLPH; 
 		if (name.equalsIgnoreCase("CAITSITH")) return CAITSITH; 
@@ -40,6 +42,14 @@ public enum EnumRace {
 		if (this == ALV) return "ALV";
 		if (this == HUMAN) return "HUMAN";
 		return "";
+	}
+	
+	public String localize() {
+		return StatCollector.translateToLocal("race." + toString() + ".name");
+	}
+	
+	public static String unlocalize(String name) {
+		return StatCollector.translateToLocal("race." + name + ".reverse");
 	}
 	
 	public static EnumRace getRace(EntityPlayer player) {

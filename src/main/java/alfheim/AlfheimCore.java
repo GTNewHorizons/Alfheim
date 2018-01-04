@@ -14,6 +14,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLConstructionEvent;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -53,10 +54,11 @@ public class AlfheimCore {
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	enableElvenStory = Loader.isModLoaded("elvenstory");
+    	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
 		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
 		
-    	enableElvenStory = Loader.isModLoaded("elvenstory");
 		FMLCommonHandler.instance().bus().register(AlfheimCore.instance);
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		AlfheimConfig.syncConfig();

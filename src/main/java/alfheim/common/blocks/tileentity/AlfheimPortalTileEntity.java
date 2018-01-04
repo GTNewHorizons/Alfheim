@@ -39,18 +39,11 @@ public class AlfheimPortalTileEntity extends TileMod {
 	private static final int[][] AIR_POSITIONS = { { -1, 1, 0 }, { 0, 1, 0 }, { 1, 1, 0 }, { -1, 2, 0 }, { 0, 2, 0 }, { 1, 2, 0 }, { -1, 3, 0 }, { 0, 3, 0 }, { 1, 3, 0 } };
 
 	private static final String TAG_TICKS_OPEN = "ticksOpen";
-	private static final String TAG_TICKS_SINCE_LAST_ITEM = "ticksSinceLastItem";
-	private static final String TAG_STACK_COUNT = "stackCount";
-	private static final String TAG_STACK = "portalStack";
-	private static final String TAG_PORTAL_FLAG = "_elvenPortal";
 
 	private static final int activation = 75000;
 	private static final int idle = 2;
 
-	List<ItemStack> stacksIn = new ArrayList();
-
 	public int ticksOpen = 0;
-	int ticksSinceLastItem = 0;
 	private boolean closeNow = false;
 	private boolean hasUnloadedParts = false;
 
@@ -254,40 +247,21 @@ public class AlfheimPortalTileEntity extends TileMod {
 	@Override
 	public void writeToNBT(NBTTagCompound cmp) {
 		super.writeToNBT(cmp);
-
-		cmp.setInteger(TAG_STACK_COUNT, stacksIn.size());
-		int i = 0;
-		for (ItemStack stack : stacksIn) {
-			NBTTagCompound stackcmp = new NBTTagCompound();
-			stack.writeToNBT(stackcmp);
-			cmp.setTag(TAG_STACK + i, stackcmp);
-			i++;
-		}
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound cmp) {
 		super.readFromNBT(cmp);
-
-		int count = cmp.getInteger(TAG_STACK_COUNT);
-		stacksIn.clear();
-		for (int i = 0; i < count; i++) {
-			NBTTagCompound stackcmp = cmp.getCompoundTag(TAG_STACK + i);
-			ItemStack stack = ItemStack.loadItemStackFromNBT(stackcmp);
-			stacksIn.add(stack);
-		}
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound cmp) {
 		cmp.setInteger(TAG_TICKS_OPEN, ticksOpen);
-		cmp.setInteger(TAG_TICKS_SINCE_LAST_ITEM, ticksSinceLastItem);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound cmp) {
 		ticksOpen = cmp.getInteger(TAG_TICKS_OPEN);
-		ticksSinceLastItem = cmp.getInteger(TAG_TICKS_SINCE_LAST_ITEM);
 	}
 
 	private int getValidMetadata() {

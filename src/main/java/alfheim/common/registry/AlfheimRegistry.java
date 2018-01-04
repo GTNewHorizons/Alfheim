@@ -20,7 +20,6 @@ public class AlfheimRegistry {
 	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 7, 5, 2}, 20);
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
-	public static final MultiblockSet elvenPortalMultiblock = AlfheimPortalTileEntity.makeMultiblockSet();
 	
 	public static void preInit() {
 		registerEntities();
