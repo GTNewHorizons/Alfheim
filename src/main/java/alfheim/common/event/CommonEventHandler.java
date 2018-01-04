@@ -40,8 +40,7 @@ public class CommonEventHandler {
 			for (String task : ToDoList.tasks) e.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.BOLD + "> " + EnumChatFormatting.RESET.YELLOW + task));
 		}
 		
-		if (e.player.getCommandSenderName().equalsIgnoreCase("MagTemTenebrius")) ASJUtilities.sendToAllOnline('<' + e.player.getCommandSenderName() + '>' + " I like to suck dicks!"); 
-			if (AlfheimCore.enableElvenStory) {
+		if (AlfheimCore.enableElvenStory) {
 			if (e.player instanceof EntityPlayerMP) {
 				StatisticsFile stats = ((EntityPlayerMP) e.player).func_147099_x();
 				if (!stats.hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {

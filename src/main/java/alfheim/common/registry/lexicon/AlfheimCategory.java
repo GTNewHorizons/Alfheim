@@ -5,6 +5,7 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.blocks.ElvenOres;
 import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
 import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
 import alfheim.common.crafting.PageManaInfusorRecipe;
@@ -20,7 +21,9 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.lexicon.BLexiconCategory;
 import vazkii.botania.common.lexicon.BLexiconEntry;
@@ -94,6 +97,8 @@ public class AlfheimCategory {
 		ores	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
+		for (int i = 0; i < ((ElvenOres) AlfheimBlocks.elvenOres).names.length; i++) ores.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenOres, 1, i));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.IffesalDust), ores, 2);
 		
 		mobs	= new BLexiconEntry("mobs", categoryAlfheim);
 		mobs	.setKnowledgeType(kt)
@@ -114,6 +119,8 @@ public class AlfheimCategory {
 				.setLexiconPages(new PageText("0"),
 								 new PageManaInfusorRecipe("1", AlfheimRecipes.recipeElvorium))
 				.setIcon(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvoriumNugget), elvorium, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvoriumBlock), elvorium, 1);
 		
 		essences= new BLexiconEntry("essences", categoryAlfheim);
 		List<IRecipe> powerRecipes = new ArrayList();
@@ -130,6 +137,10 @@ public class AlfheimCategory {
 								 new PageText("9"), new PageRuneRecipe("10", runeRecipes),
 								 new PageText("11"), new PageText("12"), new PageRuneRecipe("13", AlfheimRecipes.recipeRealityRune))
 				.setIcon(new ItemStack(ModItems.manaResource, 1, 5));
+		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot));
+		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimRune));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.MauftriumNugget), essences, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.mauftriumBlock), essences, 1);
 		
 		elvenSet= new BLexiconEntry("elvenSet", categoryAlfheim);
 		elvenSet.setKnowledgeType(kt)

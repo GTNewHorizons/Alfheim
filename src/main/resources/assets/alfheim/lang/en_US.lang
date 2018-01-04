@@ -23,9 +23,9 @@ tile.QuartzElvenOre.name=Elven Quartz Ore
 item.CreativeReachPendant.name=Creative Reach Pendant
 item.botania:ElementalAirBoots.name=Elemental Boots of Air
 item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
-item.botania:ElementalEarthChestplate.name=Elemental Chestplate of Earth
-item.botania:ElementalWaterHelmet.name=Elemental Helmet of Water
-item.botania:ElementalWaterHelmetRevealing.name=Elemental Revealing Helmet of Water
+item.botania:ElementalEarthChest.name=Elemental Chestplate of Earth
+item.botania:ElementalWaterHelm.name=Elemental Helmet of Water
+item.botania:ElementalWaterHelmRevealing.name=Elemental Revealing Helmet of Water
 item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
 item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
 item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
@@ -78,6 +78,7 @@ item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
 
 ###############################################################################################################################
 
+alfheim.armorset.elemental.name=Elemental Master
 alfheim.armorset.elvorium.name=Royal Elven Guardian
 alfheim.armorset.elvorium.desc0=30% less mana cost on Mana Tools
 alfheim.armorset.elvorium.desc1=Rods have more powerfull effect

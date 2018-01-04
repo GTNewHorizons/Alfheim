@@ -87,6 +87,6 @@ public abstract class ElementalArmor extends ItemManasteelArmor implements IPixi
 	@Override
 	public void addArmorSetDescription(ItemStack stack, List<String> list) {
 		super.addArmorSetDescription(stack, list);
-		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.elemental.desc"), list);
+		addStringToTooltip(StatCollector.translateToLocal("botania.armorset.elementium.desc"), list);
 	}
 }
