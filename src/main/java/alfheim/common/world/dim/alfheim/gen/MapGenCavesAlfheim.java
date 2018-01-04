@@ -206,7 +206,9 @@ public class MapGenCavesAlfheim extends MapGenBaseMeta
             final double var11 = this.rand.nextInt(this.rand.nextInt(120) + 8);
             final double var13 = par3 * 16 + this.rand.nextInt(16);
             int var15 = 1;
-
+            
+            if(var11 < 15) return;
+            
             if (this.rand.nextInt(4) == 0)
             {
                 this.generateLargeCaveNode(this.rand.nextLong(), par4, par5, blockIdArray, metaArray, var9, var11, var13);

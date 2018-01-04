@@ -43,7 +43,7 @@ public class RenderWings {
 	};
 	
 	public static void render(RenderPlayerEvent.Specials.Post e, EntityPlayer player) {
-		if (EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) return;
+		if (EnumRace.fromID(player.getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) return;
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -105,10 +105,10 @@ public class RenderWings {
 	}
 	
 	public static ResourceLocation getPlayerWingTexture(EntityPlayer player) {
-		return wings[EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal()];
+		return wings[EnumRace.fromID(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal()];
 	}
 	
 	public static ResourceLocation getPlayerIconTexture(EntityPlayer player) {
-		return icons[EnumRace.fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal()];
+		return icons[EnumRace.fromID(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal()];
 	}
 }

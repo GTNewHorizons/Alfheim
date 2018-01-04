@@ -43,8 +43,8 @@ public class GenLayerAlfheim extends GenLayer {
 		genlayerzoom = new GenLayerZoom(2002L, genlayeredge);
 		genlayerzoom = new GenLayerZoom(2003L, genlayerzoom);
 		genlayeraddisland = new GenLayerAddIsland(4L, genlayerzoom);
-		GenLayerDeepOcean genlayerdeepocean = new GenLayerDeepOcean(4L, genlayeraddisland);
-		GenLayer genlayer2 = GenLayerZoom.magnify(1000L, genlayerdeepocean, 0);
+		//GenLayerDeepOcean genlayerdeepocean = new GenLayerDeepOcean(4L, genlayeraddisland);
+		GenLayer genlayer2 = GenLayerZoom.magnify(1000L, genlayeraddisland, 0);
 		byte b0 = 4;
 
 		if (type == WorldType.LARGE_BIOMES) {
@@ -65,11 +65,10 @@ public class GenLayerAlfheim extends GenLayer {
 		GenLayerHills genlayerhills = new GenLayerHills(1000L, biomes, genlayer1);
 		genlayer = GenLayerZoom.magnify(1000L, genlayerriverinit, 2);
 		genlayer = GenLayerZoom.magnify(1000L, genlayer, b0);
-		GenLayerRiver genlayerriver = new GenLayerRiver(1L, genlayer);
-		GenLayerSmooth genlayersmooth = new GenLayerSmooth(1000L, genlayerriver);
+		//GenLayerRiver genlayerriver = new GenLayerRiver(1L, genlayer);
+		GenLayerSmooth genlayersmooth = new GenLayerSmooth(1000L, genlayer);
 		object = new GenLayerRareBiome(1001L, genlayerhills);
 
-		object = new GenLayerShore(1000L, (GenLayer) object);
 		for (int j = 0; j < b0; ++j) {
 			object = new GenLayerZoom((long) (1000 + j), (GenLayer) object);
 
@@ -78,13 +77,13 @@ public class GenLayerAlfheim extends GenLayer {
 			}
 
 			if (j == 1) {
-				object = new GenLayerShore(1000L, (GenLayer) object);
+				object = new GenLayerShoreAlfheim(1000L, (GenLayer) object);
 			}
 		}
 
 		GenLayerSmooth genlayersmooth1 = new GenLayerSmooth(1000L, (GenLayer) object);
 		GenLayerRiverMix genlayerrivermix = new GenLayerRiverMix(100L, genlayersmooth1, genlayersmooth);
-		GenLayerVoronoiZoom genlayervoronoizoom = new GenLayerVoronoiZoom(10L, genlayerrivermix);
+		GenLayerVoronoiZoom genlayervoronoizoom = new GenLayerVoronoiZoom(10L, genlayersmooth1);
 		genlayerrivermix.initWorldGenSeed(seed);
 		genlayervoronoizoom.initWorldGenSeed(seed);
 

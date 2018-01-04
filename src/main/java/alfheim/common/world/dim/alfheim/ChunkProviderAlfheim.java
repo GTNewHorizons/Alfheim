@@ -368,7 +368,7 @@ public class ChunkProviderAlfheim implements IChunkProvider {
 		this.rand.setSeed(this.worldObj.getSeed());
 		this.rand.setSeed((long)par2 * p1 + (long)par3 * j1 ^ this.worldObj.getSeed());
 		
-		//new BiomeDecoratorAlfheim().decorate(worldObj, rand, var4, var5);
+		// BiomeDecoratorAlfheim().decorate(this.worldObj, this.rand, var4, var5);
 		
 		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biome, var4 + 8, var5 + 8, 16, 16, this.rand);
 		BlockFalling.fallInstantly = false;

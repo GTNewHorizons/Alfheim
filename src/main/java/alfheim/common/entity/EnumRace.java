@@ -8,6 +8,21 @@ import net.minecraft.util.StatCollector;
 public enum EnumRace {
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
 	
+	public String toString() {
+		if (this == SALAMANDER) return "SALAMANDER";
+		if (this == SYLPH) return "SYLPH";
+		if (this == CAITSITH) return "CAITSITH";
+		if (this == POOKA) return "POOKA";
+		if (this == GNOME) return "GNOME";
+		if (this == LEPRECHAUN) return "LEPRECHAUN";
+		if (this == SPRIGGAN) return "SPRIGGAN";
+		if (this == UNDINE) return "UNDINE";
+		if (this == IMP) return "IMP";
+		if (this == ALV) return "ALV";
+		if (this == HUMAN) return "HUMAN";
+		return "";
+	}
+	
 	public static EnumRace fromString(String name) {
 		name = unlocalize(name);
 		if (name.equalsIgnoreCase("SALAMANDER")) return SALAMANDER; 
@@ -24,24 +39,9 @@ public enum EnumRace {
 		return null;
 	}
 	
-	public static EnumRace fromDouble(double id) {
+	public static EnumRace fromID(double id) {
 		if (0 > id || id > EnumRace.values().length) return HUMAN;
 		return EnumRace.values()[MathHelper.floor_double(id)];
-	}
-	
-	public String toString() {
-		if (this == SALAMANDER) return "SALAMANDER";
-		if (this == SYLPH) return "SYLPH";
-		if (this == CAITSITH) return "CAITSITH";
-		if (this == POOKA) return "POOKA";
-		if (this == GNOME) return "GNOME";
-		if (this == LEPRECHAUN) return "LEPRECHAUN";
-		if (this == SPRIGGAN) return "SPRIGGAN";
-		if (this == UNDINE) return "UNDINE";
-		if (this == IMP) return "IMP";
-		if (this == ALV) return "ALV";
-		if (this == HUMAN) return "HUMAN";
-		return "";
 	}
 	
 	public String localize() {
@@ -53,11 +53,11 @@ public enum EnumRace {
 	}
 	
 	public static EnumRace getRace(EntityPlayer player) {
-		return fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue());
+		return fromID(player.getEntityAttribute(Constants.RACE).getAttributeValue());
 	}
 	
 	public static int getRaceID(EntityPlayer player) {
-		return fromDouble(player.getEntityAttribute(Constants.RACE).getAttributeValue()).ordinal();
+		return MathHelper.floor_double(player.getEntityAttribute(Constants.RACE).getAttributeValue());
 	}
 	
 	public static void setRace(EntityPlayer player, EnumRace race) {

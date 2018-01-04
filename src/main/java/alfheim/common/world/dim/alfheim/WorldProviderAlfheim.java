@@ -2,9 +2,7 @@ package alfheim.common.world.dim.alfheim;
 
 import alfheim.AlfheimCore;
 import alfheim.common.utils.AlfheimConfig;
-import alfheim.common.utils.DimensionUtil;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class WorldProviderAlfheim extends WorldProvider {

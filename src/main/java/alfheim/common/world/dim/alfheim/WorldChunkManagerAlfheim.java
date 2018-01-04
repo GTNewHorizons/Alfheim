@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import alfheim.common.utils.DimensionUtil;
+import alfheim.common.world.dim.DimensionUtil;
 import alfheim.common.world.dim.alfheim.gen.layers.GenLayerAlfheim;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,8 +37,7 @@ public class WorldChunkManagerAlfheim extends WorldChunkManager {
 	protected WorldChunkManagerAlfheim() {
 		this.biomeCache = new BiomeCache(this);
 		this.biomesToSpawnIn = new ArrayList();
-		// this.biomesToSpawnIn.addAll(allowedBiomes);
-		this.biomesToSpawnIn.add(DimensionUtil.alfheimBiome);
+		this.biomesToSpawnIn.addAll(allowedBiomes);
 	}
 
 	public WorldChunkManagerAlfheim(long seed, WorldType worldtype) {

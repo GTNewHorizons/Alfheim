@@ -67,7 +67,7 @@ public class CommonEventHandler {
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.fromDouble(((EntityPlayer) e.original).getEntityAttribute(Constants.RACE).getAttributeValue());
+		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(Constants.RACE).getAttributeValue());
 		((EntityPlayer) e.entityPlayer).getEntityAttribute(Constants.RACE).setBaseValue(r.ordinal());
 	}
 	

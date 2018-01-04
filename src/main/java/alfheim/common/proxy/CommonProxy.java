@@ -8,11 +8,9 @@ import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRecipes;
 import alfheim.common.registry.AlfheimRegistry;
 import alfheim.common.registry.lexicon.AlfheimCategory;
-import alfheim.common.utils.DimensionUtil;
 import alfheim.common.utils.ElvenStoryModModifiers;
+import alfheim.common.world.dim.DimensionUtil;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {

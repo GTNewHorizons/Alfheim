@@ -1,13 +1,13 @@
 package alfheim.common.world.dim.alfheim.gen.layers;
 
-import alfheim.common.utils.DimensionUtil;
+import alfheim.common.world.dim.DimensionUtil;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayersAlfheimBiomes extends GenLayer {
-	protected BiomeGenBase[] commonBiomes = { DimensionUtil.alfheimBiome, BiomeGenBase.river };
-	protected BiomeGenBase[] rareBiomes = { BiomeGenBase.ocean };
+	protected BiomeGenBase[] commonBiomes = { DimensionUtil.alfheimBiome };
+	protected BiomeGenBase[] rareBiomes = { DimensionUtil.alfheimBeachBiome };
 
 	public GenLayersAlfheimBiomes(long seed, GenLayer genlayer) {
 		super(seed);

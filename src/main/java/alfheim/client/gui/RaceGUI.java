@@ -31,7 +31,7 @@ public class RaceGUI extends Gui {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onOverlayRendering(RenderGameOverlayEvent event) {
-		if (event.isCancelable() || event.type != ElementType.CROSSHAIRS || EnumRace.fromDouble(mc.thePlayer.getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) return;
+		if (event.isCancelable() || event.type != ElementType.CROSSHAIRS || EnumRace.fromID(mc.thePlayer.getEntityAttribute(Constants.RACE).getAttributeValue()) == EnumRace.HUMAN) return;
 		
 		glPushMatrix();
 		glEnable(GL_BLEND);

@@ -20,19 +20,15 @@ public class BiomeDecoratorAlfheim {
 	protected int chunkZ;
 
 	public void decorate(World world, Random random, int chunkX, int chunkZ) {
-		if (world != null) {
-			throw new RuntimeException("Already decorating!!");
-		} else {
-			this.currentWorld = world;
-			this.rand = random;
-			this.chunkX = chunkX;
-			this.chunkZ = chunkZ;
-			MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, rand, chunkX, chunkZ));
-			this.decoration();
-			MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, rand, chunkX, chunkZ));
-			this.currentWorld = null;
-			this.rand = null;
-		}
+		this.currentWorld = world;
+		this.rand = random;
+		this.chunkX = chunkX;
+		this.chunkZ = chunkZ;
+		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, rand, chunkX, chunkZ));
+		this.decoration();
+		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, rand, chunkX, chunkZ));
+		this.currentWorld = null;
+		this.rand = null;
 	}
 
 	private void decoration() {
@@ -45,8 +41,8 @@ public class BiomeDecoratorAlfheim {
 			int randPosX = this.chunkX + this.rand.nextInt(16) + 8;
 			int randPosZ = this.chunkZ + this.rand.nextInt(16) + 8;
 
-			new WorldGenSand(AlfheimBlocks.elvenSand, 7).generate(this.currentWorld, this.rand, randPosX,
-					this.currentWorld.getTopSolidOrLiquidBlock(randPosX, randPosZ), randPosZ);
+			//if(this.currentWorld.getTopSolidOrLiquidBlock(randPosX, randPosZ) < 65)
+			new WorldGenSand(AlfheimBlocks.elvenSand, 10).generate(this.currentWorld, this.rand, randPosX,this.currentWorld.getTopSolidOrLiquidBlock(randPosX, randPosZ), randPosZ);
 
 		}
 

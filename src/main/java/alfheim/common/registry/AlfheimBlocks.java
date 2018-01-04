@@ -32,10 +32,10 @@ public class AlfheimBlocks {
 	// public static Block elvenGlass = new BlockPattern(Constants.MODID, Material.glass, "ElvenGlass", AlfheimCore.alfheimTab, 0, 255, 0.1F, null, 0, 30, soundTypeGlass, false, false);
 	public static Block elvenGrass = new ElvenGrass();
 	public static Block elvenOres = new ElvenOres();
-	public static Block elvenSand = new BlockPattern(Constants.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false);
-	public static Block elvoriumBlock = new BlockPattern(Constants.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true);
-	public static Block livingcobble = new BlockPattern(Constants.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false);
-	public static Block mauftriumBlock = new BlockPattern(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true);
+	public static Block elvenSand = new BlockPattern(Constants.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true);
+	public static Block elvoriumBlock = new BlockPattern(Constants.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false);
+	public static Block livingcobble = new BlockPattern(Constants.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false, false);
+	public static Block mauftriumBlock = new BlockPattern(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false);
 	public static Block manaInfuser = new ManaInfuser();
 	public static Block poisonIce = new PoisonIce();
 	public static Block redFlame = new RedFlame();
