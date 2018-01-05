@@ -32,7 +32,7 @@ public class RenderContributors {
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glDisable(GL_CULL_FACE);
 			glShadeModel(GL_SMOOTH);
-
+			
 			Minecraft.getMinecraft().renderEngine.bindTexture(babylon);
 
 			glRotated(-90, 1, 0, 0);

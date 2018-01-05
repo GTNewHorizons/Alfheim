@@ -1,7 +1,5 @@
 package alfheim.common.event;
 
-import org.lwjgl.util.vector.Vector3f;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
@@ -10,29 +8,25 @@ import alfheim.common.entity.EnumRace;
 import alfheim.common.registry.AlfheimAchievements;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.utils.AlfheimConfig;
-import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatisticsFile;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class CommonEventHandler {
 	
@@ -49,9 +43,9 @@ public class CommonEventHandler {
 				if (!stats.hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
 					e.player.triggerAchievement(AlfheimAchievements.alfheim);
-					e.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.UNDERLINE.GREEN + StatCollector.translateToLocal("elvenstory.welcome0")));
-					e.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GOLD + StatCollector.translateToLocal("elvenstory.welcome1")));
-					e.player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("elvenstory.welcome2")));
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome0"));
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome1"));
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome2"));
 					e.player.inventory.addItemStackToInventory(new ItemStack(ModItems.lexicon));
 				}
 			}

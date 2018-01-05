@@ -32,6 +32,7 @@ public class AlfheimConfig extends Configuration {
 	public static Vec3[] zones = new Vec3[9];
 	public static boolean prolongDeathScreen;
 	public static int deathScreenAdditionalTime;
+	public static int flightTime;
 
 	public static void syncConfig() {
 		List<String> propOrder = new ArrayList<String>();
@@ -62,18 +63,26 @@ public class AlfheimConfig extends Configuration {
 			enableAlfheimRespawn = prop.getBoolean();
 			propOrder.add(prop.getName());
 			
-			prop = AlfheimCore.config.get("alfheim", "prolongDeathScreen", true);
-			prop.comment = "Set this to false to disable death screen prolongation";
-			prop.setLanguageKey("alfheim.configgui.prolongDeathScreen").setRequiresMcRestart(false);
-			prolongDeathScreen = prop.getBoolean();
-			propOrder.add(prop.getName());
+			if (AlfheimCore.enableElvenStory) {
+				prop = AlfheimCore.config.get("alfheim", "prolongDeathScreen", true);
+				prop.comment = "Set this to false to disable death screen prolongation";
+				prop.setLanguageKey("alfheim.configgui.prolongDeathScreen").setRequiresMcRestart(false);
+				prolongDeathScreen = prop.getBoolean();
+				propOrder.add(prop.getName());
+				
+				prop = AlfheimCore.config.get("alfheim", "deathScreenAdditionalTime", 1200);
+				prop.comment = "How longer (in ticks) \"Respawn\" button will be unavailable";
+				prop.setLanguageKey("alfheim.configgui.deathScreenAdditionalTime").setRequiresMcRestart(false);
+				deathScreenAdditionalTime = prop.getInt();
+				propOrder.add(prop.getName());
+				
+				prop = AlfheimCore.config.get("alfheim", "flightTime", 12000);
+				prop.comment = "How long can you fly as elf";
+				prop.setLanguageKey("alfheim.configgui.flightTime").setRequiresMcRestart(true);
+				flightTime = prop.getInt();
+				propOrder.add(prop.getName());
+			}
 			
-			prop = AlfheimCore.config.get("alfheim", "deathScreenAdditionalTime", 1200);
-			prop.comment = "How longer (in ticks) \"Respawn\" button will be unavailable";
-			prop.setLanguageKey("alfheim.configgui.deathScreenAdditionalTime").setRequiresMcRestart(false);
-			deathScreenAdditionalTime = prop.getInt();
-			propOrder.add(prop.getName());
-
 			if (AlfheimCore.config.hasChanged()) {
 				AlfheimCore.config.save();
 			}

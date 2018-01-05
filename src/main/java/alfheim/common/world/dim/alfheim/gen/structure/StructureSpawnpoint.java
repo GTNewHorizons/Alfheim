@@ -19,7 +19,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if (!AlfheimCore.enableElvenStory) generate01(world, rand, x, y, z);
-		else generateStartBox(world, rand, x, y, z);
+		else generateStartBox(world, rand, -2, 251, -2);
 		return true;
 	}
 
@@ -19918,17 +19918,68 @@ public class StructureSpawnpoint extends WorldGenerator {
 	}
 	
 	public void generateStartBox(World world, Random rand, int x, int y, int z) {
-		world.setBlock(0, 255, 0, Blocks.obsidian, 0, 3);
-	
-		world.setBlock(1, 254, 0, Blocks.obsidian, 0, 3);
-		world.setBlock(1, 253, 0, Blocks.obsidian, 0, 3);
-		world.setBlock(-1, 254, 0, Blocks.obsidian, 0, 3);
-		world.setBlock(-1, 253, 0, Blocks.obsidian, 0, 3);
-		world.setBlock(0, 254, 1, Blocks.obsidian, 0, 3);
-		world.setBlock(0, 253, 1, Blocks.obsidian, 0, 3);
-		world.setBlock(0, 254, -1, Blocks.obsidian, 0, 3);
-		world.setBlock(0, 253, -1, Blocks.obsidian, 0, 3);
-		
-		world.setBlock(0, 252, 0, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 1, y + 0, z + 1, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 2, y + 0, z + 1, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 3, y + 0, z + 1, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 1, y + 0, z + 2, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 2, y + 0, z + 2, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 3, y + 0, z + 2, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 1, y + 0, z + 3, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 2, y + 0, z + 3, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 3, y + 0, z + 3, Blocks.bedrock, 0, 3);
+		world.setBlock(x + 1, y + 1, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 1, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 1, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 1, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 1, z + 1, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 2, y + 1, z + 1, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 3, y + 1, z + 1, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 4, y + 1, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 1, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 1, z + 2, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 2, y + 1, z + 2, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 3, y + 1, z + 2, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 4, y + 1, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 1, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 1, z + 3, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 2, y + 1, z + 3, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 3, y + 1, z + 3, Blocks.glowstone, 0, 3);
+		world.setBlock(x + 4, y + 1, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 1, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 1, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 1, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 2, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 2, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 2, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 2, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 2, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 2, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 2, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 2, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 2, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 2, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 2, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 2, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 3, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 3, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 3, z + 0, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 3, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 3, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 3, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 3, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 0, y + 3, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 4, y + 3, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 3, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 3, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 3, z + 4, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 4, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 4, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 4, z + 1, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 4, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 4, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 4, z + 2, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 1, y + 4, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 2, y + 4, z + 3, Blocks.obsidian, 0, 3);
+		world.setBlock(x + 3, y + 4, z + 3, Blocks.obsidian, 0, 3);
 	}
 }

@@ -88,22 +88,25 @@ alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный э
 alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
-alfheim.configgui.dimensionIDAlfheim=ID измерения Альфхейма
 alfheim.configgui.biomeIDAlfheim=ID стандартного биома
 alfheim.configgui.biomeIDAlfheimBeach=ID для биома пляжа
+alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна [Только в режиме ElvenStory]
+alfheim.configgui.dimensionIDAlfheim=ID измерения Альфхейма
 alfheim.configgui.enableAlfheimRespawn=Поставьте false чтобы выключить возрождение в Альфхейме
-alfheim.configgui.prolongDeathScreen=Поставьте false чтобы выключить увеличение задержки до возрождения
-alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна
+alfheim.configgui.prolongDeathScreen=Поставьте false чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
+alfheim.configgui.flightTime=Насколько долго вы можете летать будучи эльфом [Только в режиме ElvenStory]
 
 entity.Elf.name=Эльф
 entity.Pixie.name=Пикси
 
 itemGroup.Alfheim=Альфхейм
 
+key.flight.desc=Эльфийский Полёт
+
 ###############################################################################################################################
 
-elvenstory.welcome0=Добро пожаловать в Альфхейм - Режим [Эльфийская История]!
-elvenstory.welcome1=Пожалуйста, выберите одну из следующих рас, используя команду "/race"
+elvenstory.welcome0=§n§aДобро пожаловать в Альфхейм - Режим [Эльфийская История]!
+elvenstory.welcome1=§6Пожалуйста, выберите одну из следующих рас, используя команду "/race"
 elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИН§r, §5ИМП§r
 elvenstory.commands.race.usage=/race <РАСА>
 

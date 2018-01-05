@@ -2,6 +2,7 @@ package alfheim.common.entity;
 
 import alfheim.Constants;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 
