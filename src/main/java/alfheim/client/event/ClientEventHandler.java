@@ -6,7 +6,7 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.client.entity.render.RenderWings;
+import alfheim.client.render.entity.RenderWings;
 import alfheim.client.utils.KeyBindingsUtils;
 import alfheim.common.utils.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;

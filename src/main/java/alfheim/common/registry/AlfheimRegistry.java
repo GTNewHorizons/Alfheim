@@ -2,8 +2,8 @@ package alfheim.common.registry;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
-import alfheim.common.blocks.tileentity.ManaInfuserTileEntity;
+import alfheim.common.block.tile.TileAlfheimPortal;
+import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
 import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
@@ -16,8 +16,8 @@ import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 
 public class AlfheimRegistry {
 	
-	public static final ArmorMaterial ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, new int[] {4, 9, 7, 4}, 30);
-	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 7, 5, 2}, 20);
+	public static final ArmorMaterial ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, new int[] {5, 10, 8, 5}, 30);
+	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 9, 5, 2}, 20);
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
 	
@@ -36,7 +36,7 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerTileEntities() {
-		GameRegistry.registerTileEntity(AlfheimPortalTileEntity.class, "AlfheimPortal");
-		GameRegistry.registerTileEntity(ManaInfuserTileEntity.class, "ManaInfuser");
+		GameRegistry.registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
+		GameRegistry.registerTileEntity(TileManaInfuser.class, "ManaInfuser");
 	}
 }

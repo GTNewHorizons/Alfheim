@@ -24,6 +24,8 @@ public class AlfheimConfig extends Configuration {
 
 	// DIMENSIONS
 	public static int dimensionIDAlfheim;
+	public static int biomeIDAlfheim;
+	public static int biomeIDAlfheimBeach;
 	public static boolean enableAlfheimRespawn;
 	
 	// Elven Story
@@ -41,6 +43,18 @@ public class AlfheimConfig extends Configuration {
 			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(true);
 			dimensionIDAlfheim = prop.getInt();
 			propOrder.add(prop.getName());
+
+			prop = AlfheimCore.config.get("alfheim", "biomeIDAlfheim", 152);
+			prop.comment = "Biome ID for standart biome";
+			prop.setLanguageKey("alfheim.configgui.biomeIDAlfheim").setRequiresMcRestart(true);
+			biomeIDAlfheim = prop.getInt();
+			propOrder.add(prop.getName());
+
+			prop = AlfheimCore.config.get("alfheim", "biomeIDAlfheimBeach", 153);
+			prop.comment = "Biome ID for beach biome";
+			prop.setLanguageKey("alfheim.configgui.biomeIDAlfheimBeach").setRequiresMcRestart(true);
+			biomeIDAlfheimBeach = prop.getInt();
+			propOrder.add(prop.getName());
 			
 			prop = AlfheimCore.config.get("alfheim", "enableAlfheimRespawn", true);
 			prop.comment = "Set this to false to disable respawning in Alfheim";
@@ -54,7 +68,7 @@ public class AlfheimConfig extends Configuration {
 			prolongDeathScreen = prop.getBoolean();
 			propOrder.add(prop.getName());
 			
-			prop = AlfheimCore.config.get("alfheim", "deathScreenAdditionalTime", 12000);
+			prop = AlfheimCore.config.get("alfheim", "deathScreenAdditionalTime", 1200);
 			prop.comment = "How longer (in ticks) \"Respawn\" button will be unavailable";
 			prop.setLanguageKey("alfheim.configgui.deathScreenAdditionalTime").setRequiresMcRestart(false);
 			deathScreenAdditionalTime = prop.getInt();

@@ -7,7 +7,7 @@ import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.registry.AlfheimItems;
 import alfheim.common.registry.AlfheimRecipes;
 import alfheim.common.registry.AlfheimRegistry;
-import alfheim.common.registry.lexicon.AlfheimCategory;
+import alfheim.common.registry.lexicon.AlfheimLexiconCategory;
 import alfheim.common.utils.ElvenStoryModModifiers;
 import alfheim.common.world.dim.DimensionUtil;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -20,7 +20,7 @@ public class CommonProxy {
     	AlfheimItems.init();
 		AlfheimRecipes.init();
 		AlfheimRegistry.preInit();
-    	AlfheimCategory.init();
+    	AlfheimLexiconCategory.init();
 	}
 
 	public void registerRenderThings() {}

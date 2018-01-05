@@ -11,15 +11,17 @@ import net.minecraftforge.common.DimensionManager;
 
 public class DimensionUtil {
 
-	public static BiomeGenBase alfheimBiome = new BiomeGenAlfheim(152);
-	public static BiomeGenBase alfheimBeachBiome = new BiomeGenAlfheimBeach(153);
+	public static BiomeGenBase alfheimBiome;
+	public static BiomeGenBase alfheimBeachBiome;
 
 	public static void init() {
 		addDimension(AlfheimConfig.dimensionIDAlfheim, WorldProviderAlfheim.class, false);
+		alfheimBiome = new BiomeGenAlfheim(AlfheimConfig.biomeIDAlfheim);
+		alfheimBeachBiome = new BiomeGenAlfheimBeach(AlfheimConfig.biomeIDAlfheimBeach);
 	}
 
 	private static void addDimension(int id, Class<? extends WorldProvider> w, boolean keeploading) {
-		Constants.debug("Registering dimension ID: " + id);
+		Constants.log("Registering dimension ID: " + id);
 		DimensionManager.registerProviderType(id, w, keeploading);
 		DimensionManager.registerDimension(id, id);
 	}

@@ -1,61 +1,86 @@
 package alfheim.common.registry;
 
-import static alexsocol.asjlib.ASJUtilities.*;
+import static alexsocol.asjlib.ASJUtilities.register;
 
+import java.util.Arrays;
 import java.util.List;
 
-import alfheim.common.items.CreativeReachPendant;
-import alfheim.common.items.ElementalAirBoots;
-import alfheim.common.items.ElementalEarthChest;
-import alfheim.common.items.ElementalFireLeggings;
-import alfheim.common.items.ElementalWaterHelm;
-import alfheim.common.items.ElementalWaterHelmRevealing;
-import alfheim.common.items.ElvenResource;
-import alfheim.common.items.ElvoriumArmor;
-import alfheim.common.items.ElvoriumHelmet;
-import alfheim.common.items.ElvoriumHelmetRevealing;
-import alfheim.common.items.FirePendant;
-import alfheim.common.items.IcePendant;
-import alfheim.common.items.ItemManaStorage;
-import alfheim.common.items.LivingrockPickaxe;
-import alfheim.common.items.RealitySword;
-import alfheim.common.items.Rod;
+import alfheim.common.item.CreativeReachPendant;
+import alfheim.common.item.ElementalAirBoots;
+import alfheim.common.item.ElementalEarthChest;
+import alfheim.common.item.ElementalFireLeggings;
+import alfheim.common.item.ElementalWaterHelm;
+import alfheim.common.item.ElementalWaterHelmRevealing;
+import alfheim.common.item.ElvenResource;
+import alfheim.common.item.ElvoriumArmor;
+import alfheim.common.item.ElvoriumHelmet;
+import alfheim.common.item.ElvoriumHelmetRevealing;
+import alfheim.common.item.FirePendant;
+import alfheim.common.item.IcePendant;
+import alfheim.common.item.ItemManaStorage;
+import alfheim.common.item.LivingrockPickaxe;
+import alfheim.common.item.RealitySword;
+import alfheim.common.item.Rod;
 import baubles.api.BaubleType;
 import net.minecraft.item.Item;
-import scala.actors.threadpool.Arrays;
 
 public class AlfheimItems {
+
+	public static Item creativeReachPendant;
+	public static Item elementalBoots;
+	public static Item elementalChestplate;
+	public static Item elementalHelmet;
+	public static Item elementalHelmetRevealing;
+	public static Item elementalLeggings;
+	public static Item elfFirePendant;
+	public static Item elfIcePendant;
+	public static Item elvenResource;
+	public static Item elvoriumBoots;
+	public static Item elvoriumChestplate;
+	public static Item elvoriumHelmet;
+	public static Item elvoriumHelmetRevealing;
+	public static Item elvoriumLeggings;
+	public static Item livingrockPickaxe;
+	public static Item manaElvenRing;
+	public static Item manaElvenRingGreater;
+	public static Item manaStone;
+	public static Item manaStoneGreater;
+	public static Item realitySword;
+	public static Item rodFire;
+	public static Item rodIce;
+	
+	public static void init() {
+		construct();
+		reg();
+		regOreDict();
+	}
 	
 	// There is some alphabetic mess cause Botania .setUnlocalizedName method includes registration,
 	// so I need to construct some items in odd places to get beautiful Creative Tab representation :D
 	// and yes, I'm too lazy to just reOverride Vazkii's code :P
-	
-	public static Item elementalHelmet = new ElementalWaterHelm(); //.setTextureName(Constants.MODID + ":ElementalHelmet").setUnlocalizedName("ElementalHelmet");
-	public static Item elementalHelmetRevealing = new ElementalWaterHelmRevealing();
-	public static Item elementalLeggings = new ElementalFireLeggings(); //.setTextureName(Constants.MODID + ":ElementalLeggings").setUnlocalizedName("ElementalLeggings");
-	public static Item elementalChestplate = new ElementalEarthChest(); //.setTextureName(Constants.MODID + ":ElementalChestplate").setUnlocalizedName("ElementalChestplate");
-	public static Item elementalBoots = new ElementalAirBoots(); //.setTextureName(Constants.MODID + ":ElementalBoots").setUnlocalizedName("ElementalBoots");
-	public static Item elvenResource = new ElvenResource();
-	public static Item elvoriumHelmet = new ElvoriumHelmet();
-	public static Item elvoriumHelmetRevealing = new ElvoriumHelmetRevealing();
-	public static Item elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
-	public static Item elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
-	public static Item elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
-	public static Item elfFirePendant = new FirePendant();
-	public static Item elfIcePendant = new IcePendant();
-	public static Item creativeReachPendant = new CreativeReachPendant();
-	public static Item livingrockPickaxe = new LivingrockPickaxe();
-	public static Item manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
-	public static Item manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
-	public static Item manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
-	public static Item manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
-	public static Item realitySword = new RealitySword();
-	public static Item rod = new Rod();
-
-	
-	public static void init() {
-		reg();
-		regOreDict();
+	private static void construct() {
+		elementalHelmet = new ElementalWaterHelm();
+		elementalHelmetRevealing = new ElementalWaterHelmRevealing();
+		elementalLeggings = new ElementalFireLeggings();
+		elementalChestplate = new ElementalEarthChest();
+		elementalBoots = new ElementalAirBoots();
+		elvenResource = new ElvenResource();
+		elvoriumHelmet = new ElvoriumHelmet();
+		elvoriumHelmetRevealing = new ElvoriumHelmetRevealing();
+		elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
+		elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
+		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
+		elfFirePendant = new FirePendant();
+		elfIcePendant = new IcePendant();
+		creativeReachPendant = new CreativeReachPendant();
+		livingrockPickaxe = new LivingrockPickaxe();
+		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
+		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
+		manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
+		manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
+		realitySword = new RealitySword();
+		rodFire = new Rod("MuspelheimRod", AlfheimBlocks.redFlame);
+		rodIce = new Rod("NiflheimRod", AlfheimBlocks.poisonIce);		
 	}
 
 	private static void reg() {
@@ -65,7 +90,8 @@ public class AlfheimItems {
 		register(manaStoneGreater);
 		register(manaElvenRing);
 		register(manaElvenRingGreater);
-		register(rod);
+		register(rodFire);
+		register(rodIce);
 		register(elvenResource);
 	}
 

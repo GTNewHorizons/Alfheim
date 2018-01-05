@@ -3,14 +3,14 @@ package alfheim.client.proxy;
 import org.lwjgl.input.Keyboard;
 
 import alfheim.AlfheimCore;
-import alfheim.client.blocks.render.AlfheimPortalRender;
-import alfheim.client.entity.model.ModelEntityElf;
-import alfheim.client.entity.render.RenderAlfheimPixie;
-import alfheim.client.entity.render.RenderEntityElf;
 import alfheim.client.event.ClientEventHandler;
-import alfheim.client.gui.DeathTimerGUI;
-import alfheim.client.gui.RaceGUI;
-import alfheim.common.blocks.tileentity.AlfheimPortalTileEntity;
+import alfheim.client.gui.GUIDeathTimer;
+import alfheim.client.gui.GUIRace;
+import alfheim.client.model.entity.ModelEntityElf;
+import alfheim.client.render.block.RenderBlockAlfheimPortal;
+import alfheim.client.render.entity.RenderEntityAlfheimPixie;
+import alfheim.client.render.entity.RenderEntityElf;
+import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
 import alfheim.common.proxy.CommonProxy;
@@ -29,12 +29,12 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderThings() {
-		ClientRegistry.bindTileEntitySpecialRenderer(AlfheimPortalTileEntity.class, new AlfheimPortalRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderBlockAlfheimPortal());
 		
 		if (AlfheimCore.enableElvenStory) ClientRegistry.registerKeyBinding(keyFlight);
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderAlfheimPixie());
+		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		FMLCommonHandler.instance().bus().register(new ClientEventHandler());
 		if (AlfheimCore.enableElvenStory) {
-			MinecraftForge.EVENT_BUS.register(new RaceGUI(Minecraft.getMinecraft()));
-			if (AlfheimConfig.prolongDeathScreen) MinecraftForge.EVENT_BUS.register(new DeathTimerGUI(Minecraft.getMinecraft()));
+			MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));
+			if (AlfheimConfig.prolongDeathScreen) MinecraftForge.EVENT_BUS.register(new GUIDeathTimer(Minecraft.getMinecraft()));
 		}
 	}
 }

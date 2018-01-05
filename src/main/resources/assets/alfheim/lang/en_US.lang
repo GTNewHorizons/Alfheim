@@ -78,6 +78,9 @@ item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
 
 ###############################################################################################################################
 
+achievement.alfheim=Alfheim
+achievement.alfheim.desc=Enter Alfheim
+
 alfheim.armorset.elemental.name=Elemental Master
 alfheim.armorset.elvorium.name=Royal Elven Guardian
 alfheim.armorset.elvorium.desc0=30% less mana cost on Mana Tools
@@ -85,9 +88,17 @@ alfheim.armorset.elvorium.desc1=Rods have more powerfull effect
 alfheim.armorset.elvorium.desc2=Vis discount: 20% 
 alfheim.armorset.elvorium.desc3=Runic Shield +8
 
+alfheim.configgui.dimensionIDAlfheim=Dimension ID for Alfheim
+alfheim.configgui.biomeIDAlfheim=Biome ID for standart biome
+alfheim.configgui.biomeIDAlfheimBeach=Biome ID for beach biome
+alfheim.configgui.enableAlfheimRespawn=Set this to false to disable respawning in Alfheim
+alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation
+alfheim.configgui.deathScreenAdditionalTime=How longer (in ticks) "Respawn" button will be unavailable
+
+entity.Elf.name=Elf
+entity.Pixie.name=Pixie
+
 itemGroup.Alfheim=Alfheim
-achievement.alfheim=Alfheim
-achievement.alfheim.desc=Enter Alfheim
 
 ###############################################################################################################################
 

@@ -303,7 +303,7 @@ public class AlfheimRecipes {
 		});
 		recipeSword = BotaniaAPI.getLatestAddedRecipe();
 		
-		addShapedRecipe(new ItemStack(rod, 1, 0),
+		addShapedRecipe(new ItemStack(rodFire, 1, 0),
 			new Object[] {" MR", " BM", "B  ",
 			'M', new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot),
 			'R', new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune),
@@ -311,7 +311,7 @@ public class AlfheimRecipes {
 		});
 		recipeMuspelheimRod = BotaniaAPI.getLatestAddedRecipe();
 		
-		addShapedRecipe(new ItemStack(rod, 1, 1),
+		addShapedRecipe(new ItemStack(rodIce, 1, 1),
 			new Object[] {" MR", " BM", "B  ",
 			'M', new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot),
 			'R', new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune),

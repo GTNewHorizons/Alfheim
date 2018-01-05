@@ -5,9 +5,9 @@ import java.util.Random;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.registry.AlfheimBlocks;
 import alfheim.common.utils.AlfheimConfig;
-import alfheim.common.world.dim.alfheim.gen.structure.ArenaStructure;
-import alfheim.common.world.dim.alfheim.gen.structure.DreamsTreeStructure;
-import alfheim.common.world.dim.alfheim.gen.structure.SpawnpointStructure;
+import alfheim.common.world.dim.alfheim.gen.structure.StructureArena;
+import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
+import alfheim.common.world.dim.alfheim.gen.structure.StructureSpawnpoint;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -28,7 +28,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	}
 
 	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
-		if ((chunkX == 0 && chunkZ == 0)) (new SpawnpointStructure()).generate(world, rand, -11, 64, -41);
+		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, 64, -41);
 		generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);
@@ -130,12 +130,12 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (rand.nextInt(5) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new DreamsTreeStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, Blocks.log, Blocks.leaves, 0, 4, 8, 0);
+			(new StructureDreamsTree()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, Blocks.log, Blocks.leaves, 0, 4, 8, 0);
 		}
 		if (rand.nextInt(10) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new DreamsTreeStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
+			(new StructureDreamsTree()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (rand.nextInt(1000) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new ArenaStructure()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
+			(new StructureArena()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
 		}
 	}
 }
