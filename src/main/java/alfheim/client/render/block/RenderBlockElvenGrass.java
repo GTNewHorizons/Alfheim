@@ -3,7 +3,7 @@ package alfheim.client.render.block;
 import org.lwjgl.opengl.GL11;
 
 import alfheim.common.block.BlockElvenGrass;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;

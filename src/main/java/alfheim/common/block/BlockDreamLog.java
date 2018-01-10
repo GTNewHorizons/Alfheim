@@ -2,14 +2,20 @@ package alfheim.common.block;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockDreamLog extends BlockLog {
+public class BlockDreamLog extends BlockLog implements ILexiconable {
 
 	public IIcon[] textures = new IIcon[2]; 
 	
@@ -33,5 +39,10 @@ public class BlockDreamLog extends BlockLog {
 	@SideOnly(Side.CLIENT)
 	protected IIcon getTopIcon(int meta) {
 		return textures[0];
+	}
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.worldgen;
 	}
 }

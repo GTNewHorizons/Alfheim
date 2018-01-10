@@ -3,8 +3,8 @@ package alfheim.common.world.dim.alfheim.gen;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureArena;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureSpawnpoint;
@@ -28,7 +28,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	}
 
 	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
-		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, 64, -41);
+		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0) + 3, -41);
 		generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);

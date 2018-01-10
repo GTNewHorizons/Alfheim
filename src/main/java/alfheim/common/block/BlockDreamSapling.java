@@ -4,14 +4,19 @@ import java.util.Random;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockDreamSapling extends BlockBush implements IGrowable {
+public class BlockDreamSapling extends BlockBush implements IGrowable, ILexiconable {
 
 	public BlockDreamSapling() {
 		this.setBlockName("DreamSapling");
@@ -74,5 +79,10 @@ public class BlockDreamSapling extends BlockBush implements IGrowable {
 	@Override
 	public int damageDropped(int meta) {
 		return 0;
+	}
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.worldgen;
 	}
 }

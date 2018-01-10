@@ -6,19 +6,24 @@ import alexsocol.asjlib.IGlowingLayerBlock;
 import alexsocol.asjlib.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock {
+public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock, ILexiconable {
 
 	public IIcon[] textures = new IIcon[3];
 	
@@ -89,5 +94,10 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock 
 	@Override
 	public String[] func_150125_e() {
 		return new String[] { "dream" };
+	}
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.worldgen;
 	}
 }

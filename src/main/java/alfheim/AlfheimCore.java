@@ -2,11 +2,11 @@ package alfheim;
 
 import java.io.IOException;
 
-import alfheim.common.command.CommandRace;
+import alfheim.common.core.command.CommandRace;
+import alfheim.common.core.proxy.CommonProxy;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.network.KeyBindMessage;
-import alfheim.common.proxy.CommonProxy;
-import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.utils.AlfheimConfig;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -39,7 +39,7 @@ public class AlfheimCore {
 	@Instance(Constants.MODID)
 	public static AlfheimCore instance;
 
-	@SidedProxy(clientSide = Constants.MODID + ".client.proxy.ClientProxy", serverSide = Constants.MODID + ".common.proxy.CommonProxy")
+	@SidedProxy(clientSide = Constants.MODID + ".client.core.proxy.ClientProxy", serverSide = Constants.MODID + ".common.core.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static SimpleNetworkWrapper network;
@@ -54,14 +54,14 @@ public class AlfheimCore {
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	enableElvenStory = Loader.isModLoaded("elvenstory");
+		FMLCommonHandler.instance().bus().register(AlfheimCore.instance);
+		config = new Configuration(event.getSuggestedConfigurationFile());
+		AlfheimConfig.syncConfig();
+    	enableElvenStory = Loader.isModLoaded("elvenstory") || AlfheimConfig.enableElvenStory;
     	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
 		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
 		
-		FMLCommonHandler.instance().bus().register(AlfheimCore.instance);
-		config = new Configuration(event.getSuggestedConfigurationFile());
-		AlfheimConfig.syncConfig();
     	proxy.initializeAndRegisterHandlers();
     	proxy.preInit();
     }

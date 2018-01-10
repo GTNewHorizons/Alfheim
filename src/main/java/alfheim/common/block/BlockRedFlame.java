@@ -5,7 +5,8 @@ import static net.minecraftforge.common.util.ForgeDirection.*;
 import java.util.Random;
 
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,11 +16,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockRedFlame extends BlockFire {
+public class BlockRedFlame extends BlockFire implements ILexiconable {
 
 	private IIcon[] icons;
 
@@ -173,5 +177,10 @@ public class BlockRedFlame extends BlockFire {
 				}
 			}
 		}
+	}
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.ruling;
 	}
 }

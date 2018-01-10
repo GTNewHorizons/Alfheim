@@ -1,7 +1,7 @@
 package alfheim.common.world.dim;
 
 import alfheim.Constants;
-import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import alfheim.common.world.dim.alfheim.gen.BiomeGenAlfheim;
 import alfheim.common.world.dim.alfheim.gen.BiomeGenAlfheimBeach;

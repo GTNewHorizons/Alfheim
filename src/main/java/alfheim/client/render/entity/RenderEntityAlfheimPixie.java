@@ -29,8 +29,10 @@ public class RenderEntityAlfheimPixie extends RenderLiving {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
 		if (entity.isInvisible()) return;
+		GL11.glPushMatrix();
 		GL11.glTranslated(0, -0.25, 0);
 		super.doRender(entity, x, y, z, yaw, pitch);
+		GL11.glPopMatrix();
 	}
 
 	protected int setPixieBrightness(EntityAlfheimPixie pixie, int par2, float par3) {
@@ -62,5 +64,4 @@ public class RenderEntityAlfheimPixie extends RenderLiving {
 	protected int shouldRenderPass(EntityLivingBase entity, int par2, float par3) {
 		return setPixieBrightness((EntityAlfheimPixie) entity, par2, par3);
 	}
-
 }

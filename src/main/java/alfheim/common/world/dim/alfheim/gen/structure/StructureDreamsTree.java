@@ -4,7 +4,7 @@ package alfheim.common.world.dim.alfheim.gen.structure;
 
 import java.util.Random;
 
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;

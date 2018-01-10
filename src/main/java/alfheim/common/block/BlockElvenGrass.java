@@ -5,7 +5,8 @@ import java.util.Random;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.render.block.RenderBlockElvenGrass;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,8 +29,10 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockElvenGrass extends Block implements IGrowable {
+public class BlockElvenGrass extends Block implements IGrowable, ILexiconable {
 
     @SideOnly(Side.CLIENT)
     public IIcon top;
@@ -64,7 +67,7 @@ public class BlockElvenGrass extends Block implements IGrowable {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
     	ItemStack stack = player.getCurrentEquippedItem();
-    	if (stack.getItem() instanceof ItemHoe) {
+    	if (stack != null && stack.getItem() instanceof ItemHoe) {
     		if (!player.canPlayerEdit(x, y, z, side, stack)) return false;
             else {
                 UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
@@ -301,4 +304,9 @@ public class BlockElvenGrass extends Block implements IGrowable {
         	return (side > 0) ? super.shouldSideBeRendered(access, x, y, z, side) : false;
         }
     }
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.worldgen;
+	}
 }

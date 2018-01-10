@@ -4,15 +4,14 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.block.tile.TileAlfheimPortal;
-import alfheim.common.item.ElvenResource;
-import alfheim.common.registry.AlfheimAchievements;
-import alfheim.common.registry.AlfheimItems;
-import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.core.registry.AlfheimAchievements;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,13 +21,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
-import vazkii.botania.api.wand.IWandable;
-import vazkii.botania.common.achievement.ModAchievements;
-import vazkii.botania.common.block.BlockAlfPortal;
-import vazkii.botania.common.block.tile.TileAlfPortal;
-import vazkii.botania.common.entity.EntityPixie;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockAlfheimPortal extends Block implements ITileEntityProvider {
+public class BlockAlfheimPortal extends Block implements ITileEntityProvider, ILexiconable {
 
 	public static IIcon[] textures = new IIcon[3];
 	
@@ -82,20 +77,12 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider {
 	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return;
 		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim && meta != 0) world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
 		super.breakBlock(world, x, y, z, block, meta);
     }
-	
+
 	@Override
-	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return false;
-		return super.removedByPlayer(world, player, x, y, z, willHarvest);
-    }
-	
-	@Override
-	public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && x == 0 && y == 72 && z == 0) return;
-		super.harvestBlock(world, player, x, y, z, meta);
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.portal;
 	}
 }

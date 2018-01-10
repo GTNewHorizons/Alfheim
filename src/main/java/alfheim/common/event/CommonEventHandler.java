@@ -3,29 +3,26 @@ package alfheim.common.event;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.core.registry.AlfheimAchievements;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
-import alfheim.common.registry.AlfheimAchievements;
-import alfheim.common.registry.AlfheimItems;
-import alfheim.common.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatisticsFile;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.ModItems;
 
 public class CommonEventHandler {
@@ -54,7 +51,8 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing e) {
-		if (AlfheimCore.enableElvenStory) if (e.entity instanceof EntityPlayer) {
+		if (!AlfheimCore.enableElvenStory) return;
+		if (e.entity instanceof EntityPlayer) {
 			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(Constants.RACE);
 			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(Constants.FLIGHT);
 		}
@@ -63,8 +61,14 @@ public class CommonEventHandler {
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(Constants.RACE).getAttributeValue());
-		((EntityPlayer) e.entityPlayer).getEntityAttribute(Constants.RACE).setBaseValue(r.ordinal());
+		EnumRace r = EnumRace.getRace((EntityPlayer) e.original);
+		EnumRace.setRace((EntityPlayer) e.entityPlayer, r);
+	}
+	
+	@SubscribeEvent
+	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		if (!AlfheimCore.enableElvenStory) return;
+		e.player.capabilities.allowFlying = !EnumRace.getRace(e.player).equals(EnumRace.HUMAN);
 	}
 	
 	@SubscribeEvent
@@ -89,11 +93,6 @@ public class CommonEventHandler {
 														.setBaseValue(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() -
 														(player.isSprinting() ? 4 : (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) ? 2 : 1));
 					if (player.isSprinting()) player.moveFlying(0F, 1F, 0.01F);
-					double x = player.posX - 0.25;
-					double y = player.posY - 0.5;
-					double z = player.posZ - 0.25;
-					for(int i = 0; i < 2; i++) Botania.proxy.sparkleFX(player.worldObj, x + Math.random() * player.width, y + Math.random() * 0.4, z + Math.random() * player.width, 1, 1, 1, 2F * (float) Math.random(), 20);
-					
 					} else								player.getAttributeMap().getAttributeInstance(Constants.FLIGHT)
 														.setBaseValue(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() + 
 														(player.getAttributeMap().getAttributeInstance(Constants.FLIGHT).getAttributeValue() < Constants.FLIGHT.getDefaultValue() ? 1 : 0));

@@ -2,7 +2,7 @@ package alfheim;
 
 import org.apache.logging.log4j.Level;
 
-import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -10,7 +10,7 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 public class Constants {
 	public static final String major_version = "BETA";
 	//public static final String minor_version = "";
-	public static final String build_version = "1";
+	public static final String build_version = "4";
 
 	public static final String MODID = "alfheim";
 	public static final String NAME = "Alfheim";

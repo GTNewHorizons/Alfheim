@@ -1,6 +1,6 @@
 package alfheim.common.world.dim.alfheim.gen;
 
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Blocks;
@@ -11,7 +11,7 @@ public class BiomeGenAlfheimBeach extends BiomeGenBase {
 	public BiomeGenAlfheimBeach(int p_i1969_1_) {
 		super(p_i1969_1_);
 		this.spawnableCreatureList.clear();
-		this.setBiomeName("AlfheimBeach");
+		this.setBiomeName("Alfheim Sands");
 		this.topBlock = AlfheimBlocks.elvenSand;
 		this.fillerBlock = AlfheimBlocks.elvenSand;
 		this.theBiomeDecorator.treesPerChunk = -999;

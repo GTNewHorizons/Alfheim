@@ -4,7 +4,8 @@ import java.util.Random;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,8 +22,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockPoisonIce extends Block {
+public class BlockPoisonIce extends Block implements ILexiconable {
 
 	public BlockPoisonIce() {
 		super(Material.packedIce);
@@ -104,4 +107,9 @@ public class BlockPoisonIce extends Block {
     public int tickRate(World world) {
         return 1;
     }
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.ruling;
+	}
 }

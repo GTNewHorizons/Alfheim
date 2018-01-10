@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim.gen;
 
 import java.util.Random;
 
-import alfheim.common.utils.MapGenBaseMeta;
+import alfheim.common.core.utils.MapGenBaseMeta;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;

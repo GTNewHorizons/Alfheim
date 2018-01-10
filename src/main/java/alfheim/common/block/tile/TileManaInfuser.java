@@ -3,10 +3,10 @@ package alfheim.common.block.tile;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.block.BlockManaInfuser;
-import alfheim.common.crafting.IManaInfusionRecipe;
-import alfheim.common.crafting.ManaInfusionRecipies;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.block.mana.BlockManaInfuser;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.ManaInfusionRecipies;
+import alfheim.common.crafting.recipe.IManaInfusionRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

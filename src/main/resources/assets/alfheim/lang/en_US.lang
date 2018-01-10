@@ -1,3 +1,4 @@
+##########################################################___BLOCKS___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
 tile.DragonstoneElvenOre.name=Dragonstone Ore
@@ -17,7 +18,7 @@ tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
 
-###############################################################################################################################
+##########################################################___ITEMS___###########################################################
 
 # item..name=
 item.CreativeReachPendant.name=Creative Reach Pendant
@@ -76,7 +77,7 @@ item.RealitySword.desc5=Requires §n10§r§7 §bmana§7/tick.
 item.RealitySword.descZ=You've got a power!
 item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
 
-###############################################################################################################################
+##########################################################___OTHER___###########################################################
 
 achievement.alfheim=Alfheim
 achievement.alfheim.desc=Enter Alfheim
@@ -91,24 +92,27 @@ alfheim.armorset.elvorium.desc3=Runic Shield +8
 alfheim.configgui.biomeIDAlfheim=Biome ID for standart biome
 alfheim.configgui.biomeIDAlfheimBeach=Biome ID for beach biome
 alfheim.configgui.deathScreenAdditionalTime=How longer (in ticks) "Respawn" button will be unavailable [ElvenStory Only]
+alfheim.configgui.destroyPortal=Set this to false to disable destroying portals in non-zero coords in Alfheim
 alfheim.configgui.dimensionIDAlfheim=Dimension ID for Alfheim
 alfheim.configgui.enableAlfheimRespawn=Set this to false to disable respawning in Alfheim
-alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
+alfheim.configgui.enableElvenStory=Set this to true to enable Elven Story mode without mod
 alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
+alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
+alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
 
 entity.Elf.name=Elf
 entity.Pixie.name=Pixie
 
 itemGroup.Alfheim=Alfheim
 
-key.flight.desc=Elven Flight
-
-###############################################################################################################################
+#######################################################___ELVEN STORY___########################################################
 
 elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
 elvenstory.welcome1=§6Please, select one of the following races using "/race"
 elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
 elvenstory.commands.race.usage=/race <RACE>
+
+key.flight.desc=Elven Flight
 
 race.SALAMANDER.name=SALAMANDER
 race.SYLPH.name=SYLPH

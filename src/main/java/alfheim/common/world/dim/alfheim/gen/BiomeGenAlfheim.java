@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim.gen;
 
 import java.util.Random;
 
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

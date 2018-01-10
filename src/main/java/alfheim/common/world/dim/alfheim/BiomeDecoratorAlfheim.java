@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim;
 
 import java.util.Random;
 
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenSand;

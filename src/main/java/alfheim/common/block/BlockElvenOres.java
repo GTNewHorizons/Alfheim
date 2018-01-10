@@ -5,8 +5,9 @@ import java.util.Random;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.registry.AlfheimItems;
-import alfheim.common.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.lexicon.AlfheimLexiconCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,9 +18,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.common.item.ModItems;
 
-public class BlockElvenOres extends Block {
+public class BlockElvenOres extends Block implements ILexiconable {
 
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal" };
 	public IIcon[] textures = new IIcon[names.length];
@@ -60,7 +64,7 @@ public class BlockElvenOres extends Block {
 	
 	@Override
 	public Item getItemDropped(int meta, Random rand, int fortune) {
-		if (meta >= drops.length || meta < 0) return drops[0];
+		if (meta < 0 || drops.length <= meta) return drops[0];
 		if (drops[meta] == null) return Item.getItemFromBlock(this);
 		return drops[meta];
 	}
@@ -73,6 +77,11 @@ public class BlockElvenOres extends Block {
 
 	@Override
 	public int getExpDrop(IBlockAccess world, int meta, int fortune) {
-		return (meta == 0 || meta == 2 || meta == 4) ? MathHelper.getRandomIntegerInRange(rand, 3, 7) : 0;
+		return (meta == 0 || meta == 2 || meta == 4) ? rand.nextInt(5) + 3 : 0;
+	}
+
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconCategory.ores;
 	}
 }

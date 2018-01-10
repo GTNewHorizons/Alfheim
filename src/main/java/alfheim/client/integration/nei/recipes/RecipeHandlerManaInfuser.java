@@ -2,9 +2,9 @@ package alfheim.client.integration.nei.recipes;
 
 import java.util.List;
 
-import alfheim.common.crafting.IManaInfusionRecipe;
-import alfheim.common.crafting.ManaInfusionRecipies;
-import alfheim.common.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.ManaInfusionRecipies;
+import alfheim.common.crafting.recipe.IManaInfusionRecipe;
 import codechicken.nei.PositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;

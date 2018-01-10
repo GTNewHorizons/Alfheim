@@ -8,9 +8,9 @@ import com.google.common.base.Function;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
-import alfheim.common.registry.AlfheimBlocks;
-import alfheim.common.utils.AlfheimConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -112,7 +112,7 @@ public class TileAlfheimPortal extends TileMod {
 							if (coords == null) coords = MinecraftServer.getServer().worldServerForDimension(0).getSpawnPoint();
 							if (coords == null) coords = new ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0), 0);
 
-							if (this.xCoord != 0 || this.yCoord != 72 || this.zCoord != 0) {
+							if (AlfheimConfig.destroyPortal && (this.xCoord != 0 || this.zCoord != 0)) {
 								this.worldObj.newExplosion(player, this.xCoord, this.yCoord, this.zCoord, 5, false, false);
 								this.worldObj.setBlockToAir(this.xCoord - 2, this.yCoord + 2, this.zCoord);
 								this.worldObj.setBlockToAir(this.xCoord + 2, this.yCoord + 2, this.zCoord);

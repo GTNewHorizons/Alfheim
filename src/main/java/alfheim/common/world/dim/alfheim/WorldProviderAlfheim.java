@@ -1,7 +1,7 @@
 package alfheim.common.world.dim.alfheim;
 
 import alfheim.AlfheimCore;
-import alfheim.common.utils.AlfheimConfig;
+import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
 

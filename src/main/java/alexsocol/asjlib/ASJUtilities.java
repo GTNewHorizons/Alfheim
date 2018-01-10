@@ -1,11 +1,15 @@
 package alexsocol.asjlib;
 
+import static org.lwjgl.opengl.GL11.glTranslated;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -16,6 +20,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -500,6 +505,21 @@ public class ASJUtilities {
 	}
 	
 	/**
+	 * Interpolates values for smoother render
+	 * */
+	public static double interpolate(double last, double now, float partialTicks) {
+		return last + (now - last) * partialTicks;
+	}
+	
+	public static void interpolatedTranslation(EntityPlayer player, float partialTicks) {
+		GL11.glTranslated(interpolate(player.lastTickPosX, player.posX, partialTicks), interpolate(player.lastTickPosY, player.posY, partialTicks), interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+	}
+	
+	public static void interpolatedTranslationReverse(EntityPlayer player, float partialTicks) {
+		GL11.glTranslated(-interpolate(player.lastTickPosX, player.posX, partialTicks), -interpolate(player.lastTickPosY, player.posY, partialTicks), -interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+	}
+	
+	/**
 	 * @return String which tolds you to hold shift-key
 	 * */
 	public static String holdShift() {
@@ -534,7 +554,7 @@ public class ASJUtilities {
 	}
 	
 	/**
-	 * Adds new <i>ore</i> spawn to world generator
+	 * Adds new <b>ore</b> spawn to world generator
 	 * */
 	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
 		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
