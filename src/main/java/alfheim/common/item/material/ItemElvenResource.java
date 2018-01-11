@@ -5,6 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,8 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import vazkii.botania.api.recipe.IElvenItem;
 
-public class ItemElvenResource extends Item {
+public class ItemElvenResource extends Item implements IElvenItem {
 	
 	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ /*"TheRodOfTheDebug"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
@@ -67,5 +69,10 @@ public class ItemElvenResource extends Item {
 			}
 		}*/
 		return stack;
+	}
+
+	@Override
+	public boolean isElvenItem(ItemStack stack) {
+		return stack.getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore;
 	}
 }

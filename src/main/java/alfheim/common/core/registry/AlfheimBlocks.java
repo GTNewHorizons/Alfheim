@@ -8,15 +8,7 @@ import static net.minecraftforge.oredict.OreDictionary.*;
 import alexsocol.asjlib.BlockPattern;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.block.BlockAlfheimPortal;
-import alfheim.common.block.BlockDreamLeaves;
-import alfheim.common.block.BlockDreamLog;
-import alfheim.common.block.BlockDreamSapling;
-import alfheim.common.block.BlockElvenGrass;
-import alfheim.common.block.BlockElvenOres;
-import alfheim.common.block.BlockPatternLexicon;
-import alfheim.common.block.BlockPoisonIce;
-import alfheim.common.block.BlockRedFlame;
+import alfheim.common.block.*;
 import alfheim.common.block.mana.BlockManaInfuser;
 import alfheim.common.item.block.ItemBlockElvenOres;
 import alfheim.common.lexicon.AlfheimLexiconCategory;
@@ -39,6 +31,7 @@ public class AlfheimBlocks {
 	public static Block manaInfuser;
 	public static Block poisonIce;
 	public static Block redFlame;
+	public static Block tradePortal;
 	
 	public static void init() {
 		construct();
@@ -59,12 +52,14 @@ public class AlfheimBlocks {
 		mauftriumBlock = new BlockPatternLexicon(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconCategory.essences);
 		manaInfuser = new BlockManaInfuser();
 		poisonIce = new BlockPoisonIce();
-		redFlame = new BlockRedFlame();		
+		redFlame = new BlockRedFlame();
+		tradePortal = new BlockTradePortal();
 	}
 
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
+		register(tradePortal);
 		register(elvoriumBlock);
 		register(mauftriumBlock);
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));

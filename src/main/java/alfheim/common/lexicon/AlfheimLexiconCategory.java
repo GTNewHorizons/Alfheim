@@ -43,19 +43,20 @@ public class AlfheimLexiconCategory {
 	public static LexiconEntry elves;
 	
 	// Main addon content
-	public static LexiconEntry portal;
-	public static LexiconEntry worldgen;
-	public static LexiconEntry ores;
-	public static LexiconEntry mobs;
-	public static LexiconEntry infuser;
+	public static LexiconEntry advMana;
+	public static LexiconEntry elemSet;
+	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
 	public static LexiconEntry essences;
-	public static LexiconEntry runes;
-	public static LexiconEntry elvenSet;
-	public static LexiconEntry elemSet;
-	public static LexiconEntry advMana;
-	public static LexiconEntry ruling;
+	public static LexiconEntry infuser;
+	public static LexiconEntry mobs;
+	public static LexiconEntry ores;
+	public static LexiconEntry portal;
 	public static LexiconEntry reality;
+	public static LexiconEntry ruling;
+	public static LexiconEntry runes;
+	public static LexiconEntry trade;
+	public static LexiconEntry worldgen;
 
 	// Elven Story information
 	public static LexiconEntry es;
@@ -64,31 +65,33 @@ public class AlfheimLexiconCategory {
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("alfheim", 5));
 
-		alfheim	= new BLexiconEntry("alfheim", categoryAlfheim);
-		elves	= new BLexiconEntry("elves", categoryAlfheim);
-		portal	= new BLexiconEntry("portal", categoryAlfheim);
-		worldgen= new BLexiconEntry("worldgen", categoryAlfheim);
-		ores	= new BLexiconEntry("ores", categoryAlfheim);
-		mobs	= new BLexiconEntry("mobs", categoryAlfheim);
-		infuser	= new BLexiconEntry("infuser", categoryAlfheim);
-		elvorium= new BLexiconEntry("elvorium", categoryAlfheim);
-		essences= new BLexiconEntry("essences", categoryAlfheim);
-		runes	= new BLexiconEntry("runes", categoryAlfheim);
-		elvenSet= new BLexiconEntry("elvenSet", categoryAlfheim);
-		elemSet	= new BLexiconEntry("elemSet", categoryAlfheim);
-		advMana	= new BLexiconEntry("advMana", categoryAlfheim);
-		ruling	= new BLexiconEntry("ruling", categoryAlfheim);
-		reality	= new BLexiconEntry("reality", categoryAlfheim);
+		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
+		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
+		elemSet	= new BLexiconEntry("elemSet",	categoryAlfheim);
+		elvenSet= new BLexiconEntry("elvenSet",	categoryAlfheim);
+		elves	= new BLexiconEntry("elves",	categoryAlfheim);
+		elvorium= new BLexiconEntry("elvorium",	categoryAlfheim);
+		essences= new BLexiconEntry("essences",	categoryAlfheim);
+		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
+		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
+		ores	= new BLexiconEntry("ores",		categoryAlfheim);
+		portal	= new BLexiconEntry("portal",	categoryAlfheim);
+		reality	= new BLexiconEntry("reality",	categoryAlfheim);
+		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
+		runes	= new BLexiconEntry("runes",	categoryAlfheim);
+		trade	= new BLexiconEntry("trade",	categoryAlfheim);
+		worldgen= new BLexiconEntry("worldgen",	categoryAlfheim);
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
 	}
 	
 	private static void preInitElvenStory() {
-		es		= new BLexiconEntry("es", categoryAlfheim);
-		races	= new BLexiconEntry("races", categoryAlfheim);
+		es		= new BLexiconEntry("es",		categoryAlfheim);
+		races	= new BLexiconEntry("races",	categoryAlfheim);
 	}
 	
 	public static void init() {
+		// In progress order
 		
 		alfheim	.setPriority().setKnowledgeType(BotaniaAPI.basicKnowledge)
 				.setLexiconPages(new PageText("0"), new PageText("1"))
@@ -123,6 +126,10 @@ public class AlfheimLexiconCategory {
 		mobs	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"))
 				.setIcon(new ItemStack(ModItems.manaResource, 1, 8));
+		
+		trade	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"))	// TODO Complete
+				.setIcon(new ItemStack(AlfheimBlocks.tradePortal));
 		
 		infuser	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),

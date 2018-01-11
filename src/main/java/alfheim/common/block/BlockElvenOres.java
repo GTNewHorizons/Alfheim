@@ -37,6 +37,7 @@ public class BlockElvenOres extends Block implements ILexiconable {
         this.setCreativeTab(AlfheimCore.alfheimTab);
         this.setHardness(2);
         this.setHarvestLevel("pickaxe", 2);
+        this.setHarvestLevel("pickaxe", 1, 1);
         this.setResistance(5.0F);
         this.setStepSound(soundTypeStone);
 	}
@@ -57,7 +58,6 @@ public class BlockElvenOres extends Block implements ILexiconable {
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		if (meta == 1) this.setHarvestLevel("pickaxe", 1);
 		if (meta >= textures.length || meta < 0) return textures[0];
 		return textures[meta];
 	}

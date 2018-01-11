@@ -4,8 +4,11 @@ import org.apache.logging.log4j.Level;
 
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.World;
 
 public class Constants {
 	public static final String major_version = "BETA";
@@ -38,5 +41,11 @@ public class Constants {
 	}
 	public static void log(String message) { 
 		FMLRelaunchLog.log(NAME.toUpperCase(), Level.INFO, message);
+	}
+	public static void chatLog(String message) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+	}
+	public static void chatLog(String message, World world) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
 	}
 }
