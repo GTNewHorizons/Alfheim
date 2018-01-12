@@ -1,7 +1,6 @@
 package alfheim.common.block.tile;
 
 import java.util.List;
-import java.util.Random;
 
 import com.google.common.base.Function;
 
@@ -9,19 +8,19 @@ import alfheim.Constants;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.multiblock.Multiblock;
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.common.Botania;
+import vazkii.botania.common.block.BlockStorage;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.core.handler.ConfigHandler;
@@ -52,7 +51,6 @@ public class TileTradePortal extends TileMod {
 	int recipeNum = -1;
 
 	public int ticksOpen = 0;
-	private boolean closeNow = false;
 	private boolean hasUnloadedParts = false;
 
 	private static final Function<int[], int[]> CONVERTER_X_Z = new Function<int[], int[]>() {
@@ -98,13 +96,12 @@ public class TileTradePortal extends TileMod {
 			ticksOpen++;
 
 			AxisAlignedBB aabb = getPortalAABB();
-			boolean open = ticksOpen > 60;
 
 			if (ticksOpen > 60) {
 				if (ConfigHandler.elfPortalParticlesEnabled)
 					blockParticle(meta);
 
-				if (worldObj.rand.nextInt(12000) == 0) setRandomRecipe();
+				if (worldObj.rand.nextInt(12000) == 0 && !worldObj.isRemote) setRandomRecipe();
 				
 				if (this.tradeRecipe != null) {
 					List<EntityItem> items = worldObj.getEntitiesWithinAABB(EntityItem.class, aabb);
@@ -116,20 +113,16 @@ public class TileTradePortal extends TileMod {
 							ItemStack stack = item.getEntityItem();
 							if (stack != null && isTradeAvailable(stack, this.tradeRecipe.getOutput())) {
 								stack.stackSize -= this.tradeRecipe.getOutput().stackSize;
-								giveMinecraftiansResources();
+								performTrade();
 								break;
 							}
 						}
 					}
 				}
 			}
-		} else closeNow = false;
+		}
 
-		if (closeNow) {
-			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 1 | 2);
-			for (int i = 0; i < 36; i++) blockParticle(meta);
-			closeNow = false;
-		} else if (newMeta != meta) {
+		if (newMeta != meta) {
 			if (newMeta == 0) for (int i = 0; i < 36; i++) blockParticle(meta);
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 1 | 2);
 		}
@@ -155,17 +148,15 @@ public class TileTradePortal extends TileMod {
 
 	public boolean onWanded() {
 		if (getBlockMetadata() == 0) {
-			
 			int newMeta = getValidMetadata();
 			if (newMeta != 0) {
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 1 | 2);
 				return true;
-			}
+			} 
 		} else {
-			// setRandomRecipe();
-			if (isTradeOn()) Constants.chatLog(this.tradeRecipe.getOutput().getDisplayName() + ' ' + recipeMult, this.worldObj);
+			setRandomRecipe();
+			Constants.chatLog(this.tradeRecipe.getOutput().getDisplayName() + " x" + this.recipeMult);
 		}
-		
 		return false;
 	}
 
@@ -175,19 +166,20 @@ public class TileTradePortal extends TileMod {
 	}
 
 	void setRandomRecipe() {
-		int i = -1;
-		for (RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
-			i++;
-			if (!AlfheimRegistry.isForbidden(recipe.getOutput()) && this.worldObj.rand.nextInt(BotaniaAPI.elvenTradeRecipes.size()) == 0) {
-				this.tradeRecipe = recipe;
-				this.recipeMult = this.worldObj.rand.nextInt(10) + 1;
-				this.recipeNum = i;
-				return;
-			}
-		}
+		int i = this.worldObj.rand.nextInt(BotaniaAPI.elvenTradeRecipes.size());
+		RecipeElvenTrade recipe = BotaniaAPI.elvenTradeRecipes.get(i);
+		
+		if (!AlfheimRegistry.isForbidden(recipe.getOutput())) {
+			if (recipe.getOutput().getItem() instanceof ItemBlock && Block.getBlockFromItem(recipe.getOutput().getItem()) instanceof BlockStorage && this.worldObj.rand.nextInt(10) != 0) setRandomRecipe();
+			this.tradeRecipe = recipe;
+			this.recipeMult = this.worldObj.rand.nextInt(16) + 1;
+			this.recipeNum = i;
+			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			return;
+		} else setRandomRecipe();
 	}
 	
-	void giveMinecraftiansResources() {
+	void performTrade() {
 		if (recipeMult <= 0) return;
 		List<Object> inputs = this.tradeRecipe.getInputs();
 		for (Object in : inputs) {
@@ -200,6 +192,7 @@ public class TileTradePortal extends TileMod {
 			spawnItem(new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
 		}
 		if (--recipeMult <= 0) this.tradeRecipe = null;
+		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	void spawnItem(ItemStack stack) {
@@ -294,6 +287,6 @@ public class TileTradePortal extends TileMod {
 	}
 	
 	public boolean isTradeOn() {
-		return tradeRecipe != null;
+		return tradeRecipe != null && recipeMult > 0;
 	}
 }

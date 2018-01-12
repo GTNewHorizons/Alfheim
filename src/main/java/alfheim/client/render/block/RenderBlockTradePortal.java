@@ -1,27 +1,16 @@
 package alfheim.client.render.block;
 
-import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glColor4d;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.common.block.BlockTradePortal;
 import alfheim.common.block.tile.TileTradePortal;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -31,8 +20,8 @@ import vazkii.botania.client.core.handler.ClientTickHandler;
 public class RenderBlockTradePortal extends TileEntitySpecialRenderer {
 
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float ticks) {
-		TileTradePortal portal = (TileTradePortal) tileentity;
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float ticks) {
+		TileTradePortal portal = (TileTradePortal) tile;
 		int meta = portal.getBlockMetadata();
 		if(meta == 0)
 			return;
@@ -51,24 +40,22 @@ public class RenderBlockTradePortal extends TileEntitySpecialRenderer {
 			glRotated(90, 0, 1, 0);
 		}
 		
-		// TODO fix render
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-		//renderIcon(1, 1, BlockTradePortal.textures[2], 1, 1, 240);
+		renderIcon(0, 0, BlockTradePortal.textures[2], 3, 3, 240);
 		glTranslated(0, 0, 0.5);
-		//renderIcon(1, 1, BlockTradePortal.textures[2], 1, 1, 240);
+		renderIcon(0, 0, BlockTradePortal.textures[2], 3, 3, 240);
 
 		glColor4d(1, 1, 1, 1);
 		if (portal.isTradeOn()){
-			glTranslated(0, 0, -0.25);
-			IIcon icon;
+			if (meta == 1) glTranslated(0.046875, 0, 0);
+			glTranslated(1.453125, -0.6640625, 0.251);
 			ItemStack out = portal.getOutput();
-			if (out.getItem() instanceof ItemBlock) {
-				icon = Block.getBlockFromItem(out.getItem()).getIcon(1, out.getItemDamage());
-			} else {
-				Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-				icon = out.getItem().getIconFromDamage(portal.getOutput().getItemDamage());
-			}
-			renderIcon(0.5, 0.5, icon, 2, 2, 240);
+			if (out.getItem() instanceof ItemBlock) glTranslated(0, 0, -0.140625);
+			renderItem(tile, out);
+			glRotated(180, 0, 1, 0);
+			if (out.getItem() instanceof ItemBlock) glTranslated(0, 0, 0.72075);
+			else glTranslated(0, 0, 1.002);
+			renderItem(tile, out);
 		}
 		
 		glEnable(GL_CULL_FACE);
@@ -88,4 +75,14 @@ public class RenderBlockTradePortal extends TileEntitySpecialRenderer {
 		tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0, par3Icon.getMinU(), par3Icon.getMinV());
 		tessellator.draw();
 	}
+	
+	public void renderItem(TileEntity tile, ItemStack stack) {
+		if (stack == null) return;
+		EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0D, 0.0D, 0.0D, stack);
+		entityitem.getEntityItem().stackSize = 1;
+		entityitem.hoverStart = 0.0F;
+		RenderItem.renderInFrame = true;
+		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0, 0, 0, 0, 0);
+		RenderItem.renderInFrame = false;
+    }
 }

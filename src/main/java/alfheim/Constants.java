@@ -7,7 +7,9 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class Constants {
@@ -19,7 +21,7 @@ public class Constants {
 	public static final String NAME = "Alfheim";
 	public static final String VERSION = major_version /*+ "." + minor_version*/ + "-" + build_version;
 	
-	public static final boolean DEV = false;
+	public static final boolean DEV = true;
 
 	public static final IAttribute RACE = new BaseAttribute(Constants.MODID.toUpperCase() + ":RACE", 0) {
 		@Override
@@ -47,5 +49,8 @@ public class Constants {
 	}
 	public static void chatLog(String message, World world) {
 		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+	}
+	public static void say(EntityPlayer player, String message) {
+		player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(message)));
 	}
 }

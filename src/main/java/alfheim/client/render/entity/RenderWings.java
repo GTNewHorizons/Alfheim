@@ -6,6 +6,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.Constants;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -48,6 +49,7 @@ public class RenderWings {
 	};
 	
 	public static void render(RenderWorldLastEvent e) {
+		if (!AlfheimConfig.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
 		EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
 		List<EntityPlayer> list = Minecraft.getMinecraft().theWorld.playerEntities;
 		for (EntityPlayer player : list) {

@@ -3,12 +3,15 @@ package alfheim.client.core.utils;
 import org.lwjgl.input.Mouse;
 
 import alfheim.AlfheimCore;
+import alfheim.Constants;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.network.KeyBindMessage;
 import baubles.api.BaublesApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 
 public class KeyBindingsUtils {
 
@@ -26,7 +29,9 @@ public class KeyBindingsUtils {
 		if (AlfheimCore.enableElvenStory) {
 			if (ClientProxy.keyFlight.isPressed() && !toggleFlight) {
 				toggleFlight = true;
-				AlfheimCore.network.sendToServer(new KeyBindMessage((byte) KeyBindingIDs.FLIGHT.ordinal(), false, 0));
+				if (!AlfheimConfig.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) {
+					Constants.say(player, "mes.flight.unavailable");
+				} else AlfheimCore.network.sendToServer(new KeyBindMessage((byte) KeyBindingIDs.FLIGHT.ordinal(), false, 0));
 			} else if (toggleFlight) {
 				toggleFlight = false;
 			}

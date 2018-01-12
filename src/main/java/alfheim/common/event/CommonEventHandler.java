@@ -9,8 +9,10 @@ import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -23,6 +25,10 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
+import vazkii.botania.common.block.BlockAlfPortal;
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.item.ModItems;
 
 public class CommonEventHandler {
@@ -68,7 +74,19 @@ public class CommonEventHandler {
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		if (!AlfheimCore.enableElvenStory) return;
+		if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
 		e.player.capabilities.allowFlying = !EnumRace.getRace(e.player).equals(EnumRace.HUMAN);
+	}
+	
+	@SubscribeEvent
+	public void onPlayerChangeDimension(PlayerChangedDimensionEvent e) {
+		if (!AlfheimCore.enableElvenStory) return;
+		// TODO fix IAttribute sync across dimensions
+	}
+	
+	@SubscribeEvent
+	public void onAlfPortalUpdate(ElvenPortalUpdateEvent e) {
+		if (e.portalTile.getWorldObj().provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && ((TileAlfPortal)e.portalTile).ticksOpen >= 0) ((TileAlfPortal) e.portalTile).ticksOpen = 0;
 	}
 	
 	@SubscribeEvent

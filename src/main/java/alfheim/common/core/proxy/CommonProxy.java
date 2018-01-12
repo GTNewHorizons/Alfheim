@@ -6,7 +6,7 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.ElvenStoryModModifiers;
+import alfheim.common.core.utils.AlfheimBotaniaModifiers;
 import alfheim.common.event.CommonEventHandler;
 import alfheim.common.lexicon.AlfheimLexiconCategory;
 import alfheim.common.world.dim.DimensionUtil;
@@ -35,7 +35,7 @@ public class CommonProxy {
 	
 	public void postInit() {
 		AlfheimAchievements.init();
-		if (AlfheimCore.enableElvenStory) ElvenStoryModModifiers.postInit();
+		AlfheimBotaniaModifiers.postInit();
 	}
 	
 	public void initializeAndRegisterHandlers() {

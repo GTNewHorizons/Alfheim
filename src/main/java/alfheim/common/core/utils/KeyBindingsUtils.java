@@ -5,6 +5,7 @@ import alfheim.Constants;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.StatCollector;
 
 public class KeyBindingsUtils {
 	

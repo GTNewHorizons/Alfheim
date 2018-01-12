@@ -3,6 +3,7 @@ package alfheim.client.gui;
 import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.Constants;
+import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -34,11 +35,12 @@ public class GUIDeathTimer extends Gui {
 			field_146347_a.setAccessible(true);
 			int time = -field_146347_a.getInt(gui) + 20;
 			double c = time < 0 ? 1.0 : 0.8;
-
+			
+			glScaled(AlfheimConfig.deathTimerScale, AlfheimConfig.deathTimerScale, 0);
 			{
 				glPushMatrix();
 				glColor4d(c, c, c, 1);
-				glTranslated(resolution.getScaledWidth() / 2 - 32, resolution.getScaledHeight() - 64, 0);
+				glTranslated(resolution.getScaledWidth() / 2 - 32 + AlfheimConfig.deathTimerX, resolution.getScaledHeight() - 64 + AlfheimConfig.deathTimerY, 0);
 				Tessellator tes = Tessellator.instance;
 				mc.renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/gui/DeathTimerBack.png"));
 				tes.startDrawingQuads();
@@ -49,7 +51,7 @@ public class GUIDeathTimer extends Gui {
 				tes.draw();
 				mc.renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/gui/DeathTimer.png"));
 				glTranslated(32, 32, 0);
-				glRotated(-(time % 20) * 18, 0, 0, 1); //
+				glRotated(-(time % 20) * 18, 0, 0, 1);
 				glTranslated(-32, -32, 0);
 				tes.startDrawingQuads();
 				tes.addVertexWithUV(0, 0, 0, 0, 0);
@@ -65,7 +67,7 @@ public class GUIDeathTimer extends Gui {
 				double sc = 1.5;
 				glScaled(sc, sc, 1);
 				String s = "" + Math.max((time / 20), 0);
-				font.drawString(s, (int) (resolution.getScaledWidth() / (2 * sc) - font.getStringWidth(s) / 2), (int) (resolution.getScaledHeight() / sc) - 25, (int) (255 * c) << 16 | (int) (255 * c) << 8 | (int) (255 * c), true);
+				font.drawString(s, (int) (resolution.getScaledWidth() / (2 * sc) - font.getStringWidth(s) / 2) + AlfheimConfig.deathTimerFontX, (int) (resolution.getScaledHeight() / sc) - 25 +  + AlfheimConfig.deathTimerFontY, (int) (255 * c) << 16 | (int) (255 * c) << 8 | (int) (255 * c), true);
 				glPopMatrix();
 			}
 		}

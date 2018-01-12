@@ -39,6 +39,13 @@ public class AlfheimConfig extends Configuration {
 	public static boolean prolongDeathScreen;
 	public static int deathScreenAdditionalTime;
 	public static int flightTime;
+	public static boolean enableWingsNonAlfheim;
+	
+	public static double deathTimerScale;
+	public static int deathTimerX;
+	public static int deathTimerY;
+	public static int deathTimerFontX;
+	public static int deathTimerFontY;
 
 	public static void syncConfig() {
 		List<String> propOrder = new ArrayList<String>();
@@ -62,7 +69,7 @@ public class AlfheimConfig extends Configuration {
 			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(true);
 			dimensionIDAlfheim = prop.getInt();
 			propOrder.add(prop.getName());
-			
+
 			prop = AlfheimCore.config.get("Other", "destroyPortal", true);
 			prop.comment = "Set this to false to disable destroying portals in non-zero coords in Alfheim";
 			prop.setLanguageKey("alfheim.configgui.destroyPortal").setRequiresMcRestart(false);
@@ -105,6 +112,44 @@ public class AlfheimConfig extends Configuration {
 				prop.setLanguageKey("alfheim.configgui.flightTime").setRequiresMcRestart(true);
 				flightTime = prop.getInt();
 				propOrder.add(prop.getName());
+				
+				prop = AlfheimCore.config.get("Elven Story", "enableWingsNonAlfheim", true);
+				prop.comment = "Set this to false to disable wings in other worlds";
+				prop.setLanguageKey("alfheim.configgui.enableWingsNonAlfheim").setRequiresMcRestart(false);
+				enableWingsNonAlfheim = prop.getBoolean();
+				propOrder.add(prop.getName());
+				
+				{
+					prop = AlfheimCore.config.get("Death Timer", "deathTimerScale", 1.0);
+					prop.comment = "Death Timer Scale (1 < bigger; 1 > smaller)";
+					prop.setLanguageKey("alfheim.configgui.deathTimerScale").setRequiresMcRestart(false);
+					deathTimerScale = prop.getDouble();
+					propOrder.add(prop.getName());
+		
+					prop = AlfheimCore.config.get("Death Timer", "deathTimerX", 0);
+					prop.comment = "Death Timer additional X from center";
+					prop.setLanguageKey("alfheim.configgui.deathTimerX").setRequiresMcRestart(false);
+					deathTimerX = prop.getInt();
+					propOrder.add(prop.getName());
+		
+					prop = AlfheimCore.config.get("Death Timer", "deathTimerY", 0);
+					prop.comment = "Death Timer additional Y from bottom";
+					prop.setLanguageKey("alfheim.configgui.deathTimerY").setRequiresMcRestart(false);
+					deathTimerY = prop.getInt();
+					propOrder.add(prop.getName());
+		
+					prop = AlfheimCore.config.get("Death Timer", "deathTimerFontX", 0);
+					prop.comment = "Death Timer text additional X from center";
+					prop.setLanguageKey("alfheim.configgui.deathTimerFontX").setRequiresMcRestart(false);
+					deathTimerFontX = prop.getInt();
+					propOrder.add(prop.getName());
+		
+					prop = AlfheimCore.config.get("Death Timer", "deathTimerFontY", 0);
+					prop.comment = "Death Timer text additional Y from bottom";
+					prop.setLanguageKey("alfheim.configgui.deathTimerFontY").setRequiresMcRestart(false);
+					deathTimerFontY = prop.getInt();
+					propOrder.add(prop.getName());
+				}
 			}
 			
 			if (AlfheimCore.config.hasChanged()) {
