@@ -7,7 +7,7 @@ import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -82,6 +82,6 @@ public class BlockElvenOres extends Block implements ILexiconable {
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.ores;
+		return AlfheimLexiconData.ores;
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import alfheim.Constants;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -181,6 +181,6 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.ruling;
+		return AlfheimLexiconData.ruling;
 	}
 }

@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.api.crafting.recipe.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,11 +25,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
@@ -43,7 +39,7 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	public static IIcon[] textures = new IIcon[6];
 	
 	public RealitySword() {
-		super(AlfheimRegistry.REALITY);
+		super(AlfheimAPI.REALITY);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setNoRepair();
 		this.setUnlocalizedName("RealitySword");

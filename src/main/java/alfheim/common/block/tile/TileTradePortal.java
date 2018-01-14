@@ -5,14 +5,16 @@ import java.util.List;
 import com.google.common.base.Function;
 
 import alfheim.Constants;
+import alfheim.api.crafting.recipe.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
@@ -35,6 +37,8 @@ public class TileTradePortal extends TileMod {
 	};
 
 	private static final int[][] GLOWSTONE_POSITIONS = { { -2, 2, 0 }, { 2, 2, 0 }, { 0, 4, 0 } };
+	
+	private static final int[][] PYLON_POSITIONS = { { -2, 4, 0 }, { 2, 4, 0 } };
 
 	private static final int[][] AIR_POSITIONS = {
 			{ -1, 1, 0 }, { 0, 1, 0 }, { 1, 1, 0 },
@@ -78,6 +82,7 @@ public class TileTradePortal extends TileMod {
 		Multiblock mb = new Multiblock();
 		for (int[] l : LIVINGROCK_POSITIONS) mb.addComponent(l[0], l[1] + 1, l[2], ModBlocks.livingrock, 0);
 		for (int[] g : GLOWSTONE_POSITIONS) mb.addComponent(g[0], g[1] + 1, g[2], Blocks.glowstone, 0);
+		for (int[] p : PYLON_POSITIONS) mb.addComponent(p[0], p[1] + 1, p[2], AlfheimBlocks.elvenPylon, 0);
 		mb.addComponent(0, 1, 0, AlfheimBlocks.tradePortal, 0);
 		mb.setRenderOffset(0, -1, 0);
 		return mb.makeSet();
@@ -141,7 +146,7 @@ public class TileTradePortal extends TileMod {
 
 		float motionMul = 0.2F;
 		Botania.proxy.wispFX(getWorldObj(), xCoord + pos[0], yCoord + pos[1], zCoord + pos[2],
-				(float) (Math.random() * 0.25F), (float) (Math.random() * 0.5F + 0.5F), (float) (Math.random() * 0.25F),
+				(float) (Math.random() * 0.5F + 0.5F), (float) (Math.random() * 0.25F + 0.5F), (float) (Math.random() * 0.25F),
 				(float) (Math.random() * 0.15F + 0.1F), (float) (Math.random() - 0.5F) * motionMul,
 				(float) (Math.random() - 0.5F) * motionMul, (float) (Math.random() - 0.5F) * motionMul);
 	}
@@ -154,7 +159,6 @@ public class TileTradePortal extends TileMod {
 				return true;
 			} 
 		} else {
-			setRandomRecipe();
 			Constants.chatLog(this.tradeRecipe.getOutput().getDisplayName() + " x" + this.recipeMult);
 		}
 		return false;
@@ -169,7 +173,7 @@ public class TileTradePortal extends TileMod {
 		int i = this.worldObj.rand.nextInt(BotaniaAPI.elvenTradeRecipes.size());
 		RecipeElvenTrade recipe = BotaniaAPI.elvenTradeRecipes.get(i);
 		
-		if (!AlfheimRegistry.isForbidden(recipe.getOutput())) {
+		if (!AlfheimAPI.isRetradeForbidden(recipe.getOutput())) {
 			if (recipe.getOutput().getItem() instanceof ItemBlock && Block.getBlockFromItem(recipe.getOutput().getItem()) instanceof BlockStorage && this.worldObj.rand.nextInt(10) != 0) setRandomRecipe();
 			this.tradeRecipe = recipe;
 			this.recipeMult = this.worldObj.rand.nextInt(16) + 1;
@@ -226,11 +230,9 @@ public class TileTradePortal extends TileMod {
 	}
 
 	private int getValidMetadata() {
-		if (checkConverter(null))
-			return 1;
-
-		if (checkConverter(CONVERTER_X_Z))
-			return 2;
+		if (this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return 0;
+		if (checkConverter(null)) return 1;
+		if (checkConverter(CONVERTER_X_Z)) return 2;
 
 		return 0;
 	}
@@ -243,10 +245,30 @@ public class TileTradePortal extends TileMod {
 		if (!check2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false;
 		if (!check2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false;
 		if (!check2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false;
+		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.elvenPylon, 0, converters)) return false;
 
+		lightPylons(converters);
 		return true;
 	}
 
+	private void lightPylons(Function<int[], int[]>... converters) {
+		if(ticksOpen < 50)
+			return;
+
+		for(int[] pos : PYLON_POSITIONS) {
+			for(Function<int[], int[]> f : converters) if(f != null) pos = f.apply(pos);
+
+			TileEntity tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2]);
+			if(tile instanceof TileElvenPylon) {
+				TileElvenPylon pylon = (TileElvenPylon) tile;
+				pylon.activated = true;
+				pylon.centerX = xCoord;
+				pylon.centerY = yCoord;
+				pylon.centerZ = zCoord;
+			}
+		}
+	}
+	
 	private boolean check2DArray(int[][] positions, Block block, int meta, Function<int[], int[]>... converters) {
 		for (int[] pos : positions) {
 			for (Function<int[], int[]> f : converters) if (f != null) pos = f.apply(pos);

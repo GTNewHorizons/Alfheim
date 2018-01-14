@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 
 import alfheim.Constants;
 import alfheim.client.render.entity.RenderWings;
+import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -44,10 +45,12 @@ public class GUIRace extends Gui {
 		this.mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(this.mc.thePlayer));
 		this.drawTexturedModalRect(event.resolution.getScaledWidth() * 5 + (182 * 5) + 32, event.resolution.getScaledHeight() * 10 - 256 - 32, 0, 0, 256, 256);
 
-		int flightTime = MathHelper.floor_double(this.mc.thePlayer.getEntityAttribute(Constants.FLIGHT).getAttributeValue());
-		this.mc.getTextureManager().bindTexture(this.flightTime);
-
 		{
+			glTranslated(AlfheimConfig.flightTimerX, AlfheimConfig.flightTimerY, 0);
+			glScaled(AlfheimConfig.flightTimerScale, AlfheimConfig.flightTimerScale, 0);
+			int flightTime = MathHelper.floor_double(this.mc.thePlayer.getEntityAttribute(Constants.FLIGHT).getAttributeValue());
+			this.mc.getTextureManager().bindTexture(this.flightTime);
+			
 			double mod = flightTime / Constants.FLIGHT.getDefaultValue();
 			glScaled(1152, 288, 1);
 			glTranslated(0.02, 0.02, 0);

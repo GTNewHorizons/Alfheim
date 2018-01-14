@@ -3,6 +3,7 @@ package alfheim.common.item.equipment.armor.elemental;
 import java.util.List;
 
 import alfheim.Constants;
+import alfheim.api.crafting.recipe.AlfheimAPI;
 import alfheim.client.model.armor.ModelElementalArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -20,7 +21,7 @@ import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 public abstract class ElementalArmor extends ItemManasteelArmor implements IPixieSpawner {
 
 	public ElementalArmor(int type, String name) {
-		super(type, name, AlfheimRegistry.ELEMENTAL);
+		super(type, name, AlfheimAPI.ELEMENTAL);
 	}
 	
 	@Override

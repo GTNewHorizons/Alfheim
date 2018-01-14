@@ -12,9 +12,11 @@ import org.apache.logging.log4j.Level;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -23,142 +25,103 @@ import net.minecraftforge.common.config.Property;
 
 public class AlfheimConfig extends Configuration {
 
+	public static Configuration config;
+	
+	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL + CATEGORY_SPLITTER + "dimension";
+	public static final String CATEGORY_ESMODE	= CATEGORY_GENERAL + CATEGORY_SPLITTER + "elvenstory";
+	public static final String CATEGORY_HUD			= CATEGORY_ESMODE + CATEGORY_SPLITTER + "hud";
+	
 	// DIMENSIONS
-	public static int dimensionIDAlfheim;
-	public static int biomeIDAlfheim;
-	public static int biomeIDAlfheimBeach;
+	public static int dimensionIDAlfheim		= -105;
+	public static int biomeIDAlfheim			= 152;
+	public static int biomeIDAlfheimBeach		= 153;
 	
 	// OHTER
-	public static boolean destroyPortal;
-	public static boolean enableAlfheimRespawn;
-	public static boolean showNumbersInTooltip;
+	public static boolean destroyPortal			= true;
+	public static boolean enableAlfheimRespawn	= true;
+	public static boolean showNumbersInTooltip	= false;
 	
 	// Elven Story
-	public static Vec3[] zones = new Vec3[9];
-	public static boolean enableElvenStory;
-	public static boolean prolongDeathScreen;
-	public static int deathScreenAdditionalTime;
-	public static int flightTime;
-	public static boolean enableWingsNonAlfheim;
+	public static Vec3[] zones					= new Vec3[9];
+	public static boolean enableElvenStory		= false;
+	public static boolean prolongDeathScreen	= true;
+	public static int deathScreenAddTime		= 1200;
+	public static int flightTime				= 12000;
+	public static boolean enableWingsNonAlfheim	= true;
+
+	// ES - HUD
+	public static double deathTimerScale		= 1.0;
+	public static int deathTimerX				= 0;
+	public static int deathTimerY				= 0;
+	public static double flightTimerScale		= 1.0;
+	public static int flightTimerX				= 0;
+	public static int flightTimerY				= 0;
 	
-	public static double deathTimerScale;
-	public static int deathTimerX;
-	public static int deathTimerY;
-	public static int deathTimerFontX;
-	public static int deathTimerFontY;
+	public static void loadConfig(File suggestedConfigurationFile) {
+		config = new Configuration(suggestedConfigurationFile);
 
+		config.load();
+		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings");
+		config.addCustomCategoryComment(CATEGORY_ESMODE,	"Elven Story optional features");
+		config.addCustomCategoryComment(CATEGORY_HUD, "Coordinates and sizes of HUD elements");
+		
+		syncConfig();
+		FMLCommonHandler.instance().bus().register(new AlfheimChangeListener());
+	}
+	
 	public static void syncConfig() {
-		List<String> propOrder = new ArrayList<String>();
-		try {
-			Property prop;
-
-			prop = AlfheimCore.config.get("Dimensions", "biomeIDAlfheim", 152);
-			prop.comment = "Biome ID for standart biome";
-			prop.setLanguageKey("alfheim.configgui.biomeIDAlfheim").setRequiresMcRestart(true);
-			biomeIDAlfheim = prop.getInt();
-			propOrder.add(prop.getName());
-
-			prop = AlfheimCore.config.get("Dimensions", "biomeIDAlfheimBeach", 153);
-			prop.comment = "Biome ID for beach biome";
-			prop.setLanguageKey("alfheim.configgui.biomeIDAlfheimBeach").setRequiresMcRestart(true);
-			biomeIDAlfheimBeach = prop.getInt();
-			propOrder.add(prop.getName());
-
-			prop = AlfheimCore.config.get("Dimensions", "dimensionIDAlfheim", -105);
-			prop.comment = "Dimension ID for Alfheim";
-			prop.setLanguageKey("alfheim.configgui.dimensionIDAlfheim").setRequiresMcRestart(true);
-			dimensionIDAlfheim = prop.getInt();
-			propOrder.add(prop.getName());
-
-			prop = AlfheimCore.config.get("Other", "destroyPortal", true);
-			prop.comment = "Set this to false to disable destroying portals in non-zero coords in Alfheim";
-			prop.setLanguageKey("alfheim.configgui.destroyPortal").setRequiresMcRestart(false);
-			destroyPortal = prop.getBoolean();
-			propOrder.add(prop.getName());
-			
-			prop = AlfheimCore.config.get("Other", "enableAlfheimRespawn", true);
-			prop.comment = "Set this to false to disable respawning in Alfheim";
-			prop.setLanguageKey("alfheim.configgui.enableAlfheimRespawn").setRequiresMcRestart(false);
-			enableAlfheimRespawn = prop.getBoolean();
-			propOrder.add(prop.getName());
-			
-			prop = AlfheimCore.config.get("Other", "showNumbersInTooltip", false);
-			prop.comment = "Set this to true to enable numerical mana representation";
-			prop.setLanguageKey("alfheim.configgui.showNumbersInTooltip").setRequiresMcRestart(false);
-			showNumbersInTooltip = prop.getBoolean();
-			propOrder.add(prop.getName());
-			
-			prop = AlfheimCore.config.get("Elven Story", "enableElvenStory", false);
-			prop.comment = "Set this to true to enable Elven Story mode without mod";
-			prop.setLanguageKey("alfheim.configgui.enableElvenStory").setRequiresMcRestart(false);
-			enableElvenStory = prop.getBoolean();
-			propOrder.add(prop.getName());
-			
-			if (Loader.isModLoaded("elvenstory") || enableElvenStory) {
-				prop = AlfheimCore.config.get("Elven Story", "prolongDeathScreen", true);
-				prop.comment = "Set this to false to disable death screen prolongation";
-				prop.setLanguageKey("alfheim.configgui.prolongDeathScreen").setRequiresMcRestart(false);
-				prolongDeathScreen = prop.getBoolean();
-				propOrder.add(prop.getName());
-				
-				prop = AlfheimCore.config.get("Elven Story", "deathScreenAdditionalTime", 1200);
-				prop.comment = "How longer (in ticks) \"Respawn\" button will be unavailable";
-				prop.setLanguageKey("alfheim.configgui.deathScreenAdditionalTime").setRequiresMcRestart(false);
-				deathScreenAdditionalTime = prop.getInt();
-				propOrder.add(prop.getName());
-				
-				prop = AlfheimCore.config.get("Elven Story", "flightTime", 12000);
-				prop.comment = "How long can you fly as elf";
-				prop.setLanguageKey("alfheim.configgui.flightTime").setRequiresMcRestart(true);
-				flightTime = prop.getInt();
-				propOrder.add(prop.getName());
-				
-				prop = AlfheimCore.config.get("Elven Story", "enableWingsNonAlfheim", true);
-				prop.comment = "Set this to false to disable wings in other worlds";
-				prop.setLanguageKey("alfheim.configgui.enableWingsNonAlfheim").setRequiresMcRestart(false);
-				enableWingsNonAlfheim = prop.getBoolean();
-				propOrder.add(prop.getName());
-				
-				{
-					prop = AlfheimCore.config.get("Death Timer", "deathTimerScale", 1.0);
-					prop.comment = "Death Timer Scale (1 < bigger; 1 > smaller)";
-					prop.setLanguageKey("alfheim.configgui.deathTimerScale").setRequiresMcRestart(false);
-					deathTimerScale = prop.getDouble();
-					propOrder.add(prop.getName());
+		Property prop;
 		
-					prop = AlfheimCore.config.get("Death Timer", "deathTimerX", 0);
-					prop.comment = "Death Timer additional X from center";
-					prop.setLanguageKey("alfheim.configgui.deathTimerX").setRequiresMcRestart(false);
-					deathTimerX = prop.getInt();
-					propOrder.add(prop.getName());
-		
-					prop = AlfheimCore.config.get("Death Timer", "deathTimerY", 0);
-					prop.comment = "Death Timer additional Y from bottom";
-					prop.setLanguageKey("alfheim.configgui.deathTimerY").setRequiresMcRestart(false);
-					deathTimerY = prop.getInt();
-					propOrder.add(prop.getName());
-		
-					prop = AlfheimCore.config.get("Death Timer", "deathTimerFontX", 0);
-					prop.comment = "Death Timer text additional X from center";
-					prop.setLanguageKey("alfheim.configgui.deathTimerFontX").setRequiresMcRestart(false);
-					deathTimerFontX = prop.getInt();
-					propOrder.add(prop.getName());
-		
-					prop = AlfheimCore.config.get("Death Timer", "deathTimerFontY", 0);
-					prop.comment = "Death Timer text additional Y from bottom";
-					prop.setLanguageKey("alfheim.configgui.deathTimerFontY").setRequiresMcRestart(false);
-					deathTimerFontY = prop.getInt();
-					propOrder.add(prop.getName());
-				}
-			}
+		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",		biomeIDAlfheim,			true,	"Biome ID for standart biome");
+		biomeIDAlfheimBeach	= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheimBeach",	biomeIDAlfheimBeach,	true,	"Biome ID for beach biome");
+		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",	dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
+		destroyPortal		= loadProp(CATEGORY_GENERAL,	"destroyPortal",		destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
+		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",	enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
+		showNumbersInTooltip= loadProp(CATEGORY_GENERAL,	"showNumbersInTooltip", showNumbersInTooltip,	false,	"Set this to true to enable numerical mana representation");
+		enableElvenStory	= loadProp(CATEGORY_ESMODE,		"enableElvenStory",		enableElvenStory,		true,	"Set this to true to enable Elven Story mode without mod");
+
+		AlfheimCore.enableElvenStory = Loader.isModLoaded("elvenstory") || enableElvenStory;
+
+		if (AlfheimCore.enableElvenStory) {
+			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
+			deathScreenAddTime		= loadProp(CATEGORY_ESMODE,	"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
+			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
+			enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,	"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");
+
+			deathTimerScale			= loadProp(CATEGORY_HUD,	"deathTimerScale",	deathTimerScale,	false,	"Death Timer Scale (1 < bigger; 1 > smaller)");
+			deathTimerX				= loadProp(CATEGORY_HUD,	"deathTimerX",		deathTimerX,		false,	"Death Timer additional X");
+			deathTimerY				= loadProp(CATEGORY_HUD,	"deathTimerY",		deathTimerY,		false,	"Death Timer additional Y");
 			
-			if (AlfheimCore.config.hasChanged()) {
-				AlfheimCore.config.save();
-			}
-		} catch (final Exception e) {
-			FMLLog.log(Level.ERROR, e, Constants.NAME + " has a problem loading it's config");
-			FMLCommonHandler.instance().exitJava(-1, false);
+			flightTimerScale		= loadProp(CATEGORY_HUD,	"flightTimerScale",	flightTimerScale,	false,	"Flight Timer Scale (1 < bigger; 1 > smaller)");
+			flightTimerX			= loadProp(CATEGORY_HUD,	"flightTimerX",		flightTimerX,		false,	"Flight Timer additional X");
+			flightTimerY			= loadProp(CATEGORY_HUD,	"flightTimerY",		flightTimerY,		false,	"Flight Timer additional Y");
 		}
+
+		if (config.hasChanged()) {
+			config.save();
+		}
+
+	}
+	
+	public static int loadProp(String category, String propName, int default_, boolean restart, String desc) {
+		Property prop = config.get(category, propName, default_);
+		prop.comment = desc;
+		prop.setRequiresMcRestart(restart);
+		return prop.getInt(default_);
+	}
+	
+	public static double loadProp(String category, String propName, double default_, boolean restart, String desc) {
+		Property prop = config.get(category, propName, default_);
+		prop.comment = desc;
+		prop.setRequiresMcRestart(restart);
+		return prop.getDouble(default_);
+	}
+
+	public static boolean loadProp(String category, String propName, boolean default_, boolean restart, String desc) {
+		Property prop = config.get(category, propName, default_);
+		prop.comment = desc;
+		prop.setRequiresMcRestart(restart);
+		return prop.getBoolean(default_);
 	}
 	
 	public static void initWorldCoordsForElvenStory(World world) throws IOException {
@@ -217,5 +180,12 @@ public class AlfheimConfig extends Configuration {
 	
 	private static Vec3 makeVectorOfLengthRotated(double length, double angle) {
 		return Vec3.createVectorHelper(Math.cos(Math.toRadians(angle)) * length, 64, Math.sin(Math.toRadians(angle)) * length);
+	}
+	
+	public static class AlfheimChangeListener {
+		@SubscribeEvent
+		public void onConfigChanged(OnConfigChangedEvent e) {
+			if(e.modID.equals(Constants.MODID)) syncConfig();
+		}
 	}
 }

@@ -7,6 +7,7 @@ tile.DreamLog.name=Ствол Древа Мечтаний
 tile.DreamSapling.name=Саженец Древа Мечтаний
 tile.ElementiumElvenOre.name=Руда Элементия
 tile.ElvenGrass.name=Эльфийская Трава
+tile.ElvenPylon.name=Эльфийский Пилон
 tile.ElvenSand.name=Эльфийский Песок
 tile.ElvoriumBlock.name=Блок Эльвория
 tile.GoldElvenOre.name=Золотая Руда
@@ -17,6 +18,7 @@ tile.MauftriumBlock.name=Блок Мауфтрия
 tile.MuspelheimFire.name=Красный Огонь Муспельхейма
 tile.NiflheimIce.name=Ядовитый Лёд Нифльхейма
 tile.QuartzElvenOre.name=Руда Эльфийского Кварца
+tile.TradePortal.name=Ядро Врат Мидгарда
 
 #########################################################___ПРЕДМЕТЫ___#########################################################
 

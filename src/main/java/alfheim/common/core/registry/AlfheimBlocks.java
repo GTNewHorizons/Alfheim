@@ -11,10 +11,13 @@ import alfheim.Constants;
 import alfheim.common.block.*;
 import alfheim.common.block.mana.BlockManaInfuser;
 import alfheim.common.item.block.ItemBlockElvenOres;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
+import clashsoft.cslib.minecraft.block.CSBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import vazkii.botania.common.block.BlockPylon;
+import vazkii.botania.common.block.ModBlocks;
 
 public class AlfheimBlocks {
 	
@@ -25,6 +28,7 @@ public class AlfheimBlocks {
 	public static Block elvenGrass;
 	public static Block elvenOres;
 	public static Block elvenSand;
+	public static Block elvenPylon;
 	public static Block elvoriumBlock;
 	public static Block livingcobble;
 	public static Block mauftriumBlock;
@@ -46,10 +50,11 @@ public class AlfheimBlocks {
 		dreamSapling = new BlockDreamSapling();
 		elvenGrass = new BlockElvenGrass();
 		elvenOres = new BlockElvenOres();
-		elvenSand = new BlockPatternLexicon(Constants.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconCategory.worldgen);
-		elvoriumBlock = new BlockPatternLexicon(Constants.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconCategory.elvorium);
-		livingcobble = new BlockPatternLexicon(Constants.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false, false, AlfheimLexiconCategory.worldgen);
-		mauftriumBlock = new BlockPatternLexicon(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconCategory.essences);
+		elvenSand = new BlockPatternLexicon(Constants.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen);
+		elvenPylon = new BlockElvenPylon();
+		elvoriumBlock = new BlockPatternLexicon(Constants.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.elvorium);
+		livingcobble = new BlockPatternLexicon(Constants.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false, false, AlfheimLexiconData.worldgen);
+		mauftriumBlock = new BlockPatternLexicon(Constants.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.essences);
 		manaInfuser = new BlockManaInfuser();
 		poisonIce = new BlockPoisonIce();
 		redFlame = new BlockRedFlame();
@@ -60,6 +65,7 @@ public class AlfheimBlocks {
 		register(manaInfuser);
 		register(alfheimPortal);
 		register(tradePortal);
+		register(elvenPylon);
 		register(elvoriumBlock);
 		register(mauftriumBlock);
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));

@@ -17,15 +17,20 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
+import vazkii.botania.client.lib.LibRenderIDs;
 
 public class ClientProxy extends CommonProxy {
 	
-	public final static KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
-
+	public static final KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
+	public static final int idPylon = RenderingRegistry.getNextAvailableRenderId();
+	
 	@Override
 	public void registerRenderThings() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderBlockAlfheimPortal());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderBlockTradePortal());
+		RenderingRegistry.registerBlockHandler(idPylon, new RenderBlockElvenPylon());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderTileAlfheimPortal());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileElvenPylon.class, new RenderTileElvenPylon());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderTileTradePortal());
 		
 		if (AlfheimCore.enableElvenStory) ClientRegistry.registerKeyBinding(keyFlight);
 		

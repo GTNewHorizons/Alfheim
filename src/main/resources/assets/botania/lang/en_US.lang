@@ -2,50 +2,50 @@ botania.category.alfheim=Alfheim
 
 botania.entry.alfheim=Alfheim
 botania.tagline.alfheim=New Horizons!
-botania.page.alfheim0=Alfheim ... A beautiful world where magic lives forever ... These lands were given to the light alvs, also called elves. But who are they? Creatures similar to people living for so long that they deserve to be considered immortal, they were created by the first Aesir. The very same world is filled with special magic, which made the world so beautiful.
-botania.page.alfheim1=But he also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed ... Those that the travelers knew happened to have been in Helheim or Walhall for a long time ... Oh, let the heavenly light shines upon the souls of the dead!
+botania.page.alfheim0=Alfheim... A beautiful world where magic lives forever... These lands were given to the light alvs, also called elves. But who are they? Creatures similar to people living for so long that they deserve to be considered immortal, they were created by the first Aesir. The very same world is filled with special magic, which made the world so beautiful.
+botania.page.alfheim1=But he also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed... Those that the travelers knew happened to have been in Helheim or Walhall for a long time... Oh, let the heavenly light shines upon the souls of the dead!
 
 botania.entry.elves=Elves
 botania.tagline.elves=Native people
-botania.page.elves0=As it was said before, elves are beautiful creatures, skillfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastrei was the only one who knew the temporary anomalies of his own world as his five fingers.
-botania.page.elves1=His greatest invention was the portal to Midgard, the middle world of the world tree Yggdrasil. This world was not like Alfheim. He studied this world for a week on the Midgard calendar, and during this time met people. Those only heard about the elven kingdom, but now they are eager to get there ...
-botania.page.elves2=Mastray warned them about the time jump that they will have to endure, and almost everyone listened to his warnings ... 30 years passed on Midgard, on Alfhem - only 7 hours. But they were warned, what is their punishment from themselves!
+botania.page.elves0=As it was said before, elves are beautiful creatures, skillfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastray was the only one who knew the temporary anomalies of his own world as his five fingers.
+botania.page.elves1=His greatest invention was the portal to Midgard, the middle world of the world tree Yggdrasil. This world was not like Alfheim. He studied this world for a week on the Midgard calendar, and during this time met people. Those only heard about the elven kingdom, but now they are eager to get there...
+botania.page.elves2=Mastray warned them about the time jump that they will have to endure, and almost everyone listened to his warnings... 30 years passed on Midgard, on Alfhem - only 7 hours. But they were warned, what is their punishment from themselves!
 botania.page.elves3=After this incident, the elves sought the most stable lands in their kingdom. In them, when one second passes in Alfhem, a little more than an hour passes on Midgard. So then the great cooperation of elves and people began.
 botania.page.elves4=Among the people there were mages who comprehended their craft through flowers. This magic was something similar to elven one. Having studied the precious component of Midgard ores (iron, diamonds and similar jewelry), the elves understood: bargaining with people is profitable. However, their world is not filled with mana like Alfheim. Therefore, they concluded a trade union, which is still valid today.
 
 botania.entry.portal=Portal to Alfheim
 botania.tagline.portal=We need to go even more deeper!
-botania.page.portal0=Mastray ... He was a native of Alfheim and created the first portal to Midgard, which laid the foundation for a great alliance. However, the portal itself was given to him with great difficulty. To build a portal to Midgard, the resources of Midgard were needed ... How ironic ... It's good that Freyr himself lived in Alfheim, because he was a race of Vans, another kind of gods ...
-botania.page.portal1=He understood Mastrey, and brought him terrasteel - the great alloy of Midgard. Then he quickly finished the portal and activated it. Apparently, if you build it in Midgard, it will also work ...
+botania.page.portal0=Mastray... He was a native of Alfheim and created the first portal to Midgard, which laid the foundation for a great alliance. However, the portal itself was given to him with great difficulty. To build a portal to Midgard, the resources of Midgard were needed... How ironic... It's good that Freyr himself lived in Alfheim, because he was a race of Vans, another kind of gods...
+botania.page.portal1=He understood Mastray, and brought him terrasteel - the great alloy of Midgard. Then he quickly finished the portal and activated it. Apparently, if you build it in Midgard, it will also work...
 botania.page.portal2=At the heart of the portal is Bifröst - the legendary rainbow bridge that connects Asgard to other worlds.
 botania.page.portal3=The next thing you need is a link that can set up the perfect connection between Alfheim and Midgard. Elves will never tell the secret of making this link to people, and for its manufacture will require the Netherstar - the artifact of Muspelheim. It remains only to build the portal correctly and it's ready!
 botania.page.portal4=Creating &1Alfheim Portal Core&0
 botania.page.portal5=Получение &1Межпростран- ственного Связующего Ядра&0
 botania.page.portal6=Портал в Альфхейм
 botania.page.portal7=To activate the portal, you only need to use the Core on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in Alfheim it doesn't require mana sources, since it takes energy from the world itself.
-botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastrey. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
-botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastrey. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
+botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
+botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
 
 botania.entry.worldgen=Worldgen
 botania.tagline.worldgen=More strange stuff!
-botania.page.worldgen0=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time ... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and somehow strangely react to the dragon stone ...
+botania.page.worldgen0=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and somehow strangely react to the dragon stone...
 botania.page.worldgen1=Получение древа мечтаний
 botania.page.worldgen2=Creating светящейся пыли
-botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences ... <br>And they also have special sand, which when melted gives the same glass that the elves traded.
+botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences... <br>And they also have special sand, which when melted gives the same glass that the elves traded.
 botania.page.worldgen4=Creating жизнебулыжника
 botania.page.worldgen5=Creating жизнекаменной кирки
 botania.page.worldgen6=Creating печи
 
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
-botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful ... Stunning metal!
+botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
 botania.page.ores1=Dragonstone ore - precious pink elven jewel. It is a pity that you can not make the tools out of it.<br>Gold ore - looks like the elves had the metal of the gods too...<br>Elven quartz ore - it's like the quartz from the nether, a beautiful green color, like Alfheim itself!
 botania.page.ores2=Iffesal ore - only a few people have heard about it. It is believed that its dust has a great power, and greatest elven inventions are based on it. The elves themselves are aware of the greed and profit thirst for people, so they don't want to bargain with it.
 
 botania.entry.mobs=Mobs
 botania.tagline.mobs=Finally, life!
-botania.page.mobs0=Alfheim, unlike Midgard, is not such a forgotten world. After all, there still live indigenous people - elves! It's good that they haven't lost their mind, otherwise we know the former natives of Midgard - zombies. Elves are the greatest sorcerers, and they are revered by everyone. They were, it until they got infected with that terrible virus ... But somehow they are not inclined to talk with you ...
-botania.page.mobs1=Also in the world can fly special little purple creatures, which are called pixies, otherwise - fairies. Kind - yes. Valuable - yes, because their dust is used in various crafting recipes. Elves used this ingredient to trade it for manapearls ...
+botania.page.mobs0=Alfheim, unlike Midgard, is not such a forgotten world. After all, there still live indigenous people - elves! It's good that they haven't lost their mind, otherwise we know the former natives of Midgard - zombies. Elves are the greatest sorcerers, and they are revered by everyone. They were, it until they got infected with that terrible virus... But somehow they are not inclined to talk with you...
+botania.page.mobs1=Also in the world can fly special little purple creatures, which are called pixies, otherwise - fairies. Kind - yes. Valuable - yes, because their dust is used in various crafting recipes. Elves used this ingredient to trade it for manapearls...
 
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
@@ -58,8 +58,16 @@ botania.page.infuser5=Mana-infuser
 
 botania.entry.elvorium=Elvorium
 botania.tagline.elvorium=Better than terrasteel
-botania.page.elvorium0=Elves had learned the recipe of the terrasteel, the one that Mastray had borrowed from Freyr. However, long before that, elves had a similar method of making an alloy woven from the power of Alfheim's resources. By properties, it is similar to terrasteel, but stronger ... Elementium ingot, piece of dragonstone, pixie dust and some mana. Here it is, the cherished alloy! Elvorium!
+botania.page.elvorium0=Elves had learned the recipe of the terrasteel, the one that Mastray had borrowed from Freyr. However, long before that, elves had a similar method of making an alloy woven from the power of Alfheim's resources. By properties, it is similar to terrasteel, but stronger... Elementium ingot, piece of dragonstone, pixie dust and some mana. Here it is, the cherished alloy! Elvorium!
 botania.page.elvorium1=Creating Elvorium
+
+botania.entry.trade=Reverse Exchange
+botania.tagline.trade=Well, how else?
+botania.page.trade0=Alfheim sometimes impresses with its anomalies, but precisely because of them it is possible to create a portal into this world. The trading gate used by the traders of Midgard is built in Alfheim in a different way, because of those anomalies not allowing the work of a scheme that operates in Overworld. But Mastray did not lose it.
+botania.page.trade1=The Alfheim-Midgard portal itself is similar in design to the portal of Midgard-Alfheim, but there are some differences:<br>The material for its gate won't be livingwood, but a livingrock, and elven pylons of elvorium and Iffesal dust will perfectly stabilize the connection. May the great Mastray, the Connector of the Worlds, be glorified forever!
+botania.page.trade2=Creating Elven Pylon
+botania.page.trade3=Creating Midgard Gateway Core
+botania.page.trade4=Midgard Trade Portal
 
 botania.entry.essences=Essences
 botania.tagline.essences=It looks like corals
@@ -69,7 +77,7 @@ botania.page.essences1d=Creating essence of Muspelheim
 botania.page.essences2=But when you read legends about the universe, you remember about Niflheim, the world of frosts and ice, on a par with Muspelheim occupying the status of "primal".
 botania.page.essences3=Snow, dense ice and the Iffesal dust are ideal items for the summoner of the icy wolf, Quei. He resembles Nizatar, and the same legends go about him: either a test, or a guard.
 botania.page.essences3d=Creating essence of Niflheim
-botania.page.essences4=Terrasteel and Elvorium are ideal alloys, symbolizing the power of Midgard and Alfheim. But it's still far from the limit! We all know what will happen if we combine the Gaia Spirit and the Terrestrial - Gaia ingot. A dummy, it would seem. But the elves consider differently ...
+botania.page.essences4=Terrasteel and Elvorium are ideal alloys, symbolizing the power of Midgard and Alfheim. But it's still far from the limit! We all know what will happen if we combine the Gaia Spirit and the Terrestrial - Gaia ingot. A dummy, it would seem. But the elves consider differently...
 botania.page.essences5=Legends of Asgard say: the weapons of the gods are woven of a special metal, uniting the forces of the four worlds. The elves took into account these legends and decided to become like the gods in this. They have woven two alloys from the elvorium and essences of the primal worlds, similarly to Gaia ingots: an ingots of Muspelheim's and Niflheim's powers.
 botania.page.essences6=Creating World's power ingots.
 botania.page.essences7=But they didn't stop on this and went even further, combining the ingots with Gaia's ingot and making Elven infusion. The metal of the gods themselves - Mauftrium. True power in this alloy!
@@ -77,10 +85,10 @@ botania.page.essences8=Creating Mauftrium
 
 botania.entry.runes=Runes
 botania.tagline.runes=Just a few more
-botania.page.runes0=It would seem that those runes of primary elements, seasons, deadly sins and mana itself are enough ... Not at all! When studying the properties of essences, it turned out that you can fill them with runes, and get improved versions of them!
+botania.page.runes0=It would seem that those runes of primary elements, seasons, deadly sins and mana itself are enough... Not at all! When studying the properties of essences, it turned out that you can fill them with runes, and get improved versions of them!
 botania.page.runes1=Creating new runes
-botania.page.runes2=The new runes of Muspelheim and Niflheim contain in themselves their original energy, which makes it possible to create powerful weapons of fire and ice ... May the sleeping giants of both worlds awake!
-botania.page.runes3=But besides the runes of these worlds, there is one more. The rune of five elements: air, fire, water, earth and magic, also called the Primordial rune. Such a rune contains the power of the original energy, which was before the time of these two worlds. Wait a second, was there really a time when Muspelheim and Niflheim did not exist? Who knows ...
+botania.page.runes2=The new runes of Muspelheim and Niflheim contain in themselves their original energy, which makes it possible to create powerful weapons of fire and ice... May the sleeping giants of both worlds awake!
+botania.page.runes3=But besides the runes of these worlds, there is one more. The rune of five elements: air, fire, water, earth and magic, also called the Primordial rune. Such a rune contains the power of the original energy, which was before the time of these two worlds. Wait a second, was there really a time when Muspelheim and Niflheim did not exist? Who knows...
 botania.page.runes4=Creating primordial rune
 
 botania.entry.elvenSet=Elvorium Armor
@@ -111,7 +119,7 @@ botania.page.advMana6=Creating Mauftrium ring
 
 botania.entry.ruling=Power of other worlds
 botania.tagline.ruling=I'm Bruce Almighty
-botania.page.ruling0=Muspelheim and Niflheim ... Two primordial worlds. What can we squeeze out of them? Power! More power! It all started with some essences and runes, but what can we get now? Rods! Amulets! Power!
+botania.page.ruling0=Muspelheim and Niflheim... Two primordial worlds. What can we squeeze out of them? Power! More power! It all started with some essences and runes, but what can we get now? Rods! Amulets! Power!
 botania.page.ruling1=Using the Mauftrium and Blazerods, the Elves were able to concentrate the power of the runes and use it to their advantage. The rods of two worlds allow the creation of protective circles - from the red flame of Muspelheim or the poisonous ice of Niflheim. Fortunately or unfortunately, they are short-lived, but there will be enough time for regrouping.
 botania.page.ruling2=Creating rods
 botania.page.ruling3=However, the fact of using this force doesn't yet mean its subordination - absolutely all beings are vulnerable to it. To protect themselves and not suffer from their own magic, the elves created protective amulets that could return uncontrolled energy to where it came from.
@@ -119,7 +127,7 @@ botania.page.ruling4=Creating protective amulets
 
 botania.entry.reality=Reality Sword
 botania.tagline.reality=Uii, rainbow!
-botania.page.reality0=Elemental elven armor is certainly a good idea ... But for a warrior with such armor there is not enough weapons. Let's say a sword. Fortunately this problem is solvable with the use of the alloy of the gods! The sword itself can either be a simple cutting blade, or it can erupt from itself the strength of one of the four primal elements.
+botania.page.reality0=Elemental elven armor is certainly a good idea... But for a warrior with such armor there is not enough weapons. Let's say a sword. Fortunately this problem is solvable with the use of the alloy of the gods! The sword itself can either be a simple cutting blade, or it can erupt from itself the strength of one of the four primal elements.
 botania.page.reality1=But we must take into account that when you set the sword to one of these elements, mana is wasted, so take care of it! But it's not important, because you have a lot of it, considering that you created so much Mauftrium for this sword, right?
 botania.page.reality2=Creating the sword
 

@@ -3,7 +3,7 @@ package alfheim.common.block;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.block.tile.TileTradePortal;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -38,7 +38,7 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	public void registerBlockIcons(IIconRegister reg) {
 		textures[0] = reg.registerIcon(Constants.MODID + ":TradePortal");
 		textures[1] = reg.registerIcon(Constants.MODID + ":TradePortalActive");
-		textures[2] = IconHelper.forBlock(reg, ModBlocks.alfPortal, "Inside");
+		textures[2] = reg.registerIcon(Constants.MODID + ":TradePortalInside");
 	}
 	
 	@Override
@@ -64,6 +64,6 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.trade;
+		return AlfheimLexiconData.trade;
 	}
 }

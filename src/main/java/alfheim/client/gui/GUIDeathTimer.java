@@ -36,6 +36,7 @@ public class GUIDeathTimer extends Gui {
 			int time = -field_146347_a.getInt(gui) + 20;
 			double c = time < 0 ? 1.0 : 0.8;
 			
+			glTranslated(AlfheimConfig.deathTimerX, AlfheimConfig.deathTimerY, 0);
 			glScaled(AlfheimConfig.deathTimerScale, AlfheimConfig.deathTimerScale, 0);
 			{
 				glPushMatrix();
@@ -67,7 +68,7 @@ public class GUIDeathTimer extends Gui {
 				double sc = 1.5;
 				glScaled(sc, sc, 1);
 				String s = "" + Math.max((time / 20), 0);
-				font.drawString(s, (int) (resolution.getScaledWidth() / (2 * sc) - font.getStringWidth(s) / 2) + AlfheimConfig.deathTimerFontX, (int) (resolution.getScaledHeight() / sc) - 25 +  + AlfheimConfig.deathTimerFontY, (int) (255 * c) << 16 | (int) (255 * c) << 8 | (int) (255 * c), true);
+				font.drawString(s, (int) (resolution.getScaledWidth() / (2 * sc) - font.getStringWidth(s) / 2), (int) (resolution.getScaledHeight() / sc) - 25, (int) (255 * c) << 16 | (int) (255 * c) << 8 | (int) (255 * c), true);
 				glPopMatrix();
 			}
 		}

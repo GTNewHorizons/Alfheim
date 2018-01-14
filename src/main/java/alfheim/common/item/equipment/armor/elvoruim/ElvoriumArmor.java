@@ -8,9 +8,9 @@ import com.google.common.collect.Multimap;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
+import alfheim.api.crafting.recipe.AlfheimAPI;
 import alfheim.client.model.armor.ModelElvoriumArmor;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
@@ -37,7 +37,7 @@ import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
 
 	public ElvoriumArmor(int type, String name) {
-		super(type, name, AlfheimRegistry.ELVORIUM);
+		super(type, name, AlfheimAPI.ELVORIUM);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}
 

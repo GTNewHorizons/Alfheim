@@ -2,7 +2,7 @@ package alfheim.common.block;
 
 import alfheim.AlfheimCore;
 import alfheim.Constants;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockLog;
@@ -43,6 +43,6 @@ public class BlockDreamLog extends BlockLog implements ILexiconable {
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.worldgen;
+		return AlfheimLexiconData.worldgen;
 	}
 }

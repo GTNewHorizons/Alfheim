@@ -2,16 +2,15 @@ package alfheim.client.integration.nei.recipes;
 
 import java.util.List;
 
+import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.ManaInfusionRecipies;
-import alfheim.common.crafting.recipe.IManaInfusionRecipe;
+import alfheim.common.core.registry.AlfheimRegistry;
 import codechicken.nei.PositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePetals;
-import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.integration.nei.recipe.RecipeHandlerPetalApothecary;
 import vazkii.botania.common.block.tile.mana.TilePool;
@@ -53,7 +52,7 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 
 	@Override
 	public List<? extends RecipePetals> getRecipes() {
-		return ManaInfusionRecipies.recipes;
+		return AlfheimAPI.manaInfusionRecipes;
 	}
 
 	@Override

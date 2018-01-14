@@ -3,10 +3,11 @@ package alfheim.common.block.tile;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.common.block.mana.BlockManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.ManaInfusionRecipies;
-import alfheim.common.crafting.recipe.IManaInfusionRecipe;
+import alfheim.common.core.registry.AlfheimRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -137,7 +138,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
 	boolean areItemsValid(List<EntityItem> items) {
 		if (items.isEmpty()) return false;
-		for (IManaInfusionRecipe recipe : ManaInfusionRecipies.recipes) {
+		for (IManaInfusionRecipe recipe : AlfheimAPI.manaInfusionRecipes) {
 			if (DEBUG) System.out.println(recipe.toString());
 			if(items.size() != recipe.getInputs().size()) {
 				if (DEBUG) System.out.println("Incorrect items amount (" + items.size() + "). Skipping this recipe.");

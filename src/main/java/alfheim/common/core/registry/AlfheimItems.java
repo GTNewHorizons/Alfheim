@@ -1,10 +1,13 @@
 package alfheim.common.core.registry;
 
 import static alexsocol.asjlib.ASJUtilities.register;
+import static alfheim.common.core.registry.AlfheimItems.elvenResource;
 
 import java.util.Arrays;
 import java.util.List;
 
+import alfheim.api.lib.LibOreDict;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.item.equipment.armor.elemental.ElementalAirBoots;
 import alfheim.common.item.equipment.armor.elemental.ElementalEarthChest;
 import alfheim.common.item.equipment.armor.elemental.ElementalFireLeggings;
@@ -23,6 +26,8 @@ import alfheim.common.item.material.ItemElvenResource;
 import alfheim.common.item.rod.ItemRod;
 import baubles.api.BaubleType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class AlfheimItems {
 
@@ -95,7 +100,18 @@ public class AlfheimItems {
 	}
 
 	private static void regOreDict() {
-		
+		OreDictionary.registerOre(LibOreDict.ELVORIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot));
+		OreDictionary.registerOre(LibOreDict.MAUFTRIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot));
+		OreDictionary.registerOre(LibOreDict.MUSPELHEIM_POWER_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot));
+		OreDictionary.registerOre(LibOreDict.NIFLHEIM_POWER_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot));
+		OreDictionary.registerOre(LibOreDict.ELVORIUM_NUGGET, new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumNugget));
+		OreDictionary.registerOre(LibOreDict.MAUFTRIUM_NUGGET, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumNugget));
+		OreDictionary.registerOre(LibOreDict.MUSPELHEIM_ESSENCE, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence));
+		OreDictionary.registerOre(LibOreDict.NIFLHEIM_ESSENCE, new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence));
+		OreDictionary.registerOre(LibOreDict.IFFESAL_DUST, new ItemStack(elvenResource, 1, ElvenResourcesMetas.IffesalDust));
+		OreDictionary.registerOre(LibOreDict.ARUNE[0], new ItemStack(elvenResource, 1, ElvenResourcesMetas.PrimalRune));
+		OreDictionary.registerOre(LibOreDict.ARUNE[1], new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune));
+		OreDictionary.registerOre(LibOreDict.ARUNE[2], new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune));
 	}
 	
 	public static class ElvenResourcesMetas {

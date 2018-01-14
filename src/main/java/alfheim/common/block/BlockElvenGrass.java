@@ -6,7 +6,7 @@ import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.client.render.block.RenderBlockElvenGrass;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -307,6 +307,6 @@ public class BlockElvenGrass extends Block implements IGrowable, ILexiconable {
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.worldgen;
+		return AlfheimLexiconData.worldgen;
 	}
 }

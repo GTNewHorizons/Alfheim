@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.client.integration.nei.recipes.RecipeHandlerManaInfuser.CachedManaInfuserRecipe;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.crafting.recipe.IManaInfusionRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;

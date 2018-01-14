@@ -14,6 +14,6 @@ public class ClientOnEvents {
 		if (Constants.DEV) return;
 		Field field_146347_a = gui.getClass().getDeclaredField("field_146347_a");
 		field_146347_a.setAccessible(true);
-		field_146347_a.setInt(gui, -Math.abs(AlfheimConfig.deathScreenAdditionalTime) + 20);
+		field_146347_a.setInt(gui, -Math.abs(AlfheimConfig.deathScreenAddTime) + 20);
 	}
 }

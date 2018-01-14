@@ -2,7 +2,6 @@ package alfheim.common.entity;
 
 import alfheim.Constants;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 
@@ -54,18 +53,31 @@ public enum EnumRace {
 	}
 	
 	public static EnumRace getRace(EntityPlayer player) {
+		if (!hasRace(player)) registerRace(player);
 		return fromID(player.getEntityAttribute(Constants.RACE).getAttributeValue());
 	}
 	
 	public static int getRaceID(EntityPlayer player) {
+		if (!hasRace(player)) registerRace(player);
 		return MathHelper.floor_double(player.getEntityAttribute(Constants.RACE).getAttributeValue());
 	}
 	
 	public static void setRace(EntityPlayer player, EnumRace race) {
+		if (!hasRace(player)) registerRace(player);
 		player.getEntityAttribute(Constants.RACE).setBaseValue(race.ordinal());
 	}
 	
 	public static void setRaceID(EntityPlayer player, double raceID) {
+		if (!hasRace(player)) registerRace(player);
 		player.getEntityAttribute(Constants.RACE).setBaseValue(raceID);
+	}
+	
+	private static boolean hasRace(EntityPlayer player) {
+		return player.getAttributeMap().getAttributeInstance(Constants.RACE) != null;
+	}
+	
+	private static void registerRace(EntityPlayer player) {
+		player.getAttributeMap().registerAttribute(Constants.RACE);
+		setRace(player, HUMAN);
 	}
 }; 

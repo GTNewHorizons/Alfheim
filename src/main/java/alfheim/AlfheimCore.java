@@ -14,7 +14,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLConstructionEvent;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -26,6 +25,8 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import vazkii.botania.client.core.handler.BotaniaPlayerController;
+import vazkii.botania.common.core.handler.ConfigHandler;
 
 
 @Mod(modid = Constants.MODID,
@@ -45,25 +46,14 @@ public class AlfheimCore {
 	public static SimpleNetworkWrapper network;
 	
 	public static boolean enableElvenStory = false;
-	public static Configuration config;
-	
-	@SubscribeEvent
-	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.modID.equals(Constants.MODID)) AlfheimConfig.syncConfig();
-	}
 	
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-		FMLCommonHandler.instance().bus().register(AlfheimCore.instance);
-		config = new Configuration(event.getSuggestedConfigurationFile());
-		AlfheimConfig.syncConfig();
-    	enableElvenStory = Loader.isModLoaded("elvenstory") || AlfheimConfig.enableElvenStory;
-    	
+    public void preInit(FMLPreInitializationEvent e) {
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
 		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
 		
     	proxy.initializeAndRegisterHandlers();
-    	proxy.preInit();
+    	proxy.preInit(e);
     }
     
     @EventHandler

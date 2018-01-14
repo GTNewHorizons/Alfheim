@@ -7,6 +7,7 @@ tile.DreamLog.name=Dreamwood Log
 tile.DreamSapling.name=Dreamwood Sapling
 tile.ElementiumElvenOre.name=Elementium Ore
 tile.ElvenGrass.name=Elven Grass
+tile.ElvenPylon.name=Elven Pylon
 tile.ElvenSand.name=Elven Sand
 tile.ElvoriumBlock.name=Block of Elvorium
 tile.GoldElvenOre.name=Gold Ore
@@ -17,6 +18,7 @@ tile.MauftriumBlock.name=Block of Mauftrium
 tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
+tile.TradePortal.name=Midgard Gateway Core
 
 ##########################################################___ITEMS___###########################################################
 

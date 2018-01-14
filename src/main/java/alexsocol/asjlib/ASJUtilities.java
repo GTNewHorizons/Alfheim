@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -53,6 +55,8 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
@@ -323,29 +327,25 @@ public class ASJUtilities {
 			e.printStackTrace();
 		}
 	}*/
+
+	public static void addOreDictRecipe(ItemStack output, Object... recipe) {
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
+	}
+
+	public static void addShapelessOreDictRecipe(ItemStack output, Object... recipe) {
+		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(output, recipe));
+	}
 	
 	/**
 	 * Removes recipe of <b>itemstack</b>
 	 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 	 * */
-	public static void RemoveRecipe(ItemStack resultItem) {
-		ItemStack recipeResult = null;
-		ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+	public static void removeRecipe(ItemStack resultItem) {
+		List recipes = CraftingManager.getInstance().getRecipeList();
 		
 		for (int scan = 0; scan < recipes.size(); scan++) {
-			IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
-			if (tmpRecipe instanceof ShapedRecipes) {
-				ShapedRecipes recipe = (ShapedRecipes) tmpRecipe;
-				recipeResult = recipe.getRecipeOutput();
-			}
-
-			if (tmpRecipe instanceof ShapelessRecipes) {
-				ShapelessRecipes recipe = (ShapelessRecipes) tmpRecipe;
-				recipeResult = recipe.getRecipeOutput();
-			}
-
-			if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
-				System.out.println("[ASJLib] Removed Recipe: " + recipes.get(scan) + " -> " + recipeResult);
+			if (ItemStack.areItemStacksEqual(resultItem, ((IRecipe) recipes.get(scan)).getRecipeOutput())) {
+				FMLRelaunchLog.log("ASJLib", Level.INFO, "[ASJLib] Removed Recipe: " + recipes.get(scan) + " -> " + ((IRecipe) recipes.get(scan)).getRecipeOutput());
 				recipes.remove(scan);
 			}
 		}

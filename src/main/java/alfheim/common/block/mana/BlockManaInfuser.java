@@ -3,9 +3,7 @@ package alfheim.common.block.mana;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.block.tile.TileManaInfuser;
-import alfheim.common.core.registry.ManaInfusionRecipies;
-import alfheim.common.crafting.recipe.IManaInfusionRecipe;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -64,6 +62,6 @@ public class BlockManaInfuser extends Block implements ITileEntityProvider, ILex
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.infuser;
+		return AlfheimLexiconData.infuser;
 	}
 }

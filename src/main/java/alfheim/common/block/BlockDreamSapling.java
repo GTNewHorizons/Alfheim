@@ -5,7 +5,7 @@ import java.util.Random;
 import alfheim.AlfheimCore;
 import alfheim.Constants;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.lexicon.AlfheimLexiconCategory;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -83,6 +83,6 @@ public class BlockDreamSapling extends BlockBush implements IGrowable, ILexicona
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconCategory.worldgen;
+		return AlfheimLexiconData.worldgen;
 	}
 }
