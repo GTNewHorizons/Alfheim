@@ -1,6 +1,6 @@
 package alfheim.client.render.entity;
 
-import alfheim.Constants;
+import alfheim.ModInfo;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -14,6 +14,6 @@ public class RenderEntityElf extends RenderLiving {
 
     @Override
     public ResourceLocation getEntityTexture(Entity par1Entity) {
-        return new ResourceLocation(Constants.MODID, "textures/model/entity/Elf.png");
+        return new ResourceLocation(ModInfo.MODID, "textures/model/entity/Elf.png");
     }
 }

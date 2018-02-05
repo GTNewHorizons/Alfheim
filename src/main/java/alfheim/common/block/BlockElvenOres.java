@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.lexicon.AlfheimLexiconData;
@@ -45,7 +45,7 @@ public class BlockElvenOres extends Block implements ILexiconable {
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		for (int i = 0; i < names.length; i++) {
-			textures[i] = reg.registerIcon(Constants.MODID + ':' + names[i] + "OreElven");
+			textures[i] = reg.registerIcon(ModInfo.MODID + ':' + names[i] + "OreElven");
 		}
 	}
 

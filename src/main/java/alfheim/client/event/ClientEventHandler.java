@@ -3,7 +3,8 @@ package alfheim.client.event;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
+import alfheim.api.AlfheimAPI;
 import alfheim.client.core.utils.KeyBindingsUtils;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
@@ -30,7 +31,7 @@ import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 
 public class ClientEventHandler {
 	
-	private static final ResourceLocation skin = new ResourceLocation(Constants.MODID, "textures/model/entity/AlexSocol.png");
+	private static final ResourceLocation skin = new ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png");
 	private static final ResourceLocation babylon = new ResourceLocation(LibResources.MISC_BABYLON);
 
 	@SubscribeEvent
@@ -59,7 +60,6 @@ public class ClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	public void onGUIOpened(GuiOpenEvent e) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) ClientOnEvents.onGameOver((GuiGameOver) e.gui);
-		
 	}
 	
 	@SubscribeEvent
@@ -73,7 +73,7 @@ public class ClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(Constants.RACE).getAttributeValue());
-		((EntityPlayer) e.entityPlayer).getEntityAttribute(Constants.RACE).setBaseValue(r.ordinal());
+		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
+		((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
 	}
 }

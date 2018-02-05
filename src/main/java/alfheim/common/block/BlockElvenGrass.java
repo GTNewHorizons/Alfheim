@@ -3,7 +3,7 @@ package alfheim.common.block;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.client.render.block.RenderBlockElvenGrass;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
@@ -49,7 +49,7 @@ public class BlockElvenGrass extends Block implements IGrowable, ILexiconable {
     public BlockElvenGrass() {
         super(Material.grass);
         this.setBlockName("ElvenGrass");
-        this.setBlockTextureName(Constants.MODID + ":ElvenGrass");
+        this.setBlockTextureName(ModInfo.MODID + ":ElvenGrass");
         this.setCreativeTab(AlfheimCore.alfheimTab);
         this.setHardness(0.6F);
         this.setTickRandomly(true);
@@ -228,7 +228,7 @@ public class BlockElvenGrass extends Block implements IGrowable, ILexiconable {
         
     	public ElvenGrassCrutch() {
     		super(Material.grass);
-    		this.setBlockTextureName(Constants.MODID + ":ElvenGrass");
+    		this.setBlockTextureName(ModInfo.MODID + ":ElvenGrass");
     	}
     	
     	/**

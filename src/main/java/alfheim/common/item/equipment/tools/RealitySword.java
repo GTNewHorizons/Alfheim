@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.ModInfo;
+import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -49,7 +49,7 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
 		for (int i = 0; i < 6; i++)
-		textures[i] = reg.registerIcon(Constants.MODID + ":RealitySword" + i);
+		textures[i] = reg.registerIcon(ModInfo.MODID + ":RealitySword" + i);
 	}
 	
 	@Override

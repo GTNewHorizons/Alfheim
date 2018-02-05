@@ -33,7 +33,7 @@ public class RenderTileAlfheimPortal extends TileEntitySpecialRenderer {
 
 		glTranslated(x - 1, y + 1, z + 0.25);
 		if(meta == 2) {
-			glTranslated(1.25, 0, 1.7);
+			glTranslated(1.25, 0, 1.75);
 			glRotated(90, 0, 1, 0);
 		}
 		

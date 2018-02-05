@@ -2,8 +2,9 @@ package alfheim.client.core.utils;
 
 import org.lwjgl.input.Mouse;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.utils.AlfheimConfig;
@@ -30,7 +31,7 @@ public class KeyBindingsUtils {
 			if (ClientProxy.keyFlight.isPressed() && !toggleFlight) {
 				toggleFlight = true;
 				if (!AlfheimConfig.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) {
-					Constants.say(player, "mes.flight.unavailable");
+					ASJUtilities.say(player, "mes.flight.unavailable");
 				} else AlfheimCore.network.sendToServer(new KeyBindMessage((byte) KeyBindingIDs.FLIGHT.ordinal(), false, 0));
 			} else if (toggleFlight) {
 				toggleFlight = false;

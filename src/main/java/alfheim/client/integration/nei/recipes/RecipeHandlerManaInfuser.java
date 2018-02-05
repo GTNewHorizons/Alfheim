@@ -2,7 +2,7 @@ package alfheim.client.integration.nei.recipes;
 
 import java.util.List;
 
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;

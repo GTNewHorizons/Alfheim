@@ -7,8 +7,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.ModInfo;
+import alfheim.api.AlfheimAPI;
 import alfheim.client.model.armor.ModelElvoriumArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
@@ -50,7 +50,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return Constants.MODID + ":textures/model/armor/ElvoriumArmor.png";
+		return ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png";
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
-		itemIcon = reg.registerIcon(Constants.MODID + ':' + this.getUnlocalizedName().substring(5));
+		itemIcon = reg.registerIcon(ModInfo.MODID + ':' + this.getUnlocalizedName().substring(5));
 	}
 	
 	@Override

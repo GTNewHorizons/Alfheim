@@ -16,16 +16,13 @@ import static org.lwjgl.opengl.GL11.glScaled;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 import static org.lwjgl.opengl.GL11.glTranslated;
 
-import org.lwjgl.opengl.GL11;
-
 import alexsocol.asjlib.ASJUtilities;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import vazkii.botania.client.core.helper.ShaderHelper;
@@ -56,8 +53,12 @@ public class RenderContributors {
 			}
 			
 			glRotated(-90, 1, 0, 0);
-			if (author.equals(thePlayer) && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) glRotated(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset, e.partialTicks), 0, 0, 1);
-			else glRotated(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw, e.partialTicks), 0, 0, 1);
+			
+			if (author.equals(thePlayer) && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0 && !(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
+				glRotated(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset, e.partialTicks), 0, 0, 1);
+			} else {
+				glRotated(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw, e.partialTicks), 0, 0, 1);
+			}
 			glTranslated(0, 0.5, -0.4);
 			glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + e.partialTicks, 0, 1, 0);
 			glScaled(2, 2, 2);

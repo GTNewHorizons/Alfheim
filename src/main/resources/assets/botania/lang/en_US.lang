@@ -1,4 +1,4 @@
-botania.category.alfheim=Alfheim
+2botania.category.alfheim=Alfheim
 
 botania.entry.alfheim=Alfheim
 botania.tagline.alfheim=New Horizons!
@@ -20,8 +20,8 @@ botania.page.portal1=He understood Mastray, and brought him terrasteel - the gre
 botania.page.portal2=At the heart of the portal is Bifröst - the legendary rainbow bridge that connects Asgard to other worlds.
 botania.page.portal3=The next thing you need is a link that can set up the perfect connection between Alfheim and Midgard. Elves will never tell the secret of making this link to people, and for its manufacture will require the Netherstar - the artifact of Muspelheim. It remains only to build the portal correctly and it's ready!
 botania.page.portal4=Creating &1Alfheim Portal Core&0
-botania.page.portal5=Получение &1Межпростран- ственного Связующего Ядра&0
-botania.page.portal6=Портал в Альфхейм
+botania.page.portal5=Creating &1Interdimen- sional Gateway Core&0
+botania.page.portal6=Portal to Alfheim
 botania.page.portal7=To activate the portal, you only need to use the Core on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in Alfheim it doesn't require mana sources, since it takes energy from the world itself.
 botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
 botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
@@ -29,12 +29,12 @@ botania.page.portal8s=Unfortunately, it was impossible to create a stable and fu
 botania.entry.worldgen=Worldgen
 botania.tagline.worldgen=More strange stuff!
 botania.page.worldgen0=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and somehow strangely react to the dragon stone...
-botania.page.worldgen1=Получение древа мечтаний
-botania.page.worldgen2=Creating светящейся пыли
+botania.page.worldgen1=Purifying dreamwood
+botania.page.worldgen2=Creating glowstone dust
 botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences... <br>And they also have special sand, which when melted gives the same glass that the elves traded.
-botania.page.worldgen4=Creating жизнебулыжника
-botania.page.worldgen5=Creating жизнекаменной кирки
-botania.page.worldgen6=Creating печи
+botania.page.worldgen4=Creating livingcobble
+botania.page.worldgen5=Creating livingrock pickaxe
+botania.page.worldgen6=Creating furnace
 
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
@@ -42,10 +42,25 @@ botania.page.ores0=Everyone knows that the midges of Midgard are filled with ore
 botania.page.ores1=Dragonstone ore - precious pink elven jewel. It is a pity that you can not make the tools out of it.<br>Gold ore - looks like the elves had the metal of the gods too...<br>Elven quartz ore - it's like the quartz from the nether, a beautiful green color, like Alfheim itself!
 botania.page.ores2=Iffesal ore - only a few people have heard about it. It is believed that its dust has a great power, and greatest elven inventions are based on it. The elves themselves are aware of the greed and profit thirst for people, so they don't want to bargain with it.
 
+botania.entry.anyavil=Anyavil
+botania.tagline.anyavil=Essence of pinkness
+botania.page.anyavil0=Use any pink item from either vanilla, botania or alfheim to repair your equipment. Just put it on anyavil, toss some pink stuff on the ground nearby and shoot pink mana beam directly on anyavil.
+botania.page.anyavil1=Nya! Kawaii!
+
 botania.entry.mobs=Mobs
 botania.tagline.mobs=Finally, life!
 botania.page.mobs0=Alfheim, unlike Midgard, is not such a forgotten world. After all, there still live indigenous people - elves! It's good that they haven't lost their mind, otherwise we know the former natives of Midgard - zombies. Elves are the greatest sorcerers, and they are revered by everyone. They were, it until they got infected with that terrible virus... But somehow they are not inclined to talk with you...
 botania.page.mobs1=Also in the world can fly special little purple creatures, which are called pixies, otherwise - fairies. Kind - yes. Valuable - yes, because their dust is used in various crafting recipes. Elves used this ingredient to trade it for manapearls...
+
+botania.entry.pixie=Pixie Attaractor
+botania.tagline.pixie=Come over here!
+botania.page.pixie0=Combining native Alfheim resources with Earth rune and powering it all with mana resulted in beautiful amulet, wich every pixie wants to see.
+botania.page.pixie1=Creating Pixie Attaractor
+
+botania.entry.pylons=New pylons
+botania.tagline.pylons=I will command the parade
+botania.page.pylons0=There are some changes in pylons you need to get used to:<br>All human pylons has their counterparts in Alfheim: Elven pylon is same tier as Mana pylon; Terra - as Yordin;<br>Gaia pylon is still top-tier, but it's recipe has changed.
+botania.page.pylons1=Creating Elven Pylon
 
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
@@ -65,7 +80,7 @@ botania.entry.trade=Reverse Exchange
 botania.tagline.trade=Well, how else?
 botania.page.trade0=Alfheim sometimes impresses with its anomalies, but precisely because of them it is possible to create a portal into this world. The trading gate used by the traders of Midgard is built in Alfheim in a different way, because of those anomalies not allowing the work of a scheme that operates in Overworld. But Mastray did not lose it.
 botania.page.trade1=The Alfheim-Midgard portal itself is similar in design to the portal of Midgard-Alfheim, but there are some differences:<br>The material for its gate won't be livingwood, but a livingrock, and elven pylons of elvorium and Iffesal dust will perfectly stabilize the connection. May the great Mastray, the Connector of the Worlds, be glorified forever!
-botania.page.trade2=Creating Elven Pylon
+botania.page.trade2=Creating Yordin Pylon
 botania.page.trade3=Creating Midgard Gateway Core
 botania.page.trade4=Midgard Trade Portal
 

@@ -3,7 +3,7 @@ package alfheim.client.model.armor;
 import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.AdvancedArmorModel;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -13,8 +13,8 @@ import net.minecraftforge.client.model.IModelCustom;
 
 public  class ModelElvoriumArmor extends AdvancedArmorModel {
 
-	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(Constants.MODID, "model/ElvoriumArmor.obj"));
-	public static final ResourceLocation texture = new ResourceLocation(Constants.MODID, "textures/model/armor/ElvoriumArmor.png");
+	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/ElvoriumArmor.obj"));
+	public static final ResourceLocation texture = new ResourceLocation(ModInfo.MODID, "textures/model/armor/ElvoriumArmor.png");
 	private final int partType;
 
 	/**armorType: 0 - head, 1 - body and arms, 2 - legs, 3 - feet.**/

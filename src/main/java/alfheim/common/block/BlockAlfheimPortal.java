@@ -2,7 +2,7 @@ package alfheim.common.block;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
@@ -30,7 +30,7 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	public BlockAlfheimPortal() {
 		super(Material.wood);
 		this.setBlockName("AlfheimPortal");
-		this.setBlockTextureName(Constants.MODID + ":AlfheimPortal");
+		this.setBlockTextureName(ModInfo.MODID + ":AlfheimPortal");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHardness(10.0F);
 		this.setResistance(600.0F);
@@ -39,9 +39,9 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		textures[0] = reg.registerIcon(Constants.MODID + ":AlfheimPortal");
-		textures[1] = reg.registerIcon(Constants.MODID + ":AlfheimPortalActive");
-		textures[2] = reg.registerIcon(Constants.MODID + ":AlfheimPortalInside");
+		textures[0] = reg.registerIcon(ModInfo.MODID + ":AlfheimPortal");
+		textures[1] = reg.registerIcon(ModInfo.MODID + ":AlfheimPortalActive");
+		textures[2] = reg.registerIcon(ModInfo.MODID + ":AlfheimPortalInside");
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim && meta != 0) world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
+		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim && meta != 0) world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
 		super.breakBlock(world, x, y, z, block, meta);
     }
 

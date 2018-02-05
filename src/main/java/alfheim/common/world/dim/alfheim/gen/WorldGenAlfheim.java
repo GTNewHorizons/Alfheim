@@ -29,7 +29,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 
 	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
 		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0) + 3, -41);
-		generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
+		for (int i = 0; i < 3 + rand.nextInt(2); i++) generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);
 		generateStructures(world, rand, chunkX, chunkZ);

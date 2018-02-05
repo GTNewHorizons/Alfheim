@@ -6,7 +6,7 @@ import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.init.Blocks;

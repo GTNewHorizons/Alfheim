@@ -5,7 +5,7 @@ import java.util.Random;
 import alexsocol.asjlib.IGlowingLayerBlock;
 import alexsocol.asjlib.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
@@ -30,7 +30,7 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock,
 	public BlockDreamLeaves() {
 		super();
 		this.setBlockName("DreamLeaves");
-		this.setBlockTextureName(Constants.MODID + ":DreamLeaves");
+		this.setBlockTextureName(ModInfo.MODID + ":DreamLeaves");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setLightOpacity(0);
 	}
@@ -82,9 +82,9 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock,
 
 	@SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister reg) {
-		textures[0] = reg.registerIcon(Constants.MODID + ":DreamLeaves");
-		textures[1] = reg.registerIcon(Constants.MODID + ":DreamLeavesOpaque");
-		textures[2] = reg.registerIcon(Constants.MODID + ":DreamSparks");
+		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLeaves");
+		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLeavesOpaque");
+		textures[2] = reg.registerIcon(ModInfo.MODID + ":DreamSparks");
     }
 	
 	public int getRenderType() {

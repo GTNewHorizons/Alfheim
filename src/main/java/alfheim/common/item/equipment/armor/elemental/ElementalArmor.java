@@ -2,8 +2,8 @@ package alfheim.common.item.equipment.armor.elemental;
 
 import java.util.List;
 
-import alfheim.Constants;
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.ModInfo;
+import alfheim.api.AlfheimAPI;
 import alfheim.client.model.armor.ModelElementalArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -33,7 +33,7 @@ public abstract class ElementalArmor extends ItemManasteelArmor implements IPixi
 	
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return Constants.MODID + ":textures/model/armor/ElementalArmor_" + (ConfigHandler.enableArmorModels ? "new" : armorType == 2 ? "1" : "0") + ".png";
+		return ModInfo.MODID + ":textures/model/armor/ElementalArmor_" + (ConfigHandler.enableArmorModels ? "new" : armorType == 2 ? "1" : "0") + ".png";
 	}
 
 	@Override

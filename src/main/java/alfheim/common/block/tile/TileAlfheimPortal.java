@@ -1,6 +1,5 @@
 package alfheim.common.block.tile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -9,9 +8,12 @@ import com.google.common.base.Function;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -25,7 +27,6 @@ import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
-import vazkii.botania.common.block.tile.TilePylon;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.Vector3;
@@ -76,7 +77,7 @@ public class TileAlfheimPortal extends TileMod {
 		for (int[] g : GLIMMERING_DREAMWOOD_POSITIONS)
 			mb.addComponent(g[0], g[1] + 1, g[2], ModBlocks.dreamwood, 5);
 		for (int[] p : PYLON_POSITIONS)
-			mb.addComponent(-p[0], p[1] + 1, -p[2], ModBlocks.pylon, 2);
+			mb.addComponent(-p[0], p[1] + 1, -p[2], AlfheimBlocks.alfheimPylons, 0);
 		for (int[] p : POOL_POSITIONS)
 			mb.addComponent(-p[0], p[1] + 1, -p[2], ModBlocks.pool, 0);
 
@@ -114,10 +115,11 @@ public class TileAlfheimPortal extends TileMod {
 
 							if (AlfheimConfig.destroyPortal && (this.xCoord != 0 || this.zCoord != 0)) {
 								this.worldObj.newExplosion(player, this.xCoord, this.yCoord, this.zCoord, 5, false, false);
-								this.worldObj.setBlockToAir(this.xCoord - 2, this.yCoord + 2, this.zCoord);
-								this.worldObj.setBlockToAir(this.xCoord + 2, this.yCoord + 2, this.zCoord);
+								int x = meta == 1 ? 2 : 0;
+								int z = meta == 1 ? 0 : 2;
+								this.worldObj.setBlockToAir(this.xCoord - x, this.yCoord + 2, this.zCoord - z);
+								this.worldObj.setBlockToAir(this.xCoord + x, this.yCoord + 2, this.zCoord + z);
 								this.worldObj.setBlockToAir(this.xCoord, this.yCoord + 4, this.zCoord);
-								
 								this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord);
 							}
 							
@@ -131,42 +133,23 @@ public class TileAlfheimPortal extends TileMod {
 							else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
 						}
 					}
-				if (ConfigHandler.elfPortalParticlesEnabled)
-					blockParticle(meta);
-				
-				/*ticksSinceLastItem++;
-
-				List<EntityItem> items = worldObj.getEntitiesWithinAABB(EntityItem.class, aabb);
-				if (!worldObj.isRemote)
-					for (EntityItem item : items) {
-						if (item.isDead)
-							continue;
-
-						ItemStack stack = item.getEntityItem();
-						if (stack != null && (!(stack.getItem() instanceof IElvenItem) || !((IElvenItem) stack.getItem()).isElvenItem(stack)) && !item.getEntityData().hasKey(TAG_PORTAL_FLAG)) {
-							item.setDead();
-							addItem(stack);
-							ticksSinceLastItem = 0;
-						}
-					}
-
-				if (ticksSinceLastItem >= 4) {
-					if (!worldObj.isRemote)
-						resolveRecipes();
-				}*/
+				if (ConfigHandler.elfPortalParticlesEnabled) blockParticle(meta);
 			}
 		} else
 			closeNow = false;
 
 		if (closeNow) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+			if (!worldObj.isRemote) worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
 			for (int i = 0; i < 36; i++)
 				blockParticle(meta);
 			closeNow = false;
 		} else if (newMeta != meta) {
-			if (newMeta == 0)
+			if (newMeta == 0) {
+				if (!worldObj.isRemote) worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
 				for (int i = 0; i < 36; i++)
 					blockParticle(meta);
+			}
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3);
 		}
 
@@ -207,42 +190,6 @@ public class TileAlfheimPortal extends TileMod {
 
 		return aabb;
 	}
-
-	/*void addItem(ItemStack stack) {
-		int size = stack.stackSize;
-		stack.stackSize = 1;
-		for (int i = 0; i < size; i++)
-			stacksIn.add(stack.copy());
-	}
-
-	void resolveRecipes() {
-		int i = 0;
-		for (ItemStack stack : stacksIn) {
-			if (stack != null && stack.getItem() instanceof ILexicon) {
-				((ILexicon) stack.getItem()).unlockKnowledge(stack, BotaniaAPI.elvenKnowledge);
-				ItemLexicon.setForcedPage(stack, LexiconData.elvenMessage.getUnlocalizedName());
-				spawnItem(stack);
-				stacksIn.remove(i);
-				return;
-			}
-			i++;
-		}
-
-		for (RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
-			if (recipe.matches(stacksIn, false)) {
-				recipe.matches(stacksIn, true);
-				spawnItem(recipe.getOutput().copy());
-				break;
-			}
-		}
-	}
-
-	void spawnItem(ItemStack stack) {
-		EntityItem item = new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, stack);
-		item.getEntityData().setBoolean(TAG_PORTAL_FLAG, true);
-		worldObj.spawnEntityInWorld(item);
-		ticksSinceLastItem = 0;
-	}*/
 
 	@Override
 	public void writeToNBT(NBTTagCompound cmp) {
@@ -285,7 +232,7 @@ public class TileAlfheimPortal extends TileMod {
 			return false;
 		if (!check2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
 			return false;
-		if (!check2DArray(PYLON_POSITIONS, ModBlocks.pylon, 2, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylons, 0, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false;
 		if (!check2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false;
@@ -306,7 +253,7 @@ public class TileAlfheimPortal extends TileMod {
 					pos = f.apply(pos);
 
 			TileEntity tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2]);
-			if (tile instanceof TilePylon) {
+			if (tile instanceof TileAlfheimPylons) {
 				
 				Vector3 centerBlock = new Vector3(xCoord + 0.5, yCoord + 0.75 + (Math.random() - 0.5 * 0.25), zCoord + 0.5);
 				

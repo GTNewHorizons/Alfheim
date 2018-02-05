@@ -1,25 +1,20 @@
 package alfheim.common.core.proxy;
 
-import alfheim.AlfheimCore;
+import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimBotaniaModifiers;
-import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.event.CommonEventHandler;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.world.dim.DimensionUtil;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {
 
-	public void preInit(FMLPreInitializationEvent e) {
-		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
+	public void preInit() {
     	AlfheimLexiconData.preInit();
     	AlfheimBlocks.init();
     	AlfheimItems.init();
@@ -40,7 +35,7 @@ public class CommonProxy {
 	
 	public void postInit() {
 		AlfheimAchievements.init();
-		AlfheimBotaniaModifiers.postInit();
+		AlfheimRegistry.postInit();
 	}
 	
 	public void initializeAndRegisterHandlers() {

@@ -4,7 +4,7 @@ import static net.minecraftforge.common.util.ForgeDirection.*;
 
 import java.util.Random;
 
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
@@ -42,8 +42,8 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg) {
-		this.icons = new IIcon[] { reg.registerIcon(Constants.MODID + ":MuspelheimFire0"),
-				reg.registerIcon(Constants.MODID + ":MuspelheimFire1") };
+		this.icons = new IIcon[] { reg.registerIcon(ModInfo.MODID + ":MuspelheimFire0"),
+				reg.registerIcon(ModInfo.MODID + ":MuspelheimFire1") };
 	}
 
 	@Override

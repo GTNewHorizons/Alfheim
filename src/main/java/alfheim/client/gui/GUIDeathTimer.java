@@ -2,7 +2,7 @@ package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
@@ -16,8 +16,8 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 
 public class GUIDeathTimer extends Gui {
 
-	private static final ResourceLocation rotator = new ResourceLocation(Constants.MODID, "textures/gui/DeathTimer.png");
-	private static final ResourceLocation back = new ResourceLocation(Constants.MODID, "textures/gui/DeathTimerBack.png");
+	private static final ResourceLocation rotator = new ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimer.png");
+	private static final ResourceLocation back = new ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimerBack.png");
 	private Minecraft mc;
 
 	public GUIDeathTimer(Minecraft mc) {
@@ -43,14 +43,14 @@ public class GUIDeathTimer extends Gui {
 				glColor4d(c, c, c, 1);
 				glTranslated(resolution.getScaledWidth() / 2 - 32 + AlfheimConfig.deathTimerX, resolution.getScaledHeight() - 64 + AlfheimConfig.deathTimerY, 0);
 				Tessellator tes = Tessellator.instance;
-				mc.renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/gui/DeathTimerBack.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimerBack.png"));
 				tes.startDrawingQuads();
 				tes.addVertexWithUV(0, 0, 0, 0, 0);
 				tes.addVertexWithUV(0, 64, 0, 0, 1);
 				tes.addVertexWithUV(64, 64, 0, 1, 1);
 				tes.addVertexWithUV(64, 0, 0, 1, 0);
 				tes.draw();
-				mc.renderEngine.bindTexture(new ResourceLocation(Constants.MODID, "textures/gui/DeathTimer.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimer.png"));
 				glTranslated(32, 32, 0);
 				glRotated(-(time % 20) * 18, 0, 0, 1);
 				glTranslated(-32, -32, 0);

@@ -1,6 +1,9 @@
 ##########################################################___BLOCKS___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
+tile.Anyavil.name=Anyavil
+tile.botania:AlfheimPylons0.name=Elven Pylon
+tile.botania:AlfheimPylons0.name=Yordin Pylon
 tile.DragonstoneElvenOre.name=Dragonstone Ore
 tile.DreamLeaves.name=Dreamwood Leaves
 tile.DreamLog.name=Dreamwood Log
@@ -29,6 +32,7 @@ item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
 item.botania:ElementalEarthChest.name=Elemental Chestplate of Earth
 item.botania:ElementalWaterHelm.name=Elemental Helmet of Water
 item.botania:ElementalWaterHelmRevealing.name=Elemental Revealing Helmet of Water
+item.botania:PixieAttractor.name=Pixie Attractor
 item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
 item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
 item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)

@@ -3,7 +3,7 @@ package alfheim.common.item.rod;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,7 +29,7 @@ public class ItemRod extends Item implements IManaUsingItem {
 		this.setFull3D();
 		this.setMaxDamage(100);
 		this.setMaxStackSize(1);
-		this.setTextureName(Constants.MODID + ':' + name);
+		this.setTextureName(ModInfo.MODID + ':' + name);
 		this.setUnlocalizedName(name);
 	}
     

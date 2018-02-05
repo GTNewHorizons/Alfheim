@@ -1,31 +1,32 @@
 package alexsocol.asjlib;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
+
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-
+import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Almost all code is by Vazkii, I just ported it to GL20 and made lib-style
  * */
 public final class ASJShaderHelper {
 
-	private static final int VERT = GL20.GL_VERTEX_SHADER;
-	private static final int FRAG = GL20.GL_FRAGMENT_SHADER;
+	private static final int FRAG = GL_FRAGMENT_SHADER;
+	private static final int VERT = GL_VERTEX_SHADER;
 
 	public static void useShader(int proramID, ShaderCallback callback) {
 		if(!OpenGlHelper.shadersSupported) return;
 
-		GL20.glUseProgram(proramID);
+		glUseProgram(proramID);
 
 		if(proramID != 0) {
-			int time = GL20.glGetUniformLocation(proramID, "time");
-			GL20.glUniform1f(time, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
+			int time = glGetUniformLocation(proramID, "time");
+			glUniform1f(time, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
 
 			if(callback != null)
 				callback.call(proramID);
@@ -42,30 +43,38 @@ public final class ASJShaderHelper {
 
 	// Most of the code taken from the LWJGL wiki
 	// http://lwjgl.org/wiki/index.php?title=GLSL_Shaders_with_LWJGL
-	public static int createProgram(String vertLocaion, String fragLocation) {
-		int vertID = 0, fragID = 0, programID = 0;
-		if(vertLocaion != null)
-			vertID = createShader(vertLocaion, VERT);
+	/**
+	 * Creates shader bundle for future using.
+	 * Put your shaders to <b>/assets/modid/</b>.
+	 * @param vertLocation Vertex shader location
+	 * @param fragLocation Fragment shader location
+	 * */
+	public static int createProgram(String vertLocation, String fragLocation) {
+		int vertID = 0, geomID = 0, fragID = 0, programID = 0;
+		if(vertLocation != null)
+			vertID = createShader(vertLocation, VERT);
 		if(fragLocation != null)
 			fragID = createShader(fragLocation, FRAG);
 
-		programID = GL20.glCreateProgram();
+		programID = glCreateProgram();
 		if(programID == 0)
 			return 0;
 
-		if(vertLocaion != null)
-			GL20.glAttachShader(programID, vertID);
+		if(vertLocation != null)
+			glAttachShader(programID, vertID);
 		if(fragLocation != null)
-			GL20.glAttachShader(programID, fragID);
+			glAttachShader(programID, fragID);
 
-		GL20.glLinkProgram(programID);
-		if(GL20.glGetShaderi(programID, GL20.GL_LINK_STATUS) == GL11.GL_FALSE) {
-			throw new RuntimeException("Error creating shader: " + getLogInfo(programID));
+		glLinkProgram(programID);
+		if(glGetProgrami(programID, GL_LINK_STATUS) == GL_FALSE) {
+			glDeleteProgram(programID);
+			throw new RuntimeException("Error Linking program: " + getProgramLogInfo(programID));
 		}
 
-		GL20.glValidateProgram(programID);
-		if (GL20.glGetShaderi(programID, GL20.GL_VALIDATE_STATUS) == GL11.GL_FALSE) {
-			throw new RuntimeException("Error creating shader: " + getLogInfo(programID));
+		glValidateProgram(programID);
+		if (glGetProgrami(programID, GL_VALIDATE_STATUS) == GL_FALSE) {
+			glDeleteProgram(programID);
+			throw new RuntimeException("Error Validating program: " + getProgramLogInfo(programID));
 		}
 
 		return programID;
@@ -74,76 +83,40 @@ public final class ASJShaderHelper {
 	private static int createShader(String filename, int shaderType){
 		int shaderID = 0;
 		try {
-			shaderID = GL20.glCreateShader(shaderType);
+			shaderID = glCreateShader(shaderType);
 
 			if(shaderID == 0)
 				return 0;
 
-			GL20.glShaderSource(shaderID, readFileAsString(filename));
-			GL20.glCompileShader(shaderID);
+			glShaderSource(shaderID, readFileAsString(filename));
+			glCompileShader(shaderID);
 
-			if (GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE)
-				throw new RuntimeException("Error creating shader: " + getLogInfo(shaderID));
+			if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE)
+				throw new RuntimeException("Error Compiling shader: " + getShaderLogInfo(shaderID));
 
 			return shaderID;
 		}
 		catch(Exception e) {
-			GL20.glDeleteShader(shaderID);
+			glDeleteShader(shaderID);
 			e.printStackTrace();
 			return -1;
 		}
 	}
 
-	private static String getLogInfo(int obj) {
-		return GL20.glGetShaderInfoLog(obj, GL20.GL_INFO_LOG_LENGTH);
+	private static String getShaderLogInfo(int obj) {
+		return glGetShaderInfoLog(obj, GL_INFO_LOG_LENGTH);
+	}
+
+	private static String getProgramLogInfo(int obj) {
+		return glGetProgramInfoLog(obj, GL_INFO_LOG_LENGTH);
 	}
 
 	private static String readFileAsString(String filename) throws Exception {
+		BufferedReader in = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Loader.instance().activeModContainer().getModId(), filename)).getInputStream(), "UTF-8"));
 		StringBuilder source = new StringBuilder();
-		InputStream in = ASJShaderHelper.class.getResourceAsStream(filename);
-		Exception exception = null;
-		BufferedReader reader;
-
-		if(in == null)
-			return "";
-
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-
-			Exception innerExc= null;
-			try {
-				String line;
-				while((line = reader.readLine()) != null)
-					source.append(line).append('\n');
-			} catch(Exception exc) {
-				exception = exc;
-			} finally {
-				try {
-					reader.close();
-				} catch(Exception exc) {
-					if(innerExc == null)
-						innerExc = exc;
-					else exc.printStackTrace();
-				}
-			}
-
-			if(innerExc != null)
-				throw innerExc;
-		} catch(Exception exc) {
-			exception = exc;
-		} finally {
-			try {
-				in.close();
-			} catch(Exception exc) {
-				if(exception == null)
-					exception = exc;
-				else exc.printStackTrace();
-			}
-
-			if(exception != null)
-				throw exception;
+		while (in.ready()) {
+			source.append(in.readLine()).append("\r\n");
 		}
-
 		return source.toString();
 	}
 

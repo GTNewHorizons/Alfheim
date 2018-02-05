@@ -1,7 +1,7 @@
 package alfheim.common.block.mana;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
@@ -25,7 +25,7 @@ public class BlockManaInfuser extends Block implements ITileEntityProvider, ILex
 	public BlockManaInfuser() {
 		super(Material.rock);
 		this.setBlockName("ManaInfuser");
-		this.setBlockTextureName(Constants.MODID + ":ManaInfuser");
+		this.setBlockTextureName(ModInfo.MODID + ":ManaInfuser");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHardness(3);
 		this.setHarvestLevel("pickaxe", 1);

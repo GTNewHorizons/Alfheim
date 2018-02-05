@@ -3,7 +3,7 @@ package alfheim.common.block;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
@@ -20,7 +20,7 @@ public class BlockDreamSapling extends BlockBush implements IGrowable, ILexicona
 
 	public BlockDreamSapling() {
 		this.setBlockName("DreamSapling");
-		this.setBlockTextureName(Constants.MODID + ":DreamSapling");
+		this.setBlockTextureName(ModInfo.MODID + ":DreamSapling");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setLightLevel(9.0F / 15.0F);
 		this.setLightOpacity(0);

@@ -1,6 +1,9 @@
 ###########################################################___БЛОКИ___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Ядро Портала В Альфхейм
+tile.Anyavil.name=Някавайня
+tile.botania:AlfheimPylons0.name=Эльфийский Пилон
+tile.botania:AlfheimPylons1.name=Йордин Пилон
 tile.DragonstoneElvenOre.name=Руда Камней Дракона
 tile.DreamLeaves.name=Листва Древа Мечтаний
 tile.DreamLog.name=Ствол Древа Мечтаний
@@ -29,6 +32,7 @@ item.botania:ElementalFireLeggings.name=Элементальные Поножи 
 item.botania:ElementalEarthChest.name=Элементальный Нагрудник Земли
 item.botania:ElementalWaterHelm.name=Элементальный Шлем Воды
 item.botania:ElementalWaterHelmRevealing.name=Элементальный Шлем Откровения Воды
+item.botania:PixieAttractor.name=Магнит Пикси
 item.ElementalArmor.desc1=Легки как перо (§eВысота прыжка +4§f)
 item.ElementalArmor.desc2=Быстры как огонь (§cСкорость +2§f) Бонус: §cОгнеустойчивость§f
 item.ElementalArmor.desc3=Прочен как камень (§aСопротивляемость +2§f)

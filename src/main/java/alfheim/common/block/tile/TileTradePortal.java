@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.common.base.Function;
 
-import alfheim.Constants;
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.ModInfo;
+import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.block.Block;
@@ -82,7 +82,7 @@ public class TileTradePortal extends TileMod {
 		Multiblock mb = new Multiblock();
 		for (int[] l : LIVINGROCK_POSITIONS) mb.addComponent(l[0], l[1] + 1, l[2], ModBlocks.livingrock, 0);
 		for (int[] g : GLOWSTONE_POSITIONS) mb.addComponent(g[0], g[1] + 1, g[2], Blocks.glowstone, 0);
-		for (int[] p : PYLON_POSITIONS) mb.addComponent(p[0], p[1] + 1, p[2], AlfheimBlocks.elvenPylon, 0);
+		for (int[] p : PYLON_POSITIONS) mb.addComponent(p[0], p[1] + 1, p[2], AlfheimBlocks.alfheimPylons, 1);
 		mb.addComponent(0, 1, 0, AlfheimBlocks.tradePortal, 0);
 		mb.setRenderOffset(0, -1, 0);
 		return mb.makeSet();
@@ -152,14 +152,12 @@ public class TileTradePortal extends TileMod {
 	}
 
 	public boolean onWanded() {
-		if (getBlockMetadata() == 0) {
+		if (getBlockMetadata() == 0 && worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) {
 			int newMeta = getValidMetadata();
 			if (newMeta != 0) {
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 1 | 2);
 				return true;
-			} 
-		} else {
-			Constants.chatLog(this.tradeRecipe.getOutput().getDisplayName() + " x" + this.recipeMult);
+			}
 		}
 		return false;
 	}
@@ -245,7 +243,7 @@ public class TileTradePortal extends TileMod {
 		if (!check2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false;
 		if (!check2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false;
 		if (!check2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false;
-		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.elvenPylon, 0, converters)) return false;
+		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylons, 1, converters)) return false;
 
 		lightPylons(converters);
 		return true;
@@ -259,8 +257,8 @@ public class TileTradePortal extends TileMod {
 			for(Function<int[], int[]> f : converters) if(f != null) pos = f.apply(pos);
 
 			TileEntity tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2]);
-			if(tile instanceof TileElvenPylon) {
-				TileElvenPylon pylon = (TileElvenPylon) tile;
+			if(tile instanceof TileAlfheimPylons) {
+				TileAlfheimPylons pylon = (TileAlfheimPylons) tile;
 				pylon.activated = true;
 				pylon.centerX = xCoord;
 				pylon.centerY = yCoord;

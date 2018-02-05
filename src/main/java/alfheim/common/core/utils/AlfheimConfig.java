@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.Level;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -39,11 +39,11 @@ public class AlfheimConfig extends Configuration {
 	// OHTER
 	public static boolean destroyPortal			= true;
 	public static boolean enableAlfheimRespawn	= true;
-	public static boolean showNumbersInTooltip	= false;
+	public static boolean numericalMana			= true;
+	public static boolean looniumOverseed		= false;
 	
 	// Elven Story
 	public static Vec3[] zones					= new Vec3[9];
-	public static boolean enableElvenStory		= false;
 	public static boolean prolongDeathScreen	= true;
 	public static int deathScreenAddTime		= 1200;
 	public static int flightTime				= 12000;
@@ -77,10 +77,8 @@ public class AlfheimConfig extends Configuration {
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",	dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
 		destroyPortal		= loadProp(CATEGORY_GENERAL,	"destroyPortal",		destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
 		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",	enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
-		showNumbersInTooltip= loadProp(CATEGORY_GENERAL,	"showNumbersInTooltip", showNumbersInTooltip,	false,	"Set this to true to enable numerical mana representation");
-		enableElvenStory	= loadProp(CATEGORY_ESMODE,		"enableElvenStory",		enableElvenStory,		true,	"Set this to true to enable Elven Story mode without mod");
-
-		AlfheimCore.enableElvenStory = Loader.isModLoaded("elvenstory") || enableElvenStory;
+		looniumOverseed		= loadProp(CATEGORY_GENERAL,	"looniumOverseed",		looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
+		numericalMana		= loadProp(CATEGORY_GENERAL,	"numericalMana",		numericalMana,			false,	"Set this to true to enable numerical mana representation");
 
 		if (AlfheimCore.enableElvenStory) {
 			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
@@ -185,7 +183,7 @@ public class AlfheimConfig extends Configuration {
 	public static class AlfheimChangeListener {
 		@SubscribeEvent
 		public void onConfigChanged(OnConfigChangedEvent e) {
-			if(e.modID.equals(Constants.MODID)) syncConfig();
+			if(e.modID.equals(ModInfo.MODID)) syncConfig();
 		}
 	}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,7 +19,7 @@ import vazkii.botania.api.recipe.IElvenItem;
 
 public class ItemElvenResource extends Item implements IElvenItem {
 	
-	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ /*"TheRodOfTheDebug"*/ };
+	public static final String[] subItems = new String[] { /*"ManaTester",*/ "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", /*"InfusedDreamwoodTwig",*/ /*"TheRodOfTheDebug"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ItemElvenResource() {
@@ -30,7 +30,7 @@ public class ItemElvenResource extends Item implements IElvenItem {
 	
 	public void registerIcons(IIconRegister iconRegister){
 		for (int i = 0; i < subItems.length; i++){
-			texture[i] = iconRegister.registerIcon(Constants.MODID + ":materials/" + subItems[i]);
+			texture[i] = iconRegister.registerIcon(ModInfo.MODID + ":materials/" + subItems[i]);
 		}
 	}
 

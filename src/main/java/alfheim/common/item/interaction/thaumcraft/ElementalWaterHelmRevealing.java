@@ -1,7 +1,7 @@
 package alfheim.common.item.interaction.thaumcraft;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.item.equipment.armor.elemental.ElementalWaterHelm;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,7 +34,7 @@ public class ElementalWaterHelmRevealing extends ElementalWaterHelm implements I
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return Constants.MODID + ":textures/model/armor/ElementalArmor_" + (ConfigHandler.enableArmorModels ? "new" : "2") + ".png";
+		return ModInfo.MODID + ":textures/model/armor/ElementalArmor_" + (ConfigHandler.enableArmorModels ? "new" : "2") + ".png";
 	}
 
 	@Override

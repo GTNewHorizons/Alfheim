@@ -1,7 +1,7 @@
 package alfheim.common.block;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.block.tile.TileTradePortal;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
@@ -26,7 +26,7 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	public BlockTradePortal() {
 		super(Material.rock);
 		this.setBlockName("TradePortal");
-		this.setBlockTextureName(Constants.MODID + ":TradePortal");
+		this.setBlockTextureName(ModInfo.MODID + ":TradePortal");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHarvestLevel("pickaxe", 0);
 		this.setHardness(10.0F);
@@ -36,9 +36,9 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		textures[0] = reg.registerIcon(Constants.MODID + ":TradePortal");
-		textures[1] = reg.registerIcon(Constants.MODID + ":TradePortalActive");
-		textures[2] = reg.registerIcon(Constants.MODID + ":TradePortalInside");
+		textures[0] = reg.registerIcon(ModInfo.MODID + ":TradePortal");
+		textures[1] = reg.registerIcon(ModInfo.MODID + ":TradePortalActive");
+		textures[2] = reg.registerIcon(ModInfo.MODID + ":TradePortalInside");
 	}
 	
 	@Override

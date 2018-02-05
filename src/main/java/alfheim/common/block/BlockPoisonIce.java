@@ -3,7 +3,7 @@ package alfheim.common.block;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
@@ -32,7 +32,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 		final float mod = 0.001F;
 		this.setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod);
 		this.setBlockName("NiflheimIce");
-        this.setBlockTextureName(Constants.MODID + ":NiflheimIce");
+        this.setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
         this.setBlockUnbreakable();
         this.setLightOpacity(0);
         this.setStepSound(soundTypeGlass);

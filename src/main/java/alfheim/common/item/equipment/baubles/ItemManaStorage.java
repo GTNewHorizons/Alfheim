@@ -3,7 +3,7 @@ package alfheim.common.item.equipment.baubles;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
@@ -34,7 +34,7 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 		this.setMaxDamage(1000);
 		this.setMaxStackSize(1);
 		this.setNoRepair();
-		this.setTextureName(Constants.MODID + ':' + name);
+		this.setTextureName(ModInfo.MODID + ':' + name);
 		this.setUnlocalizedName(name);
 	}
 
@@ -145,6 +145,6 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
 		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", this.MAX_MANA / TilePool.MAX_MANA));
-		if (AlfheimConfig.showNumbersInTooltip) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)));
+		if (AlfheimConfig.numericalMana) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)));
 	}
 }

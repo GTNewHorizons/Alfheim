@@ -1,33 +1,26 @@
 package alfheim.common.core.registry;
 
-import static alexsocol.asjlib.ASJUtilities.register;
-import static alfheim.common.core.registry.AlfheimItems.elvenResource;
+import static alexsocol.asjlib.ASJUtilities.*;
 
 import java.util.Arrays;
 import java.util.List;
 
+import alexsocol.asjlib.ItemPattern;
+import alfheim.AlfheimCore;
+import alfheim.ModInfo;
 import alfheim.api.lib.LibOreDict;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.item.equipment.armor.elemental.ElementalAirBoots;
-import alfheim.common.item.equipment.armor.elemental.ElementalEarthChest;
-import alfheim.common.item.equipment.armor.elemental.ElementalFireLeggings;
-import alfheim.common.item.equipment.armor.elemental.ElementalWaterHelm;
-import alfheim.common.item.equipment.armor.elvoruim.ElvoriumArmor;
-import alfheim.common.item.equipment.armor.elvoruim.ElvoriumHelmet;
-import alfheim.common.item.equipment.baubles.CreativeReachPendant;
-import alfheim.common.item.equipment.baubles.FirePendant;
-import alfheim.common.item.equipment.baubles.IcePendant;
-import alfheim.common.item.equipment.baubles.ItemManaStorage;
-import alfheim.common.item.equipment.tools.LivingrockPickaxe;
-import alfheim.common.item.equipment.tools.RealitySword;
-import alfheim.common.item.interaction.thaumcraft.ElementalWaterHelmRevealing;
-import alfheim.common.item.interaction.thaumcraft.ElvoriumHelmetRevealing;
+import alfheim.common.item.equipment.armor.elemental.*;
+import alfheim.common.item.equipment.armor.elvoruim.*;
+import alfheim.common.item.equipment.baubles.*;
+import alfheim.common.item.equipment.tools.*;
+import alfheim.common.item.interaction.thaumcraft.*;
 import alfheim.common.item.material.ItemElvenResource;
 import alfheim.common.item.rod.ItemRod;
 import baubles.api.BaubleType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
 public class AlfheimItems {
 
@@ -50,6 +43,7 @@ public class AlfheimItems {
 	public static Item manaElvenRingGreater;
 	public static Item manaStone;
 	public static Item manaStoneGreater;
+	public static Item pixieAttractor;
 	public static Item realitySword;
 	public static Item rodFire;
 	public static Item rodIce;
@@ -78,6 +72,7 @@ public class AlfheimItems {
 		elfIcePendant = new IcePendant();
 		creativeReachPendant = new CreativeReachPendant();
 		livingrockPickaxe = new LivingrockPickaxe();
+		pixieAttractor = new ItemBauble("PixieAttractor") {@Override public BaubleType getBaubleType(ItemStack stack){return BaubleType.AMULET;}};
 		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
 		manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
@@ -115,9 +110,8 @@ public class AlfheimItems {
 	}
 	
 	public static class ElvenResourcesMetas {
-		private static List<String> items;
-		
-		public static int
+		public static final int
+		//ManaTester,
 		InterdimensionalGatewayCore,
 		ManaInfusionCore,
 		ElvoriumIngot,
@@ -131,12 +125,12 @@ public class AlfheimItems {
 		IffesalDust,
 		PrimalRune,
 		MuspelheimRune,
-		NiflheimRune,
-		TheRodOfTheDebug;
+		NiflheimRune;
+		//TheRodOfTheDebug
 		
 		static {
-			items = Arrays.asList(ItemElvenResource.subItems);
-			
+			List<String> items = Arrays.asList(ItemElvenResource.subItems);
+			//ManaTester = items.indexOf("ManaTester");
 			InterdimensionalGatewayCore = items.indexOf("InterdimensionalGatewayCore");
 			ManaInfusionCore = items.indexOf("ManaInfusionCore");
 			ElvoriumIngot = items.indexOf("ElvoriumIngot");
@@ -151,7 +145,7 @@ public class AlfheimItems {
 			PrimalRune = items.indexOf("PrimalRune");
 			MuspelheimRune = items.indexOf("MuspelheimRune");
 			NiflheimRune = items.indexOf("NiflheimRune");
-			TheRodOfTheDebug = items.indexOf("TheRodOfTheDebug");
+			//TheRodOfTheDebug = items.indexOf("TheRodOfTheDebug");
 		}
 	}
 }

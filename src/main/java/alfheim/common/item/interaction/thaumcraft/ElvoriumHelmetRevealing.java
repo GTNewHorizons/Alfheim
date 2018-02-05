@@ -1,6 +1,6 @@
 package alfheim.common.item.interaction.thaumcraft;
 
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.item.equipment.armor.elvoruim.ElvoriumHelmet;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,6 +31,6 @@ public class ElvoriumHelmetRevealing extends ElvoriumHelmet implements IGoggles,
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? Constants.MODID + ":textures/model/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
+		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
 	}
 }

@@ -1,6 +1,6 @@
 package alfheim.common.world.dim;
 
-import alfheim.Constants;
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import alfheim.common.world.dim.alfheim.gen.BiomeGenAlfheim;
@@ -21,7 +21,7 @@ public class DimensionUtil {
 	}
 
 	private static void addDimension(int id, Class<? extends WorldProvider> w, boolean keeploading) {
-		Constants.log("Registering dimension ID: " + id);
+		ASJUtilities.log("Registering dimension ID: " + id);
 		DimensionManager.registerProviderType(id, w, keeploading);
 		DimensionManager.registerDimension(id, id);
 	}

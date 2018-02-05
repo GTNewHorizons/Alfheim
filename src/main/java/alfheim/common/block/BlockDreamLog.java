@@ -1,7 +1,7 @@
 package alfheim.common.block;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,8 +27,8 @@ public class BlockDreamLog extends BlockLog implements ILexiconable {
 
 	@SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister reg) {
-		textures[0] = reg.registerIcon(Constants.MODID + ":DreamLogTop");
-		textures[1] = reg.registerIcon(Constants.MODID + ":DreamLogSide");
+		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLogTop");
+		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLogSide");
     }
 	
 	@SideOnly(Side.CLIENT)

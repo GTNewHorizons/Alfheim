@@ -5,6 +5,7 @@ import java.io.IOException;
 import alfheim.common.core.command.CommandRace;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.network.KeyBindMessage;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
@@ -29,18 +30,18 @@ import vazkii.botania.client.core.handler.BotaniaPlayerController;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
 
-@Mod(modid = Constants.MODID,
-	name = Constants.NAME,
-	version = Constants.VERSION,
-	guiFactory = Constants.MODID + ".client.gui.GUIFactory",
+@Mod(modid = ModInfo.MODID,
+	name = ModInfo.NAME,
+	version = ModInfo.VERSION,
+	guiFactory = ModInfo.MODID + ".client.gui.GUIFactory",
 	dependencies = "required-after:Botania;before:elvenstory")
 
 public class AlfheimCore {
 
-	@Instance(Constants.MODID)
+	@Instance(ModInfo.MODID)
 	public static AlfheimCore instance;
 
-	@SidedProxy(clientSide = Constants.MODID + ".client.core.proxy.ClientProxy", serverSide = Constants.MODID + ".common.core.proxy.CommonProxy")
+	@SidedProxy(clientSide = ModInfo.MODID + ".client.core.proxy.ClientProxy", serverSide = ModInfo.MODID + ".common.core.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static SimpleNetworkWrapper network;
@@ -49,11 +50,13 @@ public class AlfheimCore {
 	
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-    	network = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
+    	enableElvenStory = Loader.isModLoaded("elvenstory");
+    	network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
 		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
-		
+		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
+
     	proxy.initializeAndRegisterHandlers();
-    	proxy.preInit(e);
+    	proxy.preInit();
     }
     
     @EventHandler
@@ -66,6 +69,7 @@ public class AlfheimCore {
     	proxy.postInit();
     	proxy.registerKeyBinds();
     	proxy.registerRenderThings();
+		AlfheimRegistry.loadAllPinkStuff();
     }
 
     @EventHandler

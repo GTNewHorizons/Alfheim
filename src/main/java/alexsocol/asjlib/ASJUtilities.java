@@ -1,18 +1,22 @@
 package alexsocol.asjlib;
 
-import static org.lwjgl.opengl.GL11.glTranslated;
-
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
+
+import javax.management.ReflectionException;
 
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -22,7 +26,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,12 +38,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
@@ -328,6 +331,28 @@ public class ASJUtilities {
 		}
 	}*/
 
+	public static void setFinalField(Object instance, Object value, String... names) {
+		try {
+			if (names.length == 0) throw new IllegalArgumentException("Must be at least one name!");
+			Field field = null;
+			for (String fieldName : names) for (Field f : instance.getClass().getDeclaredFields()) if (fieldName.equals(f.getName())) field = f;
+			if (field == null) throw new NoSuchFieldException("Field not found! (Class: " + instance.getClass() + "; Expected field names: " + Arrays.toString(names));
+			boolean isAccesible = field.isAccessible();
+			if (!isAccesible) field.setAccessible(true);
+			Field modfield = Field.class.getDeclaredField("modifiers");
+			boolean isModAccesible = modfield.isAccessible();
+			if (!isModAccesible) modfield.setAccessible(true);
+			int mod = field.getModifiers();
+			modfield.setInt(field, mod & ~Modifier.FINAL);
+			field.set(instance, value);
+			modfield.setInt(field, mod);
+			if (!isModAccesible) modfield.setAccessible(false);
+			if (!isAccesible) field.setAccessible(false);
+		} catch (Exception e) {
+			Logger.getGlobal().log(java.util.logging.Level.SEVERE, e.getMessage(), e);
+		}
+	}
+	
 	public static void addOreDictRecipe(ItemStack output, Object... recipe) {
 		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
 	}
@@ -448,6 +473,38 @@ public class ASJUtilities {
 	}
 	
 	/**
+     * Returns the closest vulnerable player within the given radius, or null if none is found<br>
+     * Ignoring invisibility and sneaking
+     */
+	public static EntityPlayer getClosestVulnerablePlayerToEntity(World world, Entity entity, double distance) {
+        return getClosestVulnerablePlayer(world, entity.posX, entity.posY, entity.posZ, distance);
+    }
+
+    /**
+     * Returns the closest vulnerable player within the given radius, or null if none is found<br>
+     * Ignoring invisibility and sneaking
+     */
+	public static EntityPlayer getClosestVulnerablePlayer(World world, double x, double y, double z, double distance) {
+		double prevDist = -1.0D;
+		EntityPlayer entityplayer = null;
+
+		for (int i = 0; i < world.playerEntities.size(); ++i) {
+			EntityPlayer entityplayer1 = (EntityPlayer) world.playerEntities.get(i);
+
+			if (!entityplayer1.capabilities.disableDamage && entityplayer1.isEntityAlive()) {
+				double dist = entityplayer1.getDistanceSq(x, y, z);
+
+				if ((distance < 0.0D || dist < distance * distance) && (prevDist == -1.0D || dist < prevDist)) {
+					prevDist = dist;
+					entityplayer = entityplayer1;
+				}
+			}
+		}
+
+		return entityplayer;
+	}
+	
+	/**
 	 * Registers new entity
 	 * @param entityClass Entity's class file
 	 * @param name The name of this entity
@@ -554,6 +611,23 @@ public class ASJUtilities {
 	}
 	
 	/**
+	 * @return map key by id
+	 * */
+	public static <K, V> K mapGetKeyId(Map<K, V> map, int i) {
+		List<K> keys = new ArrayList(map.keySet());
+		return keys.get(i);
+	}
+
+	
+	/**
+	 * @return map value by id
+	 * */
+	public static <K, V> V mapGetValueId(Map<K, V> map, int i) {
+		List<V> vals = new ArrayList(map.values());
+		return vals.get(i);
+	}
+	
+	/**
 	 * Adds new <b>ore</b> spawn to world generator
 	 * */
 	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
@@ -656,6 +730,26 @@ public class ASJUtilities {
 				block.getMaterial() == Material.lava;
 	}
 
+	public static void chatLog(String message) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+	}
+	
+	public static void chatLog(String message, World world) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+	}
+	
+	public static void debug(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase().concat("-Debug"), Level.INFO, message);
+	}
+	
+	public static void log(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.INFO, message);
+	}
+
+	public static void say(EntityPlayer player, String message) {
+		player.addChatMessage(new ChatComponentTranslation(message));
+	}
+	
 	public static void sendToAllOnline(String message) {
 		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
         for (EntityPlayer online : list) online.addChatMessage(new ChatComponentText(message));

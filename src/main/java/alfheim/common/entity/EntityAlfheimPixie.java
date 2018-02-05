@@ -1,17 +1,20 @@
 package alfheim.common.entity;
 
+import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.core.registry.AlfheimItems;
+import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.projectile.EntityLargeFireball;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.GameRules;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.entity.EntityFlyingCreature;
 import vazkii.botania.common.item.ModItems;
@@ -80,17 +83,29 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 
 	@Override
 	public void onEntityUpdate() {
-		super.onEntityUpdate();
-
 		if(worldObj.isRemote)
 			for(int i = 0; i < 4; i++)
 				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5  + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1F, 0.25F, 0.9F, 0.1F + (float) Math.random() * 0.25F, 12);
+		
+		EntityPlayer player = ASJUtilities.getClosestVulnerablePlayerToEntity(this.worldObj, this, 4);
+		if (player != null && BaublesApi.getBaubles(player) != null && BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(player).getStackInSlot(0), player, 1, true)) {
+			Vec3 vec = player.getLook(1.0F);
+			this.motionX = (player.posX + vec.xCoord - this.posX) / 8.0F;
+			this.motionY = (player.posY + vec.yCoord + 1.5 - this.posY) / 8.0F;
+			this.motionZ = (player.posZ + vec.zCoord - this.posZ) / 8.0F;
+			super.onEntityUpdate();
+			return;
+		}
+		
+		this.motionY *= 0.6;
+		if (this.worldObj.rand.nextInt(600) == 0) this.motionY -= 5;
+		
+		super.onEntityUpdate();
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		this.motionY *= 0.6;
 	}
 
 	@Override

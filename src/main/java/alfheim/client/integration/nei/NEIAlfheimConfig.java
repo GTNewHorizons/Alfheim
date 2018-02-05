@@ -1,6 +1,6 @@
 package alfheim.client.integration.nei;
 
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.client.integration.nei.recipes.RecipeHandlerManaInfuser;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
@@ -15,12 +15,12 @@ public class NEIAlfheimConfig implements IConfigureNEI {
 
 	@Override
 	public String getName() {
-		return Constants.MODID;
+		return ModInfo.MODID;
 	}
 
 	@Override
 	public String getVersion() {
-		return Constants.VERSION;
+		return ModInfo.VERSION;
 	}
 
 }

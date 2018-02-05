@@ -1,51 +1,65 @@
 package alfheim.client.render.entity;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glScaled;
+import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import vazkii.botania.api.item.IBaubleRender.Helper;
 import vazkii.botania.common.Botania;
 
 public class RenderWings {
 	
 	private static final ResourceLocation[] wings = {
 		null,
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SYLPH_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/CAITSITH_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/POOKA_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/GNOME_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/LEPRECHAUN_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SPRIGGAN_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/UNDINE_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/IMP_wing.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/ALV_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png"),
 	};
 	
 	private static final ResourceLocation[] icons = {
 		null,
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SALAMANDER_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SYLPH_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/CAITSITH_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/POOKA_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/GNOME_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/LEPRECHAUN_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/SPRIGGAN_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/UNDINE_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/IMP_icon.png"),
-		new ResourceLocation(Constants.MODID, "textures/model/entity/wings/ALV_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_icon.png"),
+		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_icon.png"),
 	};
 	
 	public static void render(RenderWorldLastEvent e) {
@@ -73,7 +87,11 @@ public class RenderWings {
 				glTranslated(0, 1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight, 0);
 			}
 			
-			glRotated(-ASJUtilities.interpolate(player.prevRenderYawOffset, player.renderYawOffset, e.partialTicks), 0, 1, 0);
+			if (player.isRiding() && player.ridingEntity instanceof EntityHorse) {
+				glRotated(-ASJUtilities.interpolate(player.prevRotationYaw, player.rotationYaw, e.partialTicks), 0, 1, 0);
+			} else {
+				glRotated(-ASJUtilities.interpolate(player.prevRenderYawOffset, player.renderYawOffset, e.partialTicks), 0, 1, 0);
+			}
 			glRotated(180, 1, 0, 0);
 			if (player.isSneaking()) {
 				glRotated(28.64789, 1, 0, 0);

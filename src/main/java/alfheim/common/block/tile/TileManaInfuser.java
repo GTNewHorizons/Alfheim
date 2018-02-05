@@ -3,7 +3,7 @@ package alfheim.common.block.tile;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.api.crafting.recipe.AlfheimAPI;
+import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.common.block.mana.BlockManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
@@ -36,6 +36,8 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	private static final int[][] QUARTZ_BLOCK = {{1,0},{-1,0},{0,1},{0,-1}};
 	private static final int[][] ELEMENTIUM_BLOCKS = {{1,1},{1,-1},{-1,1},{-1,-1}};
 	private static final String TAG_MANA = "mana";
+	private static final String TAG_MANA_REQUIRED = "manaRequired";
+
 	int mana;
 	int manarequest;
 	ItemStack result;
@@ -211,6 +213,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	@Override
 	public void writeCustomNBT(NBTTagCompound cmp) {
 		cmp.setInteger(TAG_MANA, mana);
+		cmp.setInteger(TAG_MANA_REQUIRED, manarequest);
 	}
 
 	@Override

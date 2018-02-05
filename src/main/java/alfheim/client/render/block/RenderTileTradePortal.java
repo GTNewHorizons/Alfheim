@@ -32,7 +32,7 @@ public class RenderTileTradePortal extends TileEntitySpecialRenderer {
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
-		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60) * 0.5);
+		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60) * 0.85);
 
 		glTranslated(x - 1, y + 1, z + 0.25);
 		if(meta == 2) {

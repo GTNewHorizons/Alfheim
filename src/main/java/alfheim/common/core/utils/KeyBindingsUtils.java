@@ -1,16 +1,15 @@
 package alfheim.common.core.utils;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.Constants;
+import alfheim.api.AlfheimAPI;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.util.StatCollector;
 
 public class KeyBindingsUtils {
 	
 	public static void enableFlight(EntityPlayerMP player) {
-		if (player.capabilities.isCreativeMode || player.getEntityAttribute(Constants.RACE).getAttributeValue() == 0) return;
+		if (player.capabilities.isCreativeMode || player.getEntityAttribute(AlfheimAPI.RACE).getAttributeValue() == 0) return;
 		player.capabilities.allowFlying = true;
 		player.capabilities.isFlying = !player.capabilities.isFlying;
 		player.sendPlayerAbilities();

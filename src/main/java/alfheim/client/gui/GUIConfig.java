@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.Constants;
+import alfheim.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
@@ -15,6 +15,6 @@ import net.minecraftforge.common.config.Configuration;
 public class GUIConfig extends GuiConfig {
 
 	public GUIConfig(GuiScreen screen) {
-		super(screen, new ConfigElement(AlfheimConfig.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), Constants.MODID, false, false, GuiConfig.getAbridgedConfigPath(AlfheimConfig.config.toString()));
+		super(screen, new ConfigElement(AlfheimConfig.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), ModInfo.MODID, false, false, GuiConfig.getAbridgedConfigPath(AlfheimConfig.config.toString()));
 	}
 }
