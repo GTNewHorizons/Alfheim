@@ -34,7 +34,7 @@ public class BiomeGenAlfheim extends BiomeGenBase {
 	public BiomeGenAlfheim(int par1) {
 		super(par1);
 		this.setBiomeName("Alfheim");
-		this.topBlock = AlfheimBlocks.elvenGrass;
+		this.topBlock = Blocks.grass;
 		this.fillerBlock = Blocks.dirt;
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

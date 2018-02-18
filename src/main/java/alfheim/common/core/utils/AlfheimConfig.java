@@ -70,8 +70,6 @@ public class AlfheimConfig extends Configuration {
 	}
 	
 	public static void syncConfig() {
-		Property prop;
-		
 		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",		biomeIDAlfheim,			true,	"Biome ID for standart biome");
 		biomeIDAlfheimBeach	= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheimBeach",	biomeIDAlfheimBeach,	true,	"Biome ID for beach biome");
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",	dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");

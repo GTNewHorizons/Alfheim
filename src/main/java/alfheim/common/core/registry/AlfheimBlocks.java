@@ -29,7 +29,6 @@ public class AlfheimBlocks {
 	public static Block dreamLeaves;
 	public static Block dreamlog;
 	public static Block dreamSapling;
-	public static Block elvenGrass;
 	public static Block elvenOres;
 	public static Block elvenSand;
 	public static Block elvoriumBlock;
@@ -53,7 +52,6 @@ public class AlfheimBlocks {
 		dreamLeaves = new BlockDreamLeaves();
 		dreamlog = new BlockDreamLog();
 		dreamSapling = new BlockDreamSapling();
-		elvenGrass = new BlockElvenGrass();
 		elvenOres = new BlockElvenOres();
 		elvenSand = new BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen);
 		elvoriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.elvorium);
@@ -75,7 +73,6 @@ public class AlfheimBlocks {
 		register(mauftriumBlock);
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));
 		register(livingcobble);
-		register(elvenGrass);
 		register(elvenSand);
 		register(dreamlog);
 		register(dreamLeaves);

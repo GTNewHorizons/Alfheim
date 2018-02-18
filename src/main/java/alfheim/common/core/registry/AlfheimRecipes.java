@@ -105,21 +105,12 @@ public class AlfheimRecipes {
 
 	public static void registerCraftingRecipes() {
 		addOreDictRecipe(new ItemStack(alfheimPortal, 1),
-		(AlfheimCore.enableElvenStory) ?
-		new Object[] {	"DPD", "GSG", "DTD",
-			'D', DREAM_WOOD,
-			'G', "dustGlowstone",
-			'P', new ItemStack(pylon, 1, 2),
-			'S', rainbowRod,
-			'T', manaInfuser
-		} : new Object[] {
 			"DPD", "GSG", "DTD",
 			'D', DREAM_WOOD,
-			'G', "dustGlowstone",
-			'P', GAIA_INGOT,
+			'G', spark,
+			'P', RUNE[8],
 			'S', rainbowRod,
-			'T', terraPlate
-		});
+			'T', new ItemStack(lens, 1, 9));
 		recipeAlfheimPortal = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(anyavil),

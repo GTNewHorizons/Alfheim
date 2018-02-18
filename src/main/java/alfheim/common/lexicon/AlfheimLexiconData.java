@@ -1,7 +1,5 @@
 package alfheim.common.lexicon;
 
-import static alfheim.common.core.registry.AlfheimBlocks.anyavil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +24,14 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModMultiblocks;
-import vazkii.botania.common.crafting.ModCraftingRecipes;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.lexicon.BLexiconCategory;
 import vazkii.botania.common.lexicon.BLexiconEntry;
+import vazkii.botania.common.lexicon.DLexiconEntry;
 import vazkii.botania.common.lexicon.LexiconData;
 import vazkii.botania.common.lexicon.page.PageCraftingRecipe;
 import vazkii.botania.common.lexicon.page.PageElvenRecipe;
 import vazkii.botania.common.lexicon.page.PageMultiblock;
-import vazkii.botania.common.lexicon.page.PageRecipe;
 import vazkii.botania.common.lexicon.page.PageRuneRecipe;
 import vazkii.botania.common.lexicon.page.PageText;
 

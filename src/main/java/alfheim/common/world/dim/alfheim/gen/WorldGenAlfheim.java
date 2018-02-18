@@ -28,7 +28,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	}
 
 	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
-		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0) + 3, -41);
+		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0), -41);
 		for (int i = 0; i < 3 + rand.nextInt(2); i++) generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);
@@ -61,7 +61,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 						int y1 = y;
 						int z1 = z + rand.nextInt(dist * 2) - dist;
 	
-						if(world.isAirBlock(x1, y1, z1) && world.getBlock(x1, y1 - 1, z1) == AlfheimBlocks.elvenGrass) {
+						if(world.isAirBlock(x1, y1, z1) && world.getBlock(x1, y1 - 1, z1) == Blocks.grass) {
 							if(primus) {
 								world.setBlock(x1, y1, z1, ModBlocks.specialFlower, 0, 2);
 								TileSpecialFlower flower = (TileSpecialFlower) world.getTileEntity(x1, y1, z1);
@@ -106,7 +106,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 				int x = chunkX + rand.nextInt(16);
 				int z = chunkZ + rand.nextInt(16);
 				int y = world.getTopSolidOrLiquidBlock(x, z);
-				if(!world.isAirBlock(x, y, z) || world.getBlock(x, y - 1, z) != AlfheimBlocks.elvenGrass) continue;
+				if(!world.isAirBlock(x, y, z) || world.getBlock(x, y - 1, z) != Blocks.grass) continue;
 				
 				int type = rand.nextInt(20);
 				if (type > 12) continue;

@@ -723,11 +723,17 @@ public class ASJUtilities {
 	public static boolean isBlockReplaceable(Block block) {
 		return	block == Blocks.air						||
 				block == Blocks.snow_layer				||
-				block.getMaterial() == Material.plants	||
 				block.getMaterial() == Material.air		||
-				block.getMaterial() == Material.water	||
+				block.getMaterial() == Material.cactus	||
+				block.getMaterial() == Material.coral	||
+				block.getMaterial() == Material.fire	||
+				block.getMaterial() == Material.gourd	||
 				block.getMaterial() == Material.leaves	||
-				block.getMaterial() == Material.lava;
+				block.getMaterial() == Material.lava	||
+				block.getMaterial() == Material.plants	||
+				block.getMaterial() == Material.vine	||
+				block.getMaterial() == Material.water	||
+				block.getMaterial() == Material.web;
 	}
 
 	public static void chatLog(String message) {

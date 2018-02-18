@@ -19914,7 +19914,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 		world.setBlock(x + 11, y + 12, z + 41, ModBlocks.dreamwood, 5, 3);
 		world.setBlock(x + 12, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
 		
-		ASJUtilities.fillGenHoles(world, AlfheimBlocks.elvenGrass, 0, x, x + 22, y, z, z + 42, 0);
+		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 22, y, z, z + 42, 0);
 	}
 	
 	public void generateStartBox(World world, Random rand, int x, int y, int z) {

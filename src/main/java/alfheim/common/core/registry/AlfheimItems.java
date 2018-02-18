@@ -72,7 +72,7 @@ public class AlfheimItems {
 		elfIcePendant = new IcePendant();
 		creativeReachPendant = new CreativeReachPendant();
 		livingrockPickaxe = new LivingrockPickaxe();
-		pixieAttractor = new ItemBauble("PixieAttractor") {@Override public BaubleType getBaubleType(ItemStack stack){return BaubleType.AMULET;}};
+		pixieAttractor = new ItemBauble("PixieAttractor") {@Override public BaubleType getBaubleType(ItemStack stack){return BaubleType.AMULET;}}.setCreativeTab(AlfheimCore.alfheimTab);
 		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
 		manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);

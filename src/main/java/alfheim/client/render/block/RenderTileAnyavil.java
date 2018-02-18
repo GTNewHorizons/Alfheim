@@ -37,7 +37,7 @@ public class RenderTileAnyavil extends TileEntitySpecialRenderer {
 	private void renderTE(TileAnyavil tile, double x, double y, double z, float partialTicks) {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x + 0.5, y + 0.425, z + 0.5);
-		GL11.glRotatef(90 * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) + 1), 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(90 * (tile.blockMetadata + 1), 0.0F, 1.0F, 0.0F);
 
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		model.renderAll();

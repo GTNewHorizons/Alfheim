@@ -3,14 +3,13 @@ package alfheim.client.render.block;
 import org.lwjgl.opengl.GL11;
 
 import alfheim.client.core.proxy.ClientProxy;
+import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAlfheimPylons;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
-import vazkii.botania.client.render.block.RenderPylon;
-import vazkii.botania.client.render.tile.RenderTilePylon;
 
 public class RenderBlockAlfheimPylons implements ISimpleBlockRenderingHandler {
 
@@ -30,7 +29,7 @@ public class RenderBlockAlfheimPylons implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public int getRenderId() {
-		return ClientProxy.idPylon;
+		return LibRenderIDs.idPylon;
 	}
 
 	@Override

@@ -4,7 +4,6 @@ package alfheim.common.world.dim.alfheim.gen.structure;
 
 import java.util.Random;
 
-import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -13,7 +12,7 @@ import net.minecraft.world.World;
 public class StructureDreamsTree {
 	
 	protected Block[] getValidSpawnBlocks() {
-		return new Block[] { AlfheimBlocks.elvenGrass };
+		return new Block[] { Blocks.grass };
 	}
 
 	public boolean LocationIsValidSpawn(World world, int x, int y, int z) {

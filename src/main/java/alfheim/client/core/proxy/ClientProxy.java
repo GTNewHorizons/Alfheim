@@ -7,10 +7,10 @@ import alfheim.AlfheimCore;
 import alfheim.client.core.utils.AlfheimBotaniaModifiers;
 import alfheim.client.event.ClientEventHandler;
 import alfheim.client.gui.*;
+import alfheim.client.lib.LibRenderIDs;
 import alfheim.client.model.entity.ModelEntityElf;
 import alfheim.client.render.block.*;
 import alfheim.client.render.entity.*;
-import alfheim.client.render.item.RenderItemAnyavil;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
@@ -25,24 +25,24 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
 import net.minecraftforge.common.MinecraftForge;
-import vazkii.botania.client.lib.LibRenderIDs;
 import vazkii.botania.common.item.ModItems;
 
 public class ClientProxy extends CommonProxy {
 	
 	public static final KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
-	public static final int idPylon = RenderingRegistry.getNextAvailableRenderId();
 	
 	@Override
 	public void registerRenderThings() {
-		RenderingRegistry.registerBlockHandler(idPylon, new RenderBlockAlfheimPylons());
+		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
+		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
+
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, new RenderBlockAlfheimPylons());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderTileAlfheimPortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylons.class, new RenderTileAlfheimPylons());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil.class, new RenderTileAnyavil());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderTileTradePortal());
-		
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anyavil), new RenderItemAnyavil());
 		
 		if (AlfheimCore.enableElvenStory) ClientRegistry.registerKeyBinding(keyFlight);
 		

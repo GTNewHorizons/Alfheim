@@ -2,6 +2,8 @@ package alfheim.common.block;
 
 import alexsocol.asjlib.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
+import alfheim.client.core.proxy.ClientProxy;
+import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
@@ -50,7 +52,7 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 
 	@Override
 	public int getRenderType() {
-		return -1;
+		return LibRenderIDs.idAnyavil;
 	}
 	
 	@Override
