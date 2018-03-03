@@ -5,45 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.ModInfo;
 import alfheim.api.crafting.recipe.IManaInfusionRecipe;
-import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.entity.ai.attributes.BaseAttribute;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
-import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimAPI {
 	public static final ArmorMaterial ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, new int[] {5, 10, 8, 5}, 30);
 	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 9, 5, 2}, 20);
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
-
-	public static final IAttribute RACE = new BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0) {
-		@Override
-		public double clampValue(double d) {
-			return d;
-		}
-	}.setShouldWatch(true);
-	
-	public static final IAttribute FLIGHT = new BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime) { 
-		
-		@Override
-		public double clampValue(double d) {
-			return Math.max(0, Math.min(AlfheimConfig.flightTime, d));
-		}
-	}.setShouldWatch(true);
 	
 	/** List of {@link RecipeElvenTrade} outputs forbidden for re'trading from Alfheim trade portal */
 	public static List<ItemStack> forbiddenRetrades = new ArrayList();

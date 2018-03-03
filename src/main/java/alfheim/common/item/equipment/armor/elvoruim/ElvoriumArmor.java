@@ -7,8 +7,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.client.model.armor.ModelElvoriumArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;

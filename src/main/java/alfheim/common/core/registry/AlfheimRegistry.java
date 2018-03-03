@@ -7,21 +7,29 @@ import static cpw.mods.fml.common.registry.GameRegistry.*;
 import java.util.LinkedHashSet;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.clashsoft.cslib.reflect.CSReflection;
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
+import alfheim.common.potion.PotionPossession;
 import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraft.entity.ai.attributes.BaseAttribute;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.brew.ModPotions;
+import vazkii.botania.common.brew.potion.PotionAllure;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.lib.LibBlockNames;
@@ -30,7 +38,28 @@ public class AlfheimRegistry {
 	
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
 	
+	public static final IAttribute FLIGHT = new BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime) { 
+		
+		@Override
+		public double clampValue(double d) {
+			return Math.max(0, Math.min(AlfheimConfig.flightTime, d));
+		}
+	}.setShouldWatch(true);
+	
+	public static final IAttribute RACE = new BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0) {
+		@Override
+		public double clampValue(double d) {
+			return d;
+		}
+	}.setShouldWatch(true);
+	
+		public static Potion possession;
+
+	
 	public static void preInit() {
+		if(Potion.potionTypes.length < 256) CSReflection.invokeStatic(ModPotions.class, new Object[] {}, "extendPotionArray");
+		
+		possession = new PotionPossession();
 		registerEntities();
 		registerTileEntities();
 	}
@@ -55,6 +84,7 @@ public class AlfheimRegistry {
 		registerTileEntity(TileAnyavil.class, "Anyavil");
 		registerTileEntity(TileManaInfuser.class, "ManaInfuser");
 		registerTileEntity(TileTradePortal.class, "TradePortal");
+		registerTileEntity(TileTransferer.class, "Transferer");
 	}
 	
 	public static void loadAllPinkStuff() {

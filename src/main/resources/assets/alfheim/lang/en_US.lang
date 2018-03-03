@@ -22,6 +22,7 @@ tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
 tile.TradePortal.name=Midgard Gateway Core
+tile.Transferer.name=Transferer
 
 ##########################################################___ITEMS___###########################################################
 
@@ -44,7 +45,9 @@ item.ElvoriumHelmetRevealing.name=Elvorium Helmet Of Revealing
 item.ElvoriumIngot.name=Elvorium Ingot
 item.ElvoriumLeggings.name=Elvorium Leggings
 item.ElvoriumNugget.name=Elvorium Nugget
+item.botania:Excaliber.name=Holy Sword Excaliber
 item.botania:FirePendant.name=Pendant Of Muspelheim Protection
+item.botania:FlugelSoul.name=Flugel Soul
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
 item.InterdimensionalGatewayCore.name=Interdimensional Gateway Core
@@ -82,11 +85,16 @@ item.RealitySword.desc4=Blinds target.
 item.RealitySword.desc5=Requires §n10§r§7 §bmana§7/tick.
 item.RealitySword.descZ=You've got a power!
 item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
+item.TankMask.name=Mysterious Mask
+item.TankMask.active=Active
+item.TankMask.inactive=Inactive
 
 ##########################################################___OTHER___###########################################################
 
 achievement.alfheim=Alfheim
 achievement.alfheim.desc=Enter Alfheim
+achievement.excaliber=Streaming Heart
+achievement.excaliber.desc=Be rewarded the Holy Sword Excaliber for a heroic feat
 
 alfheim.armorset.elemental.name=Elemental Master
 alfheim.armorset.elvorium.name=Royal Elven Guardian
@@ -115,7 +123,65 @@ alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana
 entity.Elf.name=Elf
 entity.Pixie.name=Pixie
 
+item.FlugelSoul.blockAway=1 Block Away
+item.FlugelSoul.blocksAway=%s Blocks Away
+item.FlugelSoul.anotherDim=Dimension %s
+item.FlugelSoul.clickToTeleport=Right click to Teleport
+item.FlugelSoul.clickToRemoveWarp=Shift-left click to Remove
+item.FlugelSoul.unboundWarp=Unbound Warp Point
+item.FlugelSoul.clickToAddWarp=Right click to bind to this position
+
+item.FlugelSoul.sign0=Aries
+item.FlugelSoul.sign1=Taurus
+item.FlugelSoul.sign2=Gemini
+item.FlugelSoul.sign3=Cancer
+item.FlugelSoul.sign4=Leo
+item.FlugelSoul.sign5=Virgo
+item.FlugelSoul.sign6=Libra
+item.FlugelSoul.sign7=Scorpio
+item.FlugelSoul.sign8=Sagittarius
+item.FlugelSoul.sign9=Capricorn
+item.FlugelSoul.sign10=Aquarius
+item.FlugelSoul.sign11=Pisces
+
 itemGroup.Alfheim=Alfheim
+
+#######################################################___RELIC POEMS___########################################################
+
+item.infiniteFruit.poem0=The fruit of the forbidden garden
+item.infiniteFruit.poem1=Eternally cleanses one's hunger,
+item.infiniteFruit.poem2=For that it rebuilds its pulp
+item.infiniteFruit.poem3=And makes itself younger.
+
+item.Excaliber.poem0=A sword of a true hero
+item.Excaliber.poem1=Fit for only one of the kind,
+item.Excaliber.poem2=Sharp and magic conjuring,
+item.Excaliber.poem3=Enemies it will quickly find.
+
+item.flugelEye.poem0=A vision of the past on one's mind,
+item.flugelEye.poem1=Round and round is the memory matrix,
+item.flugelEye.poem2=And their viable interactions
+item.flugelEye.poem3=Will take the psyche back to basics.
+
+item.thorRing.poem0=The force of the Thunder God
+item.thorRing.poem1=Will Shatter the salt of the Terra,
+item.thorRing.poem2=With unstoppable strength
+item.thorRing.poem3=It'll begin anew a new era.
+
+item.odinRing.poem0=The wise old God lays its blessings,
+item.odinRing.poem1=Of virtue, life and divinity,
+item.odinRing.poem2=With the hindrance of death on one's hands,
+item.odinRing.poem3=They'll form the Holy Trinity.
+
+item.lokiRing.poem0=Empty handed, a sneaking interaction,
+item.lokiRing.poem1=Once on the center, then around the track,
+item.lokiRing.poem2=Back to the start one'd go to complete
+item.lokiRing.poem3=The power of creating back-to-back.
+
+item.aesirRing.poem0=The forces of the Gods
+item.aesirRing.poem1=In this band form as one,
+item.aesirRing.poem2=And when combined all together
+item.aesirRing.poem3=Above them will be none.
 
 #######################################################___ELVEN STORY___########################################################
 

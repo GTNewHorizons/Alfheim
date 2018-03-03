@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

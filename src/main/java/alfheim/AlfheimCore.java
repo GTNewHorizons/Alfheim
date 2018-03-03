@@ -2,6 +2,7 @@ package alfheim;
 
 import java.io.IOException;
 
+import alfheim.api.ModInfo;
 import alfheim.common.core.command.CommandRace;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;

@@ -15,6 +15,7 @@ import javax.management.ReflectionException;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.clashsoft.cslib.reflect.CSReflection;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -27,6 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,6 +40,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
@@ -57,6 +60,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -140,10 +144,14 @@ public class ASJUtilities {
 		}
 	}
 	
+	public static boolean willEntityDie(LivingHurtEvent event) {
+		return willEntityDie(new LivingAttackEvent(event.entityLiving, event.source, event.ammount));
+	}
+	
 	/**
 	 * Determines whether entity will die from next hit
 	 * */
-	public static boolean willEntityDie(LivingHurtEvent event) {
+	public static boolean willEntityDie(LivingAttackEvent event) {
 		float amount = event.ammount;
 		DamageSource source = event.source;
 		EntityLivingBase living = event.entityLiving;
@@ -156,6 +164,24 @@ public class ASJUtilities {
 			amount = amount * resistance / 25.0F;
 		}
 		return Math.ceil(amount) >= Math.floor(living.getHealth());
+	}
+	
+	private static final Field dataWatcher;
+	private static final Field watchedObjects;
+	
+	static {
+		dataWatcher = CSReflection.getField(Entity.class, "dataWatcher", "field_70180_af");
+		dataWatcher.setAccessible(true);
+		watchedObjects = CSReflection.getField(DataWatcher.class, "watchedObjects", "field_75695_b");
+		watchedObjects.setAccessible(true);
+	}
+	
+	public static DataWatcher getEntityDataWatcher(Entity entity) {
+		return CSReflection.getValue(dataWatcher, entity, false);
+	}
+	
+	public static boolean isWatched(DataWatcher data, int id) {
+		return ((Map) CSReflection.getValue(watchedObjects, data, false)).containsKey(Integer.valueOf(id));
 	}
 	
 	/**

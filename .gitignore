@@ -67,4 +67,7 @@ Temporary Items
 /.classpath
 /.project
 /compile.bat
+/events.xlsx
+/fields.csv
+/methods.csv
 /refresh.bat

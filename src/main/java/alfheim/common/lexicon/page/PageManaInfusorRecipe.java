@@ -6,7 +6,6 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import alfheim.api.crafting.recipe.IManaInfusionRecipe;
-import alfheim.client.integration.nei.recipes.RecipeHandlerManaInfuser.CachedManaInfuserRecipe;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,15 +20,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.IGuiLexiconEntry;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
-import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
+import vazkii.botania.common.lexicon.LexiconData;
 import vazkii.botania.common.lexicon.page.PagePetalRecipe;
 import vazkii.botania.common.lexicon.page.PageRecipe;
-import vazkii.botania.common.lexicon.page.PageRuneRecipe;
 
 public class PageManaInfusorRecipe extends PageRecipe {
 
@@ -50,7 +48,7 @@ public class PageManaInfusorRecipe extends PageRecipe {
 	@Override
 	public void renderScreen(IGuiLexiconEntry gui, int mx, int my) {
 		TextureManager render = Minecraft.getMinecraft().renderEngine;
-
+		
 		renderItemAtGridPos(gui, 3, 0, recipe.getOutput(), false);
 		renderItemAtGridPos(gui, 2, 1, new ItemStack(AlfheimBlocks.manaInfuser), false);
 

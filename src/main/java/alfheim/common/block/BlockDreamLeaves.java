@@ -5,7 +5,7 @@ import java.util.Random;
 import alexsocol.asjlib.IGlowingLayerBlock;
 import alexsocol.asjlib.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;

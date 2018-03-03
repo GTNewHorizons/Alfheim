@@ -1,7 +1,7 @@
 package alfheim.client.core.utils;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import net.minecraft.util.ResourceLocation;
 import vazkii.botania.client.render.tile.RenderTilePylon;
 

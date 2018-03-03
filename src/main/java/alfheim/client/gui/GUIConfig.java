@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;

@@ -6,8 +6,9 @@ import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -18,8 +19,8 @@ import vazkii.botania.common.block.ModFluffBlocks;
 public class StructureSpawnpoint extends WorldGenerator {
 
 	public boolean generate(World world, Random rand, int x, int y, int z) {
-		if (!AlfheimCore.enableElvenStory) generate01(world, rand, x, y, z);
-		else generateStartBox(world, rand, -2, 251, -2);
+		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
+		if (AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures)  generateStartBox(world, rand, -2, 251, -2);
 		return true;
 	}
 

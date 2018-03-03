@@ -14,9 +14,9 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glScaled;
 import static org.lwjgl.opengl.GL11.glTranslated;
 
-import alfheim.ModInfo;
-import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.client.render.entity.RenderWings;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -57,10 +57,10 @@ public class GUIRace extends Gui {
 		{
 			glTranslated(AlfheimConfig.flightTimerX, AlfheimConfig.flightTimerY, 0);
 			glScaled(AlfheimConfig.flightTimerScale, AlfheimConfig.flightTimerScale, 0);
-			int flightTime = MathHelper.floor_double(this.mc.thePlayer.getEntityAttribute(AlfheimAPI.FLIGHT).getAttributeValue());
+			int flightTime = MathHelper.floor_double(this.mc.thePlayer.getEntityAttribute(AlfheimRegistry.FLIGHT).getAttributeValue());
 			this.mc.getTextureManager().bindTexture(this.flightTime);
 			
-			double mod = flightTime / AlfheimAPI.FLIGHT.getDefaultValue();
+			double mod = flightTime / AlfheimRegistry.FLIGHT.getDefaultValue();
 			glScaled(1152, 288, 1);
 			glTranslated(0.02, 0.02, 0);
 	        Tessellator tessellator = Tessellator.instance;

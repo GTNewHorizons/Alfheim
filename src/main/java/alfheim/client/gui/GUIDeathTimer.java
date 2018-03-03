@@ -2,7 +2,7 @@ package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;

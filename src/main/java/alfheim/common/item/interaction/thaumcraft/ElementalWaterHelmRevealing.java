@@ -1,7 +1,7 @@
 package alfheim.common.item.interaction.thaumcraft;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.item.equipment.armor.elemental.ElementalWaterHelm;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;

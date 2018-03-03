@@ -1,6 +1,6 @@
 package alfheim.common.item.interaction.thaumcraft;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.item.equipment.armor.elvoruim.ElvoriumHelmet;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;

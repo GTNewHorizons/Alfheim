@@ -2,8 +2,8 @@ package alfheim.common.item.equipment.armor.elemental;
 
 import java.util.List;
 
-import alfheim.ModInfo;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.client.model.armor.ModelElementalArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;

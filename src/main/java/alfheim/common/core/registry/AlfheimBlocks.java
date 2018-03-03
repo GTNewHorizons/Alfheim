@@ -7,9 +7,9 @@ import static net.minecraftforge.oredict.OreDictionary.*;
 
 import alexsocol.asjlib.BlockPattern;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.block.*;
-import alfheim.common.block.mana.BlockManaInfuser;
+import alfheim.common.block.mana.*;
 import alfheim.common.item.block.ItemBlockElvenOres;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import clashsoft.cslib.minecraft.block.CSBlocks;
@@ -38,6 +38,7 @@ public class AlfheimBlocks {
 	public static Block poisonIce;
 	public static Block redFlame;
 	public static Block tradePortal;
+	public static Block transferer;
 	
 	public static void init() {
 		construct();
@@ -61,12 +62,14 @@ public class AlfheimBlocks {
 		poisonIce = new BlockPoisonIce();
 		redFlame = new BlockRedFlame();
 		tradePortal = new BlockTradePortal();
+		transferer = new BlockTransferer();
 	}
 
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
 		register(tradePortal);
+		register(transferer);
 		registerBlock(alfheimPylons, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylons));
 		register(anyavil);
 		register(elvoriumBlock);

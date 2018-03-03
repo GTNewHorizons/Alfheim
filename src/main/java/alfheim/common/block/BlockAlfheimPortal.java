@@ -2,7 +2,7 @@ package alfheim.common.block;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;

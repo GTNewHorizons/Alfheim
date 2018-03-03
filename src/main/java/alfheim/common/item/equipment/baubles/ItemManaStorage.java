@@ -3,7 +3,7 @@ package alfheim.common.item.equipment.baubles;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;

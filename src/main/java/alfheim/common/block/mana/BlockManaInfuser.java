@@ -1,7 +1,7 @@
 package alfheim.common.block.mana;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;

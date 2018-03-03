@@ -1,6 +1,6 @@
 package alfheim.client.integration.nei;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.client.integration.nei.recipes.*;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;

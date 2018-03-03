@@ -22,6 +22,7 @@ tile.MuspelheimFire.name=Красный Огонь Муспельхейма
 tile.NiflheimIce.name=Ядовитый Лёд Нифльхейма
 tile.QuartzElvenOre.name=Руда Эльфийского Кварца
 tile.TradePortal.name=Ядро Врат Мидгарда
+tile.Transferer.name=Переносчик
 
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
@@ -44,7 +45,9 @@ item.ElvoriumHelmetRevealing.name=Шлем Откровения Из Эльво�
 item.ElvoriumIngot.name=Слиток Эльвория
 item.ElvoriumLeggings.name=Поножи Из Эльвория
 item.ElvoriumNugget.name=Самородок Эльвория
+item.botania:Excaliber.name=Святой Меч Экскалибер
 item.botania:FirePendant.name=Подвеска Защиты От Муспельхейма
+item.botania:FlugelSoul.name=Душа Флюгеля
 item.botania:IcePendant.name=Подвеска Защиты От Нифльхейма
 item.IffesalDust.name=Пыль Иффесалия
 item.InterdimensionalGatewayCore.name=Межпространственное Связующее Ядро
@@ -82,6 +85,9 @@ item.RealitySword.desc4=Ослепляет цель.
 item.RealitySword.desc5=Потребляет §n10§r§7 единиц §bманы§7 в тик.
 item.RealitySword.descZ=Власть в твоих руках!
 item.RealitySword.DIE=%s получил меч создателя и был наказан Богами!
+item.TankMask.name=Загадочная Маска
+item.TankMask.active=Активна
+item.TankMask.inactive=Неактивна
 
 ########################################################___ОСТАЛЬНОЕ___#########################################################
 
@@ -115,7 +121,65 @@ alfheim.configgui.showNumbersInTooltip=Поставьте true чтобы вкл
 entity.Elf.name=Эльф
 entity.Pixie.name=Пикси
 
+item.FlugelSoul.blockAway=На расстоянии блока
+item.FlugelSoul.blocksAway=На расстоянии %s блоков
+item.FlugelSoul.anotherDim=Измерение %s
+item.FlugelSoul.clickToTeleport=ПКМ для телепортации
+item.FlugelSoul.clickToRemoveWarp=Шифт-удар чтобы убрать
+item.FlugelSoul.unboundWarp=Несвязанная точка
+item.FlugelSoul.clickToAddWarp=ПКМ чтобы привязать к текущей позиции
+
+item.FlugelSoul.sign0=Овен
+item.FlugelSoul.sign1=Телец
+item.FlugelSoul.sign2=Близнецы
+item.FlugelSoul.sign3=Рак
+item.FlugelSoul.sign4=Лев
+item.FlugelSoul.sign5=Дева
+item.FlugelSoul.sign6=Весы
+item.FlugelSoul.sign7=Скорпион
+item.FlugelSoul.sign8=Стрелец
+item.FlugelSoul.sign9=Козерог
+item.FlugelSoul.sign10=Водолей
+item.FlugelSoul.sign11=Рыбы
+
 itemGroup.Alfheim=Альфхейм
+
+#######################################################___RELIC POEMS___########################################################
+
+item.infiniteFruit.poem0=Фрукт садов запретных,
+item.infiniteFruit.poem1=Голод вечно очищая,
+item.infiniteFruit.poem2=Мякоть восстанавливает свою,
+item.infiniteFruit.poem3=Себе молодость возвращая.
+
+item.Excaliber.poem0=Меч героя подлинного,
+item.Excaliber.poem1=Лишь для добра он сойдёт,
+item.Excaliber.poem2=Острый и магию призывая,
+item.Excaliber.poem3=Врагов он быстро найдёт.
+
+item.flugelEye.poem0=Видение прошлого на уме лишь,
+item.flugelEye.poem1=Матрицы памяти вращение
+item.flugelEye.poem2=И её с жизню взаимодействие
+item.flugelEye.poem3=Душе даёт возвращение.
+
+item.thorRing.poem0=Сила Бога-Громовержца
+item.thorRing.poem1=Разрушит всю соль Терры,
+item.thorRing.poem2=Вместе с силой непреодолимой
+item.thorRing.poem3=Она даст начало новой эры.
+
+item.odinRing.poem0=The wise old God lays its blessings,
+item.odinRing.poem1=Of virtue, life and divinity,
+item.odinRing.poem2=With the hindrance of death on one's hands,
+item.odinRing.poem3=They'll form the Holy Trinity.
+
+item.lokiRing.poem0=Empty handed, a sneaking interaction,
+item.lokiRing.poem1=Once on the center, then around the track,
+item.lokiRing.poem2=Back to the start one'd go to complete
+item.lokiRing.poem3=The power of creating back-to-back.
+
+item.aesirRing.poem0=The forces of the Gods
+item.aesirRing.poem1=In this band form as one,
+item.aesirRing.poem2=And when combined all together
+item.aesirRing.poem3=Above them will be none.
 
 #######################################################___ELVEN STORY___########################################################
 

@@ -3,11 +3,11 @@ package alfheim.client.event;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
-import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.client.core.utils.KeyBindingsUtils;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -73,7 +73,7 @@ public class ClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
-		((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
+		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(AlfheimRegistry.RACE).getAttributeValue());
+		((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
 	}
 }

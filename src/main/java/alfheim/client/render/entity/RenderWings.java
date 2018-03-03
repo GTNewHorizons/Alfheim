@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL11.glTranslated;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.Minecraft;

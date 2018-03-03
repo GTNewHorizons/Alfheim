@@ -3,7 +3,7 @@ package alfheim.common.block;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;

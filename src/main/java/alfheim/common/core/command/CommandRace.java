@@ -3,7 +3,7 @@ package alfheim.common.core.command;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.api.AlfheimAPI;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.command.CommandBase;
@@ -22,7 +22,7 @@ public class CommandRace extends CommandBase {
 	
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender sender) {
-		return sender instanceof EntityPlayer && EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN;
+		return sender instanceof EntityPlayer && AlfheimConfig.enableWingsNonAlfheim ? true : ((EntityPlayer) sender).dimension == AlfheimConfig.dimensionIDAlfheim && EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN;
 	}
 	
 	@Override
@@ -41,7 +41,7 @@ public class CommandRace extends CommandBase {
             EnumRace r = EnumRace.fromString(args[0]);
             if (r == null || r == EnumRace.ALV || r == EnumRace.HUMAN) throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
             if (EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN) {
-            	((EntityPlayer) sender).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
+            	((EntityPlayer) sender).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
             	((EntityPlayer) sender).capabilities.allowFlying = true;
             	((EntityPlayer) sender).setSpawnChunk(new ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].zCoord)), true, AlfheimConfig.dimensionIDAlfheim);
             	ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal()].xCoord, AlfheimConfig.zones[r.ordinal()].yCoord, AlfheimConfig.zones[r.ordinal()].zCoord);

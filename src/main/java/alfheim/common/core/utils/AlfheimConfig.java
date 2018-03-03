@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.Level;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -32,30 +32,33 @@ public class AlfheimConfig extends Configuration {
 	public static final String CATEGORY_HUD			= CATEGORY_ESMODE + CATEGORY_SPLITTER + "hud";
 	
 	// DIMENSIONS
-	public static int dimensionIDAlfheim		= -105;
-	public static int biomeIDAlfheim			= 152;
-	public static int biomeIDAlfheimBeach		= 153;
+	public static int		biomeIDAlfheim			= 152;
+	public static int		biomeIDAlfheimBeach		= 153;
+	public static int		dimensionIDAlfheim		= -105;
 	
 	// OHTER
-	public static boolean destroyPortal			= true;
-	public static boolean enableAlfheimRespawn	= true;
-	public static boolean numericalMana			= true;
-	public static boolean looniumOverseed		= false;
+	public static boolean	destroyPortal			= true;
+	public static boolean	enableAlfheimRespawn	= true;
+	public static boolean	looniumOverseed			= false;
+	public static boolean	numericalMana			= true;
+	public static int		potionIDPossession		= 30;
+
 	
 	// Elven Story
-	public static Vec3[] zones					= new Vec3[9];
-	public static boolean prolongDeathScreen	= true;
-	public static int deathScreenAddTime		= 1200;
-	public static int flightTime				= 12000;
-	public static boolean enableWingsNonAlfheim	= true;
+	public static boolean	bothSpawnStructures		= false;
+	public static int		deathScreenAddTime		= 1200;
+	public static boolean	enableWingsNonAlfheim	= true;
+	public static int		flightTime				= 12000;
+	public static boolean	prolongDeathScreen		= true;
+	public static Vec3[]	zones					= new Vec3[9];
 
 	// ES - HUD
-	public static double deathTimerScale		= 1.0;
-	public static int deathTimerX				= 0;
-	public static int deathTimerY				= 0;
-	public static double flightTimerScale		= 1.0;
-	public static int flightTimerX				= 0;
-	public static int flightTimerY				= 0;
+	public static double	deathTimerScale			= 1.0;
+	public static int		deathTimerX				= 0;
+	public static int		deathTimerY				= 0;
+	public static double	flightTimerScale		= 1.0;
+	public static int		flightTimerX			= 0;
+	public static int		flightTimerY			= 0;
 	
 	public static void loadConfig(File suggestedConfigurationFile) {
 		config = new Configuration(suggestedConfigurationFile);
@@ -77,13 +80,15 @@ public class AlfheimConfig extends Configuration {
 		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",	enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
 		looniumOverseed		= loadProp(CATEGORY_GENERAL,	"looniumOverseed",		looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
 		numericalMana		= loadProp(CATEGORY_GENERAL,	"numericalMana",		numericalMana,			false,	"Set this to true to enable numerical mana representation");
-
+		potionIDPossession	= loadProp(CATEGORY_GENERAL, 	"potionIDPossession",	potionIDPossession,		true,	"Potion id for Possession");
+		
 		if (AlfheimCore.enableElvenStory) {
-			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
+			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
 			deathScreenAddTime		= loadProp(CATEGORY_ESMODE,	"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
-			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
 			enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,	"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");
-
+			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
+			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
+			
 			deathTimerScale			= loadProp(CATEGORY_HUD,	"deathTimerScale",	deathTimerScale,	false,	"Death Timer Scale (1 < bigger; 1 > smaller)");
 			deathTimerX				= loadProp(CATEGORY_HUD,	"deathTimerX",		deathTimerX,		false,	"Death Timer additional X");
 			deathTimerY				= loadProp(CATEGORY_HUD,	"deathTimerY",		deathTimerY,		false,	"Death Timer additional Y");

@@ -1,13 +1,11 @@
 package alfheim.common.event;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
@@ -16,20 +14,25 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
 import vazkii.botania.common.block.tile.TileAlfPortal;
@@ -68,16 +71,16 @@ public class CommonEventHandler {
 	public void onEntityConstructing(EntityConstructing e) {
 		if (!AlfheimCore.enableElvenStory) return;
 		if (e.entity instanceof EntityPlayer) {
-			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(AlfheimAPI.RACE);
-			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(AlfheimAPI.FLIGHT);
+			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(AlfheimRegistry.RACE);
+			((EntityPlayer) e.entity).getAttributeMap().registerAttribute(AlfheimRegistry.FLIGHT);
 		}
 	}
 	
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.getRace((EntityPlayer) e.original);
-		EnumRace.setRace((EntityPlayer) e.entityPlayer, r);
+		int r = EnumRace.getRaceID((EntityPlayer) e.original);
+		EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
 	}
 	
 	@SubscribeEvent
@@ -136,20 +139,30 @@ public class CommonEventHandler {
 		EntityPlayer player = (EntityPlayer) e.entityLiving;
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
-				if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() >= 0
-				&&	player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() <= AlfheimAPI.FLIGHT.getDefaultValue()) {
+				if (player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() >= 0
+				&&	player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() <= AlfheimRegistry.FLIGHT.getDefaultValue()) {
 					if (player.capabilities.isFlying) {
-														player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT)
-														.setBaseValue(player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() -
+														player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT)
+														.setBaseValue(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() -
 														(player.isSprinting() ? 4 : (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) ? 2 : 1));
 					if (player.isSprinting()) player.moveFlying(0F, 1F, 0.01F);
-					} else								player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT)
-														.setBaseValue(player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() + 
-														(player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() < AlfheimAPI.FLIGHT.getDefaultValue() ? 1 : 0));
+					} else								player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT)
+														.setBaseValue(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() + 
+														(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() < AlfheimRegistry.FLIGHT.getDefaultValue() ? 1 : 0));
 					
 				}
-				if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.FLIGHT).getAttributeValue() <= 0)	player.capabilities.isFlying = false; 
+				if (player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() <= 0)	player.capabilities.isFlying = false; 
 			}
+		}
+	}
+	
+	@SubscribeEvent // 'cause I can. Why not?
+	public void onItemTooltip(ItemTooltipEvent e) {
+		if (GuiScreen.isShiftKeyDown() && e.itemStack.getItem() instanceof IRelic && e.itemStack.getItem() != ModItems.dice) {
+			e.toolTip.add("");
+			String name = e.itemStack.getUnlocalizedName() + ".poem";
+			for(int i = 0; i < 4; i++) e.toolTip.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal(name + i));
+			if (e.itemStack.getItem() == AlfheimItems.excaliber) for(int i = 0; i < 3; i++) e.toolTip.add(e.toolTip.remove(2));
 		}
 	}
 }

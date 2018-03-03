@@ -8,6 +8,7 @@ import alfheim.common.block.BlockElvenOres;
 import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.block.tile.TileTradePortal;
+import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
@@ -29,6 +30,7 @@ import vazkii.botania.common.lexicon.BLexiconCategory;
 import vazkii.botania.common.lexicon.BLexiconEntry;
 import vazkii.botania.common.lexicon.DLexiconEntry;
 import vazkii.botania.common.lexicon.LexiconData;
+import vazkii.botania.common.lexicon.RLexiconEntry;
 import vazkii.botania.common.lexicon.page.PageCraftingRecipe;
 import vazkii.botania.common.lexicon.page.PageElvenRecipe;
 import vazkii.botania.common.lexicon.page.PageMultiblock;
@@ -53,7 +55,9 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
 	public static LexiconEntry essences;
+	public static LexiconEntry excalibr;	// TODO describe
 	public static LexiconEntry infuser;
+	public static LexiconEntry mask;		// TODO describe
 	public static LexiconEntry mobs;
 	public static LexiconEntry ores;
 	public static LexiconEntry pixie;
@@ -62,13 +66,14 @@ public class AlfheimLexiconData {
 	public static LexiconEntry reality;
 	public static LexiconEntry ruling;
 	public static LexiconEntry runes;
+	public static LexiconEntry soul;		// TODO describe
 	public static LexiconEntry trade;
+	public static LexiconEntry trans;		// TODO describe
 	public static LexiconEntry worldgen;
 
 	// Elven Story information
 	public static LexiconEntry es;
 	public static LexiconEntry races;
-
 	
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("alfheim", 5));
@@ -81,8 +86,10 @@ public class AlfheimLexiconData {
 		elves	= new BLexiconEntry("elves",	categoryAlfheim);
 		elvorium= new BLexiconEntry("elvorium",	categoryAlfheim);
 		essences= new BLexiconEntry("essences",	categoryAlfheim);
+		excalibr= new RLexiconEntry("excalibr", categoryAlfheim	, AlfheimAchievements.excaliber);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
-		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
+		mask	= new BLexiconEntry("mask",		categoryAlfheim);
+		mobs	= new RLexiconEntry("mobs",		categoryAlfheim	, AlfheimAchievements.mask);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
 		portal	= new BLexiconEntry("portal",	categoryAlfheim);
@@ -90,7 +97,9 @@ public class AlfheimLexiconData {
 		reality	= new BLexiconEntry("reality",	categoryAlfheim);
 		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
 		runes	= new BLexiconEntry("runes",	categoryAlfheim);
+		soul	= new RLexiconEntry("soul",		categoryAlfheim	, AlfheimAchievements.flugelSoul);
 		trade	= new BLexiconEntry("trade",	categoryAlfheim);
+		trans	= new BLexiconEntry("trans",	categoryAlfheim);
 		worldgen= new BLexiconEntry("worldgen",	categoryAlfheim);
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
@@ -237,6 +246,18 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
 				.setIcon(new ItemStack(AlfheimItems.realitySword));
+		
+		excalibr.setKnowledgeType(BotaniaAPI.relicKnowledge)
+				.setLexiconPages(new PageText("0"))
+				.setIcon(new ItemStack(AlfheimItems.excaliber));
+		
+		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge)
+				.setLexiconPages(new PageText("0"))
+				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
+		
+		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)
+				.setLexiconPages(new PageText("0"))
+				.setIcon(new ItemStack(AlfheimItems.mask));
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory();
 		

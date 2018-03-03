@@ -3,7 +3,7 @@ package alfheim.client.model.armor;
 import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.AdvancedArmorModel;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;

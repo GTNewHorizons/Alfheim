@@ -2,7 +2,7 @@ package alfheim.client.event;
 
 import java.lang.reflect.Field;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.client.gui.GuiGameOver;

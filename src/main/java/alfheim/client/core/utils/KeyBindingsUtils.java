@@ -4,7 +4,7 @@ import org.lwjgl.input.Mouse;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.utils.AlfheimConfig;

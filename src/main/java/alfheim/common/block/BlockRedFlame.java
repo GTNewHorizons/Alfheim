@@ -4,7 +4,7 @@ import static net.minecraftforge.common.util.ForgeDirection.*;
 
 import java.util.Random;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;

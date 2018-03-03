@@ -1,6 +1,6 @@
 package alfheim.client.render.entity;
 
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;

@@ -15,8 +15,8 @@ import static vazkii.botania.common.lib.LibOreDict.*;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.api.crafting.recipe.IManaInfusionRecipe;
 import alfheim.client.integration.nei.NEIAlfheimConfig;
 import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;

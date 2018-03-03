@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import alfheim.AlfheimCore;
-import alfheim.ModInfo;
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.lexicon.AlfheimLexiconData;
