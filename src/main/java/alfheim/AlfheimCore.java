@@ -8,6 +8,7 @@ import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.network.AttributeMessage;
 import alfheim.common.network.KeyBindMessage;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -54,6 +55,7 @@ public class AlfheimCore {
     	enableElvenStory = Loader.isModLoaded("elvenstory");
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
 		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
+		network.registerMessage(AttributeMessage.Handler.class, AttributeMessage.class, 1, Side.CLIENT);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
     	proxy.initializeAndRegisterHandlers();

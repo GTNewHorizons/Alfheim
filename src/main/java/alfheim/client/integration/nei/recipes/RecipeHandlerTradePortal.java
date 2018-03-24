@@ -1,4 +1,4 @@
-package alfheim.client.integration.nei;
+package alfheim.client.integration.nei.recipes;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;

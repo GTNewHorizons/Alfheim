@@ -58,6 +58,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry excalibr;	// TODO describe
 	public static LexiconEntry infuser;
 	public static LexiconEntry mask;		// TODO describe
+	public static LexiconEntry mjolnir;		// TODO describe
 	public static LexiconEntry mobs;
 	public static LexiconEntry ores;
 	public static LexiconEntry pixie;
@@ -86,10 +87,8 @@ public class AlfheimLexiconData {
 		elves	= new BLexiconEntry("elves",	categoryAlfheim);
 		elvorium= new BLexiconEntry("elvorium",	categoryAlfheim);
 		essences= new BLexiconEntry("essences",	categoryAlfheim);
-		excalibr= new RLexiconEntry("excalibr", categoryAlfheim	, AlfheimAchievements.excaliber);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
-		mask	= new BLexiconEntry("mask",		categoryAlfheim);
-		mobs	= new RLexiconEntry("mobs",		categoryAlfheim	, AlfheimAchievements.mask);
+		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
 		portal	= new BLexiconEntry("portal",	categoryAlfheim);
@@ -97,7 +96,6 @@ public class AlfheimLexiconData {
 		reality	= new BLexiconEntry("reality",	categoryAlfheim);
 		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
 		runes	= new BLexiconEntry("runes",	categoryAlfheim);
-		soul	= new RLexiconEntry("soul",		categoryAlfheim	, AlfheimAchievements.flugelSoul);
 		trade	= new BLexiconEntry("trade",	categoryAlfheim);
 		trans	= new BLexiconEntry("trans",	categoryAlfheim);
 		worldgen= new BLexiconEntry("worldgen",	categoryAlfheim);
@@ -108,6 +106,13 @@ public class AlfheimLexiconData {
 	private static void preInitElvenStory() {
 		es		= new BLexiconEntry("es",		categoryAlfheim);
 		races	= new BLexiconEntry("races",	categoryAlfheim);
+	}
+	
+	public static void preInit2() {
+		excalibr= new RLexiconEntry("excalibr", categoryAlfheim	, AlfheimAchievements.excaliber);
+		mask	= new RLexiconEntry("mask",		categoryAlfheim	, AlfheimAchievements.mask);
+		mjolnir	= new RLexiconEntry("mjolnir",	categoryAlfheim	, AlfheimAchievements.mjolnir);
+		soul	= new RLexiconEntry("soul",		categoryAlfheim	, AlfheimAchievements.flugelSoul);
 	}
 	
 	public static void init() {
@@ -230,16 +235,14 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("6", ringRecipes))
 				.setIcon(new ItemStack(AlfheimItems.manaStone));
 		
-		List<IRecipe> rodRecipes = new ArrayList();
-		rodRecipes.add(AlfheimRecipes.recipeMuspelheimRod);
-		rodRecipes.add(AlfheimRecipes.recipeNiflheimRod);
 		List<IRecipe> amuletRecipes = new ArrayList();
 		amuletRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
 		amuletRecipes.add(AlfheimRecipes.recipeNiflheimPendant);
 		ruling	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
-								 new PageCraftingRecipe("2", rodRecipes),
-								 new PageText("3"), new PageCraftingRecipe("4", amuletRecipes))
+								 new PageCraftingRecipe("2", AlfheimRecipes.recipeMuspelheimRod),
+								 new PageCraftingRecipe("3", AlfheimRecipes.recipeNiflheimPendant),
+								 new PageText("4"), new PageCraftingRecipe("5", amuletRecipes))
 				.setIcon(new ItemStack(AlfheimItems.rodFire));
 		
 		reality	.setKnowledgeType(kt)
@@ -258,6 +261,10 @@ public class AlfheimLexiconData {
 		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)
 				.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mask));
+		
+		mjolnir	.setKnowledgeType(BotaniaAPI.relicKnowledge)
+				.setLexiconPages(new PageText("0"))
+				.setIcon(new ItemStack(AlfheimItems.mjolnir));
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory();
 		

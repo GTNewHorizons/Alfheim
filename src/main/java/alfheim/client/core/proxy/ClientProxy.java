@@ -61,7 +61,6 @@ public class ClientProxy extends CommonProxy {
 		super.initializeAndRegisterHandlers();
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		FMLCommonHandler.instance().bus().register(new ClientEventHandler());
-		if (AlfheimConfig.numericalMana) MinecraftForge.EVENT_BUS.register(new GUIManaTester(Minecraft.getMinecraft()));
 		if (AlfheimCore.enableElvenStory) {
 			ASJUtilities.log("Registering ES GUIs");
 			MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));

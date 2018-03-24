@@ -4,7 +4,6 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimItems;
-import codechicken.lib.math.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
@@ -12,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaDiscountArmor;

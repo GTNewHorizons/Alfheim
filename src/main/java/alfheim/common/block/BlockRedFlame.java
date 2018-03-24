@@ -6,6 +6,7 @@ import java.util.Random;
 
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.relauncher.Side;
@@ -17,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -25,13 +27,14 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class BlockRedFlame extends BlockFire implements ILexiconable {
 
-	private IIcon[] icons;
+	public IIcon[] icons;
 
 	public BlockRedFlame() {
-		this.setBlockName("MuspelheimFire");
-        this.setBlockUnbreakable();
-        this.setLightLevel(1.0F);
-        this.setLightOpacity(0);
+		setBlockName("MuspelheimFire");
+        setBlockUnbreakable();
+        setLightLevel(1.0F);
+        setLightOpacity(0);
+        setResistance(Float.MAX_VALUE);
 	}
 
 	@Override
@@ -42,8 +45,7 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg) {
-		this.icons = new IIcon[] { reg.registerIcon(ModInfo.MODID + ":MuspelheimFire0"),
-				reg.registerIcon(ModInfo.MODID + ":MuspelheimFire1") };
+		this.icons = new IIcon[] { reg.registerIcon(ModInfo.MODID + ":MuspelheimFire0"), reg.registerIcon(ModInfo.MODID + ":MuspelheimFire1") };
 	}
 
 	@Override
@@ -59,11 +61,12 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	}
 
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant) return;
+		if (entity instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant) return;
+		if (entity instanceof EntityLivingBase) {
+			PotionEffect burningsoul = new PotionEffect(AlfheimRegistry.soulburn.id, 200);
+			burningsoul.getCurativeItems().clear();
+			((EntityLivingBase) entity).addPotionEffect(burningsoul);
 		}
-		entity.setFire(200);
 		entity.setInWeb();
 	}
 

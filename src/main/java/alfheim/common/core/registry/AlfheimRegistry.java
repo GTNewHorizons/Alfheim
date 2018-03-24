@@ -4,32 +4,25 @@ import static alexsocol.asjlib.ASJUtilities.*;
 import static alfheim.api.AlfheimAPI.*;
 import static cpw.mods.fml.common.registry.GameRegistry.*;
 
-import java.util.LinkedHashSet;
-
-import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.clashsoft.cslib.reflect.CSReflection;
+import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.entity.EntityAlfheimPixie;
-import alfheim.common.entity.EntityElf;
-import alfheim.common.potion.PotionPossession;
+import alfheim.common.entity.*;
+import alfheim.common.potion.*;
 import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.brew.ModPotions;
-import vazkii.botania.common.brew.potion.PotionAllure;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.lib.LibBlockNames;
@@ -53,13 +46,14 @@ public class AlfheimRegistry {
 		}
 	}.setShouldWatch(true);
 	
-		public static Potion possession;
-
+	public static Potion possession;
+	public static Potion soulburn;
 	
 	public static void preInit() {
-		if(Potion.potionTypes.length < 256) CSReflection.invokeStatic(ModPotions.class, new Object[] {}, "extendPotionArray");
+		if(Potion.potionTypes.length < 256) ASJReflectionHelper.invokeStatic(ModPotions.class, null, "extendPotionArray");
 		
 		possession = new PotionPossession();
+		soulburn = new PotionSoulburn();
 		registerEntities();
 		registerTileEntities();
 	}
@@ -74,8 +68,9 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerEntities() {
-		registerEntityEgg(EntityElf.class, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance);
 		registerEntityEgg(EntityAlfheimPixie.class, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance);
+		registerEntityEgg(EntityElf.class, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance);
+		registerEntityEgg(EntityFlugel.class, "Flugel", 0xFAFAFA, 0xEBAFC8, AlfheimCore.instance);
 	}
 	
 	private static void registerTileEntities() {

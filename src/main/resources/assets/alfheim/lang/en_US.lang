@@ -33,7 +33,6 @@ item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
 item.botania:ElementalEarthChest.name=Elemental Chestplate of Earth
 item.botania:ElementalWaterHelm.name=Elemental Helmet of Water
 item.botania:ElementalWaterHelmRevealing.name=Elemental Revealing Helmet of Water
-item.botania:PixieAttractor.name=Pixie Attractor
 item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
 item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
 item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
@@ -61,6 +60,7 @@ item.manastorage.desc0=Stores up to %s manapools capacity!
 item.manastorage.desc1=Currently stored §b%s§7/§b%s§7 mana pts
 item.MauftriumIngot.name=Mauftrium Ingot
 item.MauftriumNugget.name=Mauftrium Nugget
+item.botania:Mjolnir.name=Mjölnir
 item.MuspelheimEssence.name=Muspelheim Essence
 item.MuspelheimPowerIngot.name=Muspelheim Power Ingot
 item.MuspelheimRod.name=Muspelheim Overlord Rod
@@ -69,6 +69,7 @@ item.NiflheimEssence.name=Niflheim Essence
 item.NiflheimPowerIngot.name=Niflheim Power Ingot
 item.NiflheimRod.name=Niflheim Overlord Rod
 item.NiflheimRune.name=Niflheim Rune
+item.botania:PixieAttractor.name=Pixie Attractor
 item.PrimalRune.name=Primal Rune
 item.RealitySword.name=§rSword of Reality%s
 item.RealitySword.name0= (Inert)
@@ -85,9 +86,10 @@ item.RealitySword.desc4=Blinds target.
 item.RealitySword.desc5=Requires §n10§r§7 §bmana§7/tick.
 item.RealitySword.descZ=You've got a power!
 item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
-item.TankMask.name=Mysterious Mask
+item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive
+item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################
 
@@ -119,6 +121,13 @@ alfheim.configgui.enableWingsNonAlfheim=Set this to false to disable wings in ot
 alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
 alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
 alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
+
+alfheim.potion.possession=Possession
+alfheim.potion.possession.postfix=Potion of Possession
+alfheim.potion.soulburn=Soulburn
+alfheim.potion.soulburn.postfix=Potion of Soulburn
+
+death.attack.soulburn=%s's soul burned away
 
 entity.Elf.name=Elf
 entity.Pixie.name=Pixie

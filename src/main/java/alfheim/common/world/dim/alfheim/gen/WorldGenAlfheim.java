@@ -27,8 +27,17 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) generateAlfheim(rand, chunkX, chunkZ, world);
 	}
 
-	private void generateAlfheim(Random rand, int chunkX, int chunkZ, World world) {
-		if ((chunkX == 0 && chunkZ == 0)) (new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0), -41);
+	private void generateAlfheim(final Random rand, int chunkX, int chunkZ, final World world) {
+		if (chunkX == 0 && chunkZ == 0 && !world.isRemote) {
+			Thread generate = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					ASJUtilities.log("Generating spawn...");
+					(new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0), -41);
+				}
+			}, "Alf Spawn Gen");
+			generate.start();
+		}
 		for (int i = 0; i < 3 + rand.nextInt(2); i++) generateElvenOres(world, rand, chunkX * 16, chunkZ * 16);
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);

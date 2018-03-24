@@ -21,6 +21,6 @@ public class PotionPossession extends PotionAlfheim {
 	
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent e) {
-		if (hasEffect(e.entityLiving) && e.entityLiving.getActivePotionEffect(this).getDuration() > 1200 && e.entityLiving.worldObj.getTotalWorldTime() % 20 == 0) e.entityLiving.attackEntityFrom(DamageSource.outOfWorld, (float) (e.entityLiving.getActivePotionEffect(this).getDuration() - 1200) / 400.0F);
+		if (hasEffect(e.entityLiving) && e.entityLiving.getActivePotionEffect(this).getDuration() > 1200 && e.entityLiving.ticksExisted % 20 == 0) e.entityLiving.attackEntityFrom(DamageSource.outOfWorld, (float) (e.entityLiving.getActivePotionEffect(this).getDuration() - 1200) / 400.0F);
 	}
 }

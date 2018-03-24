@@ -1,8 +1,9 @@
-package alexsocol.asjlib.clashsoft.cslib.reflect;
+package alexsocol.asjlib;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,13 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The class CSReflection.
+ * The class prev named CSReflection.
  * <p>
  * This class adds several utils for "hacking" into the JVM, also known as Reflection.
  * 
- * @author Clashsoft
+ * @author Clashsoft; slightly improved by AlexSocol
  */
-public class CSReflection {
+public class ASJReflectionHelper {
 	
 	private static Field modifiersField;
 
@@ -89,7 +90,7 @@ public class CSReflection {
 			StackTraceElement ste = stElements[i];
 			String className = ste.getClassName();
 
-			if (!CSReflection.class.getName().equals(className) && !className.startsWith("java.lang.Thread")) {
+			if (!ASJReflectionHelper.class.getName().equals(className) && !className.startsWith("java.lang.Thread")) {
 				if (callerClassName == null) {
 					callerClassName = className;
 				} else if (!callerClassName.equals(className)) {
@@ -163,6 +164,7 @@ public class CSReflection {
 				return m;
 			}
 		} catch (NoSuchMethodException ex) {
+			ex.printStackTrace();
 		} catch (SecurityException ex) {
 			ex.printStackTrace();
 		}
@@ -186,8 +188,7 @@ public class CSReflection {
 				return m;
 			}
 		}
-		CSLog.error(new NoSuchMethodException(
-				"Method not found! (Class: " + clazz + "; Expected field names: " + Arrays.toString(methodNames)));
+		CSLog.error(new NoSuchMethodException("Method not found! (Class: " + clazz + "; Expected field names: " + Arrays.toString(methodNames)));
 		return null;
 	}
 
@@ -389,7 +390,7 @@ public class CSReflection {
 
 	// Field setters
 
-	// Reference
+	// 
 
 	public static <T, V> void setStaticValue(Class<? super T> clazz, V value, String... fieldNames) {
 		setValue(clazz, null, value, fieldNames);
@@ -401,7 +402,7 @@ public class CSReflection {
 
 	public static <T, V> void setValue(Class<? super T> clazz, T instance, V value, String... fieldNames) {
 		Field f = getField(clazz, fieldNames);
-		setField(f, instance, value);
+		setValue(f, instance, value);
 	}
 
 	// Field ID
@@ -416,24 +417,72 @@ public class CSReflection {
 
 	public static <T, V> void setValue(Class<? super T> clazz, T instance, V value, int fieldID) {
 		Field f = getField(clazz, fieldID);
-		setField(f, instance, value);
+		setValue(f, instance, value);
 	}
-
+	
+	public static <T, V> void setValue(Field field, T instance, V value) {
+		setValue(field, instance, value, true);
+	}
+	
 	/**
 	 * Directly sets the value of the given {@link Field} on the given
 	 * {@link Object} {@code instance} to the given {@link Object} {@code value} .
 	 * 
-	 * @param field
-	 *            the field to set
-	 * @param instance
-	 *            the instance
-	 * @param value
-	 *            the new value
+	 * @param field the field to set
+	 * @param instance the instance
+	 * @param value the new value
+	 * @param checkAccessible true if field is private
 	 */
-	public static <T, V> void setField(Field field, T instance, V value) {
+	public static <T, V> void setValue(Field field, T instance, V value, boolean checkAccessible) {
 		try {
-			field.setAccessible(true);
+			if(checkAccessible) field.setAccessible(true);
 			field.set(instance, value);
+		} catch (Exception ex) {
+			CSLog.error(ex);
+		}
+	}
+	
+	// Reference
+	
+	public static <T, V> void setStaticFinalValue(Class<? super T> clazz, V value, String... fieldNames) {
+		setFinalValue(clazz, null, value, fieldNames);
+	}
+
+	public static <T, V> void setFinalValue(T instance, V value, String... fieldNames) {
+		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldNames);
+	}
+
+	public static <T, V> void setFinalValue(Class<? super T> clazz, T instance, V value, String... fieldNames) {
+		Field f = getField(clazz, fieldNames);
+		setFinalValue(f, instance, value);
+	}
+
+	// Field ID
+
+	public static <T, V> void setStaticFinalValue(Class<? super T> clazz, V value, int fieldID) {
+		setFinalValue(clazz, null, value, fieldID);
+	}
+
+	public static <T, V> void setFinalValue(T instance, V value, int fieldID) {
+		setFinalValue((Class<? super T>) instance.getClass(), instance, value, fieldID);
+	}
+
+	public static <T, V> void setFinalValue(Class<? super T> clazz, T instance, V value, int fieldID) {
+		Field f = getField(clazz, fieldID);
+		setFinalValue(f, instance, value);
+	}
+	
+	public static <T, V> void setFinalValue(Field field, T instance, V value) {
+		setFinalValue(field, instance, value, true);
+	}
+	
+	public static <T, V> void setFinalValue(Field field, T instance, V value, boolean checkAccessible) {
+		try {
+			if (checkAccessible) field.setAccessible(true);
+			int mods = field.getModifiers();
+			modifiersField.setInt(field, mods & ~Modifier.FINAL);
+			field.set(instance, value);
+			modifiersField.setInt(field, mods);
 		} catch (Exception ex) {
 			CSLog.error(ex);
 		}

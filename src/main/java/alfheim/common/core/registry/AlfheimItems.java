@@ -47,6 +47,7 @@ public class AlfheimItems {
 	public static Item manaStone;
 	public static Item manaStoneGreater;
 	public static Item mask;
+	public static Item mjolnir;
 	public static Item pixieAttractor;
 	public static Item realitySword;
 	public static Item rodFire;
@@ -72,28 +73,26 @@ public class AlfheimItems {
 		elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
 		elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
 		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
+		realitySword = new ItemRealitySword();
+		excaliber = new ItemExcaliber();
+		mjolnir = new ItemMjolnir();
+		mask = new ItemTankMask();
+		flugelSoul = new ItemFlugelSoul();
 		elfFirePendant = new FirePendant();
 		elfIcePendant = new IcePendant();
-		excaliber = new ItemExcaliber();
-		flugelSoul = new ItemFlugelSoul();
 		creativeReachPendant = new CreativeReachPendant();
-		livingrockPickaxe = new LivingrockPickaxe();
 		pixieAttractor = new ItemBauble("PixieAttractor") {@Override public BaubleType getBaubleType(ItemStack stack){return BaubleType.AMULET;}}.setCreativeTab(AlfheimCore.alfheimTab);
+		livingrockPickaxe = new ItemLivingrockPickaxe();
 		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
 		manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
 		manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
-		mask = new ItemTankMask();
-		realitySword = new RealitySword();
 		rodFire = new ItemRod("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodIce = new ItemRod("NiflheimRod", AlfheimBlocks.poisonIce);		
 	}
 
 	private static void reg() {
 		register(realitySword);
-		register(excaliber);
-		register(flugelSoul);
-		register(mask);
 		register(livingrockPickaxe);
 		register(manaStone);
 		register(manaStoneGreater);

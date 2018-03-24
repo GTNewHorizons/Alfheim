@@ -21,6 +21,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -48,7 +49,6 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	public ItemTankMask() {
 		super("TankMask");
 		setCreativeTab(AlfheimCore.alfheimTab);
-		setBindAchievement(AlfheimAchievements.mask);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -105,7 +105,9 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		setInt(stack, TAG_POSSESSION, getInt(stack, TAG_POSSESSION, 0) + 1);
 		entity.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 20, 4));
 		entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 20, 4));
-		entity.addPotionEffect(new PotionEffect(AlfheimConfig.potionIDPossession, getInt(stack, TAG_POSSESSION, 1)));
+		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, getInt(stack, TAG_POSSESSION, 1));
+		possessed.getCurativeItems().clear();
+		entity.addPotionEffect(possessed);
 	}
 
 	@Override
@@ -114,7 +116,9 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		initNBT(stack);
 		setInt(stack, TAG_POSSESSION, 0);
 		setInt(stack, TAG_COOLDOWN, MAX_COOLDOWN);
-		entity.addPotionEffect(new PotionEffect(AlfheimConfig.potionIDPossession, 2));
+		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, 2);
+		possessed.getCurativeItems().clear();
+		entity.addPotionEffect(possessed);
 	}
 
 	@Override
@@ -123,7 +127,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		initNBT(stack);
 		setInt(stack, TAG_POSSESSION, 0);
 		PotionEffect possessed = entity.getActivePotionEffect(AlfheimRegistry.possession);
-		if (possessed != null) entity.removePotionEffect(AlfheimConfig.potionIDPossession);
+		if (possessed != null) entity.removePotionEffect(AlfheimRegistry.possession.id);
 	}
 	
 	@Override

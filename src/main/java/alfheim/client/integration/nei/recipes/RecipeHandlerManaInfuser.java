@@ -3,7 +3,7 @@ package alfheim.client.integration.nei.recipes;
 import java.util.List;
 
 import alfheim.api.AlfheimAPI;
-import alfheim.api.crafting.recipe.IManaInfusionRecipe;
+import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import codechicken.nei.PositionedStack;
@@ -21,10 +21,9 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 
 		public int manaUsage;
 
-		public CachedManaInfuserRecipe(IManaInfusionRecipe recipe) {
+		public CachedManaInfuserRecipe(RecipeManaInfuser recipe) {
 			super(recipe, false);
-			if(recipe == null)
-				return;
+			if(recipe == null) return;
 			manaUsage = recipe.getManaUsage();
 			inputs.add(new PositionedStack(new ItemStack(AlfheimBlocks.manaInfuser), 73, 55));
 		}
@@ -52,12 +51,11 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 
 	@Override
 	public List<? extends RecipePetals> getRecipes() {
-		return AlfheimAPI.manaInfusionRecipes;
+		return AlfheimAPI.manaInfuserRecipes;
 	}
 
 	@Override
 	public CachedPetalApothecaryRecipe getCachedRecipe(RecipePetals recipe) {
-		return new CachedManaInfuserRecipe((IManaInfusionRecipe) recipe);
+		return new CachedManaInfuserRecipe((RecipeManaInfuser) recipe);
 	}
-
 }

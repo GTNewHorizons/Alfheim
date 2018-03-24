@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -67,7 +68,7 @@ public class ItemFlugelSoul extends ItemRelic {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
+	public int getColorFromItemStack(ItemStack stack, int pass) {
 		return Color.HSBtoRGB(Botania.proxy.getWorldElapsedTicks() * 2 % 360 / 360F, 0.75F, 1F);
 	}
 	
@@ -87,8 +88,8 @@ public class ItemFlugelSoul extends ItemRelic {
 			MultiversePosition pos = getWarpPoint(stack, segment);
 			if(pos.isValid()) {
 				if (!world.isRemote && player instanceof EntityPlayerMP && (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true))) {
-					((EntityPlayerMP) player).playerNetServerHandler.setPlayerLocation(pos.x, pos.y, pos.z, player.rotationYaw, player.rotationPitch);
 					world.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
+					ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z);
 				}
 			} else setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world.provider.dimensionId);
 		}

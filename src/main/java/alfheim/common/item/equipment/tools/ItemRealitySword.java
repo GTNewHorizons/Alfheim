@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
@@ -19,6 +20,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -27,18 +29,20 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 
-public class RealitySword extends ItemSword implements IManaUsingItem {
+public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
-	public static final String TAGELEMENT = "ELEMENT";
+	public static final String TAG_ELEMENT = "element";
 	public static IIcon[] textures = new IIcon[6];
 	
-	public RealitySword() {
+	public ItemRealitySword() {
 		super(AlfheimAPI.REALITY);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setNoRepair();
@@ -56,10 +60,10 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	public IIcon getIconIndex(ItemStack stack) {
 		if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
-    		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
     		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
-		return textures[stack.stackTagCompound.getInteger(TAGELEMENT)];
+		return textures[stack.stackTagCompound.getInteger(TAG_ELEMENT)];
 	}
 
 	@Override
@@ -69,23 +73,22 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (player.isSneaking()) {
-        	
         	if (!stack.hasTagCompound()) {
         		stack.stackTagCompound = new NBTTagCompound();
-        		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+        		stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
         		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         	}
         	
-        	if (stack.stackTagCompound.getInteger(TAGELEMENT) == 5) return stack;
+        	if (stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5) return stack;
         	if (merge(player.getCommandSenderName(), stack.getDisplayName()).equals("35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0")) {
-        		stack.stackTagCompound.setInteger(TAGELEMENT, 5);
+        		stack.stackTagCompound.setInteger(TAG_ELEMENT, 5);
         		stack.setStackDisplayName(StatCollector.translateToLocal("item.RealitySword.nameZ"));
         		return stack;
         	}
         	
         	if (!ManaItemHandler.requestManaExact(stack, player, 1, !world.isRemote)) return stack;
-        	int tag = Math.max(0, stack.stackTagCompound.getInteger(TAGELEMENT) + 1) % 5;
-        	stack.stackTagCompound.setInteger(TAGELEMENT, tag);
+        	int tag = Math.max(0, stack.stackTagCompound.getInteger(TAG_ELEMENT) + 1) % 5;
+        	stack.stackTagCompound.setInteger(TAG_ELEMENT, tag);
         	stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name" + tag)));
         } else player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         return stack;
@@ -132,51 +135,37 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slotID, boolean inHand) {
 		if (!stack.hasTagCompound()) {
 			stack.stackTagCompound = new NBTTagCompound();
-    		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
     		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
 		}
 		
 		if (world.isRemote) return;
 		
-		boolean flag = stack.stackTagCompound.getInteger(TAGELEMENT) == 5;
+		boolean flag = stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5;
 		if (entity instanceof EntityPlayer) {
-			if (!flag && 0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5) {
+			if (!flag && 0 < stack.stackTagCompound.getInteger(TAG_ELEMENT) && stack.stackTagCompound.getInteger(TAG_ELEMENT) < 5) {
 				if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) entity, 1, !world.isRemote)) {
-					stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+					stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
 	        		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
 				}
 			}
 			
 			if (flag && !entity.getCommandSenderName().equals("AlexSocol")) {
-				world.spawnEntityInWorld(new EntityItem(world, entity.posX, entity.posY, entity.posZ, stack.copy()));
-				((EntityPlayer) entity).inventory.consumeInventoryItem(AlfheimItems.realitySword);
-				((EntityPlayer) entity).setHealth(0);
-	            ((EntityPlayer) entity).onDeath(DamageSource.outOfWorld);
-	            ASJUtilities.sendToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", entity.getCommandSenderName())); 
+				EntityPlayer player = ((EntityPlayer) entity);
+				world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack.copy()));
+				player.inventory.consumeInventoryItem(AlfheimItems.realitySword);
+				player.setHealth(0);
+	            ASJUtilities.playDeathSound(player);
+	            player.onDeath(DamageSource.outOfWorld);
+	            ASJUtilities.sendToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName())); 
 			}
 		} else if (flag && entity instanceof EntityLivingBase) {
-			world.spawnEntityInWorld(new EntityItem(world, entity.posX, entity.posY, entity.posZ, stack.copy()));
+            EntityLivingBase living = ((EntityLivingBase) entity);
+			world.spawnEntityInWorld(new EntityItem(world, living.posX, living.posY, living.posZ, stack.copy()));
             stack.stackSize = 0;
-            
-			((EntityLivingBase) entity).setHealth(0);
-			
-			try {
-				Method getDeathSound = EntityLivingBase.class.getClass().getDeclaredMethod("getDeathSound");
-				getDeathSound.setAccessible(true);
-				Method getSoundVolume = EntityLivingBase.class.getClass().getDeclaredMethod("getSoundVolume");
-				getSoundVolume.setAccessible(true);
-				Method getSoundPitch = EntityLivingBase.class.getClass().getDeclaredMethod("getSoundPitch");
-				getSoundPitch.setAccessible(true);
-				String s = (String) getDeathSound.invoke(((EntityLivingBase) entity));
-				
-	            if (s != null) {
-	            	((EntityLivingBase) entity).playSound(s, (Float) getSoundVolume.invoke(((EntityLivingBase) entity)), (Float) getSoundPitch.invoke(((EntityLivingBase) entity)));
-	            }
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-			
-            ((EntityLivingBase) entity).onDeath(DamageSource.outOfWorld);
+            living.setHealth(0);
+            ASJUtilities.playDeathSound(living);
+			living.onDeath(DamageSource.outOfWorld);
 		}
 	}
 	
@@ -184,12 +173,12 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
-    		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
     		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
         
         if (attacker instanceof EntityPlayer) {
-        	int elem = stack.stackTagCompound.getInteger(TAGELEMENT);
+        	int elem = stack.stackTagCompound.getInteger(TAG_ELEMENT);
         	if (elem != 0 && (elem == 5 || ManaItemHandler.requestManaExact(stack, (EntityPlayer) attacker, 1000, !attacker.worldObj.isRemote && elem != 5))) useAbility(elem, attacker, target);
         }
         return super.hitEntity(stack, target, attacker);
@@ -221,11 +210,11 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
 		if (!stack.hasTagCompound()) {
         	stack.stackTagCompound = new NBTTagCompound();
-    		stack.stackTagCompound.setInteger(TAGELEMENT, 0);
+    		stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
     		stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
         }
 		
-		int elem = stack.stackTagCompound.getInteger(TAGELEMENT);
+		int elem = stack.stackTagCompound.getInteger(TAG_ELEMENT);
 		if (elem == 5) {
 			list.add(StatCollector.translateToLocal("item.RealitySword.descZ"));
 			return;
@@ -243,6 +232,6 @@ public class RealitySword extends ItemSword implements IManaUsingItem {
 
 	@Override
 	public boolean usesMana(ItemStack stack) {
-		return (0 < stack.stackTagCompound.getInteger(TAGELEMENT) && stack.stackTagCompound.getInteger(TAGELEMENT) < 5);
+		return (0 < stack.stackTagCompound.getInteger(TAG_ELEMENT) && stack.stackTagCompound.getInteger(TAG_ELEMENT) < 5);
 	}
 }

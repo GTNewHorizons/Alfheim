@@ -4,9 +4,9 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import net.minecraft.item.ItemPickaxe;
 
-public class LivingrockPickaxe extends ItemPickaxe {
+public class ItemLivingrockPickaxe extends ItemPickaxe {
 
-	public LivingrockPickaxe() {
+	public ItemLivingrockPickaxe() {
 		super(ToolMaterial.STONE);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setTextureName(ModInfo.MODID + ":LivingrockPickaxe");

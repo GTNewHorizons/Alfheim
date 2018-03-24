@@ -123,7 +123,7 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier);
 
 		ItemStack lens = stack.copy();
-		ItemNBTHelper.setString(lens, "attackerUsername", player.getCommandSenderName());
+		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, player.getCommandSenderName());
 		burst.setSourceLens(lens);
 		return burst;
 	}
@@ -138,15 +138,15 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 		EntityThrowable entity = (EntityThrowable) burst;
 		AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0D, 1.0D, 1.0D);
 
-		String attacker = ItemNBTHelper.getString(burst.getSourceLens(), "attackerUsername", "");
-		int homeID = ItemNBTHelper.getInt(stack, "homeID", -1);
+		String attacker = ItemNBTHelper.getString(burst.getSourceLens(), TAG_ATTACKER_USERNAME, "");
+		int homeID = ItemNBTHelper.getInt(stack, TAG_HOME_ID, -1);
 		if (homeID == -1) {
 			AxisAlignedBB axis1 = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(5.0D, 5.0D, 5.0D);
 			List<EntityLivingBase> entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axis1);
 			for (EntityLivingBase living : entities) {
 				if ((!(living instanceof EntityPlayer)) && (!(living instanceof IBossDisplayData)) && ((living instanceof IMob)) && (living.hurtTime == 0)) {
 					homeID = living.getEntityId();
-					ItemNBTHelper.setInt(stack, "homeID", homeID);
+					ItemNBTHelper.setInt(stack, TAG_HOME_ID, homeID);
 				}
 			}
 		}

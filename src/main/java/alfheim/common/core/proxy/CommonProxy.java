@@ -20,7 +20,8 @@ public class CommonProxy {
     	AlfheimItems.init();
 		AlfheimRecipes.preInit();
 		AlfheimRegistry.preInit();
-    	AlfheimLexiconData.init();
+		AlfheimAchievements.init();
+    	AlfheimLexiconData.preInit2();
 	}
 
 	public void registerRenderThings() {}
@@ -28,13 +29,13 @@ public class CommonProxy {
 	public void registerKeyBinds() {}
 
 	public void init() {
+    	AlfheimLexiconData.init();
 		AlfheimRegistry.init();
 		DimensionUtil.init();
 		AlfheimRecipes.init();
 	}
 	
 	public void postInit() {
-		AlfheimAchievements.init();
 		AlfheimRegistry.postInit();
 	}
 	

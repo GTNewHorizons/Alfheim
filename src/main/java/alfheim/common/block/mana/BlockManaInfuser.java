@@ -3,10 +3,13 @@ package alfheim.common.block.mana;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
+import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,8 +20,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.wand.IWandHUD;
+import vazkii.botania.api.wand.IWandable;
 
-public class BlockManaInfuser extends Block implements ITileEntityProvider, ILexiconable {
+public class BlockManaInfuser extends Block implements ITileEntityProvider, ILexiconable, IWandHUD, IWandable {
 
 	public static IIcon[] textures = new IIcon[4];
 	
@@ -64,4 +69,16 @@ public class BlockManaInfuser extends Block implements ITileEntityProvider, ILex
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		return AlfheimLexiconData.infuser;
 	}
+
+	@Override
+	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
+		((TileManaInfuser) world.getTileEntity(x, y, z)).renderHUD(mc, res);
+	}
+	
+	@Override
+	public boolean onUsedByWand(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
+		((TileManaInfuser) world.getTileEntity(x, y, z)).onWanded(player, stack);
+		return true;
+	}
+
 }

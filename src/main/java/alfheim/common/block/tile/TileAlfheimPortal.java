@@ -129,17 +129,11 @@ public class TileAlfheimPortal extends TileMod {
 							if (AlfheimCore.enableElvenStory) {
 								int race = EnumRace.getRaceID(player) - 1;
 								if (0 <= race && race < 9) ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].xCoord, AlfheimConfig.zones[race].yCoord, AlfheimConfig.zones[race].zCoord);
-								else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
-							} else {
-								ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
-								World alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfig.dimensionIDAlfheim);
-								for (int y = 50; y < 100; y++) {
-									if (alfheim.getBlock(0, y, 0) == AlfheimBlocks.alfheimPortal && alfheim.getBlockMetadata(0, y, 0) == 1) {
-										ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, y + 1, -1.5);
-										break;
-									}
+								else {
+									if (AlfheimConfig.bothSpawnStructures) findAndTP(player);
+									else ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
 								}
-							}
+							} else findAndTP(player);
 						}
 					}
 				if (ConfigHandler.elfPortalParticlesEnabled) blockParticle(meta);
@@ -165,6 +159,17 @@ public class TileAlfheimPortal extends TileMod {
 		hasUnloadedParts = false;
 	}
 
+	private void findAndTP(EntityPlayer player) {
+		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
+		World alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfig.dimensionIDAlfheim);
+		for (int y = 50; y < 100; y++) {
+			if (alfheim.getBlock(0, y, 0) == AlfheimBlocks.alfheimPortal && alfheim.getBlockMetadata(0, y, 0) == 1) {
+				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, y + 1, -1.5);
+				break;
+			}
+		}
+	}
+	
 	private void blockParticle(int meta) {
 		int i = worldObj.rand.nextInt(AIR_POSITIONS.length);
 		double[] pos = new double[] { AIR_POSITIONS[i][0] + 0.5F, AIR_POSITIONS[i][1] + 0.5F,

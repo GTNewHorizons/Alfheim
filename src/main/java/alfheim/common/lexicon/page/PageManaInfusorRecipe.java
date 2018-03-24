@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.api.crafting.recipe.IManaInfusionRecipe;
+import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,10 +32,10 @@ import vazkii.botania.common.lexicon.page.PageRecipe;
 public class PageManaInfusorRecipe extends PageRecipe {
 
 	private static final ResourceLocation manaInfusorOverlay = new ResourceLocation(LibResources.GUI_PETAL_OVERLAY);
-	private IManaInfusionRecipe recipe;
+	private RecipeManaInfuser recipe;
 	private int ticksElapsed = 0;
 
-	public PageManaInfusorRecipe(String unlocalizedName, IManaInfusionRecipe recipe) {
+	public PageManaInfusorRecipe(String unlocalizedName, RecipeManaInfuser recipe) {
 		super(unlocalizedName);
 		this.recipe = recipe;
 	}
@@ -80,7 +80,7 @@ public class PageManaInfusorRecipe extends PageRecipe {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void renderManaBar(IGuiLexiconEntry gui, IManaInfusionRecipe recipe2, int mx, int my) {
+	public void renderManaBar(IGuiLexiconEntry gui, RecipeManaInfuser recipe2, int mx, int my) {
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

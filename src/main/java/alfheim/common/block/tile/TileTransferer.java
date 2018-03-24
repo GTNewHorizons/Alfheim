@@ -2,7 +2,9 @@ package alfheim.common.block.tile;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.ItemContainingTileEntity;
+import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.client.Minecraft;
@@ -77,7 +79,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	public EntityManaBurst getBurst() {
 		EntityManaBurst burst = new EntityManaBurst(worldObj);
 
-		burst.setColor(0xFFFFFF);
+		burst.setColor(0xCCFF00);
 		burst.setMana(10000);
 		burst.setStartingMana(1);
 		burst.setMinManaLoss(1);
@@ -168,8 +170,8 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	}
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
-		String name = StatCollector.translateToLocal(new ItemStack(ModBlocks.spreader, 1, getBlockMetadata()).getUnlocalizedName().replaceAll("tile.", "tile." + LibResources.PREFIX_MOD) + ".name");
-		int color = 0xFF0000;
+		String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() + ".name");
+		int color = 0xCCFF00;
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res);
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 	}

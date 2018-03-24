@@ -1,7 +1,7 @@
 package alexsocol.asjlib;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,12 +10,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import javax.management.ReflectionException;
-
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.clashsoft.cslib.reflect.CSReflection;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -28,7 +25,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,7 +36,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
@@ -64,6 +59,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import scala.languageFeature.postfixOps;
 
 /**
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
@@ -166,24 +162,6 @@ public class ASJUtilities {
 		return Math.ceil(amount) >= Math.floor(living.getHealth());
 	}
 	
-	private static final Field dataWatcher;
-	private static final Field watchedObjects;
-	
-	static {
-		dataWatcher = CSReflection.getField(Entity.class, "dataWatcher", "field_70180_af");
-		dataWatcher.setAccessible(true);
-		watchedObjects = CSReflection.getField(DataWatcher.class, "watchedObjects", "field_75695_b");
-		watchedObjects.setAccessible(true);
-	}
-	
-	public static DataWatcher getEntityDataWatcher(Entity entity) {
-		return CSReflection.getValue(dataWatcher, entity, false);
-	}
-	
-	public static boolean isWatched(DataWatcher data, int id) {
-		return ((Map) CSReflection.getValue(watchedObjects, data, false)).containsKey(Integer.valueOf(id));
-	}
-	
 	/**
 	 * Returns the number of the slot with item matching to item passed in
 	 * @param item The item to compare
@@ -238,12 +216,15 @@ public class ASJUtilities {
 	   return amount;
 	}
 	
-
+	/**
+	 * @return damage from stack itself, not through item 
+	 * */
+	public static int getTrueDamage(ItemStack stack) {
+		return Integer.valueOf(stack.toString().split("@")[1]).intValue();
+	}
 	
 	/**
 	 * Checks if two itemstacks has same ID, size and metadata
-	 * @param stack1 First itemstack
-	 * @param stack2 Second itemstack
 	 */
 	public static boolean isItemStackEqual(ItemStack stack1, ItemStack stack2) {
 		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.stackSize == stack2.stackSize && stack1.getItemDamage() == stack2.getItemDamage());
@@ -251,11 +232,23 @@ public class ASJUtilities {
 	
 	/**
 	 * Checks if two itemstacks has same ID and metadata
-	 * @param stack1 First itemstack
-	 * @param stack2 Second itemstack
 	 */
 	public static boolean isItemStackEqualData(ItemStack stack1, ItemStack stack2) {
 		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage());
+	}
+	
+	/**
+	 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
+	 */
+	public static boolean isItemStackTrueEqual(ItemStack stack1, ItemStack stack2) {
+		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack1));
+	}
+	
+	/**
+	 * Checks if two itemstacks has same ID and metadata (from stack itself)
+	 */
+	public static boolean isItemStackTrueEqualData(ItemStack stack1, ItemStack stack2) {
+		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && getTrueDamage(stack1) == getTrueDamage(stack1));
 	}
 	
 	/**
@@ -357,28 +350,6 @@ public class ASJUtilities {
 		}
 	}*/
 
-	public static void setFinalField(Object instance, Object value, String... names) {
-		try {
-			if (names.length == 0) throw new IllegalArgumentException("Must be at least one name!");
-			Field field = null;
-			for (String fieldName : names) for (Field f : instance.getClass().getDeclaredFields()) if (fieldName.equals(f.getName())) field = f;
-			if (field == null) throw new NoSuchFieldException("Field not found! (Class: " + instance.getClass() + "; Expected field names: " + Arrays.toString(names));
-			boolean isAccesible = field.isAccessible();
-			if (!isAccesible) field.setAccessible(true);
-			Field modfield = Field.class.getDeclaredField("modifiers");
-			boolean isModAccesible = modfield.isAccessible();
-			if (!isModAccesible) modfield.setAccessible(true);
-			int mod = field.getModifiers();
-			modfield.setInt(field, mod & ~Modifier.FINAL);
-			field.set(instance, value);
-			modfield.setInt(field, mod);
-			if (!isModAccesible) modfield.setAccessible(false);
-			if (!isAccesible) field.setAccessible(false);
-		} catch (Exception e) {
-			Logger.getGlobal().log(java.util.logging.Level.SEVERE, e.getMessage(), e);
-		}
-	}
-	
 	public static void addOreDictRecipe(ItemStack output, Object... recipe) {
 		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
 	}
@@ -572,19 +543,30 @@ public class ASJUtilities {
 		chunk.setBiomeArray(array);
 	}
 	
+	private static final Method getDeathSound, getSoundVolume, getSoundPitch;
+	private static final Field isBadEffect;
+	
+	static {
+		isBadEffect = ASJReflectionHelper.getField(Potion.class, "isBadEffect", "field_76418_K", "f");
+		getDeathSound = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getDeathSound", "func_70673_aS", "aU"}, null);
+		getSoundVolume = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getSoundVolume", "func_70599_aP", "bf"}, null);
+		getSoundPitch = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getSoundPitch", "func_70647_i", "bg"}, null);
+		
+		isBadEffect.setAccessible(true);
+	}
+	
 	/**
 	 * Determines whether this potion is bad or not
 	 * */
 	public static boolean isBadPotion(Potion effect) {
-		Field isBadEffect = ReflectionHelper.findField(Potion.class, new String[] { "isBadEffect", "field_76418_K" });
-		try {
-			return ((effect != null) && (isBadEffect.getBoolean(effect)));
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return false;
+		return ASJReflectionHelper.getValue(isBadEffect, effect, false);
+	}
+	
+	/**
+	 * Plays entity's death sound
+	 * */
+	public static void playDeathSound(EntityLivingBase target) {
+    	target.playSound((String) ASJReflectionHelper.invoke(target, null, getDeathSound), (Float) ASJReflectionHelper.invoke(target, null, getSoundVolume), (Float) ASJReflectionHelper.invoke(target, null, getSoundPitch));
 	}
 	
 	/**

@@ -1,30 +1,47 @@
 package alfheim.common.core.asm;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
+import org.lwjgl.opengl.GL11;
+
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.event.NetherPortalActivationEvent;
-import alfheim.common.block.tile.TileTransferer;
+import alfheim.common.block.BlockRedFlame;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.entity.EntityFlugel;
+import alfheim.common.potion.PotionSoulburn;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gloomyfolken.hooklib.asm.Hook;
 import gloomyfolken.hooklib.asm.ReturnCondition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.subtile.SubTileEntity;
+import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.core.proxy.ClientProxy;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.BlockPylon;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TilePylon;
-import vazkii.botania.common.entity.EntityManaBurst;
+import vazkii.botania.common.item.material.ItemManaResource;
+import vazkii.botania.common.item.relic.ItemFlugelEye;
 
 public class AlfheimHookHandler {
 
@@ -67,22 +84,40 @@ public class AlfheimHookHandler {
 		return recipe.getOutput().equals(ModBlocks.livingwood) && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim;
 	}
 	
-	/*@Hook(injectOnExit = true)
-	public static void writeEntityToNBT(EntityManaBurst burst, NBTTagCompound par1nbtTagCompound) {
-		ItemStack stack = TileTransferer.getTrackingStack(burst);
-		NBTTagCompound transCmp = new NBTTagCompound();
-		if(stack != null) stack.writeToNBT(transCmp);
-		par1nbtTagCompound.setTag(TAG_TRANSFER_STACK, transCmp);
-	}
-	
-	@Hook(injectOnExit = true)
-	public static void readEntityFromNBT(EntityManaBurst burst, NBTTagCompound par1nbtTagCompound) {
-		NBTTagCompound transCmp = par1nbtTagCompound.getCompoundTag(TAG_TRANSFER_STACK);
-		ItemStack stack = ItemStack.loadItemStackFromNBT(transCmp);
-		if(stack != null) {
-			TileTransferer.addStackToTrack(burst);
-			TileTransferer.setTrackingStack(burst, stack);
+	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	public static boolean onItemUse(ItemFlugelEye eye, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		if(player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) {
+			return EntityFlugel.spawn(player, stack, world, x, y, z);
 		}
-		else TileTransferer.setTrackingStack(burst, new ItemStack(Blocks.stone, 0, 0));
-	}*/
+		return false;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Hook(injectOnExit = true)
+	public static void renderManaBar(HUDHandler hh, int x, int y, int color, float alpha, int mana, int maxMana) {
+		if (mana < 0) return;
+		GL11.glPushMatrix();
+		String text = mana + "/" + maxMana;
+		x = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2;
+		y -= 19;
+
+		Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color, true);
+		GL11.glPopMatrix();
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Hook
+	public static void doRenderShadowAndFire(Render render, Entity entity, double x, double y, double z, float yaw, float partialTicks) {
+		if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getActivePotionEffect(AlfheimRegistry.soulburn) != null) PotionSoulburn.renderEntityOnFire(render, entity, x, y, z, partialTicks);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Hook
+	public static void renderOverlays(ItemRenderer renderer, float partialTicks) {
+		if (Minecraft.getMinecraft().thePlayer.getActivePotionEffect(AlfheimRegistry.soulburn) != null) {
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			PotionSoulburn.renderFireInFirstPerson(partialTicks);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+		}
+	}
 }

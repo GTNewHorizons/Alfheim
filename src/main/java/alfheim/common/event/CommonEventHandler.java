@@ -9,6 +9,7 @@ import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
+import alfheim.common.network.AttributeMessage;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -43,11 +44,6 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
-		/*if (Constants.DEV) {
-			e.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.YELLOW.UNDERLINE + ">>> ������ �� ���������� <<<"));
-			for (String task : ToDoList.tasks) e.player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.BOLD + "> " + EnumChatFormatting.RESET.YELLOW + task));
-		}*/
-		
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player instanceof EntityPlayerMP) {
 				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
@@ -81,6 +77,7 @@ public class CommonEventHandler {
 		if (!AlfheimCore.enableElvenStory) return;
 		int r = EnumRace.getRaceID((EntityPlayer) e.original);
 		EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
+		if (!e.wasDeath) e.entityPlayer.getEntityAttribute(AlfheimRegistry.FLIGHT).setBaseValue(e.original.getEntityAttribute(AlfheimRegistry.FLIGHT).getAttributeValue());
 	}
 	
 	@SubscribeEvent
@@ -92,8 +89,9 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerChangeDimension(PlayerChangedDimensionEvent e) {
-		if (!AlfheimCore.enableElvenStory) return;
-		// TODO fix IAttribute sync across dimensions
+		if (!AlfheimCore.enableElvenStory || !(e.player instanceof EntityPlayerMP)) return;
+		AlfheimCore.network.sendTo(new AttributeMessage(0, EnumRace.getRaceID(e.player)), (EntityPlayerMP) e.player);
+		AlfheimCore.network.sendTo(new AttributeMessage(1, e.player.getEntityAttribute(AlfheimRegistry.FLIGHT).getAttributeValue()), (EntityPlayerMP) e.player);
 	}
 	
 	@SubscribeEvent
@@ -103,6 +101,7 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent e) {
+		// if (e.entityLiving instanceof EntityPlayer) ASJUtilities.chatLog(((EntityPlayer) e.entityLiving).getCurrentEquippedItem().toString() + " damage " + ((EntityPlayer) e.entityLiving).getCurrentEquippedItem().getItemDamage(), e.entityLiving.worldObj);
 		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) e.setCanceled(true);
 		if (e.source.isFireDamage() && e.entityLiving instanceof EntityPlayer && ((EntityPlayer)e.entityLiving).getCurrentArmor(1) != null && ((EntityPlayer)e.entityLiving).getCurrentArmor(1).getItem() == AlfheimItems.elementalLeggings && ManaItemHandler.requestManaExact(((EntityPlayer)e.entityLiving).getCurrentArmor(1), ((EntityPlayer)e.entityLiving), MathHelper.ceiling_float_int(10 * e.ammount), !e.entityLiving.worldObj.isRemote)) e.setCanceled(true);
 	}

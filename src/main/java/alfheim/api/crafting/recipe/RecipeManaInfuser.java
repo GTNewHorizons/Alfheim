@@ -3,18 +3,18 @@ package alfheim.api.crafting.recipe;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.api.recipe.RecipePetals;
 
-public class IManaInfusionRecipe extends RecipePetals {
+public class RecipeManaInfuser extends RecipePetals {
 	
 	public int mana;
 	
-	public IManaInfusionRecipe(int mana, ItemStack out, ItemStack... recipe) {
-		super(out, (Object[]) recipe);
+	public RecipeManaInfuser(int mana, ItemStack out, Object... recipe) {
+		super(out, recipe);
 		this.mana = mana;
 	}
 	
 	public String toString() {
 		String s = "";
-		for (Object ing : getInputs()) s += (((ItemStack)ing).toString() + " + ");
+		for (Object ing : getInputs()) s += ((ing).toString() + " + ");
 		return "Recipe: " + s + " mana*" + mana + " => " + getOutput().toString();
 	}
 

@@ -17,7 +17,7 @@ import java.util.List;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
-import alfheim.api.crafting.recipe.IManaInfusionRecipe;
+import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.client.integration.nei.NEIAlfheimConfig;
 import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;
 import alfheim.common.item.equipment.tools.ItemTwigWandExtender;
@@ -42,13 +42,13 @@ import vazkii.botania.common.item.ModItems;
 
 public class AlfheimRecipes {
 	
-	public static IManaInfusionRecipe recipeElvorium;
-	public static IManaInfusionRecipe recipeMuspelheimEssence;
-	public static IManaInfusionRecipe recipeNiflheimEssence;
-	public static IManaInfusionRecipe recipeTerrasteel;
-	public static IManaInfusionRecipe recipeMauftrium;
-	public static IManaInfusionRecipe recipeManaStone;
-	public static IManaInfusionRecipe recipeManaStoneGreater;
+	public static RecipeManaInfuser recipeElvorium;
+	public static RecipeManaInfuser recipeMuspelheimEssence;
+	public static RecipeManaInfuser recipeNiflheimEssence;
+	public static RecipeManaInfuser recipeTerrasteel;
+	public static RecipeManaInfuser recipeMauftrium;
+	public static RecipeManaInfuser recipeManaStone;
+	public static RecipeManaInfuser recipeManaStoneGreater;
 	
 	public static IRecipe recipeAlfheimPortal;
 	public static IRecipe recipeAnyavil;
@@ -100,7 +100,7 @@ public class AlfheimRecipes {
 		registerManaInfusionRecipes();
 		registerRecipies();
 		forbidRetrades();
-		if (ModInfo.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
+		//if (ModInfo.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
 	}
 
 	public static void registerCraftingRecipes() {
@@ -413,20 +413,44 @@ public class AlfheimRecipes {
 		/*addRecipe(new ItemStack(elfGlass), 100,
 			new ItemStack[] {new ItemStack(Modquartz, 1, 5), new ItemStack(elvenGlass)});*/
 		
-		recipeMuspelheimEssence = addInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), TilePool.MAX_MANA / 10,
-			new ItemStack[] {new ItemStack(manaResource, 1, 5), new ItemStack(lava_bucket)});
-		recipeNiflheimEssence = addInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), TilePool.MAX_MANA / 10,
-			new ItemStack[] {new ItemStack(manaResource, 1, 5), new ItemStack(ice)});
-		recipeTerrasteel = addInfusionRecipe(new ItemStack(manaResource, 1, 4), TilePool.MAX_MANA / 2,
-			new ItemStack[] {new ItemStack(manaResource, 1, 0), new ItemStack(manaResource, 1, 1), new ItemStack(manaResource, 1, 2)});
-		recipeElvorium = addInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), TilePool.MAX_MANA / 2,
-			new ItemStack[] {new ItemStack(manaResource, 1, 7), new ItemStack(manaResource, 1, 8), new ItemStack(manaResource, 1, 9)});
-		recipeMauftrium = addInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), TilePool.MAX_MANA,
-			new ItemStack[] {new ItemStack(manaResource, 1, 14), new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot), new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot)});
-		recipeManaStone = addInfusionRecipe(new ItemStack(manaStone, 1, 1000) , TilePool.MAX_MANA,
-			new ItemStack[] {new ItemStack(elvenResource, 4, ElvenResourcesMetas.IffesalDust), new ItemStack(manaResource, 1, 9)});
-		recipeManaStoneGreater = addInfusionRecipe(new ItemStack(manaStoneGreater, 1, 1000), TilePool.MAX_MANA * 4,
-			new ItemStack[] {new ItemStack(manaStone, 1, 1000), new ItemStack(elvenResource, 2, ElvenResourcesMetas.MuspelheimEssence), new ItemStack(elvenResource, 2, ElvenResourcesMetas.NiflheimEssence)});
+		recipeMuspelheimEssence = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
+			TilePool.MAX_MANA / 10,
+			LIFE_ESSENCE,
+			new ItemStack(lava_bucket, 1, 0));
+		
+		recipeNiflheimEssence = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence),
+			TilePool.MAX_MANA / 10,
+			LIFE_ESSENCE,
+			new ItemStack(ice, 1, 0));
+		
+		recipeTerrasteel = addInfuserRecipe(new ItemStack(manaResource, 1, 4),
+			TilePool.MAX_MANA / 2,
+			MANA_STEEL,
+			MANA_PEARL,
+			MANA_DIAMOND);
+		
+		recipeElvorium = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot),
+			TilePool.MAX_MANA / 2,
+			ELEMENTIUM,
+			PIXIE_DUST,
+			DRAGONSTONE);
+		
+		recipeMauftrium = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot),
+			TilePool.MAX_MANA,
+			GAIA_INGOT,
+			MUSPELHEIM_POWER_INGOT,
+			NIFLHEIM_POWER_INGOT);
+		
+		recipeManaStone = addInfuserRecipe(new ItemStack(manaStone, 1, 1000),
+			TilePool.MAX_MANA,
+			DRAGONSTONE,
+			new ItemStack(elvenResource, 4, ElvenResourcesMetas.IffesalDust));
+		
+		recipeManaStoneGreater = addInfuserRecipe(new ItemStack(manaStoneGreater, 1, 1000),
+			TilePool.MAX_MANA * 4,
+			new ItemStack(manaStone, 1, OreDictionary.WILDCARD_VALUE),
+			new ItemStack(elvenResource, 2, ElvenResourcesMetas.MuspelheimEssence),
+			new ItemStack(elvenResource, 2, ElvenResourcesMetas.NiflheimEssence));
 	}
 	
 	public static void forbidRetrades() {

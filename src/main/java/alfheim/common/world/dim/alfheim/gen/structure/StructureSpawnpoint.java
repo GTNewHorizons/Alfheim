@@ -21,6 +21,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
 		if (AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures)  generateStartBox(world, rand, -2, 251, -2);
+		ASJUtilities.log("Spawn created");
 		return true;
 	}
 

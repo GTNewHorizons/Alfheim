@@ -68,16 +68,15 @@ public class ItemElvenResource extends Item implements IElvenItem, ILensEffect {
     
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		// functions for The Rod Of The Debug
-		/*if (!world.isRemote && stack.getItemDamage() == subItems.length - 1) {
+		if (/*!world.isRemote && */stack.getItemDamage() == subItems.length - 1) {
 			if (!player.isSneaking()) {
-				EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
-				player.addChatMessage(new ChatComponentText(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString()));
+				//EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
+				ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString(), world);
 				//ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 			} else {
 				player.addChatComponentMessage(new ChatComponentText("Current dimension id: " + player.dimension));
 			}
-		}*/
+		}
 		return stack;
 	}
 

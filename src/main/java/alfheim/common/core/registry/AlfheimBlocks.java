@@ -12,7 +12,6 @@ import alfheim.common.block.*;
 import alfheim.common.block.mana.*;
 import alfheim.common.item.block.ItemBlockElvenOres;
 import alfheim.common.lexicon.AlfheimLexiconData;
-import clashsoft.cslib.minecraft.block.CSBlocks;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

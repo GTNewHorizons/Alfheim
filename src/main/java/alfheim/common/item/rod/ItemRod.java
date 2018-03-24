@@ -50,7 +50,7 @@ public class ItemRod extends Item implements IManaUsingItem {
 	@Override
 	public IIcon getIconIndex(ItemStack par1ItemStack) {
 		String name = par1ItemStack.getDisplayName().toLowerCase().trim();
-		return name.equals("ruby") && this == AlfheimItems.rodFire ? rubyIcon : name.equals("sapphire") && this == AlfheimItems.rodIce ? sapphireIcon : super.getIconIndex(par1ItemStack);
+		return name.equals("magical ruby") && this == AlfheimItems.rodFire ? rubyIcon : name.equals("magical sapphire") && this == AlfheimItems.rodIce ? sapphireIcon : super.getIconIndex(par1ItemStack);
 	}
 
 	@Override

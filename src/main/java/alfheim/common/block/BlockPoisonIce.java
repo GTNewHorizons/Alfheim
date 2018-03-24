@@ -29,15 +29,16 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 
 	public BlockPoisonIce() {
 		super(Material.packedIce);
-		final float mod = 0.001F;
-		this.setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod);
-		this.setBlockName("NiflheimIce");
-        this.setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
-        this.setBlockUnbreakable();
-        this.setLightOpacity(0);
-        this.setStepSound(soundTypeGlass);
-        this.setTickRandomly(true);
-		this.slipperiness = 0.98F;
+		float mod = 0.001F;
+		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod);
+		setBlockName("NiflheimIce");
+        setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
+        setBlockUnbreakable();
+        setLightOpacity(0);
+        setResistance(Float.MAX_VALUE);
+        setStepSound(soundTypeGlass);
+        setTickRandomly(true);
+		slipperiness = 0.98F;
 	}
 
 	public boolean isOpaqueCube() {

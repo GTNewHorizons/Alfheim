@@ -42,7 +42,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	looniumOverseed			= false;
 	public static boolean	numericalMana			= true;
 	public static int		potionIDPossession		= 30;
-
+	public static int		potionIDSoulburn		= 31;
 	
 	// Elven Story
 	public static boolean	bothSpawnStructures		= false;
@@ -81,6 +81,7 @@ public class AlfheimConfig extends Configuration {
 		looniumOverseed		= loadProp(CATEGORY_GENERAL,	"looniumOverseed",		looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
 		numericalMana		= loadProp(CATEGORY_GENERAL,	"numericalMana",		numericalMana,			false,	"Set this to true to enable numerical mana representation");
 		potionIDPossession	= loadProp(CATEGORY_GENERAL, 	"potionIDPossession",	potionIDPossession,		true,	"Potion id for Possession");
+		potionIDSoulburn	= loadProp(CATEGORY_GENERAL, 	"potionIDSoulburn",		potionIDSoulburn,		true,	"Potion id for Soulburn");
 		
 		if (AlfheimCore.enableElvenStory) {
 			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
