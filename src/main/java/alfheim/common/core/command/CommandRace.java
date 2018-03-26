@@ -43,6 +43,7 @@ public class CommandRace extends CommandBase {
             if (EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN) {
             	((EntityPlayer) sender).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
             	((EntityPlayer) sender).capabilities.allowFlying = true;
+            	((EntityPlayer) sender).sendPlayerAbilities();
             	((EntityPlayer) sender).setSpawnChunk(new ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].zCoord)), true, AlfheimConfig.dimensionIDAlfheim);
             	ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal()].xCoord, AlfheimConfig.zones[r.ordinal()].yCoord, AlfheimConfig.zones[r.ordinal()].zCoord);
             }

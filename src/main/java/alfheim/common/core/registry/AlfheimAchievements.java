@@ -7,8 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
+import net.minecraft.stats.StatBase;
 import net.minecraftforge.common.AchievementPage;
 import vazkii.botania.api.item.IRelic;
+import vazkii.botania.common.item.ModItems;
 
 public class AlfheimAchievements {
 
@@ -18,6 +20,7 @@ public class AlfheimAchievements {
 	public static Achievement flugelSoul;
 	public static Achievement mask;
 	public static Achievement mjolnir;
+	public static Achievement flugelKill;
 	
 	public static void init() {
 		alfheim = new AlfheimAchievement("alfheim", 0, 0, new ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null);
@@ -25,6 +28,7 @@ public class AlfheimAchievements {
 		flugelSoul = new AlfheimAchievement("flugelSoul", -2, 0, AlfheimItems.flugelSoul, null);
 		mask = new AlfheimAchievement("mask", 0, 2, AlfheimItems.mask, null);
 		mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null);
+		flugelKill = new AlfheimAchievement("flugelKill", 0, 4, ModItems.flightTiara, null);
 		
 		AchievementPage.registerAchievementPage(new AchievementPage("Alfheim", achievements.toArray(new Achievement[achievements.size()])));
 	}

@@ -8,10 +8,6 @@ import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.network.AttributeMessage;
-import alfheim.common.network.KeyBindMessage;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -21,15 +17,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
-import vazkii.botania.client.core.handler.BotaniaPlayerController;
-import vazkii.botania.common.core.handler.ConfigHandler;
 
 
 @Mod(modid = ModInfo.MODID,
@@ -54,10 +45,9 @@ public class AlfheimCore {
     public void preInit(FMLPreInitializationEvent e) {
     	enableElvenStory = Loader.isModLoaded("elvenstory");
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
-		network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
-		network.registerMessage(AttributeMessage.Handler.class, AttributeMessage.class, 1, Side.CLIENT);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
+		proxy.registerPackets();
     	proxy.initializeAndRegisterHandlers();
     	proxy.preInit();
     }

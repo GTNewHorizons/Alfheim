@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.utils.AlfheimConfig;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -363,7 +364,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		}
 
 		boolean isValid() {
-			return y > 0;
+			return y > 0 && (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER ? MinecraftServer.getServer().worldServerForDimension(dim) != null : true);
 		}
 
 		int mana(EntityPlayer player) {

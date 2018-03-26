@@ -46,6 +46,7 @@ item.ElvoriumLeggings.name=Elvorium Leggings
 item.ElvoriumNugget.name=Elvorium Nugget
 item.botania:Excaliber.name=Holy Sword Excaliber
 item.botania:FirePendant.name=Pendant Of Muspelheim Protection
+item.botania:FlugelDisc.name=Record
 item.botania:FlugelSoul.name=Flugel Soul
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
@@ -126,6 +127,11 @@ alfheim.potion.possession=Possession
 alfheim.potion.possession.postfix=Potion of Possession
 alfheim.potion.soulburn=Soulburn
 alfheim.potion.soulburn.postfix=Potion of Soulburn
+
+alfheimmics.badArena=As hard as you try, the Beacon will not accept your sacrifice. You believe the ritual grounds might be improper. It might be a good idea to check for obstructions on the nearby area and blocks below the beacon.
+alfheimmics.needsCatalysts=No matter how hard you try to push the Eye into the Beacon, nothing seems to happen, perhaps your configuration of catalyst pylons might be off.
+alfheimmisc.notallowed=Foolish mortal! You can't even fly without help! You are too weak to fight with me! Go away before I change my mind  and kill you.
+alfheimmics.peacefulNoob=You try to offer the Eye, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
 
 death.attack.soulburn=%s's soul burned away
 

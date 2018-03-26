@@ -11,6 +11,7 @@ import alfheim.common.block.tile.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.*;
+import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.potion.*;
 import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;

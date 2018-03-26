@@ -6,26 +6,37 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.client.core.utils.AlfheimBotaniaModifiers;
 import alfheim.client.event.ClientEventHandler;
-import alfheim.client.gui.*;
+import alfheim.client.gui.GUIDeathTimer;
+import alfheim.client.gui.GUIRace;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.client.model.entity.ModelEntityElf;
-import alfheim.client.render.block.*;
-import alfheim.client.render.entity.*;
-import alfheim.common.block.tile.*;
+import alfheim.client.render.block.RenderBlockAlfheimPylons;
+import alfheim.client.render.block.RenderBlockAnyavil;
+import alfheim.client.render.block.RenderBlockTransferer;
+import alfheim.client.render.block.RenderTileAlfheimPortal;
+import alfheim.client.render.block.RenderTileAlfheimPylons;
+import alfheim.client.render.block.RenderTileAnyavil;
+import alfheim.client.render.block.RenderTileTradePortal;
+import alfheim.client.render.block.RenderTileTransferer;
+import alfheim.client.render.entity.RenderEntityAlfheimPixie;
+import alfheim.client.render.entity.RenderEntityElf;
+import alfheim.common.block.tile.TileAlfheimPortal;
+import alfheim.common.block.tile.TileAlfheimPylons;
+import alfheim.common.block.tile.TileAnyavil;
+import alfheim.common.block.tile.TileTradePortal;
+import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.proxy.CommonProxy;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.entity.*;
-import cpw.mods.fml.client.registry.*;
+import alfheim.common.entity.EntityAlfheimPixie;
+import alfheim.common.entity.EntityElf;
+import alfheim.common.network.AttributeMessage;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
 import net.minecraftforge.common.MinecraftForge;
-import vazkii.botania.common.item.ModItems;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -72,5 +83,11 @@ public class ClientProxy extends CommonProxy {
 	public void postInit() {
 		super.postInit();
 		AlfheimBotaniaModifiers.postInit();
+	}
+	
+	@Override
+	public void registerPackets() {
+		super.registerPackets();
+		AlfheimCore.network.registerMessage(AttributeMessage.Handler.class, AttributeMessage.class, 1, Side.CLIENT);
 	}
 }

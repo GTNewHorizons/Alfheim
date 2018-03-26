@@ -30,8 +30,9 @@ import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 
 public class ClientEventHandler {
-	
-	private static final ResourceLocation skin = new ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png");
+
+	private static final ResourceLocation skin = new ResourceLocation(ModInfo.MODID,
+			"textures/model/entity/AlexSocol.png");
 	private static final ResourceLocation babylon = new ResourceLocation(LibResources.MISC_BABYLON);
 
 	@SubscribeEvent
@@ -39,15 +40,18 @@ public class ClientEventHandler {
 	/** Someone told me that this is the best way... */
 	public void onClientTick(ClientTickEvent e) {
 		WorldClient world = Minecraft.getMinecraft().theWorld;
-		if (world != null && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && world.provider.getSkyRenderer() == null) world.provider.setSkyRenderer(new SkyblockSkyRenderer());
+		if (world != null && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
+				&& world.provider.getSkyRenderer() == null)
+			world.provider.setSkyRenderer(new SkyblockSkyRenderer());
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
-		if (e.entityPlayer.getCommandSenderName().equals("AlexSocol")) ((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, skin);
+		if (e.entityPlayer.getCommandSenderName().equals("AlexSocol"))
+			((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, skin);
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onPlayerTick(PlayerTickEvent e) {
@@ -55,25 +59,29 @@ public class ClientEventHandler {
 			KeyBindingsUtils.parseKeybindings(e.player);
 		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void onGUIOpened(GuiOpenEvent e) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen) ClientOnEvents.onGameOver((GuiGameOver) e.gui);
+	public void onGUIOpened(GuiOpenEvent e)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		if (AlfheimCore.enableElvenStory && e.gui instanceof GuiGameOver && AlfheimConfig.prolongDeathScreen)
+			ClientOnEvents.onGameOver((GuiGameOver) e.gui);
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onWorldLastRender(RenderWorldLastEvent e) {
 		RenderWings.render(e);
 		RenderContributors.render(e);
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onClonePlayer(PlayerEvent.Clone e) {
-		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.fromID(((EntityPlayer) e.original).getEntityAttribute(AlfheimRegistry.RACE).getAttributeValue());
+		if (!AlfheimCore.enableElvenStory)
+			return;
+		EnumRace r = EnumRace
+				.fromID(((EntityPlayer) e.original).getEntityAttribute(AlfheimRegistry.RACE).getAttributeValue());
 		((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
 	}
 }

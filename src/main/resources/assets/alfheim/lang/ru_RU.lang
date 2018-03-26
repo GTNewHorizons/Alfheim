@@ -46,6 +46,7 @@ item.ElvoriumLeggings.name=Поножи Из Эльвория
 item.ElvoriumNugget.name=Самородок Эльвория
 item.botania:Excaliber.name=Святой Меч Экскалибер
 item.botania:FirePendant.name=Подвеска Защиты От Муспельхейма
+item.botania:FlugelDisc.name=Пластинка
 item.botania:FlugelSoul.name=Душа Флюгеля
 item.botania:IcePendant.name=Подвеска Защиты От Нифльхейма
 item.IffesalDust.name=Пыль Иффесалия
@@ -124,6 +125,11 @@ alfheim.potion.possession=Одержимость
 alfheim.potion.possession.postfix=Зелье Одержимости
 alfheim.potion.soulburn=Горящая Душа
 alfheim.potion.soulburn.postfix=Зелье Горения Души
+
+alfheimmics.badArena=Как бы вы ни пытлись, маяк никак не реагирует на вас. Скорее всего проблема в выбранной местности. Было бы неплохо проверить наличие препятствий вокруг, а также блоки под маяком.
+alfheimmics.needsCatalysts=Независимо от того, как сильно вы пытаетесь просовывать Глаз в маяк, ничего не происходит, возможно, ваша конфигурация каталитических пилонов нарушена.
+alfheimmisc.notallowed=Глупый смертный! Ты не можешь даже летать без посторонней помощи! Ты слишком слаб, чтобы сражаться со мной! Уходи, пока я не передумала и не убила вас.
+alfheimmics.peacefulNoob=Вы пытаетесь поднести Глаз, но мирные вибрации вашего мира мешают вам сделать это. Возможно, вам стоит что-то сделать с этим.
 
 death.attack.soulburn=Душа %s сгорела
 

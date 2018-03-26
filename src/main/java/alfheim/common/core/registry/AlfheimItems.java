@@ -22,6 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
+import vazkii.botania.common.item.record.ItemModRecord;
 
 public class AlfheimItems {
 
@@ -40,6 +41,7 @@ public class AlfheimItems {
 	public static Item elvoriumHelmetRevealing;
 	public static Item elvoriumLeggings;
 	public static Item excaliber;
+	public static Item flugelDisc;
 	public static Item flugelSoul;
 	public static Item livingrockPickaxe;
 	public static Item manaElvenRing;
@@ -78,6 +80,7 @@ public class AlfheimItems {
 		mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
+		flugelDisc = new ItemModRecord("flugel", "FlugelDisc");
 		elfFirePendant = new FirePendant();
 		elfIcePendant = new IcePendant();
 		creativeReachPendant = new CreativeReachPendant();

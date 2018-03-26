@@ -10,7 +10,7 @@ import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.entity.EntityFlugel;
+import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.potion.PotionSoulburn;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -84,7 +84,7 @@ public class AlfheimHookHandler {
 		return recipe.getOutput().equals(ModBlocks.livingwood) && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim;
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, isMandatory = true)
 	public static boolean onItemUse(ItemFlugelEye eye, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if(player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) {
 			return EntityFlugel.spawn(player, stack, world, x, y, z);

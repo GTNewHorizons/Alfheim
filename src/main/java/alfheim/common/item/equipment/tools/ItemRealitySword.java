@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.tools;
 
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -28,6 +29,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -36,6 +38,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
@@ -80,9 +83,12 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
         	}
         	
         	if (stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5) return stack;
+        	ASJUtilities.chatLog(merge(player.getCommandSenderName(), stack.getDisplayName()), player);
+        	
         	if (merge(player.getCommandSenderName(), stack.getDisplayName()).equals("35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0")) {
         		stack.stackTagCompound.setInteger(TAG_ELEMENT, 5);
-        		stack.setStackDisplayName(StatCollector.translateToLocal("item.RealitySword.nameZ"));
+        		stack.getTagCompound().removeTag("display");
+        		stack.setStackDisplayName(EnumChatFormatting.RESET + StatCollector.translateToLocal("item.RealitySword.nameZ"));
         		return stack;
         	}
         	
@@ -104,7 +110,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 		if(str != null)
 			try {
 				MessageDigest md = MessageDigest.getInstance("SHA-256");
-				return new HexBinaryAdapter().marshal(md.digest(salt(str).getBytes()));
+				return new HexBinaryAdapter().marshal(md.digest(salt(str).getBytes(Charset.forName("UTF-8"))));
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
@@ -114,7 +120,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	// Might as well be called sugar given it's not secure at all :D
 	String salt(String str) {
 		str = str += "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot";
-		SecureRandom rand = new SecureRandom(str.getBytes());
+		SecureRandom rand = new SecureRandom(str.getBytes(Charset.forName("UTF-8")));
 		int l = str.length();
 		int steps = rand.nextInt(l);
 		char[] chrs = str.toCharArray();
@@ -157,7 +163,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 				player.setHealth(0);
 	            ASJUtilities.playDeathSound(player);
 	            player.onDeath(DamageSource.outOfWorld);
-	            ASJUtilities.sendToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName())); 
+	            ASJUtilities.sayToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName())); 
 			}
 		} else if (flag && entity instanceof EntityLivingBase) {
             EntityLivingBase living = ((EntityLivingBase) entity);

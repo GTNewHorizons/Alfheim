@@ -474,7 +474,7 @@ public class ASJUtilities {
      * Ignoring invisibility and sneaking
      */
 	public static EntityPlayer getClosestVulnerablePlayerToEntity(World world, Entity entity, double distance) {
-        return getClosestVulnerablePlayer(world, entity.posX, entity.posY, entity.posZ, distance);
+        return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance);
     }
 
     /**
@@ -752,6 +752,10 @@ public class ASJUtilities {
 		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
 	}
 	
+	public static void chatLog(String message, EntityPlayer player) {
+		player.addChatMessage(new ChatComponentText((player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+	}
+	
 	public static void debug(String message) { 
 		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase().concat("-Debug"), Level.INFO, message);
 	}
@@ -761,10 +765,10 @@ public class ASJUtilities {
 	}
 
 	public static void say(EntityPlayer player, String message) {
-		player.addChatMessage(new ChatComponentTranslation(message));
+		player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(message)));
 	}
 	
-	public static void sendToAllOnline(String message) {
+	public static void sayToAllOnline(String message) {
 		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
         for (EntityPlayer online : list) online.addChatMessage(new ChatComponentText(message));
 	}

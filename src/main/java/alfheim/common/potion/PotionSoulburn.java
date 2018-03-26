@@ -6,6 +6,8 @@ import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,7 +15,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +34,7 @@ public class PotionSoulburn extends PotionAlfheim {
 		if (hasEffect(e.entityLiving) && e.entityLiving.ticksExisted % 20 == 0) e.entityLiving.attackEntityFrom(solburn, 1.0F * e.entityLiving.getActivePotionEffect(this).getAmplifier());
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void renderEntityOnFire(Render render, Entity entity, double x, double y, double z, float partialTicks) {
 		int i1 = 15728880;
 		int j = i1 % 65536;
@@ -88,7 +90,8 @@ public class PotionSoulburn extends PotionAlfheim {
 		GL11.glPopMatrix();
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void renderFireInFirstPerson(float partialTicks) {
         Tessellator tessellator = Tessellator.instance;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
