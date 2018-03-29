@@ -28,7 +28,9 @@ public class AIChase extends AIBase {
 		
 			if (target != null) {
 				Vector3 mot = new Vector3(target.posX - flugel.posX, target.posY - flugel.posY, target.posZ - flugel.posZ).normalize();
-				flugel.setVelocity(mot.x, mot.y, mot.z);
+				flugel.motionX = mot.x;
+				flugel.motionY = mot.y;
+				flugel.motionZ = mot.z;
 			} else {
 				flugel.playersWhoAttacked.remove(name);
 			}

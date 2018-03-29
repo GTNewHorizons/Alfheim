@@ -83,8 +83,6 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
         	}
         	
         	if (stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5) return stack;
-        	ASJUtilities.chatLog(merge(player.getCommandSenderName(), stack.getDisplayName()), player);
-        	
         	if (merge(player.getCommandSenderName(), stack.getDisplayName()).equals("35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0")) {
         		stack.stackTagCompound.setInteger(TAG_ELEMENT, 5);
         		stack.getTagCompound().removeTag("display");
@@ -101,6 +99,10 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
     }
 	
 	String merge(String s1, String s2) {
+		for (int i = 0; i < s1.length(); i++) System.out.print((int)s1.charAt(i) + " ");
+		System.out.println();
+		for (int i = 0; i < s2.length(); i++) System.out.print((int)s2.charAt(i) + " ");
+		System.out.println();
 		String s = "";
 		for (int i = 0; i < s1.length(); i++) for (int j = 0; j < s2.length(); j++) s += (char) ((s1.charAt(i) * s2.charAt(j)) % 256);
 		return hash(s);

@@ -6,26 +6,23 @@ import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureSpawnpoint extends WorldGenerator {
+public class StructureSpawnpoint {
 
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public static boolean generate(World world, Random rand, int x, int y, int z) {
 		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
 		if (AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures)  generateStartBox(world, rand, -2, 251, -2);
 		ASJUtilities.log("Spawn created");
 		return true;
 	}
 
-	public void generate01(World world, Random rand, int x, int y, int z) {
+	public static void generate01(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 0, y + 0, z + 0, Blocks.air, 0, 3);
 		world.setBlock(x + 1, y + 0, z + 0, Blocks.air, 0, 3);
 		world.setBlock(x + 2, y + 0, z + 0, Blocks.air, 0, 3);
@@ -1531,7 +1528,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 		
 	}
 
-	public void generate02(World world, Random rand, int x, int y, int z) {
+	public static void generate02(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 5, y + 1, z + 22, Blocks.air, 0, 3);
 		world.setBlock(x + 6, y + 1, z + 22, Blocks.air, 0, 3);
 		world.setBlock(x + 7, y + 1, z + 22, Blocks.air, 0, 3);
@@ -3038,7 +3035,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate03(World world, Random rand, int x, int y, int z) {
+	public static void generate03(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 3, z + 1, Blocks.air, 0, 3);
 		world.setBlock(x + 11, y + 3, z + 1, Blocks.air, 0, 3);
 		world.setBlock(x + 12, y + 3, z + 1, Blocks.air, 0, 3);
@@ -4545,7 +4542,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate04(World world, Random rand, int x, int y, int z) {
+	public static void generate04(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 15, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 16, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 17, y + 4, z + 23, ModFluffBlocks.elfQuartz, 0, 3);
@@ -6052,7 +6049,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate05(World world, Random rand, int x, int y, int z) {
+	public static void generate05(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 20, y + 6, z + 2, Blocks.air, 0, 3);
 		world.setBlock(x + 21, y + 6, z + 2, Blocks.air, 0, 3);
 		world.setBlock(x + 22, y + 6, z + 2, Blocks.air, 0, 3);
@@ -7559,7 +7556,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate06(World world, Random rand, int x, int y, int z) {
+	public static void generate06(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 2, y + 7, z + 25, Blocks.air, 0, 3);
 		world.setBlock(x + 3, y + 7, z + 25, Blocks.air, 0, 3);
 		world.setBlock(x + 4, y + 7, z + 25, Blocks.air, 0, 3);
@@ -9066,7 +9063,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate07(World world, Random rand, int x, int y, int z) {
+	public static void generate07(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 7, y + 9, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 8, y + 9, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 9, y + 9, z + 4, Blocks.air, 0, 3);
@@ -10073,7 +10070,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate08(World world, Random rand, int x, int y, int z) {
+	public static void generate08(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 18, y + 10, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 19, y + 10, z + 4, Blocks.air, 0, 3);
 		world.setBlock(x + 20, y + 10, z + 4, Blocks.air, 0, 3);
@@ -11580,7 +11577,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate09(World world, Random rand, int x, int y, int z) {
+	public static void generate09(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 0, y + 11, z + 27, ModFluffBlocks.elfQuartz, 0, 3);
 		world.setBlock(x + 1, y + 11, z + 27, Blocks.air, 0, 3);
 		world.setBlock(x + 2, y + 11, z + 27, Blocks.air, 0, 3);
@@ -13087,7 +13084,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate10(World world, Random rand, int x, int y, int z) {
+	public static void generate10(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 5, y + 13, z + 6, Blocks.air, 0, 3);
 		world.setBlock(x + 6, y + 13, z + 6, Blocks.air, 0, 3);
 		world.setBlock(x + 7, y + 13, z + 6, Blocks.air, 0, 3);
@@ -14594,7 +14591,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate11(World world, Random rand, int x, int y, int z) {
+	public static void generate11(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 14, z + 28, Blocks.air, 0, 3);
 		world.setBlock(x + 11, y + 14, z + 28, Blocks.air, 0, 3);
 		world.setBlock(x + 12, y + 14, z + 28, Blocks.air, 0, 3);
@@ -16101,7 +16098,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate12(World world, Random rand, int x, int y, int z) {
+	public static void generate12(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 15, y + 16, z + 7, Blocks.air, 0, 3);
 		world.setBlock(x + 16, y + 16, z + 7, Blocks.air, 0, 3);
 		world.setBlock(x + 17, y + 16, z + 7, Blocks.air, 0, 3);
@@ -17608,7 +17605,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate13(World world, Random rand, int x, int y, int z) {
+	public static void generate13(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 20, y + 17, z + 29, Blocks.air, 0, 3);
 		world.setBlock(x + 21, y + 17, z + 29, Blocks.air, 0, 3);
 		world.setBlock(x + 22, y + 17, z + 29, ModFluffBlocks.elfQuartz, 0, 3);
@@ -19115,7 +19112,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 
 	}
 
-	public void generate14(World world, Random rand, int x, int y, int z) {
+	public static void generate14(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 2, y + 19, z + 9, Blocks.air, 0, 3);
 		world.setBlock(x + 3, y + 19, z + 9, Blocks.air, 0, 3);
 		world.setBlock(x + 4, y + 19, z + 9, Blocks.air, 0, 3);
@@ -19900,7 +19897,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 		generate15(world, rand, x, y, z);
 	}
 	
-	public void generate15(World world, Random rand, int x, int y, int z) {
+	public static void generate15(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 10, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
 		world.setBlock(x + 11, y + 8, z + 41, AlfheimBlocks.alfheimPortal, 1, 3);
 		world.setBlock(x + 12, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
@@ -19919,7 +19916,7 @@ public class StructureSpawnpoint extends WorldGenerator {
 		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 22, y, z, z + 42, 0);
 	}
 	
-	public void generateStartBox(World world, Random rand, int x, int y, int z) {
+	public static void generateStartBox(World world, Random rand, int x, int y, int z) {
 		world.setBlock(x + 1, y + 0, z + 1, Blocks.bedrock, 0, 3);
 		world.setBlock(x + 2, y + 0, z + 1, Blocks.bedrock, 0, 3);
 		world.setBlock(x + 3, y + 0, z + 1, Blocks.bedrock, 0, 3);

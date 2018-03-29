@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -15,10 +14,9 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class PotionSoulburn extends PotionAlfheim {
 
@@ -26,12 +24,16 @@ public class PotionSoulburn extends PotionAlfheim {
 	
 	public PotionSoulburn() {
 		super(AlfheimConfig.potionIDSoulburn, "soulburn", true, 0xCC4400, 1);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent e) {
-		if (hasEffect(e.entityLiving) && e.entityLiving.ticksExisted % 20 == 0) e.entityLiving.attackEntityFrom(solburn, 1.0F * e.entityLiving.getActivePotionEffect(this).getAmplifier());
+	@Override
+	public boolean isReady(int time, int mod) {
+		return time > 1200 && time % 20 == 0; 
+	}
+
+	@Override
+	public void performEffect(EntityLivingBase living, int mod) {
+		 living.attackEntityFrom(solburn, mod);
 	}
 	
 	@SideOnly(Side.CLIENT)

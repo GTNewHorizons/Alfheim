@@ -29,7 +29,7 @@ sourceSets.main {
     }
 }
 
-version = "BETA-pre5.7"
+version = "BETA-pre5.15"
 group= "main"
 archivesBaseName = "Alfheim"
 

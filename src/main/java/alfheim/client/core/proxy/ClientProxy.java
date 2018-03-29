@@ -10,25 +10,12 @@ import alfheim.client.gui.GUIDeathTimer;
 import alfheim.client.gui.GUIRace;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.client.model.entity.ModelEntityElf;
-import alfheim.client.render.block.RenderBlockAlfheimPylons;
-import alfheim.client.render.block.RenderBlockAnyavil;
-import alfheim.client.render.block.RenderBlockTransferer;
-import alfheim.client.render.block.RenderTileAlfheimPortal;
-import alfheim.client.render.block.RenderTileAlfheimPylons;
-import alfheim.client.render.block.RenderTileAnyavil;
-import alfheim.client.render.block.RenderTileTradePortal;
-import alfheim.client.render.block.RenderTileTransferer;
-import alfheim.client.render.entity.RenderEntityAlfheimPixie;
-import alfheim.client.render.entity.RenderEntityElf;
-import alfheim.common.block.tile.TileAlfheimPortal;
-import alfheim.common.block.tile.TileAlfheimPylons;
-import alfheim.common.block.tile.TileAnyavil;
-import alfheim.common.block.tile.TileTradePortal;
-import alfheim.common.block.tile.TileTransferer;
+import alfheim.client.render.block.*;
+import alfheim.client.render.entity.*;
+import alfheim.common.block.tile.*;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.entity.EntityAlfheimPixie;
-import alfheim.common.entity.EntityElf;
+import alfheim.common.entity.*;
 import alfheim.common.network.AttributeMessage;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -62,6 +49,7 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
+		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark.class, new RenderEntityLightningMark());
 	}
 
 	@Override

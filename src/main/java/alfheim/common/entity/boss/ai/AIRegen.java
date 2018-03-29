@@ -11,7 +11,10 @@ public class AIRegen extends AIBase {
 
 	@Override
 	public boolean shouldExecute() {
-		if (flugel.getHealth() / flugel.getMaxHealth() < 0.6F) return true;
+		if (flugel.getHealth() / flugel.getMaxHealth() > 0.6F) {
+			flugel.setAITaskTimer(0);
+			return false;
+		}
 		return super.shouldExecute();
 	}
 	

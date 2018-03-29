@@ -84,8 +84,8 @@ public class ItemMjolnir extends ItemRelic {
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-    	if (getCharge(stack) >= MAX_CHARGE) {
-    		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1, 256, true);
+    	if (getCharge(stack) >= MAX_CHARGE && !world.isRemote) {
+    		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1, 256, true); 
     		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) world.addWeatherEffect(new EntityLightningBolt(world, mop.blockX, mop.blockY + 1, mop.blockZ));
     	}
     	if (!getBoolean(stack, TAG_CREATIVE, false)) setCharge(stack, 0);

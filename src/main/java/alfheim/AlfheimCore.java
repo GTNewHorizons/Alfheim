@@ -3,6 +3,7 @@ package alfheim;
 import java.io.IOException;
 
 import alfheim.api.ModInfo;
+import alfheim.common.core.command.CommandDimTP;
 import alfheim.common.core.command.CommandRace;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
@@ -70,6 +71,7 @@ public class AlfheimCore {
     	if (AlfheimCore.enableElvenStory) {
     		AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
     		event.registerServerCommand(new CommandRace());
+    		event.registerServerCommand(new CommandDimTP());
     	}
 	}
 

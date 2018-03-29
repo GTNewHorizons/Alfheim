@@ -11,11 +11,11 @@ import net.minecraft.world.World;
 
 public class StructureDreamsTree {
 	
-	protected Block[] getValidSpawnBlocks() {
+	protected static Block[] getValidSpawnBlocks() {
 		return new Block[] { Blocks.grass };
 	}
 
-	public boolean LocationIsValidSpawn(World world, int x, int y, int z) {
+	public static boolean LocationIsValidSpawn(World world, int x, int y, int z) {
 		int distanceToAir = 0;
 		Block checkBlock = world.getBlock(x, y, z);
 
@@ -49,7 +49,7 @@ public class StructureDreamsTree {
 		return false;
 	}
 
-	public boolean generate(World world, Random rand, int x, int y, int z, Block log, Block leaves, int upmeta, int lrmeta, int fbmeta, int lvsmeta) {
+	public static boolean generate(World world, Random rand, int x, int y, int z, Block log, Block leaves, int upmeta, int lrmeta, int fbmeta, int lvsmeta) {
 		x -= 7;
 		z -= 7;
 		if (!LocationIsValidSpawn(world, x + 7, y, z + 7)) {

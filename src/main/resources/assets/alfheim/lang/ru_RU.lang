@@ -104,6 +104,11 @@ alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный э
 alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
+alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
+alfheim.commands.tpdim.wrong=tpdim <ID>
+alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения
+alfheim.commands.tpdim.wrongid=Неверно указано ID измерения
+
 alfheim.configgui.biomeIDAlfheim=ID стандартного биома
 alfheim.configgui.biomeIDAlfheimBeach=ID для биома пляжа
 alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна [Только в режиме ElvenStory]

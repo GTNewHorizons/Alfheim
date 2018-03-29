@@ -22,6 +22,7 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import javafx.beans.DefaultProperty;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -133,6 +134,7 @@ public class ASJUtilities {
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 * */
 	public static void sendToDimensionWithoutPortal(Entity entity, int dimTo, double x, double y, double z) {
+		if (dimTo == entity.dimension) entity.setPosition(x, y, z);
 		if (entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) entity;
 	        WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
@@ -461,19 +463,33 @@ public class ASJUtilities {
 	 * @param interact Can player interact with blocks (not sure)
 	 */
 	public static MovingObjectPosition getSelectedBlock(EntityPlayer player, float fasc, double dist, boolean interact) {
-		Vec3 vec3 = player.getPosition(fasc);
+		Vec3 vec3 = getPosition(player, fasc);
 		vec3.yCoord += player.getEyeHeight();
-		Vec3 vec31 = player.getLook(fasc);
+		Vec3 vec31 = player.getLookVec();
 		Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
 		MovingObjectPosition movingobjectposition = player.worldObj.rayTraceBlocks(vec3, vec32, interact);
 		return movingobjectposition;
 	}
 	
 	/**
+     * Interpolated position vector
+     */
+	public static Vec3 getPosition(EntityPlayer player, float par1) {
+        if (par1 == 1.0F) {
+            return Vec3.createVectorHelper(player.posX, player.posY + (player.getEyeHeight() - player.getDefaultEyeHeight()), player.posZ);
+        } else {
+            double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)par1;
+            double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)par1 + (player.getEyeHeight() - player.getDefaultEyeHeight());
+            double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)par1;
+            return Vec3.createVectorHelper(d0, d1, d2);
+        }
+    }
+	
+	/**
      * Returns the closest vulnerable player within the given radius, or null if none is found<br>
      * Ignoring invisibility and sneaking
      */
-	public static EntityPlayer getClosestVulnerablePlayerToEntity(World world, Entity entity, double distance) {
+	public static EntityPlayer getClosestVulnerablePlayerToEntity(Entity entity, double distance) {
         return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance);
     }
 
@@ -638,13 +654,13 @@ public class ASJUtilities {
 	/**
 	 * Adds new <b>ore</b> spawn to world generator
 	 * */
-	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
+	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
 		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
 		int veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk;
 		for (int i = 0; i < veins; i++) {
-			int posX = blockXPos + rand.nextInt(maxX);
+			int posX = blockXPos + rand.nextInt(16);
 			int posY = minY + rand.nextInt(maxY - minY);
-			int posZ = blockZPos + rand.nextInt(maxZ);
+			int posZ = blockZPos + rand.nextInt(16);
 			(new WorldGenMinable(ore, meta, minVeinSize + rand.nextInt(maxVeinSize - minVeinSize + 1), replace)).generate(world, rand, posX, posY, posZ);
 		}
 	}
@@ -764,12 +780,22 @@ public class ASJUtilities {
 		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.INFO, message);
 	}
 
+	public static void printStackTrace() {
+		ASJUtilities.log("Stack trace: ");
+		StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+		for (int i = 2; i < stes.length; i++) ASJUtilities.log("\tat " + stes[i].toString());
+	}
+	
 	public static void say(EntityPlayer player, String message) {
 		player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(message)));
 	}
 	
 	public static void sayToAllOnline(String message) {
 		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
-        for (EntityPlayer online : list) online.addChatMessage(new ChatComponentText(message));
+        for (EntityPlayer online : list) say(online, message);
+	}
+	
+	public static void sayToAllOPs(String message) {
+		for (String op : MinecraftServer.getServer().getConfigurationManager().func_152603_m().func_152685_a()) say(MinecraftServer.getServer().getConfigurationManager().func_152612_a(op), message);
 	}
 }

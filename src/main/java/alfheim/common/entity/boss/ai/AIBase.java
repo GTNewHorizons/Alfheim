@@ -17,7 +17,7 @@ public abstract class AIBase extends EntityAIBase {
 	
 	@Override
 	public boolean shouldExecute() {
-		//ASJUtilities.chatLog("Should " + task.toString() + ": " + (flugel.getHealth() > 0 && flugel.getAITask().equals(task) && flugel.getAITaskTimer() == 0));
+		// ASJUtilities.chatLog("Should " + task.toString() + ": " + (flugel.getHealth() > 0 && flugel.getAITask().equals(task) && flugel.getAITaskTimer() == 0));
 		return flugel.getHealth() > 0 && flugel.getAITask().equals(task) && flugel.getAITaskTimer() == 0;
 	}
 
@@ -36,6 +36,5 @@ public abstract class AIBase extends EntityAIBase {
 	@Override
 	public void resetTask() {
 		flugel.setAITask(AITask.getRand());
-	}
-	
+	}	
 }

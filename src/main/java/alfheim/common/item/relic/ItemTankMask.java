@@ -60,7 +60,6 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!player.isSneaking()) return stack;
-		initNBT(stack);
 		setBoolean(stack, TAG_ACTIVATED, !getBoolean(stack, TAG_ACTIVATED, false));
 		return stack;
 	}
@@ -70,7 +69,6 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		if (e.entityLiving instanceof EntityPlayer && ASJUtilities.willEntityDie(e) && ((EntityPlayer) e.entityLiving).inventory.hasItem(this)) {
 			EntityPlayer player = (EntityPlayer) e.entityLiving;
 			int slot = ASJUtilities.getSlotWithItem(this, player.inventory);
-			initNBT(player.inventory.getStackInSlot(slot));
 			if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return;
 			IInventory baubles = BaublesApi.getBaubles(player);
 			if (baubles.getStackInSlot(0) != null)
@@ -101,19 +99,19 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase entity) {
 		if (entity.worldObj.isRemote) return;
-		initNBT(stack);
 		setInt(stack, TAG_POSSESSION, getInt(stack, TAG_POSSESSION, 0) + 1);
 		entity.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 20, 4));
 		entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 20, 4));
-		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, getInt(stack, TAG_POSSESSION, 1));
+		int time = getInt(stack, TAG_POSSESSION, 1);
+		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, time);
 		possessed.getCurativeItems().clear();
 		entity.addPotionEffect(possessed);
+		if (time >= 1200 && time % 20 == 0) entity.setHealth(entity.getHealth() - ((entity.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - 1200) / 400.0F));
 	}
 
 	@Override
 	public void onEquipped(ItemStack stack, EntityLivingBase entity) {
 		if (entity.worldObj.isRemote) return;
-		initNBT(stack);
 		setInt(stack, TAG_POSSESSION, 0);
 		setInt(stack, TAG_COOLDOWN, MAX_COOLDOWN);
 		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, 2);
@@ -124,7 +122,6 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	@Override
 	public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
 		if (entity.worldObj.isRemote) return;
-		initNBT(stack);
 		setInt(stack, TAG_POSSESSION, 0);
 		PotionEffect possessed = entity.getActivePotionEffect(AlfheimRegistry.possession);
 		if (possessed != null) entity.removePotionEffect(AlfheimRegistry.possession.id);
@@ -137,7 +134,6 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 
 	@Override
 	public boolean canUnequip(ItemStack stack, EntityLivingBase player) {
-		initNBT(stack);
 		return getInt(stack, TAG_POSSESSION, 0) < 1800;
 	}
 	

@@ -27,13 +27,13 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) generateAlfheim(rand, chunkX, chunkZ, world);
 	}
 
-	private void generateAlfheim(final Random rand, int chunkX, int chunkZ, final World world) {
+	private static void generateAlfheim(final Random rand, int chunkX, int chunkZ, final World world) {
 		if (chunkX == 0 && chunkZ == 0 && !world.isRemote) {
 			Thread generate = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					ASJUtilities.log("Generating spawn...");
-					(new StructureSpawnpoint()).generate(world, rand, -11, world.getHeightValue(0, 0), -41);
+					StructureSpawnpoint.generate(world, rand, -11, world.getHeightValue(0, -41), -41);
 				}
 			}, "Alf Spawn Gen");
 			generate.start();
@@ -42,17 +42,18 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		generateFlowers(world, rand, chunkX * 16, chunkZ * 16);
 		generateTrees(world, rand, chunkX, chunkZ);
 		generateStructures(world, rand, chunkX, chunkZ);
+		//IslandsGen.genIslands(rand, chunkX, chunkZ, world);
 	}
 
-	public void generateElvenOres(World world, Random rand, int blockXPos, int blockZPos) {
-		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, world, rand, blockXPos, blockZPos, 16, 16, 1, 8, 1, 2, 75,  1, 16);		// Dragonstone
-		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, world, rand, blockXPos, blockZPos, 16, 16, 1, 8, 3, 6, 100, 1, 64);		// Elementium
-		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, world, rand, blockXPos, blockZPos, 16, 16, 4, 8, 1, 1, 100, 1, 48);		// Quartz
-		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, world, rand, blockXPos, blockZPos, 16, 16, 1, 8, 2, 3, 100, 1, 32);		// Gold
-		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, world, rand, blockXPos, blockZPos, 16, 16, 1, 4, 1, 1, 50,  1, 16);		// Iffesal
+	public static void generateElvenOres(World world, Random rand, int blockXPos, int blockZPos) {
+		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, world, rand, blockXPos, blockZPos, 1, 8, 1, 2, 75,  1, 16);		// Dragonstone
+		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, world, rand, blockXPos, blockZPos, 1, 8, 3, 6, 100, 1, 64);		// Elementium
+		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, world, rand, blockXPos, blockZPos, 4, 8, 1, 1, 100, 1, 48);		// Quartz
+		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, world, rand, blockXPos, blockZPos, 1, 8, 2, 3, 100, 1, 32);		// Gold
+		ASJUtilities.addOreSpawn(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, world, rand, blockXPos, blockZPos, 1, 4, 1, 1, 50,  1, 16);		// Iffesal
 	}
 	
-	public void generateFlowers(World world, Random rand, int chunkX, int chunkZ) {
+	public static void generateFlowers(World world, Random rand, int chunkX, int chunkZ) {
 		{ // Botania
 			// Flowers
 			int dist = Math.min(8, Math.max(1, ConfigHandler.flowerPatchSize));
@@ -134,26 +135,26 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		}
 	}
 	
-	public void generateTrees(World world, Random rand, int chunkX, int chunkZ) {
+	public static void generateTrees(World world, Random rand, int chunkX, int chunkZ) {
 		if ((-3 < chunkX && chunkX < 3) && (-3 < chunkZ && chunkZ < 4)) return;
 		if (rand.nextInt(5) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new StructureDreamsTree()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, Blocks.log, Blocks.leaves, 0, 4, 8, 0);
+			StructureDreamsTree.generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, Blocks.log, Blocks.leaves, 0, 4, 8, 0);
 		}
 		if (rand.nextInt(10) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new StructureDreamsTree()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
+			StructureDreamsTree.generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0);
 		}
 	}
 	
-	public void generateStructures(World world, Random rand, int chunkX, int chunkZ) {
+	public static void generateStructures(World world, Random rand, int chunkX, int chunkZ) {
 		if ((-8 < chunkX && chunkX < -8) && (-8 < chunkZ && chunkZ < 8)) return;
 		if (rand.nextInt(1000) == 0) {
 			int x = chunkX * 16 + rand.nextInt(16);
 			int z = chunkZ * 16 + rand.nextInt(16);
-			(new StructureArena()).generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
+			StructureArena.generate(world, rand, x, world.getTopSolidOrLiquidBlock(x, z), z);
 		}
 	}
 }

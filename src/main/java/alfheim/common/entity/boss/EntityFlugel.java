@@ -1,6 +1,7 @@
 package alfheim.common.entity.boss;
 
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimAchievements;
@@ -22,10 +24,13 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.entity.boss.ai.AIChase;
 import alfheim.common.entity.boss.ai.AIDeathray;
 import alfheim.common.entity.boss.ai.AIInvul;
+import alfheim.common.entity.boss.ai.AILightning;
+import alfheim.common.entity.boss.ai.AIRays;
 import alfheim.common.entity.boss.ai.AIRegen;
 import alfheim.common.entity.boss.ai.AITask;
 import alfheim.common.entity.boss.ai.AITeleport;
 import baubles.api.BaublesApi;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import javafx.collections.transformation.SortedList;
@@ -39,6 +44,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,7 +91,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public static final float RANGE = 24F;
 	public static final float MAX_HP = 800F;
 
-	private static final String TAG_STAGE = "aggro";
+	private static final String TAG_STAGE = "stage";
 	private static final String TAG_SOURCE_X = "sourceX";
 	private static final String TAG_SOURCE_Y = "sourceY";
 	private static final String TAG_SOURCE_Z = "sourcesZ";
@@ -103,13 +109,15 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		setSize(0.6F, 1.8F);
 		getNavigator().setCanSwim(true);
 		tasks.taskEntries.clear();
-		tasks.addTask(0, new EntityAISwimming(this));
-		tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, Float.MAX_VALUE));
-		tasks.addTask(2, new AIInvul(this, AITask.INVUL));
-		tasks.addTask(3, new AIDeathray(this, AITask.DEATHRAY));
-		tasks.addTask(4, new AIChase(this, AITask.CHASE));
-		tasks.addTask(5, new AIRegen(this, AITask.REGEN));
-		tasks.addTask(6, new AITeleport(this, AITask.TP));
+		int i = 0;
+		tasks.addTask(i++, new EntityAIWatchClosest(this, EntityPlayer.class, Float.MAX_VALUE));
+		tasks.addTask(i, new AIChase(this, AITask.CHASE));
+		tasks.addTask(i, new AIRegen(this, AITask.REGEN));
+		tasks.addTask(i, new AITeleport(this, AITask.TP));
+		tasks.addTask(i, new AILightning(this, AITask.LIGHTNING));
+		tasks.addTask(i, new AIRays(this, AITask.RAYS));
+		tasks.addTask(i++, new AIInvul(this, AITask.INVUL));
+		tasks.addTask(i++, new AIDeathray(this, AITask.DEATHRAY));
 		isImmuneToFire = true;
 		experienceValue = 1325;
 	}
@@ -146,7 +154,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			e.setPosition(x + 0.5, y + 3, z + 0.5);
 			e.setAITask(AITask.INVUL);
 			e.setAITaskTimer(0);
-			e.setHealth(1F);
+			do {
+				e.setHealth(1F);
+			} while (e.getHealth() > 1F);
 			e.setSource(x, y, z);
 			e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 
@@ -199,6 +209,12 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 
 	@Override
+	public void setHealth(float hp) {
+		hp = Math.max(getHealth() - 40F, hp);
+		super.setHealth(hp);
+	}
+	
+	@Override
 	public void onDeath(DamageSource source) {
 		super.onDeath(source);
 		EntityLivingBase entitylivingbase = func_94060_bK();
@@ -211,7 +227,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void dropFewItems(boolean byPlayer, int looting) {
 		if(byPlayer) {
-			for(int pl = 0; pl < playersWhoAttacked.size(); pl++) {
+			for(String name : playersWhoAttacked.keySet()) {
+				if (worldObj.getPlayerEntityByName(name) == null) continue;
 				// boolean hard = isHardMode();
 				// entityDropItem(new ItemStack(ModItems.manaResource, pl == 0 ? /*hard ? 16 :*/ 8 : /*hard ? 10 :*/ 6, 5), 1F); TODO change special drop
 				boolean droppedRecord = false;
@@ -252,20 +269,31 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 	@Override
 	public void setDead() {
+		if (isKillForced() && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+			ASJUtilities.log("Someone tried to force flugel to die. They failed.");
+			ASJUtilities.printStackTrace();
+			ASJUtilities.log("If the server'd crashed next tick - report this to mod author, ignore otherwise.");
+			return;
+		}
 		ChunkCoordinates source = getSource();
 		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null);
 		isPlayingMusic = false;
-		BossBarHandler.setCurrentBoss(null);
-		ASJUtilities.sayToAllOnline("Flugel died at " + MathHelper.floor_double(posX) + " - " + MathHelper.floor_double(posY) + " - " + MathHelper.floor_double(posZ));
+		if (worldObj.isRemote) BossBarHandler.setCurrentBoss(null);
+
 		super.setDead();
+	}
+	
+	public boolean isKillForced() {
+		return getHealth() > 0 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		
-		BossBarHandler.setCurrentBoss(this);
 
+		//setAITask(AITask.RAYS);
+		//setAITaskTimer(0);
+		
 		if(ridingEntity != null) {
 			if(ridingEntity.riddenByEntity != null)
 				ridingEntity.riddenByEntity = null;
@@ -273,7 +301,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		}
 
 		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL) setDead();
-
+		
+		if(worldObj.isRemote) BossBarHandler.setCurrentBoss(this);
+		
 		if(!worldObj.isRemote) {
 			int radius = 1;
 			int posXInt = MathHelper.floor_double(posX);
@@ -403,7 +433,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			if(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(posX, posY, posZ, source.posX, source.posY, source.posZ) > range) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5);
 			if(isAggroed()) { 
 				if(getAITask().equals(AITask.NONE)) setAITask(AITask.getRand());
-				if(isDying() && getStage() != 2) setAITask(AITask.DEATHRAY);
+				if(isDying() && getStage() != 2 && getAITask() != AITask.DEATHRAY) {
+					setAITask(AITask.DEATHRAY);
+					setAITaskTimer(0);
+				}
 			} else {
 				range = 3F;
 				players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range));
@@ -614,6 +647,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		nbt.setInteger(TAG_SOURCE_Z, source.posZ);
 
 		nbt.setInteger(TAG_PLAYER_COUNT, getPlayerCount());
+		String TAG_AI_TASK = "task";
+		nbt.setInteger(TAG_AI_TASK , getAITask().ordinal());
 		nbt.setInteger(TAG_AI_TIMER, getAITaskTimer());
 		nbt.setString(TAG_SUMMONER, getSummoner());
 		
@@ -634,7 +669,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 		if(nbt.hasKey(TAG_PLAYER_COUNT)) setPlayerCount(nbt.getInteger(TAG_PLAYER_COUNT));
 		else setPlayerCount(1);
-		setAITaskTimer(nbt.getInteger(TAG_AI_TIMER));
+		String TAG_AI_TASK = "task";
+		setAITask(AITask.values()[nbt.getInteger(TAG_AI_TASK)]);
+		// TODO Add current task to tasks.executingTaskEntries (via AT)
+		setAITaskTimer(0); // TODO setAITaskTimer(nbt.getInteger(TAG_AI_TIMER));
 		setSummoner(nbt.getString(TAG_SUMMONER));
 		
 		NBTTagCompound map = nbt.getCompoundTag(TAG_ATTACKED);

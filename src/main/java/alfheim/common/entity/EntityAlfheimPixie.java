@@ -87,7 +87,7 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 			for(int i = 0; i < 4; i++)
 				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5  + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1F, 0.25F, 0.9F, 0.1F + (float) Math.random() * 0.25F, 12);
 		
-		EntityPlayer player = ASJUtilities.getClosestVulnerablePlayerToEntity(this.worldObj, this, 4);
+		EntityPlayer player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 4);
 		if (player != null && BaublesApi.getBaubles(player) != null && BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(player).getStackInSlot(0), player, 1, true)) {
 			Vec3 vec = player.getLook(1.0F);
 			this.motionX = (player.posX + vec.xCoord - this.posX) / 8.0F;

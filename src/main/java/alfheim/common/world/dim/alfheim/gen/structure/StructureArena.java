@@ -7,11 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureArena extends WorldGenerator {
+public class StructureArena {
 	protected Block[] GetValidSpawnBlocks() {
 		return new Block[] { Blocks.grass, };
 	}
@@ -37,7 +36,7 @@ public class StructureArena extends WorldGenerator {
 		return false;
 	}
 
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+	public static boolean generate(World world, Random rand, int x, int y, int z) {
 		//for (int X = 0; X < 41; X++) for (int Z = 0; Z < 41; Z++) if (!LocationIsValidSpawn(world, X + x, y, Z + z)) return false;
 		System.out.println("Arena generated at " + x + ':' + y + ':' + z);
 		

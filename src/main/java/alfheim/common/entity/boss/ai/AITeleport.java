@@ -11,7 +11,7 @@ public class AITeleport extends AIBase {
 
 	@Override
 	public void startExecuting() {
-		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(300) + 300);
+		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(100) + 100);
 	}
 
 	@Override

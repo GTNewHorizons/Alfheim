@@ -41,7 +41,7 @@ public class GUIRace extends Gui {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onOverlayRendering(RenderGameOverlayEvent.Post event) {
-		if (event.isCancelable() || event.type != ElementType.ALL || EnumRace.getRace(mc.thePlayer) == EnumRace.HUMAN) return;
+		if (event.isCancelable() || event.type != ElementType.EXPERIENCE || EnumRace.getRace(mc.thePlayer) == EnumRace.HUMAN) return;
 		
 		glPushMatrix();
 		glEnable(GL_BLEND);

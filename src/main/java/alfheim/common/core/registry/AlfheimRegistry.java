@@ -53,7 +53,7 @@ public class AlfheimRegistry {
 	public static void preInit() {
 		if(Potion.potionTypes.length < 256) ASJReflectionHelper.invokeStatic(ModPotions.class, null, "extendPotionArray");
 		
-		possession = new PotionPossession();
+		possession = new PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000, 0);
 		soulburn = new PotionSoulburn();
 		registerEntities();
 		registerTileEntities();
@@ -69,9 +69,10 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerEntities() {
-		registerEntityEgg(EntityAlfheimPixie.class, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance);
 		registerEntityEgg(EntityElf.class, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance);
-		registerEntityEgg(EntityFlugel.class, "Flugel", 0xFAFAFA, 0xEBAFC8, AlfheimCore.instance);
+		registerEntity(EntityFlugel.class, "Flugel", AlfheimCore.instance);
+		registerEntity(EntityLightningMark.class, "LightningMark", AlfheimCore.instance);
+		registerEntityEgg(EntityAlfheimPixie.class, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance);
 	}
 	
 	private static void registerTileEntities() {
