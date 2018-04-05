@@ -23,13 +23,13 @@ import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.IconHelper;
 
-public class ItemRod extends Item implements IManaUsingItem {
+public class ItemRodElemental extends Item implements IManaUsingItem {
 	
 	private Block barrier;
 	private IIcon rubyIcon;
 	private IIcon sapphireIcon;
 	
-	public ItemRod(String name, Block barrier) {
+	public ItemRodElemental(String name, Block barrier) {
 		this.barrier = barrier; // ItemManasteelSword
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setFull3D();

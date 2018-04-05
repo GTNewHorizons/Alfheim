@@ -4,14 +4,16 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.AdvancedArmorModel;
 import alfheim.api.ModInfo;
+import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+import vazkii.botania.client.core.helper.ShaderHelper;
 
-public  class ModelElvoriumArmor extends AdvancedArmorModel {
+public class ModelElvoriumArmor extends AdvancedArmorModel {
 
 	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/ElvoriumArmor.obj"));
 	public static final ResourceLocation texture = new ResourceLocation(ModInfo.MODID, "textures/model/armor/ElvoriumArmor.png");
@@ -23,18 +25,23 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void pre() {
+	public void pre(Entity entity) {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
+			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && !AlfheimConfig.fancies) return;
+			ShaderHelper.useShader(ShaderHelper.halo);
+		}
 	}
 
 	@Override
-	public void post() {
+	public void post(Entity entity) {
 		GL11.glDisable(GL11.GL_BLEND);
+		ShaderHelper.releaseShader();
 	}
 
 	@Override
-	public void partHead() {
+	public void partHead(Entity entity) {
 		if (partType == 0) {
 			double s = 0.01;
 			GL11.glTranslatef(0F, -0.75F, 0F);
@@ -45,7 +52,7 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void partBody() {
+	public void partBody(Entity entity) {
 		if (partType == 1) {
 			double s = 0.01;
 			GL11.glTranslated(0, -0.75, 0);
@@ -63,7 +70,7 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void partRightArm() {
+	public void partRightArm(Entity entity) {
 		if (partType == 1) {
 			double s = 0.01;
 			GL11.glTranslated(0.31, -0.55, 0);
@@ -74,7 +81,7 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void partLeftArm() {
+	public void partLeftArm(Entity entity) {
 		if (partType == 1) {
 			double s = 0.01;
 			GL11.glTranslated(-0.31, -0.55, 0);
@@ -85,7 +92,7 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void partRightLeg() {
+	public void partRightLeg(Entity entity) {
 		if (partType == 2) {
 			double s = 0.01;
 			GL11.glTranslated(0.125, 0.01, 0);
@@ -102,7 +109,7 @@ public  class ModelElvoriumArmor extends AdvancedArmorModel {
 	}
 
 	@Override
-	public void partLeftLeg() {
+	public void partLeftLeg(Entity entity) {
 		if (partType == 2) {
 			double s = 0.01;
 			GL11.glTranslated(-0.125, 0.01, 0);

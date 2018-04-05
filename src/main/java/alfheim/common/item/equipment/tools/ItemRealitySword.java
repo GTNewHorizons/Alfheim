@@ -99,10 +99,6 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
     }
 	
 	String merge(String s1, String s2) {
-		for (int i = 0; i < s1.length(); i++) System.out.print((int)s1.charAt(i) + " ");
-		System.out.println();
-		for (int i = 0; i < s2.length(); i++) System.out.print((int)s2.charAt(i) + " ");
-		System.out.println();
 		String s = "";
 		for (int i = 0; i < s1.length(); i++) for (int j = 0; j < s2.length(); j++) s += (char) ((s1.charAt(i) * s2.charAt(j)) % 256);
 		return hash(s);

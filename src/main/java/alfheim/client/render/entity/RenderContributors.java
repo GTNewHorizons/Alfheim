@@ -3,6 +3,7 @@ package alfheim.client.render.entity;
 import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,7 +25,8 @@ public class RenderContributors {
 		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
 		EntityPlayer lore = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("DmitryWS");
 	
-		if (author != null) {
+		AlexSocol: if (author != null) {
+			if (thePlayer.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
 			Minecraft.getMinecraft().renderEngine.bindTexture(babylon);
 			glPushMatrix();
 			glEnable(GL_BLEND);
@@ -65,7 +67,8 @@ public class RenderContributors {
 			glPopMatrix();
 		}
 		
-		if (lore != null && !(thePlayer.equals(lore) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)) {
+		DmitryWS: if (lore != null && !(thePlayer.equals(lore) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)) {
+			if (thePlayer.equals(lore) && !AlfheimConfig.fancies) break DmitryWS;
 			glPushMatrix();
 			glEnable(GL_CULL_FACE);
 			float t = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + e.partialTicks;

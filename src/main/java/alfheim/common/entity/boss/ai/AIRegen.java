@@ -10,15 +10,6 @@ public class AIRegen extends AIBase {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		if (flugel.getHealth() / flugel.getMaxHealth() > 0.6F) {
-			flugel.setAITaskTimer(0);
-			return false;
-		}
-		return super.shouldExecute();
-	}
-	
-	@Override
 	public void startExecuting() {
 		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(flugel.SPAWN_TICKS / 10) + flugel.SPAWN_TICKS / 10);
 	}

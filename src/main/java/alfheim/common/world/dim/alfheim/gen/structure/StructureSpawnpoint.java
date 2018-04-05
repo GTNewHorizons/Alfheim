@@ -16,8 +16,8 @@ import vazkii.botania.common.block.ModFluffBlocks;
 public class StructureSpawnpoint {
 
 	public static boolean generate(World world, Random rand, int x, int y, int z) {
-		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
 		if (AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures)  generateStartBox(world, rand, -2, 251, -2);
+		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
 		ASJUtilities.log("Spawn created");
 		return true;
 	}
@@ -19898,6 +19898,8 @@ public class StructureSpawnpoint {
 	}
 	
 	public static void generate15(World world, Random rand, int x, int y, int z) {
+		world.setSpawnLocation(x + 11, y + 8, z + 39);
+		
 		world.setBlock(x + 10, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
 		world.setBlock(x + 11, y + 8, z + 41, AlfheimBlocks.alfheimPortal, 1, 3);
 		world.setBlock(x + 12, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
@@ -19917,6 +19919,7 @@ public class StructureSpawnpoint {
 	}
 	
 	public static void generateStartBox(World world, Random rand, int x, int y, int z) {
+		world.setSpawnLocation(0, 253, 0);
 		world.setBlock(x + 1, y + 0, z + 1, Blocks.bedrock, 0, 3);
 		world.setBlock(x + 2, y + 0, z + 1, Blocks.bedrock, 0, 3);
 		world.setBlock(x + 3, y + 0, z + 1, Blocks.bedrock, 0, 3);

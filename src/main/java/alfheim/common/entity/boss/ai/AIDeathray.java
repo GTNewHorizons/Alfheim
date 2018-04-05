@@ -98,7 +98,7 @@ public class AIDeathray extends AIBase {
 	
 	@Override
 	public void resetTask() {
-		flugel.setStage(2);
+		flugel.setStage(flugel.STAGE_DEATHRAY);
 		super.resetTask();
 	}
 }

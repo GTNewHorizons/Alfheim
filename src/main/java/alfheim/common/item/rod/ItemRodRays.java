@@ -1,42 +1,50 @@
-package alfheim.common.entity.boss.ai;
+package alfheim.common.item.rod;
 
 import java.awt.Color;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.common.entity.boss.EntityFlugel;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.world.World;
+import vazkii.botania.api.mana.IManaUsingItem;
+import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.entity.EntityManaBurst;
 import vazkii.botania.common.item.ModItems;
 
-public class AIRays extends AIBase {
-
-	private static final String TAG_ATTACKER_USERNAME = "attackerUsername";
-	private static final int MANA_PER_DAMAGE = 1;
+public class ItemRodRays extends ItemRodBase implements IManaUsingItem {
 	
-	public AIRays(EntityFlugel flugel, AITask task) {
-		super(flugel, task);
+	private static final String TAG_ATTACKER_USERNAME = "attackerUsername";
+	private static final int MANA_PER_DAMAGE = 100;
+
+	public ItemRodRays() {
+		super("RodRays");
 	}
 
 	@Override
-	public void startExecuting() { // TODO TEST!
-		flugel.setAITaskTimer(20);
-		EntityPlayer player = ASJUtilities.getClosestVulnerablePlayerToEntity(flugel, flugel.RANGE * 2);
-		if (player != null) flugel.setPosition(flugel.posX, player.posY, flugel.posZ);
+	public void cast(ItemStack stack, World world, EntityPlayer player) {
 		for (int i = 0; i < 360; i += 15) {
-			flugel.worldObj.spawnEntityInWorld(getBurst(flugel, i));
+			if (ManaItemHandler.requestManaExactForTool(stack, player, MANA_PER_DAMAGE, world.isRemote)) {
+				if (!world.isRemote) player.worldObj.spawnEntityInWorld(getBurst(player, i));
+				player.worldObj.playSoundAtEntity(player, "botania:terraBlade", 0.4F, 1.4F);
+			}
 		}
-		flugel.worldObj.playSoundAtEntity(flugel, "botania:terraBlade", 0.4F, 1.4F);
-	}
+	}	
 	
-	public EntityManaBurst getBurst(EntityFlugel flugel, int i) {
-		EntityManaBurst burst = new EntityManaBurst(flugel.worldObj);
+	public EntityManaBurst getBurst(EntityPlayer player, int i) {
+		EntityManaBurst burst = new EntityManaBurst(player.worldObj);
 
 		float motionModifier = 15F;
 
-		burst.setColor(new Color(0.7F, 0.3F, 0.7F).getRGB());
+		burst.setColor(0xFFFF00);
 		burst.setMana(1);
 		burst.setStartingMana(1);
 		burst.setMinManaLoss(600);
@@ -45,11 +53,11 @@ public class AIRays extends AIBase {
 		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier);
 
 		ItemStack lens = new ItemStack(ModItems.terraSword, 1, 0);
-		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, flugel.getCommandSenderName());
+		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, player.getCommandSenderName());
 		burst.setSourceLens(lens);
 		
 		burst.setBurstSourceCoords(0, -1, 0);
-		burst.setLocationAndAngles(flugel.posX, flugel.posY + flugel.getEyeHeight(), flugel.posZ, i, -flugel.rotationPitch);
+		burst.setLocationAndAngles(player.posX, player.posY + player.getEyeHeight(), player.posZ, i, -player.rotationPitch);
 
 		burst.posX -= MathHelper.cos((i) / 180.0F * (float) Math.PI) / 2.0;
 		burst.posY -= 0.1;
@@ -64,10 +72,5 @@ public class AIRays extends AIBase {
 		burst.setMotion(mx, my, mz);
 		
 		return burst;
-	}
-
-	@Override
-	public boolean continueExecuting() {
-		return canContinue();
 	}
 }

@@ -39,6 +39,7 @@ public class AlfheimConfig extends Configuration {
 	// OHTER
 	public static boolean	destroyPortal			= true;
 	public static boolean	enableAlfheimRespawn	= true;
+	public static boolean	fancies					= true;
 	public static boolean	looniumOverseed			= false;
 	public static boolean	numericalMana			= true;
 	public static int		potionIDPossession		= 30;
@@ -78,6 +79,7 @@ public class AlfheimConfig extends Configuration {
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",	dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
 		destroyPortal		= loadProp(CATEGORY_GENERAL,	"destroyPortal",		destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
 		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",	enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
+		fancies				= loadProp(CATEGORY_GENERAL,	"fancies",				fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
 		looniumOverseed		= loadProp(CATEGORY_GENERAL,	"looniumOverseed",		looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
 		numericalMana		= loadProp(CATEGORY_GENERAL,	"numericalMana",		numericalMana,			false,	"Set this to true to enable numerical mana representation");
 		potionIDPossession	= loadProp(CATEGORY_GENERAL, 	"potionIDPossession",	potionIDPossession,		true,	"Potion id for Possession");

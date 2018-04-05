@@ -39,7 +39,9 @@ public class CommandDimTP extends CommandBase {
 				int id = Integer.valueOf(args[0]);
 				try {
 					World w = MinecraftServer.getServer().worldServerForDimension(id);
-					if (w == null) throw new NullPointerException("Loaded dimension is null");
+					if (w == null) {
+						throw new NullPointerException("Loaded dimension is null");
+					}
 					ChunkCoordinates s = w.getSpawnPoint();
 	           		ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, id, s.posX, s.posY, s.posZ);
 				} catch (Throwable e) {

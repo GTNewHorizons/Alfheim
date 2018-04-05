@@ -10,12 +10,14 @@ import alfheim.client.gui.GUIDeathTimer;
 import alfheim.client.gui.GUIRace;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.client.model.entity.ModelEntityElf;
+import alfheim.client.model.entity.ModelEntityFlugel;
 import alfheim.client.render.block.*;
 import alfheim.client.render.entity.*;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.*;
+import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.network.AttributeMessage;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -47,8 +49,9 @@ public class ClientProxy extends CommonProxy {
 		
 		if (AlfheimCore.enableElvenStory) ClientRegistry.registerKeyBinding(keyFlight);
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
+		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel.class, new RenderEntityFlugel(new ModelEntityFlugel(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark.class, new RenderEntityLightningMark());
 	}
 

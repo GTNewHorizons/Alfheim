@@ -16,7 +16,7 @@ public class AILightning extends AIBase {
 
 	@Override
 	public void startExecuting() {
-		flugel.setAITaskTimer(5);
+		flugel.setAITaskTimer(20);
 		for (EntityPlayer player : getRandomPlayers()) player.worldObj.spawnEntityInWorld(new EntityLightningMark(player.worldObj, player.posX, player.posY, player.posZ));
 	}
 	

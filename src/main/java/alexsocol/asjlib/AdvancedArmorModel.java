@@ -19,15 +19,15 @@ import net.minecraft.util.MathHelper;
  * @author Timaxa007
  * */
 public abstract class AdvancedArmorModel extends ModelBiped {
-	public int color = -1;//Раскраска брони в цвет.
-	public abstract void pre();//До всех частей.
-	public abstract void post();//После всех частей.
-	public abstract void partHead();//Часть: Голова.
-	public abstract void partBody();//Часть: Тело.
-	public abstract void partRightArm();//Часть: Правая рука.
-	public abstract void partLeftArm();//Часть: Левая рука.
-	public abstract void partRightLeg();//Часть: Правая нога.
-	public abstract void partLeftLeg();//Часть: Левая нога.
+	public int color = -1;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ.
+	public abstract void pre(Entity entity);//пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+	public abstract void post(Entity entity);//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+	public abstract void partHead(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ.
+	public abstract void partBody(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅ.
+	public abstract void partRightArm(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
+	public abstract void partLeftArm(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
+	public abstract void partRightLeg(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
+	public abstract void partLeftLeg(Entity entity);//пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
 
 	public void render(Entity entity, float x, float y, float z, float yaw, float pitch, float parTicks) {
 		super.render(entity, x, y, z, yaw, pitch, parTicks);
@@ -100,7 +100,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glColor3f(red, blue, green);
 		}
 
-		pre();
+		pre(entity);
 
 		float f6 = 2.0F;
 
@@ -115,7 +115,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedHead.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedHead.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partHead();
+			partHead(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -132,7 +132,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedBody.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedBody.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partBody();
+			partBody(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -143,7 +143,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedRightArm.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedRightArm.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partRightArm();
+			partRightArm(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -154,7 +154,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedLeftArm.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedLeftArm.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partLeftArm();
+			partLeftArm(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -165,7 +165,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedRightLeg.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedRightLeg.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partRightLeg();
+			partRightLeg(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -176,7 +176,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glRotatef(bipedLeftLeg.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
 			GL11.glRotatef(bipedLeftLeg.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
-			partLeftLeg();
+			partLeftLeg(entity);
 			GL11.glPopMatrix();
 		}
 
@@ -184,7 +184,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			GL11.glPopMatrix();
 		}
 
-		post();
+		post(entity);
 
 		GL11.glColor3f(1F, 1F, 1F);
 

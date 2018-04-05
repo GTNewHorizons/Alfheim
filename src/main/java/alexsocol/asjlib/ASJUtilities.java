@@ -795,7 +795,12 @@ public class ASJUtilities {
         for (EntityPlayer online : list) say(online, message);
 	}
 	
+	/** Untested! */
+	@Deprecated
 	public static void sayToAllOPs(String message) {
-		for (String op : MinecraftServer.getServer().getConfigurationManager().func_152603_m().func_152685_a()) say(MinecraftServer.getServer().getConfigurationManager().func_152612_a(op), message);
+		for (String op : MinecraftServer.getServer().getConfigurationManager().func_152606_n()) {
+			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().func_152612_a(op);
+			if (player != null) say(player, message);
+		}
 	}
 }

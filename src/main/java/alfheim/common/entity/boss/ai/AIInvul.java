@@ -25,4 +25,9 @@ public class AIInvul extends AIBase {
 		flugel.motionX = flugel.motionY = flugel.motionZ = 0;
 		return canContinue();
 	}
+	
+	@Override
+	public void resetTask() {
+		flugel.dropState();
+	}
 }

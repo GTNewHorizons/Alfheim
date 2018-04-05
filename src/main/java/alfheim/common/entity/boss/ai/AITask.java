@@ -2,20 +2,29 @@ package alfheim.common.entity.boss.ai;
 
 import java.util.Random;
 
+import alfheim.common.entity.boss.EntityFlugel;
+
 public enum AITask {
-	NONE(0), INVUL(0), REGEN(0.1), TP(0.2), CHASE(0.3), LIGHTNING(0.1), DEATHRAY(0), RAYS(0.2);
+	NONE(0, false, 0),
+	INVUL(0, false, 0),
+	TP(0.2, false, EntityFlugel.STAGE_AGGRO),
+	CHASE(0.3, false, EntityFlugel.STAGE_AGGRO),
+	REGEN(0.1, true, EntityFlugel.STAGE_MAGIC),
+	LIGHTNING(0.1, true, EntityFlugel.STAGE_MAGIC),
+	RAYS(0.2, true, EntityFlugel.STAGE_MAGIC),
+	DARK(0.2, true, EntityFlugel.STAGE_MAGIC),
+	DEATHRAY(0, false, EntityFlugel.STAGE_MAGIC);
 	
-	static final Random rng = new Random();
-	double chance;
+	/** Chance to <b>NOT</b> to apply */
+	public final double chance;
+	/** Insta-AIs can't be selected twice in a row */
+	public final boolean instant;
+	/** Stage required for execurtion */
+	public final int stage;
 	
-	AITask(double c) {
+	AITask(double c, boolean i, int s) {
 		chance = 1. - c;
-	}
-	
-	public static AITask getRand() {
-		//return AITask.RAYS;
-		AITask rand = values()[rng.nextInt(values().length)];
-		if (Math.random() > rand.chance) return rand;
-		return getRand();
+		instant = i;
+		stage = s;
 	}
 }

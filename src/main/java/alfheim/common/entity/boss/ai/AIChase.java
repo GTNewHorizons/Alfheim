@@ -16,14 +16,23 @@ public class AIChase extends AIBase {
 
 	@Override
 	public void startExecuting() {
-		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(300) + 300);
+		int s = flugel.getStage();
+		int i = s == 1 ? 300 : s == 2 ? 150 : 50;
+		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(i) + i);
 	}
 
 	@Override
 	public boolean continueExecuting() {
 		flugel.checkCollision();
-		if (flugel.getAITaskTimer() % 5 == 0) {
-			String name = ASJUtilities.mapGetKey(flugel.playersWhoAttacked, Collections.max(flugel.playersWhoAttacked.values()));
+		if (flugel.getAITaskTimer() % 10 == 0) {
+			String name = "";
+			try {
+				name = ASJUtilities.mapGetKeyOrDefault(flugel.playersWhoAttacked, Collections.max(flugel.playersWhoAttacked.values()), "");
+			} catch (Throwable e) {
+				e.printStackTrace();
+				return canContinue();
+			}
+			
 			EntityPlayer target = flugel.worldObj.getPlayerEntityByName(name);
 		
 			if (target != null) {

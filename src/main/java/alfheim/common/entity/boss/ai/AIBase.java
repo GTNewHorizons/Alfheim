@@ -35,6 +35,7 @@ public abstract class AIBase extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		flugel.setAITask(AITask.getRand());
+		flugel.setAITaskTimer(0);
+		flugel.setAITask(flugel.nextTask());
 	}	
 }

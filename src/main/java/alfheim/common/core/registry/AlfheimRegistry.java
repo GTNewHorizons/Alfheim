@@ -69,6 +69,7 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerEntities() {
+		registerEntity(EntityCharge.class, "Charge", AlfheimCore.instance);
 		registerEntityEgg(EntityElf.class, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance);
 		registerEntity(EntityFlugel.class, "Flugel", AlfheimCore.instance);
 		registerEntity(EntityLightningMark.class, "LightningMark", AlfheimCore.instance);
