@@ -1,6 +1,7 @@
 package alfheim.common.block.tile;
 
-import static alexsocol.asjlib.ASJUtilities.*;
+import static alexsocol.asjlib.ASJUtilities.getTrueDamage;
+import static alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual;
 
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;

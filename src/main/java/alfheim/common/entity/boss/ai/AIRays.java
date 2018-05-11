@@ -21,7 +21,7 @@ public class AIRays extends AIBase {
 	}
 
 	@Override
-	public void startExecuting() { // TODO TEST!
+	public void startExecuting() {
 		flugel.setAITaskTimer(20);
 		EntityPlayer player = ASJUtilities.getClosestVulnerablePlayerToEntity(flugel, flugel.RANGE * 2);
 		if (player != null) flugel.setPosition(flugel.posX, player.posY, flugel.posZ);
@@ -36,7 +36,7 @@ public class AIRays extends AIBase {
 
 		float motionModifier = 15F;
 
-		burst.setColor(new Color(0.7F, 0.3F, 0.7F).getRGB());
+		burst.setColor(new Color(179, 77, 179).getRGB());
 		burst.setMana(1);
 		burst.setStartingMana(1);
 		burst.setMinManaLoss(600);

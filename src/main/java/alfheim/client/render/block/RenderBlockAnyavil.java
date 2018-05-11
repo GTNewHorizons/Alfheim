@@ -2,17 +2,13 @@ package alfheim.client.render.block;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.client.core.proxy.ClientProxy;
 import alfheim.client.lib.LibRenderIDs;
-import alfheim.common.block.tile.TileAlfheimPylons;
 import alfheim.common.block.tile.TileAnyavil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import javafx.scene.layout.TilePane;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
-import vazkii.botania.common.block.tile.TilePylon;
 
 public class RenderBlockAnyavil implements ISimpleBlockRenderingHandler /*IItemRenderer*/ {
 

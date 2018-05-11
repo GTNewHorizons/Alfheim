@@ -1,6 +1,9 @@
 package alfheim.common.item.relic;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.getBoolean;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.getInt;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.setBoolean;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.setInt;
 
 import java.util.List;
 
@@ -8,9 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
@@ -21,7 +22,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -141,6 +141,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	public void addHiddenTooltip(ItemStack stack, EntityPlayer player, List list, boolean advTT) {
 		super.addHiddenTooltip(stack, player, list, advTT);
 		EnumChatFormatting e = getInt(stack, TAG_COOLDOWN, 0) > 0 ? EnumChatFormatting.DARK_GRAY : getBoolean(stack, TAG_ACTIVATED, false) ? EnumChatFormatting.GREEN : EnumChatFormatting.DARK_RED;
+		list.add("");
 		list.add(e + StatCollector.translateToLocal(getUnlocalizedName() + '.' + (getBoolean(stack, TAG_ACTIVATED, false) ? "" : "in") + "active"));
 	}
 

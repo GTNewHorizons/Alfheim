@@ -1,11 +1,11 @@
 package gloomyfolken.hooklib.minecraft;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 import cpw.mods.fml.relauncher.CoreModManager;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-
-import java.lang.reflect.Field;
-import java.util.Map;
 
 public class HookLibPlugin implements IFMLLoadingPlugin {
 

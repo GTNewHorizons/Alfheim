@@ -1,27 +1,25 @@
 package alfheim.common.item.rod;
 
-import java.util.List;
+import java.awt.Color;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.client.core.helper.IconHelper;
+import vazkii.botania.common.Botania;
 
 public class ItemRodElemental extends Item implements IManaUsingItem {
 	
@@ -30,7 +28,7 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 	private IIcon sapphireIcon;
 	
 	public ItemRodElemental(String name, Block barrier) {
-		this.barrier = barrier; // ItemManasteelSword
+		this.barrier = barrier;
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setFull3D();
 		this.setMaxDamage(100);
@@ -69,13 +67,29 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 							int X = MathHelper.floor_double(player.posX) + x;
 							int Y = MathHelper.floor_double(player.posY) + y;
 							int Z = MathHelper.floor_double(player.posZ) + z;
-							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z) &&
-							   (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExactForTool(stack, player, 50, true)))
-								world.setBlock(X, Y, Z, barrier);
+							Color c = new Color(this == AlfheimItems.rodFire ? 0x880000 : 0x0055AA);
+							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z)) place(stack, player, world, X, Y, Z, 0, 0.5F, 0.5F, 0.5F, barrier, player.capabilities.isCreativeMode ? 0 : 150, c.getRed(), c.getGreen(), c.getBlue());
 						}
 			stack.setItemDamage(this.getMaxDamage());
 		}
 		return stack;
+	}
+    
+    // Modified code from ItemDirtRod
+    public static boolean place(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10, Block block, int cost, float r, float g, float b) {
+		if(ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
+			ForgeDirection dir = ForgeDirection.getOrientation(par7);
+
+			ItemStack stackToPlace = new ItemStack(block);
+			stackToPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+
+			if(stackToPlace.stackSize == 0) {
+				ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, true);
+				for(int i = 0; i < 6; i++) Botania.proxy.sparkleFX(par3World, par4 + dir.offsetX + Math.random(), par5 + dir.offsetY + Math.random(), par6 + dir.offsetZ + Math.random(), r, g, b, 1F, 5);
+			}
+		}
+
+		return true;
 	}
 
 	@Override

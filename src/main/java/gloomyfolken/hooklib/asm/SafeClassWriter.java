@@ -1,8 +1,8 @@
 package gloomyfolken.hooklib.asm;
 
-import org.objectweb.asm.ClassWriter;
-
 import java.util.ArrayList;
+
+import org.objectweb.asm.ClassWriter;
 
 /**
  * ClassWriter с другой реализацией метода getCommonSuperClass: при его использовании не происходит загрузки классов.

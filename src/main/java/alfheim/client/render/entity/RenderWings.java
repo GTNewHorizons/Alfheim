@@ -1,11 +1,28 @@
 package alfheim.client.render.entity;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glScaled;
+import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.client.Minecraft;
@@ -64,7 +81,7 @@ public class RenderWings {
 			glDisable(GL_ALPHA_TEST);
 			
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
-			glColor4d(1, 1, 1, Math.min(0.75 + (float) Math.cos((double) (player.ticksExisted + e.partialTicks) * 0.3) * 0.2, 1));
+			glColor4d(1, 1, 1, player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getBaseValue() / player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttribute().getDefaultValue() < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) (player.ticksExisted + e.partialTicks) * 0.3) * 0.2, 1)) : 1);
 			
 			if (!player.equals(thePlayer)) {
 				ASJUtilities.interpolatedTranslation(player, e.partialTicks);
@@ -90,6 +107,7 @@ public class RenderWings {
 			glScaled(si, si, si);
 			drawRect(Tessellator.instance, getPlayerIconTexture(player));
 			glPopMatrix();
+			glTranslated(0, 0.1, 0);
 			
 			player.sendPlayerAbilities();
 			boolean flying = player.capabilities.isFlying;
@@ -97,20 +115,20 @@ public class RenderWings {
 	
 			// Wing left
 			glPushMatrix();
-			glTranslated(0.25, 0.1, 0.15);
+			glTranslated(0.15, 0.1, 0.15);
 			double swr = 1.5;
 			glScaled(swr, swr, swr);
-			glRotated(10, 0, 0, 1);
+			//glRotated(10, 0, 0, 1);
 			glRotated(-ry, 0, 1, 0);
 			drawRect(Tessellator.instance, getPlayerWingTexture(player));
 			glPopMatrix();
 			
 			// Wing right
 			glPushMatrix();
-			glTranslated(-0.25, 0.1, 0.15);
+			glTranslated(-0.15, 0.1, 0.15);
 			double swl = 1.5;
 			glScaled(-swl, swl, swl);
-			glRotated(10, 0, 0, 1);
+			//glRotated(10, 0, 0, 1);
 			glRotated(-ry, 0, 1, 0);
 			drawRect(Tessellator.instance, getPlayerWingTexture(player));
 			glPopMatrix();

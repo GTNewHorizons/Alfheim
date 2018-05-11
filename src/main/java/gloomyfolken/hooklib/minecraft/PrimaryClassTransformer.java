@@ -1,15 +1,16 @@
 package gloomyfolken.hooklib.minecraft;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Type;
+
 import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import gloomyfolken.hooklib.asm.AsmHook;
 import gloomyfolken.hooklib.asm.HookClassTransformer;
 import gloomyfolken.hooklib.asm.HookInjectorClassVisitor;
 import net.minecraft.launchwrapper.IClassTransformer;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Type;
-
-import java.util.HashMap;
-import java.util.List;
 
 /** Этим трансформером трансформятся все классы, которые грузятся раньше майновских.
  * В момент начала загрузки майна (точнее, чуть раньше - в Loader.injectData) все хуки отсюда переносятся в

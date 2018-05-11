@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.common.base.Function;
 
 import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.block.Block;

@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.stats.StatBase;
 import net.minecraftforge.common.AchievementPage;
 import vazkii.botania.api.item.IRelic;
 import vazkii.botania.common.item.ModItems;

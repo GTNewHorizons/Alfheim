@@ -291,7 +291,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-
+		
 		if(ridingEntity != null) {
 			if(ridingEntity.riddenByEntity != null)
 				ridingEntity.riddenByEntity = null;
@@ -673,7 +673,6 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	
 	public AITask nextTask() {
 		if (getStage() < STAGE_AGGRO) return AITask.NONE;
-		// else if (getStage() >= STAGE_AGGRO) return AITask.NONE;
 		AITask next = AITask.values()[rand.nextInt(AITask.values().length)];
 		if (next.instant && getAITask().instant && getAITask().equals(next)) return nextTask();
 		if (Math.random() < next.chance) return nextTask();

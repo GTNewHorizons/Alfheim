@@ -1,9 +1,7 @@
 package alfheim.common.entity;
 
-import alexsocol.asjlib.ASJUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 

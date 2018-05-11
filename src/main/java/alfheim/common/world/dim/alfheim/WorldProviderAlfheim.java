@@ -13,11 +13,6 @@ public class WorldProviderAlfheim extends WorldProvider {
         this.dimensionId = AlfheimConfig.dimensionIDAlfheim;
         isHellWorld = false;
     }
-    
-    @Override
-    public String getSaveFolder() {
-    	return "Alfheim";
-    }
 
     @Override
     public float getCloudHeight() {

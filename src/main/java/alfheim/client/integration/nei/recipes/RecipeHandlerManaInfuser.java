@@ -5,7 +5,6 @@ import java.util.List;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimRegistry;
 import codechicken.nei.PositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;

@@ -2,7 +2,6 @@ package alfheim.common.block;
 
 import alexsocol.asjlib.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
-import alfheim.client.core.proxy.ClientProxy;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.lexicon.AlfheimLexiconData;

@@ -2,17 +2,9 @@ package alfheim.common.item.rod;
 
 import java.awt.Color;
 
-import alexsocol.asjlib.ASJUtilities;
-import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
-import alfheim.common.entity.boss.EntityFlugel;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
@@ -44,7 +36,7 @@ public class ItemRodRays extends ItemRodBase implements IManaUsingItem {
 
 		float motionModifier = 15F;
 
-		burst.setColor(0xFFFF00);
+		burst.setColor(new Color(179, 77, 179).getRGB());
 		burst.setMana(1);
 		burst.setStartingMana(1);
 		burst.setMinManaLoss(600);

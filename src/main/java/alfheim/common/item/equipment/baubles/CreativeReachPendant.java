@@ -5,10 +5,8 @@ import baubles.api.BaubleType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
-import vazkii.botania.common.item.equipment.bauble.ItemReachRing;
 
 public class CreativeReachPendant extends ItemBauble {
 

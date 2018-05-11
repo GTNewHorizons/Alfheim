@@ -2,7 +2,8 @@ package alexsocol.asjlib;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockCarrot;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +29,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 	public abstract void partLeftArm(Entity entity);//�����: ����� ����.
 	public abstract void partRightLeg(Entity entity);//�����: ������ ����.
 	public abstract void partLeftLeg(Entity entity);//�����: ����� ����.
-
+	
 	public void render(Entity entity, float x, float y, float z, float yaw, float pitch, float parTicks) {
 		super.render(entity, x, y, z, yaw, pitch, parTicks);
 		

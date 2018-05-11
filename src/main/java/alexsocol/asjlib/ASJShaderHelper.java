@@ -18,18 +18,18 @@ public final class ASJShaderHelper {
 
 	private static final int FRAG = GL_FRAGMENT_SHADER;
 	private static final int VERT = GL_VERTEX_SHADER;
-
-	public static void useShader(int proramID, ShaderCallback callback) {
+	
+	public static void useShader(int shaderID, ShaderCallback callback) {
 		if(!OpenGlHelper.shadersSupported) return;
 
-		glUseProgram(proramID);
+		glUseProgram(shaderID);
 
-		if(proramID != 0) {
-			int time = glGetUniformLocation(proramID, "time");
+		if(shaderID != 0) {
+			int time = glGetUniformLocation(shaderID, "time");
 			glUniform1f(time, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
-
+			
 			if(callback != null)
-				callback.call(proramID);
+				callback.call(shaderID);
 		}
 	}
 
@@ -50,7 +50,7 @@ public final class ASJShaderHelper {
 	 * @param fragLocation Fragment shader location
 	 * */
 	public static int createProgram(String vertLocation, String fragLocation) {
-		int vertID = 0, geomID = 0, fragID = 0, programID = 0;
+		int vertID = 0, fragID = 0, programID = 0;
 		if(vertLocation != null)
 			vertID = createShader(vertLocation, VERT);
 		if(fragLocation != null)
@@ -122,7 +122,7 @@ public final class ASJShaderHelper {
 
 	public static abstract class ShaderCallback {
 
-		public abstract void call(int shader);
+		public abstract void call(int shaderID);
 
 	}
 }

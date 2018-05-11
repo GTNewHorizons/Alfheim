@@ -1,140 +1,141 @@
 ###########################################################___БЛОКИ___##########################################################
 # tile..name=
-tile.AlfheimPortal.name=Ядро Портала В Альфхейм
+tile.AlfheimPortal.name=Ядро портала в Альвхейм
 tile.Anyavil.name=Някавайня
-tile.botania:AlfheimPylons0.name=Эльфийский Пилон
-tile.botania:AlfheimPylons1.name=Йордин Пилон
-tile.DragonstoneElvenOre.name=Руда Камней Дракона
-tile.DreamLeaves.name=Листва Древа Мечтаний
-tile.DreamLog.name=Ствол Древа Мечтаний
-tile.DreamSapling.name=Саженец Древа Мечтаний
-tile.ElementiumElvenOre.name=Руда Элементия
-tile.ElvenGrass.name=Эльфийская Трава
-tile.ElvenPylon.name=Эльфийский Пилон
-tile.ElvenSand.name=Эльфийский Песок
-tile.ElvoriumBlock.name=Блок Эльвория
-tile.GoldElvenOre.name=Золотая Руда
-tile.IffesalElvenOre.name=Руда Иффесалия
-tile.LivingCobble.name=Булыжник Жизнекамня
-tile.ManaInfuser.name=Мана-Наполнитель
-tile.MauftriumBlock.name=Блок Мауфтрия
-tile.MuspelheimFire.name=Красный Огонь Муспельхейма
-tile.NiflheimIce.name=Ядовитый Лёд Нифльхейма
-tile.QuartzElvenOre.name=Руда Эльфийского Кварца
-tile.TradePortal.name=Ядро Врат Мидгарда
+tile.botania:AlfheimPylons0.name=Эльфийский пилон
+tile.botania:AlfheimPylons1.name=Йордин пилон
+tile.DragonstoneElvenOre.name=Руда драконьего камня
+tile.DreamLeaves.name=Листья древа мечтаний
+tile.DreamLog.name=Ствол древа мечтаний
+tile.DreamSapling.name=Саженец древа мечтаний
+tile.ElementiumElvenOre.name=Руда элементия
+tile.ElvenPylon.name=Эльфийский пилон
+tile.ElvenSand.name=Эльфийский песок
+tile.ElvoriumBlock.name=Блок эльвория
+tile.GoldElvenOre.name=Золотая руда
+tile.IffesalElvenOre.name=Руда иффесалия
+tile.LivingCobble.name=Жизнебулыжник
+tile.ManaInfuser.name=Мана-наполнитель
+tile.MauftriumBlock.name=Блок мауфтрия
+tile.MuspelheimFire.name=Вечный огонь Муспельхейма
+tile.NiflheimIce.name=Вечный лёд Нифльхейма
+tile.QuartzElvenOre.name=Руда эльфийского кварца
+tile.TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
-item.CreativeReachPendant.name=Креативная Подвеска Длинных Рук
-item.botania:ElementalAirBoots.name=Элементальные Ботинки Воздуха
-item.botania:ElementalFireLeggings.name=Элементальные Поножи Огня
-item.botania:ElementalEarthChest.name=Элементальный Нагрудник Земли
-item.botania:ElementalWaterHelm.name=Элементальный Шлем Воды
-item.botania:ElementalWaterHelmRevealing.name=Элементальный Шлем Откровения Воды
-item.ElementalArmor.desc1=Легки как перо (§eВысота прыжка +4§f)
-item.ElementalArmor.desc2=Быстры как огонь (§cСкорость +2§f) Бонус: §cОгнеустойчивость§f
-item.ElementalArmor.desc3=Прочен как камень (§aСопротивляемость +2§f)
-item.ElementalArmor.desc4=Приспособлен как рыба (§bПодводное дыхание§f + §bночное зрение§f)
-item.ElvoriumBoots.name=Ботинки Из Эльвория
-item.ElvoriumChestplate.name=Нагрудник Из Эльвория
-item.ElvoriumHelmet.name=Шлем Из Эльвория
-item.ElvoriumHelmetRevealing.name=Шлем Откровения Из Эльвория
-item.ElvoriumIngot.name=Слиток Эльвория
-item.ElvoriumLeggings.name=Поножи Из Эльвория
-item.ElvoriumNugget.name=Самородок Эльвория
-item.botania:Excaliber.name=Святой Меч Экскалибер
-item.botania:FirePendant.name=Подвеска Защиты От Муспельхейма
+item.CreativeReachPendant.name=Творческая подвеска несравненной дальности
+item.botania:ElementalAirBoots.name=Элементальные ботинки воздуха
+item.botania:ElementalFireLeggings.name=Элементальные поножи огня
+item.botania:ElementalEarthChest.name=Элементальная кираса земли
+item.botania:ElementalWaterHelm.name=Элементальный шлем воды
+item.botania:ElementalWaterHelmRevealing.name=Элементальный шлем откровения воды
+item.ElementalArmor.desc1=Лёгкие как пёрышко (§eВысота прыжка +4§7)
+item.ElementalArmor.desc2=Быстрые как огонь (§cСкорость +2§7) Бонус: §cОгнестойкость§7
+item.ElementalArmor.desc3=Крепкая как скала (§aСопротивление урону +2§7)
+item.ElementalArmor.desc4=Приспособленный как рыба (§bДыхание под водой§f + §bночное зрение§f)
+item.ElvoriumBoots.name=Ботинки из эльвория
+item.ElvoriumChestplate.name=Кираса из эльвория
+item.ElvoriumHelmet.name=Шлем из эльвория
+item.ElvoriumHelmetRevealing.name=Шлем откровения из эльвория
+item.ElvoriumIngot.name=Слиток эльвория
+item.ElvoriumLeggings.name=Поножи из эльвория
+item.ElvoriumNugget.name=Самородок эльвория
+item.botania:Excaliber.name=Святой меч Экскалибер
+item.botania:FirePendant.name=Подвеска защиты от Муспельхейма
 item.botania:FlugelDisc.name=Пластинка
 item.botania:FlugelSoul.name=Душа Флюгеля
-item.botania:IcePendant.name=Подвеска Защиты От Нифльхейма
-item.IffesalDust.name=Пыль Иффесалия
-item.InterdimensionalGatewayCore.name=Межпространственное Связующее Ядро
-item.LivingrockPickaxe.name=Кирка Из Жизнекамня
-item.ManaElvenRing.name=Кольцо Маны Из Эльвория
-item.ManaElvenRingGreater.name=Кольцо Маны Из Мауфтрия
-item.ManaInfusionCore.name=Ядро Мана-Наполнителя
-item.ManaStone.name=Иффесальный Камень Маны
-item.ManaStoneGreater.name=Первородный Камень Маны
-item.manastorage.desc0=Хранит до %s ёмкоестей бассейна маны!
-item.manastorage.desc1=Содерит §b%s§7/§b%s§7 единиц маны
-item.MauftriumIngot.name=Слиток Мауфтрия
-item.MauftriumNugget.name=Самородок Мауфтрия
+item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
+item.IffesalDust.name=Пыль иффесалия
+item.InterdimensionalGatewayCore.name=Межпространственное связующее ядро
+item.LivingrockPickaxe.name=Кирка из жизнебулыжника
+item.ManaElvenRing.name=Кольцо маны из эльвория
+item.ManaElvenRingGreater.name=Кольцо маны из мауфтрия
+item.ManaInfusionCore.name=Ядро мана-наполнителя
+item.ManaStone.name=Иффесальный камень маны
+item.ManaStoneGreater.name=Первородный камень маны
+item.manastorage.desc0=Хранит до %s ёмкостей бассейна маны!
+item.manastorage.desc1=Содержит §b%s§7/§b%s§7 единиц маны
+item.MauftriumIngot.name=Слиток мауфтрия
+item.MauftriumNugget.name=Самородок мауфтрия
 item.botania:Mjolnir.name=Мьёльнир
 item.MuspelheimEssence.name=Эссенция Муспельхейма
-item.MuspelheimPowerIngot.name=Слиток Силы Муспельхейма
-item.MuspelheimRod.name=Жезл Владык Муспельхейма
+item.MuspelheimPowerIngot.name=Слиток силы Муспельхейма
+item.MuspelheimRod.name=Жезл владыки Муспельхейма
 item.MuspelheimRune.name=Руна Муспельхейма
 item.NiflheimEssence.name=Эссенция Нифльхейма
-item.NiflheimPowerIngot.name=Слиток Силы Нифльхейма
-item.NiflheimRod.name=Жезл Владык Нифльхейма
+item.NiflheimPowerIngot.name=Слиток силы Нифльхейма
+item.NiflheimRod.name=Жезл владыки Нифльхейма
 item.NiflheimRune.name=Руна Нифльхейма
-item.botania:PixieAttractor.name=Магнит Пикси
-item.PrimalRune.name=Руна Первоэлементов
-item.RealitySword.name=§rМеч Мироздания%s
+item.botania:PixieAttractor.name=Магнит для пикси
+item.PrimalRune.name=Руна первоэлементов
+item.RealitySword.name=§rМеч мироздания%s
 item.RealitySword.name0= (Инертный)
 item.RealitySword.name1= (§eВоздух§f)
 item.RealitySword.name2= (§aЗемля§f)
 item.RealitySword.name3= (§cОгонь§f)
 item.RealitySword.name4= (§bВода§f)
-item.RealitySword.nameZ=Меч Создателя
+item.RealitySword.nameZ=Меч создателя
 item.RealitySword.desc0=Шифт+ПКМ для настройки на один из элементов
-item.RealitySword.desc1=Усиливает отдачу.
+item.RealitySword.desc1=Отбрасывает цель.
 item.RealitySword.desc2=Отравляет цель.
 item.RealitySword.desc3=Поджигает цель.
 item.RealitySword.desc4=Ослепляет цель.
 item.RealitySword.desc5=Потребляет §n10§r§7 единиц §bманы§7 в тик.
-item.RealitySword.descZ=Власть в твоих руках!
+item.RealitySword.descZ=У тебя есть сила!
 item.RealitySword.DIE=%s получил меч создателя и был наказан Богами!
-item.botania:TankMask.name=Загадочная Маска
+item.botania:TankMask.name=Загадочная маска
 item.TankMask.active=Активна
 item.TankMask.inactive=Неактивна
 item.Transferer.name=Деструктуризатор
 
 ########################################################___ОСТАЛЬНОЕ___#########################################################
 
-achievement.alfheim=Альфхейм
-achievement.alfheim.desc=Попасть Альфхейм
+achievement.alfheim=Альвхейм
+achievement.alfheim.desc=Попадите в Альвхейм
+achievement.excaliber=Биение сердца
+achievement.excaliber.desc=Будьте вознаграждены святым мечом Экскалибером за героический подвиг
 
-alfheim.armorset.elemetnal.name=Мастер Элементов
-alfheim.armorset.elvorium.name=Королевский Эльфийский Страж
-alfheim.armorset.elvorium.desc0=На 30% меньше затрат маны на мана-инструменты 
+alfheim.armorset.elemental.name=Повелитель элементов
+alfheim.armorset.elvorium.name=Королевский эльфийский страж
+alfheim.armorset.elvorium.desc0=Потребление маны на 30% меньше для инструментов и жезлов
 alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный эффект
-alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
+alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20% 
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
 alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
 alfheim.commands.tpdim.wrong=tpdim <ID>
 alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения
-alfheim.commands.tpdim.wrongid=Неверно указано ID измерения
+alfheim.commands.tpdim.wrongid=Неверно указан ID измерения
 
 alfheim.configgui.biomeIDAlfheim=ID стандартного биома
 alfheim.configgui.biomeIDAlfheimBeach=ID для биома пляжа
 alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerScale=Размер Таймера Возрождения (1 < больше; 1 > меньше) [ElvenStory Only]
-alfheim.configgui.deathTimerX=Дополнительная X-координата Таймера Возрождения (от центра) [ElvenStory Only]
-alfheim.configgui.deathTimerY=Дополнительная Y-координата Таймера Возрождения (снизу экрана) [ElvenStory Only]
-alfheim.configgui.deathTimerFontX=Дополнительная X-координата текста Таймера Возрождения (от центра) [ElvenStory Only]
-alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста Таймера Возрождения (снизу экрана) [ElvenStory Only]
-alfheim.configgui.destroyPortal=Поставьте false чтобы выключить разрушение порталов в Альфхейме на ненулевых координатах
-alfheim.configgui.dimensionIDAlfheim=ID измерения Альфхейма
-alfheim.configgui.enableWingsNonAlfheim=Поставьте false чтобы выключить крылья в других мирах [ElvenStory Only]
-alfheim.configgui.enableAlfheimRespawn=Поставьте false чтобы выключить возрождение в Альфхейме
-alfheim.configgui.enableElvenStory=Поставьте true чтобы включить режим ElvenStory без мода
-alfheim.configgui.flightTime=Насколько долго вы можете летать будучи эльфом [Только в режиме ElvenStory]
-alfheim.configgui.prolongDeathScreen=Поставьте false чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
-alfheim.configgui.showNumbersInTooltip=Поставьте true чтобы включить числовое отображение количества маны
+alfheim.configgui.deathTimerScale=Масштаб таймера возрождения (1 < больше; 1 > меньше) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerX=Дополнительная X-координата таймера возрождения (от центра) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerY=Дополнительная Y-координата таймера возрождения (внизу экрана) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerFontX=Дополнительная X-координата текста таймера возрождения (от центра) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста таймера возрождения (внизу экрана) [Только в режиме ElvenStory]
+alfheim.configgui.destroyPortal=Установите значение false, чтобы выключить разрушение порталов в Альвхейме на ненулевых координатах
+alfheim.configgui.dimensionIDAlfheim=ID измерения Альвхейм
+alfheim.configgui.enableAlfheimRespawn=Установите значение false, чтобы выключить возрождение в Альвхейме
+alfheim.configgui.enableElvenStory=Установите значение true, чтобы включить режим ElvenStory без установленного мода
+alfheim.configgui.enableWingsNonAlfheim=Установите значение false, чтобы выключить крылья в других мирах [Только в режиме ElvenStory]
+alfheim.configgui.flightTime=Насколько долго Вы можете летать будучи эльфом [Только в режиме ElvenStory]
+alfheim.configgui.prolongDeathScreen=Установите значение false, чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
+alfheim.configgui.showNumbersInTooltip=Установите значение true, чтобы включить числовое отображение количества маны
 
 alfheim.potion.possession=Одержимость
-alfheim.potion.possession.postfix=Зелье Одержимости
-alfheim.potion.soulburn=Горящая Душа
-alfheim.potion.soulburn.postfix=Зелье Горения Души
+alfheim.potion.possession.postfix=Зелье одержимости
+alfheim.potion.soulburn=Горящая душа
+alfheim.potion.soulburn.postfix=Зелье горящей души
 
-alfheimmics.badArena=Как бы вы ни пытлись, маяк никак не реагирует на вас. Скорее всего проблема в выбранной местности. Было бы неплохо проверить наличие препятствий вокруг, а также блоки под маяком.
-alfheimmics.needsCatalysts=Независимо от того, как сильно вы пытаетесь просовывать Глаз в маяк, ничего не происходит, возможно, ваша конфигурация каталитических пилонов нарушена.
-alfheimmisc.notallowed=Глупый смертный! Ты не можешь даже летать без посторонней помощи! Ты слишком слаб, чтобы сражаться со мной! Уходи, пока я не передумала и не убила вас.
-alfheimmics.peacefulNoob=Вы пытаетесь поднести Глаз, но мирные вибрации вашего мира мешают вам сделать это. Возможно, вам стоит что-то сделать с этим.
+alfheimmics.badArena=Как ни старайтесь, маяк не примет Вашу жертву. Вам кажется, что Вы допустили ошибку в подготовке территории. Чтобы убедиться в этом, проверьте территорию на наличие препятствий или больших ям в земле.
+alfheimmics.needsCatalysts=Независимо от того, как сильно Вы нажимаете глазом по маяку, кажется, ничего не происходит. Возможно, Вы допустили ошибку в расположении или конфигурации пилонов.
+alfheimmisc.notallowed=Глупый смертный! Ты даже не можешь летать без помощи! Ты слишком слаб, чтобы драться со мной! Уходи, пока я не передумала и не убила тебя.
+alfheimmics.peacefulNoob=Вы пытаетесь использовать глаз, но миролюбивая атмосфера Вашего мира мешает Вам. Возможно, Вам стоит что-то с этим сделать.
 
 death.attack.soulburn=Душа %s сгорела
 
@@ -144,10 +145,10 @@ entity.Pixie.name=Пикси
 item.FlugelSoul.blockAway=На расстоянии блока
 item.FlugelSoul.blocksAway=На расстоянии %s блоков
 item.FlugelSoul.anotherDim=Измерение %s
-item.FlugelSoul.clickToTeleport=ПКМ для телепортации
-item.FlugelSoul.clickToRemoveWarp=Шифт-удар чтобы убрать
-item.FlugelSoul.unboundWarp=Несвязанная точка
-item.FlugelSoul.clickToAddWarp=ПКМ чтобы привязать к текущей позиции
+item.FlugelSoul.clickToTeleport=ПКМ, чтобы телепортироваться
+item.FlugelSoul.clickToRemoveWarp=Shift+ЛКМ, чтобы убрать точку
+item.FlugelSoul.unboundWarp=Точка телепортации не установлена
+item.FlugelSoul.clickToAddWarp=ПКМ, чтобы привязать к текущей позиции
 
 item.FlugelSoul.sign0=Овен
 item.FlugelSoul.sign1=Телец
@@ -162,54 +163,69 @@ item.FlugelSoul.sign9=Козерог
 item.FlugelSoul.sign10=Водолей
 item.FlugelSoul.sign11=Рыбы
 
-itemGroup.Alfheim=Альфхейм
+itemGroup.Alfheim=Alfheim
 
-#######################################################___RELIC POEMS___########################################################
+######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################
 
-item.infiniteFruit.poem0=Фрукт садов запретных,
-item.infiniteFruit.poem1=Голод вечно очищая,
-item.infiniteFruit.poem2=Мякоть восстанавливает свою,
-item.infiniteFruit.poem3=Себе молодость возвращая.
+item.infiniteFruit.poem0=Плод запретного сада
+item.infiniteFruit.poem1=От голода вечно спасает,
+item.infiniteFruit.poem2=Мякоть свою восстанавливая,
+item.infiniteFruit.poem3=Молодость себе возвращает.
 
-item.Excaliber.poem0=Меч героя подлинного,
-item.Excaliber.poem1=Лишь для добра он сойдёт,
-item.Excaliber.poem2=Острый и магию призывая,
+item.Excaliber.poem0=Меч истинного героя
+item.Excaliber.poem1=Лишь для добра сойдёт,
+item.Excaliber.poem2=Силу и магию призывая,
 item.Excaliber.poem3=Врагов он быстро найдёт.
 
-item.flugelEye.poem0=Видение прошлого на уме лишь,
-item.flugelEye.poem1=Матрицы памяти вращение
-item.flugelEye.poem2=И её с жизню взаимодействие
-item.flugelEye.poem3=Душе даёт возвращение.
+item.flugelEye.poem0=Видение прошлого на уме,
+item.flugelEye.poem1=Матрицы памяти вращение,
+item.flugelEye.poem2=С жизнью её взаимодействие
+item.flugelEye.poem3=Вернёт душу к началу движения.
 
-item.thorRing.poem0=Сила Бога-Громовержца
-item.thorRing.poem1=Разрушит всю соль Терры,
-item.thorRing.poem2=Вместе с силой непреодолимой
-item.thorRing.poem3=Она даст начало новой эры.
+item.thorRing.poem0=Сила бога-громовержца
+item.thorRing.poem1=Разрушит основу Терры,
+item.thorRing.poem2=С мощью непреодолимой
+item.thorRing.poem3=Начнётся новая эра.
 
-item.odinRing.poem0=The wise old God lays its blessings,
-item.odinRing.poem1=Of virtue, life and divinity,
-item.odinRing.poem2=With the hindrance of death on one's hands,
-item.odinRing.poem3=They'll form the Holy Trinity.
+item.odinRing.poem0=Мудрый Всеотец свою милость проявляя,
+item.odinRing.poem1=Дарами жизни и божественности наделяет,
+item.odinRing.poem2=С препятствием смерти в одной лишь руке
+item.odinRing.poem3=Святую Троицу они олицетворяют.
 
-item.lokiRing.poem0=Empty handed, a sneaking interaction,
-item.lokiRing.poem1=Once on the center, then around the track,
-item.lokiRing.poem2=Back to the start one'd go to complete
-item.lokiRing.poem3=The power of creating back-to-back.
+item.lokiRing.poem0=Рук свободных тайное движение,
+item.lokiRing.poem1=В центре однажды, затем вокруг,
+item.lokiRing.poem2=Вернувшись к началу мироздания,
+item.lokiRing.poem3=Сила создания проявится вдруг.
 
-item.aesirRing.poem0=The forces of the Gods
-item.aesirRing.poem1=In this band form as one,
-item.aesirRing.poem2=And when combined all together
-item.aesirRing.poem3=Above them will be none.
+item.aesirRing.poem0=Силы высших богов Асгарда
+item.aesirRing.poem1=Представляют части одного,
+item.aesirRing.poem2=И при объединении воедино
+item.aesirRing.poem3=Над ними не будет никого.
 
-#######################################################___ELVEN STORY___########################################################
+item.kingKey.poem0=Все сокровища древнего царства
+item.kingKey.poem1=Хранит этот ключ по сей день,
+item.kingKey.poem2=Лишь достойный короля героев 
+item.kingKey.poem3=Получит право им владеть.
 
-elvenstory.welcome0=§n§aДобро пожаловать в Альфхейм - Режим [Эльфийская История]!
+item.FlugelSoul.poem0=Взгляд назад во времени,
+item.FlugelSoul.poem1=В пространстве движение,
+item.FlugelSoul.poem2=Лишь суть ангела смерти
+item.FlugelSoul.poem3=Даёт власть перемещения
+
+item.TankMask.poem0=Пеленой ужаса неподдельного
+item.TankMask.poem1=Взгляд маски сей одолевает,
+item.TankMask.poem2=И гневом жертва одержимая
+item.TankMask.poem3=Огромной силой обладает.
+
+####################################################___ЭЛЬФИЙСКАЯ ИСТОРИЯ___####################################################
+
+elvenstory.welcome0=§n§aДобро пожаловать в Альвхейм - Режим [Эльфийская история]!
 elvenstory.welcome1=§6Пожалуйста, выберите одну из следующих рас, используя команду "/race"
-elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИН§r, §5ИМП§r
+elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИНА§r, §5ИМП§r
 elvenstory.commands.race.usage=/race <РАСА>
 
-key.flight.desc=Эльфийский Полёт
-mes.flight.unavailable=Полёт доступен только в Альфхейме
+key.flight.desc=Эльфийский полёт
+mes.flight.unavailable=Полёт доступен только в Альвхейме
 
 race.SALAMANDER.name=САЛАМАНДР
 race.SYLPH.name=СИЛЬФ
@@ -218,7 +234,7 @@ race.POOKA.name=ПАК
 race.GNOME.name=ГНОМ
 race.LEPRECHAUN.name=ЛЕПРЕКОН
 race.SPRIGGAN.name=СПРИГГАН
-race.UNDINE.name=УНДИН
+race.UNDINE.name=УНДИНА
 race.IMP.name=ИМП
 
 race.САЛАМАНДР.reverse=SALAMANDER
@@ -228,5 +244,5 @@ race.ПАК.reverse=POOKA
 race.ГНОМ.reverse=GNOME
 race.ЛЕПРЕКОН.reverse=LEPRECHAUN
 race.СПРИГГАН.reverse=SPRIGGAN
-race.УНДИН.reverse=UNDINE
+race.УНДИНА.reverse=UNDINE
 race.ИМП.reverse=IMP

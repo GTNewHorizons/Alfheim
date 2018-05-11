@@ -28,7 +28,6 @@ import vazkii.botania.common.block.ModMultiblocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.lexicon.BLexiconCategory;
 import vazkii.botania.common.lexicon.BLexiconEntry;
-import vazkii.botania.common.lexicon.DLexiconEntry;
 import vazkii.botania.common.lexicon.LexiconData;
 import vazkii.botania.common.lexicon.RLexiconEntry;
 import vazkii.botania.common.lexicon.page.PageCraftingRecipe;

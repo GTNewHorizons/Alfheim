@@ -5,7 +5,6 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.entity.boss.EntityFlugel;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;
 import vazkii.botania.common.Botania;
@@ -33,7 +32,7 @@ public class AIDeathray extends AIBase {
 		int deathray = flugel.getAITaskTimer();
 		ChunkCoordinates source = flugel.getSource();
 		float range = flugel.RANGE;
-		if (!flugel.worldObj.isRemote) ASJUtilities.chatLog("Deathray in " + deathray);
+		if (!flugel.worldObj.isRemote) for (EntityPlayer player : flugel.getPlayersAround()) ASJUtilities.chatLog("Deathray in " + deathray, player);
 		flugel.setPosition(source.posX + 0.5, source.posY + 3, source.posZ + 0.5);
 		flugel.motionX = 0;
 		flugel.motionY = 0;

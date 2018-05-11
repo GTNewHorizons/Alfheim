@@ -1,16 +1,12 @@
 package alfheim.common.network;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.entity.EnumRace;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 
 public class AttributeMessage implements IMessage {
 

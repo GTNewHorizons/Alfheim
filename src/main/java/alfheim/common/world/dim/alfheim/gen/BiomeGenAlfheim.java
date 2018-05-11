@@ -9,20 +9,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.ColorizerFoliage;
-import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenFlowers;
-import vazkii.botania.common.block.BlockModFlower;
 import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
-import vazkii.botania.common.block.tile.TileSpecialFlower;
-import vazkii.botania.common.core.handler.BiomeDecorationHandler;
-import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class BiomeGenAlfheim extends BiomeGenBase {
 

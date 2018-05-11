@@ -1,6 +1,5 @@
 package alfheim.common.entity.boss.ai;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.ai.EntityAIBase;
 

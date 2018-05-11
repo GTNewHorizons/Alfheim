@@ -2,11 +2,9 @@ package alfheim.common.entity.boss.ai;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.entity.EntityCharge;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
 import vazkii.botania.common.core.helper.Vector3;
 
 public class AIEnergy extends AIBase {

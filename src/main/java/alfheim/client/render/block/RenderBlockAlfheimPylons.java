@@ -2,7 +2,6 @@ package alfheim.client.render.block;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.client.core.proxy.ClientProxy;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAlfheimPylons;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;

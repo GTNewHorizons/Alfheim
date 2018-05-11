@@ -2,7 +2,6 @@ package alfheim.client.model.entity;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -26,6 +25,7 @@ public class ModelBipedNew extends ModelBase {
 	public ModelBipedNew() { // ModelBiped
 		textureWidth = 64;
 		textureHeight = 64;
+		isChild = false;
 
 		head = new ModelRenderer(this, 0, 0);
 		head.addBox(-4F, -8F, -4F, 8, 8, 8);
@@ -110,7 +110,7 @@ public class ModelBipedNew extends ModelBase {
         rightleg.rotateAngleY = 0.0F;
         leftleg.rotateAngleY = 0.0F;
 
-        if (entity.isRiding()) {
+        if (entity != null && entity.isRiding()) {
             rightarm.rotateAngleX += -((float)Math.PI / 5F);
             leftarm.rotateAngleX += -((float)Math.PI / 5F);
             rightleg.rotateAngleX = -((float)Math.PI * 2F / 5F);
@@ -148,7 +148,7 @@ public class ModelBipedNew extends ModelBase {
             rightarm.rotateAngleZ = MathHelper.sin(onGround * (float)Math.PI) * -0.4F;
         }
 
-        if (entity.isSneaking()) {
+        if (entity != null && entity.isSneaking()) {
             body.rotateAngleX = 0.5F;
             rightarm.rotateAngleX += 0.4F;
             leftarm.rotateAngleX += 0.4F;

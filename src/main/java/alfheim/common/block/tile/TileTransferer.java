@@ -2,7 +2,6 @@ package alfheim.common.block.tile;
 
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.ItemContainingTileEntity;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
@@ -29,8 +28,6 @@ import vazkii.botania.api.mana.IDirectioned;
 import vazkii.botania.api.mana.IManaReceiver;
 import vazkii.botania.api.wand.IWandBindable;
 import vazkii.botania.client.core.handler.HUDHandler;
-import vazkii.botania.client.lib.LibResources;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.core.helper.Vector3;

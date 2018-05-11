@@ -1,7 +1,8 @@
 package alfheim.client.integration.nei;
 
 import alfheim.api.ModInfo;
-import alfheim.client.integration.nei.recipes.*;
+import alfheim.client.integration.nei.recipes.RecipeHandlerManaInfuser;
+import alfheim.client.integration.nei.recipes.RecipeHandlerTradePortal;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 

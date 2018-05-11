@@ -3,11 +3,8 @@ package alfheim.common.block.tile;
 import java.util.Random;
 
 import alfheim.common.core.registry.AlfheimBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.tileentity.TileEntity;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.Vector3;
 

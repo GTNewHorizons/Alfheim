@@ -1,29 +1,22 @@
 package alfheim.common.block.mana;
 
-import java.util.List;
 import java.util.Random;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.lexicon.AlfheimLexiconData;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -31,16 +24,12 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
-import vazkii.botania.api.mana.ILens;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
 import vazkii.botania.api.wand.IWireframeAABBProvider;
 import vazkii.botania.common.block.BlockModContainer;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName;
-import vazkii.botania.common.lexicon.LexiconData;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class BlockTransferer extends BlockModContainer implements IWandable, IWandHUD, ILexiconable, IWireframeAABBProvider {
 

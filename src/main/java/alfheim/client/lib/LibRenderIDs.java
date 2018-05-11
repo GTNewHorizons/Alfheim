@@ -1,7 +1,5 @@
 package alfheim.client.lib;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
-
 public final class LibRenderIDs {
 	
 	// ClientProxy

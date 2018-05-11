@@ -4,7 +4,6 @@ import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
-import vazkii.botania.common.item.equipment.bauble.ItemSuperLavaPendant;
 
 public class FirePendant extends ItemBauble {
 

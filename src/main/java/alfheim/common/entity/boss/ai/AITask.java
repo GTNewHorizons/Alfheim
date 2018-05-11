@@ -1,7 +1,5 @@
 package alfheim.common.entity.boss.ai;
 
-import java.util.Random;
-
 import alfheim.common.entity.boss.EntityFlugel;
 
 public enum AITask {

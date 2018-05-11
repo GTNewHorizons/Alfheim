@@ -1,7 +1,6 @@
 package alfheim.client.render.entity;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
 
 import alfheim.common.entity.EntityAlfheimPixie;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -9,7 +8,6 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import vazkii.botania.api.internal.ShaderCallback;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.model.ModelPixie;
 

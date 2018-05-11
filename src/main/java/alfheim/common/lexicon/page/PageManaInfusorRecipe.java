@@ -25,8 +25,6 @@ import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.lexicon.LexiconData;
-import vazkii.botania.common.lexicon.page.PagePetalRecipe;
 import vazkii.botania.common.lexicon.page.PageRecipe;
 
 public class PageManaInfusorRecipe extends PageRecipe {

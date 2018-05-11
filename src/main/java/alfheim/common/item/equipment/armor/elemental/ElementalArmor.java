@@ -6,7 +6,6 @@ import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
 import alfheim.client.model.armor.ModelElementalArmor;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;

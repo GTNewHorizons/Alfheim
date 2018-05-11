@@ -3,7 +3,6 @@ package alfheim.common.block.mana;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
-import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;

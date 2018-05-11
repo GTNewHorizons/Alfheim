@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,18 +1,29 @@
 package alfheim.common.core.registry;
 
-import static alexsocol.asjlib.ASJUtilities.*;
-import static alfheim.api.AlfheimAPI.*;
-import static cpw.mods.fml.common.registry.GameRegistry.*;
+import static alexsocol.asjlib.ASJUtilities.registerEntity;
+import static alexsocol.asjlib.ASJUtilities.registerEntityEgg;
+import static alfheim.api.AlfheimAPI.addPink;
+import static cpw.mods.fml.common.registry.GameRegistry.registerTileEntity;
+import static cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator;
 
 import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.block.tile.*;
+import alfheim.common.block.tile.TileAlfheimPortal;
+import alfheim.common.block.tile.TileAlfheimPylons;
+import alfheim.common.block.tile.TileAnyavil;
+import alfheim.common.block.tile.TileManaInfuser;
+import alfheim.common.block.tile.TileTradePortal;
+import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.utils.AlfheimConfig;
-import alfheim.common.entity.*;
+import alfheim.common.entity.EntityAlfheimPixie;
+import alfheim.common.entity.EntityCharge;
+import alfheim.common.entity.EntityElf;
+import alfheim.common.entity.EntityLightningMark;
 import alfheim.common.entity.boss.EntityFlugel;
-import alfheim.common.potion.*;
+import alfheim.common.potion.PotionAlfheim;
+import alfheim.common.potion.PotionSoulburn;
 import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.entity.ai.attributes.BaseAttribute;

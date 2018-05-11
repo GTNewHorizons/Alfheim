@@ -1,13 +1,8 @@
 package alfheim.common.core.asm;
 
-import java.util.Arrays;
-
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.event.NetherPortalActivationEvent;
-import alfheim.common.block.BlockRedFlame;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
@@ -20,10 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +32,6 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.BlockPylon;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TilePylon;
-import vazkii.botania.common.item.material.ItemManaResource;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
 
 public class AlfheimHookHandler {

@@ -4,15 +4,12 @@ import org.lwjgl.input.Mouse;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.network.KeyBindMessage;
 import baubles.api.BaublesApi;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.StatCollector;
 
 public class KeyBindingsUtils {
 

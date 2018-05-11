@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.entity.boss.EntityFlugel;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import vazkii.botania.common.core.helper.Vector3;
 

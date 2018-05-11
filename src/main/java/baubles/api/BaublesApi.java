@@ -1,7 +1,8 @@
 package baubles.api;
 
-import cpw.mods.fml.common.FMLLog;
 import java.lang.reflect.Method;
+
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 

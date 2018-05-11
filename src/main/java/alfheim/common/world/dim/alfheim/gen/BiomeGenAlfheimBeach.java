@@ -3,7 +3,6 @@ package alfheim.common.world.dim.alfheim.gen;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeGenAlfheimBeach extends BiomeGenBase {

@@ -26,7 +26,6 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.IconHelper;
-import vazkii.botania.client.gui.lexicon.GuiLexicon;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.relic.ItemRelic;
 

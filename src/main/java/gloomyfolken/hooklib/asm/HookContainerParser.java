@@ -1,12 +1,17 @@
 package gloomyfolken.hooklib.asm;
 
-import gloomyfolken.hooklib.asm.Hook.LocalVariable;
-import gloomyfolken.hooklib.asm.Hook.ReturnValue;
-import org.objectweb.asm.*;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import org.objectweb.asm.AnnotationVisitor;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+
+import gloomyfolken.hooklib.asm.Hook.LocalVariable;
+import gloomyfolken.hooklib.asm.Hook.ReturnValue;
 
 public class HookContainerParser {
 

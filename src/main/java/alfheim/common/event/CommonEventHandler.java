@@ -154,14 +154,4 @@ public class CommonEventHandler {
 			}
 		}
 	}
-	
-	@SubscribeEvent // 'cause I can. Why not?
-	public void onItemTooltip(ItemTooltipEvent e) {
-		if (GuiScreen.isShiftKeyDown() && e.itemStack.getItem() instanceof IRelic && e.itemStack.getItem() != ModItems.dice) {
-			e.toolTip.add("");
-			String name = e.itemStack.getUnlocalizedName() + ".poem";
-			for(int i = 0; i < 4; i++) e.toolTip.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal(name + i));
-			if (e.itemStack.getItem() == AlfheimItems.excaliber) for(int i = 0; i < 3; i++) e.toolTip.add(e.toolTip.remove(2));
-		}
-	}
 }

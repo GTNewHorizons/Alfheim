@@ -7,7 +7,7 @@ public class AlfheimHookLoader extends HookLoader {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { PrimaryClassTransformer.class.getName() };
+		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName() };
 	}
 
 	@Override

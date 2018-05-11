@@ -1,7 +1,6 @@
 package alfheim.common.core.command;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.core.utils.AlfheimConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
