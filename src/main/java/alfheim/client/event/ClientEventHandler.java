@@ -1,14 +1,10 @@
 package alfheim.client.event;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.client.core.utils.KeyBindingsUtils;
-import alfheim.client.model.entity.ModelBipedNew;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -79,25 +75,25 @@ public class ClientEventHandler {
 		RenderContributors.render(e);
 		
 		
-		{
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			ASJUtilities.interpolatedTranslationReverse(player, e.partialTicks);
-			GL11.glTranslated(0.5, 85.53, -14.5);
-			GL11.glRotated(180, 1, 0, 0);
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/model/entity/Jibril.png"));
-			//(new ModelBipedNew()).render(null, 0, MathHelper.sin(player.ticksExisted / 10F) / 2F, player.ticksExisted, player.rotationYawHead + 180, -player.rotationPitch, 0.0625F);
-			(new ModelBipedNew()).render(null, 0, 0, player.ticksExisted, 0, 0, 0.0625F);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glPopMatrix();
-		}
+//		{
+//			GL11.glPushMatrix();
+//			GL11.glDisable(GL11.GL_CULL_FACE);
+//			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+//			ASJUtilities.interpolatedTranslationReverse(player, e.partialTicks);
+//			GL11.glTranslated(0.5, 85.53, -14.5);
+//			GL11.glRotated(180, 1, 0, 0);
+//			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/model/entity/Jibril.png"));
+//			//(new ModelBipedNew()).render(null, 0, MathHelper.sin(player.ticksExisted / 10F) / 2F, player.ticksExisted, player.rotationYawHead + 180, -player.rotationPitch, 0.0625F);
+//			(new ModelBipedNew()).render(null, 0, 0, player.ticksExisted, 0, 0, 0.0625F);
+//			GL11.glEnable(GL11.GL_CULL_FACE);
+//			GL11.glPopMatrix();
+//		}
 		
-		/*GL11.glPushMatrix();
-		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
-		GL11.glTranslated(0, 100, 0);
-		RenderTesseractTest.main();
-		GL11.glPopMatrix();*/
+//		GL11.glPushMatrix();
+//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
+//		GL11.glTranslated(0, 100, 0);
+//		//Render
+//		GL11.glPopMatrix();
 	}
 
 	@SubscribeEvent

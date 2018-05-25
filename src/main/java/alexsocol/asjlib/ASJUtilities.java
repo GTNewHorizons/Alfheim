@@ -372,12 +372,11 @@ public class ASJUtilities {
 	/**
 	 * Returns MOP with block and entity
 	 * @param entity_base Entiy to calculate vector from
-	 * @param fasc Just put 1.0F there
 	 * @param dist Max distance for use
-	 * @param interact Can player interact with blocks (not sure)
+	 * @param interact Whether to get uncollidable entities
 	 * @author timaxa007
 	 */
-	public static MovingObjectPosition getMouseOver(EntityLivingBase entity_base, float fasc, double dist, boolean interact) {
+	public static MovingObjectPosition getMouseOver(EntityLivingBase entity_base, double dist, boolean interact) {
         if (entity_base == null || entity_base.worldObj == null) {
         	return null;
         }
@@ -386,10 +385,10 @@ public class ASJUtilities {
         double d0 = dist;
         double d1 = d0;
         Vec3 vec3 = Vec3.createVectorHelper(entity_base.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity_base.posY : entity_base.posY + entity_base.getEyeHeight()), entity_base.posZ);
-        Vec3 vec31 = entity_base.getLook(fasc);
+        Vec3 vec31 = entity_base.getLookVec();
         Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
         Vec3 vec33 = null;
-        MovingObjectPosition objectMouseOver = rayTrace(entity_base, dist, fasc);
+        MovingObjectPosition objectMouseOver = rayTrace(entity_base, dist);
 
         if (objectMouseOver != null) {
             d1 = objectMouseOver.hitVec.distanceTo(vec3);
@@ -442,9 +441,9 @@ public class ASJUtilities {
 	 * Raytracer for 'getMouseOver' method.<br>
 	 * Don't use it. Use {@link #getMouseOver(EntityLivingBase, float, double, boolean) getMouseOver} instead
 	 */
-	private static MovingObjectPosition rayTrace(EntityLivingBase entity, double dist, float fasc) {
+	private static MovingObjectPosition rayTrace(EntityLivingBase entity, double dist) {
         Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity.posY : entity.posY + entity.getEyeHeight()), entity.posZ);
-        Vec3 vec31 = entity.getLook(fasc);
+        Vec3 vec31 = entity.getLookVec();
         Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
         return entity.worldObj.func_147447_a(vec3, vec32, false, false, true);
     }

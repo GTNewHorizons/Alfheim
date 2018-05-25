@@ -16,7 +16,7 @@ public class KeyBindingsUtils {
 	}
 
 	public static void atack(EntityPlayerMP player) {
-		MovingObjectPosition mop = ASJUtilities.getMouseOver(player, 1.0F, player.theItemInWorldManager.getBlockReachDistance(), true);
+		MovingObjectPosition mop = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.getBlockReachDistance(), true);
 		if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null) {
 			player.attackTargetEntityWithCurrentItem(mop.entityHit);
 		}

@@ -12,72 +12,53 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41'
     }
 }
 
 apply plugin: 'forge'
+//apply plugin: 'kotlin'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
-
-sourceSets.main {
-    java {
-        srcDirs = ['src/main/java']
-    }
-    resources {
-        srcDirs = ['src/main/resources']
-    }
-}
-
-version = "BETA-pre5.20"
+version = "BETA-pre5.22"
 group= "main"
 archivesBaseName = "Alfheim"
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
-    runDir = "eclipse/assets"
+    runDir = "eclipse"
 }
-
 
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.41'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:1.2.41'
 }
 
-/*
-task deobfJar(type: Jar) {
-    from(sourceSets.main.output)
-	archiveName = "${baseName} ${version}-deobf.${extension}"
+compileJava {
+    targetCompatibility = '1.6'
+    sourceCompatibility = '1.6'
 }
 
-artifacts {
-    archives deobfJar
-}*/
+jar {
+   manifest {
+	   attributes 'FMLAT': 'alfheim_at.cfg'
+       attributes 'FMLCorePlugin': 'alfheim.common.core.asm.AlfheimHookLoader'
+       attributes 'FMLCorePluginContainsFMLMod': 'true'
+   }
+}
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        // replace version and mcversion
         expand 'version':project.version, 'mcversion':project.minecraft.version
     }
         
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
 	
 	rename '(.+_at.cfg)', 'META-INF/$1'
-}
-
-jar {
-   manifest {
-       attributes 'FMLCorePlugin': 'alfheim.common.core.asm.AlfheimHookLoader'
-       attributes 'FMLCorePluginContainsFMLMod': 'true'
-	   attributes 'FMLAT': 'alfheim_at.cfg'
-   }
 }

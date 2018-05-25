@@ -25,11 +25,9 @@ public final class ASJShaderHelper {
 		glUseProgram(shaderID);
 
 		if(shaderID != 0) {
-			int time = glGetUniformLocation(shaderID, "time");
-			glUniform1f(time, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
+			if (Minecraft.getMinecraft().theWorld != null) glUniform1f(glGetUniformLocation(shaderID, "time"), Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
 			
-			if(callback != null)
-				callback.call(shaderID);
+			if(callback != null) callback.call(shaderID);
 		}
 	}
 
