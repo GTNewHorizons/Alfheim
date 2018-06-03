@@ -26,9 +26,9 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 
 	@Override
 	public void pre(Entity entity) {
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && !AlfheimConfig.fancies) return;
 			ShaderHelper.useShader(ShaderHelper.halo);
 		}
@@ -36,8 +36,10 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 
 	@Override
 	public void post(Entity entity) {
-		GL11.glDisable(GL11.GL_BLEND);
-		ShaderHelper.releaseShader();
+		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
+			GL11.glDisable(GL11.GL_BLEND);
+			ShaderHelper.releaseShader();
+		}
 	}
 
 	@Override
