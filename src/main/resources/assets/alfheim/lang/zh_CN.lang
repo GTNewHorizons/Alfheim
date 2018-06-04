@@ -1,0 +1,148 @@
+##########################################################___BLOCKS___##########################################################
+# tile..name=
+tile.AlfheimPortal.name=艾尔夫海姆之门核心
+tile.Anyavil.name=源质钢砧
+tile.botania:AlfheimPylons1.name=尘世水晶
+tile.botania:AlfheimPylons0.name=精灵水晶
+tile.DragonstoneElvenOre.name=龙石矿石
+tile.DreamLeaves.name=精灵梦之木树叶
+tile.DreamLog.name=精灵梦之木木头
+tile.DreamSapling.name=精灵梦之木树苗
+tile.ElementiumElvenOre.name=源质钢矿石
+tile.ElvenGrass.name=精灵草方块
+tile.ElvenPylon.name=精灵水晶
+tile.ElvenSand.name=精灵之沙
+tile.ElvoriumBlock.name=魔灵钢块
+tile.GoldElvenOre.name=精灵金矿石
+tile.IffesalElvenOre.name=伊夫萨尔矿石
+tile.LivingCobble.name=活性鹅卵石
+tile.ManaInfuser.name=魔力注入器
+tile.MauftriumBlock.name=始源魂灵块
+tile.MuspelheimFire.name=永恒炽热之焰
+tile.NiflheimIce.name=永恒极寒之冰
+tile.QuartzElvenOre.name=精灵石英矿石
+tile.TradePortal.name=尘世之门核心
+
+##########################################################___ITEMS___###########################################################
+
+# item..name=
+item.CreativeReachPendant.name=创造触物吊坠
+item.botania:ElementalAirBoots.name=风暴战靴
+item.botania:ElementalFireLeggings.name=炽焰护腿
+item.botania:ElementalEarthChest.name=浩土铠甲
+item.botania:ElementalWaterHelm.name=潮汐头盔
+item.botania:ElementalWaterHelmRevealing.name=潮汐揭示头盔
+item.botania:PixieAttractor.name=精灵吸引吊坠
+item.ElementalArmor.desc1=轻如空中鸿毛 (§e强化跳跃 +4§7)
+item.ElementalArmor.desc2=疾如风中烈焰 (§c速度 +2§7) 能力: §c火焰保护§7)
+item.ElementalArmor.desc3=坚如山中顽石 (§a抗性提升 +2§7)
+item.ElementalArmor.desc4=灵如水中游鱼 (§b水下呼吸§7 + §b夜视§7)
+item.ElvoriumBoots.name=魔灵战靴
+item.ElvoriumChestplate.name=魔灵盔甲
+item.ElvoriumHelmet.name=魔灵头盔
+item.ElvoriumHelmetRevealing.name=魔灵揭示头盔
+item.ElvoriumIngot.name=魔灵钢
+item.ElvoriumLeggings.name=魔灵护腿
+item.ElvoriumNugget.name=魔灵钢粒
+item.botania:FirePendant.name=炽焰之灵护身符
+item.botania:IcePendant.name=极寒之灵护身符
+item.IffesalDust.name=魔灵粉末
+item.InterdimensionalGatewayCore.name=精灵乡核心-尘世
+item.LivingrockPickaxe.name=活石稿
+item.ManaElvenRing.name=魔灵魔力之戒
+item.ManaElvenRingGreater.name=始源魂灵魔力之戒
+item.ManaInfusionCore.name=魔力注入核心
+item.ManaStone.name=注魔宝石
+item.ManaStoneGreater.name=始源注魔宝石
+item.manastorage.desc0=可存储高达 %s 个魔力池的魔力!
+item.manastorage.desc1=目前已存储 §b%s§7/§b%s§7 mana
+item.MauftriumIngot.name=始源魂灵锭
+item.MauftriumNugget.name=始源魂灵粒
+item.MuspelheimEssence.name=炽热之魂
+item.MuspelheimPowerIngot.name=炽热魔灵之钢
+item.MuspelheimRod.name=炽热支配之杖
+item.MuspelheimRune.name=炽热符文
+item.NiflheimEssence.name=极寒之魂
+item.NiflheimPowerIngot.name=极寒魔灵之钢
+item.NiflheimRod.name=极寒支配之杖
+item.NiflheimRune.name=极寒符文
+item.PrimalRune.name=始源符文
+item.RealitySword.name=§r始源之剑-现实%s
+item.RealitySword.name0= (沉睡)
+item.RealitySword.name1= (§e风暴§f)
+item.RealitySword.name2= (§a浩土§f)
+item.RealitySword.name3= (§c炽焰§f)
+item.RealitySword.name4= (§b潮汐§f)
+item.RealitySword.nameZ=创世神之剑
+item.RealitySword.desc0=潜行+右键以切换元素之能
+item.RealitySword.desc1=风暴之力-击退!
+item.RealitySword.desc2=浩土之力-剧毒!
+item.RealitySword.desc3=炽焰之力-燃尽!
+item.RealitySword.desc4=潮汐之力-致盲!
+item.RealitySword.desc5=每秒需要 §n10§r§7 §bmana§7.
+item.RealitySword.descZ=力量!
+item.RealitySword.DIE=%s 得到了创世神之剑并遭到了创世神的惩罚
+
+##########################################################___OTHER___###########################################################
+
+achievement.alfheim=艾尔夫海姆
+achievement.alfheim.desc=欢迎来到艾尔夫海姆
+
+alfheim.armorset.elemental.name=元素掌控者
+alfheim.armorset.elvorium.name=皇族精灵守卫
+alfheim.armorset.elvorium.desc0=魔力工具使用魔力减少30%
+alfheim.armorset.elvorium.desc1=法杖内潜藏着更加强大的力量
+alfheim.armorset.elvorium.desc2=Vis减免20%
+alfheim.armorset.elvorium.desc3=符文护盾 +8
+
+alfheim.configgui.biomeIDAlfheim=Biome ID for standart biome
+alfheim.configgui.biomeIDAlfheimBeach=Biome ID for beach biome
+alfheim.configgui.deathScreenAdditionalTime=How longer (in ticks) "Respawn" button will be unavailable [ElvenStory Only]
+alfheim.configgui.deathTimerScale=Death Timer Scale (1 < bigger; 1 > smaller) [ElvenStory Only]
+alfheim.configgui.deathTimerX=Death Timer additional X from center [ElvenStory Only]
+alfheim.configgui.deathTimerY=Death Timer additional Y from bottom [ElvenStory Only]
+alfheim.configgui.deathTimerFontX=Death Timer text additional X from center [ElvenStory Only]
+alfheim.configgui.deathTimerFontY=Death Timer text additional Y from bottom [ElvenStory Only]
+alfheim.configgui.destroyPortal=Set this to false to disable destroying portals in non-zero coords in Alfheim
+alfheim.configgui.dimensionIDAlfheim=Dimension ID for Alfheim
+alfheim.configgui.enableAlfheimRespawn=Set this to false to disable respawning in Alfheim
+alfheim.configgui.enableElvenStory=Set this to true to enable Elven Story mode without mod
+alfheim.configgui.enableWingsNonAlfheim=Set this to false to disable wings in other worlds [ElvenStory Only]
+alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
+alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
+alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
+
+entity.Elf.name=精灵
+entity.Pixie.name=小精灵
+
+itemGroup.Alfheim=艾尔夫海姆
+
+#######################################################___ELVEN STORY___########################################################
+
+elvenstory.welcome0=§n§a欢迎来到艾尔夫海姆 - [精灵传说] !
+elvenstory.welcome1=§6请选择一个你想要的种族(输入括号内英文) "/race"
+elvenstory.welcome2=§4烈阳精灵(SALAMANDER)§r, §a自然精灵(SYLPH)§r, §6神裔精灵(CAITSITH)§r, §e魔元精灵(POOKA)§r, §2大地精灵(GNOME)§r, §7机械精灵(LEPRECHAUN)§r, §8暗影精灵(SPRIGGAN)§r, §b皓月精灵(UNDINE)§r, §5暗魂精灵(IMP)§r
+elvenstory.commands.race.usage=/race <RACE>
+
+key.flight.desc=精灵之羽翼
+mes.flight.unavailable=精灵之翼在艾尔夫海姆外无法汲取能量
+
+race.SALAMANDER.name=烈阳精灵
+race.SYLPH.name=自然精灵
+race.CAITSITH.name=神裔精灵
+race.POOKA.name=魔元精灵
+race.GNOME.name=大地精灵
+race.LEPRECHAUN.name=机械精灵
+race.SPRIGGAN.name=暗影精灵
+race.UNDINE.name=皓月精灵
+race.IMP.name=暗魂精灵
+
+race.SALAMANDER.reverse=SALAMANDER
+race.SYLPH.reverse=SYLPH
+race.CAITSITH.reverse=CAITSITH
+race.POOKA.reverse=POOKA
+race.GNOME.reverse=GNOME
+race.LEPRECHAUN.reverse=LEPRECHAUN
+race.SPRIGGAN.reverse=SPRIGGAN
+race.UNDINE.reverse=UNDINE
+race.IMP.reverse=IMP
