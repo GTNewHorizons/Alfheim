@@ -19,6 +19,8 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.nbt.NBTTagList
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
@@ -32,6 +34,7 @@ import vazkii.botania.common.block.BlockPylon
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TilePylon
 import vazkii.botania.common.item.relic.ItemFlugelEye
+import net.minecraft.item.ItemEnchantedBook
 
 class AlfheimHookHandler {
     
@@ -75,12 +78,35 @@ class AlfheimHookHandler {
 
         @Hook(returnCondition = ReturnCondition.ON_TRUE, isMandatory = true)
         @JvmStatic
-        fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean = if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z) else false
-
+        fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean = if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
+        
+        @Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
+        @JvmStatic
+        fun NBTTagCompound_toString(nbt: NBTTagCompound): String {
+        	var sb = StringBuilder("{\n")
+            for ((key, value) in nbt.tagMap)
+                if (value is NBTTagList || value is NBTTagCompound) {
+                    var arr = value.toString().split("\n")
+                    sb.append("    $key = ${arr.get(0)}\n")
+                    for (i in 1 until arr.size) sb.append("    ${arr.get(i)}\n")
+                } else sb.append("    ${key} = ${value}\n")
+            sb.append("}")
+            return sb.toString()
+        }
+        
+        @Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
+        @JvmStatic
+        fun NBTTagList_toString(nbt: NBTTagList): String {
+            var sb = StringBuilder("list [\n")
+            for (obj in nbt.tagList) if (obj is NBTTagList || obj is NBTTagCompound) for (s in obj.toString().split("\n")) sb.append("    $s\n") else sb.append("$obj\n")
+            sb.append("]")
+            return sb.toString()
+        }
+        
         @SideOnly(Side.CLIENT)
         @Hook(injectOnExit = true)
         @JvmStatic
-        fun renderManaBar(hh: HUDHandler, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
+        fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
             if (mana < 0) return
             GL11.glPushMatrix()
             var text = "$mana/$maxMana"

@@ -150,6 +150,7 @@ item.FlugelSoul.clickToTeleport=Right click to Teleport
 item.FlugelSoul.clickToRemoveWarp=Shift-left click to Remove
 item.FlugelSoul.unboundWarp=Unbound Warp Point
 item.FlugelSoul.clickToAddWarp=Right click to bind to this position
+item.FlugelSoul.blockedWarp=This part of soul is corrupted
 
 item.FlugelSoul.sign0=Aries
 item.FlugelSoul.sign1=Taurus

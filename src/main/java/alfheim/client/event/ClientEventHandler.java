@@ -19,12 +19,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
@@ -107,14 +110,13 @@ public class ClientEventHandler {
 	}
 	
 	
-	/*@SubscribeEvent // 'cause I can. Why not?
+	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onItemTooltip(ItemTooltipEvent e) {
-		if (GuiScreen.isShiftKeyDown() && e.itemStack.getItem() instanceof IRelic && e.itemStack.getItem() != ModItems.dice) {
+		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && ModInfo.DEV) {
 			e.toolTip.add("");
-			String name = e.itemStack.getUnlocalizedName() + ".poem";
-			for(int i = 0; i < 4; i++) e.toolTip.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal(name + i));
-			if (e.itemStack.getItem() == AlfheimItems.excaliber) for(int i = 0; i < 3; i++) e.toolTip.add(e.toolTip.remove(2));
+			e.toolTip.add("NBT Data:");
+			for (String s : e.itemStack.getTagCompound().toString().split("\n")) e.toolTip.add(s);
 		}
-	}*/
+	}
 }

@@ -61,7 +61,7 @@ public class AlfheimItems {
 	public static Item manaStone;
 	public static Item manaStoneGreater;
 	public static Item mask;
-	public static Item mjolnir;
+	//public static Item mjolnir;
 	public static Item pixieAttractor;
 	public static Item realitySword;
 	public static Item rodFire;
@@ -91,7 +91,7 @@ public class AlfheimItems {
 		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
-		mjolnir = new ItemMjolnir();
+		//mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
 		flugelDisc = new ItemModRecord("flugel", "FlugelDisc");

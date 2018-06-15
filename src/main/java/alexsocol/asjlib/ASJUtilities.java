@@ -578,6 +578,14 @@ public class ASJUtilities {
     	target.playSound((String) ASJReflectionHelper.invoke(target, null, getDeathSound), (Float) ASJReflectionHelper.invoke(target, null, getSoundVolume), (Float) ASJReflectionHelper.invoke(target, null, getSoundPitch));
 	}
 	
+	public static int randInBounds(int min, int max) {
+		return randInBounds(new Random(), min, max);
+	}
+	
+	public static int randInBounds(Random rand, int min, int max) {
+		return rand.nextInt(max - min) + min; 
+	}
+	
 	/**
 	 * Interpolates values for smoother render
 	 * */
@@ -765,18 +773,30 @@ public class ASJUtilities {
 		player.addChatMessage(new ChatComponentText((player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
 	}
 	
-	public static void debug(String message) { 
-		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase().concat("-Debug"), Level.INFO, message);
-	}
-	
 	public static void log(String message) { 
 		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.INFO, message);
+	}
+	
+	public static void debug(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.DEBUG, message);
+	}
+	
+	public static void warn(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.WARN, message);
+	}
+	
+	public static void error(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.ERROR, message);
+	}
+	
+	private static void trace(String message) { 
+		FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.TRACE, message);
 	}
 
 	public static void printStackTrace() {
 		ASJUtilities.log("Stack trace: ");
 		StackTraceElement[] stes = Thread.currentThread().getStackTrace();
-		for (int i = 2; i < stes.length; i++) ASJUtilities.log("\tat " + stes[i].toString());
+		for (int i = 2; i < stes.length; i++) ASJUtilities.trace("\tat " + stes[i].toString());
 	}
 	
 	public static void say(EntityPlayer player, String message) {

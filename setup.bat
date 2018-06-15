@@ -1,27 +1,28 @@
 @echo on
 @ECHO ##########################################################################
-@ECHO
+@ECHO.
 @ECHO  Gradle startup script for Windows
-@ECHO
+@ECHO.
 @ECHO ##########################################################################
 
-@ECHO Choose an IDE:
-@ECHO [1] Eclipse
-@ECHO [2] Idea (Intelij)
-@ECHO 
-@ECHO 
+@ECHO Choose action:
+@ECHO [1] setup for eclipse
+@ECHO [2] setup for IDEA
+@ECHO [3] clean&setup for eclipse
+@ECHO [4] clean&setup for IDEA
+@ECHO [5] build
+@ECHO [0] exit
+@ECHO. 
+@ECHO. 
 :tryagain
 @echo off
 set /p variable=""
 IF "%variable%"=="1" (goto eclipse)
-IF "%variable%"=="eclipse" (goto eclipse)
-IF "%variable%"=="Eclipse" (goto eclipse)
-
 IF "%variable%"=="2" (goto intelij)
-IF "%variable%"=="Intelij" (goto intelij)
-IF "%variable%"=="intelij" (goto intelij)
-IF "%variable%"=="idea" (goto intelij)
-IF "%variable%"=="Idea" (goto intelij)
+IF "%variable%"=="3" (goto ceclipse)
+IF "%variable%"=="4" (goto cintelij)
+IF "%variable%"=="5" (goto build)
+IF "%variable%"=="0" exit
 
 pause
 @echo on
@@ -29,34 +30,34 @@ pause
 goto tryagain
 
 
-
 :eclipse
 @echo on
 @ECHO ##########################################################################
-gradlew setupDecompWorkspace --refresh-dependencies
-gradlew eclipse
-
-@ECHO ##########################################################################
-@ECHO
-@ECHO  Mod is ready to be opened in Eclipse
-@ECHO  NOTE: you must manually add the dependencies from the lib folder, aside from buildcraft, to your project structure
-@ECHO
-@ECHO ##########################################################################
-pause
+gradlew setupDecompWorkspace eclipse --refresh-dependencies
 exit
-
-
 
 :intelij
 @echo on
-gradlew setupDecompWorkspace --refresh-dependencies
-gradlew idea
+@ECHO ##########################################################################
+gradlew setupDecompWorkspace idea --refresh-dependencies
+exit
 
+
+:ceclipse
+@echo on
 @ECHO ##########################################################################
-@ECHO
-@ECHO  Mod is ready to be opened in Intelij/Idea
-@ECHO  NOTE: you must manually add the dependencies from the lib folder, aside from buildcraft, to your project structure
-@ECHO
+gradlew clean setupDecompWorkspace eclipse --refresh-dependencies
+exit
+
+:cintelij
+@echo on
 @ECHO ##########################################################################
-pause
+gradlew clean setupDecompWorkspace idea --refresh-dependencies
+exit
+
+
+:build
+@echo on
+@ECHO ##########################################################################
+gradlew build
 exit

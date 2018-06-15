@@ -149,6 +149,7 @@ item.FlugelSoul.clickToTeleport=ПКМ, чтобы телепортироват�
 item.FlugelSoul.clickToRemoveWarp=Shift+ЛКМ, чтобы убрать точку
 item.FlugelSoul.unboundWarp=Точка телепортации не установлена
 item.FlugelSoul.clickToAddWarp=ПКМ, чтобы привязать к текущей позиции
+item.FlugelSoul.blockedWarp=Эта часть души разрушена
 
 item.FlugelSoul.sign0=Овен
 item.FlugelSoul.sign1=Телец

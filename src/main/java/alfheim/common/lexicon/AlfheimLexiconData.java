@@ -57,7 +57,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry excalibr;	// TODO describe
 	public static LexiconEntry infuser;
 	public static LexiconEntry mask;		// TODO describe
-	public static LexiconEntry mjolnir;		// TODO describe
+	//public static LexiconEntry mjolnir;		// describe
 	public static LexiconEntry mobs;
 	public static LexiconEntry ores;
 	public static LexiconEntry pixie;
@@ -110,7 +110,7 @@ public class AlfheimLexiconData {
 	public static void preInit2() {
 		excalibr= new RLexiconEntry("excalibr", categoryAlfheim	, AlfheimAchievements.excaliber);
 		mask	= new RLexiconEntry("mask",		categoryAlfheim	, AlfheimAchievements.mask);
-		mjolnir	= new RLexiconEntry("mjolnir",	categoryAlfheim	, AlfheimAchievements.mjolnir);
+		//mjolnir	= new RLexiconEntry("mjolnir",	categoryAlfheim	, AlfheimAchievements.mjolnir);
 		soul	= new RLexiconEntry("soul",		categoryAlfheim	, AlfheimAchievements.flugelSoul);
 	}
 	
@@ -240,7 +240,7 @@ public class AlfheimLexiconData {
 		ruling	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeMuspelheimRod),
-								 new PageCraftingRecipe("3", AlfheimRecipes.recipeNiflheimPendant),
+								 new PageCraftingRecipe("3", AlfheimRecipes.recipeNiflheimRod),
 								 new PageText("4"), new PageCraftingRecipe("5", amuletRecipes))
 				.setIcon(new ItemStack(AlfheimItems.rodFire));
 		
@@ -261,9 +261,9 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mask));
 		
-		mjolnir	.setKnowledgeType(BotaniaAPI.relicKnowledge)
+		/*mjolnir	.setKnowledgeType(BotaniaAPI.relicKnowledge)
 				.setLexiconPages(new PageText("0"))
-				.setIcon(new ItemStack(AlfheimItems.mjolnir));
+				.setIcon(new ItemStack(AlfheimItems.mjolnir));*/
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory();
 		

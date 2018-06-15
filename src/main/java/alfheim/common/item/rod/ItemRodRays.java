@@ -34,15 +34,12 @@ public class ItemRodRays extends ItemRodBase implements IManaUsingItem {
 	public EntityManaBurst getBurst(EntityPlayer player, int i) {
 		EntityManaBurst burst = new EntityManaBurst(player.worldObj);
 
-		float motionModifier = 15F;
-
 		burst.setColor(new Color(179, 77, 179).getRGB());
 		burst.setMana(1);
 		burst.setStartingMana(1);
 		burst.setMinManaLoss(600);
 		burst.setManaLossPerTick(4F);
 		burst.setGravity(0F);
-		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier);
 
 		ItemStack lens = new ItemStack(ModItems.terraSword, 1, 0);
 		ItemNBTHelper.setString(lens, TAG_ATTACKER_USERNAME, player.getCommandSenderName());
@@ -60,8 +57,7 @@ public class ItemRodRays extends ItemRodBase implements IManaUsingItem {
 		float f = 0.4F;
 		double mx = MathHelper.sin(burst.rotationYaw / 180.0F * (float) Math.PI) * f / 2D;
 		double mz = -(MathHelper.cos(burst.rotationYaw / 180.0F * (float) Math.PI) * f) / 2D;
-		double my = 0;
-		burst.setMotion(mx, my, mz);
+		burst.setMotion(mx * 5, 0, mz * 5);
 		
 		return burst;
 	}

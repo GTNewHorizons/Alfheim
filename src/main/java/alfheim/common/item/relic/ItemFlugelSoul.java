@@ -6,6 +6,8 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
+import alfheim.common.entity.boss.EntityFlugel;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -22,6 +24,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -45,6 +48,7 @@ import vazkii.botania.common.item.relic.ItemRelic;
 public class ItemFlugelSoul extends ItemRelic {
 	
 	private static final ResourceLocation glowTexture = new ResourceLocation(LibResources.MISC_GLOW_CYAN);
+	private static final ResourceLocation glowTextureDisabled = new ResourceLocation(ModInfo.MODID, "textures/misc/glow.png");
 
 	private static final int SEGMENTS = 12;
 	private static final MultiversePosition FALLBACK_POSITION = new MultiversePosition(0, -1, 0, 0);
@@ -57,7 +61,9 @@ public class ItemFlugelSoul extends ItemRelic {
 	private static final String TAG_POS_Z = "posZ";
 	private static final String TAG_DIMENSION = "dim";
 	private static final String TAG_FIRST_TICK = "firstTick";
-
+	private static final String TAG_DISABLED = "disabled";
+	private static final String TAG_BLOCKED = "blocked";
+	
 	IIcon[] signs;
 
 	public ItemFlugelSoul() {
@@ -82,8 +88,18 @@ public class ItemFlugelSoul extends ItemRelic {
 	}
 
 	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon && getBlocked(stack) < SEGMENTS) {
+			boolean success = EntityFlugel.spawn(player, stack, world, x, y, z, true);
+			setDisabled(stack, getBlocked(stack), true);
+			return success;
+		}
+		return false;
+	}
+	
+	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(isRightPlayer(player, stack)) {
+		if(isRightPlayer(player, stack) && !player.isSneaking()) {
 			int segment = getSegmentLookedAt(stack, player);
 			MultiversePosition pos = getWarpPoint(stack, segment);
 			if(pos.isValid()) {
@@ -116,16 +132,14 @@ public class ItemFlugelSoul extends ItemRelic {
 		super.onUpdate(stack, world, entity, pos, equipped);
 		boolean eqLastTick = wasEquipped(stack);
 		boolean firstTick = isFirstTick(stack);
-		if(eqLastTick != equipped)
-			setEquipped(stack, equipped);
+		if(eqLastTick != equipped) setEquipped(stack, equipped);
 
 		if((!equipped || firstTick) && entity instanceof EntityLivingBase) {
 			int angles = 360;
 			int segAngles = angles / SEGMENTS;
 			float shift = segAngles / 2;
 			setRotationBase(stack, getCheckingAngle((EntityLivingBase) entity) - shift);
-			if(firstTick)
-				tickFirst(stack);
+			if(firstTick) tickFirst(stack);
 		}
 	}
 
@@ -136,8 +150,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		int segAngles = angles / SEGMENTS;
 		for(int seg = 0; seg < SEGMENTS; seg++) {
 			float calcAngle = (float) seg * segAngles;
-			if(yaw >= calcAngle && yaw < calcAngle + segAngles)
-				return seg;
+			if(yaw >= calcAngle && yaw < calcAngle + segAngles) return seg;
 		}
 		return 0;
 	}
@@ -187,7 +200,26 @@ public class ItemFlugelSoul extends ItemRelic {
 		ItemNBTHelper.setFloat(stack, TAG_ROTATION_BASE, rotation);
 	}
 
+	public static boolean isDisabled(ItemStack stack, int warp) {
+		return ItemNBTHelper.getBoolean(stack, TAG_DISABLED + warp, false);
+	}
+
+	public static void setDisabled(ItemStack stack, int warp, boolean disabled) {
+		ItemNBTHelper.setBoolean(stack, TAG_DISABLED + warp, disabled);
+		stack.getTagCompound().tagMap.remove(TAG_WARP_PREFIX + warp);
+		setBlocked(stack, getBlocked(stack) + (disabled ? 1 : -1));
+	}
+	
+	public static int getBlocked(ItemStack item) {
+		return ItemNBTHelper.getInt(item, TAG_BLOCKED, 0);
+	}
+	
+	public static void setBlocked(ItemStack item, int blocked) {
+		ItemNBTHelper.setInt(item, TAG_BLOCKED, blocked);
+	}
+
 	public static void setWarpPoint(ItemStack stack, int warp, double x, double y, double z, int dim) {
+		if (isDisabled(stack, warp)) return;
 		NBTTagCompound cmp = new NBTTagCompound();
 		cmp.setDouble(TAG_POS_X, x);
 		cmp.setDouble(TAG_POS_Y, y);
@@ -197,9 +229,9 @@ public class ItemFlugelSoul extends ItemRelic {
 	}
 
 	public static MultiversePosition getWarpPoint(ItemStack stack, int warp) {
+		if (isDisabled(stack, warp)) return FALLBACK_POSITION; 
 		NBTTagCompound cmp = ItemNBTHelper.getCompound(stack, TAG_WARP_PREFIX + warp, true);
-		if(cmp == null)
-			return FALLBACK_POSITION;
+		if(cmp == null) return FALLBACK_POSITION;
 
 		double x = cmp.getDouble(TAG_POS_X);
 		double y = cmp.getDouble(TAG_POS_Y);
@@ -261,8 +293,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		for(int seg = 0; seg < SEGMENTS; seg++) {
 			boolean inside = false;
 			float rotationAngle = (seg + 0.5F) * segAngles + shift;
-			if(segmentLookedAt == seg)
-				inside = true;
+			if(segmentLookedAt == seg) inside = true;
 
 			GL11.glPushMatrix();
 			GL11.glRotatef(rotationAngle, 0F, 1F, 0F);
@@ -273,7 +304,7 @@ public class ItemFlugelSoul extends ItemRelic {
 			GL11.glTranslatef(0F, 0F, 0.5F);
 			IIcon icon = signs[seg];
 			GL11.glRotatef(90F, 0F, 1F, 0F);
-			GL11.glColor4f(1F, 1F, 1F, getWarpPoint(stack, seg).isValid() ? 1F : 0.2F);
+			GL11.glColor4f(1, !isDisabled(stack, seg) ? 1 : 0, !isDisabled(stack, seg) ? 1 : 0, getWarpPoint(stack, seg).isValid() && !isDisabled(stack, seg) ? 1 : 0.2F);
 			float f = icon.getMinU();
 			float f1 = icon.getMaxU();
 			float f2 = icon.getMinV();
@@ -295,7 +326,7 @@ public class ItemFlugelSoul extends ItemRelic {
 				GL11.glColor4f(0.6F, 0.6F, 0.6F, a);
 			else GL11.glColor4f(1F, 1F, 1F, a);
 
-			mc.renderEngine.bindTexture(glowTexture);
+			mc.renderEngine.bindTexture(isDisabled(stack, seg) ? glowTextureDisabled : glowTexture);
 			tess.startDrawingQuads();
 			for(int i = 0; i < segAngles; i++) {
 				float ang = i + seg * segAngles + shift;
@@ -327,7 +358,7 @@ public class ItemFlugelSoul extends ItemRelic {
 
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 		String s = StatCollector.translateToLocal("item.FlugelSoul.sign" + slot);
-		font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 65, 0xFFD409);
+		font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 65, isDisabled(stack, slot) ? 0xAAAAAA : 0xFFD409);
 
 		if(pos.isValid()) {
 			int dist = MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ));
@@ -342,6 +373,9 @@ public class ItemFlugelSoul extends ItemRelic {
 			font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 30, 0xFFFFFF);
 			s = StatCollector.translateToLocal("item.FlugelSoul.clickToRemoveWarp");
 			font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 20, 0xFFFFFF);
+		} else if (isDisabled(stack, slot)) {
+			s = StatCollector.translateToLocal("item.FlugelSoul.blockedWarp");
+			font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 40, 0xAAAAAA);
 		} else {
 			s = StatCollector.translateToLocal("item.FlugelSoul.unboundWarp");
 			font.drawStringWithShadow(s, resolution.getScaledWidth() / 2 - font.getStringWidth(s) / 2, resolution.getScaledHeight() / 2 - 40, 0xFFFFFF);

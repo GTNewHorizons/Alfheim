@@ -29,6 +29,7 @@ import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.relic.ItemRelic;
 
+@Deprecated
 public class ItemMjolnir extends ItemRelic {
 
 	public static final String TAG_CHARGE = "charge", TAG_CREATIVE = "creative";

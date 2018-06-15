@@ -1,3 +1,6 @@
+apply plugin: 'forge'
+apply plugin: 'kotlin'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -12,12 +15,9 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.50'
     }
 }
-
-apply plugin: 'forge'
-//apply plugin: 'kotlin'
 
 version = "BETA-pre5.22"
 group= "main"
@@ -30,13 +30,13 @@ minecraft {
 
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.41'
-    compile 'org.jetbrains.kotlin:kotlin-runtime:1.2.41'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.50'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:1.2.50'
 }
 
 compileJava {
-    targetCompatibility = '1.6'
-    sourceCompatibility = '1.6'
+    targetCompatibility = '1.8'
+    sourceCompatibility = '1.8'
 }
 
 jar {
