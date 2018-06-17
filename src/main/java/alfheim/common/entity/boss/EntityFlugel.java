@@ -578,6 +578,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		tasks.taskEntries.clear();
 		int i = 0;
 		tasks.addTask(i++, new EntityAIWatchClosest(this, EntityPlayer.class, Float.MAX_VALUE));
+		// There is NO compiler errors, just ignore those:
 		tasks.addTask(i, new AITeleport(this, AITask.TP));
 		tasks.addTask(i, new AIChase(this, AITask.CHASE));
 		tasks.addTask(i, new AIRegen(this, AITask.REGEN));
