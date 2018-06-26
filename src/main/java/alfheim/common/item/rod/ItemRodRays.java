@@ -55,8 +55,8 @@ public class ItemRodRays extends ItemRodBase implements IManaUsingItem {
 		burst.setPosition(burst.posX, burst.posY, burst.posZ);
 		burst.yOffset = 0.0F;
 		float f = 0.4F;
-		double mx = MathHelper.sin(burst.rotationYaw / 180.0F * (float) Math.PI) * f / 2D;
-		double mz = -(MathHelper.cos(burst.rotationYaw / 180.0F * (float) Math.PI) * f) / 2D;
+		double mx = MathHelper.sin(burst.rotationYaw / 180.0F * (float) Math.PI) * f / 2.0;
+		double mz = -(MathHelper.cos(burst.rotationYaw / 180.0F * (float) Math.PI) * f) / 2.0;
 		burst.setMotion(mx * 5, 0, mz * 5);
 		
 		return burst;

@@ -6,7 +6,6 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.client.core.utils.KeyBindingsUtils;
 import alfheim.client.render.entity.RenderContributors;
-import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.utils.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
@@ -22,7 +21,6 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -74,9 +72,7 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onWorldLastRender(RenderWorldLastEvent e) {
-		RenderWings.render(e);
 		RenderContributors.render(e);
-		
 		
 //		{
 //			GL11.glPushMatrix();

@@ -164,6 +164,10 @@ item.FlugelSoul.sign9=Козерог
 item.FlugelSoul.sign10=Водолей
 item.FlugelSoul.sign11=Рыбы
 
+item.HoloProjector.rotate=ЛКМ и ПКМ - поворот
+item.HoloProjector.switch=Шифт+ЛКМ - смена пола
+item.HoloProjector.select=Шифт+ПКМ - выбор расы
+
 itemGroup.Alfheim=Alfheim
 
 ######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################

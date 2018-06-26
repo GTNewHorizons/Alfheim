@@ -45,7 +45,7 @@ public class ElementalWaterHelm extends ElementalArmor implements IManaDiscountA
 			player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 1, -1));
 			player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 3, -1));
 		}
-    }
+	}
 	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {

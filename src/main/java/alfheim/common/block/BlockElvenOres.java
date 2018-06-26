@@ -33,12 +33,12 @@ public class BlockElvenOres extends Block implements ILexiconable {
 	public BlockElvenOres() {
 		super(Material.rock);
 		this.setBlockName("ElvenOre");
-        this.setCreativeTab(AlfheimCore.alfheimTab);
-        this.setHardness(2);
-        this.setHarvestLevel("pickaxe", 2);
-        this.setHarvestLevel("pickaxe", 1, 1);
-        this.setResistance(5.0F);
-        this.setStepSound(soundTypeStone);
+		this.setCreativeTab(AlfheimCore.alfheimTab);
+		this.setHardness(2);
+		this.setHarvestLevel("pickaxe", 2);
+		this.setHarvestLevel("pickaxe", 1, 1);
+		this.setResistance(5.0F);
+		this.setStepSound(soundTypeStone);
 	}
 	
 	@Override

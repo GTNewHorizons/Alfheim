@@ -17,7 +17,7 @@ public class RenderBlockAnyavil implements ISimpleBlockRenderingHandler /*IItemR
 		GL11.glPushMatrix();
 		GL11.glRotated(-90, 0, 1, 0);
 		GL11.glTranslatef(-0.5F, -0.6F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAnyavil(), 0.0D, 0.0D, 0.0D, 0.0F);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAnyavil(), 0.0, 0.0, 0.0, 0.0F);
 		GL11.glPopMatrix();
 	}
 

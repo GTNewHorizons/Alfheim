@@ -1,29 +1,15 @@
 package alfheim.common.core.registry;
 
-import static alexsocol.asjlib.ASJUtilities.getBlockName;
-import static alexsocol.asjlib.ASJUtilities.register;
-import static cpw.mods.fml.common.registry.GameRegistry.registerBlock;
-import static net.minecraft.block.Block.soundTypeGravel;
-import static net.minecraft.block.Block.soundTypeMetal;
-import static net.minecraft.block.Block.soundTypeStone;
-import static net.minecraftforge.oredict.OreDictionary.registerOre;
+import static alexsocol.asjlib.ASJUtilities.*;
+import static cpw.mods.fml.common.registry.GameRegistry.*;
+import static net.minecraft.block.Block.*;
+import static net.minecraftforge.oredict.OreDictionary.*;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.block.BlockAlfheimPortal;
-import alfheim.common.block.BlockAlfheimPylons;
-import alfheim.common.block.BlockAnyavil;
-import alfheim.common.block.BlockDreamLeaves;
-import alfheim.common.block.BlockDreamLog;
-import alfheim.common.block.BlockDreamSapling;
-import alfheim.common.block.BlockElvenOres;
-import alfheim.common.block.BlockPatternLexicon;
-import alfheim.common.block.BlockPoisonIce;
-import alfheim.common.block.BlockRedFlame;
-import alfheim.common.block.BlockTradePortal;
-import alfheim.common.block.mana.BlockManaInfuser;
-import alfheim.common.block.mana.BlockTransferer;
-import alfheim.common.item.block.ItemBlockElvenOres;
+import alfheim.common.block.*;
+import alfheim.common.block.mana.*;
+import alfheim.common.item.block.*;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

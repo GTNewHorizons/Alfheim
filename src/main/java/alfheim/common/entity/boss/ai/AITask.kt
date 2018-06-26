@@ -8,7 +8,7 @@ import alfheim.common.entity.boss.EntityFlugel
  @param stage Stage required for execurtion
  */
 enum class AITask(c: Double, val instant: Boolean, val stage: Int) {
-    
+	
 	NONE(0.0, false, 0),
 	INVUL(0.0, false, 0),
 	TP(0.2, false, EntityFlugel.STAGE_AGGRO),

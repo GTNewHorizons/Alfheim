@@ -74,13 +74,13 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 				GL11.glTranslatef(-0.5F, 0F, 0.5F);
 
 			model.renderRing();
-			GL11.glTranslated(0D, Math.sin(worldTime / 20D) / 20 - 0.025, 0D);
+			GL11.glTranslated(0, Math.sin(worldTime / 20.0) / 20 - 0.025, 0);
 			model.renderGems();
 			GL11.glPopMatrix();
 		}
 
 		GL11.glPushMatrix();
-		GL11.glTranslated(0D, Math.sin(worldTime / 20D) / 17.5, 0D);
+		GL11.glTranslated(0, Math.sin(worldTime / 20.0) / 17.5, 0);
 
 		if (!ConfigHandler.oldPylonModel)
 			GL11.glTranslatef(0.5F, 0F, -0.5F);
@@ -98,7 +98,7 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 			int lightmapX = light % 65536;
 			int lightmapY = light / 65536;
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX, lightmapY);
-			float alpha = (float) ((Math.sin(worldTime / 20D) / 2D + 0.5) / (ConfigHandler.oldPylonModel ? 1D : 2D));
+			float alpha = (float) ((Math.sin(worldTime / 20.0) / 2.0 + 0.5) / (ConfigHandler.oldPylonModel ? 1.0 : 2.0));
 			GL11.glColor4f(1F, 1F, 1F, a * (alpha + 0.183F));
 		}
 

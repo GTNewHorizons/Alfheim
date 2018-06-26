@@ -50,7 +50,7 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	}
 	
 	@Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) return ((TileTradePortal) world.getTileEntity(x, y, z)).onWanded();
 		return false;
 	}

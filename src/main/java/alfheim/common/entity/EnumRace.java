@@ -1,7 +1,9 @@
 package alfheim.common.entity;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 
@@ -37,6 +39,24 @@ public enum EnumRace {
 		if (name.equalsIgnoreCase("ALV")) return ALV;
 		if (name.equalsIgnoreCase("HUMAN")) return HUMAN;
 		return null;
+	}
+	
+	public static int getRGBColor(double id) {
+		return ASJUtilities.enumColorToRGB(getEnumColor(id));
+	}
+	
+	public static EnumChatFormatting getEnumColor(double id) {
+		if (id == 1) return EnumChatFormatting.DARK_RED;
+		if (id == 2) return EnumChatFormatting.GREEN;
+		if (id == 3) return EnumChatFormatting.GOLD;
+		if (id == 4) return EnumChatFormatting.YELLOW;
+		if (id == 5) return EnumChatFormatting.DARK_GREEN;
+		if (id == 6) return EnumChatFormatting.GRAY;
+		if (id == 7) return EnumChatFormatting.DARK_GRAY;
+		if (id == 8) return EnumChatFormatting.AQUA;
+		if (id == 9) return EnumChatFormatting.DARK_PURPLE;
+		if (id == 10) return EnumChatFormatting.WHITE;
+		return EnumChatFormatting.WHITE;
 	}
 	
 	public static EnumRace fromID(double id) {

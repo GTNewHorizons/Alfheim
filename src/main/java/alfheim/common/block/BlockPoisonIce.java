@@ -30,70 +30,70 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 		float mod = 0.001F;
 		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod);
 		setBlockName("NiflheimIce");
-        setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
-        setBlockUnbreakable();
-        setLightOpacity(0);
-        setResistance(Float.MAX_VALUE);
-        setStepSound(soundTypeGlass);
-        setTickRandomly(true);
+		setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
+		setBlockUnbreakable();
+		setLightOpacity(0);
+		setResistance(Float.MAX_VALUE);
+		setStepSound(soundTypeGlass);
+		setTickRandomly(true);
 		slipperiness = 0.98F;
 	}
 
 	public boolean isOpaqueCube() {
-        return false;
-    }
+		return false;
+	}
 	
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass() {
-        return 1;
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return 1;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
-        return world.getBlock(x, y, z) != this && !world.getBlock(x, y, z).isOpaqueCube();
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
+		return world.getBlock(x, y, z) != this && !world.getBlock(x, y, z).isOpaqueCube();
+	}
 
-    @Override
-    public int quantityDropped(Random r) {
-        return 0;
-    }
-    
-    @Override
-    public void dropBlockAsItem(World w, int x, int y, int z, ItemStack s) {
-    	return;
-    }
+	@Override
+	public int quantityDropped(Random r) {
+		return 0;
+	}
+	
+	@Override
+	public void dropBlockAsItem(World w, int x, int y, int z, ItemStack s) {
+		return;
+	}
 
-    @Override
-    public void onEntityWalking(World w, int x, int y, int z, Entity e) {
-    	if (e instanceof EntityPlayer) {
+	@Override
+	public void onEntityWalking(World w, int x, int y, int z, Entity e) {
+		if (e instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) e;
 			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
 		}
-    	e.setInWeb();
-    	if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
-    		EntityLivingBase l = (EntityLivingBase) e;
-    		l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
-    		l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
-    	}
-    }
-    
-    @Override
-    public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity e) {
-    	if (e instanceof EntityPlayer) {
+		e.setInWeb();
+		if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
+			EntityLivingBase l = (EntityLivingBase) e;
+			l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
+			l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
+		}
+	}
+	
+	@Override
+	public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity e) {
+		if (e instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) e;
 			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
 		}
-    	e.setInWeb();
-    	if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
-    		EntityLivingBase l = (EntityLivingBase) e;
-    		l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
-    		l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
-    	}
-    }
-    
-    @Override
+		e.setInWeb();
+		if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
+			EntityLivingBase l = (EntityLivingBase) e;
+			l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
+			l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
+		}
+	}
+	
+	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
 		if (world.getGameRules().getGameRuleBooleanValue("doFireTick")
 			//&& rand.nextInt(100) == 0
@@ -101,11 +101,11 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 			world.setBlockToAir(x, y, z);
 		}
 	}
-    
-    @Override
-    public int tickRate(World world) {
-        return 1;
-    }
+	
+	@Override
+	public int tickRate(World world) {
+		return 1;
+	}
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {

@@ -88,9 +88,9 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 		
 		burst.setLocationAndAngles(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, -(getRotationX() + 90), getRotationY());
 		float f = 0.4F;
-		double mx = MathHelper.sin(burst.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(burst.rotationPitch / 180.0F * (float) Math.PI) * f / 2D;
-		double mz = -(MathHelper.cos(burst.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(burst.rotationPitch / 180.0F * (float) Math.PI) * f) / 2D;
-		double my = MathHelper.sin((burst.rotationPitch) / 180.0F * (float) Math.PI) * f / 2D;
+		double mx = MathHelper.sin(burst.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(burst.rotationPitch / 180.0F * (float) Math.PI) * f / 2.0;
+		double mz = -(MathHelper.cos(burst.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(burst.rotationPitch / 180.0F * (float) Math.PI) * f) / 2.0;
+		double my = MathHelper.sin((burst.rotationPitch) / 180.0F * (float) Math.PI) * f / 2.0;
 		burst.setMotion(mx, my, mz);
 		
 		return burst;
@@ -130,7 +130,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 				if(pos.sideHit != 0 && pos.sideHit != 1) {
 					Vector3 clickVector = new Vector3(x, 0, z);
 					Vector3 relative = new Vector3(-0.5, 0, 0);
-					double angle = Math.acos(clickVector.dotProduct(relative) / (relative.mag() * clickVector.mag())) * 180D / Math.PI;
+					double angle = Math.acos(clickVector.dotProduct(relative) / (relative.mag() * clickVector.mag())) * 180.0 / Math.PI;
 
 					rotationX = (float) angle + 180F;
 					if(clickVector.z < 0)
@@ -151,7 +151,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 		float f2 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
 		double d0 = player.prevPosX + (player.posX - player.prevPosX) * f;
 		double d1 = player.prevPosY + (player.posY - player.prevPosY) * f;
-		if (!world.isRemote && player instanceof EntityPlayer) d1 += 1.62D;
+		if (!world.isRemote && player instanceof EntityPlayer) d1 += 1.62;
 		double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * f;
 		Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
 		float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);

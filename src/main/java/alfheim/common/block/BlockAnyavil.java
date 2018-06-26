@@ -55,10 +55,10 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 	}
 	
 	@Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-        int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        world.setBlockMetadataWithNotify(x, y, z, l, 2);
-    }
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5) & 3;
+		world.setBlockMetadataWithNotify(x, y, z, l, 2);
+	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
@@ -99,9 +99,9 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z) {
+	public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z) {
 		return world.getLightBrightnessForSkyBlocks(x, y, z, world.getBlock(x, y, z).getLightValue(world, x, y - 1, z));
-    }
+	}
 	
 
 	@Override

@@ -14,12 +14,16 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
@@ -36,6 +40,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
@@ -133,6 +138,7 @@ public class CommonEventHandler {
 	public void onEntityUpdate(LivingUpdateEvent e) {
 		if (e.entityLiving instanceof EntityPlayer) onPlayerUpdate(e);
 	}
+	
 	
 	private void onPlayerUpdate(LivingUpdateEvent e) {
 		EntityPlayer player = (EntityPlayer) e.entityLiving;

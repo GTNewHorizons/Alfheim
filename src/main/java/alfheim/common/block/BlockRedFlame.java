@@ -36,10 +36,10 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 
 	public BlockRedFlame() {
 		setBlockName("MuspelheimFire");
-        setBlockUnbreakable();
-        setLightLevel(1.0F);
-        setLightOpacity(0);
-        setResistance(Float.MAX_VALUE);
+		setBlockUnbreakable();
+		setLightLevel(1.0F);
+		setLightOpacity(0);
+		setResistance(Float.MAX_VALUE);
 	}
 
 	@Override

@@ -305,31 +305,31 @@ public class ModelEntityElf extends ModelBase {
 		this.Shape1.rotateAngleY = this.head.rotateAngleY;
 		this.Shape1.rotateAngleX = this.head.rotateAngleX;
 		this.Shape2.rotateAngleY = this.head.rotateAngleY;
-		this.Shape2.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape2.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape3.rotateAngleY = this.head.rotateAngleY;
-		this.Shape3.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape3.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape4.rotateAngleY = this.head.rotateAngleY;
-		this.Shape4.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape4.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape5.rotateAngleY = this.head.rotateAngleY;
-		this.Shape5.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape5.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape6.rotateAngleY = this.head.rotateAngleY;
-		this.Shape6.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape6.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape7.rotateAngleY = this.head.rotateAngleY;
-		this.Shape7.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape7.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape8.rotateAngleY = this.head.rotateAngleY;
 		this.Shape8.rotateAngleX = this.head.rotateAngleX;
 		this.Shape9.rotateAngleY = this.head.rotateAngleY;
-		this.Shape9.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape9.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape10.rotateAngleY = this.head.rotateAngleY;
-		this.Shape10.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape10.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape11.rotateAngleY = this.head.rotateAngleY;
-		this.Shape11.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape11.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape12.rotateAngleY = this.head.rotateAngleY;
-		this.Shape12.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape12.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape13.rotateAngleY = this.head.rotateAngleY;
-		this.Shape13.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape13.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape14.rotateAngleY = this.head.rotateAngleY;
-		this.Shape14.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0D);
+		this.Shape14.rotateAngleX = this.head.rotateAngleX - (float) Math.toRadians(30.0);
 		this.Shape15.rotateAngleY = this.head.rotateAngleY;
 		this.Shape15.rotateAngleX = this.head.rotateAngleX;
 		this.Shape16.rotateAngleY = this.head.rotateAngleY;
@@ -339,16 +339,16 @@ public class ModelEntityElf extends ModelBase {
 		this.Shape18.rotateAngleY = this.head.rotateAngleY;
 		this.Shape18.rotateAngleX = this.head.rotateAngleX;
 		
-        this.rightarm.rotateAngleX = MathHelper.cos(f1 * 0.6662F + (float)Math.PI) * 2.0F * f2 * 0.5F;
-        this.leftarm.rotateAngleX = MathHelper.cos(f1 * 0.6662F) * 2.0F * f2 * 0.5F;
-        this.rightleg.rotateAngleX = MathHelper.cos(f1 * 0.6662F) * 1.4F * f2;
-        this.leftleg.rotateAngleX = MathHelper.cos(f1 * 0.6662F + (float)Math.PI) * 1.4F * f2;
-        
-        this.rightshoulder.rotateAngleX = this.rightarm.rotateAngleX;
-        this.leftshoulder.rotateAngleX = this.leftarm.rotateAngleX;
-        this.rightboot.rotateAngleX = this.rightleg.rotateAngleX;
-        this.leftboot.rotateAngleX = this.leftleg.rotateAngleX;
-        
-        this.rightarm.rotateAngleZ = this.leftarm.rotateAngleZ = this.rightleg.rotateAngleY = this.leftleg.rotateAngleY = this.rightshoulder.rotateAngleZ = this.leftshoulder.rotateAngleZ = this.rightboot.rotateAngleY = this.leftboot.rotateAngleY = 0.0F;
+		this.rightarm.rotateAngleX = MathHelper.cos(f1 * 0.6662F + (float)Math.PI) * 2.0F * f2 * 0.5F;
+		this.leftarm.rotateAngleX = MathHelper.cos(f1 * 0.6662F) * 2.0F * f2 * 0.5F;
+		this.rightleg.rotateAngleX = MathHelper.cos(f1 * 0.6662F) * 1.4F * f2;
+		this.leftleg.rotateAngleX = MathHelper.cos(f1 * 0.6662F + (float)Math.PI) * 1.4F * f2;
+		
+		this.rightshoulder.rotateAngleX = this.rightarm.rotateAngleX;
+		this.leftshoulder.rotateAngleX = this.leftarm.rotateAngleX;
+		this.rightboot.rotateAngleX = this.rightleg.rotateAngleX;
+		this.leftboot.rotateAngleX = this.leftleg.rotateAngleX;
+		
+		this.rightarm.rotateAngleZ = this.leftarm.rotateAngleZ = this.rightleg.rotateAngleY = this.leftleg.rotateAngleY = this.rightshoulder.rotateAngleZ = this.leftshoulder.rotateAngleZ = this.rightboot.rotateAngleY = this.leftboot.rotateAngleY = 0.0F;
 	}
 }

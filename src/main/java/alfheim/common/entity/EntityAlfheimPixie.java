@@ -68,8 +68,8 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	}
 	
 	protected Item getDropItem() {
-        return null;
-    }
+		return null;
+	}
 
 	@Override 
 	protected void dropFewItems(boolean hit, int looting) { 
@@ -119,13 +119,13 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 			this.spawnPosition = new ChunkCoordinates((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
 		}
 
-		double d0 = (double)this.spawnPosition.posX + 0.5D - this.posX;
-		double d1 = (double)this.spawnPosition.posY + 0.1D - this.posY;
-		double d2 = (double)this.spawnPosition.posZ + 0.5D - this.posZ;
+		double d0 = (double)this.spawnPosition.posX + 0.5 - this.posX;
+		double d1 = (double)this.spawnPosition.posY + 0.1 - this.posY;
+		double d2 = (double)this.spawnPosition.posZ + 0.5 - this.posZ;
 		this.motionX += (Math.signum(d0) * 0.5 - this.motionX) * 0.1;
 		this.motionY += (Math.signum(d1) * 0.7 - this.motionY) * 0.1;
 		this.motionZ += (Math.signum(d2) * 0.5 - this.motionZ) * 0.1;
-		float f = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0F;
+		float f = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI) - 90.0F;
 		float f1 = MathHelper.wrapAngleTo180_float(f - this.rotationYaw);
 		this.moveForward = 0.5F;
 		this.rotationYaw += f1;
@@ -133,8 +133,8 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	
 	@Override
 	public void setDead() {
-        this.isDead = true;
-        if(worldObj.isRemote)
+		this.isDead = true;
+		if(worldObj.isRemote)
 			for(int i = 0; i < 12; i++)
 				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5  + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1F, 0.25F, 0.9F, 1F + (float) Math.random() * 0.25F, 5);
 	}
@@ -148,7 +148,7 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public boolean isInRangeToRenderDist(double distance) {
-        return super.isInRangeToRenderDist(distance / 16.0);
-    }
+	public boolean isInRangeToRenderDist(double distance) {
+		return super.isInRangeToRenderDist(distance / 16.0);
+	}
 }

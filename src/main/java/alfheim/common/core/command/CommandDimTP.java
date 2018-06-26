@@ -13,8 +13,8 @@ public class CommandDimTP extends CommandBase {
 
 	@Override
 	public int getRequiredPermissionLevel() {
-        return 2;
-    }
+		return 2;
+	}
 	
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender sender) {
@@ -42,15 +42,15 @@ public class CommandDimTP extends CommandBase {
 						throw new NullPointerException("Loaded dimension is null");
 					}
 					ChunkCoordinates s = w.getSpawnPoint();
-	           		ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, id, s.posX, s.posY, s.posZ);
+			   		ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, id, s.posX, s.posY, s.posZ);
 				} catch (Throwable e) {
 					throw new WrongUsageException("alfheim.commands.tpdim.worlderr", new Object[0]);
 				}
 			} catch (NumberFormatException nfe) {
 				throw new WrongUsageException("alfheim.commands.tpdim.wrongid", new Object[0]);
 			}
-        } else {
-            throw new WrongUsageException("alfheim.commands.tpdim.wrong", new Object[0]);
-        }
+		} else {
+			throw new WrongUsageException("alfheim.commands.tpdim.wrong", new Object[0]);
+		}
 	}
 }

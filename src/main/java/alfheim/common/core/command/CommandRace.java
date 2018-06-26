@@ -17,8 +17,8 @@ public class CommandRace extends CommandBase {
 
 	@Override
 	public int getRequiredPermissionLevel() {
-        return 0;
-    }
+		return 0;
+	}
 	
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender sender) {
@@ -38,18 +38,18 @@ public class CommandRace extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (args.length == 1 && sender instanceof EntityPlayer) {
-            EnumRace r = EnumRace.fromString(args[0]);
-            if (r == null || r == EnumRace.ALV || r == EnumRace.HUMAN) throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
-            if (EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN) {
-            	((EntityPlayer) sender).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
-            	((EntityPlayer) sender).capabilities.allowFlying = true;
-            	((EntityPlayer) sender).sendPlayerAbilities();
-            	((EntityPlayer) sender).setSpawnChunk(new ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].zCoord)), true, AlfheimConfig.dimensionIDAlfheim);
-            	ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal()].xCoord, AlfheimConfig.zones[r.ordinal()].yCoord, AlfheimConfig.zones[r.ordinal()].zCoord);
-            }
-        } else {
-            throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
-        }
+			EnumRace r = EnumRace.fromString(args[0]);
+			if (r == null || r == EnumRace.ALV || r == EnumRace.HUMAN) throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
+			if (EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN) {
+				((EntityPlayer) sender).getEntityAttribute(AlfheimRegistry.RACE).setBaseValue(r.ordinal());
+				((EntityPlayer) sender).capabilities.allowFlying = true;
+				((EntityPlayer) sender).sendPlayerAbilities();
+				((EntityPlayer) sender).setSpawnChunk(new ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal()].zCoord)), true, AlfheimConfig.dimensionIDAlfheim);
+				ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal()].xCoord, AlfheimConfig.zones[r.ordinal()].yCoord, AlfheimConfig.zones[r.ordinal()].zCoord);
+			}
+		} else {
+			throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
+		}
 	}
 
 	@Override
@@ -60,5 +60,5 @@ public class CommandRace extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, ss);
 		}
 		return null;
-    }
+	}
 }

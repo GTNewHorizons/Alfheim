@@ -37,22 +37,22 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		super.setRotationAngles(limbSwing, limbIpld, ticksExisted, yawHead, pitchHead, idk, entity);
 		EntityFlugel flugel = (EntityFlugel) entity;
 
-        if (flugel.isCasting()) {
-            float f6 = 0.0F;
-            float f7 = 0.0F;
-            rightarm.rotateAngleZ = 0.0F;
-            leftarm.rotateAngleZ = 0.0F;
-            rightarm.rotateAngleY = -(0.1F - f6 * 0.6F) + head.rotateAngleY;
-            leftarm.rotateAngleY = 0.1F - f6 * 0.6F + head.rotateAngleY + 0.4F;
-            rightarm.rotateAngleX = -((float)Math.PI / 2F) + head.rotateAngleX;
-            leftarm.rotateAngleX = -((float)Math.PI / 2F) + head.rotateAngleX;
-            rightarm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
-            leftarm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
-            rightarm.rotateAngleZ += MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
-            leftarm.rotateAngleZ -= MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
-            rightarm.rotateAngleX += MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
-            leftarm.rotateAngleX -= MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
-        }
+		if (flugel.isCasting()) {
+			float f6 = 0.0F;
+			float f7 = 0.0F;
+			rightarm.rotateAngleZ = 0.0F;
+			leftarm.rotateAngleZ = 0.0F;
+			rightarm.rotateAngleY = -(0.1F - f6 * 0.6F) + head.rotateAngleY;
+			leftarm.rotateAngleY = 0.1F - f6 * 0.6F + head.rotateAngleY + 0.4F;
+			rightarm.rotateAngleX = -((float)Math.PI / 2F) + head.rotateAngleX;
+			leftarm.rotateAngleX = -((float)Math.PI / 2F) + head.rotateAngleX;
+			rightarm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+			leftarm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
+			rightarm.rotateAngleZ += MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
+			leftarm.rotateAngleZ -= MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
+			rightarm.rotateAngleX += MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
+			leftarm.rotateAngleX -= MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
+		}
 	}
 	
 	public void renderWings(Entity entity, float partialTicks) {
@@ -114,7 +114,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	
 	@SideOnly(Side.CLIENT)
 	public static void renderHalo(Entity entity, float partialTicks) {
-		EntityFlugel flugel = (EntityFlugel) entity;
+		//EntityFlugel flugel = (EntityFlugel) entity;
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -128,9 +128,9 @@ public class ModelEntityFlugel extends ModelBipedNew {
 
 		GL11.glTranslated(0, -0.1 + (entity.isSneaking() ? 0.0625 : 0), 0);
 		
-		GL11.glRotated(ASJUtilities.interpolate(flugel.prevRenderYawOffset, flugel.renderYawOffset, partialTicks), 0, -1, 0);
-		GL11.glRotated(ASJUtilities.interpolate(flugel.prevRotationYawHead, flugel.rotationYawHead, partialTicks) - 270, 0, 1, 0);
-		GL11.glRotated(ASJUtilities.interpolate(flugel.prevRotationPitch, flugel.prevRotationPitch, partialTicks), 0, 0, 1);
+		//GL11.glRotated(ASJUtilities.interpolate(flugel.prevRenderYawOffset, flugel.renderYawOffset, partialTicks), 0, -1, 0);
+		//GL11.glRotated(ASJUtilities.interpolate(flugel.prevRotationYawHead, flugel.rotationYawHead, partialTicks) - 270, 0, 1, 0);
+		//GL11.glRotated(ASJUtilities.interpolate(flugel.prevRotationPitch, flugel.prevRotationPitch, partialTicks), 0, 0, 1);
 		
 		GL11.glRotated(30, 1, 0, -1);
 		GL11.glTranslatef(-0.1F, -0.5F, -0.1F);

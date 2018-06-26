@@ -8,12 +8,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityElf extends RenderLiving {
 
-    public RenderEntityElf(ModelBase model, float shadowSize) {
-        super(model, shadowSize);
-    }
+	public RenderEntityElf(ModelBase model, float shadowSize) {
+		super(model, shadowSize);
+	}
 
-    @Override
-    public ResourceLocation getEntityTexture(Entity par1Entity) {
-        return new ResourceLocation(ModInfo.MODID, "textures/model/entity/Elf.png");
-    }
+	@Override
+	public ResourceLocation getEntityTexture(Entity par1Entity) {
+		return new ResourceLocation(ModInfo.MODID, "textures/model/entity/Elf.png");
+	}
 }

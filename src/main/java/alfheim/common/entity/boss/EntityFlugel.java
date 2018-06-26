@@ -224,7 +224,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		if(entitylivingbase instanceof EntityPlayer) ((EntityPlayer) entitylivingbase).triggerAchievement(AlfheimAchievements.flugelKill);
 
 		worldObj.playSoundAtEntity(this, "random.explode", 20F, (1F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
-		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1D, 0D, 0D);
+		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1, 0, 0);
 	}
 
 	@Override
@@ -578,7 +578,6 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		tasks.taskEntries.clear();
 		int i = 0;
 		tasks.addTask(i++, new EntityAIWatchClosest(this, EntityPlayer.class, Float.MAX_VALUE));
-		// There is NO compiler errors, just ignore those:
 		tasks.addTask(i, new AITeleport(this, AITask.TP));
 		tasks.addTask(i, new AIChase(this, AITask.CHASE));
 		tasks.addTask(i, new AIRegen(this, AITask.REGEN));
@@ -796,13 +795,13 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			short short1 = 128;
 
 			for(int l = 0; l < short1; ++l)  {
-				double d6 = l / (short1 - 1.0D);
+				double d6 = l / (short1 - 1.0);
 				float f = (rand.nextFloat() - 0.5F) * 0.2F;
 				float f1 = (rand.nextFloat() - 0.5F) * 0.2F;
 				float f2 = (rand.nextFloat() - 0.5F) * 0.2F;
-				double d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5D) * width * 2.0D;
+				double d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5) * width * 2.0;
 				double d8 = d4 + (posY - d4) * d6 + rand.nextDouble() * height;
-				double d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5D) * width * 2.0D;
+				double d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5) * width * 2.0;
 				worldObj.spawnParticle("portal", d7, d8, d9, f, f1, f2);
 			}
 
@@ -816,45 +815,45 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	
 	public void checkCollision() {
 		Vec3 vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-        Vec3 vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-        MovingObjectPosition mop = this.worldObj.rayTraceBlocks(vec3, vec31);
-        vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-        vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+		Vec3 vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+		MovingObjectPosition mop = this.worldObj.rayTraceBlocks(vec3, vec31);
+		vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
+		vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
-        if (mop != null) {
-            vec31 = Vec3.createVectorHelper(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
-        }
+		if (mop != null) {
+			vec31 = Vec3.createVectorHelper(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
+		}
 
-        Entity entity = null;
-        List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
-        double d0 = 0.0D;
+		Entity entity = null;
+		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
+		double d0 = 0.0;
 
-        for (int i = 0; i < list.size(); ++i) {
-            Entity entity1 = (Entity)list.get(i);
+		for (int i = 0; i < list.size(); ++i) {
+			Entity entity1 = (Entity)list.get(i);
 
-            if (entity1.canBeCollidedWith()) {
-                float f = 0.3F;
-                AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double)f, (double)f, (double)f);
-                MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
+			if (entity1.canBeCollidedWith()) {
+				float f = 0.3F;
+				AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double)f, (double)f, (double)f);
+				MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
 
-                if (movingobjectposition1 != null) {
-                    double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
+				if (movingobjectposition1 != null) {
+					double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
 
-                    if (d1 < d0 || d0 == 0.0D) {
-                        entity = entity1;
-                        d0 = d1;
-                    }
-                }
-            }
-        }
+					if (d1 < d0 || d0 == 0.0) {
+						entity = entity1;
+						d0 = d1;
+					}
+				}
+			}
+		}
 
-        if (entity != null) {
-            mop = new MovingObjectPosition(entity);
-        }
+		if (entity != null) {
+			mop = new MovingObjectPosition(entity);
+		}
 
-        if (mop != null) {
-            this.onImpact(mop);
-        }
+		if (mop != null) {
+			this.onImpact(mop);
+		}
 	}
 
 	private void onImpact(MovingObjectPosition mop) {

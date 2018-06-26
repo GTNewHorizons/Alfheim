@@ -42,8 +42,8 @@ public class ModelElementalArmor extends ModelBiped {
 	public ModelRenderer wing2_3;
 	public ModelRenderer rightagem;
 	public ModelRenderer leftagem;
-    public ModelRenderer rightfgem;
-    public ModelRenderer leftfgem;
+	public ModelRenderer rightfgem;
+	public ModelRenderer leftfgem;
 
 	int slot;
 

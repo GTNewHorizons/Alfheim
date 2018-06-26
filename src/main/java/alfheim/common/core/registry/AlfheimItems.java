@@ -1,34 +1,21 @@
 package alfheim.common.core.registry;
 
-import static alexsocol.asjlib.ASJUtilities.register;
+import static alexsocol.asjlib.ASJUtilities.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.api.lib.LibOreDict;
-import alfheim.common.item.equipment.armor.elemental.ElementalAirBoots;
-import alfheim.common.item.equipment.armor.elemental.ElementalEarthChest;
-import alfheim.common.item.equipment.armor.elemental.ElementalFireLeggings;
-import alfheim.common.item.equipment.armor.elemental.ElementalWaterHelm;
-import alfheim.common.item.equipment.armor.elvoruim.ElvoriumArmor;
-import alfheim.common.item.equipment.armor.elvoruim.ElvoriumHelmet;
-import alfheim.common.item.equipment.baubles.CreativeReachPendant;
-import alfheim.common.item.equipment.baubles.FirePendant;
-import alfheim.common.item.equipment.baubles.IcePendant;
-import alfheim.common.item.equipment.baubles.ItemManaStorage;
-import alfheim.common.item.equipment.tools.ItemLivingrockPickaxe;
-import alfheim.common.item.equipment.tools.ItemRealitySword;
-import alfheim.common.item.interaction.thaumcraft.ElementalWaterHelmRevealing;
-import alfheim.common.item.interaction.thaumcraft.ElvoriumHelmetRevealing;
-import alfheim.common.item.material.ItemElvenResource;
-import alfheim.common.item.relic.ItemExcaliber;
-import alfheim.common.item.relic.ItemFlugelSoul;
-import alfheim.common.item.relic.ItemMjolnir;
-import alfheim.common.item.relic.ItemTankMask;
-import alfheim.common.item.rod.ItemRodElemental;
-import alfheim.common.item.rod.ItemRodLightningMark;
-import alfheim.common.item.rod.ItemRodRays;
+import alfheim.common.item.ItemHoloProjector;
+import alfheim.common.item.equipment.armor.elemental.*;
+import alfheim.common.item.equipment.armor.elvoruim.*;
+import alfheim.common.item.equipment.bauble.*;
+import alfheim.common.item.equipment.tool.*;
+import alfheim.common.item.interaction.thaumcraft.*;
+import alfheim.common.item.material.*;
+import alfheim.common.item.relic.*;
+import alfheim.common.item.rod.*;
 import baubles.api.BaubleType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,6 +42,7 @@ public class AlfheimItems {
 	public static Item excaliber;
 	public static Item flugelDisc;
 	public static Item flugelSoul;
+	public static Item holoProjector;
 	public static Item livingrockPickaxe;
 	public static Item manaElvenRing;
 	public static Item manaElvenRingGreater;
@@ -91,6 +79,7 @@ public class AlfheimItems {
 		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
+		holoProjector = new ItemHoloProjector();
 		//mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
@@ -111,6 +100,7 @@ public class AlfheimItems {
 	}
 
 	private static void reg() {
+		register(holoProjector);
 		register(realitySword);
 		register(livingrockPickaxe);
 		register(manaStone);

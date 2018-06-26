@@ -29,14 +29,14 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 	
 	public ItemRodElemental(String name, Block barrier) {
 		this.barrier = barrier;
-		this.setCreativeTab(AlfheimCore.alfheimTab);
-		this.setFull3D();
-		this.setMaxDamage(100);
-		this.setMaxStackSize(1);
-		this.setTextureName(ModInfo.MODID + ':' + name);
-		this.setUnlocalizedName(name);
+		setCreativeTab(AlfheimCore.alfheimTab);
+		setFull3D();
+		setMaxDamage(100);
+		setMaxStackSize(1);
+		setTextureName(ModInfo.MODID + ':' + name);
+		setUnlocalizedName(name);
 	}
-    
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
@@ -56,7 +56,7 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 		return getIconIndex(stack);
 	}
 	
-    @Override
+	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (stack.getItemDamage() > 0) return stack;
 		if (!world.isRemote) {
@@ -74,9 +74,9 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 		}
 		return stack;
 	}
-    
-    // Modified code from ItemDirtRod
-    public static boolean place(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10, Block block, int cost, float r, float g, float b) {
+	
+	// Modified code from ItemDirtRod
+	public static boolean place(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10, Block block, int cost, float r, float g, float b) {
 		if(ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
 			ForgeDirection dir = ForgeDirection.getOrientation(par7);
 

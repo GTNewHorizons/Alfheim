@@ -1,5 +1,7 @@
 package alexsocol.asjlib;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -8,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.management.DescriptorKey;
+
 import org.apache.logging.log4j.Level;
-import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -22,6 +25,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,14 +49,17 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -80,18 +87,18 @@ public class ASJUtilities {
 	 * */
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-    public void onTextureStitchEvent(TextureStitchEvent.Pre event) {
-        switch (event.map.getTextureType()) {
-        case 0: for(String s : blockIconsNames) blockIcons.put(s, event.map.registerIcon(s));
-        		break;
-        case 1: for(String s : itemsIconsNames) itemsIcons.put(s, event.map.registerIcon(s));
-        		break;
-        }
-    }
+	public void onTextureStitchEvent(TextureStitchEvent.Pre event) {
+		switch (event.map.getTextureType()) {
+		case 0: for(String s : blockIconsNames) blockIcons.put(s, event.map.registerIcon(s));
+				break;
+		case 1: for(String s : itemsIconsNames) itemsIcons.put(s, event.map.registerIcon(s));
+				break;
+		}
+	}
 	
 	/**
 	 * Returns the name of the block
-	 * @param block The block to get name from
+	 * @param block Block to get name from
 	 */
 	public static String getBlockName(Block block) {
 		return block.getUnlocalizedName().substring(5);
@@ -99,16 +106,24 @@ public class ASJUtilities {
 	
 	/**
 	 * Returns the name of the item
-	 * @param item The item to get name from
+	 * @param item Item to get name from
 	 */
 	public static String getItemName(Item item) {
 		return item.getUnlocalizedName().substring(5);
 	}
 	
+	/**
+	 * Registers block by name
+	 * @param block Block to register
+	 */
 	public static void register(Block block) {
 		GameRegistry.registerBlock(block, getBlockName(block));
 	}
-	
+
+	/**
+	 * Registers item by name
+	 * @param item Item to register
+	 */
 	public static void register(Item item) {
 		GameRegistry.registerItem(item, getItemName(item));
 	}
@@ -119,7 +134,7 @@ public class ASJUtilities {
 	 * */
 	public static String getModId(ItemStack stack) {
 		GameRegistry.UniqueIdentifier id = GameRegistry.findUniqueIdentifierFor(stack.getItem());
-	    return id == null || id.modId.equals("") ? "minecraft" : id.modId;
+		return id == null || id.modId.equals("") ? "minecraft" : id.modId;
 	}
 	
 	/**
@@ -131,8 +146,8 @@ public class ASJUtilities {
 		if (dimTo == entity.dimension) entity.setPosition(x, y, z);
 		if (entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) entity;
-	        WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
-	        player.mcServer.getConfigurationManager().transferPlayerToDimension(player, dimTo, new FreeTeleporter(worldTo, x, y, z));
+			WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
+			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, dimTo, new FreeTeleporter(worldTo, x, y, z));
 		}
 	}
 	
@@ -142,6 +157,7 @@ public class ASJUtilities {
 	
 	/**
 	 * Determines whether entity will die from next hit
+	 * @param event Some event fired when entity's HP decreases
 	 * */
 	public static boolean willEntityDie(LivingAttackEvent event) {
 		float amount = event.ammount;
@@ -164,13 +180,13 @@ public class ASJUtilities {
 	 * @param inventory The inventory to scan
 	 */
 	public static int getSlotWithItem(Item item, IInventory inventory) {
-        for (int i = 0; i < inventory.getSizeInventory(); ++i) {
-            if (inventory.getStackInSlot(i) != null && inventory.getStackInSlot(i).getItem() == item) {
-                return i;
-            }
-        }
-        return -1;
-    }
+		for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+			if (inventory.getStackInSlot(i) != null && inventory.getStackInSlot(i).getItem() == item) {
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 	/**
 	 * Removes itemstack from inventory
@@ -180,18 +196,18 @@ public class ASJUtilities {
 	 */
 	public static boolean consumeItemStack(IInventory inventory, ItemStack stack) {
 	   if(getAmount(inventory, stack) >= stack.stackSize) {
-	      for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	         if(isItemStackEqualData(inventory.getStackInSlot(i), stack)){
-	            int amount = Math.min(stack.stackSize, inventory.getStackInSlot(i).stackSize);
-	            if(amount > 0) {
-	               inventory.decrStackSize(i, amount);
-	               stack.stackSize -= amount;
-	            }
-	            if(stack.stackSize <= 0) {
-	               return true;
-	            }
-	         }
-	      }
+		  for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			 if(isItemStackEqualData(inventory.getStackInSlot(i), stack)){
+				int amount = Math.min(stack.stackSize, inventory.getStackInSlot(i).stackSize);
+				if(amount > 0) {
+				   inventory.decrStackSize(i, amount);
+				   stack.stackSize -= amount;
+				}
+				if(stack.stackSize <= 0) {
+				   return true;
+				}
+			 }
+		  }
 	   }
 	   return false;
 	}
@@ -205,9 +221,9 @@ public class ASJUtilities {
 	public static int getAmount(IInventory inventory, ItemStack stack) {
 	   int amount = 0;
 	   for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	      if(isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
-	         amount += inventory.getStackInSlot(i).stackSize;
-	      }
+		  if(isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
+			 amount += inventory.getStackInSlot(i).stackSize;
+		  }
 	   }
 	   return amount;
 	}
@@ -255,18 +271,18 @@ public class ASJUtilities {
 	 */
 	public static boolean consumeItemStackNBT(IInventory inventory, ItemStack stack) {
 	   if(getAmountNBT(inventory, stack) >= stack.stackSize) {
-	      for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	         if(isItemStackEqualNBT(inventory.getStackInSlot(i), stack)){
-	            int amount = Math.min(stack.stackSize, inventory.getStackInSlot(i).stackSize);
-	            if(amount > 0) {
-	            	inventory.decrStackSize(i, amount);
-	            	stack.stackSize -= amount;
-	            }
-	            if(stack.stackSize <= 0) {
-	               return true;
-	            }
-	         }
-	      }
+		  for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			 if(isItemStackEqualNBT(inventory.getStackInSlot(i), stack)){
+				int amount = Math.min(stack.stackSize, inventory.getStackInSlot(i).stackSize);
+				if(amount > 0) {
+					inventory.decrStackSize(i, amount);
+					stack.stackSize -= amount;
+				}
+				if(stack.stackSize <= 0) {
+				   return true;
+				}
+			 }
+		  }
 	   }
 	   return false;
 	}
@@ -280,9 +296,9 @@ public class ASJUtilities {
 	public static int getAmountNBT(IInventory inventory, ItemStack stack) {
 	   int amount = 0;
 	   for (int i = 0; i < inventory.getSizeInventory(); i++) {
-	      if(isItemStackEqualNBT(inventory.getStackInSlot(i), stack)) {
-	         amount += inventory.getStackInSlot(i).stackSize;
-	      }
+		  if(isItemStackEqualNBT(inventory.getStackInSlot(i), stack)) {
+			 amount += inventory.getStackInSlot(i).stackSize;
+		  }
 	   }
 	   return amount;
 	}
@@ -294,13 +310,13 @@ public class ASJUtilities {
 	 */
 	public static boolean isItemStackEqualNBT(ItemStack stack1, ItemStack stack2) {
 	   if(stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage()) {
-	      if(!stack1.hasTagCompound() && !stack2.hasTagCompound()) {
-	         return true;
-	      } else if(stack1.hasTagCompound() != stack2.hasTagCompound()) {
-	         return false;
-	      } else if(stack1.stackTagCompound.equals(stack2.stackTagCompound)) {
-	         return true;
-	      }
+		  if(!stack1.hasTagCompound() && !stack2.hasTagCompound()) {
+			 return true;
+		  } else if(stack1.hasTagCompound() != stack2.hasTagCompound()) {
+			 return false;
+		  } else if(stack1.stackTagCompound.equals(stack2.stackTagCompound)) {
+			 return true;
+		  }
 	   }
 	   return false;
 	}
@@ -308,7 +324,7 @@ public class ASJUtilities {
 	/**
 	 * Changes itemstack's item
 	 * @param stack Stack to change its item
-	 * @param item Item to set in {@link stack}
+	 * @param item Item to set in {@code stack}
 	 * */
 	public static ItemStack changeStackItem(ItemStack stack, Item item) {
 		ItemStack newStack = new ItemStack(item, stack.stackSize, stack.getItemDamage());
@@ -346,16 +362,23 @@ public class ASJUtilities {
 		}
 	}*/
 
+	/**
+	 * Adds new recipe with {@link OreDictionary} support
+	 * */
 	public static void addOreDictRecipe(ItemStack output, Object... recipe) {
 		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
 	}
 
+	/**
+	 * Adds new shapeless recipe with {@link OreDictionary} support
+	 * */
 	public static void addShapelessOreDictRecipe(ItemStack output, Object... recipe) {
 		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(output, recipe));
 	}
 	
 	/**
-	 * Removes recipe of <b>itemstack</b>
+	 * Removes recipe of {@code resultItem}
+	 * @param resultItem Stack to remove recipe
 	 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 	 * */
 	public static void removeRecipe(ItemStack resultItem) {
@@ -363,7 +386,7 @@ public class ASJUtilities {
 		
 		for (int scan = 0; scan < recipes.size(); scan++) {
 			if (ItemStack.areItemStacksEqual(resultItem, ((IRecipe) recipes.get(scan)).getRecipeOutput())) {
-				FMLRelaunchLog.log("ASJLib", Level.INFO, "[ASJLib] Removed Recipe: " + recipes.get(scan) + " -> " + ((IRecipe) recipes.get(scan)).getRecipeOutput());
+				FMLRelaunchLog.log("ASJLib", Level.INFO, "Removed Recipe: " + recipes.get(scan) + " -> " + ((IRecipe) recipes.get(scan)).getRecipeOutput());
 				recipes.remove(scan);
 			}
 		}
@@ -377,76 +400,76 @@ public class ASJUtilities {
 	 * @author timaxa007
 	 */
 	public static MovingObjectPosition getMouseOver(EntityLivingBase entity_base, double dist, boolean interact) {
-        if (entity_base == null || entity_base.worldObj == null) {
-        	return null;
-        }
-        
-        Entity pointedEntity = null;
-        double d0 = dist;
-        double d1 = d0;
-        Vec3 vec3 = Vec3.createVectorHelper(entity_base.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity_base.posY : entity_base.posY + entity_base.getEyeHeight()), entity_base.posZ);
-        Vec3 vec31 = entity_base.getLookVec();
-        Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
-        Vec3 vec33 = null;
-        MovingObjectPosition objectMouseOver = rayTrace(entity_base, dist);
+		if (entity_base == null || entity_base.worldObj == null) {
+			return null;
+		}
+		
+		Entity pointedEntity = null;
+		double d0 = dist;
+		double d1 = d0;
+		Vec3 vec3 = Vec3.createVectorHelper(entity_base.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity_base.posY : entity_base.posY + entity_base.getEyeHeight()), entity_base.posZ);
+		Vec3 vec31 = entity_base.getLookVec();
+		Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
+		Vec3 vec33 = null;
+		MovingObjectPosition objectMouseOver = rayTrace(entity_base, dist);
 
-        if (objectMouseOver != null) {
-            d1 = objectMouseOver.hitVec.distanceTo(vec3);
-        }
+		if (objectMouseOver != null) {
+			d1 = objectMouseOver.hitVec.distanceTo(vec3);
+		}
 
-        float f1 = 1.0F;
-        List list = entity_base.worldObj.getEntitiesWithinAABBExcludingEntity(entity_base, entity_base.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
-        double d2 = d1;
+		float f1 = 1.0F;
+		List list = entity_base.worldObj.getEntitiesWithinAABBExcludingEntity(entity_base, entity_base.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
+		double d2 = d1;
 
-        for (int i = 0; i < list.size(); ++i) {
-            Entity entity = (Entity)list.get(i);
+		for (int i = 0; i < list.size(); ++i) {
+			Entity entity = (Entity)list.get(i);
 
-            if (entity.canBeCollidedWith() || interact) {
-                float f2 = entity.getCollisionBorderSize();
-                AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
-                MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+			if (entity.canBeCollidedWith() || interact) {
+				float f2 = entity.getCollisionBorderSize();
+				AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+				MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
-                if (axisalignedbb.isVecInside(vec3)) {
-                    if (0.0D < d2 || d2 == 0.0D) {
-                        pointedEntity = entity;
-                        vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
-                        d2 = 0.0D;
-                    }
-                } else if (movingobjectposition != null) {
-                    double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+				if (axisalignedbb.isVecInside(vec3)) {
+					if (0.0 < d2 || d2 == 0.0) {
+						pointedEntity = entity;
+						vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+						d2 = 0.0;
+					}
+				} else if (movingobjectposition != null) {
+					double d3 = vec3.distanceTo(movingobjectposition.hitVec);
 
-                    if (d3 < d2 || d2 == 0.0D) {
-                        if (entity == entity_base.ridingEntity && !entity.canRiderInteract()) {
-                            if (d2 == 0.0D) {
-                                pointedEntity = entity;
-                                vec33 = movingobjectposition.hitVec;
-                            }
-                        } else {
-                            pointedEntity = entity;
-                            vec33 = movingobjectposition.hitVec;
-                            d2 = d3;
-                        }
-                    }
-                }
-            }
-        }
+					if (d3 < d2 || d2 == 0.0) {
+						if (entity == entity_base.ridingEntity && !entity.canRiderInteract()) {
+							if (d2 == 0.0) {
+								pointedEntity = entity;
+								vec33 = movingobjectposition.hitVec;
+							}
+						} else {
+							pointedEntity = entity;
+							vec33 = movingobjectposition.hitVec;
+							d2 = d3;
+						}
+					}
+				}
+			}
+		}
 
-        if (pointedEntity != null && (d2 < d1 || objectMouseOver == null)) {
-            return new MovingObjectPosition(pointedEntity, vec33);
-        }
-        return null;
-    }
+		if (pointedEntity != null && (d2 < d1 || objectMouseOver == null)) {
+			return new MovingObjectPosition(pointedEntity, vec33);
+		}
+		return null;
+	}
 	
 	/**
 	 * Raytracer for 'getMouseOver' method.<br>
 	 * Don't use it. Use {@link #getMouseOver(EntityLivingBase, float, double, boolean) getMouseOver} instead
 	 */
 	private static MovingObjectPosition rayTrace(EntityLivingBase entity, double dist) {
-        Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity.posY : entity.posY + entity.getEyeHeight()), entity.posZ);
-        Vec3 vec31 = entity.getLookVec();
-        Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
-        return entity.worldObj.func_147447_a(vec3, vec32, false, false, true);
-    }
+		Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity.posY : entity.posY + entity.getEyeHeight()), entity.posZ);
+		Vec3 vec31 = entity.getLookVec();
+		Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
+		return entity.worldObj.func_147447_a(vec3, vec32, false, false, true);
+	}
 	
 	/**
 	 * Returns MOP with only blocks.
@@ -465,33 +488,35 @@ public class ASJUtilities {
 	}
 	
 	/**
-     * Interpolated position vector
-     */
+	 * Interpolated position vector
+	 */
 	public static Vec3 getPosition(EntityPlayer player, float par1) {
-        if (par1 == 1.0F) {
-            return Vec3.createVectorHelper(player.posX, player.posY + (player.getEyeHeight() - player.getDefaultEyeHeight()), player.posZ);
-        } else {
-            double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)par1;
-            double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)par1 + (player.getEyeHeight() - player.getDefaultEyeHeight());
-            double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)par1;
-            return Vec3.createVectorHelper(d0, d1, d2);
-        }
-    }
+		if (par1 == 1.0F) {
+			return Vec3.createVectorHelper(player.posX, player.posY + (player.getEyeHeight() - player.getDefaultEyeHeight()), player.posZ);
+		} else {
+			double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)par1;
+			double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)par1 + (player.getEyeHeight() - player.getDefaultEyeHeight());
+			double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)par1;
+			return Vec3.createVectorHelper(d0, d1, d2);
+		}
+	}
 	
 	/**
-     * Returns the closest vulnerable player within the given radius, or null if none is found<br>
-     * Ignoring invisibility and sneaking
-     */
+	 * @return Closest vulnerable player to entity within the given radius,
+	 * ignoring invisibility and sneaking<br>
+	 * Can be null if none is found
+	 */
 	public static EntityPlayer getClosestVulnerablePlayerToEntity(Entity entity, double distance) {
-        return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance);
-    }
+		return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance);
+	}
 
-    /**
-     * Returns the closest vulnerable player within the given radius, or null if none is found<br>
-     * Ignoring invisibility and sneaking
-     */
+	/**
+	 * @return Closest vulnerable player to coords within the given radius,
+	 * ignoring invisibility and sneaking<br>
+	 * Can be null if none is found
+	 */
 	public static EntityPlayer getClosestVulnerablePlayer(World world, double x, double y, double z, double distance) {
-		double prevDist = -1.0D;
+		double prevDist = -1.0;
 		EntityPlayer entityplayer = null;
 
 		for (int i = 0; i < world.playerEntities.size(); ++i) {
@@ -500,7 +525,7 @@ public class ASJUtilities {
 			if (!entityplayer1.capabilities.disableDamage && entityplayer1.isEntityAlive()) {
 				double dist = entityplayer1.getDistanceSq(x, y, z);
 
-				if ((distance < 0.0D || dist < distance * distance) && (prevDist == -1.0D || dist < prevDist)) {
+				if ((distance < 0.0 || dist < distance * distance) && (prevDist == -1.|| dist < prevDist)) {
 					prevDist = dist;
 					entityplayer = entityplayer1;
 				}
@@ -542,6 +567,7 @@ public class ASJUtilities {
 	 * @param z -Coordinate
 	 * @param boime The biome to set at this location
 	 * */
+	@Deprecated
 	public static void setBiomeAt(World world, int x, int z, BiomeGenBase biome) {
 		if (biome == null) {
 			return;
@@ -572,33 +598,81 @@ public class ASJUtilities {
 	}
 	
 	/**
-	 * Plays entity's death sound
+	 * Plays {@code entity}'s death sound
 	 * */
-	public static void playDeathSound(EntityLivingBase target) {
-    	target.playSound((String) ASJReflectionHelper.invoke(target, null, getDeathSound), (Float) ASJReflectionHelper.invoke(target, null, getSoundVolume), (Float) ASJReflectionHelper.invoke(target, null, getSoundPitch));
+	public static void playDeathSound(EntityLivingBase entity) {
+		entity.playSound((String) ASJReflectionHelper.invoke(entity, null, getDeathSound), (Float) ASJReflectionHelper.invoke(entity, null, getSoundVolume), (Float) ASJReflectionHelper.invoke(entity, null, getSoundPitch));
 	}
 	
+	/*public static int randInBoundsInclusive(int min, int max) {
+		return randInBounds(min, max + 1);
+	}
+	
+	public static int randInBoundsInclusive(Random rand, int min, int max) {
+		return randInBounds(rand, min, max + 1);
+	}*/
+	
+	/**
+	 * @return random value in range [min, max] (inclusive)
+	 * */
 	public static int randInBounds(int min, int max) {
 		return randInBounds(new Random(), min, max);
 	}
 	
+	/**
+	 * @return random value in range [min, max] (inclusive)
+	 * */
 	public static int randInBounds(Random rand, int min, int max) {
-		return rand.nextInt(max - min) + min; 
+		return rand.nextInt(max - min + 1) + min; 
 	}
 	
 	/**
-	 * Interpolates values for smoother render
+	 * Interpolates values, e.g. for smoother render
 	 * */
 	public static double interpolate(double last, double now, float partialTicks) {
 		return last + (now - last) * partialTicks;
 	}
 	
+	/**
+	 * Translates matrix to follow player (if something is bound to world's zero coords)
+	 * */
 	public static void interpolatedTranslation(EntityPlayer player, float partialTicks) {
-		GL11.glTranslated(interpolate(player.lastTickPosX, player.posX, partialTicks), interpolate(player.lastTickPosY, player.posY, partialTicks), interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+		glTranslated(interpolate(player.lastTickPosX, player.posX, partialTicks), interpolate(player.lastTickPosY, player.posY, partialTicks), interpolate(player.lastTickPosZ, player.posZ, partialTicks));
 	}
 	
+	/**
+	 * Translates matrix not to follow player (if something is bound to camera's zero coords)
+	 * */
 	public static void interpolatedTranslationReverse(EntityPlayer player, float partialTicks) {
-		GL11.glTranslated(-interpolate(player.lastTickPosX, player.posX, partialTicks), -interpolate(player.lastTickPosY, player.posY, partialTicks), -interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+		glTranslated(-interpolate(player.lastTickPosX, player.posX, partialTicks), -interpolate(player.lastTickPosY, player.posY, partialTicks), -interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+	}
+	
+	/**
+	 * Sets matrix and translation to world's zero coordinates
+	 * so you can render something as in TileEntitySpecialRenderer (if you are used to it)
+	 * Don't forget to call {@link #postRenderISBRH}
+	 * Use this before your render something in ISimpleBlockRenderingHandler
+	 * */
+	public static void preRenderISBRH(int x, int y, int z) {
+		int X = (x / 16 - (x < 0 && x % 16 != 0 ? 1 : 0)) * -16;
+		int Z = (z / 16 - (z < 0 && z % 16 != 0 ? 1 : 0)) * -16;
+		Tessellator.instance.draw();
+		Tessellator.instance.setTranslation(0, 0, 0);
+		glPushMatrix();
+		glTranslated(X, 0, Z);
+	}
+	
+	/**
+	 * This gets everything back for other blocks to render properly
+	 * Don't use unless you've used {@link #preRenderISBRH}
+	 * Use this after your render something in ISimpleBlockRenderingHandler
+	 * */
+	public static void postRenderISBRH(int x, int y, int z) {
+		int X = (x / 16 - (x < 0 && x % 16 != 0 ? 1 : 0)) * -16;
+		int Z = (z / 16 - (z < 0 && z % 16 != 0 ? 1 : 0)) * -16;
+		glPopMatrix();
+		Tessellator.instance.startDrawingQuads();
+		Tessellator.instance.setTranslation(X, 0, Z);
 	}
 	
 	/**
@@ -615,6 +689,9 @@ public class ASJUtilities {
 		return (StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl"));
 	}
 	
+	/**
+	 * @return String which tolds you that this block/item/stuff is only for creative use
+	 * */
 	public static String creativeOnly() {
 		return StatCollector.translateToLocal("tooltip.creativeonly");
 	}
@@ -642,7 +719,6 @@ public class ASJUtilities {
 		List<K> keys = new ArrayList(map.keySet());
 		return keys.get(i);
 	}
-
 	
 	/**
 	 * @return map value by id
@@ -652,52 +728,49 @@ public class ASJUtilities {
 		return vals.get(i);
 	}
 	
-	/**
-	 * Adds new <b>ore</b> spawn to world generator
-	 * */
-	public static void addOreSpawn(Block ore, Block replace, int meta, World world, Random rand, int blockXPos, int blockZPos, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
-		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
-		int veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk;
-		for (int i = 0; i < veins; i++) {
-			int posX = blockXPos + rand.nextInt(16);
-			int posY = minY + rand.nextInt(maxY - minY);
-			int posZ = blockZPos + rand.nextInt(16);
-			(new WorldGenMinable(ore, meta, minVeinSize + rand.nextInt(maxVeinSize - minVeinSize + 1), replace)).generate(world, rand, posX, posY, posZ);
-		}
-	}
+	public static int[] colorCode = new int[32];
 	
-	public static int getDecColor(double r, double g, double b) {
-		return MathHelper.floor_double(r * 256 * 256 * 6 + g * 256 * 6 + b * 6 - 16777216);
-	}
-	
-	public static int makeRainbowFromTime(World world, int slowness) {
-		double time = world.getTotalWorldTime() % slowness, r = 0.0, g = 0.0, b = 0.0, mod = slowness / 6;
-		if (0.0 <= time && time < mod) {
-			r = mod;
-			g = time;
-		}
-		if (mod <= time && time < mod*2) {
-			g = mod;
-			r = mod*2 - time;
-		}
-		if (mod*2 <= time && time < mod*3) {
-			g = mod;
-			b = time - mod*2;
-		}
-		if (mod*3 <= time && time < mod*4) {
-			b = mod;
-			g = mod*4 - time;
-		}
-		if (mod*4 <= time && time < mod*5) {
-			b = mod;
-			r = time - mod*4;
-		}
-		if (mod*5 <= time && time < slowness) {
-			r = mod;
-			b = slowness - time;
-		}
+	static {
+		for (int i = 0; i < 32; ++i) {
+			int j = (i >> 3 & 1) * 85;
+			int k = (i >> 2 & 1) * 170 + j;
+			int l = (i >> 1 & 1) * 170 + j;
+			int i1 = (i >> 0 & 1) * 170 + j;
 
-		return getDecColor(r, g, b);
+			if (i == 6) {
+				k += 85;
+			}
+
+			if (i >= 16) {
+				k /= 4;
+				l /= 4;
+				i1 /= 4;
+			}
+
+			colorCode[i] = (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
+		}
+	}
+
+	/**
+	 * @return enum color packed in uInt with max alpha
+	 * @author qiexie
+	 * */
+	public static int enumColorToRGB(EnumChatFormatting eColor) {
+		return addAlpha(colorCode[eColor.ordinal()], 0xff); 
+	}
+	
+	/**
+	 * Adds {@code alpha} value to @{code color}
+	 * */
+	public static int addAlpha(int color, int alpha) { 
+		return ((alpha & 0xFF) << 24) | (color & 0x00FFFFFF); 
+	}
+	
+	/**
+	 * Sets render color unpacked from uInt
+	 * */
+	public static void glColor1u(int color) {
+		glColor4ub((byte) (color >> 16 & 0xFF), (byte)(color >> 8 & 0xFF), (byte) (color & 0xFF), (byte) (color >> 24 & 0xFF));
 	}
 	
 	/**
@@ -715,23 +788,49 @@ public class ASJUtilities {
 	}
 	
 	/**
-	 * Returns block IIcon registered with {@link registerBlockIcon} 
+	 * Returns block IIcon registered with {@link #registerBlockIcon} 
 	 * */
 	public static IIcon getBlockIcon(String name) {
 		return blockIcons.get(name);
 	}
 	
 	/**
-	 * Returns item IIcon registered with {@link registerItemIcon} 
+	 * Returns item IIcon registered with {@link #registerItemIcon} 
 	 * */
 	public static IIcon getItemIcon(String name) {
 		return itemsIcons.get(name);
 	}
 	
+	/**
+	 * Registers dimension
+	 * @param keepLoaded Keep spawn chunks loaded
+	 * */
+	public static void registerDimension(int id, Class<? extends WorldProvider> w, boolean keepLoaded) {
+		DimensionManager.registerProviderType(id, w, keepLoaded);
+		DimensionManager.registerDimension(id, id);
+	}
+	
+	/**
+	 * Generates <b>ore</b> into the world</br>
+	 * Args: block, it's meta, block to replace, world, rng, x, z positions,
+	 * min, max blocks in one place, min, max block groups in chunk,
+	 * chance to be generated, min, max Y-level
+	 * */
+	public static void generateOre(Block ore, int meta, Block replace, World world, Random rand, int blockXPos, int blockZPos, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
+		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
+		int veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk;
+		for (int i = 0; i < veins; i++) {
+			int posX = blockXPos + rand.nextInt(16) + 8;
+			int posY = minY + rand.nextInt(maxY - minY);
+			int posZ = blockZPos + rand.nextInt(16) + 8;
+			(new WorldGenMinable(ore, meta, minVeinSize + rand.nextInt(maxVeinSize - minVeinSize + 1), replace)).generate(world, rand, posX, posY, posZ);
+		}
+	}
 	
 	/**
 	 * Fills holes of worldgen (no more structures in mid-air)
-	 * @param radius Radius of cylinder-shaped gen hole (0 for square)
+	 * Args: world, filler, x start, x end, upper height, z start, z end
+	 * @param radius Radius of cylinder-shaped structure's base (0 for square)
 	 * */
 	public static void fillGenHoles(World world, Block filler, int meta, int xmn, int xmx, int ystart, int zmn, int zmx, int radius) {
 		if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius < 0) return;
@@ -805,7 +904,7 @@ public class ASJUtilities {
 	
 	public static void sayToAllOnline(String message) {
 		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
-        for (EntityPlayer online : list) say(online, message);
+		for (EntityPlayer online : list) say(online, message);
 	}
 	
 	/** Untested! */

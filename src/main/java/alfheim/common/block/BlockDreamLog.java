@@ -25,10 +25,10 @@ public class BlockDreamLog extends BlockLog implements ILexiconable {
 	}
 
 	@SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister reg) {
+	public void registerBlockIcons(IIconRegister reg) {
 		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLogTop");
 		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLogSide");
-    }
+	}
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon getSideIcon(int meta) {

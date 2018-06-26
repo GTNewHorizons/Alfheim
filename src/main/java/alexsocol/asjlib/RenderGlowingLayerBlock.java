@@ -32,34 +32,34 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 		renderer.setRenderBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		tes.startDrawingQuads();
 		tes.setNormal(0.0F, 0.8F, 0.0F);
-		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, meta));
+		renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, block.getIcon(0, meta));
 		tes.setNormal(0.0F, 0.8F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, meta));
+		renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, block.getIcon(1, meta));
 		tes.setNormal(0.0F, 0.0F, 1.0F);
-		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(2, meta));
+		renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, block.getIcon(2, meta));
 		tes.setNormal(0.0F, 0.0F, -1.0F);
-		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(3, meta));
+		renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, block.getIcon(3, meta));
 		tes.setNormal(0.0F, 0.0F, 0.0F);
-		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, meta));
+		renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, block.getIcon(4, meta));
 		tes.setNormal(-0.5F, 0.0F, 0.0F);
-		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, meta));
+		renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, block.getIcon(5, meta));
 		tes.draw();
 		
 		GL11.glDisable(GL11.GL_LIGHTING);
 		tes.startDrawingQuads();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		tes.setNormal(0.0F, 0.8F, 0.0F);
-		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(0, meta));
+		renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(0, meta));
 		tes.setNormal(0.0F, 0.8F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(1, meta));
+		renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(1, meta));
 		tes.setNormal(0.0F, 0.0F, 1.0F);
-		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(2, meta));
+		renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(2, meta));
 		tes.setNormal(0.0F, 0.0F, -1.0F);
-		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(3, meta));
+		renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(3, meta));
 		tes.setNormal(0.0F, 0.0F, 0.0F);
-		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(4, meta));
+		renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(4, meta));
 		tes.setNormal(-0.5F, 0.0F, 0.0F);
-		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
+		renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
 		tes.draw();
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
@@ -85,8 +85,8 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 		if (((IGlowingLayerBlock)block).getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
 		tes.draw();
 				
-        GL11.glPopMatrix();
-        
+		GL11.glPopMatrix();
+		
 		tes.startDrawingQuads();
 		return false;
 	}

@@ -63,50 +63,50 @@ public class GUIRace extends Gui {
 			double mod = flightTime / AlfheimRegistry.FLIGHT.getDefaultValue();
 			glScaled(1152, 288, 1);
 			glTranslated(0.02, 0.02, 0);
-	        Tessellator tessellator = Tessellator.instance;
-	        tessellator.startDrawingQuads();
-	        
-	        // Base
-	        tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.2);
-	        tessellator.addVertexWithUV(1, 1, this.zLevel, 1, 0.2);
-	        tessellator.addVertexWithUV(1, 0, this.zLevel, 1, 0);
-	        tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0);
-	        
-	        // Stamina default
-	        double d = 0.265;
-	        tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.4);
-	        tessellator.addVertexWithUV(d, 1, this.zLevel, d, 0.4);
-	        tessellator.addVertexWithUV(d, 0, this.zLevel, d, 0.2);
-	        tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.2);
-	        
-	        // 17
-	        tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.6);
-	        tessellator.addVertexWithUV(1, 1, this.zLevel, 1, 0.6);
-	        tessellator.addVertexWithUV(1, 0, this.zLevel, 1, 0.4);
-	        tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.4);
-	        
-	        // Stamina shifting
-	        mod *= d * d * 10;
-	        tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.4);
-	        tessellator.addVertexWithUV(d + mod, 1, this.zLevel, d + mod, 0.4);
-	        tessellator.addVertexWithUV(d + mod, 0, this.zLevel, d + mod, 0.2);
-	        tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.2);
-	        
-	        // glow
-	        if (this.mc.thePlayer.capabilities.isFlying) {
-	        	tessellator.addVertexWithUV(0 + mod + d - 0.085, 1, this.zLevel, 0, 0.8);
-		        tessellator.addVertexWithUV(1 + mod + d - 0.085 - (mod + d), 1, this.zLevel, 1 - (mod + d), 0.8);
-		        tessellator.addVertexWithUV(1 + mod + d - 0.085 - (mod + d), 0, this.zLevel, 1 - (mod + d), 0.6);
-		        tessellator.addVertexWithUV(0 + mod + d - 0.085, 0, this.zLevel, 0, 0.6);
-	        }
-	        
-	        // shifter
-	        tessellator.addVertexWithUV(0 + mod + d, 1, this.zLevel, 0, 1);
-	        tessellator.addVertexWithUV(1 + mod + d, 1, this.zLevel, 1, 1);
-	        tessellator.addVertexWithUV(1 + mod + d, 0, this.zLevel, 1, 0.8);
-	        tessellator.addVertexWithUV(0 + mod + d, 0, this.zLevel, 0, 0.8);
-	        
-	        tessellator.draw();
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			
+			// Base
+			tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.2);
+			tessellator.addVertexWithUV(1, 1, this.zLevel, 1, 0.2);
+			tessellator.addVertexWithUV(1, 0, this.zLevel, 1, 0);
+			tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0);
+			
+			// Stamina default
+			double d = 0.265;
+			tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.4);
+			tessellator.addVertexWithUV(d, 1, this.zLevel, d, 0.4);
+			tessellator.addVertexWithUV(d, 0, this.zLevel, d, 0.2);
+			tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.2);
+			
+			// 17
+			tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.6);
+			tessellator.addVertexWithUV(1, 1, this.zLevel, 1, 0.6);
+			tessellator.addVertexWithUV(1, 0, this.zLevel, 1, 0.4);
+			tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.4);
+			
+			// Stamina shifting
+			mod *= d * d * 10;
+			tessellator.addVertexWithUV(0, 1, this.zLevel, 0, 0.4);
+			tessellator.addVertexWithUV(d + mod, 1, this.zLevel, d + mod, 0.4);
+			tessellator.addVertexWithUV(d + mod, 0, this.zLevel, d + mod, 0.2);
+			tessellator.addVertexWithUV(0, 0, this.zLevel, 0, 0.2);
+			
+			// glow
+			if (this.mc.thePlayer.capabilities.isFlying) {
+				tessellator.addVertexWithUV(0 + mod + d - 0.085, 1, this.zLevel, 0, 0.8);
+				tessellator.addVertexWithUV(1 + mod + d - 0.085 - (mod + d), 1, this.zLevel, 1 - (mod + d), 0.8);
+				tessellator.addVertexWithUV(1 + mod + d - 0.085 - (mod + d), 0, this.zLevel, 1 - (mod + d), 0.6);
+				tessellator.addVertexWithUV(0 + mod + d - 0.085, 0, this.zLevel, 0, 0.6);
+			}
+			
+			// shifter
+			tessellator.addVertexWithUV(0 + mod + d, 1, this.zLevel, 0, 1);
+			tessellator.addVertexWithUV(1 + mod + d, 1, this.zLevel, 1, 1);
+			tessellator.addVertexWithUV(1 + mod + d, 0, this.zLevel, 1, 0.8);
+			tessellator.addVertexWithUV(0 + mod + d, 0, this.zLevel, 0, 0.8);
+			
+			tessellator.draw();
 		}
 		
 		glEnable(GL_ALPHA_TEST);

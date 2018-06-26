@@ -33,7 +33,7 @@ public class ElementalFireLeggings extends ElementalArmor {
 			if (player.isBurning()) player.extinguish();
 		}
 		
-    }
+	}
 	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {

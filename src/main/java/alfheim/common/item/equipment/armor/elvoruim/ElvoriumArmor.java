@@ -106,7 +106,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	@Override
 	public String getUnlocalizedNameInefficiently(ItemStack stack) {
 		 String s = this.getUnlocalizedName(stack);
-	     return s == null ? "" : StatCollector.translateToLocal(s);
+		 return s == null ? "" : StatCollector.translateToLocal(s);
 	}
 	
 	@Override

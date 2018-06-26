@@ -1,0 +1,10 @@
+Credits:
+anonymous..es	-	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
+BlesseNTumble	-	worldgen
+DmitryWS		-	lore and most of textures
+pandorarose22	-	wings textures
+
+Thanks:
+GedeonGrays and guys from Grimmorium 	- for testing and material support
+GloomyFolken 							- for awesome hooklib wich allowed me to change Botania so flexible
+Vazkii									- for making Botania, 'cause without it Alfheim would never have existed

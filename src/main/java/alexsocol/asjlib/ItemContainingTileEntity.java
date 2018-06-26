@@ -83,12 +83,12 @@ public class ItemContainingTileEntity extends TileEntity {
 		ItemStack itemstack = tile.getItem();
 		if (itemstack != null) {
 			GL11.glDisable(GL11.GL_CULL_FACE);
-			EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0D, 0.0D, 0.0D, itemstack);
+			EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0, 0.0, 0.0, itemstack);
 			Item item = entityitem.getEntityItem().getItem();
 			entityitem.getEntityItem().stackSize = tile.getItem().stackSize;
 			entityitem.hoverStart = 0.0F;
 			GL11.glPushMatrix();
-	        Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord));
+			Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord));
 
 			if (item == Items.compass) {
 				TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
@@ -99,8 +99,8 @@ public class ItemContainingTileEntity extends TileEntity {
 					TextureCompass texturecompass = (TextureCompass) textureatlassprite1;
 					double d0 = texturecompass.currentAngle;
 					double d1 = texturecompass.angleDelta;
-					texturecompass.currentAngle = 0.0D;
-					texturecompass.angleDelta = 0.0D;
+					texturecompass.currentAngle = 0.0;
+					texturecompass.angleDelta = 0.0;
 					texturecompass.updateCompass(tile.getWorldObj(), tile.xCoord, tile.zCoord, (double) MathHelper.wrapAngleTo180_float((float) (180 + tile.blockMetadata * 90)), false, true);
 					texturecompass.currentAngle = d0;
 					texturecompass.angleDelta = d1;
@@ -113,11 +113,11 @@ public class ItemContainingTileEntity extends TileEntity {
 				}
 			}
 			RenderItem.renderInFrame = true;
-			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0D, -0.2501D, 0.0D, 0.0F, 0.0F);
+			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0F, 0.0F);
 			RenderItem.renderInFrame = false;
 
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glPopMatrix();
-        }
-    }
+		}
+	}
 }

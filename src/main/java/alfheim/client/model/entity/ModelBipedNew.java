@@ -76,101 +76,101 @@ public class ModelBipedNew extends ModelBase {
 		leftleg.addChild(leftboot);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+	public void render(Entity entity, float time, float amplitude, float ticksExisted, float yawHead, float pitchHead, float size) {
+		setRotationAngles(time, amplitude, ticksExisted, yawHead, pitchHead, size, entity);
 		
 		if (this.isChild) {
-            GL11.glPushMatrix();
-            GL11.glScalef(0.5F, 0.5F, 0.5F);
-            GL11.glTranslatef(0.0F, 24.0F * f5, 0.0F);
+			GL11.glPushMatrix();
+			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			GL11.glTranslatef(0.0F, 24.0F * size, 0.0F);
 		}
 			
-		render(f5);
+		render(size);
 		if (this.isChild) GL11.glPopMatrix();
 	}
 	
-	public void render(float f5) {
-		head.render(f5);
-		body.render(f5);
-		rightarm.render(f5);
-		leftarm.render(f5);
-		rightleg.render(f5);
-		leftleg.render(f5);
+	public void render(float size) {
+		head.render(size);
+		body.render(size);
+		rightarm.render(size);
+		leftarm.render(size);
+		rightleg.render(size);
+		leftleg.render(size);
 	}
 
-	public void setRotationAngles(float limbSwing, float limbIpld, float ticksExisted, float yawHead, float pitchHead, float idk, Entity entity) {
+	public void setRotationAngles(float time, float amplitude, float ticksExisted, float yawHead, float pitchHead, float size, Entity entity) {
 		head.rotateAngleY = yawHead / (180F / (float)Math.PI);
-        head.rotateAngleX = pitchHead / (180F / (float)Math.PI);
-        rightarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbIpld * 0.5F;
-        leftarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbIpld * 0.5F;
-        rightarm.rotateAngleZ = 0.0F;
-        leftarm.rotateAngleZ = 0.0F;
-        rightleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbIpld;
-        leftleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbIpld;
-        rightleg.rotateAngleY = 0.0F;
-        leftleg.rotateAngleY = 0.0F;
+		head.rotateAngleX = pitchHead / (180F / (float)Math.PI);
+		rightarm.rotateAngleX = MathHelper.cos(time * 0.6662F + (float)Math.PI) * 2.0F * amplitude * 0.5F;
+		leftarm.rotateAngleX = MathHelper.cos(time * 0.6662F) * 2.0F * amplitude * 0.5F;
+		rightarm.rotateAngleZ = 0.0F;
+		leftarm.rotateAngleZ = 0.0F;
+		rightleg.rotateAngleX = MathHelper.cos(time * 0.6662F) * 1.4F * amplitude;
+		leftleg.rotateAngleX = MathHelper.cos(time * 0.6662F + (float)Math.PI) * 1.4F * amplitude;
+		rightleg.rotateAngleY = 0.0F;
+		leftleg.rotateAngleY = 0.0F;
 
-        if (entity != null && entity.isRiding()) {
-            rightarm.rotateAngleX += -((float)Math.PI / 5F);
-            leftarm.rotateAngleX += -((float)Math.PI / 5F);
-            rightleg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-            leftleg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-            rightleg.rotateAngleY = ((float)Math.PI / 10F);
-            leftleg.rotateAngleY = -((float)Math.PI / 10F);
-        }
+		if (entity != null && entity.isRiding()) {
+			rightarm.rotateAngleX += -((float)Math.PI / 5F);
+			leftarm.rotateAngleX += -((float)Math.PI / 5F);
+			rightleg.rotateAngleX = -((float)Math.PI * 2F / 5F);
+			leftleg.rotateAngleX = -((float)Math.PI * 2F / 5F);
+			rightleg.rotateAngleY = ((float)Math.PI / 10F);
+			leftleg.rotateAngleY = -((float)Math.PI / 10F);
+		}
 
-        //if (heldItemLeft != 0) leftarm.rotateAngleX = leftarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemLeft;
-        //if (heldItemRight != 0) rightarm.rotateAngleX = rightarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemRight;
+		//if (heldItemLeft != 0) leftarm.rotateAngleX = leftarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemLeft;
+		//if (heldItemRight != 0) rightarm.rotateAngleX = rightarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemRight;
 
-        rightarm.rotateAngleY = 0.0F;
-        leftarm.rotateAngleY = 0.0F;
-        float f6;
-        float f7;
+		rightarm.rotateAngleY = 0.0F;
+		leftarm.rotateAngleY = 0.0F;
+		float f6;
+		float f7;
 
-        if (onGround > -9990.0F) {
-            f6 = onGround;
-            body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * (float)Math.PI * 2.0F) * 0.2F;
-            rightarm.rotationPointZ = MathHelper.sin(body.rotateAngleY) * 5.0F;
-            rightarm.rotationPointX = -MathHelper.cos(body.rotateAngleY) * 5.0F;
-            leftarm.rotationPointZ = -MathHelper.sin(body.rotateAngleY) * 5.0F;
-            leftarm.rotationPointX = MathHelper.cos(body.rotateAngleY) * 5.0F;
-            rightarm.rotateAngleY += body.rotateAngleY;
-            leftarm.rotateAngleY += body.rotateAngleY;
-            leftarm.rotateAngleX += body.rotateAngleY;
-            f6 = 1.0F - onGround;
-            f6 *= f6;
-            f6 *= f6;
-            f6 = 1.0F - f6;
-            f7 = MathHelper.sin(f6 * (float)Math.PI);
-            float f8 = MathHelper.sin(onGround * (float)Math.PI) * -(head.rotateAngleX - 0.7F) * 0.75F;
-            rightarm.rotateAngleX = (float)((double)rightarm.rotateAngleX - ((double)f7 * 1.2D + (double)f8));
-            rightarm.rotateAngleY += body.rotateAngleY * 2.0F;
-            rightarm.rotateAngleZ = MathHelper.sin(onGround * (float)Math.PI) * -0.4F;
-        }
+		if (onGround > -9990.0F) {
+			f6 = onGround;
+			body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * (float)Math.PI * 2.0F) * 0.2F;
+			rightarm.rotationPointZ = MathHelper.sin(body.rotateAngleY) * 5.0F;
+			rightarm.rotationPointX = -MathHelper.cos(body.rotateAngleY) * 5.0F;
+			leftarm.rotationPointZ = -MathHelper.sin(body.rotateAngleY) * 5.0F;
+			leftarm.rotationPointX = MathHelper.cos(body.rotateAngleY) * 5.0F;
+			rightarm.rotateAngleY += body.rotateAngleY;
+			leftarm.rotateAngleY += body.rotateAngleY;
+			leftarm.rotateAngleX += body.rotateAngleY;
+			f6 = 1.0F - onGround;
+			f6 *= f6;
+			f6 *= f6;
+			f6 = 1.0F - f6;
+			f7 = MathHelper.sin(f6 * (float)Math.PI);
+			float f8 = MathHelper.sin(onGround * (float)Math.PI) * -(head.rotateAngleX - 0.7F) * 0.75F;
+			rightarm.rotateAngleX = (float)((double)rightarm.rotateAngleX - ((double)f7 * 1.2 + (double)f8));
+			rightarm.rotateAngleY += body.rotateAngleY * 2.0F;
+			rightarm.rotateAngleZ = MathHelper.sin(onGround * (float)Math.PI) * -0.4F;
+		}
 
-        if (entity != null && entity.isSneaking()) {
-            body.rotateAngleX = 0.5F;
-            rightarm.rotateAngleX += 0.4F;
-            leftarm.rotateAngleX += 0.4F;
-            rightleg.rotationPointZ = 4.0F;
-            leftleg.rotationPointZ = 4.0F;
-            rightleg.rotationPointY = 9.0F;
-            leftleg.rotationPointY = 9.0F;
-            head.rotationPointY = 1.0F;
-            hair.rotationPointY = 1.0F;
-        } else {
-            body.rotateAngleX = 0.0F;
-            rightleg.rotationPointZ = 0.1F;
-            leftleg.rotationPointZ = 0.1F;
-            rightleg.rotationPointY = 12.0F;
-            leftleg.rotationPointY = 12.0F;
-            head.rotationPointY = 0.0F;
-            hair.rotationPointY = 0.0F;
-        }
+		if (entity != null && entity.isSneaking()) {
+			body.rotateAngleX = 0.5F;
+			rightarm.rotateAngleX += 0.4F;
+			leftarm.rotateAngleX += 0.4F;
+			rightleg.rotationPointZ = 4.0F;
+			leftleg.rotationPointZ = 4.0F;
+			rightleg.rotationPointY = 9.0F;
+			leftleg.rotationPointY = 9.0F;
+			head.rotationPointY = 1.0F;
+			hair.rotationPointY = 1.0F;
+		} else {
+			body.rotateAngleX = 0.0F;
+			rightleg.rotationPointZ = 0.1F;
+			leftleg.rotationPointZ = 0.1F;
+			rightleg.rotationPointY = 12.0F;
+			leftleg.rotationPointY = 12.0F;
+			head.rotationPointY = 0.0F;
+			hair.rotationPointY = 0.0F;
+		}
 
-        rightarm.rotateAngleZ += MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
-        leftarm.rotateAngleZ -= MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
-        rightarm.rotateAngleX += MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
-        leftarm.rotateAngleX -= MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
+		rightarm.rotateAngleZ += MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
+		leftarm.rotateAngleZ -= MathHelper.cos(ticksExisted * 0.09F) * 0.05F + 0.05F;
+		rightarm.rotateAngleX += MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
+		leftarm.rotateAngleX -= MathHelper.sin(ticksExisted * 0.067F) * 0.05F;
 	}
 }

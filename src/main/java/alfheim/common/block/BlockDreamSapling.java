@@ -6,7 +6,7 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
-import alfheim.common.world.dim.alfheim.gen.structure.StructureDreamsTree;
+import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,9 +51,7 @@ public class BlockDreamSapling extends BlockBush implements IGrowable, ILexicona
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
 		int l = world.getBlockMetadata(x, y, z) & 7;
 		world.setBlock(x, y, z, Blocks.air, 0, 4);
-		if (!(new StructureDreamsTree()).generate(world, rand, x, y, z, AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0)) {
-			world.setBlock(x, y, z, this, l, 4);
-		}
+		if (!new StructureDreamsTree(AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4);
 	}
 
 	/** Can the block grow

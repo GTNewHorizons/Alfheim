@@ -50,14 +50,14 @@ public class ItemMjolnir extends ItemRelic {
 		return pass == 1 ? Color.HSBtoRGB((200 + (float)(Math.sin(Botania.proxy.getWorldElapsedTicks() / 10.0 % 20) * 20)) / 360F, 0.5F, 1F) : 0xFFFFFFFF;
 	}
 	
-    @Override
-    @SideOnly(Side.CLIENT)
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
 		for (int i = 0; i < icons.length; i++) icons[i] = IconHelper.forItem(reg, this, i);
 	}
 	
 	@Override
-    @SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack stack, int pass) {
 		return icons[pass];
 	}
@@ -72,7 +72,7 @@ public class ItemMjolnir extends ItemRelic {
 		return 2;
 	}
 	
-    @Override
+	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		list.add(new ItemStack(item));
 		
@@ -80,54 +80,54 @@ public class ItemMjolnir extends ItemRelic {
 		setBoolean(creative, TAG_CREATIVE, true);
 		setCharge(creative, MAX_CHARGE);
 		list.add(creative);
-    }
+	}
 
-    @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-    	if (getCharge(stack) >= MAX_CHARGE && !world.isRemote) {
-    		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1, 256, true); 
-    		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) world.addWeatherEffect(new EntityLightningBolt(world, mop.blockX, mop.blockY + 1, mop.blockZ));
-    	}
-    	if (!getBoolean(stack, TAG_CREATIVE, false)) setCharge(stack, 0);
-    }
+	@Override
+	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
+		if (getCharge(stack) >= MAX_CHARGE && !world.isRemote) {
+			MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1, 256, true); 
+			if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) world.addWeatherEffect(new EntityLightningBolt(world, mop.blockX, mop.blockY + 1, mop.blockZ));
+		}
+		if (!getBoolean(stack, TAG_CREATIVE, false)) setCharge(stack, 0);
+	}
 
-    @Override
-    public void onUsingTick(ItemStack stack, EntityPlayer player, int coitemInUseCountunt) {
-    	if (player.worldObj.isRemote) return;
-    	if (getCharge(stack) < MAX_CHARGE) addCharge(stack, player.capabilities.isCreativeMode ? CHARGE_PER_TICK : ManaItemHandler.requestMana(stack, player, CHARGE_PER_TICK, true));
-    }
+	@Override
+	public void onUsingTick(ItemStack stack, EntityPlayer player, int coitemInUseCountunt) {
+		if (player.worldObj.isRemote) return;
+		if (getCharge(stack) < MAX_CHARGE) addCharge(stack, player.capabilities.isCreativeMode ? CHARGE_PER_TICK : ManaItemHandler.requestMana(stack, player, CHARGE_PER_TICK, true));
+	}
 
-    @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
-        return 72000;
-    }
+	@Override
+	public int getMaxItemUseDuration(ItemStack stack) {
+		return 72000;
+	}
 
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.bow;
-    }
+	@Override
+	public EnumAction getItemUseAction(ItemStack stack) {
+		return EnumAction.bow;
+	}
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-    	if (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, MAX_CHARGE, false)) player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
-    }
-    
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int slotID, boolean inHand) {
-    	super.onUpdate(stack, world, entity, slotID, inHand);
-    	if (entity instanceof EntityPlayer && !world.isRemote && (getCharge(stack) >= MAX_CHARGE && !getBoolean(stack, TAG_CREATIVE, false) && !inHand) || (getBoolean(stack, TAG_CREATIVE, false) && inHand && stack.getDisplayName().toLowerCase().trim().equals("banhammer"))) onPlayerStoppedUsing(stack, world, (EntityPlayer) entity, 0);
-    }
-    
-    public static void addCharge(ItemStack stack, int charge) {
-    	setInt(stack, TAG_CHARGE, getCharge(stack) + charge);
-    }
-    
-    public static void setCharge(ItemStack stack, int charge) {
-    	setInt(stack, TAG_CHARGE, charge);
-    }
-    
-    public static int getCharge(ItemStack stack) {
-    	return getInt(stack, TAG_CHARGE, 0);
-    }
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, MAX_CHARGE, false)) player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+		return stack;
+	}
+	
+	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slotID, boolean inHand) {
+		super.onUpdate(stack, world, entity, slotID, inHand);
+		if (entity instanceof EntityPlayer && !world.isRemote && (getCharge(stack) >= MAX_CHARGE && !getBoolean(stack, TAG_CREATIVE, false) && !inHand) || (getBoolean(stack, TAG_CREATIVE, false) && inHand && stack.getDisplayName().toLowerCase().trim().equals("banhammer"))) onPlayerStoppedUsing(stack, world, (EntityPlayer) entity, 0);
+	}
+	
+	public static void addCharge(ItemStack stack, int charge) {
+		setInt(stack, TAG_CHARGE, getCharge(stack) + charge);
+	}
+	
+	public static void setCharge(ItemStack stack, int charge) {
+		setInt(stack, TAG_CHARGE, charge);
+	}
+	
+	public static int getCharge(ItemStack stack) {
+		return getInt(stack, TAG_CHARGE, 0);
+	}
 }

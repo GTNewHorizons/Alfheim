@@ -19,7 +19,7 @@ public class RenderBlockTransferer implements ISimpleBlockRenderingHandler {
 
 		TileTransferer spreader = new TileTransferer();
 		spreader.rotationX = -180F;
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0.0D, 0.0D, 0.0D, 0.0F);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0.0, 0.0, 0.0, 0.0F);
 		GL11.glPopMatrix();
 	}
 

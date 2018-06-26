@@ -92,11 +92,11 @@ public class RenderTileTradePortal extends TileEntitySpecialRenderer {
 	
 	public void renderItem(TileEntity tile, ItemStack stack) {
 		if (stack == null) return;
-		EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0D, 0.0D, 0.0D, stack);
+		EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0, 0.0, 0.0, stack);
 		entityitem.getEntityItem().stackSize = 1;
 		entityitem.hoverStart = 0.0F;
 		RenderItem.renderInFrame = true;
 		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0, 0, 0, 0, 0);
 		RenderItem.renderInFrame = false;
-    }
+	}
 }

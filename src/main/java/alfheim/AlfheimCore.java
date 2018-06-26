@@ -42,43 +42,43 @@ public class AlfheimCore {
 	
 	public static boolean enableElvenStory = false;
 	
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent e) {
-    	enableElvenStory = Loader.isModLoaded("elvenstory");
-    	network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent e) {
+		enableElvenStory = Loader.isModLoaded("elvenstory");
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
 		proxy.registerPackets();
-    	proxy.initializeAndRegisterHandlers();
-    	proxy.preInit();
-    }
-    
-    @EventHandler
-    public void init(FMLInitializationEvent event) { 
-    	proxy.init();
-    }
-    
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-    	proxy.postInit();
-    	proxy.registerKeyBinds();
-    	proxy.registerRenderThings();
+		proxy.initializeAndRegisterHandlers();
+		proxy.preInit();
+	}
+	
+	@EventHandler
+	public void init(FMLInitializationEvent event) { 
+		proxy.init();
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		proxy.postInit();
+		proxy.registerKeyBinds();
+		proxy.registerRenderThings();
 		AlfheimRegistry.loadAllPinkStuff();
-    }
-
-    @EventHandler
-	public void starting(FMLServerStartingEvent event) throws IOException {
-    	if (AlfheimCore.enableElvenStory) {
-    		AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
-    		event.registerServerCommand(new CommandRace());
-    		event.registerServerCommand(new CommandDimTP());
-    	}
 	}
 
-    public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
-    	@Override
-    	public Item getTabIconItem() {
-    		return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal);
-    	}
-    }.setNoTitle().setBackgroundImageName("Alfheim.png");
+	@EventHandler
+	public void starting(FMLServerStartingEvent event) throws IOException {
+		if (AlfheimCore.enableElvenStory) {
+			AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
+			event.registerServerCommand(new CommandRace());
+			event.registerServerCommand(new CommandDimTP());
+		}
+	}
+
+	public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal);
+		}
+	}.setNoTitle().setBackgroundImageName("Alfheim.png");
 }

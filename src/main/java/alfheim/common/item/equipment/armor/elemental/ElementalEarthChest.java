@@ -29,7 +29,7 @@ public class ElementalEarthChest extends ElementalArmor {
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
 		if (armorType == 1 && player.getCurrentArmor(2) != null && player.getCurrentArmor(2).getItem() == AlfheimItems.elementalChestplate && ManaItemHandler.requestManaExact(player.getCurrentArmor(2), player, 1, !world.isRemote)) player.addPotionEffect(new PotionEffect(Potion.resistance.id, 1, 1));
-    }
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {

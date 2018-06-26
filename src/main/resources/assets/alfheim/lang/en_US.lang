@@ -165,6 +165,10 @@ item.FlugelSoul.sign9=Capricorn
 item.FlugelSoul.sign10=Aquarius
 item.FlugelSoul.sign11=Pisces
 
+item.HoloProjector.rotate=LMB & RMB - rotation
+item.HoloProjector.switch=Shift+LMB - switch gender
+item.HoloProjector.select=Shift+RMB - select race
+
 itemGroup.Alfheim=Alfheim
 
 #######################################################___RELIC POEMS___########################################################

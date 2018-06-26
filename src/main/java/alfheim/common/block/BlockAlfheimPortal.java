@@ -55,7 +55,7 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	}
 	
 	@Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (world.provider.dimensionId == 0)
 			if (world.getBlockMetadata(x, y, z) == 0 && player.getCurrentEquippedItem() != null
 			&&  player.getCurrentEquippedItem().getItem() == AlfheimItems.elvenResource
@@ -79,7 +79,7 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim && meta != 0) world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)));
 		super.breakBlock(world, x, y, z, block, meta);
-    }
+	}
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {

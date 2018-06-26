@@ -40,5 +40,5 @@ public class ElementalWaterHelmRevealing extends ElementalWaterHelm implements I
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
 		super.onArmorTick(world, player, stack);
-    }
+	}
 }

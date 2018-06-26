@@ -8,12 +8,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityFlugel extends RenderLiving {
 
-    public RenderEntityFlugel(ModelBase model, float shadowSize) {
-        super(model, shadowSize);
-    }
+	public RenderEntityFlugel(ModelBase model, float shadowSize) {
+		super(model, shadowSize);
+	}
 
-    @Override
-    public ResourceLocation getEntityTexture(Entity par1Entity) {
-        return new ResourceLocation(ModInfo.MODID, "textures/model/entity/Jibril.png");
-    }
+	@Override
+	public ResourceLocation getEntityTexture(Entity par1Entity) {
+		return new ResourceLocation(ModInfo.MODID, "textures/model/entity/Jibril.png");
+	}
 }

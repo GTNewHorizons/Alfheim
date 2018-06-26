@@ -148,7 +148,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	@Override
 	public void onPlayerBaubleRender(ItemStack stack, RenderPlayerEvent e, RenderType type) {
 		if (type != RenderType.HEAD) return;
-		EntityItem entityitem = new EntityItem(e.entityPlayer.worldObj, 0.0D, 0.0D, 0.0D, stack);
+		EntityItem entityitem = new EntityItem(e.entityPlayer.worldObj, 0.0, 0.0, 0.0, stack);
 		Item item = entityitem.getEntityItem().getItem();
 		entityitem.getEntityItem().stackSize = 1;
 		entityitem.hoverStart = 0.0F;
@@ -160,7 +160,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		// Tessellator.instance.setBrightness(Blocks.air.getMixedBrightnessForBlock(e.entityPlayer.worldObj, MathHelper.floor_double(e.entityPlayer.posX), MathHelper.floor_double(e.entityPlayer.posY + 1), MathHelper.floor_double(e.entityPlayer.posZ)));
 
 		RenderItem.renderInFrame = true;
-		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0D, -0.2501D, 0.0D, 0.0F, 0.0F);
+		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0F, 0.0F);
 		RenderItem.renderInFrame = false;
 
 		GL11.glEnable(GL11.GL_CULL_FACE);

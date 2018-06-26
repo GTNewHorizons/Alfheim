@@ -4,7 +4,6 @@ import static alexsocol.asjlib.ASJUtilities.registerEntity;
 import static alexsocol.asjlib.ASJUtilities.registerEntityEgg;
 import static alfheim.api.AlfheimAPI.addPink;
 import static cpw.mods.fml.common.registry.GameRegistry.registerTileEntity;
-import static cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator;
 
 import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
@@ -24,8 +23,6 @@ import alfheim.common.entity.EntityLightningMark;
 import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.potion.PotionAlfheim;
 import alfheim.common.potion.PotionSoulburn;
-import alfheim.common.world.dim.alfheim.gen.WorldGenAlfheim;
-import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.init.Blocks;
@@ -40,8 +37,6 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimRegistry {
-	
-	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
 	
 	public static final IAttribute FLIGHT = new BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime) { 
 		
@@ -70,9 +65,7 @@ public class AlfheimRegistry {
 		registerTileEntities();
 	}
 
-	public static void init() {
-		registerWorldGenerator(worldGen, 1);
-	}
+	public static void init() {}
 	
 	public static void postInit() {
 		loadAllPinkStuff();

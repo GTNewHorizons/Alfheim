@@ -115,12 +115,12 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 			int ticks = (int) (100.0 * ((double) getCurrentMana() / (double) manaRequest));
 
 			int totalSpiritCount = 6;
-			double tickIncrement = 360D / totalSpiritCount;
+			double tickIncrement = 360.0 / totalSpiritCount;
 
 			int speed = 5;
 			double wticks = ticks * speed - tickIncrement;
 
-			double r = Math.sin((ticks - 100) / 10D) * 2;
+			double r = Math.sin((ticks - 100) / 10.0) * 2;
 			double g = Math.sin(wticks * Math.PI / 180 * 0.55);
 
 			for(int i = 0; i < totalSpiritCount; i++) {

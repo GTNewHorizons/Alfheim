@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import vazkii.botania.client.core.helper.ShaderHelper;
@@ -31,8 +32,8 @@ import vazkii.botania.client.lib.LibResources;
 
 public class RenderContributors {
 
-    private static final ResourceLocation book = new ResourceLocation(LibResources.MODEL_LEXICA);
-    private static final ResourceLocation babylon = new ResourceLocation(LibResources.MISC_BABYLON); 
+	private static final ResourceLocation book = new ResourceLocation(LibResources.MODEL_LEXICA);
+	private static final ResourceLocation babylon = new ResourceLocation(LibResources.MISC_BABYLON); 
 	
 	public static void render(RenderWorldLastEvent e) {
 		EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
@@ -40,7 +41,10 @@ public class RenderContributors {
 		EntityPlayer lore = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("DmitryWS");
 	
 		AlexSocol: if (author != null) {
+			if (thePlayer.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
 			if (thePlayer.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
+			if (author.isPotionActive(Potion.invisibility)) break AlexSocol;
+			
 			Minecraft.getMinecraft().renderEngine.bindTexture(babylon);
 			glPushMatrix();
 			glEnable(GL_BLEND);
@@ -81,8 +85,11 @@ public class RenderContributors {
 			glPopMatrix();
 		}
 		
-		DmitryWS: if (lore != null && !(thePlayer.equals(lore) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)) {
+		DmitryWS: if (lore != null) {
+			if (thePlayer.equals(lore) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break DmitryWS;
 			if (thePlayer.equals(lore) && !AlfheimConfig.fancies) break DmitryWS;
+			if (lore.isPotionActive(Potion.invisibility)) break DmitryWS;
+			
 			glPushMatrix();
 			glEnable(GL_CULL_FACE);
 			float t = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + e.partialTicks;

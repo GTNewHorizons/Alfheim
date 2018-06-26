@@ -83,8 +83,7 @@ public class ItemFlugelSoul extends ItemRelic {
 	public void registerIcons(IIconRegister par1IconRegister) {
 		super.registerIcons(par1IconRegister);
 		signs = new IIcon[12];
-		for(int i = 0; i < 12; i++)
-			signs[i] = IconHelper.forName(par1IconRegister, "unused/sign" + i);
+		for(int i = 0; i < 12; i++) signs[i] = IconHelper.forName(par1IconRegister, "unused/sign" + i);
 	}
 
 	@Override
@@ -322,9 +321,9 @@ public class ItemFlugelSoul extends ItemRelic {
 				y0 = -y;
 			}
 
-			if(seg % 2 == 0)
-				GL11.glColor4f(0.6F, 0.6F, 0.6F, a);
-			else GL11.glColor4f(1F, 1F, 1F, a);
+			float c = seg % 2 == 0 ? 0.6F : 1F;
+			if(isDisabled(stack, seg)) GL11.glColor4f(c, 0, 0, a);
+			else GL11.glColor4f(c, c, c, a);
 
 			mc.renderEngine.bindTexture(isDisabled(stack, seg) ? glowTextureDisabled : glowTexture);
 			tess.startDrawingQuads();

@@ -41,37 +41,37 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock,
 	
 	@Override
 	public boolean isOpaqueCube() {
-        return Blocks.leaves.isOpaqueCube();
-    }
+		return Blocks.leaves.isOpaqueCube();
+	}
 	
 	@Override
 	public Item getItemDropped(int meta, Random rand, int p_149650_3_) {
-        return Item.getItemFromBlock(AlfheimBlocks.dreamSapling);
-    }
+		return Item.getItemFromBlock(AlfheimBlocks.dreamSapling);
+	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getRenderColor(int meta) {
+	public int getRenderColor(int meta) {
 		return Integer.parseInt("E5FFF9", 16);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
-        return Integer.parseInt("E5FFF9", 16);
-    }
+	public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
+		return Integer.parseInt("E5FFF9", 16);
+	}
 	
 	@Override
-    public void func_150124_c(World world, int x, int y, int z, int meta, int chance) {}
+	public void func_150124_c(World world, int x, int y, int z, int meta, int chance) {}
 
 	@Override
 	protected int func_150123_b(int meta) {
-        return 100;
-    }
+		return 100;
+	}
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
-        return textures[Blocks.leaves.isOpaqueCube() ? 1 : 0];
+		return textures[Blocks.leaves.isOpaqueCube() ? 1 : 0];
 	}
 
 	@Override
@@ -80,11 +80,11 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock,
 	}
 
 	@SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister reg) {
+	public void registerBlockIcons(IIconRegister reg) {
 		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLeaves");
 		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLeavesOpaque");
 		textures[2] = reg.registerIcon(ModInfo.MODID + ":DreamSparks");
-    }
+	}
 	
 	public int getRenderType() {
 		return RenderGlowingLayerBlock.glowBlockID;
