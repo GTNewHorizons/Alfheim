@@ -53,7 +53,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
-	public static LexiconEntry essences;// TODO describe (?)
+	public static LexiconEntry essences;
 	public static LexiconEntry excalibr;	
 	public static LexiconEntry infuser;
 	public static LexiconEntry mask;
@@ -76,7 +76,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry races;
 	
 	public static void preInit() {
-		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("alfheim", 5));
+		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("Alfheim", 5));
 
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
