@@ -1,3 +1,4 @@
+package alexsocol.asjlib;
 	//forum.mcmodding.ru/threads/7509/
 	
 	/*public static void drawTextureCustomSize(double posX, double posY, double startPixX, double startPixY, double pieceSizeX, double pieceSizeY, float sizeTextureX, float sizeTextureY) {
