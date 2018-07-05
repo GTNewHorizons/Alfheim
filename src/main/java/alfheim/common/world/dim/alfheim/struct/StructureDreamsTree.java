@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class StructureDreamsTree extends StructureGovnoClass {
+public class StructureDreamsTree extends StructureStartClass {
 	public Block log;
 	public Block leaves;
 	public int upmeta;

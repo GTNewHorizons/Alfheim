@@ -53,11 +53,11 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
-	public static LexiconEntry essences;
-	public static LexiconEntry excalibr;	// TODO describe
+	public static LexiconEntry essences;// TODO describe (?)
+	public static LexiconEntry excalibr;	
 	public static LexiconEntry infuser;
-	public static LexiconEntry mask;		// TODO describe
-	//public static LexiconEntry mjolnir;		// describe
+	public static LexiconEntry mask;
+	//public static LexiconEntry mjolnir;
 	public static LexiconEntry mobs;
 	public static LexiconEntry ores;
 	public static LexiconEntry pixie;
@@ -66,9 +66,9 @@ public class AlfheimLexiconData {
 	public static LexiconEntry reality;
 	public static LexiconEntry ruling;
 	public static LexiconEntry runes;
-	public static LexiconEntry soul;		// TODO describe
+	public static LexiconEntry soul;
 	public static LexiconEntry trade;
-	public static LexiconEntry trans;		// TODO describe
+	//public static LexiconEntry trans;		// T/ODO describe FIXME
 	public static LexiconEntry worldgen;
 
 	// Elven Story information
@@ -96,7 +96,7 @@ public class AlfheimLexiconData {
 		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
 		runes	= new BLexiconEntry("runes",	categoryAlfheim);
 		trade	= new BLexiconEntry("trade",	categoryAlfheim);
-		trans	= new BLexiconEntry("trans",	categoryAlfheim);
+		//trans	= new BLexiconEntry("trans",	categoryAlfheim); FIXME
 		worldgen= new BLexiconEntry("worldgen",	categoryAlfheim);
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
@@ -108,7 +108,7 @@ public class AlfheimLexiconData {
 	}
 	
 	public static void preInit2() {
-		excalibr= new RLexiconEntry("excalibr", categoryAlfheim	, AlfheimAchievements.excaliber);
+		excalibr= new RLexiconEntry("excaliber",categoryAlfheim	, AlfheimAchievements.excaliber);
 		mask	= new RLexiconEntry("mask",		categoryAlfheim	, AlfheimAchievements.mask);
 		//mjolnir	= new RLexiconEntry("mjolnir",	categoryAlfheim	, AlfheimAchievements.mjolnir);
 		soul	= new RLexiconEntry("soul",		categoryAlfheim	, AlfheimAchievements.flugelSoul);
@@ -188,8 +188,8 @@ public class AlfheimLexiconData {
 		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPowerIngot);
 		powerRecipes.add(AlfheimRecipes.recipeNiflheimPowerIngot);
 		essences.setKnowledgeType(kt)
-				.setLexiconPages(new PageText("0"), new PageManaInfusorRecipe("1d", AlfheimRecipes.recipeMuspelheimEssence),	// TODO replace this when there will be boss
-								 new PageText("2"), new PageManaInfusorRecipe("3d", AlfheimRecipes.recipeNiflheimEssence),		// TODO replace this when there will be boss
+				.setLexiconPages(new PageText("0"), //new PageManaInfusorRecipe("1d", AlfheimRecipes.recipeMuspelheimEssence),	//  replace this when there will be boss
+								 new PageText("2"), //new PageManaInfusorRecipe("3d", AlfheimRecipes.recipeNiflheimEssence),		//  replace this when there will be boss
 								 new PageText("4"), new PageText("5"), new PageCraftingRecipe("6", powerRecipes),
 								 new PageText("7"), new PageManaInfusorRecipe("8", AlfheimRecipes.recipeMauftrium))
 				.setIcon(new ItemStack(ModItems.manaResource, 1, 5));
@@ -254,7 +254,7 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(AlfheimItems.excaliber));
 		
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge)
-				.setLexiconPages(new PageText("0"))
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
 		
 		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)
@@ -273,8 +273,9 @@ public class AlfheimLexiconData {
 				new PageText("5"));
 		
 		LexiconData.sparks.pages.clear();
-		LexiconData.sparks.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("3"),
-				new PageCraftingRecipe("2", AlfheimRecipes.recipesSpark));
+		LexiconData.sparks.setLexiconPages(new PageText("0"), new PageText("1"),
+				new PageCraftingRecipe("2", AlfheimRecipes.recipesSpark),
+				new PageText("3"));
 	}
 	
 	private static void initElvenStory() {

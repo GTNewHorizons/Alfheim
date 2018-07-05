@@ -34,7 +34,6 @@ import vazkii.botania.common.block.BlockPylon
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TilePylon
 import vazkii.botania.common.item.relic.ItemFlugelEye
-import net.minecraft.item.ItemEnchantedBook
 
 class AlfheimHookHandler {
 	
@@ -87,9 +86,9 @@ class AlfheimHookHandler {
 			for ((key, value) in nbt.tagMap)
 				if (value is NBTTagList || value is NBTTagCompound) {
 					var arr = value.toString().split("\n")
-					sb.append("	$key = ${arr.get(0)}\n")
-					for (i in 1 until arr.size) sb.append("	${arr.get(i)}\n")
-				} else sb.append("	${key} = ${value}\n")
+					sb.append(" $key = ${arr.get(0)}\n")
+					for (i in 1 until arr.size) sb.append(" ${arr.get(i)}\n")
+				} else sb.append("    ${key} = ${value}\n")
 			sb.append("}")
 			return sb.toString()
 		}
@@ -98,7 +97,7 @@ class AlfheimHookHandler {
 		@JvmStatic
 		fun NBTTagList_toString(nbt: NBTTagList): String {
 			var sb = StringBuilder("list [\n")
-			for (obj in nbt.tagList) if (obj is NBTTagList || obj is NBTTagCompound) for (s in obj.toString().split("\n")) sb.append("	$s\n") else sb.append("$obj\n")
+			for (obj in nbt.tagList) if (obj is NBTTagList || obj is NBTTagCompound) for (s in obj.toString().split("\n")) sb.append("    $s\n") else sb.append("$obj\n")
 			sb.append("]")
 			return sb.toString()
 		}

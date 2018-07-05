@@ -33,7 +33,7 @@ public class AlfheimBlocks {
 	public static Block poisonIce;
 	public static Block redFlame;
 	public static Block tradePortal;
-	public static Block transferer;
+	//public static Block transferer; FIXME
 	
 	public static void init() {
 		construct();
@@ -57,14 +57,14 @@ public class AlfheimBlocks {
 		poisonIce = new BlockPoisonIce();
 		redFlame = new BlockRedFlame();
 		tradePortal = new BlockTradePortal();
-		transferer = new BlockTransferer();
+		//transferer = new BlockTransferer(); FIXME
 	}
 
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
 		register(tradePortal);
-		register(transferer);
+		//register(transferer); FIXME
 		registerBlock(alfheimPylons, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylons));
 		register(anyavil);
 		register(elvoriumBlock);

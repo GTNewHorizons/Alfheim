@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureSpawnpoint extends StructureGovnoClass {
+public class StructureSpawnpoint extends StructureStartClass {
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if(AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2);
@@ -19913,7 +19913,7 @@ public class StructureSpawnpoint extends StructureGovnoClass {
 		world.setBlock(x + 11, y + 12, z + 41, ModBlocks.dreamwood, 5, 3);
 		world.setBlock(x + 12, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
 		
-		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 22, y, z, z + 42, 0);
+		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 22, y, z, z + 42, 0);
 	}
 	
 	public static void generateStartBox(World world, Random rand, int x, int y, int z) {

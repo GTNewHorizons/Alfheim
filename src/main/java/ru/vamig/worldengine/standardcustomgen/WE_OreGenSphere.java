@@ -17,23 +17,23 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 public class WE_OreGenSphere implements IWorldGenerator {
 	
 	public List<Integer>
-		fieldMinY			= new ArrayList(),
-		fieldMaxY			= new ArrayList(),
-		fieldMinRadius	   = new ArrayList(),
-		fieldMaxRadius	   = new ArrayList(),
+		fieldMinY            = new ArrayList(),
+		fieldMaxY            = new ArrayList(),
+		fieldMinRadius       = new ArrayList(),
+		fieldMaxRadius       = new ArrayList(),
 		oreInMaxFieldDensity = new ArrayList(),
-		chunksForField	   = new ArrayList();
+		chunksForField       = new ArrayList();
 	public List<WorldGenMinable> oreGen = new ArrayList();
 	
 	public void add(Block oreBlock, byte oreBlockMeta, Block replacingBlock, int oreBlockCountInLode, int p_fieldMinY, int p_fieldMaxY, int p_fieldMinRadius, int p_fieldMaxRadius, int p_oreInMaxFieldDensity, int p_chunksForField) {
 		oreGen.add(new WorldGenMinable(oreBlock, oreBlockMeta, oreBlockCountInLode, replacingBlock));
 		//-//
-		fieldMinY		   .add(p_fieldMinY		   );
-		fieldMaxY		   .add(p_fieldMaxY		   );
-		fieldMinRadius	  .add(p_fieldMinRadius	  );
-		fieldMaxRadius	  .add(p_fieldMaxRadius	  );
+		fieldMinY           .add(p_fieldMinY           );
+		fieldMaxY           .add(p_fieldMaxY           );
+		fieldMinRadius      .add(p_fieldMinRadius      );
+		fieldMaxRadius      .add(p_fieldMaxRadius      );
 		oreInMaxFieldDensity.add(p_oreInMaxFieldDensity);
-		chunksForField	  .add(p_chunksForField	  );
+		chunksForField      .add(p_chunksForField      );
 	}
 	
 	@Override
@@ -51,7 +51,7 @@ public class WE_OreGenSphere implements IWorldGenerator {
 						float
 							px = MathHelper.cos(v * (float)Math.PI / 180.0F) * MathHelper.sin(h * (float)Math.PI / 180.0F),
 							pz = MathHelper.cos(v * (float)Math.PI / 180.0F) * MathHelper.cos(h * (float)Math.PI / 180.0F),
-							py = MathHelper.sin(v * (float)Math.PI / 180.0F)											  ;
+							py = MathHelper.sin(v * (float)Math.PI / 180.0F)                                              ;
 						oreGen.get(i).generate(world, random,
 							sx + MathHelper.floor_float(px * rc), sy + MathHelper.floor_float(py * rc), sz + MathHelper.floor_float(pz * rc));
 					}

@@ -23,7 +23,6 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-
 @Mod(modid = ModInfo.MODID,
 	name = ModInfo.NAME,
 	version = ModInfo.VERSION,

@@ -164,7 +164,7 @@ public class BlockTransferer extends BlockModContainer implements IWandable, IWa
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconData.trans;
+		return null; //AlfheimLexiconData.trans; FIXME
 	}
 
 	@Override

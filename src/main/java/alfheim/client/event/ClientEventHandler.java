@@ -109,7 +109,7 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onItemTooltip(ItemTooltipEvent e) {
-		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && ModInfo.DEV) {
+		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && e.showAdvancedItemTooltips) {
 			e.toolTip.add("");
 			e.toolTip.add("NBT Data:");
 			for (String s : e.itemStack.getTagCompound().toString().split("\n")) e.toolTip.add(s);

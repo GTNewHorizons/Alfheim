@@ -97,7 +97,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	}
 	
 	public static void setStack(EntityManaBurst burst, ItemStack stack) {
-		ItemStack lens = new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.Transferer);
+		ItemStack lens = new ItemStack(AlfheimItems.elvenResource, 1/*, ElvenResourcesMetas.Transferer FIXME*/);
 		ItemNBTHelper.getNBT(lens).setTag(TAG_STACK, stack.writeToNBT(new NBTTagCompound()));
 		burst.setSourceLens(lens);
 	}
@@ -167,7 +167,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	}
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
-		String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() + ".name");
+		String name = StatCollector.translateToLocal(/*new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() +  FIXME*/".name");
 		int color = 0xCCFF00;
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res);
 		GL11.glColor4f(1F, 1F, 1F, 1F);

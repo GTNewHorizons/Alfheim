@@ -27,7 +27,7 @@ public class WE_TreeGen extends WorldGenerator {
 	
 	public boolean cb(Block b) {
 		for(int i = 0; i < ab.size(); i++)
-			if(b			   == ab.get(i))
+			if(b               == ab.get(i))
 				return true;
 		for(int i = 0; i < am.size(); i++)
 			if(b.getMaterial() == am.get(i))
@@ -45,11 +45,11 @@ public class WE_TreeGen extends WorldGenerator {
 		
 		ab.add(Blocks.grass  );
 		ab.add(Blocks.dirt   );
-		ab.add(Blocks.log	);
+		ab.add(Blocks.log    );
 		ab.add(Blocks.log2   );
 		ab.add(Blocks.sapling);
 		ab.add(Blocks.vine   );
-		
+		//-//
 		am.add(Material.air   );
 		am.add(Material.leaves);
 	}
@@ -63,7 +63,7 @@ public class WE_TreeGen extends WorldGenerator {
 			Block block;
 			for(int i1 = p_76484_4_; i1 <= p_76484_4_ + 1 + l; ++i1) {
 				b0 = 1;
-				if(i1 == p_76484_4_			)
+				if(i1 == p_76484_4_            )
 					b0 = 0;
 				if(i1 >= p_76484_4_ + 1 + l - 2)
 					b0 = 2;
@@ -93,7 +93,7 @@ public class WE_TreeGen extends WorldGenerator {
 					for(k1 = p_76484_4_ - b0 + l; k1 <= p_76484_4_ + l; ++k1) {
 						i3 = k1 - p_76484_4_ - l;
 						l1 = b1 + 1 - i3 / 2;
-						
+						//-//
 						for(i2 = p_76484_3_ - l1; i2 <= p_76484_3_ + l1; ++i2) {
 							j2 = i2 - p_76484_3_;
 							for(int k2 = p_76484_5_ - l1; k2 <= p_76484_5_ + l1; ++k2) {
@@ -128,7 +128,7 @@ public class WE_TreeGen extends WorldGenerator {
 						for(k1 = p_76484_4_ - 3 + l; k1 <= p_76484_4_ + l; ++k1) {
 							i3 = k1 - p_76484_4_ - l;
 							l1 = 2 - i3 / 2;
-							
+							//-//
 							for(i2 = p_76484_3_ - l1; i2 <= p_76484_3_ + l1; ++i2)
 								for(j2 = p_76484_5_ - l1; j2 <= p_76484_5_ + l1; ++j2)
 									if(p_76484_1_.getBlock(i2, k1, j2).isLeaves(p_76484_1_, i2, k1, j2)) {
@@ -163,13 +163,13 @@ public class WE_TreeGen extends WorldGenerator {
 	public void growVines(World p_76529_1_, int p_76529_2_, int p_76529_3_, int p_76529_4_, int p_76529_5_) {
 		setBlockAndNotifyAdequately(p_76529_1_, p_76529_2_, p_76529_3_, p_76529_4_, bVine, p_76529_5_);
 		int i1 = 4;
-		
+		//-//
 		while(true) {
 			--p_76529_3_;
-			
+			//-//
 			if(!p_76529_1_.getBlock(p_76529_2_, p_76529_3_, p_76529_4_).isAir(p_76529_1_, p_76529_2_, p_76529_3_, p_76529_4_) || i1 <= 0)
 				return;
-			
+			//-//
 			setBlockAndNotifyAdequately(p_76529_1_, p_76529_2_, p_76529_3_, p_76529_4_, bVine, p_76529_5_);
 			--i1;
 		}

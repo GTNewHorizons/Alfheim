@@ -42,7 +42,7 @@ public class AlfheimItems {
 	public static Item excaliber;
 	public static Item flugelDisc;
 	public static Item flugelSoul;
-	public static Item holoProjector;
+	//public static Item holoProjector; FIXME
 	public static Item livingrockPickaxe;
 	public static Item manaElvenRing;
 	public static Item manaElvenRingGreater;
@@ -54,8 +54,8 @@ public class AlfheimItems {
 	public static Item realitySword;
 	public static Item rodFire;
 	public static Item rodIce;
-	public static Item rodLightning;
-	public static Item rodRays;
+	//public static Item rodLightning; FIXME
+	//public static Item rodRays; FIXME
 	
 	public static void init() {
 		construct();
@@ -79,11 +79,11 @@ public class AlfheimItems {
 		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
-		holoProjector = new ItemHoloProjector();
+		//holoProjector = new ItemHoloProjector(); FIXME
 		//mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
-		flugelDisc = new ItemModRecord("flugel", "FlugelDisc");
+		flugelDisc = new ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimCore.alfheimTab);
 		elfFirePendant = new FirePendant();
 		elfIcePendant = new IcePendant();
 		creativeReachPendant = new CreativeReachPendant();
@@ -95,12 +95,12 @@ public class AlfheimItems {
 		manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
-		rodLightning = new ItemRodLightningMark();
-		rodRays = new ItemRodRays();
+		//rodLightning = new ItemRodLightningMark(); FIXME
+		//rodRays = new ItemRodRays(); FIXME
 	}
 
 	private static void reg() {
-		register(holoProjector);
+		//register(holoProjector); FIXME
 		register(realitySword);
 		register(livingrockPickaxe);
 		register(manaStone);
@@ -109,8 +109,8 @@ public class AlfheimItems {
 		register(manaElvenRingGreater);
 		register(rodFire);
 		register(rodIce);
-		register(rodLightning);
-		register(rodRays);
+		//register(rodLightning); FIXME
+		//register(rodRays); FIXME
 		register(elvenResource);
 	}
 
@@ -145,10 +145,10 @@ public class AlfheimItems {
 		IffesalDust,
 		PrimalRune,
 		MuspelheimRune,
-		NiflheimRune,
+		NiflheimRune
 		//TheRodOfTheDebug
-		Transferer;
-		
+		//Transferer FIXME
+		;
 		static {
 			List<String> items = Arrays.asList(ItemElvenResource.subItems);
 			//ManaTester = items.indexOf("ManaTester");
@@ -167,7 +167,7 @@ public class AlfheimItems {
 			MuspelheimRune = items.indexOf("MuspelheimRune");
 			NiflheimRune = items.indexOf("NiflheimRune");
 			//TheRodOfTheDebug = items.indexOf("TheRodOfTheDebug");
-			Transferer = items.indexOf("Transferer");
+			//Transferer = items.indexOf("Transferer"); FIXME
 		}
 	}
 }

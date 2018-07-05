@@ -86,10 +86,10 @@ botania.page.trade4=Midgard Trade Portal
 
 botania.entry.essences=Essences
 botania.tagline.essences=It looks like corals
-botania.page.essences0=When you travel to the Nether, you realize that this is only part of Muspelheim. From Elven Lore it is clear why the nether portals function: Muspelheim has approached Midgard.
+botania.page.essences0=When you travel to the Nether, you realize that this is only part of Muspelheim. From Elven Lore it is clear why the nether portals function: Muspelheim has approached Midgard.<br>But when you read legends about the universe, you remember about Niflheim, the world of frosts and ice, on a pair with Muspelheim occupying the status of "primal".
 botania.page.essences1=The resources from this infernal hole and the Iffesal dust make it possible to create a special summoner of the gigantic fiery wolf Nizatar. It is believed that it was created specifically to separate the strong from the weak, other theories claim that it was created to protect something, no one knows for sure. Nevertheless, the wolf is summoned, so let the heavenly powers help you!
 botania.page.essences1d=Creating essence of Muspelheim
-botania.page.essences2=But when you read legends about the universe, you remember about Niflheim, the world of frosts and ice, on a par with Muspelheim occupying the status of "primal".
+botania.page.essences2=&oBut how to get their powers?&r
 botania.page.essences3=Snow, dense ice and the Iffesal dust are ideal items for the summoner of the icy wolf, Quei. He resembles Nizatar, and the same legends go about him: either a test, or a guard.
 botania.page.essences3d=Creating essence of Niflheim
 botania.page.essences4=Terrasteel and Elvorium are ideal alloys, symbolizing the power of Midgard and Alfheim. But it's still far from the limit! We all know what will happen if we combine the Gaia Spirit and the Terrestrial - Gaia ingot. A dummy, it would seem. But the elves consider differently...
@@ -146,6 +146,22 @@ botania.tagline.reality=Uii, rainbow!
 botania.page.reality0=Elemental elven armor is certainly a good idea... But for a warrior with such armor there is not enough weapons. Let's say a sword. Fortunately this problem is solvable with the use of the alloy of the gods! The sword itself can either be a simple cutting blade, or it can erupt from itself the strength of one of the four primal elements.
 botania.page.reality1=But we must take into account that when you set the sword to one of these elements, mana is wasted, so take care of it! But it's not important, because you have a lot of it, considering that you created so much Mauftrium for this sword, right?
 botania.page.reality2=Creating the sword
+
+botania.entry.excaliber=Holly Sword Excaliber
+botania.tagline.excaliber=Not fake! Promise!
+botania.page.excaliber0=&oLost long ago, this sword is still not found...&r
+
+botania.entry.mask=Mysterious Mask
+botania.tagline.mask=I've already seen this somewhere...
+botania.page.mask0=Fury and danger emanates from this mask. When you try to put it on you, nothing comes out, and it just falls from your face. However, if you are on the verge of death, it materializes on you from your in your inventory, giving you unparalleled strength and endurance. But do not abuse it, otherwise the dark spirit will consume you...
+
+botania.entry.soul=Flügel
+botania.tagline.soul=Weapon of Gods
+botania.page.soul0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
+botania.page.soul1=Flügels themselves strongly hate Guardians, for the fact that they take away their eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of summoning, built in the clouds, you can summon one of the Flügels and try to defeat it.
+botania.page.soul2=But be careful - their self-love will not allow them to fight with someone who can not fly by themselves, so you need to get wings like theirs. Good armor, strong sword and potions - without them you are unlikely to achieve anything. Otherwise, an inquisitive and flexible mind will help you.
+botania.page.soul3=The winner will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flugel, even stronger, twelve more times (in exchange for warp points).
+botania.page.soul4=This will give you some useful and rare resources.<br><br><br>Unfortunately, &lso far&r no one had found a way to restore corrupted parts of the soul. Perhaps, some day...
 
 botania.entry.es= Elven Story
 botania.tagline.es=New Challenge!

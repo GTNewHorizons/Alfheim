@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureArena extends StructureGovnoClass {
+public class StructureArena extends StructureStartClass {
 	
 	protected Block[] GetValidSpawnBlocks() {
 		return new Block[] { Blocks.grass };
@@ -2232,7 +2232,7 @@ public class StructureArena extends StructureGovnoClass {
 		world.setBlock(x + 34, y + 9, z + 32, ModFluffBlocks.livingrockWall, 0, 3);
 		world.setBlock(x + 6, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
 		world.setBlock(x + 32, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
-		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 40, y, z, z + 40, 22);
+		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 40, y, z, z + 40, 22);
 		return true;
 	}
 }

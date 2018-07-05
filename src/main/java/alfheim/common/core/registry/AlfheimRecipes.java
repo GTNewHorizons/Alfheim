@@ -35,8 +35,8 @@ import vazkii.botania.common.crafting.ModCraftingRecipes;
 public class AlfheimRecipes {
 	
 	public static RecipeManaInfuser recipeElvorium;
-	public static RecipeManaInfuser recipeMuspelheimEssence;
-	public static RecipeManaInfuser recipeNiflheimEssence;
+	//public static RecipeManaInfuser recipeMuspelheimEssence;
+	//public static RecipeManaInfuser recipeNiflheimEssence;
 	public static RecipeManaInfuser recipeTerrasteel;
 	public static RecipeManaInfuser recipeMauftrium;
 	public static RecipeManaInfuser recipeManaStone;
@@ -405,7 +405,7 @@ public class AlfheimRecipes {
 		/*addRecipe(new ItemStack(elfGlass), 100,
 			new ItemStack[] {new ItemStack(Modquartz, 1, 5), new ItemStack(elvenGlass)});*/
 		
-		recipeMuspelheimEssence = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
+		/*recipeMuspelheimEssence = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
 			TilePool.MAX_MANA / 10,
 			LIFE_ESSENCE,
 			new ItemStack(lava_bucket, 1, 0));
@@ -413,7 +413,7 @@ public class AlfheimRecipes {
 		recipeNiflheimEssence = addInfuserRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence),
 			TilePool.MAX_MANA / 10,
 			LIFE_ESSENCE,
-			new ItemStack(ice, 1, 0));
+			new ItemStack(ice, 1, 0));*/
 		
 		recipeTerrasteel = addInfuserRecipe(new ItemStack(manaResource, 1, 4),
 			TilePool.MAX_MANA / 2,

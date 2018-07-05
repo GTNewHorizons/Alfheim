@@ -86,7 +86,7 @@ public class AlfheimRegistry {
 		registerTileEntity(TileAnyavil.class, "Anyavil");
 		registerTileEntity(TileManaInfuser.class, "ManaInfuser");
 		registerTileEntity(TileTradePortal.class, "TradePortal");
-		registerTileEntity(TileTransferer.class, "Transferer");
+		//registerTileEntity(TileTransferer.class, "Transferer"); FIXME
 	}
 	
 	public static void loadAllPinkStuff() {

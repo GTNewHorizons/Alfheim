@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import alfheim.common.world.dim.alfheim.struct.StructureArena;
-import alfheim.common.world.dim.alfheim.struct.StructureGovnoClass;
+import alfheim.common.world.dim.alfheim.struct.StructureStartClass;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -13,7 +12,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 public class WE_StructureGen implements IWorldGenerator {
 	public List<StrList> sttngs = new ArrayList<StrList>();
 	
-	public void add(StructureGovnoClass str, int notAllowedChXMin, int notAllowedChXMax, int notAllowedChZMin, int notAllowedChZMax, int chXtoMUSTgen, int chZtoMUSTgen, int chance, boolean notAllowing, boolean mustGen) {
+	public void add(StructureStartClass str, int notAllowedChXMin, int notAllowedChXMax, int notAllowedChZMin, int notAllowedChZMax, int chXtoMUSTgen, int chZtoMUSTgen, int chance, boolean notAllowing, boolean mustGen) {
 		sttngs.add(new StrList(str, notAllowedChXMin, notAllowedChXMax, notAllowedChZMin, notAllowedChZMax, chXtoMUSTgen, chZtoMUSTgen, chance, notAllowing, mustGen));
 	}
 	
@@ -28,7 +27,7 @@ public class WE_StructureGen implements IWorldGenerator {
 	}
 	
 	public class StrList {
-		public final StructureGovnoClass str;
+		public final StructureStartClass str;
 		public final int notAllowedChXMin;
 		public final int notAllowedChXMax;
 		public final int notAllowedChZMin;
@@ -39,7 +38,7 @@ public class WE_StructureGen implements IWorldGenerator {
 		public final boolean notAllowing;
 		public final boolean mustGen;
 		
-		StrList(StructureGovnoClass str, int notAllowedChXMin, int notAllowedChXMax, int notAllowedChZMin, int notAllowedChZMax, int chXtoMUSTgen, int chZtoMUSTgen, int chance, boolean notAllowing, boolean mustGen) {
+		StrList(StructureStartClass str, int notAllowedChXMin, int notAllowedChXMax, int notAllowedChZMin, int notAllowedChZMax, int chXtoMUSTgen, int chZtoMUSTgen, int chance, boolean notAllowing, boolean mustGen) {
 			this.str = str;
 			this.notAllowedChXMin = notAllowedChXMin;
 			this.notAllowedChXMax = notAllowedChXMax;

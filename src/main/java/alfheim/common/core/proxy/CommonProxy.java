@@ -15,6 +15,7 @@ import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
+import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class CommonProxy {
 
@@ -25,7 +26,7 @@ public class CommonProxy {
 		AlfheimRecipes.preInit();
 		AlfheimRegistry.preInit();
 		AlfheimAchievements.init();
-		AlfheimLexiconData.preInit2();
+		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2();
 	}
 
 	public void registerRenderThings() {}

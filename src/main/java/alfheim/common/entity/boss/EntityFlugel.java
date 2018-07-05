@@ -45,6 +45,7 @@ import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -67,6 +68,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import vazkii.botania.api.boss.IBotaniaBoss;
+import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.lexicon.multiblock.Multiblock;
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 import vazkii.botania.api.lexicon.multiblock.component.MultiblockComponent;
@@ -154,6 +156,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			} while (e.getHealth() > 1F);
 			e.setSource(x, y, z);
 			e.setHardMode(hard);
+			e.setSummoner(player.getCommandSenderName());
 			e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 
 			List<EntityPlayer> players = e.getPlayersAround();
@@ -176,7 +179,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		Entity e = source.getEntity();
 		if((source.damageType.equals("player")) && e != null && isTruePlayer(e) && !isEntityInvulnerable()) {
 			EntityPlayer player = (EntityPlayer) e;
-			float dmg = Math.min(isHardMode() ? 60 : 40, damage) * (getAITaskTimer() > 0 ? 0.1F : 1F); // this is OK
+			float dmg = ModInfo.DEV ? damage : Math.min(isHardMode() ? 60 : 40, damage) * (getAITaskTimer() > 0 ? 0.1F : 1F); // this is OK
 			if(!playersWhoAttacked.containsKey(player.getCommandSenderName())) playersWhoAttacked.put(player.getCommandSenderName(), 1);
 			else playersWhoAttacked.put(player.getCommandSenderName(), playersWhoAttacked.get(player.getCommandSenderName()) + 1);
 			reUpdate();
@@ -207,7 +210,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 	@Override
 	public void setHealth(float hp) {
-		hp = Math.max(getHealth() - 40F, hp);
+		hp = Math.max(getHealth() - (isHardMode() ? 60F : 40F), hp);
 		super.setHealth(hp);
 	}
 	
@@ -245,6 +248,13 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				boolean droppedRecord = false;
 
 				if (hard) {
+					if (name.equals(getSummoner()) && !((EntityPlayerMP) worldObj.getPlayerEntityByName(name)).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.mask)) {
+						ItemStack relic = new ItemStack(AlfheimItems.mask);
+						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1);
+						ItemRelic.bindToUsernameS(name, relic);
+						entityDropItem(relic, 1F);
+						lot = false;
+					}
 					entityDropItem(new ItemStack(ModItems.ancientWill, 1, rand.nextInt(6)), 1F);
 					entityDropItem(new ItemStack(AlfheimItems.elvenResource, lot ? hard ? 8 : 4 : hard ? 5 : 3, ElvenResourcesMetas.MuspelheimEssence), 1F);
 					entityDropItem(new ItemStack(AlfheimItems.elvenResource, lot ? hard ? 8 : 4 : hard ? 5 : 3, ElvenResourcesMetas.NiflheimEssence), 1F);
@@ -276,9 +286,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			}
 			
 			if	(ConfigHandler.relicsEnabled && !hard) {
-				ItemStack dice = new ItemStack(AlfheimItems.flugelSoul);
-				ItemRelic.bindToUsernameS(getSummoner(), dice);
-				entityDropItem(dice, 1F);
+				ItemStack relic = new ItemStack(AlfheimItems.flugelSoul);
+				if (worldObj.getPlayerEntityByName(getSummoner()) != null) worldObj.getPlayerEntityByName(getSummoner()).addStat(AlfheimAchievements.flugelSoul, 1);
+				ItemRelic.bindToUsernameS(getSummoner(), relic);
+				entityDropItem(relic, 1F);
 			}
 		}
 	}

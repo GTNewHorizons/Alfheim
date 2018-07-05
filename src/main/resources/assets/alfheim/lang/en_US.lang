@@ -9,7 +9,6 @@ tile.DreamLeaves.name=Dreamwood Leaves
 tile.DreamLog.name=Dreamwood Log
 tile.DreamSapling.name=Dreamwood Sapling
 tile.ElementiumElvenOre.name=Elementium Ore
-tile.ElvenGrass.name=Elven Grass
 tile.ElvenPylon.name=Elven Pylon
 tile.ElvenSand.name=Elven Sand
 tile.ElvoriumBlock.name=Block of Elvorium
@@ -46,8 +45,9 @@ item.ElvoriumLeggings.name=Elvorium Leggings
 item.ElvoriumNugget.name=Elvorium Nugget
 item.botania:Excaliber.name=Holy Sword Excaliber
 item.botania:FirePendant.name=Pendant Of Muspelheim Protection
-item.botania:FlugelDisc.name=Record
-item.botania:FlugelSoul.name=Flugel Soul
+item.botania:FlugelDisc.name=Shiny Music Disc
+item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
+item.botania:FlugelSoul.name=Flügel Soul
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
 item.InterdimensionalGatewayCore.name=Interdimensional Gateway Core
@@ -94,10 +94,16 @@ item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################
 
-achievement.alfheim=Alfheim
+achievement.alfheim=New Lands
 achievement.alfheim.desc=Enter Alfheim
 achievement.excaliber=Streaming Heart
 achievement.excaliber.desc=Be rewarded the Holy Sword Excaliber for a heroic feat
+achievement.mask=Unstoppable
+achievement.mask.desc=Be rewarded the Mysterious Mask for a heroic feat
+achievement.soul=You're my soul
+achievement.soul.desc=Be rewarded the Flügel Soul for a heroic feat
+achievement.flugelKill=Godslayer
+achievement.flugelKill.desc=Survive agains most powerful creature - Flügel
 
 alfheim.armorset.elemental.name=Elemental Master
 alfheim.armorset.elvorium.name=Royal Elven Guardian
@@ -207,6 +213,21 @@ item.aesirRing.poem0=The forces of the Gods
 item.aesirRing.poem1=In this band form as one,
 item.aesirRing.poem2=And when combined all together
 item.aesirRing.poem3=Above them will be none.
+
+item.kingKey.poem0=No
+item.kingKey.poem1=English
+item.kingKey.poem2=Poem 
+item.kingKey.poem3=Here :(
+
+item.FlugelSoul.poem0=No
+item.FlugelSoul.poem1=English
+item.FlugelSoul.poem2=Poem
+item.FlugelSoul.poem3=Here :(
+
+item.TankMask.poem0=No
+item.TankMask.poem1=English
+item.TankMask.poem2=Poem
+item.TankMask.poem3=Here :(
 
 #######################################################___ELVEN STORY___########################################################
 

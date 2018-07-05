@@ -12,13 +12,13 @@ import ru.vamig.worldengine.additions.WE_CreateChunkGen;
 import ru.vamig.worldengine.additions.WE_GeneratorData;
 
 public class WE_TerrainGenerator extends WE_CreateChunkGen {
-	public Block	worldStoneBlock			= Blocks.stone;
-	public byte		worldStoneBlockMeta		=			 0;
+	public Block worldStoneBlock     = Blocks.stone;
+	public byte  worldStoneBlockMeta =            0;
 	
-	public boolean	worldSeaGen				=		  true;
-	public int		worldSeaGenMaxY			=			63;
-	public Block	worldSeaGenBlock		= Blocks.water;
-	public byte		worldSeaGenBlockMeta	=			 0;
+	public boolean worldSeaGen          =         true;
+	public int     worldSeaGenMaxY      =           63;
+	public Block   worldSeaGenBlock     = Blocks.water;
+	public byte    worldSeaGenBlockMeta =            0;
 	
 	@Override
 	public void gen(WE_GeneratorData data) {
@@ -32,7 +32,7 @@ public class WE_TerrainGenerator extends WE_CreateChunkGen {
 					bl[xm][zm] = getBiome(data, xm - q, zm - q);
 				else
 					bl[xm][zm] = WE_Biome.getBiomeAt(data.chunkProvider, data.chunk_X - (long)q + (long)xm, data.chunk_Z - (long)q + (long)zm);
-				
+				//-//
 				if(!ni)
 					if(sb == null)
 						sb = bl[xm][zm];
@@ -40,7 +40,7 @@ public class WE_TerrainGenerator extends WE_CreateChunkGen {
 						if(sb.id != bl[xm][zm].id)
 							ni = true;
 			}
-		
+		//-//
 		for(int x = 0; x < 16; x++)
 			for(int z = 0; z < 16; z++) {
 				int n = MathHelper.floor_double(interpolatedBlock(data.chunkProvider.worldObj.getSeed(), data.chunk_X, data.chunk_Z, x, z, bl, ni, q));
@@ -62,18 +62,18 @@ public class WE_TerrainGenerator extends WE_CreateChunkGen {
 				for(int i2 = 0; i2 <= biomeListOfChunk[bx][bz].biomeInterpolateQuality; i2++) {
 					int cbx = MathHelper.floor_float(bx + MathHelper.cos(i * (float)Math.PI / 180.0F) * i2),
 						cbz = MathHelper.floor_float(bz + MathHelper.sin(i * (float)Math.PI / 180.0F) * i2);
-					
+					//-//
 					++c;
-					genPersistence	 += biomeListOfChunk[cbx][cbz].biomePersistence	;
+					genPersistence     += biomeListOfChunk[cbx][cbz].biomePersistence    ;
 					genNumberOfOctaves += biomeListOfChunk[cbx][cbz].biomeNumberOfOctaves;
-					genScaleX		  += biomeListOfChunk[cbx][cbz].biomeScaleX		 ;
-					genScaleY		  += biomeListOfChunk[cbx][cbz].biomeScaleY		 ;
+					genScaleX          += biomeListOfChunk[cbx][cbz].biomeScaleX         ;
+					genScaleY          += biomeListOfChunk[cbx][cbz].biomeScaleY         ;
 					genSurfaceHeight   += biomeListOfChunk[cbx][cbz].biomeSurfaceHeight  ;
 				}
 			genPersistence /= c;
-			genScaleX	  /= c;
-			genScaleY	  /= c;
-			
+			genScaleX      /= c;
+			genScaleY      /= c;
+			//-//
 			genNumberOfOctaves = MathHelper.floor_float(genNumberOfOctaves / c);
 			genSurfaceHeight   = MathHelper.floor_float(genSurfaceHeight   / c);
 			
