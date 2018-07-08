@@ -2,14 +2,13 @@
 # tile..name=
 tile.AlfheimPortal.name=艾尔夫海姆之门核心
 tile.Anyavil.name=源质钢砧
-tile.botania:AlfheimPylons1.name=尘世水晶
 tile.botania:AlfheimPylons0.name=精灵水晶
+tile.botania:AlfheimPylons1.name=尘世水晶
 tile.DragonstoneElvenOre.name=龙石矿石
 tile.DreamLeaves.name=精灵梦之木树叶
 tile.DreamLog.name=精灵梦之木木头
 tile.DreamSapling.name=精灵梦之木树苗
 tile.ElementiumElvenOre.name=源质钢矿石
-tile.ElvenGrass.name=精灵草方块
 tile.ElvenPylon.name=精灵水晶
 tile.ElvenSand.name=精灵之沙
 tile.ElvoriumBlock.name=魔灵钢块
@@ -22,6 +21,7 @@ tile.MuspelheimFire.name=永恒炽热之焰
 tile.NiflheimIce.name=永恒极寒之冰
 tile.QuartzElvenOre.name=精灵石英矿石
 tile.TradePortal.name=尘世之门核心
+tile.Transferer.name=转印
 
 ##########################################################___ITEMS___###########################################################
 
@@ -32,7 +32,6 @@ item.botania:ElementalFireLeggings.name=炽焰护腿
 item.botania:ElementalEarthChest.name=浩土铠甲
 item.botania:ElementalWaterHelm.name=潮汐头盔
 item.botania:ElementalWaterHelmRevealing.name=潮汐揭示头盔
-item.botania:PixieAttractor.name=精灵吸引吊坠
 item.ElementalArmor.desc1=轻如空中鸿毛 (§e强化跳跃 +4§7)
 item.ElementalArmor.desc2=疾如风中烈焰 (§c速度 +2§7) 能力: §c火焰保护§7)
 item.ElementalArmor.desc3=坚如山中顽石 (§a抗性提升 +2§7)
@@ -44,7 +43,11 @@ item.ElvoriumHelmetRevealing.name=魔灵揭示头盔
 item.ElvoriumIngot.name=魔灵钢
 item.ElvoriumLeggings.name=魔灵护腿
 item.ElvoriumNugget.name=魔灵钢粒
+item.botania:Excaliber.name=誓约胜利之剑
 item.botania:FirePendant.name=炽焰之灵护身符
+item.botania:FlugelDisc.name=闪耀之乐
+item.record.botania:flugel.desc=Kain Vinosec - 长夜之守护
+item.botania:FlugelSoul.name=不朽之魂
 item.botania:IcePendant.name=极寒之灵护身符
 item.IffesalDust.name=魔灵粉末
 item.InterdimensionalGatewayCore.name=精灵乡核心-尘世
@@ -58,6 +61,7 @@ item.manastorage.desc0=可存储高达 %s 个魔力池的魔力!
 item.manastorage.desc1=目前已存储 §b%s§7/§b%s§7 mana
 item.MauftriumIngot.name=始源魂灵锭
 item.MauftriumNugget.name=始源魂灵粒
+item.botania:Mjolnir.name=雷神之锤
 item.MuspelheimEssence.name=炽热之魂
 item.MuspelheimPowerIngot.name=炽热魔灵之钢
 item.MuspelheimRod.name=炽热支配之杖
@@ -66,6 +70,7 @@ item.NiflheimEssence.name=极寒之魂
 item.NiflheimPowerIngot.name=极寒魔灵之钢
 item.NiflheimRod.name=极寒支配之杖
 item.NiflheimRune.name=极寒符文
+item.botania:PixieAttractor.name=精灵吸引吊坠
 item.PrimalRune.name=始源符文
 item.RealitySword.name=§r始源之剑-现实%s
 item.RealitySword.name0= (沉睡)
@@ -82,11 +87,23 @@ item.RealitySword.desc4=潮汐之力-致盲!
 item.RealitySword.desc5=每秒需要 §n10§r§7 §bmana§7.
 item.RealitySword.descZ=力量!
 item.RealitySword.DIE=%s 得到了创世神之剑并遭到了创世神的惩罚
+item.botania:TankMask.name=诡秘之面
+item.TankMask.active=它"活"了
+item.TankMask.inactive=沉睡
+item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################
 
 achievement.alfheim=艾尔夫海姆
 achievement.alfheim.desc=欢迎来到艾尔夫海姆
+achievement.excaliber=流动之心
+achievement.excaliber.desc=你的壮举让你获得了誓约胜利之剑
+achievement.mask=势不可挡
+achievement.mask.desc=你的壮举让你获得了诡秘之面
+achievement.soul=吾之魂
+achievement.soul.desc=你的壮举让你获得了不朽之魂
+achievement.flugelKill=弑神者
+achievement.flugelKill.desc=不朽永存
 
 alfheim.armorset.elemental.name=元素掌控者
 alfheim.armorset.elvorium.name=皇族精灵守卫
@@ -94,6 +111,11 @@ alfheim.armorset.elvorium.desc0=魔力工具使用魔力减少30%
 alfheim.armorset.elvorium.desc1=法杖内潜藏着更加强大的力量
 alfheim.armorset.elvorium.desc2=Vis减免20%
 alfheim.armorset.elvorium.desc3=符文护盾 +8
+
+alfheim.commands.tpdim.usage=用于跨世界的传送
+alfheim.commands.tpdim.wrong=tpdim <ID>
+alfheim.commands.tpdim.worlderr=维度初始化异常
+alfheim.commands.tpdim.wrongid=错误的维度ID
 
 alfheim.configgui.biomeIDAlfheim=Biome ID for standart biome
 alfheim.configgui.biomeIDAlfheimBeach=Biome ID for beach biome
@@ -112,10 +134,100 @@ alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
 alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
 alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
 
+alfheim.potion.possession=黑暗侵蚀
+alfheim.potion.possession.postfix=侵蚀药水
+alfheim.potion.soulburn=灵魂燃烧
+alfheim.potion.soulburn.postfix=燃魂药水
+
+alfheimmics.badArena=尽你最大的努力,仪式没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
+alfheimmics.needsCatalysts=无论你如何努力将眼睛推进信标,周围似乎都没有任何事情发生,检查一下你的配置是个好主意
+alfheimmisc.notallowed=愚蠢的凡人,你连飞行都做不到,你没有和我战斗的资格,在我改变主意并干掉你之前赶紧离开
+alfheimmics.peacefulNoob=你试图提供一个眼睛,但世界的和平阻止你这样做,也许你应该做点什么
+
+death.attack.soulburn=%s的灵魂开始燃烧
+
 entity.Elf.name=精灵
 entity.Pixie.name=小精灵
 
+item.FlugelSoul.blockAway=1格远
+item.FlugelSoul.blocksAway=%s 格远
+item.FlugelSoul.anotherDim=维度 %s
+item.FlugelSoul.clickToTeleport=右键以传送
+item.FlugelSoul.clickToRemoveWarp=Shift+左键以移除
+item.FlugelSoul.unboundWarp=未绑定的传送点
+item.FlugelSoul.clickToAddWarp=右键以绑定传送点
+item.FlugelSoul.blockedWarp=灵魂的这一部分是残缺的
+
+item.FlugelSoul.sign0=白羊
+item.FlugelSoul.sign1=金牛
+item.FlugelSoul.sign2=双子
+item.FlugelSoul.sign3=巨蟹
+item.FlugelSoul.sign4=狮子
+item.FlugelSoul.sign5=处女
+item.FlugelSoul.sign6=天秤
+item.FlugelSoul.sign7=天蝎
+item.FlugelSoul.sign8=射手
+item.FlugelSoul.sign9=摩羯
+item.FlugelSoul.sign10=水瓶
+item.FlugelSoul.sign11=双鱼
+
+item.HoloProjector.rotate=LMB & RMB - 旋转
+item.HoloProjector.switch=Shift+LMB - 切换性别
+item.HoloProjector.select=Shift+RMB - 选择种族
+
 itemGroup.Alfheim=艾尔夫海姆
+
+#######################################################___RELIC POEMS___########################################################
+
+item.infiniteFruit.poem0=禁园之果
+item.infiniteFruit.poem1=永远清理一个人的饥饿
+item.infiniteFruit.poem2=为此,它重塑了它的果肉
+item.infiniteFruit.poem3=并让它自己更年轻.
+
+item.Excaliber.poem0=英雄之剑
+item.Excaliber.poem1只适合其中一种,
+item.Excaliber.poem2=锋利又神奇,
+item.Excaliber.poem3=它会迅速找到敌人.
+
+item.flugelEye.poem0=一个人过去想法的愿望,
+item.flugelEye.poem1=记忆的轮回,
+item.flugelEye.poem2=和他们的互动
+item.flugelEye.poem3=将心灵带回来.
+
+item.thorRing.poem0=雷神之力
+item.thorRing.poem1=将粉碎大地,
+item.thorRing.poem2=不可阻挡的力量
+item.thorRing.poem3=它将重启一个纪元.
+
+item.odinRing.poem0=上帝的祝福,
+item.odinRing.poem1=美德,生命,神性
+item.odinRing.poem2=阻止人的死亡,
+item.odinRing.poem3=他们将组成神圣的三位一体.
+
+item.lokiRing.poem0=空手,隐蔽的互动
+item.lokiRing.poem1=中心至环绕,
+item.lokiRing.poem2=回到最初之地,一切都会完成
+item.lokiRing.poem3=创世神的力量.
+
+item.aesirRing.poem0=众神之力
+item.aesirRing.poem1=在这个仪式中,
+item.aesirRing.poem2=当他们合为一体时
+item.aesirRing.poem3=无物凌驾于他们.
+
+item.kingKey.poem0=这里
+item.kingKey.poem1=没有
+item.kingKey.poem2=英文
+item.kingKey.poem3=诗词 :(
+
+item.FlugelSoul.poem0=这里
+item.FlugelSoul.poem1=没有
+item.FlugelSoul.poem2=英文
+item.FlugelSoul.poem3=诗词 :(
+
+item.TankMask.poem0=这里
+item.TankMask.poem1=没有
+item.TankMask.poem2=英文
+item.TankMask.poem3=诗词 :(
 
 #######################################################___ELVEN STORY___########################################################
 
