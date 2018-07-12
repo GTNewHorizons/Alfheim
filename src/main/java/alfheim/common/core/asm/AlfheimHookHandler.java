@@ -69,7 +69,7 @@ public class AlfheimHookHandler {
 		return meta == 0 || meta == 1 ? ModBlocks.storage.getIcon(side, meta) : Blocks.diamond_block.getIcon(side, 0);
 	}
 
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, targetMethod = "public static voidc_150000_e", isMandatory = true)
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
 	public static boolean onNetherPortalActivation(BlockPortal portal, World world, int x, int y, int z) {
 		return MinecraftForge.EVENT_BUS.post(new NetherPortalActivationEvent(world, x, y, z));
 	}
