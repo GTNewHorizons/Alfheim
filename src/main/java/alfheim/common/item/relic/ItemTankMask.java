@@ -134,7 +134,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 
 	@Override
 	public boolean canUnequip(ItemStack stack, EntityLivingBase player) {
-		return getInt(stack, TAG_POSSESSION, 0) < 1800;
+		return getInt(stack, TAG_POSSESSION, 0) < 1800 || player.getHealth() <= 0.0F || player.isDead;
 	}
 	
 	@Override

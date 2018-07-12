@@ -39,10 +39,10 @@ IF "%variable%"=="0" (goto exit)
 IF "%variable%"=="exit" (goto exit)
 IF "%variable%"=="Exit" (goto exit)
 
-pause
 @echo on
-@ECHO Incorrect option, try again.
-goto tryagain
+@echo Incorrect option, try again.
+@echo off
+(goto tryagain)
 
 
 :eclipse

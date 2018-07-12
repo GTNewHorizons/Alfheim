@@ -698,14 +698,14 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public AITask nextTask() {
 		if (getStage() < STAGE_AGGRO) return AITask.NONE;
 		AITask next = AITask.values()[rand.nextInt(AITask.values().length)];
-		if (next.getInstant() && getAITask().getInstant() && getAITask().equals(next)) return nextTask();
-		if (Math.random() < next.getChance()) return nextTask();
-		if (getStage() < next.getStage()) return nextTask();
+		if (next.instant && getAITask().instant && getAITask().equals(next)) return nextTask();
+		if (Math.random() < next.chance) return nextTask();
+		if (getStage() < next.stage) return nextTask();
 		return next;
 	}
 	
 	public boolean isCasting() {
-		return getAITask().getInstant();
+		return getAITask().instant;
 	}
 	
 	@Override

@@ -1,13 +1,8 @@
-package alfheim.common.entity.boss.ai
+package alfheim.common.entity.boss.ai;
 
-import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.entity.boss.EntityFlugel;
 
-/**
- @param c Chance to <b>NOT</b> to apply
- @param instant Insta-AIs can't be selected twice in a row
- @param stage Stage required for execurtion
- */
-enum class AITask(c: Double, val instant: Boolean, val stage: Int) {
+public enum AITask {
 	
 	NONE(0.0, false, 0),
 	INVUL(0.0, false, 0),
@@ -20,5 +15,15 @@ enum class AITask(c: Double, val instant: Boolean, val stage: Int) {
 	DEATHRAY(0.0, false, EntityFlugel.STAGE_MAGIC);
 	
 	/** Chance to <b>NOT</b> to apply */
-	val chance: Double = 1.0 - c
+	public final double chance;
+	/** Insta-AIs can't be selected twice in a row */
+	public final boolean instant;
+	/** Stage required for execurtion */
+	public final int stage;
+	
+	AITask(double c, boolean i, int s) {
+		chance = 1. - c;
+		instant = i;
+		stage = s;
+	}
 }

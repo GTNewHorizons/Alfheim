@@ -8,7 +8,7 @@ import cpw.mods.fml.relauncher.CoreModManager;
 public class ModInfo {
 	public static final String major_version = "BETA";
 	//public static final String minor_version = "";
-	public static final String build_version = "BETA-5";
+	public static final String build_version = "BETA-pre6.1";
 
 	public static final String MODID = "alfheim";
 	public static final String NAME = "Alfheim";
