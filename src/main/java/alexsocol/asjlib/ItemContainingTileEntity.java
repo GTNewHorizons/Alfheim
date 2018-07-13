@@ -64,7 +64,7 @@ public class ItemContainingTileEntity extends TileEntity {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeCustomNBT(nbt);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, blockMetadata, nbt);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbt);
 	}
 
 	@Override

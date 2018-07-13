@@ -29,7 +29,7 @@ public class WE_OreGen implements IWorldGenerator {
 				int posX = chunkX * 16 + random.nextInt(16) + 8;
 				int posY = ASJUtilities.randInBounds(random, wgmp.minY, wgmp.maxY);
 				int posZ = chunkZ * 16 + random.nextInt(16) + 8;
-				(new WorldGenMinable(wgmp.ore, wgmp.meta, ASJUtilities.randInBounds(random, wgmp.minVeinSize, wgmp.minVeinSize), wgmp.replace)).generate(world, random, posX, posY, posZ);
+				(new WorldGenMinable(wgmp.ore, wgmp.meta, ASJUtilities.randInBounds(random, wgmp.minVeinSize, wgmp.maxVeinSize), wgmp.replace)).generate(world, random, posX, posY, posZ);
 			}
 		}
 	}

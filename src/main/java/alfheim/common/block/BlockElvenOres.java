@@ -3,6 +3,7 @@ package alfheim.common.block;
 import java.util.List;
 import java.util.Random;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
@@ -75,10 +77,21 @@ public class BlockElvenOres extends Block implements ILexiconable {
 	}
 
 	@Override
+	public int getDamageValue(World world, int x, int y, int z) {
+		// how can damageDropped even be here if it isn't related to dropping stuff? -_-
+        return world.getBlockMetadata(x, y, z);
+    }
+	
+	@Override
 	public int getExpDrop(IBlockAccess world, int meta, int fortune) {
-		return (meta == 0 || meta == 2 || meta == 4) ? rand.nextInt(5) + 3 : 0;
+		return Item.getItemFromBlock(this) != this.getItemDropped(meta, new Random(), fortune) ? rand.nextInt(5) + 3 : 0;
 	}
 
+	@Override
+	public int quantityDropped(int meta, int fortune, Random random) {
+		return meta == 2 ? Math.max(random.nextInt(fortune + 2) - 1, 0) + 1 : 1;
+	}
+	
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		return AlfheimLexiconData.ores;

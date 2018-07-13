@@ -1,5 +1,6 @@
 package alfheim.common.block;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.client.lib.LibRenderIDs;
@@ -57,11 +58,12 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5) & 3;
-		world.setBlockMetadataWithNotify(x, y, z, l, 2);
+		world.setBlockMetadataWithNotify(x, y, z, l, 3);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		ASJUtilities.chatLog("Meta " + world.getBlockMetadata(x, y, z));
 		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(player.isSneaking()) return false;

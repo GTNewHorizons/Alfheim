@@ -92,9 +92,9 @@ public class AlfheimHookHandler {
 			Map.Entry e = (Map.Entry) o;
 			if (e.getValue() instanceof NBTTagList || e.getValue() instanceof NBTTagCompound) {
 				String[] arr = e.getValue().toString().split("\n");
-				sb.append(" $key = ${arr.get(0)}\n");
-				for (int i = 1; i < arr.length; i++) sb.append(" ${arr.get(i)}\n");
-			} else sb.append("    ${key} = ${value}\n");
+				sb.append(" ").append(e.getKey()).append(" = ").append(arr[0]).append("\n");
+				for (int i = 1; i < arr.length; i++) sb.append(" ").append(arr[i]).append("\n");
+			} else sb.append("    ").append(e.getKey()).append(" = ").append(e.getValue()).append("\n");
 		}
 		sb.append("}");
 		return sb.toString();
@@ -103,7 +103,7 @@ public class AlfheimHookHandler {
 	@Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
 	public static String NBTTagList_toString(NBTTagList nbt) {
 		StringBuilder sb = new StringBuilder("list [\n");
-		for (Object obj : nbt.tagList) if (obj instanceof NBTTagList || obj instanceof NBTTagCompound) for (String s : obj.toString().split("\n")) sb.append("    $s\n"); else sb.append("$obj\n");
+		for (Object obj : nbt.tagList) if (obj instanceof NBTTagList || obj instanceof NBTTagCompound) for (String s : obj.toString().split("\n")) sb.append("    ").append(s).append("\n"); else sb.append(obj).append("\n");
 		sb.append("]");
 		return sb.toString();
 	}

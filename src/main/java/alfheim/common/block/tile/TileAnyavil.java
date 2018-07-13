@@ -24,6 +24,8 @@ public class TileAnyavil extends ItemContainingTileEntity {
 	public static final int MAX_PINK_CHARGE = TilePool.MAX_MANA_DILLUTED;
 	private static final String TAG_MANA = "mana";
 	private static final String TAG_MANA_CAP = "manaCap";
+	private static final String TAG_METADATA = "metadata";
+
 	public int pinkCharge = 0;
 	
 	public void onBurstCollision(IManaBurst burst, World world, int x, int y, int z) {
@@ -61,18 +63,19 @@ public class TileAnyavil extends ItemContainingTileEntity {
 		int color = new Color(col[0], col[1], col[2]).getRGB();
 		BotaniaAPI.internalHandler.drawSimpleManaHUD(color, pinkCharge, MAX_PINK_CHARGE, name, res);
 	}
-	
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
 		super.writeCustomNBT(nbt);
 		nbt.setInteger(TAG_MANA, pinkCharge);
 		nbt.setInteger(TAG_MANA_CAP, MAX_PINK_CHARGE);
+		nbt.setInteger(TAG_METADATA, blockMetadata);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
 		super.readCustomNBT(nbt);
 		pinkCharge = nbt.getInteger(TAG_MANA);
+		this.blockMetadata = nbt.getInteger(TAG_METADATA);
 	}
 }

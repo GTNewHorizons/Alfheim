@@ -5,27 +5,20 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.entity.EnumRace;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import vazkii.botania.api.internal.IManaBurst;
-import vazkii.botania.api.mana.BurstProperties;
-import vazkii.botania.api.mana.ILensEffect;
 import vazkii.botania.api.recipe.IElvenItem;
-import vazkii.botania.common.entity.EntityManaBurst;
+import vazkii.botania.common.block.ModBlocks;
 
 public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect FIXME*/ {
 	
@@ -70,8 +63,18 @@ public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (/*!world.isRemote && */stack.getItemDamage() == subItems.length - 1) {
 			if (!player.isSneaking()) {
-				EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
-				ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString(), player);
+				/*int m = 50;
+				for (int x = -m; x < m; x++) for (int y = -m; y < m; y++) for (int z = -m; z < m; z++) {
+					Block b = player.worldObj.getBlock((int) player.posX + x, (int) player.posY + y, (int) player.posZ + z);
+					if (b == ModBlocks.livingrock || b.getMaterial().equals(Material.water)) player.worldObj.setBlockToAir((int) player.posX + x, (int) player.posY + y, (int) player.posZ + z);
+				}*/
+				
+				/*MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1.0F, 64, true);
+				int x = mop.blockX, y = mop.blockY, z = mop.blockZ;
+				ASJUtilities.chatLog("meta " + world.getBlockMetadata(x, y, z), world);*/
+
+				//EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
+				//ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString(), player);
 				//ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 			} else {
 				player.addChatComponentMessage(new ChatComponentText("Current dimension id: " + player.dimension));

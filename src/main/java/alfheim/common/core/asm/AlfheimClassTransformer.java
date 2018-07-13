@@ -15,28 +15,28 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		if (transformedName.equals("vazkii.botania.common.item.relic.ItemRelic")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-			ItemRelic_ClassVisitor ct = new ItemRelic_ClassVisitor(cw);
+			ItemRelic$ClassVisitor ct = new ItemRelic$ClassVisitor(cw);
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		}
 		return basicClass;
 	}
 
-	static class ItemRelic_ClassVisitor extends ClassVisitor {
+	static class ItemRelic$ClassVisitor extends ClassVisitor {
 		
-		public ItemRelic_ClassVisitor(ClassVisitor cv) {
+		public ItemRelic$ClassVisitor(ClassVisitor cv) {
 			super(ASM5, cv);
 		}
 		
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)  {
-			if (name.equals("addBindInfo")) return new ItemRelic_addBindInfo_MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			if (name.equals("addBindInfo")) return new ItemRelic$addBindInfo$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
 		
-		static class ItemRelic_addBindInfo_MethodVisitor extends MethodVisitor {
+		static class ItemRelic$addBindInfo$MethodVisitor extends MethodVisitor {
 			
-			public ItemRelic_addBindInfo_MethodVisitor(MethodVisitor mv) {
+			public ItemRelic$addBindInfo$MethodVisitor(MethodVisitor mv) {
 				super(ASM5, mv);
 			}
 			
