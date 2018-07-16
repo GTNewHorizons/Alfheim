@@ -1,3 +1,5 @@
-<addon version="BETA-6">
-	<string>Bugfixes!</string>
-</addon>
+<versionslist>
+	<addon version="BETA-6">
+		<string>Bugfixes!</string>
+	</addon>
+</versionslist>
