@@ -1,3 +1,5 @@
-<minecraft version="1.7.10">
-    <link>https://bitbucket.org/AlexSocol/alfheim/raw/master/news/1.7.10.xml</link>
-</minecraft>
+<versionslist>
+	<minecraft version="1.7.10">
+		<link>https://bitbucket.org/AlexSocol/alfheim/raw/master/news/1.7.10.xml</link>
+	</minecraft>
+</versionslist>
