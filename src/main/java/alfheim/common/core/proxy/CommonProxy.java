@@ -7,7 +7,7 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.event.CommonEventHandler;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.network.KeyBindMessage;

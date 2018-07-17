@@ -4,7 +4,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

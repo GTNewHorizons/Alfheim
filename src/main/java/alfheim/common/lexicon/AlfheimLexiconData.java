@@ -13,7 +13,7 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.page.PageManaInfusorRecipe;
 import alfheim.common.lexicon.page.PagePureDaisyRecipe;
 import net.minecraft.item.ItemStack;

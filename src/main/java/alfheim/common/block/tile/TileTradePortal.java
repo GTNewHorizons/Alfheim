@@ -6,7 +6,7 @@ import com.google.common.base.Function;
 
 import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;

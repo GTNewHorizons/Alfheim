@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim;
 
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.world.dim.alfheim.biome.BiomeBeach;
 import alfheim.common.world.dim.alfheim.biome.BiomeField;
 import alfheim.common.world.dim.alfheim.biome.BiomeForest;

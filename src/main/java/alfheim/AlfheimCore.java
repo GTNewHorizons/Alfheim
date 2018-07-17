@@ -8,7 +8,8 @@ import alfheim.common.core.command.CommandRace;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.util.InfoLoader;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -42,11 +43,13 @@ public class AlfheimCore {
 	public static boolean enableElvenStory = false;
 	
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent e) {
+	public void preInit(FMLPreInitializationEvent e) throws Throwable {
 		enableElvenStory = Loader.isModLoaded("elvenstory");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
+		if (AlfheimConfig.info) InfoLoader.start();
+		
 		proxy.registerPackets();
 		proxy.initializeAndRegisterHandlers();
 		proxy.preInit();

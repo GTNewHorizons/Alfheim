@@ -7,7 +7,7 @@ import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;

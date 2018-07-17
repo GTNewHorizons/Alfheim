@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.AdvancedArmorModel;
 import alfheim.api.ModInfo;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

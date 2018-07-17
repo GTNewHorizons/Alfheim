@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;

@@ -6,7 +6,8 @@ import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.util.InfoLoader;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EnumRace;
 import alfheim.common.network.AttributeMessage;
@@ -24,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
@@ -49,6 +51,7 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
+		for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player instanceof EntityPlayerMP) {
 				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {

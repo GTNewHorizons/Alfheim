@@ -7,7 +7,7 @@ import alfheim.api.ModInfo;
 import alfheim.client.core.utils.KeyBindingsUtils;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;

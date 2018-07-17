@@ -1,4 +1,4 @@
-package alfheim.common.core.utils;
+package alfheim.common.core.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,9 +21,9 @@ public class AlfheimConfig extends Configuration {
 
 	public static Configuration config;
 	
-	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL + CATEGORY_SPLITTER + "dimension";
-	public static final String CATEGORY_ESMODE	= CATEGORY_GENERAL + CATEGORY_SPLITTER + "elvenstory";
-	public static final String CATEGORY_HUD			= CATEGORY_ESMODE + CATEGORY_SPLITTER + "hud";
+	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "dimension";
+	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "elvenstory";
+	public static final String CATEGORY_HUD			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "hud";
 	
 	// DIMENSIONS
 	public static int		biomeIDAlfheim			= 152;
@@ -34,6 +34,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	destroyPortal			= true;
 	public static boolean	enableAlfheimRespawn	= true;
 	public static boolean	fancies					= true;
+	public static boolean 	info					= true;
 	public static boolean	looniumOverseed			= false;
 	public static boolean	numericalMana			= true;
 	public static int		potionIDPossession		= 30;
@@ -61,23 +62,24 @@ public class AlfheimConfig extends Configuration {
 		config.load();
 		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings");
 		config.addCustomCategoryComment(CATEGORY_ESMODE,	"Elven Story optional features");
-		config.addCustomCategoryComment(CATEGORY_HUD, "Coordinates and sizes of HUD elements");
+		config.addCustomCategoryComment(CATEGORY_HUD,		"Coordinates and sizes of HUD elements");
 		
 		syncConfig();
 		FMLCommonHandler.instance().bus().register(new AlfheimChangeListener());
 	}
 	
 	public static void syncConfig() {
-		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",		biomeIDAlfheim,			true,	"Biome ID for standart biome");
-		biomeIDAlfheimBeach	= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheimBeach",	biomeIDAlfheimBeach,	true,	"Biome ID for beach biome");
-		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",	dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
-		destroyPortal		= loadProp(CATEGORY_GENERAL,	"destroyPortal",		destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
-		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",	enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
-		fancies				= loadProp(CATEGORY_GENERAL,	"fancies",				fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
-		looniumOverseed		= loadProp(CATEGORY_GENERAL,	"looniumOverseed",		looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
-		numericalMana		= loadProp(CATEGORY_GENERAL,	"numericalMana",		numericalMana,			false,	"Set this to true to enable numerical mana representation");
-		potionIDPossession	= loadProp(CATEGORY_GENERAL, 	"potionIDPossession",	potionIDPossession,		true,	"Potion id for Possession");
-		potionIDSoulburn	= loadProp(CATEGORY_GENERAL, 	"potionIDSoulburn",		potionIDSoulburn,		true,	"Potion id for Soulburn");
+		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
+		biomeIDAlfheimBeach	= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheimBeach",		biomeIDAlfheimBeach,	true,	"Biome ID for beach biome");
+		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,		"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
+		destroyPortal		= loadProp(CATEGORY_GENERAL,		"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
+		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,		"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
+		fancies				= loadProp(CATEGORY_GENERAL,		"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
+		info				= loadProp(CATEGORY_GENERAL,		"info",						info,					false,	"Set this to false to disable loading info about addon");
+		looniumOverseed		= loadProp(CATEGORY_GENERAL,		"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
+		numericalMana		= loadProp(CATEGORY_GENERAL,		"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
+		potionIDPossession	= loadProp(CATEGORY_GENERAL, 		"potionIDPossession",		potionIDPossession,		true,	"Potion id for Possession");
+		potionIDSoulburn	= loadProp(CATEGORY_GENERAL, 		"potionIDSoulburn",			potionIDSoulburn,		true,	"Potion id for Soulburn");
 		
 		if (AlfheimCore.enableElvenStory) {
 			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
@@ -86,13 +88,13 @@ public class AlfheimConfig extends Configuration {
 			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
 			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
 			
-			deathTimerScale			= loadProp(CATEGORY_HUD,	"deathTimerScale",	deathTimerScale,	false,	"Death Timer Scale (1 < bigger; 1 > smaller)");
-			deathTimerX				= loadProp(CATEGORY_HUD,	"deathTimerX",		deathTimerX,		false,	"Death Timer additional X");
-			deathTimerY				= loadProp(CATEGORY_HUD,	"deathTimerY",		deathTimerY,		false,	"Death Timer additional Y");
+			deathTimerScale			= loadProp(CATEGORY_HUD,	"deathTimerScale",			deathTimerScale,		false,	"Death Timer Scale (1 < bigger; 1 > smaller)");
+			deathTimerX				= loadProp(CATEGORY_HUD,	"deathTimerX",				deathTimerX,			false,	"Death Timer additional X");
+			deathTimerY				= loadProp(CATEGORY_HUD,	"deathTimerY",				deathTimerY,			false,	"Death Timer additional Y");
 			
-			flightTimerScale		= loadProp(CATEGORY_HUD,	"flightTimerScale",	flightTimerScale,	false,	"Flight Timer Scale (1 < bigger; 1 > smaller)");
-			flightTimerX			= loadProp(CATEGORY_HUD,	"flightTimerX",		flightTimerX,		false,	"Flight Timer additional X");
-			flightTimerY			= loadProp(CATEGORY_HUD,	"flightTimerY",		flightTimerY,		false,	"Flight Timer additional Y");
+			flightTimerScale		= loadProp(CATEGORY_HUD,	"flightTimerScale",			flightTimerScale,		false,	"Flight Timer Scale (1 < bigger; 1 > smaller)");
+			flightTimerX			= loadProp(CATEGORY_HUD,	"flightTimerX",				flightTimerX,			false,	"Flight Timer additional X");
+			flightTimerY			= loadProp(CATEGORY_HUD,	"flightTimerY",				flightTimerY,			false,	"Flight Timer additional Y");
 		}
 
 		if (config.hasChanged()) {

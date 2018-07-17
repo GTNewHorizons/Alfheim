@@ -1,4 +1,4 @@
-package alfheim.common.core.utils;
+package alfheim.common.core.util;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimRegistry;

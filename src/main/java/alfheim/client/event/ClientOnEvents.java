@@ -3,7 +3,7 @@ package alfheim.client.event;
 import java.lang.reflect.Field;
 
 import alfheim.api.ModInfo;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.gui.GuiGameOver;
 
 public class ClientOnEvents {

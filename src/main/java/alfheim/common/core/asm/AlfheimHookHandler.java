@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.potion.PotionSoulburn;
 import cpw.mods.fml.relauncher.Side;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import net.minecraft.creativetab.CreativeTabs;

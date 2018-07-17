@@ -15,7 +15,7 @@ import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.block.tile.TileTradePortal;
 import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityCharge;
 import alfheim.common.entity.EntityElf;

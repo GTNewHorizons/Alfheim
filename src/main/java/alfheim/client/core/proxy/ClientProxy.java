@@ -29,7 +29,7 @@ import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.block.tile.TileTradePortal;
 import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.proxy.CommonProxy;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.EntityElf;
 import alfheim.common.entity.EntityLightningMark;

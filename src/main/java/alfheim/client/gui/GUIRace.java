@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL11.glTranslated;
 import alfheim.api.ModInfo;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.core.utils.AlfheimConfig;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

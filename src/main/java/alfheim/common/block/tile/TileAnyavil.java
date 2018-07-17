@@ -36,8 +36,11 @@ public class TileAnyavil extends ItemContainingTileEntity {
 		for (EntityItem eitem : eitems) {
 			if (eitem.isDead) continue;
 			ItemStack item = eitem.getEntityItem();
-			pinkCharge += (AlfheimAPI.getPinkness(item) * item.stackSize);
-			eitem.setDead();
+			int pinkness = AlfheimAPI.getPinkness(item);
+			if (pinkness > 0) {
+				pinkCharge += (pinkness * item.stackSize);
+				eitem.setDead();
+			}
 		}
 		
 		int extraPink = Math.max(0, pinkCharge - MAX_PINK_CHARGE);
