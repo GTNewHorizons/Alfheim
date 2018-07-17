@@ -1,5 +1,8 @@
-<versionslist>
-	<addon version="BETA-6">
-		<string>Bugfixes!</string>
-	</addon>
-</versionslist>
+<news>
+	<version id="LATEST">
+		<val>BETA-6</val>
+	</version>
+	<version id="ALL">
+		<val>GL HF!</val>
+	</version>
+</news>
