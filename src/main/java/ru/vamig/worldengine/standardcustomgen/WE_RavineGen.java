@@ -41,7 +41,7 @@ public class WE_RavineGen extends WE_CreateChunkGen {
 		for(long cx = data.chunk_X / 16L - (long)range; cx <= data.chunk_X / 16L + (long)range; ++cx)
 			for(long cz = data.chunk_Z / 16L - (long)range; cz <= data.chunk_Z / 16L + (long)range; ++cz) {
 				long nv1 = cx * rx, nv2 = cz * rz;
-				rand.setSeed((long) Math.pow(nv1, Math.pow(nv2, data.chunkProvider.worldObj.getSeed())));
+				rand.setSeed(nv1 ^ nv2 ^ data.chunkProvider.worldObj.getSeed());
 				
 				if(rand.nextInt(50) == 0) {
 					double
@@ -167,7 +167,7 @@ public class WE_RavineGen extends WE_CreateChunkGen {
 	}
 	
 	public void digBlock(WE_GeneratorData data, int index, int x, int y, int z) {
-		if(data.chunkBlocks[index] instanceof BlockFalling && data.chunkBlocks[index + 1] instanceof BlockFalling)
+		if(data.chunkBlocks[index] instanceof BlockFalling || data.chunkBlocks[index + 1] instanceof BlockFalling)
 			return;
 		
 		for(int i = 0; i < replaceBlocksList.size(); i++)

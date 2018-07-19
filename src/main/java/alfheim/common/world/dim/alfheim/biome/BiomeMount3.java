@@ -27,6 +27,8 @@ public class BiomeMount3 extends BiomeAlfheim {
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.dirt, (byte)0, ModBlocks.livingrock, (byte)0, -256, 0, -256, -2, true);
 		standardBiomeLayers.add(Blocks.grass, (byte)0, Blocks.dirt, (byte)0, -256, 0, -256, 0, false);
+		createChunkGen_InXZ_List.add(standardBiomeLayers);
+		standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.bedrock, (byte)0, 0, 0, 0, 0, true);
 		createChunkGen_InXZ_List.add(standardBiomeLayers);
 		WE_LakeGen waterLakes = new WE_LakeGen();

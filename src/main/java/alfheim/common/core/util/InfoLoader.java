@@ -10,14 +10,34 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.MinecraftForge;
+import vazkii.botania.common.core.version.VersionChecker;
 
 public class InfoLoader {
 
 	public static List<String> info = new ArrayList<String>();
+	public static boolean outdated = false;
 	
-	public static void start() throws Throwable {   
-		info.addAll(Arrays.asList(getNodeValue(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL(getNodeValue(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse((new URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/news/links.xml")).openStream()).getDocumentElement(), "1.7.10")).openStream()).getDocumentElement(), ModInfo.VERSION).split("&")));
+	public static void start() {
+		try {
+			Node root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).getDocumentElement();
+			int latest = Integer.parseInt(getNodeValue(root, "LATEST").split("-")[1]);
+			outdated = latest > Integer.parseInt(ModInfo.BUILD);
+			if (outdated) info.add(StatCollector.translateToLocalFormatted("alfheimmisc.update", ModInfo.BUILD, latest));
+			String s = getNodeValue(root, "ALL");
+			info.addAll(Arrays.asList(s.split("&")));
+			s = getNodeValue(root, ModInfo.VERSION);
+			if (s != null && !s.isEmpty()) {
+				info.add("================================================================================");
+				info.addAll(Arrays.asList(s.split("&")));
+			}
+		} catch (Exception e) {
+			ASJUtilities.error("Unable to load news & version from official repo. Check your internet connection.");
+			e.printStackTrace(System.err);
+		}
 	}
 	
 	public static String getNodeValue(Node root, String attributeValue) {

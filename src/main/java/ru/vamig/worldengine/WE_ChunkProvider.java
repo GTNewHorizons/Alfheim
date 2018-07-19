@@ -81,9 +81,9 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 		lavaLakes.maxY      =          32;
 		decorateChunkGen_List.add(lavaLakes);
 		
-		System.out.println("WorldEngine: -Applying your WorldEngine settings..."  );
+		//System.out.println("WorldEngine: -Applying your WorldEngine settings..."  );
 		wp.genSettings(this);
-		System.out.println("WorldEngine: -WorldEngine is configured successfully!");
+		//System.out.println("WorldEngine: -WorldEngine is configured successfully!");
 	}
 	
 	@Override

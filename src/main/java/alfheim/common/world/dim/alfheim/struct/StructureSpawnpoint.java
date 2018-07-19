@@ -6,18 +6,24 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
+import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureSpawnpoint extends StructureStartClass {
+public class StructureSpawnpoint implements IWorldGenerator {
+	
+	public static boolean spawn = false;
+	
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z) {
+    public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+		if (spawn || chunkX != 0 || chunkZ != 0) return;
 		if(AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2);
-		if(!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, x, y, z);
+		if(!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0), -41);
 		ASJUtilities.log("Spawn created");
-		return true;
+		spawn = true;
 	}
 	
 	public static void generate01(World world, Random rand, int x, int y, int z) {

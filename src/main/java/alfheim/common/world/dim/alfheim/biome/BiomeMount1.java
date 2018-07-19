@@ -27,6 +27,8 @@ public class BiomeMount1 extends BiomeAlfheim {
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.dirt, (byte)0, ModBlocks.livingrock, (byte)0, -256, 0, -256, -2, true);
 		standardBiomeLayers.add(Blocks.grass, (byte)0, Blocks.dirt, (byte)0, -256, 0, -256, 0, false);
+		createChunkGen_InXZ_List.add(standardBiomeLayers);
+		standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.bedrock, (byte)0, 0, 0, 0, 0, true);
 		createChunkGen_InXZ_List.add(standardBiomeLayers);
 		WE_LakeGen waterLakes = new WE_LakeGen();
@@ -40,8 +42,8 @@ public class BiomeMount1 extends BiomeAlfheim {
 		b.add(Blocks.log2, 1, Blocks.leaves2, 1, Blocks.sapling, Blocks.vine, Blocks.cocoa, 32, 3, 1, 4, false, (byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1, 2, 12, 4, 0.618, 0.381, 1.0, 1.0);
 		decorateChunkGen_List.add(b);
 		WE_StructureGen t = new WE_StructureGen();
-		t.add(new StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 0), 0, 0, 0, 0, 0, 0, 12, false, false);
-		t.add(new StructureDreamsTree(AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0), 0, 0, 0, 0, 0, 0, 20, false, false);
+		t.add(new StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 0), 12);
+		t.add(new StructureDreamsTree(AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0), 20);
 		decorateChunkGen_List.add(t);
 		WorldGenGrass g = new WorldGenGrass(true, true, true, true, 1.2);
 		decorateChunkGen_List.add(g);

@@ -73,8 +73,8 @@ public class AlfheimCore {
 		if (AlfheimCore.enableElvenStory) {
 			AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
 			event.registerServerCommand(new CommandRace());
-			event.registerServerCommand(new CommandDimTP());
 		}
+		event.registerServerCommand(new CommandDimTP());
 	}
 
 	public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {

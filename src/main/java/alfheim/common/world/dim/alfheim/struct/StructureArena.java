@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureArena extends StructureStartClass {
+public class StructureArena extends StructureBaseClass {
 	
 	protected Block[] GetValidSpawnBlocks() {
 		return new Block[] { Blocks.grass };

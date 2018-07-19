@@ -817,7 +817,7 @@ public class ASJUtilities {
 	 * chance to be generated, min, max Y-level
 	 * */
 	public static void generateOre(Block ore, int meta, Block replace, World world, Random rand, int blockXPos, int blockZPos, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
-		if (rand.nextInt(101) < (100 - chanceToSpawn)) return;
+		if (rand.nextInt(101) > chanceToSpawn) return;
 		int veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk;
 		for (int i = 0; i < veins; i++) {
 			int posX = blockXPos + rand.nextInt(16) + 8;

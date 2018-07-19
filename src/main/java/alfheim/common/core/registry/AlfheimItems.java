@@ -6,8 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
 import alfheim.common.item.ItemHoloProjector;
+import alfheim.common.item.TheRodOfTheDebug;
 import alfheim.common.item.equipment.armor.elemental.*;
 import alfheim.common.item.equipment.armor.elvoruim.*;
 import alfheim.common.item.equipment.bauble.*;
@@ -112,6 +114,7 @@ public class AlfheimItems {
 		//register(rodLightning); FIXME
 		//register(rodRays); FIXME
 		register(elvenResource);
+		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
 
 	private static void regOreDict() {

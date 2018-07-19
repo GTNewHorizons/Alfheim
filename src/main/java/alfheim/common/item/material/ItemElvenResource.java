@@ -2,27 +2,19 @@ package alfheim.common.item.material;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import vazkii.botania.api.recipe.IElvenItem;
-import vazkii.botania.common.block.ModBlocks;
 
 public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect FIXME*/ {
 	
-	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune" /*"Transferer"*/ /*"InfusedDreamwoodTwig"*/ /*"TheRodOfTheDebug"*/ };
+	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune" /*"Transferer"*/ /*"InfusedDreamwoodTwig"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ItemElvenResource() {
@@ -59,30 +51,6 @@ public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect
 		}
 	}
 	
-	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (/*!world.isRemote && */stack.getItemDamage() == subItems.length - 1) {
-			if (!player.isSneaking()) {
-				/*int m = 50;
-				for (int x = -m; x < m; x++) for (int y = -m; y < m; y++) for (int z = -m; z < m; z++) {
-					Block b = player.worldObj.getBlock((int) player.posX + x, (int) player.posY + y, (int) player.posZ + z);
-					if (b == ModBlocks.livingrock || b.getMaterial().equals(Material.water)) player.worldObj.setBlockToAir((int) player.posX + x, (int) player.posY + y, (int) player.posZ + z);
-				}*/
-				
-				/*MovingObjectPosition mop = ASJUtilities.getSelectedBlock(player, 1.0F, 64, true);
-				int x = mop.blockX, y = mop.blockY, z = mop.blockZ;
-				ASJUtilities.chatLog("meta " + world.getBlockMetadata(x, y, z), world);*/
-
-				//EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
-				//ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString(), player);
-				//ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
-			} else {
-				player.addChatComponentMessage(new ChatComponentText("Current dimension id: " + player.dimension));
-			}
-		}
-		return stack;
-	}
-
 	@Override
 	public boolean isElvenItem(ItemStack stack) {
 		return stack.getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore;

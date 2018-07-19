@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class StructureDreamsTree extends StructureStartClass {
+public class StructureDreamsTree extends StructureBaseClass {
 	public Block log;
 	public Block leaves;
 	public int upmeta;
@@ -15,6 +15,12 @@ public class StructureDreamsTree extends StructureStartClass {
 	public int fbmeta;
 	public int lvsmeta;
 	
+	/**
+	 * @param upmeta Vertical wood meta
+	 * @param lrmeta Left-right horizontal meta
+	 * @param fbmeta Front-back horizontal meta
+	 * @param lvsmeta Leaves meta
+	 * */
 	public StructureDreamsTree(Block log, Block leaves, int upmeta, int lrmeta, int fbmeta, int lvsmeta) {
 		this.log = log;
 		this.leaves = leaves;

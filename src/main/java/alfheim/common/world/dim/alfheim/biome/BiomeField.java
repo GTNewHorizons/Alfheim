@@ -27,10 +27,12 @@ public class BiomeField extends BiomeAlfheim {
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.dirt, (byte)0, ModBlocks.livingrock, (byte)0, -256, 0, -4, -2, true);
 		standardBiomeLayers.add(Blocks.grass, (byte)0, Blocks.dirt, (byte)0, -256, 0, -256, 0, false);
+		createChunkGen_InXZ_List.add(standardBiomeLayers);
+		standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.bedrock, (byte)0, 0, 0, 0, 0, true);
 		createChunkGen_InXZ_List.add(standardBiomeLayers);
 		WE_StructureGen t = new WE_StructureGen();
-		t.add(new StructureArena(), 0, 0, 0, 0, 0, 0, 1000, false, false);
+		t.add(new StructureArena(), 1000);
 		decorateChunkGen_List.add(t);
 		WorldGenGrass g = new WorldGenGrass(true, true, true, true, 1.0);
 		decorateChunkGen_List.add(g);

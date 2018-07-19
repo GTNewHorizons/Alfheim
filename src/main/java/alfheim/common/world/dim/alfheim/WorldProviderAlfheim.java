@@ -28,6 +28,7 @@ import ru.vamig.worldengine.standardcustomgen.WE_TerrainGenerator;
 import vazkii.botania.common.block.ModBlocks;
 
 public class WorldProviderAlfheim extends WE_WorldProvider {
+	
 	@Override
 	public float getCloudHeight() {
 		return 128.0F;
@@ -100,9 +101,7 @@ public class WorldProviderAlfheim extends WE_WorldProvider {
 		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32);
 		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50,  1, 16);
 		cp.decorateChunkGen_List.add(ores);
-		WE_StructureGen t = new WE_StructureGen();
-		t.add(new StructureSpawnpoint(), 0, 0, 0, 0, 0, 0, 1000, false, true);
-		cp.decorateChunkGen_List.add(t);
+		cp.decorateChunkGen_List.add(new StructureSpawnpoint());
 		WE_LakeGen waterLakes = new WE_LakeGen();
 		waterLakes.fY = 192;
 		cp.decorateChunkGen_List.add(waterLakes);

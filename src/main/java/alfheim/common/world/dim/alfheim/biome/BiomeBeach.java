@@ -24,6 +24,8 @@ public class BiomeBeach extends BiomeAlfheim {
 		
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(AlfheimBlocks.elvenSand, (byte)0, ModBlocks.livingrock, (byte)0, -256, 0, -4, -2, true);
+		createChunkGen_InXZ_List.add(standardBiomeLayers);
+		standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.bedrock, (byte)0, 0, 0, 0, 0, true);
 		createChunkGen_InXZ_List.add(standardBiomeLayers);
 	}

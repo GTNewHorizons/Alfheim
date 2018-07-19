@@ -24,6 +24,8 @@ public class BiomeLake extends BiomeAlfheim {
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.clay, (byte)0, ModBlocks.livingrock, (byte)0, -256, 0, -4, -2, true);
 		standardBiomeLayers.add(Blocks.gravel, (byte)0, Blocks.clay, (byte)0, -256, 0, -256, 1, true);
+		createChunkGen_InXZ_List.add(standardBiomeLayers);
+		standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.bedrock, (byte)0, 0, 0, 0, 0, true);
 		createChunkGen_InXZ_List.add(standardBiomeLayers);
 	}

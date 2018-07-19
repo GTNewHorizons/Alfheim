@@ -16,10 +16,10 @@ public class WE_Main {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		System.out.println("////////////////////////////////////-"                                      );
+		/*System.out.println("////////////////////////////////////-"                                      );
 		System.out.println("//#===============================//=* Version: " + VERSION + "."           );
 		System.out.println("//#=-------| WorldEngine |-------=//=* By Vamig Aliev (vk.com/win_vista)."  );
 		System.out.println("//#===============================//=* Part of VamigA_core (vk.com/vamiga).");
-		System.out.println("////////////////////////////////////-"                                      );
+		System.out.println("////////////////////////////////////-"                                      );*/
 	}
 }
