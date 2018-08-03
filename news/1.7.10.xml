@@ -5,4 +5,10 @@
 	<version id="ALL">
 		<val>GL HF!</val>
 	</version>
+	<version id="BETA-5">
+		<val>Important bugfixes were made, please update!</val>
+	</version>
+	<version id="BETA-6">
+		<val>Elven Story mode is impossible to complete. Sorry!</val>
+	</version>
 </news>
