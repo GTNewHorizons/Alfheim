@@ -87,10 +87,10 @@ botania.page.trade4=尘世之门
 botania.entry.essences=元素
 botania.tagline.essences=它看起来像珊瑚
 botania.page.essences0=当你前往地狱时, 你会意识到这只是 "炽热"的一部分. 从精灵传说中可以看出, "炽热"已经接近尘世
-botania.page.essences1=The resources from this infernal hole and the Iffesal dust make it possible to create a special summoner of the gigantic fiery wolf Nizatar. It is believed that it was created specifically to separate the strong from the weak, other theories claim that it was created to protect something, no one knows for sure. Nevertheless, the wolf is summoned, so let the heavenly powers help you!
+botania.page.essences1=烈焰, 源于地狱的力量 与魔灵粉末结合 也许可以制造出一种 可以将Nizatar- 强大的烈焰巨狼 召唤出来的东西 为什么它会被创造出来呢? 为了区分强者和弱者? 为了保护某些东西? 没有人知道答案, 然而, 这只来自天国的巨狼, 可以帮你消灭一切来犯之敌
 botania.page.essences1d=制造 炽热之魂
 botania.page.essences2=但当你读到关于宇宙的传说时 你似乎还记得"极寒" 一个由冰霜和大雪组成的世界 与"炽热"共同占据"始源"之位
-botania.page.essences3=Snow, dense ice and the Iffesal dust are ideal items for the summoner of the icy wolf, Quei. He resembles Nizatar, and the same legends go about him: either a test, or a guard.
+botania.page.essences3=将来自极寒的力量-寒冰 与魔灵粉末结合, 召唤Quei的时候, 这会是个理想的选择, 它和Nizatar的力量对立 极寒与炽热 但是传说也同样与他有关 无论是为了考验 或是为了守护
 botania.page.essences3d=制造 极寒之魂
 botania.page.essences4=泰拉钢和魔灵钢, 两种完美的合金, 象征着尘世和精灵乡的力量. 但他们还远远没有到达极限! 我们都知道,将盖亚之魂 和泰拉钢结合将会发生什么 -盖亚魂锭. 看起来似乎是种无用之物, 但是精灵考虑的和人类不同.
 botania.page.essences5=阿斯加德有一个传说: 神灵所使用的武器, 由一种特殊的金属制成, 它结合了四个世界的力量. 精灵们想到了这个传说, 并且试图制造出这样的武器 他们将"始源"注入盖亚之魂 将它们与魔灵钢结合, 就像盖亚魂锭一样, 结合了"炽热"与"极寒", 强大,完美无缺的合金
@@ -147,19 +147,19 @@ botania.page.reality0=元素精灵铠甲 母庸质疑,是一个好主意... 但�
 botania.page.reality1=但是我们必须考虑到, 当它调用原始元素的力量时, 源源不断的魔力被消耗掉了 虽说这些元素之力物超所值, 但是无缘无故的浪费 似乎并不是一个好主意 所以也许,你应该 把更多的注意力放在它上面. 但这并不是很重要, 毕竟你为了制造这把剑, 肯定消耗了更多的魔力 来制作始源魂灵, 所以你并不是很缺魔力, 对吧?
 botania.page.reality2=制造 始源之剑-现实
 
-botania.entry.excaliber=誓约胜利之剑
+botania.entry.excaliber=代表荣耀与胜利之剑炁
 botania.tagline.excaliber=亚瑟王的金色圣剑!!!(某呆毛:??)
 botania.page.excaliber0=&o很久以前, 这把代表胜利的神剑, 消失在了世人眼中, 从那时开始, 再也没有出现在世人眼前..&r
 
 botania.entry.mask=诡秘之面
 botania.tagline.mask=我似乎见过它...一
-botania.page.mask0=乱军之中 它飞到了尸体的脸上 这具尸体站了起来.. 自从你获得了它 这个噩梦就萦绕着你 每当你靠近这张面具 诡异,恐惧,死亡,可怖,死亡 他们似乎在侵蚀着你 没有办法戴上这张面具 也许死亡的力量 将会让它"活"过来
+botania.page.mask0=从来没有这么诡异的东西 无论怎样努力的戴上它 它总会从你脸上滑落 就仿佛你从未这样做过 它在排斥你的生命 也许你应该顺从它 自杀?他杀?无所谓 你需要一次死亡, 就像这个面具给你的感觉 ----疯狂---- ----诡异---- ----愤怒----
 
 botania.entry.soul=不朽
 botania.tagline.soul=神器
-botania.page.soul0=关于不朽的故事不多 任性,残忍,几乎不朽 每一个死亡天使 不朽之魂的持有者 都被世人这样形容着 传送的能力吸引了无数人 但不是每个人都有勇气 去挑战盖亚 并拿到它的一只眼睛
-botania.page.soul1=不朽们非常讨厌, 因为他们试图寻找 他们死去族人的眼睛 并将遗物带回去 将召唤仪式中不朽的眼睛 替换为用作祭品的锭 即可召唤出一位不朽 
-botania.page.soul2=但是小心 他们的高傲使他们不屑于 和无法独自飞行的人战斗 所以你需要一对翅膀 坚实的盔甲和锋利的剑 没有他们你将无所作为
+botania.page.soul0=关于不朽的故事不多 任性,残忍,几乎不朽 每一个死亡天使 不朽之魂的持有者 都被世人这样形容着 传送的能力吸引了无数人 但不是每个人都有勇气 去挑战它们 并拿到它的一只眼睛
+botania.page.soul1=不朽们非常讨厌, 因为他们试图寻找 他们死去族人的眼睛 并将遗物带回去 将召唤仪式中不朽的眼睛 替换为用作祭品的金属 即可召唤出一位不朽 
+botania.page.soul2=但是小心 他们的高傲使他们不屑于 和无法独自飞行的人战斗 所以你需要一对翅膀 坚实的盔甲和锋利的剑 没有他们你将毫无作为
 botania.page.soul3=胜利者将获得一份奖励 不朽之魂 你可以标记12处空间 就像天翼族之眼一样 但是这不是极限 你可以再次召唤不朽 并且再次获取12处空间标记
 botania.page.soul4=这将会给您提供一些便利<br><br><br>不幸的是 目前没有任何办法 恢复不朽之魂的残缺 也许 某一天？
 
