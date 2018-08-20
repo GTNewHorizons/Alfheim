@@ -1,8 +1,17 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-6</val>
+		<val>BETA-7</val>
 	</version>
 	<version id="ALL">
 		<val>GL HF!</val>
+	</version>
+	<version id="BETA-5">
+		<val>Important bugfixes were made, please update!</val>
+	</version>
+	<version id="BETA-6">
+		<val>Elven Story mode is impossible to complete. Sorry!</val>
+	</version>
+	<version id="BETA-7">
+		<val>Fixed elvenstory, but got more bugs... BETA-8 soon</val>
 	</version>
 </news>
