@@ -2,7 +2,7 @@ package alfheim.client.model.armor;
 
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.AdvancedArmorModel;
+import alexsocol.asjlib.render.AdvancedArmorModel;
 import alfheim.api.ModInfo;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && !AlfheimConfig.fancies) return;
+			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && AlfheimConfig.fancies) return;
 			ShaderHelper.useShader(ShaderHelper.halo);
 		}
 	}
@@ -106,6 +106,7 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 			double s = 0.01;
 			GL11.glTranslated(0.125, 0, 0);
 			GL11.glScaled(s, s, s);
+			Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 			model.renderPart("BootO");
 		}
 	}

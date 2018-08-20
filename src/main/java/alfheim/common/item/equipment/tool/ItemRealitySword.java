@@ -193,7 +193,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			case 2: target.addPotionEffect(new PotionEffect(Potion.poison.id, 80, 1)); break;
 			case 3: target.setFire(6); break;
 			case 4: {
-				target.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
+				attacker.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
 				target.setHealth(target.getHealth() - 5F);
 				break;
 			}

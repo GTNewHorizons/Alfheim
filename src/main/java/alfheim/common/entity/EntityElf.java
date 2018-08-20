@@ -37,6 +37,7 @@ public class EntityElf extends EntityCreature implements IMerchant, INpc {
 		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 1.0));
 		this.tasks.addTask(6, new EntityAIWander(this, 0.6));
 		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityElf.class, 6.0F));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, IMob.mobSelector));

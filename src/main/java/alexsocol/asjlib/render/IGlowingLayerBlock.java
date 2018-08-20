@@ -1,4 +1,4 @@
-package alexsocol.asjlib;
+package alexsocol.asjlib.render;
 
 import net.minecraft.util.IIcon;
 

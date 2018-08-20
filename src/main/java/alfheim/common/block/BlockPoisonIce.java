@@ -22,6 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.mana.ManaItemHandler;
 
 public class BlockPoisonIce extends Block implements ILexiconable {
 
@@ -81,10 +82,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 	
 	@Override
 	public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity e) {
-		if (e instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) e;
-			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
-		}
+		if (e instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0), (EntityPlayer) e, 50, true)) return;
 		e.setInWeb();
 		if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
 			EntityLivingBase l = (EntityLivingBase) e;
@@ -96,7 +94,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
 		if (world.getGameRules().getGameRuleBooleanValue("doFireTick")
-			//&& rand.nextInt(100) == 0
+			&& rand.nextInt(10) == 0
 			&& world.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(5, 5, 5)).isEmpty()) {
 			world.setBlockToAir(x, y, z);
 		}

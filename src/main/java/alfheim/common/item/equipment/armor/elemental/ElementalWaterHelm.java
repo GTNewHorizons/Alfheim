@@ -41,7 +41,7 @@ public class ElementalWaterHelm extends ElementalArmor implements IManaDiscountA
 
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
-		if (world.getBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY) + 1, MathHelper.floor_double(player.posZ)).getMaterial().equals(Material.water) && armorType == 0 && player.getCurrentArmor(3) != null && player.getCurrentArmor(3).getItem() == AlfheimItems.elementalHelmet && ManaItemHandler.requestManaExact(player.getCurrentArmor(3), player, 1, !world.isRemote)) {
+		if (world.getBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY) + 1, MathHelper.floor_double(player.posZ)).getMaterial().equals(Material.water) && armorType == 0 && player.getCurrentArmor(3) != null && player.getCurrentArmor(3).getItem() == this && ManaItemHandler.requestManaExact(player.getCurrentArmor(3), player, 1, !world.isRemote)) {
 			player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 1, -1));
 			player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 3, -1));
 		}

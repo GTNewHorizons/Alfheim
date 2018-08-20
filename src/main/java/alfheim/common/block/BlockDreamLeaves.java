@@ -2,8 +2,8 @@ package alfheim.common.block;
 
 import java.util.Random;
 
-import alexsocol.asjlib.IGlowingLayerBlock;
-import alexsocol.asjlib.RenderGlowingLayerBlock;
+import alexsocol.asjlib.render.IGlowingLayerBlock;
+import alexsocol.asjlib.render.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimBlocks;

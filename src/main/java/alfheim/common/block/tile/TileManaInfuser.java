@@ -147,6 +147,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	}
 
 	boolean areItemsValid(List<EntityItem> items) {
+		//boolean DBG = !worldObj.isRemote;
 		if (items.isEmpty()) return false;
 		for (RecipeManaInfuser recipe : AlfheimAPI.manaInfuserRecipes) {
 			if (DEBUG) System.out.println(recipe.toString());
@@ -156,7 +157,6 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 			}
 			
 			boolean[] equalitylist = new boolean[recipe.getInputs().size()]; // this array contains whether required ingredient is inside of AABB of infuser
-			for (boolean b : equalitylist) b = false; // Setting every value to false
 			
 			if (DEBUG) System.out.println("Scanning entities...");
 			
@@ -175,7 +175,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 							cing.setItemDamage(getTrueDamage(stack));
 						}
 						flag = isItemStackTrueEqual(stack, cing);
-					}
+					} else 
 					
 					if (ing instanceof String) {
 						List<ItemStack> ores = OreDictionary.getOres((String) ing);

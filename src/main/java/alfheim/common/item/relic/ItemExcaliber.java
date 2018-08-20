@@ -30,6 +30,7 @@ import vazkii.botania.api.internal.IManaBurst;
 import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.mana.BurstProperties;
 import vazkii.botania.api.mana.ILensEffect;
+import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.entity.EntityManaBurst;
@@ -60,7 +61,7 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 			if (ItemRelic.isRightPlayer(player, stack)) {
 				PotionEffect haste = player.getActivePotionEffect(Potion.digSpeed);
 				float check = haste == null ? 1.0F/6.0F : haste.getAmplifier() == 0 ? 0.4F : haste.getAmplifier() == 2 ? 1.0F/3.0F : 0.5F;
-				if (!world.isRemote && inHand && player.swingProgress == check) {
+				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 100, true)) {
 					EntityManaBurst burst = getBurst(player, stack);
 					world.spawnEntityInWorld(burst);
 					world.playSoundAtEntity(player, "botania:terraBlade", 0.4F, 1.4F);

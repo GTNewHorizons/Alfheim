@@ -1,4 +1,4 @@
-package alexsocol.asjlib;
+package alexsocol.asjlib.render;
 	//forum.mcmodding.ru/threads/7509/
 	
 	/*public static void drawTextureCustomSize(double posX, double posY, double startPixX, double startPixY, double pieceSizeX, double pieceSizeY, float sizeTextureX, float sizeTextureY) {
@@ -11,21 +11,21 @@ package alexsocol.asjlib;
 		tessellator.addVertexWithUV((double)(posX + pieceSizeX), (double)posY, 0.0, (double)((startPixX + (float)pieceSizeX) * f4), (double)(startPixY * f5));
 		tessellator.addVertexWithUV((double)posX, (double)posY, 0.0, (double)(startPixX * f4), (double)(startPixY * f5));
 		tessellator.draw();
-	}//p.s. лень было удалять скобки и касты.
+	}//p.s. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ.
 	
-	RenderHelper.drawTextureCustomSize(0, 0, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//Верхний левый угол
+	RenderHelper.drawTextureCustomSize(0, 0, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-	RenderHelper.drawTextureCustomSize(w - pieceSizeX, 0, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//верхний правый угол
+	RenderHelper.drawTextureCustomSize(w - pieceSizeX, 0, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-	RenderHelper.drawTextureCustomSize(w - pieceSizeX, h - pieceSizeY, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//нижний правый угол
+	RenderHelper.drawTextureCustomSize(w - pieceSizeX, h - pieceSizeY, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-	RenderHelper.drawTextureCustomSize(0, h - pieceSizeY, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//Нижний левый угол
+	RenderHelper.drawTextureCustomSize(0, h - pieceSizeY, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY);//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-	RenderHelper.drawTextureCustomSize((w - pieceSizeX)/2, (h - pieceSizeY)/2, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY); //центр
+	RenderHelper.drawTextureCustomSize((w - pieceSizeX)/2, (h - pieceSizeY)/2, startPixX, startPixY, pieceSizeX, pieceSizeY, sizeTextureX, sizeTextureY); //пїЅпїЅпїЅпїЅпїЅ
 
 	{
 	float scale = 0.7F //Percent scale;
-	double posX = (w - pieceSizeX*scale)/scale; //Рендер тексуры справа
+	double posX = (w - pieceSizeX*scale)/scale; //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 	GL11.glPushMatrix();
 	GL11.glScalef(scale, scale, 1);
@@ -39,21 +39,21 @@ package alexsocol.asjlib;
 
 String text = "svk";
 
-drawString(font, text, posX, posY, new Color(255, 0, 0).getRGB()); //Текст слева направо
-drawString(font, text, posX - font.getStringWidth(text)/2, posY, new Color(255, 0, 0).getRGB()); //Текст по центру
-drawString(font, text, posX - font.getStringWidth(text), posY, new Color(255, 0, 0).getRGB()); //Текст справа налево.
+drawString(font, text, posX, posY, new Color(255, 0, 0).getRGB()); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+drawString(font, text, posX - font.getStringWidth(text)/2, posY, new Color(255, 0, 0).getRGB()); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+drawString(font, text, posX - font.getStringWidth(text), posY, new Color(255, 0, 0).getRGB()); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
 
 */
 
 
 /**
- * Рисует круглик
- * @param centerX центральная точка по горизонтали
- * @param centerY центральная точка по вертикали
- * @param radius радиус кружочка
- * @param segments количество точек на окружности
- * @param fillColor цвет заполнения
- * @param alpha255 альфа канал
+ * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param centerX пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param centerY пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param radius пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param segments пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param fillColor пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param alpha255 пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
  */
 /*public static void materialCircle(double centerX, double centerY, double radius, int segments, int fillColor, int alpha255) {
 	GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -84,12 +84,12 @@ drawString(font, text, posX - font.getStringWidth(text), posY, new Color(255, 0,
 }*/
 
 /**
- * Метод рисует прямоугольник
- * @param posX точка начала по горизонтали
- * @param posY точка начала по вертикали
- * @param width ширина прямоугольника
- * @param height его высота
- * @param hexColor цвет заливки типа 0xFFFFFFFF.
+ * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param posX пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param posY пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param width пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param height пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+ * @param hexColor пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 0xFFFFFFFF.
  */
 /*public static void square(double posX, double posY, double width, double height, int hexColor) {
 	GL11.glDisable(GL11.GL_TEXTURE_2D);

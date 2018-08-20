@@ -2,6 +2,7 @@ package alfheim.common.potion;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
@@ -28,12 +29,12 @@ public class PotionSoulburn extends PotionAlfheim {
 
 	@Override
 	public boolean isReady(int time, int mod) {
-		return time > 1200 && time % 20 == 0; 
+		return time % 20 == 0; 
 	}
 
 	@Override
 	public void performEffect(EntityLivingBase living, int mod) {
-		 living.attackEntityFrom(solburn, mod);
+		living.attackEntityFrom(solburn, mod+1);
 	}
 	
 	@SideOnly(Side.CLIENT)

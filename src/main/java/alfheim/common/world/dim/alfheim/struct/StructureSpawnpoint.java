@@ -7,23 +7,21 @@ import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
 import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-public class StructureSpawnpoint implements IWorldGenerator {
+public class StructureSpawnpoint  {
 	
 	public static boolean spawn = false;
 	
-	@Override
-    public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		if (spawn || chunkX != 0 || chunkZ != 0) return;
+	public static void generate(World world, Random rand) {
+		if(!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0) + 2, -41);
 		if(AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2);
-		if(!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0), -41);
 		ASJUtilities.log("Spawn created");
-		spawn = true;
 	}
 	
 	public static void generate01(World world, Random rand, int x, int y, int z) {
@@ -19905,7 +19903,6 @@ public class StructureSpawnpoint implements IWorldGenerator {
 		world.setSpawnLocation(x + 11, y + 8, z + 39);
 		
 		world.setBlock(x + 10, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
-		world.setBlock(x + 11, y + 8, z + 41, AlfheimBlocks.alfheimPortal, 1, 3);
 		world.setBlock(x + 12, y + 8, z + 41, ModBlocks.dreamwood, 0, 3);
 		
 		world.setBlock(x + 9, y + 9, z + 41, ModBlocks.dreamwood, 0, 3);
@@ -19918,6 +19915,8 @@ public class StructureSpawnpoint implements IWorldGenerator {
 		world.setBlock(x + 10, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
 		world.setBlock(x + 11, y + 12, z + 41, ModBlocks.dreamwood, 5, 3);
 		world.setBlock(x + 12, y + 12, z + 41, ModBlocks.dreamwood, 0, 3);
+		
+		world.setBlock(x + 11, y + 8, z + 41, AlfheimBlocks.alfheimPortal, 1, 3);
 		
 		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 22, y, z, z + 42, 0);
 	}

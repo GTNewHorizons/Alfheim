@@ -2,7 +2,7 @@ package alfheim.client.render.block;
 
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.ItemContainingTileEntity;
+import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileAnyavil;
 import net.minecraft.client.Minecraft;

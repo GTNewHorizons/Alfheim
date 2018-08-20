@@ -40,12 +40,12 @@ public class RecipeHandlerManaInfuser extends RecipeHandlerPetalApothecary {
 	}
 
 	@Override
-	public void drawBackground(int recipe) {
+	public strictfp void drawBackground(int recipe) {
 		super.drawBackground(recipe);
 		int mana = ((CachedManaInfuserRecipe) arecipes.get(recipe)).manaUsage;
 		HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75F, mana, TilePool.MAX_MANA * 5);
-		Minecraft.getMinecraft().fontRenderer.drawString("" + mana, (168 - Minecraft.getMinecraft().fontRenderer.getStringWidth("" + mana)) / 2, 105, 0x0000FF);
-
+		String m = ((mana * 10 / TilePool.MAX_MANA / 10.) + " x mana pool(s)").replaceAll("\\.0", "");
+		Minecraft.getMinecraft().fontRenderer.drawString(m, (168 - Minecraft.getMinecraft().fontRenderer.getStringWidth(m)) / 2, 120, 0x0000FF);
 	}
 
 	@Override

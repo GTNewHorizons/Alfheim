@@ -1,8 +1,9 @@
 package alfheim;
 
+import static alfheim.api.ModInfo.*;
+
 import java.io.IOException;
 
-import alfheim.api.ModInfo;
 import alfheim.common.core.command.CommandDimTP;
 import alfheim.common.core.command.CommandRace;
 import alfheim.common.core.proxy.CommonProxy;
@@ -24,28 +25,29 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-@Mod(modid = ModInfo.MODID,
-	name = ModInfo.NAME,
-	version = ModInfo.VERSION,
-	guiFactory = ModInfo.MODID + ".client.gui.GUIFactory",
+@Mod(modid = MODID,
+	name = NAME,
+	version = VERSION,
+	guiFactory = MODID + ".client.gui.GUIFactory",
 	dependencies = "required-after:Botania;before:elvenstory")
 
 public class AlfheimCore {
 
-	@Instance(ModInfo.MODID)
+	@Instance(MODID)
 	public static AlfheimCore instance;
 
-	@SidedProxy(clientSide = ModInfo.MODID + ".client.core.proxy.ClientProxy", serverSide = ModInfo.MODID + ".common.core.proxy.CommonProxy")
+	@SidedProxy(clientSide = MODID + ".client.core.proxy.ClientProxy", serverSide = MODID + ".common.core.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static SimpleNetworkWrapper network;
+	public static int nextPacketID = 0;
 	
 	public static boolean enableElvenStory = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) throws Throwable {
-		enableElvenStory = Loader.isModLoaded("elvenstory");
-		network = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
+		enableElvenStory = Loader.isModLoaded("elvenstory") || DEV;
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
 		if (AlfheimConfig.info) InfoLoader.start();

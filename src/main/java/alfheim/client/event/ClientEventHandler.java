@@ -41,8 +41,7 @@ public class ClientEventHandler {
 	/** Someone told me that this is the best way... */
 	public void onClientTick(ClientTickEvent e) {
 		WorldClient world = Minecraft.getMinecraft().theWorld;
-		if (world != null && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
-				&& world.provider.getSkyRenderer() == null)
+		if (world != null && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && world.provider.getSkyRenderer() == null)
 			world.provider.setSkyRenderer(new SkyblockSkyRenderer());
 	}
 
@@ -88,11 +87,13 @@ public class ClientEventHandler {
 //			GL11.glPopMatrix();
 //		}
 		
-//		GL11.glPushMatrix();
+//		glPushMatrix();
 //		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
-//		GL11.glTranslated(0, 100, 0);
-//		//Render
-//		GL11.glPopMatrix();
+//		glTranslated(0, 100, 0);
+//		//render
+//		glPopMatrix();
+		
+		
 	}
 
 	@SubscribeEvent

@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.mana.ManaItemHandler;
 
 public class BlockRedFlame extends BlockFire implements ILexiconable {
 
@@ -44,7 +45,7 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 
 	@Override
 	public boolean isCollidable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -66,11 +67,11 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	}
 
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-		if (entity instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant) return;
+		if (entity instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0), (EntityPlayer) entity, 50, true)) return;
 		if (entity instanceof EntityLivingBase) {
-			PotionEffect burningsoul = new PotionEffect(AlfheimRegistry.soulburn.id, 200);
-			burningsoul.getCurativeItems().clear();
-			((EntityLivingBase) entity).addPotionEffect(burningsoul);
+			PotionEffect soulburn = new PotionEffect(AlfheimRegistry.soulburn.id, 200);
+			soulburn.getCurativeItems().clear();
+			((EntityLivingBase) entity).addPotionEffect(soulburn);
 		}
 		entity.setInWeb();
 	}
@@ -117,29 +118,20 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
 		if (world.getGameRules().getGameRuleBooleanValue("doFireTick")) {
-			boolean flag = world.getBlock(x, y - 1, z).isFireSource(world, x, y - 1, z, ForgeDirection.UP);
-
 			if (!canPlaceBlockAt(world, x, y, z)) {
 				world.setBlockToAir(x, y, z);
 			}
 
-			if ((!flag) && (world.isRaining())
-					&& ((world.canLightningStrikeAt(x, y, z)) || (world.canLightningStrikeAt(x - 1, y, z))
-							|| (world.canLightningStrikeAt(x + 1, y, z)) || (world.canLightningStrikeAt(x, y, z - 1))
-							|| (world.canLightningStrikeAt(x, y, z + 1)))) {
-				world.setBlockToAir(x, y, z);
-			} else {
+			if (world.rand.nextInt(100) == 0) world.setBlockToAir(x, y, z);
+			
+			{
 				int l = world.getBlockMetadata(x, y, z);
 				if (l < 15) {
 					world.setBlockMetadataWithNotify(x, y, z, l + rand.nextInt(3) / 2, 4);
 				}
 				world.scheduleBlockUpdate(x, y, z, this, tickRate(world) + rand.nextInt(15));
 
-				if ((!flag) && (!canNeighborBurn(world, x, y, z))) {
-					if ((!World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)) || (l > 3)) {
-						world.setBlockToAir(x, y, z);
-					}
-				} else {
+				{
 					boolean flag1 = world.isBlockHighHumidity(x, y, z);
 					byte b0 = 0;
 					if (flag1) {

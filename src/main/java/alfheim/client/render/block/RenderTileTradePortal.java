@@ -65,10 +65,11 @@ public class RenderTileTradePortal extends TileEntitySpecialRenderer {
 			glTranslated(1.453125, -0.6640625, 0.251);
 			ItemStack out = portal.getOutput();
 			if (out.getItem() instanceof ItemBlock) glTranslated(0, 0, -0.140625);
+			else glTranslated(0, -0.04, 0);
 			renderItem(tile, out);
 			glRotated(180, 0, 1, 0);
 			if (out.getItem() instanceof ItemBlock) glTranslated(0, 0, 0.72075);
-			else glTranslated(0, 0, 1.002);
+			else glTranslated(0.01, 0, 1.002);
 			renderItem(tile, out);
 		}
 		

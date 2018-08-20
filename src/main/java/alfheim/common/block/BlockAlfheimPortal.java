@@ -56,17 +56,17 @@ public class BlockAlfheimPortal extends Block implements ITileEntityProvider, IL
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (world.provider.dimensionId == 0)
-			if (world.getBlockMetadata(x, y, z) == 0 && player.getCurrentEquippedItem() != null
-			&&  player.getCurrentEquippedItem().getItem() == AlfheimItems.elvenResource
-			&&  player.getCurrentEquippedItem().getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore)
+		int newMeta = ((TileAlfheimPortal) world.getTileEntity(x, y, z)).getValidMetadata();
+		if (newMeta == 0) return false;
+		
+		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) {
+			if (world.getBlockMetadata(x, y, z) == 0 && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == AlfheimItems.elvenResource && player.getCurrentEquippedItem().getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore) {
 				ASJUtilities.consumeItemStack(player.inventory, new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore));
-			else
-				return false;		
-
-		boolean did = ((TileAlfheimPortal) world.getTileEntity(x, y, z)).onWanded();
-		if(did && player != null)
-			player.addStat(AlfheimAchievements.alfheim, 1);
+			} else return false;		
+		}
+		
+		boolean did = ((TileAlfheimPortal) world.getTileEntity(x, y, z)).onWanded(newMeta);
+		if(did && player != null) player.addStat(AlfheimAchievements.alfheim, 1);
 		return did;
 	}
 

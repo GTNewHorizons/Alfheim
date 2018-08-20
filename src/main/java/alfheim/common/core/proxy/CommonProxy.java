@@ -50,6 +50,6 @@ public class CommonProxy {
 	}
 
 	public void registerPackets() {
-		AlfheimCore.network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, 0, Side.SERVER);
+		AlfheimCore.network.registerMessage(KeyBindMessage.Handler.class, KeyBindMessage.class, AlfheimCore.nextPacketID++, Side.SERVER);
 	}
 }

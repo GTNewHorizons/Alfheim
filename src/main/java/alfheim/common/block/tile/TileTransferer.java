@@ -2,7 +2,7 @@ package alfheim.common.block.tile;
 
 import org.lwjgl.opengl.GL11;
 
-import alexsocol.asjlib.ItemContainingTileEntity;
+import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
@@ -167,10 +167,10 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	}
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
-		String name = StatCollector.translateToLocal(/*new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() +  FIXME*/".name");
+		/*String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() + ".name");
 		int color = 0xCCFF00;
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		GL11.glColor4f(1F, 1F, 1F, 1F); FIXME*/
 	}
 
 	public boolean isBound() {

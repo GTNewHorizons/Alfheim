@@ -4,17 +4,27 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.common.block.tile.TileTransferer;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import vazkii.botania.api.internal.IManaBurst;
+import vazkii.botania.api.mana.BurstProperties;
+import vazkii.botania.api.mana.ILensEffect;
 import vazkii.botania.api.recipe.IElvenItem;
+import vazkii.botania.common.entity.EntityManaBurst;
 
-public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect FIXME*/ {
+public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect FIXME*/ {
 	
-	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune" /*"Transferer"*/ /*"InfusedDreamwoodTwig"*/ };
+	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune"/*, "Transferer" FIXME*/ /*"InfusedDreamwoodTwig"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ItemElvenResource() {
@@ -50,13 +60,13 @@ public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect
 			list.add(new ItemStack(item, 1, i));
 		}
 	}
-	
+	/*
 	@Override
 	public boolean isElvenItem(ItemStack stack) {
 		return stack.getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore;
 	}
 
-	/*@Override
+	@Override
 	public void apply(ItemStack stack, BurstProperties props) {}
 
 	@Override
@@ -80,5 +90,5 @@ public class ItemElvenResource extends Item implements IElvenItem/*, ILensEffect
 	@Override
 	public boolean doParticles(IManaBurst burst, ItemStack stack) {
 		return stack.getItemDamage() == ElvenResourcesMetas.Transferer;
-	} FIXME*/
+	}FIXME*/
 }

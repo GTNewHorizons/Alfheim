@@ -1,5 +1,6 @@
 package alfheim.common.network;
 
+import alexsocol.asjlib.network.ASJPacket;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -8,31 +9,14 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 
-public class AttributeMessage implements IMessage {
+public class AttributeMessage extends ASJPacket {
 
-	public int id;
-	public double value;
-	
-	public AttributeMessage() {
-		id = 0;
-		value = 0;
-	}
+	public int id = 0;
+	public double value = 0;
 	
 	public AttributeMessage(int i, double v) {
 		id = i;
 		value = v;
-	}
-	
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		value = buf.readDouble();
-		id = buf.readInt();
-	}
-
-	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeDouble(value);
-		buf.writeInt(id);
 	}
 	
 	public static class Handler implements IMessageHandler<AttributeMessage, IMessage> {

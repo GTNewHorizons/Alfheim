@@ -1,5 +1,7 @@
 package alfheim.common.network;
 
+import alexsocol.asjlib.network.ASJPacket;
+import alfheim.client.core.utils.KeyBindingsUtils.KeyBindingIDs;
 import alfheim.common.core.util.KeyBindingsUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -7,36 +9,26 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-public class KeyBindMessage implements IMessage {
+public class KeyBindMessage extends ASJPacket {
 
-	public byte action;
+	public KeyBindingIDs action;
 	public int ticks;
 	public boolean state;
 	
-	public KeyBindMessage() {
-		this.action = 0;
-		this.state = false;
-		this.ticks = 0;
-	}
-	
-	public KeyBindMessage(byte action, boolean state, int ticks) {
+	public KeyBindMessage(KeyBindingIDs action, boolean state, int ticks) {
 		this.action = action;
 		this.state = state;
 		this.ticks = ticks;
 	}
 	
 	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeByte(action);
-		buf.writeBoolean(state);
-		buf.writeInt(ticks);
+	public void toCustomBytes(ByteBuf buf) {
+		buf.writeInt(action.ordinal());
 	}
-
+	
 	@Override
-	public void fromBytes(ByteBuf buf) {
-		action = buf.readByte();
-		state = buf.readBoolean();
-		ticks = buf.readInt();
+	public void fromCustomBytes(ByteBuf buf) {
+		action = KeyBindingIDs.values()[buf.readInt()];
 	}
 	
 	public static class Handler implements IMessageHandler<KeyBindMessage, IMessage> {
@@ -46,8 +38,8 @@ public class KeyBindMessage implements IMessage {
 			EntityPlayerMP player = message.getServerHandler().playerEntity;
 			
 			switch (packet.action) {
-				case 0: KeyBindingsUtils.enableFlight(player); break;
-				case 1: KeyBindingsUtils.atack(player); break;
+				case ATTACK: KeyBindingsUtils.atack(player); break;
+				case FLIGHT: case BOOST: KeyBindingsUtils.enableFlight(player, packet.action == KeyBindingIDs.BOOST); break;
 			}
 			return null;
 		}

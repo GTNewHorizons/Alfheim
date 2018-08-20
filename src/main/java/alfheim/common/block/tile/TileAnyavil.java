@@ -3,7 +3,7 @@ package alfheim.common.block.tile;
 import java.awt.Color;
 import java.util.List;
 
-import alexsocol.asjlib.ItemContainingTileEntity;
+import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.client.Minecraft;

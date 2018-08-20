@@ -253,14 +253,14 @@ public class ASJUtilities {
 	 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
 	 */
 	public static boolean isItemStackTrueEqual(ItemStack stack1, ItemStack stack2) {
-		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack1));
+		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2));
 	}
 	
 	/**
 	 * Checks if two itemstacks has same ID and metadata (from stack itself)
 	 */
 	public static boolean isItemStackTrueEqualData(ItemStack stack1, ItemStack stack2) {
-		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && getTrueDamage(stack1) == getTrueDamage(stack1));
+		return (stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && getTrueDamage(stack1) == getTrueDamage(stack2));
 	}
 	
 	/**

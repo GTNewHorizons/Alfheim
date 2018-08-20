@@ -17,6 +17,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.ai.AIBase;
 import alfheim.common.entity.boss.ai.AIChase;
 import alfheim.common.entity.boss.ai.AIDeathray;
@@ -59,7 +60,6 @@ import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
@@ -68,7 +68,6 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import vazkii.botania.api.boss.IBotaniaBoss;
-import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.lexicon.multiblock.Multiblock;
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 import vazkii.botania.api.lexicon.multiblock.component.MultiblockComponent;
@@ -79,7 +78,6 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 import vazkii.botania.common.item.relic.ItemRelic;
 
 public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // EntityDoppleganger
@@ -323,7 +321,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL) setDead();
 		
-		if(worldObj.isRemote) BossBarHandler.setCurrentBoss(this);
+		if(worldObj.isRemote && AlfheimConfig.flugelBossBar) BossBarHandler.setCurrentBoss(this);
 		
 		if(!worldObj.isRemote) {
 			int radius = 1;
@@ -655,7 +653,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	public void setAITask(AITask ai) {
-		for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
+		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
 		dataWatcher.updateObject(27, ai.ordinal());
 	}
 	
@@ -751,9 +749,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		String TAG_AI_TASK = "task";
 		setAITask(AITask.values()[nbt.getInteger(TAG_AI_TASK)]);
 		
-		ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
+		//if (ModInfo.DEV) ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
 		for (Object e : tasks.taskEntries) {
-			ASJUtilities.log("At " + ((EntityAITaskEntry) e).action.getClass().getName());
+			//if (ModInfo.DEV) ASJUtilities.log("At " + ((EntityAITaskEntry) e).action.getClass().getName());
 			String[] path = ((EntityAITaskEntry)e).action.getClass().getName().split("\\.");
 			if (((EntityAITaskEntry) e).action instanceof AIBase && path[path.length-1].equals(nbt.getString(TAG_AI))) {
 				tasks.executingTaskEntries.add(e);

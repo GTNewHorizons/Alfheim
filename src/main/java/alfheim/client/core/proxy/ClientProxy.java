@@ -95,6 +95,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerPackets() {
 		super.registerPackets();
-		AlfheimCore.network.registerMessage(AttributeMessage.Handler.class, AttributeMessage.class, 1, Side.CLIENT);
+		AlfheimCore.network.registerMessage(AttributeMessage.Handler.class, AttributeMessage.class, AlfheimCore.nextPacketID++, Side.CLIENT);
 	}
 }

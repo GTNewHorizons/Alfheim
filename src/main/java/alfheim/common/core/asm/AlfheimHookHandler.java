@@ -4,17 +4,20 @@ import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.potion.PotionSoulburn;
+import codechicken.nei.recipe.GuiRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gloomyfolken.hooklib.asm.Hook;
 import gloomyfolken.hooklib.asm.ReturnCondition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.Render;
@@ -85,6 +88,26 @@ public class AlfheimHookHandler {
 		return false;
 	}
 
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	public static boolean extinguishFire(World world, EntityPlayer player, int x, int y, int z, int side) {
+        if (side == 0) --y;
+        if (side == 1) ++y;
+        if (side == 2) --z;
+        if (side == 3) ++z;
+        if (side == 4) --x;
+        if (side == 5) ++x;
+        Block b = world.getBlock(x, y, z);
+        
+        boolean f = b.getBlockHardness(world, x, y, z) != -1.0F;
+        if (player != null) f = f || player.capabilities.isCreativeMode;
+        if (b.getMaterial() == Material.fire && f) {
+        	world.playAuxSFXAtEntity(player, 1004, x, y, z, 0);
+        	world.setBlockToAir(x, y, z);
+            return true;
+        }
+        return false;
+    }
+	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
 	public static String NBTTagCompound_toString(NBTTagCompound nbt) {
 		StringBuilder sb = new StringBuilder("{\n");
@@ -113,10 +136,12 @@ public class AlfheimHookHandler {
 	public static void renderManaBar(HUDHandler hh, int x, int y, int color, float alpha, int mana, int maxMana) {
 		if(mana < 0) return;
 		GL11.glPushMatrix();
+		boolean f = Minecraft.getMinecraft().currentScreen == null;
+		boolean f1 = !f && Minecraft.getMinecraft().currentScreen instanceof GuiRecipe;
 		String text = mana + "/" + maxMana;
 		int X = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2;
-		int Y = y - 19;
-		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, true);
+		int Y = f1 ? y - 9 : y - 19;
+		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, f);
 		GL11.glPopMatrix();
 	}
 

@@ -31,7 +31,7 @@ public class ItemRodElemental extends Item implements IManaUsingItem {
 		this.barrier = barrier;
 		setCreativeTab(AlfheimCore.alfheimTab);
 		setFull3D();
-		setMaxDamage(100);
+		setMaxDamage(1200);
 		setMaxStackSize(1);
 		setTextureName(ModInfo.MODID + ':' + name);
 		setUnlocalizedName(name);

@@ -1,5 +1,6 @@
 Credits:
 anonymous..es	-	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
+Xinzhou Hong	-	chinese translation
 BlesseNTumble	-	worldgen
 DmitryWS		-	lore and most of textures
 pandorarose22	-	wings textures

@@ -10,8 +10,10 @@ import java.util.Random;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderGenerate;
@@ -85,6 +87,11 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 		wp.genSettings(this);
 		//System.out.println("WorldEngine: -WorldEngine is configured successfully!");
 	}
+	
+	public List getPossibleCreatures(EnumCreatureType type, int x, int y, int z) {
+        WE_Biome b = WE_Biome.getBiomeAt(this, x, z);
+        return /*type == EnumCreatureType.monster && this.scatteredFeatureGenerator.func_143030_a(x, y, z) ? this.scatteredFeatureGenerator.getScatteredFeatureSpawnList() :*/ b.getSpawnableList(type);
+    }
 	
 	@Override
 	public Chunk provideChunk(int chunkX, int chunkZ) {

@@ -1,5 +1,6 @@
 package alfheim.common.core.asm;
 
+import alexsocol.asjlib.asm.ASJPacketCompleter;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import gloomyfolken.hooklib.minecraft.HookLoader;
 import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
@@ -8,7 +9,7 @@ import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
 public class AlfheimHookLoader extends HookLoader {
 	
 	@Override public String[] getASMTransformerClass() {
-		return new String[] { PrimaryClassTransformer.class.getName(), /*ASJASM.class.getName(),*/ AlfheimClassTransformer.class.getName() };
+		return new String[] { PrimaryClassTransformer.class.getName(), /*ASJASM.class.getName(),*/ AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName() };
 	}
 
 	@Override public void registerHooks() {

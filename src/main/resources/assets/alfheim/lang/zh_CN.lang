@@ -21,7 +21,7 @@ tile.MuspelheimFire.name=永恒炽热之焰
 tile.NiflheimIce.name=永恒极寒之冰
 tile.QuartzElvenOre.name=精灵石英矿石
 tile.TradePortal.name=尘世之门核心
-tile.Transferer.name=转印
+tile.Transferer.name=传送阵
 
 ##########################################################___ITEMS___###########################################################
 
@@ -97,11 +97,11 @@ item.Transferer.name=Destructurizer
 achievement.alfheim=艾尔夫海姆
 achievement.alfheim.desc=欢迎来到艾尔夫海姆
 achievement.excaliber=流动之心
-achievement.excaliber.desc=你的壮举让你获得了誓约胜利之剑
+achievement.excaliber.desc=荣耀与胜利
 achievement.mask=势不可挡
-achievement.mask.desc=你的壮举让你获得了诡秘之面
-achievement.soul=吾之魂
-achievement.soul.desc=你的壮举让你获得了不朽之魂
+achievement.mask.desc=诡秘的面具
+achievement.flugelSoul=吾之魂
+achievement.flugelSoul.desc=永世不朽之魂
 achievement.flugelKill=弑神者
 achievement.flugelKill.desc=不朽永存
 
@@ -139,10 +139,11 @@ alfheim.potion.possession.postfix=侵蚀药水
 alfheim.potion.soulburn=灵魂燃烧
 alfheim.potion.soulburn.postfix=燃魂药水
 
-alfheimmics.badArena=尽你最大的努力,仪式没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
+alfheimmics.badArena=即使尽你最大的努力,仪式仍然没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
 alfheimmics.needsCatalysts=无论你如何努力将眼睛推进信标,周围似乎都没有任何事情发生,检查一下你的配置是个好主意
 alfheimmisc.notallowed=愚蠢的凡人,你连飞行都做不到,你没有和我战斗的资格,在我改变主意并干掉你之前赶紧离开
 alfheimmics.peacefulNoob=你试图提供一个眼睛,但世界的和平阻止你这样做,也许你应该做点什么
+alfheimmisc.update=哦!我的天, 看上去你正在用一个过期的版本(%s). 也许你应该更新到 %s?
 
 death.attack.soulburn=%s的灵魂开始燃烧
 
@@ -180,39 +181,39 @@ itemGroup.Alfheim=艾尔夫海姆
 #######################################################___RELIC POEMS___########################################################
 
 item.infiniteFruit.poem0=禁园之果
-item.infiniteFruit.poem1=永远清理一个人的饥饿
-item.infiniteFruit.poem2=为此,它重塑了它的果肉
-item.infiniteFruit.poem3=并让它自己更年轻.
+item.infiniteFruit.poem1=永不再受饥荒之苦
+item.infiniteFruit.poem2=重塑躯体
+item.infiniteFruit.poem3=并让自己更加"年轻"
 
 item.Excaliber.poem0=英雄之剑
-item.Excaliber.poem1只适合其中一种,
-item.Excaliber.poem2=锋利又神奇,
-item.Excaliber.poem3=它会迅速找到敌人.
+item.Excaliber.poem1=剑炁
+item.Excaliber.poem2=锋利又神异
+item.Excaliber.poem3=无所遁形之敌
 
-item.flugelEye.poem0=一个人过去想法的愿望,
-item.flugelEye.poem1=记忆的轮回,
-item.flugelEye.poem2=和他们的互动
-item.flugelEye.poem3=将心灵带回来.
+item.flugelEye.poem0=一个人过去的愿望
+item.flugelEye.poem1=记忆的轮回
+item.flugelEye.poem2=凌驾于空间的力量
+item.flugelEye.poem3=至心灵之地
 
 item.thorRing.poem0=雷神之力
-item.thorRing.poem1=将粉碎大地,
+item.thorRing.poem1=粉碎大地
 item.thorRing.poem2=不可阻挡的力量
-item.thorRing.poem3=它将重启一个纪元.
+item.thorRing.poem3=它将重启一个纪元
 
-item.odinRing.poem0=上帝的祝福,
+item.odinRing.poem0=神灵的祝福,
 item.odinRing.poem1=美德,生命,神性
-item.odinRing.poem2=阻止人的死亡,
-item.odinRing.poem3=他们将组成神圣的三位一体.
+item.odinRing.poem2=挽救虔诚之人的姓名
+item.odinRing.poem3=分裂终将结束,三股神力的融合
 
-item.lokiRing.poem0=空手,隐蔽的互动
-item.lokiRing.poem1=中心至环绕,
-item.lokiRing.poem2=回到最初之地,一切都会完成
-item.lokiRing.poem3=创世神的力量.
+item.lokiRing.poem0=隐秘之触
+item.lokiRing.poem1=环绕于心
+item.lokiRing.poem2=一切终将结束于原初之地
+item.lokiRing.poem3=创世神之力
 
 item.aesirRing.poem0=众神之力
-item.aesirRing.poem1=在这个仪式中,
-item.aesirRing.poem2=当他们合为一体时
-item.aesirRing.poem3=无物凌驾于他们.
+item.aesirRing.poem1=仪式之中
+item.aesirRing.poem2=Together
+item.aesirRing.poem3=至高的神力
 
 item.kingKey.poem0=这里
 item.kingKey.poem1=没有

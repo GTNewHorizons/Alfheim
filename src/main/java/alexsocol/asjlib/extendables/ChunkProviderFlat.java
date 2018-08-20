@@ -1,4 +1,4 @@
-package alexsocol.asjlib;
+package alexsocol.asjlib.extendables;
 
 import java.util.Iterator;
 import java.util.List;

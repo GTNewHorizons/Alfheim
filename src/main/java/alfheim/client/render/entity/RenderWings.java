@@ -58,18 +58,17 @@ public class RenderWings {
 		if (EnumRace.getRace(player) == EnumRace.HUMAN) return;
 		
 		glPushMatrix();
-		glDisable(GL_CULL_FACE);
+		//glDisable(GL_CULL_FACE); somehow this was causing ONLY right boot of elvorium armor to be reverted... IDK
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_LIGHTING);
-		
 		glDepthMask(false);
 		glDisable(GL_ALPHA_TEST);
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		double spd = 0.05;
 		glColor4d(1, 1, 1, player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getBaseValue() / player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttribute().getDefaultValue() < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) (player.ticksExisted + (ticksExisted * spd)) * 0.3) * 0.2, 1)) : 1);
-		
+		glTranslated(0, -0.15, 0);
 		glRotated(model.bipedBody.rotateAngleX * (180F / (float) Math.PI), 1, 0, 0);
 		
 		// Icon
@@ -77,8 +76,9 @@ public class RenderWings {
 		glTranslated(-0.25, 0.25, 0.15);
 		double si = 0.5;
 		glScaled(si, si, si);
-		drawRect(Tessellator.instance, getPlayerIconTexture(player));
+		drawRect(Tessellator.instance, getPlayerIconTexture(player), 0);
 		glPopMatrix();
+		
 		glTranslated(0, 0.1, 0);
 		
 		player.sendPlayerAbilities();
@@ -92,7 +92,7 @@ public class RenderWings {
 		glScaled(swr, swr, swr);
 		//glRotated(10, 0, 0, 1);
 		glRotated(-ry, 0, 1, 0);
-		drawRect(Tessellator.instance, getPlayerWingTexture(player));
+		drawRect(Tessellator.instance, getPlayerWingTexture(player), -1);
 		glPopMatrix();
 		
 		// Wing right
@@ -102,15 +102,15 @@ public class RenderWings {
 		glScaled(-swl, swl, swl);
 		//glRotated(10, 0, 0, 1);
 		glRotated(-ry, 0, 1, 0);
-		drawRect(Tessellator.instance, getPlayerWingTexture(player));
+		drawRect(Tessellator.instance, getPlayerWingTexture(player), -1);
 		glPopMatrix();
 		
 		glColor4d(1, 1, 1, 1);
 		glEnable(GL_ALPHA_TEST);
 		glDepthMask(true);
-		
+		glEnable(GL_LIGHTING);
 		glDisable(GL_BLEND);
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		glPopMatrix();
 		
 		if (Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 10 == 0) {
@@ -121,13 +121,13 @@ public class RenderWings {
 		}
 	}
 	
-	private static void drawRect(Tessellator tes, ResourceLocation texture) {
+	private static void drawRect(Tessellator tes, ResourceLocation texture, int i) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		tes.startDrawingQuads();
-		tes.addVertexWithUV(0, 0, 0, 1, 0);
+		tes.addVertexWithUV(0, i, 0, 1, 0);
 		tes.addVertexWithUV(0, 1, 0, 1, 1);
 		tes.addVertexWithUV(1, 1, 0, 0, 1);
-		tes.addVertexWithUV(1, 0, 0, 0, 0);
+		tes.addVertexWithUV(1, i, 0, 0, 0);
 		tes.draw();
 	}
 	

@@ -1,4 +1,4 @@
-package alexsocol.asjlib;
+package alexsocol.asjlib.extendables;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

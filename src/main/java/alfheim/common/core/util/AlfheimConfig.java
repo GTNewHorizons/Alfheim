@@ -27,18 +27,20 @@ public class AlfheimConfig extends Configuration {
 	
 	// DIMENSIONS
 	public static int		biomeIDAlfheim			= 152;
-	public static int		biomeIDAlfheimBeach		= 153;
 	public static int		dimensionIDAlfheim		= -105;
 	
 	// OHTER
 	public static boolean	destroyPortal			= true;
 	public static boolean	enableAlfheimRespawn	= true;
 	public static boolean	fancies					= true;
+	public static boolean	flugelBossBar			= true;
 	public static boolean 	info					= true;
 	public static boolean	looniumOverseed			= false;
 	public static boolean	numericalMana			= true;
+	public static int		oregenMultiplier				= 3;
 	public static int		potionIDPossession		= 30;
 	public static int		potionIDSoulburn		= 31;
+	public static int		tradePortalRate			= 1200;
 	
 	// Elven Story
 	public static boolean	bothSpawnStructures		= false;
@@ -55,7 +57,7 @@ public class AlfheimConfig extends Configuration {
 	public static double	flightTimerScale		= 1.0;
 	public static int		flightTimerX			= 0;
 	public static int		flightTimerY			= 0;
-	
+
 	public static void loadConfig(File suggestedConfigurationFile) {
 		config = new Configuration(suggestedConfigurationFile);
 
@@ -70,16 +72,18 @@ public class AlfheimConfig extends Configuration {
 	
 	public static void syncConfig() {
 		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
-		biomeIDAlfheimBeach	= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheimBeach",		biomeIDAlfheimBeach,	true,	"Biome ID for beach biome");
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,		"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
 		destroyPortal		= loadProp(CATEGORY_GENERAL,		"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
 		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,		"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
 		fancies				= loadProp(CATEGORY_GENERAL,		"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
+		flugelBossBar		= loadProp(CATEGORY_GENERAL,		"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
 		info				= loadProp(CATEGORY_GENERAL,		"info",						info,					false,	"Set this to false to disable loading info about addon");
 		looniumOverseed		= loadProp(CATEGORY_GENERAL,		"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
 		numericalMana		= loadProp(CATEGORY_GENERAL,		"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
+		oregenMultiplier	= loadProp(CATEGORY_GENERAL, 		"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
 		potionIDPossession	= loadProp(CATEGORY_GENERAL, 		"potionIDPossession",		potionIDPossession,		true,	"Potion id for Possession");
 		potionIDSoulburn	= loadProp(CATEGORY_GENERAL, 		"potionIDSoulburn",			potionIDSoulburn,		true,	"Potion id for Soulburn");
+		tradePortalRate		= loadProp(CATEGORY_GENERAL, 		"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
 		
 		if (AlfheimCore.enableElvenStory) {
 			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");

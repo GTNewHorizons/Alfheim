@@ -108,11 +108,10 @@ public class TileAlfheimPortal extends TileMod {
 					for (EntityPlayer player : players) {
 						if (player.isDead) continue;
 						
-						boolean flag = player.dimension == AlfheimConfig.dimensionIDAlfheim;
-						if (flag) {
+						if (player.dimension == AlfheimConfig.dimensionIDAlfheim) {
 							ChunkCoordinates coords = player.getBedLocation(0);
 							if (coords == null) coords = MinecraftServer.getServer().worldServerForDimension(0).getSpawnPoint();
-							if (coords == null) coords = new ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0), 0);
+							if (coords == null) coords = new ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0) + 3, 0);
 
 							if (AlfheimConfig.destroyPortal && (this.xCoord != 0 || this.zCoord != 0)) {
 								this.worldObj.newExplosion(player, this.xCoord, this.yCoord, this.zCoord, 5, false, false);
@@ -127,7 +126,7 @@ public class TileAlfheimPortal extends TileMod {
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX, coords.posY, coords.posZ);
 						} else {
 							if (AlfheimCore.enableElvenStory) {
-								int race = EnumRace.getRaceID(player) - 1;
+								int race = EnumRace.getRaceID(player) - 1; // for array length 
 								if (0 <= race && race < 9) ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].xCoord, AlfheimConfig.zones[race].yCoord, AlfheimConfig.zones[race].zCoord);
 								else {
 									if (AlfheimConfig.bothSpawnStructures) findAndTP(player);
@@ -162,7 +161,7 @@ public class TileAlfheimPortal extends TileMod {
 	private void findAndTP(EntityPlayer player) {
 		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75, -1.5);
 		World alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfig.dimensionIDAlfheim);
-		for (int y = 50; y < 100; y++) {
+		for (int y = 50; y < 150; y++) {
 			if (alfheim.getBlock(0, y, 0) == AlfheimBlocks.alfheimPortal && alfheim.getBlockMetadata(0, y, 0) == 1) {
 				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, y + 1, -1.5);
 				break;
@@ -184,14 +183,11 @@ public class TileAlfheimPortal extends TileMod {
 				(float) (Math.random() - 0.5F) * motionMul,	(float) (Math.random() - 0.5F) * motionMul, (float) (Math.random() - 0.5F) * motionMul);
 	}
 
-	public boolean onWanded() {
+	public boolean onWanded(int newMeta) {
 		int meta = getBlockMetadata();
-		if (meta == 0) {
-			int newMeta = getValidMetadata();
-			if (newMeta != 0) {
-				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3);
-				return true;
-			}
+		if (meta == 0 && newMeta != 0) {
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3);
+			return true;
 		}
 
 		return false;
@@ -225,7 +221,7 @@ public class TileAlfheimPortal extends TileMod {
 		ticksOpen = cmp.getInteger(TAG_TICKS_OPEN);
 	}
 
-	private int getValidMetadata() {
+	public int getValidMetadata() {
 		if (checkConverter(null))
 			return 1;
 

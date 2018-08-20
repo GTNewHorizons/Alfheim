@@ -1,9 +1,12 @@
 package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.entity.EntityAlfheimPixie;
+import alfheim.common.entity.EntityElf;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import alfheim.common.world.dim.alfheim.struct.StructureArena;
 import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
@@ -36,5 +39,7 @@ public class BiomeField extends BiomeAlfheim {
 		decorateChunkGen_List.add(t);
 		WorldGenGrass g = new WorldGenGrass(true, true, true, true, 1.0);
 		decorateChunkGen_List.add(g);
+		
+		spawnableCreatureList.add(new SpawnListEntry(EntityAlfheimPixie.class, 4, 1, 3));
 	}
 }

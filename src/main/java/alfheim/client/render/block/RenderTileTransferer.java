@@ -3,7 +3,7 @@ package alfheim.client.render.block;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import alexsocol.asjlib.ItemContainingTileEntity;
+import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.common.block.tile.TileTransferer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

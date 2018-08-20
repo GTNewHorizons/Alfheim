@@ -48,12 +48,7 @@ public class WE_Biome extends BiomeGenBase {
 	
 	public WE_Biome(int ID_FOR_ALL_WE_BIOMES, boolean r) {
 		super(ID_FOR_ALL_WE_BIOMES, r);
-		setBiomeName("-=|WorldEngine|=-");
-		
-		spawnableCaveCreatureList .clear();
-		spawnableCreatureList     .clear();
-		spawnableMonsterList      .clear();
-		spawnableWaterCreatureList.clear();
+		setBiomeName("Alfheim");
 		
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.dirt   , (byte)0, Blocks.stone, (byte)0, -256, 0,   -4, -2,  true);
@@ -100,6 +95,14 @@ public class WE_Biome extends BiomeGenBase {
 		//-//
 		biomeSurfaceHeight      =             height;
 		biomeInterpolateQuality = interpolateQuality;
+	}
+	
+	public WE_Biome clearSpawn() {
+		spawnableCaveCreatureList .clear();
+		spawnableCreatureList     .clear();
+		spawnableMonsterList      .clear();
+		spawnableWaterCreatureList.clear();
+		return this;
 	}
 	
 	public static void setBiomeMap(WE_ChunkProvider cp, double persistence, int numOctaves, double sx, double sy) {

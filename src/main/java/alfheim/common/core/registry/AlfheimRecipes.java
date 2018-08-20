@@ -14,11 +14,15 @@ import static vazkii.botania.common.lib.LibOreDict.*;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
+import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -31,6 +35,9 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.crafting.ModCraftingRecipes;
+import vazkii.botania.common.crafting.ModRuneRecipes;
+import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.lib.LibOreDict;
 
 public class AlfheimRecipes {
 	
@@ -392,12 +399,16 @@ public class AlfheimRecipes {
 		recipeLivingcobble = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessOreDictRecipe(new ItemStack(manaResource, 4, 5), ancientWill);
+		
+		addShapelessRecipe(new ItemStack(brown_mushroom), mushroom);
+		addShapelessRecipe(new ItemStack(red_mushroom), mushroom);
 	}
 	
 	public static void registerSmeltingRecipes() {
 		addSmelting(new ItemStack(elvenOres, 1, 1), new ItemStack(manaResource, 1, 7), 1.0F);
 		addSmelting(new ItemStack(elvenOres, 1, 3), new ItemStack(gold_ingot, 1, 0), 1.0F);
 		addSmelting(elvenSand, new ItemStack(elfGlass), 1.0F);
+		addSmelting(manaGlass, new ItemStack(glass), 0);
 	}
 
 	public static void registerManaInfusionRecipes() {
@@ -465,6 +476,11 @@ public class AlfheimRecipes {
 				RUNE[1], RUNE[2], new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), IFFESAL_DUST);
 		recipeNiflheimRune = BotaniaAPI.registerRuneAltarRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune), costTier3,
 				RUNE[0], RUNE[3], new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), IFFESAL_DUST);
+		
+		if (AlfheimCore.enableElvenStory) {
+			ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(brown_mushroom)));
+			ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(red_mushroom)));
+		}
 		
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), new ItemStack(nether_star));
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamlog, dreamwood, 0);

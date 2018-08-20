@@ -68,7 +68,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry runes;
 	public static LexiconEntry soul;
 	public static LexiconEntry trade;
-	//public static LexiconEntry trans;		// T/ODO describe FIXME
+	//public static LexiconEntry trans;		// FIXME
 	public static LexiconEntry worldgen;
 
 	// Elven Story information

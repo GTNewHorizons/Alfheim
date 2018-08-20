@@ -1,4 +1,4 @@
-package alexsocol.asjlib;
+package alexsocol.asjlib.render;
 
 import org.lwjgl.opengl.GL11;
 

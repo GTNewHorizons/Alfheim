@@ -105,7 +105,7 @@ public class TileTradePortal extends TileMod {
 				if (ConfigHandler.elfPortalParticlesEnabled)
 					blockParticle(meta);
 
-				if (worldObj.rand.nextInt(12000) == 0 && !worldObj.isRemote) setRandomRecipe();
+				if (worldObj.rand.nextInt(AlfheimConfig.tradePortalRate) == 0 && !worldObj.isRemote) setRandomRecipe();
 				
 				if (this.tradeRecipe != null) {
 					List<EntityItem> items = worldObj.getEntitiesWithinAABB(EntityItem.class, aabb);

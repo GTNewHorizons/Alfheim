@@ -2,7 +2,7 @@ package alfheim.common.block.mana;
 
 import java.util.Random;
 
-import alexsocol.asjlib.ItemContainingTileEntity;
+import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.client.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileTransferer;
@@ -164,7 +164,7 @@ public class BlockTransferer extends BlockModContainer implements IWandable, IWa
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return null; //AlfheimLexiconData.trans; FIXME
+		return null; // AlfheimLexiconData.trans; FIXME
 	}
 
 	@Override

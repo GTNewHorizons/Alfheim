@@ -15,34 +15,26 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import vazkii.botania.api.item.IRelic;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
@@ -51,7 +43,10 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
-		for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
+		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
+			InfoLoader.triedToWarnPlayer = true;
+			for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
+		}
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player instanceof EntityPlayerMP) {
 				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
@@ -61,6 +56,7 @@ public class CommonEventHandler {
 					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome1"));
 					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome2"));
 					e.player.inventory.addItemStackToInventory(new ItemStack(ModItems.lexicon));
+					e.player.setSpawnChunk(new ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim);
 				}
 			}
 		}

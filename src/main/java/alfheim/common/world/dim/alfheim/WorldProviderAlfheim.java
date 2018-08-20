@@ -95,13 +95,16 @@ public class WorldProviderAlfheim extends WE_WorldProvider {
 		snowGen.randomSnowPoint = 8;
 		cp.createChunkGen_InXZ_List.add(snowGen);
 		WE_OreGen ores = new WE_OreGen();
-		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75,  1, 16);
-		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, 1, 8, 3, 6, 100, 1, 64);
-		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, 4, 8, 1, 1, 100, 1, 48);
-		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32);
-		ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50,  1, 16);
+		for (int i = 0; i < AlfheimConfig.oregenMultiplier; i++) {
+			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75,  1, 16);
+			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, 1, 8, 3, 6, 100, 1, 64);
+			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, 4, 8, 1, 1, 100, 1, 48);
+			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32);
+			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50,  1, 16);
+		}
 		cp.decorateChunkGen_List.add(ores);
-		cp.decorateChunkGen_List.add(new StructureSpawnpoint());
+		
+		//cp.decorateChunkGen_List.add(new StructureSpawnpoint()); FIXME WE generator is stupid
 		WE_LakeGen waterLakes = new WE_LakeGen();
 		waterLakes.fY = 192;
 		cp.decorateChunkGen_List.add(waterLakes);
