@@ -15,6 +15,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 import com.google.common.collect.Lists;
 
+import alexsocol.asjlib.ASJUtilities;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ASJPacketCompleter implements IClassTransformer {
@@ -23,28 +24,33 @@ public class ASJPacketCompleter implements IClassTransformer {
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		ClassNode cl = new ClassNode();
-		ClassReader cr = new ClassReader(basicClass);
-		cr.accept(cl, 0);
-		
-		if (cl.superName != null && cl.superName.equals("alexsocol/asjlib/network/ASJPacket")) {
-			boolean[] fs = new boolean[5]; // <init>, fromBytes, toBytes, fromCustomBytes, toCustomBytes
-			for (MethodNode mt : cl.methods) {
-				if (mt.name.equals("<init>") && mt.desc.equals("()V")) { fs[0] = true; continue; }
-				if (mt.name.equals("fromBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[1] = true; continue; }
-				if (mt.name.equals("toBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[2] = true; continue; }
-				if (mt.name.equals("fromCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[3] = true; continue; }
-				if (mt.name.equals("toCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[4] = true; continue; }
+		try {
+			ClassNode cl = new ClassNode();
+			ClassReader cr = new ClassReader(basicClass);
+			cr.accept(cl, 0);
+			
+			if (cl.superName != null && cl.superName.equals("alexsocol/asjlib/network/ASJPacket")) {
+				boolean[] fs = new boolean[5]; // <init>, fromBytes, toBytes, fromCustomBytes, toCustomBytes
+				for (MethodNode mt : cl.methods) {
+					if (mt.name.equals("<init>") && mt.desc.equals("()V")) { fs[0] = true; continue; }
+					if (mt.name.equals("fromBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[1] = true; continue; }
+					if (mt.name.equals("toBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[2] = true; continue; }
+					if (mt.name.equals("fromCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[3] = true; continue; }
+					if (mt.name.equals("toCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[4] = true; continue; }
+				}
+				
+				if (!fs[0]) makeConstructor(cl); 
+				if (!fs[1]) makeFromBytes(cl, fs[3]); 
+				if (!fs[2]) makeToBytes(cl, fs[4]); 
+				
+				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+				cl.accept(cw);
+				
+				return cw.toByteArray();
 			}
-			
-			if (!fs[0]) makeConstructor(cl); 
-			if (!fs[1]) makeFromBytes(cl, fs[3]); 
-			if (!fs[2]) makeToBytes(cl, fs[4]); 
-			
-			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-			cl.accept(cw);
-			
-			return cw.toByteArray();
+		} catch (Throwable e) {
+			ASJUtilities.error("Something went wrong while transforming class " + transformedName + "\t Contact mod author.");
+			e.printStackTrace();
 		}
 		return basicClass;
 	}

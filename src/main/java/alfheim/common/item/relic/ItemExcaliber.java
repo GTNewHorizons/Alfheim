@@ -116,7 +116,7 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 
 		burst.setColor(0xFFFF20);
 		burst.setMana(1);
-		burst.setStartingMana(1);
+		burst.setStartingMana(100);
 		burst.setMinManaLoss(200);
 		burst.setManaLossPerTick(1.0F);
 		burst.setGravity(0.0F);
