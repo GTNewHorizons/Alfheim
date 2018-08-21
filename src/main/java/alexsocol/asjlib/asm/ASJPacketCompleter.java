@@ -15,7 +15,6 @@ import org.objectweb.asm.tree.MethodNode;
 
 import com.google.common.collect.Lists;
 
-import alexsocol.asjlib.ASJUtilities;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ASJPacketCompleter implements IClassTransformer {
@@ -49,7 +48,7 @@ public class ASJPacketCompleter implements IClassTransformer {
 				return cw.toByteArray();
 			}
 		} catch (Throwable e) {
-			ASJUtilities.error("Something went wrong while transforming class " + transformedName + "\t Contact mod author.");
+			System.err.println("Something went wrong while transforming class " + transformedName + "\t Contact mod author.");
 			e.printStackTrace();
 		}
 		return basicClass;
