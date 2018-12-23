@@ -9,8 +9,8 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 public class HookLibPlugin implements IFMLLoadingPlugin {
 
-	private static boolean obf;
-	private static boolean checked;
+	public static boolean obf;
+	public static boolean checked;
 
 	// 1.6.x only
 	public String[] getLibraryRequestClass() {

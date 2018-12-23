@@ -1,6 +1,5 @@
 package alexsocol.asjlib.extendables;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -28,11 +27,9 @@ public class ChunkProviderFlat implements IChunkProvider {
 		this.random = new Random(seed);
 		this.flatWorldGenInfo = FlatGeneratorInfo.createFlatGeneratorFromString(genString);
 
-		Iterator iterator = this.flatWorldGenInfo.getFlatLayers().iterator();
 
-		while (iterator.hasNext()) {
-			FlatLayerInfo flatlayerinfo = (FlatLayerInfo)iterator.next();
-
+		for (Object o : this.flatWorldGenInfo.getFlatLayers()) {
+			FlatLayerInfo flatlayerinfo = (FlatLayerInfo) o;
 			for (int j = flatlayerinfo.getMinY(); j < flatlayerinfo.getMinY() + flatlayerinfo.getLayerCount(); ++j) {
 				this.cachedBlockIDs[j] = flatlayerinfo.func_151536_b();
 				this.cachedBlockMetadata[j] = (byte)flatlayerinfo.getFillBlockMeta();

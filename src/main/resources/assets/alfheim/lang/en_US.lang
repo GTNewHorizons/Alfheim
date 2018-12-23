@@ -16,7 +16,7 @@ tile.GoldElvenOre.name=Gold Ore
 tile.IffesalElvenOre.name=Iffesal Ore
 tile.LivingCobble.name=Livingrock Cobblestone
 tile.ManaInfuser.name=Mana Infuser
-tile.MauftriumBlock.name=Block of Mauftrium
+tile.MauftriumBlock.name=§6Block of Mauftrium
 tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
@@ -26,6 +26,8 @@ tile.Transferer.name=Transferer
 ##########################################################___ITEMS___###########################################################
 
 # item..name=
+item.botania:AuraRingElven.name=Elven Band of Aura
+item.botania:AuraRingGod.name=God's Band of Aura
 item.CreativeReachPendant.name=Creative Reach Pendant
 item.botania:ElementalAirBoots.name=Elemental Boots of Air
 item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
@@ -52,15 +54,15 @@ item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
 item.InterdimensionalGatewayCore.name=Interdimensional Gateway Core
 item.LivingrockPickaxe.name=Livingrock Pickaxe
-item.ManaElvenRing.name=Elvorium Mana Ring
-item.ManaElvenRingGreater.name=Mauftrium Mana Ring
+item.ManaRingElven.name=Elven Band of Mana
+item.ManaRingGod.name=God's Band of Mana
 item.ManaInfusionCore.name=Mana Infusion Core
 item.ManaStone.name=Iffesal Mana Gem
 item.ManaStoneGreater.name=Primal Mana Gem
 item.manastorage.desc0=Stores up to %s manapools capacity!
 item.manastorage.desc1=Currently stored §b%s§7/§b%s§7 mana pts
-item.MauftriumIngot.name=Mauftrium Ingot
-item.MauftriumNugget.name=Mauftrium Nugget
+item.MauftriumIngot.name=§6Mauftrium Ingot
+item.MauftriumNugget.name=§6Mauftrium Nugget
 item.botania:Mjolnir.name=Mjölnir
 item.MuspelheimEssence.name=Muspelheim Essence
 item.MuspelheimPowerIngot.name=Muspelheim Power Ingot
@@ -70,15 +72,16 @@ item.NiflheimEssence.name=Niflheim Essence
 item.NiflheimPowerIngot.name=Niflheim Power Ingot
 item.NiflheimRod.name=Niflheim Overlord Rod
 item.NiflheimRune.name=Niflheim Rune
+item.PaperBreak.name=Parchment of Discord
+item.PeacePipe.name=Pipe of Peace
 item.botania:PixieAttractor.name=Pixie Attractor
-item.PrimalRune.name=Primal Rune
-item.RealitySword.name=§rSword of Reality%s
-item.RealitySword.name0= (Inert)
-item.RealitySword.name1= (§eAir§f)
-item.RealitySword.name2= (§aEarth§f)
-item.RealitySword.name3= (§cFire§f)
-item.RealitySword.name4= (§bWater§f)
-item.RealitySword.nameZ=Sword of Creator
+item.PrimalRune.name=§5Primordial Rune
+item.RealitySword0.name=§6Sword of Reality§f (§7Inert§f)
+item.RealitySword1.name=§6Sword of Reality§f (§eAir§f)
+item.RealitySword2.name=§6Sword of Reality§f (§aEarth§f)
+item.RealitySword3.name=§6Sword of Reality§f (§cFire§f)
+item.RealitySword4.name=§6Sword of Reality§f (§bWater§f)
+item.RealitySword5.name=§6Sword of Creator
 item.RealitySword.desc0=Sneak+rclick to attune to one of the elements.
 item.RealitySword.desc1=Adds knockback to target.
 item.RealitySword.desc2=Poisons target.
@@ -90,6 +93,7 @@ item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
 item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive
+item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
 item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################
@@ -134,20 +138,80 @@ alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
 alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
 alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
 
+alfheim.nei.tradeportal=Midgard Trade
+
+alfheim.potion.bleeding=Bleeding
+alfheim.potion.bleeding.postfix=Potion of Blood Incoherence
+alfheim.potion.butterShield=Butterfly Shield
+alfheim.potion.butterShield.postfix=Lamp-flavored Potion
+alfheim.potion.deathMark=Death Mark
+alfheim.potion.deathMark.postfix=Potion with Curse
+alfheim.potion.decay=Decay
+alfheim.potion.decay.postfix=Potion of Decay
+alfheim.potion.goldRush=Gold Rush
+alfheim.potion.goldRush.postfix=Potion with Caffeine
+alfheim.potion.icelens=Ice Lens
+alfheim.potion.icelens.postfix=Potion of Ice Lens
+alfheim.potion.leftFlame=Leftover Flame
+alfheim.potion.leftFlame.postfix=DO NOT DRINK THIS!
+alfheim.potion.nineLifes=Nine Lifes
+alfheim.potion.nineLifes.postfix=Potion of Nine Lifes
+alfheim.potion.noclip=Noclip
+alfheim.potion.noclip.postfix=Potion of Noclip
 alfheim.potion.possession=Possession
 alfheim.potion.possession.postfix=Potion of Possession
+alfheim.potion.quadDamage=Quad Damage
+alfheim.potion.quadDamage.postfix=Potion of Holy Fury
+alfheim.potion.sacrifice=Self-Sacrifice
+alfheim.potion.sacrifice.postfix=Potion of Detachment
+alfheim.potion.sharedHP=Shared Health Pool
+alfheim.potion.sharedHP.postfix=Potion of Generosity
+alfheim.potion.showMana=Mana Shower
+alfheim.potion.showMana.postfix=Potion of True Sigh
 alfheim.potion.soulburn=Soulburn
-alfheim.potion.soulburn.postfix=Potion of Soulburn
+alfheim.potion.soulburn.postfix=Potion of Burning Soul
+alfheim.potion.stoneSkin=Stone Skin
+alfheim.potion.stoneSkin.postfix=Potion of Stone Skin
+alfheim.potion.throw=Wind Flows
+alfheim.potion.throw.postfix=Potion of Lightness
+alfheim.potion.wellolife=Well of Life
+alfheim.potion.wellolife.postfix=Potion of Water Regeneration
 
 alfheimmics.badArena=As hard as you try, the Beacon will not accept your sacrifice. You believe the ritual grounds might be improper. It might be a good idea to check for obstructions on the nearby area and blocks below the beacon.
 alfheimmics.needsCatalysts=No matter how hard you try to push the Eye into the Beacon, nothing seems to happen, perhaps your configuration of catalyst pylons might be off.
 alfheimmisc.notallowed=Foolish mortal! You can't even fly without help! You are too weak to fight with me! Go away before I change my mind  and kill you.
 alfheimmics.peacefulNoob=You try to offer the Eye, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
+alfheimmisc.teamnotmob=Party member cannot be selected as enemy target.
 alfheimmisc.update=O-oh, it seems you are playing on an outdated version (%s). Perhaps you should update to %s?
 
+alfheimmisc.cast.notarget=Select target
+alfheimmisc.cast.notready=Spell not ready
+alfheimmisc.cast.notseeing=You can't see target
+alfheimmisc.cast.obstruct=Target is obstructed
+alfheimmisc.cast.wrongtgt=Wrong target
+alfheimmisc.cast.momana=Not enough mana
+alfheimmisc.cast.notallow=You cannot cast here
+
+alfheimmisc.party.already=You are aleady in this party
+alfheimmisc.party.full=Party is full
+alfheimmisc.party.leave=You must leave current party to join new one
+alfheimmisc.party.memberdied=%s died
+alfheimmisc.party.no=There is no such party
+alfheimmisc.party.notinpartyoffline=%s isn't a party member or is offline
+alfheimmisc.party.notpl=Only partyleader can do this
+
+death.attack.bleeding=%s bleed out
+death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice 
+death.attack.gravity=%s was crushed down by gravity
+death.attack.lightning=%s was charged to death by %s's lightning
+death.attack.mark=%s died from the curse
+death.attack.possession=%s was consumed by void
+death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
+death.attack.water=%s was cut into pieces by %s's water stream
 
 entity.Elf.name=Elf
+entity.Flugel.name=Flügel
 entity.Pixie.name=Pixie
 
 item.FlugelSoul.blockAway=1 Block Away
@@ -177,6 +241,8 @@ item.HoloProjector.switch=Shift+LMB - switch gender
 item.HoloProjector.select=Shift+RMB - select race
 
 itemGroup.Alfheim=Alfheim
+
+lang.name=en_US
 
 #######################################################___RELIC POEMS___########################################################
 
@@ -259,3 +325,135 @@ race.LEPRECHAUN.reverse=LEPRECHAUN
 race.SPRIGGAN.reverse=SPRIGGAN
 race.UNDINE.reverse=UNDINE
 race.IMP.reverse=IMP
+
+#########################################################___SPELLS___###########################################################
+
+spell.cast=incantates
+
+spell.acidmyst.name=Acid Myst
+spell.aquabind.name=Aqua Bind
+spell.aquastream.name=Aqua Stream
+spell.battlehorn.name=Battle Horn
+spell.blink.name=Blink
+spell.bunnyhop.name=Bunny Hop
+spell.butterflyshield.name=Butterfly Shield
+spell.confusion.name=Confusion
+spell.day.name=Day
+spell.deathmark.name=Deathmark
+spell.decay.name=Decay
+spell.dispel.name=Dispel
+spell.dragongrowl.name=Dragon Growl
+spell.driftingmine.name=Drifting Mine
+spell.echo.name=Echolocation
+spell.fenrirstorm.name=Fenrir Storm
+spell.fireball.name=Fireball
+spell.firewall.name=Firewall
+spell.gravitytrap.name=Gravity Trap
+spell.goldrush.name=Gold Rush
+spell.hammerfall.name=Hammerfall
+spell.harp.name=Harp
+spell.healing.name=Healing
+spell.hollowbody.name=Hollow Body
+spell.icelens.name=Ice Lens
+spell.ignition.name=Ignition
+spell.mortar.name=Mortar 
+spell.night.name=Night
+spell.nightvision.name=Night Vision
+spell.ninelifes.name=Nine Lifes
+spell.noclip.name=Noclip
+spell.outdare.name=Outdare
+spell.poisonroots.name=Poison Roots
+spell.purifyingsurface.name=Purifying Surface
+spell.rain.name=Rain
+spell.sacrifice.name=Sacrifice
+spell.sharedhp.name=Shared Health Pool
+spell.smokescreen.name=Smoke Screen
+spell.stoneskin.name=Stone Skin
+spell.sun.name=Sun
+spell.thor.name=Thor
+spell.throw.name=Wind Flows
+spell.thunder.name=Thunder
+spell.truesigh.name=True Sigh
+spell.titanhit.name=Titan Hit
+spell.timestop.name=Time Stop
+spell.uphealth.name=Uphealth
+spell.wallwarp.name=Wall Warp
+spell.waterbreathing.name=Water Breathing
+spell.wellolife.name=Well of Life
+spell.windbalde.name=Wind Balde
+
+#
+spell.acidmyst.words=§bAcid Myst
+spell.aquabind.words=§bBind my enemies, water fetters!
+spell.aquastream.words=§bI direct the flow of water into the §bchannel of the enemy death!
+spell.battlehorn.words=§eFill them with shining courage to defeat §ethe many evils!
+#
+spell.blink.words=§7Blink
+spell.bunnyhop.words=§aGive him the power of a bunny to jump §ahigh!
+spell.butterflyshield.words=§6Wrap him in a shield of goddesses, and §6keep away flames and irons!
+spell.confusion.words=§8I'm inspiring false illusion, let them §8serve as death in confusion!
+spell.day.words=§6I replace the night with day, replace §6darkness with light!
+#
+spell.deathmark.words=§5Deathmark
+#
+spell.decay.words=§5Decay
+#
+spell.dispel.words=§4Dispel
+#
+spell.dragongrowl.words=§eDragon Growl
+#
+spell.driftingmine.words=§7Drifting Mine
+#
+spell.echo.words=§eEcholocation
+spell.fenrirstorm.words=§aI turn the wrath of Fenrir, directing §aon our enemies!
+spell.fireball.words=§4I throw the flame of a demon, call the §4exploding death, to throw down the army of the forest!
+spell.firewall.words=§4I command fire, rise above the enemies §4with a flaming wall!
+spell.gravitytrap.words=§7I obey the laws of the universe, I §7command gravity: increase your power!
+#
+spell.goldrush.words=§2Gold Rush
+#
+spell.hammerfall.words=§2Hammerfall
+#
+spell.harp.words=§eHarp
+spell.healing.words=§bHeal thou, healing water!
+spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
+#
+spell.icelens.words=§bIce Lens
+spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
+#
+spell.mortar.words=§2Mortar
+spell.night.words=§5I replace the day with night, replace §5the light with darkness!
+spell.nightvision.words=§8Give us eyes that illuminate the night!
+#
+spell.ninelifes.words=§6Nine Lifes
+#
+spell.noclip.words=§2Noclip
+#
+spell.outdare.words=§eOutdare
+#
+spell.poisonroots.words=§5Poison Roots
+spell.purifyingsurface.words=§bI call out a clean fountain, cease the §bbreath of flame and poison!
+spell.rain.words=§bI submit to the forces of nature, shed §bin a rain!
+spell.sacrifice.words=§5I call the §lBlack Destroyer§r§5! Make the §5heavens fall! Cast away the gods! Open the gates of §lHell§r§5!
+#
+spell.sharedhp.words=§6Shared Health Pool
+spell.smokescreen.words=§8Hide us from the enemies in your arms, §8smoke screen!
+spell.stoneskin.words=§2Protect us, great land, from now on §2our skin is as hard as a rock!
+spell.sun.words=§4I submit to the forces of nature, §4shine, the Sun!
+spell.thor.words=§aI invoke the power of the god Thor: §aput your hammer on my enemies!
+#
+spell.throw.words=§aWind Flows
+spell.thunder.words=§aI submit to the forces of nature, pour §arain and outline the sky with sparkling lightning!
+#
+spell.truesigh.words=§8True Sigh
+#
+spell.titanhit.words=§2Titan Hit
+#
+spell.timestop.words=§7Time Stop
+spell.uphealth.words=§6Give him the life of gods, to overthrow §6the wicked giants!
+spell.wallwarp.words=§2I warp the walls, making a passage §2where was none!
+spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendure the cold water!
+#
+spell.wellolife.words=§bWell of Life
+#
+spell.windbalde.words=§aWind Balde

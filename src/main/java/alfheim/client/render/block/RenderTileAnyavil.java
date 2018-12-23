@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.block.tile.TileAnyavil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -14,7 +15,6 @@ import net.minecraftforge.client.model.IModelCustom;
 
 public class RenderTileAnyavil extends TileEntitySpecialRenderer {
 
-	public static final ResourceLocation texture = new ResourceLocation("botania:textures/blocks/storage2.png");
 	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/Anyavil.obj"));
 	
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
@@ -26,7 +26,7 @@ public class RenderTileAnyavil extends TileEntitySpecialRenderer {
 		GL11.glTranslated(x + 0.5, y + 0.425, z + 0.5);
 		GL11.glRotatef(90 * (tile.blockMetadata + 1), 0.0F, 1.0F, 0.0F);
 
-		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elementiumBlock);
 		model.renderAll();
 
 		GL11.glRotated(90, 1, 0, 0);

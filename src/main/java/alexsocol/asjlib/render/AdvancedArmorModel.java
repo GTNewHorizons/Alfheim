@@ -31,8 +31,6 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 	public abstract void partLeftLeg(Entity entity);//�����: ����� ����.
 	
 	public void render(Entity entity, float x, float y, float z, float yaw, float pitch, float parTicks) {
-		super.render(entity, x, y, z, yaw, pitch, parTicks);
-		
 		this.bipedHead.showModel = false;
 		this.bipedBody.showModel = false;
 		this.bipedHeadwear.showModel = false;
@@ -47,6 +45,8 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			if(entity instanceof EntityLivingBase) {
 				EntityLivingBase living = (EntityLivingBase) entity;
 				isSneak = living != null ? living.isSneaking() : false;
+				isChild = living != null ? living.isChild() : false;
+				isRiding = living != null ? living.isRiding() : false;
 				
 				ItemStack itemstack = living.getHeldItem();
 				heldItemRight = itemstack != null ? 1 : 0;
@@ -66,6 +66,8 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 				}
 			}
 		}
+		
+		super.render(entity, x, y, z, yaw, pitch, parTicks);
 		
 		if (entity instanceof EntityZombie || entity instanceof EntitySkeleton || entity instanceof EntityGiantZombie) {
 			float f6 = MathHelper.sin(onGround * (float)Math.PI);
@@ -186,10 +188,8 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		}
 
 		post(entity);
-
+		
 		GL11.glColor3f(1F, 1F, 1F);
-
 		GL11.glPopMatrix();
-
 	}
 }

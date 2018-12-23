@@ -28,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -37,6 +38,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
@@ -393,45 +396,103 @@ public class ASJUtilities {
 	}
 	
 	/**
+	 * Checks whether {@code e1} is in FOV of {@code e2}
+	 * @author a_dizzle (minecraftforum.net)
+	 */
+	public static boolean isInFieldOfVision(EntityLivingBase e1, EntityLivingBase e2){
+	    //save Entity 2's original rotation variables
+	    float rotationYawPrime = e2.rotationYaw;
+	    float rotationPitchPrime = e2.rotationPitch;
+	    //make Entity 2 directly face Entity 1
+	    faceEntity(e2, e1, 360F, 360F);
+	    //switch values of prime rotation variables with current rotation variables
+	    float f = e2.rotationYaw;
+	    float f1 = e2.rotationPitch;
+	    e2.rotationYaw = rotationYawPrime;
+	    e2.rotationPitch = rotationPitchPrime;
+	    rotationYawPrime = f;
+	    rotationPitchPrime = f1;
+	    float X = 60F; //this is only a guess, I don't know the actual range
+	    float Y = 60F; //this is only a guess, I don't know the actual range
+	    float yawFOVMin = e2.rotationYaw - X;
+	    float yawFOVMax = e2.rotationYaw + X;
+	    float pitchFOVMin = e2.rotationPitch - Y;
+	    float pitchFOVMax = e2.rotationPitch + Y;
+	    boolean flag1 = (yawFOVMin < 0F && (rotationYawPrime >= yawFOVMin + 360F || rotationYawPrime <= yawFOVMax)) || (yawFOVMax >= 360F && (rotationYawPrime <= yawFOVMax - 360F || rotationYawPrime >= yawFOVMin)) || (yawFOVMax < 360F && yawFOVMin >= 0F && rotationYawPrime <= yawFOVMax && rotationYawPrime >= yawFOVMin);
+	    boolean flag2 = (pitchFOVMin <= -180F && (rotationPitchPrime >= pitchFOVMin + 360F || rotationPitchPrime <= pitchFOVMax)) || (pitchFOVMax > 180F && (rotationPitchPrime <= pitchFOVMax - 360F || rotationPitchPrime >= pitchFOVMin)) || (pitchFOVMax < 180F && pitchFOVMin >= -180F && rotationPitchPrime <= pitchFOVMax && rotationPitchPrime >= pitchFOVMin);
+	    if(flag1 && flag2 && e2.canEntityBeSeen(e1)) return true;
+	    else return false;
+	}
+	
+	/** 
+	 * Makes {@code e1} to face {@code e2}
+	 */
+	public static void faceEntity(EntityLivingBase e1, Entity e2, float yaw, float pitch) {
+        double d0 = e2.posX - e1.posX;
+        double d2 = e2.posZ - e1.posZ;
+        double d1;
+
+        if (e2 instanceof EntityLivingBase) {
+            EntityLivingBase entitylivingbase = (EntityLivingBase) e2;
+            d1 = entitylivingbase.posY + (double)entitylivingbase.getEyeHeight() - (e1.posY + (double)e1.getEyeHeight());
+		} else {
+            d1 = (e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0D - (e1.posY + (double)e1.getEyeHeight());
+        }
+
+        double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+        float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+        float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
+        e1.rotationPitch = updateRotation(e1.rotationPitch, f3, pitch);
+        e1.rotationYaw = updateRotation(e1.rotationYaw, f2, yaw);
+    }
+	
+	public static float updateRotation(float f, float f1, float f2) {
+        float f3 = MathHelper.wrapAngleTo180_float(f1 - f);
+        if (f3 > f2) f3 = f2;
+        if (f3 < -f2) f3 = -f2;
+        return f + f3;
+    }
+	
+	/**
 	 * Returns MOP with block and entity
-	 * @param entity_base Entiy to calculate vector from
+	 * @param entity Entity to calculate vector from
 	 * @param dist Max distance for use
 	 * @param interact Whether to get uncollidable entities
 	 * @author timaxa007
 	 */
-	public static MovingObjectPosition getMouseOver(EntityLivingBase entity_base, double dist, boolean interact) {
-		if (entity_base == null || entity_base.worldObj == null) {
+	public static MovingObjectPosition getMouseOver(EntityLivingBase entity, double dist, boolean interact) {
+		if (entity == null || entity.worldObj == null) {
 			return null;
 		}
 		
 		Entity pointedEntity = null;
 		double d0 = dist;
 		double d1 = d0;
-		Vec3 vec3 = Vec3.createVectorHelper(entity_base.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity_base.posY : entity_base.posY + entity_base.getEyeHeight()), entity_base.posZ);
-		Vec3 vec31 = entity_base.getLookVec();
+		Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity.posY : entity.posY + entity.getEyeHeight()), entity.posZ);
+		Vec3 vec31 = entity.getLookVec();
 		Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
 		Vec3 vec33 = null;
-		MovingObjectPosition objectMouseOver = rayTrace(entity_base, dist);
+		MovingObjectPosition objectMouseOver = rayTrace(entity, dist);
 
 		if (objectMouseOver != null) {
 			d1 = objectMouseOver.hitVec.distanceTo(vec3);
 		}
 
 		float f1 = 1.0F;
-		List list = entity_base.worldObj.getEntitiesWithinAABBExcludingEntity(entity_base, entity_base.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
+		List list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
 		double d2 = d1;
 
 		for (int i = 0; i < list.size(); ++i) {
-			Entity entity = (Entity)list.get(i);
+			Entity e = (Entity)list.get(i);
 
-			if (entity.canBeCollidedWith() || interact) {
-				float f2 = entity.getCollisionBorderSize();
-				AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+			if (e.canBeCollidedWith() || interact) {
+				float f2 = e.getCollisionBorderSize();
+				AxisAlignedBB axisalignedbb = e.boundingBox.expand((double)f2, (double)f2, (double)f2);
 				MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
 				if (axisalignedbb.isVecInside(vec3)) {
 					if (0.0 < d2 || d2 == 0.0) {
-						pointedEntity = entity;
+						pointedEntity = e;
 						vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
 						d2 = 0.0;
 					}
@@ -439,13 +500,13 @@ public class ASJUtilities {
 					double d3 = vec3.distanceTo(movingobjectposition.hitVec);
 
 					if (d3 < d2 || d2 == 0.0) {
-						if (entity == entity_base.ridingEntity && !entity.canRiderInteract()) {
+						if (e == entity.ridingEntity && !e.canRiderInteract()) {
 							if (d2 == 0.0) {
-								pointedEntity = entity;
+								pointedEntity = e;
 								vec33 = movingobjectposition.hitVec;
 							}
 						} else {
-							pointedEntity = entity;
+							pointedEntity = e;
 							vec33 = movingobjectposition.hitVec;
 							d2 = d3;
 						}
@@ -457,7 +518,7 @@ public class ASJUtilities {
 		if (pointedEntity != null && (d2 < d1 || objectMouseOver == null)) {
 			return new MovingObjectPosition(pointedEntity, vec33);
 		}
-		return null;
+		return getSelectedBlock(entity, dist, interact);
 	}
 	
 	/**
@@ -465,7 +526,7 @@ public class ASJUtilities {
 	 * Don't use it. Use {@link #getMouseOver(EntityLivingBase, float, double, boolean) getMouseOver} instead
 	 */
 	private static MovingObjectPosition rayTrace(EntityLivingBase entity, double dist) {
-		Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ? entity.posY : entity.posY + entity.getEyeHeight()), entity.posZ);
+		Vec3 vec3 = Vec3.createVectorHelper(entity.posX, (ASJUtilities.isServer() ? entity.posY + entity.getEyeHeight() : entity.posY), entity.posZ);
 		Vec3 vec31 = entity.getLookVec();
 		Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
 		return entity.worldObj.func_147447_a(vec3, vec32, false, false, true);
@@ -473,33 +534,42 @@ public class ASJUtilities {
 	
 	/**
 	 * Returns MOP with only blocks.
-	 * @param player Player to calculate vector from
-	 * @param fasc Just put 1.0F there
+	 * @param entity Player to calculate vector from
 	 * @param dist Max distance for use
 	 * @param interact Can player interact with blocks (not sure)
 	 */
-	public static MovingObjectPosition getSelectedBlock(EntityPlayer player, float fasc, double dist, boolean interact) {
-		Vec3 vec3 = getPosition(player, fasc);
-		vec3.yCoord += player.getEyeHeight();
-		Vec3 vec31 = player.getLookVec();
+	public static MovingObjectPosition getSelectedBlock(EntityLivingBase entity, double dist, boolean interact) {
+		Vec3 vec3 = getPosition(entity, 1.0F);
+		vec3.yCoord += entity.getEyeHeight();
+		Vec3 vec31 = entity.getLookVec();
 		Vec3 vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist);
-		MovingObjectPosition movingobjectposition = player.worldObj.rayTraceBlocks(vec3, vec32, interact);
+		MovingObjectPosition movingobjectposition = entity.worldObj.rayTraceBlocks(vec3, vec32, interact);
 		return movingobjectposition;
 	}
 	
 	/**
 	 * Interpolated position vector
 	 */
-	public static Vec3 getPosition(EntityPlayer player, float par1) {
+	public static Vec3 getPosition(EntityLivingBase living, float par1) {
+		float i = living instanceof EntityPlayer ? ((EntityPlayer) living).getDefaultEyeHeight() : 0;
 		if (par1 == 1.0F) {
-			return Vec3.createVectorHelper(player.posX, player.posY + (player.getEyeHeight() - player.getDefaultEyeHeight()), player.posZ);
+			return Vec3.createVectorHelper(living.posX, living.posY + (living.getEyeHeight() - i), living.posZ);
 		} else {
-			double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)par1;
-			double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)par1 + (player.getEyeHeight() - player.getDefaultEyeHeight());
-			double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)par1;
+			double d0 = living.prevPosX + (living.posX - living.prevPosX) * (double)par1;
+			double d1 = living.prevPosY + (living.posY - living.prevPosY) * (double)par1 + (living.getEyeHeight() - i);
+			double d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * (double)par1;
 			return Vec3.createVectorHelper(d0, d1, d2);
 		}
 	}
+	
+    public static Vec3 getLookVec(Entity e) {
+        float f1 = MathHelper.cos(-e.rotationYaw * 0.017453292F - (float)Math.PI);
+        float f2 = MathHelper.sin(-e.rotationYaw * 0.017453292F - (float)Math.PI);
+        float f3 = -MathHelper.cos(-e.rotationPitch * 0.017453292F);
+        float f4 = MathHelper.sin(-e.rotationPitch * 0.017453292F);
+        return Vec3.createVectorHelper(f2 * f3, f4, f1 * f3);
+    }
+	
 	
 	/**
 	 * @return Closest vulnerable player to entity within the given radius,
@@ -578,15 +648,10 @@ public class ASJUtilities {
 		chunk.setBiomeArray(array);
 	}
 	
-	private static final Method getDeathSound, getSoundVolume, getSoundPitch;
 	private static final Field isBadEffect;
 	
 	static {
 		isBadEffect = ASJReflectionHelper.getField(Potion.class, "isBadEffect", "field_76418_K", "f");
-		getDeathSound = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getDeathSound", "func_70673_aS", "aU"}, null);
-		getSoundVolume = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getSoundVolume", "func_70599_aP", "bf"}, null);
-		getSoundPitch = ASJReflectionHelper.getMethod(EntityLivingBase.class, new String[] {"getSoundPitch", "func_70647_i", "bg"}, null);
-		
 		isBadEffect.setAccessible(true);
 	}
 	
@@ -596,21 +661,6 @@ public class ASJUtilities {
 	public static boolean isBadPotion(Potion effect) {
 		return ASJReflectionHelper.getValue(isBadEffect, effect, false);
 	}
-	
-	/**
-	 * Plays {@code entity}'s death sound
-	 * */
-	public static void playDeathSound(EntityLivingBase entity) {
-		entity.playSound((String) ASJReflectionHelper.invoke(entity, null, getDeathSound), (Float) ASJReflectionHelper.invoke(entity, null, getSoundVolume), (Float) ASJReflectionHelper.invoke(entity, null, getSoundPitch));
-	}
-	
-	/*public static int randInBoundsInclusive(int min, int max) {
-		return randInBounds(min, max + 1);
-	}
-	
-	public static int randInBoundsInclusive(Random rand, int min, int max) {
-		return randInBounds(rand, min, max + 1);
-	}*/
 	
 	/**
 	 * @return random value in range [min, max] (inclusive)
@@ -629,22 +679,22 @@ public class ASJUtilities {
 	/**
 	 * Interpolates values, e.g. for smoother render
 	 * */
-	public static double interpolate(double last, double now, float partialTicks) {
-		return last + (now - last) * partialTicks;
+	public static double interpolate(double last, double now) {
+		return last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks;
 	}
 	
 	/**
 	 * Translates matrix to follow player (if something is bound to world's zero coords)
 	 * */
-	public static void interpolatedTranslation(EntityPlayer player, float partialTicks) {
-		glTranslated(interpolate(player.lastTickPosX, player.posX, partialTicks), interpolate(player.lastTickPosY, player.posY, partialTicks), interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+	public static void interpolatedTranslation(Entity entity) {
+		glTranslated(interpolate(entity.lastTickPosX, entity.posX), interpolate(entity.lastTickPosY, entity.posY), interpolate(entity.lastTickPosZ, entity.posZ));
 	}
 	
 	/**
 	 * Translates matrix not to follow player (if something is bound to camera's zero coords)
 	 * */
-	public static void interpolatedTranslationReverse(EntityPlayer player, float partialTicks) {
-		glTranslated(-interpolate(player.lastTickPosX, player.posX, partialTicks), -interpolate(player.lastTickPosY, player.posY, partialTicks), -interpolate(player.lastTickPosZ, player.posZ, partialTicks));
+	public static void interpolatedTranslationReverse(Entity entity) {
+		glTranslated(-interpolate(entity.lastTickPosX, entity.posX), -interpolate(entity.lastTickPosY, entity.posY), -interpolate(entity.lastTickPosZ, entity.posZ));
 	}
 	
 	/**
@@ -806,7 +856,7 @@ public class ASJUtilities {
 	 * @param keepLoaded Keep spawn chunks loaded
 	 * */
 	public static void registerDimension(int id, Class<? extends WorldProvider> w, boolean keepLoaded) {
-		DimensionManager.registerProviderType(id, w, keepLoaded);
+		if (!DimensionManager.registerProviderType(id, w, keepLoaded)) throw new IllegalArgumentException(String.format("Failed to register provider for id %d, One is already registered", id));
 		DimensionManager.registerDimension(id, id);
 	}
 	
@@ -914,5 +964,38 @@ public class ASJUtilities {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().func_152612_a(op);
 			if (player != null) say(player, message);
 		}
+	}
+
+	public static boolean isServer() {
+		return FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER;
+	}
+	
+	public static String toString(NBTTagCompound nbt) {
+		StringBuilder sb = new StringBuilder("{\n");
+		for (Object o : nbt.tagMap.entrySet()) {
+			Map.Entry e = (Map.Entry) o;
+			Object v = e.getValue();
+			if (v instanceof NBTTagList || v instanceof NBTTagCompound) {
+				String[] arr = new String[] {};
+				if (v instanceof NBTTagList) arr = toString((NBTTagList) v).split("\n");
+				else if (v instanceof NBTTagCompound) arr = toString((NBTTagCompound) v).split("\n");
+				sb.append("    ").append(e.getKey()).append(" = ").append(arr[0]).append("\n");
+				for (int i = 1; i < arr.length; i++) sb.append("    ").append(arr[i]).append("\n");
+			} else sb.append("    ").append(e.getKey()).append(" = ").append(e.getValue()).append("\n");
+		}
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public static String toString(NBTTagList nbt) {
+		StringBuilder sb = new StringBuilder("list [\n");
+		for (Object obj : nbt.tagList) if (obj instanceof NBTTagList || obj instanceof NBTTagCompound) {
+			String ts = "";
+			if (obj instanceof NBTTagList) ts = toString((NBTTagList) obj);
+			else if (obj instanceof NBTTagCompound) ts = toString((NBTTagCompound) obj);
+			for (String s : ts.split("\n")) sb.append("    ").append(s).append("\n"); 
+		} else sb.append(obj).append("\n");
+		sb.append("]");
+		return sb.toString();
 	}
 }

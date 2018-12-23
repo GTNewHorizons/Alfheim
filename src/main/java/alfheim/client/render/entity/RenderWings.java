@@ -2,74 +2,48 @@ package alfheim.client.render.entity;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
+import alfheim.api.entity.EnumRace;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.entity.EnumRace;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gloomyfolken.hooklib.asm.Hook;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import vazkii.botania.api.item.IBaubleRender.Helper;
 import vazkii.botania.common.Botania;
 
 public class RenderWings {
 	
-	private static final ResourceLocation[] wings = {
-		null,
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png"),
-	};
-	
-	private static final ResourceLocation[] icons = {
-		null,
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_icon.png"),
-		new ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_icon.png"),
-	};
-
 	@SideOnly(Side.CLIENT)
-	@Hook(injectOnExit = true)
-	public static void render(ModelBiped model, Entity entity, float time, float amplitude, float ticksExisted, float yawHead, float pitchHead, float size) {
-		if (!(entity instanceof EntityPlayer)) return;
+	public static void render(RenderPlayerEvent.Specials.Post e, EntityPlayer player) {
 		if (!AlfheimConfig.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
-		
-		EntityPlayer player = (EntityPlayer) entity;
 		if (EnumRace.getRace(player) == EnumRace.HUMAN) return;
+		if (player.isInvisible() || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) return;
+		if (player.getCommandSenderName().equals("AlexSocol")) return;
 		
 		glPushMatrix();
-		//glDisable(GL_CULL_FACE); somehow this was causing ONLY right boot of elvorium armor to be reverted... IDK
+		glDisable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_LIGHTING);
 		glDepthMask(false);
-		glDisable(GL_ALPHA_TEST);
+        glAlphaFunc(GL_GREATER, 0.003921569F);
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
-		double spd = 0.05;
-		glColor4d(1, 1, 1, player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getBaseValue() / player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttribute().getDefaultValue() < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) (player.ticksExisted + (ticksExisted * spd)) * 0.3) * 0.2, 1)) : 1);
+		double spd = 0.5;
+		EnumRace.getRace(player).glColorA(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getBaseValue() / player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttribute().getDefaultValue() < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) ((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd) * 0.3) * 0.2, 1)) : 1);
+		
+		Helper.rotateIfSneaking(player);
 		glTranslated(0, -0.15, 0);
-		glRotated(model.bipedBody.rotateAngleX * (180F / (float) Math.PI), 1, 0, 0);
 		
 		// Icon
 		glPushMatrix();
@@ -83,7 +57,7 @@ public class RenderWings {
 		
 		player.sendPlayerAbilities();
 		boolean flying = player.capabilities.isFlying;
-		float ry = 20F + (float) ((Math.sin((double) (player.ticksExisted + (ticksExisted * spd)) * (flying ? 0.4F : 0.2F)) + 0.5F) * (flying ? 30F : 5F));
+		float ry = 20F + (float) ((Math.sin((double) ((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd) * (flying ? 0.4F : 0.2F)) + 0.5F) * (flying ? 30F : 5F));
 		
 		// Wing left
 		glPushMatrix();
@@ -105,19 +79,19 @@ public class RenderWings {
 		drawRect(Tessellator.instance, getPlayerWingTexture(player), -1);
 		glPopMatrix();
 		
-		glColor4d(1, 1, 1, 1);
-		glEnable(GL_ALPHA_TEST);
+		//glColor4d(1, 1, 1, 1); for some reason it cleans color
+        glAlphaFunc(GL_GREATER, 0.1F);
 		glDepthMask(true);
 		glEnable(GL_LIGHTING);
 		glDisable(GL_BLEND);
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glPopMatrix();
 		
-		if (Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 10 == 0) {
-			double x = player.posX - 0.25;
-			double y = player.posY - 0.5 + (Minecraft.getMinecraft().thePlayer.equals(player) ? 0 : 1.5);
-			double z = player.posZ - 0.25;
-			Botania.proxy.sparkleFX(player.worldObj, x + Math.random() * player.width * 2.0, y + Math.random() * 0.8, z + Math.random() * player.width * 2.0, 1, 1, 1, 2F * (float) Math.random(), 20);
+		if (Minecraft.getMinecraft().thePlayer == player && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) return;
+		
+		if (Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 10 == 0 && !Minecraft.getMinecraft().isGamePaused()) {
+			Vector3 v = new Vector3(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().add(0, Math.random(), 0).mul(Math.random(), 1, Math.random()).mul(player.width, player.height, player.width);
+			Botania.proxy.sparkleFX(player.worldObj, player.posX + v.x, player.posY + v.y - (Minecraft.getMinecraft().thePlayer == player ? 1.62 : 0), player.posZ + v.z, 1, 1, 1, 2F * (float) Math.random(), 20);
 		}
 	}
 	
@@ -132,10 +106,10 @@ public class RenderWings {
 	}
 	
 	public static ResourceLocation getPlayerWingTexture(EntityPlayer player) {
-		return wings[EnumRace.getRaceID(player)];
+		return LibResourceLocations.wings[EnumRace.getRaceID(player)];
 	}
 	
 	public static ResourceLocation getPlayerIconTexture(EntityPlayer player) {
-		return icons[EnumRace.getRaceID(player)];
+		return LibResourceLocations.icons[EnumRace.getRaceID(player)];
 	}
 }

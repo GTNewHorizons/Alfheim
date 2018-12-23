@@ -5,9 +5,10 @@ import org.lwjgl.opengl.GL11;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.entity.EnumRace;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
 import alfheim.common.core.command.CommandRace;
-import alfheim.common.entity.EnumRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +24,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -35,30 +35,6 @@ import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemHoloProjector extends Item {
 
-	private static final ResourceLocation glowTexture = new ResourceLocation(ModInfo.MODID, "textures/misc/glow.png");
-	
-	private static final ResourceLocation[] male = {
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SALAMANDER.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SYLPH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/CAITSITH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/POOKA.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/GNOME.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/LEPRECHAUN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SPRIGGAN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/UNDINE.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/IMP.png"),
-	};
-	private static final ResourceLocation[] female = {
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SALAMANDER.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SYLPH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/CAITSITH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/POOKA.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/GNOME.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/LEPRECHAUN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SPRIGGAN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/UNDINE.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/IMP.png"),
-	};
 	private static final ModelBipedNew model = new ModelBipedNew();
 	
 	private static final int RACES = 9;
@@ -82,7 +58,7 @@ public class ItemHoloProjector extends Item {
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		int seg = getSegmentLookedAt(stack, player);
 		
-		if(player.isSneaking()) (new CommandRace()).processCommand(player, new String[] {EnumRace.values()[seg+1].toString()});
+		if(player.isSneaking() && !world.isRemote) (new CommandRace()).processCommand(player, new String[] {EnumRace.values()[seg+1].toString()});
 		else {
 			ModelHolder pos = getModel(stack, seg);
 			setModel(stack, seg, pos.rotation + 2 % 360, pos.isMale);
@@ -236,7 +212,7 @@ public class ItemHoloProjector extends Item {
 			GL11.glColor4f(1, 1, 1, 1);
 			
 			ModelHolder pos = getModel(stack, seg);
-			mc.renderEngine.bindTexture(pos.isMale ? male[seg] : female[seg]);
+			mc.renderEngine.bindTexture(pos.isMale ? LibResourceLocations.male[seg] : LibResourceLocations.female[seg]);
 			GL11.glScaled(0.75, 0.75, 0.75);
 			GL11.glRotated(180, 1, 0, 0);
 			GL11.glRotated(90 + pos.rotation, 0, 1, 0);
@@ -252,9 +228,9 @@ public class ItemHoloProjector extends Item {
 				y0 = -y;
 			}
 
-			ASJUtilities.glColor1u(EnumRace.getRGBColor(seg+1));
+			EnumRace.glColor(seg + 1);
 
-			mc.renderEngine.bindTexture(glowTexture);
+			mc.renderEngine.bindTexture(LibResourceLocations.glow);
 			tess.startDrawingQuads();
 			for(int i = 0; i < segAngles; i++) {
 				float ang = i + seg * segAngles + shift;

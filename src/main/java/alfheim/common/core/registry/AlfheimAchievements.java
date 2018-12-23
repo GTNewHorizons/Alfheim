@@ -17,6 +17,7 @@ public class AlfheimAchievements {
 	public static Achievement alfheim;
 	public static Achievement excaliber;
 	public static Achievement flugelSoul;
+	public static Achievement infuser;
 	public static Achievement mask;
 	//public static Achievement mjolnir;
 	public static Achievement flugelKill;
@@ -25,6 +26,7 @@ public class AlfheimAchievements {
 		alfheim = new AlfheimAchievement("alfheim", 0, 0, new ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null);
 		excaliber = new AlfheimAchievement("excaliber", 2, 0, AlfheimItems.excaliber, null);
 		flugelSoul = new AlfheimAchievement("flugelSoul", -2, 0, AlfheimItems.flugelSoul, null);
+		infuser = new AlfheimAchievement("infuser", 0, -2, AlfheimBlocks.manaInfuser, null);
 		mask = new AlfheimAchievement("mask", 0, 2, AlfheimItems.mask, null);
 		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null);
 		flugelKill = new AlfheimAchievement("flugelKill", 0, 4, ModItems.flightTiara, null);

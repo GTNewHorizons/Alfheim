@@ -2,10 +2,12 @@ package alfheim.client.render.block;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.client.lib.LibRenderIDs;
+import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAlfheimPylons;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
@@ -17,6 +19,7 @@ public class RenderBlockAlfheimPylons implements ISimpleBlockRenderingHandler {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.7F, -0.5F);
 		RenderTileAlfheimPylons.orange = metadata == 1;
+		RenderTileAlfheimPylons.hand = true;
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAlfheimPylons(), 0.0, 0.0, 0.0, 0.0F);
 		GL11.glPopMatrix();
 	}

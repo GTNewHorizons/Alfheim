@@ -31,6 +31,6 @@ public class ElvoriumHelmetRevealing extends ElvoriumHelmet implements IGoggles,
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
+		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
 	}
 }

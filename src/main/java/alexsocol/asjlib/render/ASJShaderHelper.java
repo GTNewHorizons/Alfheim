@@ -10,9 +10,10 @@ import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
+import vazkii.botania.client.core.handler.ClientTickHandler;
 
 /**
- * Almost all code is by Vazkii, I just ported it to GL20 and made lib-style
+ * Almost all code is by Vazkii - ShaderHelper, I just ported it to GL20 and made lib-style
  * */
 public final class ASJShaderHelper {
 
@@ -25,7 +26,10 @@ public final class ASJShaderHelper {
 		glUseProgram(shaderID);
 
 		if(shaderID != 0) {
-			if (Minecraft.getMinecraft().theWorld != null) glUniform1f(glGetUniformLocation(shaderID, "time"), Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
+			if (Minecraft.getMinecraft().theWorld != null) {
+				glUniform1i(glGetUniformLocation(shaderID, "time"), ClientTickHandler.ticksInGame);
+				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
+			}
 			
 			if(callback != null) callback.call(shaderID);
 		}
@@ -49,30 +53,33 @@ public final class ASJShaderHelper {
 	 * */
 	public static int createProgram(String vertLocation, String fragLocation) {
 		int vertID = 0, fragID = 0, programID = 0;
-		if(vertLocation != null)
-			vertID = createShader(vertLocation, VERT);
-		if(fragLocation != null)
-			fragID = createShader(fragLocation, FRAG);
-
+		
 		programID = glCreateProgram();
 		if(programID == 0)
 			return 0;
-
-		if(vertLocation != null)
+		
+		if(vertLocation != null && !vertLocation.isEmpty()) {
+			vertID = createShader(vertLocation, VERT);
 			glAttachShader(programID, vertID);
-		if(fragLocation != null)
+		}
+		
+		if(fragLocation != null && !fragLocation.isEmpty()) {
+			fragID = createShader(fragLocation, FRAG);
 			glAttachShader(programID, fragID);
-
+		}
+			
 		glLinkProgram(programID);
 		if(glGetProgrami(programID, GL_LINK_STATUS) == GL_FALSE) {
+			String info = getProgramLogInfo(programID);
 			glDeleteProgram(programID);
-			throw new RuntimeException("Error Linking program: " + getProgramLogInfo(programID));
+			throw new RuntimeException("Error Linking program: " + info);
 		}
 
 		glValidateProgram(programID);
 		if (glGetProgrami(programID, GL_VALIDATE_STATUS) == GL_FALSE) {
+			String info = getProgramLogInfo(programID);
 			glDeleteProgram(programID);
-			throw new RuntimeException("Error Validating program: " + getProgramLogInfo(programID));
+			throw new RuntimeException("Error Validating program: " + info);
 		}
 
 		return programID;
@@ -102,11 +109,11 @@ public final class ASJShaderHelper {
 	}
 
 	private static String getShaderLogInfo(int obj) {
-		return glGetShaderInfoLog(obj, GL_INFO_LOG_LENGTH);
+		return glGetShaderInfoLog(obj, glGetShaderi(obj, GL_INFO_LOG_LENGTH));
 	}
 
 	private static String getProgramLogInfo(int obj) {
-		return glGetProgramInfoLog(obj, GL_INFO_LOG_LENGTH);
+		return glGetProgramInfoLog(obj, glGetProgrami(obj, GL_INFO_LOG_LENGTH));
 	}
 
 	private static String readFileAsString(String filename) throws Exception {

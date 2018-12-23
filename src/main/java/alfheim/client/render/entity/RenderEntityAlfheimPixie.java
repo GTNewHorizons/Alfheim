@@ -2,6 +2,7 @@ package alfheim.client.render.entity;
 
 import org.lwjgl.opengl.GL11;
 
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.entity.EntityAlfheimPixie;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -21,7 +22,7 @@ public class RenderEntityAlfheimPixie extends RenderLiving {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(LibResources.MODEL_PIXIE);
+		return LibResourceLocations.pixie;
 	}
 
 	@Override

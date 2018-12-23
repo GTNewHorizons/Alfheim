@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.spell.DamageSourceSpell;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import baubles.api.BaubleType;
@@ -44,10 +45,10 @@ import vazkii.botania.common.item.relic.ItemRelicBauble;
 
 public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IManaUsingItem {
 
-	private static final String TAG_POSSESSION = "possession";
-	private static final String TAG_ACTIVATED = "activated";
-	private static final String TAG_COOLDOWN = "cooldown";
-	private static final int MAX_COOLDOWN = 12000;
+	public static final String TAG_POSSESSION = "possession";
+	public static final String TAG_ACTIVATED = "activated";
+	public static final String TAG_COOLDOWN = "cooldown";
+	public static final int MAX_COOLDOWN = 12000;
 
 	public ItemTankMask() {
 		super("TankMask");
@@ -70,6 +71,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slotID, boolean inHand) {
 		super.onUpdate(stack, world, entity, slotID, inHand);
+		setInt(stack, TAG_POSSESSION, 0);
 		if(entity instanceof EntityPlayer && getInt(stack, TAG_COOLDOWN, 0) > 0) setInt(stack, TAG_COOLDOWN, getInt(stack, TAG_COOLDOWN, 0) - ManaItemHandler.requestMana(stack, (EntityPlayer) entity, 1, world.isRemote));
 	}
 	
@@ -83,15 +85,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 		PotionEffect possessed = new PotionEffect(AlfheimRegistry.possession.id, time);
 		possessed.getCurativeItems().clear();
 		entity.addPotionEffect(possessed);
-		if (time >= (ModInfo.DEV ? 120 : 1200) && time % 20 == 0) {
-			entity.setHealth(entity.getHealth() - ((entity.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - (ModInfo.DEV ? 120 : 1200)) / 400.0F));
-			if (!entity.isEntityAlive()) {
-				IInventory baubles = BaublesApi.getBaubles((EntityPlayer) entity);
-				if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) setInt(baubles.getStackInSlot(0), TAG_POSSESSION, 0);
-				ASJUtilities.playDeathSound(entity);
-				entity.onDeath(new DamageSource("possession"));
-			}
-		}
+		if (time >= (1200) && time % 20 == 0) entity.attackEntityFrom(DamageSourceSpell.possession, ((entity.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - (1200)) / 400.0F));
 	}
 
 	@Override
@@ -106,10 +100,9 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 
 	@Override
 	public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
-		if (entity.worldObj.isRemote) return;
+		//if (entity.worldObj.isRemote) return;
 		setInt(stack, TAG_POSSESSION, 0);
-		PotionEffect possessed = entity.getActivePotionEffect(AlfheimRegistry.possession);
-		if (possessed != null) entity.removePotionEffect(AlfheimRegistry.possession.id);
+		if (entity.isPotionActive(AlfheimRegistry.possession)) entity.removePotionEffect(AlfheimRegistry.possession.id);
 	}
 	
 	@Override
@@ -119,7 +112,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 
 	@Override
 	public boolean canUnequip(ItemStack stack, EntityLivingBase player) {
-		return getInt(stack, TAG_POSSESSION, 0) < (ModInfo.DEV ? 180 : 1800);
+		return getInt(stack, TAG_POSSESSION, 0) < 1800;
 	}
 	
 	@SubscribeEvent

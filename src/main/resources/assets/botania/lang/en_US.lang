@@ -7,11 +7,17 @@ botania.page.alfheim1=But he also has terrible characteristics: time. Even the t
 
 botania.entry.elves=Elves
 botania.tagline.elves=Native people
-botania.page.elves0=As it was said before, elves are beautiful creatures, skillfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastray was the only one who knew the temporary anomalies of his own world as his five fingers.
+botania.page.elves0=As it was said before, elves are beautiful creatures, spellfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastray was the only one who knew the temporary anomalies of his own world as his five fingers.
 botania.page.elves1=His greatest invention was the portal to Midgard, the middle world of the world tree Yggdrasil. This world was not like Alfheim. He studied this world for a week on the Midgard calendar, and during this time met people. Those only heard about the elven kingdom, but now they are eager to get there...
 botania.page.elves2=Mastray warned them about the time jump that they will have to endure, and almost everyone listened to his warnings... 30 years passed on Midgard, on Alfhem - only 7 hours. But they were warned, what is their punishment from themselves!
 botania.page.elves3=After this incident, the elves sought the most stable lands in their kingdom. In them, when one second passes in Alfhem, a little more than an hour passes on Midgard. So then the great cooperation of elves and people began.
 botania.page.elves4=Among the people there were mages who comprehended their craft through flowers. This magic was something similar to elven one. Having studied the precious component of Midgard ores (iron, diamonds and similar jewelry), the elves understood: bargaining with people is profitable. However, their world is not filled with mana like Alfheim. Therefore, they concluded a trade union, which is still valid today.
+
+botania.entry.pylons=New pylons
+botania.tagline.pylons=I will command the parade
+botania.page.pylons0=There are some changes in pylons you need to get used to:<br>All human pylons has their counterparts in Alfheim: Elven pylon is same tier as Mana pylon; Terra - as Yordin;<br>Gaia pylon is still top-tier, but it's recipe has changed.
+botania.page.pylons1=Creating &1Elven Pylon&0
+botania.page.pylons2=Creating &1Gaia Pylon&0
 
 botania.entry.portal=Portal to Alfheim
 botania.tagline.portal=We need to go even more deeper!
@@ -20,7 +26,7 @@ botania.page.portal1=He understood Mastray, and brought him terrasteel - the gre
 botania.page.portal2=At the heart of the portal is Bifröst - the legendary rainbow bridge that connects Asgard to other worlds.
 botania.page.portal3=The next thing you need is a link that can set up the perfect connection between Alfheim and Midgard. Elves will never tell the secret of making this link to people, and for its manufacture will require the Netherstar - the artifact of Muspelheim. It remains only to build the portal correctly and it's ready!
 botania.page.portal4=Creating &1Alfheim Portal Core&0
-botania.page.portal5=Creating &1Interdimen- sional Gateway Core&0
+botania.page.portal5=Creating &1Interdimensional Gateway Core&0
 botania.page.portal6=Portal to Alfheim
 botania.page.portal7=To activate the portal, you only need to use the Core on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in Alfheim it doesn't require mana sources, since it takes energy from the world itself.
 botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
@@ -28,24 +34,20 @@ botania.page.portal8s=Unfortunately, it was impossible to create a stable and fu
 
 botania.entry.worldgen=Worldgen
 botania.tagline.worldgen=More strange stuff!
-botania.page.worldgen0=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and somehow strangely react to the dragon stone...
-botania.page.worldgen1=Purifying dreamwood
-botania.page.worldgen2=Creating glowstone dust
-botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences... <br>And they also have special sand, which when melted gives the same glass that the elves traded.
-botania.page.worldgen4=Creating livingcobble
-botania.page.worldgen5=Creating livingrock pickaxe
-botania.page.worldgen6=Creating furnace
+botania.page.worldgen0=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and shatters to glowstone dust when interacting with the dragon stone.
+botania.page.worldgen0u=Alfheim itself is striking in its beauty, if we forget the hazardous properties of its time... <br>Specific trees from which you can obtain dreamwood by cleaning it in the same way as ordinary trees to get livingwood; and their leaves glow in the dark and somehow strangely react to the dragon stone...
+botania.page.worldgen1=Purifying &1Dreamwood&0
+botania.page.worldgen2=Creating &1Glowstone Dust&0
+botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences... <br>The sand of this world is not like the sand of Midgard... Perhaps it can be used to make something interesting.
+botania.page.worldgen4=Creating &1Livingcobble&0
+botania.page.worldgen5=Creating &1Livingrock pickaxe&0
+botania.page.worldgen6=Creating &1Furnace&0
 
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
 botania.page.ores1=Dragonstone ore - precious pink elven jewel. It is a pity that you can not make the tools out of it.<br>Gold ore - looks like the elves had the metal of the gods too...<br>Elven quartz ore - it's like the quartz from the nether, a beautiful green color, like Alfheim itself!
 botania.page.ores2=Iffesal ore - only a few people have heard about it. It is believed that its dust has a great power, and greatest elven inventions are based on it. The elves themselves are aware of the greed and profit thirst for people, so they don't want to bargain with it.
-
-botania.entry.anyavil=Anyavil
-botania.tagline.anyavil=Essence of pinkness
-botania.page.anyavil0=Use any pink item from either vanilla, botania or alfheim to repair your equipment. Just put it on anyavil, toss some pink stuff on the ground nearby and shoot pink mana beam directly on anyavil.
-botania.page.anyavil1=Nya! Kawaii!
 
 botania.entry.mobs=Mobs
 botania.tagline.mobs=Finally, life!
@@ -55,82 +57,86 @@ botania.page.mobs1=Also in the world can fly special little purple creatures, wh
 botania.entry.pixie=Pixie Attaractor
 botania.tagline.pixie=Come over here!
 botania.page.pixie0=Combining native Alfheim resources with Earth rune and powering it all with mana resulted in beautiful amulet, wich every pixie wants to see.
-botania.page.pixie1=Creating Pixie Attaractor
+botania.page.pixie1=Creating &1Pixie Attaractor&0
 
-botania.entry.pylons=New pylons
-botania.tagline.pylons=I will command the parade
-botania.page.pylons0=There are some changes in pylons you need to get used to:<br>All human pylons has their counterparts in Alfheim: Elven pylon is same tier as Mana pylon; Terra - as Yordin;<br>Gaia pylon is still top-tier, but it's recipe has changed.
-botania.page.pylons1=Creating Elven Pylon
+botania.entry.anyavil=Anyavil
+botania.tagline.anyavil=Essence of pinkness
+botania.page.anyavil0=Use any pink item from either vanilla, botania or alfheim to repair your equipment. Just put it on anyavil, toss some pink stuff on the ground nearby and shoot pink mana beam directly on anyavil.
+botania.page.anyavil1=&dNya! Kawaii!&0
 
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
 botania.page.infuser0=Basic filling with mana is the basis of all botanical magic. Is it difficult to just throw an item in the mana pool to just fill it? Everyone will say at once: it's easy! However, the elves went further. Their goal was to create a special device that allows filling one object with the properties of others and mana. Just like Thaumaturges of Midgard.
 botania.page.infuser1=Nevertheless, this required the most valuable dust - the Iffesal. It doesn't just symbolize power - it IS power, but in a crystallized form. What about pixies dust? It is the basis of what was called the core of the mana-infuser.
-botania.page.infuser2=Creating mana-infuser core
-botania.page.infuser3=Creating mana-infuser
-botania.page.infuser4=It turned out perfectly, but it is not enough. Now we need to put this cherished bloc in the world and build on its basis a structure! The infuser is ready. It will be a continuation of botania studying and will be useful in various advanced crafting.
+botania.page.infuser2=Creating &1Mana-infuser Core&0
+botania.page.infuser3=Creating &1Mana-infuser&0
+botania.page.infuser4=It turned out perfectly, but it is not enough. Now we need to put this cherished bloc in the world and build on its basis a structure! It is worth trying to use different blocks of Alfheim materials...<br>The infuser is ready. It will be a continuation of botania studying and will be useful in various advanced crafting.
 botania.page.infuser5=Mana-infuser
+botania.page.infuser5u=§oApproximate structure§r
 
 botania.entry.elvorium=Elvorium
 botania.tagline.elvorium=Better than terrasteel
 botania.page.elvorium0=Elves had learned the recipe of the terrasteel, the one that Mastray had borrowed from Freyr. However, long before that, elves had a similar method of making an alloy woven from the power of Alfheim's resources. By properties, it is similar to terrasteel, but stronger... Elementium ingot, piece of dragonstone, pixie dust and some mana. Here it is, the cherished alloy! Elvorium!
-botania.page.elvorium1=Creating Elvorium
+botania.page.elvorium1=Creating &1Elvorium&0
 
 botania.entry.trade=Reverse Exchange
 botania.tagline.trade=Well, how else?
 botania.page.trade0=Alfheim sometimes impresses with its anomalies, but precisely because of them it is possible to create a portal into this world. The trading gate used by the traders of Midgard is built in Alfheim in a different way, because of those anomalies not allowing the work of a scheme that operates in Overworld. But Mastray did not lose it.
 botania.page.trade1=The Alfheim-Midgard portal itself is similar in design to the portal of Midgard-Alfheim, but there are some differences:<br>The material for its gate won't be livingwood, but a livingrock, and elven pylons of elvorium and Iffesal dust will perfectly stabilize the connection. May the great Mastray, the Connector of the Worlds, be glorified forever!
-botania.page.trade2=Creating Yordin Pylon
-botania.page.trade3=Creating Midgard Gateway Core
+botania.page.trade2=Creating &1Yordin Pylon&0
+botania.page.trade3=Creating &1Midgard Gateway Core&0
 botania.page.trade4=Midgard Trade Portal
 
 botania.entry.essences=Essences
 botania.tagline.essences=It looks like corals
 botania.page.essences0=When you travel to the Nether, you realize that this is only part of Muspelheim. From Elven Lore it is clear why the nether portals function: Muspelheim has approached Midgard.<br>But when you read legends about the universe, you remember about Niflheim, the world of frosts and ice, on a pair with Muspelheim occupying the status of "primal".
-botania.page.essences1=The resources from this infernal hole and the Iffesal dust make it possible to create a special summoner of the gigantic fiery wolf Nizatar. It is believed that it was created specifically to separate the strong from the weak, other theories claim that it was created to protect something, no one knows for sure. Nevertheless, the wolf is summoned, so let the heavenly powers help you!
-botania.page.essences1d=Creating essence of Muspelheim
-botania.page.essences2=&oBut how to get their powers?&r
-botania.page.essences3=Snow, dense ice and the Iffesal dust are ideal items for the summoner of the icy wolf, Quei. He resembles Nizatar, and the same legends go about him: either a test, or a guard.
-botania.page.essences3d=Creating essence of Niflheim
+botania.page.essences2=Everything was not as trivial as one would like. Apparently, the only source of the essences of the worlds were the Flügels, which collected it in plenty during the Great War. May the gods help you in getting it.
+botania.page.essences2u=&oBut how to get their powers?&r
 botania.page.essences4=Terrasteel and Elvorium are ideal alloys, symbolizing the power of Midgard and Alfheim. But it's still far from the limit! We all know what will happen if we combine the Gaia Spirit and the Terrestrial - Gaia ingot. A dummy, it would seem. But the elves consider differently...
 botania.page.essences5=Legends of Asgard say: the weapons of the gods are woven of a special metal, uniting the forces of the four worlds. The elves took into account these legends and decided to become like the gods in this. They have woven two alloys from the elvorium and essences of the primal worlds, similarly to Gaia ingots: an ingots of Muspelheim's and Niflheim's powers.
-botania.page.essences6=Creating World's power ingots.
-botania.page.essences7=But they didn't stop on this and went even further, combining the ingots with Gaia's ingot and making Elven infusion. The metal of the gods themselves - Mauftrium. True power in this alloy!
-botania.page.essences8=Creating Mauftrium
+botania.page.essences6=Creating &1World's Powers Ingots&1
+botania.page.essences7=But they didn't stop on this and went even further, combining the ingots with Gaia's ingot and making Elven infusion. The metal of the gods themselves - &6Mauftrium&0. True power in this alloy!
+botania.page.essences8=Creating &6Mauftrium&0
 
 botania.entry.runes=Runes
 botania.tagline.runes=Just a few more
 botania.page.runes0=It would seem that those runes of primary elements, seasons, deadly sins and mana itself are enough... Not at all! When studying the properties of essences, it turned out that you can fill them with runes, and get improved versions of them!
-botania.page.runes1=Creating new runes
+botania.page.runes1=Creating &1new runes&0
 botania.page.runes2=The new runes of Muspelheim and Niflheim contain in themselves their original energy, which makes it possible to create powerful weapons of fire and ice... May the sleeping giants of both worlds awake!
-botania.page.runes3=But besides the runes of these worlds, there is one more. The rune of five elements: air, fire, water, earth and magic, also called the Primordial rune. Such a rune contains the power of the original energy, which was before the time of these two worlds. Wait a second, was there really a time when Muspelheim and Niflheim did not exist? Who knows...
-botania.page.runes4=Creating primordial rune
+botania.page.runes3=But besides the runes of these worlds, there is one more. The rune of five elements: air, fire, water, earth and magic, also called the &5Primordial Rune&0. Such a rune contains the power of the original energy, which was before the time of these two worlds. Wait a second, was there really a time when Muspelheim and Niflheim did not exist? Who knows...
+botania.page.runes4=Creating &5Primal Rune&0
 
 botania.entry.elvenSet=Elvorium Armor
 botania.tagline.elvenSet=Armor at new level!
 botania.page.elvenSet0=The sorcerers of Midgard used the powers given by nature to achieve their goals. They created terrasteel and runes, for what? For the sake of the perfect armor the of nature, the Terrasteel armor. Elves took their achievements and improved them with the help of elvorium, receiving armor, which was used only by elite royal guardians.
-botania.page.elvenSet1=Creating elvorium helmet
-botania.page.elvenSet2=Creating elvorium chestplate
-botania.page.elvenSet3=Creating elvorium leggings
-botania.page.elvenSet4=Creating elvorium boots
+botania.page.elvenSet1=Creating &1Elvorium Helmet&0
+botania.page.elvenSet2=Creating &1Elvorium Chestplate&0
+botania.page.elvenSet3=Creating &1Elvorium Leggings&0
+botania.page.elvenSet4=Creating &1Elvorium Boots&0
 
 botania.entry.elemSet=Elemental Armor
 botania.tagline.elemSet=Only the Avatar, Master of all four elements...
 botania.page.elemSet0=Elves never agreed to sell Iffesal dust, because not only mechanisms was based on it, but also improved form of elementium armor - an elemenal armor, which gives the wearer much more power than a simple elementium set.
-botania.page.elemSet1=Water
-botania.page.elemSet2=Earth
-botania.page.elemSet3=Fire
-botania.page.elemSet4=Air
+botania.page.elemSet1=&1Water&0
+botania.page.elemSet2=&2Earth&0
+botania.page.elemSet3=&4Fire&0
+botania.page.elemSet4=&eAir&0
 
 botania.entry.advMana=Mana-stones
 botania.tagline.advMana=New word in storing mana
 botania.page.advMana0=As we know, the core of a simple mana store included either mana-diamond or mana-pearl. But elves had none of them. But they had their own ways of pocket mana storage.
 botania.page.advMana1=As it turned out, the dragonstone can absorb mana, but it quickly loses it. The elves strengthened this stone with the valuable Iffesal dust, and created a mana-stone that allows you to store mana four times more than that stone tablet. And with the discovery of the essences of the primal worlds, the elven magicians strengthened it even more. The result is an improved storage of mana.
-botania.page.advMana2=Creating mana-stone
-botania.page.advMana3=Improving mana-stone
+botania.page.advMana2=Creating &1Mana-stone&0
+botania.page.advMana3=&cImproving &1Mana-stone&0
 botania.page.advMana4=And what if you apply elvorium or mauftrim as perfect mana-conductor? We get rings that look beautiful on the finger and are handy sources of mana, which is always at hand. Pure beauty and functionality!
-botania.page.advMana5=Creating Elvorium ring
-botania.page.advMana6=Creating Mauftrium ring
+botania.page.advMana5=Creating &1Elvorium ring&0
+botania.page.advMana6=Creating &1Mauftrium ring&0
+
+botania.entry.auraAlf=Bands of Aura
+botania.tagline.auraAlf=Everything needs an upgrade
+botania.page.auraAlf0=&o//Волк, напиши здесь чего-нибудь заумного, а то у меня идей нет//&r
+botania.page.auraAlf1=Upgading to &1Elven Aura Ring&0
+botania.page.auraAlf2=Upgading to &1God's Aura Ring&0
 
 botania.entry.ruling=Power of other worlds
 botania.tagline.ruling=I'm Bruce Almighty
@@ -139,29 +145,35 @@ botania.page.ruling1=Using the Mauftrium and Blazerods, the Elves were able to c
 botania.page.ruling2=Feuer Frei!
 botania.page.ruling3=Castle of Glass
 botania.page.ruling4=However, the fact of using this force doesn't yet mean its subordination - absolutely all beings are vulnerable to it. To protect themselves and not suffer from their own magic, the elves created protective amulets that could return uncontrolled energy to where it came from.
-botania.page.ruling5=Creating protective amulets
+botania.page.ruling5=Creating &1protective amulets&0
 
 botania.entry.reality=Reality Sword
 botania.tagline.reality=Uii, rainbow!
 botania.page.reality0=Elemental elven armor is certainly a good idea... But for a warrior with such armor there is not enough weapons. Let's say a sword. Fortunately this problem is solvable with the use of the alloy of the gods! The sword itself can either be a simple cutting blade, or it can erupt from itself the strength of one of the four primal elements.
 botania.page.reality1=But we must take into account that when you set the sword to one of these elements, mana is wasted, so take care of it! But it's not important, because you have a lot of it, considering that you created so much Mauftrium for this sword, right?
-botania.page.reality2=Creating the sword
+botania.page.reality2=Creating &6Sword of Reality&0
 
-botania.entry.excaliber=Holly Sword Excaliber
-botania.tagline.excaliber=Not fake! Promise!
-botania.page.excaliber0=&oLost long ago, this sword is still not found...&r
+botania.entry.flugel=Flügel
+botania.tagline.flugel=Weapon of Gods
+botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
+botania.page.flugel1=Flügels themselves strongly hate Guardians, for the fact that they took away eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of summoning, built in the clouds, you can summon one of the Flügels and try to defeat it.
+botania.page.flugel2=But be careful - their self-love will not allow them to fight with someone who can not fly by themselves, so you need to get wings like theirs. Good armor, strong sword and potions - without them you are unlikely to achieve anything. Otherwise, an inquisitive and flexible mind will help you.
+
+botania.entry.soul=Flügel's Soul
+botania.tagline.soul=God Slayers
+botania.page.soul0=The one who win the Flügel will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flügel, even stronger - the one from Gods Slayers, twelve more times (in exchange for warp points).
+botania.page.soul1=This will give you some useful and rare resources.<br><br><br>Unfortunately, &lso far&r no one had found a way to restore corrupted parts of the soul. Perhaps, some day...
 
 botania.entry.mask=Mysterious Mask
 botania.tagline.mask=I've already seen this somewhere...
 botania.page.mask0=Fury and danger emanates from this mask. When you try to put it on you, nothing comes out, and it just falls from your face. However, if you are on the verge of death, it materializes on you from your in your inventory, giving you unparalleled strength and endurance. But do not abuse it, otherwise the dark spirit will consume you...
 
-botania.entry.soul=Flügel
-botania.tagline.soul=Weapon of Gods
-botania.page.soul0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
-botania.page.soul1=Flügels themselves strongly hate Guardians, for the fact that they take away their eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of summoning, built in the clouds, you can summon one of the Flügels and try to defeat it.
-botania.page.soul2=But be careful - their self-love will not allow them to fight with someone who can not fly by themselves, so you need to get wings like theirs. Good armor, strong sword and potions - without them you are unlikely to achieve anything. Otherwise, an inquisitive and flexible mind will help you.
-botania.page.soul3=The winner will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flugel, even stronger, twelve more times (in exchange for warp points).
-botania.page.soul4=This will give you some useful and rare resources.<br><br><br>Unfortunately, &lso far&r no one had found a way to restore corrupted parts of the soul. Perhaps, some day...
+botania.entry.excaliber=Holly Sword Excaliber
+botania.tagline.excaliber=Not fake! Promise!
+botania.page.excaliber0=Well, that's embarrassing...
+botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
+
+################################################################ ESM ################################################################
 
 botania.entry.es= Elven Story
 botania.tagline.es=New Challenge!
@@ -170,4 +182,84 @@ botania.page.es0=Well, you chose the Elven Story mode. So, you are an elf, belon
 botania.entry.races= Races
 botania.tagline.races=It's actually not races
 botania.page.races0=Even Hel herself didn't destroy the intelligent life in Alfheim and it's still boiling there. This world serves as the homeland for the elven races who live at an equal distance from the center of the world. In total, there are nine races: Salamanders, Sylphes, Cait Sith, Pookas, Gnomes, Leprechauns, Spriggans, Undines and Imps.
-botania.page.races1=Each of them has a unique color, a shape of the wings and an icon, and they all can fly. By default, the flight is activated by the "F" key, and if you plan to fly even faster, then press the acceleration button - increase the speed by 25%! But keep in mind: the flight time is limited and the faster you move, the less time you have.
+botania.page.races1=Each of them has a unique color, a shape of the wings and an icon, and they all can fly. 
+botania.page.races2=By default, the flight is activated by the "F" key, and if you want to fly even faster, then press the acceleration button - increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the "ALT" pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
+
+################################################################ MMO ################################################################
+
+botania.entry.parties= Parties
+botania.tagline.parties=It's a partytime!
+botania.page.parties0=The ability to create groups has been added to the game. By default, it can hold up to five participants. The main feature is disabled by default damage from allies. It will also allow you to monitor the health and mana of your friends when they are in sight, and to report on the negative effects on them in time.
+botania.page.parties1=To add a player to the party, you need to create a Pipe of Peace, which will allow you to enter into a contract with the spirits, so that they provide you with protection against attacks from each other. First, it must be smoked by the one who will be the leader, then by new member. After that, the pipe shatters.
+botania.page.parties2=Creating &1Pipe of Peace&0
+botania.page.parties3=If for some reason you need to leave the party or exclude someone - just write the name of this member on the Parchment of Discord and burn it (RMB). The only condition is that you must be the leader of this group (your name is red), and the member must be in sight.
+botania.page.parties4=Creating &1Parchment of Discord&0
+
+botania.entry.spells= Spells
+botania.tagline.spells=No magic outside Hogwarts!
+botania.page.spells0=Each elven race has its own set of spells, with a certain affinity. So, Salamanders are skillful fire mages, Sylphs - wind, Kait Sith can subdue the nature, Pookas are excellent musicians, Gnomes specialize in earth magic, Leprechauns on various technologies, Spriggans are masters of illusions, Undines - water mages, and Imps are servants of Darkness.
+botania.page.spells1=Before using the spell, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
+botania.page.spells2=The spell is selected using the arrows, cast happens when you press V. Also, while holding ctrl+shift, you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from 1 to =, while holding ctrl.
+botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
+botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures within 9 blocks
+botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness
+botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interruptштп if you move
+botania.page.battlehorn=Adds courage to allies, imposing acceleration, boost and resistance
+botania.page.blink=Allows you to teleport forward up to 8 blocks
+botania.page.bunnyhop=Imposes a high jump effect on the target.
+botania.page.butterflyshield=Grants the target three complete absorptions against magic and the absorption of half the other types of damage
+botania.page.confusion=Imposes a nausea effect on the target
+botania.page.day=Sets the time of day to day
+botania.page.deathmark=Imposes a mark on the target that inflicts tremendous curse damage if it wasn't removed in time
+botania.page.decay=Significantly weakens the immunity of the target, so any injury will result in bleeding
+botania.page.dispel=Removes all negative effects from an ally, all positive effects from an opponent; imposing nausea if there were none
+botania.page.dragongrowl=Frightens opponents within a radius of 16 blocks, imposing blindness, weakness and slowness
+botania.page.driftingmine=Launches (with pressed [Shift] sets) a mine that explodes on impact with an enemy or surface, causing average explosive damage
+botania.page.echo=Allows you to detect items and living creatures in a radius of 16 blocks
+botania.page.fenrirstorm=Deals high lightning damage to targets standing on the line of sight at a distance of up to 16 blocks
+botania.page.fireball=Launches a ball of fire that does average fire damage over a 2-block radius area
+botania.page.firewall=Sets a wall of fire in front of the caster that restrains and sets opponents on fire, inflicting minor fire damage
+botania.page.goldrush=Grants the party increased digging speed and luck when mining ore
+botania.page.gravitytrap=Creates a gravity trap, which draws in everything within a radius of 4 blocks and at a height of up to 16 blocks; and causing minor gravity damage
+botania.page.hammerfall=Deals a great suffocation damage to all opponents within a radius of 10 blocks, standing on a not too hard surface
+botania.page.harp=Summons a Harp, which grants minor healing to allies within a radius of 16 blocks and gradually removes negative effects
+botania.page.healing=Grants average healing to all party members
+botania.page.hollowbody=Imposes an invisibility effect on target
+botania.page.icelens=Allows the caster to see 10 times better through an ice lens
+botania.page.ignition=Ignites the selected block at a distance of up to 16 blocks
+botania.page.mortar=Launches a rock, causing great falling block damage on the target of direct hit, additionally breaking its armor, and medium aerth damage over an 2-blocks radius area
+botania.page.night=Sets the time of day to night
+botania.page.nightvision=Imposes a night vision effect on a party
+botania.page.ninelifes=Imposes on the target an effect which allows once to survive a death by falling, drowning, withering (with a 50% chance), burning or poisoning, and after giving a temporary invulnerability to these types of damage
+botania.page.noclip=Imposes an effect on the target, allowing it to pass through walls. To operate, it need to be able to fly and be in the air
+botania.page.outdare=Caster challenges the surrounding enemies within a radius of 32 blocks, making himself the primary target for attack
+botania.page.poisonroots=Distributes negative effects from the party to opponents within a radius of 16 blocks, further slowing them down
+botania.page.purifyingsurface=Removes poison effect from allies within 5 blocks, extinguishes and gives immunity to fire
+botania.page.rain=Causes rain/calms thunderstorm
+botania.page.resurrect=Allows for some time to resurrect an ally on the spot of his death, restoring 10 health points
+botania.page.sacrifice=You sacrifice yourself to Darkness, causing tremendous darkness damage to everyone within a radius of 32 blocks, including allies, and then you die too
+botania.page.sharedhp=You combine health points in a single pool, common to the whole party. If one dies, everybody dies
+botania.page.smokescreen=Creates a smoke cloud that imposes blindness on opponents within a radius of 16 blocks
+botania.page.stoneskin=Imposes an effect on the target, allowing you to completely absorb one hit, and then imposes an additional partial absorption effect
+botania.page.sun=Stops rain/thunder
+botania.page.thor=Summons lightning on distance up to 32 blocks under the sky
+botania.page.throw=Launches the caster forward, additionally inflicting average standard damage on anyone in the way
+botania.page.thunder=Causes a thunderstorm/increases rain
+botania.page.timestop=Stops time in a radius of 16 blocks
+botania.page.titanhit=Breaks blocks in the area of 3x3, consuming the more mana, the harder were the blocks
+botania.page.truesigh=Allows you to find out approximately how much mana the target has - the brighter and higher the "flame" - the more mana
+botania.page.uphealth=Imposes a health increasement on the target
+botania.page.wallwarp=Allows you to move through not very thick walls
+botania.page.waterbreathing=Imposes a waterbreathing effect on a party
+botania.page.wellolife=Imposes an effect on a party that gradually heals the target if it stays in the water
+botania.page.windbalde=Launches an air disc, causing average air damage to enemies on the way
+
+botania.entry.targets= Targeting
+botania.tagline.targets=You can't hide from me
+botania.page.targets0=For more convenient use of spells in the game there is also a system of targeting. To select an enemy, hover the cursor on it and hold down selection button (R by default). Now you can use spells on it that require a target.
+botania.page.targets1=To select a party member, simply press T. The selection will cycle through and the name of the selected member will be highlighted in green. Clicking on R will not allow you to select a member so not to accidentally attack him. Tracking range - 128 blocks for bosses and 32 for the rest.
+
+lexicon.time=Cast: %.2f
+lexicon.cd=Cooldown: %.2f
+lexicon.seconds=s
+lexicon.mana=Mana:

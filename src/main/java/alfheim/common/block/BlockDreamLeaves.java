@@ -6,6 +6,9 @@ import alexsocol.asjlib.render.IGlowingLayerBlock;
 import alexsocol.asjlib.render.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.common.core.handler.CardinalSystem;
+import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem;
+import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
@@ -13,14 +16,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.common.item.ModItems;
 
 public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock, ILexiconable {
 
@@ -34,6 +41,42 @@ public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock,
 		this.setLightOpacity(0);
 	}
 
+	@Override
+	// IDK whether this is good source of glowstone or not
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == ModItems.manaResource && player.getCurrentEquippedItem().getItemDamage() == 9) {
+			int eat = 2;
+			final int c = eat;
+			boolean[] sides = new boolean[6];
+			
+			for (ForgeDirection dir : ForgeDirection.values()) {
+				if (dir == ForgeDirection.UNKNOWN || eat <= 0) continue;
+				if (world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ) == this) {
+					--eat;
+					sides[dir.ordinal()] = true;
+				}
+			}
+			
+			if (eat > 0) return false;
+			for (ForgeDirection dir : ForgeDirection.values()) {
+				if (dir == ForgeDirection.UNKNOWN) continue;
+				if (sides[dir.ordinal()]) world.setBlockToAir(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+			}
+			
+			world.setBlockToAir(x, y, z);
+				
+			player.getCurrentEquippedItem().stackSize--;
+			if (!player.inventory.addItemStackToInventory(new ItemStack(Items.glowstone_dust))) {
+				player.dropPlayerItemWithRandomChoice(new ItemStack(Items.glowstone_dust), true);
+			}
+			
+			if (!world.isRemote && player instanceof EntityPlayerMP) KnowledgeSystem.learn((EntityPlayerMP) player, Knowledge.GLOWSTONE);
+			
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean isLeaves(IBlockAccess world, int x, int y, int z) {
 		return false;

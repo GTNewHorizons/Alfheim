@@ -3,6 +3,7 @@ package alfheim.common.block.mana;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
+import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -10,8 +11,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -21,6 +24,8 @@ import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.ModFluffBlocks;
 
 public class BlockManaInfuser extends Block implements ITileEntityProvider, ILexiconable, IWandHUD, IWandable {
 
@@ -57,13 +62,32 @@ public class BlockManaInfuser extends Block implements ITileEntityProvider, ILex
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.isSneaking()) {
+		if (ModInfo.DEV && !world.isRemote && player.isSneaking()) {
 			player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.AQUA + "Mana: " + ((TileManaInfuser) world.getTileEntity(x, y, z)).getCurrentMana()));
 			return true;
 		}
 		return false;
 	}
 
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
+		super.onBlockPlacedBy(world, x, y, z, placer, stack);
+		if (placer instanceof EntityPlayer) {
+			if (
+					world.getBlock(x + 1, y, z	) == ModFluffBlocks.elfQuartz &&
+					world.getBlock(x - 1, y, z	) == ModFluffBlocks.elfQuartz &&
+					world.getBlock(x	, y, z+1) == ModFluffBlocks.elfQuartz &&
+					world.getBlock(x	, y, z-1) == ModFluffBlocks.elfQuartz &&
+					world.getBlock(x + 1, y, z+1) == ModBlocks.storage && world.getBlockMetadata(x+1, y, z+1) == 2 &&
+					world.getBlock(x + 1, y, z-1) == ModBlocks.storage && world.getBlockMetadata(x+1, y, z-1) == 2 &&
+					world.getBlock(x - 1, y, z+1) == ModBlocks.storage && world.getBlockMetadata(x-1, y, z+1) == 2 &&
+					world.getBlock(x - 1, y, z-1) == ModBlocks.storage && world.getBlockMetadata(x-1, y, z-1) == 2
+				)
+				
+			((EntityPlayer) placer).triggerAchievement(AlfheimAchievements.infuser);
+		}
+	}
+	
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		return AlfheimLexiconData.infuser;

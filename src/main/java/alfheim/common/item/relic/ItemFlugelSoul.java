@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.entity.boss.EntityFlugel;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -30,7 +31,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -47,9 +47,6 @@ import vazkii.botania.common.item.relic.ItemRelic;
 
 public class ItemFlugelSoul extends ItemRelic {
 	
-	private static final ResourceLocation glowTexture = new ResourceLocation(LibResources.MISC_GLOW_CYAN);
-	private static final ResourceLocation glowTextureDisabled = new ResourceLocation(ModInfo.MODID, "textures/misc/glow.png");
-
 	private static final int SEGMENTS = 12;
 	private static final MultiversePosition FALLBACK_POSITION = new MultiversePosition(0, -1, 0, 0);
 
@@ -154,7 +151,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		return 0;
 	}
 
-	private static float getCheckingAngle(EntityLivingBase player) {
+	public static float getCheckingAngle(EntityLivingBase player) {
 		return getCheckingAngle(player, 0F);
 	}
 
@@ -325,7 +322,7 @@ public class ItemFlugelSoul extends ItemRelic {
 			if(isDisabled(stack, seg)) GL11.glColor4f(c, 0, 0, a);
 			else GL11.glColor4f(c, c, c, a);
 
-			mc.renderEngine.bindTexture(isDisabled(stack, seg) ? glowTextureDisabled : glowTexture);
+			mc.renderEngine.bindTexture(isDisabled(stack, seg) ? LibResourceLocations.glow : LibResourceLocations.glowCyan);
 			tess.startDrawingQuads();
 			for(int i = 0; i < segAngles; i++) {
 				float ang = i + seg * segAngles + shift;
@@ -396,7 +393,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		}
 
 		boolean isValid() {
-			return y > 0 && (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER ? MinecraftServer.getServer().worldServerForDimension(dim) != null : true);
+			return y > 0 && (ASJUtilities.isServer() ? MinecraftServer.getServer().worldServerForDimension(dim) != null : true);
 		}
 
 		int mana(EntityPlayer player) {

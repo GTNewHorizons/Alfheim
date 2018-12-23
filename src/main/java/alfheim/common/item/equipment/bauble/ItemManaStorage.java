@@ -40,9 +40,9 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 	@Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		par3List.add(new ItemStack(par1, 1, 1000));
-		ItemStack full = new ItemStack(par1, 1, 1);
+		/*ItemStack full = new ItemStack(par1, 1, 1);
 		setMana(full, MAX_MANA);
-		par3List.add(full);
+		par3List.add(full);*/
 	}
 
 	@Override

@@ -29,11 +29,11 @@ public class ItemContainingTileEntity extends TileEntity {
 	public ItemStack item;
 
 	public ItemStack getItem() {
-		return this.item;
+		return item;
 	}
 
-	public ItemStack setItem(ItemStack it) {
-		return this.item = it;
+	public void setItem(ItemStack it) {
+		item = it;
 	}
 
 	@Override
@@ -50,14 +50,12 @@ public class ItemContainingTileEntity extends TileEntity {
 
 	public void writeCustomNBT(NBTTagCompound nbt) {
 		NBTTagCompound compound = new NBTTagCompound();
+		if (getItem() != null) getItem().writeToNBT(compound);
 		nbt.setTag("item", compound);
-		if (getItem() != null)
-			getItem().writeToNBT(compound);
 	}
 
 	public void readCustomNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("item"))
-			setItem(ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("item")));
+		if (nbt.hasKey("item")) setItem(ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("item")));
 	}
 
 	@Override

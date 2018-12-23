@@ -3,6 +3,7 @@ package alfheim.common.block.tile;
 import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
@@ -30,7 +31,6 @@ import vazkii.botania.api.wand.IWandBindable;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.entity.EntityManaBurst;
 
 public class TileTransferer extends ItemContainingTileEntity implements IDirectioned, IManaReceiver, IWandBindable {
@@ -97,7 +97,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 	}
 	
 	public static void setStack(EntityManaBurst burst, ItemStack stack) {
-		ItemStack lens = new ItemStack(AlfheimItems.elvenResource, 1/*, ElvenResourcesMetas.Transferer FIXME*/);
+		ItemStack lens = new ItemStack(AlfheimItems.elvenResource, 1/*, ElvenResourcesMetas.Transferer BACK*/);
 		ItemNBTHelper.getNBT(lens).setTag(TAG_STACK, stack.writeToNBT(new NBTTagCompound()));
 		burst.setSourceLens(lens);
 	}
@@ -130,7 +130,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 				if(pos.sideHit != 0 && pos.sideHit != 1) {
 					Vector3 clickVector = new Vector3(x, 0, z);
 					Vector3 relative = new Vector3(-0.5, 0, 0);
-					double angle = Math.acos(clickVector.dotProduct(relative) / (relative.mag() * clickVector.mag())) * 180.0 / Math.PI;
+					double angle = Math.acos(clickVector.dotProduct(relative) / (relative.length() * clickVector.length())) * 180.0 / Math.PI;
 
 					rotationX = (float) angle + 180F;
 					if(clickVector.z < 0)
@@ -170,7 +170,7 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 		/*String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.transferer).getUnlocalizedName() + ".name");
 		int color = 0xCCFF00;
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res);
-		GL11.glColor4f(1F, 1F, 1F, 1F); FIXME*/
+		GL11.glColor4f(1F, 1F, 1F, 1F); BACK*/
 	}
 
 	public boolean isBound() {
@@ -268,19 +268,18 @@ public class TileTransferer extends ItemContainingTileEntity implements IDirecti
 			axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1);
 
 		if(!blockVec.isInside(axis))
-			blockVec = new Vector3(axis.minX + (axis.maxX - axis.minX) / 2, axis.minY + (axis.maxY - axis.minY) / 2, axis.minZ + (axis.maxZ - axis.minZ) / 2);
+			blockVec.set(axis.minX + (axis.maxX - axis.minX) / 2, axis.minY + (axis.maxY - axis.minY) / 2, axis.minZ + (axis.maxZ - axis.minZ) / 2);
 
 		Vector3 diffVec =  blockVec.copy().sub(thisVec);
-		Vector3 diffVec2D = new Vector3(diffVec.x, diffVec.z, 0);
 		Vector3 rotVec = new Vector3(0, 1, 0);
-		double angle = rotVec.angle(diffVec2D) / Math.PI * 180.0;
+		double angle = rotVec.angle(new Vector3(diffVec.x, diffVec.z, 0)) / Math.PI * 180.0;
 
 		if(blockVec.x < thisVec.x)
 			angle = -angle;
 
 		rotationX = (float) angle + 90;
 
-		rotVec = new Vector3(diffVec.x, 0, diffVec.z);
+		rotVec.set(diffVec.x, 0, diffVec.z);
 		angle = diffVec.angle(rotVec) * 180F / Math.PI;
 		if(blockVec.y < thisVec.y)
 			angle = -angle;

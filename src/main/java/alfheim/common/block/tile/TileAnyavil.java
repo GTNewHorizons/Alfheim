@@ -3,13 +3,19 @@ package alfheim.common.block.tile;
 import java.awt.Color;
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
+import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.network.MessageTileItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -19,7 +25,7 @@ import vazkii.botania.api.internal.IManaBurst;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.tile.mana.TilePool;
 
-public class TileAnyavil extends ItemContainingTileEntity {
+public class TileAnyavil extends ItemContainingTileEntity implements ISidedInventory {
 
 	public static final int MAX_PINK_CHARGE = TilePool.MAX_MANA_DILLUTED;
 	private static final String TAG_MANA = "mana";
@@ -80,5 +86,103 @@ public class TileAnyavil extends ItemContainingTileEntity {
 		super.readCustomNBT(nbt);
 		pinkCharge = nbt.getInteger(TAG_MANA);
 		this.blockMetadata = nbt.getInteger(TAG_METADATA);
+	}
+	
+	@Override
+	public void setItem(ItemStack stack) {
+		super.setItem(stack);
+		if (ASJUtilities.isServer() && worldObj != null) {
+			AlfheimCore.network.sendToDimension(new MessageTileItem(xCoord, yCoord, zCoord, getItem()), worldObj.provider.dimensionId);
+		}
+	}
+
+	@Override
+	public int getSizeInventory() {
+		return 1;
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return getItem();
+	}
+
+	@Override
+	public ItemStack decrStackSize(int slot, int ammount) {
+		if (getStackInSlot(slot) != null) {
+            ItemStack itemstack;
+
+            if (getStackInSlot(slot).stackSize <= ammount){
+                itemstack = getStackInSlot(slot);
+                setInventorySlotContents(slot, null);
+                return itemstack;
+            } else {
+                itemstack = this.getStackInSlot(slot).splitStack(ammount);
+                if (this.getStackInSlot(slot).stackSize == 0) setInventorySlotContents(slot, null);
+                return itemstack;
+            }
+        }
+		return null;
+	}
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		if (getStackInSlot(slot) != null) {
+            ItemStack itemstack = getStackInSlot(slot);
+            setInventorySlotContents(slot, null);
+            return itemstack;
+        } 
+        return null;
+	}
+
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+		setItem(stack);
+        if (stack != null && stack.stackSize > getInventoryStackLimit())  stack.stackSize = getInventoryStackLimit();
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "container.anyavil";
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 1;
+	}
+
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer player) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64.0;
+	}
+
+	@Override
+	public void openInventory() {}
+
+	@Override
+	public void closeInventory() {}
+
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		return stack != null && stack.stackSize == 1 && stack.getItem().isDamageable();
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side) {
+		return new int[]{0};
+	}
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack stack, int side) {
+		return side == 1 ? isItemValidForSlot(slot, stack) : false;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, ItemStack stack, int side) {
+		return side == 0 && slot == 0 ? !stack.isItemDamaged() : false;
 	}
 }

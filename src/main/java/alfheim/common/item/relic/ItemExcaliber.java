@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,7 +33,6 @@ import vazkii.botania.api.mana.BurstProperties;
 import vazkii.botania.api.mana.ILensEffect;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.entity.EntityManaBurst;
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword;
 import vazkii.botania.common.item.relic.ItemRelic;
@@ -155,12 +155,8 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 		if (homeID != -1) {
 			home = entity.worldObj.getEntityByID(homeID);
 			if (home != null) {
-				Vector3 vecEntity = Vector3.fromEntityCenter(home);
-				Vector3 vecThis = Vector3.fromEntityCenter(entity);
-				Vector3 vecMotion = vecEntity.sub(vecThis);
-				Vector3 vecCurrentMotion = new Vector3(entity.motionX, entity.motionY, entity.motionZ);
-
-				vecMotion.normalize().multiply(vecCurrentMotion.mag());
+				Vector3 vecMotion = Vector3.fromEntityCenter(home).sub(Vector3.fromEntityCenter(entity));
+				vecMotion.normalize().mul(new Vector3(entity.motionX, entity.motionY, entity.motionZ).length());
 				burst.setMotion(vecMotion.x, vecMotion.y, vecMotion.z);
 			}
 		}

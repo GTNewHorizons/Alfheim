@@ -9,6 +9,8 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
 import alfheim.common.item.ItemHoloProjector;
+import alfheim.common.item.ItemPaperBreak;
+import alfheim.common.item.ItemPeacePipe;
 import alfheim.common.item.TheRodOfTheDebug;
 import alfheim.common.item.equipment.armor.elemental.*;
 import alfheim.common.item.equipment.armor.elvoruim.*;
@@ -22,11 +24,15 @@ import baubles.api.BaubleType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.equipment.bauble.ItemAuraRing;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 import vazkii.botania.common.item.record.ItemModRecord;
 
 public class AlfheimItems {
 
+	public static Item auraRingElven;
+	public static Item auraRingGod;
 	public static Item creativeReachPendant;
 	public static Item elementalBoots;
 	public static Item elementalChestplate;
@@ -46,12 +52,14 @@ public class AlfheimItems {
 	public static Item flugelSoul;
 	public static Item holoProjector;
 	public static Item livingrockPickaxe;
-	public static Item manaElvenRing;
-	public static Item manaElvenRingGreater;
+	public static Item manaRingElven;
+	public static Item manaRingGod;
 	public static Item manaStone;
 	public static Item manaStoneGreater;
 	public static Item mask;
 	//public static Item mjolnir;
+	public static Item paperBreak;
+	public static Item peacePipe;
 	public static Item pixieAttractor;
 	public static Item realitySword;
 	public static Item rodFire;
@@ -91,10 +99,14 @@ public class AlfheimItems {
 		livingrockPickaxe = new ItemLivingrockPickaxe();
 		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
-		manaElvenRing = new ItemManaStorage("ManaElvenRing", 2, BaubleType.RING);
-		manaElvenRingGreater = new ItemManaStorage("ManaElvenRingGreater", 8, BaubleType.RING);
+		manaRingElven = new ItemManaStorage("ManaRingElven", 2, BaubleType.RING);
+		auraRingElven = new ItemAuraRingAlfheim("AuraRingElven");
+		manaRingGod = new ItemManaStorage("ManaRingGod", 8, BaubleType.RING);
+		auraRingGod = new ItemAuraRingAlfheim("AuraRingGod") { public int getDelay() { return 2; } };
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
+		paperBreak = new ItemPaperBreak();
+		peacePipe = new ItemPeacePipe();
 	}
 
 	private static void reg() {
@@ -103,11 +115,13 @@ public class AlfheimItems {
 		register(livingrockPickaxe);
 		register(manaStone);
 		register(manaStoneGreater);
-		register(manaElvenRing);
-		register(manaElvenRingGreater);
+		register(manaRingElven);
+		register(manaRingGod);
 		register(rodFire);
 		register(rodIce);
 		register(elvenResource);
+		register(peacePipe);
+		register(paperBreak);
 		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
 
@@ -142,7 +156,7 @@ public class AlfheimItems {
 		PrimalRune,
 		MuspelheimRune,
 		NiflheimRune
-		//Transferer FIXME
+		//Transferer BACK
 		;
 		static {
 			List<String> items = Arrays.asList(ItemElvenResource.subItems);
@@ -160,7 +174,7 @@ public class AlfheimItems {
 			PrimalRune = items.indexOf("PrimalRune");
 			MuspelheimRune = items.indexOf("MuspelheimRune");
 			NiflheimRune = items.indexOf("NiflheimRune");
-			//Transferer = items.indexOf("Transferer"); FIXME
+			//Transferer = items.indexOf("Transferer"); BACK
 		}
 	}
 }

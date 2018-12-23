@@ -2,6 +2,7 @@ package alfheim.common.lexicon.page;
 
 import org.lwjgl.opengl.GL11;
 
+import alfheim.api.lib.LibResourceLocations;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -9,7 +10,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import vazkii.botania.api.internal.IGuiLexiconEntry;
 import vazkii.botania.api.lexicon.LexiconEntry;
@@ -23,7 +23,6 @@ import vazkii.botania.common.lib.LibBlockNames;
 
 public class PagePureDaisyRecipe extends PageRecipe {
 
-	private static final ResourceLocation pureDaisyOverlay = new ResourceLocation(LibResources.GUI_MANA_INFUSION_OVERLAY);
 	private RecipePureDaisy recipe;
 	
 	public PagePureDaisyRecipe(String unlocalizedName, RecipePureDaisy recipe) {
@@ -42,7 +41,7 @@ public class PagePureDaisyRecipe extends PageRecipe {
 		TextureManager render = Minecraft.getMinecraft().renderEngine;
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 		
-		render.bindTexture(pureDaisyOverlay);
+		render.bindTexture(LibResourceLocations.manaInfuserOverlay);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1F, 1F, 1F, 1F);

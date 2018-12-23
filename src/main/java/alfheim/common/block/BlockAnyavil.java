@@ -3,7 +3,7 @@ package alfheim.common.block;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
-import alfheim.client.lib.LibRenderIDs;
+import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;

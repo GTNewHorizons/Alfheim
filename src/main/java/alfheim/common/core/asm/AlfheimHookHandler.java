@@ -1,11 +1,17 @@
 package alfheim.common.core.asm;
 
-import java.util.Map;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
+import alfheim.client.render.entity.RenderButterflies;
+import alfheim.common.core.handler.CardinalSystem.PartySystem;
+import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
@@ -21,36 +27,178 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionHelper;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.subtile.SubTileEntity;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.core.proxy.ClientProxy;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.BlockPylon;
+import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
+import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimHookHandler {
 
 	private static boolean updatingEntity = false;
 	private static String TAG_TRANSFER_STACK = "transferStack";
-
+	public static boolean numMana = true;
+	
+	@Hook(injectOnExit = true, isMandatory = true)
+	public static void onNewPotionEffect(EntityLivingBase e, PotionEffect pe) {
+		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Add.Post(e, pe));
+	}
+	
+	@Hook(injectOnExit = true, isMandatory = true)
+	public static void onChangedPotionEffect(EntityLivingBase e, PotionEffect pe, boolean was) {
+		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Change.Post(e, pe));
+	}
+	
+	@Hook(injectOnExit = true, isMandatory = true)
+	public static void onFinishedPotionEffect(EntityLivingBase e, PotionEffect pe) {
+		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Remove.Post(e, pe));
+	}
+	
+	@Hook(injectOnExit = true, isMandatory = true)
+	public static void moveFlying(Entity e, float x, float y, float z) {
+		if (e instanceof EntityLivingBase && ((EntityLivingBase) e).isPotionActive(AlfheimRegistry.leftFlame)) {
+			e.motionX = e.motionY = e.motionZ = 0.0D;
+		}
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	public static void updatePotionEffects(EntityLivingBase e) {
+		try {
+	        Iterator iterator = e.activePotionsMap.keySet().iterator();
+	
+	        while (iterator.hasNext()) {
+	            Integer integer = (Integer)iterator.next();
+	            PotionEffect potioneffect = (PotionEffect) e.activePotionsMap.get(integer);
+	
+	            if (!potioneffect.onUpdate(e)) {
+	                //if (!e.worldObj.isRemote) {
+	                    iterator.remove();
+	                    AlfheimSyntheticMethods.onFinishedPotionEffect(e, potioneffect);
+	                //}
+	            } else if (potioneffect.getDuration() % 600 == 0) {
+	                AlfheimSyntheticMethods.onChangedPotionEffect(e, potioneffect, false);
+	            }
+	        }
+	
+	        int i;
+	
+	        if (e.potionsNeedUpdate) {
+	            if (!e.worldObj.isRemote) {
+	                if (e.activePotionsMap.isEmpty()) {
+	                    e.getDataWatcher().updateObject(8, Byte.valueOf((byte)0));
+	                    e.getDataWatcher().updateObject(7, Integer.valueOf(0));
+	                    e.setInvisible(false);
+	                } else {
+	                    i = PotionHelper.calcPotionLiquidColor(e.activePotionsMap.values());
+	                    e.getDataWatcher().updateObject(8, Byte.valueOf((byte)(PotionHelper.func_82817_b(e.activePotionsMap.values()) ? 1 : 0)));
+	                    e.getDataWatcher().updateObject(7, Integer.valueOf(i));
+	                    e.setInvisible(e.isPotionActive(Potion.invisibility.id));
+	                }
+	            }
+	
+	            e.potionsNeedUpdate = false;
+	        }
+	
+	        i = e.getDataWatcher().getWatchableObjectInt(7);
+	        boolean flag1 = e.getDataWatcher().getWatchableObjectByte(8) > 0;
+	
+	        if (i > 0) {
+	            boolean flag = false;
+	
+	            if (!e.isInvisible()) {
+	                flag = e.worldObj.rand.nextBoolean();
+	            } else {
+	                flag = e.worldObj.rand.nextInt(15) == 0;
+	            }
+	
+	            if (flag1) {
+	                flag &= e.worldObj.rand.nextInt(5) == 0;
+	            }
+	
+	            if (flag && i > 0) {
+	                double d0 = (double)(i >> 16 & 255) / 255.0D;
+	                double d1 = (double)(i >> 8 & 255) / 255.0D;
+	                double d2 = (double)(i >> 0 & 255) / 255.0D;
+	                e.worldObj.spawnParticle(flag1 ? "mobSpellAmbient" : "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, e.posY + e.worldObj.rand.nextDouble() * (double)e.height - (double)e.yOffset, e.posZ + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, d0, d1, d2);
+	            }
+	        }
+		} catch (ConcurrentModificationException ex) {
+			ASJUtilities.log("Well, that was expected. Ignore.");
+			ex.printStackTrace();
+		}
+    }
+	
 	@Hook
 	public static void updateEntity(TilePylon entity) {
 		updatingEntity = entity.getWorldObj().isRemote;
 	}
-
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	public static float getHealth(EntityLivingBase e) {
+		if (e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
+		else return e.getDataWatcher().getWatchableObjectFloat(6);
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	public static float getMaxHealth(EntityLivingBase e) {
+		if (e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
+		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	public static void setHealth(EntityLivingBase e, float hp) {
+		if (e.isPotionActive(AlfheimRegistry.leftFlame)) {
+			hp = 0.000000000000000000000000000000000000000000001F;
+		}
+		
+		if (!e.isPotionActive(AlfheimRegistry.sharedHP)) {
+			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
+			return;
+		}
+		
+		Party pt = PartySystem.getMobParty(e);
+		if (pt == null) {
+			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
+			return;
+		}
+		
+		EntityLivingBase[] mr = new EntityLivingBase[pt.count];
+		for (int i = 0; i < pt.count; i++) mr[i] = pt.get(i);
+		
+		for (int i = 0; i < mr.length; i++) {
+			if (mr[i] != null) {
+				mr[i].getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, mr[i].getMaxHealth())));
+				if (hp < 0.0F) mr[i].onDeath(DamageSource.outOfWorld);
+			}
+		}
+	}
+	
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	public static void updateEntityPost(TilePylon entity) {
 		if (entity.getWorldObj().isRemote) {
@@ -62,6 +210,29 @@ public class AlfheimHookHandler {
 		}
 	}
 
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	public static void getSubBlocks(BlockSpecialFlower flower, Item item, CreativeTabs tab, List list) {
+		for(String s : BotaniaAPI.subtilesForCreativeMenu) {
+			list.add(ItemBlockSpecialFlower.ofType(s));
+			if(BotaniaAPI.miniFlowers.containsKey(s))
+				list.add(ItemBlockSpecialFlower.ofType(BotaniaAPI.miniFlowers.get(s)));
+			if (s.equals(LibBlockNames.SUBTILE_DAYBLOOM))
+				list.add(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_DAYBLOOM_PRIME));
+			if (s.equals(LibBlockNames.SUBTILE_NIGHTSHADE))
+				list.add(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_NIGHTSHADE_PRIME));
+		}
+	}
+	
+	@Hook
+	public static void onBlockPlacedBy(SubTileEntity subtile, World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		if (subtile instanceof SubTileDaybloom && ((SubTileDaybloom) subtile).isPrime()) ((SubTileDaybloom) subtile).setPrimusPosition();
+	}
+	
+	@Hook
+	public static void onBlockAdded(SubTileEntity subtile, World world, int x, int y, int z) {
+		if (subtile instanceof SubTileDaybloom && ((SubTileDaybloom) subtile).isPrime()) ((SubTileDaybloom) subtile).setPrimusPosition();
+	}
+	
 	@Hook(returnCondition = ReturnCondition.ON_TRUE)
 	public static boolean sparkleFX(ClientProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, int m, boolean fake) {
 		return updatingEntity;
@@ -88,7 +259,12 @@ public class AlfheimHookHandler {
 		return false;
 	}
 
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	@Hook(isMandatory = true, returnType = "int", returnCondition = ReturnCondition.ON_TRUE, intReturnConstant = 2)
+	public static boolean getFortuneModifier(EnchantmentHelper h, EntityLivingBase e) {
+		return e.isPotionActive(AlfheimRegistry.goldRush);
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static boolean extinguishFire(World world, EntityPlayer player, int x, int y, int z, int side) {
         if (side == 0) --y;
         if (side == 1) ++y;
@@ -107,34 +283,11 @@ public class AlfheimHookHandler {
         }
         return false;
     }
-	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
-	public static String NBTTagCompound_toString(NBTTagCompound nbt) {
-		StringBuilder sb = new StringBuilder("{\n");
-		for (Object o : nbt.tagMap.entrySet()) {
-			Map.Entry e = (Map.Entry) o;
-			if (e.getValue() instanceof NBTTagList || e.getValue() instanceof NBTTagCompound) {
-				String[] arr = e.getValue().toString().split("\n");
-				sb.append(" ").append(e.getKey()).append(" = ").append(arr[0]).append("\n");
-				for (int i = 1; i < arr.length; i++) sb.append(" ").append(arr[i]).append("\n");
-			} else sb.append("    ").append(e.getKey()).append(" = ").append(e.getValue()).append("\n");
-		}
-		sb.append("}");
-		return sb.toString();
-	}
-
-	@Hook(returnCondition = ReturnCondition.ALWAYS, targetMethod = "toString")
-	public static String NBTTagList_toString(NBTTagList nbt) {
-		StringBuilder sb = new StringBuilder("list [\n");
-		for (Object obj : nbt.tagList) if (obj instanceof NBTTagList || obj instanceof NBTTagCompound) for (String s : obj.toString().split("\n")) sb.append("    ").append(s).append("\n"); else sb.append(obj).append("\n");
-		sb.append("]");
-		return sb.toString();
-	}
 
 	@SideOnly(Side.CLIENT)
-	@Hook(injectOnExit = true)
+	@Hook(injectOnExit = true, isMandatory = true)
 	public static void renderManaBar(HUDHandler hh, int x, int y, int color, float alpha, int mana, int maxMana) {
-		if(mana < 0) return;
+		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return;
 		GL11.glPushMatrix();
 		boolean f = Minecraft.getMinecraft().currentScreen == null;
 		boolean f1 = !f && Minecraft.getMinecraft().currentScreen instanceof GuiRecipe;
@@ -146,15 +299,17 @@ public class AlfheimHookHandler {
 	}
 
 	@SideOnly(Side.CLIENT)
-	@Hook
+	@Hook(isMandatory = true)
 	public static void doRenderShadowAndFire(Render render, Entity entity, double x, double y, double z, float yaw, float partialTickTime) {
-		if(entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getActivePotionEffect(AlfheimRegistry.soulburn) != null)  PotionSoulburn.renderEntityOnFire(render, entity, x, y, z, partialTickTime);
+		if(entity instanceof EntityLivingBase) {
+			if (((EntityLivingBase) entity).isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	@Hook
+	@Hook(isMandatory = true)
 	public static void renderOverlays(ItemRenderer renderer, float partialTicks) {
-		if(Minecraft.getMinecraft().thePlayer.getActivePotionEffect(AlfheimRegistry.soulburn) != null) {
+		if(Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimRegistry.soulburn)) {
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			PotionSoulburn.renderFireInFirstPerson(partialTicks);
 			GL11.glEnable(GL11.GL_ALPHA_TEST);

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.common.entity.EntityLightningMark;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;
-import vazkii.botania.common.core.helper.Vector3;
 
 public class AILightning extends AIBase {
 
@@ -39,7 +39,7 @@ public class AILightning extends AIBase {
 		if (flugel.isHardMode()) {
 			ChunkCoordinates src = flugel.getSource();
 			for (int i = 0; i < ASJUtilities.randInBounds(flugel.worldObj.rand, 5, 10); i++) {
-				Vector3 vec3 = new Vector3(ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE)).normalize().multiply(EntityFlugel.RANGE);
+				Vector3 vec3 = new Vector3(ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE)).normalize().mul(EntityFlugel.RANGE);
 				flugel.worldObj.spawnEntityInWorld(new EntityLightningMark(flugel.worldObj, src.posX + vec3.x, src.posY + vec3.y, src.posZ + vec3.z));
 			}
 		}

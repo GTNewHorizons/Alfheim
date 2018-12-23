@@ -13,7 +13,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
+import alfheim.api.spell.DamageSourceSpell;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
@@ -76,7 +78,6 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.relic.ItemRelic;
 
@@ -89,21 +90,21 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public static final int RANGE = 24;
 	public static final float MAX_HP = 800F;
 
-	private static final String TAG_STAGE = "stage";
-	private static final String TAG_HARDMODE = "hardmode";
-	private static final String TAG_SOURCE_X = "sourceX";
-	private static final String TAG_SOURCE_Y = "sourceY";
-	private static final String TAG_SOURCE_Z = "sourceZ";
-	private static final String TAG_PLAYER_COUNT = "playerCount";
-	private static final String TAG_AI_TASK = "task";
-	private static final String TAG_AI = "ai";
-	private static final String TAG_AI_TIMER = "aiTime";
-	private static final String TAG_SUMMONER = "summoner";
-	private static final String TAG_ATTACKED = "attacked";
+	private static final String TAG_STAGE			= "stage";
+	private static final String TAG_HARDMODE		= "hardmode";
+	private static final String TAG_SOURCE_X		= "sourceX";
+	private static final String TAG_SOURCE_Y		= "sourceY";
+	private static final String TAG_SOURCE_Z		= "sourceZ";
+	private static final String TAG_PLAYER_COUNT	= "playerCount";
+	private static final String TAG_AI_TASK			= "task";
+	private static final String TAG_AI				= "ai";
+	private static final String TAG_AI_TIMER		= "aiTime";
+	private static final String TAG_SUMMONER		= "summoner";
+	private static final String TAG_ATTACKED		= "attacked";
 
-	public static final int STAGE_AGGRO = 1;	//100%	hp
-	public static final int STAGE_MAGIC = 2;	//60%	hp
-	public static final int STAGE_DEATHRAY = 3;	//12.5%	hp
+	public static final int STAGE_AGGRO				= 1;	//100%	hp
+	public static final int STAGE_MAGIC				= 2;	//60%	hp
+	public static final int STAGE_DEATHRAY			= 3;	//12.5%	hp
 
 	public HashMap<String, Integer> playersWhoAttacked = new HashMap();
 	private static boolean isPlayingMusic = false;
@@ -142,7 +143,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				return false;
 			}
 
-			if (!ModInfo.DEV && !hard) stack.stackSize--;
+			if (!hard) stack.stackSize--;
 			if (world.isRemote) return true;
 
 			EntityFlugel e = new EntityFlugel(world);
@@ -175,7 +176,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float damage) {
 		Entity e = source.getEntity();
-		if((source.damageType.equals("player")) && e != null && isTruePlayer(e) && !isEntityInvulnerable()) {
+		if((source.damageType.equals("player") || source instanceof DamageSourceSpell) && e != null && isTruePlayer(e) && !isEntityInvulnerable()) {
 			EntityPlayer player = (EntityPlayer) e;
 			float dmg = ModInfo.DEV ? damage : Math.min(isHardMode() ? 60 : 40, damage) * (getAITaskTimer() > 0 ? 0.1F : 1F); // this is OK
 			if(!playersWhoAttacked.containsKey(player.getCommandSenderName())) playersWhoAttacked.put(player.getCommandSenderName(), 1);
@@ -192,9 +193,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 		Entity attacker = source.getEntity();
 		if(attacker != null) {
-			Vector3 thisVector = Vector3.fromEntityCenter(this);
-			Vector3 playerVector = Vector3.fromEntityCenter(attacker);
-			Vector3 motionVector = thisVector.copy().sub(playerVector).copy().normalize().multiply(0.75);
+			Vector3 motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(attacker)).normalize().mul(0.75);
 
 			if(getHealth() > 0) {
 				motionX = -motionVector.x;
@@ -222,8 +221,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		}
 		super.onDeath(source);
 		EntityLivingBase entitylivingbase = func_94060_bK();
-		if(entitylivingbase instanceof EntityPlayer) ((EntityPlayer) entitylivingbase).triggerAchievement(AlfheimAchievements.flugelKill);
-
+		//if(entitylivingbase instanceof EntityPlayer && isHardMode()) ((EntityPlayer) entitylivingbase).triggerAchievement(AlfheimAchievements.flugelKill);
+		if (isHardMode()) for (EntityPlayer player : getPlayersAround()) player.triggerAchievement(AlfheimAchievements.flugelKill);
+		
 		worldObj.playSoundAtEntity(this, "random.explode", 20F, (1F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1, 0, 0);
 	}
@@ -389,7 +389,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 					double kx = Math.sin(radp) * Math.cos(radY);
 					double ky = Math.cos(radp);
 					double kz = Math.sin(radp) * Math.sin(radY);
-					Vector3 kos = new Vector3(kx, ky, kz).normalize().rotate(Math.PI * 2 * Math.random(), nrm).multiply(0.1);
+					Vector3 kos = new Vector3(kx, ky, kz).normalize().rotate(Math.PI * 2 * Math.random(), nrm).mul(0.1);
 					
 					float motX = (float) kos.x;
 					float motY = (float) kos.y;
@@ -403,7 +403,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			// No beacon potions allowed!
 			List<PotionEffect> remove = new ArrayList();
 			Collection<PotionEffect> active = player.getActivePotionEffects();
-			for(PotionEffect effect : active) if(effect.getDuration() < 200 && effect.getIsAmbient() && !ASJUtilities.isBadPotion(Potion.potionTypes[effect.getPotionID()])) remove.add(effect);
+			for(PotionEffect effect : active) if(effect.getDuration() < 200 && effect.getIsAmbient() && !Potion.potionTypes[effect.getPotionID()].isBadEffect) remove.add(effect);
 			active.removeAll(remove);
 
 			// remove player
@@ -421,9 +421,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			
 			// Get player back!
 			if(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
-				Vector3 sourceVector = new Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5);
-				Vector3 playerVector = Vector3.fromEntityCenter(player);
-				Vector3 motion = sourceVector.copy().sub(playerVector).copy().normalize();
+				Vector3 motion = new Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).sub(Vector3.fromEntityCenter(player)).normalize();
 
 				player.motionX = motion.x;
 				player.motionY = motion.y;
@@ -472,7 +470,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	
 	public void spawnPatyklz(boolean c) {
 		ChunkCoordinates source = getSource();
-		Vector3 pos = Vector3.fromEntityCenter(this).subtract(new Vector3(0, 0.2, 0));
+		Vector3 pos = Vector3.fromEntityCenter(this).sub(0, 0.2, 0);
 		for(int i = 0; i < PYLON_LOCATIONS.length; i++) {
 			int[] arr = PYLON_LOCATIONS[i];
 			int x = arr[0];
@@ -488,7 +486,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			double zp = pylonPos.z + 0.5 + Math.sin(worldTime) * rad;
 
 			Vector3 partPos = new Vector3(xp, pylonPos.y, zp);
-			Vector3 mot = pos.copy().sub(partPos).multiply(0.04);
+			Vector3 mot = pos.copy().sub(partPos).mul(0.04);
 
 			float r = (c ? 0.2F : 0.7F) + (float) Math.random() * 0.3F;
 			float g = (float) Math.random() * 0.3F;
@@ -664,7 +662,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	public boolean isAlive() {
-		return getHealth() > 0 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL && !worldObj.isRemote && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER;
+		return getHealth() > 0 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL && !worldObj.isRemote && ASJUtilities.isServer();
 	}
 	
 	public boolean isDying() {

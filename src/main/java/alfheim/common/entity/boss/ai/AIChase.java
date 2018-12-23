@@ -3,9 +3,9 @@ package alfheim.common.entity.boss.ai;
 import java.util.Collections;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
-import vazkii.botania.common.core.helper.Vector3;
 
 public class AIChase extends AIBase {
 	

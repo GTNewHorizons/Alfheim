@@ -8,10 +8,12 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import akka.routing.RemoveRoutee;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
+import alfheim.api.spell.DamageSourceSpell;
 import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,6 +35,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
@@ -47,6 +50,11 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	}
 	
 	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "item.RealitySword" + getInt(stack, TAG_ELEMENT, 0);
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
 		for (int i = 0; i < 6; i++)
@@ -54,13 +62,9 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIconIndex(ItemStack stack) {
-		if (!stack.hasTagCompound()) {
-			stack.stackTagCompound = new NBTTagCompound();
-			stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-			stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-		}
-		return textures[stack.stackTagCompound.getInteger(TAG_ELEMENT)];
+		return textures[getInt(stack, TAG_ELEMENT, 0)];
 	}
 
 	@Override
@@ -70,24 +74,15 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (player.isSneaking()) {
-			if (!stack.hasTagCompound()) {
-				stack.stackTagCompound = new NBTTagCompound();
-				stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-				stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-			}
-			
-			if (stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5) return stack;
+			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack;
 			if (merge(player.getCommandSenderName(), stack.getDisplayName()).equals("35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0")) {
-				stack.stackTagCompound.setInteger(TAG_ELEMENT, 5);
+				setInt(stack, TAG_ELEMENT, 5);
 				stack.getTagCompound().removeTag("display");
-				stack.setStackDisplayName(EnumChatFormatting.RESET + StatCollector.translateToLocal("item.RealitySword.nameZ"));
 				return stack;
 			}
 			
 			if (!ManaItemHandler.requestManaExact(stack, player, 1, !world.isRemote)) return stack;
-			int tag = Math.max(0, stack.stackTagCompound.getInteger(TAG_ELEMENT) + 1) % 5;
-			stack.stackTagCompound.setInteger(TAG_ELEMENT, tag);
-			stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name" + tag)));
+			setInt(stack, TAG_ELEMENT, Math.max(0, getInt(stack, TAG_ELEMENT, 0) + 1) % 5);
 		} else player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
 		return stack;
 	}
@@ -131,29 +126,19 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slotID, boolean inHand) {
-		if (!stack.hasTagCompound()) {
-			stack.stackTagCompound = new NBTTagCompound();
-			stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-			stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-		}
-		
 		if (world.isRemote) return;
 		
-		boolean flag = stack.stackTagCompound.getInteger(TAG_ELEMENT) == 5;
+		boolean flag = getInt(stack, TAG_ELEMENT, 0) == 5;
 		if (entity instanceof EntityPlayer) {
-			if (!flag && 0 < stack.stackTagCompound.getInteger(TAG_ELEMENT) && stack.stackTagCompound.getInteger(TAG_ELEMENT) < 5) {
-				if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) entity, 1, !world.isRemote)) {
-					stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-					stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-				}
-			}
+			if (!flag && 0 < getInt(stack, TAG_ELEMENT, 0) && getInt(stack, TAG_ELEMENT, 0) < 5) 
+				if (!ManaItemHandler.requestManaExact(stack, (EntityPlayer) entity, 1, !world.isRemote)) 
+					setInt(stack, TAG_ELEMENT, 0);
 			
 			if (flag && !entity.getCommandSenderName().equals("AlexSocol")) {
 				EntityPlayer player = ((EntityPlayer) entity);
 				world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, stack.copy()));
 				player.inventory.consumeInventoryItem(AlfheimItems.realitySword);
 				player.setHealth(0);
-				ASJUtilities.playDeathSound(player);
 				player.onDeath(DamageSource.outOfWorld);
 				ASJUtilities.sayToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName())); 
 			}
@@ -162,21 +147,17 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			world.spawnEntityInWorld(new EntityItem(world, living.posX, living.posY, living.posZ, stack.copy()));
 			stack.stackSize = 0;
 			living.setHealth(0);
-			ASJUtilities.playDeathSound(living);
 			living.onDeath(DamageSource.outOfWorld);
+		} else if (flag) {
+			world.spawnEntityInWorld(new EntityItem(world, 0, 666, 0, stack.copy()));
+			stack.stackSize = 0;
 		}
 	}
 	
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		if (!stack.hasTagCompound()) {
-			stack.stackTagCompound = new NBTTagCompound();
-			stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-			stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-		}
-		
 		if (attacker instanceof EntityPlayer) {
-			int elem = stack.stackTagCompound.getInteger(TAG_ELEMENT);
+			int elem = getInt(stack, TAG_ELEMENT, 0);
 			if (elem != 0 && (elem == 5 || ManaItemHandler.requestManaExact(stack, (EntityPlayer) attacker, 1000, !attacker.worldObj.isRemote && elem != 5))) useAbility(elem, attacker, target);
 		}
 		return super.hitEntity(stack, target, attacker);
@@ -193,8 +174,11 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			case 2: target.addPotionEffect(new PotionEffect(Potion.poison.id, 80, 1)); break;
 			case 3: target.setFire(6); break;
 			case 4: {
-				attacker.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
-				target.setHealth(target.getHealth() - 5F);
+				target.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
+				target.hurtResistantTime = target.hurtTime = 0;
+				target.attackEntityFrom(DamageSourceSpell.water(attacker), 5);
+				target.hurtResistantTime = target.maxHurtResistantTime;
+				target.hurtTime = target.maxHurtTime = 10;
 				break;
 			}
 			case 5: {
@@ -206,13 +190,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
-		if (!stack.hasTagCompound()) {
-			stack.stackTagCompound = new NBTTagCompound();
-			stack.stackTagCompound.setInteger(TAG_ELEMENT, 0);
-			stack.setStackDisplayName(StatCollector.translateToLocalFormatted("item.RealitySword.name", StatCollector.translateToLocal("item.RealitySword.name0")));
-		}
-		
-		int elem = stack.stackTagCompound.getInteger(TAG_ELEMENT);
+		int elem = getInt(stack, TAG_ELEMENT, 0);
 		if (elem == 5) {
 			list.add(StatCollector.translateToLocal("item.RealitySword.descZ"));
 			return;
@@ -230,6 +208,6 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
 	@Override
 	public boolean usesMana(ItemStack stack) {
-		return (0 < stack.stackTagCompound.getInteger(TAG_ELEMENT) && stack.stackTagCompound.getInteger(TAG_ELEMENT) < 5);
+		return (0 < getInt(stack, TAG_ELEMENT, 0) && getInt(stack, TAG_ELEMENT, 0) < 5);
 	}
 }

@@ -104,7 +104,7 @@ public class WorldProviderAlfheim extends WE_WorldProvider {
 		}
 		cp.decorateChunkGen_List.add(ores);
 		
-		//cp.decorateChunkGen_List.add(new StructureSpawnpoint()); FIXME WE generator is stupid
+		//cp.decorateChunkGen_List.add(new StructureSpawnpoint()); WE generator is stupid
 		WE_LakeGen waterLakes = new WE_LakeGen();
 		waterLakes.fY = 192;
 		cp.decorateChunkGen_List.add(waterLakes);

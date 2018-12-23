@@ -40,6 +40,6 @@ public class BiomeField extends BiomeAlfheim {
 		WorldGenGrass g = new WorldGenGrass(true, true, true, true, 1.0);
 		decorateChunkGen_List.add(g);
 		
-		spawnableCreatureList.add(new SpawnListEntry(EntityAlfheimPixie.class, 4, 1, 3));
+		spawnableCreatureList.add(new SpawnListEntry(EntityAlfheimPixie.class, 1, 1, 2));
 	}
 }

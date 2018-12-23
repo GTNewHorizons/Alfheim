@@ -4,13 +4,17 @@ import static alfheim.api.ModInfo.*;
 
 import java.io.IOException;
 
+import aaa.alexsocol.glsltoimage.Main;
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.command.CommandDimTP;
 import alfheim.common.core.command.CommandRace;
+import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.InfoLoader;
+import alfheim.common.network.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -20,8 +24,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -42,17 +48,20 @@ public class AlfheimCore {
 	public static SimpleNetworkWrapper network;
 	public static int nextPacketID = 0;
 	
+	public static String save = "";
+	
 	public static boolean enableElvenStory = false;
 	
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent e) throws Throwable {
-		enableElvenStory = Loader.isModLoaded("elvenstory") || DEV;
+	public void preInit(FMLPreInitializationEvent e) {
+		enableElvenStory =  Loader.isModLoaded("elvenstory") || DEV;
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
 		if (AlfheimConfig.info) InfoLoader.start();
 		
-		proxy.registerPackets();
+		registerPackets();
+		
 		proxy.initializeAndRegisterHandlers();
 		proxy.preInit();
 	}
@@ -64,21 +73,46 @@ public class AlfheimCore {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		proxy.postInit();
 		proxy.registerKeyBinds();
 		proxy.registerRenderThings();
+		proxy.postInit();
 		AlfheimRegistry.loadAllPinkStuff();
 	}
 
 	@EventHandler
-	public void starting(FMLServerStartingEvent event) throws IOException {
+	public void starting(FMLServerStartingEvent event) {
+		ASJUtilities.log("Starting...");
+		save = event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory().getAbsolutePath();
 		if (AlfheimCore.enableElvenStory) {
 			AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
+			CardinalSystem.load(save);
 			event.registerServerCommand(new CommandRace());
 		}
 		event.registerServerCommand(new CommandDimTP());
 	}
 
+	@EventHandler
+	public void stopping(FMLServerStoppingEvent event) {
+		if (AlfheimCore.enableElvenStory) {
+			CardinalSystem.save(save);
+		}
+	}
+
+	public static void registerPackets() {
+		AlfheimCore.network.registerMessage(MessageHotSpellS.Handler.class,	MessageHotSpellS.class,	nextPacketID++, Side.SERVER);
+		AlfheimCore.network.registerMessage(MessageKeyBind.Handler.class,	MessageKeyBind.class,	nextPacketID++, Side.SERVER);
+		
+		AlfheimCore.network.registerMessage(Message1d.Handler.class,		Message1d.class,		nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(Message2d.Handler.class,		Message2d.class,		nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(Message3d.Handler.class,		Message3d.class,		nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageEffect.Handler.class,	MessageEffect.class,	nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageHotSpellC.Handler.class,	MessageHotSpellC.class,	nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageParticles.Handler.class,	MessageParticles.class,	nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageParty.Handler.class,		MessageParty.class,		nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageTileItem.Handler.class,	MessageTileItem.class,	nextPacketID++, Side.CLIENT);
+		AlfheimCore.network.registerMessage(MessageTimeStop.Handler.class,	MessageTimeStop.class,	nextPacketID++, Side.CLIENT);
+	}
+	
 	public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
 		@Override
 		public Item getTabIconItem() {

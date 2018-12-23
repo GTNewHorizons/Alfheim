@@ -33,9 +33,8 @@ public class AIEnergy extends AIBase {
 			if (list.isEmpty()) return false;
 			EntityPlayer target = list.get(flugel.worldObj.rand.nextInt(list.size()));
 			
-			Vector3 targetVector = Vector3.fromEntityCenter(target);
 			Vector3 pos = Vector3.fromEntityCenter(flugel).add(look);
-			Vector3 motion = targetVector.copy().sub(pos).copy().normalize();
+			Vector3 motion = Vector3.fromEntityCenter(target).sub(pos).normalize();
 			
 			EntityCharge charge = new EntityCharge(flugel.worldObj, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 			flugel.worldObj.spawnEntityInWorld(charge);

@@ -6,12 +6,13 @@ import java.util.Random;
 import com.google.common.base.Function;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
+import alfheim.api.entity.EnumRace;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.entity.EnumRace;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +31,6 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.core.helper.Vector3;
 
 public class TileAlfheimPortal extends TileMod {
 
@@ -276,10 +276,6 @@ public class TileAlfheimPortal extends TileMod {
 					double x = xCoord + pos[0] + 0.5 + Math.cos(worldTime) * r;
 					double z = zCoord + pos[2] + 0.5 + Math.sin(worldTime) * r;
 
-					Vector3 ourCoords = new Vector3(x, yCoord + pos[1] + 0.25, z);
-					centerBlock.sub(new Vector3(0, 0.5, 0));
-					Vector3 movementVector = centerBlock.sub(ourCoords).normalize().multiply(0.2);
-
 					Botania.proxy.wispFX(worldObj, x, yCoord + pos[1] + 0.25, z,
 							0.75F + (float) Math.random() * 0.25F, (float) Math.random() * 0.25F, 0.75F + (float) Math.random() * 0.25F,
 							0.25F + (float) Math.random() * 0.1F, -0.075F - (float) Math.random() * 0.015F);
@@ -288,7 +284,7 @@ public class TileAlfheimPortal extends TileMod {
 						Botania.proxy.wispFX(worldObj, x, yCoord + pos[1] + 0.25, z,
 								(float) Math.random() * 0.25F, (float) Math.random() * 0.25F, 0.75F + (float) Math.random() * 0.25F,
 								0.25F + (float) Math.random() * 0.1F,
-								(float) movementVector.x, (float) movementVector.y, (float) movementVector.z);
+								(float) centerBlock.x, (float) centerBlock.y, (float) centerBlock.z);
 				}
 			}
 

@@ -2,7 +2,7 @@ package alfheim.client.render.block;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.client.lib.LibRenderIDs;
+import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileTransferer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;

@@ -5,8 +5,13 @@ import java.util.Random;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.render.RenderPostShaders;
+import alexsocol.asjlib.render.ShadedObject;
 import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -22,17 +27,27 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 
-	private static final ResourceLocation texturePinkOld = new ResourceLocation(LibResources.MODEL_PYLON_PINK_OLD);
-	private static final ResourceLocation texturePink = new ResourceLocation(LibResources.MODEL_PYLON_PINK);
 	
-	private static final ResourceLocation textureOrangeOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png");
-	private static final ResourceLocation textureOrange = new ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png");
+	
 
-	IPylonModel model;
-	public static boolean orange = false;
+	public static IPylonModel model;
+	public static boolean orange = false, hand = false;
+	public Random rand = new Random();
+	
+	public ShadedObjectPylon shObjPO = new ShadedObjectPylon(LibResourceLocations.elvenPylonOld);
+	public ShadedObjectPylon shObjP = new ShadedObjectPylon(LibResourceLocations.elvenPylon);
+	public ShadedObjectPylon shObjOO = new ShadedObjectPylon(LibResourceLocations.yordinPylonOld);
+	public ShadedObjectPylon shObjO = new ShadedObjectPylon(LibResourceLocations.yordinPylon);
 
+	public RenderTileAlfheimPylons() {
+		RenderPostShaders.registerShadedObject(shObjO);
+		RenderPostShaders.registerShadedObject(shObjP);
+		RenderPostShaders.registerShadedObject(shObjOO);
+		RenderPostShaders.registerShadedObject(shObjPO);
+	}
+	
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float pticks) {
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float ticks) {
 		if (model == null)
 			model = ConfigHandler.oldPylonModel ? new ModelPylonOld() : new ModelPylon();
 
@@ -42,25 +57,26 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		float a = MultiblockRenderHandler.rendering ? 0.6F : 1F;
 		GL11.glColor4f(1F, 1F, 1F, a);
-		if (tileentity.getWorldObj() != null) {
-			orange = tileentity.getBlockMetadata() == 1;
+		if (tile.getWorldObj() != null) {
+			orange = tile.getBlockMetadata() == 1;
 		}
 
 		if (ConfigHandler.oldPylonModel)
-			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? textureOrangeOld : texturePinkOld);
+			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? LibResourceLocations.yordinPylonOld : LibResourceLocations.elvenPylonOld);
 		else
-			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? textureOrange : texturePink);
+			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? LibResourceLocations.yordinPylon : LibResourceLocations.elvenPylon);
 
-		double worldTime = tileentity.getWorldObj() == null ? 0 : (double) (ClientTickHandler.ticksInGame + pticks);
+		double worldTime = tile.getWorldObj() == null ? 0 : (double) (ClientTickHandler.ticksInGame + ticks);
 
-		if (tileentity != null)
-			worldTime += new Random(tileentity.xCoord ^ tileentity.yCoord ^ tileentity.zCoord).nextInt(360);
+		rand.setSeed(tile.xCoord ^ tile.yCoord ^ tile.zCoord);
+		if (tile != null)
+			worldTime += rand.nextInt(360);
 
 		if (ConfigHandler.oldPylonModel) {
-			GL11.glTranslated(d0 + 0.5, d1 + 2.2, d2 + 0.5);
+			GL11.glTranslated(x + 0.5, y + 2.2, z + 0.5);
 			GL11.glScalef(1F, -1.5F, -1F);
 		} else {
-			GL11.glTranslated(d0 + 0.2 + (orange ? -0.1 : 0), d1 + 0.05, d2 + 0.8 + (orange ? 0.1 : 0));
+			GL11.glTranslated(x + 0.2 + (orange ? -0.1 : 0), y + 0.05, z + 0.8 + (orange ? 0.1 : 0));
 			float scale = orange ? 0.8F : 0.6F;
 			GL11.glScalef(scale, 0.6F, scale);
 		}
@@ -93,15 +109,13 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		model.renderCrystal();
 
 		GL11.glColor4f(1F, 1F, 1F, a);
-		if (!ShaderHelper.useShaders()) {
-			int light = 15728880;
-			int lightmapX = light % 65536;
-			int lightmapY = light / 65536;
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX, lightmapY);
-			float alpha = (float) ((Math.sin(worldTime / 20.0) / 2.0 + 0.5) / (ConfigHandler.oldPylonModel ? 1.0 : 2.0));
+		
+		if (!ShaderHelper.useShaders() || hand) {
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+			float alpha = (float) ((Math.sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / (ConfigHandler.oldPylonModel ? 1.0 : 2.0));
 			GL11.glColor4f(1F, 1F, 1F, a * (alpha + 0.183F));
 		}
-
+		
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
 		GL11.glScalef(1.1F, 1.1F, 1.1F);
 		if (!ConfigHandler.oldPylonModel)
@@ -109,10 +123,13 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		else
 			GL11.glTranslatef(0F, -0.09F, 0F);
 
-		ShaderHelper.useShader(ShaderHelper.pylonGlow);
-		model.renderCrystal();
-		ShaderHelper.releaseShader();
-
+		if (!hand) {
+			ShadedObjectPylon shObj = ConfigHandler.oldPylonModel ? orange ? shObjOO : shObjPO : orange ? shObjO : shObjP;
+			shObj.addTranslation();
+		} else {
+			model.renderCrystal();
+		}
+		
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glPopMatrix();
@@ -120,5 +137,40 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
+		
+		hand = false;
+	}
+	
+	public static class ShadedObjectPylon extends ShadedObject {
+
+		public static final int matID = RenderPostShaders.getNextAvailableRenderObjectMaterialID();
+		
+		public ShadedObjectPylon(ResourceLocation rl) {
+			super(ShaderHelper.pylonGlow, matID, rl);
+		}
+
+		@Override
+		public final void preRender() {
+			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			float a = MultiblockRenderHandler.rendering ? 0.6F : 1F;
+			GL11.glColor4f(1F, 1F, 1F, a);
+			GL11.glDisable(GL11.GL_CULL_FACE);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+		}
+
+		@Override
+		public void drawMesh() {
+			model.renderCrystal();
+		}
+
+		@Override
+		public final void postRender() {
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glDisable(GL11.GL_BLEND);
+			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		}
 	}
 }

@@ -1,0 +1,158 @@
+---- Minecraft Crash Report ----
+// Why is it breaking :(
+
+Time: 12/18/18 12:57 AM
+Description: Ticking entity
+
+java.lang.NoSuchMethodError: net.minecraft.entity.EntityLivingBase.onFinishedPotionEffect(Lnet/minecraft/potion/PotionEffect;)V
+	at alfheim.common.core.asm.AlfheimSyntheticMethods.onFinishedPotionEffect(AlfheimSyntheticMethods.java:10)
+	at alfheim.common.core.asm.AlfheimHookHandler.updatePotionEffects(AlfheimHookHandler.java:106)
+	at net.minecraft.entity.EntityLivingBase.func_70679_bo(EntityLivingBase.java)
+	at net.minecraft.entity.EntityLivingBase.func_70030_z(EntityLivingBase.java:293)
+	at net.minecraft.entity.Entity.func_70071_h_(Entity.java:318)
+	at net.minecraft.entity.EntityLivingBase.func_70071_h_(EntityLivingBase.java:1561)
+	at net.minecraft.entity.player.EntityPlayer.func_70071_h_(EntityPlayer.java:288)
+	at net.minecraft.client.entity.EntityClientPlayerMP.func_70071_h_(SourceFile:63)
+	at net.minecraft.world.World.func_72866_a(World.java:2070)
+	at net.minecraft.world.World.func_72870_g(World.java:2034)
+	at net.minecraft.world.World.func_72939_s(World.java:1887)
+	at net.minecraft.client.Minecraft.func_71407_l(Minecraft.java:2006)
+	at net.minecraft.client.Minecraft.func_71411_J(Minecraft.java:973)
+	at net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:898)
+	at net.minecraft.client.main.Main.main(SourceFile:148)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at launcher.lOlkEKchebureK.LoLkeKChEbUREk(SourceFile:322)
+	at launcher.lOlkEKchebureK.main(SourceFile:203)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at alfheim.common.core.asm.AlfheimSyntheticMethods.onFinishedPotionEffect(AlfheimSyntheticMethods.java:10)
+	at alfheim.common.core.asm.AlfheimHookHandler.updatePotionEffects(AlfheimHookHandler.java:106)
+	at net.minecraft.entity.EntityLivingBase.func_70679_bo(EntityLivingBase.java)
+	at net.minecraft.entity.EntityLivingBase.func_70030_z(EntityLivingBase.java:293)
+	at net.minecraft.entity.Entity.func_70071_h_(Entity.java:318)
+	at net.minecraft.entity.EntityLivingBase.func_70071_h_(EntityLivingBase.java:1561)
+	at net.minecraft.entity.player.EntityPlayer.func_70071_h_(EntityPlayer.java:288)
+	at net.minecraft.client.entity.EntityClientPlayerMP.func_70071_h_(SourceFile:63)
+	at net.minecraft.world.World.func_72866_a(World.java:2070)
+	at net.minecraft.world.World.func_72870_g(World.java:2034)
+	at net.minecraft.world.World.func_72939_s(World.java:1887)
+
+-- Entity being ticked --
+Details:
+	Entity Type: null (net.minecraft.client.entity.EntityClientPlayerMP)
+	Entity ID: 96617
+	Entity Name: KAIIIAK
+	Entity's Exact location: -5.42, 77.12, -20.61
+	Entity's Block location: World: (-6,77,-21), Chunk: (at 10,4,11 in -1,-2; contains blocks -16,0,-32 to -1,255,-17), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Entity's Momentum: 0.00, -0.08, 0.00
+Stacktrace:
+	at net.minecraft.client.Minecraft.func_71407_l(Minecraft.java:2006)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityClientPlayerMP['KAIIIAK'/96617, l='MpServer', x=-5.42, y=77.12, z=-20.61]]
+	Chunk stats: MultiplayerChunkCache: 585, 622
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (8,64,8), Chunk: (at 8,4,8 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 3863 game time, 3863 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 111 total; [EntityItem['item.tile.sapling.oak'/99588, l='MpServer', x=20.66, y=74.13, z=-67.13], EntityItem['item.tile.sapling.roofed_oak'/122372, l='MpServer', x=10.88, y=76.13, z=-82.09], EntityElf['έλότ'/118029, l='MpServer', x=47.50, y=72.00, z=-122.50], EntityElf['έλότ'/118030, l='MpServer', x=42.50, y=72.00, z=-124.50], EntityItem['item.item.apple'/118288, l='MpServer', x=-20.91, y=71.13, z=-81.25], EntityItem['item.tile.sapling.oak'/101400, l='MpServer', x=-10.84, y=73.13, z=-46.56], EntityItem['item.tile.hellrock'/112163, l='MpServer', x=18.59, y=69.13, z=-14.03], EntityItem['item.tile.sapling.oak'/109603, l='MpServer', x=35.63, y=73.13, z=-81.25], EntityItem['item.tile.sapling.oak'/99621, l='MpServer', x=19.88, y=71.13, z=-35.69], EntityItem['item.tile.sapling.oak'/117543, l='MpServer', x=-33.22, y=70.13, z=-82.81], EntityItem['item.tile.sapling.oak'/99881, l='MpServer', x=35.97, y=73.13, z=-83.69], EntityItem['item.tile.sapling.oak'/97832, l='MpServer', x=-22.72, y=70.13, z=-86.97], EntityItem['item.tile.sapling.roofed_oak'/96812, l='MpServer', x=-6.13, y=85.13, z=-71.44], EntityElf['έλότ'/112175, l='MpServer', x=-3.50, y=30.00, z=-28.50], EntityItem['item.tile.sapling.oak'/102963, l='MpServer', x=-17.84, y=70.13, z=-64.56], EntityElf['έλότ'/123699, l='MpServer', x=0.50, y=70.00, z=50.50], EntityElf['έλότ'/112181, l='MpServer', x=30.50, y=30.00, z=-61.50], EntityElf['έλότ'/123701, l='MpServer', x=-7.31, y=69.00, z=41.75], EntityElf['έλότ'/112180, l='MpServer', x=28.50, y=30.00, z=-60.50], EntityItem['item.tile.sapling.oak'/97844, l='MpServer', x=32.88, y=82.13, z=-76.13], EntityElf['έλότ'/123700, l='MpServer', x=-11.22, y=70.00, z=49.47], EntityItem['item.item.apple'/101687, l='MpServer', x=-3.13, y=70.13, z=-60.97], EntityElf['έλότ'/112183, l='MpServer', x=-64.50, y=137.00, z=22.50], EntityAlfheimPixie['Οθκρθ'/112182, l='MpServer', x=29.85, y=106.88, z=7.49], EntityElf['έλότ'/123702, l='MpServer', x=-0.50, y=70.00, z=51.50], EntityElf['έλότ'/112184, l='MpServer', x=-69.50, y=137.00, z=24.50], EntityElf['έλότ'/112188, l='MpServer', x=45.50, y=72.00, z=-120.50], EntityItem['item.tile.sapling.oak'/97852, l='MpServer', x=34.13, y=73.13, z=-84.19], EntityItem['item.tile.sapling.oak'/96830, l='MpServer', x=-16.88, y=76.13, z=-46.13], EntityItem['item.tile.sapling.oak'/106051, l='MpServer', x=12.66, y=71.13, z=-70.97], EntityItem['item.tile.sapling.oak'/116290, l='MpServer', x=32.28, y=77.13, z=-69.88], EntityItem['item.tile.sapling.oak'/97097, l='MpServer', x=-20.38, y=71.13, z=-85.19], EntityItem['item.tile.sapling.roofed_oak'/98636, l='MpServer', x=-17.59, y=79.13, z=-66.84], EntityItem['item.tile.sapling.oak'/124748, l='MpServer', x=10.97, y=71.13, z=-67.84], EntityItem['item.tile.witchery:altar'/103762, l='MpServer', x=21.59, y=69.13, z=-7.41], EntityItem['item.tile.flower2.tulipRed'/97108, l='MpServer', x=-37.13, y=95.13, z=36.81], EntityItem['item.tile.sapling.oak'/98658, l='MpServer', x=34.72, y=72.13, z=-77.13], EntityItem['item.tile.sapling.oak'/98405, l='MpServer', x=-4.25, y=71.13, z=-43.19], EntityItem['item.tile.sapling.oak'/97128, l='MpServer', x=-10.16, y=74.13, z=-66.63], EntityItem['item.tile.sapling.oak'/103528, l='MpServer', x=-8.06, y=74.13, z=-70.19], EntityItem['item.tile.flower1.dandelion'/97643, l='MpServer', x=-53.13, y=113.13, z=-10.88], EntityClientPlayerMP['KAIIIAK'/96617, l='MpServer', x=-5.42, y=77.12, z=-20.61], EntityTrail['νεθηβερςνξ'/96624, l='MpServer', x=-5.42, y=77.12, z=-20.61], EntityItem['item.tile.flower2.poppy'/97655, l='MpServer', x=-51.13, y=113.13, z=1.81], EntityItem['item.tile.flower2.blueOrchid'/97145, l='MpServer', x=-53.88, y=113.13, z=2.81], EntityItem['item.tile.flower2.allium'/97147, l='MpServer', x=-53.94, y=115.13, z=16.19], EntityItem['item.tile.sapling.oak'/107645, l='MpServer', x=6.16, y=80.13, z=-48.19], EntityItem['item.tile.sapling.roofed_oak'/121468, l='MpServer', x=11.88, y=71.13, z=-80.31], EntityItem['item.item.flintAndSteel'/112005, l='MpServer', x=19.34, y=69.13, z=-13.44], EntityItem['item.item.apple'/102794, l='MpServer', x=12.88, y=71.13, z=-40.72], EntityElf['έλότ'/105356, l='MpServer', x=-29.50, y=73.00, z=80.50], EntityItem['item.tile.flower2.poppy'/97179, l='MpServer', x=-51.13, y=113.13, z=-4.19], EntityItem['item.tile.sapling.oak'/98725, l='MpServer', x=39.63, y=75.13, z=-81.81], EntityItem['item.item.apple'/97189, l='MpServer', x=24.81, y=72.13, z=-82.13], EntityItem['item.tile.flower1.dandelion'/97703, l='MpServer', x=-51.13, y=113.13, z=1.81], EntityItem['item.tile.flower2.poppy'/97702, l='MpServer', x=-53.13, y=113.13, z=-10.88], EntityItem['item.tile.doublePlant.syringa'/97704, l='MpServer', x=-49.13, y=114.13, z=11.28], EntityItem['item.tile.flower1.dandelion'/96939, l='MpServer', x=-52.13, y=113.13, z=-8.88], EntityItem['item.tile.flower2.poppy'/96940, l='MpServer', x=-51.13, y=113.13, z=-5.63], EntityItem['item.tile.sapling.oak'/104113, l='MpServer', x=15.53, y=71.13, z=-75.31], EntityElf['έλότ'/108720, l='MpServer', x=0.50, y=73.00, z=-116.50], EntityItem['item.item.skull.char'/108983, l='MpServer', x=19.34, y=69.13, z=-9.56], EntityItem['item.tile.flower1.dandelion'/96697, l='MpServer', x=-36.88, y=67.13, z=-64.31], EntityItem['item.tile.sapling.oak'/101051, l='MpServer', x=-12.25, y=84.13, z=-70.91], EntityItem['item.tile.flower2.tulipPink'/96699, l='MpServer', x=-32.91, y=66.13, z=-74.09], EntityItem['item.tile.doublePlant.sunflower'/97211, l='MpServer', x=-51.13, y=113.13, z=1.81], EntityItem['item.tile.flower2.tulipOrange'/96698, l='MpServer', x=-34.53, y=66.13, z=-67.19], EntityItem['item.tile.flower2.poppy'/96701, l='MpServer', x=-33.16, y=65.13, z=-70.59], EntityItem['item.item.seeds'/96700, l='MpServer', x=-33.81, y=65.13, z=-73.81], EntityItem['item.tile.flower1.dandelion'/97212, l='MpServer', x=-50.77, y=114.13, z=11.88], EntityItem['item.tile.flower1.dandelion'/97727, l='MpServer', x=-36.38, y=95.13, z=33.81], EntityItem['item.tile.doublePlant.syringa'/96702, l='MpServer', x=-31.94, y=66.13, z=-69.75], EntityItem['item.tile.flower2.poppy'/97728, l='MpServer', x=-37.78, y=95.13, z=31.91], EntityItem['item.tile.flower1.dandelion'/96709, l='MpServer', x=-3.19, y=67.13, z=30.13], EntityItem['item.tile.flower2.poppy'/96708, l='MpServer', x=-4.81, y=67.13, z=30.81], EntityItem['item.item.seeds'/96711, l='MpServer', x=-1.03, y=67.13, z=33.38], EntityItem['item.tile.flower1.dandelion'/96710, l='MpServer', x=-4.78, y=67.13, z=31.44], EntityItem['item.tile.sapling.oak'/98249, l='MpServer', x=32.13, y=72.13, z=-58.13], EntityItem['item.tile.flower1.dandelion'/96713, l='MpServer', x=-0.44, y=67.13, z=34.19], EntityItem['item.tile.doublePlant.syringa'/96712, l='MpServer', x=-4.66, y=69.13, z=39.41], EntityItem['item.tile.flower2.tulipRed'/96715, l='MpServer', x=3.41, y=67.13, z=29.41], EntityItem['item.item.witchery:seedsartichoke'/96714, l='MpServer', x=1.72, y=66.13, z=30.34], EntityItem['item.tile.doublePlant.paeonia'/96717, l='MpServer', x=6.94, y=70.13, z=-15.06], EntityItem['item.tile.doublePlant.syringa'/96716, l='MpServer', x=-2.53, y=70.13, z=-24.66], EntityItem['item.tile.sapling.oak'/100300, l='MpServer', x=13.44, y=71.13, z=-33.13], EntityItem['item.tile.doublePlant.rose'/96719, l='MpServer', x=6.47, y=70.13, z=-11.16], EntityItem['item.tile.doublePlant.paeonia'/96718, l='MpServer', x=-1.75, y=70.13, z=-11.81], EntityItem['item.tile.flower1.dandelion'/97745, l='MpServer', x=-45.82, y=114.13, z=7.57], EntityItem['item.tile.doublePlant.sunflower'/96720, l='MpServer', x=10.06, y=70.13, z=-9.09], EntityItem['item.tile.doublePlant.sunflower'/96723, l='MpServer', x=-6.75, y=70.13, z=-8.91], EntityItem['item.item.seeds'/97747, l='MpServer', x=-47.81, y=114.13, z=4.78], EntityAlfheimPixie['Οθκρθ'/98771, l='MpServer', x=16.72, y=120.07, z=-1.66], EntityItem['item.tile.flower1.dandelion'/97746, l='MpServer', x=-47.04, y=114.13, z=4.85], EntityItem['item.tile.sapling.roofed_oak'/98002, l='MpServer', x=3.13, y=85.13, z=-71.22], EntityItem['item.tile.doublePlant.rose'/96725, l='MpServer', x=-3.38, y=70.13, z=-1.72], EntityItem['item.tile.doublePlant.rose'/96724, l='MpServer', x=-8.16, y=70.13, z=-8.03], EntityItem['item.tile.flower2.allium'/97748, l='MpServer', x=-40.66, y=95.13, z=29.84], EntityItem['item.tile.doublePlant.sunflower'/96727, l='MpServer', x=-0.31, y=70.13, z=-5.47], EntityItem['item.tile.doublePlant.rose'/96726, l='MpServer', x=-3.44, y=70.13, z=-9.97], EntityItem['item.tile.sapling.oak'/98006, l='MpServer', x=32.81, y=79.13, z=-56.88], EntityItem['item.tile.flower1.dandelion'/96729, l='MpServer', x=46.19, y=68.13, z=40.88], EntityItem['item.tile.flower1.dandelion'/96728, l='MpServer', x=48.06, y=71.13, z=-24.19], EntityElf['έλότ'/103131, l='MpServer', x=56.50, y=71.00, z=55.50], EntityItem['item.tile.flower2.poppy'/97759, l='MpServer', x=-46.13, y=114.13, z=8.00], EntityItem['item.tile.sapling.oak'/103647, l='MpServer', x=25.56, y=73.13, z=-83.78], EntityItem['item.tile.flower2.tulipRed'/97760, l='MpServer', x=-39.31, y=95.13, z=30.69], EntityItem['item.tile.sapling.roofed_oak'/98275, l='MpServer', x=20.81, y=72.13, z=-86.88], EntityItem['item.tile.flower2.tulipRed'/97776, l='MpServer', x=-37.28, y=95.13, z=31.16], EntityItem['item.tile.sapling.oak'/98041, l='MpServer', x=-19.25, y=70.13, z=-57.88], EntityItem['item.tile.sapling.oak'/123131, l='MpServer', x=37.34, y=73.13, z=-76.97], EntityItem['item.tile.flower1.dandelion'/97789, l='MpServer', x=-45.81, y=114.13, z=7.19]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.Minecraft.func_71396_d(Minecraft.java:2444)
+	at net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:919)
+	at net.minecraft.client.main.Main.main(SourceFile:148)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at launcher.lOlkEKchebureK.LoLkeKChEbUREk(SourceFile:322)
+	at launcher.lOlkEKchebureK.main(SourceFile:203)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 7 (amd64) version 6.1
+	Java Version: 1.8.0_131, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 615765440 bytes (587 MB) / 1060372480 bytes (1011 MB) up to 1060372480 bytes (1011 MB)
+	JVM Flags: 8 total; -XX:HeapDumpPath=ThisTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xms1024M -Xmx1024M -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy -Xmn128M -XX:+DisableAttachMechanism
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP v9.05 FML v7.10.99.99 Minecraft Forge 10.13.4.1614 Optifine OptiFine_1.7.10_HD_U_E7 20 mods loaded, 20 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{7.10.99.99} [Forge Mod Loader] (forge.jar) 
+	UCHIJAAAA	Forge{10.13.4.1614} [Minecraft Forge] (forge.jar) 
+	UCHIJAAAA	CodeChickenCore{1.0.7.null} [CodeChicken Core] (minecraft.jar) 
+	UCHIJAAAA	NotEnoughItems{1.0.5.118} [Not Enough Items] (NotEnoughItems-1.7.10-1.0.5.118-universal.jar) 
+	UCHIJAAAA	smoothfontcore{1.7.10-1.15.1} [Smooth Font Core] (minecraft.jar) 
+	UCHIJAAAA	ClientFixer{1.0} [ClientFixer] (minecraft.jar) 
+	UCHIJAAAA	FastCraft{1.25} [FastCraft] (FastCraft-1.25.jar) 
+	UCHIJAAAA	smoothfont{1.7.10-1.15.3} [Smooth Font] (SmoothFont-1.7.10-1.15.3.jar) 
+	UCHIJAAAA	Baubles{1.0.1.10} [Baubles] (Baubles-1.7.10-1.0.1.10.jar) 
+	UCHIJAAAA	Botania{r1.8-249} [Botania] (Botania+r1.8-249.jar) 
+	UCHIJAAAA	alfheim{BETA-pre8.34} [Alfheim] (Alfheim-BETA-pre8_34.jar) 
+	UCHIJAAAA	WorldEngine{1.1710.0} [WorldEngine] (Alfheim-BETA-pre8_34.jar) 
+	UCHIJAAAA	iChunUtil{4.2.3} [iChunUtil] (iChunUtil-4.2.3.jar) 
+	UCHIJAAAA	MemoryCleaner{1.0} [Memory Cleaner] (MemoryCleaner-1.4-mc.1.7.10.jar) 
+	UCHIJAAAA	Morph{0.9.3} [Morph] (Morph-Beta-0.9.3.jar) 
+	UCHIJAAAA	NBTEdit{1.7.2.2} [In-game NBTEdit] (NBTEdit-1.7.10-1.0.jar) 
+	UCHIJAAAA	Waila{1.5.10} [Waila] (WAILA-1.5.10.jar) 
+	UCHIJAAAA	witchery{0.24.1} [Witchery] (Witchery-0.24.1.jar) 
+	UCHIJAAAA	bspkrsCore{6.16} [bspkrsCore] ([1.7.10]bspkrsCore-universal-6.16.jar) 
+	GL info: ' Vendor: 'NVIDIA Corporation' Version: '4.4.0' Renderer: 'GeForce GT 640/PCIe/SSE2'
+	Launched Version: 1.7.10
+	LWJGL: 2.9.4
+	OpenGL: GeForce GT 640/PCIe/SSE2 GL version 4.4.0, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Anisotropic filtering is supported and maximum anisotropy is 16.
+Shaders are available because OpenGL 2.1 is supported.
+
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: []
+	Current Language: Πσρρκθι (Πξρρθÿ)
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	Anisotropic Filtering: Off (1)
+	OptiFine Version: OptiFine_1.7.10_HD_U_E7
+	Render Distance Chunks: 12
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.4.0
+	OpenGlRenderer: GeForce GT 640/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 2

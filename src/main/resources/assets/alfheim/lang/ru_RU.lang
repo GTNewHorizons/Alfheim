@@ -16,7 +16,7 @@ tile.GoldElvenOre.name=Золотая руда
 tile.IffesalElvenOre.name=Руда иффесалия
 tile.LivingCobble.name=Жизнебулыжник
 tile.ManaInfuser.name=Мана-наполнитель
-tile.MauftriumBlock.name=Блок мауфтрия
+tile.MauftriumBlock.name=§6Блок Мауфтрия
 tile.MuspelheimFire.name=Вечный огонь Муспельхейма
 tile.NiflheimIce.name=Вечный лёд Нифльхейма
 tile.QuartzElvenOre.name=Руда эльфийского кварца
@@ -26,6 +26,8 @@ tile.Transferer.name=Переносчик
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
+item.botania:AuraRingElven.name=Эльфийское кольцо ауры
+item.botania:AuraRingGod.name=Божественное кольцо ауры
 item.CreativeReachPendant.name=Творческая подвеска несравненной дальности
 item.botania:ElementalAirBoots.name=Элементальные ботинки воздуха
 item.botania:ElementalFireLeggings.name=Элементальные поножи огня
@@ -35,7 +37,7 @@ item.botania:ElementalWaterHelmRevealing.name=Элементальный шле�
 item.ElementalArmor.desc1=Лёгкие как пёрышко (§eВысота прыжка +4§7)
 item.ElementalArmor.desc2=Быстрые как огонь (§cСкорость +2§7) Бонус: §cОгнестойкость§7
 item.ElementalArmor.desc3=Крепкая как скала (§aСопротивление урону +2§7)
-item.ElementalArmor.desc4=Приспособленный как рыба (§bДыхание под водой§f + §bночное зрение§f)
+item.ElementalArmor.desc4=Приспособленный как рыба (§bДыхание под водой§7 + §bночное зрение§7)
 item.ElvoriumBoots.name=Ботинки из эльвория
 item.ElvoriumChestplate.name=Кираса из эльвория
 item.ElvoriumHelmet.name=Шлем из эльвория
@@ -45,22 +47,22 @@ item.ElvoriumLeggings.name=Поножи из эльвория
 item.ElvoriumNugget.name=Самородок эльвория
 item.botania:Excaliber.name=Святой меч Экскалибер
 item.botania:FirePendant.name=Подвеска защиты от Муспельхейма
-item.botania:FlugelDisc.name=Сияющая Пластинка
+item.botania:FlugelDisc.name=Сияющая пластинка
 item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
 item.botania:FlugelSoul.name=Душа Флюгеля
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
 item.IffesalDust.name=Пыль иффесалия
 item.InterdimensionalGatewayCore.name=Межпространственное связующее ядро
 item.LivingrockPickaxe.name=Кирка из жизнебулыжника
-item.ManaElvenRing.name=Кольцо маны из эльвория
-item.ManaElvenRingGreater.name=Кольцо маны из мауфтрия
+item.ManaRingElven.name=Эльфийское кольцо маны
+item.ManaRingGod.name=Божественное кольцо маны
 item.ManaInfusionCore.name=Ядро мана-наполнителя
 item.ManaStone.name=Иффесальный камень маны
 item.ManaStoneGreater.name=Первородный камень маны
 item.manastorage.desc0=Хранит до %s ёмкостей бассейна маны!
 item.manastorage.desc1=Содержит §b%s§7/§b%s§7 единиц маны
-item.MauftriumIngot.name=Слиток мауфтрия
-item.MauftriumNugget.name=Самородок мауфтрия
+item.MauftriumIngot.name=§6Слиток мауфтрия
+item.MauftriumNugget.name=§6Самородок мауфтрия
 item.botania:Mjolnir.name=Мьёльнир
 item.MuspelheimEssence.name=Эссенция Муспельхейма
 item.MuspelheimPowerIngot.name=Слиток силы Муспельхейма
@@ -70,15 +72,16 @@ item.NiflheimEssence.name=Эссенция Нифльхейма
 item.NiflheimPowerIngot.name=Слиток силы Нифльхейма
 item.NiflheimRod.name=Жезл владыки Нифльхейма
 item.NiflheimRune.name=Руна Нифльхейма
+item.PaperBreak.name=Пергамент раздора
+item.PeacePipe.name=Трубка мира
 item.botania:PixieAttractor.name=Магнит для пикси
-item.PrimalRune.name=Руна первоэлементов
-item.RealitySword.name=§rМеч мироздания%s
-item.RealitySword.name0= (Инертный)
-item.RealitySword.name1= (§eВоздух§f)
-item.RealitySword.name2= (§aЗемля§f)
-item.RealitySword.name3= (§cОгонь§f)
-item.RealitySword.name4= (§bВода§f)
-item.RealitySword.nameZ=Меч создателя
+item.PrimalRune.name=§5Руна Первоэлементов
+item.RealitySword0.name=§6Меч мироздания§f (§7Инертный§f)
+item.RealitySword1.name=§6Меч мироздания§f (§eВоздух§f)
+item.RealitySword2.name=§6Меч мироздания§f (§aЗемля§f)
+item.RealitySword3.name=§6Меч мироздания§f (§cОгонь§f)
+item.RealitySword4.name=§6Меч мироздания§f (§bВода§f)
+item.RealitySword5.name=§6Меч создателя
 item.RealitySword.desc0=Шифт+ПКМ для настройки на один из элементов
 item.RealitySword.desc1=Отбрасывает цель.
 item.RealitySword.desc2=Отравляет цель.
@@ -90,20 +93,21 @@ item.RealitySword.DIE=%s получил меч создателя и был на
 item.botania:TankMask.name=Загадочная маска
 item.TankMask.active=Активна
 item.TankMask.inactive=Неактивна
+item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
 item.Transferer.name=Деструктуризатор
 
 ########################################################___ОСТАЛЬНОЕ___#########################################################
 
-achievement.alfheim=Новые Земли
+achievement.alfheim=Новые земли
 achievement.alfheim.desc=Попадите в Альвхейм
 achievement.excaliber=Биение сердца
-achievement.excaliber.desc=Будьте вознаграждены Святым Мечом Экскалибером за героический подвиг
+achievement.excaliber.desc=Будьте вознаграждены святым мечом Экскалибером за героический подвиг
 achievement.mask=Неудержимый
-achievement.mask.desc=Будьте вознаграждены Загадочной Маской за героический подвиг
+achievement.mask.desc=Будьте вознаграждены загадочной маской за героический подвиг
 achievement.flugelSoul=Ты моя душа
-achievement.flugelSoul.desc=Будьте вознаграждены Душой Флюгеля за героический подвиг
-achievement.flugelKill=Убийца Богов
-achievement.flugelKill.desc=Продержитесь против наимогущественнейшего существа - Флюгеля
+achievement.flugelSoul.desc=Будьте вознаграждены душой Флюгеля за героический подвиг
+achievement.flugelKill=Убийца богов
+achievement.flugelKill.desc=Одолейте в битве наимогущественнейшее существо - Флюгеля
 
 alfheim.armorset.elemental.name=Повелитель элементов
 alfheim.armorset.elvorium.name=Королевский эльфийский страж
@@ -113,18 +117,18 @@ alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
 alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
-alfheim.commands.tpdim.wrong=tpdim <ID>
+alfheim.commands.tpdim.wrong=tpdim <ID измерения>
 alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения
 alfheim.commands.tpdim.wrongid=Неверно указан ID измерения
 
 alfheim.configgui.biomeIDAlfheim=ID стандартного биома
-alfheim.configgui.biomeIDAlfheimBeach=ID для биома пляжа
+alfheim.configgui.biomeIDAlfheimBeach=ID биома пляжа
 alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна [Только в режиме ElvenStory]
 alfheim.configgui.deathTimerScale=Масштаб таймера возрождения (1 < больше; 1 > меньше) [Только в режиме ElvenStory]
 alfheim.configgui.deathTimerX=Дополнительная X-координата таймера возрождения (от центра) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerY=Дополнительная Y-координата таймера возрождения (внизу экрана) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerY=Дополнительная Y-координата таймера возрождения (от низа) [Только в режиме ElvenStory]
 alfheim.configgui.deathTimerFontX=Дополнительная X-координата текста таймера возрождения (от центра) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста таймера возрождения (внизу экрана) [Только в режиме ElvenStory]
+alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста таймера возрождения (от низа) [Только в режиме ElvenStory]
 alfheim.configgui.destroyPortal=Установите значение false, чтобы выключить разрушение порталов в Альвхейме на ненулевых координатах
 alfheim.configgui.dimensionIDAlfheim=ID измерения Альвхейм
 alfheim.configgui.enableAlfheimRespawn=Установите значение false, чтобы выключить возрождение в Альвхейме
@@ -134,20 +138,80 @@ alfheim.configgui.flightTime=Насколько долго Вы можете л�
 alfheim.configgui.prolongDeathScreen=Установите значение false, чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
 alfheim.configgui.showNumbersInTooltip=Установите значение true, чтобы включить числовое отображение количества маны
 
+alfheim.nei.tradeportal=Обмен с Мидгардом
+
+alfheim.potion.bleeding=Кровотечение
+alfheim.potion.bleeding.postfix=Зелье несвёртываемости крови
+alfheim.potion.butterShield=Щит бабочек
+alfheim.potion.butterShield.postfix=Зелье со вкусом лампы
+alfheim.potion.deathMark=Метка смерти
+alfheim.potion.deathMark.postfix=Зелье с проклятьем
+alfheim.potion.decay=Увядание
+alfheim.potion.decay.postfix=Зелье увядания
+alfheim.potion.goldRush=Золотая лихорадка
+alfheim.potion.goldRush.postfix=Зелье с кофеином
+alfheim.potion.icelens=Ледяная линза
+alfheim.potion.icelens.postfix=Зелье ледяной линзы
+alfheim.potion.leftFlame=Остаточный огонь
+alfheim.potion.leftFlame.postfix=НЕ ВЗДУМАЙТЕ ЭТО ПИТЬ!
+alfheim.potion.nineLifes=Девять жизней
+alfheim.potion.nineLifes.postfix=Зелье девяти жизней
+alfheim.potion.noclip=Ноклип
+alfheim.potion.noclip.postfix=Зелье ноклипа
 alfheim.potion.possession=Одержимость
 alfheim.potion.possession.postfix=Зелье одержимости
+alfheim.potion.quadDamage=Quad Damage
+alfheim.potion.quadDamage.postfix=Зелье священного буйства
+alfheim.potion.sacrifice=Саможертвоприношение
+alfheim.potion.sacrifice.postfix=Зелье отрешённости
+alfheim.potion.sharedHP=Общее здоровье
+alfheim.potion.sharedHP.postfix=Зелье щедрости
+alfheim.potion.showMana=Показ маны
+alfheim.potion.showMana.postfix=Зелье истинного зрения
 alfheim.potion.soulburn=Горящая душа
 alfheim.potion.soulburn.postfix=Зелье горящей души
+alfheim.potion.stoneSkin=Каменная кожа
+alfheim.potion.stoneSkin.postfix=Зелье каменной кожи
+alfheim.potion.throw=Потоки ветра
+alfheim.potion.throw.postfix=Зелье лёгкости
+alfheim.potion.wellolife=Колодец жизни
+alfheim.potion.wellolife.postfix=Зелье водной регенерации
 
 alfheimmics.badArena=Как бы вы ни старались, ритуал не активируется. Вам кажется, что Вы допустили ошибку в подготовке территории. Чтобы убедиться в этом, проверьте территорию на наличие препятствий.
 alfheimmics.needsCatalysts=Как бы вы ни старались, ритуал не активируется. Возможно, Вы допустили ошибку в расположении или конфигурации пилонов.
 alfheimmisc.notallowed=Глупый смертный! Ты даже не можешь летать без помощи! Ты слишком слаб, чтобы драться со мной! Уходи, пока я не передумала и не убила тебя.
-alfheimmics.peacefulNoob=Вы пытаетесь совершить ритуал, но миролюбивая атмосфера Вашего мира мешает Вам. Возможно, Вам стоит что-то с этим сделать.
+alfheimmics.peacefulNoob=Вы пытаетесь провести ритуал, но миролюбивая атмосфера Вашего мира мешает Вам. Возможно, Вам стоит что-то с этим сделать.
+alfheimmisc.teamnotmob=Член группы не может быть выделен в качестве вражеской цели
 alfheimmisc.update=О-оу, кажется, вы играете на устаревшей версии (%s). Возможно, вам стоит обновиться до %s?
 
+alfheimmisc.cast.notarget=Выберите цель
+alfheimmisc.cast.notready=Заклинание не готово
+alfheimmisc.cast.notseeing=Вы не видите цель
+alfheimmisc.cast.obstruct=Цель недоступна
+alfheimmisc.cast.wrongtgt=Неверная цель
+alfheimmisc.cast.momana=Недостаточно маны
+alfheimmisc.cast.notallow=Вы не можете колдовать здесь
+
+alfheimmisc.party.already=Вы уже состоите в этой группе!
+alfheimmisc.party.full=В группе нет места!
+alfheimmisc.party.leave=Вы должны покинуть текущую группу чтобы присоединиться к новой!
+alfheimmisc.party.memberdied=%s умер!
+alfheimmisc.party.no=Такой группы не существует!
+alfheimmisc.party.notinpartyoffline=%s не является участником группы или находится не в игре!
+alfheimmisc.party.notpl=Только лидер группы может сделать это!
+
+death.attack.bleeding=%s истёк кровью 
+death.attack.darkness_FF=%s убит в обмен на жертву %s 
+death.attack.gravity=%s раздавлен гравитацией
+death.attack.lightning=%s убит молнией %s
+death.attack.mark=%s умер от проклятия
+death.attack.possession=%s поглощён пустотой
+death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
+death.attack.water=%s разрезан на части водным потоком %s
 
 entity.Elf.name=Эльф
+entity.Flugel.name=Флюгель
 entity.Pixie.name=Пикси
 
 item.FlugelSoul.blockAway=На расстоянии блока
@@ -173,10 +237,12 @@ item.FlugelSoul.sign10=Водолей
 item.FlugelSoul.sign11=Рыбы
 
 item.HoloProjector.rotate=ЛКМ и ПКМ - поворот
-item.HoloProjector.switch=Шифт+ЛКМ - смена пола
-item.HoloProjector.select=Шифт+ПКМ - выбор расы
+item.HoloProjector.switch=Shift+ЛКМ - смена пола
+item.HoloProjector.select=Shift+ПКМ - выбор расы
 
 itemGroup.Alfheim=Alfheim
+
+lang.name=ru_RU
 
 ######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################
 
@@ -259,3 +325,135 @@ race.ЛЕПРЕКОН.reverse=LEPRECHAUN
 race.СПРИГГАН.reverse=SPRIGGAN
 race.УНДИНА.reverse=UNDINE
 race.ИМП.reverse=IMP
+
+#########################################################___ЗАКЛИНАНИЯ___#######################################################
+
+spell.cast=заклинает
+
+spell.acidmyst.name=Кислотный Туман
+spell.aquabind.name=Водные Путы
+spell.aquastream.name=Поток Воды
+spell.battlehorn.name=Боевой Горн
+spell.blink.name=Блинк
+spell.bunnyhop.name=Заячий Прыжок
+spell.butterflyshield.name=Щит Бабочек
+spell.confusion.name=Замешательство
+spell.day.name=День
+spell.deathmark.name=Метка смерти
+spell.decay.name=Увядание
+spell.dispel.name=Рассеивание
+spell.dragongrowl.name=Драконий Рёв
+spell.driftingmine.name=Дрейфующая мина
+spell.echo.name=Эхолокация
+spell.fenrirstorm.name=Шторм Фенрира
+spell.fireball.name=Огненный Шар
+spell.firewall.name=Стена Огня
+spell.gravitytrap.name=Гравитационная Ловушка
+spell.goldrush.name=Золотая Лихорадка
+spell.hammerfall.name=Падение Молота
+spell.harp.name=Арфа
+spell.healing.name=Лечение
+spell.hollowbody.name=Прозрачное Тело
+spell.icelens.name=Ледяная Линза
+spell.ignition.name=Поджёг
+spell.mortar.name=Мортира 
+spell.night.name=Ночь
+spell.nightvision.name=Ночное Зрение
+spell.ninelifes.name=Девять жизней
+spell.noclip.name=Ноклип
+spell.outdare.name=Вызов
+spell.poisonroots.name=Ядовитые Корни
+spell.purifyingsurface.name=Очищающая Поверхность
+spell.rain.name=Дождь
+spell.sacrifice.name=Саможертвоприношение
+spell.sharedhp.name=Общее здоровье
+spell.smokescreen.name=Дымовая Завеса
+spell.stoneskin.name=Каменная Кожа
+spell.sun.name=Солнце
+spell.thor.name=Тор
+spell.throw.name=Порыв Ветра
+spell.thunder.name=Гроза
+spell.truesigh.name=Истинное зрение
+spell.titanhit.name=Удар Титана
+spell.timestop.name=Остановка Времени
+spell.uphealth.name=Увеличение Здоровья
+spell.wallwarp.name=Деформация Стен
+spell.waterbreathing.name=Подводное Дыхание
+spell.wellolife.name=Колодец Жизни
+spell.windbalde.name=Коса Ветра
+
+#
+spell.acidmyst.words=§bКислотный Туман
+spell.aquabind.words=§bCвяжите врагов моих, водные путы!
+spell.aquastream.words=§bЯ направляю поток воды в русло смерти врагов!
+spell.battlehorn.words=§eНаполни их сияющим мужеством, чтобы победить множество зол!
+#
+spell.blink.words=§7Блинк
+spell.bunnyhop.words=§aДай ему силу кролика для прыжков высоких!
+spell.butterflyshield.words=§6Окутай его щитом богинь и защити от огня и металла!
+spell.confusion.words=§8Я навеиваю ложные иллюзии, пусть они послужат смертью в §8замешательстве!
+spell.day.words=§6Я заменяю ночь днём, заменяю светом тьму!
+#
+spell.deathmark.words=§5Метка смерти
+#
+spell.decay.words=§5Увядание
+#
+spell.dispel.words=§4Рассеивание
+#
+spell.dragongrowl.words=§eДраконий Рёв
+#
+spell.driftingmine.words=§7Дрейфующая мина
+#
+spell.echo.words=§eЭхолокация
+spell.fenrirstorm.words=§aЯ обращаю гнев Фенрира, направляю на недругов наших!
+spell.fireball.words=§4Я высвобождаю пламя демона, призываю взрывающуюся смерть, §4чтобы низврегнуть армию леса!
+spell.firewall.words=§4Я повелеваю огню, возвысься над врагами пылающей стеной!
+spell.gravitytrap.words=§7Я подчиняю законы мироздания, повелеваю гравитации: §7увеличь свою мощь!
+#
+spell.goldrush.words=§2Золотая Лихорадка
+#
+spell.hammerfall.words=§2Падение Молота
+#
+spell.harp.words=§eАрфа
+spell.healing.words=§bВылечи его раны, исцеляющая вода!
+spell.hollowbody.words=§8Дай ему тело прозрачное, даруй невидимость!
+#
+spell.icelens.words=§bЛедяная Линза
+spell.ignition.words=§4Я призываю энергию энтропии, вспыхни же ярким пламенем!
+#
+spell.mortar.words=§2Мортира 
+spell.night.words=§5Я заменяю день ночью, заменяю свет тьмой!
+spell.nightvision.words=§8Дай нам глаза, которые осветят ночь!
+#
+spell.ninelifes.words=§6Девять жизней
+#
+spell.noclip.words=§2Ноклип
+#
+spell.outdare.words=§eВызов
+#
+spell.poisonroots.words=§5Ядовитые Корни
+spell.purifyingsurface.words=§bЯ призываю чистый фонтан, оборви дыхание пламени и яда!
+spell.rain.words=§bЯ подчиняю силы природы, пролейтесь дождём!
+spell.sacrifice.words=§5Я призываю §lЧёрного Разрушителя§r§5! Обрушь Небо! §5Низвергни Богов! И открой врата §lАда§r§5!
+#
+spell.sharedhp.words=§6Общее здоровье
+spell.smokescreen.words=§8Скрой нас от врагов в своих объятиях, дымовая завеса!
+spell.stoneskin.words=§2Защити нас, великая земля, отныне наша кожа как камень §2тверда!
+spell.sun.words=§4Я подчиняю силы природы, воссияй, Солнце!
+spell.thor.words=§aЯ призываю силу бога Тора, опусти же свой молот на врагов §aмоих!
+#
+spell.throw.words=§aПорыв Ветра
+spell.thunder.words=§aЯ подчиняю силы природы, пролейтесь дождём и очертите §aнебо сверкающими молниями!
+#
+spell.truesigh.words=§8Истинное зрение
+#
+spell.titanhit.words=§2Удар Титана
+#
+spell.timestop.words=§7Остановка Времени
+spell.uphealth.words=§6Дай ему жизнь богов, чтобы свергнуть злых гигантов!
+spell.wallwarp.words=§2Я деформирую стены, делая проход там, где его не было!
+spell.waterbreathing.words=§aДай нам жизнь рыбы, и позволь перенести холодную воду!
+#
+spell.wellolife.words=§bКолодец Жизни
+#
+spell.windbalde.words=§aКоса Ветра

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.entity.EntityFallingStar;
 
 public class AIDeathray extends AIBase {
@@ -51,7 +51,7 @@ public class AIDeathray extends AIBase {
 						Vector3 posVec = new Vector3(source.posX + x, source.posY + l * 20 + 10, source.posZ + z);
 						Vector3 motVec = new Vector3((Math.random() - 0.5) * 18, 24, (Math.random() - 0.5) * 18);
 						posVec.add(motVec);
-						motVec.normalize().negate().multiply(1.5);
+						motVec.normalize().negate().mul(1.5);
 							
 						EntityFallingStar star = new EntityFallingStar(flugel.worldObj, flugel);
 						star.setPosition(posVec.x, posVec.y, posVec.z);
@@ -68,7 +68,7 @@ public class AIDeathray extends AIBase {
 					Vector3 posVec = new Vector3(player.posX, player.posY + l * 10 * 2 + 10, player.posZ);
 					Vector3 motVec = new Vector3((Math.random() - 0.5) * 18, 24, (Math.random() - 0.5) * 18);
 					posVec.add(motVec);
-					motVec.normalize().negate().multiply(1.5);
+					motVec.normalize().negate().mul(1.5);
 						
 					EntityFallingStar star = new EntityFallingStar(flugel.worldObj, flugel);
 					star.setPosition(posVec.x, posVec.y, posVec.z);

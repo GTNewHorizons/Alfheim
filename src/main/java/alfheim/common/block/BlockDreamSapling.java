@@ -51,7 +51,7 @@ public class BlockDreamSapling extends BlockBush implements IGrowable, ILexicona
 		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
 		int l = world.getBlockMetadata(x, y, z) & 7;
 		world.setBlock(x, y, z, Blocks.air, 0, 4);
-		if (!new StructureDreamsTree(AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4);
+		if (!new StructureDreamsTree(AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4);
 	}
 
 	/** Can the block grow

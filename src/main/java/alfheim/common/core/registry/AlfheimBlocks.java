@@ -22,7 +22,7 @@ public class AlfheimBlocks {
 	public static Block alfheimPylons;
 	public static Block anyavil;
 	public static Block dreamLeaves;
-	public static Block dreamlog;
+	public static Block dreamLog;
 	public static Block dreamSapling;
 	public static Block elvenOres;
 	public static Block elvenSand;
@@ -33,7 +33,7 @@ public class AlfheimBlocks {
 	public static Block poisonIce;
 	public static Block redFlame;
 	public static Block tradePortal;
-	//public static Block transferer; FIXME
+	//public static Block transferer; BACK
 	
 	public static void init() {
 		construct();
@@ -46,7 +46,7 @@ public class AlfheimBlocks {
 		alfheimPylons = new BlockAlfheimPylons();
 		anyavil = new BlockAnyavil();
 		dreamLeaves = new BlockDreamLeaves();
-		dreamlog = new BlockDreamLog();
+		dreamLog = new BlockDreamLog();
 		dreamSapling = new BlockDreamSapling();
 		elvenOres = new BlockElvenOres();
 		elvenSand = new BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen);
@@ -57,14 +57,14 @@ public class AlfheimBlocks {
 		poisonIce = new BlockPoisonIce();
 		redFlame = new BlockRedFlame();
 		tradePortal = new BlockTradePortal();
-		//transferer = new BlockTransferer(); FIXME
+		//transferer = new BlockTransferer(); BACK
 	}
 
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
 		register(tradePortal);
-		//register(transferer); FIXME
+		//register(transferer); BACK
 		registerBlock(alfheimPylons, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylons));
 		register(anyavil);
 		register(elvoriumBlock);
@@ -72,7 +72,7 @@ public class AlfheimBlocks {
 		registerBlock(elvenOres, ItemBlockElvenOres.class, getBlockName(elvenOres));
 		register(livingcobble);
 		register(elvenSand);
-		register(dreamlog);
+		register(dreamLog);
 		register(dreamLeaves);
 		register(dreamSapling);
 		register(poisonIce);

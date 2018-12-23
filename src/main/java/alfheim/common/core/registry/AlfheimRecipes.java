@@ -52,6 +52,8 @@ public class AlfheimRecipes {
 	public static IRecipe recipeAlfheimPortal;
 	public static IRecipe recipeAnyavil;
 	public static List<IRecipe> recipesApothecary;
+	public static IRecipe recipeAuraRingElven;
+	public static IRecipe recipeAuraRingGod;
 	public static IRecipe recipeEmentalHelmet;
 	public static IRecipe recipeEmentalChestplate;
 	public static IRecipe recipeEmentalLeggings;
@@ -65,12 +67,11 @@ public class AlfheimRecipes {
 	public static IRecipe recipeElvoriumPylon;
 	public static IRecipe recipeFurnace;
 	public static IRecipe recipeGaiaPylon;
-	public static IRecipe recipeGlowstone;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
-	public static IRecipe recipeManaElvenRing;
-	public static IRecipe recipeManaElvenRingGreater1;
-	public static IRecipe recipeManaElvenRingGreater2;
+	public static IRecipe recipeManaRingElven;
+	public static IRecipe recipeManaRingGod1;
+	public static IRecipe recipeManaRingGod2;
 	public static IRecipe recipeManaInfusionCore;
 	public static IRecipe recipeManaInfuser;
 	public static IRecipe recipeMuspelheimPendant;
@@ -79,6 +80,8 @@ public class AlfheimRecipes {
 	public static IRecipe recipeNiflheimPendant;
 	public static IRecipe recipeNiflheimPowerIngot;
 	public static IRecipe recipeNiflheimRod;
+	public static IRecipe recipePaperBreak;
+	public static IRecipe recipePeacePipe;
 	public static IRecipe recipePixieAttractor;
 	public static List<IRecipe> recipesSpark;
 	public static IRecipe recipeSword;
@@ -117,8 +120,8 @@ public class AlfheimRecipes {
 				'P', PIXIE_DUST,
 				'E', ELEMENTIUM,
 				'D', DRAGONSTONE,
-				'B', new ItemStack(ModBlocks.storage, 1, 2),
-				'G', new ItemStack(ModBlocks.storage, 1, 4));
+				'B', new ItemStack(storage, 1, 2),
+				'G', new ItemStack(storage, 1, 4));
 		recipeAnyavil = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 0),
@@ -136,12 +139,22 @@ public class AlfheimRecipes {
 		recipeElvoriumPylon = BotaniaAPI.getLatestAddedRecipe();
 		
 		for(int i = 0; i < 16; i++)
-			addOreDictRecipe(new ItemStack(ModBlocks.altar),
+			addOreDictRecipe(new ItemStack(altar),
 					"SPS", " C ", "CCC",
 					'S', livingcobble,
 					'P', PETAL[i],
 					'C', LIVING_ROCK);
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16);
+		
+		addShapelessOreDictRecipe(new ItemStack(auraRingElven),
+			ELVORIUM_INGOT,
+			new ItemStack(auraRingGreater));
+		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe();
+		
+		addShapelessOreDictRecipe(new ItemStack(auraRingGod),
+			MAUFTRIUM_INGOT,
+			new ItemStack(auraRingElven));
+		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elementalHelmet),
 			"RTR", "DPD", " M ",
@@ -292,37 +305,30 @@ public class AlfheimRecipes {
 			'S', livingcobble);
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe();
 		
-		// IDK whether this is good source of glowstone or not
-		addOreDictRecipe(new ItemStack(glowstone_dust),
-			"LLL", "LDL", "LLL",
-			'L', dreamLeaves,
-			'D', DRAGONSTONE);
-		recipeGlowstone = BotaniaAPI.getLatestAddedRecipe(); 
-		
 		addOreDictRecipe(new ItemStack(livingrockPickaxe),
 			"LLL", " S ", " S ",
 			'L', livingcobble,
 			'S', "stickWood");
 		recipeLivingrockPickaxe = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(manaElvenRing),
+		addOreDictRecipe(new ItemStack(manaRingElven),
 			"IS ", "S S", " S ",
 			'S', ELVORIUM_INGOT,
 			'I', manaStone);
-		recipeManaElvenRing = BotaniaAPI.getLatestAddedRecipe();
+		recipeManaRingElven = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(manaElvenRingGreater),
+		addOreDictRecipe(new ItemStack(manaRingGod),
 			"IS ", "S S", " S ",
 			'S', MAUFTRIUM_INGOT,
 			'I', manaStoneGreater);
-		recipeManaElvenRingGreater1 = BotaniaAPI.getLatestAddedRecipe();
+		recipeManaRingGod1 = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(manaElvenRingGreater), 
+		addOreDictRecipe(new ItemStack(manaRingGod), 
 			"SI", "IR",
 			'S', manaStoneGreater,
-			'R', manaElvenRing,
+			'R', manaRingElven,
 			'I', MAUFTRIUM_INGOT);
-		recipeManaElvenRingGreater2 = BotaniaAPI.getLatestAddedRecipe();
+		recipeManaRingGod2 = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(manaInfuser),
 			"DCD", "IRI", "SSS",
@@ -332,6 +338,16 @@ public class AlfheimRecipes {
 			'R', rainbowRod,
 			'S', LIVING_ROCK);
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(paperBreak),
+			"  P", " P ", "P  ",
+			'P', paper);
+		recipePaperBreak = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(peacePipe),
+			"S  ", " S ", "  S",
+			'S', stick);
+		recipePeacePipe = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(pixieAttractor),
 			"EDE", "EPE", " S ",
@@ -483,7 +499,7 @@ public class AlfheimRecipes {
 		}
 		
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), new ItemStack(nether_star));
-		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamlog, dreamwood, 0);
+		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0);
 		
 		addRecipe(new HelmRevealingAlfheimRecipe());
 	}

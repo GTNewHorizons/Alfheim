@@ -1,9 +1,12 @@
 Credits:
-anonymous..es	-	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
-Xinzhou Hong	-	chinese translation
-BlesseNTumble	-	worldgen
-DmitryWS		-	lore and most of textures
-pandorarose22	-	wings textures
+anonymous..es       -	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
+lie_mander's friend -   gnome(m,f) base skins
+Inga Akuma          -   spriggan(m), salamander(f) base skins
+Xinzhou Hong        -	chinese translation
+Vamig Aliev         -	worldgen
+DmitryWS            -	lore and most of textures
+pandorarose22       -	wings textures
+vidar90             -   black dots shader on gravity spell
 
 Thanks:
 GedeonGrays and guys from Grimmorium 	- for testing and material support

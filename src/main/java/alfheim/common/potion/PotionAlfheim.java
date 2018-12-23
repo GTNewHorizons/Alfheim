@@ -1,26 +1,28 @@
 package alfheim.common.potion;
 
-import alfheim.api.ModInfo;
+import org.lwjgl.opengl.GL11;
+
+import alfheim.api.lib.LibResourceLocations;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import vazkii.botania.common.brew.potion.PotionMod;
 
 public class PotionAlfheim extends PotionMod {
 	
-	private static final ResourceLocation texture = new ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png");
-
-	public PotionAlfheim(int id, String name, boolean badEffect, int color, int iconIndex) {
-		super(id, name, badEffect, color, iconIndex);
+	private static int iconID = 0;
+	
+	public PotionAlfheim(int id, String name, boolean badEffect, int color) {
+		super(id, name, badEffect, color, iconID++);
 		setPotionName("alfheim.potion." + name);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getStatusIconIndex() {
+		GL11.glEnable(GL11.GL_BLEND);
 		int id = super.getStatusIconIndex();
-		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.potions);
 		return id;
 	}
 }

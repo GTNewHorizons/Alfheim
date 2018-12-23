@@ -3,7 +3,7 @@ package alfheim.common.block;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.client.lib.LibRenderIDs;
+import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAlfheimPylons;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.lexicon.AlfheimLexiconData;

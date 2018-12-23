@@ -4,18 +4,16 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.block.tile.TileTransferer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import vazkii.botania.client.core.handler.ClientTickHandler;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.client.model.ModelSpreader;
 
 public class RenderTileTransferer extends TileEntitySpecialRenderer {
 
-	private static final ResourceLocation texture = new ResourceLocation(LibResources.MODEL_SPREADER);
 	private static final ModelSpreader model = new ModelSpreader();
 
 	@Override
@@ -34,7 +32,7 @@ public class RenderTileTransferer extends TileEntitySpecialRenderer {
 		GL11.glRotatef(spreader.rotationY, 1F, 0F, 0F);
 		GL11.glTranslatef(0F, 1F, 0F);
 
-		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.spreader);
 		GL11.glScalef(1F, -1F, -1F);
 
 		double time = ClientTickHandler.ticksInGame + ticks;

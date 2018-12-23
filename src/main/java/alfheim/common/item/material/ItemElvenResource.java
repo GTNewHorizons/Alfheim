@@ -22,9 +22,9 @@ import vazkii.botania.api.mana.ILensEffect;
 import vazkii.botania.api.recipe.IElvenItem;
 import vazkii.botania.common.entity.EntityManaBurst;
 
-public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect FIXME*/ {
+public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect BACK*/ {
 	
-	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune"/*, "Transferer" FIXME*/ /*"InfusedDreamwoodTwig"*/ };
+	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune"/*, "Transferer" BACK*/ /*"InfusedDreamwoodTwig"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
 	public ItemElvenResource() {
@@ -90,5 +90,5 @@ public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect
 	@Override
 	public boolean doParticles(IManaBurst burst, ItemStack stack) {
 		return stack.getItemDamage() == ElvenResourcesMetas.Transferer;
-	}FIXME*/
+	}BACK*/
 }

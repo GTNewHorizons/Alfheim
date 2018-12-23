@@ -15,6 +15,8 @@ import org.objectweb.asm.tree.MethodNode;
 
 import com.google.common.collect.Lists;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ASJPacketCompleter implements IClassTransformer {
@@ -23,14 +25,15 @@ public class ASJPacketCompleter implements IClassTransformer {
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (basicClass == null || basicClass.length == 0) return basicClass;
 		try {
-			ClassNode cl = new ClassNode();
+			ClassNode cn = new ClassNode();
 			ClassReader cr = new ClassReader(basicClass);
-			cr.accept(cl, 0);
+			cr.accept(cn, 0);
 			
-			if (cl.superName != null && cl.superName.equals("alexsocol/asjlib/network/ASJPacket")) {
+			if (cn.superName != null && cn.superName.equals("alexsocol/asjlib/network/ASJPacket")) {
 				boolean[] fs = new boolean[5]; // <init>, fromBytes, toBytes, fromCustomBytes, toCustomBytes
-				for (MethodNode mt : cl.methods) {
+				for (MethodNode mt : cn.methods) {
 					if (mt.name.equals("<init>") && mt.desc.equals("()V")) { fs[0] = true; continue; }
 					if (mt.name.equals("fromBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[1] = true; continue; }
 					if (mt.name.equals("toBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[2] = true; continue; }
@@ -38,18 +41,19 @@ public class ASJPacketCompleter implements IClassTransformer {
 					if (mt.name.equals("toCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[4] = true; continue; }
 				}
 				
-				if (!fs[0]) makeConstructor(cl); 
-				if (!fs[1]) makeFromBytes(cl, fs[3]); 
-				if (!fs[2]) makeToBytes(cl, fs[4]); 
+				if (!fs[0]) makeConstructor(cn); 
+				if (!fs[1]) makeFromBytes(cn, fs[3]); 
+				if (!fs[2]) makeToBytes(cn, fs[4]); 
 				
 				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-				cl.accept(cw);
+				cn.accept(cw);
 				
 				return cw.toByteArray();
 			}
 		} catch (Throwable e) {
 			System.err.println("Something went wrong while transforming class " + transformedName + "\t Contact mod author.");
 			e.printStackTrace();
+			return basicClass;
 		}
 		return basicClass;
 	}
@@ -75,7 +79,7 @@ public class ASJPacketCompleter implements IClassTransformer {
 			if (!descriptors.contains(fn.desc)) continue;
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitVarInsn(ALOAD, 1);
-			mv.visitMethodInsn(INVOKESTATIC, "alexsocol/asjlib/network/ASJPacket", "read" + fn.desc.replaceAll("/", "").replaceAll(";", ""), "(Lio/netty/buffer/ByteBuf;)" + fn.desc.replaceAll("/", "").replaceAll(";", ""), false);
+			mv.visitMethodInsn(INVOKESTATIC, "alexsocol/asjlib/network/ASJPacket", "read" + fn.desc.replaceAll("/", "").replaceAll(";", ""), "(Lio/netty/buffer/ByteBuf;)" + fn.desc, false);
 			mv.visitFieldInsn(PUTFIELD, cl.name, fn.name, fn.desc);
 		}
 		mv.visitInsn(RETURN);

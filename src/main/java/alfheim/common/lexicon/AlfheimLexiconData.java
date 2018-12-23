@@ -1,13 +1,20 @@
 package alfheim.common.lexicon;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import alfheim.AlfheimCore;
+import alfheim.api.AlfheimAPI;
+import alfheim.api.spell.SpellBase;
 import alfheim.common.block.BlockElvenOres;
 import alfheim.common.block.tile.TileAlfheimPortal;
 import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.block.tile.TileTradePortal;
+import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
@@ -15,13 +22,18 @@ import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.page.PageManaInfusorRecipe;
+import alfheim.common.lexicon.page.PageMultiblockLearnable;
 import alfheim.common.lexicon.page.PagePureDaisyRecipe;
+import alfheim.common.lexicon.page.PageSpell;
+import alfheim.common.lexicon.page.PageTextLearnableAchievement;
+import alfheim.common.lexicon.page.PageTextLearnableKnowledge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.LexiconPage;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModMultiblocks;
@@ -33,6 +45,7 @@ import vazkii.botania.common.lexicon.RLexiconEntry;
 import vazkii.botania.common.lexicon.page.PageCraftingRecipe;
 import vazkii.botania.common.lexicon.page.PageElvenRecipe;
 import vazkii.botania.common.lexicon.page.PageMultiblock;
+import vazkii.botania.common.lexicon.page.PageRecipe;
 import vazkii.botania.common.lexicon.page.PageRuneRecipe;
 import vazkii.botania.common.lexicon.page.PageText;
 
@@ -48,6 +61,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elves;
 	
 	// Main addon content
+	public static LexiconEntry auraAlf;
 	public static LexiconEntry advMana;
 	public static LexiconEntry anyavil;
 	public static LexiconEntry elemSet;
@@ -55,6 +69,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elvorium;
 	public static LexiconEntry essences;
 	public static LexiconEntry excalibr;	
+	public static LexiconEntry flugel;	
 	public static LexiconEntry infuser;
 	public static LexiconEntry mask;
 	//public static LexiconEntry mjolnir;
@@ -68,16 +83,22 @@ public class AlfheimLexiconData {
 	public static LexiconEntry runes;
 	public static LexiconEntry soul;
 	public static LexiconEntry trade;
-	//public static LexiconEntry trans;		// FIXME
+	//public static LexiconEntry trans;		// BACK
 	public static LexiconEntry worldgen;
 
 	// Elven Story information
 	public static LexiconEntry es;
 	public static LexiconEntry races;
 	
+	// MMO info
+	public static LexiconEntry parties;
+	public static LexiconEntry spells;
+	public static LexiconEntry targets;
+	
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("Alfheim", 5));
 
+		auraAlf = new BLexiconEntry("auraAlf", categoryAlfheim);
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
 		anyavil	= new BLexiconEntry("anyavil",	categoryAlfheim);
@@ -86,6 +107,7 @@ public class AlfheimLexiconData {
 		elves	= new BLexiconEntry("elves",	categoryAlfheim);
 		elvorium= new BLexiconEntry("elvorium",	categoryAlfheim);
 		essences= new BLexiconEntry("essences",	categoryAlfheim);
+		flugel	= new BLexiconEntry("flugel",	categoryAlfheim);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
 		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
@@ -96,7 +118,7 @@ public class AlfheimLexiconData {
 		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
 		runes	= new BLexiconEntry("runes",	categoryAlfheim);
 		trade	= new BLexiconEntry("trade",	categoryAlfheim);
-		//trans	= new BLexiconEntry("trans",	categoryAlfheim); FIXME
+		//trans	= new BLexiconEntry("trans",	categoryAlfheim); BACK
 		worldgen= new BLexiconEntry("worldgen",	categoryAlfheim);
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
@@ -105,6 +127,14 @@ public class AlfheimLexiconData {
 	private static void preInitElvenStory() {
 		es		= new BLexiconEntry("es",		categoryAlfheim);
 		races	= new BLexiconEntry("races",	categoryAlfheim);
+		
+		preInitMMO();
+	}
+	
+	private static void preInitMMO() {
+		parties	= new BLexiconEntry("parties",	categoryAlfheim);
+		spells	= new BLexiconEntry("spells",	categoryAlfheim);
+		targets	= new BLexiconEntry("targets",	categoryAlfheim);
 	}
 	
 	public static void preInit2() {
@@ -124,6 +154,10 @@ public class AlfheimLexiconData {
 		elves	.setPriority().setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));
 		
+		pylons	.setPriority().setKnowledgeType(BotaniaAPI.basicKnowledge)
+				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeElvenPylon), new PageCraftingRecipe("2", AlfheimRecipes.recipeGaiaPylon))
+				.setIcon(new ItemStack(AlfheimBlocks.alfheimPylons, 1, 0));
+		
 		portal	.setPriority().setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
@@ -132,27 +166,30 @@ public class AlfheimLexiconData {
 								 new PageText("7"), new PageText(AlfheimConfig.destroyPortal ? "8" : "8s"));
 		
 		worldgen.setKnowledgeType(kt)
-				.setLexiconPages(new PageText("0"),
+				.setLexiconPages(new PageTextLearnableKnowledge("0", Knowledge.GLOWSTONE),
 								 new PagePureDaisyRecipe("1", AlfheimRecipes.recipeDreamwood),
-								 new PageCraftingRecipe("2", AlfheimRecipes.recipeGlowstone),
+								 //new PageCraftingRecipe("2", AlfheimRecipes.recipeGlowstone),
 								 new PageText("3"),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeLivingcobble),
 								 new PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe),
 								 new PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace))
 				.setIcon(new ItemStack(AlfheimBlocks.dreamLeaves));
+		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenSand));
+		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLog));
+		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
+		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
 		
-		pylons	.setPriority().setKnowledgeType(BotaniaAPI.basicKnowledge)
-				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeElvenPylon))
-				.setIcon(new ItemStack(AlfheimBlocks.alfheimPylons, 1, 0));
 		
 		ores	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
 		for (int i = 0; i < ((BlockElvenOres) AlfheimBlocks.elvenOres).names.length; i++) ores.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenOres, 1, i));
-		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.IffesalDust), ores, 2);
-		
-		anyavil	.setKnowledgeType(kt)
-				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeAnyavil));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 1), ores, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 0), ores, 2);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 2), ores, 2);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 3), ores, 2);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 4), ores, 3);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.IffesalDust), ores, 3);
 		
 		mobs	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"))
@@ -162,20 +199,21 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipePixieAttractor))
 				.setIcon(new ItemStack(AlfheimItems.pixieAttractor));
 		
+		anyavil	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeAnyavil));
+		
 		infuser	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeManaInfusionCore),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeManaInfuser),
 								 new PageText("4"),
-								 new PageMultiblock("5", TileManaInfuser.makeMultiblockSet()))
+								 new PageMultiblockLearnable("5", TileManaInfuser.makeMultiblockSetUnknown(), TileManaInfuser.makeMultiblockSet(), AlfheimAchievements.infuser))
 				.setIcon(new ItemStack(AlfheimBlocks.manaInfuser));
 		
 		elvorium.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"),
 								 new PageManaInfusorRecipe("1", AlfheimRecipes.recipeElvorium))
 				.setIcon(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot));
-		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvoriumNugget), elvorium, 1);
-		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvoriumBlock), elvorium, 1);
 		
 		trade	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
@@ -188,14 +226,14 @@ public class AlfheimLexiconData {
 		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPowerIngot);
 		powerRecipes.add(AlfheimRecipes.recipeNiflheimPowerIngot);
 		essences.setKnowledgeType(kt)
-				.setLexiconPages(new PageText("0"), //new PageManaInfusorRecipe("1d", AlfheimRecipes.recipeMuspelheimEssence),	//  replace this when there will be boss
-								 new PageText("2"), //new PageManaInfusorRecipe("3d", AlfheimRecipes.recipeNiflheimEssence),		//  replace this when there will be boss
+				.setLexiconPages(new PageText("0"),
+								 new PageTextLearnableAchievement("2", AlfheimAchievements.flugelKill),
 								 new PageText("4"), new PageText("5"), new PageCraftingRecipe("6", powerRecipes),
 								 new PageText("7"), new PageManaInfusorRecipe("8", AlfheimRecipes.recipeMauftrium))
 				.setIcon(new ItemStack(ModItems.manaResource, 1, 5));
 		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot));
-		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.MauftriumNugget), essences, 1);
-		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.mauftriumBlock), essences, 1);
+		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimEssence));
+		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence));
 		
 		List<RecipeRuneAltar> runeRecipes = new ArrayList();
 		runeRecipes.add(AlfheimRecipes.recipeMuspelheimRune);
@@ -204,7 +242,7 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"), new PageRuneRecipe("1", runeRecipes),
 								 new PageText("2"), new PageText("3"), new PageRuneRecipe("4", AlfheimRecipes.recipeRealityRune))
 				.setIcon(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.PrimalRune));
-		runes.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimRune));
+		runes	.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimRune));
 		
 		elvenSet.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"),
@@ -213,6 +251,7 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeElvoriumLeggings),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeElvoriumBoots))
 				.setIcon(new ItemStack(AlfheimItems.elvoriumHelmet));
+		elvenSet.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvoriumHelmetRevealing));
 		
 		elemSet	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"),
@@ -221,18 +260,25 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeEmentalLeggings),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeEmentalBoots))
 				.setIcon(new ItemStack(AlfheimItems.elementalHelmet));
+		elemSet	.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elementalHelmetRevealing));
 		
 		List<IRecipe> ringRecipes = new ArrayList();
-		ringRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater1);
-		ringRecipes.add(AlfheimRecipes.recipeManaElvenRingGreater2);
+		ringRecipes.add(AlfheimRecipes.recipeManaRingGod1);
+		ringRecipes.add(AlfheimRecipes.recipeManaRingGod2);
 		advMana	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),
 								 new PageManaInfusorRecipe("3", AlfheimRecipes.recipeManaStoneGreater),
 								 new PageText("4"),
-								 new PageCraftingRecipe("5", AlfheimRecipes.recipeManaElvenRing),
+								 new PageCraftingRecipe("5", AlfheimRecipes.recipeManaRingElven),
 								 new PageCraftingRecipe("6", ringRecipes))
 				.setIcon(new ItemStack(AlfheimItems.manaStone));
+		
+		auraAlf	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"),
+								 new PageCraftingRecipe("1", AlfheimRecipes.recipeAuraRingElven),
+								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAuraRingGod))
+				.setIcon(new ItemStack(AlfheimItems.auraRingElven));
 		
 		List<IRecipe> amuletRecipes = new ArrayList();
 		amuletRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
@@ -249,17 +295,21 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
 				.setIcon(new ItemStack(AlfheimItems.realitySword));
 		
-		excalibr.setKnowledgeType(BotaniaAPI.relicKnowledge)
-				.setLexiconPages(new PageText("0"))
-				.setIcon(new ItemStack(AlfheimItems.excaliber));
+		flugel	.setKnowledgeType(kt)
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
+				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge)
-				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"))
+				.setLexiconPages(new PageText("0"), new PageText("1"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
 		
 		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)
 				.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mask));
+		
+		excalibr.setKnowledgeType(BotaniaAPI.relicKnowledge)
+				.setLexiconPages(new PageTextLearnableAchievement("0", AlfheimAchievements.excaliber))
+				.setIcon(new ItemStack(AlfheimItems.excaliber));
 		
 		/*mjolnir	.setKnowledgeType(BotaniaAPI.relicKnowledge)
 				.setLexiconPages(new PageText("0"))
@@ -283,6 +333,36 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"));
 		
 		races	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"));
+		
+		initMMO();
+	}
+	
+	private static void initMMO() {
+		parties	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipePeacePipe),
+								 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
+				.setIcon(null);
+		
+		spells	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+		
+		targets	.setKnowledgeType(BotaniaAPI.basicKnowledge).setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"));
+	}
+	
+	public static void postInit() {
+		postInitMMO();
+	}
+	
+	private static void postInitMMO() {
+		ArrayList<SpellBase> l = Lists.newArrayList(AlfheimAPI.spells);
+		l.sort(new Comparator<SpellBase>() {
+			@Override
+			public int compare(SpellBase s1, SpellBase s2) {
+				return s1.getName().compareTo(s2.getName());
+			}
+		});
+		for (SpellBase spell : l) spells.addPage(new PageSpell(spell));
 	}
 }

@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -49,6 +50,15 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
 	int mana, manaRequest, knownMana = -1;
 	ItemStack result;
+
+	public static MultiblockSet makeMultiblockSetUnknown() {
+		Multiblock mb = new Multiblock();
+		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], Blocks.wool, 0);
+		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[1], Blocks.wool, 15);
+		mb.addComponent(0, 0, 0, AlfheimBlocks.manaInfuser, 0);
+		mb.setRenderOffset(0, 1, 0);
+		return mb.makeSet();
+	}
 
 	public static MultiblockSet makeMultiblockSet() {
 		Multiblock mb = new Multiblock();

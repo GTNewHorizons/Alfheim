@@ -43,7 +43,7 @@ public class BiomeMount3Trees extends BiomeAlfheim {
 		decorateChunkGen_List.add(b);
 		WE_StructureGen t = new WE_StructureGen();
 		t.add(new StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 0), 1);
-		t.add(new StructureDreamsTree(AlfheimBlocks.dreamlog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0), 2);
+		t.add(new StructureDreamsTree(AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0), 2);
 		decorateChunkGen_List.add(t);
 		WorldGenGrass g = new WorldGenGrass(true, true, true, true, 1.2);
 		decorateChunkGen_List.add(g);

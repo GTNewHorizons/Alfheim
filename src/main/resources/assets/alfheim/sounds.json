@@ -1,0 +1,56 @@
+{
+	"horn.bhorn": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "horn/bhorn",
+				"stream": false
+			}
+		]
+	},
+	"horn.ehorn": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "horn/ehorn",
+				"stream": false
+			}
+		]
+	},
+	"horn.ghorn": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "horn/ghorn",
+				"stream": false
+			}
+		]
+	},
+	"redexp": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "redexp",
+				"stream": false
+			}
+		]
+	},
+	"quad": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "quad",
+				"stream": false
+			}
+		]
+	},
+	"quadh": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "quadh",
+				"stream": false
+			}
+		]
+	}
+}
