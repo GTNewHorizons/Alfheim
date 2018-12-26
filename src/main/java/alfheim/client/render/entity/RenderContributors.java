@@ -1,12 +1,10 @@
 package alfheim.client.render.entity;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import org.lwjgl.opengl.GL13;
-
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alexsocol.asjlib.render.ASJShaderHelper;
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback;
 import alexsocol.asjlib.render.RenderPostShaders;
@@ -31,13 +29,34 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import vazkii.botania.client.core.helper.ShaderHelper;
-import vazkii.botania.client.fx.FXWisp;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class RenderContributors {
 
 	public static EffectRenderer effectRenderer = new EffectRenderer(Minecraft.getMinecraft().theWorld, Minecraft.getMinecraft().renderEngine);
 	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
+	public static int fireID = ASJShaderHelper.createProgram(null, "shaders/fire.frag");
+	public static ShaderCallback callback = new ShaderCallback() {
+		@Override
+		public void call(int shaderID) {
+			TextureManager r = Minecraft.getMinecraft().renderEngine;
+			
+			int explosionUniform = glGetUniformLocation(shaderID, "explosion");
+			int gravelUniform = glGetUniformLocation(shaderID, "gravel");
+			
+			OpenGlHelper.setActiveTexture(GL_TEXTURE0); 
+			r.bindTexture(LibResourceLocations.explosion);
+			glUniform1i(explosionUniform, 0);
+
+			OpenGlHelper.setActiveTexture(GL_TEXTURE0 + ConfigHandler.glSecondaryTextureUnit);
+			glEnable(GL_TEXTURE_2D);
+			glGetInteger(GL_TEXTURE_BINDING_2D);
+			r.bindTexture(LibResourceLocations.gravel);
+			glUniform1i(gravelUniform, ConfigHandler.glSecondaryTextureUnit);
+			
+			OpenGlHelper.setActiveTexture(GL_TEXTURE0); 
+		}
+	};
 	
 	public static ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.babylon) {
 		
@@ -141,27 +160,7 @@ public class RenderContributors {
 				}
 				
 				glColor3d(1, 1, 1);
-				ASJShaderHelper.useShader(ASJShaderHelper.createProgram(null, "shaders/fire.frag"), new ShaderCallback() {
-					@Override
-					public void call(int shaderID) {
-						TextureManager r = Minecraft.getMinecraft().renderEngine;
-						
-						int explosionUniform = glGetUniformLocation(shaderID, "explosion");
-						int gravelUniform = glGetUniformLocation(shaderID, "gravel");
-						
-						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0); 
-						r.bindTexture(LibResourceLocations.explosion);
-						glUniform1i(explosionUniform, 0);
-
-						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0 + ConfigHandler.glSecondaryTextureUnit);
-						glEnable(GL_TEXTURE_2D);
-						glGetInteger(GL_TEXTURE_BINDING_2D);
-						r.bindTexture(LibResourceLocations.gravel);
-						glUniform1i(gravelUniform, ConfigHandler.glSecondaryTextureUnit);
-						
-						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0); 
-					}
-				});
+				ASJShaderHelper.useShader(fireID, callback);
 				
 				{ // leather
 					glPushMatrix();

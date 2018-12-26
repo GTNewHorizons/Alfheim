@@ -61,7 +61,7 @@ vec4 sampleFire(vec3 loc, vec4 scale) {
 
 void main(void) {
 	vec2 uv = vec2(gl_TexCoord[0]);
-    vec3 uvInput = vec3(uv.x, uv.y * 0.75, 0.0);
-    vec3 color = sampleFire(uvInput, vec4(1.0, 2.0, 1.0, 0.5)).xyz * 1.5;
-    gl_FragColor = vec4(color, color.b);
+    vec3 uvInput = vec3(uv.x - 0.5, uv.y, 0.0);
+    vec3 color = sampleFire(uvInput, vec4(1.0, 2.0, 1.0, 0.5)).rgb * 1.5;
+    gl_FragColor = vec4(color, color.r);
 }
