@@ -1,24 +1,35 @@
 package alfheim.client.render.entity;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
+
+import org.lwjgl.opengl.GL13;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
+import alexsocol.asjlib.render.ASJShaderHelper;
+import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback;
 import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
+import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.client.fx.FXWisp;
 import vazkii.botania.common.core.handler.ConfigHandler;
@@ -26,6 +37,7 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 public class RenderContributors {
 
 	public static EffectRenderer effectRenderer = new EffectRenderer(Minecraft.getMinecraft().theWorld, Minecraft.getMinecraft().renderEngine);
+	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
 	
 	public static ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.babylon) {
 		
@@ -67,7 +79,7 @@ public class RenderContributors {
 		EntityPlayer tester = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("KAIIIAK");
 
 		AlexSocol: if (author != null) {
-			//if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
+			if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
 			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
 			//if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
 			
@@ -91,19 +103,87 @@ public class RenderContributors {
 				glTranslated(0, 0.05, -0.5);
 			} else glTranslated(0, 0.15, -0.5);
 			
-			/*{ // ring
+			{ // ring
 				glPushMatrix();
 				glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + e.partialTicks, 0, 1, 0);
 				glScaled(0.2, 0.2, 0.2);
 		
 				so.addTranslation();
 				glPopMatrix();
-			}*/
+			}
 			
 			{ // wings
 				glPushMatrix();
+				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.mine3);
+				glColor3d(0.1, 0.1, 0.1);
 				
-				{
+				glRotated(90, 1, 0, 0);
+				double s = 2, spd = 0.5;
+				glScaled(s, s, s);
+				
+				player.sendPlayerAbilities();
+				boolean flying = player.capabilities.isFlying;
+				double ry = (flying ? 30 : 15) + (Math.sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd * (flying ? 0.4 : 0.2)) + 0.5) * (flying ? 25. : 5.);
+				
+				{ // bones
+					glPushMatrix();
+					glRotated(-ry, 0, 1, 0);
+					glTranslated(-0.35, 0.05, 0.025);
+					model.renderAllExcept("leather");
+					glPopMatrix();
+					
+					glPushMatrix();
+					glRotated(180, 0, 1, 0);
+					glRotated(ry, 0, 1, 0);
+					glTranslated(-0.35, 0.05, -0.025);
+					model.renderAllExcept("leather");	
+					glPopMatrix();
+				}
+				
+				glColor3d(1, 1, 1);
+				ASJShaderHelper.useShader(ASJShaderHelper.createProgram(null, "shaders/fire.frag"), new ShaderCallback() {
+					@Override
+					public void call(int shaderID) {
+						TextureManager r = Minecraft.getMinecraft().renderEngine;
+						
+						int explosionUniform = glGetUniformLocation(shaderID, "explosion");
+						int gravelUniform = glGetUniformLocation(shaderID, "gravel");
+						
+						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0); 
+						r.bindTexture(LibResourceLocations.explosion);
+						glUniform1i(explosionUniform, 0);
+
+						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0 + ConfigHandler.glSecondaryTextureUnit);
+						glEnable(GL_TEXTURE_2D);
+						glGetInteger(GL_TEXTURE_BINDING_2D);
+						r.bindTexture(LibResourceLocations.gravel);
+						glUniform1i(gravelUniform, ConfigHandler.glSecondaryTextureUnit);
+						
+						OpenGlHelper.setActiveTexture(GL13.GL_TEXTURE0); 
+					}
+				});
+				
+				{ // leather
+					glPushMatrix();
+					glRotated(-ry, 0, 1, 0);
+					glTranslated(-0.35, 0.05, 0.025);
+					
+					model.renderPart("leather");
+					glPopMatrix();
+					
+					glPushMatrix();
+					glRotated(180, 0, 1, 0);
+					glRotated(ry, 0, 1, 0);
+					glTranslated(-0.35, 0.05, -0.025);
+					
+					model.renderPart("leather");
+					glPopMatrix();
+				}
+				
+				ASJShaderHelper.releaseShader();
+				glColor3d(1, 1, 1);
+				
+				/*{
 					Vector3 v = new Vector3();
 					wispFX(Minecraft.getMinecraft().theWorld,
 							// pos
@@ -121,7 +201,8 @@ public class RenderContributors {
 				effectRenderer.updateEffects();
 				if (Minecraft.getMinecraft().entityRenderer.debugViewDirection == 0)
 					effectRenderer.renderParticles(player, Minecraft.getMinecraft().timer.renderPartialTicks);
-
+				*/
+				
 				glPopMatrix();
 			}
 			

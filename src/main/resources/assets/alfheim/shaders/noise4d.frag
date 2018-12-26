@@ -109,6 +109,7 @@ vec3 _sn_4_floatToColor(float v){
 	  return abs(vec3(v));
 }
 
+// Original shader from https://shaderfrog.com/app/view/1883
 void main() {
 	vec3 _io_4_return = vPos / 10.0 + ftime * speed;
 	float _io_5_return = _sn_3_octive(_io_4_return);

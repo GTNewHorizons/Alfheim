@@ -20,10 +20,12 @@ public class LibResourceLocations {
 	public static ResourceLocation elvenPylon = new ResourceLocation(LibResources.MODEL_PYLON_PINK);
 	public static ResourceLocation elvenPylonOld = new ResourceLocation(LibResources.MODEL_PYLON_PINK_OLD);
 	public static ResourceLocation elvoriumArmor = new ResourceLocation(ModInfo.MODID, "textures/model/armor/ElvoriumArmor.png");
+	public static ResourceLocation explosion = new ResourceLocation(ModInfo.MODID, "textures/misc/explosion.png");
 	public static ResourceLocation gaiaPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylon.png");
 	public static ResourceLocation gaiaPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/GaiaPylonOld.png");
 	public static ResourceLocation glow = new ResourceLocation(ModInfo.MODID, "textures/misc/glow.png");
 	public static ResourceLocation glowCyan = new ResourceLocation(LibResources.MISC_GLOW_CYAN);
+	public static ResourceLocation gravel = new ResourceLocation(ModInfo.MODID, "textures/misc/gravel.png");
 	public static ResourceLocation gravity = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Gravity.png");
 	public static ResourceLocation halo = new ResourceLocation(LibResources.MISC_HALO);
 	public static ResourceLocation health = new ResourceLocation(ModInfo.MODID, "textures/gui/health.png");

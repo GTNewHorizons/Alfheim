@@ -51,27 +51,27 @@ public class FXWispBound extends EntityFX {
 		setSize(0.01F, 0.01F);
 		EntityLivingBase renderentity = FMLClientHandler.instance().getClient().renderViewEntity;
 
-		if(distanceLimit) {
+		/*if(distanceLimit) {
 			int visibleDistance = 50;
 			if (!FMLClientHandler.instance().getClient().gameSettings.fancyGraphics)
 				visibleDistance = 25;
 
 			if (renderentity == null || renderentity.getDistance(posX, posY, posZ) > visibleDistance)
 				particleMaxAge = 0;
-		}
+		}*/
 
 		prevPosX = posX;
 		prevPosY = posY;
 		prevPosZ = posZ;
 	}
 
-	public static void dispatchQueuedRenders(Tessellator tessellator) {
+	public static void dispatchQueuedRenders(Tessellator tessellator) { // FXWisp
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
 		
-		AlexSocol: if (author != null) {
+		/*AlexSocol:*/ if (author != null) {
 			//if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
-			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
+			//if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
 			//if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
 			
 			glPushMatrix();
@@ -83,7 +83,7 @@ public class FXWispBound extends EntityFX {
 				glTranslated(0, 1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight, 0);
 			}
 			
-			if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
+			/*if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
 				glRotated(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset), 0, 0, 1);
 			} else {
 				glRotated(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw), 0, 0, 1);
@@ -92,7 +92,7 @@ public class FXWispBound extends EntityFX {
 			if(author.isSneaking()) {
 				glRotated(28.64789, 1, 0, 0);
 				glTranslated(0, 0.05, -0.5);
-			} else glTranslated(0, 0.15, -0.5);
+			} else glTranslated(0, 0.15, -0.5);*/
 			
 			glColor4f(1.0F, 1.0F, 1.0F, 0.75F);
 			Minecraft.getMinecraft().renderEngine.bindTexture(ConfigHandler.matrixMode ? ObfuscationHelper.getParticleTexture() : particles);
@@ -110,8 +110,6 @@ public class FXWispBound extends EntityFX {
 	}
 
 	private void renderQueued(Tessellator tessellator, boolean depthEnabled) {
-		
-		
 		ParticleRenderDispatcherBound.wispFxCount++;
 
 		float agescale = 0;
