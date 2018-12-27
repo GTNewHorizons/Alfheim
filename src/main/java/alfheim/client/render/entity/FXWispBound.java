@@ -62,10 +62,10 @@ public class FXWispBound extends EntityFX {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
 		
-		/*AlexSocol:*/ if (author != null) {
-			//if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
-			//if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
-			//if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
+		AlexSocol: if (author != null) {
+			if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
+			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
+			if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
 			
 			glPushMatrix();
 			ParticleRenderDispatcherBound.wispFxCount = 0;
@@ -104,7 +104,7 @@ public class FXWispBound extends EntityFX {
 	private Vector3 o = new Vector3();
 	private void renderQueued(Tessellator tessellator, boolean depthEnabled) {
 		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
-		
+
 		ParticleRenderDispatcherBound.wispFxCount++;
 
 		float agescale = 0;

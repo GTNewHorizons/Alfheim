@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
 
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alexsocol.asjlib.render.ASJShaderHelper;
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback;
 import alexsocol.asjlib.render.RenderPostShaders;
@@ -37,6 +36,7 @@ public class RenderContributors {
 
 	public static EffectRenderer effectRenderer = new EffectRenderer(Minecraft.getMinecraft().theWorld, Minecraft.getMinecraft().renderEngine);
 	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
+
 	public static ShaderCallback callback = new ShaderCallback() {
 		@Override
 		public void call(int shaderID) {
@@ -101,7 +101,7 @@ public class RenderContributors {
 		AlexSocol: if (author != null) {
 			if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
 			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
-			//if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
+			if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
 			
 			glPushMatrix();
 			
@@ -167,8 +167,7 @@ public class RenderContributors {
 				{ // leather
 					glPushMatrix();
 					glRotated(-ry, 0, 1, 0);
-					glTranslated(-0.35, 0.05, 0.065);
-					
+					glTranslated(-0.35, 0.05, 0.065);					
 					model.renderPart("leather");
 					glPopMatrix();
 					
@@ -176,7 +175,6 @@ public class RenderContributors {
 					glRotated(180, 0, 1, 0);
 					glRotated(ry, 0, 1, 0);
 					glTranslated(-0.35, 0.05, -0.065);
-					
 					model.renderPart("leather");
 					glPopMatrix();
 				}
@@ -185,7 +183,6 @@ public class RenderContributors {
 				glColor3d(1, 1, 1);
 				
 				double off = 0;
-				
 				for (int c = 0; c < 8; c++) {
 					for (int i = -1; i < 2; i += 2) {
 						off = (0.1 + Math.random() * 1.8);
@@ -203,7 +200,6 @@ public class RenderContributors {
 								// offset
 								off * i);
 					}
-				}
 				
 				effectRenderer.updateEffects();
 				if (Minecraft.getMinecraft().entityRenderer.debugViewDirection == 0)
