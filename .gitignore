@@ -46,31 +46,14 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Just to disable all unnecessary files and folders
+# Just to disable ALL unnecessary files and folders
 
-/.gradle
-/.metadata
-/.settings
-/_BLANKSET
-/_GA
-/_GUNS
-/_JJ
-/_MS
-/_OSM
-/_PG
-/_SCPC2R
-/bin
-/build
-/eclipse
-/gradle
-/libs
-/.classpath
-/.project
-/compile.bat
-/events.xlsx
-/fields.csv
-/methods.csv
-/refresh.bat
-/data.lnk
-/fields.lnk
-/utils
+/*
+/*/
+!/src/
+!/.gitattributes
+!/.gitignore
+!/build.gradle
+!/gradlew
+!/gradlew.bat
+!/setup.bat

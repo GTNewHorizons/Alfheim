@@ -28,7 +28,7 @@ import net.minecraft.item.Item;
 	name = NAME,
 	version = VERSION,
 	guiFactory = MODID + ".client.gui.GUIFactory",
-	dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3")
+	dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3;after:Thaumcraft")
 
 public class AlfheimCore {
 
