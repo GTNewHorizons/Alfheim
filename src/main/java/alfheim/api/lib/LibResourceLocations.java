@@ -25,7 +25,6 @@ public class LibResourceLocations {
 	public static ResourceLocation glow = new ResourceLocation(ModInfo.MODID, "textures/misc/glow.png");
 	public static ResourceLocation glowCyan = new ResourceLocation("botania:textures/misc/glow1.png");
 	public static ResourceLocation gravel = new ResourceLocation(ModInfo.MODID, "textures/misc/gravel.png");
-	public static ResourceLocation gravel = new ResourceLocation(ModInfo.MODID, "textures/misc/gravel.png");
 	public static ResourceLocation gravity = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Gravity.png");
 	public static ResourceLocation halo = new ResourceLocation("botania:textures/misc/halo.png");
 	public static ResourceLocation health = new ResourceLocation(ModInfo.MODID, "textures/gui/health.png");

@@ -15,7 +15,6 @@ import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
-import alfheim.client.render.entity.ParticleRenderDispatcherBound;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -89,11 +88,16 @@ public class EventHandlerClient {
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
-		RenderWings.render(e, e.entityPlayer);
-		
+	public void onPlayerSpecialPreRender(RenderPlayerEvent.Specials.Pre e) {
 		if (e.entityPlayer.getCommandSenderName().equals("AlexSocol"))
 			((AbstractClientPlayer) e.entityPlayer).func_152121_a(Type.SKIN, LibResourceLocations.skin);
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
+		RenderWings.render(e, e.entityPlayer);
+		RenderContributors.render(e, e.entityPlayer);
 	}
 
 	@SubscribeEvent
@@ -117,10 +121,7 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onWorldLastRender(RenderWorldLastEvent e) {
-		RenderContributors.render(e);
-		
 		Minecraft.getMinecraft().mcProfiler.startSection("alf-particles");
-		ParticleRenderDispatcherBound.dispatch();
 		
 		if (!AlfheimCore.enableElvenStory) return;
 		

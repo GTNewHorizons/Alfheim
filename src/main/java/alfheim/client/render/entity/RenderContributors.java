@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
 
+import org.lwjgl.opengl.GL11;
+
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.render.ASJShaderHelper;
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback;
@@ -26,15 +28,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+import vazkii.botania.api.item.IBaubleRender.Helper;
 import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class RenderContributors {
 
-	public static EffectRenderer effectRenderer = new EffectRenderer(Minecraft.getMinecraft().theWorld, Minecraft.getMinecraft().renderEngine);
 	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
 
 	public static ShaderCallback callback = new ShaderCallback() {
@@ -92,41 +95,20 @@ public class RenderContributors {
 		RenderPostShaders.registerShadedObject(so);
 	}
 	
-	public static void render(RenderWorldLastEvent e) {
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
-		EntityPlayer lore = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("DmitryWS");
-		EntityPlayer tester = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("KAIIIAK");
-
-		AlexSocol: if (author != null) {
-			if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
-			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
-			if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
+	public static void render(RenderPlayerEvent.Specials.Post e, EntityPlayer player) {
+		if (player.isInvisible() || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return;
+		
+		AlexSocol: if (player.getCommandSenderName().equals("AlexSocol")) {
+			if (player.equals(Minecraft.getMinecraft().thePlayer) && (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) || !AlfheimConfig.fancies) break AlexSocol;
 			
 			glPushMatrix();
-			
-			if (!player.equals(author)) {
-				ASJUtilities.interpolatedTranslation(author);
-				ASJUtilities.interpolatedTranslationReverse(player);
-				glTranslated(0, 1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight, 0);
-			}
-			
-			glRotated(-90, 1, 0, 0);
-			
-			if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
-				glRotated(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset), 0, 0, 1);
-			} else {
-				glRotated(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw), 0, 0, 1);
-			}
-			
-			if(author.isSneaking()) {
-				glRotated(28.64789, 1, 0, 0);
-				glTranslated(0, 0.05, -0.5);
-			} else glTranslated(0, 0.15, -0.5);
+			glRotated(90, 1, 0, 0);
+			Helper.rotateIfSneaking(player);
+			glTranslated(0, 0.15, -0.25);
 			
 			{ // ring
 				glPushMatrix();
-				glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + e.partialTicks, 0, 1, 0);
+				glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + Minecraft.getMinecraft().timer.renderPartialTicks, 0, 1, 0);
 				glScaled(0.2, 0.2, 0.2);
 		
 				so.addTranslation();
@@ -142,21 +124,21 @@ public class RenderContributors {
 				double s = 2, spd = 0.5;
 				glScaled(s, s, s);
 				
-				author.sendPlayerAbilities();
-				boolean flying = author.capabilities.isFlying;
-				double ry = (flying ? 30 : 15) + (Math.sin((author.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd * (flying ? 0.4 : 0.2)) + 0.5) * (flying ? 25. : 5.);
+				player.sendPlayerAbilities();
+				boolean flying = player.capabilities.isFlying;
+				double ry = (flying ? 30 : 15) + (Math.sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd * (flying ? 0.4 : 0.2)) + 0.5) * (flying ? 25. : 5.);
 				
 				{ // bones
 					glPushMatrix();
 					glRotated(-ry, 0, 1, 0);
-					glTranslated(-0.35, 0.05, 0.065);
+					glTranslated(-0.35, 0.05, 0.025);
 					model.renderAllExcept("leather");
 					glPopMatrix();
 					
 					glPushMatrix();
 					glRotated(180, 0, 1, 0);
 					glRotated(ry, 0, 1, 0);
-					glTranslated(-0.35, 0.05, -0.065);
+					glTranslated(-0.35, 0.05, -0.025);
 					model.renderAllExcept("leather");	
 					glPopMatrix();
 				}
@@ -167,79 +149,45 @@ public class RenderContributors {
 				{ // leather
 					glPushMatrix();
 					glRotated(-ry, 0, 1, 0);
-					glTranslated(-0.35, 0.05, 0.065);					
+					glTranslated(-0.35, 0.05, 0.025);					
 					model.renderPart("leather");
 					glPopMatrix();
 					
 					glPushMatrix();
 					glRotated(180, 0, 1, 0);
 					glRotated(ry, 0, 1, 0);
-					glTranslated(-0.35, 0.05, -0.065);
+					glTranslated(-0.35, 0.05, -0.025);
 					model.renderPart("leather");
 					glPopMatrix();
 				}
 				
 				ASJShaderHelper.releaseShader();
-				glColor3d(1, 1, 1);
-				
-				double off = 0;
-				for (int c = 0; c < 8; c++) {
-					for (int i = -1; i < 2; i += 2) {
-						off = (0.1 + Math.random() * 1.8);
-						wispFX(Minecraft.getMinecraft().theWorld,
-								// pos
-								0, -.3 + (off > 0.8 ? (1.9 - off) / 2 + Math.sin(off) - 1 : off / 4 - 0.1), 0,
-								// rgb
-								1, /*(float) Math.random() **/ 0.25F, /*(float) Math.random() **/ 0.075F,
-								// size
-								0.05F + (float) Math.random() * 0.05F,
-								// motion
-								0, -0.005F - (float)(Math.random() * 0.01), 0,
-								// max age
-								2,
-								// offset
-								off * i);
-					}
-				
-				effectRenderer.updateEffects();
-				if (Minecraft.getMinecraft().entityRenderer.debugViewDirection == 0)
-					effectRenderer.renderParticles(player, Minecraft.getMinecraft().timer.renderPartialTicks);
-				
+				glColor4d(1, 1, 1, 1);
 				glPopMatrix();
 			}
 			
 			glPopMatrix();
 		}
 		
-		DmitryWS: if (lore != null) {
-			if (player.equals(lore) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break DmitryWS;
-			if (player.equals(lore) && !AlfheimConfig.fancies) break DmitryWS;
-			if (lore.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break DmitryWS; // FIXME more invis checks
+		DmitryWS: if (player.getCommandSenderName().equals("DmitryWS")) {
+			if (player.equals(Minecraft.getMinecraft().thePlayer) && (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) || !AlfheimConfig.fancies) break DmitryWS;
 			
 			glPushMatrix();
 			glEnable(GL_CULL_FACE);
-			float t = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + e.partialTicks;
+			double t = Math.sin((Minecraft.getMinecraft().theWorld.getTotalWorldTime() + Minecraft.getMinecraft().timer.renderPartialTicks) / 10.);
 			
-			if (!player.equals(lore)) {
-				ASJUtilities.interpolatedTranslation(lore);
-				ASJUtilities.interpolatedTranslationReverse(player);
-				glTranslated(0, 1.75 + Minecraft.getMinecraft().thePlayer.eyeHeight, 0);
-			}
-			
-			glTranslated(0, 1.5 -(0.9 + Math.sin(t / 20) * 0.025), 0);
-			glRotated(-ASJUtilities.interpolate(lore.prevRotationYaw, lore.rotationYaw), 0, 1, 0);
+			glTranslated(0, -(0.9 + t * 0.05), 0);
+			glRotated(180, 1, 0, 0);
 			glRotated(-90, 0, 1, 0);
 			glRotated(60, 0, 0, 1);
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.lexica);
 			ModelBook model = new ModelBook();
-			model.render((Entity)null, 0, 0, 0.95F, 1, 0.0F, 0.0625F);
+			model.render((Entity)null, 0, 0.075F + (float) (t * 0.025), 0.925F - (float) (t * 0.025), 1, 0.0F, 0.0625F);
 			glPopMatrix();
 		}
 		
-		KAIIIAK: if (tester != null) {
-			if (player.equals(tester) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break KAIIIAK;
-			if (player.equals(tester) && !AlfheimConfig.fancies) break KAIIIAK;
-			if (tester.isPotionActive(Potion.invisibility) || tester.isPotionActive(AlfheimRegistry.leftFlame)) break KAIIIAK; // FIXME more invis checks
+		KAIIIAK: if (player.getCommandSenderName().equals("KAIIIAK")) {
+			if (player.equals(Minecraft.getMinecraft().thePlayer) && (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) || !AlfheimConfig.fancies) break KAIIIAK;
 			
 			glPushMatrix();
 			glEnable(GL_BLEND);
@@ -247,14 +195,8 @@ public class RenderContributors {
 			glDisable(GL_CULL_FACE);
 			glShadeModel(GL_SMOOTH);
 			
-			if (!player.equals(tester)) {
-				ASJUtilities.interpolatedTranslation(tester);
-				ASJUtilities.interpolatedTranslationReverse(player);
-			} else {
-				glTranslated(0, -1.5, 0);
-			}
-			
-			glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + e.partialTicks, 0, 1, 0);
+			glTranslated(0, player == Minecraft.getMinecraft().thePlayer ? 1.25 : 0.25, 0);
+			glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + Minecraft.getMinecraft().timer.renderPartialTicks, 0, 1, 0);
 			glScaled(2, 2, 2);
 			
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.aura);
@@ -271,33 +213,5 @@ public class RenderContributors {
 			glDisable(GL_BLEND);
 			glPopMatrix();
 		}
-	}
-	
-	private static void wispFX(World world, double x, double y, double z, float r, float g, float b, float size, float motionx, float motiony, float motionz, float maxAgeMul, double offset) {
-		if(!doParticle(world))
-			return;
-
-		FXWispBound wisp = new FXWispBound(world, x, y, z, size, r, g, b, true, true, maxAgeMul, offset);
-		wisp.motionX = motionx;
-		wisp.motionY = motiony;
-		wisp.motionZ = motionz;
-
-		effectRenderer.addEffect(wisp);
-	}
-
-	private static boolean doParticle(World world) {
-		if(!world.isRemote)
-			return false;
-
-		if(!ConfigHandler.useVanillaParticleLimiter)
-			return true;
-
-		float chance = 1F;
-		if(Minecraft.getMinecraft().gameSettings.particleSetting == 1)
-			chance = 0.6F;
-		else if(Minecraft.getMinecraft().gameSettings.particleSetting == 2)
-			chance = 0.2F;
-
-		return chance == 1F || Math.random() < chance;
 	}
 }
