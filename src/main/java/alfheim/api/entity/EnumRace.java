@@ -1,6 +1,5 @@
 package alfheim.api.entity;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.AlfheimAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
@@ -49,7 +48,7 @@ public enum EnumRace {
 	}
 	
 	public static void glColor(double id) {
-		ASJUtilities.glColor1u(ASJUtilities.addAlpha(getRGBColor(id), 255));
+		glColor1u(addAlpha(getRGBColor(id), 255));
 	}
 	
 	public void glColorA(double alpha) {
@@ -57,7 +56,15 @@ public enum EnumRace {
 	}
 	
 	public static void glColorA(double id, double alpha) {
-		ASJUtilities.glColor1u(ASJUtilities.addAlpha(getRGBColor(id), (int) (alpha * 255)));
+		glColor1u(addAlpha(getRGBColor(id), (int) (alpha * 255)));
+	}
+	
+	private static int addAlpha(int color, int alpha) { 
+		return ((alpha & 0xFF) << 24) | (color & 0x00FFFFFF); 
+	}
+	
+	private static void glColor1u(int color) {
+		org.lwjgl.opengl.GL11.glColor4ub((byte) (color >> 16 & 0xFF), (byte)(color >> 8 & 0xFF), (byte) (color & 0xFF), (byte) (color >> 24 & 0xFF));
 	}
 	
 	public static EnumRace getByID(double id) {

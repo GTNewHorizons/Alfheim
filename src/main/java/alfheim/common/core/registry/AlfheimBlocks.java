@@ -43,7 +43,7 @@ public class AlfheimBlocks {
 
 	private static void construct() {
 		alfheimPortal = new BlockAlfheimPortal();
-		alfheimPylons = new BlockAlfheimPylons();
+		alfheimPylons = new BlockAlfheimPylon();
 		anyavil = new BlockAnyavil();
 		dreamLeaves = new BlockDreamLeaves();
 		dreamLog = new BlockDreamLog();

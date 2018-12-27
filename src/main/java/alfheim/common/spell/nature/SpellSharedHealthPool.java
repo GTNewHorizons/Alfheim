@@ -20,6 +20,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellSharedHealthPool extends SpellBase {
 
+	public SpellSharedHealthPool() {
+		super("sharedhp", EnumRace.CAITSITH, 256000, 72000, 100, true);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -57,37 +61,4 @@ public class SpellSharedHealthPool extends SpellBase {
 		caster.setHealth(total);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.CAITSITH;
-	}
-
-	@Override
-	public String getName() {
-		return "sharedhp";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 256000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 72000;
-	}
-
-	@Override
-	public int castTime() {
-		return 100;
-	}
-
-	@Override
-	public boolean isHard() {
-		return true;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

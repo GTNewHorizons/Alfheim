@@ -26,6 +26,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellAquaBind extends SpellBase {
 
+	public SpellAquaBind() {
+		super("aquabind", EnumRace.UNDINE, 4000, 600, 15);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(caster, 15, false);
@@ -52,36 +56,6 @@ public class SpellAquaBind extends SpellBase {
 
 		SpellEffectHandler.sendPacket(Spells.AQUABIND, caster.dimension, hit.x, hit.y, hit.z);
 		return result;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "aquabind";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 4000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 15;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

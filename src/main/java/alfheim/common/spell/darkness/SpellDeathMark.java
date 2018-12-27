@@ -17,6 +17,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellDeathMark extends SpellBase {
 
+	public SpellDeathMark() {
+		super("deathmark", EnumRace.IMP, 24000, 3000, 10);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -39,37 +43,4 @@ public class SpellDeathMark extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.IMP;
-	}
-
-	@Override
-	public String getName() {
-		return "deathmark";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 24000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 3000;
-	}
-
-	@Override
-	public int castTime() {
-		return 10;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellHollowBody extends SpellBase {
 
+	public SpellHollowBody() {
+		super("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -38,37 +42,4 @@ public class SpellHollowBody extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SPRIGGAN;
-	}
-
-	@Override
-	public String getName() {
-		return "hollowbody";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 10000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1200;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -24,6 +24,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellTrueSigh extends SpellBase {
 
+	public SpellTrueSigh() {
+		super("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayerMP)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -44,37 +48,4 @@ public class SpellTrueSigh extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SPRIGGAN;
-	}
-
-	@Override
-	public String getName() {
-		return "truesigh";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 2000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 2500;
-	}
-
-	@Override
-	public int castTime() {
-		return 40;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

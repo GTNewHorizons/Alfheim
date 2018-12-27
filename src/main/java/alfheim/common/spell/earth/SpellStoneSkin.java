@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellStoneSkin extends SpellBase {
 
+	public SpellStoneSkin() {
+		super("stoneskin", EnumRace.GNOME, 3000, 600, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -35,37 +39,4 @@ public class SpellStoneSkin extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.GNOME;
-	}
-
-	@Override
-	public String getName() {
-		return "stoneskin";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 3000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

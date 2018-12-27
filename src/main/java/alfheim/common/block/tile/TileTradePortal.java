@@ -170,7 +170,7 @@ public class TileTradePortal extends TileMod {
 		int i = this.worldObj.rand.nextInt(BotaniaAPI.elvenTradeRecipes.size());
 		RecipeElvenTrade recipe = BotaniaAPI.elvenTradeRecipes.get(i);
 		
-		if (!AlfheimAPI.isRetradeForbidden(recipe.getOutput())) {
+		if (AlfheimAPI.isRetradeable(recipe.getOutput())) {
 			if (recipe.getOutput().getItem() instanceof ItemBlock && Block.getBlockFromItem(recipe.getOutput().getItem()) instanceof BlockStorage && this.worldObj.rand.nextInt(10) != 0) setRandomRecipe();
 			this.tradeRecipe = recipe;
 			this.recipeMult = this.worldObj.rand.nextInt(16) + 1;

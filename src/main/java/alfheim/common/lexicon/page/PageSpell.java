@@ -32,7 +32,7 @@ public class PageSpell extends LexiconPage {
 	SpellBase spell;
 	
 	public PageSpell(SpellBase s) {
-		super("botania.page." + s.getName());
+		super("botania.page." + s.name);
 		spell = s;
 	}
 
@@ -50,25 +50,25 @@ public class PageSpell extends LexiconPage {
 		
 		glPushMatrix();
 		glTranslated(gui.getWidth() / 2 - 16, 8, 0);
-		GUISpells.drawRect(spell.isHard() ? LibResourceLocations.spellFrameEpic : LibResourceLocations.spellFrame, 32);
+		GUISpells.drawRect(spell.hard ? LibResourceLocations.spellFrameEpic : LibResourceLocations.spellFrame, 32);
 		glTranslated(8, 8, 0);
-		GUISpells.drawRect(LibResourceLocations.spell(spell.getName()), 16);
-		text = EnumChatFormatting.BOLD + StatCollector.translateToLocal("spell." + spell.getName() + ".name");
+		GUISpells.drawRect(LibResourceLocations.spell(spell.name), 16);
+		text = EnumChatFormatting.BOLD + StatCollector.translateToLocal("spell." + spell.name + ".name");
 		font.drawString(text, font.getStringWidth(text) / -2 + 8, 24, 0);
 		glColor4d(1, 1, 1, 1);
 		
 		glTranslated(-32, 0, 0);
-		GUISpells.drawRect(LibResourceLocations.affinities[spell.getRace().ordinal()], 16);
+		GUISpells.drawRect(LibResourceLocations.affinities[spell.race.ordinal()], 16);
 		glTranslated(64, 0, 0);
 		glMatrixMode(GL_TEXTURE);
 		glScaled(-1, 1, 1);
-		GUISpells.drawRect(LibResourceLocations.affinities[spell.getRace().ordinal()], 16);
+		GUISpells.drawRect(LibResourceLocations.affinities[spell.race.ordinal()], 16);
 		glScaled(-1, 1, 1);
 		glMatrixMode(GL_MODELVIEW);
 		
 		glPopMatrix();
 		String s = StatCollector.translateToLocal("lexicon.seconds");
-		text = String.format(StatCollector.translateToLocal("lexicon.time") + s, spell.castTime() / 20.0).replaceAll("\\.0" + s, s);
+		text = String.format(StatCollector.translateToLocal("lexicon.time") + s, spell.getCastTime() / 20.0).replaceAll("\\.0" + s, s);
 		font.drawString(text, 16, 48, 0);
 		text = String.format(StatCollector.translateToLocal("lexicon.cd") + s, spell.getCooldown() / 20.0).replaceAll("\\.0" + s, s);
 		font.drawString(text, gui.getWidth() - font.getStringWidth(text) - 16, 48, 0);

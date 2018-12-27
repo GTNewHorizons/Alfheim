@@ -762,22 +762,6 @@ public class ASJUtilities {
 		return def;
 	}
 	
-	/**
-	 * @return map key by id
-	 * */
-	public static <K, V> K mapGetKeyId(Map<K, V> map, int i) {
-		List<K> keys = new ArrayList(map.keySet());
-		return keys.get(i);
-	}
-	
-	/**
-	 * @return map value by id
-	 * */
-	public static <K, V> V mapGetValueId(Map<K, V> map, int i) {
-		List<V> vals = new ArrayList(map.values());
-		return vals.get(i);
-	}
-	
 	public static int[] colorCode = new int[32];
 	
 	static {

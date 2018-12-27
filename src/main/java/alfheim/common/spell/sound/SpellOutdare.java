@@ -11,6 +11,10 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class SpellOutdare extends SpellBase {
 
+	public SpellOutdare() {
+		super("outdare", EnumRace.POOKA, 6000, 2400, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		List<EntityLiving> l = caster.worldObj.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(32, 32, 32));
@@ -29,37 +33,4 @@ public class SpellOutdare extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.POOKA;
-	}
-
-	@Override
-	public String getName() {
-		return "outdare";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 6000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 2400;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

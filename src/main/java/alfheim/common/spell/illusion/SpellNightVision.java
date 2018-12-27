@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellNightVision extends SpellBase {
 
+	public SpellNightVision() {
+		super("nightvision", EnumRace.SPRIGGAN, 6000, 1200, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -35,37 +39,4 @@ public class SpellNightVision extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SPRIGGAN;
-	}
-
-	@Override
-	public String getName() {
-		return "nightvision";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 6000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1200;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

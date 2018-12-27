@@ -19,6 +19,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellPurifyingSurface extends SpellBase {
 
+	public SpellPurifyingSurface() {
+		super("purifyingsurface", EnumRace.UNDINE, 5000, 600, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -37,36 +41,6 @@ public class SpellPurifyingSurface extends SpellBase {
 			SpellEffectHandler.sendPacket(Spells.PURE, living);
 		}
 		return result;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "purifyingsurface";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 5000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

@@ -15,6 +15,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellGravityTrap extends SpellBase {
 
+	public SpellGravityTrap() {
+		super("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(caster, 15, true);
@@ -25,36 +29,6 @@ public class SpellGravityTrap extends SpellBase {
 			return result;
 		}
 		return SpellCastResult.WRONGTGT;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.LEPRECHAUN;
-	}
-
-	@Override
-	public String getName() {
-		return "gravitytrap";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 10000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

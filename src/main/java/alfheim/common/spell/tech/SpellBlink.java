@@ -13,6 +13,10 @@ import vazkii.botania.common.Botania;
 
 public class SpellBlink extends SpellBase {
 
+	public SpellBlink() {
+		super("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result;
@@ -65,36 +69,6 @@ public class SpellBlink extends SpellBase {
 	   	}
     	
 		return SpellCastResult.OBSTRUCT;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.LEPRECHAUN;
-	}
-
-	@Override
-	public String getName() {
-		return "blink";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 10000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1200;
-	}
-
-	@Override
-	public int castTime() {
-		return 5;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

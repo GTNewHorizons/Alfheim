@@ -8,6 +8,7 @@ import alexsocol.asjlib.render.ASJShaderHelper;
 import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
 import alfheim.api.lib.LibResourceLocations;
+import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -15,13 +16,10 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class SpellVisualizations {
 
-	public static int noise;
 	public static ShadedObject so;
 	
 	static {
-		noise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
-		
-		so = new ShadedObject(noise, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), null) {
+		so = new ShadedObject(LibShaderIDs.idNoise, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), null) {
 			
 			@Override
 			public void preRender() {

@@ -11,6 +11,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellWallWarp extends SpellBase {
 
+	public SpellWallWarp() {
+		super("wallwarp", EnumRace.GNOME, 4000, 600, 5);
+	}
+
 	@Override
 	// This spell is slightly changed version of item from thKaguya's mod 
 	public SpellCastResult performCast(EntityLivingBase caster) {
@@ -83,37 +87,4 @@ public class SpellWallWarp extends SpellBase {
 		
 		return SpellCastResult.OBSTRUCT;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.GNOME;
-	}
-
-	@Override
-	public String getName() {
-		return "wallwarp";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 4000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 5;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

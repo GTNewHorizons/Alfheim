@@ -5,6 +5,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
@@ -52,9 +53,12 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 		int extraPink = Math.max(0, pinkCharge - MAX_PINK_CHARGE);
 		float[] col = EntitySheep.fleeceColorTable[6];
 		if (extraPink > 0) {
+			extraPink = Math.min(extraPink, 4000);
 			pinkCharge = MAX_PINK_CHARGE;
+			Vector3 m = new Vector3();
 			for (; extraPink > 0; extraPink--) {
-				Botania.proxy.wispFX(world, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, col[0], col[1], col[2], 0.25F, worldObj.rand.nextFloat() / 5.0F - 0.1F, worldObj.rand.nextFloat() / 5.0F - 0.1F, worldObj.rand.nextFloat() / 5.0F - 0.1F);
+				m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.1);
+				Botania.proxy.wispFX(world, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, col[0], col[1], col[2], 0.25F, (float) m.x, (float) m.y, (float) m.z);
 			}
 		}
 		
@@ -63,7 +67,7 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 		pinkCharge -= transfer;
 		item.setItemDamage(item.getItemDamage() - transfer);
 		
-		for (int i = 0; i < 24; i++) Botania.proxy.wispFX(world, xCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), yCoord + 1.5, zCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), col[0], col[1], col[2], 0.25F, 0, worldObj.rand.nextFloat() / 5.0F - 0.1F, 0);
+		for (int i = 0; i < 24; i++) Botania.proxy.wispFX(world, xCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), yCoord + 1.5, zCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), col[0], col[1], col[2], 0.25F, 0, worldObj.rand.nextFloat() * 0.2F - 0.1F, 0);
 	}
 
 	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {

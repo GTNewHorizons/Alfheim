@@ -101,7 +101,7 @@ public class AlfheimRecipes {
 		registerSmeltingRecipes();
 		registerManaInfusionRecipes();
 		registerRecipies();
-		forbidRetrades();
+		banRetrades();
 		//if (ModInfo.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
 	}
 
@@ -472,13 +472,13 @@ public class AlfheimRecipes {
 			new ItemStack(elvenResource, 2, ElvenResourcesMetas.NiflheimEssence));
 	}
 	
-	public static void forbidRetrades() {
-		AlfheimAPI.addForbiddenRetrade(AlfheimRecipes.recipeInterdimensional.getOutput());
-		AlfheimAPI.addForbiddenRetrade(new ItemStack(iron_ingot));
-		AlfheimAPI.addForbiddenRetrade(new ItemStack(iron_block));
-		AlfheimAPI.addForbiddenRetrade(new ItemStack(ender_pearl));
-		AlfheimAPI.addForbiddenRetrade(new ItemStack(diamond));
-		AlfheimAPI.addForbiddenRetrade(new ItemStack(diamond_block));
+	public static void banRetrades() {
+		AlfheimAPI.banRetrade(AlfheimRecipes.recipeInterdimensional.getOutput());
+		AlfheimAPI.banRetrade(new ItemStack(iron_ingot));
+		AlfheimAPI.banRetrade(new ItemStack(iron_block));
+		AlfheimAPI.banRetrade(new ItemStack(ender_pearl));
+		AlfheimAPI.banRetrade(new ItemStack(diamond));
+		AlfheimAPI.banRetrade(new ItemStack(diamond_block));
 	}
 	
 	public static void registerRecipies() {

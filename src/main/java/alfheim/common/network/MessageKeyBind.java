@@ -58,7 +58,7 @@ public class MessageKeyBind extends ASJPacket {
 					if (spell == null) AlfheimCore.network.sendTo(new Message2d(m2d.COOLDOWN, ids, -DESYNC.ordinal()), player);
 					else {
 						seg.ids = ids;
-						seg.init = spell.castTime();
+						seg.init = spell.getCastTime();
 						seg.castableSpell = spell;
 					}
 					break;

@@ -12,6 +12,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellThor extends SpellBase {
 
+	public SpellThor() {
+		super("thor", EnumRace.SYLPH, 60000, 12000, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result;
@@ -44,37 +48,4 @@ public class SpellThor extends SpellBase {
     	
     	return SpellCastResult.WRONGTGT;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SYLPH;
-	}
-
-	@Override
-	public String getName() {
-		return "thor";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 60000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 12000;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

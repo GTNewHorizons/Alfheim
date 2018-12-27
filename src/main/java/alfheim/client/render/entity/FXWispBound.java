@@ -6,6 +6,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
@@ -35,7 +36,7 @@ public class FXWispBound extends EntityFX {
 	float f4;
 	float f5;
 
-	public FXWispBound(World world, double d, double d1, double d2,  float size, float red, float green, float blue, boolean distanceLimit, boolean depthTest, float maxAgeMul) {
+	public FXWispBound(World world, double d, double d1, double d2,  float size, float red, float green, float blue, boolean distanceLimit, boolean depthTest, float maxAgeMul, double offset) {
 		super(world, d, d1, d2, 0.0D, 0.0D, 0.0D);
 		particleRed = red;
 		particleGreen = green;
@@ -49,41 +50,32 @@ public class FXWispBound extends EntityFX {
 		moteHalfLife = particleMaxAge / 2;
 		noClip = true;
 		setSize(0.01F, 0.01F);
-		EntityLivingBase renderentity = FMLClientHandler.instance().getClient().renderViewEntity;
-
-		if(distanceLimit) {
-			int visibleDistance = 50;
-			if (!FMLClientHandler.instance().getClient().gameSettings.fancyGraphics)
-				visibleDistance = 25;
-
-			if (renderentity == null || renderentity.getDistance(posX, posY, posZ) > visibleDistance)
-				particleMaxAge = 0;
-		}
 
 		prevPosX = posX;
 		prevPosY = posY;
 		prevPosZ = posZ;
+		
+		this.offset = offset;
 	}
 
-	public static void dispatchQueuedRenders(Tessellator tessellator) {
+	public static void dispatchQueuedRenders(Tessellator tessellator) { // FXWisp
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
 		
-		AlexSocol: if (author != null) {
+		/*AlexSocol:*/ if (author != null) {
 			//if (player.equals(author) && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) break AlexSocol;
-			if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
+			//if (player.equals(author) && !AlfheimConfig.fancies) break AlexSocol;
 			//if (author.isPotionActive(Potion.invisibility) || author.isPotionActive(AlfheimRegistry.leftFlame)) break AlexSocol; // FIXME more invis checks
 			
 			glPushMatrix();
 			ParticleRenderDispatcherBound.wispFxCount = 0;
 	
 			if (!player.equals(author)) {
-				ASJUtilities.interpolatedTranslation(author);
 				ASJUtilities.interpolatedTranslationReverse(player);
 				glTranslated(0, 1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight, 0);
-			}
+			} else ASJUtilities.interpolatedTranslation(author);
 			
-			if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
+			/*if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
 				glRotated(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset), 0, 0, 1);
 			} else {
 				glRotated(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw), 0, 0, 1);
@@ -92,7 +84,7 @@ public class FXWispBound extends EntityFX {
 			if(author.isSneaking()) {
 				glRotated(28.64789, 1, 0, 0);
 				glTranslated(0, 0.05, -0.5);
-			} else glTranslated(0, 0.15, -0.5);
+			} else glTranslated(0, 0.15, -0.5);*/
 			
 			glColor4f(1.0F, 1.0F, 1.0F, 0.75F);
 			Minecraft.getMinecraft().renderEngine.bindTexture(ConfigHandler.matrixMode ? ObfuscationHelper.getParticleTexture() : particles);
@@ -108,13 +100,15 @@ public class FXWispBound extends EntityFX {
 			glPopMatrix();
 		}
 	}
-
+	
+	private Vector3 o = new Vector3();
 	private void renderQueued(Tessellator tessellator, boolean depthEnabled) {
-		
+		EntityPlayer author = Minecraft.getMinecraft().theWorld.getPlayerEntityByName("AlexSocol");
 		
 		ParticleRenderDispatcherBound.wispFxCount++;
 
 		float agescale = 0;
+		double spd = 0.5;
 		agescale = (float)particleAge / (float) moteHalfLife;
 		if (agescale > 1F)
 			agescale = 2 - agescale;
@@ -126,12 +120,33 @@ public class FXWispBound extends EntityFX {
 		float f12 = (float)(prevPosY + (posY - prevPosY) * f - interpPosY);
 		float f13 = (float)(prevPosZ + (posZ - prevPosZ) * f - interpPosZ);
 
+		o.discard().x = offset;
+		
+		if (!(author.isRiding() && author.ridingEntity instanceof EntityHorse)) {
+			o.rotate(Math.toRadians(-ASJUtilities.interpolate(author.prevRenderYawOffset, author.renderYawOffset)), Vector3.oY);
+		} else {
+			o.rotate(Math.toRadians(-ASJUtilities.interpolate(author.prevRotationYaw, author.rotationYaw)), Vector3.oY);
+		}
+		
+		/*if(author.isSneaking()) {
+			o.rotate(Math.toRadians(28.64789), Vector3.oX);
+			o.add(0, 0.05, -0.5);
+		} else o.add(0, 0.15, -0.5);*/
+		
+		author.sendPlayerAbilities();
+		boolean flying = author.capabilities.isFlying;
+		double ry = (flying ? 30 : 15) + (Math.sin((author.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd * (flying ? 0.4 : 0.2)) + 0.5) * (flying ? 25. : 5.);
+		
+		o.rotate((offset > 0 ? 1 : -1) * Math.toRadians(ry), Vector3.oY);
+		
+		tessellator.addTranslation((float) o.x, (float) o.y, (float) o.z);
 		tessellator.setBrightness(240);
-		tessellator.setColorRGBA_F(particleRed, particleGreen, particleBlue, 0.5F);
+		glColor4d(particleRed, particleGreen, particleBlue, 0.5);
 		tessellator.addVertexWithUV(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10, 0, 1);
 		tessellator.addVertexWithUV(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10, 1, 1);
 		tessellator.addVertexWithUV(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10, 1, 0);
 		tessellator.addVertexWithUV(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10, 0, 0);
+		tessellator.addTranslation((float) -o.x, (float) -o.y, (float) -o.z);
 	}
 
 	@Override
@@ -168,6 +183,7 @@ public class FXWispBound extends EntityFX {
 		particleGravity = value;
 	}
 
+	double offset;
 	public boolean distanceLimit = true;
 	float moteParticleScale;
 	int moteHalfLife;

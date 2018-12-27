@@ -20,6 +20,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellDispel extends SpellBase {
 
+	public SpellDispel() {
+		super("dispel", EnumRace.SALAMANDER, 1000, 600, 25);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -49,37 +53,4 @@ public class SpellDispel extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SALAMANDER;
-	}
-
-	@Override
-	public String getName() {
-		return "dispel";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 1000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 25;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -14,6 +14,10 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class SpellIgnition extends SpellBase {
 
+	public SpellIgnition() {
+		super("ignition", EnumRace.SALAMANDER, 2000, 100, 5);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTALLOW;
@@ -34,7 +38,7 @@ public class SpellIgnition extends SpellBase {
 		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
 		boolean mana =
 				player.capabilities.isCreativeMode ||
-				consumeMana(player, (int) (getManaCost() * (getRace().equals(EnumRace.getRace(player)) || isHard() ? 1 : 1.5)), false);
+				consumeMana(player, (int) (getManaCost() * (race.equals(EnumRace.getRace(player)) ? 1 : 1.5)), false);
 		
 		if (!mana) return SpellCastResult.NOMANA;
 		
@@ -42,43 +46,10 @@ public class SpellIgnition extends SpellBase {
 		stackToPlace.tryPlaceItemIntoWorld(player, caster.worldObj, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, (float) mop.hitVec.xCoord, (float) mop.hitVec.yCoord, (float) mop.hitVec.zCoord);
 
 		if(stackToPlace.stackSize == 0) {
-			consumeMana(player, (int) (getManaCost() * (getRace().equals(EnumRace.getRace(player)) || isHard() ? 1 : 1.5)), true);
+			consumeMana(player, (int) (getManaCost() * (race.equals(EnumRace.getRace(player)) ? 1 : 1.5)), true);
 			return SpellCastResult.OK;
 		}
 		
 		return SpellCastResult.OBSTRUCT;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SALAMANDER;
-	}
-
-	@Override
-	public String getName() {
-		return "ignition";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 2000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 100;
-	}
-
-	@Override
-	public int castTime() {
-		return 5;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

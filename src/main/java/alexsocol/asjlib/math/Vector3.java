@@ -97,6 +97,10 @@ public class Vector3 implements Serializable {
 		return  Math.hypot(e1.posX - e2.posX, e1.posZ - e2.posZ);
 	}
 
+	public Vector3 discard() {
+		return set(0, 0, 0);
+	}
+	
 	public Vector3 set(double d, double d1, double d2) {
 		x = d;
 		y = d1;

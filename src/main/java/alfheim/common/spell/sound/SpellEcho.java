@@ -23,6 +23,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellEcho extends SpellBase {
 
+	public SpellEcho() {
+		super("echo", EnumRace.POOKA, 4000, 1500, 5);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -40,37 +44,4 @@ public class SpellEcho extends SpellBase {
 		if (caster instanceof EntityPlayerMP) AlfheimCore.network.sendTo(new MessageParticles(Spells.ECHO.ordinal(), caster.posX, caster.posY, caster.posZ), (EntityPlayerMP) caster);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.POOKA;
-	}
-
-	@Override
-	public String getName() {
-		return "echo";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 400;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1500;
-	}
-
-	@Override
-	public int castTime() {
-		return 5;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

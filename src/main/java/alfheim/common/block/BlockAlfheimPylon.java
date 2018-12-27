@@ -26,9 +26,9 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)
-public class BlockAlfheimPylons extends BlockModContainer implements ITileEntityProvider, ILexiconable, IInfusionStabiliser {
+public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityProvider, ILexiconable, IInfusionStabiliser {
 
-	public BlockAlfheimPylons() {
+	public BlockAlfheimPylon() {
 		super(Material.iron);
 		final float f = 1F / 16F * 2F;
 		this.setBlockBounds(f, 0F, f, 1F - f, 1F / 16F * 21F, 1F - f);

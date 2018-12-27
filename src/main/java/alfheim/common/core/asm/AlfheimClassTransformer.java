@@ -11,9 +11,10 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
 import static alfheim.api.ModInfo.OBF;
-import alfheim.api.spell.DamageSourceSpell;
+
 import alfheim.common.core.handler.CardinalSystem.ManaSystem;
 import alfheim.common.core.util.AlfheimBotaniaModifiers;
+import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

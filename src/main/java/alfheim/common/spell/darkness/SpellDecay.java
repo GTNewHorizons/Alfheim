@@ -18,6 +18,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellDecay extends SpellBase {
 
+	public SpellDecay() {
+		super("decay", EnumRace.IMP, 12000, 2400, 25);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -40,37 +44,4 @@ public class SpellDecay extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.IMP;
-	}
-
-	@Override
-	public String getName() {
-		return "decay";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 12000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 2400;
-	}
-
-	@Override
-	public int castTime() {
-		return 25;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

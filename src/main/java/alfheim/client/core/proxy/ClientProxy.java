@@ -11,6 +11,7 @@ import alfheim.client.core.handler.EventHandlerClient;
 import alfheim.client.gui.GUIDeathTimer;
 import alfheim.client.gui.GUIIceLens;
 import alfheim.client.gui.GUISpells;
+import alfheim.client.lib.LibResourceLocationsActual;
 import alfheim.client.gui.GUIParty;
 import alfheim.client.model.entity.ModelEntityElf;
 import alfheim.client.model.entity.ModelEntityFlugel;
@@ -64,13 +65,22 @@ public class ClientProxy extends CommonProxy {
 	public static final KeyBinding keySelTeam = new KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay");
 	
 	@Override
+	public void preInit() {
+		super.preInit();
+		LibResourceLocationsActual.init();
+	}
+	
+	@Override
 	public void registerRenderThings() {
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idTransferer = RenderingRegistry.getNextAvailableRenderId();
 		
+		LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag");
 		LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
-		
+		LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
+		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
+
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, new RenderBlockAlfheimPylons());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, new RenderBlockTransferer());

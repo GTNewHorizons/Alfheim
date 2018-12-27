@@ -18,6 +18,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellPoisonRoots extends SpellBase {
 
+	public SpellPoisonRoots() {
+		super("poisonroots", EnumRace.IMP, 60000, 6000, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -80,37 +84,4 @@ public class SpellPoisonRoots extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.IMP;
-	}
-
-	@Override
-	public String getName() {
-		return "poisonroots";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 60000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 6000;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

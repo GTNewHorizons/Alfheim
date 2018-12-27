@@ -16,6 +16,10 @@ import net.minecraft.util.Vec3;
 
 public class SpellThrow extends SpellBase {
 
+	public SpellThrow() {
+		super("throw", EnumRace.SYLPH, 8000, 600, 10);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -27,37 +31,4 @@ public class SpellThrow extends SpellBase {
 		}
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SYLPH;
-	}
-
-	@Override
-	public String getName() {
-		return "throw";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 8000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 10;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

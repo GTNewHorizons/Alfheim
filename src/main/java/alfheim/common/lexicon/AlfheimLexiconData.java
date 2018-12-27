@@ -360,7 +360,7 @@ public class AlfheimLexiconData {
 		l.sort(new Comparator<SpellBase>() {
 			@Override
 			public int compare(SpellBase s1, SpellBase s2) {
-				return s1.getName().compareTo(s2.getName());
+				return s1.name.compareTo(s2.name);
 			}
 		});
 		for (SpellBase spell : l) spells.addPage(new PageSpell(spell));

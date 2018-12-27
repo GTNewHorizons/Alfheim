@@ -16,41 +16,15 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class SpellAcidMyst extends SpellBase {
 
+	public SpellAcidMyst() {
+		super("acidmyst", EnumRace.UNDINE, 8000, 400, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(new EntitySpellAcidMyst(caster.worldObj, caster));
 		return result;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "acidmyst";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 8000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 400;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

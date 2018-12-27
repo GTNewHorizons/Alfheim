@@ -14,6 +14,10 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellHarp extends SpellBase {
 
+	public SpellHarp() {
+		super("harp", EnumRace.POOKA, 15000, 3600, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result;
@@ -41,37 +45,4 @@ public class SpellHarp extends SpellBase {
    		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(new EntitySpellHarp(caster.worldObj, caster, x, y, z));
    		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.POOKA;
-	}
-
-	@Override
-	public String getName() {
-		return "harp";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 1500;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 3600;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

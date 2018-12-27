@@ -18,6 +18,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellBattleHorn extends SpellBase {
 
+	public SpellBattleHorn() {
+		super("battlehorn", EnumRace.POOKA, 5000, 600, 15);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -41,37 +45,4 @@ public class SpellBattleHorn extends SpellBase {
 		caster.worldObj.playSound(caster.posX, caster.posY, caster.posZ, ModInfo.MODID + ":horn.bhorn", 100.0F, 0.8F + caster.worldObj.rand.nextFloat() * 0.2F, false);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.POOKA;
-	}
-
-	@Override
-	public String getName() {
-		return "battlehorn";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 5000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 15;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -14,6 +14,7 @@ import alexsocol.asjlib.render.ASJShaderHelper;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
+import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.core.handler.CardinalSystemClient;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
@@ -47,12 +48,10 @@ import vazkii.botania.api.mana.IManaUsingItem;
 public class GUIParty extends Gui {
 	
 	private Minecraft mc;
-	public static int shadowId;
 	
 	public GUIParty(Minecraft mc) {
 		super();
 		this.mc = mc;
-		shadowId = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
@@ -237,7 +236,7 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 4, 0, 1, 0);
 					Tessellator.instance.draw();
 					
-					ASJShaderHelper.useShader(shadowId);
+					ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 					
 					double mod = MathHelper.floor_double(mc.thePlayer.getEntityAttribute(AlfheimRegistry.FLIGHT).getAttributeValue()) / AlfheimRegistry.FLIGHT.getDefaultValue();
 					double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;

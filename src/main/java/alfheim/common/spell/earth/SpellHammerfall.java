@@ -22,6 +22,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class SpellHammerfall extends SpellBase {
 
+	public SpellHammerfall() {
+		super("hammerfall", EnumRace.GNOME, 10000, 200, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!caster.onGround || caster.worldObj.isAirBlock(MathHelper.floor_double(caster.posX), MathHelper.floor_double(caster.posY) - 1, MathHelper.floor_double(caster.posZ))) return SpellCastResult.WRONGTGT;
@@ -45,37 +49,7 @@ public class SpellHammerfall extends SpellBase {
 		}
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.GNOME;
-	}
-
-	@Override
-	public String getName() {
-		return "hammerfall";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 10000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 200;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
+	
 	@Override
 	public void render(EntityLivingBase caster) {
 		double s = 10;

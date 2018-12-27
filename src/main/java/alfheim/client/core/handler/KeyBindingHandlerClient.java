@@ -86,7 +86,7 @@ public class KeyBindingHandlerClient {
 							}
 							
 							AlfheimCore.network.sendToServer(new MessageKeyBind(CAST.ordinal(), true, i));
-							CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs((CardinalSystemClient.segment.hotSpells[i] >> 28) & 0xF, CardinalSystemClient.segment.hotSpells[i] & 0xFFFFFFF).castTime();
+							CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs((CardinalSystemClient.segment.hotSpells[i] >> 28) & 0xF, CardinalSystemClient.segment.hotSpells[i] & 0xFFFFFFF).getCastTime();
 						}
 					}
 				}
@@ -147,7 +147,7 @@ public class KeyBindingHandlerClient {
 					
 					int i = ((raceID & 0xF) << 28) | (spellID & 0xFFFFFFF);
 					AlfheimCore.network.sendToServer(new MessageKeyBind(CAST.ordinal(), false, i));
-					CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs(raceID, spellID).castTime();
+					CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs(raceID, spellID).getCastTime();
 				}
 			} else if (toggleCast) {
 				toggleCast = false;

@@ -11,7 +11,6 @@ import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.api.event.SpellCastEvent;
 import alfheim.api.event.TileUpdateEvent;
-import alfheim.api.spell.DamageSourceSpell;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.ManaSystem;
@@ -26,6 +25,7 @@ import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.util.DamageSourceSpell;
 import alfheim.common.core.util.InfoLoader;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.item.relic.ItemTankMask;
@@ -91,20 +91,12 @@ public class EventHandler {
 		PlayerSegment seg = CardinalSystem.forPlayer(player);
 		
 		switch (seg.quadStage) {
-			case 0: if (e.spell.getName().equals("stoneskin")) {
+			case 0: if (e.spell.name.equals("stoneskin")) {
 						++seg.quadStage;
 						break;
 					}
 			
-			case 1: if (e.spell.getName().equals("uphealth") && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
-						++seg.quadStage;
-						break;
-					} else {
-						seg.quadStage = 0;
-						break;
-					}
-			
-			case 2: if (e.spell.getName().equals("icelens") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1) {
+			case 1: if (e.spell.name.equals("uphealth") && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
 						++seg.quadStage;
 						break;
 					} else {
@@ -112,7 +104,7 @@ public class EventHandler {
 						break;
 					}
 			
-			case 3: if (e.spell.getName().equals("battlehorn") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+			case 2: if (e.spell.name.equals("icelens") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1) {
 						++seg.quadStage;
 						break;
 					} else {
@@ -120,7 +112,15 @@ public class EventHandler {
 						break;
 					}
 			
-			case 4: if (e.spell.getName().equals("thor") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+			case 3: if (e.spell.name.equals("battlehorn") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+						++seg.quadStage;
+						break;
+					} else {
+						seg.quadStage = 0;
+						break;
+					}
+			
+			case 4: if (e.spell.name.equals("thor") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
 						++seg.quadStage;
 						break;
 					} else {

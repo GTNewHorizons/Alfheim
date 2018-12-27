@@ -7,13 +7,15 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
+
 import com.google.common.collect.Lists;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
+import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.item.Item.ToolMaterial;
@@ -34,10 +36,10 @@ public class AlfheimAPI {
 		}
 	}.setShouldWatch(true);
 	
-	/** List of {@link RecipeElvenTrade} outputs forbidden for re'trading from Alfheim trade portal */
-	public static List<ItemStack> forbiddenRetrades = new ArrayList();
+	/** List of {@link RecipeElvenTrade} outputs banned for re'trading in Alfheim trade portal */
+	public static ArrayList<ItemStack> bannedRetrades = new ArrayList();
 	/** List of recipies for mana infuser */
-	public static List<RecipeManaInfuser> manaInfuserRecipes = new ArrayList<RecipeManaInfuser>();
+	public static ArrayList<RecipeManaInfuser> manaInfuserRecipes = new ArrayList<RecipeManaInfuser>();
 	/** List of all pink items with their relative pinkness */
 	public static HashMap<ItemStack, Integer> pinkness = new HashMap<ItemStack, Integer>();
 	/** List of all spells for all races */
@@ -46,7 +48,7 @@ public class AlfheimAPI {
 	public static HashMap<EnumRace, HashSet<SpellBase>> spellMapping = new HashMap<EnumRace, HashSet<SpellBase>>();
 	
 	public static RecipeManaInfuser addInfuserRecipe(RecipeManaInfuser rec) {
-		manaInfuserRecipes.add(rec);
+		if (rec != null) manaInfuserRecipes.add(rec);
 		return rec;
 	}
 	
@@ -56,32 +58,38 @@ public class AlfheimAPI {
 		return rec;
 	}
 	
-	public static boolean removeInfusionRecipeByResult(ItemStack result) {
-		for (int i = 0; i < manaInfuserRecipes.size(); i++) if (ItemStack.areItemStacksEqual(manaInfuserRecipes.get(i).getOutput(), result)) {
-			manaInfuserRecipes.remove(i);
-			return true;
-		}
-		return false;
+	public static RecipeManaInfuser removeInfusionRecipe(RecipeManaInfuser rec) {
+		return rec != null && manaInfuserRecipes.remove(rec) ? rec : null;
 	}
 	
-	public static void addForbiddenRetrade(ItemStack output) {
-		forbiddenRetrades.add(output);
+	public static RecipeManaInfuser removeInfusionRecipe(ItemStack result) {
+		for (int i = 0; i < manaInfuserRecipes.size(); i++)
+			if (ItemStack.areItemStacksEqual(manaInfuserRecipes.get(i).getOutput(), result)) 
+				return manaInfuserRecipes.remove(i);
+		return null;
 	}
 	
-	public static boolean isRetradeForbidden(ItemStack output) {
-		for (ItemStack out : forbiddenRetrades) if (ItemStack.areItemStacksEqual(output, out)) return true;
-		return false;
+	/** Remove {@code output} from Alfheim trade portal */
+	public static void banRetrade(ItemStack output) {
+		bannedRetrades.add(output);
 	}
 	
-	public static void addPink(ItemStack pink, int weight) {
-		pinkness.put(pink, Integer.valueOf(weight));
+	/** Check if {@code output} isn't banned to be obtained through Alfheim trade portal */
+	public static boolean isRetradeable(ItemStack output) {
+		for (ItemStack out : bannedRetrades) if (ItemStack.areItemStacksEqual(output, out)) return false;
+		return true;
+	}
+	
+	/** Map a stack to it's pinkness. Also can override old values */
+	public static Integer addPink(ItemStack pink, int weight) {
+		return pinkness.put(pink, Integer.valueOf(weight));
 	}
 	
 	public static int getPinkness(ItemStack item) {
-		for (int i = 0; i < pinkness.size(); i++) {
-			ItemStack pink = ASJUtilities.mapGetKeyId(pinkness, i);
-			if (pink.getItem().equals(item.getItem()) && pink.getItemDamage() == item.getItemDamage()) return ASJUtilities.mapGetValueId(pinkness, i);
-		}
+		for (ItemStack pink : pinkness.keySet())
+			if (pink.getItem() == item.getItem() && pink.getItemDamage() == item.getItemDamage()) {
+				return pinkness.get(pink);
+			}
 		return 0;
 	}
 	
@@ -100,13 +108,13 @@ public class AlfheimAPI {
 	 * Imp - Darkness
 	 */
 	public static void registerSpell(SpellBase spell) {
-		if (spell.getRace() == EnumRace.HUMAN) throw new IllegalArgumentException("Spell race must be one of the elements");
-		if (spell.getRace() == EnumRace.ALV) throw new IllegalArgumentException("This race is currently not supported");
+		if (spell.race == EnumRace.HUMAN) throw new IllegalArgumentException("Spell race must be one of the elements");
+		if (spell.race == EnumRace.ALV) throw new IllegalArgumentException("This race is currently not supported");
 		if (spells.add(spell)) {
-			checkGet(spell.getRace()).add(spell);
-			LibResourceLocations.add(spell.getName());
+			checkGet(spell.race).add(spell);
+			LibResourceLocations.add(spell.name);
 		}
-		else ASJUtilities.warn("Trying to register spell " + spell.getName() + " twice. Skipping.");
+		else FMLRelaunchLog.log(ModInfo.MODID.toUpperCase(), Level.WARN, "Trying to register spell " + spell.name + " twice. Skipping.");
 		
 	}
 
@@ -120,14 +128,14 @@ public class AlfheimAPI {
 		l.sort(new Comparator<SpellBase>() {
 			@Override
 			public int compare(SpellBase s1, SpellBase s2) {
-				return s1.getName().compareTo(s2.getName());
+				return s1.name.compareTo(s2.name);
 			}
 		});
 		return l;
 	}
 	
 	public static SpellBase getSpellInstance(String name) {
-		for (SpellBase spell : spells) if (spell.getName().equals(name)) return spell;
+		for (SpellBase spell : spells) if (spell.name.equals(name)) return spell;
 		return null;
 	}
 	
@@ -146,6 +154,6 @@ public class AlfheimAPI {
 				if (sb == spell) return i; 
 			}
 		}
-		throw new IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.getName());
+		throw new IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name);
 	}
 }

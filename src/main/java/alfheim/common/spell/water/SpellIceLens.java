@@ -12,6 +12,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellIceLens extends SpellBase {
 
+	public SpellIceLens() {
+		super("icelens", EnumRace.UNDINE, 6000, 1200, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -22,37 +26,4 @@ public class SpellIceLens extends SpellBase {
 		}
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "icelens";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 6000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1200;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -155,6 +155,7 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	}
 
 	@Override
+	@Optional.Method(modid = "Thaumcraft")
 	public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) {
 		return hasArmorSet(player) ? 5 : 0;
 	}

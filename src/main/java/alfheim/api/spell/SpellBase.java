@@ -3,8 +3,6 @@ package alfheim.api.spell;
 import java.io.Serializable;
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.SpellCastEvent;
@@ -25,32 +23,72 @@ import vazkii.botania.api.mana.ManaItemHandler;
 
 public abstract class SpellBase {
 	
+	public final EnumRace	race;
+	public final String		name;
+	protected int			mana,
+							cldn,
+							cast;
+	public final boolean	hard;
+	
+	public SpellBase(String name, EnumRace race, int mana, int cldn, int cast) {
+		this(name, race, mana, cldn, cast, false);
+	}
+	
+	public SpellBase(String name, EnumRace race, int mana, int cldn, int cast, boolean hard) {
+		this.race = race;
+		this.name = name;
+		this.mana = mana;
+		this.cldn = cldn;
+		this.cast = cast;
+		this.hard = hard;
+	}
+	
 	/**
 	 * Mana checking and consumption call here
 	 * @return Result of cast
 	 */
 	public abstract SpellCastResult performCast(EntityLivingBase caster);
 	
-	public abstract EnumRace getRace();
-	
-	public abstract String getName();
-	
 	// public abstract String[] getWords();
 	
-	public abstract int getManaCost();
+	public int setManaCost(int newVal) {
+		int temp = mana;
+		mana = newVal;
+		return temp;
+	}
 	
-	public abstract int getCooldown();
+	public int getManaCost() {
+		return mana;
+	}
 	
-	public abstract int castTime();
+	public int setCooldown(int newVal) {
+		int temp = cldn;
+		cldn = newVal;
+		return temp;
+	}
 	
-	public abstract boolean isHard();
+	public int getCooldown() {
+		return cldn;
+	}
+	
+	public int setCastTime(int newVal) {
+		int temp = cast;
+		cast = newVal;
+		return temp;
+	}
+	
+	public int getCastTime() {
+		return cast;
+	}
 	
 	@SideOnly(Side.CLIENT)
-	public abstract void render(EntityLivingBase caster);
+	public void render(EntityLivingBase caster) {
+		// NO-OP
+	}
 	
 	public SpellCastResult checkCast(EntityLivingBase caster) {
 		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
-		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, (int) (getManaCost() * (caster instanceof EntityPlayer && getRace().equals(EnumRace.getRace((EntityPlayer) caster)) || isHard() ? 1 : 1.5)), true) : true;
+		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, (int) (getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5)), true) : true;
 		return mana ? SpellCastResult.OK : SpellCastResult.NOMANA;
 	}
 	
@@ -60,7 +98,7 @@ public abstract class SpellBase {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof SpellBase && getName().equals(((SpellBase) obj).getName()) && getRace().equals(((SpellBase) obj).getRace());
+		return obj instanceof SpellBase && name.equals(((SpellBase) obj).name) && race.equals(((SpellBase) obj).race);
 	}
 	
 	@Override
@@ -70,7 +108,7 @@ public abstract class SpellBase {
 	
 	@Override
 	public String toString() {
-		return getName();
+		return name;
 	}
 	
 	public static enum SpellCastResult {
@@ -79,6 +117,6 @@ public abstract class SpellBase {
 	
 	public static final void say(EntityPlayerMP caster, SpellBase spell) {
 		List<EntityPlayerMP> l = caster.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(40, 40, 40));
-		for (EntityPlayerMP player : l) if (Vector3.entityDistance(caster, player) < 40) player.addChatMessage(new ChatComponentText(EnumChatFormatting.UNDERLINE + "* " + caster.getCommandSenderName() + ' ' + StatCollector.translateToLocal("spell.cast") + EnumChatFormatting.RESET + ": " + StatCollector.translateToLocal("spell." + spell.getName() + ".words")));
+		for (EntityPlayerMP player : l) if (Math.sqrt(Math.pow(caster.posX - player.posX, 2) + Math.pow(caster.posY - player.posY, 2) + Math.pow(caster.posZ - player.posZ, 2)) < 40) player.addChatMessage(new ChatComponentText(EnumChatFormatting.UNDERLINE + "* " + caster.getCommandSenderName() + ' ' + StatCollector.translateToLocal("spell.cast") + EnumChatFormatting.RESET + ": " + StatCollector.translateToLocal("spell." + spell.name + ".words")));
 	}
 }

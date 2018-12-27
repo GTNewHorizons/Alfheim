@@ -778,7 +778,7 @@ public class CardinalSystem {
 			try {
 				out.writeInt(coolDown.keySet().size());
 				for (SpellBase spell : coolDown.keySet()) {
-					out.writeUTF(spell.getName());
+					out.writeUTF(spell.name);
 					out.writeInt(coolDown.get(spell));
 				}
 				out.writeObject(hotSpells);

@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
-import alfheim.api.spell.DamageSourceSpell;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;

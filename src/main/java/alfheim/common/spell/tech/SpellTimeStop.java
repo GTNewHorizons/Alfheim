@@ -14,43 +14,17 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellTimeStop extends SpellBase {
 
+	public SpellTimeStop() {
+		super("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) TimeStopSystem.stop(caster);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.LEPRECHAUN;
-	}
-
-	@Override
-	public String getName() {
-		return "timestop";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 256000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 75000;
-	}
-
-	@Override
-	public int castTime() {
-		return 100;
-	}
-
-	@Override
-	public boolean isHard() {
-		return true;
-	}
-
+	
 	@Override
 	public void render(EntityLivingBase caster) {
 		SpellVisualizations.negateSphere(caster, 0.5);

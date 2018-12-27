@@ -12,6 +12,10 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class SpellHealing extends SpellBase {
 
+	public SpellHealing() {
+		super("healing", EnumRace.UNDINE, 2000, 200, 10);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -30,37 +34,4 @@ public class SpellHealing extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "healing";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 2000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 200;
-	}
-
-	@Override
-	public int castTime() {
-		return 10;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

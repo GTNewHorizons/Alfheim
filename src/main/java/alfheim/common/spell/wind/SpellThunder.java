@@ -11,6 +11,10 @@ import net.minecraft.world.WorldServer;
 
 public class SpellThunder extends SpellBase {
 
+	public SpellThunder() {
+		super("thunder", EnumRace.SYLPH, 30000, 6000, 50);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -27,37 +31,4 @@ public class SpellThunder extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SYLPH;
-	}
-
-	@Override
-	public String getName() {
-		return "thunder";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 30000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 6000;
-	}
-
-	@Override
-	public int castTime() {
-		return 50;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

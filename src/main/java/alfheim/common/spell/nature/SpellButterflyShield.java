@@ -14,6 +14,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellButterflyShield extends SpellBase {
 
+	public SpellButterflyShield() {
+		super("butterflyshield", EnumRace.CAITSITH, 8000, 12000, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -35,37 +39,4 @@ public class SpellButterflyShield extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.CAITSITH;
-	}
-
-	@Override
-	public String getName() {
-		return "butterflyshield";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 8000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 12000;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

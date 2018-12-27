@@ -21,7 +21,12 @@ import vazkii.botania.common.item.relic.ItemLokiRing;
 
 public class SpellTitanHit extends SpellBase {
 
-	public int cd = 0, mana = 0;
+	public SpellTitanHit() {
+		super("titanhit", EnumRace.GNOME, 1, 1, 2);
+	}
+
+	/** temp value for counting total on block breaking */
+	public int tcd = 0, tmana = 0;
 	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
@@ -32,7 +37,7 @@ public class SpellTitanHit extends SpellBase {
 		MovingObjectPosition mop = ASJUtilities.getSelectedBlock(caster, dist, false);
 		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellCastResult.WRONGTGT;
 		
-		mana = removeBlocksInIteration(caster.worldObj, (EntityPlayer) caster, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, false);
+		tmana = removeBlocksInIteration(caster.worldObj, (EntityPlayer) caster, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, false);
 		
 		result = checkCast(caster);
 		if (result != SpellCastResult.OK) return result;
@@ -76,7 +81,7 @@ public class SpellTitanHit extends SpellBase {
 					block.harvestBlock(world, player, x, y, z, localMeta);
 					
 					mana += block.getBlockHardness(world, x, y, z) * 10;
-					cd += 2;
+					tcd += 2;
 				}
 				if (!remove) {
 					flag = true;
@@ -102,37 +107,17 @@ public class SpellTitanHit extends SpellBase {
 	}
 	
 	@Override
-	public EnumRace getRace() {
-		return EnumRace.GNOME;
-	}
-
-	@Override
-	public String getName() {
-		return "titanhit";
-	}
-
-	@Override
 	public int getManaCost() {
-		int temp = mana;
-		mana = 0;
-		return temp;
+		int temp = tmana;
+		tmana = 0;
+		return temp * mana;
 	}
 
 	@Override
 	public int getCooldown() {
-		int temp = cd;
-		cd = 0;
-		return temp;
-	}
-
-	@Override
-	public int castTime() {
-		return 2;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
+		int temp = tcd;
+		tcd = 0;
+		return temp * cldn;
 	}
 
 	@Override

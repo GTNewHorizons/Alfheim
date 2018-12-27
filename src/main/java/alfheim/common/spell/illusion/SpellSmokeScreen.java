@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellSmokeScreen extends SpellBase {
 
+	public SpellSmokeScreen() {
+		super("smokescreen", EnumRace.SPRIGGAN, 5000, 600, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -30,37 +34,4 @@ public class SpellSmokeScreen extends SpellBase {
 		SpellEffectHandler.sendPacket(Spells.SMOKE, caster);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SPRIGGAN;
-	}
-
-	@Override
-	public String getName() {
-		return "smokescreen";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 5000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

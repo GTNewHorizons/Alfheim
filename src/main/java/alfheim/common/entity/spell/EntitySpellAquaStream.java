@@ -4,10 +4,10 @@ import java.util.UUID;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
-import alfheim.api.spell.DamageSourceSpell;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
+import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

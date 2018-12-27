@@ -116,7 +116,7 @@ public class RecipeHandlerTradePortal extends TemplateRecipeHandler {
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if(outputId.equals(getRecipeID()) && hasElvenKnowledge()) {
 			for (RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
-				if (recipe == null || AlfheimAPI.isRetradeForbidden(recipe.getOutput()))
+				if (recipe == null || !AlfheimAPI.isRetradeable(recipe.getOutput()))
 					continue;
 
 				arecipes.add(new CachedTradePortalRecipe(recipe));
@@ -128,7 +128,7 @@ public class RecipeHandlerTradePortal extends TemplateRecipeHandler {
 	public void loadCraftingRecipes(ItemStack result) {
 		if(hasElvenKnowledge()) {
 			for(RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
-				if(recipe == null || AlfheimAPI.isRetradeForbidden(recipe.getOutput()))
+				if(recipe == null || !AlfheimAPI.isRetradeable(recipe.getOutput()))
 					continue;
 
 				CachedTradePortalRecipe crecipe = new CachedTradePortalRecipe(recipe);
@@ -142,7 +142,7 @@ public class RecipeHandlerTradePortal extends TemplateRecipeHandler {
 	public void loadUsageRecipes(ItemStack ingredient) {
 		if(hasElvenKnowledge()) {
 			for(RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
-				if(recipe == null || AlfheimAPI.isRetradeForbidden(recipe.getOutput()))
+				if(recipe == null || !AlfheimAPI.isRetradeable(recipe.getOutput()))
 					continue;
 
 				if(NEIServerUtils.areStacksSameTypeCrafting(recipe.getOutput(), ingredient))

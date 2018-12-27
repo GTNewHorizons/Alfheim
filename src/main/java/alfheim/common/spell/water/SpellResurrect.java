@@ -20,6 +20,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellResurrect extends SpellBase {
 
+	public SpellResurrect() {
+		super("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -44,37 +48,4 @@ public class SpellResurrect extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "resurrect";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 256000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 72000;
-	}
-
-	@Override
-	public int castTime() {
-		return 100;
-	}
-
-	@Override
-	public boolean isHard() {
-		return true;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

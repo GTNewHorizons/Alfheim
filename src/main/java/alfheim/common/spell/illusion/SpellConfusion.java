@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellConfusion extends SpellBase {
 
+	public SpellConfusion() {
+		super("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -38,37 +42,4 @@ public class SpellConfusion extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SPRIGGAN;
-	}
-
-	@Override
-	public String getName() {
-		return "confusion";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 4000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 1200;
-	}
-
-	@Override
-	public int castTime() {
-		return 15;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

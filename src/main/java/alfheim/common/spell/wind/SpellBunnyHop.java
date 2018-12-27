@@ -16,6 +16,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellBunnyHop extends SpellBase {
 
+	public SpellBunnyHop() {
+		super("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!(caster instanceof EntityPlayer)) return SpellCastResult.NOTARGET; // TODO add targets for mobs
@@ -38,37 +42,4 @@ public class SpellBunnyHop extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SYLPH;
-	}
-
-	@Override
-	public String getName() {
-		return "bunnyhop";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 6000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 2400;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -2,29 +2,22 @@ package alfheim;
 
 import static alfheim.api.ModInfo.*;
 
-import java.io.IOException;
-
-import aaa.alexsocol.glsltoimage.Main;
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.core.command.CommandDimTP;
-import alfheim.common.core.command.CommandRace;
+import alfheim.common.core.command.*;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.InfoLoader;
+import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
 import alfheim.common.network.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
@@ -35,7 +28,7 @@ import net.minecraft.item.Item;
 	name = NAME,
 	version = VERSION,
 	guiFactory = MODID + ".client.gui.GUIFactory",
-	dependencies = "required-after:Botania;before:elvenstory")
+	dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3")
 
 public class AlfheimCore {
 
@@ -77,6 +70,7 @@ public class AlfheimCore {
 		proxy.registerRenderThings();
 		proxy.postInit();
 		AlfheimRegistry.loadAllPinkStuff();
+		if (Loader.isModLoaded("MineTweaker3")) MinetweakerAlfheimConfig.loadConfig();
 	}
 
 	@EventHandler

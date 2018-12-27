@@ -19,6 +19,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellGoldRush extends SpellBase {
 
+	public SpellGoldRush() {
+		super("goldrush", EnumRace.GNOME, 7000, 3000, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -38,37 +42,4 @@ public class SpellGoldRush extends SpellBase {
 		
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.GNOME;
-	}
-
-	@Override
-	public String getName() {
-		return "goldrush";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 7000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 3000;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

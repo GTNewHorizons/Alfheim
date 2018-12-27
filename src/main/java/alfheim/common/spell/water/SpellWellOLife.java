@@ -18,6 +18,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellWellOLife extends SpellBase {
 
+	public SpellWellOLife() {
+		super("wellolife", EnumRace.UNDINE, 7000, 600, 30);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		Party pt = caster instanceof EntityPlayer ? PartySystem.getParty((EntityPlayer) caster) : PartySystem.getMobParty(caster);
@@ -37,37 +41,4 @@ public class SpellWellOLife extends SpellBase {
 		SpellEffectHandler.sendPacket(Spells.PURE, caster);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.UNDINE;
-	}
-
-	@Override
-	public String getName() {
-		return "wellolife";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 7000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 600;
-	}
-
-	@Override
-	public int castTime() {
-		return 30;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -14,42 +14,16 @@ import net.minecraft.entity.EntityLivingBase;
 
 public final class SpellFirewall extends SpellBase {
 
+	public SpellFirewall() {
+		super("firewall", EnumRace.SALAMANDER, 4000, 200, 15);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) 
 			caster.worldObj.spawnEntityInWorld(new EntitySpellFirewall(caster.worldObj, caster));
 		return result;
-	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.SALAMANDER;
-	}
-
-	@Override
-	public String getName() {
-		return "firewall";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 4000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 200;
-	}
-
-	@Override
-	public int castTime() {
-		return 15;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
 	}
 
 	@Override

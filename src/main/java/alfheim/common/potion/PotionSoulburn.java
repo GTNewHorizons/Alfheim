@@ -2,10 +2,10 @@ package alfheim.common.potion;
 
 import org.lwjgl.opengl.GL11;
 
-import alfheim.api.spell.DamageSourceSpell;
 import alfheim.common.block.BlockRedFlame;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;

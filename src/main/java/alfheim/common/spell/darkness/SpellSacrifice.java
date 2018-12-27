@@ -18,6 +18,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellSacrifice extends SpellBase {
 
+	public SpellSacrifice() {
+		super("sacrifice", EnumRace.IMP, 256000, 75000, 100, true);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -27,37 +31,7 @@ public class SpellSacrifice extends SpellBase {
 		}
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.IMP;
-	}
-
-	@Override
-	public String getName() {
-		return "sacrifice";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 256000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 75000;
-	}
-
-	@Override
-	public int castTime() {
-		return 100;
-	}
-
-	@Override
-	public boolean isHard() {
-		return true;
-	}
-
+	
 	@Override
 	public void render(EntityLivingBase caster) {
 		SpellVisualizations.negateSphere(caster, 1);

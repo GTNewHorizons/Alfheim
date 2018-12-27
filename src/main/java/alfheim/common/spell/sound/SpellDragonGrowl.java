@@ -19,6 +19,10 @@ import net.minecraft.potion.PotionEffect;
 
 public class SpellDragonGrowl extends SpellBase {
 
+	public SpellDragonGrowl() {
+		super("dragongrowl", EnumRace.POOKA, 12000, 2400, 20);
+	}
+
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
@@ -37,37 +41,4 @@ public class SpellDragonGrowl extends SpellBase {
 		caster.worldObj.playSoundEffect(caster.posX, caster.posY, caster.posZ, "mob.enderdragon.growl", 100.0F, 0.8F + caster.worldObj.rand.nextFloat() * 0.2F);
 		return result;
 	}
-
-	@Override
-	public EnumRace getRace() {
-		return EnumRace.POOKA;
-	}
-
-	@Override
-	public String getName() {
-		return "dragongrowl";
-	}
-
-	@Override
-	public int getManaCost() {
-		return 12000;
-	}
-
-	@Override
-	public int getCooldown() {
-		return 2400;
-	}
-
-	@Override
-	public int castTime() {
-		return 20;
-	}
-
-	@Override
-	public boolean isHard() {
-		return false;
-	}
-
-	@Override
-	public void render(EntityLivingBase caster) {}
 }

@@ -1,4 +1,4 @@
-package alfheim.api.spell;
+package alfheim.common.core.util;
 
 import alfheim.common.entity.spell.EntitySpellDriftingMine;
 import alfheim.common.entity.spell.EntitySpellFenrirStorm;
