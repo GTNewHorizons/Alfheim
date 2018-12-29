@@ -1,5 +1,7 @@
 package alfheim.common.core.handler;
 
+import java.util.Random;
+
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
@@ -28,6 +30,7 @@ import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
 import alfheim.common.core.util.InfoLoader;
 import alfheim.common.entity.EntityAlfheimPixie;
+import alfheim.common.entity.boss.EntityFlugel;
 import alfheim.common.item.relic.ItemTankMask;
 import alfheim.common.network.Message1d;
 import alfheim.common.network.Message2d;
@@ -41,8 +44,15 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.IBossDisplayData;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -62,6 +72,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -73,8 +84,10 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
+import vazkii.botania.common.entity.EntityDoppleganger;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
+import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe;
 
 public class EventHandler {
 	
@@ -410,6 +423,23 @@ public class EventHandler {
 		
 		Party pt = PartySystem.getMobParty(e.entityLiving);
 		if (pt != null) pt.setDead(e.entityLiving, true);
+	}
+	
+	@SubscribeEvent
+	public void onEntityDrops(LivingDropsEvent event) {
+		if(event.recentlyHit && event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
+			ItemStack weapon = ((EntityPlayer) event.source.getEntity()).getCurrentEquippedItem();
+			if(weapon != null && weapon.getItem() instanceof ItemElementiumAxe) {
+				Random rand = event.entity.worldObj.rand;
+				int looting = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon);
+
+				if(event.entityLiving instanceof EntityFlugel && rand.nextInt(13) < 1 + looting) {
+					EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(AlfheimItems.flugelHead));
+					entityitem.delayBeforeCanPickup = 10;
+					event.drops.add(entityitem);
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent

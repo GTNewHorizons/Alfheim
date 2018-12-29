@@ -11,6 +11,7 @@ import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.InfoLoader;
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimConfig;
 import alfheim.common.network.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -23,6 +24,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import vazkii.botania.common.Botania;
 
 @Mod(modid = MODID,
 	name = NAME,
@@ -44,10 +46,12 @@ public class AlfheimCore {
 	public static String save = "";
 	
 	public static boolean enableElvenStory = false;
+	public static boolean MineTweakerLoaded = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		enableElvenStory =  Loader.isModLoaded("elvenstory") || DEV;
+		enableElvenStory = Loader.isModLoaded("elvenstory") || DEV;
+		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
 
@@ -70,7 +74,8 @@ public class AlfheimCore {
 		proxy.registerRenderThings();
 		proxy.postInit();
 		AlfheimRegistry.loadAllPinkStuff();
-		if (Loader.isModLoaded("MineTweaker3")) MinetweakerAlfheimConfig.loadConfig();
+		if (MineTweakerLoaded) MinetweakerAlfheimConfig.loadConfig();
+		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimConfig.loadConfig();
 	}
 
 	@EventHandler

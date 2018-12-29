@@ -14,6 +14,8 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import vazkii.botania.common.block.BlockGaiaHead;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName;
 
 public class AlfheimBlocks {
@@ -27,6 +29,7 @@ public class AlfheimBlocks {
 	public static Block elvenOres;
 	public static Block elvenSand;
 	public static Block elvoriumBlock;
+	public static Block flugelHead;
 	public static Block livingcobble;
 	public static Block mauftriumBlock;
 	public static Block manaInfuser;
@@ -51,6 +54,7 @@ public class AlfheimBlocks {
 		elvenOres = new BlockElvenOres();
 		elvenSand = new BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen);
 		elvoriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.elvorium);
+		flugelHead = new BlockFlugelHead();
 		livingcobble = new BlockPatternLexicon(ModInfo.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false, false, AlfheimLexiconData.worldgen);
 		mauftriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.essences);
 		manaInfuser = new BlockManaInfuser();
@@ -75,6 +79,7 @@ public class AlfheimBlocks {
 		register(dreamLog);
 		register(dreamLeaves);
 		register(dreamSapling);
+		register(flugelHead);
 		register(poisonIce);
 		register(redFlame);
 	}

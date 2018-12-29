@@ -31,6 +31,7 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaDiscountArmor;
+import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
@@ -118,8 +119,8 @@ public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountAr
 	public void addArmorSetDescription(ItemStack stack, List<String> list) {
 		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.elvorium.desc0"), list);	// -30% mana cost
 		addStringToTooltip(StatCollector.translateToLocal("alfheim.armorset.elvorium.desc1"), list);	// Powerful rods
-		if (Loader.isModLoaded("Thaumcraft")) addStringToTooltip(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("alfheim.armorset.elvorium.desc2"), list);	// -20% vis discount
-		if (Loader.isModLoaded("Thaumcraft")) addStringToTooltip(EnumChatFormatting.GOLD		+ StatCollector.translateToLocal("alfheim.armorset.elvorium.desc3"), list);	// 8 pts of runic shield
+		if (Botania.thaumcraftLoaded) addStringToTooltip(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("alfheim.armorset.elvorium.desc2"), list);	// -20% vis discount
+		if (Botania.thaumcraftLoaded) addStringToTooltip(EnumChatFormatting.GOLD		+ StatCollector.translateToLocal("alfheim.armorset.elvorium.desc3"), list);	// 8 pts of runic shield
 		addStringToTooltip(StatCollector.translateToLocal("botania.armorset.terrasteel.desc1"), list);	// Regen w/o full hungerbar
 		addStringToTooltip(StatCollector.translateToLocal("botania.armorset.terrasteel.desc2"), list);	// Passive mana regen
 	}

@@ -1,4 +1,4 @@
-package alfheim.client.render.block;
+package alfheim.client.render.tile;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

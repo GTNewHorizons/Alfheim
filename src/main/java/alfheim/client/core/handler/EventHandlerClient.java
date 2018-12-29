@@ -17,6 +17,7 @@ import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
+import alfheim.client.render.item.RenderItemFlugelHead;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -83,7 +84,12 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
     public void onPlayerPreRender(RenderPlayerEvent.Pre e) {
-		if (e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) e.setCanceled(true);
+		if (e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
+			e.setCanceled(true);
+			return;
+		}
+		
+		RenderItemFlugelHead.render(e, e.entityPlayer);
     }
 	
 	@SubscribeEvent
@@ -96,6 +102,7 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onPlayerSpecialPostRender(RenderPlayerEvent.Specials.Post e) {
+		RenderItemFlugelHead.render(e, e.entityPlayer);
 		RenderWings.render(e, e.entityPlayer);
 		RenderContributors.render(e, e.entityPlayer);
 	}

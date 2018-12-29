@@ -1,4 +1,4 @@
-package alfheim.client.render.block;
+package alfheim.client.render.tile;
 
 import java.util.Random;
 

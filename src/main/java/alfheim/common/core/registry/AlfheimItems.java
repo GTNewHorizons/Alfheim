@@ -8,6 +8,7 @@ import java.util.List;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
+import alfheim.common.item.ItemFlugelHead;
 import alfheim.common.item.ItemHoloProjector;
 import alfheim.common.item.ItemPaperBreak;
 import alfheim.common.item.ItemPeacePipe;
@@ -16,11 +17,14 @@ import alfheim.common.item.equipment.armor.elemental.*;
 import alfheim.common.item.equipment.armor.elvoruim.*;
 import alfheim.common.item.equipment.bauble.*;
 import alfheim.common.item.equipment.tool.*;
+import alfheim.common.item.equipment.tool.elementuim.ItemElementiumHoe;
+import alfheim.common.item.equipment.tool.manasteel.ItemManasteelHoe;
 import alfheim.common.item.interaction.thaumcraft.*;
 import alfheim.common.item.material.*;
 import alfheim.common.item.relic.*;
 import alfheim.common.item.rod.*;
 import baubles.api.BaubleType;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -39,6 +43,7 @@ public class AlfheimItems {
 	public static Item elementalHelmet;
 	public static Item elementalHelmetRevealing;
 	public static Item elementalLeggings;
+	public static Item elementiumHoe;
 	public static Item elfFirePendant;
 	public static Item elfIcePendant;
 	public static Item elvenResource = new ItemElvenResource(); // Because it MUST be constructed BEFORE blocks.
@@ -49,11 +54,13 @@ public class AlfheimItems {
 	public static Item elvoriumLeggings;
 	public static Item excaliber;
 	public static Item flugelDisc;
+	public static Item flugelHead;
 	public static Item flugelSoul;
 	public static Item holoProjector;
 	public static Item livingrockPickaxe;
 	public static Item manaRingElven;
 	public static Item manaRingGod;
+	public static Item manasteelHoe;
 	public static Item manaStone;
 	public static Item manaStoneGreater;
 	public static Item mask;
@@ -77,14 +84,16 @@ public class AlfheimItems {
 	private static void construct() {
 		elementalHelmet = new ElementalWaterHelm();
 		elementalHelmetRevealing = new ElementalWaterHelmRevealing();
-		elementalLeggings = new ElementalFireLeggings();
 		elementalChestplate = new ElementalEarthChest();
+		elementalLeggings = new ElementalFireLeggings();
 		elementalBoots = new ElementalAirBoots();
+		elementiumHoe = new ItemElementiumHoe();
 		elvoriumHelmet = new ElvoriumHelmet();
 		elvoriumHelmetRevealing = new ElvoriumHelmetRevealing();
 		elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
 		elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
 		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
+		flugelHead = new ItemFlugelHead();
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
 		holoProjector = new ItemHoloProjector();
@@ -97,6 +106,7 @@ public class AlfheimItems {
 		creativeReachPendant = new CreativeReachPendant();
 		pixieAttractor = new ItemPendant("PixieAttractor");
 		livingrockPickaxe = new ItemLivingrockPickaxe();
+		manasteelHoe = new ItemManasteelHoe();
 		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
 		manaRingElven = new ItemManaStorage("ManaRingElven", 2, BaubleType.RING);
@@ -113,6 +123,8 @@ public class AlfheimItems {
 		register(holoProjector);
 		register(realitySword);
 		register(livingrockPickaxe);
+		register(manasteelHoe);
+		register(elementiumHoe);
 		register(manaStone);
 		register(manaStoneGreater);
 		register(manaRingElven);
@@ -122,6 +134,7 @@ public class AlfheimItems {
 		register(elvenResource);
 		register(peacePipe);
 		register(paperBreak);
+		register(flugelHead);
 		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
 

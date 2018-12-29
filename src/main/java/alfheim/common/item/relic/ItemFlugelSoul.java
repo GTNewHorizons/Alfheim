@@ -9,6 +9,7 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.entity.boss.EntityFlugel;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -43,6 +44,7 @@ import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
+import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 import vazkii.botania.common.item.relic.ItemRelic;
 
 public class ItemFlugelSoul extends ItemRelic {
@@ -60,6 +62,11 @@ public class ItemFlugelSoul extends ItemRelic {
 	private static final String TAG_FIRST_TICK = "firstTick";
 	private static final String TAG_DISABLED = "disabled";
 	private static final String TAG_BLOCKED = "blocked";
+	
+	// ItemFlightTiara
+	private static final String TAG_TIME_LEFT = "timeLeft";
+	private static final int MAX_FLY_TIME = 1200;
+
 	
 	IIcon[] signs;
 
@@ -136,6 +143,12 @@ public class ItemFlugelSoul extends ItemRelic {
 			float shift = segAngles / 2;
 			setRotationBase(stack, getCheckingAngle((EntityLivingBase) entity) - shift);
 			if(firstTick) tickFirst(stack);
+		}
+		
+		if (entity instanceof EntityPlayer) {
+			ItemStack tiara = PlayerHandler.getPlayerBaubles((EntityPlayer) entity).getStackInSlot(0);
+			if (tiara != null && tiara.getItem() instanceof ItemFlightTiara) 
+				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, MAX_FLY_TIME);
 		}
 	}
 

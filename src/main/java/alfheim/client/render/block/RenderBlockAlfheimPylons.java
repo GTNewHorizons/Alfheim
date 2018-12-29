@@ -3,6 +3,7 @@ package alfheim.client.render.block;
 import org.lwjgl.opengl.GL11;
 
 import alfheim.api.lib.LibRenderIDs;
+import alfheim.client.render.tile.RenderTileAlfheimPylons;
 import alfheim.common.block.tile.TileAlfheimPylons;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;

@@ -92,7 +92,6 @@ public class AlfheimRegistry {
 	public static Potion tHrOw;
 	public static Potion wellOLife;
 
-	
 	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
 	
 	public static void preInit() {
@@ -245,6 +244,7 @@ public class AlfheimRegistry {
 		registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
 		registerTileEntity(TileAlfheimPylons.class, "AlfheimPylon");
 		registerTileEntity(TileAnyavil.class, "Anyavil");
+		registerTileEntity(TileFlugelHead.class, "FlugelHead");
 		registerTileEntity(TileManaInfuser.class, "ManaInfuser");
 		registerTileEntity(TileTradePortal.class, "TradePortal");
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK

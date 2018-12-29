@@ -8,6 +8,7 @@ import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
+import alfheim.client.render.tile.RenderTileFlugelHead;
 import alfheim.common.core.command.CommandRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -35,8 +36,6 @@ import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemHoloProjector extends Item {
 
-	private static final ModelBipedNew model = new ModelBipedNew();
-	
 	private static final int RACES = 9;
 	private static final ModelHolder FALLBACK_MODEL = new ModelHolder(0, true);
 	
@@ -217,7 +216,7 @@ public class ItemHoloProjector extends Item {
 			GL11.glRotated(180, 1, 0, 0);
 			GL11.glRotated(90 + pos.rotation, 0, 1, 0);
 			GL11.glTranslated(0, -0.75, 0);
-			model.render(0.0625F);
+			RenderTileFlugelHead.model.render(0.0625F);
 			GL11.glPopMatrix();
 
 			GL11.glPushMatrix();

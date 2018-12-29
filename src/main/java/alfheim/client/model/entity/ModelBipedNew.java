@@ -9,18 +9,18 @@ import net.minecraft.util.MathHelper;
 
 public class ModelBipedNew extends ModelBase {
 	
-	ModelRenderer head;
-	ModelRenderer hair;
-	ModelRenderer body;
-	ModelRenderer chest;
-	ModelRenderer rightarm;
-	ModelRenderer rightglove;
-	ModelRenderer leftarm;
-	ModelRenderer leftglove;
-	ModelRenderer rightleg;
-	ModelRenderer rightboot;
-	ModelRenderer leftleg;
-	ModelRenderer leftboot;
+	public ModelRenderer head;
+	public ModelRenderer hair;
+	public ModelRenderer body;
+	public ModelRenderer chest;
+	public ModelRenderer rightarm;
+	public ModelRenderer rightglove;
+	public ModelRenderer leftarm;
+	public ModelRenderer leftglove;
+	public ModelRenderer rightleg;
+	public ModelRenderer rightboot;
+	public ModelRenderer leftleg;
+	public ModelRenderer leftboot;
 
 	public ModelBipedNew() { // ModelBiped
 		textureWidth = 64;

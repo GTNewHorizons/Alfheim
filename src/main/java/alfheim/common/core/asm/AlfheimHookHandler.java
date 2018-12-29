@@ -55,6 +55,7 @@ import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.item.ItemGaiaHead;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.lib.LibBlockNames;
@@ -259,6 +260,12 @@ public class AlfheimHookHandler {
 		return false;
 	}
 
+	@Hook(createMethod = true)
+	public static ItemStack onItemRightClick(ItemGaiaHead item, ItemStack stack, World world, EntityPlayer player) {
+		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1)); 
+		return stack;
+	}
+	
 	@Hook(isMandatory = true, returnType = "int", returnCondition = ReturnCondition.ON_TRUE, intReturnConstant = 2)
 	public static boolean getFortuneModifier(EnchantmentHelper h, EntityLivingBase e) {
 		return e.isPotionActive(AlfheimRegistry.goldRush);

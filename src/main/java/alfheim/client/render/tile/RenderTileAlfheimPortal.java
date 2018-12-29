@@ -1,4 +1,4 @@
-package alfheim.client.render.block;
+package alfheim.client.render.tile;
 
 import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
