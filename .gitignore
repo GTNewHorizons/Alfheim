@@ -50,6 +50,7 @@ Temporary Items
 
 /*
 /*/
+!/gradle/
 !/libs/
 !/src/
 !/.gitattributes
