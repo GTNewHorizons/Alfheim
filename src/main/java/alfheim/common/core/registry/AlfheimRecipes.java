@@ -55,6 +55,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeAuraRingElven;
 	public static IRecipe recipeAuraRingGod;
 	public static IRecipe recipeEmentalHelmet;
+	public static IRecipe recipeEmentalHelmetRevealing;
 	public static IRecipe recipeEmentalChestplate;
 	public static IRecipe recipeEmentalLeggings;
 	public static IRecipe recipeEmentalBoots;
@@ -62,6 +63,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeElvenPylon;
 	private static List<IRecipe> recipesElvenWand;
 	public static IRecipe recipeElvoriumHelmet;
+	public static IRecipe recipeElvoriumHelmetRevealing;
 	public static IRecipe recipeElvoriumChestplate;
 	public static IRecipe recipeElvoriumLeggings;
 	public static IRecipe recipeElvoriumBoots;
@@ -174,6 +176,7 @@ public class AlfheimRecipes {
 			'D', IFFESAL_DUST,
 			'P', elementiumHelmRevealing,
 			'M', RUNE[8]);
+		recipeEmentalHelmetRevealing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elementalChestplate),
 			"RTR", "DPD", " M ",
@@ -277,6 +280,7 @@ public class AlfheimRecipes {
 			'P', terrasteelHelmRevealing,
 			'C', new ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 			'M', MAUFTRIUM_INGOT);
+		recipeElvoriumHelmetRevealing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elvoriumChestplate),
 			"TRT", "EPE", "CMC",

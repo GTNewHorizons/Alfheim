@@ -56,7 +56,7 @@ public class AlfheimItems {
 	public static Item flugelDisc;
 	public static Item flugelHead;
 	public static Item flugelSoul;
-	public static Item holoProjector;
+	//public static Item holoProjector;
 	public static Item livingrockPickaxe;
 	public static Item manaRingElven;
 	public static Item manaRingGod;
@@ -96,7 +96,7 @@ public class AlfheimItems {
 		flugelHead = new ItemFlugelHead();
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
-		holoProjector = new ItemHoloProjector();
+		//holoProjector = new ItemHoloProjector();
 		//mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
@@ -120,7 +120,7 @@ public class AlfheimItems {
 	}
 
 	private static void reg() {
-		register(holoProjector);
+		//register(holoProjector);
 		register(realitySword);
 		register(livingrockPickaxe);
 		register(manasteelHoe);
