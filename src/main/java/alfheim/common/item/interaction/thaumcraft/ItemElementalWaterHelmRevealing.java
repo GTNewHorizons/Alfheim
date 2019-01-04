@@ -2,7 +2,7 @@ package alfheim.common.item.interaction.thaumcraft;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.item.equipment.armor.elemental.ElementalWaterHelm;
+import alfheim.common.item.equipment.armor.elemental.ItemElementalWaterHelm;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,9 +15,9 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 @Optional.InterfaceList({
 		@Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles", striprefs = true),
 		@Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.nodes.IRevealer", striprefs = true) })
-public class ElementalWaterHelmRevealing extends ElementalWaterHelm implements IGoggles, IRevealer {
+public class ItemElementalWaterHelmRevealing extends ItemElementalWaterHelm implements IGoggles, IRevealer {
 	
-	public ElementalWaterHelmRevealing() {
+	public ItemElementalWaterHelmRevealing() {
 		super("ElementalWaterHelmRevealing");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.util.AlfheimConfig;
@@ -20,11 +21,12 @@ public class PotionThrow extends PotionAlfheim {
 
 	@Override
 	public boolean isReady(int time, int mod) {
-		return true;
+		return AlfheimCore.enableMMO;
 	}
 	
 	@Override
 	public void performEffect(EntityLivingBase target, int mod) {
+		if (!AlfheimCore.enableMMO) return;
 		Vector3 v = new Vector3(target.getLookVec()).mul(mod+1);
 		target.motionX = v.x;
 		target.motionY = v.y;

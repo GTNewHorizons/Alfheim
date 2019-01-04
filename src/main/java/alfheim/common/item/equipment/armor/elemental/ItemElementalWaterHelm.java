@@ -17,14 +17,14 @@ import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaDiscountArmor;
 import vazkii.botania.api.mana.ManaItemHandler;
 
-public class ElementalWaterHelm extends ElementalArmor implements IManaDiscountArmor {
+public class ItemElementalWaterHelm extends ElementalArmor implements IManaDiscountArmor {
 	
-	public ElementalWaterHelm() {
+	public ItemElementalWaterHelm() {
 		super(0, "ElementalWaterHelm");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}
 
-	public ElementalWaterHelm(String name) {
+	public ItemElementalWaterHelm(String name) {
 		super(0, name);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}

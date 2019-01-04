@@ -16,11 +16,11 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
 
-public class ElementalAirBoots extends ElementalArmor {
+public class ItemElementalAirBoots extends ElementalArmor {
 
 	public static final int ONEBLOCKCOST = 10;
 	
-	public ElementalAirBoots() {
+	public ItemElementalAirBoots() {
 		super(3, "ElementalAirBoots");
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		MinecraftForge.EVENT_BUS.register(this);

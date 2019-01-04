@@ -32,32 +32,34 @@ import vazkii.botania.common.Botania;
 public class SpellEffectHandlerClient {
 	
 	public static void select(Spells s, double x, double y, double z, double x2, double y2, double z2) {
-		switch (s) {
-			case ACID: spawnAcid(x, y, z); break; 
-			case AQUABIND: spawnAquaBind(x, y, z); break;
-			case AQUASTREAM: spawnAquaStream(x, y, z, x2, y2, z2); break;
-			case AQUASTREAM_HIT: spawnAquaStreamHit(x, y, z); break;
-			case DISPEL: spawnBurst(x, y, z, 1, 0, 0); break;
-			case ECHO: spawnEcho(x, y, z); break;
-			case ECHO_ENTITY: spawnEchoEntity(x, y, z); break;
-			case ECHO_ITEM: spawnEchoItem(x, y, z); break;
-			case ECHO_MOB: spawnEchoMob(x, y, z); break;
-			case ECHO_PLAYER: spawnEchoPlayer(x, y, z); break;
-			case EXPL: spawnExplosion(x, y, z); break;
-			case GRAVITY: spawnGravity(x, y, z, x2, y2, z2); break;
-			case HEAL: spawnBurst(x, y, z, 0, 1, 0); break;
-			case ICELENS: addIceLens(); break;
-			case MANA: addMana(x, y); break;
-			case NOTE: spawnNote(x, y, z); break;
-			case NVISION: spawnBurst(x, y, z, 0, 0, 1); break;
-			case PURE: spawnBurst(x, y, z, 0, 0.75F, 1); break;
-			case PURE_AREA: spawnPure(x, y, z); break;
-			case QUAD: quadDamage(); break;
-			case QUADH: quadHurt(); break;
-			case SMOKE: spawnSmoke(x, y, z); break;
-			case THROW: spawnThrow(x, y, z, x2, y2, z2); break;
-			case TREMORS: spawnTremors(x, y, z); break;
-			case UPHEAL: spawnBurst(x, y, z, 1, 0.75F, 0); break;
+		if (AlfheimCore.enableMMO) {
+			switch (s) {
+				case ACID: spawnAcid(x, y, z); break; 
+				case AQUABIND: spawnAquaBind(x, y, z); break;
+				case AQUASTREAM: spawnAquaStream(x, y, z, x2, y2, z2); break;
+				case AQUASTREAM_HIT: spawnAquaStreamHit(x, y, z); break;
+				case DISPEL: spawnBurst(x, y, z, 1, 0, 0); break;
+				case ECHO: spawnEcho(x, y, z); break;
+				case ECHO_ENTITY: spawnEchoEntity(x, y, z); break;
+				case ECHO_ITEM: spawnEchoItem(x, y, z); break;
+				case ECHO_MOB: spawnEchoMob(x, y, z); break;
+				case ECHO_PLAYER: spawnEchoPlayer(x, y, z); break;
+				case EXPL: spawnExplosion(x, y, z); break;
+				case GRAVITY: spawnGravity(x, y, z, x2, y2, z2); break;
+				case HEAL: spawnBurst(x, y, z, 0, 1, 0); break;
+				case ICELENS: addIceLens(); break;
+				case MANA: addMana(x, y); break;
+				case NOTE: spawnNote(x, y, z); break;
+				case NVISION: spawnBurst(x, y, z, 0, 0, 1); break;
+				case PURE: spawnBurst(x, y, z, 0, 0.75F, 1); break;
+				case PURE_AREA: spawnPure(x, y, z); break;
+				case QUAD: quadDamage(); break;
+				case QUADH: quadHurt(); break;
+				case SMOKE: spawnSmoke(x, y, z); break;
+				case THROW: spawnThrow(x, y, z, x2, y2, z2); break;
+				case TREMORS: spawnTremors(x, y, z); break;
+				case UPHEAL: spawnBurst(x, y, z, 1, 0.75F, 0); break;
+			}
 		}
 	}
 
@@ -198,16 +200,18 @@ public class SpellEffectHandlerClient {
 	}
 
 	public static void onDeath(EntityLivingBase target) {
-		if(Minecraft.getMinecraft().thePlayer == target) {
+		if(AlfheimCore.enableMMO && Minecraft.getMinecraft().thePlayer == target) {
 			Minecraft.getMinecraft().displayGuiScreen(new GUIDeathTimer());
 			Minecraft.getMinecraft().thePlayer.hurtTime = 0;
 		}
 	}
 
 	public static void onDeathTick(EntityLivingBase target) {
-		int c = 0xFFFFFF;
-		if (target instanceof EntityPlayer && EnumRace.getRace((EntityPlayer) target) != EnumRace.HUMAN) c = EnumRace.getRace((EntityPlayer) target).getRGBColor();
-		Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - (Minecraft.getMinecraft().thePlayer == target ? 1.5 : 0), target.posZ, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float)(Math.random() * 0.5), (float)(Math.random() * 0.015 - 0.0075), (float)(Math.random() * 0.025), (float)(Math.random() * 0.015 - 0.0075), 2);
+		if (AlfheimCore.enableMMO) {
+			int c = 0xFFFFFF;
+			if (target instanceof EntityPlayer && EnumRace.getRace((EntityPlayer) target) != EnumRace.HUMAN) c = EnumRace.getRace((EntityPlayer) target).getRGBColor();
+			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - (Minecraft.getMinecraft().thePlayer == target ? 1.5 : 0), target.posZ, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float)(Math.random() * 0.5), (float)(Math.random() * 0.015 - 0.0075), (float)(Math.random() * 0.025), (float)(Math.random() * 0.015 - 0.0075), 2);
+		}
 	}
 
 	public static void onRespawned() {

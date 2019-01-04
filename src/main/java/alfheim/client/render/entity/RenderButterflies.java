@@ -17,7 +17,6 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class RenderButterflies {
 	
-	
 	static Random rand = new Random();
 	
 	@SideOnly(Side.CLIENT)

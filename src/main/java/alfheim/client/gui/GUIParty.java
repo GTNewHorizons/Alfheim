@@ -20,6 +20,7 @@ import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.entity.Flight;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
@@ -238,7 +239,7 @@ public class GUIParty extends Gui {
 					
 					ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 					
-					double mod = MathHelper.floor_double(mc.thePlayer.getEntityAttribute(AlfheimRegistry.FLIGHT).getAttributeValue()) / AlfheimRegistry.FLIGHT.getDefaultValue();
+					double mod = MathHelper.floor_double(Flight.get(mc.thePlayer)) / Flight.max();
 					double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;
 					glColor4d(1, 1, 1, (mc.thePlayer.capabilities.isFlying ? (mod > 0.1 ? time + 0.5 : time) : 1));
 					

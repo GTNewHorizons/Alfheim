@@ -29,8 +29,8 @@ botania.page.portal4=Creating &1Alfheim Portal Core&0
 botania.page.portal5=Creating &1Interdimensional Gateway Core&0
 botania.page.portal6=Portal to Alfheim
 botania.page.portal7=To activate the portal, you only need to use the Core on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in Alfheim it doesn't require mana sources, since it takes energy from the world itself.
-botania.page.portal8t=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
-botania.page.portal8f=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
+botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
+botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
 
 botania.entry.worldgen=Worldgen
 botania.tagline.worldgen=More strange stuff!
@@ -41,9 +41,7 @@ botania.page.worldgen2=Creating &1Glowstone Dust&0
 botania.page.worldgen3=Also in the world you can find ruins, for example, places of battles with the Guardian of Gaia, that's how the elves received his essences... <br>The sand of this world is not like the sand of Midgard... Perhaps it can be used to make something interesting.
 botania.page.worldgen4=Creating &1Livingcobble&0
 botania.page.worldgen5=Creating &1Livingrock pickaxe&0
-botania.page.worldgen6=Creating &1Hoe&0
-botania.page.worldgen7=9 times better Hoe!
-botania.page.worldgen8=Creating &1Furnace&0
+botania.page.worldgen6=Creating &1Furnace&0
 
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
@@ -136,10 +134,9 @@ botania.page.advMana6=Creating &1Mauftrium ring&0
 
 botania.entry.auraAlf=Bands of Aura
 botania.tagline.auraAlf=Everything needs an upgrade
-# this is a joke don't remove this please :3
-botania.page.auraAlf0=&o//Gedeon, write something smart here cause I have no ideas//&r
-botania.page.auraAlf1=Upgading to &2Elven&0 level
-botania.page.auraAlf2=Upgading to &6God's&0 level
+botania.page.auraAlf0=&o//Волк, напиши здесь чего-нибудь заумного, а то у меня идей нет//&r
+botania.page.auraAlf1=Upgading to &1Elven Aura Ring&0
+botania.page.auraAlf2=Upgading to &1God's Aura Ring&0
 
 botania.entry.ruling=Power of other worlds
 botania.tagline.ruling=I'm Bruce Almighty
@@ -161,7 +158,6 @@ botania.tagline.flugel=Weapon of Gods
 botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
 botania.page.flugel1=Flügels themselves strongly hate Guardians, for the fact that they took away eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of summoning, built in the clouds, you can summon one of the Flügels and try to defeat it.
 botania.page.flugel2=But be careful - their self-love will not allow them to fight with someone who can not fly by themselves, so you need to get wings like theirs. Good armor, strong sword and potions - without them you are unlikely to achieve anything. Otherwise, an inquisitive and flexible mind will help you.
-botania.page.flugel3=With a small chance, you can cut down Flugel's head just as you do with Gaia's guardians. And now both can be put on.
 
 botania.entry.soul=Flügel's Soul
 botania.tagline.soul=God Slayers
@@ -187,7 +183,7 @@ botania.entry.races= Races
 botania.tagline.races=It's actually not races
 botania.page.races0=Even Hel herself didn't destroy the intelligent life in Alfheim and it's still boiling there. This world serves as the homeland for the elven races who live at an equal distance from the center of the world. In total, there are nine races: Salamanders, Sylphes, Cait Sith, Pookas, Gnomes, Leprechauns, Spriggans, Undines and Imps.
 botania.page.races1=Each of them has a unique color, a shape of the wings and an icon, and they all can fly. 
-botania.page.races2=By default, the flight is activated by the "F" key, and if you want to fly even faster, then press the acceleration button - increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the "ALT" pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
+botania.page.races2=By default, the flight is activated by the [F] key, and if you want to fly even faster, then press the acceleration button - increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the "ALT" pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
 
 ################################################################ MMO ################################################################
 
@@ -203,11 +199,12 @@ botania.entry.spells= Spells
 botania.tagline.spells=No magic outside Hogwarts!
 botania.page.spells0=Each elven race has its own set of spells, with a certain affinity. So, Salamanders are skillful fire mages, Sylphs - wind, Kait Sith can subdue the nature, Pookas are excellent musicians, Gnomes specialize in earth magic, Leprechauns on various technologies, Spriggans are masters of illusions, Undines - water mages, and Imps are servants of Darkness.
 botania.page.spells1=Before using the spell, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
-botania.page.spells2=The spell is selected using the arrows, cast happens when you press V. Also, while holding ctrl+shift, you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from 1 to =, while holding ctrl.
-botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
+botania.page.spells2=The spell is selected using the arrows, cast happens when you press [V]. Also, while holding [ctrl]+[shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [ctrl].
+botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change.
+botania.page.spells3u=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
 botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures within 9 blocks
 botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness
-botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interruptштп if you move
+botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interrupts if you move
 botania.page.battlehorn=Adds courage to allies, imposing acceleration, boost and resistance
 botania.page.blink=Allows you to teleport forward up to 8 blocks
 botania.page.bunnyhop=Imposes a high jump effect on the target.
@@ -231,7 +228,7 @@ botania.page.healing=Grants average healing to all party members
 botania.page.hollowbody=Imposes an invisibility effect on target
 botania.page.icelens=Allows the caster to see 10 times better through an ice lens
 botania.page.ignition=Ignites the selected block at a distance of up to 16 blocks
-botania.page.mortar=Launches a rock, causing great falling block damage on the target of direct hit, additionally breaking its armor, and medium aerth damage over an 2-blocks radius area
+botania.page.mortar=Launches a rock, causing great falling block damage on the target of direct hit, additionally breaking its armor, and medium earth damage over an 2-blocks radius area
 botania.page.night=Sets the time of day to night
 botania.page.nightvision=Imposes a night vision effect on a party
 botania.page.ninelifes=Imposes on the target an effect which allows once to survive a death by falling, drowning, withering (with a 50% chance), burning or poisoning, and after giving a temporary invulnerability to these types of damage
@@ -260,8 +257,8 @@ botania.page.windbalde=Launches an air disc, causing average air damage to enemi
 
 botania.entry.targets= Targeting
 botania.tagline.targets=You can't hide from me
-botania.page.targets0=For more convenient use of spells in the game there is also a system of targeting. To select an enemy, hover the cursor on it and hold down selection button (R by default). Now you can use spells on it that require a target.
-botania.page.targets1=To select a party member, simply press T. The selection will cycle through and the name of the selected member will be highlighted in green. Clicking on R will not allow you to select a member so not to accidentally attack him. Tracking range - 128 blocks for bosses and 32 for the rest.
+botania.page.targets0=For more convenient use of spells in the game there is also a system of targeting. To select an enemy, hover the cursor on it and hold down selection button ([R] by default). Now you can use spells on it that require a target.
+botania.page.targets1=To select a party member, simply press [T]. The selection will cycle through and the name of the selected member will be highlighted in green. Clicking on [R] won't allow you to select a member so not to accidentally attack him. Tracking range - 128 blocks for bosses and 32 for the rest.
 
 lexicon.time=Cast: %.2f
 lexicon.cd=Cooldown: %.2f

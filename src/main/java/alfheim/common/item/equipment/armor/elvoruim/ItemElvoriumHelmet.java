@@ -29,17 +29,17 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 
-public class ElvoriumHelmet extends ElvoriumArmor implements IAncientWillContainer, IManaGivingItem {
+public class ItemElvoriumHelmet extends ItemElvoriumArmor implements IAncientWillContainer, IManaGivingItem {
 
 	private static final String TAG_ANCIENT_WILL = "AncientWill";
 	static IIcon willIcon;
 
-	public ElvoriumHelmet() {
+	public ItemElvoriumHelmet() {
 		this("ElvoriumHelmet");
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	public ElvoriumHelmet(String name) {
+	public ItemElvoriumHelmet(String name) {
 		super(0, name);
 	}
 
@@ -94,7 +94,7 @@ public class ElvoriumHelmet extends ElvoriumArmor implements IAncientWillContain
 
 	@SideOnly(Side.CLIENT)
 	public static void renderOnPlayer(ItemStack stack, RenderPlayerEvent event) {
-		if(hasAnyWill(stack) && !((ElvoriumArmor) stack.getItem()).hasPhantomInk(stack)) {
+		if(hasAnyWill(stack) && !((ItemElvoriumArmor) stack.getItem()).hasPhantomInk(stack)) {
 			GL11.glPushMatrix();
 			float f = willIcon.getMinU();
 			float f1 = willIcon.getMaxU();
@@ -119,7 +119,7 @@ public class ElvoriumHelmet extends ElvoriumArmor implements IAncientWillContain
 			if(hasArmorSet(player)) {
 				boolean crit = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null;
 				ItemStack stack = player.inventory.armorItemInSlot(3);
-				if(crit && stack != null && stack.getItem() instanceof ElvoriumHelmet) {
+				if(crit && stack != null && stack.getItem() instanceof ItemElvoriumHelmet) {
 					boolean ahrim = hasAncientWill(stack, 0);
 					boolean dharok = hasAncientWill(stack, 1);
 					boolean guthan = hasAncientWill(stack, 2);
@@ -162,8 +162,8 @@ public class ElvoriumHelmet extends ElvoriumArmor implements IAncientWillContain
 		GL11.glRotatef(pitch, 0, 0, 1);
 
 		ItemStack helm = player.inventory.armorItemInSlot(3);
-		if(helm != null && helm.getItem() instanceof ElvoriumHelmet)
-			ElvoriumHelmet.renderOnPlayer(helm, event);
+		if(helm != null && helm.getItem() instanceof ItemElvoriumHelmet)
+			ItemElvoriumHelmet.renderOnPlayer(helm, event);
 
 		GL11.glPopMatrix();
 	}

@@ -7,6 +7,7 @@ import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.client.core.proxy.ClientProxy;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem;
@@ -15,6 +16,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.entity.Flight;
 import alfheim.common.network.Message1d;
 import alfheim.common.network.MessageHotSpellC;
 import alfheim.common.network.MessageParticles;
@@ -71,7 +73,7 @@ public class PacketHandlerClient {
 				int d1 = (int) packet.data1;
 				switch (d1) {
 					case 0: EnumRace.setRaceID(Minecraft.getMinecraft().thePlayer, packet.data2); break;
-					case 1: Minecraft.getMinecraft().thePlayer.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).setBaseValue(packet.data2); break;
+					case 1: Flight.set(Minecraft.getMinecraft().thePlayer, packet.data2); break;
 				}
 			} break;
 			case COOLDOWN: {
@@ -111,6 +113,7 @@ public class PacketHandlerClient {
 				info.setThundering(((int) packet.data1) > 1);
 				info.setThunderTime((int) packet.data3);
 			} break;
+			case TOGGLER: ClientProxy.toggelModes(packet.data1 > 0, ((int) packet.data2 & 1) > 0, ((int) packet.data3 & 1) > 0, (((int) packet.data2 >> 1) & 1) > 0, (((int) packet.data3 >> 1) & 1) > 0); break;
 		}
 	}
 }

@@ -11,9 +11,9 @@ import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
-public class CreativeReachPendant extends ItemPendant {
+public class ItemCreativeReachPendant extends ItemPendant {
 
-	public CreativeReachPendant() {
+	public ItemCreativeReachPendant() {
 		super("CreativeReachPendant");
 	}
 

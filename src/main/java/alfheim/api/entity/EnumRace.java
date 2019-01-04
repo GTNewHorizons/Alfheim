@@ -80,28 +80,27 @@ public enum EnumRace {
 		return StatCollector.translateToLocal("race." + name + ".reverse");
 	}
 	
+	public static void ensureExistance(EntityPlayer player) {
+		if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.RACE) == null) registerRace(player);
+	}
+	
 	public static EnumRace getRace(EntityPlayer player) {
-		if (!hasRace(player)) registerRace(player);
+		ensureExistance(player);
 		return getByID(player.getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
 	}
 	
 	public static int getRaceID(EntityPlayer player) {
-		if (!hasRace(player)) registerRace(player);
+		ensureExistance(player);
 		return MathHelper.floor_double(player.getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
 	}
 	
 	public static void setRace(EntityPlayer player, EnumRace race) {
-		if (!hasRace(player)) registerRace(player);
+		ensureExistance(player);
 		player.getEntityAttribute(AlfheimAPI.RACE).setBaseValue(race.ordinal());
 	}
 	
 	public static void setRaceID(EntityPlayer player, double raceID) {
-		if (!hasRace(player)) registerRace(player);
 		player.getEntityAttribute(AlfheimAPI.RACE).setBaseValue(raceID);
-	}
-	
-	private static boolean hasRace(EntityPlayer player) {
-		return player.getAttributeMap().getAttributeInstance(AlfheimAPI.RACE) != null;
 	}
 	
 	private static void registerRace(EntityPlayer player) {

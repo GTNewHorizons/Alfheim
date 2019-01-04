@@ -19,7 +19,7 @@ public class Message3d extends ASJPacket {
 	}
 	
 	public static enum m3d {
-		PARTY_STATUS, KEY_BIND, WAETHER
+		PARTY_STATUS, KEY_BIND, WAETHER, TOGGLER
 	}
 	
 	public static class Handler implements IMessageHandler<Message3d, IMessage> {

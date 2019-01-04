@@ -5,10 +5,9 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
+import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -28,7 +27,7 @@ public class TheRodOfTheDebug extends Item {
 			if (true/*!world.isRemote*/) {
 				if (!player.isSneaking()) {
 					if (!world.isRemote) {
-//						PartySystem.setParty(player, new Party(player));
+						PartySystem.setParty(player, new Party(player));
 						PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
 					}
 					
@@ -46,7 +45,7 @@ public class TheRodOfTheDebug extends Item {
 //					ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 				} else {
 					EnumRace.setRaceID(player, (EnumRace.getRace(player).ordinal() + 1) % 11);
-//					ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player).toString(), player);
+					ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player), player);
 				}
 			}
 			return stack;

@@ -8,6 +8,7 @@ import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.entity.Flight;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,7 +41,7 @@ public class RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		double spd = 0.5;
-		EnumRace.getRace(player).glColorA(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getBaseValue() / player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttribute().getDefaultValue() < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) ((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd) * 0.3) * 0.2, 1)) : 1);
+		EnumRace.getRace(player).glColorA(Flight.get(player) / Flight.get(player) < 0.05 ? (Math.min(0.75 + (float) Math.cos((double) ((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * spd) * 0.3) * 0.2, 1)) : 1);
 		
 		Helper.rotateIfSneaking(player);
 		glTranslated(0, -0.15, 0);

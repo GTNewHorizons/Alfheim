@@ -45,12 +45,13 @@ public class AlfheimCore {
 	
 	public static String save = "";
 	
-	public static boolean enableElvenStory = false;
+	public static boolean enableElvenStory = true;
+	public static boolean enableMMO = true;
 	public static boolean MineTweakerLoaded = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		enableElvenStory = Loader.isModLoaded("elvenstory") || DEV;
+		AlfheimConfig.readModes();
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
@@ -82,19 +83,16 @@ public class AlfheimCore {
 	public void starting(FMLServerStartingEvent event) {
 		ASJUtilities.log("Starting...");
 		save = event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory().getAbsolutePath();
-		if (AlfheimCore.enableElvenStory) {
-			AlfheimConfig.initWorldCoordsForElvenStory(event.getServer().getEntityWorld());
-			CardinalSystem.load(save);
-			event.registerServerCommand(new CommandRace());
-		}
+		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save);
+		if (enableMMO) CardinalSystem.load(save);
+		event.registerServerCommand(new CommandAlfheim());
 		event.registerServerCommand(new CommandDimTP());
+		event.registerServerCommand(new CommandRace());
 	}
-
+	
 	@EventHandler
 	public void stopping(FMLServerStoppingEvent event) {
-		if (AlfheimCore.enableElvenStory) {
-			CardinalSystem.save(save);
-		}
+		if (enableMMO) CardinalSystem.save(save);
 	}
 
 	public static void registerPackets() {

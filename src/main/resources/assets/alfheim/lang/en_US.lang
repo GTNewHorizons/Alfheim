@@ -119,6 +119,10 @@ alfheim.armorset.elvorium.desc1=Rods have more powerfull effect
 alfheim.armorset.elvorium.desc2=Vis discount: 20% 
 alfheim.armorset.elvorium.desc3=Runic Shield +8
 
+alfheim.commands.alfheim.done=%s changed Alfheim mode to [%sESM%s|%sMMO%s]
+alfheim.commands.alfheim.usage=Used for modes configuration
+alfheim.commands.alfheim.wrong=/alfheim <command>
+
 alfheim.commands.tpdim.usage=Used for cross-world teleport
 alfheim.commands.tpdim.wrong=tpdim <ID>
 alfheim.commands.tpdim.worlderr=Dimension Initialization Exception
@@ -305,8 +309,12 @@ elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
 elvenstory.welcome1=§6Please, select one of the following races using "/race"
 elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
 elvenstory.commands.race.usage=/race <RACE>
+elvenstory.commands.race.unavailable=Command unavailable: Elven Story Mode is disabled.
 
+key.cast.desc=Spell Cast
 key.flight.desc=Elven Flight
+key.selmob.desc=Select Mob
+key.selteam.desc=Select Party Member
 mes.flight.unavailable=Flight is available only in Alfheim
 
 race.SALAMANDER.name=SALAMANDER

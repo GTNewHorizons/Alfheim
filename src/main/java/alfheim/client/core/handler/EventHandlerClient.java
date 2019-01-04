@@ -84,7 +84,7 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
     public void onPlayerPreRender(RenderPlayerEvent.Pre e) {
-		if (e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
+		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
 			e.setCanceled(true);
 			return;
 		}
@@ -122,24 +122,30 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onBlockOverlay(RenderBlockOverlayEvent e) {
-		if (e.overlayType != OverlayType.FIRE) e.setCanceled(e.player.isPotionActive(AlfheimRegistry.noclip));
+		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.setCanceled(e.player.isPotionActive(AlfheimRegistry.noclip));
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onWorldLastRender(RenderWorldLastEvent e) {
-		Minecraft.getMinecraft().mcProfiler.startSection("alf-particles");
-		
-		if (!AlfheimCore.enableElvenStory) return;
-		
+		if (AlfheimCore.enableMMO) renderMMO();
+
+//		glPushMatrix();
+//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
+//		glTranslated(0, 4, 0);
+//		// render
+//		glPopMatrix();
+	}		
+
+	private void renderMMO() {
 		spell: {
 			SpellBase spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID);
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) break spell;
 			
 			glPushMatrix();
 			ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer);
-    		spell.render(Minecraft.getMinecraft().thePlayer);
-    		glPopMatrix();
+			spell.render(Minecraft.getMinecraft().thePlayer);
+			glPopMatrix();
 		}
 		
 		target: if (CardinalSystemClient.segment().target != null) {
@@ -156,7 +162,7 @@ public class EventHandlerClient {
 			} else {
 				glTranslated(0, -(1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight), 0);
 			}
-			glRotated(Minecraft.getMinecraft().theWorld.getTotalWorldTime() + e.partialTicks, 0, 1, 0);
+			glRotated(Minecraft.getMinecraft().theWorld.getTotalWorldTime() + Minecraft.getMinecraft().timer.renderPartialTicks, 0, 1, 0);
 			glScalef(CardinalSystemClient.segment.target.width, CardinalSystemClient.segment.target.width, CardinalSystemClient.segment.target.width);
 			ASJUtilities.glColor1u(CardinalSystemClient.segment.isParty ? 0xFF00FF00 : 0xFFFF0000);
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.cross);
@@ -175,20 +181,15 @@ public class EventHandlerClient {
 		}
 		
 		TimeStopSystemClient.render();
-		
-//		glPushMatrix();
-//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
-//		glTranslated(0, 4, 0);
-//		// render
-//		glPopMatrix();
-	}		
+	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onClonePlayer(PlayerEvent.Clone e) {
-		if (!AlfheimCore.enableElvenStory) return;
-		EnumRace r = EnumRace.getByID(((EntityPlayer) e.original).getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
-		((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
+		if (AlfheimCore.enableElvenStory) {
+			EnumRace r = EnumRace.getByID(((EntityPlayer) e.original).getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
+			((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
+		}
 	}
 	
 	@SubscribeEvent
@@ -204,6 +205,6 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onFOV(FOVUpdateEvent e) {
-		if (e.entity.getActivePotionEffect(AlfheimRegistry.icelens) != null) e.newfov = 0.1F;
+		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimRegistry.icelens) != null) e.newfov = 0.1F;
 	}
 }

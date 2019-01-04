@@ -17,6 +17,7 @@ public class PotionNoclip extends PotionAlfheim {
 
 	@Override
 	public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
+		if (!AlfheimCore.enableMMO) return;
 		if (target instanceof EntityPlayer) {
 			((EntityPlayer) target).capabilities.allowFlying = true;
 			((EntityPlayer) target).capabilities.isFlying = true;
@@ -28,6 +29,7 @@ public class PotionNoclip extends PotionAlfheim {
 
 	@Override
 	public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
+		if (!AlfheimCore.enableMMO) return;
 		target.noClip = false;
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(target.getEntityId(), AlfheimRegistry.noclip.id, 0, 0));
 	}

@@ -1,7 +1,7 @@
 package alfheim.common.item.interaction.thaumcraft;
 
 import alfheim.api.ModInfo;
-import alfheim.common.item.equipment.armor.elvoruim.ElvoriumHelmet;
+import alfheim.common.item.equipment.armor.elvoruim.ItemElvoriumHelmet;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,9 +13,9 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 @Optional.InterfaceList({
 	@Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles", striprefs = true),
 	@Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.nodes.IRevealer", striprefs = true) })
-public class ElvoriumHelmetRevealing extends ElvoriumHelmet implements IGoggles, IRevealer {
+public class ItemElvoriumHelmetRevealing extends ItemElvoriumHelmet implements IGoggles, IRevealer {
 
-	public ElvoriumHelmetRevealing() {
+	public ItemElvoriumHelmetRevealing() {
 		super("ElvoriumHelmetRevealing");
 	}
 

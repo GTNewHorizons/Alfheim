@@ -2,6 +2,7 @@ package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -25,7 +26,7 @@ public class GUIIceLens extends Gui {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onOverlayRendering(RenderGameOverlayEvent.Post event) {
-		if (event.type != ElementType.HELMET || Minecraft.getMinecraft().thePlayer.getActivePotionEffect(AlfheimRegistry.icelens) == null) return;
+		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || Minecraft.getMinecraft().thePlayer.getActivePotionEffect(AlfheimRegistry.icelens) == null) return;
 		
 		glPushMatrix();
 		glEnable(GL_BLEND);

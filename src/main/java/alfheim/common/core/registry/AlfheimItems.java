@@ -56,7 +56,7 @@ public class AlfheimItems {
 	public static Item flugelDisc;
 	public static Item flugelHead;
 	public static Item flugelSoul;
-	//public static Item holoProjector;
+	public static Item holoProjector;
 	public static Item livingrockPickaxe;
 	public static Item manaRingElven;
 	public static Item manaRingGod;
@@ -82,28 +82,28 @@ public class AlfheimItems {
 	// so I need to construct some items in odd places to get beautiful Creative Tab representation :D
 	// and yes, I'm too lazy to just reOverride Vazkii's code :P
 	private static void construct() {
-		elementalHelmet = new ElementalWaterHelm();
-		elementalHelmetRevealing = new ElementalWaterHelmRevealing();
-		elementalChestplate = new ElementalEarthChest();
-		elementalLeggings = new ElementalFireLeggings();
-		elementalBoots = new ElementalAirBoots();
+		elementalHelmet = new ItemElementalWaterHelm();
+		elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
+		elementalChestplate = new ItemElementalEarthChest();
+		elementalLeggings = new ItemElementalFireLeggings();
+		elementalBoots = new ItemElementalAirBoots();
 		elementiumHoe = new ItemElementiumHoe();
-		elvoriumHelmet = new ElvoriumHelmet();
-		elvoriumHelmetRevealing = new ElvoriumHelmetRevealing();
-		elvoriumChestplate = new ElvoriumArmor(1, "ElvoriumChestplate");
-		elvoriumLeggings = new ElvoriumArmor(2, "ElvoriumLeggings");
-		elvoriumBoots = new ElvoriumArmor(3, "ElvoriumBoots");
+		elvoriumHelmet = new ItemElvoriumHelmet();
+		elvoriumHelmetRevealing = new ItemElvoriumHelmetRevealing();
+		elvoriumChestplate = new ItemElvoriumArmor(1, "ElvoriumChestplate");
+		elvoriumLeggings = new ItemElvoriumArmor(2, "ElvoriumLeggings");
+		elvoriumBoots = new ItemElvoriumArmor(3, "ElvoriumBoots");
 		flugelHead = new ItemFlugelHead();
 		realitySword = new ItemRealitySword();
 		excaliber = new ItemExcaliber();
-		//holoProjector = new ItemHoloProjector();
+		holoProjector = new ItemHoloProjector();
 		//mjolnir = new ItemMjolnir();
 		mask = new ItemTankMask();
 		flugelSoul = new ItemFlugelSoul();
 		flugelDisc = new ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimCore.alfheimTab);
 		elfFirePendant = new ItemPendant("FirePendant");
 		elfIcePendant = new ItemPendant("IcePendant");
-		creativeReachPendant = new CreativeReachPendant();
+		creativeReachPendant = new ItemCreativeReachPendant();
 		pixieAttractor = new ItemPendant("PixieAttractor");
 		livingrockPickaxe = new ItemLivingrockPickaxe();
 		manasteelHoe = new ItemManasteelHoe();
@@ -120,7 +120,7 @@ public class AlfheimItems {
 	}
 
 	private static void reg() {
-		//register(holoProjector);
+		register(holoProjector);
 		register(realitySword);
 		register(livingrockPickaxe);
 		register(manasteelHoe);
