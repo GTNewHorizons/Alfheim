@@ -10,8 +10,6 @@ import vazkii.botania.api.mana.IManaUsingItem;
 
 public abstract class ItemRodBase extends Item implements IManaUsingItem {
 
-	static final int MANA_PER_CAST = 1000;
-	
 	public ItemRodBase(String name) {
 		setCreativeTab(AlfheimCore.alfheimTab);
 		setTextureName(ModInfo.MODID + ":" + name);

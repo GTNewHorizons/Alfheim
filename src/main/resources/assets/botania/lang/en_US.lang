@@ -43,6 +43,11 @@ botania.page.worldgen4=Creating &1Livingcobble&0
 botania.page.worldgen5=Creating &1Livingrock pickaxe&0
 botania.page.worldgen6=Creating &1Furnace&0
 
+botania.entry.greenRod=Rod of the Green Hills
+botania.tagline.greenRod=Greening!
+botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
+botania.page.greenRod1=Green green green green green
+
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!

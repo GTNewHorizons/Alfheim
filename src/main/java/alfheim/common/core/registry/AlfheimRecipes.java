@@ -68,6 +68,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeElvoriumPylon;
 	public static IRecipe recipeFurnace;
 	public static IRecipe recipeGaiaPylon;
+	public static IRecipe recipeGreenRod;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
 	public static IRecipe recipeManaInfusionCore;
@@ -312,6 +313,13 @@ public class AlfheimRecipes {
 			"SSS", "S S", "SSS",
 			'S', livingcobble);
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(rodGrass),
+			"  R", " D ", "S  ",
+			'D', dirtRod,
+			'R', RUNE[4],
+			'S', grassSeeds);
+		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(livingrockPickaxe),
 			"LLL", " S ", " S ",

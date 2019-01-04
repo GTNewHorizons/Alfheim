@@ -70,6 +70,7 @@ public class AlfheimItems {
 	public static Item pixieAttractor;
 	public static Item realitySword;
 	public static Item rodFire;
+	public static Item rodGrass;
 	public static Item rodIce;
 	
 	public static void init() {
@@ -114,12 +115,14 @@ public class AlfheimItems {
 		manaRingGod = new ItemManaStorage("ManaRingGod", 8, BaubleType.RING);
 		auraRingGod = new ItemAuraRingAlfheim("AuraRingGod") { public int getDelay() { return 2; } };
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
+		rodGrass = new ItemRodGrass();
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
 		paperBreak = new ItemPaperBreak();
 		peacePipe = new ItemPeacePipe();
 	}
 
 	private static void reg() {
+		register(flugelHead);
 		register(holoProjector);
 		register(realitySword);
 		register(livingrockPickaxe);
@@ -131,10 +134,10 @@ public class AlfheimItems {
 		register(manaRingGod);
 		register(rodFire);
 		register(rodIce);
-		register(elvenResource);
+		register(rodGrass);
 		register(peacePipe);
 		register(paperBreak);
-		register(flugelHead);
+		register(elvenResource);
 		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
 

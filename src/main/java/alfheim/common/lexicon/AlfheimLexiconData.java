@@ -68,8 +68,9 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
 	public static LexiconEntry essences;
-	public static LexiconEntry excalibr;	
-	public static LexiconEntry flugel;	
+	public static LexiconEntry excalibr;
+	public static LexiconEntry flugel;
+	public static LexiconEntry greenRod;
 	public static LexiconEntry infuser;
 	public static LexiconEntry mask;
 	//public static LexiconEntry mjolnir;
@@ -108,6 +109,7 @@ public class AlfheimLexiconData {
 		elvorium= new BLexiconEntry("elvorium",	categoryAlfheim);
 		essences= new BLexiconEntry("essences",	categoryAlfheim);
 		flugel	= new BLexiconEntry("flugel",	categoryAlfheim);
+		greenRod= new BLexiconEntry("greenRod",	categoryAlfheim);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
 		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
@@ -180,6 +182,8 @@ public class AlfheimLexiconData {
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
 		
+		greenRod.setKnowledgeType(BotaniaAPI.basicKnowledge)
+				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeGreenRod));
 		
 		ores	.setKnowledgeType(kt)
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
