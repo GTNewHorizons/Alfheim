@@ -208,7 +208,7 @@ public class EventHandler {
 					e.player.inventory.addItemStackToInventory(new ItemStack(ModItems.lexicon));
 					e.player.setSpawnChunk(new ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim);
 				}
-				CardinalSystem.transfer((EntityPlayerMP) e.player);
+				if (AlfheimCore.enableMMO) CardinalSystem.transfer((EntityPlayerMP) e.player);
 			}
 		}
 	}
@@ -233,8 +233,10 @@ public class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			int r = EnumRace.getRaceID((EntityPlayer) e.original);
 			EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
-			if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original));
-			else PartySystem.getParty(e.entityPlayer).setDead(e.entityPlayer, false);
+			if (AlfheimCore.enableMMO) {
+				if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original));
+				else PartySystem.getParty(e.entityPlayer).setDead(e.entityPlayer, false);
+			}
 		}
 	}
 	
@@ -243,7 +245,7 @@ public class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
 			e.player.capabilities.allowFlying = !EnumRace.getRace(e.player).equals(EnumRace.HUMAN);
-			PartySystem.getParty(e.player).setDead(e.player, false);
+			if (AlfheimCore.enableMMO) PartySystem.getParty(e.player).setDead(e.player, false);
 		}
 	}
 	
@@ -291,7 +293,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent e) {
 		float ammount = e.ammount;
-		}
+		
 		if (AlfheimCore.enableMMO) {
 			if ( e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
 				ammount *= 4.0F;
@@ -300,11 +302,12 @@ public class EventHandler {
 				e.setCanceled(true);
 				return;
 			}
-			if ((e.source.damageType.equalsIgnoreCase(DamageSource.inWall.damageType) || e.source.damageType.equalsIgnoreCase(DamageSource.inWall.drown.damageType)) && e.entityLiving.isPotionActive(AlfheimRegistry.noclip)) {
+			if ((e.source.damageType.equalsIgnoreCase(DamageSource.inWall.damageType) || e.source.damageType.equalsIgnoreCase(DamageSource.drown.damageType)) && e.entityLiving.isPotionActive(AlfheimRegistry.noclip)) {
 				e.setCanceled(true);
 				return;
-			}		}
-		}		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) {
+			}		
+		}		
+		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) {
 			e.setCanceled(true);
 			return;
 		}
@@ -362,7 +365,7 @@ public class EventHandler {
 				} else if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && e.source.getEntity().isEntityAlive() && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
 					e.source.getEntity().attackEntityFrom(e.source, e.ammount / 2);
 				}
-				e.source.getSourceOfDamage().attackEntityFrom(e.source, e.ammount / 2);			}
+			}
 			
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.stoneSkin);
 			if (pe != null && !e.source.isMagicDamage() && !e.source.isDamageAbsolute()) {
@@ -447,15 +450,10 @@ public class EventHandler {
 	public void onEntityDrops(LivingDropsEvent event) {
 		if(event.recentlyHit && event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
 			ItemStack weapon = ((EntityPlayer) event.source.getEntity()).getCurrentEquippedItem();
-			if(weapon != null && weapon.getItem() instanceof ItemElementiumAxe) {
-				Random rand = event.entity.worldObj.rand;
-				int looting = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon);
-
-				if(event.entityLiving instanceof EntityFlugel && rand.nextInt(13) < 1 + looting) {
-					EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(AlfheimItems.flugelHead));
-					entityitem.delayBeforeCanPickup = 10;
-					event.drops.add(entityitem);
-				}
+			if(weapon != null && weapon.getItem() instanceof ItemElementiumAxe &&event.entityLiving instanceof EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
+				EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(AlfheimItems.flugelHead));
+				entityitem.delayBeforeCanPickup = 10;
+				event.drops.add(entityitem);
 			}
 		}
 	}
@@ -544,6 +542,7 @@ public class EventHandler {
 	}
 
 	public static void checkAddAttrs() {
+		if (!AlfheimCore.enableElvenStory) return;
 		for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
 			EntityPlayerMP player = (EntityPlayerMP) o;
 			EnumRace.ensureExistance(player);
