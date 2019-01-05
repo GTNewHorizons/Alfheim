@@ -102,7 +102,7 @@ public class AlfheimRegistry {
 			}
 
 			public void performEffect(EntityLivingBase living, int ampl) {
-				living.attackEntityFrom(DamageSourceSpell.bleeding, ampl+1);
+				if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.bleeding, ampl+1);
 			}
 		};
 		butterShield = new PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF);
@@ -112,7 +112,7 @@ public class AlfheimRegistry {
 			}
 
 			public void performEffect(EntityLivingBase living, int ampl) {
-				living.attackEntityFrom(DamageSourceSpell.mark, Integer.MAX_VALUE);
+				if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.mark, Integer.MAX_VALUE);
 			}
 		};
 		decay = new PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355);
@@ -121,7 +121,7 @@ public class AlfheimRegistry {
 		leftFlame = new PotionAlfheim(AlfheimConfig.potionIDLeftFlame, "leftFlame", false, 0x0) {
 			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 				super.applyAttributesModifiersToEntity(target, attributes, ampl);
-				if (target instanceof EntityPlayer) {
+				if (AlfheimCore.enableMMO && target instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) target;
 					player.capabilities.allowEdit = false;
 					player.capabilities.allowFlying = true;
@@ -134,7 +134,7 @@ public class AlfheimRegistry {
 			
 			public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 				super.removeAttributesModifiersFromEntity(target, attributes, ampl);
-				if (target instanceof EntityPlayer) {
+				if (AlfheimCore.enableMMO && target instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) target;
 					player.capabilities.allowEdit = true;
 					player.capabilities.allowFlying = false;
@@ -152,7 +152,7 @@ public class AlfheimRegistry {
 			@Override
 			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 				super.applyAttributesModifiersToEntity(target, attributes, ampl);
-				SpellEffectHandler.sendPacket(Spells.QUAD, target);
+				if (AlfheimCore.enableMMO) SpellEffectHandler.sendPacket(Spells.QUAD, target);
 			}
 		};
 		sacrifice = new PotionSacrifice();
@@ -160,6 +160,7 @@ public class AlfheimRegistry {
 			@Override
 			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 				super.applyAttributesModifiersToEntity(target, attributes, ampl);
+				if (!AlfheimCore.enableMMO) return;
 				AttributeModifier m = new AttributeModifier(UUID.fromString("53E7B7F2-19BF-40FE-B204-729CE822D188"), "sharedHP", ampl - target.getMaxHealth(), 0);
 				target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m);
 				target.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(m);
@@ -168,6 +169,7 @@ public class AlfheimRegistry {
 			@Override
 			public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 				super.removeAttributesModifiersFromEntity(target, attributes, ampl);
+				if (!AlfheimCore.enableMMO) return;
 				AttributeModifier m = target.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(UUID.fromString("53E7B7F2-19BF-40FE-B204-729CE822D188"));
 				if (m != null) target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m);
 				target.setHealth(Math.min(target.getHealth(), target.getMaxHealth()));
@@ -179,6 +181,7 @@ public class AlfheimRegistry {
 			}
 			
 			public void performEffect(EntityLivingBase living, int ampl) {
+				if (!AlfheimCore.enableMMO) return;
 				PotionEffect pe = living.getActivePotionEffect(this);
 				if (pe == null) return;
 				
@@ -200,10 +203,11 @@ public class AlfheimRegistry {
 		tHrOw = new PotionThrow();
 		wellOLife = new PotionAlfheim(AlfheimConfig.potionIDWellOLife, "wellolife", false, 0x00FFFF) {
 			public boolean isReady(int time, int ampl) {
-				return time % 10 == 0;
+				return AlfheimCore.enableMMO && time % 10 == 0;
 			}
 
 			public void performEffect(EntityLivingBase living, int ampl) {
+				if (!AlfheimCore.enableMMO) return;
 				if (living.isInWater()) living.heal(0.5F);
 			}
 		};

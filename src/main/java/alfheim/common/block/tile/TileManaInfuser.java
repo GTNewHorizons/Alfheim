@@ -1,15 +1,17 @@
 package alfheim.common.block.tile;
 
-import static alexsocol.asjlib.ASJUtilities.getTrueDamage;
-import static alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual;
+import static alexsocol.asjlib.ASJUtilities.*;
 
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.item.relic.ItemFlugelSoul;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -21,6 +23,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
@@ -35,8 +38,10 @@ import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
+import vazkii.botania.common.block.tile.TileBrewery;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.block.tile.mana.TilePool;
+import vazkii.botania.common.entity.EntityDoppleganger;
 
 public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
@@ -44,17 +49,28 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	
 	public static final int MAX_MANA = TilePool.MAX_MANA * 8;
 
-	private static final int[][] QUARTZ_BLOCK = {{1,0},{-1,0},{0,1},{0,-1}};
-	private static final int[][] ELEMENTIUM_BLOCKS = {{1,1},{1,-1},{-1,1},{-1,-1}};
+	private static final int[][] PYLONS = {{6,-1,0},{-6,-1,0},{0,-1,6},{0,-1,-6}};
+	private static final int[][] QUARTZ_BLOCK = {{1,0,0},{-1,0,0},{0,0,1},{0,0,-1}};
+	private static final int[][] ELEMENTIUM_BLOCKS = {{1,0,1},{1,0,-1},{-1,0,1},{-1,0,-1}};
 	private static final String TAG_MANA = "mana", TAG_MANA_REQUIRED = "manaRequired", TAG_KNOWN_MANA = "knownMana";
 
 	int mana, manaRequest, knownMana = -1;
 	ItemStack result;
 
+	public static MultiblockSet makeMultiblockSetSoul() {
+		Multiblock mb = new Multiblock();
+		for(int[] l : PYLONS) mb.addComponent(l[0], 1, l[2], AlfheimBlocks.alfheimPylons, 2);
+		mb.addComponent(0, 0, 0, Blocks.beacon, 0);
+		mb.addComponent(0, 2, 0, AlfheimBlocks.manaInfuser, 0);
+		mb.addComponent(0, 5, 0, ModBlocks.brewery, 0);
+		mb.setRenderOffset(0, 0, 0);
+		return mb.makeSet();
+	}
+	
 	public static MultiblockSet makeMultiblockSetUnknown() {
 		Multiblock mb = new Multiblock();
-		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], Blocks.wool, 0);
-		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[1], Blocks.wool, 15);
+		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[2], Blocks.wool, 0);
+		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[2], Blocks.wool, 15);
 		mb.addComponent(0, 0, 0, AlfheimBlocks.manaInfuser, 0);
 		mb.setRenderOffset(0, 1, 0);
 		return mb.makeSet();
@@ -62,8 +78,8 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
 	public static MultiblockSet makeMultiblockSet() {
 		Multiblock mb = new Multiblock();
-		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[1], ModFluffBlocks.elfQuartz, 0);
-		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[1], ModBlocks.storage, 2);
+		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[2], ModFluffBlocks.elfQuartz, 0);
+		for(int[] l : ELEMENTIUM_BLOCKS) mb.addComponent(l[0], 0, l[2], ModBlocks.storage, 2);
 		mb.addComponent(0, 0, 0, AlfheimBlocks.manaInfuser, 0);
 		mb.setRenderOffset(0, 1, 0);
 		return mb.makeSet();
@@ -72,10 +88,54 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	@Override
 	public void updateEntity() {
 		boolean removeMana = true;
+		int boom = 3;
+		
+		gaia: if (isReadyToKillGaia()) {
+			List<EntityDoppleganger> l = worldObj.getEntitiesWithinAABB(EntityDoppleganger.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 3, zCoord + 1));
+			boom: if (!l.isEmpty()) {
+				if (l.size() > 1) break boom;
+				else {
+					if (blockMetadata != 2)	worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3);
+					boom = 5;
+					EntityDoppleganger dop = l.get(0);
+					boolean hard = dop.isHardMode();
+					soulParticles();
+					
+					if (dop.getInvulTime() <= 0) {
+						boom = 5;
+						dop.setHealth(dop.getHealth() - 10);
+						
+						if (dop.getHealth() <= 0) {
+							dop.setDead();
+							if (dop.isEntityAlive()) break boom;
+						} else return;
+						
+						TileEntity te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord);
+						
+						if (te != null && te instanceof TileBrewery && ((TileBrewery) te).getStackInSlot(0) != null && ((TileBrewery) te).getStackInSlot(0).getItem() instanceof ItemFlugelSoul && ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).getBlocked(((TileBrewery) te).getStackInSlot(0)) > 0) {
+							boom = 10;
+							if (hard || Math.random() > 0.5) ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).setDisabled(((TileBrewery) te).getStackInSlot(0), ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).getBlocked(((TileBrewery) te).getStackInSlot(0)), false);
+							else break boom;
+							doneParticles();
+							break gaia;
+						} else break boom;
+						
+					} else return;
+				}
+			} else {
+				if (blockMetadata != 0)	worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+				break gaia;
+			}
+			
+			worldObj.newExplosion(null, xCoord, yCoord, zCoord, boom, true, false);
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+			return;
+		}
+		
+		if (mana <= 0 && blockMetadata != 0)  worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
 		
 		if(hasValidPlatform()) {
 			List<EntityItem> items = getItems();
-			if (mana <= 0 && blockMetadata != 0)  worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
 			if(areItemsValid(items)) {
 				if (DEBUG) System.out.println("Mana: " + mana + "\tMana requested: " + manaRequest + "\tResult: " + result.toString());
 				
@@ -116,7 +176,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 				manaRequest = 0;
 			}
 		}
-
+		
 		if(removeMana) recieveMana(-1000);
 	}
 
@@ -152,6 +212,19 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		}
 	}
 
+	void doneParticles() {
+		// XXX particles
+	}
+
+	Vector3 v = new Vector3();
+	
+	void soulParticles() {
+		for (int[] c : PYLONS) {
+			v.set(-c[0], -c[1], -c[2]).normalize().mul(0.4);
+			Botania.proxy.wispFX(worldObj, xCoord + 0.5 + c[0], yCoord + 0.65 + c[1], zCoord + c[2] + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+		}
+	}
+	
 	List<EntityItem> getItems() {
 		return worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 2, zCoord + 1));
 	}
@@ -233,21 +306,25 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		return false;
 	}
 
+	boolean isReadyToKillGaia() {
+		return checkPlatform(0, -2,  0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylons, 2);
+	}
+	
 	boolean hasValidPlatform() {
 		return checkAll(QUARTZ_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2);
 	}
 
 	boolean checkAll(int[][] positions, Block block, int meta) {
 		for (int[] position : positions) {
-			if(!checkPlatform(position[0], position[1], block, meta))
+			if(!checkPlatform(position[0], position[1], position[2], block, meta))
 				return false;
 		}
 
 		return true;
 	}
 
-	boolean checkPlatform(int xOff, int zOff, Block block, int meta) {
-		return worldObj.getBlock(xCoord + xOff, yCoord, zOff + zCoord) == block && worldObj.getBlockMetadata(xCoord + xOff, yCoord, zOff + zCoord) == meta;
+	boolean checkPlatform(int xOff, int yOff, int zOff, Block block, int meta) {
+		return worldObj.getBlock(xCoord + xOff, yOff + yCoord, zOff + zCoord) == block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zOff + zCoord) == meta;
 	}
 
 	@Override
@@ -281,7 +358,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
 	@Override
 	public boolean canRecieveManaFromBursts() {
-		return areItemsValid(getItems());
+		return hasValidPlatform() && areItemsValid(getItems());
 	}
 
 	@Override
@@ -307,7 +384,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 
 	@Override
 	public boolean areIncomingTranfersDone() {
-		return !areItemsValid(getItems());
+		return !hasValidPlatform() || !areItemsValid(getItems());
 	}
 
 	@Override

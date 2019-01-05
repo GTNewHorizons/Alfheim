@@ -3,13 +3,16 @@ package alfheim.common.core.handler;
 import static alfheim.api.spell.SpellBase.SpellCastResult.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
+import alfheim.api.entity.EnumRace;
 import alfheim.api.event.SpellCastEvent;
 import alfheim.api.spell.SpellBase;
 import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem;
 import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.entity.Flight;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -18,11 +21,12 @@ import net.minecraftforge.common.MinecraftForge;
 public class KeyBindingHandler {
 	
 	public static void enableFlight(EntityPlayerMP player, boolean boost) {
-		if (player.capabilities.isCreativeMode || player.getEntityAttribute(AlfheimAPI.RACE).getAttributeValue() == 0) return;
+		if (!AlfheimCore.enableElvenStory) return;
+		if (player.capabilities.isCreativeMode || EnumRace.getRace(player) == EnumRace.HUMAN) return;
 		player.capabilities.allowFlying = true;
 		player.capabilities.isFlying = !player.capabilities.isFlying;
 		player.sendPlayerAbilities();
-		if (boost) player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).setBaseValue(player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() - 300);
+		if (boost) Flight.sub(player, 300);
 	}
 
 	public static void atack(EntityPlayerMP player) {
@@ -33,6 +37,7 @@ public class KeyBindingHandler {
 	}
 
 	public static int cast(EntityPlayerMP caster, int raceID, int spellID) {
+		if (!AlfheimCore.enableMMO) return -NOTALLOW.ordinal();
 		if (caster.isPotionActive(AlfheimRegistry.leftFlame)) return -NOTALLOW.ordinal();
 		SpellBase spell = AlfheimAPI.getSpellByIDs(raceID, spellID);
 		if (spell == null) return -DESYNC.ordinal();

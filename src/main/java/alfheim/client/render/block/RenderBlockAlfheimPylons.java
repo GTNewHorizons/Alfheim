@@ -20,6 +20,7 @@ public class RenderBlockAlfheimPylons implements ISimpleBlockRenderingHandler {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.7F, -0.5F);
 		RenderTileAlfheimPylons.orange = metadata == 1;
+		RenderTileAlfheimPylons.red = metadata == 2;
 		RenderTileAlfheimPylons.hand = true;
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileAlfheimPylons(), 0.0, 0.0, 0.0, 0.0F);
 		GL11.glPopMatrix();

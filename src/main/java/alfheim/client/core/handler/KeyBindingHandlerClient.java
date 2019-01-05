@@ -17,6 +17,8 @@ import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.entity.Flight;
+import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant;
 import alfheim.common.network.Message2d;
 import alfheim.common.network.MessageHotSpellS;
 import alfheim.common.network.MessageKeyBind;
@@ -47,13 +49,35 @@ public class KeyBindingHandlerClient {
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true;
-			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.creativeReachPendant)
+			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() instanceof ItemCreativeReachPendant)
 				AlfheimCore.network.sendToServer(new MessageKeyBind(ATTACK.ordinal(), false, 0));
 		} else if (toggleLMB) {
 			toggleLMB = false;
 		}
 		
 		if (AlfheimCore.enableElvenStory) {
+			if (Keyboard.isKeyDown(ClientProxy.keyFlight.getKeyCode())) {
+				if (!toggleFlight) {
+					toggleFlight = true;
+					toggleFlight(player, false);
+				}
+			} else if (toggleFlight) {
+				toggleFlight = false;
+			}
+			
+			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed() && !toggleJump && Keyboard.isKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
+				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.getKeyCode(), false);
+				toggleJump = toggleAlt = true;
+				toggleFlight(player, true);
+				if (Flight.get(player) >= 300) {
+					player.motionY += 3;
+				}
+			} else if (toggleJump && toggleAlt) {
+				toggleJump = toggleAlt = false;
+			}
+		}
+		
+		if (AlfheimCore.enableMMO) {
 			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 				boolean flag = false;
 				for (int i = 0; i < CardinalSystemClient.segment().hotSpells.length; i++) {
@@ -153,15 +177,6 @@ public class KeyBindingHandlerClient {
 				toggleCast = false;
 			}
 			
-			if (Keyboard.isKeyDown(ClientProxy.keyFlight.getKeyCode())) {
-				if (!toggleFlight) {
-					toggleFlight = true;
-					toggleFlight(player, false);
-				}
-			} else if (toggleFlight) {
-				toggleFlight = false;
-			}
-			
 			if (ClientProxy.keySelMob.isPressed()) {
 				if (!toggleSelMob) {
 					toggleSelMob = true;
@@ -178,17 +193,6 @@ public class KeyBindingHandlerClient {
 				}
 			} else if (toggleSelTeam) {
 				toggleSelTeam = false;
-			}
-			
-			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed() && !toggleJump && Keyboard.isKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
-				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.getKeyCode(), false);
-				toggleJump = toggleAlt = true;
-				toggleFlight(player, true);
-				if (player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT).getAttributeValue() >= 300) {
-					player.motionY += 3;
-				}
-			} else if (toggleJump && toggleAlt) {
-				toggleJump = toggleAlt = false;
 			}
 		}
 	}

@@ -14,6 +14,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -43,6 +44,8 @@ import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.tile.TileBrewery;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 import vazkii.botania.common.item.relic.ItemRelic;
@@ -92,10 +95,16 @@ public class ItemFlugelSoul extends ItemRelic {
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon && getBlocked(stack) < SEGMENTS) {
-			boolean success = EntityFlugel.spawn(player, stack, world, x, y, z, true);
-			setDisabled(stack, getBlocked(stack), true);
-			return success;
+		Block block = world.getBlock(x, y, z);
+		if (block == Blocks.beacon) {
+			if (player.isSneaking() && getBlocked(stack) < SEGMENTS) {
+				boolean success = EntityFlugel.spawn(player, stack, world, x, y, z, true);
+				setDisabled(stack, getBlocked(stack), true);
+				return success;
+			}
+		} else if (block == ModBlocks.brewery) {
+			TileBrewery brew = (TileBrewery) world.getTileEntity(x, y, z);
+			brew.setInventorySlotContents(0, stack.splitStack(1));
 		}
 		return false;
 	}

@@ -2,11 +2,13 @@ package alfheim.common.core.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -28,6 +30,7 @@ public class AlfheimConfig extends Configuration {
 	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "dimension";
 	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "elvenstory";
 	public static final String CATEGORY_HUD			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "hud";
+	public static final String CATEGORY_MMO			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "mmo";
 	public static final String CATEGORY_POTIONS		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "potions";
 	
 	// DIMENSIONS
@@ -72,10 +75,9 @@ public class AlfheimConfig extends Configuration {
 	public static int		flightTime				= 1200;
 	public static boolean	frienldyFire			= false;
 	public static int		maxPartyMembers			= 5;
-	public static boolean	prolongDeathScreen		= true;
 	public static Vec3[]	zones					= new Vec3[9];
 
-	// ES - HUD
+	// HUD
 	public static double	partyHUDScale			= 1.0;
 
 
@@ -85,7 +87,7 @@ public class AlfheimConfig extends Configuration {
 		config.load();
 		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings");
 		config.addCustomCategoryComment(CATEGORY_ESMODE,	"Elven Story optional features");
-		config.addCustomCategoryComment(CATEGORY_HUD,		"Coordinates and sizes of HUD elements");
+		config.addCustomCategoryComment(CATEGORY_HUD,		"HUD elements customizations");
 		
 		syncConfig();
 		FMLCommonHandler.instance().bus().register(new AlfheimChangeListener());
@@ -124,13 +126,14 @@ public class AlfheimConfig extends Configuration {
 		
 		if (AlfheimCore.enableElvenStory) {
 			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
-			deathScreenAddTime		= loadProp(CATEGORY_ESMODE,	"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
 			enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,	"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");
-			frienldyFire			= loadProp(CATEGORY_ESMODE,	"frienldyFire",				frienldyFire,			false,	"Set this to true to enable da,age to party members");
 			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
-			maxPartyMembers			= loadProp(CATEGORY_ESMODE,	"maxPartyMembers",			maxPartyMembers,		false,	"How many people can be in single party at the same time");
-			prolongDeathScreen		= loadProp(CATEGORY_ESMODE,	"prolongDeathScreen",		prolongDeathScreen,		false,	"Set this to false to disable death screen prolongation");
-			
+		}
+		
+		if (AlfheimCore.enableMMO) {
+			deathScreenAddTime		= loadProp(CATEGORY_MMO,	"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
+			frienldyFire			= loadProp(CATEGORY_MMO,	"frienldyFire",				frienldyFire,			false,	"Set this to true to enable da,age to party members");
+			maxPartyMembers			= loadProp(CATEGORY_MMO,	"maxPartyMembers",			maxPartyMembers,		false,	"How many people can be in single party at the same time");
 			partyHUDScale			= loadProp(CATEGORY_HUD,	"partyHUDScale",			partyHUDScale,			false,	"Party HUD Scale (1 < bigger; 1 > smaller)");
 		}
 
@@ -160,27 +163,35 @@ public class AlfheimConfig extends Configuration {
 		return prop.getBoolean(default_);
 	}
 	
-	public static void initWorldCoordsForElvenStory(World world) {
-		File f = new File(world.getSaveHandler().getWorldDirectory().getAbsolutePath() + "/data/AlfheimCoords.txt"); 
-		if (!f.exists()) makeDefaultWorldCoords(world);
+	public static void initWorldCoordsForElvenStory(String save) {
+		File f = new File(save + "/data/AlfheimCoords.txt"); 
+		if (!f.exists()) makeDefaultWorldCoords(save);
 			
 		try {
-			BufferedReader fin = new BufferedReader(new FileReader(world.getSaveHandler().getWorldDirectory().getAbsolutePath() + "/data/AlfheimCoords.txt"));
+			FileReader fr = new FileReader(save + "/data/AlfheimCoords.txt");
+			BufferedReader br = new BufferedReader(fr);
 			for (int i = 0; i < zones.length; i++) {
-				fin.readLine();
-				zones[i] = makeVectorFromString(fin.readLine());
+				br.readLine();
+				try {
+					zones[i] = makeVectorFromString(br.readLine());
+				} catch (IllegalArgumentException e) {
+					br.close();
+					fr.close();
+					throw e;
+				}
 			}
-			fin.close();
+			br.close();
+			fr.close();
 		} catch (IOException e) {
 			System.err.println("Unable to read Alfheim Coords data. Creating default...");
 			e.printStackTrace();
-			makeDefaultWorldCoords(world);
+			makeDefaultWorldCoords(save);
 		}
 	}
 
-	private static void makeDefaultWorldCoords(World world) {
+	private static void makeDefaultWorldCoords(String save) {
 		try {
-			FileWriter fout = new FileWriter(world.getSaveHandler().getWorldDirectory().getAbsolutePath() + "/data/AlfheimCoords.txt");
+			FileWriter fw = new FileWriter(save + "/data/AlfheimCoords.txt");
 			
 			StringBuilder s = new StringBuilder();
 			double angle = 0;
@@ -202,10 +213,10 @@ public class AlfheimConfig extends Configuration {
 			s.append(writeStandardCoords(angle += 40));
 			s.append("Imp start city and players spawnpoint coords:\n");
 			s.append(writeStandardCoords(angle += 40));
-			fout.write(s.toString());
-			fout.close();
+			fw.write(s.toString());
+			fw.close();
 		} catch (IOException e) {
-			System.err.println("Unable to generate default Alfheim Coords data. Setting all to [0, 300, 0]...");
+			ASJUtilities.error("Unable to generate default Alfheim Coords data. Setting all to [0, 300, 0]...");
 			e.printStackTrace();
 			
 			for (int i = 0; i < zones.length; i++) {
@@ -221,7 +232,7 @@ public class AlfheimConfig extends Configuration {
 	
 	private static Vec3 makeVectorFromString(String s) {
 		String[] ss = s.split(" : ");
-		if (ss.length != 3) throw new IllegalArgumentException("Something went wrong in sourcecode, contact author");
+		if (ss.length != 3) throw new IllegalArgumentException(String.format("Wrong coords count. Expected 3 got %d", ss.length));
 		return Vec3.createVectorHelper(Integer.valueOf(ss[0]).intValue(), Integer.valueOf(ss[1]).intValue(), Integer.valueOf(ss[2]).intValue());
 	}
 	
@@ -237,6 +248,47 @@ public class AlfheimConfig extends Configuration {
 		@SubscribeEvent
 		public void onConfigChanged(OnConfigChangedEvent e) {
 			if(e.modID.equals(ModInfo.MODID)) syncConfig();
+		}
+	}
+	
+	public static void readModes() {
+		File f = new File("config/esm.cfg"); 
+		if (!f.exists()) return;
+		try {
+			FileReader fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
+			br.readLine();
+			String[] flags = br.readLine().split(" ");
+			
+			br.close();
+			fr.close();
+			
+			if (flags.length != 2) throw new IllegalArgumentException(String.format("Wrong flags count. Expected 2 got %d", flags.length));
+			
+			if (flags[0].equals("false")) {
+				if (flags[1].equals("false")) AlfheimCore.enableElvenStory = AlfheimCore.enableMMO = false;
+				else throw new IllegalArgumentException(flags[1].equals("true") ? "Unable to enable MMO mode without ESM" : String.format("Unknown param value for MMO mode: %s", flags[1]));
+			} else if (flags[0].equals("true")) {
+				AlfheimCore.enableElvenStory = true;
+				if (flags[1].equals("false")) AlfheimCore.enableMMO = false;
+				else if (flags[1].equals("true")) AlfheimCore.enableMMO = true;
+				else throw new IllegalArgumentException(String.format("Unknown param value for MMO mode: %s", flags[1]));
+			} else throw new IllegalArgumentException(String.format("Unknown param value for ESM mode: %s", flags[0]));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void writeModes() {
+		if (!AlfheimCore.enableElvenStory && AlfheimCore.enableMMO) throw new IllegalArgumentException("Unable to write modes state when ESM is disabled and MMO is enabled");
+		File f = new File("config/esm.cfg"); 
+		try {
+			FileWriter fw = new FileWriter(f);
+			fw.write(String.format("ESM mode, MMO mode (second requires first). Default \"true true\"\n%s %s", AlfheimCore.enableElvenStory ? "true" : "false", AlfheimCore.enableMMO ? "true" : "false"));
+			fw.close();
+		} catch (IOException e) {
+			ASJUtilities.error("Unable to write modes state");
+			e.printStackTrace();
 		}
 	}
 }

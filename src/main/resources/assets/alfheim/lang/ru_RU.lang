@@ -52,6 +52,7 @@ item.botania:FlugelDisc.name=Сияющая пластинка
 item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
 item.FlugelHead.name=Голова Флюгеля
 item.botania:FlugelSoul.name=Душа Флюгеля
+item.grassRod.name=Жезл зелёных холмов
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
 item.IffesalDust.name=Пыль иффесалия
 item.InterdimensionalGatewayCore.name=Межпространственное связующее ядро
@@ -119,8 +120,12 @@ alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный э
 alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20% 
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
+alfheim.commands.alfheim.done=%s изменил режим Альфхейма на [%sESM%s|%sMMO%s]
+alfheim.commands.alfheim.usage=Используется для настройки режимов
+alfheim.commands.alfheim.wrong=/alfheim <команда>
+
 alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
-alfheim.commands.tpdim.wrong=tpdim <ID измерения>
+alfheim.commands.tpdim.wrong=/tpdim <ID измерения>
 alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения
 alfheim.commands.tpdim.wrongid=Неверно указан ID измерения
 
@@ -305,6 +310,7 @@ elvenstory.welcome0=§n§aДобро пожаловать в Альвхейм - 
 elvenstory.welcome1=§6Пожалуйста, выберите одну из следующих рас, используя команду "/race"
 elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИНА§r, §5ИМП§r
 elvenstory.commands.race.usage=/race <РАСА>
+elvenstory.commands.race.unavailable=Команда недоступна: режим Эльфийской истории отключён.
 
 key.cast.desc=Каст заклинания
 key.flight.desc=Эльфийский полёт

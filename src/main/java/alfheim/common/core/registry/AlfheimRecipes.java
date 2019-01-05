@@ -55,7 +55,6 @@ public class AlfheimRecipes {
 	public static IRecipe recipeAuraRingElven;
 	public static IRecipe recipeAuraRingGod;
 	public static IRecipe recipeEmentalHelmet;
-	public static IRecipe recipeEmentalHelmetRevealing;
 	public static IRecipe recipeEmentalChestplate;
 	public static IRecipe recipeEmentalLeggings;
 	public static IRecipe recipeEmentalBoots;
@@ -63,13 +62,13 @@ public class AlfheimRecipes {
 	public static IRecipe recipeElvenPylon;
 	private static List<IRecipe> recipesElvenWand;
 	public static IRecipe recipeElvoriumHelmet;
-	public static IRecipe recipeElvoriumHelmetRevealing;
 	public static IRecipe recipeElvoriumChestplate;
 	public static IRecipe recipeElvoriumLeggings;
 	public static IRecipe recipeElvoriumBoots;
 	public static IRecipe recipeElvoriumPylon;
 	public static IRecipe recipeFurnace;
 	public static IRecipe recipeGaiaPylon;
+	public static IRecipe recipeGreenRod;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
 	public static IRecipe recipeManaInfusionCore;
@@ -176,7 +175,6 @@ public class AlfheimRecipes {
 			'D', IFFESAL_DUST,
 			'P', elementiumHelmRevealing,
 			'M', RUNE[8]);
-		recipeEmentalHelmetRevealing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elementalChestplate),
 			"RTR", "DPD", " M ",
@@ -280,7 +278,6 @@ public class AlfheimRecipes {
 			'P', terrasteelHelmRevealing,
 			'C', new ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 			'M', MAUFTRIUM_INGOT);
-		recipeElvoriumHelmetRevealing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elvoriumChestplate),
 			"TRT", "EPE", "CMC",
@@ -316,6 +313,13 @@ public class AlfheimRecipes {
 			"SSS", "S S", "SSS",
 			'S', livingcobble);
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(rodGrass),
+			"  R", " D ", "S  ",
+			'D', dirtRod,
+			'R', RUNE[4],
+			'S', grassSeeds);
+		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(livingrockPickaxe),
 			"LLL", " S ", " S ",
@@ -511,17 +515,15 @@ public class AlfheimRecipes {
 		recipeNiflheimRune = BotaniaAPI.registerRuneAltarRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune), costTier3,
 				RUNE[0], RUNE[3], new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), IFFESAL_DUST);
 		
-		if (AlfheimCore.enableElvenStory) {
-			ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(brown_mushroom)));
-			ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(red_mushroom)));
-		}
+		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(brown_mushroom)));
+		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(red_mushroom)));
 		
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), new ItemStack(nether_star));
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0);
 		
 		addRecipe(new HelmRevealingAlfheimRecipe());
 	}
-
+	
 	public static void init() {
 		ModCraftingRecipes.recipeGaiaPylon = recipeGaiaPylon;
 	}

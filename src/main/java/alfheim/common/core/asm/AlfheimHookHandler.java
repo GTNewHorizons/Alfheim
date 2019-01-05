@@ -7,6 +7,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
 import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.client.render.entity.RenderButterflies;
@@ -28,6 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -83,7 +85,7 @@ public class AlfheimHookHandler {
 	
 	@Hook(injectOnExit = true, isMandatory = true)
 	public static void moveFlying(Entity e, float x, float y, float z) {
-		if (e instanceof EntityLivingBase && ((EntityLivingBase) e).isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimCore.enableMMO && e instanceof EntityLivingBase && ((EntityLivingBase) e).isPotionActive(AlfheimRegistry.leftFlame)) {
 			e.motionX = e.motionY = e.motionZ = 0.0D;
 		}
 	}
@@ -162,18 +164,23 @@ public class AlfheimHookHandler {
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
-		if (e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
+		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
 		else return e.getDataWatcher().getWatchableObjectFloat(6);
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getMaxHealth(EntityLivingBase e) {
-		if (e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
+		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
 		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static void setHealth(EntityLivingBase e, float hp) {
+		if (!AlfheimCore.enableMMO) {
+			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
+			return;
+		}
+		
 		if (e.isPotionActive(AlfheimRegistry.leftFlame)) {
 			hp = 0.000000000000000000000000000000000000000000001F;
 		}
@@ -266,9 +273,9 @@ public class AlfheimHookHandler {
 		return stack;
 	}
 	
-	@Hook(isMandatory = true, returnType = "int", returnCondition = ReturnCondition.ON_TRUE, intReturnConstant = 2)
-	public static boolean getFortuneModifier(EnchantmentHelper h, EntityLivingBase e) {
-		return e.isPotionActive(AlfheimRegistry.goldRush);
+	@Hook(isMandatory = true, returnCondition = ReturnCondition.ALWAYS)
+	public static int getFortuneModifier(EnchantmentHelper h, EntityLivingBase e) {
+		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.getHeldItem()) + (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush) ? 2 : 0);
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
@@ -308,9 +315,7 @@ public class AlfheimHookHandler {
 	@SideOnly(Side.CLIENT)
 	@Hook(isMandatory = true)
 	public static void doRenderShadowAndFire(Render render, Entity entity, double x, double y, double z, float yaw, float partialTickTime) {
-		if(entity instanceof EntityLivingBase) {
-			if (((EntityLivingBase) entity).isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks);
-		}
+		if (AlfheimCore.enableMMO) if(entity instanceof EntityLivingBase) if (((EntityLivingBase) entity).isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks);
 	}
 
 	@SideOnly(Side.CLIENT)

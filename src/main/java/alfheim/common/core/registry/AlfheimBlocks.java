@@ -7,6 +7,7 @@ import static net.minecraftforge.oredict.OreDictionary.*;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.lib.LibOreDict;
 import alfheim.common.block.*;
 import alfheim.common.block.mana.*;
 import alfheim.common.item.block.*;
@@ -85,6 +86,10 @@ public class AlfheimBlocks {
 	}
 
 	private static void regOreDict() {
-		registerOre("oreGold", new ItemStack(elvenOres, 1, 3));
+		registerOre(LibOreDict.DRAGON_ORE, new ItemStack(elvenOres, 1, 0));
+		registerOre(LibOreDict.ELEMENTIUM_ORE, new ItemStack(elvenOres, 1, 1));
+		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, new ItemStack(elvenOres, 1, 2));
+		registerOre(LibOreDict.GOLD_ORE, new ItemStack(elvenOres, 1, 3));
+		registerOre(LibOreDict.IFFESAL_ORE, new ItemStack(elvenOres, 1, 4));
 	}
 }

@@ -29,7 +29,7 @@ import vazkii.botania.common.block.ModFluffBlocks;
 
 public class BlockManaInfuser extends Block implements ITileEntityProvider, ILexiconable, IWandHUD, IWandable {
 
-	public static IIcon[] textures = new IIcon[4];
+	public static IIcon[] textures = new IIcon[7];
 	
 	public BlockManaInfuser() {
 		super(Material.rock);
@@ -53,11 +53,14 @@ public class BlockManaInfuser extends Block implements ITileEntityProvider, ILex
 		textures[1] = reg.registerIcon(this.getTextureName() + "Top");
 		textures[2] = reg.registerIcon(this.getTextureName() + "Top_Active");
 		textures[3] = reg.registerIcon(this.getTextureName() + "Side");
+		textures[4] = reg.registerIcon(this.getTextureName() + "BottomDark");
+		textures[5] = reg.registerIcon(this.getTextureName() + "TopDark");
+		textures[6] = reg.registerIcon(this.getTextureName() + "SideDark");
 	}
 	
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		return side == 0 ? textures[0] : side == 1 ? (meta == 1 ? textures[2] : textures[1]) : textures[3];
+		return side == 0 ? (meta == 2 ? textures[4] : textures[0]) : side == 1 ? ((meta == 2 ? textures[5] : meta == 1 ? textures[2] : textures[1])) : (meta == 2 ? textures[6] : textures[3]);
 	}
 	
 	@Override

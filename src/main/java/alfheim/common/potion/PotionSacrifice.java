@@ -4,6 +4,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.common.core.util.AlfheimConfig;
@@ -28,11 +29,12 @@ public class PotionSacrifice extends PotionAlfheim {
 	@Override
 	public boolean isReady(int time, int mod) {
 		timeQueued = time;
-		return timeQueued <= 32; 
+		return AlfheimCore.enableMMO && timeQueued <= 32; 
 	}
 	
 	@Override
 	public void performEffect(EntityLivingBase target, int mod) {
+		if (!AlfheimCore.enableMMO) return;
 		if (timeQueued == 32) for (int i = 0; i < 8; i++) target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000.0F, 0.8F + target.worldObj.rand.nextFloat() * 0.2F);
 		else particles(target, 32 - timeQueued);
 	}
@@ -40,6 +42,7 @@ public class PotionSacrifice extends PotionAlfheim {
 	@Override
 	public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl);
+		if (!AlfheimCore.enableMMO) return;
 		List<EntityLivingBase> l = target.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, target.boundingBox.copy().expand(32, 32, 32));
 		DamageSource dmg;
 		for (EntityLivingBase e : l) {

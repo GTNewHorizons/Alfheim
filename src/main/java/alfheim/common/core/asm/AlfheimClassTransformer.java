@@ -144,8 +144,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 				if (flag && opcode == GETSTATIC && (owner.equals("net/minecraft/util/DamageSource") || owner.equals("ro")) && (name.equals("magic") || name.equals("k")) && (desc.equals("Lnet/minecraft/util/DamageSource;") || desc.equals("Lro;"))) {
 					flag = false;
-					super.visitFieldInsn(GETSTATIC, "alfheim/common/core/util/DamageSourceSpell", "poison", OBF ? "Lro;" : "Lnet/minecraft/util/DamageSource;");
-					return;
+					super.visitFieldInsn(GETSTATIC, "alfheim/common/core/util/DamageSourceSpell", "poison", OBF ? "Lro;" : "Lnet/minecraft/util/DamageSource;");					return;
 				} else if (opcode == GETSTATIC && (owner.equals("net/minecraft/potion/Potion") || owner.equals("rv")) && (name.equals("poison") || name.equals("u")) && (desc.equals("Lnet/minecraft/potion/Potion;") || desc.equals("Lrv;"))) flag = true;
 				
 				super.visitFieldInsn(opcode, owner, name, desc);

@@ -13,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -58,11 +59,13 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 	public void getSubBlocks(Item item, CreativeTabs tab, List subs) {
 		subs.add(new ItemStack(item, 1, 0)); // elven		(pink)
 		subs.add(new ItemStack(item, 1, 1)); // elvorium	(orange)
+		subs.add(new ItemStack(item, 1, 2)); // anti		(red)
 	}
 	
 	@Override
-	public IIcon getIcon(int side, int meta) { // elementium for pink; elvorium for orange
-		return meta == 0 ? ModBlocks.storage.getIcon(0, 2) : AlfheimBlocks.elvoriumBlock.getIcon(0, 0);
+	public IIcon getIcon(int side, int meta) { // elementium for pink; elvorium for orange; redstone for red
+		
+		return meta == 0 ? ModBlocks.storage.getIcon(0, 2) : meta == 2 ? AlfheimBlocks.elvoriumBlock.getIcon(0, 0) : Blocks.redstone_block.getIcon(0, 0);
 	}
 
 	@Override
@@ -82,7 +85,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 
 	@Override
 	public float getEnchantPowerBonus(World world, int x, int y, int z) {
-		return world.getBlockMetadata(x, y, z) == 0 ? 8 : 15; // pink 8; orange 15
+		return world.getBlockMetadata(x, y, z) == 0 ? 8 : 15; // pink 8; orange and red 15
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		int meta = world.getBlockMetadata(x, y, z);
-		return meta == 0 ? AlfheimLexiconData.pylons : AlfheimLexiconData.trade /* orange */;
+		return meta == 0 ? AlfheimLexiconData.pylons : meta == 1 ? AlfheimLexiconData.trade : AlfheimLexiconData.soul;
 	}
 	
 	@Override

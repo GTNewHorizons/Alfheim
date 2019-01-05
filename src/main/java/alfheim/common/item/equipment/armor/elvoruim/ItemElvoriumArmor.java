@@ -35,9 +35,9 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
-public class ElvoriumArmor extends ItemManasteelArmor implements IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
+public class ItemElvoriumArmor extends ItemManasteelArmor implements IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
 
-	public ElvoriumArmor(int type, String name) {
+	public ItemElvoriumArmor(int type, String name) {
 		super(type, name, AlfheimAPI.ELVORIUM);
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}

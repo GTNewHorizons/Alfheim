@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,8 +147,11 @@ public class ASJUtilities {
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 * */
 	public static void sendToDimensionWithoutPortal(Entity entity, int dimTo, double x, double y, double z) {
-		if (dimTo == entity.dimension) entity.setPosition(x, y, z);
-		if (entity instanceof EntityPlayerMP) {
+		if (dimTo == entity.dimension) {
+			if (entity instanceof EntityLivingBase) ((EntityLivingBase) entity).setPositionAndUpdate(x, y, z);
+			else entity.setPosition(x, y, z);
+		}
+		else if (entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) entity;
 			WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
 			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, dimTo, new FreeTeleporter(worldTo, x, y, z));
@@ -760,6 +764,21 @@ public class ASJUtilities {
 	public static <K, V> K mapGetKeyOrDefault(Map<K, V> map, V v, K def) {
 		for (Map.Entry<K, V> e : map.entrySet()) if (e.getValue().equals(v)) return e.getKey();
 		return def;
+	}
+	
+	public static <T extends Comparable<T>> int indexOfComparableArray(T[] array, T key) {
+		int id = -1;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i].compareTo(key) == 0) {
+				id = i;
+				break;
+			}
+		}
+		return id;
+	}
+	
+	public static <T extends Comparable<T>> int indexOfComparableColl(Collection<T> coll, T key) {
+		return indexOfComparableArray((T[]) coll.toArray(), key);
 	}
 	
 	public static int[] colorCode = new int[32];
