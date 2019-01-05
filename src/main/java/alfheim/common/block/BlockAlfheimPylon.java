@@ -64,8 +64,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 	
 	@Override
 	public IIcon getIcon(int side, int meta) { // elementium for pink; elvorium for orange; redstone for red
-		
-		return meta == 0 ? ModBlocks.storage.getIcon(0, 2) : meta == 2 ? AlfheimBlocks.elvoriumBlock.getIcon(0, 0) : Blocks.redstone_block.getIcon(0, 0);
+		return meta == 2 ? Blocks.redstone_block.getIcon(0, 0) : meta == 1 ? AlfheimBlocks.elvoriumBlock.getIcon(0, 0) : ModBlocks.storage.getIcon(0, 2);
 	}
 
 	@Override

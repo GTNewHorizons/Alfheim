@@ -300,7 +300,10 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge)
-				.setLexiconPages(new PageText("0"), new PageText("1"), new PageMultiblock("2", AlfheimMultiblocks.soul)) // FIXME add re-soul description
+				.setLexiconPages(new PageText("0"), new PageText("1"), // FIXME add re-soul lore
+								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon),
+								 new PageMultiblock("3", AlfheimMultiblocks.soul),
+								 new PageText("4"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
 		
 		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)

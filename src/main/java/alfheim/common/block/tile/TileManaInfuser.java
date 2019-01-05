@@ -223,6 +223,8 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 			v.set(-c[0], -c[1], -c[2]).normalize().mul(0.4);
 			Botania.proxy.wispFX(worldObj, xCoord + 0.5 + c[0], yCoord + 0.65 + c[1], zCoord + c[2] + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
 		}
+		// XXX connect to other pylons
+		// rotate vec for this
 	}
 	
 	List<EntityItem> getItems() {

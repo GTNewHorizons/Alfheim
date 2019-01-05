@@ -139,7 +139,8 @@ botania.page.advMana6=Creating &1Mauftrium ring&0
 
 botania.entry.auraAlf=Bands of Aura
 botania.tagline.auraAlf=Everything needs an upgrade
-botania.page.auraAlf0=&o//Волк, напиши здесь чего-нибудь заумного, а то у меня идей нет//&r
+# this is a joke don't remove this please :3
+botania.page.auraAlf0=&o//Gedeon, write something smart here cause I have no ideas//&r
 botania.page.auraAlf1=Upgading to &1Elven Aura Ring&0
 botania.page.auraAlf2=Upgading to &1God's Aura Ring&0
 
@@ -166,8 +167,11 @@ botania.page.flugel2=But be careful - their self-love will not allow them to fig
 
 botania.entry.soul=Flügel's Soul
 botania.tagline.soul=God Slayers
-botania.page.soul0=The one who win the Flügel will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flügel, even stronger - the one from Gods Slayers, twelve more times (in exchange for warp points).
-botania.page.soul1=This will give you some useful and rare resources.<br><br><br>Unfortunately, &lso far&r no one had found a way to restore corrupted parts of the soul. Perhaps, some day...
+botania.page.soul0=The one who win the Flügel will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flügel, even stronger - the one from Gods Slayers, twelve more times (in exchange for warp points). This will give you some useful and rare resources.
+botania.page.soul1=&o//Lore stuff here//&r
+botania.page.soul2=Creating &4Anti-pylon&0
+botania.page.soul3=Soul restructurizer
+botania.page.soul4=In order to restore the soul, it is enough to place it in the upper part of the brewery and summon the Gaia Guardian. Anti-pylons will do the rest for you. For sure success, call the hardcore form of the Guardian. But if you are lucky, then the usual form will help, it is like a coin toss.
 
 botania.entry.mask=Mysterious Mask
 botania.tagline.mask=I've already seen this somewhere...
