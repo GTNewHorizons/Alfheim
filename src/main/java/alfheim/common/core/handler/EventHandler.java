@@ -291,6 +291,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent e) {
 		float ammount = e.ammount;
+		}
 		if (AlfheimCore.enableMMO) {
 			if ( e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
 				ammount *= 4.0F;
@@ -302,10 +303,8 @@ public class EventHandler {
 			if ((e.source.damageType.equalsIgnoreCase(DamageSource.inWall.damageType) || e.source.damageType.equalsIgnoreCase(DamageSource.inWall.drown.damageType)) && e.entityLiving.isPotionActive(AlfheimRegistry.noclip)) {
 				e.setCanceled(true);
 				return;
-			}
-		}
-		
-		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) {
+			}		}
+		}		if (e.entityLiving instanceof EntityAlfheimPixie && e.source.getDamageType().equals(DamageSource.inWall.getDamageType())) {
 			e.setCanceled(true);
 			return;
 		}
@@ -341,7 +340,7 @@ public class EventHandler {
 			nl: if (pe != null) {
 				boolean blockable = e.source.damageType.equals(DamageSource.fall.damageType)		||
 									e.source.damageType.equals(DamageSource.drown.damageType)		||
-									e.source.damageType.equals(DamageSource.inFire.damageType)		|| 
+									e.source.damageType.equals(DamageSource.inFire.damageType)		||
 									e.source.damageType.equals(DamageSource.onFire.damageType)		||
 									e.source.damageType.equals(DamageSourceSpell.poison.damageType)	||
 									e.source.damageType.equals(DamageSource.wither.damageType)		;
@@ -363,7 +362,7 @@ public class EventHandler {
 				} else if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && e.source.getEntity().isEntityAlive() && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
 					e.source.getEntity().attackEntityFrom(e.source, e.ammount / 2);
 				}
-			}
+				e.source.getSourceOfDamage().attackEntityFrom(e.source, e.ammount / 2);			}
 			
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.stoneSkin);
 			if (pe != null && !e.source.isMagicDamage() && !e.source.isDamageAbsolute()) {
