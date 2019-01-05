@@ -100,10 +100,6 @@ public class DamageSourceSpell extends DamageSource {
 	    }
 
 	    public Entity getSourceOfDamage() {
-	        return this.attacker;
-	    }
-
-	    public Entity getEntity() {
 	        return this.indirectEntity;
 	    }
 

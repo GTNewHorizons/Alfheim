@@ -144,7 +144,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 				if (flag && opcode == GETSTATIC && (owner.equals("net/minecraft/util/DamageSource") || owner.equals("ro")) && (name.equals("magic") || name.equals("k")) && (desc.equals("Lnet/minecraft/util/DamageSource;") || desc.equals("Lro;"))) {
 					flag = false;
-					super.visitFieldInsn(GETSTATIC, "alfheim/api/spell/DamageSourceSpell", "poison", OBF ? "Lro;" : "Lnet/minecraft/util/DamageSource;");
+					super.visitFieldInsn(GETSTATIC, "alfheim/commom/core/util/DamageSourceSpell", "poison", OBF ? "Lro;" : "Lnet/minecraft/util/DamageSource;");
 					return;
 				} else if (opcode == GETSTATIC && (owner.equals("net/minecraft/potion/Potion") || owner.equals("rv")) && (name.equals("poison") || name.equals("u")) && (desc.equals("Lnet/minecraft/potion/Potion;") || desc.equals("Lrv;"))) flag = true;
 				
@@ -294,7 +294,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 				Label l2 = new Label();
 				mv.visitJumpInsn(IFNE, l2);
 				mv.visitVarInsn(ALOAD, 1);
-				mv.visitTypeInsn(INSTANCEOF, "alfheim/api/spell/DamageSourceSpell");
+				mv.visitTypeInsn(INSTANCEOF, "alfheim/common/core/util/DamageSourceSpell");
 				mv.visitJumpInsn(IFNE, l2);
 				mv.visitVarInsn(ALOAD, 3);
 				mv.visitTypeInsn(INSTANCEOF, "vazkii/botania/common/entity/EntityPixie");
