@@ -1,9 +1,9 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-8</val>
+		<val>BETA-9</val>
 	</version>
 	<version id="ALL">
-		<val>Happy New Year! :3</val>
+		<val>Alfheim one year anniversary!</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -13,5 +13,8 @@
 	</version>
 	<version id="BETA-7">
 		<val>Some bugs here, you'll better update :3</val>
+	</version>
+	<version id="BETA-8">
+		<val>New MMO-related features and some other stuff, quicker update :D</val>
 	</version>
 </news>
