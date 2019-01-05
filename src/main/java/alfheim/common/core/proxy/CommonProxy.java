@@ -1,12 +1,9 @@
 package alfheim.common.core.proxy;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.block.AlfheimMultiblocks;
 import alfheim.common.core.handler.EventHandler;
-import alfheim.common.core.registry.AlfheimAchievements;
-import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRecipes;
-import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim;
@@ -24,6 +21,7 @@ public class CommonProxy {
 		AlfheimRegistry.preInit();
 		AlfheimAchievements.init();
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2();
+		AlfheimMultiblocks.init();
 	}
 
 	public void registerRenderThings() {}

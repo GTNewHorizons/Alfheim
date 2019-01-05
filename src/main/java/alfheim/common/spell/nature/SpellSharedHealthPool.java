@@ -52,8 +52,8 @@ public class SpellSharedHealthPool extends SpellBase {
 		for (int i = 0; i < pt.count; i++) {
 			EntityLivingBase mr = pt.get(i);
 			if (mr != null && Vector3.entityDistance(mr, caster) < 32) {
-				mr.addPotionEffect(new PotionEffect(AlfheimRegistry.sharedHP.id, 600, (int) max, true));
-				AlfheimCore.network.sendToAll(new MessageEffect(mr.getEntityId(), AlfheimRegistry.sharedHP.id, 600, (int) max));
+				mr.addPotionEffect(new PotionEffect(AlfheimRegistry.sharedHP.id, 36000, (int) max, true));
+				AlfheimCore.network.sendToAll(new MessageEffect(mr.getEntityId(), AlfheimRegistry.sharedHP.id, 36000, (int) max));
 				SpellEffectHandler.sendPacket(Spells.UPHEAL, mr);
 			}
 		}

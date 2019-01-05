@@ -1,7 +1,6 @@
 package alfheim.common.lexicon;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,16 +9,14 @@ import com.google.common.collect.Lists;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.spell.SpellBase;
+import alfheim.common.block.AlfheimMultiblocks;
 import alfheim.common.block.BlockElvenOres;
-import alfheim.common.block.tile.TileAlfheimPortal;
-import alfheim.common.block.tile.TileManaInfuser;
-import alfheim.common.block.tile.TileTradePortal;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.page.PageManaInfusorRecipe;
 import alfheim.common.lexicon.page.PageMultiblockLearnable;
@@ -33,7 +30,6 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
 import vazkii.botania.api.lexicon.LexiconEntry;
-import vazkii.botania.api.lexicon.LexiconPage;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModMultiblocks;
@@ -45,7 +41,6 @@ import vazkii.botania.common.lexicon.RLexiconEntry;
 import vazkii.botania.common.lexicon.page.PageCraftingRecipe;
 import vazkii.botania.common.lexicon.page.PageElvenRecipe;
 import vazkii.botania.common.lexicon.page.PageMultiblock;
-import vazkii.botania.common.lexicon.page.PageRecipe;
 import vazkii.botania.common.lexicon.page.PageRuneRecipe;
 import vazkii.botania.common.lexicon.page.PageText;
 
@@ -165,7 +160,7 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"),
 								 new PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
 								 new PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
-								 new PageMultiblock("6", TileAlfheimPortal.makeMultiblockSet()),
+								 new PageMultiblock("6", AlfheimMultiblocks.portal),
 								 new PageText("7"), new PageText(AlfheimConfig.destroyPortal ? "8" : "8s"));
 		
 		worldgen.setKnowledgeType(kt)
@@ -212,7 +207,7 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeManaInfusionCore),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeManaInfuser),
 								 new PageText("4"),
-								 new PageMultiblockLearnable("5", TileManaInfuser.makeMultiblockSetUnknown(), TileManaInfuser.makeMultiblockSet(), AlfheimAchievements.infuser))
+								 new PageMultiblockLearnable("5", AlfheimMultiblocks.infuserU, AlfheimMultiblocks.infuser, AlfheimAchievements.infuser))
 				.setIcon(new ItemStack(AlfheimBlocks.manaInfuser));
 		
 		elvorium.setKnowledgeType(kt)
@@ -224,7 +219,7 @@ public class AlfheimLexiconData {
 				.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumPylon),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeTradePortal),
-								 new PageMultiblock("4", TileTradePortal.makeMultiblockSet()))
+								 new PageMultiblock("4", AlfheimMultiblocks.yordin))
 				.setIcon(new ItemStack(AlfheimBlocks.tradePortal));
 		
 		List<IRecipe> powerRecipes = new ArrayList();
@@ -305,7 +300,7 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge)
-				.setLexiconPages(new PageText("0"), new PageText("1"))
+				.setLexiconPages(new PageText("0"), new PageText("1"), new PageMultiblock("2", AlfheimMultiblocks.soul)) // FIXME add re-soul description
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
 		
 		mask	.setKnowledgeType(BotaniaAPI.relicKnowledge)

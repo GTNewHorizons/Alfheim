@@ -27,13 +27,12 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 
-	
-	
-
 	public static IPylonModel model;
-	public static boolean orange = false, hand = false;
+	public static boolean orange = false, red = false, hand = false;
 	public Random rand = new Random();
-	
+
+	public ShadedObjectPylon shObjRO = new ShadedObjectPylon(LibResourceLocations.antiPylonOld);
+	public ShadedObjectPylon shObjR = new ShadedObjectPylon(LibResourceLocations.antiPylon);
 	public ShadedObjectPylon shObjPO = new ShadedObjectPylon(LibResourceLocations.elvenPylonOld);
 	public ShadedObjectPylon shObjP = new ShadedObjectPylon(LibResourceLocations.elvenPylon);
 	public ShadedObjectPylon shObjOO = new ShadedObjectPylon(LibResourceLocations.yordinPylonOld);
@@ -42,8 +41,10 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 	public RenderTileAlfheimPylons() {
 		RenderPostShaders.registerShadedObject(shObjO);
 		RenderPostShaders.registerShadedObject(shObjP);
+		RenderPostShaders.registerShadedObject(shObjR);
 		RenderPostShaders.registerShadedObject(shObjOO);
 		RenderPostShaders.registerShadedObject(shObjPO);
+		RenderPostShaders.registerShadedObject(shObjRO);
 	}
 	
 	@Override
@@ -59,12 +60,13 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		GL11.glColor4f(1F, 1F, 1F, a);
 		if (tile.getWorldObj() != null) {
 			orange = tile.getBlockMetadata() == 1;
+			red = tile.getBlockMetadata() == 2;
 		}
 
 		if (ConfigHandler.oldPylonModel)
-			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? LibResourceLocations.yordinPylonOld : LibResourceLocations.elvenPylonOld);
+			Minecraft.getMinecraft().renderEngine.bindTexture(red ? LibResourceLocations.antiPylonOld : orange ? LibResourceLocations.yordinPylonOld : LibResourceLocations.elvenPylonOld);
 		else
-			Minecraft.getMinecraft().renderEngine.bindTexture(orange ? LibResourceLocations.yordinPylon : LibResourceLocations.elvenPylon);
+			Minecraft.getMinecraft().renderEngine.bindTexture(red ? LibResourceLocations.antiPylon : orange ? LibResourceLocations.yordinPylon : LibResourceLocations.elvenPylon);
 
 		double worldTime = tile.getWorldObj() == null ? 0 : (double) (ClientTickHandler.ticksInGame + ticks);
 
@@ -124,7 +126,7 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 			GL11.glTranslatef(0F, -0.09F, 0F);
 
 		if (!hand) {
-			ShadedObjectPylon shObj = ConfigHandler.oldPylonModel ? orange ? shObjOO : shObjPO : orange ? shObjO : shObjP;
+			ShadedObjectPylon shObj = ConfigHandler.oldPylonModel ? (red ? shObjRO : orange ? shObjOO : shObjPO) : (red ? shObjR : orange ? shObjO : shObjP);
 			shObj.addTranslation();
 		} else {
 			model.renderCrystal();

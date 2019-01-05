@@ -7,6 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class LibResourceLocations {
 	
+	public static ResourceLocation antiPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png");
+	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
 	public static ResourceLocation arfa = new ResourceLocation(ModInfo.MODID, "textures/model/entity/arfa.png"); 
 	public static ResourceLocation aura = new ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png"); 
 	public static ResourceLocation babylon = new ResourceLocation("botania:textures/misc/babylon.png");

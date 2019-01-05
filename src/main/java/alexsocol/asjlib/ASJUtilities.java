@@ -147,8 +147,11 @@ public class ASJUtilities {
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 * */
 	public static void sendToDimensionWithoutPortal(Entity entity, int dimTo, double x, double y, double z) {
-		if (dimTo == entity.dimension) entity.setPosition(x, y, z);
-		if (entity instanceof EntityPlayerMP) {
+		if (dimTo == entity.dimension) {
+			if (entity instanceof EntityLivingBase) ((EntityLivingBase) entity).setPositionAndUpdate(x, y, z);
+			else entity.setPosition(x, y, z);
+		}
+		else if (entity instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) entity;
 			WorldServer worldTo = player.mcServer.worldServerForDimension(dimTo);
 			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, dimTo, new FreeTeleporter(worldTo, x, y, z));
