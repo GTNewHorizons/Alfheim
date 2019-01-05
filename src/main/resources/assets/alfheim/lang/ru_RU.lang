@@ -306,7 +306,10 @@ elvenstory.welcome1=§6Пожалуйста, выберите одну из сл
 elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ§r, §eПАК§r, §2ГНОМ§r, §7ЛЕПРЕКОН§r, §8СПРИГГАН§r, §bУНДИНА§r, §5ИМП§r
 elvenstory.commands.race.usage=/race <РАСА>
 
+key.cast.desc=Каст заклинания
 key.flight.desc=Эльфийский полёт
+key.selmob.desc=Выбор вражеской цели
+key.selteam.desc=Выбор участника группы
 mes.flight.unavailable=Полёт доступен только в Альвхейме
 
 race.SALAMANDER.name=САЛАМАНДР

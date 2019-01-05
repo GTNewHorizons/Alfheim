@@ -306,7 +306,10 @@ elvenstory.welcome1=§6Please, select one of the following races using "/race"
 elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
 elvenstory.commands.race.usage=/race <RACE>
 
+key.cast.desc=Spell Cast
 key.flight.desc=Elven Flight
+key.selmob.desc=Select Mob
+key.selteam.desc=Select Party Member
 mes.flight.unavailable=Flight is available only in Alfheim
 
 race.SALAMANDER.name=SALAMANDER
