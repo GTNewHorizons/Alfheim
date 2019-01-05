@@ -280,10 +280,10 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent e) {
 		float ammount = e.ammount;
-		if (e.source.getSourceOfDamage() != null && e.source.getSourceOfDamage() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getSourceOfDamage()).isPotionActive(AlfheimRegistry.quadDamage)) {
+		if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
 			ammount *= 4.0F;
 		}
-		if ((e.source.getSourceOfDamage() != null && e.source.getSourceOfDamage() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getSourceOfDamage()).isPotionActive(AlfheimRegistry.leftFlame)) || (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))) {
+		if ((e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.leftFlame)) || (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))) {
 			e.setCanceled(true);
 			return;
 		}
@@ -345,8 +345,8 @@ public class EventHandler {
 					e.setCanceled(true);
 					return;
 				}
-			} else if (e.source.getSourceOfDamage() != null && e.source.getSourceOfDamage() instanceof EntityLivingBase && e.source.getSourceOfDamage().isEntityAlive() && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
-				e.source.getSourceOfDamage().attackEntityFrom(e.source, e.ammount / 2);
+			} else if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && e.source.getEntity().isEntityAlive() && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
+				e.source.getEntity().attackEntityFrom(e.source, e.ammount / 2);
 			}
 		}
 		
@@ -366,9 +366,9 @@ public class EventHandler {
 		}
 		
 		// ################################################################ NOT CANCELING ################################################################
-		if (e.source.getSourceOfDamage() != null && e.source.getSourceOfDamage() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getSourceOfDamage()).isPotionActive(AlfheimRegistry.quadDamage)) {
+		if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
 			e.ammount *= 4.0F;
-			SpellEffectHandler.sendPacket(Spells.QUADH, e.source.getSourceOfDamage());
+			SpellEffectHandler.sendPacket(Spells.QUADH, e.source.getEntity());
 		}
 		
 		pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield);
