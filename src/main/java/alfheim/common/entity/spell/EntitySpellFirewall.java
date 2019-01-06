@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.AlfheimConfig;
@@ -49,8 +50,9 @@ public class EntitySpellFirewall extends Entity implements ITimeStopSpecific {
 	}
 
     public void onUpdate() {
-    	if (!worldObj.isRemote && (caster != null && caster.isDead)) {
+    	if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster != null && caster.isDead))) {
             setDead();
+            return;
         } else {
         	super.onUpdate();
         	

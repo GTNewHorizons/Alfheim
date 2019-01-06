@@ -7,6 +7,7 @@ import javax.management.MXBean;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.DamageSourceSpell;
@@ -34,7 +35,7 @@ public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
 
 	@Override
 	public void onEntityUpdate() {
-		if (!worldObj.isRemote && (caster == null || caster.isDead || ticksExisted > 20)) {
+		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster == null || caster.isDead || ticksExisted > 20))) {
 			setDead();
 			return;
 		}

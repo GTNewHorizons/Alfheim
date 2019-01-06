@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
@@ -34,7 +35,7 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 
 	@Override
 	public void onEntityUpdate() {
-		if (ticksExisted > 200) {
+		if (!AlfheimCore.enableMMO || ticksExisted > 200) {
 			setDead();
 			return;
 		}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -57,8 +58,9 @@ public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
     
     @Override
     public void onUpdate() {
-        if (!worldObj.isRemote && (caster != null && caster.isDead || !worldObj.blockExists((int)posX, (int)posY, (int)posZ))) {
+        if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster != null && caster.isDead || !worldObj.blockExists((int)posX, (int)posY, (int)posZ)))) {
             setDead();
+            return;
         } else {
             super.onUpdate();
 

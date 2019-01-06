@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -34,7 +35,7 @@ public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
 	
 	@Override
 	public void onEntityUpdate() {
-		if (caster == null || caster.isDead || ticksExisted > 50) {
+		if (!AlfheimCore.enableMMO || (caster == null || caster.isDead || ticksExisted > 50)) {
 			setDead();
 			return;
 		}

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -33,7 +34,7 @@ public class EntitySpellAquaStream extends Entity implements ITimeStopSpecific {
 	
 	@Override
 	public void onEntityUpdate() {
-		if (caster == null || caster.isDead || (caster.posX != posX || caster.posY != posY || caster.posZ != posZ) || ticksExisted > 50) {
+		if (!AlfheimCore.enableMMO || (caster == null || caster.isDead || (caster.posX != posX || caster.posY != posY || caster.posZ != posZ) || ticksExisted > 50)) {
 			setDead();
 			return;
 		}

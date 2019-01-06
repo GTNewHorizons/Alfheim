@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.Entity;
@@ -44,7 +45,7 @@ public class EntitySpellFenrirStorm extends Entity implements ITimeStopSpecific 
 	
 	@Override
 	public void onEntityUpdate() {
-		if (!worldObj.isRemote && (caster == null || area == null || ticksExisted > 12)) {
+		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster == null || area == null || ticksExisted > 12))) {
 			setDead();
 			return;
 		}

@@ -7,6 +7,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -35,11 +36,9 @@ public class EntitySpellHarp extends Entity implements ITimeStopSpecific {
 	}
 
     public void onUpdate() {
-    	if (caster == null || (caster != null && caster.isDead)) {
-            if (!worldObj.isRemote) {
-            	setDead();
-            	return;
-            }
+    	if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster == null || (caster != null && caster.isDead)))) {
+            setDead();
+            return;
         } else {
         	super.onUpdate();
         	
