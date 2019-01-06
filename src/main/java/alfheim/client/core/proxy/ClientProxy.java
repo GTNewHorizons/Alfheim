@@ -29,6 +29,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -79,6 +80,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine.class, new RenderEntityDriftingMine());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellGravityTrap.class, new RenderEntityGravityTrap());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellFenrirStorm.class, new RenderEntityFenrirStorm());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar.class, new RenderEntityMortar());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade.class, new RenderEntityWindBlade());
 	}
 

@@ -3,14 +3,16 @@ package alfheim;
 public interface DevInfo {
 	
 	public static final String[] fixes = {
-		"Включение/блокировка всего ЕСМ/ММО функционала при выполнении команд включения/отключения ЕСМ/ММО",
-		// А именно:
-		// "Добавление/удаление записей в лексиконе",
-		// "Изменение их типа знаний",
-		// "Включение/выключение гуи" -  ClientProxy
-		// "Включение/выключение кейбиндов" -  ClientProxy
-		// "Загрузка информации про точки респавна",
-		// "Загрузка данных Кардинала"
+		"Поменять цвета расс на:"
+//		Cait Sith	Yellow
+//		Imp	Purple
+//		Gnome	Brown
+//		Leprechaun	Grey
+//		Pooka	Gold
+//		Salamander	Red
+//		Spriggan	Black
+//		Sylph	Green
+//		Undine	Blue
 	};
 	
 	public static final String[] todo = {

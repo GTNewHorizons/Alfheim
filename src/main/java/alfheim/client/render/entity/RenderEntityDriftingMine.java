@@ -17,7 +17,6 @@ public class RenderEntityDriftingMine extends Render {
 	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/mine.obj"));
 	
 	public RenderEntityDriftingMine() {
-		super();
 		shadowSize = 0.0F;
 	}
 

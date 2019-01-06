@@ -216,7 +216,7 @@ public class ItemHoloProjector extends Item {
 			GL11.glRotated(180, 1, 0, 0);
 			GL11.glRotated(90 + pos.rotation, 0, 1, 0);
 			GL11.glTranslated(0, -0.75, 0);
-			RenderTileFlugelHead.model.render(0.0625F);
+			ModelBipedNew.model.render(0.0625F);
 			GL11.glPopMatrix();
 
 			GL11.glPushMatrix();

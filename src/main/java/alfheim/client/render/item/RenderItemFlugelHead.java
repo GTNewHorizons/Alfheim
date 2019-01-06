@@ -3,6 +3,7 @@ package alfheim.client.render.item;
 import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.lib.LibResourceLocations;
+import alfheim.client.model.entity.ModelBipedNew;
 import alfheim.client.render.tile.RenderTileFlugelHead;
 import alfheim.common.item.ItemFlugelHead;
 import net.minecraft.client.Minecraft;
@@ -38,7 +39,7 @@ public class RenderItemFlugelHead {
 			if (player.getCurrentArmor(3) != null) {
 				if (player.getCurrentArmor(3).getItem() instanceof ItemFlugelHead) {
 					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.jibril);
-					RenderTileFlugelHead.model.head.render(0.0625F);
+					ModelBipedNew.model.head.render(0.0625F);
 				} else
 				if (player.getCurrentArmor(3).getItem() instanceof ItemGaiaHead) {
 					Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().thePlayer.getLocationSkin());

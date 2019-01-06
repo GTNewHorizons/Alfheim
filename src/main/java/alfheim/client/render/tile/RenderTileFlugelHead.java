@@ -24,8 +24,6 @@ import alfheim.client.model.entity.ModelBipedNew;
 
 public class RenderTileFlugelHead extends TileEntitySkullRenderer {
 
-	public static final ModelBipedNew model = new ModelBipedNew();
-
 	@Override
 	public void renderTileEntityAt(TileEntitySkull skull, double x, double y, double z, float ticks) {
 		render(skull, x, y, z, skull.getBlockMetadata() & 7, skull.func_145906_b() * 360 / 16.0F, skull.func_145904_a());
@@ -59,7 +57,7 @@ public class RenderTileFlugelHead extends TileEntitySkullRenderer {
 		glScaled(-1, -1, 1);
 		glEnable(GL_ALPHA_TEST);
 		glRotated(rotation, 0, 1, 0);
-		model.head.render(0.0625F);
+		ModelBipedNew.model.head.render(0.0625F);
 
 		glPopMatrix();
 	}

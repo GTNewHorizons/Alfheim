@@ -130,7 +130,7 @@ public class AlfheimLexiconData {
 	
 	private static void preInitMMO() {
 		if (parties	== null) parties	= new BLexiconEntry("parties",	categoryAlfheim);
-		if (spells	== null) spells	= new BLexiconEntry("spells",	categoryAlfheim);
+		if (spells	== null) spells		= new BLexiconEntry("spells",	categoryAlfheim);
 		if (targets	== null) targets	= new BLexiconEntry("targets",	categoryAlfheim);
 	}
 	
@@ -370,7 +370,7 @@ public class AlfheimLexiconData {
 	}
 	
 	public static void disableESM() {
-		init();
+		init(); // XXX change just to setKnowledgeType
 		
 		removeEntry(es		, categoryAlfheim);
 		removeEntry(races	, categoryAlfheim);
@@ -379,14 +379,15 @@ public class AlfheimLexiconData {
 	public static void reEnableESM() {
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
 		if (AlfheimCore.enableMMO) preInitMMO();
-		init();
 		
 		if (!categoryAlfheim.entries.contains(es))		BotaniaAPI.addEntry(es		, categoryAlfheim);
 		if (!categoryAlfheim.entries.contains(races))	BotaniaAPI.addEntry(races	, categoryAlfheim);
+		
+		init(); // XXX change just to setKnowledgeType
 	}
 	
 	public static void disableMMO() {
-		init();
+		init(); // XXX change just to setKnowledgeType
 		
 		removeEntry(parties	, categoryAlfheim);
 		removeEntry(spells	, categoryAlfheim);
@@ -396,11 +397,12 @@ public class AlfheimLexiconData {
 	public static void reEnableMMO() {
 		if (AlfheimCore.enableElvenStory) preInitElvenStory();
 		if (AlfheimCore.enableMMO) preInitMMO();
-		init();
 		
 		if (!categoryAlfheim.entries.contains(parties))	BotaniaAPI.addEntry(parties	, categoryAlfheim);
 		if (!categoryAlfheim.entries.contains(spells))	BotaniaAPI.addEntry(spells	, categoryAlfheim);
 		if (!categoryAlfheim.entries.contains(targets))	BotaniaAPI.addEntry(targets	, categoryAlfheim);
+		
+		init(); // XXX change just to setKnowledgeType
 	}
 	
 	private static void removeEntry(LexiconEntry entry, LexiconCategory category) {

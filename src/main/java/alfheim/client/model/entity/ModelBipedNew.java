@@ -9,6 +9,8 @@ import net.minecraft.util.MathHelper;
 
 public class ModelBipedNew extends ModelBase {
 	
+	public static final ModelBipedNew model = new ModelBipedNew();
+	
 	public ModelRenderer head;
 	public ModelRenderer hair;
 	public ModelRenderer body;
