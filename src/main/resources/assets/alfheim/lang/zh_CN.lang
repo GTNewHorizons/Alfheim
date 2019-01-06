@@ -4,6 +4,7 @@ tile.AlfheimPortal.name=艾尔夫海姆之门核心
 tile.Anyavil.name=源质钢砧
 tile.botania:AlfheimPylons0.name=精灵水晶
 tile.botania:AlfheimPylons1.name=尘世水晶
+tile.botania:AlfheimPylons2.name=§4御灵水晶
 tile.DragonstoneElvenOre.name=龙石矿石
 tile.DreamLeaves.name=精灵梦之木树叶
 tile.DreamLog.name=精灵梦之木木头
@@ -26,6 +27,8 @@ tile.Transferer.name=传送阵
 ##########################################################___ITEMS___###########################################################
 
 # item..name=
+item.botania:AuraRingElven.name=精灵级光环之戒
+item.botania:AuraRingGod.name=神灵级光环之戒
 item.CreativeReachPendant.name=创造触物吊坠
 item.botania:ElementalAirBoots.name=风暴战靴
 item.botania:ElementalFireLeggings.name=炽焰护腿
@@ -36,6 +39,7 @@ item.ElementalArmor.desc1=轻如空中鸿毛 (§e强化跳跃 +4§7)
 item.ElementalArmor.desc2=疾如风中烈焰 (§c速度 +2§7) 能力: §c火焰保护§7)
 item.ElementalArmor.desc3=坚如山中顽石 (§a抗性提升 +2§7)
 item.ElementalArmor.desc4=灵如水中游鱼 (§b水下呼吸§7 + §b夜视§7)
+item.ElementiumHoe.name=源质钢锄
 item.ElvoriumBoots.name=魔灵战靴
 item.ElvoriumChestplate.name=魔灵盔甲
 item.ElvoriumHelmet.name=魔灵头盔
@@ -47,20 +51,23 @@ item.botania:Excaliber.name=誓约胜利之剑
 item.botania:FirePendant.name=炽焰之灵护身符
 item.botania:FlugelDisc.name=闪耀之乐
 item.record.botania:flugel.desc=Kain Vinosec - 长夜之守护
+item.FlugelHead.name=不朽之头颅
 item.botania:FlugelSoul.name=不朽之魂
+item.grassRod.name=青山权杖
 item.botania:IcePendant.name=极寒之灵护身符
 item.IffesalDust.name=魔灵粉末
 item.InterdimensionalGatewayCore.name=精灵乡核心-尘世
 item.LivingrockPickaxe.name=活石稿
-item.ManaElvenRing.name=魔灵魔力之戒
-item.ManaElvenRingGreater.name=始源魂灵魔力之戒
 item.ManaInfusionCore.name=魔元核心
+item.ManaRingElven.name=魔灵魔力之戒
+item.ManaRingGod.name=始源魂灵魔力之戒
+item.ManasteelHoe.name=魔力钢锄头
 item.ManaStone.name=注魔宝石
 item.ManaStoneGreater.name=始源注魔宝石
 item.manastorage.desc0=可存储高达 %s 个魔力池的魔力!
 item.manastorage.desc1=目前已存储 §b%s§7/§b%s§7 mana
-item.MauftriumIngot.name=始源魂灵锭
-item.MauftriumNugget.name=始源魂灵粒
+item.MauftriumIngot.name=§6始源魂灵锭§6
+item.MauftriumNugget.name=§6始源魂灵粒§6
 item.botania:Mjolnir.name=雷神之锤
 item.MuspelheimEssence.name=炽热之魂
 item.MuspelheimPowerIngot.name=炽热魔灵之钢
@@ -70,26 +77,28 @@ item.NiflheimEssence.name=极寒之魂
 item.NiflheimPowerIngot.name=极寒魔灵之钢
 item.NiflheimRod.name=极寒支配之杖
 item.NiflheimRune.name=极寒符文
+item.PaperBreak.name=盟约羊皮纸
+item.PeacePipe.name=和平烟斗
 item.botania:PixieAttractor.name=精灵吸引吊坠
 item.PrimalRune.name=始源符文
-item.RealitySword.name=§r始源之剑-现实%s
-item.RealitySword.name0= (沉睡)
-item.RealitySword.name1= (§e风暴§f)
-item.RealitySword.name2= (§a浩土§f)
-item.RealitySword.name3= (§c炽焰§f)
-item.RealitySword.name4= (§b潮汐§f)
-item.RealitySword.nameZ=创世神之剑
+item.RealitySword0.name=§6始源之剑-现实§f (§7沉睡§f)
+item.RealitySword1.name=§6始源之剑-现实§f (§e风暴§f)
+item.RealitySword2.name=§6始源之剑-现实§f (§a大地§f)
+item.RealitySword3.name=§6始源之剑-现实§f (§c炽焰§f)
+item.RealitySword4.name=§6始源之剑-现实§f (§b潮汐§f)
+item.RealitySword5.name=§6创世神之剑
 item.RealitySword.desc0=潜行+右键以切换元素之能
 item.RealitySword.desc1=风暴之力-击退!
 item.RealitySword.desc2=浩土之力-剧毒!
 item.RealitySword.desc3=炽焰之力-燃尽!
 item.RealitySword.desc4=潮汐之力-致盲!
 item.RealitySword.desc5=每秒需要 §n10§r§7 §bmana§7.
-item.RealitySword.descZ=力量!
+item.RealitySword.descZ=你得到了力量
 item.RealitySword.DIE=%s 得到了创世神之剑并遭到了创世神的惩罚
 item.botania:TankMask.name=诡秘之面
 item.TankMask.active=它"活"了
 item.TankMask.inactive=沉睡
+item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
 item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################
@@ -111,6 +120,10 @@ alfheim.armorset.elvorium.desc0=魔力工具使用魔力减少30%
 alfheim.armorset.elvorium.desc1=法杖内潜藏着更加强大的力量
 alfheim.armorset.elvorium.desc2=Vis减免20%
 alfheim.armorset.elvorium.desc3=符文护盾 +8
+
+alfheim.commands.alfheim.done=%s 将艾尔夫海姆模式改为 [%sESM%s|%sMMO%s]
+alfheim.commands.alfheim.usage=用于模式配置
+alfheim.commands.alfheim.wrong=/alfheim <command>
 
 alfheim.commands.tpdim.usage=用于跨世界的传送
 alfheim.commands.tpdim.wrong=tpdim <ID>
@@ -134,30 +147,90 @@ alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
 alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
 alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
 
-alfheim.potion.possession=黑暗侵蚀
-alfheim.potion.possession.postfix=侵蚀药水
+alfheim.nei.tradeportal=尘世贸易
+
+alfheim.potion.bleeding=流血
+alfheim.potion.bleeding.postfix=血液暴乱药水
+alfheim.potion.butterShield=自然护盾
+alfheim.potion.butterShield.postfix=自然守护药水
+alfheim.potion.deathMark=死亡诅咒
+alfheim.potion.deathMark.postfix=诅咒药水
+alfheim.potion.decay=衰弱
+alfheim.potion.decay.postfix=衰弱药水
+alfheim.potion.goldRush=淘金热
+alfheim.potion.goldRush.postfix=咖啡因药水
+alfheim.potion.icelens=凛冰棱镜
+alfheim.potion.icelens.postfix=冰封棱镜药水
+alfheim.potion.leftFlame=灵魂燃尽
+alfheim.potion.leftFlame.postfix=魂灭药水-永远不要喝下它
+alfheim.potion.nineLifes=替死
+alfheim.potion.nineLifes.postfix=替死药水
+alfheim.potion.noclip=虚无
+alfheim.potion.noclip.postfix=虚无药水
+alfheim.potion.possession=Possession
+alfheim.potion.possession.postfix=Potion of Possession
+alfheim.potion.quadDamage=四重伤害
+alfheim.potion.quadDamage.postfix=神圣之怒药水
+alfheim.potion.sacrifice=自我牺牲
+alfheim.potion.sacrifice.postfix=献祭药水
+alfheim.potion.sharedHP=生命共享
+alfheim.potion.sharedHP.postfix=生命共享药水
+alfheim.potion.showMana=魔力窥探
+alfheim.potion.showMana.postfix=魔力窥探药水
 alfheim.potion.soulburn=灵魂燃烧
 alfheim.potion.soulburn.postfix=燃魂药水
+alfheim.potion.stoneSkin=坚不可摧
+alfheim.potion.stoneSkin.postfix=不毁药水
+alfheim.potion.throw=灵如流风
+alfheim.potion.throw.postfix=流风药水
+alfheim.potion.wellolife=生命源泉
+alfheim.potion.wellolife.postfix=潮汐之生命药水
 
 alfheimmics.badArena=即使尽你最大的努力,仪式仍然没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
 alfheimmics.needsCatalysts=无论你如何努力将眼睛推进信标,周围似乎都没有任何事情发生,检查一下你的配置是个好主意
 alfheimmisc.notallowed=愚蠢的凡人,你连飞行都做不到,你没有和我战斗的资格,在我改变主意并干掉你之前赶紧离开
 alfheimmics.peacefulNoob=你试图提供一个眼睛,但世界的和平阻止你这样做,也许你应该做点什么
-alfheimmisc.update=哦!我的天, 看上去你正在用一个过期的版本(%s). 也许你应该更新到 %s?
+alfheimmisc.teamnotmob=盟友无法被选定为敌方目标
+alfheimmisc.update=看上去你正在使用一个过期的版本(%s). 也许你应该更新到 %s?
 
-death.attack.soulburn=%s的灵魂开始燃烧
+alfheimmisc.cast.notarget=选择一个目标
+alfheimmisc.cast.notready=法术并未准备完毕
+alfheimmisc.cast.notseeing=目标不在目视距离内
+alfheimmisc.cast.obstruct=目标被阻挡
+alfheimmisc.cast.wrongtgt=错误的目标
+alfheimmisc.cast.momana=魔力不足
+alfheimmisc.cast.notallow=你无法在此施法
+
+alfheimmisc.party.already=你已经进入这个阵营了
+alfheimmisc.party.full=阵营人数已满
+alfheimmisc.party.leave=你必须离开现在的阵营并且加入新的
+alfheimmisc.party.memberdied=%s 死亡
+alfheimmisc.party.no=没有这样的阵营
+alfheimmisc.party.notinpartyoffline=%s 不是一个盟友或已离线
+alfheimmisc.party.notpl=只有盟主才可以这样做
+
+death.attack.bleeding=%s 流血致死
+death.attack.darkness_FF=%s 被杀死以换取 %s 的牺牲
+death.attack.gravity=%s 被重力彻底碾碎
+death.attack.lightning=%s 被 %s 的闪电劈成了焦炭
+death.attack.mark=%s 死于诅咒
+death.attack.possession=%s 被虚空杀死
+death.attack.sacrifice=%s 将自己献祭给黑暗
+death.attack.soulburn=%s 的灵魂被燃烧殆尽
+death.attack.water=%s 被 %s 的水流切成碎片
 
 entity.Elf.name=精灵
+entity.Flugel.name=不朽
 entity.Pixie.name=小精灵
 
 item.FlugelSoul.blockAway=1格远
-item.FlugelSoul.blocksAway=%s 格远
+item.FlugelSoul.blocksAway=%s格远
 item.FlugelSoul.anotherDim=维度 %s
 item.FlugelSoul.clickToTeleport=右键以传送
-item.FlugelSoul.clickToRemoveWarp=Shift+左键以移除
+item.FlugelSoul.clickToRemoveWarp=摁下Shift+左键以移除
 item.FlugelSoul.unboundWarp=未绑定的传送点
 item.FlugelSoul.clickToAddWarp=右键以绑定传送点
-item.FlugelSoul.blockedWarp=灵魂的这一部分是残缺的
+item.FlugelSoul.blockedWarp=不朽之魂的这一部分已经残缺
 
 item.FlugelSoul.sign0=白羊
 item.FlugelSoul.sign1=金牛
@@ -172,28 +245,30 @@ item.FlugelSoul.sign9=摩羯
 item.FlugelSoul.sign10=水瓶
 item.FlugelSoul.sign11=双鱼
 
-item.HoloProjector.rotate=LMB & RMB - 旋转
-item.HoloProjector.switch=Shift+LMB - 切换性别
-item.HoloProjector.select=Shift+RMB - 选择种族
+item.HoloProjector.rotate=鼠标左键 & 右键 - 旋转
+item.HoloProjector.switch=Shift+鼠标左键 - 切换性别
+item.HoloProjector.select=Shift+鼠标右键 - 选择种族
 
 itemGroup.Alfheim=艾尔夫海姆
+
+lang.name=zh_CN
 
 #######################################################___RELIC POEMS___########################################################
 
 item.infiniteFruit.poem0=禁园之果
 item.infiniteFruit.poem1=永不再受饥荒之苦
 item.infiniteFruit.poem2=重塑躯体
-item.infiniteFruit.poem3=并让自己更加"年轻"
+item.infiniteFruit.poem3=涅槃重生
 
 item.Excaliber.poem0=英雄之剑
 item.Excaliber.poem1=剑炁
 item.Excaliber.poem2=锋利又神异
 item.Excaliber.poem3=无所遁形之敌
 
-item.flugelEye.poem0=一个人过去的愿望
-item.flugelEye.poem1=记忆的轮回
+item.flugelEye.poem0=过往的旅途
+item.flugelEye.poem1=轮回中的记忆
 item.flugelEye.poem2=凌驾于空间的力量
-item.flugelEye.poem3=至心灵之地
+item.flugelEye.poem3=将心灵带回原点
 
 item.thorRing.poem0=雷神之力
 item.thorRing.poem1=粉碎大地
@@ -234,21 +309,25 @@ item.TankMask.poem3=诗词 :(
 
 elvenstory.welcome0=§n§a欢迎来到艾尔夫海姆 - [精灵传说] !
 elvenstory.welcome1=§6请选择一个你想要的种族(输入括号内英文) "/race"
-elvenstory.welcome2=§4烈阳精灵(SALAMANDER)§r, §a自然精灵(SYLPH)§r, §6神裔精灵(CAITSITH)§r, §e魔元精灵(POOKA)§r, §2大地精灵(GNOME)§r, §7机械精灵(LEPRECHAUN)§r, §8暗影精灵(SPRIGGAN)§r, §b皓月精灵(UNDINE)§r, §5暗魂精灵(IMP)§r
+elvenstory.welcome2=§4炽焰精灵(SALAMANDER)§r, §a风暴精灵(SYLPH)§r, §6自然精灵(CAITSITH)§r, §e魂灵精灵(POOKA)§r, §2浩土精灵(GNOME)§r, §7科技精灵(LEPRECHAUN)§r, §8虚无精灵(SPRIGGAN)§r, §b潮汐精灵(UNDINE)§r, §5黑暗精灵(IMP)§r
 elvenstory.commands.race.usage=/race <RACE>
+elvenstory.commands.race.unavailable=命令不可用: 精灵传说模式已禁用
 
+key.cast.desc=施法键
 key.flight.desc=精灵之羽翼
+key.selmob.desc=选择实体
+key.selteam.desc=选择盟友
 mes.flight.unavailable=精灵之翼在艾尔夫海姆外无法汲取能量
 
-race.SALAMANDER.name=烈阳精灵
-race.SYLPH.name=自然精灵
-race.CAITSITH.name=神裔精灵
-race.POOKA.name=魔元精灵
-race.GNOME.name=大地精灵
-race.LEPRECHAUN.name=机械精灵
-race.SPRIGGAN.name=暗影精灵
-race.UNDINE.name=皓月精灵
-race.IMP.name=暗魂精灵
+race.SALAMANDER.name=SALAMANDER
+race.SYLPH.name=SYLPH
+race.CAITSITH.name=CAITSITH
+race.POOKA.name=POOKA
+race.GNOME.name=GNOME
+race.LEPRECHAUN.name=LEPRECHAUN
+race.SPRIGGAN.name=SPRIGGAN
+race.UNDINE.name=UNDINE
+race.IMP.name=IMP
 
 race.SALAMANDER.reverse=SALAMANDER
 race.SYLPH.reverse=SYLPH
@@ -259,3 +338,135 @@ race.LEPRECHAUN.reverse=LEPRECHAUN
 race.SPRIGGAN.reverse=SPRIGGAN
 race.UNDINE.reverse=UNDINE
 race.IMP.reverse=IMP
+
+#########################################################___SPELLS___###########################################################
+
+spell.cast=咒语
+
+spell.acidmyst.name=剧毒魔雾
+spell.aquabind.name=潮汐捆缚
+spell.aquastream.name=潮汐冲击
+spell.battlehorn.name=狂战乐章
+spell.blink.name=空间穿梭
+spell.bunnyhop.name=轻灵舞跃
+spell.butterflyshield.name=自然守护
+spell.confusion.name=天旋地转
+spell.day.name=奥术-白昼
+spell.deathmark.name=死亡咒印
+spell.decay.name=衰变腐朽
+spell.dispel.name=祛魔辟朽
+spell.dragongrowl.name=镇魂龙啸
+spell.driftingmine.name=灵能爆裂
+spell.echo.name=魂灵寻位
+spell.fenrirstorm.name=雷霆风暴
+spell.fireball.name=爆裂火球
+spell.firewall.name=炽热炎壁
+spell.gravitytrap.name=重力奇点
+spell.goldrush.name=灵能碎石
+spell.hammerfall.name=浩土陨星
+spell.harp.name=仙琴灵乐
+spell.healing.name=愈魂疗伤
+spell.hollowbody.name=身化虚灵
+spell.icelens.name=凛冰棱镜
+spell.ignition.name=灵能烈焰
+spell.mortar.name=浩土冲击
+spell.night.name=奥术-暗宵
+spell.nightvision.name=破妄之瞳
+spell.ninelifes.name=灵能替死
+spell.noclip.name=虚幻之体
+spell.outdare.name=讽心嘲魂
+spell.poisonroots.name=毒藤缠绕
+spell.purifyingsurface.name=神圣净化
+spell.rain.name=奥术-骤雨
+spell.sacrifice.name=黑暗献祭
+spell.sharedhp.name=生命共享
+spell.smokescreen.name=灵能暗幕
+spell.stoneskin.name=坚不可摧
+spell.sun.name=奥术-烈阳
+spell.thor.name=雷神之怒
+spell.throw.name=身化流风
+spell.thunder.name=奥术-雷暴
+spell.truesigh.name=灵能之烟
+spell.titanhit.name=泰坦之击
+spell.timestop.name=时光冻结
+spell.uphealth.name=圣灵治愈
+spell.wallwarp.name=身融浩土
+spell.waterbreathing.name=坎水之息
+spell.wellolife.name=生命源泉
+spell.windbalde.name=风暴利刃
+
+#
+spell.acidmyst.words=§b剧毒的魔雾
+spell.aquabind.words=§b捆缚我的敌人! 潮汐之铐!
+spell.aquastream.words=§b潮汐将引导敌人步入死亡!
+spell.battlehorn.words=§e满载勇气与荣誉的勇士们!撕碎胆敢阻挡之敌!
+#
+spell.blink.words=§7穿梭于空间
+spell.bunnyhop.words=§a给予他如同流风的轻盈
+spell.butterflyshield.words=§6自然守护着他！烈焰与剑刃永远无法靠近！
+spell.confusion.words=§8扰乱他们的灵魂！让他们在混乱与虚妄中死去！
+spell.day.words=§6我将用白昼代替暗宵! 神圣的光明终将驱散一切黑暗！
+#
+spell.deathmark.words=§5诅咒与死亡！
+#
+spell.decay.words=§5衰变与腐朽！
+#
+spell.dispel.words=§4魑魅魍魉不复存在！
+#
+spell.dragongrowl.words=§e震碎灵魂的龙啸！
+#
+spell.driftingmine.words=§7引动爆裂的灵能！
+#
+spell.echo.words=§e敌人将无所遁形！
+spell.fenrirstorm.words=§c我引动了雷霆的愤怒！ 它将撕碎我们的敌人！
+spell.fireball.words=§4我召唤了恶魔的怒焰！它将带来死亡与毁灭！
+spell.firewall.words=§4我支配着烈焰！敌人永远无法跨越火焰的壁垒！
+spell.gravitytrap.words=§7我主宰着宇宙的规则！命令引力撕碎一切来犯之敌！
+#
+spell.goldrush.words=§2灵能将毁山碎岩！
+#
+spell.hammerfall.words=§2降临浩土之陨星！
+#
+spell.harp.words=§e奏响灵乐的琴弦！
+spell.healing.words=§b自然将治愈一切悲苦与伤痛！
+spell.hollowbody.words=§8化为虚灵的身躯!敌人将无法寻到我的踪迹!
+#
+spell.icelens.words=§b操纵光明的冰封棱镜！
+spell.ignition.words=§4我支配熵的力量！引燃世间一切
+#
+spell.mortar.words=§2浩土之怒火！
+spell.night.words=§5我用暗宵取代白昼！无穷的黑暗终将吞噬世间万物！
+spell.nightvision.words=§8黑暗永远无法阻挡吾的双眼！
+#
+spell.ninelifes.words=§6灵能永不竭！我将永不灭！
+#
+spell.noclip.words=§2世间万物皆为虚妄！吾的步伐不可阻挡！
+#
+spell.outdare.words=§e一人独战百万军！ 万军丛中取首级！
+#
+spell.poisonroots.words=§5剧毒的藤蔓将束缚他们！
+spell.purifyingsurface.words=§b我将召唤纯净的泉水！火焰和毒素永不得侵袭吾身！
+spell.rain.words=§b我主宰自然的力量！疾风骤雨永不停息！
+spell.sacrifice.words=§5吾将献祭己身于黑暗！打开地狱的大门！黑暗终将吞噬整个世界！
+#
+spell.sharedhp.words=§6奉献吾等的生命！吾等缔结盟约-从此共生共死！
+spell.smokescreen.words=§8敌人将无从寻找我们的踪迹！黑暗的烟幕将使我们隐于敌人的视线
+spell.stoneskin.words=§2伟大的浩土将庇护吾等！皮肤将如岩石般坚不可摧！
+spell.sun.words=§4我主宰自然的力量！昊阳烈日永不落下！
+spell.thor.words=§a我将引动雷神的怒火！神明的力量将毁灭吾之敌手！
+#
+spell.throw.words=§a将身躯化为清风！灵动如同空中疾风！
+spell.thunder.words=§a我主宰自然的力量！暴风雷霆永不消逝！
+#
+spell.truesigh.words=§8我引动世界的力量！无处不在的灵能将告诉我敌人的魔力！
+#
+spell.titanhit.words=§2泰坦的怒火！势不可挡！
+#
+spell.timestop.words=§7我主宰时间的法则！吾命令时间就此冻结！
+spell.uphealth.words=§6给予他生命的力量！悲苦伤痛永不存！
+spell.wallwarp.words=§2信步闲庭行万里！无物将阻吾之步！
+spell.waterbreathing.words=§a灵如水中游鱼！自然将赋予我们生命之力！
+#
+spell.wellolife.words=§b潮汐予万物生命！治愈水中之人！
+#
+spell.windbalde.words=§a无处不在的疾风啊！我将引动你浩瀚的伟力！将面前的敌人切成碎片！
