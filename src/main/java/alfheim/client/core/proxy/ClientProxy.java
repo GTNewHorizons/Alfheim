@@ -70,6 +70,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylons.class, new RenderTileAlfheimPylons());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil.class, new RenderTileAnyavil());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFlugelHead.class, new RenderTileFlugelHead());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder.class, new RenderTileItemHolder());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderTileTradePortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer.class, new RenderTileTransferer());
 

@@ -1,46 +1,37 @@
 package alfheim.common.block;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.api.lib.LibRenderIDs;
-import alfheim.common.block.tile.TileAnyavil;
-import alfheim.common.lexicon.AlfheimLexiconData;
+import alfheim.common.block.tile.TileItemHolder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import vazkii.botania.api.internal.IManaBurst;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
-import vazkii.botania.api.mana.IManaTrigger;
-import vazkii.botania.api.wand.IWandHUD;
+import vazkii.botania.common.block.mana.BlockPool;
 
-public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTrigger, IWandHUD, ILexiconable {
+public class BlockItemHolder extends Block implements ILexiconable, ITileEntityProvider {
 
-	public BlockAnyavil() {
+	public BlockItemHolder() {
 		super(Material.iron);
-		this.setBlockName("Anyavil");
-		this.setCreativeTab(AlfheimCore.alfheimTab);
-		this.setLightOpacity(0);
-		this.setHardness(5.0F);
-		this.setResistance(2000.0F);
-		this.setStepSound(soundTypeAnvil);
+		setBlockBounds(0, 0, 0, 1, 0.25F, 1);
+		setBlockName("ItemHolder");
+		setBlockTextureName(ModInfo.MODID + ":ItemHolder");
+		setCreativeTab(AlfheimCore.alfheimTab);
 	}
 
-	@Override
+	/*@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
@@ -52,15 +43,14 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 
 	@Override
 	public int getRenderType() {
-		return LibRenderIDs.idAnyavil;
-	}
+		return LibRenderIDs.idItemHolder;
+	}*/
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		int l = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5) & 3;
-		world.setBlockMetadataWithNotify(x, y, z, l, 3);
+	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+		return world.getBlock(x, y - 1, z) instanceof BlockPool;
 	}
-
+	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
@@ -86,24 +76,13 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 		}
 		return true;
 	}
-
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		int l = world.getBlockMetadata(x, y, z) & 3;
-
-		if (l != 3 && l != 1) {
-			this.setBlockBounds(0.125F, 0.0F, 0.0F, 0.875F, 1.0F, 1.0F);
-		} else {
-			this.setBlockBounds(0.0F, 0.0F, 0.125F, 1.0F, 1.0F, 0.875F);
-		}
-	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z) {
 		return world.getLightBrightnessForSkyBlocks(x, y, z, world.getBlock(x, y, z).getLightValue(world, x, y - 1, z));
 	}
-
+	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
@@ -120,24 +99,11 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 	
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileAnyavil();
-	}
-	
-	@Override
-	public void onBurstCollision(IManaBurst burst, World world, int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileAnyavil) ((TileAnyavil) tile).onBurstCollision(burst, world, x, y, z);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileAnyavil) ((TileAnyavil) tile).renderHUD(mc, res, world, x, y, z);
+		return new TileItemHolder();
 	}
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return AlfheimLexiconData.anyavil;
+		return null; // XXX
 	}
 }

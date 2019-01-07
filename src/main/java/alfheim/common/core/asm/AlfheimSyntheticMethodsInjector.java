@@ -18,6 +18,14 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 		cr.accept(cv, ClassReader.SKIP_FRAMES);
 		basicClass = cw.toByteArray();
 		
+		if (transformedName.equals("vazkii.botania.common.block.tile.mana.TilePool")) {
+			cr = new ClassReader(basicClass);
+			cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			cv = new TilePool$ClassVisitor(cw);
+			cr.accept(cv, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+		
 		if (transformedName.equals("alfheim.common.core.asm.AlfheimSyntheticMethods")) {
 			cr = new ClassReader(basicClass);
 			cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -52,6 +60,19 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 		}
 	}
 	
+	static class TilePool$ClassVisitor extends ClassVisitor {
+		
+		public TilePool$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+	    public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
+	        if (name.equals("canAccept") || name.equals("canSpare")) access = Opcodes.ACC_PUBLIC;
+	        return super.visitField(access, name, desc, signature, value);
+	    }
+	}
+	
 	static class AlfheimSyntheticMethods$ClassVisitor extends ClassVisitor {
 		
 		public AlfheimSyntheticMethods$ClassVisitor(ClassVisitor cv) {
@@ -61,12 +82,16 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)  {
 			if (name.equals("onFinishedPotionEffect")) {
-				System.out.println("Generating synthetic onFinishedPotionEffect: " + name + desc);
+				System.out.println("Generating synthetic onFinishedPotionEffect");
 				return new AlfheimSyntheticMethods$onFinishedPotionEffect$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
-			}
+			} else
 			if (name.equals("onChangedPotionEffect")) {
-				System.out.println("Generating synthetic onChangedPotionEffect: " + name + desc);
+				System.out.println("Generating synthetic onChangedPotionEffect");
 				return new AlfheimSyntheticMethods$onChangedPotionEffect$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			} else
+			if (name.equals("canAccept") || name.equals("canSpare")) {
+				System.out.println("Generating synthetic " + name);
+				return new AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
@@ -113,6 +138,20 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			@Override
 			public void visitMaxs(int maxStack, int maxLocals) {
 				super.visitMaxs(3, 3);
+			}
+		}
+	
+		static class AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor extends MethodVisitor {
+			
+			public AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
+				if (name.equals("alchemy")) name = "canAccept"; else
+				if (name.equals("conjuration")) name = "canSpare"; 
+				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 		}
 	}

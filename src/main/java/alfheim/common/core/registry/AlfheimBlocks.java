@@ -31,6 +31,7 @@ public class AlfheimBlocks {
 	public static Block elvenSand;
 	public static Block elvoriumBlock;
 	public static Block flugelHead;
+	public static Block itemHolder;
 	public static Block livingcobble;
 	public static Block mauftriumBlock;
 	public static Block manaInfuser;
@@ -56,6 +57,7 @@ public class AlfheimBlocks {
 		elvenSand = new BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0, 255, 1, "shovel", 0, 5, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen);
 		elvoriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.elvorium);
 		flugelHead = new BlockFlugelHead();
+		itemHolder = new BlockItemHolder();
 		livingcobble = new BlockPatternLexicon(ModInfo.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0, 255, 2, "pickaxe", 0, 60, soundTypeStone, true, false, false, AlfheimLexiconData.worldgen);
 		mauftriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.essences);
 		manaInfuser = new BlockManaInfuser();
@@ -70,6 +72,7 @@ public class AlfheimBlocks {
 		register(alfheimPortal);
 		register(tradePortal);
 		//register(transferer); BACK
+		register(itemHolder);
 		registerBlock(alfheimPylons, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylons));
 		register(anyavil);
 		register(elvoriumBlock);
