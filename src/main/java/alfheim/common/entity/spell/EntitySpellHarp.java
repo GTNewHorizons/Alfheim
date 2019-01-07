@@ -40,9 +40,10 @@ public class EntitySpellHarp extends Entity implements ITimeStopSpecific {
             setDead();
             return;
         } else {
+        	if (!ASJUtilities.isServer()) return;
         	super.onUpdate();
         	
-            if (ticksExisted >= 600) this.setDead();
+            if (ticksExisted >= 600) setDead();
             
             Party pt = PartySystem.getMobParty(caster);
             if (pt == null || pt.count == 0) {

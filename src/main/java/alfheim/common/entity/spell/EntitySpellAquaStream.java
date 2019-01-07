@@ -38,7 +38,7 @@ public class EntitySpellAquaStream extends Entity implements ITimeStopSpecific {
 			setDead();
 			return;
 		}
-		if (this.isDead) return;
+		if (this.isDead || !ASJUtilities.isServer()) return;
 		
 		MovingObjectPosition mop = ASJUtilities.getMouseOver(caster, 16, true);
 		if (mop == null) mop = ASJUtilities.getSelectedBlock(caster, 16, true);

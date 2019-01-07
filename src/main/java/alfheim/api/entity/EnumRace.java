@@ -1,5 +1,6 @@
 package alfheim.api.entity;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.AlfheimAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
@@ -14,6 +15,8 @@ public enum EnumRace {
 	}
 	
 	public static int getRGBColor(double id) {
+		//return ASJUtilities.enumColorToRGB(getEnumColor(id));
+		
 		if (id == 1) return 0xb61f24;
 		if (id == 2) return 0x5ee52e;
 		if (id == 3) return 0xcdb878;
@@ -33,13 +36,13 @@ public enum EnumRace {
 	public static EnumChatFormatting getEnumColor(double id) {
 		if (id == 1) return EnumChatFormatting.DARK_RED;
 		if (id == 2) return EnumChatFormatting.GREEN;
-		if (id == 3) return EnumChatFormatting.GOLD;
-		if (id == 4) return EnumChatFormatting.YELLOW;
+		if (id == 3) return EnumChatFormatting.YELLOW;
+		if (id == 4) return EnumChatFormatting.GOLD;
 		if (id == 5) return EnumChatFormatting.DARK_GREEN;
 		if (id == 6) return EnumChatFormatting.GRAY;
-		if (id == 7) return EnumChatFormatting.DARK_GRAY;
+		if (id == 7) return EnumChatFormatting.WHITE;
 		if (id == 8) return EnumChatFormatting.AQUA;
-		if (id == 9) return EnumChatFormatting.DARK_PURPLE;
+		if (id == 9) return EnumChatFormatting.LIGHT_PURPLE;
 		return EnumChatFormatting.WHITE;
 	}
 	

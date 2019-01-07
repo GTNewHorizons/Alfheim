@@ -209,7 +209,7 @@ public class SpellEffectHandlerClient {
 	public static void onDeathTick(EntityLivingBase target) {
 		if (AlfheimCore.enableMMO) {
 			int c = 0xFFFFFF;
-			if (target instanceof EntityPlayer && EnumRace.getRace((EntityPlayer) target) != EnumRace.HUMAN) c = EnumRace.getRace((EntityPlayer) target).getRGBColor();
+			if (target instanceof EntityPlayer) c = EnumRace.getRace((EntityPlayer) target).getRGBColor();
 			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - (Minecraft.getMinecraft().thePlayer == target ? 1.5 : 0), target.posZ, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float)(Math.random() * 0.5), (float)(Math.random() * 0.015 - 0.0075), (float)(Math.random() * 0.025), (float)(Math.random() * 0.015 - 0.0075), 2);
 		}
 	}

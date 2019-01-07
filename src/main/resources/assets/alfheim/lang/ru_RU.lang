@@ -54,6 +54,7 @@ item.botania:FirePendant.name=Подвеска защиты от Муспель�
 item.botania:FlugelDisc.name=Сияющая пластинка
 item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
 item.FlugelHead.name=Голова Флюгеля
+item.FlugelHead.desc=Чтобы надеть нажмите ПКМ в руке
 item.botania:FlugelSoul.name=Душа Флюгеля
 item.grassRod.name=Жезл зелёных холмов
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма

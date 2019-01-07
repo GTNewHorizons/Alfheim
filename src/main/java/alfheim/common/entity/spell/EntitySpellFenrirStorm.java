@@ -3,6 +3,7 @@ package alfheim.common.entity.spell;
 import java.util.List;
 import java.util.UUID;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
@@ -49,7 +50,7 @@ public class EntitySpellFenrirStorm extends Entity implements ITimeStopSpecific 
 			setDead();
 			return;
 		}
-		if (this.isDead || worldObj.isRemote) return;
+		if (this.isDead || !ASJUtilities.isServer()) return;
 
 		if (ticksExisted == 4) {
 			List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, area.toAABB());

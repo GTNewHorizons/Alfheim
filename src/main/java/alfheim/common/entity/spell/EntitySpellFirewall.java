@@ -3,6 +3,7 @@ package alfheim.common.entity.spell;
 import java.util.List;
 import java.util.UUID;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
@@ -54,6 +55,7 @@ public class EntitySpellFirewall extends Entity implements ITimeStopSpecific {
             setDead();
             return;
         } else {
+        	if (!ASJUtilities.isServer()) return;
         	super.onUpdate();
         	
             if (ticksExisted >= 600) {

@@ -40,6 +40,8 @@ public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
 			return;
 		}
 		
+		if (!ASJUtilities.isServer()) return;
+		
 		if (isCollidedHorizontally) setDead();
 		
 		if (this.isDead) return;

@@ -9,7 +9,6 @@ public class LibResourceLocations {
 	
 	public static ResourceLocation antiPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png");
 	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
-	public static ResourceLocation arfa = new ResourceLocation(ModInfo.MODID, "textures/model/entity/arfa.png"); 
 	public static ResourceLocation aura = new ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png"); 
 	public static ResourceLocation babylon = new ResourceLocation("botania:textures/misc/babylon.png");
 	public static ResourceLocation butterfly = new ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png");
@@ -29,6 +28,7 @@ public class LibResourceLocations {
 	public static ResourceLocation gravel = new ResourceLocation(ModInfo.MODID, "textures/misc/gravel.png");
 	public static ResourceLocation gravity = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Gravity.png");
 	public static ResourceLocation halo = new ResourceLocation("botania:textures/misc/halo.png");
+	public static ResourceLocation harp = new ResourceLocation(ModInfo.MODID, "textures/model/entity/harp.png"); 
 	public static ResourceLocation health = new ResourceLocation(ModInfo.MODID, "textures/gui/health.png");
 	public static ResourceLocation hotSpells = new ResourceLocation(ModInfo.MODID, "textures/gui/HotSpells.png");
 	public static ResourceLocation iceLens = new ResourceLocation(ModInfo.MODID, "textures/misc/IceLens.png");

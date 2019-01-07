@@ -171,7 +171,7 @@ public class GUISpells extends Gui {
         glPopMatrix();
         
         SpellBase spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID);
-        font.drawString(StatCollector.translateToLocal("spell." + spell.name + ".name"), 24, height - 18, EnumRace.getRGBColor(KeyBindingHandlerClient.raceID));
+        font.drawString(StatCollector.translateToLocal("spell." + spell.name + ".name"), 24, height - 18, ASJUtilities.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID)));
         
         // ################################################################ HOTSPELLS ################################################################
         
@@ -201,8 +201,8 @@ public class GUISpells extends Gui {
         		txt = ticksToTime(SpellCastingSystemClient.getCoolDown(spell));
         		font.drawString(txt, 2 + (12 - font.getStringWidth(txt)) / 2, 4, 0xFFFFFF);
         	}
-			txt = StatCollector.translateToLocal("spell." + spell.name + ".name");
-			font.drawString(txt, -font.getStringWidth(txt) - 4, 4, EnumRace.getRGBColor((CardinalSystemClient.segment.hotSpells[i] >> 28) & 0xF));
+			//txt = StatCollector.translateToLocal("spell." + spell.name + ".name");
+			//font.drawString(txt, -font.getStringWidth(txt) - 4, 4, EnumRace.getRGBColor((CardinalSystemClient.segment.hotSpells[i] >> 28) & 0xF));
 		}
 		
         glPopMatrix();

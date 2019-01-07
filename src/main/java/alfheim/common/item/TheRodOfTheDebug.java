@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import vazkii.botania.common.item.equipment.tool.terrasteel.ItemTerraPick;
 
 public class TheRodOfTheDebug extends Item {
 

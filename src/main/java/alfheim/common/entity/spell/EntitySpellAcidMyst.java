@@ -3,6 +3,7 @@ package alfheim.common.entity.spell;
 import java.util.List;
 import java.util.UUID;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
@@ -39,7 +40,7 @@ public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
 			setDead();
 			return;
 		}
-		if (this.isDead) return;
+		if (this.isDead || !ASJUtilities.isServer()) return;
 		
 		List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(4.5, 4.5, 4.5));
 		l.remove(caster);

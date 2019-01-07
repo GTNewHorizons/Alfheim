@@ -18,6 +18,7 @@ import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.client.render.item.RenderItemFlugelHead;
+import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -34,6 +35,8 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
@@ -43,6 +46,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
+import vazkii.botania.common.item.ModItems;
 
 public class EventHandlerClient {
 
@@ -195,6 +199,10 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onItemTooltip(ItemTooltipEvent e) {
+		if (e.itemStack.getItem() == ModItems.gaiaHead || e.itemStack.getItem() == AlfheimItems.flugelHead) {
+			e.toolTip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("item.FlugelHead.desc"));
+		}
+		
 		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && e.showAdvancedItemTooltips) {
 			e.toolTip.add("");
 			e.toolTip.add("NBT Data:");

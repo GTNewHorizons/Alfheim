@@ -2,18 +2,7 @@ package alfheim;
 
 public interface DevInfo {
 	
-	public static final String[] fixes = {
-		"Поменять цвета расс на:"
-//		Cait Sith	Yellow
-//		Imp	Purple
-//		Gnome	Brown
-//		Leprechaun	Grey
-//		Pooka	Gold
-//		Salamander	Red
-//		Spriggan	Black
-//		Sylph	Green
-//		Undine	Blue
-	};
+	public static final String[] fixes = {};
 	
 	public static final String[] todo = {
 		"Партиклы из OSM",

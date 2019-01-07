@@ -6,12 +6,15 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem;
+import alfheim.common.core.handler.CardinalSystem.TimeStopSystem;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.network.Message3d;
 import alfheim.common.network.Message3d.m3d;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
@@ -63,8 +66,6 @@ public class CommandAlfheim extends CommandBase {
 		return getListOfStringsMatchingLastWord(args, "esm", "mmo");
 	}
 	
-	
-	
 	public static void toggleESM(boolean on) {
 		if (on) {
 			AlfheimConfig.initWorldCoordsForElvenStory(AlfheimCore.save);
@@ -77,8 +78,9 @@ public class CommandAlfheim extends CommandBase {
 		if (on) {
 			CardinalSystem.load(AlfheimCore.save);
 			toggleESM(AlfheimCore.enableElvenStory = true);
+			for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) TimeStopSystem.transfer((EntityPlayerMP) o, Integer.MAX_VALUE);
 		} else {
-			
+			CardinalSystem.save(AlfheimCore.save);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package alfheim.common.entity.spell;
 import java.util.List;
 import java.util.UUID;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
@@ -39,7 +40,7 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 			setDead();
 			return;
 		}
-		if (this.isDead || ticksExisted < 20 || worldObj.isRemote) return;
+		if (this.isDead || ticksExisted < 20 || !ASJUtilities.isServer()) return;
 
 		List<Entity> l = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4, 8, 4));
 		for (Entity e : l) {

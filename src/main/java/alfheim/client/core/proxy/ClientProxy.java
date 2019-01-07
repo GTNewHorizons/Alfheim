@@ -9,6 +9,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.render.ASJShaderHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.lib.*;
+import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.core.handler.EventHandlerClient;
 import alfheim.client.gui.*;
 import alfheim.client.lib.LibResourceLocationsActual;
@@ -76,7 +77,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel.class, new RenderEntityFlugel(new ModelEntityFlugel(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark.class, new RenderEntityLightningMark());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp.class, new RenderEntityArfa());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp.class, new RenderEntityHarp());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine.class, new RenderEntityDriftingMine());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellGravityTrap.class, new RenderEntityGravityTrap());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellFenrirStorm.class, new RenderEntityFenrirStorm());
@@ -138,6 +139,7 @@ public class ClientProxy extends CommonProxy {
 			AlfheimLexiconData.disableMMO();
 			disableMMOGUIs();
 			removeMMOKeyBinds();
+			TimeStopSystemClient.tsAreas.clear();
 		}
 	}
 	
