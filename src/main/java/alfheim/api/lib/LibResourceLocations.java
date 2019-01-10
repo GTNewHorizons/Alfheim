@@ -34,13 +34,16 @@ public class LibResourceLocations {
 	public static ResourceLocation iceLens = new ResourceLocation(ModInfo.MODID, "textures/misc/IceLens.png");
 	public static ResourceLocation jibril = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Jibril.png");
 	public static ResourceLocation lexica = new ResourceLocation("botania:textures/model/lexica.png");
+	public static ResourceLocation livingrock = new ResourceLocation("botania:textures/blocks/livingrock0.png");
 	public static ResourceLocation manaInfuserOverlay = new ResourceLocation("botania:textures/gui/manaInfusionOverlay.png");
 	public static ResourceLocation mark = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Mark.png");
 	public static ResourceLocation mine1 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/1.png");
 	public static ResourceLocation mine2 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/2.png");
 	public static ResourceLocation mine3 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/3.png");
 	public static ResourceLocation petalOverlay = new ResourceLocation("botania:textures/gui/petalOverlay.png");
-	public static ResourceLocation pixie = new ResourceLocation("botania:textures/model/pixie.png");	
+	public static ResourceLocation pixie = new ResourceLocation("botania:textures/model/pixie.png");
+	public static ResourceLocation poolBlue = new ResourceLocation(ModInfo.MODID, "textures/blocks/PoolBlue.png");	
+	public static ResourceLocation poolPink = new ResourceLocation(ModInfo.MODID, "textures/blocks/PoolPink.png");	
 	public static ResourceLocation potions = new ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png");
 	public static ResourceLocation skin = new ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png");
 	public static ResourceLocation spellFrame = new ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png");

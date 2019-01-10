@@ -335,7 +335,7 @@ public class Vector3 implements Serializable {
 	}
 
 	public Vector3 rotate(double angle, Vector3 axis) {
-		Quaternion.aroundAxis(axis.copy().normalize(), angle).rotate(this);
+		Quaternion.aroundAxis(axis.copy().normalize(), Math.toRadians(angle)).rotate(this);
 		return this;
 	}
 

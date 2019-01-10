@@ -150,9 +150,7 @@ public class OrientedBB {
 	
 	/** Rotates BB on given angle in DEG around given axis (axis coords are global) */
 	public OrientedBB rotate(double angle, Vector3 axis) {
-		angle = Math.toRadians(angle);
-		
-		orient.rotate(angle, axis);
+		orient.rotate(Math.toRadians(angle), axis);
 		pos.rotate(angle, axis);
 		
 		a.rotate(angle, axis);

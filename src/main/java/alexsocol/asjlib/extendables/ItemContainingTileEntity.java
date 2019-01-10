@@ -26,7 +26,7 @@ import net.minecraft.util.MathHelper;
 
 public class ItemContainingTileEntity extends TileEntity {
 
-	public ItemStack item;
+	private ItemStack item;
 
 	public ItemStack getItem() {
 		return item;

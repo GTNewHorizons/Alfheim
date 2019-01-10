@@ -15,7 +15,7 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 		ClassReader cr = new ClassReader(basicClass);
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 		ClassVisitor cv = new ClassVisitorPotionMethodPublicizer(cw, String.format("%s (%s)", name, transformedName));
-		cr.accept(cv, ClassReader.SKIP_FRAMES);
+		cr.accept(cv, ClassReader.EXPAND_FRAMES);
 		basicClass = cw.toByteArray();
 		
 		if (transformedName.equals("vazkii.botania.common.block.tile.mana.TilePool")) {

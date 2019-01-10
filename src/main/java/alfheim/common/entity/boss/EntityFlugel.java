@@ -389,7 +389,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 					double kx = Math.sin(radp) * Math.cos(radY);
 					double ky = Math.cos(radp);
 					double kz = Math.sin(radp) * Math.sin(radY);
-					Vector3 kos = new Vector3(kx, ky, kz).normalize().rotate(Math.PI * 2 * Math.random(), nrm).mul(0.1);
+					Vector3 kos = new Vector3(kx, ky, kz).normalize().rotate(Math.toRadians(Math.PI * 2 * Math.random()), nrm).mul(0.1);
 					
 					float motX = (float) kos.x;
 					float motY = (float) kos.y;

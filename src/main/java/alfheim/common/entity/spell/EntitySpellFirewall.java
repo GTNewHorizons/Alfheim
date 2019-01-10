@@ -75,9 +75,9 @@ public class EntitySpellFirewall extends Entity implements ITimeStopSpecific {
             	}
             }
 
-            Vector3 a = obb.a.copy().sub(obb.pos).rotate(Math.toRadians(rotationYaw * -2), Vector3.oY).add(obb.pos),
-            		b = obb.b.copy().sub(obb.pos).rotate(Math.toRadians(rotationYaw * -2), Vector3.oY).add(obb.pos),
-            		d = obb.d.copy().sub(obb.pos).rotate(Math.toRadians(rotationYaw * -2), Vector3.oY).add(obb.pos),
+            Vector3 a = obb.a.copy().sub(obb.pos).rotate(rotationYaw * -2, Vector3.oY).add(obb.pos),
+            		b = obb.b.copy().sub(obb.pos).rotate(rotationYaw * -2, Vector3.oY).add(obb.pos),
+            		d = obb.d.copy().sub(obb.pos).rotate(rotationYaw * -2, Vector3.oY).add(obb.pos),
             		v = d.copy().sub(d.copy().sub(a).mul(0.5));
             
         	int sources = 20, power = 5;

@@ -67,6 +67,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry flugel;
 	public static LexiconEntry greenRod;
 	public static LexiconEntry infuser;
+	public static LexiconEntry itemHold;
 	public static LexiconEntry mask;
 	//public static LexiconEntry mjolnir;
 	public static LexiconEntry mobs;
@@ -106,6 +107,7 @@ public class AlfheimLexiconData {
 		flugel	= new BLexiconEntry("flugel",	categoryAlfheim);
 		greenRod= new BLexiconEntry("greenRod",	categoryAlfheim);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
+		itemHold= new BLexiconEntry("itemHold",	categoryAlfheim);
 		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
@@ -173,6 +175,8 @@ public class AlfheimLexiconData {
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLog));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
+
+		itemHold.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeItemHolder));
 		
 		greenRod.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeGreenRod));
 		
@@ -353,11 +357,11 @@ public class AlfheimLexiconData {
 		pylons	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		portal	.setKnowledgeType(kt);
 		worldgen.setKnowledgeType(kt);
+		itemHold.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		greenRod.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		ores	.setKnowledgeType(kt);
 		mobs	.setKnowledgeType(kt);
 		pixie	.setKnowledgeType(kt);
-		anyavil	.setKnowledgeType(kt);
 		infuser	.setKnowledgeType(kt);
 		elvorium.setKnowledgeType(kt);
 		trade	.setKnowledgeType(kt);

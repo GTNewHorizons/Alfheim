@@ -54,6 +54,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderThings() {
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
+		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idTransferer = RenderingRegistry.getNextAvailableRenderId();
 		
@@ -63,6 +64,7 @@ public class ClientProxy extends CommonProxy {
 		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
 
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, new RenderBlockItemHolder());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, new RenderBlockAlfheimPylons());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, new RenderBlockTransferer());
 		

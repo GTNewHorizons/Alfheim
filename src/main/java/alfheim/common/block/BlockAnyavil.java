@@ -69,7 +69,7 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 		if(te != null) {
 			if(te.getItem() != null) {
 				if(!world.isRemote){
-					EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item);
+					EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem());
 					world.spawnEntityInWorld(entityitem);				
 				}
 				te.setItem(null);

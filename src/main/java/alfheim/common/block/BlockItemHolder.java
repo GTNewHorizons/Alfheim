@@ -5,6 +5,7 @@ import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileItemHolder;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -25,13 +26,13 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 
 	public BlockItemHolder() {
 		super(Material.iron);
-		setBlockBounds(0, 0, 0, 1, 0.25F, 1);
+		setBlockBounds(0, -0.5F, 0, 1, -0.125F, 1);
 		setBlockName("ItemHolder");
 		setBlockTextureName(ModInfo.MODID + ":ItemHolder");
 		setCreativeTab(AlfheimCore.alfheimTab);
 	}
 
-	/*@Override
+	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
@@ -44,7 +45,7 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 	@Override
 	public int getRenderType() {
 		return LibRenderIDs.idItemHolder;
-	}*/
+	}
 	
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
@@ -59,7 +60,7 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 		if(te != null) {
 			if(te.getItem() != null) {
 				if(!world.isRemote){
-					EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item);
+					EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem());
 					world.spawnEntityInWorld(entityitem);				
 				}
 				te.setItem(null);
@@ -86,12 +87,9 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
-		if(te != null) {
-			if(te.getItem() != null) {
-				EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem());
-				world.spawnEntityInWorld(entityitem);
-				te.setItem(null);
-			}
+		if(te != null && te.getItem() != null) {
+			world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem()));
+			te.setItem(null);
 		}
 
 		super.breakBlock(world, x, y, z, block, meta);
@@ -104,6 +102,6 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
-		return null; // XXX
+		return AlfheimLexiconData.itemHold;
 	}
 }

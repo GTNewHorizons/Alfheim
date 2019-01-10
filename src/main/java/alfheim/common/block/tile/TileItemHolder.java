@@ -2,6 +2,7 @@ package alfheim.common.block.tile;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.common.core.asm.AlfheimSyntheticMethods;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -18,7 +19,15 @@ public class TileItemHolder extends ItemContainingTileEntity {
 	@Override
 	public void updateEntity() {
 		TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
-		if (te == null || !(te instanceof TilePool)) return; // XXX add block dropping
+		if (te == null || !(te instanceof TilePool)) {
+			if (worldObj.isRemote) return;
+			worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, new ItemStack(worldObj.getBlock(xCoord, yCoord, zCoord), 1, worldObj.getBlockMetadata(xCoord, yCoord, zCoord))));
+			if (getItem() != null) worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, getItem().copy()));
+			setItem(null);
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+			return;
+		}
+		
 		TilePool pool = (TilePool) te;
 		
 		ItemStack stack = getItem();
@@ -62,9 +71,9 @@ public class TileItemHolder extends ItemContainingTileEntity {
 				}
 
 				if(didSomething) {
-					if(worldObj.isRemote && ConfigHandler.chargingAnimationEnabled && worldObj.rand.nextInt(20) == 0) {
-						Vector3 itemVec = Vector3.fromTileEntity(this).add(0.5, 0.5 + Math.random() * 0.3, 0.5);
-						Vector3 tileVec = Vector3.fromTileEntity(this).add(0.2 + Math.random() * 0.6, 0, 0.2 + Math.random() * 0.6);
+					if(worldObj.isRemote && ConfigHandler.chargingAnimationEnabled && worldObj.rand.nextInt(100) == 0) {
+						Vector3 itemVec = Vector3.fromTileEntity(this).add(0.5, Math.random() * 0.3, 0.5);
+						Vector3 tileVec = Vector3.fromTileEntity(this).add(0.2 + Math.random() * 0.6, -0.5, 0.2 + Math.random() * 0.6);
 						LightningHandler.spawnLightningBolt(worldObj, pool.isOutputtingPower() ? tileVec : itemVec, pool.isOutputtingPower() ? itemVec : tileVec, 80, worldObj.rand.nextLong(), 0x4400799c, 0x4400C6FF);
 					}
 					pool.isDoingTransfer = pool.isOutputtingPower();

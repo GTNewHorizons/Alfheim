@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.relic.ItemFlugelSoul;
@@ -35,6 +36,7 @@ import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
 import vazkii.botania.api.mana.spark.SparkHelper;
 import vazkii.botania.client.core.handler.HUDHandler;
+import vazkii.botania.client.core.proxy.ClientProxy;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
@@ -49,7 +51,8 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	
 	public static final int MAX_MANA = TilePool.MAX_MANA * 8;
 
-	private static final int[][] PYLONS = {{6,-1,0},{-6,-1,0},{0,-1,6},{0,-1,-6}};
+	private static final int[][] GAIAS = {{4,-1,4},{-4,-1,4},{-4,-1,-4},{4,-1,-4}};
+	private static final int[][] PYLONS = {{6,-1,0},{0,-1,6},{-6,-1,0},{0,-1,-6}};
 	private static final int[][] QUARTZ_BLOCK = {{1,0,0},{-1,0,0},{0,0,1},{0,0,-1}};
 	private static final int[][] ELEMENTIUM_BLOCKS = {{1,0,1},{1,0,-1},{-1,0,1},{-1,0,-1}};
 	private static final String TAG_MANA = "mana", TAG_MANA_REQUIRED = "manaRequired", TAG_KNOWN_MANA = "knownMana";
@@ -99,10 +102,10 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 					boom = 5;
 					EntityDoppleganger dop = l.get(0);
 					boolean hard = dop.isHardMode();
-					soulParticles();
 					
 					if (dop.getInvulTime() <= 0) {
-						boom = 5;
+						soulParticles();
+						boom = 7;
 						dop.setHealth(dop.getHealth() - 10);
 						
 						if (dop.getHealth() <= 0) {
@@ -120,13 +123,17 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 							break gaia;
 						} else break boom;
 						
-					} else return;
+					} else {
+						if (worldObj.getTotalWorldTime() % 5 == 0) prepareParticles();
+						return;
+					}
 				}
 			} else {
 				if (blockMetadata != 0)	worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
 				break gaia;
 			}
 			
+			if (ModInfo.DEV) ASJUtilities.chatLog("Boom at " + boom);
 			worldObj.newExplosion(null, xCoord, yCoord, zCoord, boom, true, false);
 			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 			return;
@@ -212,19 +219,45 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		}
 	}
 
-	void doneParticles() {
-		// XXX particles
-	}
-
 	Vector3 v = new Vector3();
+
+	void prepareParticles() {
+		int ci = 0;
+		for (int[] c : PYLONS) {
+			for (int i = -1; i < 84; i++) {
+				v.set(0, 0, 0.1).rotate(-45 - 90 * ci, Vector3.oY).extend(i / 10.).add(c[0], c[1], c[2]);
+				Botania.proxy.sparkleFX(worldObj, xCoord + v.x + 0.5, yCoord + v.y + 0.65, zCoord + v.z + 0.5, 1, 0.01F, 0.01F, 1, 2);
+			}
+			ci++;
+		}
+	}
 	
 	void soulParticles() {
 		for (int[] c : PYLONS) {
 			v.set(-c[0], -c[1], -c[2]).normalize().mul(0.4);
-			Botania.proxy.wispFX(worldObj, xCoord + 0.5 + c[0], yCoord + 0.65 + c[1], zCoord + c[2] + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
 		}
-		// XXX connect to other pylons
-		// rotate vec for this
+		for (int[] c : GAIAS) {
+			v.set(c[0], 0, c[2]).normalize().mul(0.3);
+			v.rotate(107.5, Vector3.oY);
+			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, 0.01F, 1, 0.3F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+			v.rotate(-215, Vector3.oY);
+			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, 0.01F, 1, 0.3F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+		}
+	}
+	
+	void doneParticles() {
+		for (int i = 0; i < 64; i++) {
+			v.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(Math.random() * 0.2 + 0.1);
+			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord + 1.65 + Math.random() * 0.2, zCoord + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+		}
+		for (int i = 0; i < 16; i++) {
+			v.set(0, 1, 0).mul(Math.random() * 0.2 + 0.1);
+			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord + 1 + Math.random(), zCoord + 0.5, 1, 0.01F, 0.01F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+		}
+		for (int i = 0; i < 64; i++) {
+			Botania.proxy.sparkleFX(worldObj, xCoord + 0.5 + Math.random() * 0.25 - 0.125, yCoord + 4, zCoord + 0.5 + Math.random() * 0.25 - 0.125, 1, 0.01F, 0.01F, 5, 15);
+		}
 	}
 	
 	List<EntityItem> getItems() {

@@ -222,10 +222,10 @@ public class ItemFlugelSoul extends ItemRelic {
 		return ItemNBTHelper.getBoolean(stack, TAG_DISABLED + warp, false);
 	}
 
-	public static void setDisabled(ItemStack stack, int warp, boolean disabled) {
-		ItemNBTHelper.setBoolean(stack, TAG_DISABLED + warp, disabled);
+	public static void setDisabled(ItemStack stack, int warp, boolean disable) {
+		ItemNBTHelper.setBoolean(stack, TAG_DISABLED + (warp - (disable ? 0 : 1)), disable);
 		stack.getTagCompound().tagMap.remove(TAG_WARP_PREFIX + warp);
-		setBlocked(stack, getBlocked(stack) + (disabled ? 1 : -1));
+		setBlocked(stack, getBlocked(stack) + (disable ? 1 : -1));
 	}
 	
 	public static int getBlocked(ItemStack item) {

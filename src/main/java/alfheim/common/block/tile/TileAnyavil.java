@@ -37,7 +37,7 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 	
 	public void onBurstCollision(IManaBurst burst, World world, int x, int y, int z) {
 		if (burst.isFake()) return;
-		if (this.item == null) return;
+		if (getItem() == null) return;
 		if (burst.getColor() != 0xFFF280A6) return;
 		List<EntityItem> eitems = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord, zCoord - 1, xCoord + 2, yCoord + 2, zCoord + 2).expand(5, 3, 5));
 		for (EntityItem eitem : eitems) {
@@ -62,10 +62,10 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 			}
 		}
 		
-		int needed = item.getItemDamage();
+		int needed = getItem().getItemDamage();
 		int transfer = Math.max(0, Math.min(needed, pinkCharge));
 		pinkCharge -= transfer;
-		item.setItemDamage(item.getItemDamage() - transfer);
+		getItem().setItemDamage(getItem().getItemDamage() - transfer);
 		
 		for (int i = 0; i < 24; i++) Botania.proxy.wispFX(world, xCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), yCoord + 1.5, zCoord + 0.5 + (worldObj.rand.nextFloat() / 5.0F - 0.1F), col[0], col[1], col[2], 0.25F, 0, worldObj.rand.nextFloat() * 0.2F - 0.1F, 0);
 	}

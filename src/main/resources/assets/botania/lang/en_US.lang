@@ -43,6 +43,11 @@ botania.page.worldgen4=Creating &1Livingcobble&0
 botania.page.worldgen5=Creating &1Livingrock pickaxe&0
 botania.page.worldgen6=Creating &1Furnace&0
 
+botania.entry.itemHold=Mana Accelerator
+botania.tagline.greenRod=Not just a shelf
+botania.page.itemHold0=Tired of waiting for your &1Terra Shatterer&0 to be charged? Are you afraid that someone will carry off the &1Mana Tablet&0 or will it just disappear for some reason? Then the &1Mana Accelerator&0 is for you. A simple and elegant solution that allows you to securely place an item over a mana pool, not only protecting it, but also speeding up the transfer of mana about two times! And it also changes color.
+botania.page.itemHold1=Creating &1Mana Accelerator&0
+
 botania.entry.greenRod=Rod of the Green Hills
 botania.tagline.greenRod=Greening!
 botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
