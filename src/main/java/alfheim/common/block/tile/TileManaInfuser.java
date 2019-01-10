@@ -239,10 +239,13 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		}
 		for (int[] c : GAIAS) {
 			v.set(c[0], 0, c[2]).normalize().mul(0.3);
+			float r = (float) Math.random() * 0.3F;
+			float g = 0.7F + (float) Math.random() * 0.3F;
+			float b = 0.7F + (float) Math.random() * 0.3F;
 			v.rotate(107.5, Vector3.oY);
-			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, 0.01F, 1, 0.3F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, r, g, b, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
 			v.rotate(-215, Vector3.oY);
-			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, 0.01F, 1, 0.3F, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+			Botania.proxy.wispFX(worldObj, xCoord + c[0] + 0.5, yCoord + c[1] + 0.65, zCoord + c[2] + 0.5, r, g, b, 0.5F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
 		}
 	}
 	

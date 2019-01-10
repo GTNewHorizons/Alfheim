@@ -57,6 +57,8 @@ import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.core.proxy.CommonProxy;
+import vazkii.botania.common.entity.EntityDoppleganger;
 import vazkii.botania.common.item.ItemGaiaHead;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
@@ -64,7 +66,7 @@ import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimHookHandler {
 
-	private static boolean updatingEntity = false;
+	private static boolean updatingTile = false, updatingEntity = false;
 	private static String TAG_TRANSFER_STACK = "transferStack";
 	public static boolean numMana = true;
 	
@@ -157,11 +159,6 @@ public class AlfheimHookHandler {
 		}
     }
 	
-	@Hook
-	public static void updateEntity(TilePylon entity) {
-		updatingEntity = entity.getWorldObj().isRemote;
-	}
-	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
 		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
@@ -207,15 +204,57 @@ public class AlfheimHookHandler {
 		}
 	}
 	
+	@Hook
+	public static void onLivingUpdate(EntityDoppleganger e) {
+		updatingEntity = true;
+	}
+	
+	@Hook(injectOnExit = true, targetMethod = "onLivingUpdate")
+	public static void onLivingUpdatePost(EntityDoppleganger e) {
+		updatingEntity = false;
+	}
+	
+	public static float rt = 0, gt = 0, bt = 0;
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	public static void wispFX(CommonProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, float gravity) {
+		if (updatingEntity) {
+			r = rt = (float) Math.random() * 0.3F;
+			g = gt = 0.7F + (float) Math.random() * 0.3F;
+			b = bt = 0.7F + (float) Math.random() * 0.3F;
+		}
+		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, gravity, 1F);
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	public static void wispFX(CommonProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, float motionx, float motiony, float motionz) {
+		if (updatingEntity && size == 0.4F) {
+			r = rt;
+			g = gt;
+			b = bt;
+		}
+		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, motionx, motiony, motionz, 1F);
+	}
+	
+	@Hook
+	public static void updateEntity(TilePylon entity) {
+		updatingTile = entity.getWorldObj().isRemote;
+	}
+	
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	public static void updateEntityPost(TilePylon entity) {
 		if (entity.getWorldObj().isRemote) {
-			updatingEntity = false;
+			updatingTile = false;
 			if (entity.getWorldObj().rand.nextBoolean()) {
 				int meta = entity.getBlockMetadata();
 				Botania.proxy.sparkleFX(entity.getWorldObj(), entity.xCoord + Math.random(), entity.yCoord + Math.random() * 1.5, entity.zCoord + Math.random(), meta == 2 ? 0F : 0.5F, meta == 0 ? 0.5F : 1F, meta == 1 ? 0.5F : 1F, (float) Math.random(), 2);
 			}
 		}
+	}
+	
+	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	public static boolean sparkleFX(ClientProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, int m, boolean fake) {
+		return updatingTile;
 	}
 
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -239,11 +278,6 @@ public class AlfheimHookHandler {
 	@Hook
 	public static void onBlockAdded(SubTileEntity subtile, World world, int x, int y, int z) {
 		if (subtile instanceof SubTileDaybloom && ((SubTileDaybloom) subtile).isPrime()) ((SubTileDaybloom) subtile).setPrimusPosition();
-	}
-	
-	@Hook(returnCondition = ReturnCondition.ON_TRUE)
-	public static boolean sparkleFX(ClientProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, int m, boolean fake) {
-		return updatingEntity;
 	}
 
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
