@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import vazkii.botania.common.Botania;
 
 public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
 
@@ -40,7 +41,10 @@ public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
 			return;
 		}
 		
-		if (!ASJUtilities.isServer()) return;
+		if (!ASJUtilities.isServer()) {
+			Botania.proxy.wispFX(worldObj, posX + Math.random() * 2 - 1, posY, posZ + Math.random() * 2 - 1, (float) Math.random() * 0.1F + 0.8F, (float) Math.random() * 0.1F + 0.9F, (float) Math.random() * 0.1F + 0.8F, (float) Math.random() * 0.3F + 0.2F, (float) motionX / -10F, (float) motionY / -10F, (float) motionZ / -10F, 0.5F);
+			return;
+		}
 		
 		if (isCollidedHorizontally) setDead();
 		

@@ -22,6 +22,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class ASJPacketCompleter implements IClassTransformer {
 
 	public static final List descriptors = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;");
+	public static boolean doLog = true;
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -51,8 +52,10 @@ public class ASJPacketCompleter implements IClassTransformer {
 				return cw.toByteArray();
 			}
 		} catch (Throwable e) {
-			System.err.println("Something went wrong while transforming class " + transformedName + "\t Contact mod author.");
-			e.printStackTrace();
+			if (doLog) {
+				System.err.println("Something went wrong while transforming class " + transformedName + ". Ignore if everything is OK (this is NOT ASJLib error).");
+				e.printStackTrace();
+			}
 			return basicClass;
 		}
 		return basicClass;

@@ -44,7 +44,7 @@ botania.page.worldgen5=Creating &1Livingrock pickaxe&0
 botania.page.worldgen6=Creating &1Furnace&0
 
 botania.entry.itemHold=Mana Accelerator
-botania.tagline.greenRod=Not just a shelf
+botania.tagline.itemHold=Not just a shelf
 botania.page.itemHold0=Tired of waiting for your &1Terra Shatterer&0 to be charged? Are you afraid that someone will carry off the &1Mana Tablet&0 or will it just disappear for some reason? Then the &1Mana Accelerator&0 is for you. A simple and elegant solution that allows you to securely place an item over a mana pool, not only protecting it, but also speeding up the transfer of mana about two times! And it also changes color.
 botania.page.itemHold1=Creating &1Mana Accelerator&0
 
@@ -167,16 +167,17 @@ botania.page.reality2=Creating &6Sword of Reality&0
 botania.entry.flugel=Flügel
 botania.tagline.flugel=Weapon of Gods
 botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
-botania.page.flugel1=Flügels themselves strongly hate Guardians, for the fact that they took away eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of summoning, built in the clouds, you can summon one of the Flügels and try to defeat it.
+botania.page.flugel1=Flügels themselves strongly hate Guardians, for the fact that they took away eyes from their dead relatives, and are trying their best to return the relics. And it can be used to your advantage. Replacing the sacrificial ingot at the eye of the Flügel in the ritual of Gaia, built in the clouds, you can summon one of the Flügels and try to defeat it.
 botania.page.flugel2=But be careful - their self-love will not allow them to fight with someone who can not fly by themselves, so you need to get wings like theirs. Good armor, strong sword and potions - without them you are unlikely to achieve anything. Otherwise, an inquisitive and flexible mind will help you.
 
 botania.entry.soul=Flügel's Soul
 botania.tagline.soul=God Slayers
 botania.page.soul0=The one who win the Flügel will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flügel, even stronger - the one from Gods Slayers, twelve more times (in exchange for warp points). This will give you some useful and rare resources.
-botania.page.soul1=&o//Lore stuff here//&r
+botania.page.soul1=<br><br><br><br><br><br><br>&oit seems page is torn out&r
 botania.page.soul2=Creating &4Anti-pylon&0
-botania.page.soul3=Soul restructurizer
-botania.page.soul4=In order to restore the soul, it is enough to place it in the upper part of the brewery and summon the Gaia Guardian. Anti-pylons will do the rest for you. For sure success, call the hardcore form of the Guardian. But if you are lucky, then the usual form will help, it is like a coin toss.
+botania.page.soul3=Pave them around ritual of Gaia to form a ring with Gaia pylons, then place the Mana infuser and the botanical brewery over the beacon. Thus, the energy from the pylons will be concentrated in the infuser and, having passed through the guardian of Gaia, will restore a part of the Flügel's soul.
+botania.page.soul4=Soul restructurizer
+botania.page.soul5=In order to restore the soul, it is enough to place it in the upper part of the brewery and summon the Gaia Guardian. Anti-pylons will do the rest for you. For sure success, call the hardcore form of the Guardian. But if you are lucky, then the usual form will help, it is like a coin toss. But be careful. If you make a mistake, the accumulated energy will be released into space in the form of an explosion.
 
 botania.entry.mask=Mysterious Mask
 botania.tagline.mask=I've already seen this somewhere...

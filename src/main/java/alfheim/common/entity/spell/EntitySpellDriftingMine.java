@@ -63,6 +63,8 @@ public class EntitySpellDriftingMine extends Entity implements ITimeStopSpecific
             setDead();
             return;
         } else {
+        	moveEntity(motionX, motionY, motionZ);
+        	
         	if (!ASJUtilities.isServer()) return;
             super.onUpdate();
 
@@ -84,9 +86,6 @@ public class EntitySpellDriftingMine extends Entity implements ITimeStopSpecific
 	        
 	        if (movingobjectposition != null) onImpact(movingobjectposition);
             
-            posX += motionX;
-            posY += motionY;
-            posZ += motionZ;
             float f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
             rotationYaw = (float)(Math.atan2(motionZ, motionX) * 180.0D / Math.PI) + 90.0F;
 
@@ -98,7 +97,6 @@ public class EntitySpellDriftingMine extends Entity implements ITimeStopSpecific
             rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2F;
             rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2F;
             
-            setPosition(posX, posY, posZ);
         }
 	}
     

@@ -53,7 +53,7 @@ public class ItemRodGrass extends Item implements IManaUsingItem {
 
 	@Override
 	public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
-		if(count != getMaxItemUseDuration(stack)) terraform(stack, player.worldObj, player);
+		if(count != getMaxItemUseDuration(stack) && count % 5 == 0) terraform(stack, player.worldObj, player);
 	}
 
 	@Override
@@ -69,15 +69,17 @@ public class ItemRodGrass extends Item implements IManaUsingItem {
 		int y = MathHelper.floor_double(player.posY - (world.isRemote ? 2 : 1));
 		int z = MathHelper.floor_double(player.posZ);
 
+		boolean done = false;
 		for (int i = -range; i <= range; i++) {
 			for (int k = -range; k <= range; k++) {
-				for (int j = -range; j <= range; j++) {
+				for (int j = -1; j <= 1; j++) {
 					if (!world.isAirBlock(x + i, y + j + 1, z + k)) continue;
 					for(int id : OreDictionary.getOreIDs(new ItemStack(world.getBlock(x + i, y + j, z + k), 1, world.getBlockMetadata(x + i, y + j, z + k))))
 						if(validBlocks.contains(OreDictionary.getOreName(id))) 
-							if (place(stack, player, world, x + i, y + j, z + k, 1, 0.5F, 1, 0.5F, Blocks.grass, world.canBlockSeeTheSky(x + i, y + j, z + k) ? 30 : 50, 0, 1, 0)) return;
+							if (place(stack, player, world, x + i, y + j, z + k, 1, 0.5F, 1, 0.5F, Blocks.grass, world.canBlockSeeTheSky(x + i, y + j, z + k) ? 30 : 50, 0, 1, 0)) done = true;
 				}
 			}
+			if (done) break;
 		}
 	}
 	

@@ -284,9 +284,9 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
 		soul	.setLexiconPages(new PageText("0"), new PageText("1"), // FIXME add re-soul lore
-								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon),
-								 new PageMultiblock("3", AlfheimMultiblocks.soul),
-								 new PageText("4"))
+								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon), new PageText("3"),
+								 new PageMultiblock("4", AlfheimMultiblocks.soul),
+								 new PageText("5"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
 		
 		mask	.setLexiconPages(new PageText("0"))

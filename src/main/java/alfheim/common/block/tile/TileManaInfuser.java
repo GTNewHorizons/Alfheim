@@ -133,7 +133,6 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 				break gaia;
 			}
 			
-			if (ModInfo.DEV) ASJUtilities.chatLog("Boom at " + boom);
 			worldObj.newExplosion(null, xCoord, yCoord, zCoord, boom, true, false);
 			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 			return;

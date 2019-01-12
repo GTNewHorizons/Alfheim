@@ -1,5 +1,6 @@
 package alfheim.common.core.util;
 
+import java.awt.AlphaComposite;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -38,6 +40,7 @@ public class AlfheimConfig extends Configuration {
 	public static int		dimensionIDAlfheim		= -105;
 	
 	// OHTER
+	public static boolean	asmLog					= true;
 	public static boolean	destroyPortal			= true;
 	public static boolean	enableAlfheimRespawn	= true;
 	public static boolean	fancies					= true;
@@ -48,6 +51,7 @@ public class AlfheimConfig extends Configuration {
 	public static int		oregenMultiplier		= 3;
 	public static int		tradePortalRate			= 1200;
 	
+	// POTIONS
 	public static int		potionID___COUNTER		= 30;
 	public static int		potionIDBleeding		= potionID___COUNTER++;
 	public static int		potionIDButterShield	= potionID___COUNTER++;
@@ -94,6 +98,8 @@ public class AlfheimConfig extends Configuration {
 	}
 	
 	public static void syncConfig() {
+		asmLog				= loadProp(CATEGORY_GENERAL,		"asmLog",					asmLog,					false,	"Set this to false to disable error logging while transforming classes with asm");
+		ASJPacketCompleter.doLog = asmLog;
 		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,		"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
 		destroyPortal		= loadProp(CATEGORY_GENERAL,		"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");

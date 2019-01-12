@@ -4,6 +4,8 @@ import static org.objectweb.asm.Opcodes.*;
 
 import org.objectweb.asm.*;
 
+import alfheim.common.core.util.AlfheimConfig;
+
 import static alfheim.api.ModInfo.OBF;
 import gloomyfolken.hooklib.minecraft.HookLibPlugin;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -12,11 +14,22 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		ClassReader cr = new ClassReader(basicClass);
-		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-		ClassVisitor cv = new ClassVisitorPotionMethodPublicizer(cw, String.format("%s (%s)", name, transformedName));
-		cr.accept(cv, ClassReader.EXPAND_FRAMES);
-		basicClass = cw.toByteArray();
+		ClassReader cr;
+		ClassWriter cw;
+		ClassVisitor cv;
+		
+		try {
+			cr = new ClassReader(basicClass);
+			cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			cv = new ClassVisitorPotionMethodPublicizer(cw, String.format("%s (%s)", name, transformedName));
+			cr.accept(cv, ClassReader.EXPAND_FRAMES);
+			basicClass = cw.toByteArray();
+		} catch (Throwable e) {
+			if (AlfheimConfig.asmLog) {
+				System.err.println("Something went wrong while transforming class " + transformedName + ". Ignore if everything is OK (this is NOT Alfheim error).");
+				e.printStackTrace();
+			}
+		}
 		
 		if (transformedName.equals("vazkii.botania.common.block.tile.mana.TilePool")) {
 			cr = new ClassReader(basicClass);

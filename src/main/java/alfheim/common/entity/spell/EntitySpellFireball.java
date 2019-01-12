@@ -76,7 +76,7 @@ public class EntitySpellFireball extends Entity implements ITimeStopSpecific {
             setDead();
             return;
         } else {
-        	if (!ASJUtilities.isServer()) return;
+        	//if (!ASJUtilities.isServer()) return;
             super.onUpdate();
 
             if (ticksExisted == 600) onImpact(null);

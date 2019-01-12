@@ -13,6 +13,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +26,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import vazkii.botania.common.block.ModBlocks;
 
 public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
 
@@ -63,7 +65,10 @@ public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
             setDead();
             return;
         } else {
-        	if (!ASJUtilities.isServer()) return;
+        	if (!ASJUtilities.isServer()) {
+        		worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ModBlocks.livingrock) + "_0", posX + Math.random() - 0.5, posY, posZ + Math.random() - 0.5, motionX / -10, -0.05, motionX / -10);
+        		return;
+        	}
             super.onUpdate();
 
             if (ticksExisted == 100) onImpact(null);
