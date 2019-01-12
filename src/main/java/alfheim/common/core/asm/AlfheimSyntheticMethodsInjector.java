@@ -12,6 +12,8 @@ import net.minecraft.launchwrapper.IClassTransformer;
 
 public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 
+	public static boolean doLog = true;
+	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 		ClassReader cr;
@@ -25,7 +27,7 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			cr.accept(cv, ClassReader.EXPAND_FRAMES);
 			basicClass = cw.toByteArray();
 		} catch (Throwable e) {
-			if (AlfheimConfig.asmLog) {
+			if (doLog) {
 				System.err.println("Something went wrong while transforming class " + transformedName + ". Ignore if everything is OK (this is NOT Alfheim error).");
 				e.printStackTrace();
 			}

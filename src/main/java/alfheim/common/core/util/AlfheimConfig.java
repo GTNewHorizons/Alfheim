@@ -13,6 +13,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.common.core.asm.AlfheimSyntheticMethodsInjector;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -99,7 +100,7 @@ public class AlfheimConfig extends Configuration {
 	
 	public static void syncConfig() {
 		asmLog				= loadProp(CATEGORY_GENERAL,		"asmLog",					asmLog,					false,	"Set this to false to disable error logging while transforming classes with asm");
-		ASJPacketCompleter.doLog = asmLog;
+		ASJPacketCompleter.doLog = AlfheimSyntheticMethodsInjector.doLog = asmLog;
 		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
 		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,		"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
 		destroyPortal		= loadProp(CATEGORY_GENERAL,		"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
