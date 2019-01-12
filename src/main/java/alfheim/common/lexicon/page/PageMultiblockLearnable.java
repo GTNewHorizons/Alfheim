@@ -122,6 +122,7 @@ public class PageMultiblockLearnable extends LexiconPage {
 	}
 
 	String getButtonStr() {
+		MultiblockSet set = known() ? this.set : this.setUn;
 		return StatCollector.translateToLocal(MultiblockRenderHandler.currentMultiblock == set ? "botaniamisc.unvisualize" : "botaniamisc.visualize");
 	}
 
@@ -133,6 +134,7 @@ public class PageMultiblockLearnable extends LexiconPage {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onActionPerformed(IGuiLexiconEntry gui, GuiButton button) {
+		MultiblockSet set = known() ? this.set : this.setUn;
 		if(button == this.button) {
 			if(MultiblockRenderHandler.currentMultiblock == set)
 				MultiblockRenderHandler.setMultiblock(null);

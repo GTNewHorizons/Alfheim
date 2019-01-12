@@ -15,6 +15,7 @@ public class AlfheimHookLoader extends HookLoader {
 	
 	static {
 		ModInfo.OBF = !(Boolean) ASJReflectionHelper.getStaticValue(CoreModManager.class, "deobfuscatedEnvironment");
+		ASJReflectionHelper.setStaticFinalValue(ModInfo.class, !ModInfo.OBF, "DEV");
 	}
 	
 	@Override public String[] getASMTransformerClass() {
