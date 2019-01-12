@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-9</val>
+		<val>BETA-10</val>
 	</version>
 	<version id="ALL">
 		<val>GL HF!</val>
@@ -16,5 +16,8 @@
 	</version>
 	<version id="BETA-8">
 		<val>New MMO-related features and some other stuff, quicker update :D</val>
+	</version>
+	<version id="BETA-9">
+		<val>Fixed incompatibilities with some mods, get new version!</val>
 	</version>
 </news>
