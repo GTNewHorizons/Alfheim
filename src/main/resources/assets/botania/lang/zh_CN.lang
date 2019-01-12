@@ -1,4 +1,4 @@
-botania.category.alfheim=艾尔夫海姆
+botania.category.Alfheim=艾尔夫海姆
 
 botania.entry.alfheim=精灵乡-艾尔夫海姆
 botania.tagline.alfheim=新视界!
@@ -13,6 +13,12 @@ botania.page.elves2=Mastray警告他们 跨越世界之人必将承受... 时光
 botania.page.elves3=事件发生之后, 精灵急于寻找王国中 最为稳定的地方. 对他们来说, 当尘世的1小时, 精灵乡的1秒过后. 精灵和人类的伟大贸易 开始了.......
 botania.page.elves4=他们发现这些人类中的法师, 同样使用着来自鲜花的魔力, 神奇的魔法和精灵无比相似. 在研究了来自尘世的矿石后 (铁, 钻石,或是其他类似宝石), 这些精灵明白了一个道理 与人类交易是有利可图的. 无论如何,尘世看上去 并没有和精灵乡一样的魔法, 所以他们缔结了一份契约 精灵-贸易-人类...
 
+botania.entry.pylons=新水晶
+botania.tagline.pylons=我将指挥游行
+botania.page.pylons0=你需要的水晶有些改动<br>在精灵乡中,所有尘世的水晶 都有它的对应水晶: 精灵水晶和魔法水晶相似, 泰拉就像尘世水晶;<br>盖亚水晶仍然是最顶尖的, 但是他的合成配方变了
+botania.page.pylons1=制造 &1精灵水晶&0
+botania.page.pylons2=制造 &1盖亚水晶&0
+
 botania.entry.portal=艾尔夫海姆之门
 botania.tagline.portal=我们需要更加的深入!
 botania.page.portal0=Mastray... 他是精灵乡的本地居民, 他创建了和尘世的贸易之门, 为一个伟大的联盟奠定了基础 然而,贸易之门本身 似乎给他带来了很大的麻烦. 为了建立尘世之门 需要来自尘世的资源... 多么讽刺... Freyr居住在精灵乡是件好事 因为他是Vans一族的 另一种神明....
@@ -24,17 +30,23 @@ botania.page.portal5=制造 &1精灵乡核心-尘世&0
 botania.page.portal6=艾尔夫海姆之门
 botania.page.portal7=要激活这座门户, 你只需要在门户上使用核心, 工作方式和精灵传送门一样. 唯一不同的是, 在精灵乡它不需要魔力来源 因为他的能量来源于整个世界
 botania.page.portal8=不幸的是, 即使是Mastray, 也不可能创造一个稳定, 且功能齐全的门户 这个版本不能再传送死物, 只会和高等生物- 玩家产生精神连接 但是, 如果它不在世界的中心, 就能以稀少的代价 补偿精灵乡的时间异常
-botania.page.portal8s=不幸的是, 即使是Mastray, 也不可能创造一个稳定, 且功能齐全的门户 这个版本不能再传送死物, 只会和高等生物- 玩家产生精神连接 但是它 成功的弥补了 精灵乡的时间异常
+botania.page.portal8s=不幸的是, 即使是Mastray, 也不可能创造一个稳定, 且功能齐全的门户 这个版本不能再传送死物, 只会和高等生物- 玩家产生精神连接 但是它成功的弥补了 精灵乡的时间异常
 
 botania.entry.worldgen=世界生成
-botania.tagline.worldgen=更多奇怪的东西!
-botania.page.worldgen0=精灵乡本身就是一个美丽的, 引人注目的美丽景观, 如果能忘掉时间带来的危险 <br>你可以用把这些奇特的树木, 用把木头变成活木的方式 把它们变成梦之木; 不知为何, 如果它们的树叶和龙石结合, 就会在黑暗中发出光芒...
-botania.page.worldgen1=净化 梦之木
-botania.page.worldgen2=制造 萤石粉
-botania.page.worldgen3=在这个世界上也有很多遗迹, 例如盖亚守护者留下的遗迹, 精灵们吸收着她的精华... <br>他们也有特殊的沙子, 当它们融化的时候, 精灵就会用他们和人类交易.
-botania.page.worldgen4=制造 活性鹅卵石
-botania.page.worldgen5=制造 活石稿
-botania.page.worldgen6=制造 熔炉
+botania.tagline.worldgen=更多奇怪的小玩意儿
+botania.page.worldgen0=艾尔夫海姆本身就是一个美丽的 引人注目的美丽景观 前提是 我们能忘掉时间带来的危险 <br>将木头净化为活木 这种神奇的能力也适用于 将这些树木变成梦之木; 在和龙石结合发生反应后 它们的树叶似乎闪烁着光芒 即使在黑暗中也是如此
+botania.page.worldgen0u=艾尔夫海姆本身就是一个美丽的 引人注目的美丽景观 前提是 我们能忘掉时间带来的危险 <br>将木头净化为活木 这种神奇的能力也适用于 将这些树木变成梦之木; 它们的树叶会在黑暗中发光 不知为何 它们也会和龙石发生反应 
+botania.page.worldgen1=净化 &1梦之木&0
+botania.page.worldgen2=制造 &1萤石粉&0
+botania.page.worldgen3=在这个世界上也有很多遗迹, 例如盖亚守护者留下的遗迹, 精灵们吸收着她的精华... <br>他们也有特殊的沙子, 通过融化这些沙子 可以制造出完美无暇的 通透如水晶的玻璃 这种仅存于精灵乡的神奇材料 吸引了无数尘世之人
+botania.page.worldgen4=制造 &1活性鹅卵石&0
+botania.page.worldgen5=制造 &1活石镐&0
+botania.page.worldgen6=制造 &1熔炉&0
+
+botania.entry.greenRod=青山权杖
+botania.tagline.greenRod=翠绿! 春意盎然!
+botania.page.greenRod0=自然的恢复速度并不是很快 即使是自然生长出一块草地 也往往需要太长的时间. 但这一切都不会再发生了! &1青山权杖!&0 会将所有暴露在空气中的 &1泥土&0-&1菌丝&0和&1灰化土&0 都转化为&1草地&0 这个过程需要一些&4Mana&0. 如果这些方块在地下, 则需要更多Mana来完成转化.
+botania.page.greenRod1=&a原谅! &a原谅! &a原谅!&a原谅!
 
 botania.entry.ores=矿石
 botania.tagline.ores=制造更多筛子...
@@ -42,132 +54,222 @@ botania.page.ores0=每个人都知道, 尘世的大地充满了矿石. 当矿工
 botania.page.ores1=龙石矿石 -珍贵的粉红色精灵宝石. 很遗憾,它们不能被做成工具.<br>金矿石 -看来精灵也拥有神灵的金属.<br>精灵石英矿石 -它就像来自地狱的石英, 美丽无瑕的的翠绿色, 就像美丽的艾尔夫海姆....
 botania.page.ores2=魔灵矿石 - 只有少数人知道它的存在. 而精灵最伟大的发明就是基于 它那拥有强大力量的尘埃. 精灵非常清晰的意识到 人类对力量和利润的贪婪, 所以精灵们并不想和人类交易 这些强大的力量之源.
 
-botania.entry.anyavil=源质钢砧
-botania.tagline.anyavil=粉色的本质
-botania.page.anyavil0=使用植物魔法,艾尔夫海姆 或者原版的粉色物品修复工具. 将工具放置在源质钢砧上, 将粉红色的物品丢在附近 并且向其发射粉色的魔力脉冲
-botania.page.anyavil1=呀!卡哇伊!
-
 botania.entry.mobs=实体
 botania.tagline.mobs=最后,生活!
-botania.page.mobs0=与尘世不同, 精灵乡并不是个被遗忘的世界. 毕竟, 这里仍然居住这一些精灵. 他们没有失去理智是件好事, 否则我们将会见到 尘世的前原住民-僵尸. 精灵是伟大的法师, 他们受到每个人的尊敬. 直到他们感染了那可怕的病毒 不知为何,他们不想和你说话
+botania.page.mobs0=与尘世不同, 精灵乡并不是个被遗忘的世界. 毕竟, 这里仍然居住这一些精灵. 他们没有失去理智是件好事, 否则我们将会见到 尘世的前原住民-僵尸. 精灵是伟大的法师, 他们受到每个人的尊敬. 直到他们感染了那可怕的病毒 不知为何,他们不倾向于和你说话
 botania.page.mobs1=奇特的紫色小生物飞舞在空中 它们叫做小精灵,除此之外 -仙女,善良,有价值的 因为它们身上的的尘埃, 经常被用于各种合成. 有些时候 也许精灵需要一些魔力珍珠, 是的 尘世之人就拥有这些珍珠
 
 botania.entry.pixie=精灵吸引吊坠
-botania.tagline.pixie=论如何诱拐精灵!
+botania.tagline.pixie=论如何诱拐精灵
 botania.page.pixie0=使用魔力驱动这个吊坠, 由尘世与精灵乡的材料制成, 每一个小精灵都想看到它.
-botania.page.pixie1=制作 精灵吸引吊坠
+botania.page.pixie1=制造 &1精灵吸引吊坠&0
 
-botania.entry.pylons=新水晶
-botania.tagline.pylons=我将指挥游行
-botania.page.pylons0=你需要的水晶有些改动<br>在精灵乡中,所有尘世的水晶 都有它的对应水晶: 精灵水晶和魔法水晶相似, 泰拉就像尘世水晶;<br>盖亚水晶仍然是最顶尖的, 但是他的合成配方变了
-botania.page.pylons1=制造 精灵水晶
+botania.entry.anyavil=源质钢砧
+botania.tagline.anyavil=粉色的本质
+botania.page.anyavil0=使用植物魔法,艾尔夫海姆 或者原版的粉色物品修复工具. 将工具放置在源质钢砧上, 将粉红色的物品丢在附近 并且向其发射粉色的魔力脉冲
+botania.page.anyavil1=&d哇! 卡哇伊!&0
 
 botania.entry.infuser=注魔
 botania.tagline.infuser=神秘时代躺枪
-botania.page.infuser0=魔力灌注是植物魔法的基础. 向魔力池中扔了一件, 这件物品很难填满? 所有人都会立刻说:"Easy" 然而,精灵在这上面做得更好. 他们想要创造一种特殊的装置 可以将物品的属性和魔力值, 注入另一件物品. 就像尘世的注魔矩阵..
-botania.page.infuser1=尽管如此, 这需要最有价值的尘埃 -魔灵粉末. 它不仅仅象征着权利 -它代表力量, 一种结晶的形式. 精灵尘如何? 这是魔术注入器核心的基础
-botania.page.infuser2=制造 魔元核心
-botania.page.infuser3=制造 魔力注入器核心
-botania.page.infuser4=结果很完美, 但这远远不够. 将它放置在这个世界里 并以其为基础建立结构 这个魔力注入器已经就绪. 这将是植物魔法的延续,并且 在各种高级法师手中发挥作用
+botania.page.infuser0=魔力灌注是植物魔法的基础. 想要填满一件物品的魔力? 所有人都会立刻说:"Easy" 单纯的丢进魔力池即可 然而,精灵在这上面做得更好. 他们想要创造一种特殊的装置 可以将物品的属性和魔力值 注入另一件物品. 就像尘世的注魔矩阵..
+botania.page.infuser1=尽管如此, 这需要最有价值的尘埃 -魔灵粉末. 它不仅仅代表着力量 -它即是力量, 但一吹即散的粉尘并不稳定 一种结晶的形式才是我们需要的. 为什么不试试精灵尘呢? 这是魔术注入器核心的基础
+botania.page.infuser2=制造 &1魔元核心&0
+botania.page.infuser3=制造 &1魔力注入器核心&0
+botania.page.infuser4=事实证明这很完美 但这还不够 将这个珍贵的物品放在地上 并以此为基础 建立一个魔力注入矩阵.......<br>魔力注入器已就绪 它将是植物魔法研究的延续 并且被用于各种高级的合成
 botania.page.infuser5=魔力注入器
+botania.page.infuser5u=§o近似结构§r
 
 botania.entry.elvorium=魔灵钢
 botania.tagline.elvorium=比泰拉钢更好
 botania.page.elvorium0=Mastray从Freyr那里, 借来了泰拉钢的配方 所以精灵们母庸置疑的学会了 然而, 早在那之前, 精灵就知道如何制作一种合金 由精灵乡的资源制造而成. 从属性上来看, 它类似于泰拉钢, 但是更加强大... 源质钢,龙石,精灵尘 和一些魔力. 精灵们的珍贵合金!-魔灵钢!
-botania.page.elvorium1=制造 魔灵钢
+botania.page.elvorium1=制造 &1魔灵钢&0
 
 botania.entry.trade=反向交换
 botania.tagline.trade=所以,这意味着什么?
 botania.page.trade0=有些时候, 精灵乡的异常令人印象深刻, 但正因如此,才有可能 在这个世界创立一个门户. 热衷于和尘世交易的精灵们, 以特殊的方式建立了一座门户 这些门户因为世界的差异, 所以不能在尘世运行. 但是Mastray并没有失去它.
 botania.page.trade1=尘世之门和精灵门相似, 但是仍然有些不同:<br>门户的建造材料不是活木, 而是活石, 尘世水晶本身含有魔灵粉末, 所以它可以在不需要魔力, 永远维持着门户的稳定运行. 愿伟大的Mastray, 世界的连接者永远荣耀
-botania.page.trade2=制造 尘世水晶
-botania.page.trade3=制造 尘世之门核心
+botania.page.trade2=Creating &1尘世水晶&0
+botania.page.trade3=Creating &1尘世之门核心&0
 botania.page.trade4=尘世之门
 
 botania.entry.essences=元素
 botania.tagline.essences=它看起来像珊瑚
-botania.page.essences0=当你前往地狱时, 你会意识到这只是 "炽热"的一部分. 从精灵传说中可以看出, "炽热"已经接近尘世
-botania.page.essences1=烈焰, 源于地狱的力量 与魔灵粉末结合 也许可以制造出一种 可以将Nizatar- 强大的烈焰巨狼 召唤出来的东西 为什么它会被创造出来呢? 为了区分强者和弱者? 为了保护某些东西? 没有人知道答案, 然而, 这只来自天国的巨狼, 可以帮你消灭一切来犯之敌
-botania.page.essences1d=制造 炽热之魂
-botania.page.essences2=但当你读到关于宇宙的传说时 你似乎还记得"极寒" 一个由冰霜和大雪组成的世界 与"炽热"共同占据"始源"之位
-botania.page.essences3=将来自极寒的力量-寒冰 与魔灵粉末结合, 召唤Quei的时候, 这会是个理想的选择, 它和Nizatar的力量对立 极寒与炽热 但是传说也同样与他有关 无论是为了考验 或是为了守护
-botania.page.essences3d=制造 极寒之魂
+botania.page.essences0=地狱仅仅只是"炽热"的一部分 也许你已经意识到了这一点 在你前往地狱的时候. 古老的精灵传说告诉了你 地狱之门为何存在: 一扇通往"炽热"的门户 同时这也意味着 "炽热"已经接近尘世.<br>但是事情似乎没有这么简单 曾读过关于宇宙的传说的你 清晰的记得"极寒" 一个由冰霜和大雪组成的世界 与"炽热"共同占据"始源"之位
+botania.page.essences2=一切都不是那么微不足道 显然 世界精华的唯一来源是不朽 在"Great War"期间 它收集了很多世界精华
+botania.page.essences2u=&o但是如何获取他们的力量?&r
 botania.page.essences4=泰拉钢和魔灵钢, 两种完美的合金, 象征着尘世和精灵乡的力量. 但他们还远远没有到达极限! 我们都知道,将盖亚之魂 和泰拉钢结合将会发生什么 -盖亚魂锭. 看起来似乎是种无用之物, 但是精灵考虑的和人类不同.
 botania.page.essences5=阿斯加德有一个传说: 神灵所使用的武器, 由一种特殊的金属制成, 它结合了四个世界的力量. 精灵们想到了这个传说, 并且试图制造出这样的武器 他们将"始源"注入盖亚之魂 将它们与魔灵钢结合, 就像盖亚魂锭一样, 结合了"炽热"与"极寒", 强大,完美无缺的合金
-botania.page.essences6=制造 拥有世界之力的合金
+botania.page.essences6=制造 &1拥有世界之力的合金&1
 botania.page.essences7=但是他们并没有止步于此! 将这些合金的精华,属性, 与魔力一同注入盖亚魂锭内. 拥有无垠之力的神之金属 -始源魂灵锭!!!!!
-botania.page.essences8=制造 始源魂灵锭
+botania.page.essences8=制造 &6始源魂灵锭&0
 
 botania.entry.runes=符文
 botania.tagline.runes=只有一点新物品(真的)
 botania.page.runes0=看起来这些主要元素的符文, 季节,罪恶,魔法本身就足够了... 错!这还远远不够 当研究元素的本质时, 你或许可以将其注入符文? 事实证明确实如此, 并且获得拥有更强力量的符文
-botania.page.runes1=制造 新符文
+botania.page.runes1=制造 &1新符文&0
 botania.page.runes2=新符文包裹着他们的力量 "炽热"与"极寒" 两大始源之力流淌其中 这使得制造更加强大的, 带有"炽热"与"极寒"的, 令人惊叹的武器变为可能 也许始源世界中沉睡的, 浩瀚无垠的力量, 终将被唤醒!
-botania.page.runes3=但是除了这些世界的符文, 还有五个元素的符文, 也被称为原始符文: 风,火,水,土和魔法 这些符文包含了原始之力, 在始源世界之前 等一下, 真的有一段时间, "炽热"和"极寒"不存在吗? 谁知道呢...
-botania.page.runes4=制造 始源符文
+botania.page.runes3=但是除了这些世界的符文, 还有五个元素的符文, 也被称为原始符文: 风,火,水,土和魔法 这些符文包含了原始之力, 等等 在接触到始源的力量之前 你或许得花点时间思考 "极寒"与"炽热" 居然不是最为古老的力量? 它们曾经并不存在? 谁知道呢...
+botania.page.runes4=制造 &5始源符文&0
 
 botania.entry.elvenSet=魔灵铠甲
 botania.tagline.elvenSet=更强的铠甲!
 botania.page.elvenSet0=尘世的法师们, 使用着自然界赋予的力量, 来完成他们的目标, 他们创造了泰拉钢和符文 为了什么? 为了更完美的铠甲, 泰拉钢铠甲. 精灵们在魔灵钢的帮助下, 将其加以改进, 获得了强大的,稀少的, 只有精灵皇族才能使用的铠甲
-botania.page.elvenSet1=制造 魔灵头盔
-botania.page.elvenSet2=制造 魔灵盔甲
-botania.page.elvenSet3=制造 魔灵护腿
-botania.page.elvenSet4=制造 魔灵战靴
+botania.page.elvenSet1=制造 &1魔灵头盔&0
+botania.page.elvenSet2=制造 &1魔灵盔甲&0
+botania.page.elvenSet3=制造 &1魔灵护腿&0
+botania.page.elvenSet4=制造 &1魔灵战靴&0
 
 botania.entry.elemSet=元素铠甲
 botania.tagline.elemSet=只有四种元素的掌控者...
 botania.page.elemSet0=精灵从未向人类出售魔灵粉末 不仅是因为它含有的强大力量 而是因为,魔灵粉末, 能够强化,改进源质钢铠甲- 一种元素装甲, 他给予了穿戴者更多的能力, 而不仅仅是简单的元素防御.
-botania.page.elemSet1=潮汐
-botania.page.elemSet2=浩土
-botania.page.elemSet3=炽焰
-botania.page.elemSet4=风暴
+botania.page.elemSet1=&1潮汐&0
+botania.page.elemSet2=&2浩土&0
+botania.page.elemSet3=&4炽焰&0
+botania.page.elemSet4=&e风暴&0
 
 botania.entry.advMana=注魔宝石
 botania.tagline.advMana=存储魔力的新定义
-botania.page.advMana0=正如我们所知道的, 就算是最简单的魔力存储核心 也必须包含魔力钻石, 当然魔力珍珠也是可行的. 但是这些资源不存在于精灵乡 那么,精灵如何存储魔力呢, 他们拥有自己的方式, 能够将魔力存储在便携物品里
+botania.page.advMana0=正如我们所知道的, 就算是最简单的魔力存储核心 也必须包含魔力钻石, 当然魔力珍珠也是可行的. 但是这些资源不存在于精灵乡 那么,精灵如何存储魔力呢, 他们拥有自己的独特的能力, 能够将魔力存储在便携物品里
 botania.page.advMana1=事实证明, 龙石能够吸收魔力, 但是随着时间的流逝, 内部的魔力也会逐渐消失, 伟大的精灵法师们, 利用宝贵的魔灵粉末强化了它 并且制造了一块魔力石 这块小小的石头内, 拥有比魔力石碑多4倍的容量 随着对始源元素的发掘, 精灵们将其二次强化, 使其能够存储更多的魔力.
-botania.page.advMana2=制造 注魔宝石
-botania.page.advMana3=制造 始源注魔宝石
+botania.page.advMana2=制造 &1注魔宝石&0
+botania.page.advMana3=&c强化 &1注魔宝石&0
 botania.page.advMana4=而如果将它们和魔灵钢, 或者始源魂灵锭这些 完美的魔力导体结合起来呢? 你的手中多出了一枚戒指, 方便的魔力来源, 极致纯粹的美丽.
-botania.page.advMana5=制造 魔灵魔力之戒
-botania.page.advMana6=制造 始源魂灵魔力之戒
+botania.page.advMana5=制造 &1魔灵魔力之戒&0
+botania.page.advMana6=制造 &1始源魂灵魔力之戒&0
+
+botania.entry.auraAlf=光环之戒
+botania.tagline.auraAlf=一切都可以变得更好
+# this is a joke don't remove this please :3
+botania.page.auraAlf0=&o//Gedeon, write something smart here cause I have no ideas//&r
+botania.page.auraAlf1=升级至 &2精灵级光环之戒&0 级
+botania.page.auraAlf2=升级至 &6神灵级光环之戒&0 级
 
 botania.entry.ruling=始源世界之力
 botania.tagline.ruling=吾乃全知全能的神灵(←中二晚期)
 botania.page.ruling0="炽热"与"极寒"... 两座神奇的始源世界. 我们可以从中得到什么? 力量! 更多的力量! 一切都源于那些元素和符文, 但我们现在可以得到什么? 权杖! 护身符! 能力!
 botania.page.ruling1=使用始源魂灵之力, 精灵能够集中符文的力量. 两种拥有强大力量的始源权杖 能够创造出坚不可摧的防御 -来自"炽热"的赤红火焰 -来自"极寒"的剧毒冰块 不幸的是,精灵乡的材料, 无法在短暂的时间内 承受并使用大量始源之力, 但幸运的是, 始源魂灵锭含有的强大力量 能够快速的修复自身.
-botania.page.ruling2=驱火
-botania.page.ruling3=避水
+botania.page.ruling2=Feuer Frei!-自由之焰!
+botania.page.ruling3=水晶之城!
 botania.page.ruling4=然而, 始源之力的强大和高傲, 使它们无法被任何人所掌控, 即使能够使用它们, 也无法和它们建立从属关系 所有的生物都会被其所伤害. 为了保证自身的安全, 不被自己释放的魔法伤害, 精灵们制造了一些护身符, 可以将不受控制的始源之力 送回始源世界中
-botania.page.ruling5=制造 始源护身符
+botania.page.ruling5=制造 &1始源护身符&0
 
 botania.entry.reality=始源之剑-现实
 botania.tagline.reality=存在 即真实!!!
 botania.page.reality0=元素精灵铠甲 母庸质疑,是一个好主意... 但是对于真正的战士来说, 他们还需要一把趁手的武器 看上去剑是一个不错的注意. 利用神之金属-始源魂灵! 这个问题可以非常轻松的解决 利用神之金属制造而成的剑 不仅有绝世的锋锐, 更是可以从原始元素中 获取强大的力量
 botania.page.reality1=但是我们必须考虑到, 当它调用原始元素的力量时, 源源不断的魔力被消耗掉了 虽说这些元素之力物超所值, 但是无缘无故的浪费 似乎并不是一个好主意 所以也许,你应该 把更多的注意力放在它上面. 但这并不是很重要, 毕竟你为了制造这把剑, 肯定消耗了更多的魔力 来制作始源魂灵, 所以你并不是很缺魔力, 对吧?
-botania.page.reality2=制造 始源之剑-现实
+botania.page.reality2=制造 &6始源之剑-现实&0
 
-botania.entry.excaliber=代表荣耀与胜利之剑炁
-botania.tagline.excaliber=亚瑟王的金色圣剑!!!(某呆毛:??)
-botania.page.excaliber0=&o很久以前, 这把代表胜利的神剑, 消失在了世人眼中, 从那时开始, 再也没有出现在世人眼前..&r
+botania.entry.flugel=不朽
+botania.tagline.flugel=神灵的武器
+botania.page.flugel0=关于不朽的故事不多 任性,残忍,几乎不朽 被称为死亡天使 它们撕裂空间的能力 被无数人羡慕着 但不是所有人 都能打败盖亚守护者 并拿到不朽的眼睛
+botania.page.flugel1=不朽们非常讨厌守护者 因为他们将不朽的眼睛 从死去的不朽身上夺走 这也许可以成为你的优势 在高空中建立一个祭坛 召唤守护者的祭坛 并把不朽之眼放入信标 就像对用于祭奠的金属 即可召唤出一位不朽 并且,试图击败它
+botania.page.flugel2=但是小心 不朽们非常高傲 无法独自飞行的人 没有资格和它们战斗 因此你需要: 和它们一样的翅膀 坚不可摧的盔甲 削铁如泥的利剑 与一些强大的药水 没有它们你将无所作为 并且 一个好奇和灵活的脑袋 也可以帮助你
+
+botania.entry.soul=不朽之魂
+botania.tagline.soul=弑神者
+botania.page.soul0=每一个击败不朽的人 都将得到一个不朽之魂 可以标记12处空间坐标 就像曾经的那颗眼睛一样 但这不是一切的重点 灵魂可以再次召唤出另不朽 比之前的更加强大 不朽之魂的力量是有限的 每个只能支撑12次召唤 
+botania.page.soul1=&o//Lore stuff here//&r
+botania.page.soul2=制造 &4御灵水晶&0
+botania.page.soul3=灵魂重组者
+botania.page.soul4=为了将不朽之魂回复完全 需要将它放在酿造台上方 并且召唤盖亚守护者即可 御灵水晶将完成剩下的工作 为确保成功 请召唤困难形态的守护者 但如果你相信你自己的运气 那么试试召唤普通的形态吧 就像抛硬币一样 有时成功-有时失败
 
 botania.entry.mask=诡秘之面
-botania.tagline.mask=我似乎见过它...一
+botania.tagline.mask=我似乎见过它...
 botania.page.mask0=从来没有这么诡异的东西 无论怎样努力的戴上它 它总会从你脸上滑落 就仿佛你从未这样做过 它在排斥你的生命 也许你应该顺从它 自杀?他杀?无所谓 你需要一次死亡, 就像这个面具给你的感觉 ----疯狂---- ----诡异---- ----愤怒----
 
-botania.entry.soul=不朽
-botania.tagline.soul=神器
-botania.page.soul0=关于不朽的故事不多 任性,残忍,几乎不朽 被称为死亡天使 它们撕裂空间的能力 被无数人羡慕着 但不是所有人 都能打败盖亚守护者 并拿到不朽的眼睛
-botania.page.soul1=不朽们非常讨厌守护者 因为他们将不朽的眼睛 从死去的不朽身上夺走 这也许可以成为你的优势 在高空中建立一个祭坛 召唤守护者的祭坛 并把不朽之眼放入信标 就像对用于祭奠的金属 即可召唤出一位不朽 并且,试图击败它
-botania.page.soul2=但是小心 不朽们非常高傲 无法独自飞行的人 没有资格和它们战斗 因此你需要: 和它们一样的翅膀 坚不可摧的盔甲 削铁如泥的利剑 与一些强大的药水 没有它们你将无所作为 好奇和灵活的脑袋 有时候并不能解决一切
-botania.page.soul3=每一个击败不朽的人 都将得到一个不朽之魂 可以标记12处空间坐标 就像曾经的那只眼睛 但这不会是一切的终点 使用一个空间坐标的力量 即可再次召唤一位不朽 比用天翼族之眼召唤的 更加强大
-botania.page.soul4=击败再次召唤的不朽 即可获取一些珍稀的资源<br><br><br>不幸的是 目前没有任何办法 修复不朽之魂的残缺 也许 某一天？
+botania.entry.excaliber=代表荣耀与胜利的圣剑
+botania.tagline.excaliber=亚瑟王的金色圣剑!!!(某呆毛:??)
+botania.page.excaliber0=嗯.... 那很尴尬......
+botania.page.excaliber0u=&o很久以前, 这把代表胜利的神剑, 消失在了世人眼中, 从那时开始, 再也没有出现在世人眼前....&r
 
-botania.entry.es=精灵传说
-botania.tagline.es=新的挑战!
+################################################################ ESM ################################################################
+
+botania.entry.es= 精灵传说
+botania.tagline.es=新的挑战！
 botania.page.es0=看上去 你似乎选择了精灵传说模式, 也许你是无意的? 管他呢,你现在是精灵了 选择一个你喜欢的种族. 你的目标是什么? 第一:活下去, 第二:建立通往尘世之门, 所有的信息都在手册之中, 对,你现在看的这本.
 
 botania.entry.races=种族
 botania.tagline.races=这其实并不是种族
 botania.page.races0=即使是Hel本人 也没有破坏精灵乡的和谐. 这个世界居住着九个种族: Salamanders, Sylphes, Cait Sith, Pookas, Gnomes, Leprechauns, Spriggans, Undines and Imps.
-botania.page.races1=每个种族都有其独特的颜色, 翅膀的形状和图标, 并且生来就能够飞舞在空中. 默认情况下 摁下"F"键即可激活飞行, 如果你想飞的更快 摁下加速按钮 -25%的速度提升, 但请记住: 精灵的力量有限, 移动速度越快, 体内存储的能量消耗的越快
+botania.page.races1=每个种族都有其独特的颜色, 翅膀的形状和标志 并且生来就能飞舞在空中
+botania.page.races2=默认情况下 摁下[F]键即可激活飞行, 如果你想飞的更快 摁下加速按钮 即可获得-25%的速度提升, 如果你突然被一群敌人包围 摁下跳跃按钮和ALT 即可加速直线向上飞 但请记住: 精灵的力量有限, 移动速度越快, 体内存储的能量消耗的越快
+
+################################################################ MMO ################################################################
+
+botania.entry.parties= 契约
+botania.tagline.parties=狂欢的派对时间!
+botania.page.parties0=游戏中添加了创建阵营的功能 默认情况下 每个阵营最多可以有5个玩家 并且默认关闭友军伤害 你还可以及时得知盟友的状态 生命与魔力值 并且可以及时得知负面状态
+botania.page.parties1=在和别的玩家缔结盟约之前 你需要创建一个和平烟斗 (它在逗我？↑） 这将允许你们缔结精神契约 以便防止盟友间的误伤  首先 它必须由领导者首先吸烟 然后由新成员吸烟 之后,管子破碎
+botania.page.parties2=制造 &1和平烟斗&0
+botania.page.parties3=如果你需要离开盟约 又或者要开除某人 (-因为某种原因) 只需要在羊皮纸上写下名字 并且烧了它吧 (Right-Mouse-Button) 但是有一个条件 你必须是领导者(红名) 并且目标成员必须在视线内
+botania.page.parties4=制造 &1盟约羊皮纸&0
+
+botania.entry.spells= 魔法
+botania.tagline.spells=霍格沃茨外再无魔法！
+botania.page.spells0=每个种族都有其独有的魔法 且对于某种元素带有亲和力 Salamanders-炽焰法师 Sylphes-风暴掌控者  Cait·Sith-自然征服者 Pookas-乐章编织者 Gnomes-浩土行者 Leprechauns-科技主宰 Spriggans-幻想之主 Undines-潮汐使者 Imps-黑暗从者
+botania.page.spells1=在使用魔法之前 你需要等待一段时间 让能量聚集在你的手上 以保证你的能量保持平衡
+botania.page.spells2=使用箭头选择咒语 当你按下V时进行施法 此外 在同时按住ctrl和shift时 你能在12个快捷施法槽 设置咒语 并使用1到=作为编号 同时需要摁住ctrl
+botania.page.spells3=对于你的种族来说 魔法所需的法力并不会变高 但是如果使用了别的魔法 (例如Sylphes用火) 则所需的法力会高出25% 
+botania.page.spells3u=对于你的种族来说 魔法所需的法力并不会变高 但是如果使用了别的魔法 (例如Sylphes用火) 则所需的法力会高出25% 此外 一些种族具有顶级魔法 需要的魔力不会改变 但是没有一定知识则无法使用
+botania.page.acidmyst=毒素喷射: 对9个方块内的生物造成 &a毒素伤害
+botania.page.aquabind=对直径为7个区块中的生物 施加&7缓慢效果
+botania.page.aquastream=沿着视野方向释放水流 造成轻微的&9水属性伤害 &0移动则会打断
+botania.page.battlehorn=为盟友施加 &c力量 &b加速 &a跳跃强化 &8抗性提升
+botania.page.blink=允许释放者向前传送 最多&c8个方块
+botania.page.bunnyhop=对目标施加 &a跳跃效果
+botania.page.butterflyshield=向目标施加三层护盾 可完全抵免&5魔法伤害 &0并且抵免一半其他伤害
+botania.page.confusion=对目标施加&2反胃效果
+botania.page.day=将世界时间变为 白天
+botania.page.deathmark=在目标身上施加标记 如果没有及时清除 则会造成巨额的 &8诅咒伤害
+botania.page.decay=大量削弱目标的免疫力 任何对目标的伤害都会造成 &c出血效果
+botania.page.dispel=清除盟友所有的负面影响 来自对手的增益效果 如果没有&2反胃 &0则会造成&2反胃
+botania.page.dragongrowl=在半径16格的范围内 &0恐吓对手 造成&0失明 &7虚弱 &8缓慢
+botania.page.driftingmine=发射(摁下shift设置)一枚炸弹 撞击到敌人或地面会爆炸 造成&c范围性伤害
+botania.page.echo=检测半径16格内的物品和生物 
+botania.page.fenrirstorm=对视线上的的目标造成 高额的&9雷击伤害 &0最大范围为16格
+botania.page.fireball=发射一枚火球 在半径为2格的范围内 造成范围性&c火焰伤害
+botania.page.firewall=在施法者面前制造火焰墙 限制敌人行动并使其着火 造成轻微的&c火焰伤害
+botania.page.goldrush=在开采矿石时 提高了阵营内(所有玩家)的 &e挖掘速度&0和&9时运
+botania.page.gravitytrap=创建一个引力奇点 吸取半径4格 高度16格内的所有物品 并且造成轻微的&8重力伤害
+botania.page.hammerfall=对半径19格内的敌人 造成极大的&8窒息伤害 &0不要站在过硬的方块上
+botania.page.harp=召唤一个竖琴 它可以治疗盟友 并且逐渐消除负面影响 最大范围为半径16格
+botania.page.healing=对所有的盟友提供平均治疗
+botania.page.hollowbody=对目标施加&8隐身效果
+botania.page.icelens=通过生成冰镜 使得施法者获取 &210倍视野
+botania.page.ignition=点燃十字准星所指方块 最大距离为16格
+botania.page.mortar=发射一块岩石 对直接击中的目标造成巨大的 &8坠落伤害 &0同时打破护甲 并且在半径2格内造成 范围中等伤害
+botania.page.night=将世界时间变为夜晚
+botania.page.nightvision=对阵营(所有玩家)内施加 &9夜视效果
+botania.page.ninelifes=对目标施加免死效果 使目标在死亡中幸存 免疫类型为: 坠落-溺水-凋零(50%概率) 燃烧和中毒
+botania.page.noclip=对目标施加穿墙效果 允许目标穿过方块墙壁 为了有效操作 目标需要可以进行飞行
+botania.page.outdare=施法者会吸引敌人的仇恨 范围为半径32格 使施法者成为主要攻击目标 (注意:请谨慎使用)
+botania.page.poisonroots=将减速效果施加给敌方联盟 最大范围为16格 
+botania.page.purifyingsurface=消除盟友的中毒和燃烧效果 并且提供&c抗火效果
+botania.page.rain=使世界开始暴风雨
+botania.page.resurrect=在盟友死亡的敌方复活他 并且恢复10点生命值
+botania.page.sacrifice=施法者将自己献祭给黑暗 对半径32格内的 所有人(包括盟友) 造成巨大的&0黑暗伤害 同时施法者也会死亡 
+botania.page.sharedhp=将所有的生命聚集在一起 此效果影响整个阵营 每位玩家都拥有所有的生命 同时生命力将同步
+botania.page.smokescreen=创建一个烟雾云 对半径16格内的敌人造成 &8失明效果
+botania.page.stoneskin=需要选定一个目标 释放该法术 施法者可以完全吸收 下一次&6任意伤害 &0并且获取一些额外的抗性
+botania.page.sun=使世界停止暴风雨
+botania.page.thor=在十字准星所指位置召唤闪电 最大范围为32格
+botania.page.throw=施术者将自己向前推进 对任何触碰的敌人造成 &3 标准伤害
+botania.page.thunder=引起雷雨/增加雨水
+botania.page.timestop=将半径16格内的时间停止
+botania.page.titanhit=在3x3的区域内打破方块 方块硬度越高 魔力消耗越多
+botania.page.truesigh=让你大致了解目标所有魔力值 越明亮的火焰表示魔力越多
+botania.page.uphealth=对目标施加&d生命恢复
+botania.page.wallwarp=使施法者穿过不是很厚的墙壁
+botania.page.waterbreathing=对阵营施加水下呼吸效果
+botania.page.wellolife=如果目标在水中 则对目标施加治疗效果
+botania.page.windbalde=发射一枚空气弹 对触碰敌人造成 &b空气伤害
+
+botania.entry.targets= 选定目标
+botania.tagline.targets=无所遁形
+botania.page.targets0=目标系统可以使玩家 更方便的使用法术 若要选择一个敌人 则用十字准星瞄准目标 并摁下选择按钮(默认为R) 现在你可以在目标身上施法
+botania.page.targets1=要选择一个盟友 只需要摁下T循环选择 所选成员的名称将会变绿 目标选择键-R 不允许选择盟友 以免意外的攻击 范围-盟主为128格 其余32格
+
+lexicon.time=吟唱时间: %.2f
+lexicon.cd=冷却: %.2f
+lexicon.seconds=s
+lexicon.mana=魔力消耗:
