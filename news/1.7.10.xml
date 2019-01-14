@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-10</val>
+		<val>BETA-11</val>
 	</version>
 	<version id="ALL">
 		<val>GL HF!</val>
@@ -19,5 +19,8 @@
 	</version>
 	<version id="BETA-9">
 		<val>Fixed incompatibilities with some mods, get new version!</val>
+	</version>
+	<version id="BETA-10">
+		<val>Fixed client-server modes desync, update if you are playing on a server.</val>
 	</version>
 </news>
