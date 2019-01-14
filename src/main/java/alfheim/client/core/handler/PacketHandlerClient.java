@@ -91,7 +91,11 @@ public class PacketHandlerClient {
 				}
 			} break;
 			case UUID: CardinalSystemClient.segment().party.setUUID((int) packet.data2, (int) packet.data1); break;
-			
+			case MODES: {
+				if (packet.data1 > 0) ClientProxy.enableESM(); else ClientProxy.disableESM();
+				if (packet.data2 > 0) ClientProxy.enableMMO(); else ClientProxy.disableMMO();
+				break;
+			}
 		}
 	}
 

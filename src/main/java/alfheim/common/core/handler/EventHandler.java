@@ -196,8 +196,10 @@ public class EventHandler {
 			InfoLoader.triedToWarnPlayer = true;
 			for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
 		}
-		if (AlfheimCore.enableElvenStory) {
-			if (e.player instanceof EntityPlayerMP) {
+		
+		if (e.player instanceof EntityPlayerMP) {
+			AlfheimCore.network.sendTo(new Message2d(m2d.MODES, AlfheimCore.enableElvenStory ? 1 : 0, AlfheimCore.enableMMO ? 1 : 0), (EntityPlayerMP) e.player);
+			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime), (EntityPlayerMP) e.player);
 				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);

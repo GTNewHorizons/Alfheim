@@ -18,7 +18,7 @@ public class Message2d extends ASJPacket {
 	}
 	
 	public static enum m2d {
-		UUID, COOLDOWN, ATTRIBUTE
+		UUID, COOLDOWN, ATTRIBUTE, MODES
 	}
 	
 	public static class Handler implements IMessageHandler<Message2d, IMessage> {

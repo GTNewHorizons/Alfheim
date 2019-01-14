@@ -119,57 +119,62 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 
 	public static boolean spawn(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
-		if(world.getTileEntity(x, y, z) instanceof TileEntityBeacon && isTruePlayer(player)) {
-			if(world.difficultySetting == EnumDifficulty.PEACEFUL) {
-				if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.peacefulNoob");
-				return false;
-			}
-
-			for(int[] coords : PYLON_LOCATIONS) { // TODO change structure
-				int i = x + coords[0];
-				int j = y + coords[1];
-				int k = z + coords[2];
-
-				Block blockat = world.getBlock(i, j, k);
-				int meta = world.getBlockMetadata(i, j, k);
-				if(blockat != ModBlocks.pylon || meta != 2) {
-					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.needsCatalysts");
+		if(world.getTileEntity(x, y, z) instanceof TileEntityBeacon) {
+			if (isTruePlayer(player)) {
+				if(world.difficultySetting == EnumDifficulty.PEACEFUL) {
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.peacefulNoob");
 					return false;
 				}
-				
+	
+				for(int[] coords : PYLON_LOCATIONS) { // TODO change structure
+					int i = x + coords[0];
+					int j = y + coords[1];
+					int k = z + coords[2];
+	
+					Block blockat = world.getBlock(i, j, k);
+					int meta = world.getBlockMetadata(i, j, k);
+					if(blockat != ModBlocks.pylon || meta != 2) {
+						if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.needsCatalysts");
+						return false;
+					}
+					
+				}
+				if(!hasProperArena(world, x, y, z)) {
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.badArena");
+					return false;
+				}
+	
+				if (!hard) stack.stackSize--;
+				if (world.isRemote) return true;
+	
+				EntityFlugel e = new EntityFlugel(world);
+				e.setPosition(x + 0.5, y + 3, z + 0.5);
+				e.setAITask(AITask.INVUL);
+				e.setAITaskTimer(0);
+				do {
+					e.setHealth(1F);
+				} while (e.getHealth() > 1F);
+				e.setSource(x, y, z);
+				e.setHardMode(hard);
+				e.setSummoner(player.getCommandSenderName());
+				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
+	
+				List<EntityPlayer> players = e.getPlayersAround();
+				int playerCount = 0;
+				for(EntityPlayer p : players) if(isTruePlayer(p)) playerCount++;
+	
+				e.setPlayerCount(playerCount);
+				e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(MAX_HP * playerCount * (hard ? 2 : 1));
+	
+				world.playSoundAtEntity(e, "mob.enderdragon.growl", 10F, 0.1F);
+				world.spawnEntityInWorld(e);
+				return true;
 			}
-			if(!hasProperArena(world, x, y, z)) {
-				if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.badArena");
-				return false;
-			}
-
-			if (!hard) stack.stackSize--;
-			if (world.isRemote) return true;
-
-			EntityFlugel e = new EntityFlugel(world);
-			e.setPosition(x + 0.5, y + 3, z + 0.5);
-			e.setAITask(AITask.INVUL);
-			e.setAITaskTimer(0);
-			do {
-				e.setHealth(1F);
-			} while (e.getHealth() > 1F);
-			e.setSource(x, y, z);
-			e.setHardMode(hard);
-			e.setSummoner(player.getCommandSenderName());
-			e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
-
-			List<EntityPlayer> players = e.getPlayersAround();
-			int playerCount = 0;
-			for(EntityPlayer p : players) if(isTruePlayer(p)) playerCount++;
-
-			e.setPlayerCount(playerCount);
-			e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(MAX_HP * playerCount * (hard ? 2 : 1));
-
-			world.playSoundAtEntity(e, "mob.enderdragon.growl", 10F, 0.1F);
-			world.spawnEntityInWorld(e);
-			return true;
+			ASJUtilities.say(player, "alfheimmics.fakeplayer");
+			return false;
 		}
 
+		ASJUtilities.say(player, "alfheimmics.notbeacon");
 		return false;
 	}
 

@@ -362,6 +362,7 @@ public class AlfheimLexiconData {
 		ores	.setKnowledgeType(kt);
 		mobs	.setKnowledgeType(kt);
 		pixie	.setKnowledgeType(kt);
+		anyavil	.setKnowledgeType(kt);
 		infuser	.setKnowledgeType(kt);
 		elvorium.setKnowledgeType(kt);
 		trade	.setKnowledgeType(kt);

@@ -958,6 +958,7 @@ public class ASJUtilities {
 	public static void sayToAllOnline(String message) {
 		List<EntityPlayer> list = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
 		for (EntityPlayer online : list) say(online, message);
+		log(message);
 	}
 	
 	/** Untested! */
@@ -967,6 +968,7 @@ public class ASJUtilities {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().func_152612_a(op);
 			if (player != null) say(player, message);
 		}
+		log(message);
 	}
 
 	public static boolean isServer() {

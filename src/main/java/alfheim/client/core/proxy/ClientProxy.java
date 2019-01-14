@@ -113,6 +113,40 @@ public class ClientProxy extends CommonProxy {
 		else toggleMMO(esm, mmo, esmOld, mmoOld);
 	}
 
+	public static void enableESM() {
+		if (AlfheimCore.enableElvenStory) return;
+		AlfheimCore.enableElvenStory = true;
+		AlfheimLexiconData.reEnableESM();
+		addESMKeyBinds();
+		EventHandler.checkAddAttrs();
+	}
+	
+	public static void disableESM() {
+		if (!AlfheimCore.enableElvenStory) return;
+		AlfheimCore.enableElvenStory = false;
+		AlfheimLexiconData.disableESM();
+		removeESMKeyBinds();
+		disableMMO();
+	}
+	
+	public static void enableMMO() {
+		if (AlfheimCore.enableMMO) return;
+		AlfheimCore.enableMMO = true;
+		AlfheimLexiconData.reEnableMMO();
+		enableMMOGUIs();
+		addMMOKeyBinds();
+		enableESM();
+	}
+	
+	public static void disableMMO() {
+		if (!AlfheimCore.enableMMO) return;
+		AlfheimCore.enableMMO = false;
+		AlfheimLexiconData.disableMMO();
+		disableMMOGUIs();
+		removeMMOKeyBinds();
+		TimeStopSystemClient.tsAreas.clear();
+	}
+
 	private static void toggleESM(boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (esmOld == esm) return;
 		AlfheimCore.enableElvenStory = esm;
@@ -120,11 +154,9 @@ public class ClientProxy extends CommonProxy {
 		if (esm) {
 			AlfheimLexiconData.reEnableESM();
 			addESMKeyBinds();
-			EventHandler.checkAddAttrs();
 		} else {
 			AlfheimLexiconData.disableESM();
 			removeESMKeyBinds();
-			// removeAttrs <- no need
 			if (mmoOld != mmo) toggleMMO(esm, mmo, esmOld, mmoOld);
 		}
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem;
+import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.handler.CardinalSystem.TimeStopSystem;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.network.Message3d;
@@ -69,6 +70,7 @@ public class CommandAlfheim extends CommandBase {
 	public static void toggleESM(boolean on) {
 		if (on) {
 			AlfheimConfig.initWorldCoordsForElvenStory(AlfheimCore.save);
+			EventHandler.checkAddAttrs();
 		} else {
 			toggleMMO(AlfheimCore.enableMMO = false);
 		}
@@ -78,7 +80,7 @@ public class CommandAlfheim extends CommandBase {
 		if (on) {
 			CardinalSystem.load(AlfheimCore.save);
 			toggleESM(AlfheimCore.enableElvenStory = true);
-			for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) TimeStopSystem.transfer((EntityPlayerMP) o, Integer.MAX_VALUE);
+			for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) CardinalSystem.transfer((EntityPlayerMP) o);
 		} else {
 			CardinalSystem.save(AlfheimCore.save);
 		}
