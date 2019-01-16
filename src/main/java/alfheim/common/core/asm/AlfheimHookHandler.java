@@ -161,13 +161,13 @@ public class AlfheimHookHandler {
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
+		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
 		else return e.getDataWatcher().getWatchableObjectFloat(6);
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getMaxHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
+		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
 		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
 	}
 	
@@ -178,11 +178,11 @@ public class AlfheimHookHandler {
 			return;
 		}
 		
-		if (e.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) {
 			hp = 0.000000000000000000000000000000000000000000001F;
 		}
 		
-		if (!e.isPotionActive(AlfheimRegistry.sharedHP)) {
+		if (AlfheimRegistry.sharedHP != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
 			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
 			return;
 		}
