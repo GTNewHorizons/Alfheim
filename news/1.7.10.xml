@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-11</val>
+		<val>BETA-12</val>
 	</version>
 	<version id="ALL">
 		<val>GL HF!</val>
@@ -22,5 +22,8 @@
 	</version>
 	<version id="BETA-10">
 		<val>Fixed client-server modes desync, update if you are playing on a server.</val>
+	</version>
+	<version id="BETA-11">
+		<val>Fixed crash on launch with Factorization.</val>
 	</version>
 </news>
