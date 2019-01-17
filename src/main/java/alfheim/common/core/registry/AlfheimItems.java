@@ -108,11 +108,11 @@ public class AlfheimItems {
 		pixieAttractor = new ItemPendant("PixieAttractor");
 		livingrockPickaxe = new ItemLivingrockPickaxe();
 		manasteelHoe = new ItemManasteelHoe();
-		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
+		manaStone = new ItemManaStorage("ManaStone", 2.5, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
-		manaRingElven = new ItemManaStorage("ManaRingElven", 2, BaubleType.RING);
+		manaRingElven = new ItemManaStorage("ManaRingElven", 5, BaubleType.RING);
 		auraRingElven = new ItemAuraRingAlfheim("AuraRingElven");
-		manaRingGod = new ItemManaStorage("ManaRingGod", 8, BaubleType.RING);
+		manaRingGod = new ItemManaStorage("ManaRingGod", 12, BaubleType.RING);
 		auraRingGod = new ItemAuraRingAlfheim("AuraRingGod") { public int getDelay() { return 2; } };
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodGrass = new ItemRodGrass();

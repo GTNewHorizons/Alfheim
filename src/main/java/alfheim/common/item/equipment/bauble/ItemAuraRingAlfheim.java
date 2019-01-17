@@ -24,7 +24,7 @@ public class ItemAuraRingAlfheim extends ItemBauble implements IManaGivingItem {
 	}
 
 	public int getDelay() {
-		return 10;
+		return 5;
 	}
 
 	@Override
