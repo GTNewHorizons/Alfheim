@@ -1,10 +1,6 @@
 Greetings to all players and those who just passed by in the Alfheim repository!
 
-Alfheim is an addon to Botania mod, written for Minecraft. It realizes one of the worlds of Scandinavian mythology, the prerequisites for which were mostly fashion.
-
-Greetings to all players and those who just passed by in the Alfheim repository!
-
-Alfheim is an addon to the [Botania](http://botaniamod.net/) mod written for [Minecraft](https://minecraft.net/). It adds one of the worlds of the [Scandinavian mythology](https://en.m.wikipedia.org/wiki/√Ålfheimr), the prerequisites for which were in the Botania mod.
+Alfheim is an addon to the [Botania](http://botaniamod.net/) mod written for [Minecraft](https://minecraft.net/). It adds one of the worlds of the [Scandinavian mythology](https://en.m.wikipedia.org/wiki/¡lfheimr), the prerequisites for which were in the Botania mod.
 
 Alfheim is licensed under the [Botania License](http://botaniamod.net/license.php) 
 
