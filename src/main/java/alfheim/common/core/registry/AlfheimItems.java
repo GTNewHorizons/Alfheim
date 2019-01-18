@@ -8,6 +8,7 @@ import java.util.List;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
+import alfheim.common.item.ItemAstrolabe;
 import alfheim.common.item.ItemFlugelHead;
 import alfheim.common.item.ItemHoloProjector;
 import alfheim.common.item.ItemPaperBreak;
@@ -31,10 +32,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.bauble.ItemAuraRing;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
+import vazkii.botania.common.item.equipment.bauble.ItemBaubleCosmetic;
 import vazkii.botania.common.item.record.ItemModRecord;
 
 public class AlfheimItems {
 
+	public static Item astrolabe;
 	public static Item auraRingElven;
 	public static Item auraRingGod;
 	public static Item creativeReachPendant;
@@ -72,6 +75,7 @@ public class AlfheimItems {
 	public static Item rodFire;
 	public static Item rodGrass;
 	public static Item rodIce;
+	public static Item thinkingHand;
 	
 	public static void init() {
 		construct();
@@ -83,6 +87,7 @@ public class AlfheimItems {
 	// so I need to construct some items in odd places to get beautiful Creative Tab representation :D
 	// and yes, I'm too lazy to just reOverride Vazkii's code :P
 	private static void construct() {
+		astrolabe = new ItemAstrolabe();
 		elementalHelmet = new ItemElementalWaterHelm();
 		elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
 		elementalChestplate = new ItemElementalEarthChest();
@@ -119,6 +124,7 @@ public class AlfheimItems {
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
 		paperBreak = new ItemPaperBreak();
 		peacePipe = new ItemPeacePipe();
+		thinkingHand = new ItemThinkingHand();
 	}
 
 	private static void reg() {
@@ -132,12 +138,14 @@ public class AlfheimItems {
 		register(manaStoneGreater);
 		register(manaRingElven);
 		register(manaRingGod);
+		register(astrolabe);
 		register(rodFire);
 		register(rodIce);
 		register(rodGrass);
 		register(peacePipe);
 		register(paperBreak);
 		register(elvenResource);
+		register(thinkingHand);
 		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
 

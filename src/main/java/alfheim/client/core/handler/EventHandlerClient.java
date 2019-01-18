@@ -15,9 +15,11 @@ import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.client.gui.ItemsRemainingRenderHandler;
 import alfheim.client.render.entity.RenderContributors;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.client.render.item.RenderItemFlugelHead;
+import alfheim.client.render.world.AstrolabePreviewHandler;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
@@ -39,17 +41,25 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import vazkii.botania.client.core.handler.MultiblockRenderHandler;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 import vazkii.botania.common.item.ModItems;
 
 public class EventHandlerClient {
 
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onDrawScreenPost(RenderGameOverlayEvent.Post event) {
+		ItemsRemainingRenderHandler.render(event.resolution, event.partialTicks);
+	}
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onDisconnect(ClientDisconnectionFromServerEvent e) {
@@ -121,6 +131,9 @@ public class EventHandlerClient {
 			if (CardinalSystemClient.segment.target != null && Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null)
 				if (!CardinalSystemClient.segment.target.isEntityAlive() || Vector3.entityDistance(Minecraft.getMinecraft().thePlayer, CardinalSystemClient.segment.target) > (CardinalSystemClient.segment.target instanceof IBossDisplayData ? 128 : 32)) CardinalSystemClient.segment.target = null;
 		}
+		if (e.phase == TickEvent.Phase.END) {
+			ItemsRemainingRenderHandler.tick();
+		}
 	}
 	
 	@SubscribeEvent
@@ -132,6 +145,7 @@ public class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onWorldLastRender(RenderWorldLastEvent e) {
+		AstrolabePreviewHandler.onWorldRenderLast(e);
 		if (AlfheimCore.enableMMO) renderMMO();
 
 //		glPushMatrix();
