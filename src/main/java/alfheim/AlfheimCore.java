@@ -96,6 +96,7 @@ public class AlfheimCore {
 	}
 
 	public static void registerPackets() {
+		AlfheimCore.network.registerMessage(Message0d.Handler.class,		Message0d.class,		nextPacketID++, Side.SERVER);
 		AlfheimCore.network.registerMessage(MessageHotSpellS.Handler.class,	MessageHotSpellS.class,	nextPacketID++, Side.SERVER);
 		AlfheimCore.network.registerMessage(MessageKeyBind.Handler.class,	MessageKeyBind.class,	nextPacketID++, Side.SERVER);
 		

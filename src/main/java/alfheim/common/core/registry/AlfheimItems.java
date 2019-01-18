@@ -40,7 +40,10 @@ public class AlfheimItems {
 	public static Item astrolabe;
 	public static Item auraRingElven;
 	public static Item auraRingGod;
+	public static Item cloudPendant;
+	public static Item cloudPendantSuper;
 	public static Item creativeReachPendant;
+	public static Item dodgeRing;
 	public static Item elementalBoots;
 	public static Item elementalChestplate;
 	public static Item elementalHelmet;
@@ -88,6 +91,9 @@ public class AlfheimItems {
 	// and yes, I'm too lazy to just reOverride Vazkii's code :P
 	private static void construct() {
 		astrolabe = new ItemAstrolabe();
+		cloudPendant = new ItemCloudPendant();
+		cloudPendantSuper = new ItemSuperCloudPendant();
+		dodgeRing = new ItemDodgeRing();
 		elementalHelmet = new ItemElementalWaterHelm();
 		elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
 		elementalChestplate = new ItemElementalEarthChest();
@@ -138,6 +144,9 @@ public class AlfheimItems {
 		register(manaStoneGreater);
 		register(manaRingElven);
 		register(manaRingGod);
+		register(cloudPendant);
+		register(cloudPendantSuper);
+		register(dodgeRing);
 		register(astrolabe);
 		register(rodFire);
 		register(rodIce);
