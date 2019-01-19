@@ -12,13 +12,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.api.item.ICosmeticBauble;
+import vazkii.botania.common.core.BotaniaCreativeTab;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
 public class ItemThinkingHand extends ItemBauble implements ICosmeticBauble {
 
 	public ItemThinkingHand() {
 		super("ThinkingHand");
-		setCreativeTab(AlfheimCore.alfheimTab);
+		setCreativeTab(BotaniaCreativeTab.INSTANCE);
 	}
 
 	@Override

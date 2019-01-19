@@ -1,13 +1,3 @@
-/**
- * This class was created by <Vazkii>. It's distributed as
- * part of the Botania Mod. Get the Source Code in github:
- * https://github.com/Vazkii/Botania
- * 
- * Botania is Open Source and distributed under the
- * Botania License: http://botaniamod.net/license.php
- * 
- * File Created @ [22/10/2016, 16:52:36 (GMT)]
- */
 package alfheim.common.item.equipment.bauble;
 
 import java.util.UUID;

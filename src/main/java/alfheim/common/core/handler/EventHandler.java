@@ -173,16 +173,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityUpdate(EntityUpdateEvent e) {
 		if (e.entity == null || !e.entity.isEntityAlive()) return;
-		if (AlfheimCore.enableMMO) {
-			if (e.entity instanceof EntityLivingBase && ((EntityLivingBase) e.entity).isPotionActive(AlfheimRegistry.leftFlame)) {
-				PotionEffect pe = ((EntityLivingBase) e.entity).getActivePotionEffect(AlfheimRegistry.leftFlame);
-				pe.duration--;
-				if(!ASJUtilities.isServer()) SpellEffectHandlerClient.onDeathTick((EntityLivingBase) e.entity);
-				if (pe.duration <= 0) ((EntityLivingBase) e.entity).removePotionEffect(pe.potionID);
-				else e.setCanceled(true);
-			}
-			if (ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
-		}
+		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
 	}
 	
 	@SubscribeEvent
@@ -515,6 +506,14 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent e) {
 		if (AlfheimCore.enableMMO) {
+			if (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) {
+				PotionEffect pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.leftFlame);
+				pe.duration--;
+				if(!ASJUtilities.isServer()) SpellEffectHandlerClient.onDeathTick(e.entityLiving);
+				if (pe.duration <= 0) e.entityLiving.removePotionEffect(pe.potionID);
+				else e.setCanceled(true);
+			}
+			
 			if (e.entityLiving.isDead) {
 				Party pt = PartySystem.getMobParty(e.entityLiving);
 				if (pt != null) pt.setDead(e.entityLiving, true);

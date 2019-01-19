@@ -524,7 +524,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 						add = false;
 						mv.visitInsn(DUP);
 						mv.visitIntInsn(BIPUSH, 22);
-						mv.visitLdcInsn("lensMessanger");
+						mv.visitLdcInsn("lensMessenger");
 						mv.visitInsn(AASTORE);
 						mv.visitInsn(DUP);
 						mv.visitIntInsn(BIPUSH, 23);

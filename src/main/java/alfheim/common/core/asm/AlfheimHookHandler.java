@@ -13,6 +13,7 @@ import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.client.render.entity.RenderButterflies;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
@@ -59,6 +60,7 @@ import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.core.BotaniaCreativeTab;
 import vazkii.botania.common.core.proxy.CommonProxy;
 import vazkii.botania.common.entity.EntityDoppleganger;
 import vazkii.botania.common.item.ItemGaiaHead;
@@ -282,6 +284,11 @@ public class AlfheimHookHandler {
 
 		lens.setLens(MESSANGER, new LensMessanger());
 		lens.setLens(TRIPWIRE, new LensTripwire());
+	}
+	
+	@Hook(injectOnExit = true)
+	public static void displayAllReleventItems(BotaniaCreativeTab tab, List list) {
+		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list);
 	}
 	
 	@Hook

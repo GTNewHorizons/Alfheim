@@ -16,6 +16,8 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (basicClass == null || basicClass.length == 0) return basicClass;
+		
 		ClassReader cr;
 		ClassWriter cw;
 		ClassVisitor cv;

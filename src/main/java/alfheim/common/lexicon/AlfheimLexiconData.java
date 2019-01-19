@@ -26,6 +26,7 @@ import alfheim.common.lexicon.page.PageTextLearnableAchievement;
 import alfheim.common.lexicon.page.PageTextLearnableKnowledge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import scala.tools.nsc.doc.html.page.diagram.DotDiagramGenerator;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
@@ -56,9 +57,13 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elves;
 	
 	// Main addon content
-	public static LexiconEntry auraAlf;
+
 	public static LexiconEntry advMana;
+	public static LexiconEntry aniTorch;	// FIXME add
 	public static LexiconEntry anyavil;
+	public static LexiconEntry astrolab;
+	public static LexiconEntry auraAlf;
+	public static LexiconEntry dodgRing;
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
@@ -99,6 +104,8 @@ public class AlfheimLexiconData {
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
 		anyavil	= new BLexiconEntry("anyavil",	categoryAlfheim);
+		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
+		dodgRing= new BLexiconEntry("dodgRing",	categoryAlfheim);
 		elemSet	= new BLexiconEntry("elemSet",	categoryAlfheim);
 		elvenSet= new BLexiconEntry("elvenSet",	categoryAlfheim);
 		elves	= new BLexiconEntry("elves",	categoryAlfheim);
@@ -179,6 +186,10 @@ public class AlfheimLexiconData {
 		itemHold.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeItemHolder));
 		
 		greenRod.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeGreenRod));
+		
+		dodgRing.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeDodgeRing));
+		
+		astrolab.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipeAstrolabe));
 		
 		ores	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
@@ -309,6 +320,15 @@ public class AlfheimLexiconData {
 		LexiconData.sparks.setLexiconPages(new PageText("0"), new PageText("1"),
 				new PageCraftingRecipe("2", AlfheimRecipes.recipesSpark),
 				new PageText("3"));
+		
+		LexiconData.cosmeticBaubles.setLexiconPages(new PageCraftingRecipe("34", AlfheimRecipes.recipeThinkingHand));
+
+		LexiconData.lenses.pages.add(15, new PageText("38"));
+		LexiconData.lenses.pages.add(16, new PageText("39"));
+		
+		LexiconData.elvenLenses.pages.add(new PageText("11"));
+		LexiconData.elvenLenses.pages.add(new PageText("12"));
+		
 	}
 	
 	private static void initElvenStory() {

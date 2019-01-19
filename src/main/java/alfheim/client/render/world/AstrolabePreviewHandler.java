@@ -1,13 +1,3 @@
-/**
- * This class was created by <Vazkii>, backported to 1.7.10 by <AlexSocol>. It's distributed as
- * part of the Botania Mod. Get the Source Code in github:
- * https://github.com/Vazkii/Botania
- * 
- * Botania is Open Source and distributed under the
- * Botania License: http://botaniamod.net/license.php
- * 
- * File Created @ [27/10/2016, 17:55:20 (GMT)]
- */
 package alfheim.client.render.world;
 
 import static org.lwjgl.opengl.GL11.*;

@@ -1,6 +1,7 @@
 ##########################################################___BLOCKS___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
+tile.AnimatedTorch.name=Animated Torch
 tile.Anyavil.name=Anyavil
 tile.botania:AlfheimPylons0.name=Elven Pylon
 tile.botania:AlfheimPylons1.name=Yordin Pylon
@@ -29,9 +30,14 @@ tile.Transferer.name=Transferer
 ##########################################################___ITEMS___###########################################################
 
 # item..name=
+item.Astrolabe.name=Worldshaper's Astrolabe
 item.botania:AuraRingElven.name=Elven Band of Aura
 item.botania:AuraRingGod.name=God's Band of Aura
+item.botania:BalanceCloak.name=Cloak of Balance
+item.botania:CloudPendant.name=Cirrus Amulet
+item.botania:SuperCloudPendant.name=Nimbus Amulet
 item.CreativeReachPendant.name=Creative Reach Pendant
+item.botania:DodgeRing.name=Ring of Dexterous Motion
 item.botania:ElementalAirBoots.name=Elemental Boots of Air
 item.botania:ElementalFireLeggings.name=Elemental Leggings of Fire
 item.botania:ElementalEarthChest.name=Elemental Chestplate of Earth
@@ -61,6 +67,11 @@ item.grassRod.name=Rod of the Green Hills
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.IffesalDust.name=Iffesal Dust
 item.InterdimensionalGatewayCore.name=Interdimensional Gateway Core
+item.botania:InvisibilityCloak.name=Invisibility Cloak
+item.botania:lensMessenger.name=Mana Lens: Messenger
+item.botania:lensMessenger.short=Messenger
+item.botania:lensTripwire.name=Mana Lens: Tripwire
+item.botania:lensTripwire.short=Tripwire
 item.LivingrockPickaxe.name=Livingrock Pickaxe
 item.ManaInfusionCore.name=Mana Infusion Core
 item.ManaRingElven.name=Elven Band of Mana
@@ -103,6 +114,7 @@ item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive
 item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
+item.botania:ThinkingHand.name=Thinking Hand
 item.Transferer.name=Destructurizer
 
 ##########################################################___OTHER___###########################################################

@@ -53,8 +53,10 @@ public class AlfheimRecipes {
 	public static IRecipe recipeAntiPylon;
 	public static IRecipe recipeAnyavil;
 	public static List<IRecipe> recipesApothecary;
+	public static IRecipe recipeAstrolabe;
 	public static IRecipe recipeAuraRingElven;
 	public static IRecipe recipeAuraRingGod;
+	public static IRecipe recipeDodgeRing;
 	public static IRecipe recipeEmentalHelmet;
 	public static IRecipe recipeEmentalChestplate;
 	public static IRecipe recipeEmentalLeggings;
@@ -90,6 +92,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipePixieAttractor;
 	public static List<IRecipe> recipesSpark;
 	public static IRecipe recipeSword;
+	public static IRecipe recipeThinkingHand;
 	public static IRecipe recipeTradePortal;
 
 	public static RecipeElvenTrade recipeInterdimensional;
@@ -152,11 +155,18 @@ public class AlfheimRecipes {
 		
 		for(int i = 0; i < 16; i++)
 			addOreDictRecipe(new ItemStack(altar),
-					"SPS", " C ", "CCC",
-					'S', livingcobble,
-					'P', PETAL[i],
-					'C', LIVING_ROCK);
+				"SPS", " C ", "CCC",
+				'S', livingcobble,
+				'P', PETAL[i],
+				'C', LIVING_ROCK);
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16);
+		
+		addOreDictRecipe(new ItemStack(astrolabe),
+			" ES", "EEE", "SED",
+			'E', ELEMENTIUM,
+			'S', LIFE_ESSENCE,
+			'D', DREAM_WOOD);
+		recipeAstrolabe = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessOreDictRecipe(new ItemStack(auraRingElven),
 			ELVORIUM_INGOT,
@@ -167,6 +177,13 @@ public class AlfheimRecipes {
 			MAUFTRIUM_INGOT,
 			new ItemStack(auraRingElven));
 		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(dodgeRing),
+			"EM ", "M M", " MR",
+			'E', "gemEmerald",
+			'M', MANA_STEEL,
+			'R', RUNE[3]);
+		recipeDodgeRing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elementalHelmet),
 			"RTR", "DPD", " M ",
@@ -424,6 +441,12 @@ public class AlfheimRecipes {
 				'N', "nuggetGold");
 		recipesSpark = BotaniaAPI.getLatestAddedRecipes(16);
 		recipesSpark.addAll(ModCraftingRecipes.recipesSpark);
+		
+		addOreDictRecipe(new ItemStack(thinkingHand),
+			"PPP", "PSP", "PPP",
+			'P', tinyPotato,
+			'S', MANA_STRING);
+		recipeThinkingHand = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(tradePortal),
 			"LEL", "LEL", "LEL",
