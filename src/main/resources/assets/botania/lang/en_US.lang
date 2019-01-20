@@ -199,6 +199,8 @@ botania.tagline.excaliber=Not fake! Promise!
 botania.page.excaliber0=Well, that's embarrassing...
 botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
 
+################################################################ BACKPORT ################################################################
+
 botania.page.cosmeticBaubles34=Really makes you think
 
 botania.page.lens38=The &1Messenger Lens&0 massively decreases the amount of &4Mana&0 a &4Mana Burst&0 carries, and also drastically increases the burst's speed and maximum distance.<br>This can be very useful for interactions with blocks such as the &1Mana Detector&0, &1Drum of the Wild&0, &1Animated Torch&0, among others.
@@ -206,6 +208,31 @@ botania.page.lens39=Messenger Lens
 
 botania.page.elvenLenses11=The &1Tripwire Lens&0 is another &4Control Lens&0.<br>A spreader that has it attached will only be allowed to fire if there is one or more mobs, or players, in the path described by the &4mana burst&0 that the spreader would shoot.
 botania.page.elvenLenses12=Tripwire Lens
+
+botania.entry.amulCirs=Cirrus Amulet
+botania.tagline.amulCirs=Gives you double jump
+botania.page.amulCirs0=The &1Cirrus Amulet&0 is a bauble that can be worn in the &4amulet&0 slot.<br>While being worn, the wearer is granted the ability to &4double jump&0, the second jump negating all currently accumulated fall momentum and damage that would occur from the fall.
+botania.page.amulCirs1=It's all in the cloud
+
+botania.entry.amulNimb=Nimbus Amulet
+botania.tagline.amulNimb=Gives you triple jump
+botania.page.amulNimb0=The &1Nimbus Amulet&0 is an upgraded version of the &1Cirrus Amulet&0, infused with the power of &1Gaia Spirits&0, it allows the wearer to &4triple jump&0.
+botania.page.amulNimb1=Magic > physics
+
+botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
+botania.page.judgementCloaks4=Pain split
+
+botania.entry.cloakInv=Invisibility Cloak
+botania.tagline.cloakInv=Exactly what it says on the tin
+botania.page.cloakInv0=Not much explanation is required for the &1Invisibility Cloak&0.<br>It's a bauble worn on the &4body&0 slot, that will take &4Mana&0 from the wearer's inventory to make them, and their baubles invisible as long as it's worn and the cost is fulfilled.
+botania.page.cloakInv1=You're a wizard, steve
+
+botania.entry.aniTorch=Animated Torch
+botania.tagline.aniTorch=Compact systems with a floating redstone torch
+botania.page.aniTorch0=The &1Animated Torch&0 is no more than a floating &1Redstone Torch&0 with a spark of magical autonomy.<br>The torch, when placed, will face a horizontal direction, providing power towards that direction. Shift-right clicking it will rotate the torch 90 degrees, changing the power to the new direction instead.
+botania.page.aniTorch1=By default, whenever the torch is triggered, it'll turn 180 degrees, serving as a T-Flip-Flop Latch.<br>To trigger the torch one can either have a &4mana burst&0 collide with it, or have an adjacent &1Hovering Hourglass&0 turn. Either way will have the torch do its specified rotation.
+botania.page.aniTorch2=Using a &1Wand of the Forest&0 on the torch will change its mode. The default mode is &4Toggle&0, which was explained in the previous page.<br>The other two modes are &4Rotate&0, which will have the torch do a 90 degree spin every time, and &4Random&0, which will have the torch rotate towards a random direction.
+botania.page.aniTorch3=It's fallen and it can't get up
 
 ################################################################ ESM ################################################################
 
