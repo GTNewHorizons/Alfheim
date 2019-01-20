@@ -53,17 +53,6 @@ botania.tagline.greenRod=Greening!
 botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
 botania.page.greenRod1=Green green green green green
 
-botania.entry.dodgRing=Ring of Dexterous Motion
-botania.tagline.dodgRing=Sweep to the side to dodge attacks
-botania.page.dodgRing0=The &1Ring of Dexterous Motion&0 is a handy bauble to help prevent damage during combat. While worn, one can press their &4left/right&0 keys (which are &4A and D&0, respectively, by default) to quickly sweep to the side and dodge incoming attacks or mobs.<br>The dodge ability goes through a short cooldown before it can be used again, and uses up some of the user's hunger bar.
-botania.page.dodgRing1=Dexterity bonus
-
-botania.entry.astrolab=Worldshaper's Astrolabe
-botania.tagline.astrolab=A tool to help create planes
-botania.page.astrolab0=The &1Worldshaper's Astrolabe&0 is a handy tool to place down blocks, a lot of them, really quick.<br>To start off, shift-right click the astrolabe on a block in the world. This will set the block that will be placed.<br>Shift-right clicking with the astrolabe on the air will change how many blocks will get placed.
-botania.page.astrolab1=When looking at a block with the astrolabe in hand, a quick preview will show up, of what blocks will be placed upon right click.<br>To create the wall or floor displayed, alongside &4Mana&0, the respective blocks will be taken from the user's inventory, or items that can provide blocks to items such as the &1Rod of the Shifting Crust&0. (e.g. &1Rod of the Depths&0, &1Hand of Ender&0).
-botania.page.astrolab2=Builds walls, creates worlds
-
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
@@ -219,20 +208,31 @@ botania.tagline.amulNimb=Gives you triple jump
 botania.page.amulNimb0=The &1Nimbus Amulet&0 is an upgraded version of the &1Cirrus Amulet&0, infused with the power of &1Gaia Spirits&0, it allows the wearer to &4triple jump&0.
 botania.page.amulNimb1=Magic > physics
 
-botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
-botania.page.judgementCloaks4=Pain split
-
-botania.entry.cloakInv=Invisibility Cloak
-botania.tagline.cloakInv=Exactly what it says on the tin
-botania.page.cloakInv0=Not much explanation is required for the &1Invisibility Cloak&0.<br>It's a bauble worn on the &4body&0 slot, that will take &4Mana&0 from the wearer's inventory to make them, and their baubles invisible as long as it's worn and the cost is fulfilled.
-botania.page.cloakInv1=You're a wizard, steve
-
 botania.entry.aniTorch=Animated Torch
 botania.tagline.aniTorch=Compact systems with a floating redstone torch
 botania.page.aniTorch0=The &1Animated Torch&0 is no more than a floating &1Redstone Torch&0 with a spark of magical autonomy.<br>The torch, when placed, will face a horizontal direction, providing power towards that direction. Shift-right clicking it will rotate the torch 90 degrees, changing the power to the new direction instead.
 botania.page.aniTorch1=By default, whenever the torch is triggered, it'll turn 180 degrees, serving as a T-Flip-Flop Latch.<br>To trigger the torch one can either have a &4mana burst&0 collide with it, or have an adjacent &1Hovering Hourglass&0 turn. Either way will have the torch do its specified rotation.
 botania.page.aniTorch2=Using a &1Wand of the Forest&0 on the torch will change its mode. The default mode is &4Toggle&0, which was explained in the previous page.<br>The other two modes are &4Rotate&0, which will have the torch do a 90 degree spin every time, and &4Random&0, which will have the torch rotate towards a random direction.
 botania.page.aniTorch3=It's fallen and it can't get up
+
+botania.entry.astrolab=Worldshaper's Astrolabe
+botania.tagline.astrolab=A tool to help create planes
+botania.page.astrolab0=The &1Worldshaper's Astrolabe&0 is a handy tool to place down blocks, a lot of them, really quick.<br>To start off, shift-right click the astrolabe on a block in the world. This will set the block that will be placed.<br>Shift-right clicking with the astrolabe on the air will change how many blocks will get placed.
+botania.page.astrolab1=When looking at a block with the astrolabe in hand, a quick preview will show up, of what blocks will be placed upon right click.<br>To create the wall or floor displayed, alongside &4Mana&0, the respective blocks will be taken from the user's inventory, or items that can provide blocks to items such as the &1Rod of the Shifting Crust&0. (e.g. &1Rod of the Depths&0, &1Hand of Ender&0).
+botania.page.astrolab2=Builds walls, creates worlds
+
+botania.entry.cloakInv=Invisibility Cloak
+botania.tagline.cloakInv=Exactly what it says on the tin
+botania.page.cloakInv0=Not much explanation is required for the &1Invisibility Cloak&0.<br>It's a bauble worn on the &4body&0 slot, that will take &4Mana&0 from the wearer's inventory to make them, and their baubles invisible as long as it's worn and the cost is fulfilled.
+botania.page.cloakInv1=You're a wizard, steve
+
+botania.entry.dodgRing=Ring of Dexterous Motion
+botania.tagline.dodgRing=Sweep to the side to dodge attacks
+botania.page.dodgRing0=The &1Ring of Dexterous Motion&0 is a handy bauble to help prevent damage during combat. While worn, one can press their &4left/right&0 keys (which are &4A and D&0, respectively, by default) to quickly sweep to the side and dodge incoming attacks or mobs.<br>The dodge ability goes through a short cooldown before it can be used again, and uses up some of the user's hunger bar.
+botania.page.dodgRing1=Dexterity bonus
+
+botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
+botania.page.judgementCloaks4=Pain split
 
 ################################################################ ESM ################################################################
 

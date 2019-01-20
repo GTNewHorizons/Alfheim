@@ -26,7 +26,6 @@ import alfheim.common.lexicon.page.PageTextLearnableAchievement;
 import alfheim.common.lexicon.page.PageTextLearnableKnowledge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import scala.tools.nsc.doc.html.page.diagram.DotDiagramGenerator;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;

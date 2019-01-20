@@ -30,7 +30,7 @@ tile.Transferer.name=Переносчик
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
-item.Astrolabe.name=Астролябия преобразователя мира
+item.Astrolabe.name=Астролябия формирователя мира
 item.botania:AuraRingElven.name=Эльфийское кольцо ауры
 item.botania:AuraRingGod.name=Божественное кольцо ауры
 item.botania:BalanceCloak.name=Плащ Баланса
