@@ -528,7 +528,6 @@ public class EventHandler {
 		EntityPlayer player = (EntityPlayer) e.entityLiving;
 		
 		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && player.worldObj.getTotalWorldTime() % 20 == 0) ManaSystem.handleManaChange(player);
-		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
 				if (Flight.get(player) >= 0 && Flight.get(player) <= Flight.max()) {
@@ -537,6 +536,7 @@ public class EventHandler {
 						if (player.isSprinting()) player.moveFlying(0F, 1F, 0.01F);
 					} else Flight.add(player, Flight.get(player) < Flight.max() ? 1 : 0);
 				}
+				
 				if (Flight.get(player) <= 0)	player.capabilities.isFlying = false;
 			}
 		}

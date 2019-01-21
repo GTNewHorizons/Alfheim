@@ -31,17 +31,16 @@ public class AlfheimConfig extends Configuration {
 	public static Configuration config;
 	
 	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "dimension";
-	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "elvenstory";
-	public static final String CATEGORY_HUD			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "hud";
-	public static final String CATEGORY_MMO			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "mmo";
 	public static final String CATEGORY_POTIONS		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "potions";
+	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "elvenstory";
+	public static final String CATEGORY_MMO			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "mmo";
+	public static final String CATEGORY_HUD			= CATEGORY_MMO	 	+ CATEGORY_SPLITTER + "hud";
 	
 	// DIMENSIONS
 	public static int		biomeIDAlfheim			= 152;
 	public static int		dimensionIDAlfheim		= -105;
 	
 	// OHTER
-	public static boolean	asmLog					= true;
 	public static boolean	destroyPortal			= true;
 	public static boolean	enableAlfheimRespawn	= true;
 	public static boolean	fancies					= true;
@@ -84,8 +83,9 @@ public class AlfheimConfig extends Configuration {
 
 	// HUD
 	public static double	partyHUDScale			= 1.0;
-
-
+	public static boolean	selfHealthUI			= true;
+	public static boolean	targethUI				= true;
+	
 	public static void loadConfig(File suggestedConfigurationFile) {
 		config = new Configuration(suggestedConfigurationFile);
 
@@ -99,50 +99,48 @@ public class AlfheimConfig extends Configuration {
 	}
 	
 	public static void syncConfig() {
-		asmLog				= loadProp(CATEGORY_GENERAL,		"asmLog",					asmLog,					false,	"Set this to false to disable error logging while transforming classes with asm");
-		ASJPacketCompleter.doLog = AlfheimSyntheticMethodsInjector.doLog = asmLog;
-		biomeIDAlfheim		= loadProp(CATEGORY_DIMENSION,		"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
-		dimensionIDAlfheim	= loadProp(CATEGORY_DIMENSION,		"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
-		destroyPortal		= loadProp(CATEGORY_GENERAL,		"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
-		enableAlfheimRespawn= loadProp(CATEGORY_GENERAL,		"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
-		fancies				= loadProp(CATEGORY_GENERAL,		"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
-		flugelBossBar		= loadProp(CATEGORY_GENERAL,		"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
-		info				= loadProp(CATEGORY_GENERAL,		"info",						info,					false,	"Set this to false to disable loading info about addon");
-		looniumOverseed		= loadProp(CATEGORY_GENERAL,		"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
-		numericalMana		= loadProp(CATEGORY_GENERAL,		"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
-		oregenMultiplier	= loadProp(CATEGORY_GENERAL, 		"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
-		tradePortalRate		= loadProp(CATEGORY_GENERAL, 		"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
+		biomeIDAlfheim			= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
+		dimensionIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
+		
+		destroyPortal			= loadProp(CATEGORY_GENERAL,	"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
+		enableAlfheimRespawn	= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
+		fancies					= loadProp(CATEGORY_GENERAL,	"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
+		flugelBossBar			= loadProp(CATEGORY_GENERAL,	"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
+		info					= loadProp(CATEGORY_GENERAL,	"info",						info,					false,	"Set this to false to disable loading info about addon");
+		looniumOverseed			= loadProp(CATEGORY_GENERAL,	"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
+		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
+		oregenMultiplier		= loadProp(CATEGORY_GENERAL, 	"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
+		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
 
-		potionIDBleeding	= loadProp(CATEGORY_POTIONS, 		"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
-		potionIDButterShield= loadProp(CATEGORY_POTIONS, 		"potionIDButterShield",		potionIDButterShield,	true,	"Potion id for Butterfly Shield");
-		potionIDDeathMark	= loadProp(CATEGORY_POTIONS, 		"potionIDDeathMark",		potionIDDeathMark,		true,	"Potion id for Death Mark");
-		potionIDDecay		= loadProp(CATEGORY_POTIONS, 		"potionIDDecay",			potionIDDecay,			true,	"Potion id for Decay");
-		potionIDGoldRush	= loadProp(CATEGORY_POTIONS, 		"potionIDGoldRush",			potionIDGoldRush,		true,	"Potion id for Gold Rush");
-		potionIDIceLens		= loadProp(CATEGORY_POTIONS, 		"potionIDIceLens",			potionIDIceLens,		true,	"Potion id for Ice Lense");
-		potionIDLeftFlame	= loadProp(CATEGORY_POTIONS, 		"potionIDLeftFlame",		potionIDLeftFlame,		true,	"Potion id for Leftover Flame");
-		potionIDNoclip		= loadProp(CATEGORY_POTIONS, 		"potionIDNoclip",			potionIDNoclip,			true,	"Potion id for Noclip");
-		potionIDPossession	= loadProp(CATEGORY_POTIONS, 		"potionIDPossession",		potionIDPossession,		true,	"Potion id for Possession");
-		potionIDQuadDamage	= loadProp(CATEGORY_POTIONS, 		"potionIDQuadDamage",		potionIDQuadDamage,		true,	"Potion id for Quad Damage");
-		potionIDSacrifice	= loadProp(CATEGORY_POTIONS, 		"potionIDSacrifice",		potionIDSacrifice,		true,	"Potion id for Sacrifice");
-		potionIDSharedHP	= loadProp(CATEGORY_POTIONS, 		"potionIDSharedHP",			potionIDSharedHP,		true,	"Potion id for Shared Health Pool");
-		potionIDShowMana	= loadProp(CATEGORY_POTIONS, 		"potionIDShowMana",			potionIDShowMana,		true,	"Potion id for Mana Showing Effect");
-		potionIDSoulburn	= loadProp(CATEGORY_POTIONS, 		"potionIDSoulburn",			potionIDSoulburn,		true,	"Potion id for Soulburn");
-		potionIDStoneSkin	= loadProp(CATEGORY_POTIONS, 		"potionIDStoneSkin",		potionIDStoneSkin,		true,	"Potion id for Stone Skin");
-		potionIDThrow		= loadProp(CATEGORY_POTIONS, 		"potionIDThrow",			potionIDThrow,			true,	"Potion id for Throw");
-		potionIDWellOLife	= loadProp(CATEGORY_POTIONS, 		"potionIDWellOLife",		potionIDWellOLife,		true,	"Potion id for Well'o'Life");
+		potionIDBleeding		= loadProp(CATEGORY_POTIONS, 	"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
+		potionIDButterShield	= loadProp(CATEGORY_POTIONS, 	"potionIDButterShield",		potionIDButterShield,	true,	"Potion id for Butterfly Shield");
+		potionIDDeathMark		= loadProp(CATEGORY_POTIONS, 	"potionIDDeathMark",		potionIDDeathMark,		true,	"Potion id for Death Mark");
+		potionIDDecay			= loadProp(CATEGORY_POTIONS, 	"potionIDDecay",			potionIDDecay,			true,	"Potion id for Decay");
+		potionIDGoldRush		= loadProp(CATEGORY_POTIONS, 	"potionIDGoldRush",			potionIDGoldRush,		true,	"Potion id for Gold Rush");
+		potionIDIceLens			= loadProp(CATEGORY_POTIONS, 	"potionIDIceLens",			potionIDIceLens,		true,	"Potion id for Ice Lense");
+		potionIDLeftFlame		= loadProp(CATEGORY_POTIONS, 	"potionIDLeftFlame",		potionIDLeftFlame,		true,	"Potion id for Leftover Flame");
+		potionIDNoclip			= loadProp(CATEGORY_POTIONS, 	"potionIDNoclip",			potionIDNoclip,			true,	"Potion id for Noclip");
+		potionIDPossession		= loadProp(CATEGORY_POTIONS, 	"potionIDPossession",		potionIDPossession,		true,	"Potion id for Possession");
+		potionIDQuadDamage		= loadProp(CATEGORY_POTIONS, 	"potionIDQuadDamage",		potionIDQuadDamage,		true,	"Potion id for Quad Damage");
+		potionIDSacrifice		= loadProp(CATEGORY_POTIONS, 	"potionIDSacrifice",		potionIDSacrifice,		true,	"Potion id for Sacrifice");
+		potionIDSharedHP		= loadProp(CATEGORY_POTIONS, 	"potionIDSharedHP",			potionIDSharedHP,		true,	"Potion id for Shared Health Pool");
+		potionIDShowMana		= loadProp(CATEGORY_POTIONS, 	"potionIDShowMana",			potionIDShowMana,		true,	"Potion id for Mana Showing Effect");
+		potionIDSoulburn		= loadProp(CATEGORY_POTIONS, 	"potionIDSoulburn",			potionIDSoulburn,		true,	"Potion id for Soulburn");
+		potionIDStoneSkin		= loadProp(CATEGORY_POTIONS, 	"potionIDStoneSkin",		potionIDStoneSkin,		true,	"Potion id for Stone Skin");
+		potionIDThrow			= loadProp(CATEGORY_POTIONS, 	"potionIDThrow",			potionIDThrow,			true,	"Potion id for Throw");
+		potionIDWellOLife		= loadProp(CATEGORY_POTIONS, 	"potionIDWellOLife",		potionIDWellOLife,		true,	"Potion id for Well'o'Life");
 		
-		if (AlfheimCore.enableElvenStory) {
-			bothSpawnStructures		= loadProp(CATEGORY_ESMODE,	"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
-			enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,	"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");
-			flightTime				= loadProp(CATEGORY_ESMODE,	"flightTime",				flightTime,				true,	"How long can you fly as elf");
-		}
+		bothSpawnStructures		= loadProp(CATEGORY_ESMODE,		"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
+		enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,		"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");
+		flightTime				= loadProp(CATEGORY_ESMODE,		"flightTime",				flightTime,				true,	"How long can you fly as elf");
 		
-		if (AlfheimCore.enableMMO) {
-			deathScreenAddTime		= loadProp(CATEGORY_MMO,	"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
-			frienldyFire			= loadProp(CATEGORY_MMO,	"frienldyFire",				frienldyFire,			false,	"Set this to true to enable da,age to party members");
-			maxPartyMembers			= loadProp(CATEGORY_MMO,	"maxPartyMembers",			maxPartyMembers,		false,	"How many people can be in single party at the same time");
-			partyHUDScale			= loadProp(CATEGORY_HUD,	"partyHUDScale",			partyHUDScale,			false,	"Party HUD Scale (1 < bigger; 1 > smaller)");
-		}
+		deathScreenAddTime		= loadProp(CATEGORY_MMO,		"deathScreenAdditionalTime",deathScreenAddTime,		false,	"How longer (in ticks) \"Respawn\" button will be unavailable");
+		frienldyFire			= loadProp(CATEGORY_MMO,		"frienldyFire",				frienldyFire,			false,	"Set this to true to enable da,age to party members");
+		maxPartyMembers			= loadProp(CATEGORY_MMO,		"maxPartyMembers",			maxPartyMembers,		false,	"How many people can be in single party at the same time");
+		
+		partyHUDScale			= loadProp(CATEGORY_HUD,		"partyHUDScale",			partyHUDScale,			false,	"Party HUD Scale (1 < bigger; 1 > smaller)");
+		selfHealthUI			= loadProp(CATEGORY_HUD,		"selfHealthUI",				selfHealthUI,			false,	"Set this to false to hide player's healthbar");
+		targethUI				= loadProp(CATEGORY_HUD,		"targethUI",				targethUI,				false,	"Set this to false to hide target's healthbar");
 
 		if (config.hasChanged()) {
 			config.save();

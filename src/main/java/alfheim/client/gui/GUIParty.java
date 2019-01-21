@@ -11,6 +11,7 @@ import org.apache.http.impl.client.RedirectLocations;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alexsocol.asjlib.render.ASJShaderHelper;
+import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
@@ -74,7 +75,7 @@ public class GUIParty extends Gui {
 		glScaled(s, s, s);
 		
 		// ################################################################ SELF ################################################################
-		{
+		if (AlfheimConfig.selfHealthUI) {
 			/*glPushMatrix();
 			glTranslated(8, 8, 0);
 			glScaled(3./4, 3./8, 1);
@@ -225,7 +226,7 @@ public class GUIParty extends Gui {
 				glTranslated(-1./24, -1./24, 0);
 				glMatrixMode(GL_MODELVIEW);
 				
-				{
+				if (AlfheimConfig.targethUI){
 					mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(player));
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -249,7 +250,7 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
 					Tessellator.instance.addVertexWithUV(36, 36-(mod*32), 0, 1, 1-mod);
 					Tessellator.instance.draw();
-				}
+				} else ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 
 				glColor4d(1, 1, 1, 1);
 				for (int i = 0; i < pt.count; i++) {
@@ -280,6 +281,7 @@ public class GUIParty extends Gui {
 				tg_icon: {
 					l = CardinalSystemClient.segment.target;
 					if (l == null) break tg_icon;
+					if (!AlfheimConfig.targethUI) break tg_icon;
 					
 					glPushMatrix();
 					glTranslated(event.resolution.getScaledWidth() / 2. / s - 116, 11, 0);
@@ -458,7 +460,7 @@ public class GUIParty extends Gui {
 		}
 		
 		// ################################################################ TARGET ################################################################
-		if (CardinalSystemClient.segment.target != null) {
+		if (AlfheimConfig.targethUI && CardinalSystemClient.segment.target != null) {
 			glTranslated(event.resolution.getScaledWidth() / 2. / s - 120, 0, 0);
 			
 			EntityLivingBase l = CardinalSystemClient.segment.target;

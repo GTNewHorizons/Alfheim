@@ -43,6 +43,7 @@ public class ClientProxy extends CommonProxy {
 	
 	private static final Gui guiIceLens = new GUIIceLens(Minecraft.getMinecraft());
 	private static final Gui guiParty = new GUIParty(Minecraft.getMinecraft());
+	//private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
 	private static final Gui guiSpells = new GUISpells(Minecraft.getMinecraft());
 	
 	@Override
@@ -185,6 +186,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(guiIceLens);
 		MinecraftForge.EVENT_BUS.register(guiParty);
 		MinecraftForge.EVENT_BUS.register(guiSpells);
+		MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));
 	}
 	
 	private static void disableMMOGUIs() {
