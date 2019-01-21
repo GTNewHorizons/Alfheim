@@ -30,6 +30,7 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.LexiconPage;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModMultiblocks;
@@ -56,9 +57,16 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elves;
 	
 	// Main addon content
-	public static LexiconEntry auraAlf;
+
 	public static LexiconEntry advMana;
+	public static LexiconEntry amulCirs;
+	public static LexiconEntry amulNimb;
+	public static LexiconEntry aniTorch;
 	public static LexiconEntry anyavil;
+	public static LexiconEntry astrolab;
+	public static LexiconEntry auraAlf;
+	public static LexiconEntry cloakInv;
+	public static LexiconEntry dodgRing;
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
 	public static LexiconEntry elvorium;
@@ -95,10 +103,16 @@ public class AlfheimLexiconData {
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("Alfheim", 5));
 
-		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
+		amulCirs= new BLexiconEntry("amulCirs",	categoryAlfheim);
+		amulNimb= new BLexiconEntry("amulNimb",	categoryAlfheim);
+		aniTorch= new BLexiconEntry("aniTorch",	categoryAlfheim);
 		anyavil	= new BLexiconEntry("anyavil",	categoryAlfheim);
+		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
+		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
+		cloakInv= new BLexiconEntry("cloakInv",	categoryAlfheim);
+		dodgRing= new BLexiconEntry("dodgRing",	categoryAlfheim);
 		elemSet	= new BLexiconEntry("elemSet",	categoryAlfheim);
 		elvenSet= new BLexiconEntry("elvenSet",	categoryAlfheim);
 		elves	= new BLexiconEntry("elves",	categoryAlfheim);
@@ -146,8 +160,7 @@ public class AlfheimLexiconData {
 	// In progress order
 	public static void init() {
 		alfheim	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"))
-				.setIcon(new ItemStack(AlfheimBlocks.alfheimPortal));
+				.setLexiconPages(new PageText("0"), new PageText("1"));
 		
 		elves	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));
@@ -176,9 +189,22 @@ public class AlfheimLexiconData {
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
 
+		aniTorch.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"),
+								 new PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch));
+		
 		itemHold.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeItemHolder));
 		
 		greenRod.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeGreenRod));
+		
+		dodgRing.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeDodgeRing));
+		
+		cloakInv.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeInvisibilityCloak));
+		
+		amulCirs.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCloudPendant));
+		
+		amulNimb.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCloudPendantSuper));
+		
+		astrolab.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipeAstrolabe));
 		
 		ores	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
@@ -309,6 +335,31 @@ public class AlfheimLexiconData {
 		LexiconData.sparks.setLexiconPages(new PageText("0"), new PageText("1"),
 				new PageCraftingRecipe("2", AlfheimRecipes.recipesSpark),
 				new PageText("3"));
+		
+		LexiconData.cosmeticBaubles.setLexiconPages(new PageCraftingRecipe("34", AlfheimRecipes.recipeThinkingHand));
+
+		LexiconPage pg = new PageText("botania.page.lens38");
+		LexiconData.lenses.pages.add(14, pg);
+		pg.onPageAdded(LexiconData.lenses, 14);
+		pg = new PageCraftingRecipe("botania.page.lens39", AlfheimRecipes.recipeLensMessenger);
+		LexiconData.lenses.pages.add(15, pg);
+		pg.onPageAdded(LexiconData.lenses, 15);
+		LexiconRecipeMappings.map(new ItemStack(ModItems.lens, 1, 22), LexiconData.lenses, 14);
+		
+		pg = new PageText("botania.page.elvenLenses11");
+		LexiconData.elvenLenses.pages.add(pg);
+		pg.onPageAdded(LexiconData.elvenLenses, 11);
+		pg = new PageCraftingRecipe("botania.page.elvenLenses12", AlfheimRecipes.recipeLensTripwire);
+		LexiconData.elvenLenses.pages.add(pg);
+		pg.onPageAdded(LexiconData.elvenLenses, 12);
+		LexiconRecipeMappings.map(new ItemStack(ModItems.lens, 1, 23), LexiconData.elvenLenses, 11);
+		
+		pg = new PageText("botania.page.judgementCloaks1n");
+		LexiconData.judgementCloaks.pages.set(1, pg);
+		pg.onPageAdded(LexiconData.judgementCloaks, 1);
+		pg = new PageCraftingRecipe("botania.page.judgementCloaks4", AlfheimRecipes.recipeBalanceCloak);
+		LexiconData.judgementCloaks.pages.add(pg);
+		pg.onPageAdded(LexiconData.judgementCloaks, 4);
 	}
 	
 	private static void initElvenStory() {
@@ -357,8 +408,16 @@ public class AlfheimLexiconData {
 		pylons	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		portal	.setKnowledgeType(kt);
 		worldgen.setKnowledgeType(kt);
+		
+		aniTorch.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		itemHold.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		greenRod.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		dodgRing.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		cloakInv.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		amulCirs.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		amulNimb.setKnowledgeType(kt);
+		astrolab.setKnowledgeType(kt);
+		
 		ores	.setKnowledgeType(kt);
 		mobs	.setKnowledgeType(kt);
 		pixie	.setKnowledgeType(kt);

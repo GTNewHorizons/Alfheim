@@ -1,32 +1,19 @@
 package alfheim.client.render.world;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
-import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.gui.GUIDeathTimer;
-import alfheim.common.core.handler.CardinalSystem;
-import alfheim.common.core.handler.CardinalSystem.TimeStopSystem;
 import alfheim.common.core.registry.AlfheimRegistry;
-import alfheim.common.network.MessageParticles;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.world.NoteBlockEvent.Note;
-import vazkii.botania.client.lib.LibResources;
-import vazkii.botania.client.model.ModelMiniIsland;
 import vazkii.botania.common.Botania;
 
 public class SpellEffectHandlerClient {

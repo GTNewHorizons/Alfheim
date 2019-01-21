@@ -8,6 +8,7 @@ import java.util.List;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
+import alfheim.common.item.ItemAstrolabe;
 import alfheim.common.item.ItemFlugelHead;
 import alfheim.common.item.ItemHoloProjector;
 import alfheim.common.item.ItemPaperBreak;
@@ -30,14 +31,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.bauble.ItemAuraRing;
+import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
+import vazkii.botania.common.item.equipment.bauble.ItemBaubleCosmetic;
 import vazkii.botania.common.item.record.ItemModRecord;
 
 public class AlfheimItems {
 
+	public static Item astrolabe;
 	public static Item auraRingElven;
 	public static Item auraRingGod;
+	public static Item balanceCloak;
+	public static Item cloudPendant;
+	public static Item cloudPendantSuper;
 	public static Item creativeReachPendant;
+	public static Item dodgeRing;
 	public static Item elementalBoots;
 	public static Item elementalChestplate;
 	public static Item elementalHelmet;
@@ -57,6 +65,7 @@ public class AlfheimItems {
 	public static Item flugelHead;
 	public static Item flugelSoul;
 	public static Item holoProjector;
+	public static Item invisibilityCloak;
 	public static Item livingrockPickaxe;
 	public static Item manaRingElven;
 	public static Item manaRingGod;
@@ -72,6 +81,7 @@ public class AlfheimItems {
 	public static Item rodFire;
 	public static Item rodGrass;
 	public static Item rodIce;
+	public static Item thinkingHand;
 	
 	public static void init() {
 		construct();
@@ -83,6 +93,7 @@ public class AlfheimItems {
 	// so I need to construct some items in odd places to get beautiful Creative Tab representation :D
 	// and yes, I'm too lazy to just reOverride Vazkii's code :P
 	private static void construct() {
+		astrolabe = new ItemAstrolabe();
 		elementalHelmet = new ItemElementalWaterHelm();
 		elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
 		elementalChestplate = new ItemElementalEarthChest();
@@ -108,17 +119,23 @@ public class AlfheimItems {
 		pixieAttractor = new ItemPendant("PixieAttractor");
 		livingrockPickaxe = new ItemLivingrockPickaxe();
 		manasteelHoe = new ItemManasteelHoe();
-		manaStone = new ItemManaStorage("ManaStone", 2, (BaubleType) null);
+		manaStone = new ItemManaStorage("ManaStone", 2.5, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
-		manaRingElven = new ItemManaStorage("ManaRingElven", 2, BaubleType.RING);
+		manaRingElven = new ItemManaStorage("ManaRingElven", 5, BaubleType.RING);
 		auraRingElven = new ItemAuraRingAlfheim("AuraRingElven");
-		manaRingGod = new ItemManaStorage("ManaRingGod", 8, BaubleType.RING);
+		manaRingGod = new ItemManaStorage("ManaRingGod", 12, BaubleType.RING);
 		auraRingGod = new ItemAuraRingAlfheim("AuraRingGod") { public int getDelay() { return 2; } };
+		dodgeRing = new ItemDodgeRing();
+		cloudPendant = new ItemCloudPendant();
+		cloudPendantSuper = new ItemSuperCloudPendant();
+		balanceCloak = new ItemBalanceCloak();
+		invisibilityCloak = new ItemInvisibilityCloak();
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodGrass = new ItemRodGrass();
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
 		paperBreak = new ItemPaperBreak();
 		peacePipe = new ItemPeacePipe();
+		thinkingHand = new ItemThinkingHand();
 	}
 
 	private static void reg() {
@@ -132,6 +149,7 @@ public class AlfheimItems {
 		register(manaStoneGreater);
 		register(manaRingElven);
 		register(manaRingGod);
+		register(astrolabe);
 		register(rodFire);
 		register(rodIce);
 		register(rodGrass);

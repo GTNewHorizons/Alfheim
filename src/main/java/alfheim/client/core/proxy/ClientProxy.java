@@ -43,6 +43,7 @@ public class ClientProxy extends CommonProxy {
 	
 	private static final Gui guiIceLens = new GUIIceLens(Minecraft.getMinecraft());
 	private static final Gui guiParty = new GUIParty(Minecraft.getMinecraft());
+	//private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
 	private static final Gui guiSpells = new GUISpells(Minecraft.getMinecraft());
 	
 	@Override
@@ -53,6 +54,7 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerRenderThings() {
+		LibRenderIDs.idAniTorch = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
@@ -70,6 +72,7 @@ public class ClientProxy extends CommonProxy {
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderTileAlfheimPortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylons.class, new RenderTileAlfheimPylons());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAnimatedTorch.class, new RenderTileAnimatedTorch());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil.class, new RenderTileAnyavil());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFlugelHead.class, new RenderTileFlugelHead());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder.class, new RenderTileItemHolder());
@@ -183,6 +186,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(guiIceLens);
 		MinecraftForge.EVENT_BUS.register(guiParty);
 		MinecraftForge.EVENT_BUS.register(guiSpells);
+		MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));
 	}
 	
 	private static void disableMMOGUIs() {

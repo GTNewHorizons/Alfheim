@@ -13,9 +13,12 @@ import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.client.render.entity.RenderButterflies;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
+import alfheim.common.item.lens.LensMessanger;
+import alfheim.common.item.lens.LensTripwire;
 import alfheim.common.potion.PotionSoulburn;
 import codechicken.nei.recipe.GuiRecipe;
 import cpw.mods.fml.relauncher.Side;
@@ -57,10 +60,12 @@ import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.core.BotaniaCreativeTab;
 import vazkii.botania.common.core.proxy.CommonProxy;
 import vazkii.botania.common.entity.EntityDoppleganger;
 import vazkii.botania.common.item.ItemGaiaHead;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
+import vazkii.botania.common.item.lens.ItemLens;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.lib.LibBlockNames;
 
@@ -161,13 +166,13 @@ public class AlfheimHookHandler {
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
+		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
 		else return e.getDataWatcher().getWatchableObjectFloat(6);
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
 	public static float getMaxHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
+		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
 		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
 	}
 	
@@ -178,11 +183,11 @@ public class AlfheimHookHandler {
 			return;
 		}
 		
-		if (e.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) {
 			hp = 0.000000000000000000000000000000000000000000001F;
 		}
 		
-		if (!e.isPotionActive(AlfheimRegistry.sharedHP)) {
+		if (AlfheimRegistry.sharedHP != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
 			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
 			return;
 		}
@@ -268,6 +273,22 @@ public class AlfheimHookHandler {
 			if (s.equals(LibBlockNames.SUBTILE_NIGHTSHADE))
 				list.add(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_NIGHTSHADE_PRIME));
 		}
+	}
+	
+	public static final int MESSANGER = 22, TRIPWIRE = 23;
+	
+	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
+	public static void ItemLens$clinit(ItemLens lens) {
+		lens.setProps(MESSANGER, 1);
+		lens.setProps(TRIPWIRE, 1 << 5);
+
+		lens.setLens(MESSANGER, new LensMessanger());
+		lens.setLens(TRIPWIRE, new LensTripwire());
+	}
+	
+	@Hook(injectOnExit = true)
+	public static void displayAllReleventItems(BotaniaCreativeTab tab, List list) {
+		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list);
 	}
 	
 	@Hook

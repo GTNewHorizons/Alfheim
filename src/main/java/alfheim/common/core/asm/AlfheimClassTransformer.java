@@ -7,6 +7,7 @@ import java.util.List;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
@@ -69,7 +70,23 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-		
+			
+		if (transformedName.equals("vazkii.botania.common.lib.LibItemNames")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			LibItemNames$ClassVisitor ct = new LibItemNames$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+			
+		if (transformedName.equals("vazkii.botania.common.item.lens.ItemLens")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			ItemLens$ClassVisitor ct = new ItemLens$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+			
 		if (transformedName.equals("vazkii.botania.common.item.relic.ItemRelic")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -200,9 +217,11 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)  {
-			if (name.equals("updateEntities") || (name.equals("h") && desc.equals("()V"))) {
-				System.out.println("Visiting World#updateEntities: " + name + desc);
-				return new World$updateEntities$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			if (!AlfheimHookLoader.isThermos) {
+				if (name.equals("updateEntities") || (name.equals("h") && desc.equals("()V"))) {
+					System.out.println("Visiting World#updateEntities: " + name + desc);
+					return new World$updateEntities$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+				}
 			}
 			if (name.equals("updateEntityWithOptionalForce") || (name.equals("a") && desc.equals("(Lsa;Z)V"))) {
 				System.out.println("Visiting World#updateEntityWithOptionalForce: " + name + desc);
@@ -454,6 +473,116 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		}
 	}
 
+	static class LibItemNames$ClassVisitor extends ClassVisitor {
+		
+		public LibItemNames$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+			if (name.equals("<clinit>")) {
+				System.out.println("Visiting LibItemNames#<clinit>: " + name + desc);
+				return new LibItemNames$clinit$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions);
+		}
+		
+		static class LibItemNames$clinit$MethodVisitor extends MethodVisitor {
+			
+			public LibItemNames$clinit$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			private boolean twotwo_twofour = true, add = false, twoone = true;
+			
+			@Override
+			public void visitIntInsn(int opcode, int operand) {
+				if (opcode == BIPUSH) {
+					if (operand == 22) {
+						if (twotwo_twofour) {
+							twotwo_twofour = false;
+							operand = 24;
+						}
+					} 
+					
+					if (operand == 21) {
+						if (twoone) {
+							twoone = false;
+							add = true;
+						}
+					}
+				}
+				
+				super.visitIntInsn(opcode, operand);
+			}
+			
+			@Override
+			public void visitInsn(int opcode) {
+				super.visitInsn(opcode);
+				
+				if (opcode == AASTORE) {
+					if (add) {
+						add = false;
+						mv.visitInsn(DUP);
+						mv.visitIntInsn(BIPUSH, 22);
+						mv.visitLdcInsn("lensMessenger");
+						mv.visitInsn(AASTORE);
+						mv.visitInsn(DUP);
+						mv.visitIntInsn(BIPUSH, 23);
+						mv.visitLdcInsn("lensTripwire");
+						mv.visitInsn(AASTORE);
+					}
+				}
+			}
+		}
+	}
+	
+	static class ItemLens$ClassVisitor extends ClassVisitor {
+		
+		public ItemLens$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
+			if (name.equals("SUBTYPES")) {
+				value = new Integer(24);
+			}
+			return super.visitField(access, name, desc, signature, value);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+			System.out.println("Visiting ItemLens#" + name + ": " + name + desc);
+			return new ItemLens$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+		}
+		
+		static class ItemLens$MethodVisitor extends MethodVisitor {
+			
+			public ItemLens$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			int left = 2;
+			
+			@Override
+			public void visitIntInsn(int opcode, int operand) {
+				if (opcode == BIPUSH) {
+					if (operand == 22) {
+						operand = 24;
+					} else if (operand == 21) {
+						if (left--> 0) {
+							operand = 23;
+						}
+					}
+				}
+				
+				super.visitIntInsn(opcode, operand);
+			}
+		}
+	}
+	
 	static class ItemRelic$ClassVisitor extends ClassVisitor {
 		
 		public ItemRelic$ClassVisitor(ClassVisitor cv) {

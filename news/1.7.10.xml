@@ -1,7 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-12</val>
-	</version>
+		<val>BETA-13</val>	</version>
 	<version id="ALL">
 		<val>GL HF!</val>
 	</version>
@@ -26,4 +25,6 @@
 	<version id="BETA-11">
 		<val>Fixed crash on launch with Factorization.</val>
 	</version>
-</news>
+	<version id="BETA-12">
+		<val>Nice stuff from 1.12.2 Botania, just check it out :3</val>
+	</version></news>

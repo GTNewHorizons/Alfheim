@@ -50,11 +50,17 @@ public class AlfheimRecipes {
 	public static RecipeManaInfuser recipeManaStoneGreater;
 	
 	public static IRecipe recipeAlfheimPortal;
+	public static IRecipe recipeAnimatedTorch;
 	public static IRecipe recipeAntiPylon;
 	public static IRecipe recipeAnyavil;
 	public static List<IRecipe> recipesApothecary;
+	public static IRecipe recipeAstrolabe;
 	public static IRecipe recipeAuraRingElven;
 	public static IRecipe recipeAuraRingGod;
+	public static IRecipe recipeBalanceCloak;
+	public static IRecipe recipeCloudPendant;
+	public static IRecipe recipeCloudPendantSuper;
+	public static IRecipe recipeDodgeRing;
 	public static IRecipe recipeEmentalHelmet;
 	public static IRecipe recipeEmentalChestplate;
 	public static IRecipe recipeEmentalLeggings;
@@ -70,7 +76,10 @@ public class AlfheimRecipes {
 	public static IRecipe recipeFurnace;
 	public static IRecipe recipeGaiaPylon;
 	public static IRecipe recipeGreenRod;
+	public static IRecipe recipeInvisibilityCloak;
 	public static IRecipe recipeItemHolder;
+	public static IRecipe recipeLensMessenger;
+	public static IRecipe recipeLensTripwire;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
 	public static IRecipe recipeManaInfusionCore;
@@ -90,6 +99,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipePixieAttractor;
 	public static List<IRecipe> recipesSpark;
 	public static IRecipe recipeSword;
+	public static IRecipe recipeThinkingHand;
 	public static IRecipe recipeTradePortal;
 
 	public static RecipeElvenTrade recipeInterdimensional;
@@ -127,15 +137,6 @@ public class AlfheimRecipes {
 				'P', new ItemStack(pylon, 1, 2));
 		recipeAntiPylon = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(anyavil),
-				"BGB", " P ", "EDE",
-				'P', PIXIE_DUST,
-				'E', ELEMENTIUM,
-				'D', DRAGONSTONE,
-				'B', new ItemStack(storage, 1, 2),
-				'G', new ItemStack(storage, 1, 4));
-		recipeAnyavil = BotaniaAPI.getLatestAddedRecipe();
-		
 		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 0),
 			" P ", "EDE", " P ",
 			'P', PIXIE_DUST,
@@ -152,11 +153,33 @@ public class AlfheimRecipes {
 		
 		for(int i = 0; i < 16; i++)
 			addOreDictRecipe(new ItemStack(altar),
-					"SPS", " C ", "CCC",
-					'S', livingcobble,
-					'P', PETAL[i],
-					'C', LIVING_ROCK);
+				"SPS", " C ", "CCC",
+				'S', livingcobble,
+				'P', PETAL[i],
+				'C', LIVING_ROCK);
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16);
+		
+		addOreDictRecipe(new ItemStack(animatedTorch),
+			"P", "T",
+			'T', redstone_torch,
+			'P', MANA_POWDER);
+		recipeAnimatedTorch = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(anyavil),
+			"BGB", " P ", "EDE",
+			'P', PIXIE_DUST,
+			'E', ELEMENTIUM,
+			'D', DRAGONSTONE,
+			'B', new ItemStack(storage, 1, 2),
+			'G', new ItemStack(storage, 1, 4));
+		recipeAnyavil = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(astrolabe),
+			" ES", "EEE", "SED",
+			'E', ELEMENTIUM,
+			'S', LIFE_ESSENCE,
+			'D', DREAM_WOOD);
+		recipeAstrolabe = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessOreDictRecipe(new ItemStack(auraRingElven),
 			ELVORIUM_INGOT,
@@ -167,6 +190,37 @@ public class AlfheimRecipes {
 			MAUFTRIUM_INGOT,
 			new ItemStack(auraRingElven));
 		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(balanceCloak),
+			"WWW", "EWE", "ESE",
+			'W', new ItemStack(wool, 1, 8),
+			'E', "gemEmerald",
+			'S', LIFE_ESSENCE);
+		recipeBalanceCloak = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(cloudPendant),
+			"US ", "S S", "MSA",
+			'U', RUNE[6],
+			'S', MANA_STRING,
+			'M', MANA_STEEL,
+			'A', RUNE[3]);
+		recipeCloudPendant = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(cloudPendantSuper),
+			"GEG", "GPG", "WSW",
+			'G', ghast_tear,
+			'E', ELEMENTIUM,
+			'P', new ItemStack(cloudPendant),
+			'W', new ItemStack(wool, 1, 0),
+			'S', LIFE_ESSENCE);
+		recipeCloudPendantSuper = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(dodgeRing),
+			"EM ", "M M", " MR",
+			'E', "gemEmerald",
+			'M', MANA_STEEL,
+			'R', RUNE[3]);
+		recipeDodgeRing = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elementalHelmet),
 			"RTR", "DPD", " M ",
@@ -330,12 +384,29 @@ public class AlfheimRecipes {
 			'S', grassSeeds);
 		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
 		
+		addOreDictRecipe(new ItemStack(invisibilityCloak),
+			"PWP", "GWG", "GJG",
+			'P', PRISMARINE_SHARD,
+			'W', new ItemStack(wool, 1, 0),
+			'G', manaGlass,
+			'J', MANA_PEARL);
+		recipeInvisibilityCloak = BotaniaAPI.getLatestAddedRecipe();
+		
 		addOreDictRecipe(new ItemStack(itemHolder),
 			"MLM", "LDL",
 			'D', MANA_DIAMOND,
 			'L', LIVING_ROCK,
 			'M', MANA_PEARL);
 		recipeItemHolder = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(lens, 1, 22),
+			" P ", "PLP", " P ",
+			'P', paper,
+			'L', new ItemStack(lens, 1, 0));
+		recipeLensMessenger = BotaniaAPI.getLatestAddedRecipe();
+		
+		addShapelessOreDictRecipe(new ItemStack(lens, 1, 23), new ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM);
+		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(livingrockPickaxe),
 			"LLL", " S ", " S ",
@@ -424,6 +495,12 @@ public class AlfheimRecipes {
 				'N', "nuggetGold");
 		recipesSpark = BotaniaAPI.getLatestAddedRecipes(16);
 		recipesSpark.addAll(ModCraftingRecipes.recipesSpark);
+		
+		addOreDictRecipe(new ItemStack(thinkingHand),
+			"PPP", "PSP", "PPP",
+			'P', tinyPotato,
+			'S', MANA_STRING);
+		recipeThinkingHand = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(tradePortal),
 			"LEL", "LEL", "LEL",

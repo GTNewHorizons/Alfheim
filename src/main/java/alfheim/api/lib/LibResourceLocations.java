@@ -11,6 +11,7 @@ public class LibResourceLocations {
 	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
 	public static ResourceLocation aura = new ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png"); 
 	public static ResourceLocation babylon = new ResourceLocation("botania:textures/misc/babylon.png");
+	public static ResourceLocation balanceCloak = new ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png");
 	public static ResourceLocation butterfly = new ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png");
 	public static ResourceLocation cross = new ResourceLocation(ModInfo.MODID, "textures/misc/crosshair.png");
 	public static ResourceLocation deathTimer = new ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimer.png");

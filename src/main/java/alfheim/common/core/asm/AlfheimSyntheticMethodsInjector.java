@@ -12,10 +12,12 @@ import net.minecraft.launchwrapper.IClassTransformer;
 
 public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 
-	public static boolean doLog = true;
+	public static boolean doLog = System.getProperty("asjlib.asm.errorlog", "off").equals("on");
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (basicClass == null || basicClass.length == 0) return basicClass;
+		
 		ClassReader cr;
 		ClassWriter cw;
 		ClassVisitor cv;

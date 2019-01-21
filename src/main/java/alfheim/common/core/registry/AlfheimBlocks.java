@@ -23,6 +23,7 @@ public class AlfheimBlocks {
 	
 	public static Block alfheimPortal;
 	public static Block alfheimPylons;
+	public static Block animatedTorch;
 	public static Block anyavil;
 	public static Block dreamLeaves;
 	public static Block dreamLog;
@@ -49,6 +50,7 @@ public class AlfheimBlocks {
 	private static void construct() {
 		alfheimPortal = new BlockAlfheimPortal();
 		alfheimPylons = new BlockAlfheimPylon();
+		animatedTorch = new BlockAnimatedTorch();
 		anyavil = new BlockAnyavil();
 		dreamLeaves = new BlockDreamLeaves();
 		dreamLog = new BlockDreamLog();
@@ -83,6 +85,7 @@ public class AlfheimBlocks {
 		register(dreamLog);
 		register(dreamLeaves);
 		register(dreamSapling);
+		register(animatedTorch);
 		register(flugelHead);
 		register(poisonIce);
 		register(redFlame);

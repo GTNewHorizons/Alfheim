@@ -73,7 +73,7 @@ public class RenderEntityLightningMark extends Render {
 		float chargeMul = charge / 10F;
 
 		
-		Random rand = new Random(mark.getUniqueID().getMostSignificantBits());
+		Random rand = new Random(mark.getUniqueID().getMostSignificantBits()); // FIXME remove instanciating
 
 		float s = chargeMul;
 		s += Math.min(1F, (live + partialTick) * 0.2F);

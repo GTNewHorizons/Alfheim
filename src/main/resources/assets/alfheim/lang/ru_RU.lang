@@ -1,6 +1,7 @@
 ###########################################################___БЛОКИ___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Ядро портала в Альвхейм
+tile.AnimatedTorch.name=Подвижный факел
 tile.Anyavil.name=Някавайня
 tile.botania:AlfheimPylons0.name=Эльфийский пилон
 tile.botania:AlfheimPylons1.name=Йордин пилон
@@ -29,9 +30,14 @@ tile.Transferer.name=Переносчик
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
+item.Astrolabe.name=Астролябия формирователя мира
 item.botania:AuraRingElven.name=Эльфийское кольцо ауры
 item.botania:AuraRingGod.name=Божественное кольцо ауры
+item.botania:BalanceCloak.name=Плащ Баланса
+item.botania:CloudPendant.name=Перистый амулет
+item.botania:SuperCloudPendant.name=Облачный амулет
 item.CreativeReachPendant.name=Творческая подвеска несравненной дальности
+item.botania:DodgeRing.name=Кольцо ловких движений
 item.botania:ElementalAirBoots.name=Элементальные ботинки воздуха
 item.botania:ElementalFireLeggings.name=Элементальные поножи огня
 item.botania:ElementalEarthChest.name=Элементальная кираса земли
@@ -61,6 +67,11 @@ item.grassRod.name=Жезл зелёных холмов
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
 item.IffesalDust.name=Пыль иффесалия
 item.InterdimensionalGatewayCore.name=Межпространственное связующее ядро
+item.botania:InvisibilityCloak.name=Плащ невидимости
+item.botania:lensMessenger.name=Мана линза: Посыльный
+item.botania:lensMessenger.short=Посыльный
+item.botania:lensTripwire.name=Мана линза: Растяжка
+item.botania:lensTripwire.short=Растяжка
 item.LivingrockPickaxe.name=Кирка из жизнебулыжника
 item.ManaInfusionCore.name=Ядро мана-наполнителя
 item.ManaRingElven.name=Эльфийское кольцо маны
@@ -103,6 +114,7 @@ item.botania:TankMask.name=Загадочная маска
 item.TankMask.active=Активна
 item.TankMask.inactive=Неактивна
 item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
+item.botania:ThinkingHand.name=Думающая рука
 item.Transferer.name=Деструктуризатор
 
 ########################################################___ОСТАЛЬНОЕ___#########################################################
@@ -192,6 +204,7 @@ alfheim.potion.wellolife.postfix=Зелье водной регенерации
 
 alfheimmics.badArena=Как бы вы ни старались, ритуал не активируется. Вам кажется, что Вы допустили ошибку в подготовке территории. Чтобы убедиться в этом, проверьте территорию на наличие препятствий.
 alfheimmics.fakeplayer=Только настоящие игроки могут призвать Флюгеля
+alfheimmisc.invalidDodge=Неверный пакет уклонения
 alfheimmics.needsCatalysts=Как бы вы ни старались, ритуал не активируется. Возможно, Вы допустили ошибку в расположении или конфигурации пилонов.
 alfheimmisc.notallowed=Глупый смертный! Ты даже не можешь летать без помощи! Ты слишком слаб, чтобы драться со мной! Уходи, пока я не передумала и не убила тебя.
 alfheimmics.notbeacon=Это не тот блок, либо он повреждён (во втором случае обратитесь к администратору).

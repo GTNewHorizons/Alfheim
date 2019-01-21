@@ -1,6 +1,7 @@
 package alfheim.common.entity;
 
 import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class Flight {
@@ -27,7 +28,7 @@ public class Flight {
 	}
 	
 	public static void add(EntityPlayer player, double val) {
-		set(player, get(player) + val);
+		set(player, Math.max(0, Math.min(get(player) + val, AlfheimConfig.flightTime)));
 	}
 	
 	public static void sub(EntityPlayer player, double val) {

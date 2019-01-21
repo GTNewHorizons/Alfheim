@@ -22,7 +22,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class ASJPacketCompleter implements IClassTransformer {
 
 	public static final List descriptors = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;");
-	public static boolean doLog = true;
+	public static boolean doLog = System.getProperty("asjlib.asm.errorlog", "off").equals("on");
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {

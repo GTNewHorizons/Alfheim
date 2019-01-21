@@ -173,16 +173,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityUpdate(EntityUpdateEvent e) {
 		if (e.entity == null || !e.entity.isEntityAlive()) return;
-		if (AlfheimCore.enableMMO) {
-			if (e.entity instanceof EntityLivingBase && ((EntityLivingBase) e.entity).isPotionActive(AlfheimRegistry.leftFlame)) {
-				PotionEffect pe = ((EntityLivingBase) e.entity).getActivePotionEffect(AlfheimRegistry.leftFlame);
-				pe.duration--;
-				if(!ASJUtilities.isServer()) SpellEffectHandlerClient.onDeathTick((EntityLivingBase) e.entity);
-				if (pe.duration <= 0) ((EntityLivingBase) e.entity).removePotionEffect(pe.potionID);
-				else e.setCanceled(true);
-			}
-			if (ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
-		}
+		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
 	}
 	
 	@SubscribeEvent
@@ -515,6 +506,14 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent e) {
 		if (AlfheimCore.enableMMO) {
+			if (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) {
+				PotionEffect pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.leftFlame);
+				pe.duration--;
+				if(!ASJUtilities.isServer()) SpellEffectHandlerClient.onDeathTick(e.entityLiving);
+				if (pe.duration <= 0) e.entityLiving.removePotionEffect(pe.potionID);
+				else e.setCanceled(true);
+			}
+			
 			if (e.entityLiving.isDead) {
 				Party pt = PartySystem.getMobParty(e.entityLiving);
 				if (pt != null) pt.setDead(e.entityLiving, true);
@@ -529,7 +528,6 @@ public class EventHandler {
 		EntityPlayer player = (EntityPlayer) e.entityLiving;
 		
 		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && player.worldObj.getTotalWorldTime() % 20 == 0) ManaSystem.handleManaChange(player);
-		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
 				if (Flight.get(player) >= 0 && Flight.get(player) <= Flight.max()) {
@@ -538,6 +536,7 @@ public class EventHandler {
 						if (player.isSprinting()) player.moveFlying(0F, 1F, 0.01F);
 					} else Flight.add(player, Flight.get(player) < Flight.max() ? 1 : 0);
 				}
+				
 				if (Flight.get(player) <= 0)	player.capabilities.isFlying = false;
 			}
 		}

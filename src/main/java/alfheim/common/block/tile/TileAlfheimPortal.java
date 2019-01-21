@@ -269,7 +269,7 @@ public class TileAlfheimPortal extends TileMod {
 				
 				if(ConfigHandler.elfPortalParticlesEnabled) {
 					double worldTime = this.worldObj.getTotalWorldTime();
-					worldTime += new Random(xCoord + pos[0] ^ yCoord + pos[1] ^ zCoord + pos[2]).nextInt(1000);
+					worldTime += new Random(xCoord + pos[0] ^ yCoord + pos[1] ^ zCoord + pos[2]).nextInt(1000); // FIXME remove instanciating
 					worldTime /= 5;
 
 					float r = 0.75F + (float) Math.random() * 0.05F;
