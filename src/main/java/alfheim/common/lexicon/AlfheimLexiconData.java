@@ -160,8 +160,7 @@ public class AlfheimLexiconData {
 	// In progress order
 	public static void init() {
 		alfheim	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"))
-				.setIcon(new ItemStack(AlfheimBlocks.alfheimPortal));
+				.setLexiconPages(new PageText("0"), new PageText("1"));
 		
 		elves	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));

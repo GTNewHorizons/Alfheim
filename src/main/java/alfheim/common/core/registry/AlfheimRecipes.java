@@ -385,11 +385,11 @@ public class AlfheimRecipes {
 		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(invisibilityCloak),
-			"PWP", "GWG", "GPG",
+			"PWP", "GWG", "GJG",
 			'P', PRISMARINE_SHARD,
 			'W', new ItemStack(wool, 1, 0),
 			'G', manaGlass,
-			'P', MANA_PEARL);
+			'J', MANA_PEARL);
 		recipeInvisibilityCloak = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(itemHolder),

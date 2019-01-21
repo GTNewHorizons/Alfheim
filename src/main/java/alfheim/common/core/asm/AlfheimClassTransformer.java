@@ -217,15 +217,15 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)  {
-			if (name.equals("updateEntities") || (name.equals("h") && desc.equals("()V"))) {
-				System.out.println("Visiting World#updateEntities: " + name + desc);
-				return new World$updateEntities$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
-			}
 			if (!AlfheimHookLoader.isThermos) {
-				if (name.equals("updateEntityWithOptionalForce") || (name.equals("a") && desc.equals("(Lsa;Z)V"))) {
-					System.out.println("Visiting World#updateEntityWithOptionalForce: " + name + desc);
-					return new World$updateEntityWithOptionalForce$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+				if (name.equals("updateEntities") || (name.equals("h") && desc.equals("()V"))) {
+					System.out.println("Visiting World#updateEntities: " + name + desc);
+					return new World$updateEntities$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 				}
+			}
+			if (name.equals("updateEntityWithOptionalForce") || (name.equals("a") && desc.equals("(Lsa;Z)V"))) {
+				System.out.println("Visiting World#updateEntityWithOptionalForce: " + name + desc);
+				return new World$updateEntityWithOptionalForce$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
