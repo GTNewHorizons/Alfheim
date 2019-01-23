@@ -1733,7 +1733,6 @@ public class StructureArena extends StructureBaseClass {
 		world.setBlock(x + 3, y + 1, z + 19, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 4, y + 1, z + 19, ModBlocks.livingrock, 3, 3);
 		world.setBlock(x + 5, y + 1, z + 19, ModFluffBlocks.livingrockBrickStairs, 1, 3);
-		world.setBlock(x + 21, y + 1, z + 19, ModBlocks.storage, 2, 3);
 		world.setBlock(x + 36, y + 1, z + 19, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 37, y + 1, z + 19, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 38, y + 1, z + 19, ModBlocks.livingrock, 2, 3);
@@ -1742,7 +1741,6 @@ public class StructureArena extends StructureBaseClass {
 		world.setBlock(x + 2, y + 1, z + 20, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 3, y + 1, z + 20, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 4, y + 1, z + 20, ModBlocks.livingrock, 1, 3);
-		world.setBlock(x + 21, y + 1, z + 20, ModBlocks.storage, 2, 3);
 		world.setBlock(x + 35, y + 1, z + 20, ModFluffBlocks.livingrockBrickStairs, 0, 3);
 		world.setBlock(x + 36, y + 1, z + 20, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 37, y + 1, z + 20, ModBlocks.livingrock, 1, 3);
@@ -1753,7 +1751,6 @@ public class StructureArena extends StructureBaseClass {
 		world.setBlock(x + 3, y + 1, z + 21, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 4, y + 1, z + 21, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 5, y + 1, z + 21, ModFluffBlocks.livingrockBrickStairs, 1, 3);
-		world.setBlock(x + 19, y + 1, z + 21, ModBlocks.storage, 2, 3);
 		world.setBlock(x + 36, y + 1, z + 21, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 37, y + 1, z + 21, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 38, y + 1, z + 21, ModBlocks.livingrock, 1, 3);
@@ -1782,7 +1779,6 @@ public class StructureArena extends StructureBaseClass {
 		world.setBlock(x + 3, y + 1, z + 24, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 4, y + 1, z + 24, ModBlocks.livingrock, 1, 3);
 		world.setBlock(x + 5, y + 1, z + 24, ModFluffBlocks.livingrockBrickStairs, 1, 3);
-		world.setBlock(x + 16, y + 1, z + 24, ModBlocks.pylon, 2, 3);
 		world.setBlock(x + 35, y + 1, z + 24, ModFluffBlocks.livingrockBrickStairs, 0, 3);
 		world.setBlock(x + 36, y + 1, z + 24, ModBlocks.livingrock, 2, 3);
 		world.setBlock(x + 37, y + 1, z + 24, ModBlocks.livingrock, 1, 3);
@@ -2233,6 +2229,43 @@ public class StructureArena extends StructureBaseClass {
 		world.setBlock(x + 6, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
 		world.setBlock(x + 32, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3);
 		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 40, y, z, z + 40, 22);
+
+		int count = world.rand.nextInt(3) + 1, index;
+		
+		if (count < 3 && world.rand.nextInt(count * 2) == 0) {
+			index = world.rand.nextInt(4);
+			switch (index) {
+				case 0: world.setBlock(x + 16, y + 1, z + 16, ModBlocks.pylon, 2, 3); break;
+				case 1: world.setBlock(x + 24, y + 1, z + 16, ModBlocks.pylon, 2, 3); break;
+				case 2: world.setBlock(x + 16, y + 1, z + 24, ModBlocks.pylon, 2, 3); break;
+				case 3: world.setBlock(x + 24, y + 1, z + 24, ModBlocks.pylon, 2, 3); break;
+			}
+		}
+
+		boolean[] pos = new boolean[9];
+		int[] yo = new int[9];
+		
+		for (; count > 0; count--) {
+			index = world.rand.nextInt(9);
+			if (pos[index]) {
+				count++;
+				continue;
+			}
+				
+			pos[index] = true;
+			yo[index] = world.rand.nextInt(3) == 0 ? 0 : 1;
+		}
+		
+		if(pos[0]) world.setBlock(x + 19, y + yo[0], z + 19, ModBlocks.storage, 2, 3);
+		if(pos[1]) world.setBlock(x + 20, y + yo[1], z + 19, ModBlocks.storage, 2, 3);
+		if(pos[2]) world.setBlock(x + 21, y + yo[2], z + 19, ModBlocks.storage, 2, 3);
+		if(pos[3]) world.setBlock(x + 19, y + yo[3], z + 20, ModBlocks.storage, 2, 3);
+		if(pos[4]) world.setBlock(x + 20, y + yo[4], z + 20, ModBlocks.storage, 2, 3);
+		if(pos[5]) world.setBlock(x + 21, y + yo[5], z + 20, ModBlocks.storage, 2, 3);
+		if(pos[6]) world.setBlock(x + 19, y + yo[6], z + 21, ModBlocks.storage, 2, 3);
+		if(pos[7]) world.setBlock(x + 20, y + yo[7], z + 21, ModBlocks.storage, 2, 3);
+		if(pos[8]) world.setBlock(x + 21, y + yo[8], z + 21, ModBlocks.storage, 2, 3);
+
 		return true;
 	}
 }

@@ -360,6 +360,8 @@ public class AlfheimLexiconData {
 		pg = new PageCraftingRecipe("botania.page.judgementCloaks4", AlfheimRecipes.recipeBalanceCloak);
 		LexiconData.judgementCloaks.pages.add(pg);
 		pg.onPageAdded(LexiconData.judgementCloaks, 4);
+		
+		setKnowledgeTypes();
 	}
 	
 	private static void initElvenStory() {
@@ -449,6 +451,74 @@ public class AlfheimLexiconData {
 				targets	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 			}
 		}
+		
+		LexiconData.elvenLenses.setKnowledgeType(kt);
+		LexiconData.dreamwoodSpreader.setKnowledgeType(kt);
+		LexiconData.prism.setKnowledgeType(kt);
+		LexiconData.sparkUpgrades.setKnowledgeType(kt);
+		LexiconData.sparkChanger.setKnowledgeType(kt);
+		LexiconData.dandelifeon.setKnowledgeType(kt);
+		LexiconData.kekimurus.setKnowledgeType(kt);
+		LexiconData.rafflowsia.setKnowledgeType(kt);
+		LexiconData.spectrolus.setKnowledgeType(kt);
+		LexiconData.bubbell.setKnowledgeType(kt);
+		LexiconData.heiseiDream.setKnowledgeType(kt);
+		LexiconData.loonium.setKnowledgeType(kt);
+		LexiconData.orechid.setKnowledgeType(kt);
+		LexiconData.orechidIgnem.setKnowledgeType(kt);
+		LexiconData.spectranthemum.setKnowledgeType(kt);
+		LexiconData.flasks.setKnowledgeType(kt);
+		LexiconData.cocoon.setKnowledgeType(kt);
+		LexiconData.conjurationCatalyst.setKnowledgeType(kt);
+		LexiconData.craftCrate.setKnowledgeType(kt);
+		LexiconData.gatherDrum.setKnowledgeType(kt);
+		LexiconData.manaBomb.setKnowledgeType(kt);
+		LexiconData.spectralPlatform.setKnowledgeType(kt);
+		LexiconData.ghostRail.setKnowledgeType(kt);
+		LexiconData.crystalBow.setKnowledgeType(kt);
+		LexiconData.elfGear.setKnowledgeType(kt);
+		LexiconData.virus.setKnowledgeType(kt);
+		LexiconData.openBucket.setKnowledgeType(kt);
+		LexiconData.fireChakram.setKnowledgeType(kt);
+		LexiconData.clip.setKnowledgeType(kt);
+		LexiconData.rainbowRod.setKnowledgeType(kt);
+		LexiconData.skyDirtRod.setKnowledgeType(kt);
+		LexiconData.gravityRod.setKnowledgeType(kt);
+		LexiconData.missileRod.setKnowledgeType(kt);
+		LexiconData.laputaShard.setKnowledgeType(kt);
+		LexiconData.slimeBottle.setKnowledgeType(kt);
+		LexiconData.regenIvy.setKnowledgeType(kt);
+		LexiconData.worldSeed.setKnowledgeType(kt);
+		LexiconData.divaCharm.setKnowledgeType(kt);
+		LexiconData.judgementCloaks.setKnowledgeType(kt);
+		LexiconData.superLavaPendant.setKnowledgeType(kt);
+		LexiconData.superTravelBelt.setKnowledgeType(kt);
+		LexiconData.goldLaurel.setKnowledgeType(kt);
+		LexiconData.pixieRing.setKnowledgeType(kt);
+		LexiconData.reachRing.setKnowledgeType(kt);
+		LexiconData.corporea.setKnowledgeType(kt);
+		LexiconData.blackHoleTalisman.setKnowledgeType(kt);
+		LexiconData.corporeaCrystalCube.setKnowledgeType(kt);
+		LexiconData.corporeaFunnel.setKnowledgeType(kt);
+		LexiconData.corporeaIndex.setKnowledgeType(kt);
+		LexiconData.corporeaInterceptor.setKnowledgeType(kt);
+		LexiconData.corporeaRetainer.setKnowledgeType(kt);
+		LexiconData.flightTiara.setKnowledgeType(kt);
+		LexiconData.spawnerClaw.setKnowledgeType(kt);
+		LexiconData.spawnerMover.setKnowledgeType(kt);
+		LexiconData.luminizerTransport.setKnowledgeType(kt);
+		LexiconData.redString.setKnowledgeType(kt);
+		LexiconData.keepIvy.setKnowledgeType(kt);
+		LexiconData.starSword.setKnowledgeType(kt);
+		LexiconData.thunderSword.setKnowledgeType(kt);
+		LexiconData.elvenMessage.setKnowledgeType(kt);
+		LexiconData.elvenResources.setKnowledgeType(kt);
+		LexiconData.elvenLore.setKnowledgeType(kt);
+		LexiconData.gaiaRitual.setKnowledgeType(kt);
+		LexiconData.gaiaRitualHardmode.setKnowledgeType(kt);
+		if (LexiconData.relics != null) LexiconData.relics.setKnowledgeType(kt);
+		LexiconData.headCreating.setKnowledgeType(kt);
+		LexiconData.starfield.setKnowledgeType(kt);
 	}
 	
 	public static void disableESM() {
