@@ -1,7 +1,5 @@
 package alfheim.common.core.asm;
 
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.api.ModInfo;

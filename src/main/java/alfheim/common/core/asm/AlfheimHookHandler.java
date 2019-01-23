@@ -1,5 +1,7 @@
 package alfheim.common.core.asm;
 
+import static gloomyfolken.hooklib.asm.ReturnCondition.*;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +26,6 @@ import codechicken.nei.recipe.GuiRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gloomyfolken.hooklib.asm.Hook;
-import gloomyfolken.hooklib.asm.ReturnCondition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
@@ -44,14 +45,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.subtile.SubTileEntity;
 import vazkii.botania.client.core.handler.HUDHandler;
@@ -92,6 +92,20 @@ public class AlfheimHookHandler {
 		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Remove.Post(e, pe));
 	}
 	
+	@Hook(returnCondition = ON_TRUE)
+	public static boolean requestManaExact(ManaItemHandler handler, ItemStack stack, EntityPlayer player, int manaToGet, boolean remove) {
+		return player.capabilities.isCreativeMode;
+	}
+	
+	@Hook(returnCondition = ON_TRUE, returnType = "int", returnAnotherMethod = "requestManaChecked")
+	public static boolean requestMana(ManaItemHandler handler, ItemStack stack, EntityPlayer player, int manaToGet, boolean remove) {
+		return player.capabilities.isCreativeMode;
+	}
+	
+	public static int requestManaChecked(ManaItemHandler handler, ItemStack stack, EntityPlayer player, int manaToGet, boolean remove) {
+		return manaToGet;
+	}
+	
 	@Hook(injectOnExit = true, isMandatory = true)
 	public static void moveFlying(Entity e, float x, float y, float z) {
 		if (AlfheimCore.enableMMO && e instanceof EntityLivingBase && ((EntityLivingBase) e).isPotionActive(AlfheimRegistry.leftFlame)) {
@@ -99,7 +113,7 @@ public class AlfheimHookHandler {
 		}
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static void updatePotionEffects(EntityLivingBase e) {
 		try {
 	        Iterator iterator = e.activePotionsMap.keySet().iterator();
@@ -166,19 +180,19 @@ public class AlfheimHookHandler {
 		}
     }
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
 		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
 		else return e.getDataWatcher().getWatchableObjectFloat(6);
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static float getMaxHealth(EntityLivingBase e) {
 		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
 		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static void setHealth(EntityLivingBase e, float hp) {
 		if (!AlfheimCore.enableMMO) {
 			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
@@ -223,7 +237,7 @@ public class AlfheimHookHandler {
 	
 	public static float rt = 0, gt = 0, bt = 0;
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	@Hook(returnCondition = ALWAYS)
 	public static void wispFX(CommonProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, float gravity) {
 		if (updatingEntity) {
 			r = rt = (float) Math.random() * 0.3F;
@@ -233,7 +247,7 @@ public class AlfheimHookHandler {
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, gravity, 1F);
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	@Hook(returnCondition = ALWAYS)
 	public static void wispFX(CommonProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, float motionx, float motiony, float motionz) {
 		if (updatingEntity && size == 0.4F) {
 			r = rt;
@@ -259,12 +273,12 @@ public class AlfheimHookHandler {
 		}
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ON_TRUE)
+	@Hook(returnCondition = ON_TRUE)
 	public static boolean sparkleFX(ClientProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, int m, boolean fake) {
 		return updatingTile;
 	}
 
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	@Hook(returnCondition = ALWAYS)
 	public static void getSubBlocks(BlockSpecialFlower flower, Item item, CreativeTabs tab, List list) {
 		for(String s : BotaniaAPI.subtilesForCreativeMenu) {
 			list.add(ItemBlockSpecialFlower.ofType(s));
@@ -303,28 +317,28 @@ public class AlfheimHookHandler {
 		if (subtile instanceof SubTileDaybloom && ((SubTileDaybloom) subtile).isPrime()) ((SubTileDaybloom) subtile).setPrimusPosition();
 	}
 
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
+	@Hook(returnCondition = ALWAYS)
 	public static IIcon getIcon(BlockPylon pylon, int side, int meta) {
 		return meta == 0 || meta == 1 ? ModBlocks.storage.getIcon(side, meta) : Blocks.diamond_block.getIcon(side, 0);
 	}
 
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
+	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
 	public static boolean onNetherPortalActivation(BlockPortal portal, World world, int x, int y, int z) {
 		return MinecraftForge.EVENT_BUS.post(new NetherPortalActivationEvent(world, x, y, z));
 	}
 
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false, isMandatory = true)
+	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false, isMandatory = true)
 	public static boolean matches(RecipePureDaisy recipe, World world, int x, int y, int z, SubTileEntity pureDaisy, Block block, int meta) {
 		return recipe.getOutput().equals(ModBlocks.livingwood) && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim;
 	}
 
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, isMandatory = true)
+	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	public static boolean onItemUse(ItemFlugelEye eye, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) return EntityFlugel.spawn(player, stack, world, x, y, z, false);
 		return false;
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false)
+	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false)
 	public static boolean spawn(EntityDoppleganger gaia, EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
 		for (int i = -1; i < 2; i++) 
 			for (int k = -1; k < 2; k++) 
@@ -341,12 +355,12 @@ public class AlfheimHookHandler {
 		return stack;
 	}
 	
-	@Hook(isMandatory = true, returnCondition = ReturnCondition.ALWAYS)
+	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	public static int getFortuneModifier(EnchantmentHelper h, EntityLivingBase e) {
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.getHeldItem()) + (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush) ? 2 : 0);
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS, isMandatory = true)
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static boolean extinguishFire(World world, EntityPlayer player, int x, int y, int z, int side) {
         if (side == 0) --y;
         if (side == 1) ++y;
