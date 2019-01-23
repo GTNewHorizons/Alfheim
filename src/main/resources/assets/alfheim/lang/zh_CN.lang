@@ -186,10 +186,10 @@ alfheim.potion.throw.postfix=流风药水
 alfheim.potion.wellolife=生命源泉
 alfheim.potion.wellolife.postfix=潮汐之生命药水
 
-alfheimmics.badArena=即使尽你最大的努力,仪式仍然没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
-alfheimmics.needsCatalysts=无论你如何努力将眼睛推进信标,周围似乎都没有任何事情发生,检查一下你的配置是个好主意
+alfheimmisc.badArena=即使尽你最大的努力,仪式仍然没有接受你的祭奠,检查一下周围和下方的障碍物是个好主意
+alfheimmisc.needsCatalysts=无论你如何努力将眼睛推进信标,周围似乎都没有任何事情发生,检查一下你的配置是个好主意
 alfheimmisc.notallowed=愚蠢的凡人,你连飞行都做不到,你没有和我战斗的资格,在我改变主意并干掉你之前赶紧离开
-alfheimmics.peacefulNoob=你试图提供一个眼睛,但世界的和平阻止你这样做,也许你应该做点什么
+alfheimmisc.peacefulNoob=你试图提供一个眼睛,但世界的和平阻止你这样做,也许你应该做点什么
 alfheimmisc.teamnotmob=盟友无法被选定为敌方目标
 alfheimmisc.update=看上去你正在使用一个过期的版本(%s). 也许你应该更新到 %s?
 

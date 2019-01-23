@@ -14,12 +14,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.ManaItemHandler;
@@ -33,6 +35,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 		setBlockName("NiflheimIce");
 		setBlockTextureName(ModInfo.MODID + ":NiflheimIce");
 		setBlockUnbreakable();
+		setHarvestLevel("pick", 2);
 		setLightOpacity(0);
 		setResistance(Float.MAX_VALUE);
 		setStepSound(soundTypeGlass);
@@ -40,6 +43,20 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 		slipperiness = 0.98F;
 	}
 
+	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		int metadata = world.getBlockMetadata(x, y, z);
+        float hardness = getBlockHardness(world, x, y, z);
+        
+        IInventory bbls = BaublesApi.getBaubles(player);
+		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 5, true)) hardness = 2;
+
+		if (hardness < 0.0F) return 0.0F;
+		
+        if (!ForgeHooks.canHarvestBlock(this, player, metadata)) return player.getBreakSpeed(this, true, metadata, x, y, z) / hardness / 100F;
+        else return player.getBreakSpeed(this, false, metadata, x, y, z) / hardness / 30F;
+	}
+	
 	public boolean isOpaqueCube() {
 		return false;
 	}
@@ -73,22 +90,16 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
 		}
 		e.setInWeb();
-		if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
+		if (!w.isRemote && e instanceof EntityLivingBase) {
 			EntityLivingBase l = (EntityLivingBase) e;
-			l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
+			if (!l.isPotionActive(Potion.poison)) l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
 			l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
 		}
 	}
 	
 	@Override
 	public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity e) {
-		if (e instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles((EntityPlayer) e).getStackInSlot(0), (EntityPlayer) e, 50, true)) return;
-		e.setInWeb();
-		if (!w.isRemote && w.getTotalWorldTime() % 20 == 0 && e instanceof EntityLivingBase) {
-			EntityLivingBase l = (EntityLivingBase) e;
-			l.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 2));
-			l.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 25, 2));
-		}
+		this.onEntityWalking(w, x, y, z, e);
 	}
 	
 	@Override

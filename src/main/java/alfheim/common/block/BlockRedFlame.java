@@ -1,11 +1,6 @@
 package alfheim.common.block;
 
-import static net.minecraftforge.common.util.ForgeDirection.DOWN;
-import static net.minecraftforge.common.util.ForgeDirection.EAST;
-import static net.minecraftforge.common.util.ForgeDirection.NORTH;
-import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.util.ForgeDirection.UP;
-import static net.minecraftforge.common.util.ForgeDirection.WEST;
+import static net.minecraftforge.common.util.ForgeDirection.*;
 
 import java.util.Random;
 
@@ -22,10 +17,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
@@ -43,6 +40,20 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 		setResistance(Float.MAX_VALUE);
 	}
 
+	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		int metadata = world.getBlockMetadata(x, y, z);
+        float hardness = getBlockHardness(world, x, y, z);
+        
+        IInventory bbls = BaublesApi.getBaubles(player);
+		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 300, true)) hardness = 2;
+
+		if (hardness < 0.0F) return 0.0F;
+		
+        if (!ForgeHooks.canHarvestBlock(this, player, metadata)) return player.getBreakSpeed(this, true, metadata, x, y, z) / hardness / 100F;
+        else return player.getBreakSpeed(this, false, metadata, x, y, z) / hardness / 30F;
+	}
+	
 	@Override
 	public boolean isCollidable() {
 		return false;

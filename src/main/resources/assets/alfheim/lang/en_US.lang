@@ -202,13 +202,14 @@ alfheim.potion.throw.postfix=Potion of Lightness
 alfheim.potion.wellolife=Well of Life
 alfheim.potion.wellolife.postfix=Potion of Water Regeneration
 
-alfheimmics.badArena=As hard as you try, the Beacon will not accept your sacrifice. You believe the ritual grounds might be improper. It might be a good idea to check for obstructions on the nearby area and blocks below the beacon.
-alfheimmics.fakeplayer=Only true players can summon Flügel.
+alfheimmisc.badArena=As hard as you try, the Beacon will not accept your sacrifice. You believe the ritual grounds might be improper. It might be a good idea to check for obstructions on the nearby area and blocks below the beacon.
+alfheimmisc.fakeplayer=Only true players can summon Flügel.
+alfheimmisc.inactive=Beacon must have at least one active level
 alfheimmisc.invalidDodge=Invalid Dodge Packet
-alfheimmics.needsCatalysts=No matter how hard you try to push the Eye into the Beacon, nothing seems to happen, perhaps your configuration of catalyst pylons might be off.
+alfheimmisc.needsCatalysts=No matter how hard you try to push the Eye into the Beacon, nothing seems to happen, perhaps your configuration of catalyst pylons might be off.
 alfheimmisc.notallowed=Foolish mortal! You can't even fly without help! You are too weak to fight with me! Go away before I change my mind and kill you.
-alfheimmics.notbeacon=This is wrong block, or it is corrupted (in the second case, contact server administrator).
-alfheimmics.peacefulNoob=You try to offer the Eye, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
+alfheimmisc.notbeacon=This is wrong block, or it is corrupted (in the second case, contact server administrator).
+alfheimmisc.peacefulNoob=You try to offer the Eye, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
 alfheimmisc.teamnotmob=Party member cannot be selected as enemy target.
 alfheimmisc.update=O-oh, it seems you are playing on an outdated version (%s). Perhaps you should update to %s?
 

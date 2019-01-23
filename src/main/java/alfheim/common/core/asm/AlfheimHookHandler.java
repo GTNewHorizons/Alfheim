@@ -44,6 +44,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -321,6 +323,17 @@ public class AlfheimHookHandler {
 		if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) return EntityFlugel.spawn(player, stack, world, x, y, z, false);
 		return false;
 	}
+	
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false)
+	public static boolean spawn(EntityDoppleganger gaia, EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
+		for (int i = -1; i < 2; i++) 
+			for (int k = -1; k < 2; k++) 
+				if (!world.getBlock(x + i, y - 1, z + k).isBeaconBase(world, x + i, y - 1, z + k, x, y, z)) {
+					if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive");
+					return true;
+				}
+		return false;
+	}
 
 	@Hook(createMethod = true)
 	public static ItemStack onItemRightClick(ItemGaiaHead item, ItemStack stack, World world, EntityPlayer player) {
@@ -343,7 +356,8 @@ public class AlfheimHookHandler {
         if (side == 5) ++x;
         Block b = world.getBlock(x, y, z);
         
-        boolean f = b.getBlockHardness(world, x, y, z) != -1.0F;
+        boolean f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0.0F;
+        
         if (player != null) f = f || player.capabilities.isCreativeMode;
         if (b.getMaterial() == Material.fire && f) {
         	world.playAuxSFXAtEntity(player, 1004, x, y, z, 0);

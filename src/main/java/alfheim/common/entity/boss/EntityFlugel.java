@@ -122,10 +122,15 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		if(world.getTileEntity(x, y, z) instanceof TileEntityBeacon) {
 			if (isTruePlayer(player)) {
 				if(world.difficultySetting == EnumDifficulty.PEACEFUL) {
-					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.peacefulNoob");
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.peacefulNoob");
 					return false;
 				}
 	
+				if (((TileEntityBeacon) world.getTileEntity(x, y, z)).getLevels() < 1) {
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive");
+					return false;
+				}
+				
 				for(int[] coords : PYLON_LOCATIONS) { // TODO change structure
 					int i = x + coords[0];
 					int j = y + coords[1];
@@ -134,16 +139,19 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 					Block blockat = world.getBlock(i, j, k);
 					int meta = world.getBlockMetadata(i, j, k);
 					if(blockat != ModBlocks.pylon || meta != 2) {
-						if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.needsCatalysts");
+						if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.needsCatalysts");
 						return false;
 					}
 					
 				}
-				if(!hasProperArena(world, x, y, z)) {
-					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.badArena");
-					return false;
+				
+				if (!ModInfo.DEV) {
+					if(!hasProperArena(world, x, y, z)) {
+						if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena");
+						return false;
+					}
 				}
-	
+					
 				if (!hard) stack.stackSize--;
 				if (world.isRemote) return true;
 	
@@ -170,11 +178,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				world.spawnEntityInWorld(e);
 				return true;
 			}
-			ASJUtilities.say(player, "alfheimmics.fakeplayer");
+			ASJUtilities.say(player, "alfheimmisc.fakeplayer");
 			return false;
 		}
 
-		ASJUtilities.say(player, "alfheimmics.notbeacon");
+		ASJUtilities.say(player, "alfheimmisc.notbeacon");
 		return false;
 	}
 
@@ -503,7 +511,6 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 
 	private static boolean hasProperArena(World world, int sx, int sy, int sz) {
-		if (((TileEntityBeacon) world.getTileEntity(sx, sy, sz)).getLevels() < 1) return false;
 		boolean proper = true;
 		Botania.proxy.setWispFXDepthTest(false);
 		for(int i = -RANGE; i < RANGE + 1; i++)

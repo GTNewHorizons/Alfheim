@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +32,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -99,7 +102,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		if (block == Blocks.beacon) {
 			if (player.isSneaking() && getBlocked(stack) < SEGMENTS) {
 				boolean success = EntityFlugel.spawn(player, stack, world, x, y, z, true);
-				setDisabled(stack, getBlocked(stack), true);
+				if (success) setDisabled(stack, getBlocked(stack), true);
 				return success;
 			}
 		} else if (block == ModBlocks.brewery) {
