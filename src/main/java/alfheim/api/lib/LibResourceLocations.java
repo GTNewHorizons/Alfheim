@@ -105,27 +105,27 @@ public class LibResourceLocations {
 	public static int MOB = 11, NPC = 12, BOSS = 13;
 	
 	public static final ResourceLocation[] male = {
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SALAMANDER.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SYLPH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/CAITSITH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/POOKA.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/GNOME.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/LEPRECHAUN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/SPRIGGAN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/UNDINE.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/IMP.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Salamander.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Sylph.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/CaitSith.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Pooka.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Gnome.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Leprechaun.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Spriggan.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Undine.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Imp.png"),
 	};
 	
 	public static final ResourceLocation[] female = {
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SALAMANDER.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SYLPH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/CAITSITH.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/POOKA.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/GNOME.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/LEPRECHAUN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/SPRIGGAN.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/UNDINE.png"),
-			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/IMP.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Salamander.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Sylph.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/CaitSith.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Pooka.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Gnome.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Leprechaun.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Spriggan.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Undine.png"),
+			new ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Imp.png"),
 	};
 	
 	private static HashMap<String, ResourceLocation> spells = new HashMap<String, ResourceLocation>();

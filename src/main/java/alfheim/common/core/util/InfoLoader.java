@@ -76,6 +76,7 @@ public class InfoLoader {
 				e.printStackTrace(System.err);
 			}
 			doneChecking = true;
+			ASJUtilities.log("Successfully loaded news & version");
 		}
 	}
 }

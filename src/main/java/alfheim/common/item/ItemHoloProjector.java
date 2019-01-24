@@ -1,6 +1,6 @@
 package alfheim.common.item;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
@@ -60,7 +60,7 @@ public class ItemHoloProjector extends Item {
 		if(player.isSneaking() && !world.isRemote) (new CommandRace()).processCommand(player, new String[] {EnumRace.values()[seg+1].toString()});
 		else {
 			ModelHolder pos = getModel(stack, seg);
-			setModel(stack, seg, pos.rotation + 2 % 360, pos.isMale);
+			setModel(stack, seg, (pos.rotation + 20) % 360, pos.isMale);
 		}
 		return stack;
 	}
@@ -72,7 +72,7 @@ public class ItemHoloProjector extends Item {
 			int seg = getSegmentLookedAt(stack, player);
 			ModelHolder pos = getModel(stack, seg);
 			if (player.isSneaking()) setModel(stack, seg, pos.rotation, !pos.isMale);
-			else setModel(stack, seg, pos.rotation - 2 % 360, pos.isMale);
+			else setModel(stack, seg, (pos.rotation - 20) % 360, pos.isMale);
 			return true;
 		}
 
@@ -175,16 +175,17 @@ public class ItemHoloProjector extends Item {
 		Tessellator tess = Tessellator.instance;
 		Tessellator.renderingWorldRenderer = false;
 
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		glPushMatrix();
+		glDisable(GL_CULL_FACE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		float alpha = ((float) Math.sin((ClientTickHandler.ticksInGame + partialTicks) * 0.2F) * 0.5F + 0.5F) * 0.4F + 0.3F;
 
 		double posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
 		double posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks;
 		double posZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
 
-		GL11.glTranslated(posX - RenderManager.renderPosX, posY - RenderManager.renderPosY, posZ - RenderManager.renderPosZ);
+		glTranslated(posX - RenderManager.renderPosX, posY - RenderManager.renderPosY, posZ - RenderManager.renderPosZ);
 
 		int angles = 360;
 		int segAngles = angles / RACES;
@@ -205,22 +206,22 @@ public class ItemHoloProjector extends Item {
 			float rotationAngle = (seg + 0.5F) * segAngles + shift;
 			if(segmentLookedAt == seg) inside = true;
 
-			GL11.glPushMatrix();
-			GL11.glRotatef(rotationAngle, 0F, 1F, 0F);
-			GL11.glTranslatef(s * m, -0.75F, 0F);
-			GL11.glColor4f(1, 1, 1, 1);
+			glPushMatrix();
+			glRotatef(rotationAngle, 0F, 1F, 0F);
+			glTranslatef(s * m, -0.75F, 0F);
+			glColor4f(1, 1, 1, 1);
 			
 			ModelHolder pos = getModel(stack, seg);
 			mc.renderEngine.bindTexture(pos.isMale ? LibResourceLocations.male[seg] : LibResourceLocations.female[seg]);
-			GL11.glScaled(0.75, 0.75, 0.75);
-			GL11.glRotated(180, 1, 0, 0);
-			GL11.glRotated(90 + pos.rotation, 0, 1, 0);
-			GL11.glTranslated(0, -0.75, 0);
+			glScaled(0.75, 0.75, 0.75);
+			glRotated(180, 1, 0, 0);
+			glRotated(90 + pos.rotation, 0, 1, 0);
+			glTranslated(0, -0.75, 0);
 			ModelBipedNew.model.render(0.0625F);
-			GL11.glPopMatrix();
+			glPopMatrix();
 
-			GL11.glPushMatrix();
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glRotatef(180F, 1F, 0F, 0F);
 			float a = alpha;
 			if(inside) {
 				a += 0.3F;
@@ -248,9 +249,11 @@ public class ItemHoloProjector extends Item {
 			y0 = 0;
 			tess.draw();
 
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
-		GL11.glPopMatrix();
+		glDisable(GL_BLEND);
+		glEnable(GL_CULL_FACE);
+		glPopMatrix();
 	}
 
 	@SideOnly(Side.CLIENT)
