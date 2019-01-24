@@ -46,6 +46,7 @@ public class LibResourceLocations {
 	public static ResourceLocation poolBlue = new ResourceLocation(ModInfo.MODID, "textures/blocks/PoolBlue.png");	
 	public static ResourceLocation poolPink = new ResourceLocation(ModInfo.MODID, "textures/blocks/PoolPink.png");	
 	public static ResourceLocation potions = new ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png");
+	public static ResourceLocation rook = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Rook.png");
 	public static ResourceLocation skin = new ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png");
 	public static ResourceLocation spellFrame = new ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png");
 	public static ResourceLocation spellFrameEpic = new ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png");

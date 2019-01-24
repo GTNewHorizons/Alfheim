@@ -81,7 +81,7 @@ public class PacketHandlerClient {
 					case NOTALLOW: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notallow"); break; // TODO playSound "not allowed"
 					case NOTARGET: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notarget"); break; // TODO playSound "no target"
 					case NOTREADY: /*ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notready");*/ break; // TODO playSound "spell not ready"
-					case NOTSEEING: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notseenig"); break; // TODO playSound "not seeing"
+					case NOTSEEING: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notseeing"); break; // TODO playSound "not seeing"
 					case OBSTRUCT: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.obstruct"); break; // TODO playSound "target obstructed"
 					case OK: SpellCastingSystemClient.setCoolDown(AlfheimAPI.getSpellByIDs(((int) packet.data1 >> 28) & 0xF, (int) packet.data1 & 0xFFFFFFF), (int) packet.data2); break;
 					case WRONGTGT: ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.wrongtgt"); break; // TODO playSound "wrong target"

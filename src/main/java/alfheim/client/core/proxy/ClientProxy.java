@@ -22,7 +22,7 @@ import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.util.AlfheimBotaniaModifiers;
 import alfheim.common.entity.*;
-import alfheim.common.entity.boss.EntityFlugel;
+import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -82,6 +82,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel.class, new RenderEntityFlugel(new ModelEntityFlugel(), 0.25F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityRook.class, new RenderEntityRook(new ModelEntityRook(), 1.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark.class, new RenderEntityLightningMark());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp.class, new RenderEntityHarp());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine.class, new RenderEntityDriftingMine());

@@ -242,6 +242,7 @@ death.attack.water=%s разрезан на части водным потоко
 entity.Elf.name=Эльф
 entity.Flugel.name=Флюгель
 entity.Pixie.name=Пикси
+entity.Rook.name=Ладья Полубога
 
 item.FlugelSoul.blockAway=На расстоянии блока
 item.FlugelSoul.blocksAway=На расстоянии %s блоков

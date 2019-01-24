@@ -24,6 +24,7 @@ import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.EntityFlugel;
+import alfheim.common.entity.boss.EntityRook;
 import alfheim.common.entity.spell.*;
 import alfheim.common.potion.*;
 import alfheim.common.spell.darkness.*;
@@ -231,6 +232,7 @@ public class AlfheimRegistry {
 		registerEntity(EntityFlugel.class, "Flugel", AlfheimCore.instance);
 		registerEntity(EntityLightningMark.class, "LightningMark", AlfheimCore.instance);
 		registerEntityEgg(EntityAlfheimPixie.class, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance);
+		registerEntity(EntityRook.class, "Rook", AlfheimCore.instance);
 		
 		registerEntity(EntitySpellAcidMyst.class, "SpellAcidMyst", AlfheimCore.instance);
 		registerEntity(EntitySpellHarp.class, "SpellArfa", AlfheimCore.instance);

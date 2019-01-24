@@ -242,6 +242,7 @@ death.attack.water=%s was cut into pieces by %s's water stream
 entity.Elf.name=Elf
 entity.Flugel.name=Flügel
 entity.Pixie.name=Pixie
+entity.Rook.name=Demigod's Rook
 
 item.FlugelSoul.blockAway=1 Block Away
 item.FlugelSoul.blocksAway=%s Blocks Away

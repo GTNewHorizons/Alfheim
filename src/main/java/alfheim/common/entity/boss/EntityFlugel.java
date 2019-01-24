@@ -20,17 +20,17 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
-import alfheim.common.entity.boss.ai.AIBase;
-import alfheim.common.entity.boss.ai.AIChase;
-import alfheim.common.entity.boss.ai.AIDeathray;
-import alfheim.common.entity.boss.ai.AIEnergy;
-import alfheim.common.entity.boss.ai.AIInvul;
-import alfheim.common.entity.boss.ai.AILightning;
-import alfheim.common.entity.boss.ai.AIRays;
-import alfheim.common.entity.boss.ai.AIRegen;
-import alfheim.common.entity.boss.ai.AITask;
-import alfheim.common.entity.boss.ai.AITeleport;
-import alfheim.common.entity.boss.ai.AIWait;
+import alfheim.common.entity.boss.ai.flugel.AIBase;
+import alfheim.common.entity.boss.ai.flugel.AIChase;
+import alfheim.common.entity.boss.ai.flugel.AIDeathray;
+import alfheim.common.entity.boss.ai.flugel.AIEnergy;
+import alfheim.common.entity.boss.ai.flugel.AIInvul;
+import alfheim.common.entity.boss.ai.flugel.AILightning;
+import alfheim.common.entity.boss.ai.flugel.AIRays;
+import alfheim.common.entity.boss.ai.flugel.AIRegen;
+import alfheim.common.entity.boss.ai.flugel.AITask;
+import alfheim.common.entity.boss.ai.flugel.AITeleport;
+import alfheim.common.entity.boss.ai.flugel.AIWait;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -109,8 +109,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public HashMap<String, Integer> playersWhoAttacked = new HashMap();
 	private static boolean isPlayingMusic = false;
 	
-	public EntityFlugel(World par1World) {
-		super(par1World);
+	public EntityFlugel(World world) {
+		super(world);
 		setSize(0.6F, 1.8F);
 		getNavigator().setCanSwim(true);
 		initAI();

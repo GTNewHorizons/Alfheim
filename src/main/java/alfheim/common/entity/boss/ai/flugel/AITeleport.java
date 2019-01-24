@@ -1,4 +1,4 @@
-package alfheim.common.entity.boss.ai;
+package alfheim.common.entity.boss.ai.flugel;
 
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.util.ChunkCoordinates;

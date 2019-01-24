@@ -1,4 +1,4 @@
-package alfheim.common.entity.boss.ai;
+package alfheim.common.entity.boss.ai.flugel;
 
 import java.awt.Color;
 
