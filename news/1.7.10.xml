@@ -2,8 +2,13 @@
 	<version id="LATEST">
 		<val>BETA-13</val>
 	</version>
+	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
 		<val>GL HF!</val>
+	</version>
+	<!-- New tag for ALL versions, now supports json - start with "$json" -->
+	<version id="UNIVERSAL">
+		<val>GL HF!&$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>

@@ -59,6 +59,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -177,7 +178,10 @@ public class EventHandler {
 	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
 		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
 			InfoLoader.triedToWarnPlayer = true;
-			for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
+			for (String s : InfoLoader.info) {
+				if (s.startsWith("$json")) e.player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(s.replace("$json", "")));
+				else e.player.addChatMessage(new ChatComponentText(s));
+			}
 		}
 		
 		if (e.player instanceof EntityPlayerMP) {

@@ -1,33 +1,16 @@
 package alfheim.common.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
-import alfheim.common.world.dim.alfheim.struct.StructureArena;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
-import vazkii.botania.api.item.IManaProficiencyArmor;
-import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.api.subtile.ISpecialFlower;
-import vazkii.botania.common.Botania;
-import vazkii.botania.common.item.rod.ItemTerraformRod;
-import vazkii.botania.common.lib.LibMisc;
 
 public class TheRodOfTheDebug extends Item {
 

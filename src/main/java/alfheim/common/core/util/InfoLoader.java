@@ -59,12 +59,12 @@ public class InfoLoader {
 		@Override
 		public void run() {
 			try {
-				Node root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).getDocumentElement();
+				Node root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("https://bitbucket.org/AlexSocol/alfheim/raw/" + (ModInfo.DEV ? "development" : "master") + "/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).getDocumentElement();
 				String latest = getNodeValue(root, "LATEST");
 				onlineVersion = Integer.parseInt(latest.split("-")[1]);
 				outdated = onlineVersion > Integer.parseInt(ModInfo.BUILD.replaceAll("\\D", ""));
 				if (outdated) info.add(StatCollector.translateToLocalFormatted("alfheimmisc.update", ModInfo.VERSION, latest));
-				String s = getNodeValue(root, "ALL");
+				String s = getNodeValue(root, "UNIVERSAL");
 				info.addAll(Arrays.asList(s.split("&")));
 				s = getNodeValue(root, ModInfo.VERSION);
 				if (s != null && !s.isEmpty()) {

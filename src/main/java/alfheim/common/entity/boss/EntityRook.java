@@ -3,6 +3,7 @@ package alfheim.common.entity.boss;
 import alexsocol.asjlib.math.Vector3;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -40,7 +41,7 @@ public class EntityRook extends EntityCreature { // EntityFlugel, EntityIronGole
         tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6));
         tasks.addTask(8, new EntityAILookIdle(this));
         targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, e -> e instanceof EntityLivingBase)); // XXX remove lambda
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, new IEntitySelector() {@Override public boolean isEntityApplicable(Entity e) {return e instanceof EntityLivingBase;}}));
 	}
 
 	public static void spawn(World world, int x, int y, int z) {
