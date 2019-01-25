@@ -1,7 +1,9 @@
 package alfheim.common.block;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.block.IHourglassTrigger;
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnimatedTorch;
 import alfheim.common.lexicon.AlfheimLexiconData;
@@ -30,7 +32,7 @@ import vazkii.botania.api.wand.IWandable;
 import vazkii.botania.common.block.BlockHourglass;
 import vazkii.botania.common.lexicon.LexiconData;
 
-public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IWandable, IManaTrigger, IWandHUD, ILexiconable {
+public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 
 	public BlockAnimatedTorch() {
 		super(Material.circuits);
@@ -61,10 +63,17 @@ public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IW
 		if(!burst.isFake()) ((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle();
 	}
 
-	/*@Override
+	@Override
 	public void onTriggeredByHourglass(World world, int x, int y, int z, TileEntity hourglass) {
-		((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle(); FIXME
-	}*/
+		((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle();
+	}
+	
+	@Override
+	public boolean onBlockEventReceived(World world, int x, int y, int z, int id, int param) {
+		super.onBlockEventReceived(world, x, y, z, id, param);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        return tile != null ? tile.receiveClientEvent(id, param) : false;
+	}
 	
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {

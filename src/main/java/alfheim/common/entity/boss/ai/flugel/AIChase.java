@@ -16,7 +16,7 @@ public class AIChase extends AIBase {
 	@Override
 	public void startExecuting() {
 		int s = flugel.getStage();
-		int i = s == 1 ? 300 : s == 2 ? 150 : 50;
+		int i = s == 1 ? 200 : s == 2 ? 100 : 50;
 		flugel.setAITaskTimer(flugel.worldObj.rand.nextInt(i) + i);
 	}
 

@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
+import alfheim.api.block.IHourglassTrigger;
 import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.client.render.entity.RenderButterflies;
@@ -50,6 +51,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.RecipePureDaisy;
@@ -61,6 +63,7 @@ import vazkii.botania.common.block.BlockPylon;
 import vazkii.botania.common.block.BlockSpecialFlower;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
+import vazkii.botania.common.block.tile.TileHourglass;
 import vazkii.botania.common.block.tile.TilePylon;
 import vazkii.botania.common.core.BotaniaCreativeTab;
 import vazkii.botania.common.core.proxy.CommonProxy;
@@ -257,13 +260,25 @@ public class AlfheimHookHandler {
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, motionx, motiony, motionz, 1F);
 	}
 	
-	@Hook
-	public static void updateEntity(TilePylon entity) {
+	@Hook(injectOnExit = true, targetMethod = "updateEntity")
+	public static void TileHourglass$updateEntity(TileHourglass hourglass) {
+		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
+			Block block;
+			for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+				block = hourglass.getWorldObj().getBlock(hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ);
+				if (block instanceof IHourglassTrigger)
+					((IHourglassTrigger) block).onTriggeredByHourglass(hourglass.getWorldObj(), hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ, hourglass);
+			}
+		}
+	}
+	
+	@Hook(targetMethod = "updateEntity")
+	public static void TilePylon$updateEntity(TilePylon entity) {
 		updatingTile = entity.getWorldObj().isRemote;
 	}
 	
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	public static void updateEntityPost(TilePylon entity) {
+	public static void TilePylon$updateEntityPost(TilePylon entity) {
 		if (entity.getWorldObj().isRemote) {
 			updatingTile = false;
 			if (entity.getWorldObj().rand.nextBoolean()) {

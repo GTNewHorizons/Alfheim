@@ -109,6 +109,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public HashMap<String, Integer> playersWhoAttacked = new HashMap();
 	private static boolean isPlayingMusic = false;
 	
+	private float prevHP;
+	
 	public EntityFlugel(World world) {
 		super(world);
 		setSize(0.6F, 1.8F);
@@ -220,8 +222,15 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 	@Override
 	public void setHealth(float hp) {
+		prevHealth = getHealth();
 		hp = Math.max(getHealth() - (isHardMode() ? 60F : 40F), hp);
 		super.setHealth(hp);
+		
+		if (getAITask() == AITask.INVUL) return;
+		if (getHealth() < prevHealth && ((int)(getHealth() / (getMaxHealth() / 10))) < ((int)(prevHealth / (getMaxHealth() / 10)))) {
+			if (!getAITask().instant && getAITask() != AITask.DEATHRAY) 
+				setAITaskTimer(0);
+		}
 	}
 	
 	@Override
@@ -706,7 +715,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public AITask nextTask() {
 		if (getStage() < STAGE_AGGRO) return AITask.NONE;
 		AITask next = AITask.values()[rand.nextInt(AITask.values().length)];
-		if (next.instant && getAITask().instant && getAITask().equals(next)) return nextTask();
+		if (/*next.instant && getAITask().instant &&*/ getAITask().equals(next)) return nextTask();
 		if (Math.random() < next.chance) return nextTask();
 		if (getStage() < next.stage) return nextTask();
 		return next;

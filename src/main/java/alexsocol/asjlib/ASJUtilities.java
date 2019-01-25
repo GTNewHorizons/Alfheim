@@ -914,15 +914,15 @@ public class ASJUtilities {
 	}
 
 	public static void chatLog(String message) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + message));
 	}
 	
 	public static void chatLog(String message, World world) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + (world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
 	}
 	
 	public static void chatLog(String message, EntityPlayer player) {
-		player.addChatMessage(new ChatComponentText((player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		player.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + (player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
 	}
 	
 	public static void log(String message) { 

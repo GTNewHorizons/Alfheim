@@ -249,6 +249,7 @@ public class AlfheimRegistry {
 	private static void registerTileEntities() {
 		registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
 		registerTileEntity(TileAlfheimPylons.class, "AlfheimPylon");
+		registerTileEntity(TileAnimatedTorch.class, "AnimatedTorch");
 		registerTileEntity(TileAnyavil.class, "Anyavil");
 		registerTileEntity(TileFlugelHead.class, "FlugelHead");
 		registerTileEntity(TileItemHolder.class, "ItemHolder");

@@ -2,6 +2,7 @@ package alfheim.common.block.tile;
 
 import java.util.Arrays;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,7 +52,6 @@ public class TileAnimatedTorch extends TileMod {
 	private TorchMode torchMode = TorchMode.TOGGLE;
 
 	public void handRotate() {
-		rotateTo((side + 1) % 4);
 		if(!worldObj.isRemote)
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, (side + 1) % 4);
 	}
@@ -67,8 +67,6 @@ public class TileAnimatedTorch extends TileMod {
 	}
 
 	public void toggle() {
-		rotateTo(torchMode.rotate(this, side));
-		
 		if(!worldObj.isRemote) {
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, torchMode.rotate(this, side));
 			nextRandomRotation = worldObj.rand.nextInt(4);
@@ -91,7 +89,7 @@ public class TileAnimatedTorch extends TileMod {
 		}
 	}
 
-	private void rotateTo(int side) {
+	public void rotateTo(int side) {
 		if(rotating) return;
 
 		currentRandomRotation = nextRandomRotation;
@@ -101,7 +99,7 @@ public class TileAnimatedTorch extends TileMod {
 		if(diff < 0)
 			diff = 360 + diff;
 
-		rotationTicks = 4;
+		rotationTicks = 5;
 		anglePerTick = diff / rotationTicks;
 		this.side = side;
 		rotating = true;

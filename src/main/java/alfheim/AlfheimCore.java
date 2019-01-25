@@ -47,13 +47,11 @@ public class AlfheimCore {
 	
 	public static boolean enableElvenStory = true;
 	public static boolean enableMMO = true;
-	public static boolean BotanicalAddonsLoaded = false;
 	public static boolean MineTweakerLoaded = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		AlfheimConfig.readModes();
-		BotanicalAddonsLoaded = Loader.isModLoaded("shadowfox_botany"); // check your mcmod.info noob
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
