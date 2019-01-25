@@ -3,7 +3,7 @@ package alfheim.common.core.handler;
 import java.lang.reflect.Field;
 
 import alexsocol.asjlib.ASJReflectionHelper;
-import alfheim.common.item.equipment.bauble.CloudPendantShim;
+import alfheim.common.item.equipment.bauble.ItemCloudPendant;
 import alfheim.common.item.equipment.bauble.ItemDodgeRing;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
@@ -60,7 +60,7 @@ public class PacketHandler {
 		IInventory baublesInv = BaublesApi.getBaubles(player);
 		ItemStack amuletStack = baublesInv.getStackInSlot(0);
 
-		if(amuletStack != null && amuletStack.getItem() instanceof CloudPendantShim) {
+		if(amuletStack != null && amuletStack.getItem() instanceof ItemCloudPendant) {
 			player.addExhaustion(0.3F);
 			player.fallDistance = 0;
 				
@@ -68,7 +68,7 @@ public class PacketHandler {
 
 			if(belt != null && belt.getItem() instanceof ItemTravelBelt) {
 				float val = ASJReflectionHelper.getValue(fallBuffer, (ItemTravelBelt) belt.getItem(), false);
-				player.fallDistance = -val * ((CloudPendantShim) amuletStack.getItem()).getMaxAllowedJumps();
+				player.fallDistance = -val * ((ItemCloudPendant) amuletStack.getItem()).getMaxAllowedJumps();
 			}
 		}
 	}

@@ -45,6 +45,6 @@ public class TileAlfheimPylons extends TileEntity {
 		}
 
 		if(worldObj.rand.nextBoolean() && worldObj.isRemote)
-			Botania.proxy.sparkleFX(worldObj, xCoord + Math.random(), yCoord + Math.random() * 1.5, zCoord + Math.random(), 1.0F, 0.5F, meta == 0 ? 1.0F : 0F, (float) Math.random(), 2);
+			Botania.proxy.sparkleFX(worldObj, xCoord + Math.random(), yCoord + Math.random() * 1.5, zCoord + Math.random(), 1, meta != 2 ? 0.5F : 0, meta == 0 ? 1 : 0, (float) Math.random(), 2);
 	}
 }

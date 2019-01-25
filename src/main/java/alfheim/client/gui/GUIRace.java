@@ -30,7 +30,7 @@ public class GUIRace extends Gui {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onOverlayRendering(RenderGameOverlayEvent.Post e) {
-		if (AlfheimCore.enableMMO && AlfheimConfig.selfHealthUI) return;
+		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfig.selfHealthUI)) return;
 		if (e.isCancelable() || e.type != ElementType.EXPERIENCE || EnumRace.getRace(mc.thePlayer) == EnumRace.HUMAN) return;
 		
 		glPushMatrix();

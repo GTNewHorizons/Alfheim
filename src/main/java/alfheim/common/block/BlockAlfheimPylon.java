@@ -64,7 +64,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 	
 	@Override
 	public IIcon getIcon(int side, int meta) { // elementium for pink; elvorium for orange; redstone for red
-		return meta == 2 ? Blocks.redstone_block.getIcon(0, 0) : meta == 1 ? AlfheimBlocks.elvoriumBlock.getIcon(0, 0) : ModBlocks.storage.getIcon(0, 2);
+		return meta == 2 ? Blocks.redstone_block.getIcon(side, 0) : meta == 1 ? AlfheimBlocks.elvoriumBlock.getIcon(side, 0) : ModBlocks.storage.getIcon(side, 2);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityP
 	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		int meta = world.getBlockMetadata(x, y, z);
-		return meta == 0 ? AlfheimLexiconData.pylons : meta == 1 ? AlfheimLexiconData.trade : AlfheimLexiconData.soul;
+		return meta == 2 ? AlfheimLexiconData.soul: meta == 1 ? AlfheimLexiconData.trade : AlfheimLexiconData.pylons ;
 	}
 	
 	@Override

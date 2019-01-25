@@ -24,36 +24,30 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.api.item.IBaubleRender;
 import vazkii.botania.client.core.helper.IconHelper;
+import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 import vazkii.botania.common.lib.LibItemNames;
 
-public class ItemCloudPendant extends CloudPendantShim implements IBaubleRender {
+public class ItemCloudPendant extends ItemPendant implements IBaubleRender {
 
 	private static int timesJumped;
 	private static boolean jumpDown;
+	private final int maxJumps;
 	
-	private static IIcon cirrusGem;
-	
-	public ItemCloudPendant(String name) {
+	public ItemCloudPendant(String name, int jumps) {
 		super(name);
-		setCreativeTab(AlfheimCore.alfheimTab);
+		maxJumps = jumps;
 	}
 	
 	public ItemCloudPendant() {
-		this("CloudPendant");
+		this("CloudPendant", 2);
 	}
 
 	@Override
-	public void registerIcons(IIconRegister reg) {
-		super.registerIcons(reg);
-		cirrusGem = reg.registerIcon(ModInfo.MODID + ":CirrusGem");
+	public void onWornTick(ItemStack stack, EntityLivingBase player) {
+		super.onWornTick(stack, player);
+		clientWornTick(stack, player);
 	}
 	
-	@Override
-	public BaubleType getBaubleType(ItemStack arg0) {
-		return BaubleType.AMULET;
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void clientWornTick(ItemStack stack, EntityLivingBase player) {
 		if(player instanceof EntityPlayerSP && player == Minecraft.getMinecraft().thePlayer) {
@@ -75,18 +69,7 @@ public class ItemCloudPendant extends CloudPendantShim implements IBaubleRender 
 		}
 	}
 	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onPlayerBaubleRender(ItemStack stack, RenderPlayerEvent event, RenderType type) {
-		if(type == RenderType.BODY) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-			Helper.rotateIfSneaking(event.entityPlayer);
-			boolean armor = event.entityPlayer.getEquipmentInSlot(3) != null;
-			GL11.glRotated(180, 1, 0, 0);
-			GL11.glTranslated(-0.2, -0.3, armor ? 0.2 : 0.15);
-			GL11.glScaled(0.5, 0.5, 0.5);
-
-			ItemRenderer.renderItemIn2D(Tessellator.instance, cirrusGem.getMaxU(), cirrusGem.getMinV(), cirrusGem.getMinU(), cirrusGem.getMaxV(), cirrusGem.getIconWidth(), cirrusGem.getIconHeight(), 1F / 32F);
-		}
+	public final int getMaxAllowedJumps() {
+		return maxJumps;
 	}
 }

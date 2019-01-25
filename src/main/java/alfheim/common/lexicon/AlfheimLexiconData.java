@@ -57,7 +57,6 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elves;
 	
 	// Main addon content
-
 	public static LexiconEntry advMana;
 	public static LexiconEntry amulCirs;
 	public static LexiconEntry amulNimb;
@@ -66,6 +65,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry astrolab;
 	public static LexiconEntry auraAlf;
 	public static LexiconEntry cloakInv;
+	public static LexiconEntry crescent;
 	public static LexiconEntry dodgRing;
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
@@ -112,6 +112,7 @@ public class AlfheimLexiconData {
 		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
 		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
 		cloakInv= new BLexiconEntry("cloakInv",	categoryAlfheim);
+		crescent= new BLexiconEntry("crescent",	categoryAlfheim);
 		dodgRing= new BLexiconEntry("dodgRing",	categoryAlfheim);
 		elemSet	= new BLexiconEntry("elemSet",	categoryAlfheim);
 		elvenSet= new BLexiconEntry("elvenSet",	categoryAlfheim);
@@ -277,15 +278,12 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(AlfheimItems.elementalHelmet));
 		elemSet	.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elementalHelmetRevealing));
 		
-		List<IRecipe> ringRecipes = new ArrayList();
-		ringRecipes.add(AlfheimRecipes.recipeManaRingGod1);
-		ringRecipes.add(AlfheimRecipes.recipeManaRingGod2);
 		advMana	.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),
 								 new PageManaInfusorRecipe("3", AlfheimRecipes.recipeManaStoneGreater),
 								 new PageText("4"),
 								 new PageCraftingRecipe("5", AlfheimRecipes.recipeManaRingElven),
-								 new PageCraftingRecipe("6", ringRecipes))
+								 new PageCraftingRecipe("6", AlfheimRecipes.recipeManaRingGod))
 				.setIcon(new ItemStack(AlfheimItems.manaStone));
 		
 		auraAlf	.setLexiconPages(new PageText("0"),
@@ -301,6 +299,8 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeNiflheimRod),
 								 new PageText("4"), new PageCraftingRecipe("5", amuletRecipes))
 				.setIcon(new ItemStack(AlfheimItems.rodFire));
+		
+		crescent.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCrescentAmulet));
 		
 		reality	.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
@@ -434,6 +434,7 @@ public class AlfheimLexiconData {
 		advMana	.setKnowledgeType(kt);
 		auraAlf	.setKnowledgeType(kt);
 		ruling	.setKnowledgeType(kt);
+		crescent.setKnowledgeType(kt);
 		reality	.setKnowledgeType(kt);
 		flugel	.setKnowledgeType(kt);
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge);

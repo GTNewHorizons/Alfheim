@@ -379,7 +379,7 @@ public class EventHandler {
 			}
 			
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield);
-			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {
+			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {
 				e.ammount /= 2.F;
 				int dur = (int) Math.max(pe.duration -= (e.ammount * 20), 0);
 				if (dur < 0) pe.duration = 0; // e.entityLiving.removePotionEffect(AlfheimRegistry.butterShield.id); <- same :(
