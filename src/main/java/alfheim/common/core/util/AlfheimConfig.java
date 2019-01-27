@@ -84,7 +84,7 @@ public class AlfheimConfig extends Configuration {
 	// HUD
 	public static double	partyHUDScale			= 1.0;
 	public static boolean	selfHealthUI			= true;
-	public static boolean	targethUI				= true;
+	public static boolean	targetUI				= true;
 	
 	public static void loadConfig(File suggestedConfigurationFile) {
 		config = new Configuration(suggestedConfigurationFile);
@@ -140,7 +140,7 @@ public class AlfheimConfig extends Configuration {
 		
 		partyHUDScale			= loadProp(CATEGORY_HUD,		"partyHUDScale",			partyHUDScale,			false,	"Party HUD Scale (1 < bigger; 1 > smaller)");
 		selfHealthUI			= loadProp(CATEGORY_HUD,		"selfHealthUI",				selfHealthUI,			false,	"Set this to false to hide player's healthbar");
-		targethUI				= loadProp(CATEGORY_HUD,		"targethUI",				targethUI,				false,	"Set this to false to hide target's healthbar");
+		targetUI				= loadProp(CATEGORY_HUD,		"targethUI",				targetUI,				false,	"Set this to false to hide target's healthbar");
 
 		if (config.hasChanged()) {
 			config.save();

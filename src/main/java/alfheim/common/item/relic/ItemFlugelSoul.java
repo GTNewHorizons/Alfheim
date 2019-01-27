@@ -135,7 +135,7 @@ public class ItemFlugelSoul extends ItemRelic {
 			MultiversePosition pos = getWarpPoint(stack, segment);
 			if(pos.isValid()) {
 				setWarpPoint(stack, segment, 0, -1, 0, 0);
-				return true;
+				return false;
 			}
 		}
 

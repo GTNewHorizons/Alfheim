@@ -65,7 +65,7 @@ public class GUIParty extends Gui {
 		Party pt = CardinalSystemClient.segment().party;
 		int color = 0xFFFFFFFF, R = 0xFFDD0000, Y = 0xFFDDDD00, G = 0xFF00DD00;
 		String data;
-		
+		zLevel = -90;
 		double s = AlfheimConfig.partyHUDScale;
 		
 		glPushMatrix();
@@ -75,6 +75,7 @@ public class GUIParty extends Gui {
 		glScaled(s, s, s);
 		
 		// ################################################################ SELF ################################################################
+		
 		if (AlfheimConfig.selfHealthUI) {
 			/*glPushMatrix();
 			glTranslated(8, 8, 0);
@@ -87,15 +88,13 @@ public class GUIParty extends Gui {
 			glPopMatrix();*/
 			
 			{
-				glTranslated(0, -0.5, 0);
-				zLevel = -89.0F;
+				glTranslated(0, -0.5, -89);
 				data = player.getHealth() + "/" + player.getMaxHealth();
 				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0);
-				glTranslated(0, 0.5, 0);
+				glTranslated(0, 0.5, 89);
 			}
 			
 			glColor4d(1, 1, 1, 1);
-			zLevel = -90.0F;
 			mc.renderEngine.bindTexture(LibResourceLocations.health);
 			drawTexturedModalRect(0, 0, 0, 0, 200, 40);
 			ASJUtilities.glColor1u(ASJUtilities.addAlpha(EnumRace.getRace(player).getRGBColor(), 255));
@@ -205,7 +204,9 @@ public class GUIParty extends Gui {
 					}
 				}
 				
+				glTranslated(0, 0, -89);
 				font.drawString(data, 88 - (font.getStringWidth(data) / 2), 3, CardinalSystemClient.segment.target == mc.thePlayer ? G : pt.get(0) == mc.thePlayer ? R : 0xFFFFFFFF, shadow);
+				glTranslated(0, 0, 89);
 			}
 		}
 		
@@ -219,14 +220,14 @@ public class GUIParty extends Gui {
 			
 			// ################ icon: ################
 			{
-				zLevel = -85.0F;
+				zLevel = -85;
 				glMatrixMode(GL_TEXTURE);
 				glPushMatrix();
 				glScaled(512./464, 512./464, 1);
 				glTranslated(-1./24, -1./24, 0);
 				glMatrixMode(GL_MODELVIEW);
 				
-				if (AlfheimConfig.targethUI){
+				if (AlfheimConfig.selfHealthUI){
 					mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(player));
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -281,7 +282,7 @@ public class GUIParty extends Gui {
 				tg_icon: {
 					l = CardinalSystemClient.segment.target;
 					if (l == null) break tg_icon;
-					if (!AlfheimConfig.targethUI) break tg_icon;
+					if (!AlfheimConfig.targetUI) break tg_icon;
 					
 					glPushMatrix();
 					glTranslated(event.resolution.getScaledWidth() / 2. / s - 116, 11, 0);
@@ -420,16 +421,18 @@ public class GUIParty extends Gui {
 					}
 					
 					if (st) data = EnumChatFormatting.STRIKETHROUGH + data;
+					glTranslated(0, 0, -85);
 					font.drawString(data, 36, y + 4, color, shadow);
+					glTranslated(0, 0, 85);
 					
 					if (l != null) {
-						glTranslated(0, -0.5, 0);
+						glTranslated(0, -0.5, -85);
 						boolean unicode = font.getUnicodeFlag();
 						font.setUnicodeFlag(true);
 						data = l.getHealth() + "/" + l.getMaxHealth();
 						font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0);
 						font.setUnicodeFlag(unicode);
-						glTranslated(0, 0.5, 0);
+						glTranslated(0, 0.5, 85);
 					}
 				}
 				
@@ -460,9 +463,9 @@ public class GUIParty extends Gui {
 		}
 		
 		// ################################################################ TARGET ################################################################
-		if (AlfheimConfig.targethUI && CardinalSystemClient.segment.target != null) {
+		if (AlfheimConfig.targetUI && CardinalSystemClient.segment.target != null) {
 			glTranslated(event.resolution.getScaledWidth() / 2. / s - 120, 0, 0);
-			
+			zLevel = -80;
 			EntityLivingBase l = CardinalSystemClient.segment.target;
 			float hp = Math.min(l.getHealth(), l.getMaxHealth());
 			float hpm = l.getMaxHealth();
@@ -552,8 +555,10 @@ public class GUIParty extends Gui {
 				
 				if (st) data = EnumChatFormatting.STRIKETHROUGH + data;
 				
+				glTranslated(0, 0, -80);
 				font.drawString(data, 36, 6, color, shadow);
 				font.drawString(String.format("(%.2fm)", Vector3.entityDistance(player, CardinalSystemClient.segment.target)), 128, 6, color, shadow);
+				glTranslated(0, 0, 80);
 			}
 			
 			// ################ potions: ################

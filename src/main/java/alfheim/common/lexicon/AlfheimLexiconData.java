@@ -25,6 +25,7 @@ import alfheim.common.lexicon.page.PageSpell;
 import alfheim.common.lexicon.page.PageTextLearnableAchievement;
 import alfheim.common.lexicon.page.PageTextLearnableKnowledge;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
@@ -545,6 +546,9 @@ public class AlfheimLexiconData {
 		removeEntry(parties	, categoryAlfheim);
 		removeEntry(spells	, categoryAlfheim);
 		removeEntry(targets	, categoryAlfheim);
+		
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	public static void reEnableMMO() {
@@ -556,6 +560,9 @@ public class AlfheimLexiconData {
 		if (!categoryAlfheim.entries.contains(targets))	BotaniaAPI.addEntry(targets	, categoryAlfheim);
 		
 		setKnowledgeTypes();
+		
+		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	private static void removeEntry(LexiconEntry entry, LexiconCategory category) {

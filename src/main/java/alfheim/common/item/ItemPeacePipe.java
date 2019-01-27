@@ -32,6 +32,7 @@ public class ItemPeacePipe extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!AlfheimCore.enableMMO) return stack;
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {
 				Party pt = PartySystem.getParty(player);

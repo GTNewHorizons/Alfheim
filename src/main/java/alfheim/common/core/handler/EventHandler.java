@@ -256,22 +256,23 @@ public class EventHandler {
 	// ################################ LEFT FLAME ################################
 	@SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent e) {
-		if(AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (e.getPlayer().getCurrentEquippedItem() != null && (e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.flugelSoul || e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.holoProjector)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
     public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
     public void onBlockMultiPlace(BlockEvent.MultiPlaceEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
 	public void onPlayerDrop(ItemTossEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) {
 			e.setCanceled(true);
 			e.player.inventory.addItemStackToInventory(e.entityItem.getEntityItem().copy());
 		}

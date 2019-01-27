@@ -4,6 +4,8 @@ import org.lwjgl.opengl.GL11;
 
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -26,6 +28,7 @@ public class ItemPendant extends ItemBauble implements IBaubleRender {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister par1IconRegister) {
 		super.registerIcons(par1IconRegister);
 		icon = IconHelper.forItem(par1IconRegister, this, "Gem");

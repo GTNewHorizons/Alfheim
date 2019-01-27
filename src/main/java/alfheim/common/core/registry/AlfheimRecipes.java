@@ -25,8 +25,10 @@ import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.api.recipe.RecipePureDaisy;
@@ -434,16 +436,21 @@ public class AlfheimRecipes {
 			'T', LIVINGWOOD_TWIG);
 		recipeManasteelHoe = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(paperBreak),
+		recipePaperBreak = new
+		ShapedOreRecipe(new ItemStack(paperBreak),
 			"  P", " P ", "P  ",
 			'P', paper);
-		recipePaperBreak = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(peacePipe),
+		recipePeacePipe = new
+		ShapedOreRecipe(new ItemStack(peacePipe),
 			"S  ", " S ", "  S",
 			'S', stick);
-		recipePeacePipe = BotaniaAPI.getLatestAddedRecipe();
 		
+		if (AlfheimCore.enableMMO) {
+			CraftingManager.getInstance().getRecipeList().add(recipePaperBreak);
+			CraftingManager.getInstance().getRecipeList().add(recipePeacePipe);
+		}
+			
 		addOreDictRecipe(new ItemStack(pixieAttractor),
 			"EDE", "EPE", " S ",
 			'D', DRAGONSTONE,

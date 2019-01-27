@@ -47,6 +47,7 @@ public class ItemPaperBreak extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!AlfheimCore.enableMMO) return stack;
 		if (!world.isRemote) {
 			String name = getCompound(stack, "display", false).getString("Name");
 			Party pt = PartySystem.getParty(player);

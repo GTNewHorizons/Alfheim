@@ -223,7 +223,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void setHealth(float hp) {
 		prevHealth = getHealth();
-		hp = Math.max(getHealth() - (isHardMode() ? 60F : 40F), hp);
+		
+		hp = Math.max(prevHealth - (isHardMode() ? 60F : 40F), hp);
+		
+		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtResistantTime > 0) return;
+		
 		super.setHealth(hp);
 		
 		if (getAITask() == AITask.INVUL) return;

@@ -73,7 +73,7 @@ public class ItemHoloProjector extends Item {
 			ModelHolder pos = getModel(stack, seg);
 			if (player.isSneaking()) setModel(stack, seg, pos.rotation, !pos.isMale);
 			else setModel(stack, seg, (pos.rotation - 20) % 360, pos.isMale);
-			return true;
+			return false;
 		}
 
 		return false;
