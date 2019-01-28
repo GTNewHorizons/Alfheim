@@ -31,6 +31,7 @@ import alfheim.common.entity.boss.ai.flugel.AIRegen;
 import alfheim.common.entity.boss.ai.flugel.AITask;
 import alfheim.common.entity.boss.ai.flugel.AITeleport;
 import alfheim.common.entity.boss.ai.flugel.AIWait;
+import alfheim.common.item.relic.ItemFlugelSoul;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -79,6 +80,7 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.item.relic.ItemRelic;
 
 public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // EntityDoppleganger
@@ -153,7 +155,18 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 						return false;
 					}
 				}
-					
+				
+				boolean miku = false;
+				ChunkCoordinates crds = null;
+				
+				if (stack.getItem() == ModItems.flugelEye) {
+					crds = ((ItemFlugelEye) ModItems.flugelEye).getBinding(stack);
+				} else if (stack.getItem() == AlfheimItems.flugelSoul) {
+					crds = ItemFlugelSoul.getFirstCoords(stack);
+				}
+				
+				if (crds != null) miku = crds.posX == 39 && crds.posY == 39 && crds.posZ == 39;
+				
 				if (!hard) stack.stackSize--;
 				if (world.isRemote) return true;
 	
@@ -169,6 +182,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.setSummoner(player.getCommandSenderName());
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
+				if (miku) {
+					e.setAlwaysRenderNameTag(miku);
+					e.setCustomNameTag("Hatsune Miku");
+				}
+				
 				List<EntityPlayer> players = e.getPlayersAround();
 				int playerCount = 0;
 				for(EntityPlayer p : players) if(isTruePlayer(p)) playerCount++;
@@ -650,6 +668,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	// --------------------------------------------------------
+	
+	@Override
+	public void setCustomNameTag(String name) {
+		if (getHealth() == 1) dataWatcher.updateObject(10, name);
+	}
 	
 	public void setStage(int stage) {
 		dataWatcher.updateObject(21, (byte) stage);

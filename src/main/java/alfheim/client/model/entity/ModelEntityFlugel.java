@@ -25,6 +25,8 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
@@ -36,9 +38,15 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		/*if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
+			// FIXME render miku
+			return;
+		}*/
+		
 		super.render(entity, f, f1, f2, f3, f4, f5); // ItemFlightTiara
 		renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
 		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
+		
 	}
 
 	public void setRotationAngles(float limbSwing, float limbIpld, float ticksExisted, float yawHead, float pitchHead, float idk, Entity entity) {

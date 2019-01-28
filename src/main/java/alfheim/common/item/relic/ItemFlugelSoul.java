@@ -34,6 +34,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBeacon;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -261,6 +262,11 @@ public class ItemFlugelSoul extends ItemRelic {
 		return new MultiversePosition(x, y, z, dim);
 	}
 
+	public static ChunkCoordinates getFirstCoords(ItemStack stack) {
+		MultiversePosition pos = getWarpPoint(stack, getBlocked(stack));
+		return new ChunkCoordinates((int) pos.x, (int) pos.y, (int) pos.z);
+	}
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onRenderWorldLast(RenderWorldLastEvent event) {
