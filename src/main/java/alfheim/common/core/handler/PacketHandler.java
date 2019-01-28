@@ -42,9 +42,11 @@ public class PacketHandler {
 			}
 		}
 
-		if (ItemNBTHelper.getInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD) > 0) 
+		if (ItemNBTHelper.getInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, 0) > 0) {
 			sh.netManager.closeChannel(new ChatComponentTranslation("alfheimmisc.invalidDodge"));
-		
+			return;
+		}
+
 		player.addExhaustion(0.3F);
 		ItemNBTHelper.setInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD);
 	}

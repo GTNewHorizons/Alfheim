@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble;
 
 import org.lwjgl.opengl.GL11;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
@@ -59,12 +60,12 @@ public class ItemDodgeRing extends ItemBauble {
 			int oldLeft = leftDown;
 			leftDown = ClientTickHandler.ticksInGame;
 
-			if(leftDown - oldLeft < threshold) dodge(mc.thePlayer, true);
+			if(leftDown - oldLeft < threshold) dodge(mc.thePlayer, ringStack, true);
 		} else if(mc.gameSettings.keyBindRight.getIsKeyPressed() && !oldRightDown) {
 			int oldRight = rightDown;
 			rightDown = ClientTickHandler.ticksInGame;
 
-			if(rightDown - oldRight < threshold) dodge(mc.thePlayer, false);
+			if(rightDown - oldRight < threshold) dodge(mc.thePlayer, ringStack, false);
 		}
 
 		oldLeftDown = mc.gameSettings.keyBindLeft.getIsKeyPressed();
@@ -74,10 +75,10 @@ public class ItemDodgeRing extends ItemBauble {
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase player) {
 		int cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0);
-		if(cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1);
+		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1);
 	}
 
-	private static void dodge(EntityPlayer player, boolean left) {
+	private static void dodge(EntityPlayer player, ItemStack stack, boolean left) {
 		if(player.capabilities.isFlying || !player.onGround || player.moveForward > 0.2 || player.moveForward < -0.2) return;
 
 		float yaw = player.rotationYaw;
@@ -91,6 +92,7 @@ public class ItemDodgeRing extends ItemBauble {
 		player.motionZ = sideVec.z;
 
 		AlfheimCore.network.sendToServer(new Message0d(m0d.DODGE));
+		ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD);
 	}
 
 	@SideOnly(Side.CLIENT)

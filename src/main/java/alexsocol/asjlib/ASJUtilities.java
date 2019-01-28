@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -913,16 +914,24 @@ public class ASJUtilities {
 				block.getMaterial() == Material.web;
 	}
 
-	public static void chatLog(String message) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + message));
+	private static DecimalFormat format = new DecimalFormat("000");
+	
+	private static String time(World world) {
+		return String.format("[%s] ", format.format(world.getTotalWorldTime() % 1000));
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public static void chatLog(String message) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(time(Minecraft.getMinecraft().theWorld) + message));
+	}
+	
+	@SideOnly(Side.CLIENT)
 	public static void chatLog(String message, World world) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + (world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(time(world) + (world.isRemote ? "[C] " : "[S] ") + message));
 	}
 	
 	public static void chatLog(String message, EntityPlayer player) {
-		player.addChatMessage(new ChatComponentText("[" + Minecraft.getMinecraft().theWorld.getTotalWorldTime() % 1000 + "] " + (player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		player.addChatMessage(new ChatComponentText(time(player.worldObj) + (player.worldObj.isRemote ? "[C] " : "[S] ") + message));
 	}
 	
 	public static void log(String message) { 

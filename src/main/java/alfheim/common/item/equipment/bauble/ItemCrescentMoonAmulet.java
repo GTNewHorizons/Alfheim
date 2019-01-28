@@ -32,7 +32,8 @@ public class ItemCrescentMoonAmulet extends ItemPendant implements IManaUsingIte
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase player) {
 		super.onWornTick(stack, player);
-		ItemNBTHelper.setInt(stack, TAG_COOLDOWN, Math.max(0, ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) - 1));
+		int cd = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0);
+		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd - 1);
 	}
 	
 	@SubscribeEvent
