@@ -1,5 +1,6 @@
 package alfheim.common.block;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.api.lib.LibRenderIDs;
@@ -106,15 +107,31 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
-		if(te != null) {
-			if(te.getItem() != null) {
-				EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem());
-				world.spawnEntityInWorld(entityitem);
-				te.setItem(null);
-			}
+		if(te != null && te.getItem() != null) {
+			EntityItem entityitem = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.getItem());
+			world.spawnEntityInWorld(entityitem);
+			te.setItem(null);
 		}
 
 		super.breakBlock(world, x, y, z, block, meta);
+	}
+	
+	@Override
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+	
+	@Override
+	public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
+		if(te != null && te.getItem() != null) {
+			if (te.getItem().getItemDamage() == te.getItem().getMaxDamage()	) return 1;
+			if (te.getItem().getItemDamage() == 0							) return 15;
+			int pow = MathHelper.ceiling_double_int((te.getItem().getMaxDamage() - te.getItem().getItemDamage()) * 15D / te.getItem().getMaxDamage());
+			return Math.min(pow, 14);
+		}
+		
+		return 0;
 	}
 	
 	@Override
@@ -126,6 +143,7 @@ public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTri
 	public void onBurstCollision(IManaBurst burst, World world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if (tile != null && tile instanceof TileAnyavil) ((TileAnyavil) tile).onBurstCollision(burst, world, x, y, z);
+		world.notifyBlocksOfNeighborChange(x, y, z, this);
 	}
 
 	@Override

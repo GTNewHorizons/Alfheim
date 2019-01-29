@@ -1,8 +1,21 @@
 package alfheim.common.entity.boss;
 
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
+
+import java.awt.Rectangle;
+
 import alexsocol.asjlib.math.Vector3;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -18,11 +31,17 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import vazkii.botania.api.boss.IBotaniaBoss;
+import vazkii.botania.client.core.handler.BossBarHandler;
 
-public class EntityRook extends EntityCreature { // EntityFlugel, EntityIronGolem, EntityWither
+public class EntityRook extends EntityCreature implements IBotaniaBoss { // EntityFlugel, EntityIronGolem, EntityWither
 
 	private static final double MAX_HP = 1000;
 
@@ -122,4 +141,66 @@ public class EntityRook extends EntityCreature { // EntityFlugel, EntityIronGole
 	public boolean canAttackClass(Class clazz) {
         return true;
     }
+
+    public AxisAlignedBB getCollisionBox(Entity entity) {
+        return entity.boundingBox;
+    }
+
+    public AxisAlignedBB getBoundingBox() {
+        return boundingBox;
+    }
+
+    public boolean canBePushed() {
+    	return false;
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getBossBarTexture() {
+		return BossBarHandler.defaultBossBar;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private static Rectangle barRect;
+	@SideOnly(Side.CLIENT)
+	private static Rectangle hpBarRect;
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Rectangle getBossBarTextureRect() {
+		if(barRect == null)
+			barRect = new Rectangle(0, 0, 185, 15);
+		return barRect;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Rectangle getBossBarHPTextureRect() {
+		if(hpBarRect == null)
+			hpBarRect = new Rectangle(0, barRect.y + barRect.height, 181, 7);
+		return hpBarRect;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void bossBarRenderCallback(ScaledResolution res, int x, int y) {
+		// NO-OP for now
+		/*glPushMatrix();
+		int px = x + 160;
+		int py = y + 12;
+
+		Minecraft mc = Minecraft.getMinecraft();
+		ItemStack stack = new ItemStack(Items.skull, 1, 3);
+		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
+		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+		glEnable(GL_RESCALE_NORMAL);
+		RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, stack, px, py);
+		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+
+		boolean unicode = mc.fontRenderer.getUnicodeFlag();
+		mc.fontRenderer.setUnicodeFlag(true);
+		mc.fontRenderer.drawStringWithShadow("" + getPlayerCount(), px + 15, py + 4, 0xFFFFFF);
+		mc.fontRenderer.setUnicodeFlag(unicode);
+		glPopMatrix();*/
+	}
 }

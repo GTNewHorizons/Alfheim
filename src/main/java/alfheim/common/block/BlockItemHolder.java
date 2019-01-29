@@ -1,5 +1,6 @@
 package alfheim.common.block;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
@@ -15,13 +16,16 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.mana.BlockPool;
+import vazkii.botania.common.block.tile.mana.TilePool;
 
 public class BlockItemHolder extends Block implements ILexiconable, ITileEntityProvider {
 
@@ -95,6 +99,28 @@ public class BlockItemHolder extends Block implements ILexiconable, ITileEntityP
 		}
 
 		super.breakBlock(world, x, y, z, block, meta);
+	}
+	
+	@Override
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+	
+	@Override
+	public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+		ItemContainingTileEntity te = (ItemContainingTileEntity) world.getTileEntity(x, y, z);
+
+		if(te != null && te.getItem() != null && te.getItem().getItem() instanceof IManaItem) {
+			ItemStack stack = te.getItem();
+			IManaItem mana = (IManaItem) te.getItem().getItem();
+			
+			if (mana.getMana(stack) == mana.getMaxMana(stack)	) return 15;
+			if (mana.getMana(stack) == 0						) return 0;
+			
+			return MathHelper.floor_double(Math.min(Math.max(0, mana.getMana(stack) * 15D / mana.getMaxMana(stack)), 15));
+		}
+		
+		return 0;
 	}
 	
 	@Override
