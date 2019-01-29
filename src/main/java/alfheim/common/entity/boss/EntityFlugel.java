@@ -161,10 +161,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.setSummoner(player.getCommandSenderName());
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
-				if (miku) {
+				/*if (miku) { // FIXME BACK
 					e.setAlwaysRenderNameTag(miku);
 					e.setCustomNameTag("Hatsune Miku");
-				}
+				}*/
 				
 				List<EntityPlayer> players = e.getPlayersAround();
 				int playerCount = 0;
