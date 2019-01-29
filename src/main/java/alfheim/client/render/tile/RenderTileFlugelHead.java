@@ -1,26 +1,12 @@
 package alfheim.client.render.tile;
 
-import java.util.Map;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
-import net.minecraft.tileentity.TileEntitySkull;
-import net.minecraft.util.ResourceLocation;
-
 import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL12;
-
-import vazkii.botania.client.core.helper.ShaderHelper;
-import vazkii.botania.client.model.ModelSkullOverride;
-import vazkii.botania.client.render.entity.RenderDoppleganger;
-import vazkii.botania.common.block.tile.TileGaiaHead;
-
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import static org.lwjgl.opengl.GL12.*;
 
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
+import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
+import net.minecraft.tileentity.TileEntitySkull;
 
 public class RenderTileFlugelHead extends TileEntitySkullRenderer {
 
@@ -53,7 +39,7 @@ public class RenderTileFlugelHead extends TileEntitySkullRenderer {
 			}
 		} else glTranslated(x + 0.5, y, z + 0.5);
 
-		glEnable(GL12.GL_RESCALE_NORMAL);
+		glEnable(GL_RESCALE_NORMAL);
 		glScaled(-1, -1, 1);
 		glEnable(GL_ALPHA_TEST);
 		glRotated(rotation, 0, 1, 0);

@@ -1,6 +1,5 @@
 package alfheim.common.network;
 
-import alfheim.client.core.handler.KeyBindingHandlerClient;
 import alfheim.client.core.handler.PacketHandlerClient;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

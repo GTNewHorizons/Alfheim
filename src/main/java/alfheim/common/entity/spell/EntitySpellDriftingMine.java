@@ -9,8 +9,8 @@ import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
-import alfheim.common.core.util.DamageSourceSpell;
 import alfheim.common.core.handler.SpellEffectHandler;
+import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import vazkii.botania.common.Botania;
 
 public class EntitySpellDriftingMine extends Entity implements ITimeStopSpecific {
 	

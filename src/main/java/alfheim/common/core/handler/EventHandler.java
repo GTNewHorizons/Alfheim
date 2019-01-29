@@ -34,7 +34,6 @@ import alfheim.common.network.Message1d;
 import alfheim.common.network.Message2d;
 import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageEffect;
-import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;

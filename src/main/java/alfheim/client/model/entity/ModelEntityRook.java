@@ -1,6 +1,6 @@
 package alfheim.client.model.entity;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -480,7 +480,7 @@ public class ModelEntityRook extends ModelBase {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-    	GL11.glRotated(180, 0, 1, 0);
+    	glRotated(180, 0, 1, 0);
         upper_body_deco.render(f5);
         lower_top_body_piece.render(f5);
         main_towers_base.render(f5);
@@ -508,7 +508,7 @@ public class ModelEntityRook extends ModelBase {
         crotch.render(f5);
         lef_arm1.render(f5);
         lef_lower_body_side_1.render(f5);
-        GL11.glRotated(-180, 0, 1, 0);
+        glRotated(-180, 0, 1, 0);
     }
 
     /**

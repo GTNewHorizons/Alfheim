@@ -2,7 +2,6 @@ package alfheim.common.item.lens;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;

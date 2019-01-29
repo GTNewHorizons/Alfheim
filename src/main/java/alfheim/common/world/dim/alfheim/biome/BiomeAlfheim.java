@@ -1,15 +1,7 @@
 package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.entity.EntityElf;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import ru.vamig.worldengine.WE_Biome;
-import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
-import ru.vamig.worldengine.standardcustomgen.WE_SnowGen;
-import vazkii.botania.common.block.ModBlocks;
 
 public class BiomeAlfheim extends WE_Biome {
 	

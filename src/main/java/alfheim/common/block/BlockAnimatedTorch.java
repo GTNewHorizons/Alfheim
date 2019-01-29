@@ -1,6 +1,5 @@
 package alfheim.common.block;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.block.IHourglassTrigger;
@@ -10,17 +9,14 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.internal.IManaBurst;
@@ -29,8 +25,6 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.IManaTrigger;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
-import vazkii.botania.common.block.BlockHourglass;
-import vazkii.botania.common.lexicon.LexiconData;
 
 public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 

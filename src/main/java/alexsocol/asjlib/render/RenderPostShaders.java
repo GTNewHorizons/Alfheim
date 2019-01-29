@@ -3,7 +3,6 @@ package alexsocol.asjlib.render;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import alexsocol.asjlib.ASJUtilities;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

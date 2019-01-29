@@ -1,14 +1,8 @@
 package alfheim.common.world.dim.alfheim.biome;
 
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
-import alfheim.common.world.dim.alfheim.struct.StructureArena;
-import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
 import net.minecraft.init.Blocks;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
-import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
-import ru.vamig.worldengine.standardcustomgen.WE_StructureGen;
-import ru.vamig.worldengine.standardcustomgen.WE_WorldTreeGen;
 import vazkii.botania.common.block.ModBlocks;
 
 public class BiomeMount3Field extends BiomeAlfheim {

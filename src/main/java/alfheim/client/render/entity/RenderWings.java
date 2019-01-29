@@ -3,13 +3,10 @@ package alfheim.client.render.entity;
 import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.math.Vector3;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
-import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.Flight;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;

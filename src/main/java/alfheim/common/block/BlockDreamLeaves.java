@@ -6,7 +6,6 @@ import alexsocol.asjlib.render.IGlowingLayerBlock;
 import alexsocol.asjlib.render.RenderGlowingLayerBlock;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.AlfheimBlocks;

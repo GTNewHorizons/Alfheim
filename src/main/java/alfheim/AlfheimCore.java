@@ -14,7 +14,6 @@ import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimConfig;
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig;
 import alfheim.common.network.*;
-import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -26,7 +25,6 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import travellersgear.TravellersGear;
 import vazkii.botania.common.Botania;
 
 @Mod(modid = MODID,

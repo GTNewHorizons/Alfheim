@@ -1,9 +1,6 @@
 package alfheim.common.item.relic;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.getBoolean;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.getInt;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.setBoolean;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.setInt;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 import java.awt.Color;
 import java.util.List;

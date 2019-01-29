@@ -2,7 +2,6 @@ package alfheim.client.render.entity;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import net.minecraft.client.Minecraft;

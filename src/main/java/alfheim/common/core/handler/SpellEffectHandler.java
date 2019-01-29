@@ -1,12 +1,9 @@
 package alfheim.common.core.handler;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.network.MessageParticles;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class SpellEffectHandler {
 	

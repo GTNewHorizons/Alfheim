@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import cpw.mods.fml.common.Optional;
@@ -10,12 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import travellersgear.api.ITravellersGear;
-import travellersgear.api.TravellersGearAPI;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
-import vazkii.botania.common.lib.LibItemNames;
 
 @Optional.Interface(modid = "TravellersGear", iface = "travellersgear.api.ITravellersGear", striprefs = true)
 public class ItemInvisibilityCloak extends ItemBauble implements IManaUsingItem, ITravellersGear {

@@ -2,7 +2,6 @@ package alfheim.common.integration.travellersgear.handler;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import gloomyfolken.hooklib.asm.Hook;
@@ -12,9 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import travellersgear.api.TravellersGearAPI;
-import travellersgear.client.ClientProxy;
-import travellersgear.common.util.CloakColourizationRecipe;
-import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak;
 
 public class BotaniaToTravellersGearAdapter {

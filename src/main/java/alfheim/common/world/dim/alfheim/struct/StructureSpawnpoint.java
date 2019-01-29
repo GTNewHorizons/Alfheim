@@ -6,11 +6,8 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
-import cpw.mods.fml.common.IWorldGenerator;
-import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 

@@ -3,7 +3,6 @@ package alfheim.common.spell.fire;
 import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;

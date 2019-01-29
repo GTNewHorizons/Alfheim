@@ -7,14 +7,11 @@ import alfheim.api.spell.SpellBase;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
-import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.handler.SpellEffectHandler;
+import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.network.MessageEffect;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class SpellGoldRush extends SpellBase {

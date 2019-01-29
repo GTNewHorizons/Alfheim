@@ -1,6 +1,6 @@
 package alfheim.common.item;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.getCompound;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;

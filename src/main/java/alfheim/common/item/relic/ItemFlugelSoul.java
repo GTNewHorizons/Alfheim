@@ -1,16 +1,14 @@
 package alfheim.common.item.relic;
 
-import java.awt.Color;
+import static org.lwjgl.opengl.GL11.*;
 
-import org.lwjgl.opengl.GL11;
+import java.awt.Color;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.entity.boss.EntityFlugel;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +21,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,8 +29,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -46,7 +41,6 @@ import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.client.core.helper.IconHelper;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileBrewery;
@@ -291,16 +285,16 @@ public class ItemFlugelSoul extends ItemRelic {
 		Tessellator tess = Tessellator.instance;
 		Tessellator.renderingWorldRenderer = false;
 
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		glPushMatrix();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		float alpha = ((float) Math.sin((ClientTickHandler.ticksInGame + partialTicks) * 0.2F) * 0.5F + 0.5F) * 0.4F + 0.3F;
 
 		double posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
 		double posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks;
 		double posZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
 
-		GL11.glTranslated(posX - RenderManager.renderPosX, posY - RenderManager.renderPosY, posZ - RenderManager.renderPosZ);
+		glTranslated(posX - RenderManager.renderPosX, posY - RenderManager.renderPosY, posZ - RenderManager.renderPosZ);
 
 		float base = getRotationBase(stack);
 		int angles = 360;
@@ -322,27 +316,27 @@ public class ItemFlugelSoul extends ItemRelic {
 			float rotationAngle = (seg + 0.5F) * segAngles + shift;
 			if(segmentLookedAt == seg) inside = true;
 
-			GL11.glPushMatrix();
-			GL11.glRotatef(rotationAngle, 0F, 1F, 0F);
-			GL11.glTranslatef(s * m, -0.75F, 0F);
+			glPushMatrix();
+			glRotatef(rotationAngle, 0F, 1F, 0F);
+			glTranslatef(s * m, -0.75F, 0F);
 
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
-			GL11.glScalef(0.75F, 0.75F, 0.75F);
-			GL11.glTranslatef(0F, 0F, 0.5F);
+			glScalef(0.75F, 0.75F, 0.75F);
+			glTranslatef(0F, 0F, 0.5F);
 			IIcon icon = signs[seg];
-			GL11.glRotatef(90F, 0F, 1F, 0F);
-			GL11.glColor4f(1, !isDisabled(stack, seg) ? 1 : 0, !isDisabled(stack, seg) ? 1 : 0, getWarpPoint(stack, seg).isValid() && !isDisabled(stack, seg) ? 1 : 0.2F);
+			glRotatef(90F, 0F, 1F, 0F);
+			glColor4f(1, !isDisabled(stack, seg) ? 1 : 0, !isDisabled(stack, seg) ? 1 : 0, getWarpPoint(stack, seg).isValid() && !isDisabled(stack, seg) ? 1 : 0.2F);
 			float f = icon.getMinU();
 			float f1 = icon.getMaxU();
 			float f2 = icon.getMinV();
 			float f3 = icon.getMaxV();
 			ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), 1F / 16F);
 
-			GL11.glColor3f(1F, 1F, 1F);
-			GL11.glPopMatrix();
+			glColor3f(1F, 1F, 1F);
+			glPopMatrix();
 
-			GL11.glPushMatrix();
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glRotatef(180F, 1F, 0F, 0F);
 			float a = alpha;
 			if(inside) {
 				a += 0.3F;
@@ -350,8 +344,8 @@ public class ItemFlugelSoul extends ItemRelic {
 			}
 
 			float c = seg % 2 == 0 ? 0.6F : 1F;
-			if(isDisabled(stack, seg)) GL11.glColor4f(c, 0, 0, a);
-			else GL11.glColor4f(c, c, c, a);
+			if(isDisabled(stack, seg)) glColor4f(c, 0, 0, a);
+			else glColor4f(c, c, c, a);
 
 			mc.renderEngine.bindTexture(isDisabled(stack, seg) ? LibResourceLocations.glow : LibResourceLocations.glowCyan);
 			tess.startDrawingQuads();
@@ -372,9 +366,9 @@ public class ItemFlugelSoul extends ItemRelic {
 			y0 = 0;
 			tess.draw();
 
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 
 	@SideOnly(Side.CLIENT)

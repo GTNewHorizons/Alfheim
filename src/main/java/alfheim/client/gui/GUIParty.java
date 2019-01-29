@@ -1,26 +1,21 @@
-	package alfheim.client.gui;
+package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
+import static org.lwjgl.opengl.GL13.*;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.Collection;
 
-import org.apache.http.impl.client.RedirectLocations;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alexsocol.asjlib.render.ASJShaderHelper;
-import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.core.handler.CardinalSystemClient;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
-import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.Flight;
 import cpw.mods.fml.common.eventhandler.EventPriority;

@@ -5,7 +5,6 @@ import alfheim.api.ModInfo;
 import alfheim.api.spell.SpellBase;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
-import net.minecraft.network.NetworkManager;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

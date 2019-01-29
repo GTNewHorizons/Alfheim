@@ -7,7 +7,6 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.handler.EventHandler;
-import alfheim.common.core.handler.CardinalSystem.TimeStopSystem;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.network.Message3d;
 import alfheim.common.network.Message3d.m3d;

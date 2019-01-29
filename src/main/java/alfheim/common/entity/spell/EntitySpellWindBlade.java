@@ -3,8 +3,6 @@ package alfheim.common.entity.spell;
 import java.util.List;
 import java.util.UUID;
 
-import javax.management.MXBean;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
@@ -15,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
 

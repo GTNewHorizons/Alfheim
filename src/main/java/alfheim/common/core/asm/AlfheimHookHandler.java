@@ -1,12 +1,11 @@
 package alfheim.common.core.asm;
 
 import static gloomyfolken.hooklib.asm.ReturnCondition.*;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
@@ -400,14 +399,14 @@ public class AlfheimHookHandler {
 	@Hook(injectOnExit = true, isMandatory = true)
 	public static void renderManaBar(HUDHandler hh, int x, int y, int color, float alpha, int mana, int maxMana) {
 		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return;
-		GL11.glPushMatrix();
+		glPushMatrix();
 		boolean f = Minecraft.getMinecraft().currentScreen == null;
 		boolean f1 = !f && Minecraft.getMinecraft().currentScreen instanceof GuiRecipe;
 		String text = mana + "/" + maxMana;
 		int X = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2;
 		int Y = f1 ? y - 9 : y - 19;
 		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, f);
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -420,9 +419,9 @@ public class AlfheimHookHandler {
 	@Hook(isMandatory = true)
 	public static void renderOverlays(ItemRenderer renderer, float partialTicks) {
 		if(Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimRegistry.soulburn)) {
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			glDisable(GL_ALPHA_TEST);
 			PotionSoulburn.renderFireInFirstPerson(partialTicks);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			glEnable(GL_ALPHA_TEST);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package alfheim.client.render.tile;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.ModInfo;
@@ -22,19 +22,19 @@ public class RenderTileAnyavil extends TileEntitySpecialRenderer {
 	}
 	
 	private void renderTE(TileAnyavil tile, double x, double y, double z, float partialTicks) {
-		GL11.glPushMatrix();
-		GL11.glTranslated(x + 0.5, y + 0.425, z + 0.5);
-		GL11.glRotatef(90 * (tile.blockMetadata + 1), 0.0F, 1.0F, 0.0F);
+		glPushMatrix();
+		glTranslated(x + 0.5, y + 0.425, z + 0.5);
+		glRotated(90 * (tile.blockMetadata + 1), 0, 1, 0);
 
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elementiumBlock);
 		model.renderAll();
 
-		GL11.glRotated(90, 1, 0, 0);
-		GL11.glRotated(135, 0, 0, 1);
-		GL11.glTranslated(0, 0.07, -0.6);
-		GL11.glScaled(1.5, 1.5, 1.5);
+		glRotated(90, 1, 0, 0);
+		glRotated(135, 0, 0, 1);
+		glTranslated(0, 0.07, -0.6);
+		glScaled(1.5, 1.5, 1.5);
 
 		ItemContainingTileEntity.renderItem(tile);
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 }

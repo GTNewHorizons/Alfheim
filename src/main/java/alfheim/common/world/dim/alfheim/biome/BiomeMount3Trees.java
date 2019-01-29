@@ -2,7 +2,6 @@ package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
-import alfheim.common.world.dim.alfheim.struct.StructureArena;
 import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
 import net.minecraft.init.Blocks;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;

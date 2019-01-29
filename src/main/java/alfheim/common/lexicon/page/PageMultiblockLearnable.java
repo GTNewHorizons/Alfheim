@@ -1,8 +1,14 @@
 package alfheim.common.lexicon.page;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -16,19 +22,12 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import alexsocol.asjlib.ASJUtilities;
 import vazkii.botania.api.internal.IGuiLexiconEntry;
 import vazkii.botania.api.lexicon.LexiconPage;
 import vazkii.botania.api.lexicon.multiblock.Multiblock;
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
 import vazkii.botania.client.core.handler.MultiblockRenderHandler;
 import vazkii.botania.client.lib.LibResources;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class PageMultiblockLearnable extends LexiconPage {
 
@@ -55,17 +54,17 @@ public class PageMultiblockLearnable extends LexiconPage {
 		TextureManager render = Minecraft.getMinecraft().renderEngine;
 		render.bindTexture(multiblockOverlay);
 
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_ALPHA_TEST);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_ALPHA_TEST);
+		glColor4f(1F, 1F, 1F, 1F);
 		((GuiScreen) gui).drawTexturedModalRect(gui.getLeft(), gui.getTop(), 0, 0, gui.getWidth(), gui.getHeight());
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		glDisable(GL_BLEND);
+		glEnable(GL_ALPHA_TEST);
 
 		final float maxX = 90, maxY = 60;
-		GL11.glPushMatrix();
-		GL11.glTranslatef(gui.getLeft() + gui.getWidth() / 2, gui.getTop() + 90, gui.getZLevel() + 100F);
+		glPushMatrix();
+		glTranslatef(gui.getLeft() + gui.getWidth() / 2, gui.getTop() + 90, gui.getZLevel() + 100F);
 
 		Multiblock m = known() ? mb : mbUn;
 		
@@ -74,14 +73,14 @@ public class PageMultiblockLearnable extends LexiconPage {
 		float scaleX = maxX / diag;
 		float scaleY = maxY / height;
 		float scale = -Math.min(scaleY, scaleX);
-		GL11.glScalef(scale, scale, scale);
+		glScalef(scale, scale, scale);
 
-		GL11.glRotatef(-20F, 1, 0, 0);
-		GL11.glRotatef(gui.getElapsedTicks(), 0, 1, 0);
+		glRotatef(-20F, 1, 0, 0);
+		glRotatef(gui.getElapsedTicks(), 0, 1, 0);
 
 		MultiblockRenderHandler.renderMultiblockOnPage(m);
 
-		GL11.glPopMatrix();
+		glPopMatrix();
 
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 		boolean unicode = font.getUnicodeFlag();
@@ -90,16 +89,16 @@ public class PageMultiblockLearnable extends LexiconPage {
 		font.drawString(s, gui.getLeft() + gui.getWidth() / 2 - font.getStringWidth(s) / 2, gui.getTop() + 16, 0x000000);
 		font.setUnicodeFlag(unicode);
 
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		glEnable(GL_RESCALE_NORMAL);
 		RenderHelper.enableGUIStandardItemLighting();
 		int x = gui.getLeft() + 15;
 		int y = gui.getTop() + 25;
 		RenderItem.getInstance().renderItemIntoGUI(font, render, new ItemStack(Blocks.stonebrick), x, y);
 		RenderHelper.disableStandardItemLighting();
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		glDisable(GL_RESCALE_NORMAL);
 
-		GL11.glPushMatrix();
-		GL11.glTranslatef(0F, 0F, 200F);
+		glPushMatrix();
+		glTranslatef(0F, 0F, 200F);
 		if(mx >= x && mx < x + 16 && my >= y && my < y + 16) {
 			List<String> mats = new ArrayList();
 			mats.add(StatCollector.translateToLocal("botaniamisc.materialsRequired"));
@@ -112,7 +111,7 @@ public class PageMultiblockLearnable extends LexiconPage {
 
 			vazkii.botania.client.core.helper.RenderHelper.renderTooltip(mx, my, mats);
 		}
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 
 	@Override

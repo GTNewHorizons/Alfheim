@@ -1,26 +1,17 @@
 package alfheim.common.spell.illusion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
-import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.handler.CardinalSystem;
-import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
-import alfheim.common.network.MessageEffect;
 import alfheim.common.network.MessageParticles;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 
 public class SpellTrueSigh extends SpellBase {
 

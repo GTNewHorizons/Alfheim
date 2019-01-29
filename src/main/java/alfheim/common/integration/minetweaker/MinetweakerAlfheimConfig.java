@@ -7,7 +7,6 @@ import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
-import vazkii.botania.common.block.ModBlocks;
 
 public class MinetweakerAlfheimConfig {
 

@@ -1,8 +1,6 @@
 package alfheim.common.lexicon.page;
 
 import alexsocol.asjlib.ASJUtilities;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.stats.Achievement;
 import vazkii.botania.common.lexicon.page.PageText;

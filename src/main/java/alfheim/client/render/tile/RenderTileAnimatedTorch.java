@@ -1,30 +1,19 @@
 package alfheim.client.render.tile;
 
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
-import alexsocol.asjlib.extendables.ItemContainingTileEntity;
-
 import static org.lwjgl.opengl.GL11.*;
+
+import java.util.Random;
 
 import alfheim.common.block.tile.TileAnimatedTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureCompass;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 
 public class RenderTileAnimatedTorch extends TileEntitySpecialRenderer {
@@ -61,16 +50,16 @@ public class RenderTileAnimatedTorch extends TileEntitySpecialRenderer {
 		glTranslated(0, 0.15, 0);
 		
 		{
-			GL11.glDisable(GL11.GL_CULL_FACE);
+			glDisable(GL_CULL_FACE);
 			EntityItem entityitem = new EntityItem(hasWorld ? tile.getWorldObj() : Minecraft.getMinecraft().theWorld, 0.0, 0.0, 0.0, new ItemStack(Blocks.redstone_torch));
 			entityitem.hoverStart = 0.0F;
-			GL11.glPushMatrix();
+			glPushMatrix();
 			Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord));
 			RenderItem.renderInFrame = true;
 			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0F, 0.0F);
 			RenderItem.renderInFrame = false;
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glPopMatrix();
+			glEnable(GL_CULL_FACE);
+			glPopMatrix();
 		}
 		
 		glPopMatrix();

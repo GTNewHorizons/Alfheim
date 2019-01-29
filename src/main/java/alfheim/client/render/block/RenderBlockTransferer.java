@@ -1,6 +1,6 @@
 package alfheim.client.render.block;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileTransferer;
@@ -14,13 +14,13 @@ public class RenderBlockTransferer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+		glPushMatrix();
+		glTranslated(-0.5, -0.5, -0.5);
 
 		TileTransferer spreader = new TileTransferer();
-		spreader.rotationX = -180F;
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0.0, 0.0, 0.0, 0.0F);
-		GL11.glPopMatrix();
+		spreader.rotationX = -180;
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0, 0, 0, 0);
+		glPopMatrix();
 	}
 
 	@Override

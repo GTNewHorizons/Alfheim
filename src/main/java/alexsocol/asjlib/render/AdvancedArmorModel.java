@@ -1,6 +1,6 @@
 package alexsocol.asjlib.render;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockCarrot;
@@ -39,7 +39,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		this.bipedRightArm.showModel = false;
 		this.bipedRightLeg.showModel = false;
 		
-		GL11.glPushMatrix();
+		glPushMatrix();
 		
 		{
 			if(entity instanceof EntityLivingBase) {
@@ -88,10 +88,10 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			bipedLeftArm.rotateAngleX -= MathHelper.sin(z * 0.067F) * 0.05F;
 
 			if (entity instanceof EntitySkeleton && ((EntitySkeleton)entity).getSkeletonType() == 1)
-				GL11.glScalef(1.2F, 1.2F, 1.2F);
+				glScalef(1.2F, 1.2F, 1.2F);
 
 			else if (entity instanceof EntityGiantZombie)
-				GL11.glScalef(6F, 6F, 6F);
+				glScalef(6F, 6F, 6F);
 
 		}
 
@@ -100,7 +100,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			float red = (float)(color >> 16 & 255) / 255F;
 			float blue = (float)(color >> 8 & 255) / 255F;
 			float green = (float)(color & 255) / 255F;
-			GL11.glColor3f(red, blue, green);
+			glColor3f(red, blue, green);
 		}
 
 		pre(entity);
@@ -108,88 +108,88 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		float f6 = 2.0F;
 
 		{//partHead
-			GL11.glPushMatrix();
+			glPushMatrix();
 			if (isChild) {
-				GL11.glScalef(1.5F / f6, 1.5F / f6, 1.5F / f6);
-				GL11.glTranslatef(0.0F, 16.0F * parTicks, 0.0F);
+				glScalef(1.5F / f6, 1.5F / f6, 1.5F / f6);
+				glTranslatef(0.0F, 16.0F * parTicks, 0.0F);
 			}
-			GL11.glTranslatef(bipedHead.rotationPointX * parTicks, bipedHead.rotationPointY * parTicks, bipedHead.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedHead.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedHead.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedHead.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glTranslatef(bipedHead.rotationPointX * parTicks, bipedHead.rotationPointY * parTicks, bipedHead.rotationPointZ * parTicks);
+			glRotatef(bipedHead.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedHead.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedHead.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partHead(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		if (isChild) {
-			GL11.glPushMatrix();
-			GL11.glScalef(1.0F / f6, 1.0F / f6, 1.0F / f6);
-			GL11.glTranslatef(0.0F, 24.0F * parTicks, 0.0F);
+			glPushMatrix();
+			glScalef(1.0F / f6, 1.0F / f6, 1.0F / f6);
+			glTranslatef(0.0F, 24.0F * parTicks, 0.0F);
 		}
 
 		{//partBody
-			GL11.glPushMatrix();
-			GL11.glTranslatef(bipedBody.rotationPointX * parTicks, bipedBody.rotationPointY * parTicks, bipedBody.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedBody.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedBody.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedBody.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glTranslatef(bipedBody.rotationPointX * parTicks, bipedBody.rotationPointY * parTicks, bipedBody.rotationPointZ * parTicks);
+			glRotatef(bipedBody.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedBody.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedBody.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partBody(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		{//partRightArm
-			GL11.glPushMatrix();
-			GL11.glTranslatef(bipedRightArm.rotationPointX * parTicks, bipedRightArm.rotationPointY * parTicks, bipedRightArm.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedRightArm.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedRightArm.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedRightArm.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glTranslatef(bipedRightArm.rotationPointX * parTicks, bipedRightArm.rotationPointY * parTicks, bipedRightArm.rotationPointZ * parTicks);
+			glRotatef(bipedRightArm.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedRightArm.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedRightArm.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partRightArm(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		{//partLeftArm
-			GL11.glPushMatrix();
-			GL11.glTranslatef(bipedLeftArm.rotationPointX * parTicks, bipedLeftArm.rotationPointY * parTicks, bipedLeftArm.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedLeftArm.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedLeftArm.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedLeftArm.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glTranslatef(bipedLeftArm.rotationPointX * parTicks, bipedLeftArm.rotationPointY * parTicks, bipedLeftArm.rotationPointZ * parTicks);
+			glRotatef(bipedLeftArm.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedLeftArm.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedLeftArm.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partLeftArm(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		{//partRightLeg
-			GL11.glPushMatrix();
-			GL11.glTranslatef(bipedRightLeg.rotationPointX * parTicks, bipedRightLeg.rotationPointY * parTicks, bipedRightLeg.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedRightLeg.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedRightLeg.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedRightLeg.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glTranslatef(bipedRightLeg.rotationPointX * parTicks, bipedRightLeg.rotationPointY * parTicks, bipedRightLeg.rotationPointZ * parTicks);
+			glRotatef(bipedRightLeg.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedRightLeg.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedRightLeg.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partRightLeg(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		{//partLeftLeg
-			GL11.glPushMatrix();
-			GL11.glTranslatef(bipedLeftLeg.rotationPointX * parTicks, bipedLeftLeg.rotationPointY * parTicks, bipedLeftLeg.rotationPointZ * parTicks);
-			GL11.glRotatef(bipedLeftLeg.rotateAngleZ * (180F / (float)Math.PI), 0F, 0F, 1F);
-			GL11.glRotatef(bipedLeftLeg.rotateAngleY * (180F / (float)Math.PI), 0F, 1F, 0F);
-			GL11.glRotatef(bipedLeftLeg.rotateAngleX * (180F / (float)Math.PI), 1F, 0F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			glPushMatrix();
+			glTranslatef(bipedLeftLeg.rotationPointX * parTicks, bipedLeftLeg.rotationPointY * parTicks, bipedLeftLeg.rotationPointZ * parTicks);
+			glRotatef(bipedLeftLeg.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotatef(bipedLeftLeg.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotatef(bipedLeftLeg.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			glRotatef(180F, 1, 0, 0);
 			partLeftLeg(entity);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		if (isChild) {
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 
 		post(entity);
 		
-		GL11.glColor3f(1F, 1F, 1F);
-		GL11.glPopMatrix();
+		glColor3f(1F, 1, 1);
+		glPopMatrix();
 	}
 }

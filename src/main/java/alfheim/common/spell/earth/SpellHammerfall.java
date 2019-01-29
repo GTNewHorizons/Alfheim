@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;

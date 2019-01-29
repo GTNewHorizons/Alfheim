@@ -1,26 +1,16 @@
 package alfheim.common.block.tile;
 
-import java.util.Arrays;
-
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.ITickable;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
 
 public class TileAnimatedTorch extends TileMod {

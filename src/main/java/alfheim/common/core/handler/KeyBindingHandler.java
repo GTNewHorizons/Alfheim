@@ -5,7 +5,6 @@ import static alfheim.api.spell.SpellBase.SpellCastResult.*;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.SpellCastEvent;
 import alfheim.api.spell.SpellBase;

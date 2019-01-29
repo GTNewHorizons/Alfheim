@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.List;
 
-import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -12,7 +11,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.api.item.ICosmeticBauble;

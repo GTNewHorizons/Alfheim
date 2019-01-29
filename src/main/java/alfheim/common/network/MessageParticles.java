@@ -1,14 +1,10 @@
 package alfheim.common.network;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.network.ASJPacket;
 import alfheim.client.core.handler.PacketHandlerClient;
-import alfheim.client.render.world.SpellEffectHandlerClient;
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import net.minecraft.client.Minecraft;
 
 public class MessageParticles extends ASJPacket {
 

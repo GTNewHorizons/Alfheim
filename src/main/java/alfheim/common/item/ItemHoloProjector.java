@@ -2,13 +2,11 @@ package alfheim.common.item;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
-import alfheim.client.render.tile.RenderTileFlugelHead;
 import alfheim.common.core.command.CommandRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;

@@ -1,13 +1,11 @@
 package alfheim.common.item.equipment.bauble;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
 import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -21,7 +19,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
@@ -106,15 +103,15 @@ public class ItemDodgeRing extends ItemBauble {
 		if(!player.capabilities.isFlying) {
 			int cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0);
 			int width = Math.min((int) ((cd - pticks) * 2), 40);
-			GL11.glColor4d(1, 1, 1, 1);
+			glColor4d(1, 1, 1, 1);
 			if(width > 0) {
 				Gui.drawRect(xo, y - 2, xo + 40, y - 1, 0x88000000);
 				Gui.drawRect(xo, y - 2, xo + width, y - 1, 0xFFFFFFFF);
 			}
 		}
 
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		GL11.glColor4d(1, 1, 1, 1);
+		glEnable(GL_ALPHA_TEST);
+		glColor4d(1, 1, 1, 1);
 	}
 
 	@Override

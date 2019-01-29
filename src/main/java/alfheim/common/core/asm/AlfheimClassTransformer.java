@@ -1,31 +1,11 @@
 package alfheim.common.core.asm;
 
+import static alfheim.api.ModInfo.OBF;
 import static org.objectweb.asm.Opcodes.*;
 
-import java.util.List;
+import org.objectweb.asm.*;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-
-import static alfheim.api.ModInfo.OBF;
-
-import alfheim.common.core.handler.CardinalSystem.ManaSystem;
-import alfheim.common.core.util.AlfheimBotaniaModifiers;
-import alfheim.common.core.util.DamageSourceSpell;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.IClassTransformer;
-import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.mana.IManaItem;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimClassTransformer implements IClassTransformer {
 

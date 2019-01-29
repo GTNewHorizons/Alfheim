@@ -1,16 +1,12 @@
 package alfheim.common.entity.boss;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
@@ -20,21 +16,9 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
-import alfheim.common.entity.boss.ai.flugel.AIBase;
-import alfheim.common.entity.boss.ai.flugel.AIChase;
-import alfheim.common.entity.boss.ai.flugel.AIDeathray;
-import alfheim.common.entity.boss.ai.flugel.AIEnergy;
-import alfheim.common.entity.boss.ai.flugel.AIInvul;
-import alfheim.common.entity.boss.ai.flugel.AILightning;
-import alfheim.common.entity.boss.ai.flugel.AIRays;
-import alfheim.common.entity.boss.ai.flugel.AIRegen;
-import alfheim.common.entity.boss.ai.flugel.AITask;
-import alfheim.common.entity.boss.ai.flugel.AITeleport;
-import alfheim.common.entity.boss.ai.flugel.AIWait;
+import alfheim.common.entity.boss.ai.flugel.*;
 import alfheim.common.item.relic.ItemFlugelSoul;
-import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -61,13 +45,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -955,7 +933,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void bossBarRenderCallback(ScaledResolution res, int x, int y) {
-		GL11.glPushMatrix();
+		glPushMatrix();
 		int px = x + 160;
 		int py = y + 12;
 
@@ -963,7 +941,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		ItemStack stack = new ItemStack(Items.skull, 1, 3);
 		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
 		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		glEnable(GL_RESCALE_NORMAL);
 		RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, stack, px, py);
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
 
@@ -971,7 +949,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		mc.fontRenderer.setUnicodeFlag(true);
 		mc.fontRenderer.drawStringWithShadow("" + getPlayerCount(), px + 15, py + 4, 0xFFFFFF);
 		mc.fontRenderer.setUnicodeFlag(unicode);
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 	
 	/*	================================	LEXICON STUFF	================================	*/

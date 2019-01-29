@@ -6,14 +6,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.entity.spell.EntitySpellFenrirStorm;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityFenrirStorm extends Render {

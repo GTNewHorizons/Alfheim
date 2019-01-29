@@ -1,28 +1,19 @@
 package alfheim.common.core.util;
 
-import java.awt.AlphaComposite;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.core.asm.AlfheimSyntheticMethodsInjector;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.NpcMerchant;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 

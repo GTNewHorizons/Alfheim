@@ -7,7 +7,6 @@ import alfheim.common.item.equipment.bauble.ItemCloudPendant;
 import alfheim.common.item.equipment.bauble.ItemDodgeRing;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
-import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayerMP;

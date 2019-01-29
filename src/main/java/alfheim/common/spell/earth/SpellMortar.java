@@ -2,8 +2,6 @@ package alfheim.common.spell.earth;
 
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.api.spell.SpellBase.SpellCastResult;
-import alfheim.common.entity.spell.EntitySpellFireball;
 import alfheim.common.entity.spell.EntitySpellMortar;
 import net.minecraft.entity.EntityLivingBase;
 

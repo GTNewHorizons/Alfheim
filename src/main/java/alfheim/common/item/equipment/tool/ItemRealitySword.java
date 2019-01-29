@@ -1,5 +1,7 @@
 package alfheim.common.item.equipment.tool;
 
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
+
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +10,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
-import akka.routing.RemoveRoutee;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
@@ -24,18 +25,15 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 

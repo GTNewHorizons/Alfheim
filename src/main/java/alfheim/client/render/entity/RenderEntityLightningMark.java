@@ -6,9 +6,7 @@ import java.util.Random;
 
 import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
-import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
-import alfheim.api.lib.LibShaderIDs;
 import alfheim.common.entity.EntityLightningMark;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;

@@ -14,15 +14,14 @@ import alfheim.api.spell.SpellBase;
 import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.core.proxy.ClientProxy;
-import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.Flight;
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant;
 import alfheim.common.network.Message2d;
+import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageHotSpellS;
 import alfheim.common.network.MessageKeyBind;
-import alfheim.common.network.Message2d.m2d;
 import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -30,7 +29,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import vazkii.botania.api.mana.ManaItemHandler;
 
 @SideOnly(Side.CLIENT)
 public class KeyBindingHandlerClient {

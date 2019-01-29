@@ -2,11 +2,8 @@ package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.render.ASJShaderHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.entity.EnumRace;
-import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.render.entity.RenderWings;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.Flight;

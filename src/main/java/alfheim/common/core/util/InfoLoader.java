@@ -14,7 +14,6 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
-import vazkii.botania.common.core.version.VersionChecker;
 
 public class InfoLoader {
 

@@ -1,22 +1,11 @@
 package alfheim.common.core.util;
 
-import alfheim.common.entity.spell.EntitySpellDriftingMine;
-import alfheim.common.entity.spell.EntitySpellFenrirStorm;
-import alfheim.common.entity.spell.EntitySpellFireball;
-import alfheim.common.entity.spell.EntitySpellFirewall;
-import alfheim.common.entity.spell.EntitySpellMortar;
-import alfheim.common.entity.spell.EntitySpellWindBlade;
+import alfheim.common.entity.spell.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.Explosion;
+import net.minecraft.util.*;
 
 public class DamageSourceSpell extends DamageSource {
 

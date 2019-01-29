@@ -3,7 +3,6 @@ package alfheim.common.block;
 import java.util.ArrayList;
 import java.util.Random;
 
-import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileFlugelHead;
 import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;

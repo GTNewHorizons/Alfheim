@@ -1,6 +1,5 @@
 package alfheim.api.entity;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.AlfheimAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;

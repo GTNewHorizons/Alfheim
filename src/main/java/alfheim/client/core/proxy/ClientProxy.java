@@ -1,7 +1,5 @@
 package alfheim.client.core.proxy;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 

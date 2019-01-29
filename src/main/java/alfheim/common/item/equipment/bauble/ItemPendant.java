@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.bauble;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
@@ -45,10 +45,12 @@ public class ItemPendant extends ItemBauble implements IBaubleRender {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
 			Helper.rotateIfSneaking(event.entityPlayer);
 			boolean armor = event.entityPlayer.getCurrentArmor(2) != null;
-			GL11.glRotated(180, 1, 0, 0);
-			GL11.glTranslated(-0.25, -0.4, armor ? 0.21 : 0.14);
-			GL11.glScaled(0.5, 0.5, 0.5);
+			glPushMatrix();
+			glRotated(180, 1, 0, 0);
+			glTranslated(-0.25, -0.4, armor ? 0.21 : 0.14);
+			glScaled(0.5, 0.5, 0.5);
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.getMaxU(), icon.getMinV(), icon.getMinU(), icon.getMaxV(), icon.getIconWidth(), icon.getIconHeight(), 1F / 32F);
+			glPopMatrix();
 		}
 	}
 }

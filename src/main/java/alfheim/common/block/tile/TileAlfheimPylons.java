@@ -1,7 +1,5 @@
 package alfheim.common.block.tile;
 
-import java.util.Random;
-
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.tileentity.TileEntity;

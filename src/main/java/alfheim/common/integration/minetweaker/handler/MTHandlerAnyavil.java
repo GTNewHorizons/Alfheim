@@ -1,6 +1,6 @@
 package alfheim.common.integration.minetweaker.handler;
 
-import static alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getStack;
+import static alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.*;
 
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;

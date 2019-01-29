@@ -1,13 +1,10 @@
 package alfheim.common.item.equipment.bauble;
 
 import alfheim.AlfheimCore;
-import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInvBasic;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -16,7 +13,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
 public class ItemCrescentMoonAmulet extends ItemPendant implements IManaUsingItem {
 
