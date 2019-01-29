@@ -28,6 +28,8 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 		renderTE((TileItemHolder)tile, x, y, z, partialTicks);		
 	}
 	
+	Random rand = new Random();
+	
 	private void renderTE(TileItemHolder tile, double x, double y, double z, float partialTicks) {
 		boolean inf = false, dil = false, fab = false;
 		int c = 0;
@@ -49,8 +51,10 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 
 		if(fab) {
 			float time = ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks;
-			if(tile != null)
-				time += new Random(tile.xCoord ^ tile.yCoord-1 ^ tile.zCoord).nextInt(100000); // FIXME remove instanciating
+			if(tile != null) {
+				rand.setSeed(tile.xCoord ^ tile.yCoord-1 ^ tile.zCoord);
+				time += rand.nextInt(100000);
+			}
 
 			Color color = Color.getHSBColor(time * 0.005F, 0.6F, 1F);
 			glColor4ub((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue(), (byte) 255);

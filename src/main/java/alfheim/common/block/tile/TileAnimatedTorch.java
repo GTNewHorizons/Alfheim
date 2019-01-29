@@ -1,11 +1,17 @@
 package alfheim.common.block.tile;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -103,7 +109,9 @@ public class TileAnimatedTorch extends TileMod {
 		int x = res.getScaledWidth() / 2 + 10;
 		int y = res.getScaledHeight() / 2 - 8;
 
-		// RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, new ItemStack(Blocks.redstone_torch), x, y); // FIXME some bug
+		RenderHelper.enableGUIStandardItemLighting();
+		glEnable(GL_RESCALE_NORMAL);
+		RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, new ItemStack(AlfheimBlocks.animatedTorch), x, y);
 		
 		mc.fontRenderer.drawStringWithShadow(StatCollector.translateToLocal("tile.AnimatedTorch.desc." + torchMode.name().toLowerCase()), x + 18, y + 6, 0xFF4444);
 	}

@@ -60,6 +60,8 @@ public class RenderEntityLightningMark extends Render {
 		return null;
 	}
 
+	Random rand = new Random();
+	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntityLightningMark mark = (EntityLightningMark) entity;
@@ -71,7 +73,7 @@ public class RenderEntityLightningMark extends Render {
 		float chargeMul = charge / 10F;
 
 		
-		Random rand = new Random(mark.getUniqueID().getMostSignificantBits()); // FIXME remove instanciating
+		rand.setSeed(mark.getUniqueID().getMostSignificantBits());
 
 		float s = chargeMul;
 		s += Math.min(1F, (live + partialTick) * 0.2F);

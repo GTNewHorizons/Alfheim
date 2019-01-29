@@ -179,7 +179,7 @@ public class AlfheimRegistry {
 				}
 				
 				if (!ASJUtilities.isServer()) 
-					for (int i = 0; i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration))); i++)  // FIXME proper i < VALUE
+					for (int i = 0; i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration))); i++) // looks like this "i < VALUE" is fine
 						SpellEffectHandlerClient.spawnMana(living, i);
 			}
 		};

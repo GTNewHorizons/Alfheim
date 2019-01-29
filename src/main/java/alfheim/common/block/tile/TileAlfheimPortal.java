@@ -251,6 +251,8 @@ public class TileAlfheimPortal extends TileMod {
 		return true;
 	}
 
+	Random rand = new Random();
+	
 	private void lightPylons(Function<int[], int[]>... converters) {
 		if (ticksOpen < 50)
 			return;
@@ -269,7 +271,8 @@ public class TileAlfheimPortal extends TileMod {
 				
 				if(ConfigHandler.elfPortalParticlesEnabled) {
 					double worldTime = this.worldObj.getTotalWorldTime();
-					worldTime += new Random(xCoord + pos[0] ^ yCoord + pos[1] ^ zCoord + pos[2]).nextInt(1000); // FIXME remove instanciating
+					rand.setSeed(xCoord + pos[0] ^ yCoord + pos[1] ^ zCoord + pos[2]);
+					worldTime += rand.nextInt(1000);
 					worldTime /= 5;
 
 					float r = 0.75F + (float) Math.random() * 0.05F;

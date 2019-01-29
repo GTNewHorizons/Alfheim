@@ -25,6 +25,8 @@ public class RenderEntityFenrirStorm extends Render {
 		return null;
 	}
 
+	Random rand = new Random();
+	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntitySpellFenrirStorm e = (EntitySpellFenrirStorm) entity;
@@ -48,7 +50,7 @@ public class RenderEntityFenrirStorm extends Render {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		glColor4d(0.65, 1, 1, 1);
 		
-		Random rand = new Random(e.getEntityId() + (e.ticksExisted / 3)); // FIXME remove instanciating
+		rand.setSeed(e.getEntityId() + (e.ticksExisted / 3));
 		
 		for (int i = 0; i < 3; i++) {
 			glLineWidth(ASJUtilities.randInBounds(1, 3));

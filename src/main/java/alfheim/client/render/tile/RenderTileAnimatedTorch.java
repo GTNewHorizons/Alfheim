@@ -23,6 +23,8 @@ public class RenderTileAnimatedTorch extends TileEntitySpecialRenderer {
 		render((TileAnimatedTorch) te, x, y, z, partialTicks);
 	}
 	
+	Random rand = new Random();
+	
 	public void render(TileAnimatedTorch tile, double x, double y, double z, float partialTicks) {
 		Minecraft mc = Minecraft.getMinecraft();
 		glPushMatrix();
@@ -31,9 +33,11 @@ public class RenderTileAnimatedTorch extends TileEntitySpecialRenderer {
 		boolean hasWorld = tile != null && tile.getWorldObj() != null;
 		int wtime = !hasWorld ? 0 : ClientTickHandler.ticksInGame;
 		
-		if(wtime != 0)
-			wtime += new Random(tile.xCoord ^ tile.yCoord ^ tile.zCoord).nextInt(360); // FIXME remove instanciating
-
+		if(wtime != 0) {
+			rand.setSeed(tile.xCoord ^ tile.yCoord ^ tile.zCoord);
+			wtime += rand.nextInt(360);
+		}
+			
 		float time = wtime == 0 ? 0 : wtime + partialTicks;
 		double xt = 0.5 + Math.cos(time * 0.05) * 0.025;
 		double yt = 0.1 + (Math.sin(time * 0.04) + 1) * 0.05;
