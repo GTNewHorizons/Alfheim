@@ -6,6 +6,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -48,7 +49,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 		int metadata = world.getBlockMetadata(x, y, z);
         float hardness = getBlockHardness(world, x, y, z);
         
-        IInventory bbls = BaublesApi.getBaubles(player);
+        IInventory bbls = PlayerHandler.getPlayerBaubles(player);
 		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 5, true)) hardness = 2;
 
 		if (hardness < 0.0F) return 0.0F;
@@ -87,7 +88,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 	public void onEntityWalking(World w, int x, int y, int z, Entity e) {
 		if (e instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) e;
-			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
+			if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.elfIcePendant) return;
 		}
 		e.setInWeb();
 		if (!w.isRemote && e instanceof EntityLivingBase) {

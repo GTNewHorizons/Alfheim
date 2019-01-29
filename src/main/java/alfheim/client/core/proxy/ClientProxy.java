@@ -24,6 +24,7 @@ import alfheim.common.core.util.AlfheimBotaniaModifiers;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
+import alfheim.common.integration.travellersgear.handler.BotaniaInTravellersGearRenderer;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -103,6 +104,7 @@ public class ClientProxy extends CommonProxy {
 		super.initializeAndRegisterHandlers();
 		MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
 		FMLCommonHandler.instance().bus().register(new EventHandlerClient());
+		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(new BotaniaInTravellersGearRenderer());
 		if (AlfheimCore.enableMMO) enableMMOGUIs();
 	}
 	

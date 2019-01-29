@@ -63,6 +63,14 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			return cw.toByteArray();
 		} else
 			
+		if (transformedName.equals("vazkii.botania.client.core.handler.BaubleRenderHandler")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			BaubleRenderHandler$ClassVisitor ct = new BaubleRenderHandler$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+			
 		if (transformedName.equals("vazkii.botania.common.entity.EntityDoppleganger")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -284,6 +292,35 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		}
 	}
 
+	static class BaubleRenderHandler$ClassVisitor extends ClassVisitor {
+		
+		public BaubleRenderHandler$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+			if (name.equals("renderManaTablet")) {
+				System.out.println("Visiting BaubleRenderHandler#renderManaTablet: " + name + desc);
+				return new BaubleRenderHandler$renderManaTablet$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions);
+		}
+		
+		static class BaubleRenderHandler$renderManaTablet$MethodVisitor extends MethodVisitor {
+			
+			public BaubleRenderHandler$renderManaTablet$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitLdcInsn(Object cst) {
+				if (cst instanceof Float && ((Float) cst).floatValue() == 0.2F) cst = new Float(0.33F);
+				super.visitLdcInsn(cst);
+			}
+		}
+	}
+	
 	static class EntityDoppleganger$ClassVisitor extends ClassVisitor {
 		
 		public EntityDoppleganger$ClassVisitor(ClassVisitor cv) {

@@ -28,5 +28,6 @@ public class AlfheimHookLoader extends HookLoader {
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
+		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
 	}
 }

@@ -33,6 +33,7 @@ import alfheim.common.entity.boss.ai.flugel.AITeleport;
 import alfheim.common.entity.boss.ai.flugel.AIWait;
 import alfheim.common.item.relic.ItemFlugelSoul;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -451,7 +452,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			active.removeAll(remove);
 
 			// remove player
-			IInventory baubles = BaublesApi.getBaubles(player);
+			IInventory baubles = PlayerHandler.getPlayerBaubles(player);
 			ItemStack tiara = baubles.getStackInSlot(0);
 			if (tiara != null && tiara.getItem().equals(ModItems.flightTiara) && tiara.getItemDamage() == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200);

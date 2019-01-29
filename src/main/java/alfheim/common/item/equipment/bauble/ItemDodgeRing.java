@@ -8,6 +8,7 @@ import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -20,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
@@ -45,7 +47,7 @@ public class ItemDodgeRing extends ItemBauble {
 	public void onKeyDown(KeyInputEvent event) {
 		Minecraft mc = Minecraft.getMinecraft();
 
-		IInventory baublesInv = BaublesApi.getBaubles(mc.thePlayer);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(mc.thePlayer);
 		ItemStack ringStack = baublesInv.getStackInSlot(1);
 		if(ringStack == null|| !(ringStack.getItem() instanceof ItemDodgeRing)) {
 			ringStack = baublesInv.getStackInSlot(2);
@@ -92,7 +94,8 @@ public class ItemDodgeRing extends ItemBauble {
 		player.motionZ = sideVec.z;
 
 		AlfheimCore.network.sendToServer(new Message0d(m0d.DODGE));
-		ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD);
+		// stupid singleplayer NBT autosync -_- 
+		if (!Minecraft.getMinecraft().isSingleplayer()) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD);
 	}
 
 	@SideOnly(Side.CLIENT)

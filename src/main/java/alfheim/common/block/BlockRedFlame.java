@@ -9,6 +9,7 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockFire;
@@ -45,7 +46,7 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 		int metadata = world.getBlockMetadata(x, y, z);
         float hardness = getBlockHardness(world, x, y, z);
         
-        IInventory bbls = BaublesApi.getBaubles(player);
+        IInventory bbls = PlayerHandler.getPlayerBaubles(player);
 		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 300, true)) hardness = 2;
 
 		if (hardness < 0.0F) return 0.0F;
@@ -78,7 +79,7 @@ public class BlockRedFlame extends BlockFire implements ILexiconable {
 	}
 
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-		if (entity instanceof EntityPlayer && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0), (EntityPlayer) entity, 50, true)) return;
+		if (entity instanceof EntityPlayer && PlayerHandler.getPlayerBaubles((EntityPlayer) entity).getStackInSlot(0) != null && BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0).getItem() == AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles((EntityPlayer) entity).getStackInSlot(0), (EntityPlayer) entity, 50, true)) return;
 		if (entity instanceof EntityLivingBase) {
 			PotionEffect soulburn = new PotionEffect(AlfheimRegistry.soulburn.id, 200);
 			soulburn.getCurativeItems().clear();

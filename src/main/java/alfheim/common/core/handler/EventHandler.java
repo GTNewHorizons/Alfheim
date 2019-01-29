@@ -35,6 +35,7 @@ import alfheim.common.network.Message2d;
 import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageEffect;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -420,7 +421,7 @@ public class EventHandler {
 		}
 		
 		if (e.source.damageType.equals(DamageSourceSpell.possession.damageType) && e.entityLiving instanceof EntityPlayer) {
-			IInventory baubles = BaublesApi.getBaubles((EntityPlayer) e.entityLiving);
+			IInventory baubles = PlayerHandler.getPlayerBaubles((EntityPlayer) e.entityLiving);
 			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) {
 				ItemNBTHelper.setInt(baubles.getStackInSlot(0), ItemTankMask.TAG_POSSESSION, 0);
 				if (!((EntityPlayer) e.entityLiving).inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {

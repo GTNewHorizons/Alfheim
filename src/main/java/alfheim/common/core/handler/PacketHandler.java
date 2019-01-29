@@ -8,6 +8,7 @@ import alfheim.common.item.equipment.bauble.ItemDodgeRing;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -31,7 +32,7 @@ public class PacketHandler {
 		
 		player.worldObj.playSoundAtEntity(player, "botania:dash", 1F, 1F);
 
-		IInventory baublesInv = BaublesApi.getBaubles(player);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(player);
 		ItemStack ringStack = baublesInv.getStackInSlot(1);
 
 		if(ringStack == null|| !(ringStack.getItem() instanceof ItemDodgeRing)) {
@@ -59,7 +60,7 @@ public class PacketHandler {
 	}
 	
 	private static void jump(EntityPlayerMP player) {
-		IInventory baublesInv = BaublesApi.getBaubles(player);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(player);
 		ItemStack amuletStack = baublesInv.getStackInSlot(0);
 
 		if(amuletStack != null && amuletStack.getItem() instanceof ItemCloudPendant) {

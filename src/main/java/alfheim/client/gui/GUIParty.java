@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.apache.http.impl.client.RedirectLocations;
@@ -68,6 +69,8 @@ public class GUIParty extends Gui {
 		zLevel = -90;
 		double s = AlfheimConfig.partyHUDScale;
 		
+	    DecimalFormat format = new DecimalFormat("###.0#");
+		
 		glPushMatrix();
 		glEnable(GL_BLEND);
 		glColor4d(1, 1, 1, 1);
@@ -89,7 +92,7 @@ public class GUIParty extends Gui {
 			
 			{
 				glTranslated(0, -0.5, -89);
-				data = player.getHealth() + "/" + player.getMaxHealth();
+				data = (format.format(player.getHealth()) + "/" + format.format(player.getMaxHealth())).replace(',', '.');
 				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0);
 				glTranslated(0, 0.5, 89);
 			}
@@ -429,7 +432,7 @@ public class GUIParty extends Gui {
 						glTranslated(0, -0.5, -85);
 						boolean unicode = font.getUnicodeFlag();
 						font.setUnicodeFlag(true);
-						data = l.getHealth() + "/" + l.getMaxHealth();
+						data = (format.format(l.getHealth()) + "/" + format.format(l.getMaxHealth())).replace(',', '.');
 						font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0);
 						font.setUnicodeFlag(unicode);
 						glTranslated(0, 0.5, 85);

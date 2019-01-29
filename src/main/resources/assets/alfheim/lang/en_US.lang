@@ -217,6 +217,7 @@ alfheimmisc.notallowed=Foolish mortal! You can't even fly without help! You are 
 alfheimmisc.notbeacon=This is wrong block, or it is corrupted (in the second case, contact server administrator).
 alfheimmisc.peacefulNoob=You try to offer the Eye, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
 alfheimmisc.teamnotmob=Party member cannot be selected as enemy target.
+alfheimmisc.tgtooltip=Press &b%key%&7 to open the Traveller's Gear menu
 alfheimmisc.update=O-oh, it seems you are playing on an outdated version (%s). Perhaps you should update to %s?
 
 alfheimmisc.cast.notarget=Select target

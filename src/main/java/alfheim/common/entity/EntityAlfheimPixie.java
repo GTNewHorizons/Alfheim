@@ -3,6 +3,7 @@ package alfheim.common.entity;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.common.core.registry.AlfheimItems;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
@@ -89,7 +90,7 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 		}
 		
 		player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 4);
-		if (player != null && BaublesApi.getBaubles(player) != null && BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(player).getStackInSlot(0), player, 1, true)) {
+		if (player != null && PlayerHandler.getPlayerBaubles(player) != null && BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() == AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(player).getStackInSlot(0), player, 1, true)) {
 			Vec3 vec = player.getLook(1.0F);
 			this.motionX = (player.posX + vec.xCoord - this.posX) / 8.0F;
 			this.motionY = (player.posY + vec.yCoord + 1.5 - this.posY) / 8.0F;

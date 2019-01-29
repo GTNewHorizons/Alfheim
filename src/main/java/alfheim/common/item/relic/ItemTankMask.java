@@ -18,6 +18,7 @@ import alfheim.common.core.util.DamageSourceSpell;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -121,7 +122,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 			EntityPlayer player = (EntityPlayer) e.entityLiving;
 			int slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory);
 			if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return;
-			IInventory baubles = BaublesApi.getBaubles(player);
+			IInventory baubles = PlayerHandler.getPlayerBaubles(player);
 			if (baubles.getStackInSlot(0) != null)
 				if (((IBauble) baubles.getStackInSlot(0).getItem()).canUnequip(baubles.getStackInSlot(0), player)) {
 					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false);

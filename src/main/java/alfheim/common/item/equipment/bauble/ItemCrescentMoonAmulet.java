@@ -3,6 +3,7 @@ package alfheim.common.item.equipment.bauble;
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +41,7 @@ public class ItemCrescentMoonAmulet extends ItemPendant implements IManaUsingIte
 	public void onWearerHurt(LivingHurtEvent e) {
 		if (!e.source.isDamageAbsolute() && e.entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) e.entityLiving;
-			IInventory bbls = BaublesApi.getBaubles(player);
+			IInventory bbls = PlayerHandler.getPlayerBaubles(player);
 			if (bbls != null && bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).getItem() instanceof ItemCrescentMoonAmulet)
 				if (e.source.isMagicDamage()) {
 					if (ItemNBTHelper.getInt(bbls.getStackInSlot(0), TAG_COOLDOWN, 0) <= 0) {

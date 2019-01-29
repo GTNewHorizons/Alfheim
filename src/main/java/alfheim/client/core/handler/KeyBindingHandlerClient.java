@@ -24,6 +24,7 @@ import alfheim.common.network.MessageHotSpellS;
 import alfheim.common.network.MessageKeyBind;
 import alfheim.common.network.Message2d.m2d;
 import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class KeyBindingHandlerClient {
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true;
-			if (BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() instanceof ItemCreativeReachPendant)
+			if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).getItem() instanceof ItemCreativeReachPendant)
 				AlfheimCore.network.sendToServer(new MessageKeyBind(ATTACK.ordinal(), false, 0));
 		} else if (toggleLMB) {
 			toggleLMB = false;
