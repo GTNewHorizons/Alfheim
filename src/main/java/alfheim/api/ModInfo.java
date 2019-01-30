@@ -4,8 +4,8 @@ public class ModInfo {
 	
 	public static final String MAJOR = "BETA";
 	//public static final String MINOR = "";
-	public static final String BUILD = "14";
 
+	public static final String BUILD = "14";
 	public static final String MODID = "alfheim";
 	public static final String NAME = "Alfheim";
 	public static final String VERSION = MAJOR /*+ "." + MINOR*/ + "-" + BUILD;

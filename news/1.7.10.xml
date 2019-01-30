@@ -1,7 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-13</val>
-	</version>
+		<val>BETA-13</val>	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
 		<val>GL HF!</val>
@@ -33,5 +32,4 @@
 	</version>
 	<version id="BETA-12">
 		<val>Nice stuff from 1.12.2 Botania, just check it out :3</val>
-	</version>
-</news>
+	</version></news>
