@@ -91,6 +91,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	private static boolean isPlayingMusic = false;
 	
 	private float prevHP;
+	private int hurtTimeActual;
 	
 	public EntityFlugel(World world) {
 		super(world);
@@ -99,6 +100,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		initAI();
 		isImmuneToFire = true;
 		experienceValue = 1325;
+		hurtTimeActual = 0;
 	}
 
 	public static boolean spawn(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
@@ -220,12 +222,12 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void setHealth(float hp) {
 		prevHealth = getHealth();
-		
 		hp = Math.max(prevHealth - (isHardMode() ? 60F : 40F), hp);
 		
-		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtResistantTime > 0) return;
+		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return;
 		
 		super.setHealth(hp);
+		hurtTimeActual = 20;
 		
 		if (getAITask() == AITask.INVUL) return;
 		if (getHealth() < prevHealth && ((int)(getHealth() / (getMaxHealth() / 10))) < ((int)(prevHealth / (getMaxHealth() / 10)))) {
@@ -475,6 +477,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				if(!players.isEmpty()) damageEntity(DamageSource.causePlayerDamage(players.get(0)), 0);
 			}
 		}
+		
+		hurtTimeActual = Math.max(0, --hurtTimeActual);
 	}
 	
 	/*	================================	UTILITY STUFF	================================	*/

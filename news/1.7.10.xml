@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-14</val>
+		<val>BETA-15</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -36,5 +36,8 @@
 	</version>
 	<version id="BETA-13">
 		<val>Fixed some bugs and improved stuff, go update!</val>
+	</version>
+	<version id="BETA-14">
+		<val>Accidentally made Flugel immortal :(</val>
 	</version>
 </news>
