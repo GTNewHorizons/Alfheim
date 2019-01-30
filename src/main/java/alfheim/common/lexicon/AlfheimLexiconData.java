@@ -348,23 +348,23 @@ public class AlfheimLexiconData {
 	
 	private static void initElvenStory() {
 		if (es		.pages.isEmpty()) 	es		.setPriority()
-										.setLexiconPages(new PageText("0"));
+												.setLexiconPages(new PageText("0"));
 		
 		if (races	.pages.isEmpty())	races	.setPriority()
-										.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"));
+												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"));
 		
 		if (AlfheimCore.enableMMO) initMMO();
 	}
 	
 	private static void initMMO() {
-		if (parties	.pages.isEmpty()) 	parties	.setPriority()
+		if (parties	.pages.isEmpty())	parties	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipePeacePipe),
 																 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
 												.setIcon(null);
-										
+		
 		if (spells	.pages.isEmpty())	spells	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
-										
+
 		if (targets	.pages.isEmpty())	targets	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"));
 	}
