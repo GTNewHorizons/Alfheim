@@ -42,7 +42,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 			model.renderAll();
 			glPopMatrix();
 			
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku0);
 			super.render(entity, f, f1, f2, f3, f4, f5);
 			glDisable(GL_BLEND);
 			
