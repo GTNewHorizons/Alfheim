@@ -29,7 +29,7 @@ public class RenderButterflies {
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_LIGHTING);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
-		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		glColor4d(1, 1, 1, 1);
 		
 		glTranslated(x, y, z);
 		double s = Math.max(entity.width, entity.height) / 1.25;

@@ -1,4 +1,4 @@
-package alfheim.common.entity.boss.ai;
+package alfheim.common.entity.boss.ai.flugel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +99,7 @@ public class AIDeathray extends AIBase {
 	@Override
 	public void resetTask() {
 		flugel.setStage(flugel.STAGE_DEATHRAY);
-		super.resetTask();
+		flugel.setAITaskTimer(0);
+		flugel.setAITask(AITask.REGEN);
 	}
 }

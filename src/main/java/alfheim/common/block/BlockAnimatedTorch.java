@@ -2,23 +2,21 @@ package alfheim.common.block;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.block.IHourglassTrigger;
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnimatedTorch;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import vazkii.botania.api.internal.IManaBurst;
@@ -27,10 +25,8 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.IManaTrigger;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
-import vazkii.botania.common.block.BlockHourglass;
-import vazkii.botania.common.lexicon.LexiconData;
 
-public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IWandable, IManaTrigger, IWandHUD, ILexiconable {
+public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 
 	public BlockAnimatedTorch() {
 		super(Material.circuits);
@@ -61,10 +57,17 @@ public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IW
 		if(!burst.isFake()) ((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle();
 	}
 
-	/*@Override
+	@Override
 	public void onTriggeredByHourglass(World world, int x, int y, int z, TileEntity hourglass) {
-		((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle(); FIXME
-	}*/
+		((TileAnimatedTorch) world.getTileEntity(x, y, z)).toggle();
+	}
+	
+	@Override
+	public boolean onBlockEventReceived(World world, int x, int y, int z, int id, int param) {
+		super.onBlockEventReceived(world, x, y, z, id, param);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        return tile != null ? tile.receiveClientEvent(id, param) : false;
+	}
 	
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {

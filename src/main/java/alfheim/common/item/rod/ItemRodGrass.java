@@ -1,34 +1,23 @@
 package alfheim.common.item.rod;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.api.subtile.ISpecialFlower;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.item.rod.ItemDirtRod;
-import vazkii.botania.common.item.rod.ItemTerraformRod;
-import vazkii.botania.common.lib.LibMisc;
 
 public class ItemRodGrass extends Item implements IManaUsingItem {
 

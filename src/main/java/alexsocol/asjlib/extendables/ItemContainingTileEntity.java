@@ -1,6 +1,6 @@
 package alexsocol.asjlib.extendables;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -80,12 +80,12 @@ public class ItemContainingTileEntity extends TileEntity {
 	public static void renderItem(ItemContainingTileEntity tile) {
 		ItemStack itemstack = tile.getItem();
 		if (itemstack != null) {
-			GL11.glDisable(GL11.GL_CULL_FACE);
+			glDisable(GL_CULL_FACE);
 			EntityItem entityitem = new EntityItem(tile.getWorldObj(), 0.0, 0.0, 0.0, itemstack);
 			Item item = entityitem.getEntityItem().getItem();
 			entityitem.getEntityItem().stackSize = tile.getItem().stackSize;
 			entityitem.hoverStart = 0.0F;
-			GL11.glPushMatrix();
+			glPushMatrix();
 			Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord));
 
 			if (item == Items.compass) {
@@ -114,8 +114,8 @@ public class ItemContainingTileEntity extends TileEntity {
 			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0F, 0.0F);
 			RenderItem.renderInFrame = false;
 
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glPopMatrix();
+			glEnable(GL_CULL_FACE);
+			glPopMatrix();
 		}
 	}
 }

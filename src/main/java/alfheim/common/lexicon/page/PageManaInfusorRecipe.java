@@ -1,9 +1,9 @@
 package alfheim.common.lexicon.page;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.api.lib.LibResourceLocations;
@@ -22,7 +22,6 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.client.core.handler.HUDHandler;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.lexicon.page.PageRecipe;
@@ -67,11 +66,11 @@ public class PageManaInfusorRecipe extends PageRecipe {
 
 		render.bindTexture(LibResourceLocations.petalOverlay);
 
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glColor4f(1F, 1F, 1F, 1F);
 		((GuiScreen) gui).drawTexturedModalRect(gui.getLeft(), gui.getTop(), 0, 0, gui.getWidth(), gui.getHeight());
-		GL11.glDisable(GL11.GL_BLEND);
+		glDisable(GL_BLEND);
 		
 		super.renderScreen(gui, mx, my);
 	}
@@ -79,8 +78,8 @@ public class PageManaInfusorRecipe extends PageRecipe {
 	@SideOnly(Side.CLIENT)
 	public void renderManaBar(IGuiLexiconEntry gui, RecipeManaInfuser recipe2, int mx, int my) {
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		String manaUsage = StatCollector.translateToLocal("botaniamisc.manaUsage") + ": ";
 		int x1 = gui.getLeft() + gui.getWidth() / 2 - font.getStringWidth(manaUsage + recipe2.getManaUsage()) / 2;
 		font.drawString(manaUsage, x1, gui.getTop() + 110, 0x66000000);
@@ -103,7 +102,7 @@ public class PageManaInfusorRecipe extends PageRecipe {
 		font.drawString(stopStr, x + 50 - font.getStringWidth(stopStr) / 2, y + 15, 0x99000000);
 		font.drawString(ratioString, x + 50 - font.getStringWidth(ratioString) / 2, y + 5, 0x99000000);
 		font.setUnicodeFlag(unicode);
-		GL11.glDisable(GL11.GL_BLEND);
+		glDisable(GL_BLEND);
 	}
 	
 	@Override

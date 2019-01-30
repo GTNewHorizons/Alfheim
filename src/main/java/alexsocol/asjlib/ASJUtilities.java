@@ -3,15 +3,13 @@ package alexsocol.asjlib;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import javax.management.DescriptorKey;
 
 import org.apache.logging.log4j.Level;
 
@@ -29,7 +27,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -913,16 +910,24 @@ public class ASJUtilities {
 				block.getMaterial() == Material.web;
 	}
 
-	public static void chatLog(String message) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+	private static DecimalFormat format = new DecimalFormat("000");
+	
+	private static String time(World world) {
+		return String.format("[%s] ", format.format(world.getTotalWorldTime() % 1000));
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public static void chatLog(String message) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(time(Minecraft.getMinecraft().theWorld) + message));
+	}
+	
+	@SideOnly(Side.CLIENT)
 	public static void chatLog(String message, World world) {
-		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText((world.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(time(world) + (world.isRemote ? "[C] " : "[S] ") + message));
 	}
 	
 	public static void chatLog(String message, EntityPlayer player) {
-		player.addChatMessage(new ChatComponentText((player.worldObj.isRemote ? "[CLIENT] " : "[SERVER] ") + message));
+		player.addChatMessage(new ChatComponentText(time(player.worldObj) + (player.worldObj.isRemote ? "[C] " : "[S] ") + message));
 	}
 	
 	public static void log(String message) { 

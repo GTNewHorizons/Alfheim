@@ -1,7 +1,7 @@
 package alfheim.client.render.tile;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
 
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.lib.LibResourceLocations;
@@ -19,35 +19,35 @@ public class RenderTileTransferer extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float ticks) {
 		TileTransferer spreader = (TileTransferer) tileentity;
-		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
-		GL11.glTranslated(d0, d1, d2);
+		glPushMatrix();
+		glEnable(GL_RESCALE_NORMAL);
+		glColor4f(1F, 1F, 1F, 1F);
+		glTranslated(d0, d1, d2);
 		
-		GL11.glTranslatef(0.5F, 1.5F, 0.5F);
+		glTranslatef(0.5F, 1.5F, 0.5F);
 
 		ItemContainingTileEntity.renderItem(spreader);
-		GL11.glRotatef(spreader.rotationX + 90F, 0F, 1F, 0F);
-		GL11.glTranslatef(0F, -1F, 0F);
-		GL11.glRotatef(spreader.rotationY, 1F, 0F, 0F);
-		GL11.glTranslatef(0F, 1F, 0F);
+		glRotatef(spreader.rotationX + 90F, 0F, 1F, 0F);
+		glTranslatef(0F, -1F, 0F);
+		glRotatef(spreader.rotationY, 1F, 0F, 0F);
+		glTranslatef(0F, 1F, 0F);
 
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.spreader);
-		GL11.glScalef(1F, -1F, -1F);
+		glScalef(1F, -1F, -1F);
 
 		double time = ClientTickHandler.ticksInGame + ticks;
 
 		model.render();
-		GL11.glColor3f(1F, 1F, 1F);
+		glColor3f(1F, 1F, 1F);
 
-		GL11.glPushMatrix();
+		glPushMatrix();
 		double worldTicks = tileentity.getWorldObj() == null ? 0 : time;
-		GL11.glRotatef((float) worldTicks % 360, 0F, 1F, 0F);
-		GL11.glTranslatef(0F, (float) Math.sin(worldTicks / 20.0) * 0.05F, 0F);
+		glRotatef((float) worldTicks % 360, 0F, 1F, 0F);
+		glTranslatef(0F, (float) Math.sin(worldTicks / 20.0) * 0.05F, 0F);
 		model.renderCube();
-		GL11.glPopMatrix();
+		glPopMatrix();
 
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glPopMatrix();
+		glEnable(GL_RESCALE_NORMAL);
+		glPopMatrix();
 	}
 }

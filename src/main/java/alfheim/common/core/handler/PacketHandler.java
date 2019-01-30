@@ -3,11 +3,11 @@ package alfheim.common.core.handler;
 import java.lang.reflect.Field;
 
 import alexsocol.asjlib.ASJReflectionHelper;
-import alfheim.common.item.equipment.bauble.CloudPendantShim;
+import alfheim.common.item.equipment.bauble.ItemCloudPendant;
 import alfheim.common.item.equipment.bauble.ItemDodgeRing;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
-import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -31,7 +31,7 @@ public class PacketHandler {
 		
 		player.worldObj.playSoundAtEntity(player, "botania:dash", 1F, 1F);
 
-		IInventory baublesInv = BaublesApi.getBaubles(player);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(player);
 		ItemStack ringStack = baublesInv.getStackInSlot(1);
 
 		if(ringStack == null|| !(ringStack.getItem() instanceof ItemDodgeRing)) {
@@ -42,9 +42,11 @@ public class PacketHandler {
 			}
 		}
 
-		if (ItemNBTHelper.getInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD) > 0) 
+		if (ItemNBTHelper.getInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, 0) > 0) {
 			sh.netManager.closeChannel(new ChatComponentTranslation("alfheimmisc.invalidDodge"));
-		
+			return;
+		}
+
 		player.addExhaustion(0.3F);
 		ItemNBTHelper.setInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD);
 	}
@@ -57,10 +59,10 @@ public class PacketHandler {
 	}
 	
 	private static void jump(EntityPlayerMP player) {
-		IInventory baublesInv = BaublesApi.getBaubles(player);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(player);
 		ItemStack amuletStack = baublesInv.getStackInSlot(0);
 
-		if(amuletStack != null && amuletStack.getItem() instanceof CloudPendantShim) {
+		if(amuletStack != null && amuletStack.getItem() instanceof ItemCloudPendant) {
 			player.addExhaustion(0.3F);
 			player.fallDistance = 0;
 				
@@ -68,7 +70,7 @@ public class PacketHandler {
 
 			if(belt != null && belt.getItem() instanceof ItemTravelBelt) {
 				float val = ASJReflectionHelper.getValue(fallBuffer, (ItemTravelBelt) belt.getItem(), false);
-				player.fallDistance = -val * ((CloudPendantShim) amuletStack.getItem()).getMaxAllowedJumps();
+				player.fallDistance = -val * ((ItemCloudPendant) amuletStack.getItem()).getMaxAllowedJumps();
 			}
 		}
 	}

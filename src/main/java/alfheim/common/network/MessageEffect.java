@@ -1,8 +1,6 @@
 package alfheim.common.network;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.network.ASJPacket;
-import alfheim.common.core.registry.AlfheimRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

@@ -1,7 +1,5 @@
 package alfheim.common.core.asm;
 
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.api.ModInfo;
@@ -30,5 +28,6 @@ public class AlfheimHookLoader extends HookLoader {
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
+		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
 	}
 }

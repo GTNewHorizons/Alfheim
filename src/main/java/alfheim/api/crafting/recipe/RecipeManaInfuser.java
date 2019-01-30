@@ -1,6 +1,5 @@
 package alfheim.api.crafting.recipe;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.api.recipe.RecipePetals;
 

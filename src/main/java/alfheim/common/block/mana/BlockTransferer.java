@@ -6,7 +6,6 @@ import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileTransferer;
-import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;

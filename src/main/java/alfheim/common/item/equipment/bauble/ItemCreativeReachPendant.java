@@ -1,7 +1,5 @@
 package alfheim.common.item.equipment.bauble;
 
-import alfheim.AlfheimCore;
-import baubles.api.BaubleType;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -9,7 +7,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.client.core.helper.IconHelper;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
 public class ItemCreativeReachPendant extends ItemPendant {
 

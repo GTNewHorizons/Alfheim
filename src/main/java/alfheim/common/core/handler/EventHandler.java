@@ -1,11 +1,8 @@
 package alfheim.common.core.handler;
 
-import java.util.Random;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.EntityUpdateEvent;
@@ -37,7 +34,7 @@ import alfheim.common.network.Message1d;
 import alfheim.common.network.Message2d;
 import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageEffect;
-import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -50,10 +47,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -66,6 +59,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -85,7 +79,6 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.entity.EntityDoppleganger;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe;
@@ -185,7 +178,10 @@ public class EventHandler {
 	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
 		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
 			InfoLoader.triedToWarnPlayer = true;
-			for (String s : InfoLoader.info) e.player.addChatMessage(new ChatComponentText(s));
+			for (String s : InfoLoader.info) {
+				if (s.startsWith("$json")) e.player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(s.replace("$json", "")));
+				else e.player.addChatMessage(new ChatComponentText(s));
+			}
 		}
 		
 		if (e.player instanceof EntityPlayerMP) {
@@ -260,22 +256,23 @@ public class EventHandler {
 	// ################################ LEFT FLAME ################################
 	@SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent e) {
-		if(AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (e.getPlayer().getCurrentEquippedItem() != null && (e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.flugelSoul || e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.holoProjector)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
     public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
     public void onBlockMultiPlace(BlockEvent.MultiPlaceEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
     }
 	
 	@SubscribeEvent
 	public void onPlayerDrop(ItemTossEvent e) {
-		if(AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) {
 			e.setCanceled(true);
 			e.player.inventory.addItemStackToInventory(e.entityItem.getEntityItem().copy());
 		}
@@ -383,7 +380,7 @@ public class EventHandler {
 			}
 			
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield);
-			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {
+			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {
 				e.ammount /= 2.F;
 				int dur = (int) Math.max(pe.duration -= (e.ammount * 20), 0);
 				if (dur < 0) pe.duration = 0; // e.entityLiving.removePotionEffect(AlfheimRegistry.butterShield.id); <- same :(
@@ -423,7 +420,7 @@ public class EventHandler {
 		}
 		
 		if (e.source.damageType.equals(DamageSourceSpell.possession.damageType) && e.entityLiving instanceof EntityPlayer) {
-			IInventory baubles = BaublesApi.getBaubles((EntityPlayer) e.entityLiving);
+			IInventory baubles = PlayerHandler.getPlayerBaubles((EntityPlayer) e.entityLiving);
 			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) {
 				ItemNBTHelper.setInt(baubles.getStackInSlot(0), ItemTankMask.TAG_POSSESSION, 0);
 				if (!((EntityPlayer) e.entityLiving).inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {

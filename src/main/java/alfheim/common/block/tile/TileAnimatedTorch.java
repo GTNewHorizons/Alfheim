@@ -1,25 +1,22 @@
 package alfheim.common.block.tile;
 
-import java.util.Arrays;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
 
 import alfheim.common.core.registry.AlfheimBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.ITickable;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
 
 public class TileAnimatedTorch extends TileMod {
@@ -51,7 +48,6 @@ public class TileAnimatedTorch extends TileMod {
 	private TorchMode torchMode = TorchMode.TOGGLE;
 
 	public void handRotate() {
-		rotateTo((side + 1) % 4);
 		if(!worldObj.isRemote)
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, (side + 1) % 4);
 	}
@@ -67,8 +63,6 @@ public class TileAnimatedTorch extends TileMod {
 	}
 
 	public void toggle() {
-		rotateTo(torchMode.rotate(this, side));
-		
 		if(!worldObj.isRemote) {
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, torchMode.rotate(this, side));
 			nextRandomRotation = worldObj.rand.nextInt(4);
@@ -91,7 +85,7 @@ public class TileAnimatedTorch extends TileMod {
 		}
 	}
 
-	private void rotateTo(int side) {
+	public void rotateTo(int side) {
 		if(rotating) return;
 
 		currentRandomRotation = nextRandomRotation;
@@ -101,7 +95,7 @@ public class TileAnimatedTorch extends TileMod {
 		if(diff < 0)
 			diff = 360 + diff;
 
-		rotationTicks = 4;
+		rotationTicks = 5;
 		anglePerTick = diff / rotationTicks;
 		this.side = side;
 		rotating = true;
@@ -115,7 +109,9 @@ public class TileAnimatedTorch extends TileMod {
 		int x = res.getScaledWidth() / 2 + 10;
 		int y = res.getScaledHeight() / 2 - 8;
 
-		// RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, new ItemStack(Blocks.redstone_torch), x, y); // FIXME some bug
+		RenderHelper.enableGUIStandardItemLighting();
+		glEnable(GL_RESCALE_NORMAL);
+		RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, new ItemStack(AlfheimBlocks.animatedTorch), x, y);
 		
 		mc.fontRenderer.drawStringWithShadow(StatCollector.translateToLocal("tile.AnimatedTorch.desc." + torchMode.name().toLowerCase()), x + 18, y + 6, 0xFF4444);
 	}

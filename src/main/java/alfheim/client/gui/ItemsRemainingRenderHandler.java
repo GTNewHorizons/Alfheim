@@ -1,9 +1,9 @@
 package alfheim.client.gui;
 
-import java.util.regex.Pattern;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
+import java.util.regex.Pattern;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,22 +37,22 @@ public final class ItemsRemainingRenderHandler {
 			int start = maxTicks - leaveTicks;
 			float alpha = ticks + partTicks > start ? 1F : (ticks + partTicks) / start;
 
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			glDisable(GL_ALPHA_TEST);
+			glEnable(GL_BLEND);
+			glEnable(GL_RESCALE_NORMAL);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			GL11.glColor4f(1F, 1F, 1F, alpha);
+			glColor4f(1F, 1F, 1F, alpha);
 			RenderHelper.enableGUIStandardItemLighting();
 			int xp = x + (int) (16F * (1F - alpha));
-			GL11.glTranslatef(xp, y, 0F);
-			GL11.glScalef(alpha, 1F, 1F);
+			glTranslatef(xp, y, 0F);
+			glScalef(alpha, 1F, 1F);
 			RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, stack, 0, 0);
-			GL11.glScalef(1F / alpha,1F, 1F);
-			GL11.glTranslatef(-xp, -y, 0F);
+			glScalef(1F / alpha,1F, 1F);
+			glTranslatef(-xp, -y, 0F);
 			RenderHelper.disableStandardItemLighting();
-			GL11.glColor4f(1F, 1F, 1F, 1F);
-			GL11.glEnable(GL11.GL_BLEND);
+			glColor4f(1F, 1F, 1F, 1F);
+			glEnable(GL_BLEND);
 
 			String text = "";
 
@@ -75,8 +75,8 @@ public final class ItemsRemainingRenderHandler {
 			int color = 0x00FFFFFF | (int) (alpha * 0xFF) << 24;
 			mc.fontRenderer.drawStringWithShadow(text, x + 20, y + 6, color);
 
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			glDisable(GL_BLEND);
+			glEnable(GL_ALPHA_TEST);
 		}
 	}
 

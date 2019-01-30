@@ -1,20 +1,16 @@
 package alfheim.common.spell.nature;
 
-import java.util.UUID;
-
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
-import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.network.MessageEffect;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 

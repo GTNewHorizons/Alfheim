@@ -2,19 +2,14 @@ package alfheim.client.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.client.core.handler.CardinalSystemClient;
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
 import alfheim.client.core.handler.KeyBindingHandlerClient;
-import alfheim.client.render.entity.RenderWings;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;

@@ -1,16 +1,12 @@
 package alfheim.common.entity.boss;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
@@ -20,19 +16,9 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
-import alfheim.common.entity.boss.ai.AIBase;
-import alfheim.common.entity.boss.ai.AIChase;
-import alfheim.common.entity.boss.ai.AIDeathray;
-import alfheim.common.entity.boss.ai.AIEnergy;
-import alfheim.common.entity.boss.ai.AIInvul;
-import alfheim.common.entity.boss.ai.AILightning;
-import alfheim.common.entity.boss.ai.AIRays;
-import alfheim.common.entity.boss.ai.AIRegen;
-import alfheim.common.entity.boss.ai.AITask;
-import alfheim.common.entity.boss.ai.AITeleport;
-import alfheim.common.entity.boss.ai.AIWait;
-import baubles.api.BaublesApi;
-import cpw.mods.fml.common.FMLCommonHandler;
+import alfheim.common.entity.boss.ai.flugel.*;
+import alfheim.common.item.relic.ItemFlugelSoul;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -59,13 +45,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -79,6 +59,7 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.ModItems;
+import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.item.relic.ItemRelic;
 
 public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // EntityDoppleganger
@@ -109,8 +90,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public HashMap<String, Integer> playersWhoAttacked = new HashMap();
 	private static boolean isPlayingMusic = false;
 	
-	public EntityFlugel(World par1World) {
-		super(par1World);
+	private float prevHP;
+	
+	public EntityFlugel(World world) {
+		super(world);
 		setSize(0.6F, 1.8F);
 		getNavigator().setCanSwim(true);
 		initAI();
@@ -122,10 +105,15 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		if(world.getTileEntity(x, y, z) instanceof TileEntityBeacon) {
 			if (isTruePlayer(player)) {
 				if(world.difficultySetting == EnumDifficulty.PEACEFUL) {
-					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.peacefulNoob");
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.peacefulNoob");
 					return false;
 				}
 	
+				if (((TileEntityBeacon) world.getTileEntity(x, y, z)).getLevels() < 1) {
+					if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive");
+					return false;
+				}
+				
 				for(int[] coords : PYLON_LOCATIONS) { // TODO change structure
 					int i = x + coords[0];
 					int j = y + coords[1];
@@ -134,16 +122,30 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 					Block blockat = world.getBlock(i, j, k);
 					int meta = world.getBlockMetadata(i, j, k);
 					if(blockat != ModBlocks.pylon || meta != 2) {
-						if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.needsCatalysts");
+						if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.needsCatalysts");
 						return false;
 					}
 					
 				}
-				if(!hasProperArena(world, x, y, z)) {
-					if(!world.isRemote) ASJUtilities.say(player, "alfheimmics.badArena");
-					return false;
+				
+				if (!ModInfo.DEV) {
+					if(!hasProperArena(world, x, y, z)) {
+						if(!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena");
+						return false;
+					}
 				}
-	
+				
+				boolean miku = false;
+				ChunkCoordinates crds = null;
+				
+				if (stack.getItem() == ModItems.flugelEye) {
+					crds = ((ItemFlugelEye) ModItems.flugelEye).getBinding(stack);
+				} else if (stack.getItem() == AlfheimItems.flugelSoul) {
+					crds = ItemFlugelSoul.getFirstCoords(stack);
+				}
+				
+				if (crds != null) miku = crds.posX == 39 && crds.posY == 39 && crds.posZ == 39;
+				
 				if (!hard) stack.stackSize--;
 				if (world.isRemote) return true;
 	
@@ -159,6 +161,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.setSummoner(player.getCommandSenderName());
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
+				/*if (miku) { // FIXME BACK
+					e.setAlwaysRenderNameTag(miku);
+					e.setCustomNameTag("Hatsune Miku");
+				}*/
+				
 				List<EntityPlayer> players = e.getPlayersAround();
 				int playerCount = 0;
 				for(EntityPlayer p : players) if(isTruePlayer(p)) playerCount++;
@@ -170,11 +177,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				world.spawnEntityInWorld(e);
 				return true;
 			}
-			ASJUtilities.say(player, "alfheimmics.fakeplayer");
+			ASJUtilities.say(player, "alfheimmisc.fakeplayer");
 			return false;
 		}
 
-		ASJUtilities.say(player, "alfheimmics.notbeacon");
+		ASJUtilities.say(player, "alfheimmisc.notbeacon");
 		return false;
 	}
 
@@ -212,8 +219,19 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 
 	@Override
 	public void setHealth(float hp) {
-		hp = Math.max(getHealth() - (isHardMode() ? 60F : 40F), hp);
+		prevHealth = getHealth();
+		
+		hp = Math.max(prevHealth - (isHardMode() ? 60F : 40F), hp);
+		
+		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtResistantTime > 0) return;
+		
 		super.setHealth(hp);
+		
+		if (getAITask() == AITask.INVUL) return;
+		if (getHealth() < prevHealth && ((int)(getHealth() / (getMaxHealth() / 10))) < ((int)(prevHealth / (getMaxHealth() / 10)))) {
+			if (!getAITask().instant && getAITask() != AITask.DEATHRAY) 
+				setAITaskTimer(0);
+		}
 	}
 	
 	@Override
@@ -412,7 +430,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 			active.removeAll(remove);
 
 			// remove player
-			IInventory baubles = BaublesApi.getBaubles(player);
+			IInventory baubles = PlayerHandler.getPlayerBaubles(player);
 			ItemStack tiara = baubles.getStackInSlot(0);
 			if (tiara != null && tiara.getItem().equals(ModItems.flightTiara) && tiara.getItemDamage() == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200);
@@ -503,7 +521,6 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 
 	private static boolean hasProperArena(World world, int sx, int sy, int sz) {
-		if (((TileEntityBeacon) world.getTileEntity(sx, sy, sz)).getLevels() < 1) return false;
 		boolean proper = true;
 		Botania.proxy.setWispFXDepthTest(false);
 		for(int i = -RANGE; i < RANGE + 1; i++)
@@ -631,6 +648,11 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	
 	// --------------------------------------------------------
 	
+	@Override
+	public void setCustomNameTag(String name) {
+		if (getHealth() == 1) dataWatcher.updateObject(10, name);
+	}
+	
 	public void setStage(int stage) {
 		dataWatcher.updateObject(21, (byte) stage);
 	}
@@ -699,7 +721,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public AITask nextTask() {
 		if (getStage() < STAGE_AGGRO) return AITask.NONE;
 		AITask next = AITask.values()[rand.nextInt(AITask.values().length)];
-		if (next.instant && getAITask().instant && getAITask().equals(next)) return nextTask();
+		if (/*next.instant && getAITask().instant &&*/ getAITask().equals(next)) return nextTask();
 		if (Math.random() < next.chance) return nextTask();
 		if (getStage() < next.stage) return nextTask();
 		return next;
@@ -911,7 +933,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void bossBarRenderCallback(ScaledResolution res, int x, int y) {
-		GL11.glPushMatrix();
+		glPushMatrix();
 		int px = x + 160;
 		int py = y + 12;
 
@@ -919,7 +941,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		ItemStack stack = new ItemStack(Items.skull, 1, 3);
 		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
 		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		glEnable(GL_RESCALE_NORMAL);
 		RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, stack, px, py);
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
 
@@ -927,7 +949,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		mc.fontRenderer.setUnicodeFlag(true);
 		mc.fontRenderer.drawStringWithShadow("" + getPlayerCount(), px + 15, py + 4, 0xFFFFFF);
 		mc.fontRenderer.setUnicodeFlag(unicode);
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 	
 	/*	================================	LEXICON STUFF	================================	*/

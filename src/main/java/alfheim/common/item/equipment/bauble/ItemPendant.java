@@ -1,9 +1,11 @@
 package alfheim.common.item.equipment.bauble;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.AlfheimCore;
 import baubles.api.BaubleType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,16 +20,15 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 
 public class ItemPendant extends ItemBauble implements IBaubleRender {
 
-	IIcon icon;
-	String name;
+	private IIcon icon;
 	
 	public ItemPendant(String name) {
 		super(name);
-		this.name = name;
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister par1IconRegister) {
 		super.registerIcons(par1IconRegister);
 		icon = IconHelper.forItem(par1IconRegister, this, "Gem");
@@ -44,10 +45,12 @@ public class ItemPendant extends ItemBauble implements IBaubleRender {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
 			Helper.rotateIfSneaking(event.entityPlayer);
 			boolean armor = event.entityPlayer.getCurrentArmor(2) != null;
-			GL11.glRotatef(180F, 1F, 0F, 0F);
-			GL11.glTranslatef(-0.25F, -0.4F, armor ? 0.2F : 0.15F);
-			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			glPushMatrix();
+			glRotated(180, 1, 0, 0);
+			glTranslated(-0.25, -0.4, armor ? 0.21 : 0.14);
+			glScaled(0.5, 0.5, 0.5);
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.getMaxU(), icon.getMinV(), icon.getMinU(), icon.getMaxV(), icon.getIconWidth(), icon.getIconHeight(), 1F / 32F);
+			glPopMatrix();
 		}
 	}
 }

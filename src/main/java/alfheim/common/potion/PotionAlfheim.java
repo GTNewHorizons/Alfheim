@@ -1,6 +1,6 @@
 package alfheim.common.potion;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.lib.LibResourceLocations;
 import cpw.mods.fml.relauncher.Side;
@@ -20,7 +20,7 @@ public class PotionAlfheim extends PotionMod {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getStatusIconIndex() {
-		GL11.glEnable(GL11.GL_BLEND);
+		glEnable(GL_BLEND);
 		int id = super.getStatusIconIndex();
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.potions);
 		return id;

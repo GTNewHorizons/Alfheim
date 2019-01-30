@@ -1,6 +1,6 @@
 package alfheim.client.model.armor;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.render.AdvancedArmorModel;
 import alfheim.api.ModInfo;
@@ -8,8 +8,6 @@ import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
@@ -31,8 +29,8 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 	public void pre(Entity entity) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elvoriumArmor);
 		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && !AlfheimConfig.fancies) return;
 			ShaderHelper.useShader(ShaderHelper.halo);
 		}
@@ -41,7 +39,7 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 	@Override
 	public void post(Entity entity) {
 		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
-			GL11.glDisable(GL11.GL_BLEND);
+			glDisable(GL_BLEND);
 			ShaderHelper.releaseShader();
 		}
 	}
@@ -51,8 +49,8 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 0) {
 			double s = 0.01;
-			GL11.glTranslatef(0F, -0.75F, 0F);
-			GL11.glScaled(s, s, s);
+			glTranslatef(0F, -0.75F, 0F);
+			glScaled(s, s, s);
 			model.renderPart("Head");
 		}
 	}
@@ -62,14 +60,14 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 1) {
 			double s = 0.01;
-			GL11.glTranslated(0, -0.75, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(0, -0.75, 0);
+			glScaled(s, s, s);
 			model.renderPart("Body");
 		} else
 		if (partType == 2) {
 			double s = 0.01;
-			GL11.glTranslated(0, -0.73, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(0, -0.73, 0);
+			glScaled(s, s, s);
 			model.renderPart("Belt");
 		}
 	}
@@ -79,8 +77,8 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 1) {
 			double s = 0.01;
-			GL11.glTranslated(0.31, -0.55, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(0.31, -0.55, 0);
+			glScaled(s, s, s);
 			model.renderPart("ArmO");
 		}
 	}
@@ -90,8 +88,8 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 1) {
 			double s = 0.01;
-			GL11.glTranslated(-0.31, -0.55, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(-0.31, -0.55, 0);
+			glScaled(s, s, s);
 			model.renderPart("ArmT");
 		}
 	}
@@ -101,14 +99,14 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 2) {
 			double s = 0.01;
-			GL11.glTranslated(0.125, 0.01, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(0.125, 0.01, 0);
+			glScaled(s, s, s);
 			model.renderPart("pantsO");
 		} else
 		if (partType == 3) {
 			double s = 0.01;
-			GL11.glTranslated(0.125, 0, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(0.125, 0, 0);
+			glScaled(s, s, s);
 			model.renderPart("BootO");
 		}
 	}
@@ -118,14 +116,14 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 		if (ink(e, partType)) return;
 		if (partType == 2) {
 			double s = 0.01;
-			GL11.glTranslated(-0.125, 0.01, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(-0.125, 0.01, 0);
+			glScaled(s, s, s);
 			model.renderPart("PantsT");
 		} else
 		if (partType == 3) {
 			double s = 0.01;
-			GL11.glTranslated(-0.125, 0, 0);
-			GL11.glScaled(s, s, s);
+			glTranslated(-0.125, 0, 0);
+			glScaled(s, s, s);
 			model.renderPart("BootT");
 		}
 	}

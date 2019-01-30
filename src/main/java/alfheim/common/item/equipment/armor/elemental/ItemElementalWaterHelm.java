@@ -3,7 +3,6 @@ package alfheim.common.item.equipment.armor.elemental;
 import java.util.List;
 
 import alfheim.AlfheimCore;
-import alfheim.common.core.registry.AlfheimItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;

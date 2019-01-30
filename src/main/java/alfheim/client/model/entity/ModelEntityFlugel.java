@@ -23,9 +23,15 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		/*if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
+			// FIXME render miku
+			return;
+		}*/
+		
 		super.render(entity, f, f1, f2, f3, f4, f5); // ItemFlightTiara
 		renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
 		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
+		
 	}
 
 	public void setRotationAngles(float limbSwing, float limbIpld, float ticksExisted, float yawHead, float pitchHead, float idk, Entity entity) {
@@ -66,7 +72,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		glPushMatrix();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(1F, 1F, 1F, 1F);
+		glColor4d(1, 1, 1, 1);
 
 		int light = 15728880;
 		int lightmapX = light % 65536;

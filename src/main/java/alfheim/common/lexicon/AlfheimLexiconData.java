@@ -12,38 +12,20 @@ import alfheim.api.spell.SpellBase;
 import alfheim.common.block.AlfheimMultiblocks;
 import alfheim.common.block.BlockElvenOres;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
-import alfheim.common.core.registry.AlfheimAchievements;
-import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.lexicon.page.PageManaInfusorRecipe;
-import alfheim.common.lexicon.page.PageMultiblockLearnable;
-import alfheim.common.lexicon.page.PagePureDaisyRecipe;
-import alfheim.common.lexicon.page.PageSpell;
-import alfheim.common.lexicon.page.PageTextLearnableAchievement;
-import alfheim.common.lexicon.page.PageTextLearnableKnowledge;
+import alfheim.common.lexicon.page.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.lexicon.KnowledgeType;
-import vazkii.botania.api.lexicon.LexiconCategory;
-import vazkii.botania.api.lexicon.LexiconEntry;
-import vazkii.botania.api.lexicon.LexiconPage;
-import vazkii.botania.api.lexicon.LexiconRecipeMappings;
+import vazkii.botania.api.lexicon.*;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModMultiblocks;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.lexicon.BLexiconCategory;
-import vazkii.botania.common.lexicon.BLexiconEntry;
-import vazkii.botania.common.lexicon.LexiconData;
-import vazkii.botania.common.lexicon.RLexiconEntry;
-import vazkii.botania.common.lexicon.page.PageCraftingRecipe;
-import vazkii.botania.common.lexicon.page.PageElvenRecipe;
-import vazkii.botania.common.lexicon.page.PageMultiblock;
-import vazkii.botania.common.lexicon.page.PageRuneRecipe;
-import vazkii.botania.common.lexicon.page.PageText;
+import vazkii.botania.common.lexicon.*;
+import vazkii.botania.common.lexicon.page.*;
 
 public class AlfheimLexiconData {
 	
@@ -57,7 +39,6 @@ public class AlfheimLexiconData {
 	public static LexiconEntry elves;
 	
 	// Main addon content
-
 	public static LexiconEntry advMana;
 	public static LexiconEntry amulCirs;
 	public static LexiconEntry amulNimb;
@@ -66,6 +47,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry astrolab;
 	public static LexiconEntry auraAlf;
 	public static LexiconEntry cloakInv;
+	public static LexiconEntry crescent;
 	public static LexiconEntry dodgRing;
 	public static LexiconEntry elemSet;
 	public static LexiconEntry elvenSet;
@@ -112,6 +94,7 @@ public class AlfheimLexiconData {
 		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
 		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
 		cloakInv= new BLexiconEntry("cloakInv",	categoryAlfheim);
+		crescent= new BLexiconEntry("crescent",	categoryAlfheim);
 		dodgRing= new BLexiconEntry("dodgRing",	categoryAlfheim);
 		elemSet	= new BLexiconEntry("elemSet",	categoryAlfheim);
 		elvenSet= new BLexiconEntry("elvenSet",	categoryAlfheim);
@@ -277,15 +260,12 @@ public class AlfheimLexiconData {
 				.setIcon(new ItemStack(AlfheimItems.elementalHelmet));
 		elemSet	.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elementalHelmetRevealing));
 		
-		List<IRecipe> ringRecipes = new ArrayList();
-		ringRecipes.add(AlfheimRecipes.recipeManaRingGod1);
-		ringRecipes.add(AlfheimRecipes.recipeManaRingGod2);
 		advMana	.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),
 								 new PageManaInfusorRecipe("3", AlfheimRecipes.recipeManaStoneGreater),
 								 new PageText("4"),
 								 new PageCraftingRecipe("5", AlfheimRecipes.recipeManaRingElven),
-								 new PageCraftingRecipe("6", ringRecipes))
+								 new PageCraftingRecipe("6", AlfheimRecipes.recipeManaRingGod))
 				.setIcon(new ItemStack(AlfheimItems.manaStone));
 		
 		auraAlf	.setLexiconPages(new PageText("0"),
@@ -302,6 +282,8 @@ public class AlfheimLexiconData {
 								 new PageText("4"), new PageCraftingRecipe("5", amuletRecipes))
 				.setIcon(new ItemStack(AlfheimItems.rodFire));
 		
+		crescent.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCrescentAmulet));
+		
 		reality	.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
 				.setIcon(new ItemStack(AlfheimItems.realitySword));
@@ -309,7 +291,7 @@ public class AlfheimLexiconData {
 		flugel	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
-		soul	.setLexiconPages(new PageText("0"), new PageText("1"), // FIXME add re-soul lore
+		soul	.setLexiconPages(new PageText("0"), new PageText("1"),
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon), new PageText("3"),
 								 new PageMultiblock("4", AlfheimMultiblocks.soul),
 								 new PageText("5"))
@@ -360,6 +342,8 @@ public class AlfheimLexiconData {
 		pg = new PageCraftingRecipe("botania.page.judgementCloaks4", AlfheimRecipes.recipeBalanceCloak);
 		LexiconData.judgementCloaks.pages.add(pg);
 		pg.onPageAdded(LexiconData.judgementCloaks, 4);
+		
+		setKnowledgeTypes();
 	}
 	
 	private static void initElvenStory() {
@@ -432,6 +416,7 @@ public class AlfheimLexiconData {
 		advMana	.setKnowledgeType(kt);
 		auraAlf	.setKnowledgeType(kt);
 		ruling	.setKnowledgeType(kt);
+		crescent.setKnowledgeType(kt);
 		reality	.setKnowledgeType(kt);
 		flugel	.setKnowledgeType(kt);
 		soul	.setKnowledgeType(BotaniaAPI.relicKnowledge);
@@ -449,6 +434,74 @@ public class AlfheimLexiconData {
 				targets	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 			}
 		}
+		
+		LexiconData.elvenLenses.setKnowledgeType(kt);
+		LexiconData.dreamwoodSpreader.setKnowledgeType(kt);
+		LexiconData.prism.setKnowledgeType(kt);
+		LexiconData.sparkUpgrades.setKnowledgeType(kt);
+		LexiconData.sparkChanger.setKnowledgeType(kt);
+		LexiconData.dandelifeon.setKnowledgeType(kt);
+		LexiconData.kekimurus.setKnowledgeType(kt);
+		LexiconData.rafflowsia.setKnowledgeType(kt);
+		LexiconData.spectrolus.setKnowledgeType(kt);
+		LexiconData.bubbell.setKnowledgeType(kt);
+		LexiconData.heiseiDream.setKnowledgeType(kt);
+		LexiconData.loonium.setKnowledgeType(kt);
+		LexiconData.orechid.setKnowledgeType(kt);
+		LexiconData.orechidIgnem.setKnowledgeType(kt);
+		LexiconData.spectranthemum.setKnowledgeType(kt);
+		LexiconData.flasks.setKnowledgeType(kt);
+		LexiconData.cocoon.setKnowledgeType(kt);
+		LexiconData.conjurationCatalyst.setKnowledgeType(kt);
+		LexiconData.craftCrate.setKnowledgeType(kt);
+		LexiconData.gatherDrum.setKnowledgeType(kt);
+		LexiconData.manaBomb.setKnowledgeType(kt);
+		LexiconData.spectralPlatform.setKnowledgeType(kt);
+		LexiconData.ghostRail.setKnowledgeType(kt);
+		LexiconData.crystalBow.setKnowledgeType(kt);
+		LexiconData.elfGear.setKnowledgeType(kt);
+		LexiconData.virus.setKnowledgeType(kt);
+		LexiconData.openBucket.setKnowledgeType(kt);
+		LexiconData.fireChakram.setKnowledgeType(kt);
+		LexiconData.clip.setKnowledgeType(kt);
+		LexiconData.rainbowRod.setKnowledgeType(kt);
+		LexiconData.skyDirtRod.setKnowledgeType(kt);
+		LexiconData.gravityRod.setKnowledgeType(kt);
+		LexiconData.missileRod.setKnowledgeType(kt);
+		LexiconData.laputaShard.setKnowledgeType(kt);
+		LexiconData.slimeBottle.setKnowledgeType(kt);
+		LexiconData.regenIvy.setKnowledgeType(kt);
+		LexiconData.worldSeed.setKnowledgeType(kt);
+		LexiconData.divaCharm.setKnowledgeType(kt);
+		LexiconData.judgementCloaks.setKnowledgeType(kt);
+		LexiconData.superLavaPendant.setKnowledgeType(kt);
+		LexiconData.superTravelBelt.setKnowledgeType(kt);
+		LexiconData.goldLaurel.setKnowledgeType(kt);
+		LexiconData.pixieRing.setKnowledgeType(kt);
+		LexiconData.reachRing.setKnowledgeType(kt);
+		LexiconData.corporea.setKnowledgeType(kt);
+		LexiconData.blackHoleTalisman.setKnowledgeType(kt);
+		LexiconData.corporeaCrystalCube.setKnowledgeType(kt);
+		LexiconData.corporeaFunnel.setKnowledgeType(kt);
+		LexiconData.corporeaIndex.setKnowledgeType(kt);
+		LexiconData.corporeaInterceptor.setKnowledgeType(kt);
+		LexiconData.corporeaRetainer.setKnowledgeType(kt);
+		LexiconData.flightTiara.setKnowledgeType(kt);
+		LexiconData.spawnerClaw.setKnowledgeType(kt);
+		LexiconData.spawnerMover.setKnowledgeType(kt);
+		LexiconData.luminizerTransport.setKnowledgeType(kt);
+		LexiconData.redString.setKnowledgeType(kt);
+		LexiconData.keepIvy.setKnowledgeType(kt);
+		LexiconData.starSword.setKnowledgeType(kt);
+		LexiconData.thunderSword.setKnowledgeType(kt);
+		LexiconData.elvenMessage.setKnowledgeType(kt);
+		LexiconData.elvenResources.setKnowledgeType(kt);
+		LexiconData.elvenLore.setKnowledgeType(kt);
+		LexiconData.gaiaRitual.setKnowledgeType(kt);
+		LexiconData.gaiaRitualHardmode.setKnowledgeType(kt);
+		if (LexiconData.relics != null) LexiconData.relics.setKnowledgeType(kt);
+		LexiconData.headCreating.setKnowledgeType(kt);
+		LexiconData.starfield.setKnowledgeType(kt);
 	}
 	
 	public static void disableESM() {
@@ -474,6 +527,9 @@ public class AlfheimLexiconData {
 		removeEntry(parties	, categoryAlfheim);
 		removeEntry(spells	, categoryAlfheim);
 		removeEntry(targets	, categoryAlfheim);
+		
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	public static void reEnableMMO() {
@@ -485,6 +541,9 @@ public class AlfheimLexiconData {
 		if (!categoryAlfheim.entries.contains(targets))	BotaniaAPI.addEntry(targets	, categoryAlfheim);
 		
 		setKnowledgeTypes();
+		
+		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	private static void removeEntry(LexiconEntry entry, LexiconCategory category) {

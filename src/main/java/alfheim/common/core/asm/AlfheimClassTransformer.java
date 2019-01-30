@@ -1,31 +1,11 @@
 package alfheim.common.core.asm;
 
+import static alfheim.api.ModInfo.OBF;
 import static org.objectweb.asm.Opcodes.*;
 
-import java.util.List;
+import org.objectweb.asm.*;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-
-import static alfheim.api.ModInfo.OBF;
-
-import alfheim.common.core.handler.CardinalSystem.ManaSystem;
-import alfheim.common.core.util.AlfheimBotaniaModifiers;
-import alfheim.common.core.util.DamageSourceSpell;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.IClassTransformer;
-import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.mana.IManaItem;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
-import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimClassTransformer implements IClassTransformer {
 
@@ -59,6 +39,14 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 			World$ClassVisitor ct = new World$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+			
+		if (transformedName.equals("vazkii.botania.client.core.handler.BaubleRenderHandler")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			BaubleRenderHandler$ClassVisitor ct = new BaubleRenderHandler$ClassVisitor(cw);
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
@@ -284,6 +272,35 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		}
 	}
 
+	static class BaubleRenderHandler$ClassVisitor extends ClassVisitor {
+		
+		public BaubleRenderHandler$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+			if (name.equals("renderManaTablet")) {
+				System.out.println("Visiting BaubleRenderHandler#renderManaTablet: " + name + desc);
+				return new BaubleRenderHandler$renderManaTablet$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions);
+		}
+		
+		static class BaubleRenderHandler$renderManaTablet$MethodVisitor extends MethodVisitor {
+			
+			public BaubleRenderHandler$renderManaTablet$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitLdcInsn(Object cst) {
+				if (cst instanceof Float && ((Float) cst).floatValue() == 0.2F) cst = new Float(0.33F);
+				super.visitLdcInsn(cst);
+			}
+		}
+	}
+	
 	static class EntityDoppleganger$ClassVisitor extends ClassVisitor {
 		
 		public EntityDoppleganger$ClassVisitor(ClassVisitor cv) {

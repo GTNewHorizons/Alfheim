@@ -3,7 +3,6 @@ package alfheim.client.gui;
 import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.core.registry.AlfheimRegistry;
 import cpw.mods.fml.common.eventhandler.EventPriority;

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import net.minecraft.entity.EntityLivingBase;

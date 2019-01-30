@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
-import alfheim.client.render.tile.RenderTileFlugelHead;
 import alfheim.common.item.ItemFlugelHead;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,10 +30,10 @@ public class RenderItemFlugelHead {
 			float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick;
 			
 			glPushMatrix();
-			glRotatef(yawOffset, 0, -1, 0);
-			glRotatef(yaw - 270, 0, 1, 0);
-			glRotatef(pitch, 0, 0, 1);
-			glRotatef(-90, 0, 1, 0);
+			glRotated(yawOffset, 0, -1, 0);
+			glRotated(yaw - 270, 0, 1, 0);
+			glRotated(pitch, 0, 0, 1);
+			glRotated(-90, 0, 1, 0);
 
 			if (player.getCurrentArmor(3) != null) {
 				if (player.getCurrentArmor(3).getItem() instanceof ItemFlugelHead) {

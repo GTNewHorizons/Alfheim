@@ -15,8 +15,6 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
-import vazkii.botania.common.block.BlockGaiaHead;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName;
 
 public class AlfheimBlocks {

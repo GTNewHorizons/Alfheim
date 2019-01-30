@@ -1,6 +1,6 @@
 package alfheim.common.lexicon.page;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.lib.LibResourceLocations;
 import net.minecraft.block.Block;
@@ -15,7 +15,6 @@ import vazkii.botania.api.internal.IGuiLexiconEntry;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.lexicon.LexiconRecipeMappings;
 import vazkii.botania.api.recipe.RecipePureDaisy;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.lexicon.page.PageRecipe;
 import vazkii.botania.common.lexicon.page.PageText;
@@ -42,11 +41,11 @@ public class PagePureDaisyRecipe extends PageRecipe {
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 		
 		render.bindTexture(LibResourceLocations.manaInfuserOverlay);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glColor4f(1F, 1F, 1F, 1F);
 		((GuiScreen) gui).drawTexturedModalRect(gui.getLeft(), gui.getTop(), 0, 0, gui.getWidth(), gui.getHeight());
-		GL11.glDisable(GL11.GL_BLEND);
+		glDisable(GL_BLEND);
 
 		renderItemAtGridPos(gui, 1, 1, new ItemStack(Item.getItemFromBlock((Block) recipe.getInput())), false);
 		renderItemAtGridPos(gui, 2, 1, ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_PUREDAISY), false);

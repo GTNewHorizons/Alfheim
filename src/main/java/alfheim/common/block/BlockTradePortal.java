@@ -61,6 +61,16 @@ public class BlockTradePortal extends Block implements ITileEntityProvider, ILex
 	}
 	
 	@Override
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+	
+	@Override
+	public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+		return ((TileTradePortal) world.getTileEntity(x, y, z)).isTradeOn() ? 15 : 0;
+	}
+	
+	@Override
 	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
 		return AlfheimLexiconData.trade;
 	}

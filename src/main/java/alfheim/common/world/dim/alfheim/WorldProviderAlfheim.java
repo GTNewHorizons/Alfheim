@@ -14,7 +14,6 @@ import alfheim.common.world.dim.alfheim.biome.BiomeMount3;
 import alfheim.common.world.dim.alfheim.biome.BiomeMount3Field;
 import alfheim.common.world.dim.alfheim.biome.BiomeMount3Trees;
 import alfheim.common.world.dim.alfheim.biome.BiomeSandbank;
-import alfheim.common.world.dim.alfheim.struct.StructureSpawnpoint;
 import ru.vamig.worldengine.WE_Biome;
 import ru.vamig.worldengine.WE_ChunkProvider;
 import ru.vamig.worldengine.WE_WorldProvider;
@@ -23,7 +22,6 @@ import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
 import ru.vamig.worldengine.standardcustomgen.WE_OreGen;
 import ru.vamig.worldengine.standardcustomgen.WE_RavineGen;
 import ru.vamig.worldengine.standardcustomgen.WE_SnowGen;
-import ru.vamig.worldengine.standardcustomgen.WE_StructureGen;
 import ru.vamig.worldengine.standardcustomgen.WE_TerrainGenerator;
 import vazkii.botania.common.block.ModBlocks;
 

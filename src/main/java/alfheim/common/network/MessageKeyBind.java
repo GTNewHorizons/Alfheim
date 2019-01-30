@@ -1,19 +1,18 @@
 package alfheim.common.network;
 
-import static alfheim.api.spell.SpellBase.SpellCastResult.DESYNC;
+import static alfheim.api.spell.SpellBase.SpellCastResult.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.network.ASJPacket;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.spell.SpellBase;
-import alfheim.client.core.handler.CardinalSystemClient;
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs;
 import alfheim.common.core.handler.CardinalSystem;
-import alfheim.common.core.handler.KeyBindingHandler;
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem;
 import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
+import alfheim.common.core.handler.KeyBindingHandler;
 import alfheim.common.network.Message2d.m2d;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

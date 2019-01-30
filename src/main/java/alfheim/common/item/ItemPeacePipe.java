@@ -1,17 +1,14 @@
 package alfheim.common.item;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.getString;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.setInt;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.setString;
-import static vazkii.botania.common.core.helper.ItemNBTHelper.verifyExistance;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
-import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -32,6 +29,7 @@ public class ItemPeacePipe extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!AlfheimCore.enableMMO) return stack;
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {
 				Party pt = PartySystem.getParty(player);

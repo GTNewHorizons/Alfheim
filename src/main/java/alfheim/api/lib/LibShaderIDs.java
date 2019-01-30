@@ -1,7 +1,5 @@
 package alfheim.api.lib;
 
-import alexsocol.asjlib.render.ASJShaderHelper;
-
 public class LibShaderIDs {
 	
 	// ClientProxy

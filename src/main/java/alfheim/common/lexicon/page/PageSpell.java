@@ -1,13 +1,7 @@
 package alfheim.common.lexicon.page;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.lwjgl.opengl.GL11.*;
 
-import com.google.common.base.Joiner;
-
-import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.client.gui.GUISpells;
@@ -18,13 +12,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import vazkii.botania.api.internal.IGuiLexiconEntry;
 import vazkii.botania.api.lexicon.LexiconPage;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.common.block.tile.mana.TilePool;
-import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.lexicon.page.PageText;
 
 public class PageSpell extends LexiconPage {

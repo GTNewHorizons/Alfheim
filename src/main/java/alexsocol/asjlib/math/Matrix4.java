@@ -7,8 +7,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -291,6 +289,6 @@ public class Matrix4 {
 	public void glApply() {
 		glBuf.put(m00).put(m10).put(m20).put(m30).put(m01).put(m11).put(m21).put(m31).put(m02).put(m12).put(m22).put(m32).put(m03).put(m13).put(m23).put(m33);
 		glBuf.flip();
-		GL11.glMultMatrix(glBuf);
+		org.lwjgl.opengl.GL11.glMultMatrix(glBuf);
 	}
 }

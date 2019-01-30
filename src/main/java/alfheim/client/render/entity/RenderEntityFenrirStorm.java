@@ -6,14 +6,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.entity.spell.EntitySpellFenrirStorm;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityFenrirStorm extends Render {
@@ -28,6 +25,8 @@ public class RenderEntityFenrirStorm extends Render {
 		return null;
 	}
 
+	Random rand = new Random();
+	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntitySpellFenrirStorm e = (EntitySpellFenrirStorm) entity;
@@ -51,7 +50,7 @@ public class RenderEntityFenrirStorm extends Render {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		glColor4d(0.65, 1, 1, 1);
 		
-		Random rand = new Random(e.getEntityId() + (e.ticksExisted / 3)); // FIXME remove instanciating
+		rand.setSeed(e.getEntityId() + (e.ticksExisted / 3));
 		
 		for (int i = 0; i < 3; i++) {
 			glLineWidth(ASJUtilities.randInBounds(1, 3));

@@ -4,12 +4,8 @@ import static alexsocol.asjlib.ASJUtilities.*;
 
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.relic.ItemFlugelSoul;
@@ -36,7 +32,6 @@ import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
 import vazkii.botania.api.mana.spark.SparkHelper;
 import vazkii.botania.client.core.handler.HUDHandler;
-import vazkii.botania.client.core.proxy.ClientProxy;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
@@ -450,6 +445,6 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.manaInfuser, 1, getBlockMetadata()).getUnlocalizedName() + ".name");
 		int color = 0xCC00FF;
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res);
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		org.lwjgl.opengl.GL11.glColor4d(1, 1, 1, 1);
 	}
 }

@@ -1,6 +1,5 @@
 package alfheim.common.network;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.network.ASJPacket;
 import alfheim.client.core.handler.PacketHandlerClient;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;

@@ -1,8 +1,8 @@
 package alfheim.common.item.equipment.armor.elvoruim;
 
-import java.util.List;
+import static org.lwjgl.opengl.GL11.*;
 
-import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -95,19 +95,19 @@ public class ItemElvoriumHelmet extends ItemElvoriumArmor implements IAncientWil
 	@SideOnly(Side.CLIENT)
 	public static void renderOnPlayer(ItemStack stack, RenderPlayerEvent event) {
 		if(hasAnyWill(stack) && !((ItemElvoriumArmor) stack.getItem()).hasPhantomInk(stack)) {
-			GL11.glPushMatrix();
+			glPushMatrix();
 			float f = willIcon.getMinU();
 			float f1 = willIcon.getMaxU();
 			float f2 = willIcon.getMinV();
 			float f3 = willIcon.getMaxV();
 			vazkii.botania.api.item.IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer);
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-			GL11.glRotatef(90F, 0F, 1F, 0F);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
-			GL11.glTranslatef(-0.26F, 0.15F, -0.39F);
-			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			glRotated(90, 0, 1, 0);
+			glRotated(180, 1, 0, 0);
+			glTranslated(-0.26, 0.15, -0.39);
+			glScaled(0.5, 0.5, 0.5);
 			ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, willIcon.getIconWidth(), willIcon.getIconHeight(), 1F / 16F);
-			GL11.glPopMatrix();
+			glPopMatrix();
 		}
 	}
 
@@ -156,15 +156,15 @@ public class ItemElvoriumHelmet extends ItemElvoriumArmor implements IAncientWil
 		float yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * event.partialRenderTick;
 		float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * event.partialRenderTick;
 
-		GL11.glPushMatrix();
-		GL11.glRotatef(yawOffset, 0, -1, 0);
-		GL11.glRotatef(yaw - 270, 0, 1, 0);
-		GL11.glRotatef(pitch, 0, 0, 1);
+		glPushMatrix();
+		glRotatef(yawOffset, 0, -1, 0);
+		glRotatef(yaw - 270, 0, 1, 0);
+		glRotatef(pitch, 0, 0, 1);
 
 		ItemStack helm = player.inventory.armorItemInSlot(3);
 		if(helm != null && helm.getItem() instanceof ItemElvoriumHelmet)
 			ItemElvoriumHelmet.renderOnPlayer(helm, event);
 
-		GL11.glPopMatrix();
+		glPopMatrix();
 	}
 }

@@ -158,6 +158,11 @@ botania.page.ruling3=Castle of Glass
 botania.page.ruling4=However, the fact of using this force doesn't yet mean its subordination - absolutely all beings are vulnerable to it. To protect themselves and not suffer from their own magic, the elves created protective amulets that could return uncontrolled energy to where it came from.
 botania.page.ruling5=Creating &1protective amulets&0
 
+botania.entry.crescent=Amulet of Crescent Moon
+botania.tagline.crescent=Unique Item
+botania.page.crescent0=The &1Amulet of Crescent Moon&0 protects wearer from 10% of every non-magical incoming damage in exchange for some &4Mana&0 or from 10 points of magical damage.<br>If magical damage was consumed, amulet can be reused only after short cooldown.
+botania.page.crescent1=Creating &1Amulet&0
+
 botania.entry.reality=Reality Sword
 botania.tagline.reality=Uii, rainbow!
 botania.page.reality0=Elemental elven armor is certainly a good idea... But for a warrior with such armor there is not enough weapons. Let's say a sword. Fortunately this problem is solvable with the use of the alloy of the gods! The sword itself can either be a simple cutting blade, or it can erupt from itself the strength of one of the four primal elements.

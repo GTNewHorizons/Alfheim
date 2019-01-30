@@ -2,14 +2,16 @@ package alfheim.common.item.equipment.bauble;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alfheim.AlfheimCore;
+import java.util.List;
+
 import baubles.api.BaubleType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import vazkii.botania.api.item.ICosmeticBauble;
 import vazkii.botania.common.core.BotaniaCreativeTab;
@@ -43,5 +45,10 @@ public class ItemThinkingHand extends ItemBauble implements ICosmeticBauble {
 			ItemRenderer.renderItemIn2D(Tessellator.instance, itemIcon.getMaxU(), itemIcon.getMinV(), itemIcon.getMinU(), itemIcon.getMaxV(), itemIcon.getIconWidth(), itemIcon.getIconHeight(), 1F / 16F);
 			glPopMatrix();
 		}
+	}
+
+	public void addHiddenTooltip(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+		par3List.add(StatCollector.translateToLocal("botaniamisc.cosmeticBauble").replaceAll("&", "\u00a7"));
+		super.addHiddenTooltip(par1ItemStack, par2EntityPlayer, par3List, par4);
 	}
 }

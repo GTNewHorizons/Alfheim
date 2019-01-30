@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -306,7 +305,7 @@ public class Vector3 implements Serializable {
 
 	@SideOnly(Side.CLIENT)
 	public Vector3 glVertex() {
-		GL11.glVertex3d(x, y, z);
+		org.lwjgl.opengl.GL11.glVertex3d(x, y, z);
 		return this;
 	}
 

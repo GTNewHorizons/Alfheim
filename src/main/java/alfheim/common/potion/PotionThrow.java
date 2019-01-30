@@ -2,8 +2,6 @@ package alfheim.common.potion;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
@@ -11,7 +9,6 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Vec3;
 
 public class PotionThrow extends PotionAlfheim {
 

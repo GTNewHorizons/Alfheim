@@ -22,8 +22,8 @@ import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisplay, IBauble {
 	
-	public static BaubleType type;
-	public int MAX_MANA;
+	public BaubleType type;
+	public final int MAX_MANA;
 	public static final String TAG_MANA = "mana";
 	
 	public ItemManaStorage(String name, double maxManaCap, BaubleType type) {
@@ -113,7 +113,7 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 
 	@Override
 	public BaubleType getBaubleType(ItemStack stack) {
-		return this.type;
+		return type;
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisp
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
-		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", this.MAX_MANA / TilePool.MAX_MANA));
+		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA));
 		if (AlfheimConfig.numericalMana) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)));
 	}
 }

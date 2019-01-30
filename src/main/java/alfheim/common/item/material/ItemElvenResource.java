@@ -4,23 +4,11 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.common.block.tile.TileTransferer;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import vazkii.botania.api.internal.IManaBurst;
-import vazkii.botania.api.mana.BurstProperties;
-import vazkii.botania.api.mana.ILensEffect;
-import vazkii.botania.api.recipe.IElvenItem;
-import vazkii.botania.common.entity.EntityManaBurst;
 
 public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect BACK*/ {
 	

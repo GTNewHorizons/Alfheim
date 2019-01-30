@@ -1,6 +1,6 @@
 package alfheim.client.model.entity;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -82,13 +82,13 @@ public class ModelBipedNew extends ModelBase {
 		setRotationAngles(time, amplitude, ticksExisted, yawHead, pitchHead, size, entity);
 		
 		if (this.isChild) {
-			GL11.glPushMatrix();
-			GL11.glScalef(0.5F, 0.5F, 0.5F);
-			GL11.glTranslatef(0.0F, 24.0F * size, 0.0F);
+			glPushMatrix();
+			glScalef(0.5F, 0.5F, 0.5F);
+			glTranslatef(0.0F, 24.0F * size, 0.0F);
 		}
 			
 		render(size);
-		if (this.isChild) GL11.glPopMatrix();
+		if (this.isChild) glPopMatrix();
 	}
 	
 	public void render(float size) {

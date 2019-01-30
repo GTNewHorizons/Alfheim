@@ -15,9 +15,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
-import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumPick;
-import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword;
-import vazkii.botania.common.item.relic.ItemLokiRing;
 
 public class SpellTitanHit extends SpellBase {
 

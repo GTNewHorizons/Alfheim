@@ -2,20 +2,15 @@ package alfheim.common.potion;
 
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.entity.boss.IBossDisplayData;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import vazkii.botania.api.boss.IBotaniaBoss;
 import vazkii.botania.common.Botania;
 
 public class PotionSacrifice extends PotionAlfheim {

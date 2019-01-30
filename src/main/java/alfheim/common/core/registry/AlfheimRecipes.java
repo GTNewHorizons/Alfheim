@@ -14,30 +14,27 @@ import static vazkii.botania.common.lib.LibOreDict.*;
 
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.crafting.ModCraftingRecipes;
 import vazkii.botania.common.crafting.ModRuneRecipes;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.lib.LibOreDict;
 
 public class AlfheimRecipes {
 	
@@ -60,6 +57,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeBalanceCloak;
 	public static IRecipe recipeCloudPendant;
 	public static IRecipe recipeCloudPendantSuper;
+	public static IRecipe recipeCrescentAmulet;
 	public static IRecipe recipeDodgeRing;
 	public static IRecipe recipeEmentalHelmet;
 	public static IRecipe recipeEmentalChestplate;
@@ -85,8 +83,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeManaInfusionCore;
 	public static IRecipe recipeManaInfuser;
 	public static IRecipe recipeManaRingElven;
-	public static IRecipe recipeManaRingGod1;
-	public static IRecipe recipeManaRingGod2;
+	public static IRecipe recipeManaRingGod;
 	public static IRecipe recipeManasteelHoe;
 	public static IRecipe recipeMuspelheimPendant;
 	public static IRecipe recipeMuspelheimPowerIngot;
@@ -181,14 +178,10 @@ public class AlfheimRecipes {
 			'D', DREAM_WOOD);
 		recipeAstrolabe = BotaniaAPI.getLatestAddedRecipe();
 		
-		addShapelessOreDictRecipe(new ItemStack(auraRingElven),
-			ELVORIUM_INGOT,
-			new ItemStack(auraRingGreater));
+		addShapelessOreDictRecipe(new ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater);
 		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe();
 		
-		addShapelessOreDictRecipe(new ItemStack(auraRingGod),
-			MAUFTRIUM_INGOT,
-			new ItemStack(auraRingElven));
+		addShapelessOreDictRecipe(new ItemStack(auraRingGod), MAUFTRIUM_INGOT, auraRingElven);
 		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(balanceCloak),
@@ -214,6 +207,13 @@ public class AlfheimRecipes {
 			'W', new ItemStack(wool, 1, 0),
 			'S', LIFE_ESSENCE);
 		recipeCloudPendantSuper = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(crescentMoonAmulet),
+			"  M", "MS ", "RM ",
+			'M', MAUFTRIUM_NUGGET,
+			'R', RUNE[13],
+			'S', new ItemStack(manaResource, 1, 12));
+		recipeCrescentAmulet = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(dodgeRing),
 			"EM ", "M M", " MR",
@@ -281,14 +281,14 @@ public class AlfheimRecipes {
 		recipeGaiaPylon = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elfFirePendant),
-			" N ", "NPN", "RN ",
+			"  N", "NP ", "RN ",
 			'N', MAUFTRIUM_NUGGET,
 			'R', ARUNE[1],
 			'P', lavaPendant);
 		recipeMuspelheimPendant = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elfIcePendant),
-			" N ", "NPN", "RN ",
+			"  N", "NP ", "RN ",
 			'N', MAUFTRIUM_NUGGET,
 			'R', ARUNE[2],
 			'P', icePendant);
@@ -377,13 +377,6 @@ public class AlfheimRecipes {
 			'S', livingcobble);
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(rodGrass),
-			"  R", " D ", "S  ",
-			'D', dirtRod,
-			'R', RUNE[4],
-			'S', grassSeeds);
-		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
-		
 		addOreDictRecipe(new ItemStack(invisibilityCloak),
 			"PWP", "GWG", "GJG",
 			'P', PRISMARINE_SHARD,
@@ -429,18 +422,8 @@ public class AlfheimRecipes {
 			'I', manaStone);
 		recipeManaRingElven = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(manaRingGod),
-			"IS ", "S S", " S ",
-			'S', MAUFTRIUM_INGOT,
-			'I', manaStoneGreater);
-		recipeManaRingGod1 = BotaniaAPI.getLatestAddedRecipe();
-		
-		addOreDictRecipe(new ItemStack(manaRingGod), 
-			"SI", "IR",
-			'S', manaStoneGreater,
-			'R', manaRingElven,
-			'I', MAUFTRIUM_INGOT);
-		recipeManaRingGod2 = BotaniaAPI.getLatestAddedRecipe();
+		addShapelessOreDictRecipe(new ItemStack(manaRingGod), MAUFTRIUM_INGOT, manaStoneGreater);
+		recipeManaRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(manasteelHoe),
 			"SS", " T", " T",
@@ -448,16 +431,21 @@ public class AlfheimRecipes {
 			'T', LIVINGWOOD_TWIG);
 		recipeManasteelHoe = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(paperBreak),
+		recipePaperBreak = new
+		ShapedOreRecipe(new ItemStack(paperBreak),
 			"  P", " P ", "P  ",
 			'P', paper);
-		recipePaperBreak = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(peacePipe),
+		recipePeacePipe = new
+		ShapedOreRecipe(new ItemStack(peacePipe),
 			"S  ", " S ", "  S",
 			'S', stick);
-		recipePeacePipe = BotaniaAPI.getLatestAddedRecipe();
 		
+		if (AlfheimCore.enableMMO) {
+			CraftingManager.getInstance().getRecipeList().add(recipePaperBreak);
+			CraftingManager.getInstance().getRecipeList().add(recipePeacePipe);
+		}
+			
 		addOreDictRecipe(new ItemStack(pixieAttractor),
 			"EDE", "EPE", " S ",
 			'D', DRAGONSTONE,
@@ -479,6 +467,13 @@ public class AlfheimRecipes {
 			'R', ARUNE[1],
 			'B', blaze_rod);
 		recipeMuspelheimRod = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(rodGrass),
+			"  R", " D ", "S  ",
+			'D', dirtRod,
+			'R', RUNE[4],
+			'S', grassSeeds);
+		recipeGreenRod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(rodIce),
 			" MR", " BM", "B  ",
@@ -583,8 +578,9 @@ public class AlfheimRecipes {
 		recipeManaStoneGreater = addInfuserRecipe(new ItemStack(manaStoneGreater, 1, 1000),
 			TilePool.MAX_MANA * 4,
 			new ItemStack(manaStone, 1, OreDictionary.WILDCARD_VALUE),
-			new ItemStack(elvenResource, 2, ElvenResourcesMetas.MuspelheimEssence),
-			new ItemStack(elvenResource, 2, ElvenResourcesMetas.NiflheimEssence));
+			new ItemStack(manaResource, 4, 5),
+			new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
+			new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence));
 	}
 	
 	public static void banRetrades() {

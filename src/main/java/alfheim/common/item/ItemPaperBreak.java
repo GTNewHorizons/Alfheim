@@ -1,6 +1,6 @@
 package alfheim.common.item;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.getCompound;
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
@@ -47,6 +47,7 @@ public class ItemPaperBreak extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!AlfheimCore.enableMMO) return stack;
 		if (!world.isRemote) {
 			String name = getCompound(stack, "display", false).getString("Name");
 			Party pt = PartySystem.getParty(player);

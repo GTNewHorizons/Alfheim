@@ -1,12 +1,8 @@
 package alfheim.common.block.tile;
 
-import org.lwjgl.opengl.GL11;
-
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alexsocol.asjlib.math.Vector3;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
@@ -20,7 +16,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -28,7 +23,6 @@ import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.api.mana.IDirectioned;
 import vazkii.botania.api.mana.IManaReceiver;
 import vazkii.botania.api.wand.IWandBindable;
-import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.entity.EntityManaBurst;

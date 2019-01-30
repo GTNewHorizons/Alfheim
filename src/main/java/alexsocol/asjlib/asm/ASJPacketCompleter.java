@@ -3,7 +3,6 @@ package alexsocol.asjlib.asm;
 import static org.objectweb.asm.Opcodes.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.objectweb.asm.ClassReader;
@@ -15,8 +14,6 @@ import org.objectweb.asm.tree.MethodNode;
 
 import com.google.common.collect.Lists;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ASJPacketCompleter implements IClassTransformer {

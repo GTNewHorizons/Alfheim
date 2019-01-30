@@ -1,12 +1,12 @@
 package alfheim.common.item.equipment.bauble;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.AlfheimCore;
 import alfheim.common.network.Message0d;
 import alfheim.common.network.Message0d.m0d;
 import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
+import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -44,7 +44,7 @@ public class ItemDodgeRing extends ItemBauble {
 	public void onKeyDown(KeyInputEvent event) {
 		Minecraft mc = Minecraft.getMinecraft();
 
-		IInventory baublesInv = BaublesApi.getBaubles(mc.thePlayer);
+		IInventory baublesInv = PlayerHandler.getPlayerBaubles(mc.thePlayer);
 		ItemStack ringStack = baublesInv.getStackInSlot(1);
 		if(ringStack == null|| !(ringStack.getItem() instanceof ItemDodgeRing)) {
 			ringStack = baublesInv.getStackInSlot(2);
@@ -59,12 +59,12 @@ public class ItemDodgeRing extends ItemBauble {
 			int oldLeft = leftDown;
 			leftDown = ClientTickHandler.ticksInGame;
 
-			if(leftDown - oldLeft < threshold) dodge(mc.thePlayer, true);
+			if(leftDown - oldLeft < threshold) dodge(mc.thePlayer, ringStack, true);
 		} else if(mc.gameSettings.keyBindRight.getIsKeyPressed() && !oldRightDown) {
 			int oldRight = rightDown;
 			rightDown = ClientTickHandler.ticksInGame;
 
-			if(rightDown - oldRight < threshold) dodge(mc.thePlayer, false);
+			if(rightDown - oldRight < threshold) dodge(mc.thePlayer, ringStack, false);
 		}
 
 		oldLeftDown = mc.gameSettings.keyBindLeft.getIsKeyPressed();
@@ -74,10 +74,10 @@ public class ItemDodgeRing extends ItemBauble {
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase player) {
 		int cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0);
-		if(cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1);
+		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1);
 	}
 
-	private static void dodge(EntityPlayer player, boolean left) {
+	private static void dodge(EntityPlayer player, ItemStack stack, boolean left) {
 		if(player.capabilities.isFlying || !player.onGround || player.moveForward > 0.2 || player.moveForward < -0.2) return;
 
 		float yaw = player.rotationYaw;
@@ -91,6 +91,8 @@ public class ItemDodgeRing extends ItemBauble {
 		player.motionZ = sideVec.z;
 
 		AlfheimCore.network.sendToServer(new Message0d(m0d.DODGE));
+		// stupid singleplayer NBT autosync -_- 
+		if (!Minecraft.getMinecraft().isSingleplayer()) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -101,15 +103,15 @@ public class ItemDodgeRing extends ItemBauble {
 		if(!player.capabilities.isFlying) {
 			int cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0);
 			int width = Math.min((int) ((cd - pticks) * 2), 40);
-			GL11.glColor4d(1, 1, 1, 1);
+			glColor4d(1, 1, 1, 1);
 			if(width > 0) {
 				Gui.drawRect(xo, y - 2, xo + 40, y - 1, 0x88000000);
 				Gui.drawRect(xo, y - 2, xo + width, y - 1, 0xFFFFFFFF);
 			}
 		}
 
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		GL11.glColor4d(1, 1, 1, 1);
+		glEnable(GL_ALPHA_TEST);
+		glColor4d(1, 1, 1, 1);
 	}
 
 	@Override

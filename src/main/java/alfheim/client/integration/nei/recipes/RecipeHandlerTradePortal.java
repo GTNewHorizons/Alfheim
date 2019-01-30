@@ -1,10 +1,10 @@
 package alfheim.client.integration.nei.recipes;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
 
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
@@ -87,11 +87,11 @@ public class RecipeHandlerTradePortal extends TemplateRecipeHandler {
 	@Override
 	public void drawBackground(int recipe) {
 		super.drawBackground(recipe);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.7F);
+		glEnable(GL_BLEND);
+		glColor4f(1.0F, 1.0F, 1.0F, 0.7F);
 		GuiDraw.changeTexture(ModInfo.MODID + ":textures/gui/TradePortalOverlay.png");
 		GuiDraw.drawTexturedModalRect(30, 10, 17, 17, 100, 80);
-		GL11.glDisable(GL11.GL_BLEND);
+		glDisable(GL_BLEND);
 		GuiDraw.changeTexture(TextureMap.locationBlocksTexture);
 		RenderItem.getInstance().renderIcon(35, 29, BlockTradePortal.textures[2], 48, 48);
 	}

@@ -2,9 +2,7 @@ package alfheim.common.spell.tech;
 
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.api.spell.SpellBase.SpellCastResult;
 import alfheim.common.entity.spell.EntitySpellDriftingMine;
-import alfheim.common.entity.spell.EntitySpellFireball;
 import net.minecraft.entity.EntityLivingBase;
 
 public class SpellDriftingMine extends SpellBase {

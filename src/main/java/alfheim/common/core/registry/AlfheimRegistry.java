@@ -4,26 +4,20 @@ import static alexsocol.asjlib.ASJUtilities.*;
 import static alfheim.api.AlfheimAPI.*;
 import static cpw.mods.fml.common.registry.GameRegistry.*;
 
-import java.lang.reflect.Method;
 import java.util.UUID;
 
 import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.api.entity.EnumRace;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.handler.SpellEffectHandler;
-import alfheim.common.core.handler.CardinalSystem.PartySystem;
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.core.util.DamageSourceSpell;
+import alfheim.common.core.util.*;
 import alfheim.common.entity.*;
-import alfheim.common.entity.boss.EntityFlugel;
+import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
 import alfheim.common.potion.*;
 import alfheim.common.spell.darkness.*;
@@ -37,15 +31,9 @@ import alfheim.common.spell.water.*;
 import alfheim.common.spell.wind.*;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.BaseAttribute;
-import net.minecraft.entity.ai.attributes.BaseAttributeMap;
-import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -53,10 +41,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.brew.ModPotions;
 import vazkii.botania.common.item.ModItems;
@@ -194,7 +179,7 @@ public class AlfheimRegistry {
 				}
 				
 				if (!ASJUtilities.isServer()) 
-					for (int i = 0; i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration))); i++)  // FIXME proper i < VALUE
+					for (int i = 0; i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration))); i++) // looks like this "i < VALUE" is fine
 						SpellEffectHandlerClient.spawnMana(living, i);
 			}
 		};
@@ -231,6 +216,7 @@ public class AlfheimRegistry {
 		registerEntity(EntityFlugel.class, "Flugel", AlfheimCore.instance);
 		registerEntity(EntityLightningMark.class, "LightningMark", AlfheimCore.instance);
 		registerEntityEgg(EntityAlfheimPixie.class, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance);
+		registerEntity(EntityRook.class, "Rook", AlfheimCore.instance);
 		
 		registerEntity(EntitySpellAcidMyst.class, "SpellAcidMyst", AlfheimCore.instance);
 		registerEntity(EntitySpellHarp.class, "SpellArfa", AlfheimCore.instance);
@@ -247,6 +233,7 @@ public class AlfheimRegistry {
 	private static void registerTileEntities() {
 		registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
 		registerTileEntity(TileAlfheimPylons.class, "AlfheimPylon");
+		registerTileEntity(TileAnimatedTorch.class, "AnimatedTorch");
 		registerTileEntity(TileAnyavil.class, "Anyavil");
 		registerTileEntity(TileFlugelHead.class, "FlugelHead");
 		registerTileEntity(TileItemHolder.class, "ItemHolder");

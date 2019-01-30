@@ -14,7 +14,6 @@ import minetweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import vazkii.botania.api.recipe.RecipeRuneAltar;
 
 @ZenClass("mods." + ModInfo.MODID + ".ManaInfuser")
 public class MTHandlerManaInfuser {

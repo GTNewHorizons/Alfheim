@@ -6,9 +6,7 @@ import java.util.Random;
 
 import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
-import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
-import alfheim.api.lib.LibShaderIDs;
 import alfheim.common.entity.EntityLightningMark;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -62,6 +60,8 @@ public class RenderEntityLightningMark extends Render {
 		return null;
 	}
 
+	Random rand = new Random();
+	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntityLightningMark mark = (EntityLightningMark) entity;
@@ -73,7 +73,7 @@ public class RenderEntityLightningMark extends Render {
 		float chargeMul = charge / 10F;
 
 		
-		Random rand = new Random(mark.getUniqueID().getMostSignificantBits()); // FIXME remove instanciating
+		rand.setSeed(mark.getUniqueID().getMostSignificantBits());
 
 		float s = chargeMul;
 		s += Math.min(1F, (live + partialTick) * 0.2F);

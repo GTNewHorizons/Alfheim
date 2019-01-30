@@ -1,13 +1,10 @@
 package alfheim.common.core.asm;
 
+import static alfheim.api.ModInfo.OBF;
 import static org.objectweb.asm.Opcodes.*;
 
 import org.objectweb.asm.*;
 
-import alfheim.common.core.util.AlfheimConfig;
-
-import static alfheim.api.ModInfo.OBF;
-import gloomyfolken.hooklib.minecraft.HookLibPlugin;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
