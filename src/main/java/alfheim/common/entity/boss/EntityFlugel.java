@@ -71,6 +71,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public static final int RANGE = 24;
 	public static final float MAX_HP = 800F;
 
+	private static final String TAG_NAME			= "name";
 	private static final String TAG_STAGE			= "stage";
 	private static final String TAG_HARDMODE		= "hardmode";
 	private static final String TAG_SOURCE_X		= "sourceX";
@@ -91,6 +92,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	private static boolean isPlayingMusic = false;
 	
 	private float prevHP;
+	private int hurtTimeActual;
 	
 	public EntityFlugel(World world) {
 		super(world);
@@ -99,6 +101,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		initAI();
 		isImmuneToFire = true;
 		experienceValue = 1325;
+		hurtTimeActual = 0;
 	}
 
 	public static boolean spawn(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
@@ -220,12 +223,12 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void setHealth(float hp) {
 		prevHealth = getHealth();
-		
 		hp = Math.max(prevHealth - (isHardMode() ? 60F : 40F), hp);
 		
-		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtResistantTime > 0) return;
+		if (getAITask() != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return;
 		
 		super.setHealth(hp);
+		hurtTimeActual = 20;
 		
 		if (getAITask() == AITask.INVUL) return;
 		if (getHealth() < prevHealth && ((int)(getHealth() / (getMaxHealth() / 10))) < ((int)(prevHealth / (getMaxHealth() / 10)))) {
@@ -475,6 +478,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				if(!players.isEmpty()) damageEntity(DamageSource.causePlayerDamage(players.get(0)), 0);
 			}
 		}
+		
+		hurtTimeActual = Math.max(0, --hurtTimeActual);
 	}
 	
 	/*	================================	UTILITY STUFF	================================	*/
@@ -678,9 +683,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	public void setAITask(AITask ai) {
-		dataWatcher.updateObject(27, AITask.NONE.ordinal());
-//		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
-//		dataWatcher.updateObject(27, ai.ordinal());
+//		dataWatcher.updateObject(27, AITask.NONE.ordinal());
+		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
+		dataWatcher.updateObject(27, ai.ordinal());
 	}
 	
 	// --------------------------------------------------------
@@ -735,6 +740,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
+		if (hasCustomNameTag()) nbt.setString(TAG_NAME, getCustomNameTag());
+		
 		nbt.setInteger(TAG_STAGE, getStage());
 		nbt.setBoolean(TAG_HARDMODE, isHardMode());
 		
@@ -762,6 +769,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
+		if (nbt.hasKey(TAG_PLAYER_COUNT)) dataWatcher.updateObject(10, nbt.getString(TAG_NAME));
+		
 		setStage(nbt.getInteger(TAG_STAGE));
 		setHardMode(nbt.getBoolean(TAG_HARDMODE));
 		

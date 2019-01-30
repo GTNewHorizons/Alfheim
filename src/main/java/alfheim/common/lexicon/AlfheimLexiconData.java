@@ -364,7 +364,7 @@ public class AlfheimLexiconData {
 		
 		if (spells	.pages.isEmpty())	spells	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
-
+		
 		if (targets	.pages.isEmpty())	targets	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"));
 	}
