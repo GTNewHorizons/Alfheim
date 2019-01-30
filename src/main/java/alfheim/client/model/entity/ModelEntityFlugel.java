@@ -33,18 +33,12 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
 			FontRenderer font = Minecraft.getMinecraft().fontRenderer;
-			
-			leftarm.showModel = rightarm.showModel = false;
-			leftleg.showModel = rightleg.showModel = false;
-			
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glPushMatrix();
 			glRotated(180, 1, 0, 0);
 			glTranslated(0, -1.5, 0);
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku1);
-			double s = 1.0;
-			glScaled(s, 1, s);
 			model.renderAll();
 			glPopMatrix();
 			
@@ -57,7 +51,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 			glRotated(leftarm.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
 			glRotated(leftarm.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
 			glRotated(leftarm.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
-			s = 0.01;
+			double s = 0.01;
 			glScaled(s, s, s);
 			
 			glPushMatrix();
