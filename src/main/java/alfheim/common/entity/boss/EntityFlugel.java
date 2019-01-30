@@ -161,10 +161,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.setSummoner(player.getCommandSenderName());
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
-				/*if (miku) { // FIXME BACK
+				if (miku) {
 					e.setAlwaysRenderNameTag(miku);
 					e.setCustomNameTag("Hatsune Miku");
-				}*/
+				}
 				
 				List<EntityPlayer> players = e.getPlayersAround();
 				int playerCount = 0;
@@ -678,8 +678,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	public void setAITask(AITask ai) {
-		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
-		dataWatcher.updateObject(27, ai.ordinal());
+		dataWatcher.updateObject(27, AITask.NONE.ordinal());
+//		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
+//		dataWatcher.updateObject(27, ai.ordinal());
 	}
 	
 	// --------------------------------------------------------

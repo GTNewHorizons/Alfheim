@@ -3,35 +3,87 @@ package alfheim.client.model.entity;
 import static org.lwjgl.opengl.GL11.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.render.entity.RenderEntityFlugel;
 import alfheim.common.entity.boss.EntityFlugel;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class ModelEntityFlugel extends ModelBipedNew {
+	
+	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/Miku1.obj"));
 	
 	public ModelEntityFlugel() {
 		super();
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		/*if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
-			// FIXME render miku
+		if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
+			FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+			
+			leftarm.showModel = rightarm.showModel = false;
+			leftleg.showModel = rightleg.showModel = false;
+			
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glPushMatrix();
+			glRotated(180, 1, 0, 0);
+			glTranslated(0, -1.5, 0);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku1);
+			double s = 1.0;
+			glScaled(s, 1, s);
+			model.renderAll();
+			glPopMatrix();
+			
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png"));
+			super.render(entity, f, f1, f2, f3, f4, f5);
+			glDisable(GL_BLEND);
+			
+			glPushMatrix();
+			glTranslated(leftarm.rotationPointX * f5, leftarm.rotationPointY * f5, leftarm.rotationPointZ * f5);
+			glRotated(leftarm.rotateAngleZ * (180F / (float)Math.PI), 0, 0, 1);
+			glRotated(leftarm.rotateAngleY * (180F / (float)Math.PI), 0, 1, 0);
+			glRotated(leftarm.rotateAngleX * (180F / (float)Math.PI), 1, 0, 0);
+			s = 0.01;
+			glScaled(s, s, s);
+			
+			glPushMatrix();
+			glTranslated(19, -5, (font.getStringWidth("01") / -2));
+			glRotated(-90, 0, 1, 0);
+			font.drawString("01", 0, 0, 0xFF0000);
+			glPopMatrix();
+			
+			glPushMatrix();
+			glTranslated(19, 2.5, (font.getStringWidth("Hatsune Miku.") / -2) / 5);
+			glRotated(-90, 0, 1, 0);
+			
+			s = 0.175;
+			glScaled(s, s, s);
+			font.drawString("Hatsune Miku.", 0, 0, 0xFF0000);
+			glPopMatrix();
+			
+			glColor4d(1, 1, 1, 1);
+			glPopMatrix();
+			
 			return;
-		}*/
+		}
 		
 		super.render(entity, f, f1, f2, f3, f4, f5); // ItemFlightTiara
 		renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
 		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
-		
 	}
 
 	public void setRotationAngles(float limbSwing, float limbIpld, float ticksExisted, float yawHead, float pitchHead, float idk, Entity entity) {
