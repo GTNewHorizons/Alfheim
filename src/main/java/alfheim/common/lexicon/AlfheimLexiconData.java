@@ -347,26 +347,26 @@ public class AlfheimLexiconData {
 	}
 	
 	private static void initElvenStory() {
-		es		.setPriority()
-				.setLexiconPages(new PageText("0"));
+		if (es		.pages.isEmpty()) 	es		.setPriority()
+												.setLexiconPages(new PageText("0"));
 		
-		races	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"));
+		if (races	.pages.isEmpty())	races	.setPriority()
+												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"));
 		
 		if (AlfheimCore.enableMMO) initMMO();
 	}
 	
 	private static void initMMO() {
-		parties	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipePeacePipe),
-								 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
-				.setIcon(null);
+		if (parties	.pages.isEmpty())	parties	.setPriority()
+												.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipePeacePipe),
+																 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
+												.setIcon(null);
 		
-		spells	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+		if (spells	.pages.isEmpty())	spells	.setPriority()
+												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
 		
-		targets	.setPriority()
-				.setLexiconPages(new PageText("0"), new PageText("1"));
+		if (targets	.pages.isEmpty())	targets	.setPriority()
+												.setLexiconPages(new PageText("0"), new PageText("1"));
 	}
 	
 	public static void postInit() {
@@ -512,8 +512,14 @@ public class AlfheimLexiconData {
 	}
 	
 	public static void reEnableESM() {
-		if (AlfheimCore.enableElvenStory) preInitElvenStory();
-		if (AlfheimCore.enableMMO) preInitMMO();
+		if (AlfheimCore.enableElvenStory) {
+			preInitElvenStory();
+			initElvenStory();
+		}
+		if (AlfheimCore.enableMMO) {
+			preInitMMO();
+			initMMO();
+		}
 		
 		if (!categoryAlfheim.entries.contains(es))		BotaniaAPI.addEntry(es		, categoryAlfheim);
 		if (!categoryAlfheim.entries.contains(races))	BotaniaAPI.addEntry(races	, categoryAlfheim);
@@ -533,8 +539,14 @@ public class AlfheimLexiconData {
 	}
 	
 	public static void reEnableMMO() {
-		if (AlfheimCore.enableElvenStory) preInitElvenStory();
-		if (AlfheimCore.enableMMO) preInitMMO();
+		if (AlfheimCore.enableElvenStory) {
+			preInitElvenStory();
+			initElvenStory();
+		}
+		if (AlfheimCore.enableMMO) {
+			preInitMMO();
+			initMMO();
+		}
 		
 		if (!categoryAlfheim.entries.contains(parties))	BotaniaAPI.addEntry(parties	, categoryAlfheim);
 		if (!categoryAlfheim.entries.contains(spells))	BotaniaAPI.addEntry(spells	, categoryAlfheim);
