@@ -1,12 +1,9 @@
 package alfheim.common.core.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.render.RenderPostShaders;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -38,6 +35,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	flugelBossBar			= true;
 	public static boolean 	info					= true;
 	public static boolean	looniumOverseed			= false;
+	public static boolean	minimalGraphics			= false;
 	public static boolean	numericalMana			= true;
 	public static int		oregenMultiplier		= 3;
 	public static int		tradePortalRate			= 1200;
@@ -99,6 +97,7 @@ public class AlfheimConfig extends Configuration {
 		flugelBossBar			= loadProp(CATEGORY_GENERAL,	"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
 		info					= loadProp(CATEGORY_GENERAL,	"info",						info,					false,	"Set this to false to disable loading info about addon");
 		looniumOverseed			= loadProp(CATEGORY_GENERAL,	"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
+		minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",			minimalGraphics,		false,	"Set this to true to disable .obj models and shaders");
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
 		oregenMultiplier		= loadProp(CATEGORY_GENERAL, 	"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
 		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
@@ -136,6 +135,8 @@ public class AlfheimConfig extends Configuration {
 		if (config.hasChanged()) {
 			config.save();
 		}
+		
+		RenderPostShaders.allowShaders = !minimalGraphics;
 	}
 	
 	public static int loadProp(String category, String propName, int default_, boolean restart, String desc) {

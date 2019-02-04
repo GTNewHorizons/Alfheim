@@ -8,9 +8,11 @@ import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
 import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
+import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class SpellVisualizations {
 
@@ -58,11 +60,13 @@ public class SpellVisualizations {
 
 		glDisable(GL_LIGHTING); 
 		glDisable(GL_TEXTURE_2D); 
-		glColor4d(0, 0, 0, 1); 
+		if (RenderPostShaders.allowShaders) glColor4d(0, 0, 0, 1); 
+		else glColor4d(0.25, 0, 0, 1); 
 		double size = 240.0; 
 
 		glScaled(0.5, 0.5, 0.5); 
-		so.addTranslation();
+		if (RenderPostShaders.allowShaders) so.addTranslation();
+		else renderSphere(Tessellator.instance, 240.0, (float) 240.0/3.6F, 0.0D, 1.0F, 0); 
 		glColorMask(false, true, true, false); 
 		glCullFace(GL_FRONT);
 		if (inside)  glDisable(GL_DEPTH_TEST); 

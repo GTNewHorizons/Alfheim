@@ -12,6 +12,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class RenderPostShaders {
 	
+	public static boolean allowShaders = true;
+	
 	static {
 		MinecraftForge.EVENT_BUS.register(new RendererPostShaders());
 	}
@@ -43,7 +45,7 @@ public class RenderPostShaders {
 				post = false;
 			}
 			if (obj.shaderID != prevShader) {
-				ASJShaderHelper.useShader(obj.shaderID);
+				if (allowShaders) ASJShaderHelper.useShader(obj.shaderID);
 				prevShader = obj.shaderID;
 			}
 			if (obj.materialID != prevMaterial) obj.preRender();
@@ -55,7 +57,7 @@ public class RenderPostShaders {
 		}
 		if (post) prevObj.postRender();
 		
-		ASJShaderHelper.releaseShader();
+		if (allowShaders) ASJShaderHelper.releaseShader();
 	}
 	
 	public static class RendererPostShaders {

@@ -8,6 +8,7 @@ import java.util.Random;
 import alexsocol.asjlib.render.RenderPostShaders;
 import alexsocol.asjlib.render.ShadedObject;
 import alfheim.api.lib.LibResourceLocations;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -121,7 +122,16 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		else
 			glTranslatef(0F, -0.09F, 0F);
 
-		if (!hand) {
+		if (!RenderPostShaders.allowShaders) {
+			int light = 15728880;
+			int lightmapX = light % 65536;
+			int lightmapY = light / 65536;
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX, lightmapY);
+			float alpha = (float) ((Math.sin(worldTime / 20D) / 2D + 0.5) / (ConfigHandler.oldPylonModel ? 1D : 2D));
+			glColor4f(1F, 1F, 1F, a * (alpha + 0.183F));
+		}
+		
+		if (!hand && RenderPostShaders.allowShaders) {
 			ShadedObjectPylon shObj = ConfigHandler.oldPylonModel ? (red ? shObjRO : orange ? shObjOO : shObjPO) : (red ? shObjR : orange ? shObjO : shObjP);
 			shObj.addTranslation();
 		} else {

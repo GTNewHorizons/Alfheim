@@ -42,6 +42,7 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.ICreativeManaProvider;
 import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.api.mana.IManaUsingItem;
+import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class GUIParty extends Gui {
 	
@@ -237,7 +238,7 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 4, 0, 1, 0);
 					Tessellator.instance.draw();
 					
-					ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+					if (!ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 					
 					double mod = MathHelper.floor_double(Flight.get(mc.thePlayer)) / Flight.max();
 					double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;
@@ -249,7 +250,9 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
 					Tessellator.instance.addVertexWithUV(36, 36-(mod*32), 0, 1, 1-mod);
 					Tessellator.instance.draw();
-				} else ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+				} else {
+					if (!ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+				}
 
 				glColor4d(1, 1, 1, 1);
 				for (int i = 0; i < pt.count; i++) {
@@ -300,7 +303,7 @@ public class GUIParty extends Gui {
 				glPopMatrix();
 				glMatrixMode(GL_MODELVIEW);
 				
-				ASJShaderHelper.releaseShader();
+				if (!ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
 			}
 			
 			// ################ rest: ################

@@ -31,6 +31,6 @@ public class ItemElvoriumHelmetRevealing extends ItemElvoriumHelmet implements I
 
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ConfigHandler.enableArmorModels ? ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png" : LibResources.MODEL_MANASTEEL_2;
+		return ModInfo.MODID + ":textures/model/armor/ElvoriumArmor" + (ConfigHandler.enableArmorModels ? "" : "2") + ".png";
 	}
 }

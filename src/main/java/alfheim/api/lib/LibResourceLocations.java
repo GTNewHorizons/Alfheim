@@ -9,6 +9,7 @@ public class LibResourceLocations {
 	
 	public static ResourceLocation antiPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png");
 	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
+	public static ResourceLocation anyavil = new ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png");
 	public static ResourceLocation aura = new ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png"); 
 	public static ResourceLocation babylon = new ResourceLocation("botania:textures/misc/babylon.png");
 	public static ResourceLocation balanceCloak = new ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png");

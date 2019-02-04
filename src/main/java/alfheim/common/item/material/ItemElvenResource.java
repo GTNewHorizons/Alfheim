@@ -15,16 +15,24 @@ public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect
 	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune"/*, "Transferer" BACK*/ /*"InfusedDreamwoodTwig"*/ };
 	private IIcon[] texture = new IIcon[subItems.length];
 	
+	public static IIcon harp = null;
+	public static IIcon mine = null;
+	public static IIcon wind = null;
+	public static IIcon wing = null;
+	
 	public ItemElvenResource() {
 		this.setCreativeTab(AlfheimCore.alfheimTab);
 		this.setHasSubtypes(true);
 		this.setUnlocalizedName("ElvenItems");
 	}
 	
-	public void registerIcons(IIconRegister iconRegister){
-		for (int i = 0; i < subItems.length; i++){
-			texture[i] = iconRegister.registerIcon(ModInfo.MODID + ":materials/" + subItems[i]);
-		}
+	public void registerIcons(IIconRegister reg){
+		for (int i = 0; i < subItems.length; i++)
+			texture[i] = reg.registerIcon(ModInfo.MODID + ":materials/" + subItems[i]);
+		harp = reg.registerIcon(ModInfo.MODID + ":misc/harp");
+		mine = reg.registerIcon(ModInfo.MODID + ":misc/mine");
+		wind = reg.registerIcon(ModInfo.MODID + ":misc/wind");
+		wing = reg.registerIcon(ModInfo.MODID + ":misc/wing");
 	}
 
 	public IIcon getIconFromDamage(int i) {

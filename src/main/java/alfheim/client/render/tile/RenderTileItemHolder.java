@@ -8,7 +8,9 @@ import java.util.Random;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
+import alfheim.client.model.block.ModelSimpleItemHolder;
 import alfheim.common.block.tile.TileItemHolder;
+import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.passive.EntitySheep;
@@ -23,6 +25,7 @@ import vazkii.botania.common.block.tile.mana.TilePool;
 public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 
 	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/holder.obj"));
+	public static final ModelSimpleItemHolder modelSimple = new ModelSimpleItemHolder();
 	
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTicks) {
 		renderTE((TileItemHolder)tile, x, y, z, partialTicks);		
@@ -63,7 +66,13 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 			glColor4f(acolor[0], acolor[1], acolor[2], MultiblockRenderHandler.rendering ? 0.6F : 1F);
 		}
 		
-		model.renderAll();
+		if (AlfheimConfig.minimalGraphics) {
+			glPushMatrix();
+			glTranslated(0, 1, 0);
+			glRotated(180, 1, 0, 0);
+			modelSimple.renderAll();
+			glPopMatrix();
+		} else model.renderAll();
 		
 		glRotated(90, 1, 0, 0);
 		glRotated(135, 0, 0, 1);

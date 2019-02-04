@@ -30,7 +30,9 @@ import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaDiscountArmor;
+import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
+import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
@@ -50,7 +52,7 @@ public class ItemElvoriumArmor extends ItemManasteelArmor implements IManaDiscou
 	
 	@Override
 	public String getArmorTextureAfterInk(ItemStack stack, int slot) {
-		return ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png";
+		return ConfigHandler.enableArmorModels ? (ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png") : slot == 2 ? (ModInfo.MODID + ":textures/model/armor/ElvoriumArmor1.png") : (ModInfo.MODID + ":textures/model/armor/ElvoriumArmor0.png");
 	}
 
 	@Override
