@@ -18,6 +18,8 @@ import vazkii.botania.common.item.equipment.tool.ToolCommons;
 
 public class SpellTitanHit extends SpellBase {
 
+	public static final Material[] MATERIALS = new Material[] { Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay };
+
 	public SpellTitanHit() {
 		super("titanhit", EnumRace.GNOME, 1, 1, 2);
 	}
@@ -50,8 +52,7 @@ public class SpellTitanHit extends SpellBase {
 		for(int x1 = xs; x1 < xe; x1++)
 			for(int y1 = ys; y1 < ye; y1++)
 				for(int z1 = zs; z1 < ze; z1++)
-					mana += removeBlockWithDrops(world, player, x1 + x, y1 + y, z1 + z, remove, draw,
-												 new Material[] { Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay });
+					mana += removeBlockWithDrops(world, player, x1 + x, y1 + y, z1 + z, remove, draw, MATERIALS);
 		return mana;
 	}
 

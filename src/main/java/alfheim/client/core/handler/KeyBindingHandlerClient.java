@@ -176,7 +176,7 @@ public class KeyBindingHandlerClient {
 				toggleCast = false;
 			}
 			
-			if (ClientProxy.keySelMob.isPressed()) {
+			if (Keyboard.isKeyDown(ClientProxy.keySelMob.getKeyCode())) {
 				if (!toggleSelMob) {
 					toggleSelMob = true;
 					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(new MessageKeyBind(SEL.ordinal(), CardinalSystemClient.segment().isParty, CardinalSystemClient.segment.target.getEntityId()));
@@ -185,7 +185,7 @@ public class KeyBindingHandlerClient {
 				toggleSelMob = false;
 			}
 			
-			if (ClientProxy.keySelTeam.isPressed()) {
+			if (Keyboard.isKeyDown(ClientProxy.keySelTeam.getKeyCode())) {
 				if (!toggleSelTeam) {
 					toggleSelTeam = true;
 					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(new MessageKeyBind(SEL.ordinal(), CardinalSystemClient.segment().isParty, CardinalSystemClient.segment.target.getEntityId()));

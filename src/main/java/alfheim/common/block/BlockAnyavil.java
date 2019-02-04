@@ -9,6 +9,7 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -28,7 +29,7 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.IManaTrigger;
 import vazkii.botania.api.wand.IWandHUD;
 
-public class BlockAnyavil extends Block implements ITileEntityProvider, IManaTrigger, IWandHUD, ILexiconable {
+public class BlockAnyavil extends BlockContainer implements IManaTrigger, IWandHUD, ILexiconable {
 
 	public BlockAnyavil() {
 		super(Material.iron);

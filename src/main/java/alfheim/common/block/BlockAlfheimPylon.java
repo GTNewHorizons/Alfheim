@@ -27,7 +27,7 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)
-public class BlockAlfheimPylon extends BlockModContainer implements ITileEntityProvider, ILexiconable, IInfusionStabiliser {
+public class BlockAlfheimPylon extends BlockModContainer implements ILexiconable, IInfusionStabiliser {
 
 	public BlockAlfheimPylon() {
 		super(Material.iron);

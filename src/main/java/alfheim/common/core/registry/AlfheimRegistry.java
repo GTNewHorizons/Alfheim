@@ -234,6 +234,7 @@ public class AlfheimRegistry {
 		registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
 		registerTileEntity(TileAlfheimPylons.class, "AlfheimPylon");
 		registerTileEntity(TileAnimatedTorch.class, "AnimatedTorch");
+		registerTileEntity(TileAnomaly.class, "Anomaly");
 		registerTileEntity(TileAnyavil.class, "Anyavil");
 		registerTileEntity(TileFlugelHead.class, "FlugelHead");
 		registerTileEntity(TileItemHolder.class, "ItemHolder");

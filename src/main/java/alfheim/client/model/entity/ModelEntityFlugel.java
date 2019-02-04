@@ -118,7 +118,6 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		glPushMatrix();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4d(1, 1, 1, 1);
 
 		int light = 15728880;
 		int lightmapX = light % 65536;
@@ -155,7 +154,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		glRotatef(-rx, 1F, 0F, 0F);
 		glRotatef(-rz, 0F, 0F, 1F);
 		
-		glColor3f(1F, 1F, 1F);
+		glColor4d(1, 1, 1, 1);
 		glPopMatrix();
 	}
 	

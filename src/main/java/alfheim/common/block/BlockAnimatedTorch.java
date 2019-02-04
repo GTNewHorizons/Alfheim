@@ -9,6 +9,7 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -26,7 +27,7 @@ import vazkii.botania.api.mana.IManaTrigger;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
 
-public class BlockAnimatedTorch extends Block implements ITileEntityProvider, IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
+public class BlockAnimatedTorch extends BlockContainer implements IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 
 	public BlockAnimatedTorch() {
 		super(Material.circuits);

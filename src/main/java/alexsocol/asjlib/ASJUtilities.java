@@ -764,18 +764,20 @@ public class ASJUtilities {
 	}
 	
 	public static <T extends Comparable<T>> int indexOfComparableArray(T[] array, T key) {
-		int id = -1;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i].compareTo(key) == 0) {
-				id = i;
-				break;
-			}
-		}
-		return id;
+		for (int i = 0; i < array.length; i++)
+			if (array[i].compareTo(key) == 0)
+				return i;
+		return -1;
 	}
 	
 	public static <T extends Comparable<T>> int indexOfComparableColl(Collection<T> coll, T key) {
-		return indexOfComparableArray((T[]) coll.toArray(), key);
+		int id = -1;
+		for (T t : coll) {
+			++id;
+			if (t.compareTo(key) == 0)
+				return id;
+		}
+		return id;
 	}
 	
 	public static int[] colorCode = new int[32];

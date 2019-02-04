@@ -43,16 +43,14 @@ public class BlockElvenOres extends Block implements ILexiconable {
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		for (int i = 0; i < names.length; i++) {
+		for (int i = 0; i < names.length; i++)
 			textures[i] = reg.registerIcon(ModInfo.MODID + ':' + names[i] + "OreElven");
-		}
 	}
 
 	@Override
 	public void getSubBlocks(Item block, CreativeTabs tab, List list) {
-		for (int i = 0; i < names.length; i++) {
+		for (int i = 0; i < names.length; i++)
 			list.add(new ItemStack(block, 1, i));
-		}
 	}
 
 	@Override

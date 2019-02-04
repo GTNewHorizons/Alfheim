@@ -29,7 +29,6 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -39,6 +38,13 @@ public class ClientProxy extends CommonProxy {
 	public static final KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
 	public static final KeyBinding keySelMob = new KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.gameplay");
 	public static final KeyBinding keySelTeam = new KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay");
+	
+	static {
+		removeKeyBinding(keyCast);
+		removeKeyBinding(keyFlight);
+		removeKeyBinding(keySelMob);
+		removeKeyBinding(keySelTeam);
+	}
 	
 	private static final Gui guiIceLens = new GUIIceLens(Minecraft.getMinecraft());
 	private static final Gui guiParty = new GUIParty(Minecraft.getMinecraft());
@@ -198,7 +204,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private static void addESMKeyBinds() {
-		ClientRegistry.registerKeyBinding(keyFlight);
+		addKeyBinding(keyFlight);
 	}
 	
 	private static void removeESMKeyBinds() {
@@ -206,9 +212,9 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private static void addMMOKeyBinds() {
-		ClientRegistry.registerKeyBinding(keyCast);
-		ClientRegistry.registerKeyBinding(keySelMob);
-		ClientRegistry.registerKeyBinding(keySelTeam);
+		addKeyBinding(keyCast);
+		addKeyBinding(keySelMob);
+		addKeyBinding(keySelTeam);
 	}
 	
 	private static void removeMMOKeyBinds() {
@@ -218,8 +224,18 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private static void unregisterKeyBinding(KeyBinding key) {
+		removeKeyBinding(key);
 		int id = ASJUtilities.indexOfComparableArray(Minecraft.getMinecraft().gameSettings.keyBindings, key);
 		if (id < 0 || id > Minecraft.getMinecraft().gameSettings.keyBindings.length) return;
         Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id);
+	}
+	
+	private static void addKeyBinding(KeyBinding key) {
+		key.setKeyCode(key.getKeyCodeDefault());
+		ClientRegistry.registerKeyBinding(key);
+	}
+	
+	private static void removeKeyBinding(KeyBinding key) {
+		key.setKeyCode(0);
 	}
 }

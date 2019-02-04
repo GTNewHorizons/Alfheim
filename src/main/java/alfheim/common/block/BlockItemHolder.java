@@ -10,6 +10,7 @@ import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -27,7 +28,7 @@ import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.mana.BlockPool;
 import vazkii.botania.common.block.tile.mana.TilePool;
 
-public class BlockItemHolder extends Block implements ILexiconable, ITileEntityProvider {
+public class BlockItemHolder extends BlockContainer implements ILexiconable {
 
 	public BlockItemHolder() {
 		super(Material.iron);
