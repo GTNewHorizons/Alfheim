@@ -2,7 +2,10 @@ package alfheim;
 
 import static alfheim.api.ModInfo.*;
 
+import java.io.File;
+
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.api.ModInfo;
 import alfheim.common.core.command.*;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.proxy.CommonProxy;
@@ -57,7 +60,7 @@ public class AlfheimCore {
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
+		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory(), ModInfo.NAME + ".cfg"));
 
 		if (AlfheimConfig.info) InfoLoader.start();
 		
