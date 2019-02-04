@@ -31,9 +31,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import vazkii.botania.api.item.IBaubleRender;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.relic.ItemRelicBauble;
 
 public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IManaUsingItem {
@@ -109,7 +111,7 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	}
 	
 	@SubscribeEvent
-	public void onLivingAttacked(LivingAttackEvent e) {
+	public void onLivingAttacked(LivingAttackEvent e) { // FIXME move to event below
 		if (e.entityLiving instanceof EntityPlayer && ASJUtilities.willEntityDie(e) && ((EntityPlayer) e.entityLiving).inventory.hasItem(AlfheimItems.mask)) {
 			EntityPlayer player = (EntityPlayer) e.entityLiving;
 			int slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory);
@@ -123,6 +125,20 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 			baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy());
 			player.inventory.consumeInventoryItem(AlfheimItems.mask);
 			e.setCanceled(true);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onEntityDeath(LivingDeathEvent e) {
+		if (e.source.damageType.equals(DamageSourceSpell.possession.damageType) && e.entityLiving instanceof EntityPlayer) {
+			IInventory baubles = PlayerHandler.getPlayerBaubles((EntityPlayer) e.entityLiving);
+			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) {
+				ItemNBTHelper.setInt(baubles.getStackInSlot(0), ItemTankMask.TAG_POSSESSION, 0);
+				if (!((EntityPlayer) e.entityLiving).inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
+					((EntityPlayer) e.entityLiving).dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false);
+                }
+				baubles.setInventorySlotContents(0, null);
+			}
 		}
 	}
 	

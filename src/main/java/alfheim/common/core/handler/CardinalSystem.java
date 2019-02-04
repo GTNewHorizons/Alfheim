@@ -1,23 +1,18 @@
 package alfheim.common.core.handler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.UUID;
+import static alfheim.common.network.Message2d.m2d.*;
+import static alfheim.common.network.Message3d.m3d.*;
+
+import java.io.*;
+import java.util.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
+import alfheim.api.event.EntityUpdateEvent;
+import alfheim.api.event.TileUpdateEvent;
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent;
 import alfheim.api.event.TimeStopCheckEvent.TimeStopTileCheckEvent;
 import alfheim.api.spell.ITimeStopSpecific;
@@ -26,14 +21,10 @@ import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
 import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.network.Message1d;
-import alfheim.common.network.Message2d;
-import alfheim.common.network.Message2d.m2d;
-import alfheim.common.network.Message3d;
-import alfheim.common.network.Message3d.m3d;
-import alfheim.common.network.MessageHotSpellC;
-import alfheim.common.network.MessageParty;
-import alfheim.common.network.MessageTimeStop;
+import alfheim.common.network.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -48,9 +39,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.ICreativeManaProvider;
 import vazkii.botania.api.mana.IManaItem;
@@ -151,7 +145,7 @@ public class CardinalSystem {
 		public static void transfer(EntityPlayerMP player) {
 			for (EnumRace affinity : EnumRace.values())
 				for (SpellBase spell : AlfheimAPI.getSpellsFor(affinity))
-					AlfheimCore.network.sendTo(new Message2d(m2d.COOLDOWN, ((affinity.ordinal() & 0xF) << 28) | (AlfheimAPI.getSpellID(spell) & 0xFFFFFFF), getCoolDown(player, spell)), player);
+					AlfheimCore.network.sendTo(new Message2d(COOLDOWN, ((affinity.ordinal() & 0xF) << 28) | (AlfheimAPI.getSpellID(spell) & 0xFFFFFFF), getCoolDown(player, spell)), player);
 		}
 		
 		public static int setCoolDown(EntityPlayer caster, SpellBase spell, int cd) {
@@ -182,7 +176,7 @@ public class CardinalSystem {
 						if (segment.init > 0) --segment.init;
 						else {
 							if (segment.ids != 0 && segment.castableSpell != null) {
-								AlfheimCore.network.sendTo(new Message2d(m2d.COOLDOWN, segment.ids, KeyBindingHandler.cast(player, (segment.ids >> 28) & 0xF, segment.ids & 0xFFFFFFF)), player);
+								AlfheimCore.network.sendTo(new Message2d(COOLDOWN, segment.ids, KeyBindingHandler.cast(player, (segment.ids >> 28) & 0xF, segment.ids & 0xFFFFFFF)), player);
 								segment.init = segment.ids = 0;
 								segment.castableSpell = null;
 							}
@@ -208,7 +202,7 @@ public class CardinalSystem {
 	}
 
 	public static class ManaSystem {
-		
+
 		public static void handleManaChange(EntityPlayer player) {
 			PartySystem.getParty(player).sendMana(player, getMana(player));
 		}
@@ -248,6 +242,21 @@ public class CardinalSystem {
 		public static int getMana(EntityLivingBase mr) {
 			if (!(mr instanceof EntityPlayer)) return 0;
 			return getMana((EntityPlayer) mr);
+		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new ManaSyncHandler());
+		}
+		
+		private static class ManaSyncHandler {
+			
+			@SubscribeEvent
+			public void onLivingUpdate(LivingUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && e.entityLiving instanceof EntityPlayer) {
+					EntityPlayer player = (EntityPlayer) e.entityLiving;
+					if (player .worldObj.getTotalWorldTime() % 20 == 0) ManaSystem.handleManaChange(player);
+				}
+			}
 		}
 	}
 	
@@ -316,6 +325,28 @@ public class CardinalSystem {
 			return false;
 		}
 		
+		public static boolean friendlyFire(EntityLivingBase entityLiving, DamageSource source) {
+			if (!AlfheimCore.enableMMO || source.damageType.contains("_FF")) return false;
+			
+			if (!ASJUtilities.isServer()) return false;
+			if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {
+				Party pt = getParty((EntityPlayer) source.getEntity());
+				if (pt != null && pt.isMember(entityLiving)) {
+					return true;
+				}
+			}
+			if (entityLiving instanceof EntityPlayer && source.getEntity() != null && source.getEntity() instanceof EntityLivingBase) {
+				Party pt = getParty((EntityPlayer) entityLiving);
+				if (pt != null && pt.isMember((EntityLivingBase) source.getEntity())) {
+					return true;
+				}
+			}
+			if (source.getEntity() != null && source.getEntity() instanceof EntityLivingBase && mobsSameParty(entityLiving, (EntityLivingBase) source.getEntity())) {
+				return true;
+			}
+			return false;
+		}
+		
 		public static void notifySpawn(Entity e) {
 			if (e != null && e instanceof EntityLivingBase) {
 				for (PlayerSegment segment : playerSegments.values()) {
@@ -324,7 +355,7 @@ public class CardinalSystem {
 							if (segment.party.isPlayer(i)) {
 								EntityLivingBase mr = segment.party.get(i);
 								if (mr != null && mr instanceof EntityPlayerMP) {
-									AlfheimCore.network.sendTo(new Message2d(m2d.UUID, e.getEntityId(), segment.party.indexOf((EntityLivingBase) e)), (EntityPlayerMP) mr);
+									AlfheimCore.network.sendTo(new Message2d(UUID, e.getEntityId(), segment.party.indexOf((EntityLivingBase) e)), (EntityPlayerMP) mr);
 								}
 							}
 						}
@@ -561,7 +592,7 @@ public class CardinalSystem {
 				for (int i = 0; i < count; i++) {
 					EntityLivingBase e = get(i);
 					if (e != null && members[i].isPlayer && e instanceof EntityPlayerMP)
-						AlfheimCore.network.sendTo(new Message3d(m3d.PARTY_STATUS, PartyStatus.MANA.ordinal(), index, mana), (EntityPlayerMP) e);
+						AlfheimCore.network.sendTo(new Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal(), index, mana), (EntityPlayerMP) e);
 				}
 			}
 			
@@ -569,7 +600,7 @@ public class CardinalSystem {
 				for (int i = 0; i < count; i++) {
 					EntityLivingBase e = get(i);
 					if (e != null && members[i].isPlayer && e instanceof EntityPlayerMP)
-						AlfheimCore.network.sendTo(new Message3d(m3d.PARTY_STATUS, PartyStatus.DEAD.ordinal(), id, d ? -10 : -100), (EntityPlayerMP) e);
+						AlfheimCore.network.sendTo(new Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal(), id, d ? -10 : -100), (EntityPlayerMP) e);
 				}
 			}
 			
@@ -643,6 +674,23 @@ public class CardinalSystem {
 				public Object clone() {
 					return new Member(name, uuid, mana, isPlayer, isDead);
 				}
+			}
+		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new PartyThingsListener());
+		}
+		
+		private static class PartyThingsListener {
+			
+			@SubscribeEvent
+			public void onClonePlayer(PlayerEvent.Clone e) {
+				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false);
+			}
+
+			@SubscribeEvent
+			public void onPlayerRespawn(PlayerRespawnEvent e) {
+				if (AlfheimCore.enableMMO) getParty(e.player).setDead(e.player, false);
 			}
 		}
 	}
@@ -742,6 +790,33 @@ public class CardinalSystem {
 		    	uuid = caster.entityUniqueID;
 				pos = Vector3.fromEntity(caster);
 				id = ++nextID;
+			}
+		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new TimeStopThingsListener());
+		}
+		
+		private static class TimeStopThingsListener {
+			@SubscribeEvent
+			public void onPlayerChangedDimension(PlayerChangedDimensionEvent e) {
+				if (AlfheimCore.enableMMO && e.player instanceof EntityPlayerMP) transfer((EntityPlayerMP) e.player, e.fromDim);
+			}
+			
+			@SubscribeEvent
+			public void onEntityUpdate(EntityUpdateEvent e) {
+				if (e.entity == null || !e.entity.isEntityAlive()) return;
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.entity)) e.setCanceled(true);
+			}
+			
+			@SubscribeEvent
+			public void onLivingUpdate(LivingUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.entity)) e.setCanceled(true);
+			}
+			
+			@SubscribeEvent
+			public void onTileUpdate(TileUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.tile)) e.setCanceled(true);
 			}
 		}
 	}

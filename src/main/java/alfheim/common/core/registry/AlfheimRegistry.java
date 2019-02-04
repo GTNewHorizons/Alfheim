@@ -4,17 +4,10 @@ import static alexsocol.asjlib.ASJUtilities.*;
 import static alfheim.api.AlfheimAPI.*;
 import static cpw.mods.fml.common.registry.GameRegistry.*;
 
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJReflectionHelper;
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
-import alfheim.client.render.world.SpellEffectHandlerClient;
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.block.tile.*;
-import alfheim.common.core.handler.SpellEffectHandler;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.*;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
@@ -31,16 +24,11 @@ import alfheim.common.spell.water.*;
 import alfheim.common.spell.wind.*;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim;
 import cpw.mods.fml.common.IWorldGenerator;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.brew.ModPotions;
@@ -81,121 +69,24 @@ public class AlfheimRegistry {
 	
 	public static void preInit() {
 		if(Potion.potionTypes.length < 256) ASJReflectionHelper.invokeStatic(ModPotions.class, null, "extendPotionArray");
-		bleeding = new PotionAlfheim(AlfheimConfig.potionIDBleeding, "bleeding", true, 0xFF0000) {
-			public boolean isReady(int time, int ampl) {
-				return time % (20/Math.max(1, ampl)) == 0; 
-			}
-
-			public void performEffect(EntityLivingBase living, int ampl) {
-				if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.bleeding, ampl+1);
-			}
-		};
+		bleeding = new PotionBleeding();
 		butterShield = new PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF);
-		deathMark = new PotionAlfheim(AlfheimConfig.potionIDDeathMark, "deathMark", true, 0x553355) {
-			public boolean isReady(int time, int ampl) {
-				return time == 1; 
-			}
-
-			public void performEffect(EntityLivingBase living, int ampl) {
-				if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.mark, Integer.MAX_VALUE);
-			}
-		};
+		deathMark = new PotionDeathMark();
 		decay = new PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355);
-		goldRush = new PotionAlfheim(AlfheimConfig.potionIDGoldRush, "goldRush", false, 0x55FF00);
+		goldRush = new PotionGoldRush();
 		icelens = new PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF);
-		leftFlame = new PotionAlfheim(AlfheimConfig.potionIDLeftFlame, "leftFlame", false, 0x0) {
-			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
-				super.applyAttributesModifiersToEntity(target, attributes, ampl);
-				if (AlfheimCore.enableMMO && target instanceof EntityPlayer) {
-					EntityPlayer player = (EntityPlayer) target;
-					player.capabilities.allowEdit = false;
-					player.capabilities.allowFlying = true;
-					player.capabilities.disableDamage = true;
-					player.capabilities.isFlying = true;
-					if(player instanceof EntityPlayerMP) ((EntityPlayerMP) player).theItemInWorldManager.setBlockReachDistance(-1);
-					if(!ASJUtilities.isServer()) SpellEffectHandlerClient.onDeath(target);
-				}
-			}
-			
-			public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
-				super.removeAttributesModifiersFromEntity(target, attributes, ampl);
-				if (AlfheimCore.enableMMO && target instanceof EntityPlayer) {
-					EntityPlayer player = (EntityPlayer) target;
-					player.capabilities.allowEdit = true;
-					player.capabilities.allowFlying = false;
-					player.capabilities.disableDamage = false;
-					player.capabilities.isFlying = false;
-					if(player instanceof EntityPlayerMP) ((EntityPlayerMP) player).theItemInWorldManager.setBlockReachDistance(5);
-					player.getDataWatcher().updateObject(6, Float.valueOf(ampl));
-				}
-			}
-		};
+		leftFlame = new PotionLeftFlame();
 		nineLifes = new PotionAlfheim(AlfheimConfig.potionIDNineLifes, "nineLifes", false, 0xDD2222);
 		noclip = new PotionNoclip();
 		possession = new PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000);
-		quadDamage = new PotionAlfheim(AlfheimConfig.potionIDQuadDamage, "quadDamage", false, 0x22FFFF) {
-			@Override
-			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
-				super.applyAttributesModifiersToEntity(target, attributes, ampl);
-				if (AlfheimCore.enableMMO) SpellEffectHandler.sendPacket(Spells.QUAD, target);
-			}
-		};
+		quadDamage = new PotionQuadDamage();
 		sacrifice = new PotionSacrifice();
-		sharedHP = new PotionAlfheim(AlfheimConfig.potionIDSharedHP, "sharedHP", false, 0xFF0000) {
-			@Override
-			public void applyAttributesModifiersToEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
-				super.applyAttributesModifiersToEntity(target, attributes, ampl);
-				if (!AlfheimCore.enableMMO) return;
-				AttributeModifier m = new AttributeModifier(UUID.fromString("53E7B7F2-19BF-40FE-B204-729CE822D188"), "sharedHP", ampl - target.getMaxHealth(), 0);
-				target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m);
-				target.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(m);
-			}
-			
-			@Override
-			public void removeAttributesModifiersFromEntity(EntityLivingBase target, BaseAttributeMap attributes, int ampl) {
-				super.removeAttributesModifiersFromEntity(target, attributes, ampl);
-				if (!AlfheimCore.enableMMO) return;
-				AttributeModifier m = target.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(UUID.fromString("53E7B7F2-19BF-40FE-B204-729CE822D188"));
-				if (m != null) target.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(m);
-				target.setHealth(Math.min(target.getHealth(), target.getMaxHealth()));
-			}
-		};
-		showMana = new PotionAlfheim(AlfheimConfig.potionIDShowMana, "showMana", false, 0x0000DD) {
-			public boolean isReady(int time, int ampl) {
-				return true;
-			}
-			
-			public void performEffect(EntityLivingBase living, int ampl) {
-				if (!AlfheimCore.enableMMO) return;
-				PotionEffect pe = living.getActivePotionEffect(this);
-				if (pe == null) return;
-				
-				if (ASJUtilities.isServer() || pe.amplifier <= 0) {
-					pe.duration = 1;
-					return;
-				} else {
-					if (pe.duration < Integer.MAX_VALUE) ++pe.duration;
-					--pe.amplifier;
-				}
-				
-				if (!ASJUtilities.isServer()) 
-					for (int i = 0; i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration))); i++) // looks like this "i < VALUE" is fine
-						SpellEffectHandlerClient.spawnMana(living, i);
-			}
-		};
+		sharedHP = new PotionSharedHP();
+		showMana = new PotionShowMana();
 		soulburn = new PotionSoulburn();
 		stoneSkin = new PotionAlfheim(AlfheimConfig.potionIDStoneSkin, "stoneSkin", false, 0x593C1F);
 		tHrOw = new PotionThrow();
-		wellOLife = new PotionAlfheim(AlfheimConfig.potionIDWellOLife, "wellolife", false, 0x00FFFF) {
-			public boolean isReady(int time, int ampl) {
-				return AlfheimCore.enableMMO && time % 10 == 0;
-			}
-
-			public void performEffect(EntityLivingBase living, int ampl) {
-				if (!AlfheimCore.enableMMO) return;
-				if (living.isInWater()) living.heal(0.5F);
-			}
-		};
+		wellOLife = new PotionWellOLife();
 		registerEntities();
 		registerTileEntities();
 	}
@@ -362,7 +253,7 @@ public class AlfheimRegistry {
 		addPink(new ItemStack(AlfheimItems.elementalHelmetRevealing), 45);
 		addPink(new ItemStack(AlfheimItems.elementalLeggings), 56);
 		addPink(new ItemStack(AlfheimItems.pixieAttractor), 36);
-		addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);
+		//addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);
 		addPink(new ItemStack(AlfheimBlocks.manaInfuser), 90);
 		addPink(new ItemStack(AlfheimBlocks.alfheimPylons), 45);
 		addPink(new ItemStack(AlfheimBlocks.elvenOres), 9);
