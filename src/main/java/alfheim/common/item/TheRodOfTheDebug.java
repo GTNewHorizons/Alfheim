@@ -1,7 +1,6 @@
 package alfheim.common.item;
 
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.render.RenderPostShaders;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
@@ -31,8 +30,6 @@ public class TheRodOfTheDebug extends Item {
 						PartySystem.setParty(player, new Party(player));
 						PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
 					}
-					
-					RenderPostShaders.allowShaders = false;
 					
 //					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
 					

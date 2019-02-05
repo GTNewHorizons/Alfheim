@@ -248,7 +248,7 @@ public class CardinalSystem {
 			MinecraftForge.EVENT_BUS.register(new ManaSyncHandler());
 		}
 		
-		private static class ManaSyncHandler {
+		public static class ManaSyncHandler {
 			
 			@SubscribeEvent
 			public void onLivingUpdate(LivingUpdateEvent e) {
@@ -681,7 +681,7 @@ public class CardinalSystem {
 			MinecraftForge.EVENT_BUS.register(new PartyThingsListener());
 		}
 		
-		private static class PartyThingsListener {
+		public static class PartyThingsListener {
 			
 			@SubscribeEvent
 			public void onClonePlayer(PlayerEvent.Clone e) {
@@ -797,7 +797,7 @@ public class CardinalSystem {
 			MinecraftForge.EVENT_BUS.register(new TimeStopThingsListener());
 		}
 		
-		private static class TimeStopThingsListener {
+		public static class TimeStopThingsListener {
 			@SubscribeEvent
 			public void onPlayerChangedDimension(PlayerChangedDimensionEvent e) {
 				if (AlfheimCore.enableMMO && e.player instanceof EntityPlayerMP) transfer((EntityPlayerMP) e.player, e.fromDim);

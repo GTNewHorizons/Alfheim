@@ -237,7 +237,8 @@ alfheimmisc.party.notinpartyoffline=%s isn't a party member or is offline
 alfheimmisc.party.notpl=Only partyleader can do this
 
 death.attack.bleeding=%s bleed out
-death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice 
+death.attack.corruption=%s got too close to anomaly
+death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice
 death.attack.gravity=%s was crushed down by gravity
 death.attack.lightning=%s was charged to death by %s's lightning
 death.attack.mark=%s died from the curse

@@ -14,6 +14,7 @@ public class DamageSourceSpell extends DamageSource {
 	}
 
 	public static final DamageSource bleeding	= new DamageSource		("bleeding")	.setDamageBypassesArmor().setDamageIsAbsolute();
+	public static final DamageSource corruption	= new DamageSource		("corruption")	.setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage();
 	public static final DamageSource gravity	= new DamageSourceSpell	("gravity")		.setDamageBypassesArmor().setDifficultyScaled();
 	public static final DamageSource mark		= new DamageSourceSpell	("mark")		.setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage();
 	public static final DamageSource poison		= new DamageSourceSpell	("poison")		.setDamageBypassesArmor();

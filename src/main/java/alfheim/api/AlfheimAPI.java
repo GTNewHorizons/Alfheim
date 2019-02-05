@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 
+import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
@@ -44,6 +45,8 @@ public class AlfheimAPI {
 	public static HashSet<SpellBase> spells = new HashSet<SpellBase>();
 	/** Map of elven spells associated with their race (affinity), sorted by name */
 	public static HashMap<EnumRace, HashSet<SpellBase>> spellMapping = new HashMap<EnumRace, HashSet<SpellBase>>();
+	/** Map of anomaly types and their subtiles, specifying their behavior */
+	public static HashMap<String, Class<? extends SubTileEntity>> anomalies = new HashMap<String, Class<? extends SubTileEntity>>();
 	
 	public static RecipeManaInfuser addInfuserRecipe(RecipeManaInfuser rec) {
 		if (rec != null) manaInfuserRecipes.add(rec);
@@ -153,5 +156,13 @@ public class AlfheimAPI {
 			}
 		}
 		throw new IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name);
+	}
+	
+	public static void registerAnomaly(String name, Class<? extends SubTileEntity> behavior) {
+		anomalies.put(name, behavior);
+	}
+	
+	public static Class<? extends SubTileEntity> getAnomaly(String name) {
+		return anomalies.get(name);
 	}
 }

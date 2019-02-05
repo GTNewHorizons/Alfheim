@@ -47,6 +47,7 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 public class GUIParty extends Gui {
 	
 	private Minecraft mc;
+	public static final DecimalFormat format = new DecimalFormat("0.0#");
 	
 	public GUIParty(Minecraft mc) {
 		super();
@@ -64,8 +65,6 @@ public class GUIParty extends Gui {
 		String data;
 		zLevel = -90;
 		double s = AlfheimConfig.partyHUDScale;
-		
-	    DecimalFormat format = new DecimalFormat("###.0#");
 		
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -238,7 +237,7 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 4, 0, 1, 0);
 					Tessellator.instance.draw();
 					
-					if (!ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 					
 					double mod = MathHelper.floor_double(Flight.get(mc.thePlayer)) / Flight.max();
 					double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;
@@ -251,7 +250,7 @@ public class GUIParty extends Gui {
 					Tessellator.instance.addVertexWithUV(36, 36-(mod*32), 0, 1, 1-mod);
 					Tessellator.instance.draw();
 				} else {
-					if (!ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 				}
 
 				glColor4d(1, 1, 1, 1);
@@ -303,7 +302,7 @@ public class GUIParty extends Gui {
 				glPopMatrix();
 				glMatrixMode(GL_MODELVIEW);
 				
-				if (!ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
+				if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
 			}
 			
 			// ################ rest: ################
@@ -507,8 +506,7 @@ public class GUIParty extends Gui {
 			health: {
 				if (!l.isEntityAlive()) break health;
 				
-				double mod;
-				mod = ((int) (hp / Math.max(hpm, 1) * 200.)) / 200.;
+				double mod = ((int) (hp / Math.max(hpm, 1) * 200.)) / 200.;
 				ASJUtilities.glColor1u(mod > 0.5 ? G : mod > 0.1 ? Y : R);
 				int length = MathHelper.floor_double(200 * mod);
 				
@@ -556,10 +554,10 @@ public class GUIParty extends Gui {
 				
 				if (st) data = EnumChatFormatting.STRIKETHROUGH + data;
 				
-				glTranslated(0, 0, -80);
+				glTranslated(0, 0, -79);
 				font.drawString(data, 36, 6, color, shadow);
 				font.drawString(String.format("(%.2fm)", Vector3.entityDistance(player, CardinalSystemClient.segment.target)), 128, 6, color, shadow);
-				glTranslated(0, 0, 80);
+				glTranslated(0, 0, 79);
 			}
 			
 			// ################ potions: ################

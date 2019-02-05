@@ -5,9 +5,12 @@ import java.util.List;
 
 import alexsocol.asjlib.extendables.MaterialPublic;
 import alfheim.AlfheimCore;
+import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
+import alfheim.api.block.tile.SubTileEntity;
 import alfheim.common.block.tile.TileAnomaly;
-import net.minecraft.block.Block;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.item.block.ItemBlockAnomaly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -15,8 +18,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import vazkii.botania.common.item.rod.ItemTerraformRod;
+import vazkii.botania.common.block.tile.TileSpecialFlower;
+import vazkii.botania.common.core.helper.ItemNBTHelper;
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class BlockAnomaly extends BlockContainer {
 
@@ -33,11 +40,42 @@ public class BlockAnomaly extends BlockContainer {
 		setCreativeTab(AlfheimCore.alfheimTab);
 		setLightLevel(1);
 		setLightOpacity(0);
+		setResistance(Float.MAX_VALUE / 3.0F);
 		setStepSound(soundTypeCloth);
+	}
+	
+	public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int x, int y, int z) {
+		return AxisAlignedBB.getBoundingBox(0.25 + x, 0.25 + y, 0.25 + z, 0.75 + x, 0.75 + y, 0.75 + z);
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_) {
+		return null;
+	}
+	
+	@Override
+	public void getSubBlocks(Item block, CreativeTabs tab, List list) { // BlockSpecialFlower
+		for (String name : AlfheimAPI.anomalies.keySet()) 
+			list.add(ItemBlockAnomaly.ofType(name));
+	}
+	
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return ItemBlockAnomaly.ofType(((TileAnomaly) world.getTileEntity(x, y, z)).subTileName);
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileAnomaly();
+	}
+	
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+	
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
 	}
 }

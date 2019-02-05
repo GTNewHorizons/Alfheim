@@ -8,6 +8,10 @@ import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.*;
+import alfheim.common.block.tile.sub.SubTileAntigrav;
+import alfheim.common.block.tile.sub.SubTileGravity;
+import alfheim.common.block.tile.sub.SubTileLightning;
+import alfheim.common.block.tile.sub.SubTileManaTornado;
 import alfheim.common.core.util.*;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
@@ -132,8 +136,17 @@ public class AlfheimRegistry {
 		registerTileEntity(TileManaInfuser.class, "ManaInfuser");
 		registerTileEntity(TileTradePortal.class, "TradePortal");
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
+		
+		registerAnomalies();
 	}
 	
+	private static void registerAnomalies() {
+		registerAnomaly("Antigrav", SubTileAntigrav.class);
+		registerAnomaly("Gravity", SubTileGravity.class);
+		registerAnomaly("Lightning", SubTileLightning.class);
+		registerAnomaly("ManaTornado", SubTileManaTornado.class);
+	}
+
 	private static void registerSpells() {
 		registerSpell(new SpellAcidMyst());
 		registerSpell(new SpellAquaBind());

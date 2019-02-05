@@ -87,7 +87,7 @@ public class AlfheimBlocks {
 		register(dreamSapling);
 		register(animatedTorch);
 		register(flugelHead);
-		register(anomaly);
+		registerBlock(anomaly, ItemBlockAnomaly.class, getBlockName(anomaly));
 		register(poisonIce);
 		register(redFlame);
 	}

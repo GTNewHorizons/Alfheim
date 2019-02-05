@@ -3,14 +3,17 @@ package alfheim.common.core.handler;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
+import alfheim.api.event.SpellCastEvent;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.ManaSystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
@@ -57,6 +60,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -187,6 +192,79 @@ public class EventHandler {
 			if (e.player instanceof EntityPlayerMP) {
 				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 0, EnumRace.getRaceID(e.player)), (EntityPlayerMP) e.player);
 				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 1, Flight.get(e.player)), (EntityPlayerMP) e.player);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onSpellCast(SpellCastEvent.Pre e) {
+		if (TimeStopSystem.affected(e.caster)) e.setCanceled(true);
+	}
+		
+	@SubscribeEvent
+	public void onSpellCasted(SpellCastEvent.Post e) {
+		if (ModInfo.DEV) e.cd = 5;
+		if (!(e.caster instanceof EntityPlayer)) return;
+		EntityPlayer player = (EntityPlayer) e.caster;
+		PlayerSegment seg = CardinalSystem.forPlayer(player);
+		
+		switch (seg.quadStage) {
+			case 0: if (e.spell.name.equals("stoneskin")) {
+						++seg.quadStage;
+						break;
+					}
+			
+			case 1: if (e.spell.name.equals("uphealth") && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
+						++seg.quadStage;
+						break;
+					} else {
+						seg.quadStage = 0;
+						break;
+					}
+				
+			case 2: if (e.spell.name.equals("icelens") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1) {
+						++seg.quadStage;
+						break;
+					} else {
+						seg.quadStage = 0;
+						break;
+					}
+			
+			case 3: if (e.spell.name.equals("battlehorn") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+						++seg.quadStage;
+						break;
+					} else {
+						seg.quadStage = 0;
+						break;
+					}
+			
+			case 4: if (e.spell.name.equals("thor") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+						++seg.quadStage;
+						break;
+					} else {
+						seg.quadStage = 0;
+						break;
+					}
+			default: seg.quadStage = 0;
+		}
+	}
+	
+	@SubscribeEvent
+	public void onStruckByLightning(EntityStruckByLightningEvent e) {
+		if (AlfheimCore.enableMMO) {
+			if (!(e.entity instanceof EntityPlayer)) return;
+			EntityPlayer player = (EntityPlayer) e.entity;
+			PlayerSegment seg = CardinalSystem.forPlayer(player);
+			if (seg.quadStage >= 5 && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+				seg.quadStage = 0;
+				player.removePotionEffect(AlfheimRegistry.stoneSkin.id);
+				player.removePotionEffect(Potion.field_76434_w.id);
+				player.removePotionEffect(AlfheimRegistry.icelens.id);
+				player.removePotionEffect(Potion.damageBoost.id);
+				player.addPotionEffect(new PotionEffect(AlfheimRegistry.quadDamage.id, 600, 0, false));
+				AlfheimCore.network.sendToAll(new MessageEffect(e.entity.getEntityId(), AlfheimRegistry.quadDamage.id, 600, 0));
+				e.setCanceled(true);
+				return;
 			}
 		}
 	}

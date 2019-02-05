@@ -236,8 +236,9 @@ alfheimmisc.party.no=Такой группы не существует!
 alfheimmisc.party.notinpartyoffline=%s не является участником группы или находится не в игре!
 alfheimmisc.party.notpl=Только лидер группы может сделать это!
 
-death.attack.bleeding=%s истёк кровью 
-death.attack.darkness_FF=%s убит в обмен на жертву %s 
+death.attack.bleeding=%s истёк кровью
+death.attack.corruption=%s подошёл слишком близко к аномалии
+death.attack.darkness_FF=%s убит в обмен на жертву %s
 death.attack.gravity=%s раздавлен гравитацией
 death.attack.lightning=%s убит молнией %s
 death.attack.mark=%s умер от проклятия
