@@ -1,68 +1,89 @@
 package alfheim.common.block.tile;
 
-import alfheim.api.AlfheimAPI;
+import java.util.HashMap;
+import java.util.List;
+
 import alfheim.api.block.tile.SubTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import vazkii.botania.common.block.tile.TileMod;
 
 public class TileAnomaly extends TileMod {
 	
+	private static final String TAG_SUBTILE_MAIN = "subTileMain";
 	private static final String TAG_SUBTILE_NAME = "subTileName";
 	private static final String TAG_SUBTILE_CMP = "subTileCmp";
+	private static final String TAG_SUBTILE_COUNT = "subTileCount";
 	
-	public SubTileEntity subTile;
-	public String subTileName;
+	public HashMap<String, SubTileEntity> subTiles = new HashMap<String, SubTileEntity>();
+	public String mainSubTile;
+	public int compatibilityBit = 0; // not serializing because will be recalculated on load
 	
 	@Override
 	public void updateEntity() {
-		if (subTile != null) subTile.updateEntity();
+		List<Object> l = subTiles.get(mainSubTile).getTargets();
+		for (SubTileEntity subTile : subTiles.values()) subTile.updateEntity(l);
 	}
 	
-	public TileAnomaly setSubTile(String name) {
-		provideSubTile(name);
-		return this;
+	public TileAnomaly addSubTile(String name) {
+		return addSubTile(SubTileEntity.forName(name), name);
 	}
 	
-	public TileAnomaly setSubTile(SubTileEntity sub) {
-		subTile = sub;
+	public TileAnomaly addSubTile(SubTileEntity sub, String name) {
+		if (sub == null || !canAdd(sub)) return this;
+		
+		compatibilityBit |= sub.typeBits();
+		
+		if (mainSubTile == null || mainSubTile.isEmpty()) mainSubTile = name;
+		
+		subTiles.put(name, sub);
 		return (TileAnomaly) (sub.superTile = this);
+	}
+	
+	public boolean canAdd(SubTileEntity sub) {
+		return (compatibilityBit & sub.typeBits()) == 0;
 	}
 	
 	@Override
 	public void writeCustomNBT(NBTTagCompound cmp) {
 		super.writeCustomNBT(cmp);
 		
-		cmp.setString(TAG_SUBTILE_NAME, subTileName);
-		
-		NBTTagCompound subCmp = new NBTTagCompound();
-		cmp.setTag(TAG_SUBTILE_CMP, subCmp);
+		cmp.setString(TAG_SUBTILE_MAIN, mainSubTile);
 
-		if(subTile != null)
-			subTile.writeToNBT(subCmp);
+		int c = subTiles.keySet().size();
+		cmp.setInteger(TAG_SUBTILE_COUNT, c);
+		
+		NBTTagCompound subCmp;
+		
+		for (String name : subTiles.keySet()) {
+			cmp.setString(TAG_SUBTILE_NAME + c, name);
+			
+			subCmp = new NBTTagCompound();
+			cmp.setTag(TAG_SUBTILE_CMP + (c--), subCmp);
+			
+			subTiles.get(name).writeToNBT(subCmp);
+		}
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound cmp) {
 		super.readCustomNBT(cmp);
 
-		subTileName = cmp.getString(TAG_SUBTILE_NAME);
+		mainSubTile = cmp.getString(TAG_SUBTILE_MAIN);
 		
-		NBTTagCompound subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP);
-		if(subTile == null)
-			provideSubTile(subTileName);
-
-		if(subTile != null)
-			subTile.readFromNBT(subCmp);
-	}
-
-	public void provideSubTile(String name) {
-		subTileName = name;
+		int c = cmp.getInteger(TAG_SUBTILE_COUNT);
 		
-		Class<? extends SubTileEntity> tileClass = AlfheimAPI.getAnomaly(name);
-		try {
-			setSubTile(tileClass.newInstance());
-		} catch (Exception e) {
-			e.printStackTrace();
+		String subTileName;
+		NBTTagCompound subCmp;
+		SubTileEntity subTile;
+		
+		for (; c > 0; c--) {
+			subTileName = cmp.getString(TAG_SUBTILE_NAME + c);
+			subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP + c);
+			subTile = SubTileEntity.forName(subTileName);
+			if(subTile != null)
+				subTile.readFromNBT(subCmp);
+			
+			addSubTile(subTile, subTileName);
 		}
 	}
 }

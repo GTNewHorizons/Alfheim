@@ -2,6 +2,7 @@ package alfheim.common.block;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import alexsocol.asjlib.extendables.MaterialPublic;
 import alfheim.AlfheimCore;
@@ -27,7 +28,7 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class BlockAnomaly extends BlockContainer {
 
-	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setNotBlocker().setNoGrass().setNotOpaque().setNotSolid().setImmovableMobility();
+	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setNotSolid().setImmovableMobility();
 	
 	public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
 	
@@ -61,7 +62,7 @@ public class BlockAnomaly extends BlockContainer {
 	
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-		return ItemBlockAnomaly.ofType(((TileAnomaly) world.getTileEntity(x, y, z)).subTileName);
+		return ItemBlockAnomaly.ofType(((TileAnomaly) world.getTileEntity(x, y, z)).mainSubTile);
 	}
 	
 	@Override
@@ -77,5 +78,10 @@ public class BlockAnomaly extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	@Override
+	public Item getItemDropped(int meta, Random rand, int luck) {
+		return null;
 	}
 }

@@ -88,6 +88,10 @@ public class Vector3 implements Serializable {
 		return Math.sqrt(Math.pow(v.x - te.xCoord, 2) + Math.pow(v.y - te.yCoord, 2) + Math.pow(v.z - te.zCoord, 2));
 	}
 	
+	public static double entityTileDistance(Entity e, TileEntity te) {
+		return Math.sqrt(Math.pow(e.posX - te.xCoord, 2) + Math.pow(e.posY - te.yCoord, 2) + Math.pow(e.posZ - te.zCoord, 2));
+	}
+	
 	public static double entityDistance(Entity e1, Entity e2) {
 		return Math.sqrt(Math.pow(e1.posX - e2.posX, 2) + Math.pow(e1.posY - e2.posY, 2) + Math.pow(e1.posZ - e2.posZ, 2));
 	}
@@ -118,6 +122,27 @@ public class Vector3 implements Serializable {
 		x = vec.x;
 		y = vec.y;
 		z = vec.z;
+		return this;
+	}
+	
+	public Vector3 set(Entity e) {
+		x = e.posX;
+		y = e.posY;
+		z = e.posZ;
+		return this;
+	}
+	
+	public Vector3 set(TileEntity te) {
+		x = te.xCoord;
+		y = te.yCoord;
+		z = te.zCoord;
+		return this;
+	}
+	
+	public Vector3 rand() {
+		x = Math.random();
+		y = Math.random();
+		z = Math.random();
 		return this;
 	}
 
@@ -162,6 +187,20 @@ public class Vector3 implements Serializable {
 		z += vec.z;
 		return this;
 	}
+	
+	public Vector3 add(Entity e) {
+		x += e.posX;
+		y += e.posY;
+		z += e.posZ;
+		return this;
+	}
+	
+	public Vector3 add(TileEntity te) {
+		x += te.xCoord;
+		y += te.yCoord;
+		z += te.zCoord;
+		return this;
+	}
 
 	public Vector3 sub(double d) {
 		return sub(d, d, d);
@@ -178,6 +217,20 @@ public class Vector3 implements Serializable {
 		x -= vec.x;
 		y -= vec.y;
 		z -= vec.z;
+		return this;
+	}
+	
+	public Vector3 sub(Entity e) {
+		x -= e.posX;
+		y -= e.posY;
+		z -= e.posZ;
+		return this;
+	}
+	
+	public Vector3 sub(TileEntity te) {
+		x -= te.xCoord;
+		y -= te.yCoord;
+		z -= te.zCoord;
 		return this;
 	}
 

@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.Botania;
 
@@ -30,30 +29,8 @@ public class SubTileGravity extends SubTileEntity {
 		
 		double radius = power * 10, dist = 0, str = 0;
 		
-		vacuum: {
-			List<Entity> list = superTile.getWorldObj().getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord + 1, superTile.yCoord + 1, superTile.zCoord + 1).expand(radius, radius, radius));
-			if (list == null || list.isEmpty()) break vacuum;
-			
-			for (Entity e : list) {
-				if (e instanceof EntityPlayer && ((EntityPlayer) e).capabilities.disableDamage) continue;
-				
-				ve.set(e.posX, e.posY, e.posZ);
-				
-				if (!ASJUtilities.isServer()) if (e == Minecraft.getMinecraft().thePlayer) ve.add(0, -1.62, 0);
-				
-				if ((dist = Math.sqrt(Math.pow(ve.x - superTile.xCoord + 0.5, 2) + Math.pow(ve.y - superTile.yCoord + 0.5, 2) + Math.pow(ve.z - superTile.zCoord + 0.5, 2))) > radius) continue;
-					
-				vt.set(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5);
-				vt.set(vt).sub(ve).normalize().mul(str = power * 0.5 * 1/dist);
-				
-				e.motionX += vt.x;
-				e.motionY += vt.y * 1.25;
-				e.motionZ += vt.z;
-			}
-		}
-		
-		vt.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Math.random() * radius / 2).add(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5);
-		ve.set(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5).sub(vt).mul(0.05);
+		vt.rand().sub(0.5).normalize().mul(Math.random() * radius / 2).add(superTile).add(0.5);
+		ve.set(superTile).add(0.5).sub(vt).mul(0.05);
 		
 		Botania.proxy.wispFX(superTile.getWorldObj(), vt.x, vt.y, vt.z,	1, 1, 1, 0.5F, (float) ve.x, (float) ve.y, (float) ve.z, 0.5F);
 	}
@@ -68,5 +45,38 @@ public class SubTileGravity extends SubTileEntity {
 	public void readCustomNBT(NBTTagCompound cmp) {
 		super.readCustomNBT(cmp);
 		power = cmp.getDouble(TAG_POWER);
+	}
+
+	@Override
+	public List<Object> getTargets() {
+		double radius = power * 10, dist = 0, str = 0;
+		return allAroundRaw(Entity.class, radius);
+	}
+
+	@Override
+	public void performEffect(Object target) {
+		if (target == null || !(target instanceof Entity)) return;
+		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
+		
+		Entity entity = (Entity) target;
+		double radius = power * 10, dist = 0, str = 0;
+		
+		ve.set(entity);
+		
+		if (!ASJUtilities.isServer()) if (entity == Minecraft.getMinecraft().thePlayer) ve.add(0, -1.62, 0);
+		
+		if ((dist = Math.sqrt(Math.pow(ve.x - superTile.xCoord + 0.5, 2) + Math.pow(ve.y - superTile.yCoord + 0.5, 2) + Math.pow(ve.z - superTile.zCoord + 0.5, 2))) > radius) return;;
+			
+		vt.set(superTile).add(0.5);
+		vt.set(vt).sub(ve).normalize().mul(str = power * 0.5 * 1/dist);
+		
+		entity.motionX += vt.x;
+		entity.motionY += vt.y * 1.25;
+		entity.motionZ += vt.z;
+	}
+
+	@Override
+	public int typeBits() {
+		return MOTION;
 	}
 }

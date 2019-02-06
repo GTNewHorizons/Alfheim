@@ -34,6 +34,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	fancies					= true;
 	public static boolean	flugelBossBar			= true;
 	public static boolean 	info					= true;
+	public static int		lightningsSpeed			= 2;
 	public static boolean	looniumOverseed			= false;
 	public static boolean	minimalGraphics			= false;
 	public static boolean	numericalMana			= true;
@@ -96,6 +97,7 @@ public class AlfheimConfig extends Configuration {
 		fancies					= loadProp(CATEGORY_GENERAL,	"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
 		flugelBossBar			= loadProp(CATEGORY_GENERAL,	"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
 		info					= loadProp(CATEGORY_GENERAL,	"info",						info,					false,	"Set this to false to disable loading info about addon");
+		lightningsSpeed			= loadProp(CATEGORY_GENERAL,	"lightningsSpeed",			lightningsSpeed,		false,	"How many ticks it takes between two lightings are spawned in Lightning Anomaly render");
 		looniumOverseed			= loadProp(CATEGORY_GENERAL,	"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
 		minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",			minimalGraphics,		false,	"Set this to true to disable .obj models and shaders");
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");

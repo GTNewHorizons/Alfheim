@@ -8,10 +8,7 @@ import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.*;
-import alfheim.common.block.tile.sub.SubTileAntigrav;
-import alfheim.common.block.tile.sub.SubTileGravity;
-import alfheim.common.block.tile.sub.SubTileLightning;
-import alfheim.common.block.tile.sub.SubTileManaTornado;
+import alfheim.common.block.tile.sub.*;
 import alfheim.common.core.util.*;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
@@ -145,6 +142,7 @@ public class AlfheimRegistry {
 		registerAnomaly("Gravity", SubTileGravity.class);
 		registerAnomaly("Lightning", SubTileLightning.class);
 		registerAnomaly("ManaTornado", SubTileManaTornado.class);
+		registerAnomaly("ManaVoid", SubTileManaVoid.class);
 	}
 
 	private static void registerSpells() {

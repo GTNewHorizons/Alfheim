@@ -6,18 +6,19 @@ import net.minecraft.block.material.Material;
 // For inline purpose; first call methods from here, then from Material
 public class MaterialPublic extends Material {
 
-	public boolean blocker = true, liquid = false, noGrass = true, opaque = true, solid = true;
+	public boolean blocker = true, grass = true, liquid = false, opaque = true, solid = true;
 	
 	public MaterialPublic(MapColor color) {
 		super(color);
 	}
 	
+	// BLOCKS WATER
 	public boolean blocksMovement() {
 		return blocker;
 	}
 	
 	public boolean getCanBlockGrass() {
-        return noGrass;
+        return grass;
     }
 	
 	public boolean isLiquid() {
@@ -49,8 +50,8 @@ public class MaterialPublic extends Material {
         return this;
     }
 	
-	public MaterialPublic setNoGrass() {
-		noGrass = true;
+	public MaterialPublic setGrass() {
+		grass = true;
         return this;
     }
 	
@@ -58,6 +59,7 @@ public class MaterialPublic extends Material {
         return super.setNoPushMobility();
     }
 	
+	/** Can be washed away */
 	public MaterialPublic setNotBlocker() {
 		blocker = false;
         return this;

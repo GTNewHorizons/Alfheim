@@ -1,19 +1,16 @@
 package alfheim.common.block.tile.sub;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
-import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.helper.Vector3;
 
@@ -33,23 +30,9 @@ public class SubTileLightning extends SubTileEntity {
 			return;
 		}
 		
-		if (ticks % 100 == 0) {
-			EntityLivingBase entity = findNearestEntity();
-			if (entity == null) return;
-			
-			entity.attackEntityFrom(DamageSourceSpell.corruption, (float) (Math.random() * 2 + 3));
-			
-			if (entity instanceof EntityPlayer)
-				ManaItemHandler.requestMana(new ItemStack(Blocks.stone), (EntityPlayer) entity, (int) (Math.random() * 10000 + 2000), true);
-			
-			ve.set(entity.posX, entity.posY, entity.posZ).normalize();
-			vt.add(ve.x / 2, ve.y / 2, ve.z / 2);
-			ve.set(entity.posX, entity.posY, entity.posZ);
-			
-			Botania.proxy.lightningFX(superTile.getWorldObj(), vt, ve, 1, superTile.getWorldObj().rand.nextLong(), 0, 0xFF0000);
-		}
+		if (AlfheimConfig.lightningsSpeed < 1) return;
 		
-		if (ticks % 2 == 0) {
+		if (ticks % AlfheimConfig.lightningsSpeed == 0) {
 			ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
 			vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25);
 			ve.multiply(1.5).add(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5);
@@ -57,29 +40,36 @@ public class SubTileLightning extends SubTileEntity {
 		}
 	}
 	
-	public EntityLivingBase findNearestEntity() {
-        List<EntityLivingBase> list = superTile.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord, superTile.yCoord, superTile.zCoord).expand(radius, radius, radius));
-        EntityLivingBase entity1 = null;
-        double d0 = Double.MAX_VALUE;
+	@Override
+	public List<Object> getTargets() {
+		List l = new ArrayList<Object>();
+		if (ticks % 100 == 0) l.add(findNearestEntity(radius));
+		return l;
+	}
 
-        for (EntityLivingBase entity2 : list) {
-            if (entity2 != null) {
-                double d1 = getDistanceSqToEntity(entity2);
+	@Override
+	public void performEffect(Object target) {
+		if (ticks % 20 != 0) return;
+		if (target == null || !(target instanceof EntityLivingBase)) return;
+    	if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
 
-                if (d1 <= d0) {
-                    entity1 = entity2;
-                    d0 = d1;
-                }
-            }
-        }
+		EntityLivingBase entity = (EntityLivingBase) target;
+		
+		entity.attackEntityFrom(DamageSourceSpell.corruption, (float) (Math.random() * 2 + 3));
+		
+		/*if (entity instanceof EntityPlayer)
+		ManaItemHandler.requestMana(new ItemStack(Blocks.stone), (EntityPlayer) entity, (int) (Math.random() * 10000 + 2000), true);*/
+		
+		vt.set(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5);
+		ve.set(entity.posX, entity.posY, entity.posZ).normalize();
+		vt.add(ve.x / 2, ve.y / 2, ve.z / 2);
+		ve.set(entity.posX, entity.posY, entity.posZ);
+		
+		Botania.proxy.lightningFX(superTile.getWorldObj(), vt, ve, 1, superTile.getWorldObj().rand.nextLong(), 0, 0xFF0000);
+	}
 
-        return entity1;
-    }
-	
-	public double getDistanceSqToEntity(EntityLivingBase entity) {
-        double d0 = superTile.xCoord - entity.posX;
-        double d1 = superTile.yCoord - entity.posY;
-        double d2 = superTile.zCoord - entity.posZ;
-        return d0 * d0 + d1 * d1 + d2 * d2;
-    }
+	@Override
+	public int typeBits() {
+		return HEALTH;
+	}
 }

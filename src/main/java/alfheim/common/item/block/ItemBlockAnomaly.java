@@ -48,7 +48,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 			TileEntity te = world.getTileEntity(x, y, z);
 			if(te instanceof TileAnomaly) {
 				/*TileAnomaly tile = */
-				((TileAnomaly) te).setSubTile(type);
+				((TileAnomaly) te).addSubTile(type);
 //				tile.onBlockAdded(world, x, y, z);
 //				tile.onBlockPlacedBy(world, x, y, z, player, stack);
 				if(!world.isRemote)
