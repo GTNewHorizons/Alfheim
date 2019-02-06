@@ -4,8 +4,10 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
+import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,6 +32,9 @@ public class TheRodOfTheDebug extends Item {
 						PartySystem.setParty(player, new Party(player));
 						PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
 					}
+					
+					/*world.setBlock(0, 5, -50, AlfheimBlocks.anomaly);
+					((TileAnomaly) world.getTileEntity(0, 5, -50)).addSubTile("Gravity").addSubTile("Lightning").addSubTile("ManaVoid");*/
 					
 //					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
 					

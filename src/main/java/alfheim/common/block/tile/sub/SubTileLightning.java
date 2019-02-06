@@ -3,6 +3,7 @@ package alfheim.common.block.tile.sub;
 import java.util.ArrayList;
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
@@ -43,22 +44,19 @@ public class SubTileLightning extends SubTileEntity {
 	@Override
 	public List<Object> getTargets() {
 		List l = new ArrayList<Object>();
-		if (ticks % 100 == 0) l.add(findNearestEntity(radius));
+		if (ticks % 50 == 0) l.add(findNearestEntity(radius));
 		return l;
 	}
 
 	@Override
 	public void performEffect(Object target) {
-		if (ticks % 20 != 0) return;
+		if (ticks % 25 != 0) return;
 		if (target == null || !(target instanceof EntityLivingBase)) return;
     	if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
 
 		EntityLivingBase entity = (EntityLivingBase) target;
 		
-		entity.attackEntityFrom(DamageSourceSpell.corruption, (float) (Math.random() * 2 + 3));
-		
-		/*if (entity instanceof EntityPlayer)
-		ManaItemHandler.requestMana(new ItemStack(Blocks.stone), (EntityPlayer) entity, (int) (Math.random() * 10000 + 2000), true);*/
+		entity.attackEntityFrom(DamageSourceSpell.corruption, (float) Math.min((Math.random() * 2 + 3) / vt.set(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5).add(-entity.posX, -entity.posY, -entity.posZ).mag() / 2, 2.5));
 		
 		vt.set(superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5);
 		ve.set(entity.posX, entity.posY, entity.posZ).normalize();
