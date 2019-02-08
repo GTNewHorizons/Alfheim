@@ -18,22 +18,22 @@ public class SubTileManaTornado extends SubTileEntity {
 	
 	@Override
 	public void update() {
-		int c = ASJUtilities.colorCode[superTile.getWorldObj().rand.nextInt(ASJUtilities.colorCode.length)];
+		int c = ASJUtilities.colorCode[worldObj().rand.nextInt(ASJUtilities.colorCode.length)];
 		v.rand().sub(0.5).normalize().mul(Math.random()).add(superTile).add(0.5);
-		Botania.proxy.wispFX(superTile.getWorldObj(), v.x, v.y, v.z, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float) (Math.random() * 0.25 + 0.25), 0, (float) (Math.random() * 2 + 1));
+		Botania.proxy.wispFX(worldObj(), v.x, v.y, v.z, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float) (Math.random() * 0.25 + 0.25), 0, (float) (Math.random() * 2 + 1));
 	}
 	
 	public EntityManaBurst spawnBurst() {
-		EntityManaBurst burst = new EntityManaBurst(superTile.getWorldObj());
+		EntityManaBurst burst = new EntityManaBurst(worldObj());
 		float motionModifier = 0.5F;
-		burst.setColor(ASJUtilities.colorCode[superTile.getWorldObj().rand.nextInt(ASJUtilities.colorCode.length)]);
+		burst.setColor(ASJUtilities.colorCode[worldObj().rand.nextInt(ASJUtilities.colorCode.length)]);
 		burst.setMana(120);
 		burst.setStartingMana(340);
 		burst.setMinManaLoss(50);
 		burst.setManaLossPerTick(1F);
 		burst.setGravity(0F);
 
-		int meta = superTile.getWorldObj().rand.nextInt(ItemLens.SUBTYPES + 1);
+		int meta = worldObj().rand.nextInt(ItemLens.SUBTYPES + 1);
 		if (meta == ItemLens.SUBTYPES) meta = ItemLens.STORM;
 		
 		ItemStack lens = new ItemStack(ModItems.lens, 1, meta);
@@ -49,14 +49,17 @@ public class SubTileManaTornado extends SubTileEntity {
 
 	@Override
 	public List<Object> getTargets() {
-		List l = new ArrayList<Object>();
-		if (superTile.getWorldObj().rand.nextInt(100) == 0) l.add(spawnBurst());
-		return l;
+		if (worldObj().rand.nextInt(100) == 0) {
+			List l = new ArrayList<Object>();
+			l.add(spawnBurst());
+			return l;
+		}
+		return EMPTY_LIST;
 	}
 
 	@Override
 	public void performEffect(Object target) {
-		if (target != null && target instanceof EntityManaBurst) superTile.getWorldObj().spawnEntityInWorld((EntityManaBurst) target);
+		if (target != null && target instanceof EntityManaBurst) worldObj().spawnEntityInWorld((EntityManaBurst) target);
 	}
 
 	@Override

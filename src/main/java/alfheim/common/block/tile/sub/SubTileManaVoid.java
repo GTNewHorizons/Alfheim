@@ -28,11 +28,11 @@ public class SubTileManaVoid extends SubTileEntity {
 				for (int i = 0; i < 100; i++) performEffect(player);
 			}
 			
-			superTile.getWorldObj().createExplosion(null, superTile.xCoord, superTile.yCoord, superTile.zCoord, radius = 10, false);
+			worldObj().createExplosion(null, x(), y(), z(), radius = 10, false);
 			
 			for (int i = 0; i < 128; i++) {
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.1);
-				Botania.proxy.wispFX(superTile.getWorldObj(), superTile.xCoord + 0.5, superTile.yCoord + 0.5, superTile.zCoord + 0.5, 0.01F, 0.75F, 1, 0.25F, (float) v.x, (float) v.y, (float) v.z, 2);
+				Botania.proxy.wispFX(worldObj(), x() + 0.5, y() + 0.5, z() + 0.5, 0.01F, 0.75F, 1, 0.25F, (float) v.x, (float) v.y, (float) v.z, 2);
 			}
 			
 			mana = 0;
@@ -58,7 +58,7 @@ public class SubTileManaVoid extends SubTileEntity {
 			
 			double l = v.set(superTile).add(0.5).sub(player.posX, player.posY + (flag ? 1 : -0.62), player.posZ).length();
 			v.normalize().mul(l / 40);
-			Botania.proxy.wispFX(superTile.getWorldObj(), player.posX, player.posY + (flag ? 1 : -0.62), player.posZ, 0.01F, 0.75F, 1, radius / 40F, (float) v.x, (float) v.y, (float) v.z, 2);
+			Botania.proxy.wispFX(worldObj(), player.posX, player.posY + (flag ? 1 : -0.62), player.posZ, 0.01F, 0.75F, 1, radius / 40F, (float) v.x, (float) v.y, (float) v.z, 2);
 		}
 	}
 

@@ -3,6 +3,7 @@ package alfheim.common.block.tile;
 import java.util.HashMap;
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import vazkii.botania.common.block.tile.TileMod;
@@ -20,6 +21,8 @@ public class TileAnomaly extends TileMod {
 	
 	@Override
 	public void updateEntity() {
+		if (mainSubTile == null || mainSubTile.isEmpty() || subTiles.get(mainSubTile) == null) return;
+		
 		List<Object> l = subTiles.get(mainSubTile).getTargets();
 		for (SubTileEntity subTile : subTiles.values()) subTile.updateEntity(l);
 	}
@@ -47,20 +50,27 @@ public class TileAnomaly extends TileMod {
 	public void writeCustomNBT(NBTTagCompound cmp) {
 		super.writeCustomNBT(cmp);
 		
-		cmp.setString(TAG_SUBTILE_MAIN, mainSubTile);
-
-		int c = subTiles.keySet().size();
-		cmp.setInteger(TAG_SUBTILE_COUNT, c);
+		if (mainSubTile == null) return;
 		
-		NBTTagCompound subCmp;
-		
-		for (String name : subTiles.keySet()) {
-			cmp.setString(TAG_SUBTILE_NAME + c, name);
+		try {
+			cmp.setString(TAG_SUBTILE_MAIN, mainSubTile);
+	
+			int c = subTiles.keySet().size();
+			cmp.setInteger(TAG_SUBTILE_COUNT, c);
 			
-			subCmp = new NBTTagCompound();
-			cmp.setTag(TAG_SUBTILE_CMP + (c--), subCmp);
+			NBTTagCompound subCmp;
 			
-			subTiles.get(name).writeToNBT(subCmp);
+			for (String name : subTiles.keySet()) {
+				cmp.setString(TAG_SUBTILE_NAME + c, name);
+				
+				subCmp = new NBTTagCompound();
+				cmp.setTag(TAG_SUBTILE_CMP + (c--), subCmp);
+				
+				subTiles.get(name).writeToNBT(subCmp);
+			}
+		} catch (Throwable e) {
+			ASJUtilities.error("Got exception writing anomaly data. It will be discarded.");
+			e.printStackTrace();
 		}
 	}
 

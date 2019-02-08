@@ -29,6 +29,7 @@ public class MaterialPublic extends Material {
 		return opaque;
 	}
 	
+	/** Can be replaced -_- */
 	public boolean isSolid() {
 		return solid;
 	}

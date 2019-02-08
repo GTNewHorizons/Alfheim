@@ -143,6 +143,9 @@ public class AlfheimRegistry {
 		registerAnomaly("Lightning", SubTileLightning.class);
 		registerAnomaly("ManaTornado", SubTileManaTornado.class);
 		registerAnomaly("ManaVoid", SubTileManaVoid.class);
+		registerAnomaly("SpeedDown", SubTileSpeedDown.class);
+		registerAnomaly("SpeedUp", SubTileSpeedUp.class);
+		registerAnomaly("Warp", SubTileWarp.class);
 	}
 
 	private static void registerSpells() {

@@ -28,7 +28,7 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class BlockAnomaly extends BlockContainer {
 
-	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setNotSolid().setImmovableMobility();
+	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
 	
 	public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
 	

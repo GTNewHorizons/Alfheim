@@ -1,18 +1,19 @@
 package alfheim.api.block.tile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import com.google.common.collect.Lists;
-
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+import thaumcraft.codechicken.lib.math.MathHelper;
 
 // Used for anomalies
 public abstract class SubTileEntity {
@@ -20,6 +21,8 @@ public abstract class SubTileEntity {
 	/** The Tag items should use to store which sub tile they are. **/
 	public static final String TAG_TYPE = "type";
 	public static final String TAG_TICKS = "ticks";
+	public static final ArrayList<Object> EMPTY_LIST = new ArrayList<Object>(0);
+	public Random rand = new Random();
 	
 	public int ticks;
 	
@@ -40,6 +43,7 @@ public abstract class SubTileEntity {
 		}
 		
 		ticks++;
+		//ASJUtilities.chatLog("Done");
 	}
 	
 	public abstract List<Object> getTargets();
@@ -80,10 +84,39 @@ public abstract class SubTileEntity {
 		}
 	}
 	
+	public World worldObj() {
+		return superTile.getWorldObj();
+	}
+	
+	public int x() {
+		return superTile.xCoord;
+	}
+	
+	public int x(double x) {
+		return x() + MathHelper.floor_double(x);
+	}
+	
+	public int y() {
+		return superTile.yCoord;
+	}
+	
+	public int y(double y) {
+		return y() + MathHelper.floor_double(y);
+	}
+	
+	public int z() {
+		return superTile.zCoord;
+	}
+	
+	public int z(double z) {
+		return z() + MathHelper.floor_double(z);
+	}
+	
+	
 	// ################################ UTILS ################################
 	
 	public EntityLivingBase findNearestVulnerableEntity(double radius) {
-        List<EntityLivingBase> list = superTile.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord, superTile.yCoord, superTile.zCoord).expand(radius, radius, radius));
+        List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
         EntityLivingBase entity1 = null;
         double d0 = Double.MAX_VALUE;
 
@@ -105,7 +138,7 @@ public abstract class SubTileEntity {
     }
 	
 	public EntityLivingBase findNearestEntity(double radius) {
-        List<EntityLivingBase> list = superTile.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord, superTile.yCoord, superTile.zCoord).expand(radius, radius, radius));
+        List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
         EntityLivingBase entity1 = null;
         double d0 = Double.MAX_VALUE;
 
@@ -125,10 +158,10 @@ public abstract class SubTileEntity {
     }
 	
 	public <E> List<E> allAround(Class<E> clazz, double radius) {
-		return superTile.getWorldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord + 1, superTile.yCoord + 1, superTile.zCoord + 1).expand(radius, radius, radius));
+		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius, radius));
 	}
 	
 	public List allAroundRaw(Class clazz, double radius) {
-		return superTile.getWorldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(superTile.xCoord, superTile.yCoord, superTile.zCoord, superTile.xCoord + 1, superTile.yCoord + 1, superTile.zCoord + 1).expand(radius, radius, radius));
+		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius, radius));
 	}
 }

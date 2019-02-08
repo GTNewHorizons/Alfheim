@@ -1,6 +1,7 @@
 package alfheim.common.core.asm;
 
 import alexsocol.asjlib.ASJReflectionHelper;
+import alexsocol.asjlib.asm.ASJASM;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.relauncher.CoreModManager;
@@ -22,12 +23,14 @@ public class AlfheimHookLoader extends HookLoader {
 	}
 	
 	@Override public String[] getASMTransformerClass() {
-		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName(), AlfheimSyntheticMethodsInjector.class.getName()/*, ASJASM.class.getName()*/ };
+		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName(), AlfheimSyntheticMethodsInjector.class.getName(), ASJASM.class.getName() };
 	}
 
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
 		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
+		
+		ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler");
 	}
 }

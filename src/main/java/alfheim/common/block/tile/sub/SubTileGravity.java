@@ -32,7 +32,7 @@ public class SubTileGravity extends SubTileEntity {
 		vt.rand().sub(0.5).normalize().mul(Math.random() * radius / 2).add(superTile).add(0.5);
 		ve.set(superTile).add(0.5).sub(vt).mul(0.05);
 		
-		Botania.proxy.wispFX(superTile.getWorldObj(), vt.x, vt.y, vt.z,	1, 1, 1, 0.5F, (float) ve.x, (float) ve.y, (float) ve.z, 0.5F);
+		Botania.proxy.wispFX(worldObj(), vt.x, vt.y, vt.z,	1, 1, 1, 0.5F, (float) ve.x, (float) ve.y, (float) ve.z, 0.5F);
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class SubTileGravity extends SubTileEntity {
 		
 		if (!ASJUtilities.isServer()) if (entity == Minecraft.getMinecraft().thePlayer) ve.add(0, -1.62, 0);
 		
-		if ((dist = Math.sqrt(Math.pow(ve.x - superTile.xCoord + 0.5, 2) + Math.pow(ve.y - superTile.yCoord + 0.5, 2) + Math.pow(ve.z - superTile.zCoord + 0.5, 2))) > radius) return;;
+		if ((dist = Math.sqrt(Math.pow(ve.x - x() + 0.5, 2) + Math.pow(ve.y - y() + 0.5, 2) + Math.pow(ve.z - z() + 0.5, 2))) > radius) return;;
 			
 		vt.set(superTile).add(0.5);
 		vt.set(vt).sub(ve).normalize().mul(str = power * 0.5 * 1/dist);

@@ -36,6 +36,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	}
 
 	public static ItemStack ofType(ItemStack stack, String type) {
+		if (type == null || type.isEmpty()) type = "undefined";
 		ItemNBTHelper.setString(stack, SubTileEntity.TAG_TYPE, type);
 		return stack;
 	}

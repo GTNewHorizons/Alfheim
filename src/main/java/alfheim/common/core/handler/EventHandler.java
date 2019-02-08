@@ -5,12 +5,14 @@ import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
+import alfheim.api.event.EntityUpdateEvent;
 import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.api.event.SpellCastEvent;
+import alfheim.api.event.TileUpdateEvent;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
-import alfheim.common.core.handler.CardinalSystem.ManaSystem;
+import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
@@ -27,12 +29,10 @@ import alfheim.common.core.util.InfoLoader;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.Flight;
 import alfheim.common.entity.boss.EntityFlugel;
-import alfheim.common.item.relic.ItemTankMask;
 import alfheim.common.network.Message1d;
 import alfheim.common.network.Message2d;
 import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageEffect;
-import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -48,7 +48,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -60,24 +59,19 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import net.minecraftforge.event.world.BlockEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
 import vazkii.botania.common.block.tile.TileAlfPortal;
-import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe;
@@ -98,6 +92,7 @@ public class EventHandler {
 			AlfheimCore.network.sendTo(new Message2d(m2d.MODES, AlfheimCore.enableElvenStory ? 1 : 0, AlfheimCore.enableMMO ? 1 : 0), (EntityPlayerMP) e.player);
 			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime), (EntityPlayerMP) e.player);
+				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.CL_SLOWDOWN, AlfheimConfig.slowDownClients ? 1 : 0), (EntityPlayerMP) e.player);
 				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
 					e.player.triggerAchievement(AlfheimAchievements.alfheim);
@@ -473,5 +468,22 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onFinishedPotionEffect(LivingPotionEvent.Remove.Post e) {
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
+	}
+	
+	@SubscribeEvent
+	public void onEntityUpdate(EntityUpdateEvent e) {
+		if (e.entity == null || !e.entity.isEntityAlive()) return;
+		if ((ASJUtilities.isServer() || AlfheimConfig.slowDownClients) && AlfheimSyntheticMethods.cantUpdate(e.entity)) {
+			e.setCanceled(true);
+			AlfheimSyntheticMethods.allowUpdate(e.entity);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onTileUpdate(TileUpdateEvent e) {
+		if (AlfheimSyntheticMethods.cantUpdate(e.tile)) {
+			e.setCanceled(true);
+			AlfheimSyntheticMethods.allowUpdate(e.tile);
+		}
 	}
 }

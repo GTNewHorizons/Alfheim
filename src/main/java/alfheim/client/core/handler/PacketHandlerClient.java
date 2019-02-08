@@ -61,6 +61,7 @@ public class PacketHandlerClient {
 			case DEATH_TIMER: AlfheimConfig.deathScreenAddTime = (int) packet.data1; break;
 			case KNOWLEDGE: CardinalSystemClient.segment().knowledge[(int) packet.data1] = true; break;
 			case TIME_STOP_REMOVE: TimeStopSystemClient.remove((int) packet.data1); break;
+			case CL_SLOWDOWN: AlfheimConfig.slowDownClients = packet.data1 != 0; break;
 		}
 	}
 

@@ -39,6 +39,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	minimalGraphics			= false;
 	public static boolean	numericalMana			= true;
 	public static int		oregenMultiplier		= 3;
+	public static boolean	slowDownClients			= false;
 	public static int		tradePortalRate			= 1200;
 	
 	// POTIONS
@@ -102,6 +103,7 @@ public class AlfheimConfig extends Configuration {
 		minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",			minimalGraphics,		false,	"Set this to true to disable .obj models and shaders");
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
 		oregenMultiplier		= loadProp(CATEGORY_GENERAL, 	"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
+		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",			slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly");
 		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
 
 		potionIDBleeding		= loadProp(CATEGORY_POTIONS, 	"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
