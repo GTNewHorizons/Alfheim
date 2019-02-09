@@ -122,10 +122,11 @@ public class SubTileWarp extends SubTileEntity {
 				b1 = worldObj().getBlock(v.x1, v.y1, v.z1);
 				b2 = worldObj().getBlock(v.x2, v.y2, v.z2);
 				
-				if ((worldObj().isAirBlock(v.x1, v.y1, v.z1)			&&
-					 worldObj().isAirBlock(v.x2, v.y2, v.z2))			||
-					 b1 == Blocks.bedrock || b2 == Blocks.bedrock		||
-					 worldObj().getTileEntity(v.x1, v.y1, v.z1) != null ||
+				if ((worldObj().isAirBlock(v.x1, v.y1, v.z1)				&&
+					 worldObj().isAirBlock(v.x2, v.y2, v.z2))				||
+					 b1.getBlockHardness(worldObj(), v.x1, v.y1, v.z1) < 0	||
+					 b2.getBlockHardness(worldObj(), v.x2, v.y2, v.z2) < 0	||
+					 worldObj().getTileEntity(v.x1, v.y1, v.z1) != null 	||
 					 worldObj().getTileEntity(v.x2, v.y2, v.z2) != null
 				) continue;
 
