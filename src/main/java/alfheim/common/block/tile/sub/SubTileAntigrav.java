@@ -46,11 +46,6 @@ public class SubTileAntigrav extends SubTileEntity {
 	
 	@Override
 	public int getStrip() {
-		return 0;
-	}
-	
-	@Override
-	public int getColor() {
-		return 0x80E6FF;
+		return 7;
 	}
 }
