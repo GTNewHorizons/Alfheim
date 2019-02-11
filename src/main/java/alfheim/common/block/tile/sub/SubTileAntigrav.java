@@ -11,7 +11,7 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.helper.MathHelper;
 
 public class SubTileAntigrav extends SubTileEntity {
-
+	
 	public static final double power = 0.7, radius = 15;
 	Vector3 v = new Vector3();
 	
@@ -22,12 +22,12 @@ public class SubTileAntigrav extends SubTileEntity {
 			Botania.proxy.wispFX(worldObj(), v.x, v.y, v.z, 0.5F, 0.9F, 1, 0.1F, -0.1F, 10);
 		}
 	}
-
+	
 	@Override
 	public List<Object> getTargets() {
 		return worldObj().getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius * 2, radius));
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (target == null || !(target instanceof Entity)) return;
@@ -38,9 +38,19 @@ public class SubTileAntigrav extends SubTileEntity {
 		
 		entity.motionY += power * 0.125;
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return MOTION;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 0;
+	}
+	
+	@Override
+	public int getColor() {
+		return 0x80E6FF;
 	}
 }

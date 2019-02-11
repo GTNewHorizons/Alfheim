@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class LibResourceLocations {
 	
+	public static ResourceLocation anomalies = new ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png");
 	public static ResourceLocation antiPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png");
 	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
 	public static ResourceLocation anyavil = new ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png");
@@ -143,5 +144,5 @@ public class LibResourceLocations {
 	}
 	
 	public static ResourceLocation inventory = new ResourceLocation("textures/gui/container/inventory.png");
-    public static ResourceLocation widgets = new ResourceLocation("textures/gui/widgets.png");
+	public static ResourceLocation widgets = new ResourceLocation("textures/gui/widgets.png");
 }

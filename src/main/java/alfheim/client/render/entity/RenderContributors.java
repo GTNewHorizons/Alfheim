@@ -36,9 +36,9 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class RenderContributors {
-
+	
 	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
-
+	
 	public static ShaderCallback callback = new ShaderCallback() {
 		@Override
 		public void call(int shaderID) {
@@ -50,7 +50,7 @@ public class RenderContributors {
 			OpenGlHelper.setActiveTexture(GL_TEXTURE0); 
 			r.bindTexture(LibResourceLocations.explosion);
 			glUniform1i(explosionUniform, 0);
-
+			
 			OpenGlHelper.setActiveTexture(GL_TEXTURE0 + ConfigHandler.glSecondaryTextureUnit);
 			glEnable(GL_TEXTURE_2D);
 			glGetInteger(GL_TEXTURE_BINDING_2D);
@@ -108,7 +108,7 @@ public class RenderContributors {
 				
 				glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 2.0) + Minecraft.getMinecraft().timer.renderPartialTicks, 0, 1, 0);
 				glScaled(0.2, 0.2, 0.2);
-		
+				
 				so.addTranslation();
 				glPopMatrix();
 			}
@@ -117,15 +117,15 @@ public class RenderContributors {
 				if (AlfheimConfig.minimalGraphics) {
 					IIcon icon = ItemElvenResource.wing;
 					Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-
+					
 					boolean flying = player.capabilities.isFlying;
-
+					
 					float rz = 120F;
 					float rx = 20F + (float) ((Math.sin((double) (player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * (flying ? 0.4F : 0.2F)) + 0.5F) * (flying ? 30F : 5F));
 					float ry = 0F;
 					float h = 0.2F;
 					float i = 0.15F;
-
+					
 					glPushMatrix();
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -139,11 +139,11 @@ public class RenderContributors {
 					float f1 = icon.getMaxU();
 					float f2 = icon.getMinV();
 					float f3 = icon.getMaxV();
-
+					
 					Helper.rotateIfSneaking(player);
-
+					
 					glTranslatef(0F, h, i);
-
+					
 					glRotatef(rz, 0F, 0F, 1F);
 					glRotatef(rx, 1F, 0F, 0F);
 					glRotatef(ry, 0F, 1F, 0F);
@@ -151,7 +151,7 @@ public class RenderContributors {
 					glRotatef(-ry, 0F, 1F, 0F);
 					glRotatef(-rx, 1F, 0F, 0F);
 					glRotatef(-rz, 0F, 0F, 1F);
-
+					
 					glScalef(-1F, 1F, 1F);
 					glRotatef(rz, 0F, 0F, 1F);
 					glRotatef(rx, 1F, 0F, 0F);
@@ -160,7 +160,7 @@ public class RenderContributors {
 					glRotatef(-ry, 1F, 0F, 0F);
 					glRotatef(-rx, 1F, 0F, 0F);
 					glRotatef(-rz, 0F, 0F, 1F);
-
+					
 					glColor4d(1, 1, 1, 1);
 					glPopMatrix();
 				} else {
@@ -196,9 +196,8 @@ public class RenderContributors {
 					}
 					
 					glColor3d(1, 1, 1);
-					if (ConfigHandler.useShaders) {
+					if (ConfigHandler.useShaders)
 						ASJShaderHelper.useShader(LibShaderIDs.idFire, callback);
-					}
 					else {
 						glDisable(GL_LIGHTING);
 						OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
@@ -221,9 +220,7 @@ public class RenderContributors {
 					}
 					
 					if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
-					else {
-						glEnable(GL_LIGHTING);
-					}
+					else glEnable(GL_LIGHTING);
 					glColor4d(1, 1, 1, 1);
 					glPopMatrix();
 				}

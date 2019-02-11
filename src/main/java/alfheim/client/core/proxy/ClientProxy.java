@@ -59,7 +59,6 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerRenderThings() {
-		LibRenderIDs.idAniTorch = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
@@ -69,7 +68,7 @@ public class ClientProxy extends CommonProxy {
 		LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
 		LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
 		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
-
+		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, new RenderBlockItemHolder());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, new RenderBlockAlfheimPylons());
@@ -78,12 +77,13 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderTileAlfheimPortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylons.class, new RenderTileAlfheimPylons());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnimatedTorch.class, new RenderTileAnimatedTorch());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomaly.class, new RenderTileAnomaly());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil.class, new RenderTileAnyavil());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFlugelHead.class, new RenderTileFlugelHead());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder.class, new RenderTileItemHolder());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderTileTradePortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer.class, new RenderTileTransferer());
-
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel.class, new RenderEntityFlugel(new ModelEntityFlugel(), 0.25F));
@@ -96,13 +96,13 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar.class, new RenderEntityMortar());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade.class, new RenderEntityWindBlade());
 	}
-
+	
 	@Override
 	public void registerKeyBinds() {
 		if (AlfheimCore.enableElvenStory) addESMKeyBinds();
 		if (AlfheimCore.enableMMO) addMMOKeyBinds();
 	}
-
+	
 	@Override
 	public void initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers();
@@ -117,12 +117,12 @@ public class ClientProxy extends CommonProxy {
 		super.postInit();
 		AlfheimBotaniaModifiers.postInit();
 	}
-
+	
 	public static void toggelModes(boolean b, boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (b) toggleESM(esm, mmo, esmOld, mmoOld);
 		else toggleMMO(esm, mmo, esmOld, mmoOld);
 	}
-
+	
 	public static void enableESM() {
 		if (AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = true;
@@ -156,7 +156,7 @@ public class ClientProxy extends CommonProxy {
 		removeMMOKeyBinds();
 		TimeStopSystemClient.tsAreas.clear();
 	}
-
+	
 	private static void toggleESM(boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (esmOld == esm) return;
 		AlfheimCore.enableElvenStory = esm;
@@ -170,7 +170,7 @@ public class ClientProxy extends CommonProxy {
 			if (mmoOld != mmo) toggleMMO(esm, mmo, esmOld, mmoOld);
 		}
 	}
-
+	
 	private static void toggleMMO(boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (mmoOld == mmo) return;
 		AlfheimCore.enableMMO = mmo;
@@ -227,7 +227,7 @@ public class ClientProxy extends CommonProxy {
 		removeKeyBinding(key);
 		int id = ASJUtilities.indexOfComparableArray(Minecraft.getMinecraft().gameSettings.keyBindings, key);
 		if (id < 0 || id > Minecraft.getMinecraft().gameSettings.keyBindings.length) return;
-        Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id);
+		Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id);
 	}
 	
 	private static void addKeyBinding(KeyBinding key) {

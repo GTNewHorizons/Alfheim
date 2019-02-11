@@ -14,7 +14,7 @@ import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.Botania;
 
 public class SubTileGravity extends SubTileEntity {
-
+	
 	public static final String TAG_POWER = "power";
 	public double power = 0.65;
 	Vector3 vt = new Vector3();
@@ -46,13 +46,13 @@ public class SubTileGravity extends SubTileEntity {
 		super.readCustomNBT(cmp);
 		power = cmp.getDouble(TAG_POWER);
 	}
-
+	
 	@Override
 	public List<Object> getTargets() {
 		double radius = power * 10, dist = 0, str = 0;
 		return allAroundRaw(Entity.class, radius);
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (target == null || !(target instanceof Entity)) return;
@@ -66,7 +66,7 @@ public class SubTileGravity extends SubTileEntity {
 		if (!ASJUtilities.isServer()) if (entity == Minecraft.getMinecraft().thePlayer) ve.add(0, -1.62, 0);
 		
 		if ((dist = Math.sqrt(Math.pow(ve.x - x() + 0.5, 2) + Math.pow(ve.y - y() + 0.5, 2) + Math.pow(ve.z - z() + 0.5, 2))) > radius) return;;
-			
+		
 		vt.set(superTile).add(0.5);
 		vt.set(vt).sub(ve).normalize().mul(str = power * 0.5 * 1/dist);
 		
@@ -74,9 +74,14 @@ public class SubTileGravity extends SubTileEntity {
 		entity.motionY += vt.y * 1.25;
 		entity.motionZ += vt.z;
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return MOTION;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 0;
 	}
 }

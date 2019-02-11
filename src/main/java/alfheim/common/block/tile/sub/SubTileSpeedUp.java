@@ -14,7 +14,7 @@ import net.minecraft.util.MathHelper;
 import vazkii.botania.common.Botania;
 
 public class SubTileSpeedUp extends SubTileEntity {
-
+	
 	public static final int radius = 8;
 	
 	@Override
@@ -26,7 +26,7 @@ public class SubTileSpeedUp extends SubTileEntity {
 		Botania.proxy.wispFX(worldObj(), x() + 0.5, y() + 0.5 + Math.cos(worldTime) * r, z() + 0.5 + Math.sin(worldTime) * r,
 				(float) Math.random() * 0.25F, 0.75F + (float) Math.random() * 0.25F, (float) Math.random() * 0.25F,
 				0.1F + (float) Math.random() * 0.1F);
-
+		
 		Botania.proxy.wispFX(worldObj(), x() + 0.5 + Math.sin(worldTime) * r, y() + 0.5, z() + 0.5 + Math.cos(worldTime) * r,
 				(float) Math.random() * 0.25F, 0.75F + (float) Math.random() * 0.25F, (float) Math.random() * 0.25F,
 				0.1F + (float) Math.random() * 0.1F);
@@ -49,15 +49,20 @@ public class SubTileSpeedUp extends SubTileEntity {
 		
 		return l;
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (target instanceof Entity) ((Entity) target).onUpdate();
 		if (target instanceof TileEntity) ((TileEntity) target).updateEntity();
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return TIME;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 4;
 	}
 }

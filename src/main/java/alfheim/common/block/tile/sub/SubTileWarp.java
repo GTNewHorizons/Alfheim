@@ -17,7 +17,7 @@ import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.Botania;
 
 public class SubTileWarp extends SubTileEntity {
-
+	
 	private static final String TAG_RADIUS = "radius";
 	public int radius = 8;
 	
@@ -129,7 +129,7 @@ public class SubTileWarp extends SubTileEntity {
 					 worldObj().getTileEntity(v.x1, v.y1, v.z1) != null 	||
 					 worldObj().getTileEntity(v.x2, v.y2, v.z2) != null
 				) continue;
-
+				
 				v.m1 = worldObj().getBlockMetadata(v.x1, v.y1, v.z1);
 				v.m2 = worldObj().getBlockMetadata(v.x2, v.y2, v.z2);
 				l = new ArrayList<Object>();
@@ -141,7 +141,7 @@ public class SubTileWarp extends SubTileEntity {
 		if (l == null) l = EMPTY_LIST;
 		return l;
 	}
-
+	
 	private EntityLivingBase rand(List<Object> l) {
 		return (EntityLivingBase) l.remove(worldObj().rand.nextInt(l.size()));
 	}
@@ -176,7 +176,12 @@ public class SubTileWarp extends SubTileEntity {
 	public int typeBits() {
 		return SPACE;
 	}
-
+	
+	@Override
+	public int getStrip() {
+		return 6;
+	}
+	
 	private static class Vector8i {
 		
 		public static Vector3 v = new Vector3();

@@ -13,7 +13,7 @@ import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.lens.ItemLens;
 
 public class SubTileManaTornado extends SubTileEntity {
-
+	
 	Vector3 v = new Vector3();
 	
 	@Override
@@ -32,13 +32,13 @@ public class SubTileManaTornado extends SubTileEntity {
 		burst.setMinManaLoss(50);
 		burst.setManaLossPerTick(1F);
 		burst.setGravity(0F);
-
+		
 		int meta = worldObj().rand.nextInt(ItemLens.SUBTYPES + 1);
 		if (meta == ItemLens.SUBTYPES) meta = ItemLens.STORM;
 		
 		ItemStack lens = new ItemStack(ModItems.lens, 1, meta);
 		burst.setSourceLens(lens);
-
+		
 		v.rand().sub(0.5).normalize().mul(motionModifier).add(0.5).add(superTile);
 		burst.setPosition(v.x, v.y, v.z);
 		v.sub(0.5).sub(superTile);
@@ -46,7 +46,7 @@ public class SubTileManaTornado extends SubTileEntity {
 		
 		return burst;
 	}
-
+	
 	@Override
 	public List<Object> getTargets() {
 		if (worldObj().rand.nextInt(100) == 0) {
@@ -56,14 +56,19 @@ public class SubTileManaTornado extends SubTileEntity {
 		}
 		return EMPTY_LIST;
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (target != null && target instanceof EntityManaBurst) worldObj().spawnEntityInWorld((EntityManaBurst) target);
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return ALL;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 2;
 	}
 }

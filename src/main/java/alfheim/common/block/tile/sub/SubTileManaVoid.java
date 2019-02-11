@@ -14,7 +14,7 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.Botania;
 
 public class SubTileManaVoid extends SubTileEntity {
-
+	
 	public static final String TAG_MANA = "mana";
 	public static int radius = 10;
 	public int mana;
@@ -43,7 +43,7 @@ public class SubTileManaVoid extends SubTileEntity {
 	public List<Object> getTargets() {
 		return allAroundRaw(EntityPlayer.class, radius);
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (target == null || !(target instanceof EntityPlayer)) return;
@@ -61,10 +61,15 @@ public class SubTileManaVoid extends SubTileEntity {
 			Botania.proxy.wispFX(worldObj(), player.posX, player.posY + (flag ? 1 : -0.62), player.posZ, 0.01F, 0.75F, 1, radius / 40F, (float) v.x, (float) v.y, (float) v.z, 2);
 		}
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return MANA;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 3;
 	}
 	
 	@Override

@@ -16,7 +16,7 @@ import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.helper.Vector3;
 
 public class SubTileLightning extends SubTileEntity {
-
+	
 	public static final double radius = 12;
 	Vector3 vt = new Vector3();
 	Vector3 ve = new Vector3();
@@ -55,8 +55,8 @@ public class SubTileLightning extends SubTileEntity {
 	public void performEffect(Object target) {
 		if (ticks % 25 != 0) return;
 		if (target == null || !(target instanceof EntityLivingBase)) return;
-    	if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
-
+		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
+		
 		EntityLivingBase entity = (EntityLivingBase) target;
 		
 		entity.attackEntityFrom(DamageSourceSpell.corruption, (float) Math.min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-entity.posX, -entity.posY, -entity.posZ).mag() / 2, 2.5));
@@ -68,9 +68,14 @@ public class SubTileLightning extends SubTileEntity {
 		
 		Botania.proxy.lightningFX(worldObj(), vt, ve, 1, worldObj().rand.nextLong(), 0, 0xFF0000);
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return HEALTH;
+	}
+	
+	@Override
+	public int getStrip() {
+		return 1;
 	}
 }

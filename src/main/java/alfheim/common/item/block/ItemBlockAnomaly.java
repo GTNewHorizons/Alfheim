@@ -1,22 +1,44 @@
 package alfheim.common.item.block;
 
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
+
+import java.util.HashMap;
+
+import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.common.block.BlockAnomaly;
 import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.registry.AlfheimBlocks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemBlockAnomaly extends ItemBlock {
-
+	
 	public ItemBlockAnomaly(Block block) {
 		super(block);
 	}
-
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconIndex(ItemStack stack) {
+		return BlockAnomaly.icons.get(getString(stack, SubTileEntity.TAG_TYPE, "undefined"));
+	}
+	
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+		return getIconIndex(stack);
+	}
+	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return "tile.Anomaly." + ItemNBTHelper.getString(stack, SubTileEntity.TAG_TYPE, "undefined");
@@ -34,7 +56,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	public static ItemStack ofType(String type) {
 		return ofType(new ItemStack(AlfheimBlocks.anomaly), type);
 	}
-
+	
 	public static ItemStack ofType(ItemStack stack, String type) {
 		if (type == null || type.isEmpty()) type = "undefined";
 		ItemNBTHelper.setString(stack, SubTileEntity.TAG_TYPE, type);
@@ -56,7 +78,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 					world.markBlockForUpdate(x, y, z);
 			}
 		}
-
+		
 		return placed;
 	}
 }

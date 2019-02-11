@@ -7,6 +7,8 @@ import java.util.Random;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.lib.LibResourceLocations;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +19,7 @@ import net.minecraft.world.World;
 
 // Used for anomalies
 public abstract class SubTileEntity {
-
+	
 	/** The Tag items should use to store which sub tile they are. **/
 	public static final String TAG_TYPE = "type";
 	public static final String TAG_TICKS = "ticks";
@@ -43,7 +45,6 @@ public abstract class SubTileEntity {
 		}
 		
 		ticks++;
-		//ASJUtilities.chatLog("Done");
 	}
 	
 	public abstract List<Object> getTargets();
@@ -67,14 +68,14 @@ public abstract class SubTileEntity {
 	}
 	
 	public void writeCustomNBT(NBTTagCompound cmp) {}
-
+	
 	public final void readFromNBT(NBTTagCompound cmp) {
 		ticks = cmp.getInteger(TAG_TICKS);
 		readCustomNBT(cmp);
 	}
 	
 	public void readCustomNBT(NBTTagCompound cmp) {}
-
+	
 	public static SubTileEntity forName(String name) {
 		try {
 			return AlfheimAPI.getAnomaly(name).newInstance();
@@ -83,6 +84,8 @@ public abstract class SubTileEntity {
 			return null;
 		}
 	}
+	
+	// ################################ SUPERTILE ################################
 	
 	public World worldObj() {
 		return superTile.getWorldObj();
@@ -112,50 +115,48 @@ public abstract class SubTileEntity {
 		return z() + MathHelper.floor_double(z);
 	}
 	
-	
 	// ################################ UTILS ################################
 	
 	public EntityLivingBase findNearestVulnerableEntity(double radius) {
-        List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
-        EntityLivingBase entity1 = null;
-        double d0 = Double.MAX_VALUE;
-
-        for (EntityLivingBase entity2 : list) {
-            if (entity2 != null) {
-            	if (entity2.isEntityInvulnerable()) continue;
-            	if (entity2 instanceof EntityPlayer && ((EntityPlayer) entity2).capabilities.disableDamage) continue;
-            	
-                double d1 = Vector3.entityTileDistance(entity2, superTile);
-
-                if (d1 <= d0) {
-                    entity1 = entity2;
-                    d0 = d1;
-                }
-            }
-        }
-
-        return entity1;
-    }
+		List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
+		EntityLivingBase entity1 = null;
+		double d0 = Double.MAX_VALUE;
+	
+		for (EntityLivingBase entity2 : list) {
+			if (entity2 != null) {
+				if (entity2.isEntityInvulnerable()) continue;
+				if (entity2 instanceof EntityPlayer && ((EntityPlayer) entity2).capabilities.disableDamage) continue;
+				
+				double d1 = Vector3.entityTileDistance(entity2, superTile);
+	
+				if (d1 <= d0) {
+					entity1 = entity2;
+					d0 = d1;
+				}
+			}
+		}
+	
+		return entity1;
+	}
 	
 	public EntityLivingBase findNearestEntity(double radius) {
-        List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
-        EntityLivingBase entity1 = null;
-        double d0 = Double.MAX_VALUE;
+		List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
+		EntityLivingBase entity1 = null;
+		double d0 = Double.MAX_VALUE;
 
-        for (EntityLivingBase entity2 : list) {
-            if (entity2 != null) {
-            	
-                double d1 = Vector3.entityTileDistance(entity2, superTile);
+		for (EntityLivingBase entity2 : list) {
+			if (entity2 != null) {
+				
+				double d1 = Vector3.entityTileDistance(entity2, superTile);
 
-                if (d1 <= d0) {
-                    entity1 = entity2;
-                    d0 = d1;
-                }
-            }
-        }
-
-        return entity1;
-    }
+				if (d1 <= d0) {
+					entity1 = entity2;
+					d0 = d1;
+				}
+			}
+		}
+		return entity1;
+	}
 	
 	public <E> List<E> allAround(Class<E> clazz, double radius) {
 		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius, radius));
@@ -163,5 +164,23 @@ public abstract class SubTileEntity {
 	
 	public List allAroundRaw(Class clazz, double radius) {
 		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius, radius));
+	}
+	
+	// ################################ RENDER ################################
+	
+	public void bindTexture() {
+		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.anomalies);
+	}
+	
+	public int getFrames() {
+		return 32;
+	}
+	
+	public int getStrip() {
+		return 0;
+	}
+
+	public int getColor() {
+		return 0xFFFFFF;
 	}
 }

@@ -1,6 +1,7 @@
 package alfheim.common.block;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -8,29 +9,26 @@ import alexsocol.asjlib.extendables.MaterialPublic;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
-import alfheim.api.block.tile.SubTileEntity;
 import alfheim.common.block.tile.TileAnomaly;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.block.ItemBlockAnomaly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import vazkii.botania.common.block.tile.TileSpecialFlower;
-import vazkii.botania.common.core.helper.ItemNBTHelper;
-import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class BlockAnomaly extends BlockContainer {
-
-	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
 	
+	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
 	public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
+	public static final HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
 	
 	public BlockAnomaly() {
 		super(anomaly);
@@ -71,6 +69,12 @@ public class BlockAnomaly extends BlockContainer {
 	}
 	
 	@Override
+	public void registerBlockIcons(IIconRegister reg) {
+		for (String name : AlfheimAPI.anomalies.keySet())
+			icons.put(name, reg.registerIcon(ModInfo.MODID + ":anomalies/" + name));
+	}
+	
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
@@ -78,6 +82,11 @@ public class BlockAnomaly extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	@Override
+	public int getRenderType() {
+		return -1;
 	}
 	
 	@Override
