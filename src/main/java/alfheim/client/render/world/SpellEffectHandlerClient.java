@@ -18,6 +18,8 @@ import vazkii.botania.common.Botania;
 
 public class SpellEffectHandlerClient {
 	
+	static Vector3 m = new Vector3();
+	
 	public static void select(Spells s, double x, double y, double z, double x2, double y2, double z2) {
 		if (AlfheimCore.enableMMO) {
 			switch (s) {
@@ -43,6 +45,7 @@ public class SpellEffectHandlerClient {
 				case QUAD: quadDamage(); break;
 				case QUADH: quadHurt(); break;
 				case SMOKE: spawnSmoke(x, y, z); break;
+				case SPLASH: spawnSplash(x, y, z); break;
 				case THROW: spawnThrow(x, y, z, x2, y2, z2); break;
 				case TREMORS: spawnTremors(x, y, z); break;
 				case UPHEAL: spawnBurst(x, y, z, 1, 0.75F, 0); break;
@@ -71,10 +74,9 @@ public class SpellEffectHandlerClient {
 	}
 
 	public static void spawnAcid(double x, double y, double z) {
-		Vector3 v = new Vector3();
 		for (int i = 0; i < 256; i++) {
-			v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Math.random() * 9, Math.random() * 9, Math.random() * 9);
-			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + v.x, y + v.y, z + v.z, (float) (Math.random() * 0.2), 1, 0, 2, 0, 2);
+			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Math.random() * 9, Math.random() * 9, Math.random() * 9);
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + m.x, y + m.y, z + m.z, (float) (Math.random() * 0.2), 1, 0, 2, 0, 2);
 		}
 	}
 	
@@ -99,7 +101,6 @@ public class SpellEffectHandlerClient {
 	}
 
 	public static void spawnEcho(double x, double y, double z) {
-		Vector3 m = new Vector3();
 		for (int i = 0; i < 64; i++) {
 			m.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(0.5);
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0.5F, 0.5F, 0.5F, 1, (float) m.x, 0, (float) m.z);
@@ -125,10 +126,9 @@ public class SpellEffectHandlerClient {
 	public static void spawnExplosion(double x, double y, double z) {
 		Minecraft.getMinecraft().theWorld.spawnParticle("largeexplode", x, y, z, 1, 0, 0);
         
-        Vector3 v = new Vector3();
         for (int i = 0; i < 32; i++) {
-        	v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15);
-			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 1, (float) Math.random() * 0.25F, (float) Math.random() * 0.075F, 0.25F + (float) Math.random() * 0.45F, (float) v.x, (float) v.y, (float) v.z, 0.5F);
+        	m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15);
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 1, (float) Math.random() * 0.25F, (float) Math.random() * 0.075F, 0.25F + (float) Math.random() * 0.45F, (float) m.x, (float) m.y, (float) m.z, 0.5F);
         }
 	}
 	
@@ -141,8 +141,8 @@ public class SpellEffectHandlerClient {
 			
 		}
 		double d = Math.random() * (mana *= 0.5);
-		Vector3 v = new Vector3(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(Math.random()).mul((1.0 * (mana * 0.25)) - (d / mana * (mana * 2.0 / 7.0))).add(0, d, 0);
-		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, living.posX + v.x, living.posY + v.y, living.posZ + v.z,
+		m.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(Math.random()).mul((1.0 * (mana * 0.25)) - (d / mana * (mana * 2.0 / 7.0))).add(0, d, 0);
+		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, living.posX + m.x, living.posY + m.y, living.posZ + m.z,
 					0.025F, 0.15F, 0.9F, (float) (Math.random() * (mana * 0.5) + 0.5),
 					0, (float) (Math.random() * 2.0 + 1.0));
 	}
@@ -151,20 +151,25 @@ public class SpellEffectHandlerClient {
 		Minecraft.getMinecraft().theWorld.spawnParticle("note", x, ++y, z, Minecraft.getMinecraft().theWorld.rand.nextInt(25) / 24.0, 0, 0);
 	}
 	
-	// TODO change to OSM particles
-	public static void spawnSmoke(double x, double y, double z) {
-		Vector3 pos = new Vector3();
-		for (int i = 0; i < 256; i++) {
-			pos.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Minecraft.getMinecraft().theWorld.rand.nextInt(15) + Math.random());
-			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + pos.x, y + pos.y, z + pos.z, 0.1F, 0.1F, 0.1F, (float) (Math.random() * 4 + 4), (float) (Math.random() * -0.075));
-		}
-	}
-	
 	public static void spawnPure(double x, double y, double z) {
-		Vector3 m = new Vector3();
 		for (int i = 0; i < 64; i++) {
 			m.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(0.2);
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0, 0.75F, 1, 1, (float) m.x, 0, (float) m.z);
+		}
+	}
+	
+	// TODO change to OSM particles
+	public static void spawnSmoke(double x, double y, double z) {
+		for (int i = 0; i < 256; i++) {
+			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Minecraft.getMinecraft().theWorld.rand.nextInt(15) + Math.random());
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + m.x, y + m.y, z + m.z, 0.1F, 0.1F, 0.1F, (float) (Math.random() * 4 + 4), (float) (Math.random() * -0.075));
+		}
+	}
+
+	public static void spawnSplash(double x, double y, double z) {
+		for (int j = 0; j < 32; j++) {
+			m.rand().sub(0.5, 0, 0.5).normalize().mul(Math.random() * 0.5 + 0.5).mul(0.5).mul(0.5, 2, 0.5);
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 0.1F, 0.5F, 1, 0.5F, (float) m.x, (float) m.y, (float) m.z, 0.5F);
 		}
 	}
 
@@ -173,7 +178,6 @@ public class SpellEffectHandlerClient {
 	}
 	
 	public static void spawnTremors(double x, double y, double z) {
-		Vector3 m = new Vector3();
 		Block block = Minecraft.getMinecraft().theWorld.getBlock(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z));
 		int meta = Minecraft.getMinecraft().theWorld.getBlockMetadata(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z));
 		for (int i = 0; i < 512; i++) {
@@ -183,7 +187,7 @@ public class SpellEffectHandlerClient {
 	}
 	
 	public static enum Spells {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, THROW, TREMORS, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, UPHEAL
 	}
 
 	public static void onDeath(EntityLivingBase target) {

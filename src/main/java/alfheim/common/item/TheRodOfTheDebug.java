@@ -7,6 +7,7 @@ import alfheim.api.entity.EnumRace;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
