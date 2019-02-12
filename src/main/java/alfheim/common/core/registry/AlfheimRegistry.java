@@ -30,6 +30,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.brew.ModPotions;
@@ -123,18 +124,22 @@ public class AlfheimRegistry {
 	}
 	
 	private static void registerTileEntities() {
-		registerTileEntity(TileAlfheimPortal.class, "AlfheimPortal");
-		registerTileEntity(TileAlfheimPylons.class, "AlfheimPylon");
-		registerTileEntity(TileAnimatedTorch.class, "AnimatedTorch");
-		registerTileEntity(TileAnomaly.class, "Anomaly");
-		registerTileEntity(TileAnyavil.class, "Anyavil");
-		registerTileEntity(TileFlugelHead.class, "FlugelHead");
-		registerTileEntity(TileItemHolder.class, "ItemHolder");
-		registerTileEntity(TileManaInfuser.class, "ManaInfuser");
-		registerTileEntity(TileTradePortal.class, "TradePortal");
+		registerTile(TileAlfheimPortal.class, "AlfheimPortal");
+		registerTile(TileAlfheimPylons.class, "AlfheimPylon");
+		registerTile(TileAnimatedTorch.class, "AnimatedTorch");
+		registerTile(TileAnomaly.class, "Anomaly");
+		registerTile(TileAnyavil.class, "Anyavil");
+		registerTile(TileFlugelHead.class, "FlugelHead");
+		registerTile(TileItemHolder.class, "ItemHolder");
+		registerTile(TileManaInfuser.class, "ManaInfuser");
+		registerTile(TileTradePortal.class, "TradePortal");
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		
 		registerAnomalies();
+	}
+	
+	private static void registerTile(Class<? extends TileEntity> tileEntityClass, String id) {
+		registerTileEntity(tileEntityClass, ModInfo.MODID + ":" + id);
 	}
 	
 	private static void registerAnomalies() {

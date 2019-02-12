@@ -613,6 +613,7 @@ public class ASJUtilities {
 	 */
 	public static void registerEntity(Class<? extends Entity> entityClass, String name, Object instance){
 		int ID = EntityRegistry.findGlobalUniqueEntityId();
+		name = FMLCommonHandler.instance().findContainerFor(instance).getModId() + ":" + name;
 		EntityRegistry.registerGlobalEntityID(entityClass, name, ID);
 		EntityRegistry.registerModEntity(entityClass, name, ID, instance, 128, 1, true);
 	}
@@ -626,6 +627,7 @@ public class ASJUtilities {
 	 */
 	public static void registerEntityEgg(Class<? extends Entity> entityClass, String name, int backColor, int frontColor, Object instance){
 		int ID = EntityRegistry.findGlobalUniqueEntityId();
+		name = FMLCommonHandler.instance().findContainerFor(instance).getModId() + ":" + name;
 		EntityRegistry.registerGlobalEntityID(entityClass, name, ID);
 		EntityRegistry.registerModEntity(entityClass, name, ID, instance, 128, 1, true);
 		EntityList.entityEggs.put(Integer.valueOf(ID), new EntityList.EntityEggInfo(ID, backColor, frontColor));
