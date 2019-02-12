@@ -196,6 +196,7 @@ public class RenderContributors {
 					}
 					
 					glColor3d(1, 1, 1);
+					glDisable(GL_CULL_FACE);
 					if (ConfigHandler.useShaders)
 						ASJShaderHelper.useShader(LibShaderIDs.idFire, callback);
 					else {
@@ -221,6 +222,7 @@ public class RenderContributors {
 					
 					if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
 					else glEnable(GL_LIGHTING);
+					glEnable(GL_CULL_FACE);
 					glColor4d(1, 1, 1, 1);
 					glPopMatrix();
 				}

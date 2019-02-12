@@ -17,7 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-// Used for anomalies
+// Used for anomalies - TileAnomaly
 public abstract class SubTileEntity {
 	
 	/** The Tag items should use to store which sub tile they are. **/
@@ -143,12 +143,12 @@ public abstract class SubTileEntity {
 		List<EntityLivingBase> list = allAround(EntityLivingBase.class, radius);
 		EntityLivingBase entity1 = null;
 		double d0 = Double.MAX_VALUE;
-
+	
 		for (EntityLivingBase entity2 : list) {
 			if (entity2 != null) {
 				
 				double d1 = Vector3.entityTileDistance(entity2, superTile);
-
+	
 				if (d1 <= d0) {
 					entity1 = entity2;
 					d0 = d1;
@@ -179,7 +179,7 @@ public abstract class SubTileEntity {
 	public int getStrip() {
 		return 0;
 	}
-
+	
 	public int getColor() {
 		return 0xFFFFFF;
 	}

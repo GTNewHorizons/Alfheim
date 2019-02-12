@@ -24,24 +24,20 @@ import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemBlockAnomaly extends ItemBlock {
 	
+	public static final String TYPE_UNDEFINED = "undefined";
+	
 	public ItemBlockAnomaly(Block block) {
 		super(block);
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconIndex(ItemStack stack) {
-		return BlockAnomaly.icons.get(getString(stack, SubTileEntity.TAG_TYPE, "undefined"));
-	}
-	
-	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
-		return getIconIndex(stack);
+		return BlockAnomaly.iconUndefined;
 	}
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "tile.Anomaly." + ItemNBTHelper.getString(stack, SubTileEntity.TAG_TYPE, "undefined");
+		return "tile.Anomaly." + ItemNBTHelper.getString(stack, SubTileEntity.TAG_TYPE, TYPE_UNDEFINED);
 	}
 	
 	@Override
@@ -50,7 +46,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	}
 	
 	public static String getType(ItemStack stack) {
-		return ItemNBTHelper.detectNBT(stack) ? ItemNBTHelper.getString(stack, SubTileEntity.TAG_TYPE, "") : "";
+		return ItemNBTHelper.detectNBT(stack) ? ItemNBTHelper.getString(stack, SubTileEntity.TAG_TYPE, TYPE_UNDEFINED) : TYPE_UNDEFINED;
 	}
 	
 	public static ItemStack ofType(String type) {
@@ -58,7 +54,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	}
 	
 	public static ItemStack ofType(ItemStack stack, String type) {
-		if (type == null || type.isEmpty()) type = "undefined";
+		if (type == null || type.isEmpty()) type = TYPE_UNDEFINED;
 		ItemNBTHelper.setString(stack, SubTileEntity.TAG_TYPE, type);
 		return stack;
 	}

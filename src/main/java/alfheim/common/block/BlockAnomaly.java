@@ -27,8 +27,9 @@ import net.minecraft.world.World;
 public class BlockAnomaly extends BlockContainer {
 	
 	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
-	public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
-	public static final HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
+	// public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
+	// maybe will change warp's behavior to swap only blocks from list above ^
+	public static IIcon iconUndefined;
 	
 	public BlockAnomaly() {
 		super(anomaly);
@@ -53,7 +54,7 @@ public class BlockAnomaly extends BlockContainer {
 	}
 	
 	@Override
-	public void getSubBlocks(Item block, CreativeTabs tab, List list) { // BlockSpecialFlower
+	public void getSubBlocks(Item block, CreativeTabs tab, List list) {
 		for (String name : AlfheimAPI.anomalies.keySet()) 
 			list.add(ItemBlockAnomaly.ofType(name));
 	}
@@ -70,8 +71,7 @@ public class BlockAnomaly extends BlockContainer {
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		for (String name : AlfheimAPI.anomalies.keySet())
-			icons.put(name, reg.registerIcon(ModInfo.MODID + ":anomalies/" + name));
+		iconUndefined = reg.registerIcon(ModInfo.MODID + ":undefined");
 	}
 	
 	@Override

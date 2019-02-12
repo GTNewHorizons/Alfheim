@@ -14,10 +14,12 @@ import alfheim.client.lib.LibResourceLocationsActual;
 import alfheim.client.model.entity.*;
 import alfheim.client.render.block.*;
 import alfheim.client.render.entity.*;
+import alfheim.client.render.item.*;
 import alfheim.client.render.tile.*;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
+import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimBotaniaModifiers;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
@@ -30,6 +32,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
@@ -68,6 +72,8 @@ public class ClientProxy extends CommonProxy {
 		LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
 		LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
 		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
+		
+	    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), new RenderItemAnomaly());
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, new RenderBlockItemHolder());
