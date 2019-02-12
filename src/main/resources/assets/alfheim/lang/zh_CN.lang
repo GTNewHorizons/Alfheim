@@ -219,9 +219,9 @@ death.attack.sacrifice=%s 将自己献祭给黑暗
 death.attack.soulburn=%s 的灵魂被燃烧殆尽
 death.attack.water=%s 被 %s 的水流切成碎片
 
-entity.Elf.name=精灵
-entity.Flugel.name=不朽
-entity.Pixie.name=小精灵
+entity.alfheim:Elf.name=精灵
+entity.alfheim:Flugel.name=不朽
+entity.alfheim:Pixie.name=小精灵
 
 item.FlugelSoul.blockAway=1格远
 item.FlugelSoul.blocksAway=%s格远

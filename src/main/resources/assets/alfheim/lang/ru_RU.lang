@@ -247,10 +247,10 @@ death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
 death.attack.water=%s разрезан на части водным потоком %s
 
-entity.Elf.name=Эльф
-entity.Flugel.name=Флюгель
-entity.Pixie.name=Пикси
-entity.Rook.name=Ладья Полубога
+entity.alfheim:Elf.name=Эльф
+entity.alfheim:Flugel.name=Флюгель
+entity.alfheim:Pixie.name=Пикси
+entity.alfheim:Rook.name=Ладья Полубога
 
 item.FlugelSoul.blockAway=На расстоянии блока
 item.FlugelSoul.blocksAway=На расстоянии %s блоков

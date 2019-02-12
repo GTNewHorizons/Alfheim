@@ -247,10 +247,10 @@ death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
 death.attack.water=%s was cut into pieces by %s's water stream
 
-entity.Elf.name=Elf
-entity.Flugel.name=Flügel
-entity.Pixie.name=Pixie
-entity.Rook.name=Demigod's Rook
+entity.alfheim:Elf.name=Elf
+entity.alfheim:Flugel.name=Flügel
+entity.alfheim:Pixie.name=Pixie
+entity.alfheim:Rook.name=Demigod's Rook
 
 item.FlugelSoul.blockAway=1 Block Away
 item.FlugelSoul.blocksAway=%s Blocks Away

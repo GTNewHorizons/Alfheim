@@ -445,7 +445,7 @@ public class EventHandler {
 			}
 		}
 	}
-
+	
 	public static void checkAddAttrs() {
 		if (!AlfheimCore.enableElvenStory) return;
 		for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
@@ -454,7 +454,7 @@ public class EventHandler {
 			Flight.ensureExistence(player);
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void onNewPotionEffect(LivingPotionEvent.Add.Post e) {
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
@@ -462,6 +462,8 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onChangedPotionEffect(LivingPotionEvent.Change.Post e) {
+		if (e.effect.potionID == AlfheimConfig.potionIDSharedHP) return;
+		
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
 	}
 	

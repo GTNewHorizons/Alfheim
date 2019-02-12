@@ -222,7 +222,7 @@ public class RenderContributors {
 					
 					if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
 					else glEnable(GL_LIGHTING);
-					glEnable(GL_CULL_FACE);
+					//glEnable(GL_CULL_FACE); for some reason this breaks tiara wings render -_-
 					glColor4d(1, 1, 1, 1);
 					glPopMatrix();
 				}

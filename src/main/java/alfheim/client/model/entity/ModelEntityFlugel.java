@@ -29,7 +29,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	public ModelEntityFlugel() {
 		super();
 	}
-
+	
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		if (entity.getDataWatcher().getWatchableObjectString(10).equals("Hatsune Miku")) {
 			FontRenderer font = Minecraft.getMinecraft().fontRenderer;
@@ -79,11 +79,11 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
 		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks);
 	}
-
+	
 	public void setRotationAngles(float limbSwing, float limbIpld, float ticksExisted, float yawHead, float pitchHead, float idk, Entity entity) {
 		super.setRotationAngles(limbSwing, limbIpld, ticksExisted, yawHead, pitchHead, idk, entity);
 		EntityFlugel flugel = (EntityFlugel) entity;
-
+		
 		if (flugel.isCasting()) {
 			float f6 = 0.0F;
 			float f7 = 0.0F;
@@ -105,7 +105,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 	public void renderWings(Entity entity, float partialTicks) {
 		IIcon icon = ItemFlightTiara.wingIcons[0];
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-
+		
 		boolean flying = !entity.onGround;
 		
 		float rz = 120F;
@@ -114,25 +114,21 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		float h = 0.4F;
 		float i = 0.15F;
 		float s = 1F;
-
+		
 		glPushMatrix();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		int light = 15728880;
-		int lightmapX = light % 65536;
-		int lightmapY = light / 65536;
 		
 		float f = icon.getMinU();
 		float f1 = icon.getMaxU();
 		float f2 = icon.getMinV();
 		float f3 = icon.getMaxV();
 		float sr = 1F / s;
-
+		
 		if (entity.isSneaking()) glRotatef(28.64789F, 1.0F, 0.0F, 0.0F);
-
+		
 		glTranslatef(0F, h, i);
-
+		
 		glRotatef(rz, 0F, 0F, 1F);
 		glRotatef(rx, 1F, 0F, 0F);
 		glRotatef(ry, 0F, 1F, 0F);
@@ -171,9 +167,9 @@ public class ModelEntityFlugel extends ModelBipedNew {
 		glRotated(30, 1, 0, -1);
 		glTranslated(0.1F, -0.5F, -0.1F);
 		glRotated(e.ticksExisted + partialTicks, 0, 1, 0);
-
+		
 		RenderEntityFlugel.so.addTranslation();
-
+		
 		glPopMatrix();
 	}
 }
