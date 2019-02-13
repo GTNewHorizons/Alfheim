@@ -28,6 +28,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	
 	public ItemBlockAnomaly(Block block) {
 		super(block);
+		setMaxStackSize(1);
 	}
 	
 	@Override
