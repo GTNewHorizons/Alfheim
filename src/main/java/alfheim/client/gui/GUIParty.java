@@ -280,7 +280,7 @@ public class GUIParty extends Gui {
 				y = 0;
 				
 				tg_icon: {
-					l = CardinalSystemClient.segment.target;
+					l = CardinalSystemClient.segment().target;
 					if (l == null) break tg_icon;
 					if (!AlfheimConfig.targetUI) break tg_icon;
 					

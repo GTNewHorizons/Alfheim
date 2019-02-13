@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,8 @@ public class SubTileSpeedDown extends SubTileEntity {
 	
 	@Override
 	protected void update() {
+		if (inWG()) return;
+		
 		rand.setSeed(x() ^ y() ^ z());
 		double worldTime = (worldObj().getTotalWorldTime() + rand.nextInt(1000)) / 10.0;
 		float r = 0.75F + (float) Math.random() * 0.05F;
@@ -36,7 +39,7 @@ public class SubTileSpeedDown extends SubTileEntity {
 	
 	@Override
 	public List<Object> getTargets() {
-		if (worldObj().getTotalWorldTime() % 2 == 0) return EMPTY_LIST;
+		if (inWG() || worldObj().getTotalWorldTime() % 2 == 0) return EMPTY_LIST;
 		List<Object> l = allAroundRaw(Entity.class, 8);
 		for (int x = -radius; x <= radius; x++) 
 			for (int z = -radius; z <= radius; z++) 
@@ -63,5 +66,10 @@ public class SubTileSpeedDown extends SubTileEntity {
 	@Override
 	public int getStrip() {
 		return 5;
+	}
+	
+	@Override
+	public EnumAnomalityRarity getRarity() {
+		return EnumAnomalityRarity.EPIC;
 	}
 }

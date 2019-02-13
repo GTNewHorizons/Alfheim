@@ -10,10 +10,10 @@ import vazkii.botania.common.block.tile.TileMod;
 
 public class TileAnomaly extends TileMod {
 	
-	private static final String TAG_SUBTILE_MAIN = "subTileMain";
-	private static final String TAG_SUBTILE_NAME = "subTileName";
-	private static final String TAG_SUBTILE_CMP = "subTileCmp";
-	private static final String TAG_SUBTILE_COUNT = "subTileCount";
+	public static final String TAG_SUBTILE_MAIN = "subTileMain";
+	public static final String TAG_SUBTILE_NAME = "subTileName";
+	public static final String TAG_SUBTILE_CMP = "subTileCmp";
+	public static final String TAG_SUBTILE_COUNT = "subTileCount";
 	
 	public HashMap<String, SubTileEntity> subTiles = new HashMap<String, SubTileEntity>();
 	public String mainSubTile;
@@ -73,11 +73,11 @@ public class TileAnomaly extends TileMod {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public void readCustomNBT(NBTTagCompound cmp) {
 		super.readCustomNBT(cmp);
-
+		
 		mainSubTile = cmp.getString(TAG_SUBTILE_MAIN);
 		
 		int c = cmp.getInteger(TAG_SUBTILE_COUNT);
@@ -88,9 +88,10 @@ public class TileAnomaly extends TileMod {
 		
 		for (; c > 0; c--) {
 			subTileName = cmp.getString(TAG_SUBTILE_NAME + c);
-			subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP + c);
 			subTile = SubTileEntity.forName(subTileName);
-			if(subTile != null)
+			
+			subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP + c);
+			if(subTile != null && !subCmp.hasNoTags())
 				subTile.readFromNBT(subCmp);
 			
 			addSubTile(subTile, subTileName);

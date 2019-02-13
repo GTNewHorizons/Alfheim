@@ -18,11 +18,13 @@ import vazkii.botania.common.Botania;
 
 public class SubTileWarp extends SubTileEntity {
 	
-	private static final String TAG_RADIUS = "radius";
-	public int radius = 8;
+	public static final String TAG_RADIUS = "radius";
+	public int radius = 20;
 	
 	@Override
-	protected void update() {
+	public void update() {
+		if (inWG()) return;
+		
 		if (ASJUtilities.isServer() && ticks % 600 == 0) {
 			radius = worldObj().rand.nextInt(8) + 16;
 			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile);
@@ -101,7 +103,7 @@ public class SubTileWarp extends SubTileEntity {
 		
 		List<Object> l = null;
 		
-		if (ticks % 100 == 0) {
+		if (ticks % 100 == 0 && !inWG()) {
 			l = allAroundRaw(EntityLivingBase.class, radius);
 			if (l != null && l.size() > 0) {
 				if (l.size() == 1) {
@@ -150,28 +152,32 @@ public class SubTileWarp extends SubTileEntity {
 	public void performEffect(Object target) {
 		if (!ASJUtilities.isServer()) return;
 		
-		if (target instanceof LivingPair) {
-			LivingPair pair = (LivingPair) target;
-			if ((pair.e1 instanceof EntityPlayer && ((EntityPlayer) pair.e1).capabilities.isCreativeMode) || (pair.e2 instanceof EntityPlayer && ((EntityPlayer) pair.e2).capabilities.isCreativeMode)) return;
-			double x = pair.e1.posX, y = pair.e1.posY, z = pair.e1.posZ;
-			
-			pair.e1.setPositionAndUpdate(pair.e2.posX, pair.e2.posY, pair.e2.posZ);
-			pair.e2.setPositionAndUpdate(x, y, z);
-			return;
+		if (!inWG()) {
+			if (target instanceof LivingPair) {
+				LivingPair pair = (LivingPair) target;
+				if ((pair.e1 instanceof EntityPlayer && ((EntityPlayer) pair.e1).capabilities.isCreativeMode) || (pair.e2 instanceof EntityPlayer && ((EntityPlayer) pair.e2).capabilities.isCreativeMode)) return;
+				double x = pair.e1.posX, y = pair.e1.posY, z = pair.e1.posZ;
+				
+				pair.e1.setPositionAndUpdate(pair.e2.posX, pair.e2.posY, pair.e2.posZ);
+				pair.e2.setPositionAndUpdate(x, y, z);
+				return;
+			} else if (target instanceof LivingCoords) {
+				LivingCoords crds = (LivingCoords) target;
+				if (crds.e instanceof EntityPlayer && ((EntityPlayer) crds.e).capabilities.isCreativeMode) return;
+				crds.e.setPositionAndUpdate(crds.x, crds.y, crds.z);
+				return;
+			}
 		}
-		if (target instanceof LivingCoords) {
-			LivingCoords crds = (LivingCoords) target;
-			if (crds.e instanceof EntityPlayer && ((EntityPlayer) crds.e).capabilities.isCreativeMode) return;
-			crds.e.setPositionAndUpdate(crds.x, crds.y, crds.z);
-		}
+		
 		if (target instanceof Vector8i) {
 			Vector8i v = (Vector8i) target;
 			Block block = worldObj().getBlock(v.x1, v.y1, v.z1);
 			worldObj().setBlock(v.x1, v.y1, v.z1, worldObj().getBlock(v.x2, v.y2, v.z2), v.m2, 3);
 			worldObj().setBlock(v.x2, v.y2, v.z2, block, v.m1, 3);
+			return;
 		}
 	}
-
+	
 	@Override
 	public int typeBits() {
 		return SPACE;
@@ -239,5 +245,10 @@ public class SubTileWarp extends SubTileEntity {
 			e1 = en1;
 			e2 = en2;
 		}
+	}
+	
+	@Override
+	public EnumAnomalityRarity getRarity() {
+		return EnumAnomalityRarity.RARE;
 	}
 }

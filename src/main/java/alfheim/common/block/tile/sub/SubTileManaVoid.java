@@ -5,6 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -41,6 +42,7 @@ public class SubTileManaVoid extends SubTileEntity {
 	
 	@Override
 	public List<Object> getTargets() {
+		if (inWG()) return EMPTY_LIST;
 		return allAroundRaw(EntityPlayer.class, radius);
 	}
 	
@@ -82,5 +84,10 @@ public class SubTileManaVoid extends SubTileEntity {
 	public void readCustomNBT(NBTTagCompound cmp) {
 		super.writeCustomNBT(cmp);
 		mana = cmp.getInteger(TAG_MANA);
+	}
+	
+	@Override
+	public EnumAnomalityRarity getRarity() {
+		return EnumAnomalityRarity.COMMON;
 	}
 }

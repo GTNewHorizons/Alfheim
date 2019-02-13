@@ -47,7 +47,7 @@ public class AlfheimRegistry {
 			return Math.max(0, Math.min(AlfheimConfig.flightTime, d));
 		}
 	}.setShouldWatch(true);
-
+	
 	public static Potion bleeding;
 	public static Potion butterShield;
 	public static Potion deathMark;
@@ -66,8 +66,8 @@ public class AlfheimRegistry {
 	public static Potion stoneSkin;
 	public static Potion tHrOw;
 	public static Potion wellOLife;
-
-	public static final IWorldGenerator worldGen = new WorldGenAlfheim();
+	
+	public static IWorldGenerator worldGen;
 	
 	public static void preInit() {
 		if(Potion.potionTypes.length < 256) ASJReflectionHelper.invokeStatic(ModPotions.class, null, "extendPotionArray");
@@ -91,13 +91,15 @@ public class AlfheimRegistry {
 		wellOLife = new PotionWellOLife();
 		registerEntities();
 		registerTileEntities();
+		
+		worldGen = new WorldGenAlfheim();
 	}
-
+	
 	public static void init() {
 		registerWorldGenerator(worldGen, 1);
 		registerSpells();
 	}
-
+	
 	public static void postInit() {
 		loadAllPinkStuff();
 		if (AlfheimConfig.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed);
@@ -152,7 +154,7 @@ public class AlfheimRegistry {
 		registerAnomaly("SpeedUp", SubTileSpeedUp.class);
 		registerAnomaly("Warp", SubTileWarp.class);
 	}
-
+	
 	private static void registerSpells() {
 		registerSpell(new SpellAcidMyst());
 		registerSpell(new SpellAquaBind());

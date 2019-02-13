@@ -20,15 +20,16 @@ import net.minecraft.world.World;
 // Used for anomalies - TileAnomaly
 public abstract class SubTileEntity {
 	
-	/** The Tag items should use to store which sub tile they are. **/
-	public static final String TAG_TYPE = "type";
+	public enum EnumAnomalityRarity {
+		COMMON, RARE, EPIC
+	}
+	
 	public static final String TAG_TICKS = "ticks";
 	public static final ArrayList<Object> EMPTY_LIST = new ArrayList<Object>(0);
 	public Random rand = new Random();
-	
-	public int ticks;
-	
 	public TileEntity superTile;
+	public int ticks;
+	public boolean worldGen = false;
 	
 	/** optional update method for particles or other stuff */
 	protected void update() {}
@@ -61,6 +62,8 @@ public abstract class SubTileEntity {
 							
 	/** Checks if two SubTiles can be mixed in single anomaly */
 	public abstract int typeBits();
+	
+	public abstract EnumAnomalityRarity getRarity();
 	
 	public final void writeToNBT(NBTTagCompound cmp) {
 		cmp.setInteger(TAG_TICKS, ticks);
@@ -164,6 +167,10 @@ public abstract class SubTileEntity {
 	
 	public List allAroundRaw(Class clazz, double radius) {
 		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x(), y(), z(), x(1), y(1), z(1)).expand(radius, radius, radius));
+	}
+	
+	public boolean inWG() {
+		return worldGen;
 	}
 	
 	// ################################ RENDER ################################

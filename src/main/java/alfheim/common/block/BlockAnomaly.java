@@ -1,5 +1,7 @@
 package alfheim.common.block;
 
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileAnomaly;
+import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.block.ItemBlockAnomaly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
@@ -61,7 +64,10 @@ public class BlockAnomaly extends BlockContainer {
 	
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-		return ItemBlockAnomaly.ofType(((TileAnomaly) world.getTileEntity(x, y, z)).mainSubTile);
+		ItemStack anomaly = new ItemStack(AlfheimBlocks.anomaly);
+		initNBT(anomaly);
+		((TileAnomaly) world.getTileEntity(x, y, z)).writeCustomNBT(getNBT(anomaly));
+		return anomaly;
 	}
 	
 	@Override

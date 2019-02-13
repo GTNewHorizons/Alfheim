@@ -5,6 +5,7 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,6 +24,8 @@ public class SubTileLightning extends SubTileEntity {
 	
 	@Override
 	public void update() {
+		if (inWG()) return;
+		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5);
 		
 		if (worldObj().rand.nextInt(6000) == 0) {
@@ -31,9 +34,7 @@ public class SubTileLightning extends SubTileEntity {
 			return;
 		}
 		
-		if (AlfheimConfig.lightningsSpeed < 1) return;
-		
-		if (ticks % AlfheimConfig.lightningsSpeed == 0) {
+		if (AlfheimConfig.lightningsSpeed > 0 && ticks % AlfheimConfig.lightningsSpeed == 0) {
 			ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
 			vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25);
 			ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5);
@@ -43,6 +44,8 @@ public class SubTileLightning extends SubTileEntity {
 	
 	@Override
 	public List<Object> getTargets() {
+		if (inWG()) return EMPTY_LIST;
+		
 		if (ticks % 50 == 0) {
 			List l = new ArrayList<Object>();
 			l.add(findNearestEntity(radius));
@@ -50,7 +53,7 @@ public class SubTileLightning extends SubTileEntity {
 		}
 		return EMPTY_LIST;
 	}
-
+	
 	@Override
 	public void performEffect(Object target) {
 		if (ticks % 25 != 0) return;
@@ -77,5 +80,10 @@ public class SubTileLightning extends SubTileEntity {
 	@Override
 	public int getStrip() {
 		return 1;
+	}
+	
+	@Override
+	public EnumAnomalityRarity getRarity() {
+		return EnumAnomalityRarity.COMMON;
 	}
 }

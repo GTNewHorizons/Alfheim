@@ -5,6 +5,7 @@ import java.util.List;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.block.tile.SubTileEntity;
+import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,8 @@ public class SubTileGravity extends SubTileEntity {
 	
 	@Override
 	public void update() {
+		if (inWG()) return;
+		
 		if (ASJUtilities.isServer() && ticks % 100 == 0) {
 			power = Math.random() * 0.65 + 0.35;
 			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile);
@@ -49,6 +52,7 @@ public class SubTileGravity extends SubTileEntity {
 	
 	@Override
 	public List<Object> getTargets() {
+		if (inWG()) return EMPTY_LIST;
 		double radius = power * 10, dist = 0, str = 0;
 		return allAroundRaw(Entity.class, radius);
 	}
@@ -83,5 +87,10 @@ public class SubTileGravity extends SubTileEntity {
 	@Override
 	public int getStrip() {
 		return 0;
+	}
+	
+	@Override
+	public EnumAnomalityRarity getRarity() {
+		return EnumAnomalityRarity.COMMON;
 	}
 }
