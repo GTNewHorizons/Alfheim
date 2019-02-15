@@ -8,6 +8,8 @@ import com.google.common.collect.Lists;
 
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.common.block.AlfheimMultiblocks;
 import alfheim.common.block.BlockElvenOres;
@@ -43,6 +45,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry amulCirs;
 	public static LexiconEntry amulNimb;
 	public static LexiconEntry aniTorch;
+	public static LexiconEntry anomaly;
 	public static LexiconEntry anyavil;
 	public static LexiconEntry astrolab;
 	public static LexiconEntry auraAlf;
@@ -90,6 +93,7 @@ public class AlfheimLexiconData {
 		amulCirs= new BLexiconEntry("amulCirs",	categoryAlfheim);
 		amulNimb= new BLexiconEntry("amulNimb",	categoryAlfheim);
 		aniTorch= new BLexiconEntry("aniTorch",	categoryAlfheim);
+		anomaly	= new BLexiconEntry("anomaly",	categoryAlfheim);
 		anyavil	= new BLexiconEntry("anyavil",	categoryAlfheim);
 		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
 		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
@@ -144,6 +148,12 @@ public class AlfheimLexiconData {
 	public static void init() {
 		alfheim	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"));
+		
+		anomaly	.setPriority()
+				.setLexiconPages(new PageText("0"));
+		
+		for (String name : AlfheimAPI.anomalies.keySet())
+			anomaly.setLexiconPages(new PageImage(name + ".t", ModInfo.MODID + ":textures/gui/entries/Anomaly" + name + ".png"), new PageText(name + ".d"));
 		
 		elves	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));
@@ -388,6 +398,7 @@ public class AlfheimLexiconData {
 		kt();
 		
 		alfheim	.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		anomaly	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		elves	.setKnowledgeType(kt);
 		pylons	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		portal	.setKnowledgeType(kt);

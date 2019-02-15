@@ -5,6 +5,26 @@ botania.tagline.alfheim=New Horizons!
 botania.page.alfheim0=Alfheim... A beautiful world where magic lives forever... These lands were given to the light alvs, also called elves. But who are they? Creatures similar to people living for so long that they deserve to be considered immortal, they were created by the first Aesir. The very same world is filled with special magic, which made the world so beautiful.
 botania.page.alfheim1=But he also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed... Those that the travelers knew happened to have been in Helheim or Walhall for a long time... Oh, let the heavenly light shines upon the souls of the dead!
 
+botania.entry.anomaly=Anomalies
+botania.tagline.=The dangers of this world
+botania.page.anomaly0=We all know that in the past, Alfheim, like the other worlds, suffered from The Shattering. And since this event was not only physical, but magical in nature, it is clear that anomalies were formed in the world.
+botania.page.anomalyManaVoid.t=&1Manavortex&0
+botania.page.anomalyManaVoid.d=Pulls &1Mana&0 from players nearby. One brave man decided to check how much it could hold. Gained a lot of mana and came closer to it. According to the observers, after about a minute the vortex &4exploded&0, killing the experimenter on the spot, and a huge sphere of mana flew in it's direction.
+botania.page.anomalySpeedUp.t=&1Accelerator&0
+botania.page.anomalySpeedUp.d=A very rare anomaly, within its radius of action, is capable of twice accelerating all creatures and some mechanisms, like furnaces. Some lucky ones who have found such an anomaly build their houses right next to it, significantly speeding up their flower meadows.
+botania.page.anomalyWarp.t=&1Warp&0
+botania.page.anomalyWarp.d=Probably the most easily recognizable anomaly. If you see a bunch of randomly floating blocks - this is the &1Warp&0. It is very dangerous for singles, as it can easily imprint into the block, therefore, in order to successfully pass through it, it is worth walking in pairs, since then it simply swaps the travelers in places.
+botania.page.anomalyAntigrav.t=&1Antigravity&0
+botania.page.anomalyAntigrav.d=A relatively safe anomaly, often used as large lifts or, if there is a reservoir next to it, for diving from a height. Fortunately, in order to lift the blocks it does not have enough strength.
+botania.page.anomalyLightning.t=&1Clot of Dark Energy&0
+botania.page.anomalyLightning.d=Attacks by electrical discharges all living things that are within reach, and the closer an object is found, the stronger the hit it receives.
+botania.page.anomalyManaTornado.t=&1Mana Thunder&0
+botania.page.anomalyManaTornado.d=Every few seconds, randomly shoots in the randomly directed &1Mana burst&0 with a random effect. Sometimes this can even lead to an explosion at the point where the burst hits the surface.
+botania.page.anomalySpeedDown.t=&1Decelerator&0
+botania.page.anomalySpeedDown.d=An anomaly, as rare as &1Acceleration&0, and simply works opposite to it.
+botania.page.anomalyGravity.t=&1Gravity Vortex&0
+botania.page.anomalyGravity.d=The field of alternating gravity, dragging all the objects to it. If you got into the zone of its action, then your only way to get out is to run in the opposite direction, otherwise you can stay there forever. Does not act on the blocks.
+
 botania.entry.elves=Elves
 botania.tagline.elves=Native people
 botania.page.elves0=As it was said before, elves are beautiful creatures, spellfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastray was the only one who knew the temporary anomalies of his own world as his five fingers.

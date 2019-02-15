@@ -432,6 +432,8 @@ public class EventHandler {
 	private void onPlayerUpdate(LivingUpdateEvent e) {
 		EntityPlayer player = (EntityPlayer) e.entityLiving;
 		
+//		player.rotationYaw = player.rotationPitch = 90;
+		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
 				if (Flight.get(player) >= 0 && Flight.get(player) <= Flight.max()) {
