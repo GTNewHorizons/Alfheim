@@ -48,7 +48,6 @@ public class AlfheimRecipes {
 	
 	public static IRecipe recipeAlfheimPortal;
 	public static IRecipe recipeAnimatedTorch;
-	public static IRecipe recipeAntiPylon;
 	public static IRecipe recipeAnyavil;
 	public static List<IRecipe> recipesApothecary;
 	public static IRecipe recipeAstrolabe;
@@ -126,13 +125,6 @@ public class AlfheimRecipes {
 			'S', rainbowRod,
 			'T', new ItemStack(lens, 1, 18));
 		recipeAlfheimPortal = BotaniaAPI.getLatestAddedRecipe();
-		
-		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 2),
-				" I ", " P ", " F ",
-				'F', new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
-				'I', new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence),
-				'P', new ItemStack(pylon, 1, 2));
-		recipeAntiPylon = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 0),
 			" P ", "EDE", " P ",

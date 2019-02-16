@@ -38,13 +38,12 @@ public class WorldGenAlfheim implements IWorldGenerator {
 	
 	private static void generateAlfheim(final Random rand, int chunkX, int chunkZ, final World world) {
 		if (chunkX == 0 && chunkZ == 0 && !world.isRemote) {
-			Thread generate = new Thread(new Runnable() {
+			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					StructureSpawnpoint.generate(world, rand);
 				}
-			}, "Alf Spawn Gen");
-			generate.start();
+			}, "Alf Spawn Gen").start();
 		}
 		
 		if (rand.nextInt(AlfheimConfig.anomaliesDispersion) == 0) {

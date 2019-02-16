@@ -34,7 +34,7 @@ public class AlfheimLexiconData {
 	public static KnowledgeType kt = (AlfheimCore.enableElvenStory) ? BotaniaAPI.basicKnowledge : BotaniaAPI.elvenKnowledge;
 	
 	public static LexiconCategory categoryAlfheim;
-
+	
 	/** Lore alfheim page */
 	public static LexiconEntry alfheim;
 	/** Lore elves page */
@@ -75,7 +75,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry trade;
 	//public static LexiconEntry trans;		// BACK
 	public static LexiconEntry worldgen;
-
+	
 	// Elven Story information
 	public static LexiconEntry es;
 	public static LexiconEntry races;
@@ -87,7 +87,7 @@ public class AlfheimLexiconData {
 	
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("Alfheim", 5));
-
+		
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
 		amulCirs= new BLexiconEntry("amulCirs",	categoryAlfheim);
@@ -152,8 +152,15 @@ public class AlfheimLexiconData {
 		anomaly	.setPriority()
 				.setLexiconPages(new PageText("0"));
 		
-		for (String name : AlfheimAPI.anomalies.keySet())
+		int index = -1;
+		for (String name : AlfheimAPI.anomalies.keySet()) {
+			if (name.equals("Lightning")) index = anomaly.pages.size() + 1;
 			anomaly.setLexiconPages(new PageImage(name + ".t", ModInfo.MODID + ":textures/gui/entries/Anomaly" + name + ".png"), new PageText(name + ".d"));
+		}
+		
+		LexiconPage pg = new PageTextLearnableKnowledge("botania.page.anomalyLightning.d", Knowledge.PYLONS);
+		anomaly.pages.set(index, pg);
+		pg.onPageAdded(anomaly, index);
 		
 		elves	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));
@@ -181,7 +188,7 @@ public class AlfheimLexiconData {
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLog));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
 		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
-
+		
 		aniTorch.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch));
 		
@@ -301,8 +308,7 @@ public class AlfheimLexiconData {
 		flugel	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
-		soul	.setLexiconPages(new PageText("0"), new PageText("1"),
-								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon), new PageText("3"),
+		soul	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("3"),
 								 new PageMultiblock("4", AlfheimMultiblocks.soul),
 								 new PageText("5"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
@@ -329,8 +335,8 @@ public class AlfheimLexiconData {
 				new PageText("3"));
 		
 		LexiconData.cosmeticBaubles.setLexiconPages(new PageCraftingRecipe("34", AlfheimRecipes.recipeThinkingHand));
-
-		LexiconPage pg = new PageText("botania.page.lens38");
+		
+		pg = new PageText("botania.page.lens38");
 		LexiconData.lenses.pages.add(14, pg);
 		pg.onPageAdded(LexiconData.lenses, 14);
 		pg = new PageCraftingRecipe("botania.page.lens39", AlfheimRecipes.recipeLensMessenger);

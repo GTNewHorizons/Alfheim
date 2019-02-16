@@ -37,13 +37,13 @@ import vazkii.botania.common.Botania;
 	dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3;after:Thaumcraft")
 
 public class AlfheimCore {
-
+	
 	@Instance(MODID)
 	public static AlfheimCore instance;
-
+	
 	@SidedProxy(clientSide = MODID + ".client.core.proxy.ClientProxy", serverSide = MODID + ".common.core.proxy.CommonProxy")
 	public static CommonProxy proxy;
-
+	
 	public static SimpleNetworkWrapper network;
 	public static int nextPacketID = 0;
 	
@@ -61,7 +61,7 @@ public class AlfheimCore {
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory(), ModInfo.NAME + ".cfg"));
-
+		
 		if (AlfheimConfig.info) InfoLoader.start();
 		
 		registerPackets();
@@ -85,13 +85,13 @@ public class AlfheimCore {
 		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimConfig.loadConfig();
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig();
 	}
-
+	
 	@EventHandler
 	public void starting(FMLServerStartingEvent event) {
 		ASJUtilities.log("Starting...");
 		save = event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory().getAbsolutePath();
 		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save);
-		if (enableMMO) CardinalSystem.load(save);
+		CardinalSystem.load(save);
 		event.registerServerCommand(new CommandAlfheim());
 		event.registerServerCommand(new CommandDimTP());
 		event.registerServerCommand(new CommandRace());
@@ -99,9 +99,9 @@ public class AlfheimCore {
 	
 	@EventHandler
 	public void stopping(FMLServerStoppingEvent event) {
-		if (enableMMO) CardinalSystem.save(save);
+		CardinalSystem.save(save);
 	}
-
+	
 	public static void registerPackets() {
 		AlfheimCore.network.registerMessage(Message0d.Handler.class,		Message0d.class,		nextPacketID++, Side.SERVER);
 		AlfheimCore.network.registerMessage(MessageHotSpellS.Handler.class,	MessageHotSpellS.class,	nextPacketID++, Side.SERVER);

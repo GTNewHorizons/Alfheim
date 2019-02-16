@@ -11,6 +11,7 @@ import alfheim.api.lib.LibResourceLocations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -64,6 +65,10 @@ public abstract class SubTileEntity {
 	public abstract int typeBits();
 	
 	public abstract EnumAnomalityRarity getRarity();
+
+	public boolean onActivated(ItemStack stack, EntityPlayer player, World world, int x, int y, int z) {
+		return false;
+	}
 	
 	public final void writeToNBT(NBTTagCompound cmp) {
 		cmp.setInteger(TAG_TICKS, ticks);

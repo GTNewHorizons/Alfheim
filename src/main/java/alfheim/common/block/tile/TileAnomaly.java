@@ -5,7 +5,10 @@ import java.util.List;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import vazkii.botania.common.block.tile.TileMod;
 
 public class TileAnomaly extends TileMod {
@@ -25,6 +28,12 @@ public class TileAnomaly extends TileMod {
 		
 		List<Object> l = subTiles.get(mainSubTile).getTargets();
 		for (SubTileEntity subTile : subTiles.values()) subTile.updateEntity(l);
+	}
+	
+	public boolean onActivated(ItemStack stack, EntityPlayer player, World world, int x, int y, int z) {
+		boolean flag = false;
+		for (SubTileEntity subTile : subTiles.values()) flag |= subTile.onActivated(stack, player, world, x, y, z);
+		return flag;
 	}
 	
 	public TileAnomaly addSubTile(String name) {

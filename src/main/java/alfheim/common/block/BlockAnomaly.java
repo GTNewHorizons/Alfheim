@@ -19,6 +19,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -47,8 +48,9 @@ public class BlockAnomaly extends BlockContainer {
 		setStepSound(soundTypeCloth);
 	}
 	
-	public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int x, int y, int z) {
-		return AxisAlignedBB.getBoundingBox(0.25 + x, 0.25 + y, 0.25 + z, 0.75 + x, 0.75 + y, 0.75 + z);
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		return ((TileAnomaly) world.getTileEntity(x, y, z)).onActivated(player.getCurrentEquippedItem(), player, world, x, y, z);
 	}
 	
 	@Override

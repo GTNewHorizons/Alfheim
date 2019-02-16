@@ -50,7 +50,7 @@ import vazkii.botania.api.mana.ICreativeManaProvider;
 import vazkii.botania.api.mana.IManaItem;
 
 public class CardinalSystem {
-
+	
 	public static HashMap<String, PlayerSegment> playerSegments = new HashMap<String, PlayerSegment>();
 	
 	public static void load(String save) {
@@ -85,10 +85,14 @@ public class CardinalSystem {
 	}
 	
 	public static void transfer(EntityPlayerMP player) {
-		SpellCastingSystem.transfer(player);
-		HotSpellsSystem.transfer(player);
-		PartySystem.transfer(player);
-		TimeStopSystem.transfer(player, 0);
+		KnowledgeSystem.transfer(player);
+		
+		if (AlfheimCore.enableMMO) {
+			SpellCastingSystem.transfer(player);
+			HotSpellsSystem.transfer(player);
+			PartySystem.transfer(player);
+			TimeStopSystem.transfer(player, 0);
+		}
 	}
 	
 	public static void save(String save) {
@@ -120,7 +124,7 @@ public class CardinalSystem {
 	}
 	
 	public static class KnowledgeSystem {
-
+		
 		public static void learn(EntityPlayerMP player, Knowledge kn) {
 			PlayerSegment seg = forPlayer(player);
 			if (!seg.knowledge[kn.ordinal()]) AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal()), player);
@@ -136,7 +140,7 @@ public class CardinalSystem {
 		}
 		
 		public static enum Knowledge {
-			GLOWSTONE
+			GLOWSTONE, PYLONS
 		}
 	}
 	
@@ -200,32 +204,32 @@ public class CardinalSystem {
 			}
 		}
 	}
-
+	
 	public static class ManaSystem {
-
+		
 		public static void handleManaChange(EntityPlayer player) {
 			PartySystem.getParty(player).sendMana(player, getMana(player));
 		}
 		
 		public static int getMana(EntityPlayer player) {
 			int totalMana = 0;
-
+			
 			IInventory mainInv = player.inventory;
 			IInventory baublesInv = BotaniaAPI.internalHandler.getBaublesInventory(player);
-
+			
 			int invSize = mainInv.getSizeInventory();
 			int size = invSize;
 			if(baublesInv != null)
 				size += baublesInv.getSizeInventory();
-
+			
 			for(int i = 0; i < size; i++) {
 				boolean useBaubles = i >= invSize;
 				IInventory inv = useBaubles ? baublesInv : mainInv;
 				ItemStack stack = inv.getStackInSlot(i - (useBaubles ? invSize : 0));
-
+				
 				if(stack != null) {
 					Item item = stack.getItem();
-
+					
 					if(item instanceof ICreativeManaProvider && ((ICreativeManaProvider) item).isCreative(stack)) return Integer.MAX_VALUE;
 					
 					if(item instanceof IManaItem) 
@@ -281,13 +285,13 @@ public class CardinalSystem {
 			}
 		}
 	}
-
+	
 	public static class PartySystem {
 		
 		public static void transfer(EntityPlayerMP player) {
 			AlfheimCore.network.sendTo(new MessageParty(forPlayer(player).party), player);
 		}
-
+		
 		public static void setParty(EntityPlayer player, Party party) {
 			forPlayer(player).party = party;
 			party.sendChanges();
@@ -308,7 +312,7 @@ public class CardinalSystem {
 				if (segment.party.isMember(id)) return segment.party;
 			return null;
 		}
-
+		
 		public static boolean sameParty(EntityPlayer p1, EntityLivingBase p2) {
 			return getParty(p1).isMember(p2);
 		}
@@ -366,8 +370,8 @@ public class CardinalSystem {
 		
 		public static class Party implements Serializable, Cloneable {
 			
-		    private static final long serialVersionUID = 84616843168484257L;
-
+			private static final long serialVersionUID = 84616843168484257L;
+			
 			/** Flag for server's storing functions */
 			private static transient boolean serverIO = false;
 			
@@ -488,7 +492,7 @@ public class CardinalSystem {
 			public void setDead(int i, boolean d) {
 				if (!ASJUtilities.isServer()) members[i].isDead = d;
 			}
-	
+			
 			public void setDead(EntityLivingBase mr, boolean d) {
 				int i = indexOf(mr);
 				if (i != -1) {
@@ -519,7 +523,7 @@ public class CardinalSystem {
 				sendChanges();
 				return true;
 			}
-	
+			
 			public boolean remove(EntityLivingBase mr) {
 				if (mr == null) return false;
 				if (mr instanceof EntityPlayer && members[0].name.equals(mr.getCommandSenderName()))
@@ -652,10 +656,10 @@ public class CardinalSystem {
 				result.count = count;
 				return result;
 			}
-	
+			
 			private static class Member implements Serializable, Cloneable {
 				
-			    private static final long serialVersionUID = 8416468367146381L;
+				private static final long serialVersionUID = 8416468367146381L;
 				public final String name;
 				public UUID uuid;
 				public int mana;
@@ -687,14 +691,14 @@ public class CardinalSystem {
 			public void onClonePlayer(PlayerEvent.Clone e) {
 				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false);
 			}
-
+			
 			@SubscribeEvent
 			public void onPlayerRespawn(PlayerRespawnEvent e) {
 				if (AlfheimCore.enableMMO) getParty(e.player).setDead(e.player, false);
 			}
 		}
 	}
-
+	
 	public static class HotSpellsSystem {
 		
 		public static void transfer(EntityPlayerMP player) {
@@ -778,16 +782,16 @@ public class CardinalSystem {
 		
 		private static class TimeStopArea implements Serializable {
 			
-		    private static final long serialVersionUID = 4146871637815241L;
-		    
-		    public transient static int nextID = -1;
-		    public final Vector3 pos;
-		    public final UUID uuid;
-		    public transient final int id;
-		    public int life = 1200;
-		    
-		    public TimeStopArea(EntityLivingBase caster) {
-		    	uuid = caster.entityUniqueID;
+			private static final long serialVersionUID = 4146871637815241L;
+			
+			public transient static int nextID = -1;
+			public final Vector3 pos;
+			public final UUID uuid;
+			public transient final int id;
+			public int life = 1200;
+			
+			public TimeStopArea(EntityLivingBase caster) {
+				uuid = caster.entityUniqueID;
 				pos = Vector3.fromEntity(caster);
 				id = ++nextID;
 			}
@@ -823,8 +827,8 @@ public class CardinalSystem {
 	
 	public static class PlayerSegment implements Serializable {
 		
-	    private static final long serialVersionUID = 6871678638741684L;
-	    
+		private static final long serialVersionUID = 6871678638741684L;
+		
 		public HashMap<SpellBase, Integer> coolDown = new HashMap<SpellBase, Integer>();
 		public int[] hotSpells = new int[12];
 		
