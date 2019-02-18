@@ -13,8 +13,6 @@ import alfheim.api.block.IHourglassTrigger;
 import alfheim.api.event.LivingPotionEvent;
 import alfheim.api.event.NetherPortalActivationEvent;
 import alfheim.client.render.entity.RenderButterflies;
-import alfheim.common.core.handler.CardinalSystem.PartySystem;
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
@@ -37,7 +35,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -45,9 +42,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -179,51 +174,6 @@ public class AlfheimHookHandler {
 		} catch (ConcurrentModificationException ex) {
 			ASJUtilities.log("Well, that was expected. Ignore.");
 			ex.printStackTrace();
-		}
-	}
-	
-	@Hook(returnCondition = ALWAYS, isMandatory = true)
-	public static float getHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.000000000000000000000000000000000000000000001F;
-		else return e.getDataWatcher().getWatchableObjectFloat(6);
-	}
-	
-	@Hook(returnCondition = ALWAYS, isMandatory = true)
-	public static float getMaxHealth(EntityLivingBase e) {
-		if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame)) return 0.0F;
-		else return (float) e.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
-	}
-	
-	@Hook(returnCondition = ALWAYS, isMandatory = true)
-	public static void setHealth(EntityLivingBase e, float hp) {
-		if (!AlfheimCore.enableMMO) {
-			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
-			return;
-		}
-		
-		if (AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame)) {
-			hp = 0.000000000000000000000000000000000000000000001F;
-		}
-		
-		if (AlfheimRegistry.sharedHP != null && e.activePotionsMap != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
-			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
-			return;
-		}
-		
-		Party pt = PartySystem.getMobParty(e);
-		if (pt == null) {
-			e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
-			return;
-		}
-		
-		EntityLivingBase[] mr = new EntityLivingBase[pt.count];
-		for (int i = 0; i < pt.count; i++) mr[i] = pt.get(i);
-		
-		for (int i = 0; i < mr.length; i++) {
-			if (mr[i] != null) {
-				mr[i].getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, mr[i].getMaxHealth())));
-				if (hp < 0.0F) mr[i].onDeath(DamageSource.outOfWorld);
-			}
 		}
 	}
 	
