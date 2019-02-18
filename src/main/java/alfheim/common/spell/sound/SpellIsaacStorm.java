@@ -18,7 +18,7 @@ public class SpellIsaacStorm extends SpellBase {
 
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
-		if (caster.worldObj.getEntitiesWithinAABB(IMob.class, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(15, 15, 15)).isEmpty()) return SpellCastResult.NOTSEEING;
+		if (caster.worldObj.getEntitiesWithinAABB(IMob.class, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(15, 15, 15)).isEmpty()) return SpellCastResult.WRONGTGT;
 			
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {
