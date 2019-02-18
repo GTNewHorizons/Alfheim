@@ -250,6 +250,7 @@ death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice
 death.attack.gravity=%s was crushed down by gravity
 death.attack.lightning=%s was charged to death by %s's lightning
 death.attack.mark=%s died from the curse
+death.attack.missile=%s was torn to shreds by %s's rocket storm
 death.attack.possession=%s was consumed by void
 death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
@@ -406,6 +407,7 @@ spell.healing.name=Healing
 spell.hollowbody.name=Hollow Body
 spell.icelens.name=Ice Lens
 spell.ignition.name=Ignition
+spell.isaacstorm.name=Isaac's Epic Missile Storm
 spell.mortar.name=Mortar 
 spell.night.name=Night
 spell.nightvision.name=Night Vision
@@ -471,6 +473,8 @@ spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
 #
 spell.icelens.words=§bIce Lens
 spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
+#
+spell.isaacstorm.words=§eIsaac's Epic Missile Storm
 #
 spell.mortar.words=§2Mortar
 spell.night.words=§5I replace the day with night, replace §5the light with darkness!

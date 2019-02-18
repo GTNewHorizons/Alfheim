@@ -74,7 +74,7 @@ import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.lib.LibBlockNames;
 
 public class AlfheimHookHandler {
-
+	
 	private static boolean updatingTile = false, updatingEntity = false;
 	private static String TAG_TRANSFER_STACK = "transferStack";
 	public static boolean numMana = true;
@@ -86,7 +86,7 @@ public class AlfheimHookHandler {
 	
 	@Hook(injectOnExit = true, isMandatory = true)
 	public static void onChangedPotionEffect(EntityLivingBase e, PotionEffect pe, boolean was) {
-		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Change.Post(e, pe));
+		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Change.Post(e, pe, was));
 	}
 	
 	@Hook(injectOnExit = true, isMandatory = true)
@@ -118,69 +118,69 @@ public class AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static void updatePotionEffects(EntityLivingBase e) {
 		try {
-	        Iterator iterator = e.activePotionsMap.keySet().iterator();
+			Iterator iterator = e.activePotionsMap.keySet().iterator();
 	
-	        while (iterator.hasNext()) {
-	            Integer integer = (Integer)iterator.next();
-	            PotionEffect potioneffect = (PotionEffect) e.activePotionsMap.get(integer);
+			while (iterator.hasNext()) {
+				Integer integer = (Integer)iterator.next();
+				PotionEffect potioneffect = (PotionEffect) e.activePotionsMap.get(integer);
 	
-	            if (!potioneffect.onUpdate(e)) {
-	                //if (!e.worldObj.isRemote) {
-	                    iterator.remove();
-	                    AlfheimSyntheticMethods.onFinishedPotionEffect(e, potioneffect);
-	                //}
-	            } else if (potioneffect.getDuration() % 600 == 0) {
-	                AlfheimSyntheticMethods.onChangedPotionEffect(e, potioneffect, false);
-	            }
-	        }
+				if (!potioneffect.onUpdate(e)) {
+					//if (!e.worldObj.isRemote) {
+						iterator.remove();
+						AlfheimSyntheticMethods.onFinishedPotionEffect(e, potioneffect);
+					//}
+				} else if (potioneffect.getDuration() % 600 == 0) {
+					AlfheimSyntheticMethods.onChangedPotionEffect(e, potioneffect, false);
+				}
+			}
 	
-	        int i;
+			int i;
 	
-	        if (e.potionsNeedUpdate) {
-	            if (!e.worldObj.isRemote) {
-	                if (e.activePotionsMap.isEmpty()) {
-	                    e.getDataWatcher().updateObject(8, Byte.valueOf((byte)0));
-	                    e.getDataWatcher().updateObject(7, Integer.valueOf(0));
-	                    e.setInvisible(false);
-	                } else {
-	                    i = PotionHelper.calcPotionLiquidColor(e.activePotionsMap.values());
-	                    e.getDataWatcher().updateObject(8, Byte.valueOf((byte)(PotionHelper.func_82817_b(e.activePotionsMap.values()) ? 1 : 0)));
-	                    e.getDataWatcher().updateObject(7, Integer.valueOf(i));
-	                    e.setInvisible(e.isPotionActive(Potion.invisibility.id));
-	                }
-	            }
+			if (e.potionsNeedUpdate) {
+				if (!e.worldObj.isRemote) {
+					if (e.activePotionsMap.isEmpty()) {
+						e.getDataWatcher().updateObject(8, Byte.valueOf((byte)0));
+						e.getDataWatcher().updateObject(7, Integer.valueOf(0));
+						e.setInvisible(false);
+					} else {
+						i = PotionHelper.calcPotionLiquidColor(e.activePotionsMap.values());
+						e.getDataWatcher().updateObject(8, Byte.valueOf((byte)(PotionHelper.func_82817_b(e.activePotionsMap.values()) ? 1 : 0)));
+						e.getDataWatcher().updateObject(7, Integer.valueOf(i));
+						e.setInvisible(e.isPotionActive(Potion.invisibility.id));
+					}
+				}
 	
-	            e.potionsNeedUpdate = false;
-	        }
+				e.potionsNeedUpdate = false;
+			}
 	
-	        i = e.getDataWatcher().getWatchableObjectInt(7);
-	        boolean flag1 = e.getDataWatcher().getWatchableObjectByte(8) > 0;
+			i = e.getDataWatcher().getWatchableObjectInt(7);
+			boolean flag1 = e.getDataWatcher().getWatchableObjectByte(8) > 0;
 	
-	        if (i > 0) {
-	            boolean flag = false;
+			if (i > 0) {
+				boolean flag = false;
 	
-	            if (!e.isInvisible()) {
-	                flag = e.worldObj.rand.nextBoolean();
-	            } else {
-	                flag = e.worldObj.rand.nextInt(15) == 0;
-	            }
+				if (!e.isInvisible()) {
+					flag = e.worldObj.rand.nextBoolean();
+				} else {
+					flag = e.worldObj.rand.nextInt(15) == 0;
+				}
 	
-	            if (flag1) {
-	                flag &= e.worldObj.rand.nextInt(5) == 0;
-	            }
+				if (flag1) {
+					flag &= e.worldObj.rand.nextInt(5) == 0;
+				}
 	
-	            if (flag && i > 0) {
-	                double d0 = (double)(i >> 16 & 255) / 255.0D;
-	                double d1 = (double)(i >> 8 & 255) / 255.0D;
-	                double d2 = (double)(i >> 0 & 255) / 255.0D;
-	                e.worldObj.spawnParticle(flag1 ? "mobSpellAmbient" : "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, e.posY + e.worldObj.rand.nextDouble() * (double)e.height - (double)e.yOffset, e.posZ + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, d0, d1, d2);
-	            }
-	        }
+				if (flag && i > 0) {
+					double d0 = (double)(i >> 16 & 255) / 255.0D;
+					double d1 = (double)(i >> 8 & 255) / 255.0D;
+					double d2 = (double)(i >> 0 & 255) / 255.0D;
+					e.worldObj.spawnParticle(flag1 ? "mobSpellAmbient" : "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, e.posY + e.worldObj.rand.nextDouble() * (double)e.height - (double)e.yOffset, e.posZ + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, d0, d1, d2);
+				}
+			}
 		} catch (ConcurrentModificationException ex) {
 			ASJUtilities.log("Well, that was expected. Ignore.");
 			ex.printStackTrace();
 		}
-    }
+	}
 	
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static float getHealth(EntityLivingBase e) {
@@ -291,7 +291,7 @@ public class AlfheimHookHandler {
 	public static boolean sparkleFX(ClientProxy proxy, World world, double x, double y, double z, float r, float g, float b, float size, int m, boolean fake) {
 		return updatingTile;
 	}
-
+	
 	@Hook(returnCondition = ALWAYS)
 	public static void getSubBlocks(BlockSpecialFlower flower, Item item, CreativeTabs tab, List list) {
 		for(String s : BotaniaAPI.subtilesForCreativeMenu) {
@@ -311,7 +311,7 @@ public class AlfheimHookHandler {
 	public static void ItemLens$clinit(ItemLens lens) {
 		lens.setProps(MESSANGER, 1);
 		lens.setProps(TRIPWIRE, 1 << 5);
-
+	
 		lens.setLens(MESSANGER, new LensMessanger());
 		lens.setLens(TRIPWIRE, new LensTripwire());
 	}
@@ -330,22 +330,22 @@ public class AlfheimHookHandler {
 	public static void onBlockAdded(SubTileEntity subtile, World world, int x, int y, int z) {
 		if (subtile instanceof SubTileDaybloom && ((SubTileDaybloom) subtile).isPrime()) ((SubTileDaybloom) subtile).setPrimusPosition();
 	}
-
+	
 	@Hook(returnCondition = ALWAYS)
 	public static IIcon getIcon(BlockPylon pylon, int side, int meta) {
 		return meta == 0 || meta == 1 ? ModBlocks.storage.getIcon(side, meta) : Blocks.diamond_block.getIcon(side, 0);
 	}
-
+	
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
 	public static boolean onNetherPortalActivation(BlockPortal portal, World world, int x, int y, int z) {
 		return MinecraftForge.EVENT_BUS.post(new NetherPortalActivationEvent(world, x, y, z));
 	}
-
+	
 	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false, isMandatory = true)
 	public static boolean matches(RecipePureDaisy recipe, World world, int x, int y, int z, SubTileEntity pureDaisy, Block block, int meta) {
 		return recipe.getOutput().equals(ModBlocks.livingwood) && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim;
 	}
-
+	
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	public static boolean onItemUse(ItemFlugelEye eye, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (player.isSneaking() && world.getBlock(x, y, z) == Blocks.beacon) return EntityFlugel.spawn(player, stack, world, x, y, z, false);
@@ -362,7 +362,7 @@ public class AlfheimHookHandler {
 				}
 		return false;
 	}
-
+	
 	@Hook(createMethod = true)
 	public static ItemStack onItemRightClick(ItemGaiaHead item, ItemStack stack, World world, EntityPlayer player) {
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1)); 
@@ -376,25 +376,25 @@ public class AlfheimHookHandler {
 	
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static boolean extinguishFire(World world, EntityPlayer player, int x, int y, int z, int side) {
-        if (side == 0) --y;
-        if (side == 1) ++y;
-        if (side == 2) --z;
-        if (side == 3) ++z;
-        if (side == 4) --x;
-        if (side == 5) ++x;
-        Block b = world.getBlock(x, y, z);
-        
-        boolean f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0.0F;
-        
-        if (player != null) f = f || player.capabilities.isCreativeMode;
-        if (b.getMaterial() == Material.fire && f) {
-        	world.playAuxSFXAtEntity(player, 1004, x, y, z, 0);
-        	world.setBlockToAir(x, y, z);
-            return true;
-        }
-        return false;
-    }
-
+		if (side == 0) --y;
+		if (side == 1) ++y;
+		if (side == 2) --z;
+		if (side == 3) ++z;
+		if (side == 4) --x;
+		if (side == 5) ++x;
+		Block b = world.getBlock(x, y, z);
+		
+		boolean f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0.0F;
+		
+		if (player != null) f = f || player.capabilities.isCreativeMode;
+		if (b.getMaterial() == Material.fire && f) {
+			world.playAuxSFXAtEntity(player, 1004, x, y, z, 0);
+			world.setBlockToAir(x, y, z);
+			return true;
+		}
+		return false;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@Hook(injectOnExit = true, isMandatory = true)
 	public static void renderManaBar(HUDHandler hh, int x, int y, int color, float alpha, int mana, int maxMana) {
@@ -408,13 +408,13 @@ public class AlfheimHookHandler {
 		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, f);
 		glPopMatrix();
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	@Hook(isMandatory = true)
 	public static void doRenderShadowAndFire(Render render, Entity entity, double x, double y, double z, float yaw, float partialTickTime) {
 		if (AlfheimCore.enableMMO) if(entity instanceof EntityLivingBase) if (((EntityLivingBase) entity).isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks);
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	@Hook(isMandatory = true)
 	public static void renderOverlays(ItemRenderer renderer, float partialTicks) {

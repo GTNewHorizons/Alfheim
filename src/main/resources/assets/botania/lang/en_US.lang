@@ -285,7 +285,7 @@ botania.entry.spells= Spells
 botania.tagline.spells=No magic outside Hogwarts!
 botania.page.spells0=Each elven race has its own set of spells, with a certain affinity. So, Salamanders are skillful fire mages, Sylphs - wind, Kait Sith can subdue the nature, Pookas are excellent musicians, Gnomes specialize in earth magic, Leprechauns on various technologies, Spriggans are masters of illusions, Undines - water mages, and Imps are servants of Darkness.
 botania.page.spells1=Before using the spell, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
-botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [ctrl]+[shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [ctrl].
+botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [ctrl]+[shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [ctrl]. You can also cancel the current spell by pressing the [X] button.
 botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change.
 botania.page.spells3u=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
 botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures within 9 blocks
@@ -314,6 +314,7 @@ botania.page.healing=Grants average healing to all party members
 botania.page.hollowbody=Imposes an invisibility effect on target
 botania.page.icelens=Allows the caster to see 10 times better through an ice lens
 botania.page.ignition=Ignites the selected block at a distance of up to 16 blocks
+botania.page.isaacstorm=Launches a swarm of magic missiles, each of which pursues a randomly chosen target and, when hit, causes high damage to it.
 botania.page.mortar=Launches a rock, causing great falling block damage on the target of direct hit, additionally breaking its armor, and medium earth damage over an 2-blocks radius area
 botania.page.night=Sets the time of day to night
 botania.page.nightvision=Imposes a night vision effect on a party

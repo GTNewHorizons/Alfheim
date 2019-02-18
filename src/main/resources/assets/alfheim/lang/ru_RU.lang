@@ -250,6 +250,7 @@ death.attack.darkness_FF=%s убит в обмен на жертву %s
 death.attack.gravity=%s раздавлен гравитацией
 death.attack.lightning=%s убит молнией %s
 death.attack.mark=%s умер от проклятия
+death.attack.missile=%s был разорван в клочья ракетным штормом %s
 death.attack.possession=%s поглощён пустотой
 death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
@@ -406,6 +407,7 @@ spell.healing.name=Лечение
 spell.hollowbody.name=Прозрачное Тело
 spell.icelens.name=Ледяная Линза
 spell.ignition.name=Поджёг
+spell.isaacstorm.name=Эпический Ракетный Шторм Исаака
 spell.mortar.name=Мортира 
 spell.night.name=Ночь
 spell.nightvision.name=Ночное Зрение
@@ -471,6 +473,8 @@ spell.hollowbody.words=§8Дай ему тело прозрачное, дару�
 #
 spell.icelens.words=§bЛедяная Линза
 spell.ignition.words=§4Я призываю энергию энтропии, вспыхни же ярким пламенем!
+#
+spell.isaacstorm.words=§eЭпический Ракетный Шторм Исаака
 #
 spell.mortar.words=§2Мортира 
 spell.night.words=§5Я заменяю день ночью, заменяю свет тьмой!

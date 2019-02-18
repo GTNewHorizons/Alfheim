@@ -52,7 +52,7 @@ public class SpellEffectHandlerClient {
 			}
 		}
 	}
-
+	
 	public static void addIceLens() {
 		Minecraft.getMinecraft().thePlayer.addPotionEffect(new PotionEffect(AlfheimRegistry.icelens.id, 200, 0, true));
 	}
@@ -72,7 +72,7 @@ public class SpellEffectHandlerClient {
 	public static void quadHurt() {
 		Minecraft.getMinecraft().thePlayer.playSound(ModInfo.MODID + ":quadh", 1, 1);
 	}
-
+	
 	public static void spawnAcid(double x, double y, double z) {
 		for (int i = 0; i < 256; i++) {
 			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Math.random() * 9, Math.random() * 9, Math.random() * 9);
@@ -87,49 +87,57 @@ public class SpellEffectHandlerClient {
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + X, y, z + Z, 0, 0.5F, 1, 0.5F);
 		}
 	}
-
+	
 	public static void spawnAquaStream(double x, double y, double z, double x2, double y2, double z2) {
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 0.5F, 0.5F, 1, 1.0F, (float) x2, (float) y2, (float) z2, 0.5F);
 	}
-
+	
 	public static void spawnAquaStreamHit(double x, double y, double z) {
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 0, 0.5F, 1, 0.5F);
 	}
-
+	
 	public static void spawnBurst(double x, double y, double z, float r, float g, float b) {
 		for (int i = 0; i < 8; i++) Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + Math.random() - 0.5, y + Math.random() * 0.25, z + Math.random() - 0.5, r, g, b, 1, (float) (Math.random() * -0.075));
 	}
-
+	
 	public static void spawnEcho(double x, double y, double z) {
 		for (int i = 0; i < 64; i++) {
 			m.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(0.5);
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0.5F, 0.5F, 0.5F, 1, (float) m.x, 0, (float) m.z);
 		}
 	}
-
+	
 	public static void spawnEchoEntity(double x, double y, double z) {
+		Botania.proxy.setWispFXDepthTest(false);
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 1, 1, 0, 1, 0, 3);
+		Botania.proxy.setWispFXDepthTest(true);
 	}
-
+	
 	public static void spawnEchoItem(double x, double y, double z) {
+		Botania.proxy.setWispFXDepthTest(false);
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0, 1, 0, 1, 0, 3);
+		Botania.proxy.setWispFXDepthTest(true);
 	}
-
+	
 	public static void spawnEchoMob(double x, double y, double z) {
+		Botania.proxy.setWispFXDepthTest(false);
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 1, 0, 0, 1, 0, 3);
+		Botania.proxy.setWispFXDepthTest(true);
 	}
-
+	
 	public static void spawnEchoPlayer(double x, double y, double z) {
+		Botania.proxy.setWispFXDepthTest(false);
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0, 0, 1, 1, 0, 3);
+		Botania.proxy.setWispFXDepthTest(true);
 	}
-
+	
 	public static void spawnExplosion(double x, double y, double z) {
 		Minecraft.getMinecraft().theWorld.spawnParticle("largeexplode", x, y, z, 1, 0, 0);
-        
-        for (int i = 0; i < 32; i++) {
-        	m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15);
+		
+		for (int i = 0; i < 32; i++) {
+			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15);
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 1, (float) Math.random() * 0.25F, (float) Math.random() * 0.075F, 0.25F + (float) Math.random() * 0.45F, (float) m.x, (float) m.y, (float) m.z, 0.5F);
-        }
+		}
 	}
 	
 	public static void spawnGravity(double x, double y, double z, double x2, double y2, double z2) {
@@ -165,14 +173,14 @@ public class SpellEffectHandlerClient {
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + m.x, y + m.y, z + m.z, 0.1F, 0.1F, 0.1F, (float) (Math.random() * 4 + 4), (float) (Math.random() * -0.075));
 		}
 	}
-
+	
 	public static void spawnSplash(double x, double y, double z) {
 		for (int j = 0; j < 32; j++) {
 			m.rand().sub(0.5, 0, 0.5).normalize().mul(Math.random() * 0.5 + 0.5).mul(0.5).mul(0.5, 2, 0.5);
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 0.1F, 0.5F, 1, 0.5F, (float) m.x, (float) m.y, (float) m.z, 0.5F);
 		}
 	}
-
+	
 	public static void spawnThrow(double x, double y, double z, double x2, double y2, double z2) {
 		for (int i = 0; i < 8; i++) Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + Math.random() - 0.5, y + Math.random() * 0.25, z + Math.random() - 0.5, 0, 1, 0.25F, 1, (float) x2, (float) y2, (float) z2);
 	}
@@ -189,14 +197,14 @@ public class SpellEffectHandlerClient {
 	public static enum Spells {
 		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, UPHEAL
 	}
-
+	
 	public static void onDeath(EntityLivingBase target) {
 		if(AlfheimCore.enableMMO && Minecraft.getMinecraft().thePlayer == target) {
 			Minecraft.getMinecraft().displayGuiScreen(new GUIDeathTimer());
 			Minecraft.getMinecraft().thePlayer.hurtTime = 0;
 		}
 	}
-
+	
 	public static void onDeathTick(EntityLivingBase target) {
 		if (AlfheimCore.enableMMO) {
 			int c = 0xFFFFFF;
@@ -204,7 +212,7 @@ public class SpellEffectHandlerClient {
 			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - (Minecraft.getMinecraft().thePlayer == target ? 1.5 : 0), target.posZ, ((c >> 16) & 0xFF) / 255F, ((c >> 8) & 0xFF) / 255F, (c & 0xFF) / 255F, (float)(Math.random() * 0.5), (float)(Math.random() * 0.015 - 0.0075), (float)(Math.random() * 0.025), (float)(Math.random() * 0.015 - 0.0075), 2);
 		}
 	}
-
+	
 	public static void onRespawned() {
 		Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 		Minecraft.getMinecraft().setIngameFocus();

@@ -4,14 +4,13 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
-import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -39,11 +38,11 @@ public class TheRodOfTheDebug extends Item {
 					
 //					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
 					
-//					int r = 32;
+//					int r = 12;
 //					for (int x = -r; x < r; x++) {
 //						for (int z = -r; z < r; z++) {
-//							for (int y = 1; y < 3; y++) {
-//								world.setBlock(x, 3, z, Blocks.air);
+//							for (int y = 1; y < 4; y++) {
+//								world.setBlock(x, y, z + 50, Blocks.grass);
 //							}
 //						}
 //					}

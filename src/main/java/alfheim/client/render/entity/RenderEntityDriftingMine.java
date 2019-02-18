@@ -17,23 +17,23 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
 public class RenderEntityDriftingMine extends Render {
-
+	
 	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/mine.obj"));
 	
 	public RenderEntityDriftingMine() {
 		shadowSize = 0.0F;
 	}
-
+	
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return LibResourceLocations.mine2;
 	}
-
+	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		glPushMatrix();
 		glTranslated(x, y+0.5, z);
-		//glRotated(((Minecraft.getMinecraft().theWorld.getTotalWorldTime() + entity.ticksExisted) + Minecraft.getMinecraft().timer.renderPartialTicks) * 0.5, 1, 1, 1);
+		glRotated(((Minecraft.getMinecraft().theWorld.getTotalWorldTime() + entity.ticksExisted) + Minecraft.getMinecraft().timer.renderPartialTicks) * 0.5, 1, 1, 1);
 		if (AlfheimConfig.minimalGraphics) {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
 			glTranslated(-0.5, -0.5, 0.03125);

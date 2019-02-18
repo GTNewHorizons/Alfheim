@@ -23,7 +23,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class MessageKeyBind extends ASJPacket {
-
+	
 	public int action;
 	public int ticks;
 	public boolean state;
@@ -43,7 +43,7 @@ public class MessageKeyBind extends ASJPacket {
 	}
 	
 	public static class Handler implements IMessageHandler<MessageKeyBind, IMessage> {
-
+	
 		@Override
 		public IMessage onMessage(MessageKeyBind packet, MessageContext message) {
 			EntityPlayerMP player = message.getServerHandler().playerEntity;
@@ -61,6 +61,11 @@ public class MessageKeyBind extends ASJPacket {
 						seg.castableSpell = spell;
 					}
 					break;
+				}
+				case UNCAST: {
+					PlayerSegment seg = CardinalSystem.forPlayer(player);
+					seg.init = seg.ids = 0;
+					seg.castableSpell = null;
 				}
 				case FLIGHT: KeyBindingHandler.enableFlight(player, packet.state); break;
 				case SEL: {

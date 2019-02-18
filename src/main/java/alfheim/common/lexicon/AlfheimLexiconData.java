@@ -378,8 +378,13 @@ public class AlfheimLexiconData {
 																 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
 												.setIcon(null);
 		
-		if (spells	.pages.isEmpty())	spells	.setPriority()
-												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+		if (spells	.pages.isEmpty())	{
+										spells	.setPriority()
+										.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+										
+										postInitMMO();
+		}
+												
 		
 		if (targets	.pages.isEmpty())	targets	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"));
@@ -536,6 +541,7 @@ public class AlfheimLexiconData {
 		if (AlfheimCore.enableMMO) {
 			preInitMMO();
 			initMMO();
+			postInitMMO();
 		}
 		
 		if (!categoryAlfheim.entries.contains(es))		BotaniaAPI.addEntry(es		, categoryAlfheim);

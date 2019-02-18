@@ -121,6 +121,7 @@ public class AlfheimRegistry {
 		registerEntity(EntitySpellFireball.class, "SpellFireball", AlfheimCore.instance);
 		registerEntity(EntitySpellFirewall.class, "SpellFirewall", AlfheimCore.instance);
 		registerEntity(EntitySpellGravityTrap.class, "SpellGravityTrap", AlfheimCore.instance);
+		registerEntity(EntitySpellIsaacMissile.class, "SpellIsaacMissile", AlfheimCore.instance);
 		registerEntity(EntitySpellMortar.class, "SpellMortar", AlfheimCore.instance);
 		registerEntity(EntitySpellWindBlade.class, "SpellWindBlade", AlfheimCore.instance);
 	}
@@ -182,6 +183,7 @@ public class AlfheimRegistry {
 		registerSpell(new SpellHollowBody());
 		registerSpell(new SpellIceLens());
 		registerSpell(new SpellIgnition());
+		registerSpell(new SpellIsaacStorm());
 		registerSpell(new SpellMortar());
 		registerSpell(new SpellNight());
 		registerSpell(new SpellNightVision());

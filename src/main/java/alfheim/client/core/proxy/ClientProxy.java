@@ -39,6 +39,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy {
 	
 	public static final KeyBinding keyCast = new KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.gameplay");
+	public static final KeyBinding keyUnCast = new KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.gameplay");
 	public static final KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
 	public static final KeyBinding keySelMob = new KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.gameplay");
 	public static final KeyBinding keySelTeam = new KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay");
@@ -52,7 +53,7 @@ public class ClientProxy extends CommonProxy {
 	
 	private static final Gui guiIceLens = new GUIIceLens(Minecraft.getMinecraft());
 	private static final Gui guiParty = new GUIParty(Minecraft.getMinecraft());
-	//private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
+	private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
 	private static final Gui guiSpells = new GUISpells(Minecraft.getMinecraft());
 	
 	@Override
@@ -115,6 +116,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
 		FMLCommonHandler.instance().bus().register(new EventHandlerClient());
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(new BotaniaInTravellersGearRenderer());
+		if (AlfheimCore.enableElvenStory) enableESMGUIs();
 		if (AlfheimCore.enableMMO) enableMMOGUIs();
 	}
 	
@@ -133,6 +135,7 @@ public class ClientProxy extends CommonProxy {
 		if (AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = true;
 		AlfheimLexiconData.reEnableESM();
+		enableESMGUIs();
 		addESMKeyBinds();
 		EventHandler.checkAddAttrs();
 	}
@@ -141,6 +144,7 @@ public class ClientProxy extends CommonProxy {
 		if (!AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = false;
 		AlfheimLexiconData.disableESM();
+		disableESMGUIs();
 		removeESMKeyBinds();
 		disableMMO();
 	}
@@ -194,12 +198,21 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 	
+	private static void enableESMGUIs() {
+		ASJUtilities.log("Registering ESM GUIs");
+		MinecraftForge.EVENT_BUS.register(guiRace);
+	}
+	
+	private static void disableESMGUIs() {
+		ASJUtilities.log("Unregistering ESM GUIs");
+		MinecraftForge.EVENT_BUS.unregister(guiRace);
+	}
+	
 	private static void enableMMOGUIs() {
 		ASJUtilities.log("Registering MMO GUIs");
 		MinecraftForge.EVENT_BUS.register(guiIceLens);
 		MinecraftForge.EVENT_BUS.register(guiParty);
 		MinecraftForge.EVENT_BUS.register(guiSpells);
-		MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));
 	}
 	
 	private static void disableMMOGUIs() {
@@ -219,12 +232,14 @@ public class ClientProxy extends CommonProxy {
 	
 	private static void addMMOKeyBinds() {
 		addKeyBinding(keyCast);
+		addKeyBinding(keyUnCast);
 		addKeyBinding(keySelMob);
 		addKeyBinding(keySelTeam);
 	}
 	
 	private static void removeMMOKeyBinds() {
 		unregisterKeyBinding(keyCast);
+		unregisterKeyBinding(keyUnCast);
 		unregisterKeyBinding(keySelMob);
 		unregisterKeyBinding(keySelTeam);
 	}

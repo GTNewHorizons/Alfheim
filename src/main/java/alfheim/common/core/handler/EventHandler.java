@@ -464,9 +464,7 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onChangedPotionEffect(LivingPotionEvent.Change.Post e) {
-		if (e.effect.potionID == AlfheimConfig.potionIDSharedHP) return;
-		
-		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
+		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier, e.update));
 	}
 	
 	@SubscribeEvent
