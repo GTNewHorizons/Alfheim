@@ -2,9 +2,14 @@ package alfheim.client.model.entity;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import alexsocol.asjlib.ASJUtilities;
+import alfheim.common.entity.boss.EntityRook;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.util.MathHelper;
 
 /**
  * Rook  - XJustaguyX
@@ -215,7 +220,7 @@ public class ModelEntityRook extends ModelBase {
         hummer_handle = new ModelRenderer(this, 304, 0);
         hummer_handle.setRotationPoint(-19.42F, 26.21F, -0.43F);
         hummer_handle.addBox(23.0F, 4.3F, -13.2F, 3, 3, 40, 0.0F);
-        setRotateAngle(hummer_handle, 0.017976891295541593F, 0.003839724354387525F, 0.017453292519943295F);
+        setRotateAngle(hummer_handle, -0.40142572795869574F, 0.003839724354387525F, 0.017453292519943295F);
         lef_arm_deco_lower2 = new ModelRenderer(this, 170, 105);
         lef_arm_deco_lower2.setRotationPoint(0.0F, 0.0F, 0.0F);
         lef_arm_deco_lower2.addBox(-2.5F, 24.3F, -11.7F, 13, 6, 15, 0.0F);
@@ -479,35 +484,36 @@ public class ModelEntityRook extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+    public void render(Entity entity, float time, float amplitude, float ticksExisted, float yawHead, float pitchHead, float size) {
     	glRotated(180, 0, 1, 0);
-        upper_body_deco.render(f5);
-        lower_top_body_piece.render(f5);
-        main_towers_base.render(f5);
-        catapult_front_base.render(f5);
-        righ_leg1.render(f5);
-        righ_lower_body_side.render(f5);
-        lef_tower_side.render(f5);
-        lef_leg1.render(f5);
-        mid_tower_lower.render(f5);
-        mid_tower_base.render(f5);
-        lef_lower_body_side.render(f5);
-        body_main.render(f5);
-        righ_tower1.render(f5);
-        righ_arm1.render(f5);
-        righ_tower1_1.render(f5);
-        top_body_piece.render(f5);
-        mid_tower_upper.render(f5);
-        righ_tower_side.render(f5);
-        head2.render(f5);
-        righ_side_bodypiece.render(f5);
-        lower_body_deco.render(f5);
-        head1.render(f5);
-        lef_upper_body_side.render(f5);
-        lef_side_bodypiece.render(f5);
-        crotch.render(f5);
-        lef_arm1.render(f5);
-        lef_lower_body_side_1.render(f5);
+    	setRotationAngles(time, amplitude, ticksExisted, yawHead, pitchHead, size, entity);
+        upper_body_deco.render(size);
+        lower_top_body_piece.render(size);
+        main_towers_base.render(size);
+        catapult_front_base.render(size);
+        righ_leg1.render(size);
+        righ_lower_body_side.render(size);
+        lef_tower_side.render(size);
+        lef_leg1.render(size);
+        mid_tower_lower.render(size);
+        mid_tower_base.render(size);
+        lef_lower_body_side.render(size);
+        body_main.render(size);
+        righ_tower1.render(size);
+        righ_arm1.render(size);
+        righ_tower1_1.render(size);
+        top_body_piece.render(size);
+        mid_tower_upper.render(size);
+        righ_tower_side.render(size);
+        head2.render(size);
+        righ_side_bodypiece.render(size);
+        lower_body_deco.render(size);
+        head1.render(size);
+        lef_upper_body_side.render(size);
+        lef_side_bodypiece.render(size);
+        crotch.render(size);
+        lef_arm1.render(size);
+        lef_lower_body_side_1.render(size);
         glRotated(-180, 0, 1, 0);
     }
 
@@ -518,5 +524,37 @@ public class ModelEntityRook extends ModelBase {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+    }
+    
+	public void setRotationAngles(float time, float amplitude, float ticksExisted, float yawHead, float pitchHead, float size, Entity entity) {
+		amplitude /= 2.0F;
+		
+		righ_arm1.rotateAngleX = MathHelper.cos(time * 0.6662F + (float)Math.PI) * 2.0F * amplitude * 0.5F - (float) Math.toRadians(7);
+		righ_arm1.rotateAngleZ = (float) Math.toRadians(13);
+		lef_arm1.rotateAngleZ = (float) Math.toRadians(-13);
+		righ_leg1.rotateAngleX = MathHelper.cos(time * 0.6662F) * 1.4F * amplitude + (float) Math.toRadians(7);
+		lef_leg1.rotateAngleX = MathHelper.cos(time * 0.6662F + (float)Math.PI) * 1.4F * amplitude + (float) Math.toRadians(7);
+		righ_leg1.rotateAngleZ = (float) Math.toRadians(9);
+		lef_leg1.rotateAngleZ = (float) Math.toRadians(-9);
+	}
+	
+	@Override
+	public void setLivingAnimations(EntityLivingBase living, float time, float amplitude, float ticksExisted) {
+		if (living instanceof EntityRook) {
+			EntityRook rook = (EntityRook) living;
+	        int i = rook.getAttackTimer();
+	
+			if (i > 0) {
+				lef_arm1.rotateAngleX = -2.0F + 1.5F * interpolate((float) i - ticksExisted, 20.0F);
+				lef_arm1.rotateAngleX /= -2.0F;
+				lef_arm1.rotateAngleX += (float) Math.toRadians(16);
+			} else {
+				lef_arm1.rotateAngleX = MathHelper.cos(time * 0.6662F) * 2.0F * amplitude * 0.5F + (float) Math.toRadians(16);
+			}
+		}
+	}
+	
+	public float interpolate(float angle, float mod) {
+        return (Math.abs(angle % mod - mod * 0.5F) - mod * 0.25F) / (mod * 0.25F);
     }
 }
