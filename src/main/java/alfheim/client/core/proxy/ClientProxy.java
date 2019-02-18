@@ -9,6 +9,7 @@ import alfheim.AlfheimCore;
 import alfheim.api.lib.*;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.core.handler.EventHandlerClient;
+import alfheim.client.core.util.AlfheimBotaniaModifiersClient;
 import alfheim.client.gui.*;
 import alfheim.client.lib.LibResourceLocationsActual;
 import alfheim.client.model.entity.*;
@@ -20,7 +21,6 @@ import alfheim.common.block.tile.*;
 import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.util.AlfheimBotaniaModifiers;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
@@ -121,7 +121,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit() {
 		super.postInit();
-		AlfheimBotaniaModifiers.postInit();
+		AlfheimBotaniaModifiersClient.postInit();
 	}
 	
 	public static void toggelModes(boolean b, boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {

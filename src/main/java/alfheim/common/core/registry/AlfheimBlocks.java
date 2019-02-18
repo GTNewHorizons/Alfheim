@@ -45,7 +45,7 @@ public class AlfheimBlocks {
 		reg();
 		regOreDict();
 	}
-
+	
 	private static void construct() {
 		alfheimPortal = new BlockAlfheimPortal();
 		alfheimPylons = new BlockAlfheimPylon();
@@ -68,7 +68,7 @@ public class AlfheimBlocks {
 		tradePortal = new BlockTradePortal();
 		//transferer = new BlockTransferer(); BACK
 	}
-
+	
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
@@ -91,12 +91,14 @@ public class AlfheimBlocks {
 		register(poisonIce);
 		register(redFlame);
 	}
-
+	
 	private static void regOreDict() {
 		registerOre(LibOreDict.DRAGON_ORE, new ItemStack(elvenOres, 1, 0));
 		registerOre(LibOreDict.ELEMENTIUM_ORE, new ItemStack(elvenOres, 1, 1));
 		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, new ItemStack(elvenOres, 1, 2));
 		registerOre(LibOreDict.GOLD_ORE, new ItemStack(elvenOres, 1, 3));
 		registerOre(LibOreDict.IFFESAL_ORE, new ItemStack(elvenOres, 1, 4));
+		
+		registerOre("sand", new ItemStack(elvenSand));
 	}
 }
