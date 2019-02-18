@@ -244,6 +244,10 @@ alfheimmisc.party.no=There is no such party
 alfheimmisc.party.notinpartyoffline=%s isn't a party member or is offline
 alfheimmisc.party.notpl=Only partyleader can do this
 
+alfheimmisc.waila.trade.available=%s more trade(s) available
+alfheimmisc.waila.trade.results=Results: 
+alfheimmisc.waila.trade.request=Request: 
+
 death.attack.bleeding=%s bleed out
 death.attack.corruption=%s got too close to anomaly
 death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice

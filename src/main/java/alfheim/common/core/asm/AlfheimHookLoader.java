@@ -25,11 +25,11 @@ public class AlfheimHookLoader extends HookLoader {
 	@Override public String[] getASMTransformerClass() {
 		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName(), AlfheimSyntheticMethodsInjector.class.getName(), ASJASM.class.getName() };
 	}
-
+	
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
-		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
+		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter");
 		
 		ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler");
 	}

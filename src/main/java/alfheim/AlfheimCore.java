@@ -16,6 +16,7 @@ import alfheim.common.core.util.InfoLoader;
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimConfig;
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig;
+import alfheim.common.integration.waila.WAILAAlfheimConfig;
 import alfheim.common.network.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -53,12 +54,14 @@ public class AlfheimCore {
 	public static boolean enableMMO = true;
 	public static boolean MineTweakerLoaded = false;
 	public static boolean TravellersGearLoaded = false;
+	public static boolean WAILALoaded = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		AlfheimConfig.readModes();
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
+		WAILALoaded = Loader.isModLoaded("Waila");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory(), ModInfo.NAME + ".cfg"));
 		
@@ -84,6 +87,7 @@ public class AlfheimCore {
 		if (MineTweakerLoaded) MinetweakerAlfheimConfig.loadConfig();
 		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimConfig.loadConfig();
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig();
+		if (WAILALoaded) WAILAAlfheimConfig.loadConfig();
 	}
 	
 	@EventHandler
