@@ -13,9 +13,11 @@ import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
 @MCVersion(value = "1.7.10")
 public class AlfheimHookLoader extends HookLoader {
 	
-	public static boolean isThermos = false;
+	public static final boolean hpSpells;
+	public static final boolean isThermos;
 	
 	static {
+		hpSpells = !System.getProperty("alfheim.spells.hpasm", "on").equals("off");
 		isThermos = System.getProperty("alfheim.thermos.suppress", "off").equals("on");
 		if (isThermos) FMLRelaunchLog.info(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core", ModInfo.MODID.toUpperCase()));
 		ModInfo.OBF = !(Boolean) ASJReflectionHelper.getStaticValue(CoreModManager.class, "deobfuscatedEnvironment");
@@ -28,6 +30,7 @@ public class AlfheimHookLoader extends HookLoader {
 
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
+		if (hpSpells) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
 		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
 		
