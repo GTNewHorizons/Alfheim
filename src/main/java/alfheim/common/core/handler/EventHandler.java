@@ -38,7 +38,6 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -426,10 +425,12 @@ public class EventHandler {
 				if (pt != null) pt.setDead(e.entityLiving, true);
 			}
 		}
+		
+		if (e.entityLiving instanceof EntityPlayer) onPlayerUpdate(e);
 	}
 	
-	private void onPlayerUpdate(PlayerTickEvent e) {
-		EntityPlayer player = (EntityPlayer) e.player;
+	private void onPlayerUpdate(LivingUpdateEvent e) {
+		EntityPlayer player = (EntityPlayer) e.entityLiving;
 		
 //		player.rotationYaw = player.rotationPitch = 90;
 		
