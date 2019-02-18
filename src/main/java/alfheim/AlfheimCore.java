@@ -4,7 +4,6 @@ import static alfheim.api.ModInfo.*;
 
 import java.io.File;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
 import alfheim.common.core.command.*;
 import alfheim.common.core.handler.CardinalSystem;
@@ -92,7 +91,6 @@ public class AlfheimCore {
 	
 	@EventHandler
 	public void starting(FMLServerStartingEvent event) {
-		ASJUtilities.log("Starting...");
 		save = event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory().getAbsolutePath();
 		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save);
 		CardinalSystem.load(save);
