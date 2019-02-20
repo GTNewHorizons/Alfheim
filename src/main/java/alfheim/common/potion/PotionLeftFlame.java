@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.world.BlockEvent;
 
@@ -50,6 +51,11 @@ public class PotionLeftFlame extends PotionAlfheim {
 	}
 	
 	@SubscribeEvent
+	public void onBreakSpeed(BreakSpeed e) {
+		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) e.newSpeed = 0;
+	}
+	
+	@SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent e) {
 		if (AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
 		if (e.getPlayer().getCurrentEquippedItem() != null && (e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.flugelSoul || e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.holoProjector)) e.setCanceled(true);
@@ -74,7 +80,7 @@ public class PotionLeftFlame extends PotionAlfheim {
 	}
 	
 	@SubscribeEvent
-	public void onBreakSpeed(BreakSpeed e) {
-		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) e.newSpeed = 0;
+	public void onHeal(LivingHealEvent e) {
+		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
 	}
 }

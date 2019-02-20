@@ -18,8 +18,10 @@ public class AlfheimHookLoader extends HookLoader {
 	
 	static {
 		hpSpells = !System.getProperty("alfheim.spells.hpasm", "on").equals("off");
+		if (!hpSpells) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable hooks into health system, thing may not go well: Shared HP spell is unavailable, \"leftover flame\" of other players can somehow be \"healed\" (seems to lead to nothing).", ModInfo.MODID.toUpperCase()));
 		isThermos = System.getProperty("alfheim.thermos.suppress", "off").equals("on");
-		if (isThermos) FMLRelaunchLog.info(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core", ModInfo.MODID.toUpperCase()));
+		if (isThermos) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core - thing may not go well", ModInfo.MODID.toUpperCase()));
+		
 		ModInfo.OBF = !(Boolean) ASJReflectionHelper.getStaticValue(CoreModManager.class, "deobfuscatedEnvironment");
 		ASJReflectionHelper.setStaticFinalValue(ModInfo.class, !ModInfo.OBF, "DEV");
 	}
