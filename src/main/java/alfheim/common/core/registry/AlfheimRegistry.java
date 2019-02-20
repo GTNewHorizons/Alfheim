@@ -194,7 +194,7 @@ public class AlfheimRegistry {
 		registerSpell(new SpellPoisonRoots());
 		registerSpell(new SpellPurifyingSurface());
 		registerSpell(new SpellRain());
-		if (AlfheimHookLoader.hpSpells) registerSpell(new SpellResurrect());
+		registerSpell(new SpellResurrect());
 		registerSpell(new SpellSacrifice());
 		if (AlfheimHookLoader.hpSpells) registerSpell(new SpellSharedHealthPool());
 		registerSpell(new SpellSmokeScreen());
