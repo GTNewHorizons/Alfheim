@@ -128,7 +128,7 @@ public class ModelEntityRook extends ModelBase {
         setRotateAngle(lower_top_body_piece, -0.03490658503988659F, 0.0F, 0.0F);
         hummer_head2 = new ModelRenderer(this, 336, 183);
         hummer_head2.setRotationPoint(-3.93F, -5.6F, -0.8F);
-        hummer_head2.addBox(48.0F, -21.9F, 27.9F, 8, 18, 8, 0.0F);
+        hummer_head2.addBox(48.0F, -26.2F, 27.9F, 8, 18, 8, 0.0F);
         setRotateAngle(hummer_head2, -0.03752457891787808F, 5.235987755982988E-4F, 0.01710422666954443F);
         main_towers_base = new ModelRenderer(this, 132, 4);
         main_towers_base.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -219,7 +219,7 @@ public class ModelEntityRook extends ModelBase {
         setRotateAngle(righ_tower_flagpole2_1, -0.42114794850623166F, 0.16615534478986016F, 0.3862413634663451F);
         hummer_handle = new ModelRenderer(this, 304, 0);
         hummer_handle.setRotationPoint(-19.42F, 26.21F, -0.43F);
-        hummer_handle.addBox(23.0F, 4.3F, -13.2F, 3, 3, 40, 0.0F);
+        hummer_handle.addBox(23.0F, 0.0F, -13.2F, 3, 3, 40, 0.0F);
         setRotateAngle(hummer_handle, -0.40142572795869574F, 0.003839724354387525F, 0.017453292519943295F);
         lef_arm_deco_lower2 = new ModelRenderer(this, 170, 105);
         lef_arm_deco_lower2.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -401,7 +401,7 @@ public class ModelEntityRook extends ModelBase {
         setRotateAngle(lef_lower_body_side_1, -0.03490658503988659F, 0.0F, -0.14364059743913332F);
         hummer_head = new ModelRenderer(this, 289, 181);
         hummer_head.setRotationPoint(-24.44F, 21.57F, -1.28F);
-        hummer_head.addBox(43.5F, -24.7F, 26.8F, 10, 17, 10, 0.0F);
+        hummer_head.addBox(43.5F, -29.0F, 26.8F, 10, 17, 10, 0.0F);
         setRotateAngle(hummer_head, -0.01727875959474386F, 0.008377580409572781F, -1.7453292519943296E-4F);
         righ_tower_flagpole1_1 = new ModelRenderer(this, 350, 144);
         righ_tower_flagpole1_1.setRotationPoint(0.0F, 0.0F, 0.0F);

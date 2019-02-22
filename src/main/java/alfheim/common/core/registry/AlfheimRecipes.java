@@ -19,6 +19,8 @@ import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;
+import alfheim.common.crafting.recipe.LootInterceptorClearRecipe;
+import alfheim.common.crafting.recipe.LootInterceptorRecipe;
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -79,6 +81,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeLensTripwire;
 	public static IRecipe recipeLivingcobble;
 	public static IRecipe recipeLivingrockPickaxe;
+	public static IRecipe recipeLootInterceptor;
 	public static IRecipe recipeManaInfusionCore;
 	public static IRecipe recipeManaInfuser;
 	public static IRecipe recipeManaRingElven;
@@ -169,12 +172,6 @@ public class AlfheimRecipes {
 			'S', LIFE_ESSENCE,
 			'D', DREAM_WOOD);
 		recipeAstrolabe = BotaniaAPI.getLatestAddedRecipe();
-		
-		addShapelessOreDictRecipe(new ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater);
-		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe();
-		
-		addShapelessOreDictRecipe(new ItemStack(auraRingGod), MAUFTRIUM_INGOT, auraRingElven);
-		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(balanceCloak),
 			"WWW", "EWE", "ESE",
@@ -390,14 +387,18 @@ public class AlfheimRecipes {
 			'L', new ItemStack(lens, 1, 0));
 		recipeLensMessenger = BotaniaAPI.getLatestAddedRecipe();
 		
-		addShapelessOreDictRecipe(new ItemStack(lens, 1, 23), new ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM);
-		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe();
-		
 		addOreDictRecipe(new ItemStack(livingrockPickaxe),
 			"LLL", " S ", " S ",
 			'L', livingcobble,
 			'S', "stickWood");
 		recipeLivingrockPickaxe = BotaniaAPI.getLatestAddedRecipe();
+		
+		addOreDictRecipe(new ItemStack(lootInterceptor),
+			"IHI", "DID",
+			'I', IFFESAL_DUST,
+			'H', blackHoleTalisman,
+			'D', DREAM_WOOD);
+		recipeLootInterceptor = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(manaInfuser),
 			"DCD", "IRI", "SSS",
@@ -413,9 +414,6 @@ public class AlfheimRecipes {
 			'S', ELVORIUM_INGOT,
 			'I', manaStone);
 		recipeManaRingElven = BotaniaAPI.getLatestAddedRecipe();
-		
-		addShapelessOreDictRecipe(new ItemStack(manaRingGod), MAUFTRIUM_INGOT, manaStoneGreater);
-		recipeManaRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(manasteelHoe),
 			"SS", " T", " T",
@@ -497,6 +495,12 @@ public class AlfheimRecipes {
 	}
 
 	public static void registerShapelessRecipes() {
+		addShapelessOreDictRecipe(new ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater);
+		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe();
+		
+		addShapelessOreDictRecipe(new ItemStack(auraRingGod), MAUFTRIUM_INGOT, auraRingElven);
+		recipeAuraRingGod = BotaniaAPI.getLatestAddedRecipe();
+		
 		if (Botania.thaumcraftLoaded) {
 			Item goggles = (Item) Item.itemRegistry.getObject("Thaumcraft:ItemGoggles");
 			addShapelessRecipe(new ItemStack(elementalHelmetRevealing), new ItemStack(elementalHelmet), goggles);
@@ -512,11 +516,17 @@ public class AlfheimRecipes {
 		addShapelessOreDictRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET); 
 		addShapelessOreDictRecipe(new ItemStack(elvoriumBlock), ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT);
 		addShapelessOreDictRecipe(new ItemStack(mauftriumBlock), MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT);
+
+		addShapelessOreDictRecipe(new ItemStack(lens, 1, 23), new ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM);
+		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessOreDictRecipe(new ItemStack(livingcobble), LIVING_ROCK);
 		recipeLivingcobble = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessOreDictRecipe(new ItemStack(manaResource, 4, 5), ancientWill);
+		
+		addShapelessOreDictRecipe(new ItemStack(manaRingGod), MAUFTRIUM_INGOT, manaStoneGreater);
+		recipeManaRingGod = BotaniaAPI.getLatestAddedRecipe();
 		
 		addShapelessRecipe(new ItemStack(brown_mushroom), mushroom);
 		addShapelessRecipe(new ItemStack(red_mushroom), mushroom);
@@ -603,6 +613,8 @@ public class AlfheimRecipes {
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0);
 		
 		addRecipe(new HelmRevealingAlfheimRecipe());
+		addRecipe(new LootInterceptorRecipe());
+		addRecipe(new LootInterceptorClearRecipe());
 	}
 	
 	public static void init() {

@@ -74,6 +74,11 @@ botania.tagline.greenRod=Greening!
 botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
 botania.page.greenRod1=Green green green green green
 
+botania.entry.lootInt=Loot Interceptor
+botania.tagline.lootInt=No more littered inventories!
+botania.page.lootInt0=By upgrading &1Black Hole Talisman&0 with some &1Iffesal Dust&0 one can create a sort of handy trashcan, which can consume not only block, but items from your inventory and shatter them into some amount of &4Mana&0. Put unwanted items in crafting grid alongside with &1Interceptor&0 to setup destroy filter (only &4ID&0 and &4Metadata&0 sensitive). Put it to empty grid to clear filter.  
+botania.page.lootInt1=Creating &1Interceptor&0
+
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!

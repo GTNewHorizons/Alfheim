@@ -61,6 +61,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry greenRod;
 	public static LexiconEntry infuser;
 	public static LexiconEntry itemHold;
+	public static LexiconEntry lootInt;
 	public static LexiconEntry mask;
 	//public static LexiconEntry mjolnir;
 	public static LexiconEntry mobs;
@@ -109,6 +110,7 @@ public class AlfheimLexiconData {
 		greenRod= new BLexiconEntry("greenRod",	categoryAlfheim);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
 		itemHold= new BLexiconEntry("itemHold",	categoryAlfheim);
+		lootInt	= new BLexiconEntry("lootInt",	categoryAlfheim);
 		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
@@ -205,6 +207,8 @@ public class AlfheimLexiconData {
 		amulNimb.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCloudPendantSuper));
 		
 		astrolab.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipeAstrolabe));
+		
+		lootInt	.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeLootInterceptor));
 		
 		ores	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
@@ -423,6 +427,7 @@ public class AlfheimLexiconData {
 		amulCirs.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		amulNimb.setKnowledgeType(kt);
 		astrolab.setKnowledgeType(kt);
+		lootInt	.setKnowledgeType(kt);
 		
 		ores	.setKnowledgeType(kt);
 		mobs	.setKnowledgeType(kt);
