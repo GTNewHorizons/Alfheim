@@ -46,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 	
 	static {
 		removeKeyBinding(keyCast);
+		removeKeyBinding(keyUnCast);
 		removeKeyBinding(keyFlight);
 		removeKeyBinding(keySelMob);
 		removeKeyBinding(keySelTeam);
