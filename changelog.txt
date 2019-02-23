@@ -1,17 +1,4 @@
 Innovations:
-New worldgen feature - anomalies, left after The Shattering
-New item - Loot Interceptor, converts garbage to mana
-New hi' spell - Isaacs' Epic Missile Storm
-WAILA compatibility for anyavil and Midgard trade portal
-Reality sword: earth mode - slowdown (was poison); water mode - launch to space
-VM argument //-Dalfheim.spells.hpasm=off// to turn off hooks into HP system
-Terraform Rods now can remove livingrock
-Fortune sensitivity for dragonstone ore
-...and more
-
+ -- 
 Fixes:
-#56 - "Minimal Graphics" mode
-#57 - Config names changed
-#58 (Exotic birds crash)
-#59 (Keybinds interruption)
-#63 - New entity IDs
+ -- 
