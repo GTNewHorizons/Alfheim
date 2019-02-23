@@ -76,44 +76,13 @@ public class GUISpells extends Gui {
 	        glEnable(GL_TEXTURE_2D);
         }
         
-		glTranslated(0, height - 62, 0);
-		eng.bindTexture(LibResourceLocations.spellRace);
-		tes.startDrawingQuads();
-		tes.addVertexWithUV(0, 0, 0, 1, 0);
-		tes.addVertexWithUV(0, 60, 0, 1, 1);
-		tes.addVertexWithUV(24, 60, 0, 0, 1);
-		tes.addVertexWithUV(24, 0, 0, 0, 0);
-		tes.draw();
-		glDisable(GL_BLEND);
-		
-		glPopMatrix();
-        glPushMatrix();
-		glTranslated(4, height - 40, 0);
-		drawRect(LibResourceLocations.affinities[rID], 16);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glTranslated(0, 20, 0);
-		int nrID = rID - 1;
-		nrID = nrID < 1 ? 9 : nrID;
-		drawRect(LibResourceLocations.affinities[nrID], 16);
-		
-        glTranslated(0, -40, 0);
-		nrID = rID + 1;
-		nrID = nrID > 9 ? 1 : nrID;
-		drawRect(LibResourceLocations.affinities[nrID], 16);
-        glColor4d(1, 1, 1, 1);
-        glPopMatrix();
-        
-        zLevel = -91.0F;
+        // ################ horizontal bar ################
         eng.bindTexture(LibResourceLocations.widgets);
-        drawTexturedModalRect(20 + pos * 20, height - 44, 0, 22, 24, 24);
-        zLevel = -92.0F;
         drawTexturedModalRect(21, height - 43, 0, 0, length, 22);
         drawTexturedModalRect(21 + length, height - 43, 161, 0, 22, 22);
+        drawTexturedModalRect(20 + pos * 20, height - 44, 0, 22, 24, 24);
 		
-        zLevel = -90.0F;
-        
+        // ################ spells icons ################
         glPushMatrix();
     	glTranslated(24, height - 40, 0);
         for (int i = 0; i < Math.min(count, 5); i++) {
@@ -165,6 +134,41 @@ public class GUISpells extends Gui {
         glEnable(GL_TEXTURE_2D);
         glPopMatrix();
         
+        glColor4d(1, 1, 1, 1);
+        
+        // ################ Vertical bar ################
+        glPushMatrix();
+        glTranslated(0, height - 62, 0);
+		eng.bindTexture(LibResourceLocations.spellRace);
+		tes.startDrawingQuads();
+		tes.addVertexWithUV(0, 0, 0, 1, 0);
+		tes.addVertexWithUV(0, 60, 0, 1, 1);
+		tes.addVertexWithUV(24, 60, 0, 0, 1);
+		tes.addVertexWithUV(24, 0, 0, 0, 0);
+		tes.draw();
+        glPopMatrix();
+        
+        // ################ Race icons ################
+        glPopMatrix();
+        glPushMatrix();
+		glTranslated(4, height - 40, 0);
+		drawRect(LibResourceLocations.affinities[rID], 16);
+
+		glColor4d(1, 1, 1, 0.75);
+		
+		glTranslated(0, 20, 0);
+		int nrID = rID - 1;
+		nrID = nrID < 1 ? 9 : nrID;
+		drawRect(LibResourceLocations.affinities[nrID], 16);
+		
+        glTranslated(0, -40, 0);
+		nrID = rID + 1;
+		nrID = nrID > 9 ? 1 : nrID;
+		drawRect(LibResourceLocations.affinities[nrID], 16);
+        glColor4d(1, 1, 1, 1);
+        glPopMatrix();
+        
+        // ################ Spell name ################
         SpellBase spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID);
         font.drawString(StatCollector.translateToLocal("spell." + spell.name + ".name"), 24, height - 18, ASJUtilities.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID)));
         
@@ -203,7 +207,6 @@ public class GUISpells extends Gui {
         glPopMatrix();
         
         glDisable(GL_BLEND);
-		
         glPopMatrix();
 	}
 	

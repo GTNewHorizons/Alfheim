@@ -75,6 +75,7 @@ public class GUIParty extends Gui {
 		// ################################################################ SELF ################################################################
 		
 		if (AlfheimConfig.selfHealthUI) {
+			glPushMatrix();
 			/*glPushMatrix();
 			glTranslated(8, 8, 0);
 			glScaled(3./4, 3./8, 1);
@@ -84,13 +85,6 @@ public class GUIParty extends Gui {
 			zLevel = -89.0F;
 			drawTexturedModalRect(0, 0, 160, 64, 32, 64);
 			glPopMatrix();*/
-			
-			{
-				glTranslated(0, -0.5, -89);
-				data = (format.format(player.getHealth()) + "/" + format.format(player.getMaxHealth())).replace(',', '.');
-				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0);
-				glTranslated(0, 0.5, 89);
-			}
 			
 			glColor4d(1, 1, 1, 1);
 			mc.renderEngine.bindTexture(LibResourceLocations.health);
@@ -181,7 +175,15 @@ public class GUIParty extends Gui {
 
 				if (length > 11) drawTexturedModalRect(39, 26, 39, 66, length - 11, 10);
 			}
-			
+
+			// ################ hp: ################
+			{
+				glTranslated(0, -0.5, -89);
+				data = (format.format(player.getHealth()) + "/" + format.format(player.getMaxHealth())).replace(',', '.');
+				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0);
+				glTranslated(0, 0.5, 89);
+			}
+
 			// ################ name: ################
 			{
 				data = mc.thePlayer.getCommandSenderName();
@@ -206,104 +208,18 @@ public class GUIParty extends Gui {
 				font.drawString(data, 88 - (font.getStringWidth(data) / 2), 3, CardinalSystemClient.segment.target == mc.thePlayer ? G : pt.get(0) == mc.thePlayer ? R : 0xFFFFFFFF, shadow);
 				glTranslated(0, 0, 89);
 			}
+			glColor4d(1, 1, 1, 1);
+			glPopMatrix();
 		}
 		
 		// ################################################################ PARTY ################################################################
+		EntityLivingBase l = null;
 		
 		{
+			glPushMatrix();
 			float hp = -1, hpm = -1;
 			int y = 10, col = 0xFFDDDDDD; // bg color
 			boolean st = false, shadow = true;
-			EntityLivingBase l = null;
-			
-			// ################ icon: ################
-			{
-				zLevel = -85;
-				glMatrixMode(GL_TEXTURE);
-				glPushMatrix();
-				glScaled(512./464, 512./464, 1);
-				glTranslated(-1./24, -1./24, 0);
-				glMatrixMode(GL_MODELVIEW);
-				
-				if (AlfheimConfig.selfHealthUI){
-					mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(player));
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-					glColor4d(1, 1, 1, 0.5);
-					Tessellator.instance.startDrawingQuads();
-					Tessellator.instance.addVertexWithUV(4, 4, 0, 0, 0);
-					Tessellator.instance.addVertexWithUV(4, 36, 0, 0, 1);
-					Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
-					Tessellator.instance.addVertexWithUV(36, 4, 0, 1, 0);
-					Tessellator.instance.draw();
-					
-					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
-					
-					double mod = MathHelper.floor_double(Flight.get(mc.thePlayer)) / Flight.max();
-					double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;
-					glColor4d(1, 1, 1, (mc.thePlayer.capabilities.isFlying ? (mod > 0.1 ? time + 0.5 : time) : 1));
-					
-					Tessellator.instance.startDrawingQuads();
-					Tessellator.instance.addVertexWithUV(4, 36-(mod*32), 0, 0, 1-mod);
-					Tessellator.instance.addVertexWithUV(4, 36, 0, 0, 1);
-					Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
-					Tessellator.instance.addVertexWithUV(36, 36-(mod*32), 0, 1, 1-mod);
-					Tessellator.instance.draw();
-				} else {
-					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
-				}
-
-				glColor4d(1, 1, 1, 1);
-				for (int i = 0; i < pt.count; i++) {
-					l = pt.get(i);
-					if (l == mc.thePlayer) continue;
-					
-					icon: {
-						y += 40;
-						if (l == null) break icon;
-						
-						glPushMatrix();
-						glTranslated(4, y, 0);
-						mc.getTextureManager().bindTexture(pt.isPlayer(i) ? RenderWings.getPlayerIconTexture((EntityPlayer) l) : l instanceof IBossDisplayData ? LibResourceLocations.icons[LibResourceLocations.BOSS] : l instanceof INpc ? LibResourceLocations.icons[LibResourceLocations.NPC] : LibResourceLocations.icons[LibResourceLocations.MOB]);
-						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-						glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-						Tessellator.instance.startDrawingQuads();
-						Tessellator.instance.addVertexWithUV(0, 0, 0, 0, 0);
-						Tessellator.instance.addVertexWithUV(0, 28, 0, 0, 1);
-						Tessellator.instance.addVertexWithUV(28, 28, 0, 1, 1);
-						Tessellator.instance.addVertexWithUV(28, 0, 0, 1, 0);
-						Tessellator.instance.draw();
-						glPopMatrix();
-					}
-				}
-				
-				y = 0;
-				
-				tg_icon: {
-					l = CardinalSystemClient.segment().target;
-					if (l == null) break tg_icon;
-					if (!AlfheimConfig.targetUI) break tg_icon;
-					
-					glPushMatrix();
-					glTranslated(event.resolution.getScaledWidth() / 2. / s - 116, 11, 0);
-					mc.getTextureManager().bindTexture(l instanceof EntityPlayer ? RenderWings.getPlayerIconTexture((EntityPlayer) l) : l instanceof IBossDisplayData ? LibResourceLocations.icons[LibResourceLocations.BOSS] : l instanceof INpc ? LibResourceLocations.icons[LibResourceLocations.NPC] : LibResourceLocations.icons[LibResourceLocations.MOB]);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-					Tessellator.instance.startDrawingQuads();
-					Tessellator.instance.addVertexWithUV(0, 0, 0, 0, 0);
-					Tessellator.instance.addVertexWithUV(0, 28, 0, 0, 1);
-					Tessellator.instance.addVertexWithUV(28, 28, 0, 1, 1);
-					Tessellator.instance.addVertexWithUV(28, 0, 0, 1, 0);
-					Tessellator.instance.draw();
-					glPopMatrix();
-				}
-				
-				glMatrixMode(GL_TEXTURE);
-				glPopMatrix();
-				glMatrixMode(GL_MODELVIEW);
-				
-				if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
-			}
 			
 			// ################ rest: ################
 			for (int i = 0; i < pt.count; i++) {
@@ -458,15 +374,19 @@ public class GUIParty extends Gui {
 				st = false;
 				shadow = true;
 				col = 0xFFDDDDDD;
-				ASJUtilities.glColor1u(0xFFFFFFFF);
+				glColor4d(1, 1, 1, 1);
 			}
+			
+			glPopMatrix();
 		}
 		
 		// ################################################################ TARGET ################################################################
 		if (AlfheimConfig.targetUI && CardinalSystemClient.segment.target != null) {
+			glPushMatrix();
+			glColor4d(1, 1, 1, 1);
 			glTranslated(event.resolution.getScaledWidth() / 2. / s - 120, 0, 0);
 			zLevel = -80;
-			EntityLivingBase l = CardinalSystemClient.segment.target;
+			l = CardinalSystemClient.segment.target;
 			float hp = Math.min(l.getHealth(), l.getMaxHealth());
 			float hpm = l.getMaxHealth();
 			int col = 0xFFDDDDDD; // bg color
@@ -584,7 +504,100 @@ public class GUIParty extends Gui {
 			st = false;
 			shadow = true;
 			col = 0xFFDDDDDD;
-			ASJUtilities.glColor1u(0xFFFFFFFF);
+			glColor4d(1, 1, 1, 1);
+			glPopMatrix();
+		}
+		
+		// ################ icon: ################
+		{
+			int y = 0;
+			zLevel = -80;
+			glMatrixMode(GL_TEXTURE);
+			glPushMatrix();
+			glScaled(512./464, 512./464, 1);
+			glTranslated(-1./24, -1./24, 0);
+			glMatrixMode(GL_MODELVIEW);
+			
+			if (AlfheimConfig.selfHealthUI) {
+				mc.getTextureManager().bindTexture(RenderWings.getPlayerIconTexture(player));
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+				glColor4d(1, 1, 1, 0.5);
+				Tessellator.instance.startDrawingQuads();
+				Tessellator.instance.addVertexWithUV(4, 4, 0, 0, 0);
+				Tessellator.instance.addVertexWithUV(4, 36, 0, 0, 1);
+				Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
+				Tessellator.instance.addVertexWithUV(36, 4, 0, 1, 0);
+				Tessellator.instance.draw();
+				
+				if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+				
+				double mod = MathHelper.floor_double(Flight.get(mc.thePlayer)) / Flight.max();
+				double time = Math.sin(mc.theWorld.getTotalWorldTime() / 2) * 0.5;
+				glColor4d(1, 1, 1, (mc.thePlayer.capabilities.isFlying ? (mod > 0.1 ? time + 0.5 : time) : 1));
+				
+				Tessellator.instance.startDrawingQuads();
+				Tessellator.instance.addVertexWithUV(4, 36-(mod*32), 0, 0, 1-mod);
+				Tessellator.instance.addVertexWithUV(4, 36, 0, 0, 1);
+				Tessellator.instance.addVertexWithUV(36, 36, 0, 1, 1);
+				Tessellator.instance.addVertexWithUV(36, 36-(mod*32), 0, 1, 1-mod);
+				Tessellator.instance.draw();
+			} else {
+				if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow);
+			}
+
+			y += 20;
+			
+			glColor4d(1, 1, 1, 1);
+			for (int i = 0; i < pt.count; i++) {
+				l = pt.get(i);
+				if (l == mc.thePlayer) continue;
+				
+				icon: {
+					y += 40;
+					if (l == null) break icon;
+					
+					glPushMatrix();
+					glTranslated(4, y, 0);
+					mc.getTextureManager().bindTexture(pt.isPlayer(i) ? RenderWings.getPlayerIconTexture((EntityPlayer) l) : l instanceof IBossDisplayData ? LibResourceLocations.icons[LibResourceLocations.BOSS] : l instanceof INpc ? LibResourceLocations.icons[LibResourceLocations.NPC] : LibResourceLocations.icons[LibResourceLocations.MOB]);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+					Tessellator.instance.startDrawingQuads();
+					Tessellator.instance.addVertexWithUV(0, 0, 0, 0, 0);
+					Tessellator.instance.addVertexWithUV(0, 28, 0, 0, 1);
+					Tessellator.instance.addVertexWithUV(28, 28, 0, 1, 1);
+					Tessellator.instance.addVertexWithUV(28, 0, 0, 1, 0);
+					Tessellator.instance.draw();
+					glPopMatrix();
+				}
+			}
+			
+			y = 0;
+			
+			tg_icon: {
+				l = CardinalSystemClient.segment().target;
+				if (l == null) break tg_icon;
+				if (!AlfheimConfig.targetUI) break tg_icon;
+				
+				glPushMatrix();
+				glTranslated(event.resolution.getScaledWidth() / 2. / s - 116, 11, 0);
+				mc.getTextureManager().bindTexture(l instanceof EntityPlayer ? RenderWings.getPlayerIconTexture((EntityPlayer) l) : l instanceof IBossDisplayData ? LibResourceLocations.icons[LibResourceLocations.BOSS] : l instanceof INpc ? LibResourceLocations.icons[LibResourceLocations.NPC] : LibResourceLocations.icons[LibResourceLocations.MOB]);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+				Tessellator.instance.startDrawingQuads();
+				Tessellator.instance.addVertexWithUV(0, 0, 0, 0, 0);
+				Tessellator.instance.addVertexWithUV(0, 28, 0, 0, 1);
+				Tessellator.instance.addVertexWithUV(28, 28, 0, 1, 1);
+				Tessellator.instance.addVertexWithUV(28, 0, 0, 1, 0);
+				Tessellator.instance.draw();
+				glPopMatrix();
+			}
+			
+			glMatrixMode(GL_TEXTURE);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
+			
+			if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader();
 		}
 		
 		glDisable(GL_BLEND);
