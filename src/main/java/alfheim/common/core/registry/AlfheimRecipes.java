@@ -100,7 +100,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeSword;
 	public static IRecipe recipeThinkingHand;
 	public static IRecipe recipeTradePortal;
-
+	
 	public static RecipeElvenTrade recipeInterdimensional;
 	
 	public static RecipePureDaisy recipeDreamwood;
@@ -118,7 +118,7 @@ public class AlfheimRecipes {
 		banRetrades();
 		//if (ModInfo.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
 	}
-
+	
 	public static void registerCraftingRecipes() {
 		addOreDictRecipe(new ItemStack(alfheimPortal, 1),
 			"DPD", "GSG", "DTD",
@@ -129,17 +129,17 @@ public class AlfheimRecipes {
 			'T', new ItemStack(lens, 1, 18));
 		recipeAlfheimPortal = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 0),
+		addOreDictRecipe(new ItemStack(alfheimPylon, 1, 0),
 			" P ", "EDE", " P ",
 			'P', PIXIE_DUST,
 			'E', ELEMENTIUM,
 			'D', DRAGONSTONE);
 		recipeElvenPylon = BotaniaAPI.getLatestAddedRecipe();
 		
-		addOreDictRecipe(new ItemStack(alfheimPylons, 1, 1),
+		addOreDictRecipe(new ItemStack(alfheimPylon, 1, 1),
 			" E ", "EPE", "III",
 			'E', ELVORIUM_NUGGET,
-			'P', new ItemStack(alfheimPylons, 1, 0),
+			'P', new ItemStack(alfheimPylon, 1, 0),
 			'I', IFFESAL_DUST);
 		recipeElvoriumPylon = BotaniaAPI.getLatestAddedRecipe();
 		
@@ -266,7 +266,7 @@ public class AlfheimRecipes {
 				" E ", "TPT", " E ",
 				'T', TERRASTEEL_NUGGET,
 				'E', overgrowthSeed,
-				'P', new ItemStack(alfheimPylons, 1, 0));
+				'P', new ItemStack(alfheimPylon, 1, 0));
 		recipeGaiaPylon = BotaniaAPI.getLatestAddedRecipe();
 		
 		addOreDictRecipe(new ItemStack(elfFirePendant),
@@ -493,7 +493,7 @@ public class AlfheimRecipes {
 			'E', ELVORIUM_NUGGET);
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe();
 	}
-
+	
 	public static void registerShapelessRecipes() {
 		addShapelessOreDictRecipe(new ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater);
 		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe();
@@ -506,7 +506,7 @@ public class AlfheimRecipes {
 			addShapelessRecipe(new ItemStack(elementalHelmetRevealing), new ItemStack(elementalHelmet), goggles);
 			addShapelessRecipe(new ItemStack(elvoriumHelmetRevealing), new ItemStack(elvoriumHelmet), goggles);
 		}
-
+		
 		addShapelessOreDictRecipe(new ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumNugget), ELVORIUM_INGOT);
 		addShapelessOreDictRecipe(new ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumNugget), MAUFTRIUM_INGOT);
 		addShapelessRecipe(new ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), elvoriumBlock);
@@ -516,7 +516,7 @@ public class AlfheimRecipes {
 		addShapelessOreDictRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET); 
 		addShapelessOreDictRecipe(new ItemStack(elvoriumBlock), ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT);
 		addShapelessOreDictRecipe(new ItemStack(mauftriumBlock), MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT);
-
+		
 		addShapelessOreDictRecipe(new ItemStack(lens, 1, 23), new ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM);
 		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe();
 		
@@ -538,7 +538,7 @@ public class AlfheimRecipes {
 		addSmelting(elvenSand, new ItemStack(elfGlass), 1.0F);
 		addSmelting(manaGlass, new ItemStack(glass), 0);
 	}
-
+	
 	public static void registerManaInfusionRecipes() {
 		// Why is this here?
 		/*addRecipe(new ItemStack(elfGlass), 100,

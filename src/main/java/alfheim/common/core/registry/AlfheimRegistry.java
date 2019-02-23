@@ -129,7 +129,7 @@ public class AlfheimRegistry {
 	
 	private static void registerTileEntities() {
 		registerTile(TileAlfheimPortal.class, "AlfheimPortal");
-		registerTile(TileAlfheimPylons.class, "AlfheimPylon");
+		registerTile(TileAlfheimPylon.class, "AlfheimPylon");
 		registerTile(TileAnimatedTorch.class, "AnimatedTorch");
 		registerTile(TileAnomaly.class, "Anomaly");
 		registerTile(TileAnyavil.class, "Anyavil");
@@ -279,7 +279,7 @@ public class AlfheimRegistry {
 		addPink(new ItemStack(AlfheimItems.pixieAttractor), 36);
 		//addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);
 		addPink(new ItemStack(AlfheimBlocks.manaInfuser), 90);
-		addPink(new ItemStack(AlfheimBlocks.alfheimPylons), 45);
+		addPink(new ItemStack(AlfheimBlocks.alfheimPylon), 45);
 		addPink(new ItemStack(AlfheimBlocks.elvenOres), 9);
 		addPink(new ItemStack(AlfheimBlocks.elvenOres, 1, 1), 9);
 		addPink(new ItemStack(AlfheimBlocks.anyavil), 297);

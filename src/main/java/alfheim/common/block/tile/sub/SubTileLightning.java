@@ -58,17 +58,17 @@ public class SubTileLightning extends SubTileEntity {
 			--stack.stackSize;
 			
 			if (world.getBlock(x, y + 1, z) == ModBlocks.pylon && world.getBlockMetadata(x, y + 1, z) == 2)
-				world.setBlock(x, y + 1, z, AlfheimBlocks.alfheimPylons, 2, 3); else 
+				world.setBlock(x, y + 1, z, AlfheimBlocks.alfheimPylon, 2, 3); else 
 			if (world.getBlock(x, y - 1, z) == ModBlocks.pylon && world.getBlockMetadata(x, y - 1, z) == 2)
-				world.setBlock(x, y - 1, z, AlfheimBlocks.alfheimPylons, 2, 3); else 
+				world.setBlock(x, y - 1, z, AlfheimBlocks.alfheimPylon, 2, 3); else 
 			if (world.getBlock(x + 1, y, z) == ModBlocks.pylon && world.getBlockMetadata(x + 1, y, z) == 2)
-				world.setBlock(x + 1, y, z, AlfheimBlocks.alfheimPylons, 2, 3); else 
+				world.setBlock(x + 1, y, z, AlfheimBlocks.alfheimPylon, 2, 3); else 
 			if (world.getBlock(x - 1, y, z) == ModBlocks.pylon && world.getBlockMetadata(x - 1, y, z) == 2)
-				world.setBlock(x - 1, y, z, AlfheimBlocks.alfheimPylons, 2, 3); else 
+				world.setBlock(x - 1, y, z, AlfheimBlocks.alfheimPylon, 2, 3); else 
 			if (world.getBlock(x, y, z + 1) == ModBlocks.pylon && world.getBlockMetadata(x, y, z + 1) == 2)
-				world.setBlock(x, y, z + 1, AlfheimBlocks.alfheimPylons, 2, 3); else 
+				world.setBlock(x, y, z + 1, AlfheimBlocks.alfheimPylon, 2, 3); else 
 			if (world.getBlock(x, y, z - 1) == ModBlocks.pylon && world.getBlockMetadata(x, y, z - 1) == 2)
-				world.setBlock(x, y, z - 1, AlfheimBlocks.alfheimPylons, 2, 3);
+				world.setBlock(x, y, z - 1, AlfheimBlocks.alfheimPylon, 2, 3);
 			
 			world.playSoundEffect(x, y, z, "botania:runeAltarStart", 1F, 1F);
 			

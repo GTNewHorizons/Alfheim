@@ -20,7 +20,7 @@ import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName;
 public class AlfheimBlocks {
 	
 	public static Block alfheimPortal;
-	public static Block alfheimPylons;
+	public static Block alfheimPylon;
 	public static Block animatedTorch;
 	public static Block anomaly;
 	public static Block anyavil;
@@ -36,6 +36,7 @@ public class AlfheimBlocks {
 	public static Block mauftriumBlock;
 	public static Block manaInfuser;
 	public static Block poisonIce;
+	public static Block powerPylon;
 	public static Block redFlame;
 	public static Block tradePortal;
 	//public static Block transferer; BACK
@@ -48,7 +49,7 @@ public class AlfheimBlocks {
 	
 	private static void construct() {
 		alfheimPortal = new BlockAlfheimPortal();
-		alfheimPylons = new BlockAlfheimPylon();
+		alfheimPylon = new BlockAlfheimPylon();
 		animatedTorch = new BlockAnimatedTorch();
 		anomaly = new BlockAnomaly();
 		anyavil = new BlockAnyavil();
@@ -64,6 +65,7 @@ public class AlfheimBlocks {
 		mauftriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.essences);
 		manaInfuser = new BlockManaInfuser();
 		poisonIce = new BlockPoisonIce();
+		powerPylon = new BlockPowerPylon();
 		redFlame = new BlockRedFlame();
 		tradePortal = new BlockTradePortal();
 		//transferer = new BlockTransferer(); BACK
@@ -75,7 +77,8 @@ public class AlfheimBlocks {
 		register(tradePortal);
 		//register(transferer); BACK
 		register(itemHolder);
-		registerBlock(alfheimPylons, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylons));
+		registerBlock(alfheimPylon, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylon));
+		registerBlock(powerPylon, ItemBlockWithMetadataAndName.class, getBlockName(powerPylon));
 		register(anyavil);
 		register(elvoriumBlock);
 		register(mauftriumBlock);

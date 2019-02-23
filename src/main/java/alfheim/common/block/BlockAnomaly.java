@@ -14,6 +14,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.block.ItemBlockAnomaly;
+import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -27,8 +28,10 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import vazkii.botania.api.lexicon.ILexiconable;
+import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockAnomaly extends BlockContainer {
+public class BlockAnomaly extends BlockContainer implements ILexiconable {
 	
 	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
 	public static IIcon iconUndefined;
@@ -98,5 +101,10 @@ public class BlockAnomaly extends BlockContainer {
 	@Override
 	public Item getItemDropped(int meta, Random rand, int luck) {
 		return null;
+	}
+	
+	@Override
+	public LexiconEntry getEntry(World world, int x, int y, int z, EntityPlayer player, ItemStack lexicon) {
+		return AlfheimLexiconData.anomaly;
 	}
 }

@@ -58,7 +58,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	
 	public static MultiblockSet makeMultiblockSetSoul() {
 		Multiblock mb = new Multiblock();
-		for(int[] l : PYLONS) mb.addComponent(l[0], 1, l[2], AlfheimBlocks.alfheimPylons, 2);
+		for(int[] l : PYLONS) mb.addComponent(l[0], 1, l[2], AlfheimBlocks.alfheimPylon, 2);
 		mb.addComponent(0, 0, 0, Blocks.beacon, 0);
 		mb.addComponent(0, 2, 0, AlfheimBlocks.manaInfuser, 0);
 		mb.addComponent(0, 5, 0, ModBlocks.brewery, 0);
@@ -347,7 +347,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	}
 	
 	boolean isReadyToKillGaia() {
-		return checkPlatform(0, -2,  0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylons, 2);
+		return checkPlatform(0, -2,  0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylon, 2);
 	}
 	
 	boolean hasValidPlatform() {

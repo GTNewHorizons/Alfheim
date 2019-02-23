@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.handler.ConfigHandler;
 
-public class TileAlfheimPylons extends TileEntity {
+public class TileAlfheimPylon extends TileEntity {
 
 	boolean activated = false;
 	int centerX, centerY, centerZ;

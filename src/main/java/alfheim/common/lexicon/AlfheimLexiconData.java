@@ -68,6 +68,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry ores;
 	public static LexiconEntry pixie;
 	public static LexiconEntry portal;
+	public static LexiconEntry powerPys;
 	public static LexiconEntry pylons;
 	public static LexiconEntry reality;
 	public static LexiconEntry ruling;
@@ -116,6 +117,7 @@ public class AlfheimLexiconData {
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
 		portal	= new BLexiconEntry("portal",	categoryAlfheim);
 		pylons	= new BLexiconEntry("pylons",	categoryAlfheim);
+		powerPys= new BLexiconEntry("powerPys",	categoryAlfheim);
 		reality	= new BLexiconEntry("reality",	categoryAlfheim);
 		ruling	= new BLexiconEntry("ruling",	categoryAlfheim);
 		runes	= new BLexiconEntry("runes",	categoryAlfheim);
@@ -169,7 +171,7 @@ public class AlfheimLexiconData {
 		
 		pylons	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeElvenPylon), new PageCraftingRecipe("2", AlfheimRecipes.recipeGaiaPylon))
-				.setIcon(new ItemStack(AlfheimBlocks.alfheimPylons, 1, 0));
+				.setIcon(new ItemStack(AlfheimBlocks.alfheimPylon, 1, 0));
 		
 		portal	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"),
@@ -190,6 +192,8 @@ public class AlfheimLexiconData {
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLog), worldgen, 1);
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLeaves), worldgen, 1);
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1);
+		
+		powerPys.setLexiconPages(new PageText("0")); // TODO Describe
 		
 		aniTorch.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch));
@@ -416,11 +420,12 @@ public class AlfheimLexiconData {
 		kt();
 		
 		alfheim	.setKnowledgeType(BotaniaAPI.basicKnowledge);
-		anomaly	.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		anomaly	.setKnowledgeType(kt);
 		elves	.setKnowledgeType(kt);
 		pylons	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		portal	.setKnowledgeType(kt);
 		worldgen.setKnowledgeType(kt);
+		powerPys.setKnowledgeType(kt);
 		
 		aniTorch.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		itemHold.setKnowledgeType(BotaniaAPI.basicKnowledge);

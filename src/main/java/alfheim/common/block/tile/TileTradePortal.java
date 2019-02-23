@@ -81,7 +81,7 @@ public class TileTradePortal extends TileMod {
 		Multiblock mb = new Multiblock();
 		for (int[] l : LIVINGROCK_POSITIONS) mb.addComponent(l[0], l[1] + 1, l[2], ModBlocks.livingrock, 0);
 		for (int[] g : GLOWSTONE_POSITIONS) mb.addComponent(g[0], g[1] + 1, g[2], Blocks.glowstone, 0);
-		for (int[] p : PYLON_POSITIONS) mb.addComponent(p[0], p[1] + 1, p[2], AlfheimBlocks.alfheimPylons, 1);
+		for (int[] p : PYLON_POSITIONS) mb.addComponent(p[0], p[1] + 1, p[2], AlfheimBlocks.alfheimPylon, 1);
 		mb.addComponent(0, 1, 0, AlfheimBlocks.tradePortal, 0);
 		mb.setRenderOffset(0, -1, 0);
 		return mb.makeSet();
@@ -195,7 +195,7 @@ public class TileTradePortal extends TileMod {
 		if (--recipeMult <= 0) setTradeRecipe(null);
 		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
-
+	
 	void spawnItem(ItemStack stack) {
 		EntityItem item = new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, stack);
 		worldObj.spawnEntityInWorld(item);
@@ -247,7 +247,7 @@ public class TileTradePortal extends TileMod {
 		if (!check2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false;
 		if (!check2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false;
 		if (!check2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false;
-		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylons, 1, converters)) return false;
+		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 1, converters)) return false;
 		
 		lightPylons(converters);
 		return true;
@@ -261,8 +261,8 @@ public class TileTradePortal extends TileMod {
 			for(Function<int[], int[]> f : converters) if(f != null) pos = f.apply(pos);
 			
 			TileEntity tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2]);
-			if(tile instanceof TileAlfheimPylons) {
-				TileAlfheimPylons pylon = (TileAlfheimPylons) tile;
+			if(tile instanceof TileAlfheimPylon) {
+				TileAlfheimPylon pylon = (TileAlfheimPylon) tile;
 				pylon.activated = true;
 				pylon.centerX = xCoord;
 				pylon.centerY = yCoord;
