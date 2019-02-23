@@ -11,15 +11,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.mana.ManaItemHandler;
 
 public abstract class SpellBase {
 	
+	// Will be set during preInit
+	public static Potion overmag;
 	public final EnumRace	race;
 	public final String		name;
 	protected int			mana,
@@ -83,9 +87,21 @@ public abstract class SpellBase {
 		// NO-OP
 	}
 	
+	public static float over(EntityLivingBase caster, double was) {
+		return (float) (caster.isPotionActive(overmag) ? was * 1.2 : was);
+	}
+	
 	public SpellCastResult checkCast(EntityLivingBase caster) {
 		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
-		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, (int) (getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5)), true) : true;
+		int cost = MathHelper.ceiling_double_int(getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5));
+		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true) : true;
+		return mana ? SpellCastResult.OK : SpellCastResult.NOMANA;
+	}
+	
+	public SpellCastResult checkCastOver(EntityLivingBase caster) {
+		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
+		int cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5)));
+		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true) : true;
 		return mana ? SpellCastResult.OK : SpellCastResult.NOMANA;
 	}
 	

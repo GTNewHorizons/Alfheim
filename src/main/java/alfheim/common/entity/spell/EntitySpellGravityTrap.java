@@ -7,6 +7,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
+import alfheim.api.spell.SpellBase;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -20,8 +21,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific {
-
-    public EntityLivingBase caster;
+	
+	public EntityLivingBase caster;
 	
 	public EntitySpellGravityTrap(World world) {
 		this(world, null, 0, 0, 0);
@@ -33,7 +34,7 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 		setSize(8F, 0.01F);
 		this.caster = caster;
 	}
-
+	
 	@Override
 	public void onEntityUpdate() {
 		if (!AlfheimCore.enableMMO || ticksExisted > 200) {
@@ -41,7 +42,7 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 			return;
 		}
 		if (this.isDead || ticksExisted < 20 || !ASJUtilities.isServer()) return;
-
+		
 		List<Entity> l = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4, 8, 4));
 		for (Entity e : l) {
 			if (e == this || e == caster || (e instanceof EntityLivingBase && PartySystem.mobsSameParty(caster, (EntityLivingBase) e) && !AlfheimConfig.frienldyFire) || (e instanceof EntityPlayer && ((EntityPlayer) e).capabilities.isCreativeMode)) continue;
@@ -50,7 +51,7 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 				e.motionY -= 1;
 				e.motionX -= dist.x / 5;
 				e.motionZ -= dist.z / 5;
-				e.attackEntityFrom(DamageSourceSpell.gravity, 0.5F);
+				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, 0.5));
 			}
 		}
 		
@@ -60,11 +61,11 @@ public class EntitySpellGravityTrap extends Entity implements ITimeStopSpecific 
 			SpellEffectHandler.sendPacket(Spells.GRAVITY, dimension, p.x, p.y, p.z, m.x, m.y, m.z);
 		}
 	}
-
+	
 	public boolean isImmune() {
 		return false;
 	}
-
+	
 	public boolean affectedBy(UUID uuid) {
 		return !caster.getUniqueID().equals(uuid);
 	}

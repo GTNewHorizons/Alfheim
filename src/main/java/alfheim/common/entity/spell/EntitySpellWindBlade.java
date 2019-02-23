@@ -7,6 +7,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
+import alfheim.api.spell.SpellBase;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.Entity;
@@ -17,20 +18,20 @@ import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
 
 public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
-
+	
 	private EntityLivingBase caster;
-
+	
 	public EntitySpellWindBlade(World world) {
 		super(world);
 		setSize(3, 0.1F);
 	}
-
+	
 	public EntitySpellWindBlade(World world, EntityLivingBase caster) {
 		this(world);
 		this.caster = caster;
-        setPositionAndRotation(caster.posX, caster.posY + caster.height * 0.75, caster.posZ, caster.rotationYaw, caster.rotationPitch);
+		setPositionAndRotation(caster.posX, caster.posY + caster.height * 0.75, caster.posZ, caster.rotationYaw, caster.rotationPitch);
 	}
-
+	
 	@Override
 	public void onEntityUpdate() {
 		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster == null || caster.isDead || ticksExisted > 20))) {
@@ -52,19 +53,19 @@ public class EntitySpellWindBlade extends Entity implements ITimeStopSpecific {
 		
 		List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, boundingBox);
 		l.remove(caster);
-		for (EntityLivingBase e : l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), 6);
+		for (EntityLivingBase e : l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), SpellBase.over(caster, 6));
 	}
-
+	
 	public boolean isImmune() {
 		return false;
 	}
-
+	
 	public boolean affectedBy(UUID uuid) {
 		return !caster.getUniqueID().equals(uuid);
 	}
 	
 	public void entityInit() {}
-
+	
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")); else setDead();
 		if (caster == null) setDead();

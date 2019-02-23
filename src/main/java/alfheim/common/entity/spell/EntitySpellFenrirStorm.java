@@ -8,6 +8,7 @@ import alexsocol.asjlib.math.OrientedBB;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
+import alfheim.api.spell.SpellBase;
 import alfheim.common.core.util.DamageSourceSpell;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +28,7 @@ public class EntitySpellFenrirStorm extends Entity implements ITimeStopSpecific 
 		area = new OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8, 0.5, 0.5, 8));
 		renderDistanceWeight = 4;
 	}
-
+	
 	public EntitySpellFenrirStorm(World world, EntityLivingBase caster) {
 		this(world);
 		this.caster = caster;
@@ -49,23 +50,23 @@ public class EntitySpellFenrirStorm extends Entity implements ITimeStopSpecific 
 			return;
 		}
 		if (this.isDead || !ASJUtilities.isServer()) return;
-
+		
 		if (ticksExisted == 4) {
 			List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, area.toAABB());
-			for (EntityLivingBase e : l) if (e != caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), 10.0F);
+			for (EntityLivingBase e : l) if (e != caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, 10));
 		}
 	}
-
+	
 	public boolean isImmune() {
 		return false;
 	}
-
+	
 	public boolean affectedBy(UUID uuid) {
 		return !caster.getUniqueID().equals(uuid);
 	}
 	
 	public void entityInit() {}
-
+	
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")); else setDead();
 		if (caster == null) setDead();

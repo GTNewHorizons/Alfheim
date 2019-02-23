@@ -272,10 +272,17 @@ public class EventHandler {
 	public void onEntityAttacked(LivingAttackEvent e) {
 		float ammount = e.ammount;
 		
+		if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase) 
+			if (((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.berserk))
+				ammount *= 1.2F;
+			else
+			if (((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.ninja))
+				ammount *= 0.8F;
+		
 		if (AlfheimCore.enableMMO) {
-			if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
+			if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage))
 				ammount *= 4.0F;
-			}
+			
 			if ((e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.leftFlame)) || (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))) {
 				e.setCanceled(true);
 				return;
@@ -304,9 +311,8 @@ public class EventHandler {
 		
 		// ################################################################ NOT CANCELING ################################################################
 		
-		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(AlfheimRegistry.decay) && !e.source.isFireDamage() && !e.source.isMagicDamage() && !(e.source instanceof DamageSourceSpell) && !e.source.damageType.equals(DamageSourceSpell.bleeding.damageType)) {
+		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(AlfheimRegistry.decay) && !e.source.isFireDamage() && !e.source.isMagicDamage() && !(e.source instanceof DamageSourceSpell) && !e.source.damageType.equals(DamageSourceSpell.bleeding.damageType))
 			e.entityLiving.addPotionEffect(new PotionEffect(AlfheimRegistry.bleeding.id, 120, 0, true));
-		}
 	}
 	
 	@SubscribeEvent
@@ -316,7 +322,19 @@ public class EventHandler {
 			return;
 		}
 		
+		if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase) 
+			if (((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.berserk))
+				e.ammount *= 1.2F;
+			else
+			if (((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.ninja))
+				e.ammount *= 0.8F;
+		
 		if (AlfheimCore.enableMMO) {
+			if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
+				e.ammount *= 4.0F;
+				SpellEffectHandler.sendPacket(Spells.QUADH, e.source.getEntity());
+			}
+			
 			PotionEffect pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.nineLifes);
 			nl: if (pe != null) {
 				boolean blockable = e.source.damageType.equals(DamageSource.fall.damageType)		||
@@ -362,10 +380,6 @@ public class EventHandler {
 			}
 			
 			// ################################################################ NOT CANCELING ################################################################
-			if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
-				e.ammount *= 4.0F;
-				SpellEffectHandler.sendPacket(Spells.QUADH, e.source.getEntity());
-			}
 			
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield);
 			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {

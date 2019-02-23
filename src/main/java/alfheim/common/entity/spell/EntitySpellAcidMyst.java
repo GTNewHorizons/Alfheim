@@ -7,6 +7,7 @@ import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.spell.ITimeStopSpecific;
+import alfheim.api.spell.SpellBase;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.SpellEffectHandler;
@@ -19,14 +20,14 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
-
+	
 	public EntityLivingBase caster;
-
+	
 	public EntitySpellAcidMyst(World world) {
 		super(world);
 		setSize(1, 1);
 	}
-
+	
 	public EntitySpellAcidMyst(World world, EntityLivingBase caster) {
 		this(world);
 		this.caster = caster;
@@ -44,25 +45,25 @@ public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
 		
 		List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(4.5, 4.5, 4.5));
 		l.remove(caster);
-		for (EntityLivingBase e : l) if (!PartySystem.mobsSameParty(caster, e) && Vector3.entityDistance(caster, e) < 9) e.attackEntityFrom(DamageSourceSpell.poison, 1);
+		for (EntityLivingBase e : l) if (!PartySystem.mobsSameParty(caster, e) && Vector3.entityDistance(caster, e) < 9) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, 1)); 
 	}
 	
 	public int getTopBlock(World world, int x, int z) {
-        int y;
-        for (y = 255; y > 0 && world.isAirBlock(x, y, z); --y);
-        return y;
-    }
-
+		int y;
+		for (y = 255; y > 0 && world.isAirBlock(x, y, z); --y);
+		return y;
+	}
+	
 	public boolean isImmune() {
 		return false;
 	}
-
+	
 	public boolean affectedBy(UUID uuid) {
 		return !caster.getUniqueID().equals(uuid);
 	}
 	
 	public void entityInit() {}
-
+	
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")); else setDead();
 		if (caster == null) setDead();

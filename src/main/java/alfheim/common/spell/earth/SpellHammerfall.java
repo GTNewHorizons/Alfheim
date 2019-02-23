@@ -20,20 +20,20 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class SpellHammerfall extends SpellBase {
-
+	
 	public SpellHammerfall() {
 		super("hammerfall", EnumRace.GNOME, 10000, 200, 20);
 	}
-
+	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		if (!caster.onGround || caster.worldObj.isAirBlock(MathHelper.floor_double(caster.posX), MathHelper.floor_double(caster.posY) - 1, MathHelper.floor_double(caster.posZ))) return SpellCastResult.WRONGTGT;
 		
-		SpellCastResult result = checkCast(caster);
+		SpellCastResult result = checkCastOver(caster);
 		if (result != SpellCastResult.OK) return result;
 		
 		SpellEffectHandler.sendPacket(Spells.TREMORS, caster);
-
+		
 		List<EntityLivingBase> list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, caster.boundingBox.expand(10, 2, 10));
 		list.remove(caster);
 		for (EntityLivingBase living : list) {
@@ -44,7 +44,7 @@ public class SpellHammerfall extends SpellBase {
 				block.getBlockHardness(living.worldObj, MathHelper.floor_double(living.posX), MathHelper.floor_double(living.posY-1), MathHelper.floor_double(living.posZ)) < 2 &&
 				!PartySystem.mobsSameParty(caster, living) &&
 				Vector3.entityDistancePlane(living, caster) < 10)
-				living.attackEntityFrom(DamageSource.inWall, 10.0F);
+				living.attackEntityFrom(DamageSource.inWall, over(caster, 10));
 		}
 		return result;
 	}
@@ -53,7 +53,7 @@ public class SpellHammerfall extends SpellBase {
 	public void render(EntityLivingBase caster) {
 		double s = 10;
 		glDisable(GL_CULL_FACE);
-        glAlphaFunc(GL_GREATER, 0.003921569F);
+		glAlphaFunc(GL_GREATER, 0.003921569F);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glTranslated(0, -1.61, 0);
@@ -65,7 +65,7 @@ public class SpellHammerfall extends SpellBase {
 		Tessellator.instance.addVertexWithUV(caster.posX + s, caster.posY, caster.posZ - s, 1, 0);
 		Tessellator.instance.draw();
 		glDisable(GL_BLEND);
-        glAlphaFunc(GL_GREATER, 0.1F);
+		glAlphaFunc(GL_GREATER, 0.1F);
 		glEnable(GL_CULL_FACE);
 	}
 }

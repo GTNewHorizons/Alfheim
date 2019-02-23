@@ -7,6 +7,7 @@ import static cpw.mods.fml.common.registry.GameRegistry.*;
 import alexsocol.asjlib.ASJReflectionHelper;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.spell.SpellBase;
 import alfheim.common.block.tile.*;
 import alfheim.common.block.tile.sub.*;
 import alfheim.common.core.asm.AlfheimHookLoader;
@@ -49,6 +50,7 @@ public class AlfheimRegistry {
 		}
 	}.setShouldWatch(true);
 	
+	public static Potion berserk;
 	public static Potion bleeding;
 	public static Potion butterShield;
 	public static Potion deathMark;
@@ -57,7 +59,9 @@ public class AlfheimRegistry {
 	public static Potion icelens;
 	public static Potion leftFlame;
 	public static Potion nineLifes;
+	public static Potion ninja;
 	public static Potion noclip;
+	public static Potion overmage;
 	public static Potion possession;
 	public static Potion quadDamage;
 	public static Potion sacrifice;
@@ -65,6 +69,7 @@ public class AlfheimRegistry {
 	public static Potion showMana;
 	public static Potion soulburn;
 	public static Potion stoneSkin;
+	public static Potion tank;
 	public static Potion tHrOw;
 	public static Potion wellOLife;
 	
@@ -72,6 +77,7 @@ public class AlfheimRegistry {
 	
 	public static void preInit() {
 		if(Potion.potionTypes.length < 256) ASJReflectionHelper.invokeStatic(ModPotions.class, null, "extendPotionArray");
+		berserk = new PotionBerserk();
 		bleeding = new PotionBleeding();
 		butterShield = new PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF);
 		deathMark = new PotionDeathMark();
@@ -80,7 +86,9 @@ public class AlfheimRegistry {
 		icelens = new PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF);
 		leftFlame = new PotionLeftFlame();
 		nineLifes = new PotionAlfheim(AlfheimConfig.potionIDNineLifes, "nineLifes", false, 0xDD2222);
+		ninja = new PotionNinja();
 		noclip = new PotionNoclip();
+		overmage = new PotionAlfheim(AlfheimConfig.potionIDOvermage, "overmage", false, 0x88FFFF);
 		possession = new PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000);
 		quadDamage = new PotionQuadDamage();
 		sacrifice = new PotionSacrifice();
@@ -88,12 +96,14 @@ public class AlfheimRegistry {
 		showMana = new PotionShowMana();
 		soulburn = new PotionSoulburn();
 		stoneSkin = new PotionAlfheim(AlfheimConfig.potionIDStoneSkin, "stoneSkin", false, 0x593C1F);
+		tank = new PotionTank();
 		tHrOw = new PotionThrow();
 		wellOLife = new PotionWellOLife();
 		registerEntities();
 		registerTileEntities();
 		
 		worldGen = new WorldGenAlfheim();
+		SpellBase.overmag = overmage;
 	}
 	
 	public static void init() {

@@ -23,6 +23,7 @@ public class AlfheimConfig extends Configuration {
 	public static final String CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "potions";
 	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "elvenstory";
 	public static final String CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo";
+	public static final String CATEGORY_MMOP		= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions";
 	public static final String CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud";
 	
 	// DIMENSION
@@ -49,6 +50,7 @@ public class AlfheimConfig extends Configuration {
 	
 	// POTIONS
 	public static int		potionID___COUNTER		= 30;
+	public static int		potionIDBerserk			= potionID___COUNTER++;
 	public static int		potionIDBleeding		= potionID___COUNTER++;
 	public static int		potionIDButterShield	= potionID___COUNTER++;
 	public static int		potionIDDeathMark		= potionID___COUNTER++;
@@ -56,8 +58,10 @@ public class AlfheimConfig extends Configuration {
 	public static int		potionIDGoldRush		= potionID___COUNTER++;
 	public static int		potionIDIceLens			= potionID___COUNTER++;
 	public static int		potionIDLeftFlame		= potionID___COUNTER++;
+	public static int		potionIDNinja			= potionID___COUNTER++;
 	public static int		potionIDNineLifes		= potionID___COUNTER++;
 	public static int		potionIDNoclip			= potionID___COUNTER++;
+	public static int		potionIDOvermage		= potionID___COUNTER++;
 	public static int		potionIDPossession		= potionID___COUNTER++;
 	public static int		potionIDQuadDamage		= potionID___COUNTER++;
 	public static int		potionIDSacrifice		= potionID___COUNTER++;
@@ -65,6 +69,7 @@ public class AlfheimConfig extends Configuration {
 	public static int		potionIDShowMana		= potionID___COUNTER++;
 	public static int		potionIDSoulburn		= potionID___COUNTER++;
 	public static int		potionIDStoneSkin		= potionID___COUNTER++;
+	public static int		potionIDTank			= potionID___COUNTER++;
 	public static int 		potionIDThrow			= potionID___COUNTER++;
 	public static int 		potionIDWellOLife		= potionID___COUNTER++;
 	
@@ -119,23 +124,27 @@ public class AlfheimConfig extends Configuration {
 		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",			slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly");
 		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
 		
-		potionIDBleeding		= loadProp(CATEGORY_POTIONS, 	"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
-		potionIDButterShield	= loadProp(CATEGORY_POTIONS, 	"potionIDButterShield",		potionIDButterShield,	true,	"Potion id for Butterfly Shield");
-		potionIDDeathMark		= loadProp(CATEGORY_POTIONS, 	"potionIDDeathMark",		potionIDDeathMark,		true,	"Potion id for Death Mark");
-		potionIDDecay			= loadProp(CATEGORY_POTIONS, 	"potionIDDecay",			potionIDDecay,			true,	"Potion id for Decay");
-		potionIDGoldRush		= loadProp(CATEGORY_POTIONS, 	"potionIDGoldRush",			potionIDGoldRush,		true,	"Potion id for Gold Rush");
-		potionIDIceLens			= loadProp(CATEGORY_POTIONS, 	"potionIDIceLens",			potionIDIceLens,		true,	"Potion id for Ice Lense");
-		potionIDLeftFlame		= loadProp(CATEGORY_POTIONS, 	"potionIDLeftFlame",		potionIDLeftFlame,		true,	"Potion id for Leftover Flame");
-		potionIDNoclip			= loadProp(CATEGORY_POTIONS, 	"potionIDNoclip",			potionIDNoclip,			true,	"Potion id for Noclip");
+		potionIDBerserk			= loadProp(CATEGORY_POTIONS, 	"potionIDBerserk",			potionIDBerserk,		true,	"Potion id for Berserk");
+		potionIDBleeding		= loadProp(CATEGORY_MMOP, 		"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
+		potionIDButterShield	= loadProp(CATEGORY_MMOP, 		"potionIDButterShield",		potionIDButterShield,	true,	"Potion id for Butterfly Shield");
+		potionIDDeathMark		= loadProp(CATEGORY_MMOP, 		"potionIDDeathMark",		potionIDDeathMark,		true,	"Potion id for Death Mark");
+		potionIDDecay			= loadProp(CATEGORY_MMOP, 		"potionIDDecay",			potionIDDecay,			true,	"Potion id for Decay");
+		potionIDGoldRush		= loadProp(CATEGORY_MMOP, 		"potionIDGoldRush",			potionIDGoldRush,		true,	"Potion id for Gold Rush");
+		potionIDIceLens			= loadProp(CATEGORY_MMOP, 		"potionIDIceLens",			potionIDIceLens,		true,	"Potion id for Ice Lense");
+		potionIDLeftFlame		= loadProp(CATEGORY_MMOP, 		"potionIDLeftFlame",		potionIDLeftFlame,		true,	"Potion id for Leftover Flame");
+		potionIDNinja			= loadProp(CATEGORY_POTIONS, 	"potionIDNinja",			potionIDNinja,			true,	"Potion id for Ninja");
+		potionIDNoclip			= loadProp(CATEGORY_MMOP, 		"potionIDNoclip",			potionIDNoclip,			true,	"Potion id for Noclip");
+		potionIDOvermage		= loadProp(CATEGORY_POTIONS, 	"potionIDOvermage",			potionIDOvermage,		true,	"Potion id for Overmage");
 		potionIDPossession		= loadProp(CATEGORY_POTIONS, 	"potionIDPossession",		potionIDPossession,		true,	"Potion id for Possession");
-		potionIDQuadDamage		= loadProp(CATEGORY_POTIONS, 	"potionIDQuadDamage",		potionIDQuadDamage,		true,	"Potion id for Quad Damage");
-		potionIDSacrifice		= loadProp(CATEGORY_POTIONS, 	"potionIDSacrifice",		potionIDSacrifice,		true,	"Potion id for Sacrifice");
-		potionIDSharedHP		= loadProp(CATEGORY_POTIONS, 	"potionIDSharedHP",			potionIDSharedHP,		true,	"Potion id for Shared Health Pool");
-		potionIDShowMana		= loadProp(CATEGORY_POTIONS, 	"potionIDShowMana",			potionIDShowMana,		true,	"Potion id for Mana Showing Effect");
+		potionIDQuadDamage		= loadProp(CATEGORY_MMOP, 		"potionIDQuadDamage",		potionIDQuadDamage,		true,	"Potion id for Quad Damage");
+		potionIDSacrifice		= loadProp(CATEGORY_MMOP, 		"potionIDSacrifice",		potionIDSacrifice,		true,	"Potion id for Sacrifice");
+		potionIDSharedHP		= loadProp(CATEGORY_MMOP, 		"potionIDSharedHP",			potionIDSharedHP,		true,	"Potion id for Shared Health Pool");
+		potionIDShowMana		= loadProp(CATEGORY_MMOP, 		"potionIDShowMana",			potionIDShowMana,		true,	"Potion id for Mana Showing Effect");
 		potionIDSoulburn		= loadProp(CATEGORY_POTIONS, 	"potionIDSoulburn",			potionIDSoulburn,		true,	"Potion id for Soulburn");
-		potionIDStoneSkin		= loadProp(CATEGORY_POTIONS, 	"potionIDStoneSkin",		potionIDStoneSkin,		true,	"Potion id for Stone Skin");
-		potionIDThrow			= loadProp(CATEGORY_POTIONS, 	"potionIDThrow",			potionIDThrow,			true,	"Potion id for Throw");
-		potionIDWellOLife		= loadProp(CATEGORY_POTIONS, 	"potionIDWellOLife",		potionIDWellOLife,		true,	"Potion id for Well'o'Life");
+		potionIDStoneSkin		= loadProp(CATEGORY_MMOP, 		"potionIDStoneSkin",		potionIDStoneSkin,		true,	"Potion id for Stone Skin");
+		potionIDTank			= loadProp(CATEGORY_POTIONS, 	"potionIDTank",				potionIDTank,			true,	"Potion id for Tank");
+		potionIDThrow			= loadProp(CATEGORY_MMOP, 		"potionIDThrow",			potionIDThrow,			true,	"Potion id for Throw");
+		potionIDWellOLife		= loadProp(CATEGORY_MMOP, 		"potionIDWellOLife",		potionIDWellOLife,		true,	"Potion id for Well'o'Life");
 		
 		bothSpawnStructures		= loadProp(CATEGORY_ESMODE,		"bothSpawnStructures",		bothSpawnStructures,	false,	"Set this to true to generate both cube and castle (!contains portal!) on zero coords of Alfheim");
 		enableWingsNonAlfheim	= loadProp(CATEGORY_ESMODE,		"enableWingsNonAlfheim",	enableWingsNonAlfheim,	false,	"Set this to false to disable wings in other worlds");

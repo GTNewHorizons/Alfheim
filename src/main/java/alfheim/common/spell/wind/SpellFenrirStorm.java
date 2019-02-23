@@ -6,14 +6,14 @@ import alfheim.common.entity.spell.EntitySpellFenrirStorm;
 import net.minecraft.entity.EntityLivingBase;
 
 public class SpellFenrirStorm extends SpellBase {
-
+	
 	public SpellFenrirStorm() {
 		super("fenrirstorm", EnumRace.SYLPH, 1000, 100, 5);
 	}
-
+	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
-		SpellCastResult result = checkCast(caster);
+		SpellCastResult result = checkCastOver(caster);
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(new EntitySpellFenrirStorm(caster.worldObj, caster));
 		return result;
 	}

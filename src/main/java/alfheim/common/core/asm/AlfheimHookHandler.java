@@ -89,6 +89,29 @@ public class AlfheimHookHandler {
 		MinecraftForge.EVENT_BUS.post(new LivingPotionEvent.Remove.Post(e, pe));
 	}
 	
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
+	public static boolean isPotionActive(EntityLivingBase e, Potion p) {
+		if (p == Potion.resistance) {
+			return 
+			e.activePotionsMap.containsKey(Integer.valueOf(Potion.resistance.id)) ||
+			e.activePotionsMap.containsKey(Integer.valueOf(AlfheimRegistry.tank.id));
+		}
+		return e.activePotionsMap.containsKey(Integer.valueOf(p.id));
+	}
+	
+	@Hook(returnCondition = ALWAYS, isMandatory = true)
+	public static PotionEffect getActivePotionEffect(EntityLivingBase e, Potion p) {
+		PotionEffect pe = (PotionEffect) e.activePotionsMap.get(Integer.valueOf(p.id));
+		if (p == Potion.resistance)
+			if (e.isPotionActive(AlfheimRegistry.tank)) {
+				PotionEffect tank = ((PotionEffect) e.activePotionsMap.get(Integer.valueOf(AlfheimRegistry.tank.id)));
+				if (pe == null) pe = new PotionEffect(Potion.resistance.id, tank.duration, 0);
+				pe.amplifier += tank.amplifier;
+			}
+		
+		return pe;
+	}
+	
 	@Hook(returnCondition = ON_TRUE)
 	public static boolean requestManaExact(ManaItemHandler handler, ItemStack stack, EntityPlayer player, int manaToGet, boolean remove) {
 		return player.capabilities.isCreativeMode;
@@ -114,11 +137,11 @@ public class AlfheimHookHandler {
 	public static void updatePotionEffects(EntityLivingBase e) {
 		try {
 			Iterator iterator = e.activePotionsMap.keySet().iterator();
-	
+			
 			while (iterator.hasNext()) {
 				Integer integer = (Integer)iterator.next();
 				PotionEffect potioneffect = (PotionEffect) e.activePotionsMap.get(integer);
-	
+				
 				if (!potioneffect.onUpdate(e)) {
 					//if (!e.worldObj.isRemote) {
 						iterator.remove();
@@ -128,9 +151,9 @@ public class AlfheimHookHandler {
 					AlfheimSyntheticMethods.onChangedPotionEffect(e, potioneffect, false);
 				}
 			}
-	
+			
 			int i;
-	
+			
 			if (e.potionsNeedUpdate) {
 				if (!e.worldObj.isRemote) {
 					if (e.activePotionsMap.isEmpty()) {
@@ -144,26 +167,26 @@ public class AlfheimHookHandler {
 						e.setInvisible(e.isPotionActive(Potion.invisibility.id));
 					}
 				}
-	
+				
 				e.potionsNeedUpdate = false;
 			}
-	
+			
 			i = e.getDataWatcher().getWatchableObjectInt(7);
 			boolean flag1 = e.getDataWatcher().getWatchableObjectByte(8) > 0;
-	
+			
 			if (i > 0) {
 				boolean flag = false;
-	
+				
 				if (!e.isInvisible()) {
 					flag = e.worldObj.rand.nextBoolean();
 				} else {
 					flag = e.worldObj.rand.nextInt(15) == 0;
 				}
-	
+				
 				if (flag1) {
 					flag &= e.worldObj.rand.nextInt(5) == 0;
 				}
-	
+				
 				if (flag && i > 0) {
 					double d0 = (double)(i >> 16 & 255) / 255.0D;
 					double d1 = (double)(i >> 8 & 255) / 255.0D;

@@ -12,24 +12,24 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 
 public final class SpellFirewall extends SpellBase {
-
+	
 	public SpellFirewall() {
 		super("firewall", EnumRace.SALAMANDER, 4000, 200, 15);
 	}
-
+	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
-		SpellCastResult result = checkCast(caster);
+		SpellCastResult result = checkCastOver(caster);
 		if (result == SpellCastResult.OK) 
 			caster.worldObj.spawnEntityInWorld(new EntitySpellFirewall(caster.worldObj, caster));
 		return result;
 	}
-
+	
 	@Override
 	public void render(EntityLivingBase caster) {
 		int s = 3;
 		//glDisable(GL_ALPHA_TEST);
-        glAlphaFunc(GL_GREATER, 0.003921569F);
+		glAlphaFunc(GL_GREATER, 0.003921569F);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		ASJUtilities.interpolatedTranslation(caster);
@@ -43,7 +43,7 @@ public final class SpellFirewall extends SpellBase {
 		Tessellator.instance.addVertexWithUV( s, 0.1, -1, 1, 0);
 		Tessellator.instance.draw();
 		glDisable(GL_BLEND);
-        glAlphaFunc(GL_GREATER, 0.1F);
+		glAlphaFunc(GL_GREATER, 0.1F);
 		//glEnable(GL_ALPHA_TEST);
 	}
 }
