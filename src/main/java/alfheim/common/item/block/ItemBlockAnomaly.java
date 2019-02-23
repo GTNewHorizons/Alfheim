@@ -3,6 +3,8 @@ package alfheim.common.item.block;
 import static alfheim.common.block.tile.TileAnomaly.*;
 import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
+import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.common.block.BlockAnomaly;
 import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.registry.AlfheimBlocks;
@@ -22,6 +24,7 @@ public class ItemBlockAnomaly extends ItemBlock {
 	public ItemBlockAnomaly(Block block) {
 		super(block);
 		setMaxStackSize(1);
+		setTextureName(ModInfo.MODID + ":undefined");
 	}
 	
 	@Override

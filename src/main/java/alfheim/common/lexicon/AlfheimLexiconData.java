@@ -186,10 +186,10 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe),
 								 new PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace))
 				.setIcon(new ItemStack(AlfheimBlocks.dreamLeaves));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenSand));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLog));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenSand), worldgen, 3);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLog), worldgen, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLeaves), worldgen, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1);
 		
 		aniTorch.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch));
@@ -316,12 +316,15 @@ public class AlfheimLexiconData {
 								 new PageMultiblock("4", AlfheimMultiblocks.soul),
 								 new PageText("5"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.flugelSoul), soul, 1);
 		
 		mask	.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mask));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.mask), mask, 1);
 		
 		excalibr.setLexiconPages(new PageTextLearnableAchievement("0", AlfheimAchievements.excaliber))
 				.setIcon(new ItemStack(AlfheimItems.excaliber));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.excaliber), excalibr, 1);
 		
 		/*mjolnir.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mjolnir));*/

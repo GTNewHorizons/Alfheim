@@ -18,6 +18,8 @@ import vazkii.botania.common.Botania;
 
 public class SubTileWarp extends SubTileEntity {
 	
+	// public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
+	// maybe will change warp's behavior to swap only blocks from list above ^
 	public static final String TAG_RADIUS = "radius";
 	public int radius = 20;
 	

@@ -31,8 +31,6 @@ import net.minecraft.world.World;
 public class BlockAnomaly extends BlockContainer {
 	
 	public static final Material anomaly = new MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility();
-	// public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
-	// maybe will change warp's behavior to swap only blocks from list above ^
 	public static IIcon iconUndefined;
 	
 	public BlockAnomaly() {
