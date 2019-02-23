@@ -2,7 +2,9 @@ package alfheim;
 
 import static alfheim.api.ModInfo.*;
 
-import alexsocol.asjlib.ASJUtilities;
+import java.io.File;
+
+import alfheim.api.ModInfo;
 import alfheim.common.core.command.*;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.proxy.CommonProxy;
@@ -13,6 +15,7 @@ import alfheim.common.core.util.InfoLoader;
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimConfig;
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig;
+import alfheim.common.integration.waila.WAILAAlfheimConfig;
 import alfheim.common.network.*;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -34,13 +37,13 @@ import vazkii.botania.common.Botania;
 	dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3;after:Thaumcraft")
 
 public class AlfheimCore {
-
+	
 	@Instance(MODID)
 	public static AlfheimCore instance;
-
+	
 	@SidedProxy(clientSide = MODID + ".client.core.proxy.ClientProxy", serverSide = MODID + ".common.core.proxy.CommonProxy")
 	public static CommonProxy proxy;
-
+	
 	public static SimpleNetworkWrapper network;
 	public static int nextPacketID = 0;
 	
@@ -50,15 +53,17 @@ public class AlfheimCore {
 	public static boolean enableMMO = true;
 	public static boolean MineTweakerLoaded = false;
 	public static boolean TravellersGearLoaded = false;
+	public static boolean WAILALoaded = false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		AlfheimConfig.readModes();
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
+		WAILALoaded = Loader.isModLoaded("Waila");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-		AlfheimConfig.loadConfig(e.getSuggestedConfigurationFile());
-
+		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory(), ModInfo.NAME + ".cfg"));
+		
 		if (AlfheimConfig.info) InfoLoader.start();
 		
 		registerPackets();
@@ -81,14 +86,14 @@ public class AlfheimCore {
 		if (MineTweakerLoaded) MinetweakerAlfheimConfig.loadConfig();
 		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimConfig.loadConfig();
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig();
+		if (WAILALoaded) WAILAAlfheimConfig.loadConfig();
 	}
-
+	
 	@EventHandler
 	public void starting(FMLServerStartingEvent event) {
-		ASJUtilities.log("Starting...");
 		save = event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory().getAbsolutePath();
 		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save);
-		if (enableMMO) CardinalSystem.load(save);
+		CardinalSystem.load(save);
 		event.registerServerCommand(new CommandAlfheim());
 		event.registerServerCommand(new CommandDimTP());
 		event.registerServerCommand(new CommandRace());
@@ -96,9 +101,9 @@ public class AlfheimCore {
 	
 	@EventHandler
 	public void stopping(FMLServerStoppingEvent event) {
-		if (enableMMO) CardinalSystem.save(save);
+		CardinalSystem.save(save);
 	}
-
+	
 	public static void registerPackets() {
 		AlfheimCore.network.registerMessage(Message0d.Handler.class,		Message0d.class,		nextPacketID++, Side.SERVER);
 		AlfheimCore.network.registerMessage(MessageHotSpellS.Handler.class,	MessageHotSpellS.class,	nextPacketID++, Side.SERVER);

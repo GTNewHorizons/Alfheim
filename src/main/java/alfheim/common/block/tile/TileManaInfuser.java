@@ -8,6 +8,7 @@ import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.item.relic.ItemFlugelSoul;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -41,20 +42,20 @@ import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.entity.EntityDoppleganger;
 
 public class TileManaInfuser extends TileMod implements ISparkAttachable {
-
+	
 	private static final boolean DEBUG = false;
 	
 	public static final int MAX_MANA = TilePool.MAX_MANA * 8;
-
+	
 	private static final int[][] GAIAS = {{4,-1,4},{-4,-1,4},{-4,-1,-4},{4,-1,-4}};
 	private static final int[][] PYLONS = {{6,-1,0},{0,-1,6},{-6,-1,0},{0,-1,-6}};
 	private static final int[][] QUARTZ_BLOCK = {{1,0,0},{-1,0,0},{0,0,1},{0,0,-1}};
 	private static final int[][] ELEMENTIUM_BLOCKS = {{1,0,1},{1,0,-1},{-1,0,1},{-1,0,-1}};
 	private static final String TAG_MANA = "mana", TAG_MANA_REQUIRED = "manaRequired", TAG_KNOWN_MANA = "knownMana";
-
+	
 	int mana, manaRequest, knownMana = -1;
 	ItemStack result;
-
+	
 	public static MultiblockSet makeMultiblockSetSoul() {
 		Multiblock mb = new Multiblock();
 		for(int[] l : PYLONS) mb.addComponent(l[0], 1, l[2], AlfheimBlocks.alfheimPylons, 2);
@@ -73,7 +74,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		mb.setRenderOffset(0, 1, 0);
 		return mb.makeSet();
 	}
-
+	
 	public static MultiblockSet makeMultiblockSet() {
 		Multiblock mb = new Multiblock();
 		for(int[] l : QUARTZ_BLOCK) mb.addComponent(l[0], 0, l[2], ModFluffBlocks.elfQuartz, 0);
@@ -110,14 +111,21 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 						
 						TileEntity te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord);
 						
-						if (te != null && te instanceof TileBrewery && ((TileBrewery) te).getStackInSlot(0) != null && ((TileBrewery) te).getStackInSlot(0).getItem() instanceof ItemFlugelSoul && ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).getBlocked(((TileBrewery) te).getStackInSlot(0)) > 0) {
-							boom = 10;
-							if (hard || Math.random() > 0.5) ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).setDisabled(((TileBrewery) te).getStackInSlot(0), ((ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem()).getBlocked(((TileBrewery) te).getStackInSlot(0)), false);
-							else break boom;
-							doneParticles();
-							break gaia;
+						if (te != null && te instanceof TileBrewery) {
+							TileBrewery brew = (TileBrewery) te;
+							
+							if (brew.getStackInSlot(0) != null && brew.getStackInSlot(0).getItem() == AlfheimItems.flugelSoul) {
+								ItemFlugelSoul soul = (ItemFlugelSoul) ((TileBrewery) te).getStackInSlot(0).getItem();
+								
+								if (soul.getBlocked(brew.getStackInSlot(0)) > 0) {
+									boom = 10;
+									if (hard || Math.random() > 0.5) soul.setDisabled(brew.getStackInSlot(0), soul.getBlocked(brew.getStackInSlot(0)), false);
+									else break boom;
+									doneParticles();
+									break gaia;
+								}
+							}
 						} else break boom;
-						
 					} else {
 						if (worldObj.getTotalWorldTime() % 5 == 0) prepareParticles();
 						return;
@@ -147,7 +155,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 					for(ISparkEntity otherSpark : sparkEntities) {
 						if(spark == otherSpark)
 							continue;
-
+						
 						if(otherSpark.getAttachedTile() != null && otherSpark.getAttachedTile() instanceof IManaPool)
 							otherSpark.registerTransfer(spark);
 					}
@@ -157,7 +165,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 					doParticles();
 					if (blockMetadata != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
 				}
-
+				
 				if(mana >= manaRequest && !worldObj.isRemote) {
 					EntityItem item = items.get(0);
 					for(EntityItem otherItem : items)
@@ -180,41 +188,41 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		
 		if(removeMana) recieveMana(-1000);
 	}
-
+	
 	void doParticles() {
 		if(worldObj.isRemote) {
 			int ticks = (int) (100.0 * ((double) getCurrentMana() / (double) manaRequest));
-
+			
 			int totalSpiritCount = 6;
 			double tickIncrement = 360.0 / totalSpiritCount;
-
+			
 			int speed = 5;
 			double wticks = ticks * speed - tickIncrement;
-
+			
 			double r = Math.sin((ticks - 100) / 10.0) * 2;
 			double g = Math.sin(wticks * Math.PI / 180 * 0.55);
-
+			
 			for(int i = 0; i < totalSpiritCount; i++) {
 				double x = xCoord + Math.sin(wticks * Math.PI / 180) * r + 0.5;
 				double y = yCoord + 0.25 + Math.abs(r) * 0.7;
 				double z = zCoord + Math.cos(wticks * Math.PI / 180) * r + 0.5;
-
+				
 				wticks += tickIncrement;
 				float[] colorsfx = new float[] {
 						(float) ticks / (float) 100, 0F, 1F - (float) ticks / (float) 100
 				};
 				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], 0.85F, (float)g * 0.05F, 0.25F);
 				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], (float) Math.random() * 0.1F + 0.1F, (float) (Math.random() - 0.5) * 0.05F, (float) (Math.random() - 0.5) * 0.05F, (float) (Math.random() - 0.5) * 0.05F, 0.9F);
-
+				
 				if(ticks == 100)
 					for(int j = 0; j < 15; j++)
 						Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord + 1.25, zCoord + 0.5, colorsfx[0], colorsfx[1], colorsfx[2], (float) Math.random() * 0.15F + 0.15F, (float) (Math.random() - 0.5F) * 0.125F, (float) (Math.random() - 0.5F) * 0.125F, (float) (Math.random() - 0.5F) * 0.125F);
 			}
 		}
 	}
-
+	
 	Vector3 v = new Vector3();
-
+	
 	void prepareParticles() {
 		int ci = 0;
 		for (int[] c : PYLONS) {
@@ -260,7 +268,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	List<EntityItem> getItems() {
 		return worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 2, zCoord + 1));
 	}
-
+	
 	boolean areItemsValid(List<EntityItem> items) {
 		//boolean DBG = !worldObj.isRemote;
 		if (items.isEmpty()) return false;
@@ -313,7 +321,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 					if (DEBUG) System.out.println("Entity stack DON'T match ingredient stack (" + stack.toString() + " != " + ing.toString() + ") Continuing scanning.");
 				}
 			}
-
+			
 			if (DEBUG) System.out.println("Scanning complete. Checking matching");
 			
 			boolean flagAllEqual = true; // I'm sure everything matches
@@ -333,11 +341,11 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 				return true;
 			}
 		}
-
+		
 		if (DEBUG) System.out.println("Scanned all recipes, no matching found. Returning false.");
 		return false;
 	}
-
+	
 	boolean isReadyToKillGaia() {
 		return checkPlatform(0, -2,  0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylons, 2);
 	}
@@ -345,64 +353,64 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 	boolean hasValidPlatform() {
 		return checkAll(QUARTZ_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2);
 	}
-
+	
 	boolean checkAll(int[][] positions, Block block, int meta) {
 		for (int[] position : positions) {
 			if(!checkPlatform(position[0], position[1], position[2], block, meta))
 				return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	boolean checkPlatform(int xOff, int yOff, int zOff, Block block, int meta) {
 		return worldObj.getBlock(xCoord + xOff, yOff + yCoord, zOff + zCoord) == block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zOff + zCoord) == meta;
 	}
-
+	
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
 		nbt.setInteger(TAG_MANA, mana);
 		nbt.setInteger(TAG_MANA_REQUIRED, manaRequest);
 		nbt.setInteger(TAG_KNOWN_MANA, knownMana);
 	}
-
+	
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
 		mana = nbt.getInteger(TAG_MANA);
 		knownMana = nbt.getInteger(TAG_KNOWN_MANA);
 	}
-
+	
 	@Override
 	public int getCurrentMana() {
 		return mana;
 	}
-
+	
 	@Override
 	public boolean isFull() {
 		return mana >= MAX_MANA;
 	}
-
+	
 	@Override
 	public void recieveMana(int mana) {
 		this.mana = Math.max(0, Math.min(MAX_MANA, this.mana + mana));
 		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
 	}
-
+	
 	@Override
 	public boolean canRecieveManaFromBursts() {
 		return hasValidPlatform() && areItemsValid(getItems());
 	}
-
+	
 	@Override
 	public boolean canAttachSpark(ItemStack stack) {
 		return true;
 	}
-
+	
 	@Override
 	public void attachSpark(ISparkEntity entity) {
 		// NO-OP
 	}
-
+	
 	@Override
 	public ISparkEntity getAttachedSpark() {
 		List<ISparkEntity> sparks = worldObj.getEntitiesWithinAABB(ISparkEntity.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 2, zCoord + 1));
@@ -410,24 +418,24 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 			Entity e = (Entity) sparks.get(0);
 			return (ISparkEntity) e;
 		}
-
+		
 		return null;
 	}
-
+	
 	@Override
 	public boolean areIncomingTranfersDone() {
 		return !hasValidPlatform() || !areItemsValid(getItems());
 	}
-
+	
 	@Override
 	public int getAvailableSpaceForMana() {
 		return Math.max(0, MAX_MANA - getCurrentMana());
 	}
-
+	
 	public void onWanded(EntityPlayer player, ItemStack stack) {
 		if(player == null)
 			return;
-
+		
 		if(!player.isSneaking()) {
 			if(!worldObj.isRemote) {
 				knownMana = mana;
@@ -440,7 +448,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 			worldObj.playSoundAtEntity(player, "botania:ding", 0.1F, 1F);
 		}
 	}
-
+	
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
 		String name = StatCollector.translateToLocal(new ItemStack(AlfheimBlocks.manaInfuser, 1, getBlockMetadata()).getUnlocalizedName() + ".name");
 		int color = 0xCC00FF;

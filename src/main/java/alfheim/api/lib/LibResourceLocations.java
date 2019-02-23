@@ -7,8 +7,10 @@ import net.minecraft.util.ResourceLocation;
 
 public class LibResourceLocations {
 	
+	public static ResourceLocation anomalies = new ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png");
 	public static ResourceLocation antiPylon = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png");
 	public static ResourceLocation antiPylonOld = new ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png");
+	public static ResourceLocation anyavil = new ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png");
 	public static ResourceLocation aura = new ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png"); 
 	public static ResourceLocation babylon = new ResourceLocation("botania:textures/misc/babylon.png");
 	public static ResourceLocation balanceCloak = new ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png");
@@ -38,6 +40,8 @@ public class LibResourceLocations {
 	public static ResourceLocation livingrock = new ResourceLocation("botania:textures/blocks/livingrock0.png");
 	public static ResourceLocation manaInfuserOverlay = new ResourceLocation("botania:textures/gui/manaInfusionOverlay.png");
 	public static ResourceLocation mark = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Mark.png");
+	public static ResourceLocation miku0 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png");
+	public static ResourceLocation miku1 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku1.png");
 	public static ResourceLocation mine1 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/1.png");
 	public static ResourceLocation mine2 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/2.png");
 	public static ResourceLocation mine3 = new ResourceLocation(ModInfo.MODID, "textures/model/entity/3.png");
@@ -140,5 +144,5 @@ public class LibResourceLocations {
 	}
 	
 	public static ResourceLocation inventory = new ResourceLocation("textures/gui/container/inventory.png");
-    public static ResourceLocation widgets = new ResourceLocation("textures/gui/widgets.png");
+	public static ResourceLocation widgets = new ResourceLocation("textures/gui/widgets.png");
 }

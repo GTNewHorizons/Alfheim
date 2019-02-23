@@ -58,6 +58,7 @@ public class AlfheimItems {
 	public static Item holoProjector;
 	public static Item invisibilityCloak;
 	public static Item livingrockPickaxe;
+	public static Item lootInterceptor;
 	public static Item manaRingElven;
 	public static Item manaRingGod;
 	public static Item manasteelHoe;
@@ -109,6 +110,7 @@ public class AlfheimItems {
 		creativeReachPendant = new ItemCreativeReachPendant();
 		pixieAttractor = new ItemPendant("PixieAttractor");
 		livingrockPickaxe = new ItemLivingrockPickaxe();
+		lootInterceptor = new ItemLootInterceptor();
 		manasteelHoe = new ItemManasteelHoe();
 		manaStone = new ItemManaStorage("ManaStone", 3, (BaubleType) null);
 		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
@@ -142,6 +144,7 @@ public class AlfheimItems {
 		register(manaRingElven);
 		register(manaRingGod);
 		register(astrolabe);
+		register(lootInterceptor);
 		register(rodFire);
 		register(rodIce);
 		register(rodGrass);

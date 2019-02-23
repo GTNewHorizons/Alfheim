@@ -12,7 +12,7 @@ import alfheim.api.event.SpellCastEvent;
 import alfheim.api.event.TileUpdateEvent;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
-import alfheim.common.core.handler.CardinalSystem.ManaSystem;
+import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
@@ -29,17 +29,16 @@ import alfheim.common.core.util.InfoLoader;
 import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.entity.Flight;
 import alfheim.common.entity.boss.EntityFlugel;
-import alfheim.common.item.relic.ItemTankMask;
 import alfheim.common.network.Message1d;
 import alfheim.common.network.Message2d;
 import alfheim.common.network.Message2d.m2d;
 import alfheim.common.network.MessageEffect;
-import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -50,7 +49,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -64,21 +62,17 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import net.minecraftforge.event.world.BlockEvent;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
 import vazkii.botania.common.block.tile.TileAlfPortal;
-import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe;
@@ -86,10 +80,123 @@ import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe;
 public class EventHandler {
 	
 	@SubscribeEvent
+	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
+		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
+			InfoLoader.triedToWarnPlayer = true;
+			for (String s : InfoLoader.info) {
+				if (s.startsWith("$json")) e.player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(s.replace("$json", "")));
+				else e.player.addChatMessage(new ChatComponentText(s));
+			}
+		}
+		
+		if (e.player instanceof EntityPlayerMP) {
+			AlfheimCore.network.sendTo(new Message2d(m2d.MODES, AlfheimCore.enableElvenStory ? 1 : 0, AlfheimCore.enableMMO ? 1 : 0), (EntityPlayerMP) e.player);
+			if (AlfheimCore.enableElvenStory) {
+				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime), (EntityPlayerMP) e.player);
+				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.CL_SLOWDOWN, AlfheimConfig.slowDownClients ? 1 : 0), (EntityPlayerMP) e.player);
+				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
+					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
+					e.player.triggerAchievement(AlfheimAchievements.alfheim);
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome0"));
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome1"));
+					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome2"));
+					e.player.inventory.addItemStackToInventory(new ItemStack(ModItems.lexicon));
+					e.player.setSpawnChunk(new ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim);
+				}
+				if (AlfheimCore.enableMMO) CardinalSystem.transfer((EntityPlayerMP) e.player);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onNetherPortalActivation(NetherPortalActivationEvent e) {
+		if (e.worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) e.setCanceled(true);
+	}
+	
+	@SubscribeEvent
+	public void onAlfPortalUpdate(ElvenPortalUpdateEvent e) {
+		if (e.portalTile.getWorldObj().provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && ((TileAlfPortal)e.portalTile).ticksOpen >= 0) ((TileAlfPortal) e.portalTile).ticksOpen = 0;
+	}
+	
+	@SubscribeEvent
+	public void onEntityDrops(LivingDropsEvent event) {
+		if(event.recentlyHit && event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
+			ItemStack weapon = ((EntityPlayer) event.source.getEntity()).getCurrentEquippedItem();
+			if(weapon != null && weapon.getItem() instanceof ItemElementiumAxe &&event.entityLiving instanceof EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
+				EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(AlfheimItems.flugelHead));
+				entityitem.delayBeforeCanPickup = 10;
+				event.drops.add(entityitem);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (AlfheimCore.enableElvenStory) {
+			ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
+			if (equipped != null && equipped.getItem() == Items.bowl && event.action == Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
+				MovingObjectPosition movingobjectposition = ToolCommons.raytraceFromEntity(event.world, event.entityPlayer, true, 4.5F);
+				
+				if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && !event.world.isRemote) {
+					int i = movingobjectposition.blockX;
+					int j = movingobjectposition.blockY;
+					int k = movingobjectposition.blockZ;
+					
+					if (event.world.getBlock(i, j, k).getMaterial() == Material.water) {
+						--equipped.stackSize;
+						
+						if (equipped.stackSize <= 0) event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, new ItemStack(ModItems.waterBowl));
+						else event.entityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(ModItems.waterBowl), false);
+					}
+				}
+			}
+		}
+	}
+	
+	// ################################ ATTRIBUTES ################################
+	
+	@SubscribeEvent
+	public void onEntityConstructing(EntityConstructing e) {
+		if (AlfheimCore.enableElvenStory) {
+			if (e.entity instanceof EntityPlayer) {
+				EnumRace.ensureExistance(((EntityPlayer) e.entity));
+				Flight.ensureExistence(((EntityPlayer) e.entity));
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onClonePlayer(PlayerEvent.Clone e) {
+		if (AlfheimCore.enableElvenStory) {
+			int r = EnumRace.getRaceID((EntityPlayer) e.original);
+			EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
+			if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original));
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		if (AlfheimCore.enableElvenStory) {
+			if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
+			e.player.capabilities.allowFlying = !EnumRace.getRace(e.player).equals(EnumRace.HUMAN);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerChangeDimension(PlayerChangedDimensionEvent e) {
+		if (AlfheimCore.enableElvenStory) {
+			if (e.player instanceof EntityPlayerMP) {
+				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 0, EnumRace.getRaceID(e.player)), (EntityPlayerMP) e.player);
+				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 1, Flight.get(e.player)), (EntityPlayerMP) e.player);
+			}
+		}
+	}
+	
+	@SubscribeEvent
 	public void onSpellCast(SpellCastEvent.Pre e) {
 		if (TimeStopSystem.affected(e.caster)) e.setCanceled(true);
 	}
-	
+		
 	@SubscribeEvent
 	public void onSpellCasted(SpellCastEvent.Post e) {
 		if (ModInfo.DEV) e.cd = 5;
@@ -110,7 +217,7 @@ public class EventHandler {
 						seg.quadStage = 0;
 						break;
 					}
-			
+				
 			case 2: if (e.spell.name.equals("icelens") && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1) {
 						++seg.quadStage;
 						break;
@@ -158,134 +265,15 @@ public class EventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public void onTileUpdate(TileUpdateEvent e) {
-		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && TimeStopSystem.affected(e.tile)) e.setCanceled(true);
-	}
-	
-	@SubscribeEvent
-	public void onEntityUpdate(EntityUpdateEvent e) {
-		if (e.entity == null || !e.entity.isEntityAlive()) return;
-		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
-	}
-	
-	@SubscribeEvent
-	public void onPlayerChangedDimension(PlayerChangedDimensionEvent e) {
-		if (AlfheimCore.enableMMO && e.player instanceof EntityPlayerMP) TimeStopSystem.transfer((EntityPlayerMP) e.player, e.fromDim);
-	}
-	
-	@SubscribeEvent
-	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
-		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
-			InfoLoader.triedToWarnPlayer = true;
-			for (String s : InfoLoader.info) {
-				if (s.startsWith("$json")) e.player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(s.replace("$json", "")));
-				else e.player.addChatMessage(new ChatComponentText(s));
-			}
-		}
-		
-		if (e.player instanceof EntityPlayerMP) {
-			AlfheimCore.network.sendTo(new Message2d(m2d.MODES, AlfheimCore.enableElvenStory ? 1 : 0, AlfheimCore.enableMMO ? 1 : 0), (EntityPlayerMP) e.player);
-			if (AlfheimCore.enableElvenStory) {
-				AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime), (EntityPlayerMP) e.player);
-				if (!((EntityPlayerMP) e.player).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
-					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253, 0.5);
-					e.player.triggerAchievement(AlfheimAchievements.alfheim);
-					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome0"));
-					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome1"));
-					e.player.addChatComponentMessage(new ChatComponentTranslation("elvenstory.welcome2"));
-					e.player.inventory.addItemStackToInventory(new ItemStack(ModItems.lexicon));
-					e.player.setSpawnChunk(new ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim);
-				}
-				if (AlfheimCore.enableMMO) CardinalSystem.transfer((EntityPlayerMP) e.player);
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onNetherPortalActivation(NetherPortalActivationEvent e) {
-		if (e.worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) e.setCanceled(true);
-	}
-	
-	@SubscribeEvent
-	public void onEntityConstructing(EntityConstructing e) {
-		if (AlfheimCore.enableElvenStory) {
-			if (e.entity instanceof EntityPlayer) {
-				EnumRace.ensureExistance(((EntityPlayer) e.entity));
-				Flight.ensureExistence(((EntityPlayer) e.entity));
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onClonePlayer(PlayerEvent.Clone e) {
-		if (AlfheimCore.enableElvenStory) {
-			int r = EnumRace.getRaceID((EntityPlayer) e.original);
-			EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
-			if (AlfheimCore.enableMMO) {
-				if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original));
-				else PartySystem.getParty(e.entityPlayer).setDead(e.entityPlayer, false);
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onPlayerRespawn(PlayerRespawnEvent e) {
-		if (AlfheimCore.enableElvenStory) {
-			if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return;
-			e.player.capabilities.allowFlying = !EnumRace.getRace(e.player).equals(EnumRace.HUMAN);
-			if (AlfheimCore.enableMMO) PartySystem.getParty(e.player).setDead(e.player, false);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onPlayerChangeDimension(PlayerChangedDimensionEvent e) {
-		if (AlfheimCore.enableElvenStory) {
-			if (e.player instanceof EntityPlayerMP) {
-				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 0, EnumRace.getRaceID(e.player)), (EntityPlayerMP) e.player);
-				AlfheimCore.network.sendTo(new Message2d(m2d.ATTRIBUTE, 1, Flight.get(e.player)), (EntityPlayerMP) e.player);
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onAlfPortalUpdate(ElvenPortalUpdateEvent e) {
-		if (e.portalTile.getWorldObj().provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && ((TileAlfPortal)e.portalTile).ticksOpen >= 0) ((TileAlfPortal) e.portalTile).ticksOpen = 0;
-	}
-	
-	// ################################ LEFT FLAME ################################
-	@SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent e) {
-		if (AlfheimCore.enableMMO && e.getPlayer().isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
-		if (e.getPlayer().getCurrentEquippedItem() != null && (e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.flugelSoul || e.getPlayer().getCurrentEquippedItem().getItem() == AlfheimItems.holoProjector)) e.setCanceled(true);
-    }
-	
-	@SubscribeEvent
-    public void onBlockPlace(BlockEvent.PlaceEvent e) {
-		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
-    }
-	
-	@SubscribeEvent
-    public void onBlockMultiPlace(BlockEvent.MultiPlaceEvent e) {
-		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.setCanceled(true);
-    }
-	
-	@SubscribeEvent
-	public void onPlayerDrop(ItemTossEvent e) {
-		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) {
-			e.setCanceled(true);
-			e.player.inventory.addItemStackToInventory(e.entityItem.getEntityItem().copy());
-		}
-	}
-	
-	// ################################### END ####################################
+	// ################################### POTIONS & STUFF ####################################
+	// not decentralized because of importance of the order
 	
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent e) {
 		float ammount = e.ammount;
 		
 		if (AlfheimCore.enableMMO) {
-			if ( e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
+			if (e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.quadDamage)) {
 				ammount *= 4.0F;
 			}
 			if ((e.source.getEntity() != null && e.source.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) e.source.getEntity()).isPotionActive(AlfheimRegistry.leftFlame)) || (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))) {
@@ -305,7 +293,7 @@ public class EventHandler {
 			e.setCanceled(true);
 			return;
 		}
-		if (friendlyFire(e.entityLiving, e.source)) {
+		if (PartySystem.friendlyFire(e.entityLiving, e.source)) {
 			e.setCanceled(true);
 			return;
 		}
@@ -323,7 +311,7 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent e) {
-		if (friendlyFire(e.entityLiving, e.source)) {
+		if (PartySystem.friendlyFire(e.entityLiving, e.source)) {
 			e.setCanceled(true);
 			return;
 		}
@@ -389,95 +377,17 @@ public class EventHandler {
 		}
 	}
 	
-	public static boolean friendlyFire(EntityLivingBase entityLiving, DamageSource source) {
-		if (!AlfheimCore.enableMMO || source.damageType.contains("_FF")) return false;
-		
-		if (!ASJUtilities.isServer()) return false;
-		if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {
-			Party pt = PartySystem.getParty((EntityPlayer) source.getEntity());
-			if (pt != null && pt.isMember(entityLiving)) {
-				return true;
-			}
-		}
-		if (entityLiving instanceof EntityPlayer && source.getEntity() != null && source.getEntity() instanceof EntityLivingBase) {
-			Party pt = PartySystem.getParty((EntityPlayer) entityLiving);
-			if (pt != null && pt.isMember((EntityLivingBase) source.getEntity())) {
-				return true;
-			}
-		}
-		if (source.getEntity() != null && source.getEntity() instanceof EntityLivingBase && PartySystem.mobsSameParty(entityLiving, (EntityLivingBase) source.getEntity())) {
-			return true;
-		}
-		return false;
-	}
-	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent e) {
-		if (AlfheimCore.enableMMO && e.entityLiving instanceof EntityPlayer && !MinecraftServer.getServer().isSinglePlayer()) {
-			e.entityLiving.clearActivePotions();
-			e.entityLiving.addPotionEffect(new PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfig.deathScreenAddTime, 0, true));
-			e.entityLiving.getDataWatcher().updateObject(6, Float.valueOf(1F));
-		}
-		
-		if (e.source.damageType.equals(DamageSourceSpell.possession.damageType) && e.entityLiving instanceof EntityPlayer) {
-			IInventory baubles = PlayerHandler.getPlayerBaubles((EntityPlayer) e.entityLiving);
-			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) {
-				ItemNBTHelper.setInt(baubles.getStackInSlot(0), ItemTankMask.TAG_POSSESSION, 0);
-				if (!((EntityPlayer) e.entityLiving).inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
-					((EntityPlayer) e.entityLiving).dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false);
-                }
-				baubles.setInventorySlotContents(0, null);
-			}
-		}
-		
 		if (AlfheimCore.enableMMO) {
+			if (e.entityLiving instanceof EntityPlayer && !MinecraftServer.getServer().isSinglePlayer()) {
+				e.entityLiving.clearActivePotions();
+				e.entityLiving.addPotionEffect(new PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfig.deathScreenAddTime, 0, true));
+				e.entityLiving.getDataWatcher().updateObject(6, Float.valueOf(1F));
+			}
+		
 			Party pt = PartySystem.getMobParty(e.entityLiving);
 			if (pt != null) pt.setDead(e.entityLiving, true);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onEntityDrops(LivingDropsEvent event) {
-		if(event.recentlyHit && event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
-			ItemStack weapon = ((EntityPlayer) event.source.getEntity()).getCurrentEquippedItem();
-			if(weapon != null && weapon.getItem() instanceof ItemElementiumAxe &&event.entityLiving instanceof EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
-				EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(AlfheimItems.flugelHead));
-				entityitem.delayBeforeCanPickup = 10;
-				event.drops.add(entityitem);
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onBreakSpeed(BreakSpeed e) {
-		if (AlfheimCore.enableMMO) {
-			if (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) e.newSpeed = 0;
-			if (e.entityLiving.isPotionActive(AlfheimRegistry.goldRush)) e.newSpeed *= 2;
-		}
-	}
-	
-	@SubscribeEvent
-	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (AlfheimCore.enableElvenStory) {
-			ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
-			if (equipped != null && equipped.getItem() == Items.bowl && event.action == Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
-				MovingObjectPosition movingobjectposition = ToolCommons.raytraceFromEntity(event.world, event.entityPlayer, true, 4.5F);
-	
-				if (movingobjectposition != null) {
-					if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && !event.world.isRemote) {
-						int i = movingobjectposition.blockX;
-						int j = movingobjectposition.blockY;
-						int k = movingobjectposition.blockZ;
-	
-						if (event.world.getBlock(i, j, k).getMaterial() == Material.water) {
-							--equipped.stackSize;
-	
-							if (equipped.stackSize <= 0) event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, new ItemStack(ModItems.waterBowl));
-							else event.entityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(ModItems.waterBowl), false);
-						}
-					}
-				}
-			}
 		}
 	}
 	
@@ -501,7 +411,7 @@ public class EventHandler {
 	}
 	
 	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent e) {
+	public void onLivingUpdate(LivingUpdateEvent e) {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) {
 				PotionEffect pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.leftFlame);
@@ -515,16 +425,16 @@ public class EventHandler {
 				Party pt = PartySystem.getMobParty(e.entityLiving);
 				if (pt != null) pt.setDead(e.entityLiving, true);
 			}
-			if (ASJUtilities.isServer() && TimeStopSystem.affected(e.entity)) e.setCanceled(true);
 		}
-		
-		if (e.entityLiving instanceof EntityPlayer) onPlayerUpdate(e);
 	}
 	
-	private void onPlayerUpdate(LivingUpdateEvent e) {
-		EntityPlayer player = (EntityPlayer) e.entityLiving;
+	@SubscribeEvent
+	public void onPlayerUpdate(PlayerTickEvent e) {
+		if (e.phase == Phase.START) return;
+		EntityPlayer player = (EntityPlayer) e.player;
 		
-		if (AlfheimCore.enableMMO && ASJUtilities.isServer() && player.worldObj.getTotalWorldTime() % 20 == 0) ManaSystem.handleManaChange(player);
+//		player.rotationYaw = player.rotationPitch = 90;
+		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
 				if (Flight.get(player) >= 0 && Flight.get(player) <= Flight.max()) {
@@ -538,7 +448,7 @@ public class EventHandler {
 			}
 		}
 	}
-
+	
 	public static void checkAddAttrs() {
 		if (!AlfheimCore.enableElvenStory) return;
 		for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
@@ -547,7 +457,7 @@ public class EventHandler {
 			Flight.ensureExistence(player);
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void onNewPotionEffect(LivingPotionEvent.Add.Post e) {
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
@@ -555,11 +465,28 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onChangedPotionEffect(LivingPotionEvent.Change.Post e) {
-		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
+		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier, e.update));
 	}
 	
 	@SubscribeEvent
 	public void onFinishedPotionEffect(LivingPotionEvent.Remove.Post e) {
 		if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), e.effect.potionID, e.effect.duration, e.effect.amplifier));
+	}
+	
+	@SubscribeEvent
+	public void onEntityUpdate(EntityUpdateEvent e) {
+		if (e.entity == null || !e.entity.isEntityAlive()) return;
+		if ((ASJUtilities.isServer() || AlfheimConfig.slowDownClients) && AlfheimSyntheticMethods.cantUpdate(e.entity)) {
+			e.setCanceled(true);
+			AlfheimSyntheticMethods.allowUpdate(e.entity);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onTileUpdate(TileUpdateEvent e) {
+		if (AlfheimSyntheticMethods.cantUpdate(e.tile)) {
+			e.setCanceled(true);
+			AlfheimSyntheticMethods.allowUpdate(e.tile);
+		}
 	}
 }

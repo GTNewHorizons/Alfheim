@@ -103,9 +103,13 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 				System.out.println("Generating synthetic onChangedPotionEffect");
 				return new AlfheimSyntheticMethods$onChangedPotionEffect$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 			} else
-			if (name.equals("canAccept") || name.equals("canSpare")) {
+			if (name.equals("canAccept") || name.equals("canSpare") || name.equals("cantUpdate")) {
 				System.out.println("Generating synthetic " + name);
-				return new AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+				return new AlfheimSyntheticMethods$SyntheticGetters$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			} else
+			if (name.equals("allowUpdate") || name.equals("denyUpdate")) {
+				System.out.println("Generating synthetic " + name);
+				return new AlfheimSyntheticMethods$SyntheticSetters$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
@@ -155,16 +159,39 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			}
 		}
 	
-		static class AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor extends MethodVisitor {
+		static class AlfheimSyntheticMethods$SyntheticGetters$MethodVisitor extends MethodVisitor {
 			
-			public AlfheimSyntheticMethods$TilePoolGetters$MethodVisitor(MethodVisitor mv) {
+			public AlfheimSyntheticMethods$SyntheticGetters$MethodVisitor(MethodVisitor mv) {
 				super(ASM5, mv);
 			}
 			
 			@Override
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 				if (name.equals("alchemy")) name = "canAccept"; else
-				if (name.equals("conjuration")) name = "canSpare"; 
+				if (name.equals("conjuration")) name = "canSpare";  else
+				if (name.equals("isDead")) name = "cantUpdateE";
+				super.visitFieldInsn(opcode, owner, name, desc);
+			}
+			
+			@Override
+			public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
+				if (name.equals("canUpdate"))
+					super.visitFieldInsn(GETFIELD, owner, "cantUpdateT", "Z");
+				else
+					super.visitMethodInsn(opcode, owner, name, desc, itf);
+			}
+		}
+
+		static class AlfheimSyntheticMethods$SyntheticSetters$MethodVisitor extends MethodVisitor {
+			
+			public AlfheimSyntheticMethods$SyntheticSetters$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
+				if (name.equals("isDead")) name = "cantUpdateE"; else
+				if (name.equals("blockMetadata")) { name = "cantUpdateT"; desc = "Z"; }
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 		}

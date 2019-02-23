@@ -1,6 +1,7 @@
 package alfheim.common.core.asm;
 
 import alexsocol.asjlib.ASJReflectionHelper;
+import alexsocol.asjlib.asm.ASJASM;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.relauncher.CoreModManager;
@@ -12,22 +13,29 @@ import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
 @MCVersion(value = "1.7.10")
 public class AlfheimHookLoader extends HookLoader {
 	
-	public static boolean isThermos = false;
+	public static final boolean hpSpells;
+	public static final boolean isThermos;
 	
 	static {
+		hpSpells = !System.getProperty("alfheim.spells.hpasm", "on").equals("off");
+		if (!hpSpells) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable hooks into health system, thing may not go well: Shared HP spell is unavailable, \"leftover flame\" of other players can somehow be \"healed\" (seems to lead to nothing).", ModInfo.MODID.toUpperCase()));
 		isThermos = System.getProperty("alfheim.thermos.suppress", "off").equals("on");
-		if (isThermos) FMLRelaunchLog.info(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core", ModInfo.MODID.toUpperCase()));
+		if (isThermos) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core - thing may not go well", ModInfo.MODID.toUpperCase()));
+		
 		ModInfo.OBF = !(Boolean) ASJReflectionHelper.getStaticValue(CoreModManager.class, "deobfuscatedEnvironment");
 		ASJReflectionHelper.setStaticFinalValue(ModInfo.class, !ModInfo.OBF, "DEV");
 	}
 	
 	@Override public String[] getASMTransformerClass() {
-		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName(), AlfheimSyntheticMethodsInjector.class.getName()/*, ASJASM.class.getName()*/ };
+		return new String[] { PrimaryClassTransformer.class.getName(), AlfheimClassTransformer.class.getName(), ASJPacketCompleter.class.getName(), AlfheimSyntheticMethodsInjector.class.getName(), ASJASM.class.getName() };
 	}
-
+	
 	@Override public void registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler");
+		if (hpSpells) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks");
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
-		registerHookContainer("alfheim.common.integration.travellersgear.handler.BotaniaToTravellersGearAdapter");
+		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter");
+		
+		ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler");
 	}
 }

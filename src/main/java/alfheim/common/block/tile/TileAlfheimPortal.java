@@ -171,8 +171,7 @@ public class TileAlfheimPortal extends TileMod {
 	
 	private void blockParticle(int meta) {
 		int i = worldObj.rand.nextInt(AIR_POSITIONS.length);
-		double[] pos = new double[] { AIR_POSITIONS[i][0] + 0.5F, AIR_POSITIONS[i][1] + 0.5F,
-				AIR_POSITIONS[i][2] + 0.5F };
+		double[] pos = new double[] { AIR_POSITIONS[i][0] + 0.5F, AIR_POSITIONS[i][1] + 0.5F, AIR_POSITIONS[i][2] + 0.5F };
 		if (meta == 2)
 			pos = CONVERTER_X_Z_FP.apply(pos);
 

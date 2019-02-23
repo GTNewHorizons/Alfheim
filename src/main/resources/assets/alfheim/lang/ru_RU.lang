@@ -5,6 +5,14 @@ tile.AnimatedTorch.name=Подвижный факел
 tile.AnimatedTorch.desc.random=Случайно
 tile.AnimatedTorch.desc.rotate=Поворот
 tile.AnimatedTorch.desc.toggle=Переключение
+tile.Anomaly.ManaVoid.name=Манаворонка
+tile.Anomaly.SpeedUp.name=Ускорение
+tile.Anomaly.Warp.name=Варп
+tile.Anomaly.Antigrav.name=Антигравитация
+tile.Anomaly.Lightning.name=Сгусток тёмной энергии
+tile.Anomaly.ManaTornado.name=Манабуря
+tile.Anomaly.SpeedDown.name=Замедление
+tile.Anomaly.Gravity.name=Гравитационная воронка
 tile.Anyavil.name=Някавайня
 tile.botania:AlfheimPylons0.name=Эльфийский пилон
 tile.botania:AlfheimPylons1.name=Йордин пилон
@@ -77,6 +85,7 @@ item.botania:lensMessenger.short=Посыльный
 item.botania:lensTripwire.name=Мана линза: Растяжка
 item.botania:lensTripwire.short=Растяжка
 item.LivingrockPickaxe.name=Кирка из жизнебулыжника
+item.LootInterceptor.name=Перехватчик лута
 item.ManaInfusionCore.name=Ядро мана-наполнителя
 item.ManaRingElven.name=Эльфийское кольцо маны
 item.ManaRingGod.name=Божественное кольцо маны
@@ -236,20 +245,26 @@ alfheimmisc.party.no=Такой группы не существует!
 alfheimmisc.party.notinpartyoffline=%s не является участником группы или находится не в игре!
 alfheimmisc.party.notpl=Только лидер группы может сделать это!
 
-death.attack.bleeding=%s истёк кровью 
-death.attack.darkness_FF=%s убит в обмен на жертву %s 
+alfheimmisc.waila.trade.available=Обменов доступно: %s
+alfheimmisc.waila.trade.results=Результаты: 
+alfheimmisc.waila.trade.request=Запрос: 
+
+death.attack.bleeding=%s истёк кровью
+death.attack.corruption=%s подошёл слишком близко к аномалии
+death.attack.darkness_FF=%s убит в обмен на жертву %s
 death.attack.gravity=%s раздавлен гравитацией
 death.attack.lightning=%s убит молнией %s
 death.attack.mark=%s умер от проклятия
+death.attack.missile=%s был разорван в клочья ракетным штормом %s
 death.attack.possession=%s поглощён пустотой
 death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
 death.attack.water=%s разрезан на части водным потоком %s
 
-entity.Elf.name=Эльф
-entity.Flugel.name=Флюгель
-entity.Pixie.name=Пикси
-entity.Rook.name=Ладья Полубога
+entity.alfheim:Elf.name=Эльф
+entity.alfheim:Flugel.name=Флюгель
+entity.alfheim:Pixie.name=Пикси
+entity.alfheim:Rook.name=Ладья Полубога
 
 item.FlugelSoul.blockAway=На расстоянии блока
 item.FlugelSoul.blocksAway=На расстоянии %s блоков
@@ -397,6 +412,7 @@ spell.healing.name=Лечение
 spell.hollowbody.name=Прозрачное Тело
 spell.icelens.name=Ледяная Линза
 spell.ignition.name=Поджёг
+spell.isaacstorm.name=Эпический Ракетный Шторм Исаака
 spell.mortar.name=Мортира 
 spell.night.name=Ночь
 spell.nightvision.name=Ночное Зрение
@@ -462,6 +478,8 @@ spell.hollowbody.words=§8Дай ему тело прозрачное, дару�
 #
 spell.icelens.words=§bЛедяная Линза
 spell.ignition.words=§4Я призываю энергию энтропии, вспыхни же ярким пламенем!
+#
+spell.isaacstorm.words=§eЭпический Ракетный Шторм Исаака
 #
 spell.mortar.words=§2Мортира 
 spell.night.words=§5Я заменяю день ночью, заменяю свет тьмой!

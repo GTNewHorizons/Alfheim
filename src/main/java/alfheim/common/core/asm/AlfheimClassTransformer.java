@@ -8,7 +8,7 @@ import org.objectweb.asm.*;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class AlfheimClassTransformer implements IClassTransformer {
-
+	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 		if (transformedName.equals("net.minecraft.entity.EntityTrackerEntry")) {
@@ -34,7 +34,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-
+		
 		if (transformedName.equals("net.minecraft.world.World")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -82,6 +82,14 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
+			
+		if (transformedName.equals("vazkii.botania.common.item.rod.ItemTerraformRod")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			ItemTerraformRod$ClassVisitor ct = new ItemTerraformRod$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
 		
 		return basicClass;
 	}
@@ -121,7 +129,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			}
 		}
 	}
-
+	
 	static class Potion$ClassVisitor extends ClassVisitor {
 		
 		public Potion$ClassVisitor(ClassVisitor cv) {
@@ -271,7 +279,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			}
 		}
 	}
-
+	
 	static class BaubleRenderHandler$ClassVisitor extends ClassVisitor {
 		
 		public BaubleRenderHandler$ClassVisitor(ClassVisitor cv) {
@@ -489,7 +497,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			return super.visitMethod(access, name, desc, signature, exceptions);
 		}
 	}
-
+	
 	static class LibItemNames$ClassVisitor extends ClassVisitor {
 		
 		public LibItemNames$ClassVisitor(ClassVisitor cv) {
@@ -636,6 +644,58 @@ public class AlfheimClassTransformer implements IClassTransformer {
 					}
 				} else {
 					super.visitJumpInsn(opcode, label);
+				}
+			}
+		}
+	}
+	
+	static class ItemTerraformRod$ClassVisitor extends ClassVisitor {
+		
+		public ItemTerraformRod$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)  {
+			if (name.equals("<clinit>")) {
+				System.out.println("Visiting ItemTerraformRod#<clinit>: " + name + desc);
+				return new ItemTerraformRod$clinit$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions);
+		}
+		
+		static class ItemTerraformRod$clinit$MethodVisitor extends MethodVisitor {
+			
+			public ItemTerraformRod$clinit$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			boolean injectLength = true;
+			boolean injectNew = false;
+			
+			@Override
+			public void visitIntInsn(int opcode, int operand) {
+				if (opcode == BIPUSH) {
+					if (operand == 20) {
+						if (injectLength) {
+							injectLength = false;
+							operand = 21;
+						}
+					} else if (operand == 19) {
+						injectNew = true;
+					}
+				}
+				super.visitIntInsn(opcode, operand);
+			}
+			
+			@Override
+			public void visitInsn(int opcode) {
+				super.visitInsn(opcode);
+				if (opcode == AASTORE && injectNew) {
+					super.visitInsn(DUP);
+					super.visitIntInsn(BIPUSH, 20);
+					super.visitLdcInsn("livingrock");
+					super.visitInsn(AASTORE);
 				}
 			}
 		}

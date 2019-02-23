@@ -32,10 +32,10 @@ import net.minecraft.entity.player.EntityPlayer;
 
 @SideOnly(Side.CLIENT)
 public class KeyBindingHandlerClient {
-
+	
 	/** Toggle Keys */
-	public static boolean toggleFlight, toggleLMB, toggleJump, toggleAlt, toggleCast, toggleSelMob, toggleSelTeam,
-						  toggleLeft, toggleUp, toggleDown, toggleRight;
+	public static boolean toggleFlight, toggleJump, toggleCast, toggleUnCast, toggleSelMob, toggleSelTeam,
+						  toggleLMB, toggleAlt, toggleLeft, toggleUp, toggleDown, toggleRight;
 	
 	/** IDs for spell selection GUI */
 	public static int raceID = 1, spellID = 0;
@@ -125,7 +125,7 @@ public class KeyBindingHandlerClient {
 			} else if (toggleUp) {
 				toggleUp = false;
 			}
-
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 				if (!toggleDown) {
 					toggleDown = true;
@@ -136,7 +136,7 @@ public class KeyBindingHandlerClient {
 			} else if (toggleDown) {
 				toggleDown = false;
 			}
-
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 				if (!toggleRight) {
 					toggleRight = true;
@@ -146,7 +146,7 @@ public class KeyBindingHandlerClient {
 			} else if (toggleRight) {
 				toggleRight = false;
 			}
-
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 				if (!toggleLeft) {
 					toggleLeft = true;
@@ -157,26 +157,38 @@ public class KeyBindingHandlerClient {
 				toggleLeft = false;
 			}
 			
-			cast: if (Keyboard.isKeyDown(ClientProxy.keyCast.getKeyCode()) && !toggleCast) {
-				toggleCast = true;
-				if (CardinalSystemClient.segment().init <= 0) {
-					
-					SpellBase spell = AlfheimAPI.getSpellByIDs(raceID, spellID);
-					if (spell == null) PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -DESYNC.ordinal()));
-					if (!player.capabilities.isCreativeMode && !spell.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
-						PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -NOMANA.ordinal()));
-						break cast;
+			cast: if (Keyboard.isKeyDown(ClientProxy.keyCast.getKeyCode())) {
+				if (!toggleCast) {
+					toggleCast = true;
+					if (CardinalSystemClient.segment().init <= 0) {
+						
+						SpellBase spell = AlfheimAPI.getSpellByIDs(raceID, spellID);
+						if (spell == null) PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -DESYNC.ordinal()));
+						if (!player.capabilities.isCreativeMode && !spell.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
+							PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -NOMANA.ordinal()));
+							break cast;
+						}
+						
+						int i = ((raceID & 0xF) << 28) | (spellID & 0xFFFFFFF);
+						AlfheimCore.network.sendToServer(new MessageKeyBind(CAST.ordinal(), false, i));
+						CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs(raceID, spellID).getCastTime();
 					}
-					
-					int i = ((raceID & 0xF) << 28) | (spellID & 0xFFFFFFF);
-					AlfheimCore.network.sendToServer(new MessageKeyBind(CAST.ordinal(), false, i));
-					CardinalSystemClient.segment.init = CardinalSystemClient.segment.initM = AlfheimAPI.getSpellByIDs(raceID, spellID).getCastTime();
 				}
 			} else if (toggleCast) {
 				toggleCast = false;
 			}
 			
-			if (ClientProxy.keySelMob.isPressed()) {
+			if (Keyboard.isKeyDown(ClientProxy.keyUnCast.getKeyCode())) {
+				if (!toggleUnCast) {
+					toggleUnCast = true;
+					AlfheimCore.network.sendToServer(new MessageKeyBind(UNCAST.ordinal(), false, 0));
+					CardinalSystemClient.segment().init = CardinalSystemClient.segment.initM = 0;
+				}
+			} else if (toggleUnCast) {
+				toggleUnCast = false;
+			}
+				 
+			if (Keyboard.isKeyDown(ClientProxy.keySelMob.getKeyCode())) {
 				if (!toggleSelMob) {
 					toggleSelMob = true;
 					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(new MessageKeyBind(SEL.ordinal(), CardinalSystemClient.segment().isParty, CardinalSystemClient.segment.target.getEntityId()));
@@ -185,7 +197,7 @@ public class KeyBindingHandlerClient {
 				toggleSelMob = false;
 			}
 			
-			if (ClientProxy.keySelTeam.isPressed()) {
+			if (Keyboard.isKeyDown(ClientProxy.keySelTeam.getKeyCode())) {
 				if (!toggleSelTeam) {
 					toggleSelTeam = true;
 					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(new MessageKeyBind(SEL.ordinal(), CardinalSystemClient.segment().isParty, CardinalSystemClient.segment.target.getEntityId()));
@@ -203,6 +215,6 @@ public class KeyBindingHandlerClient {
 	}
 	
 	public static enum KeyBindingIDs {
-		ATTACK, CAST, FLIGHT, SEL
+		ATTACK, CAST, UNCAST, FLIGHT, SEL
 	}
 }

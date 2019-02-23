@@ -11,9 +11,12 @@ import java.util.List;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.ModInfo;
+import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
+import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.Side;
@@ -34,6 +37,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.common.Botania;
 
 public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
@@ -161,22 +165,21 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 		return super.hitEntity(stack, target, attacker);
 	}
 	
+	
 	private void useAbility(int i, EntityLivingBase attacker, EntityLivingBase target) {
 		switch (i) {
 			case 1: {
+				target.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
 				Vec3 vec = attacker.getLookVec();
 				target.motionX = vec.xCoord * 1.5;
 				target.motionZ = vec.zCoord * 1.5;
 				break;
 			}
-			case 2: target.addPotionEffect(new PotionEffect(Potion.poison.id, 80, 1)); break;
+			case 2: target.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 1)); break;
 			case 3: target.setFire(6); break;
 			case 4: {
-				target.addPotionEffect(new PotionEffect(Potion.blindness.id, 100, -1));
-				target.hurtResistantTime = target.hurtTime = 0;
-				target.attackEntityFrom(DamageSourceSpell.water(attacker), 5);
-				target.hurtResistantTime = target.maxHurtResistantTime;
-				target.hurtTime = target.maxHurtTime = 10;
+				target.motionY += 0.825;
+				SpellEffectHandler.sendPacket(Spells.SPLASH, target);
 				break;
 			}
 			case 5: {

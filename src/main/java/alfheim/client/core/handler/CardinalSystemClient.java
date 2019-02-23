@@ -22,7 +22,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class CardinalSystemClient {
-
+	
 	private static final Minecraft mc = Minecraft.getMinecraft();
 	public static PlayerSegmentClient segment;
 	
@@ -68,12 +68,12 @@ public class CardinalSystemClient {
 			}
 		}
 	}
-
+	
 	public static class TargetingSystemClient {
 		
 		public static boolean selectMob() {
 			if (mc == null || mc.thePlayer == null) return false;
-	        if (segment().party == null) segment.party = new Party(mc.thePlayer);
+			if (segment().party == null) segment.party = new Party(mc.thePlayer);
 			MovingObjectPosition mop = ASJUtilities.getMouseOver(mc.thePlayer, 128, true);
 			if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
 				if (!segment.party.isMember((EntityLivingBase) mop.entityHit)) {
@@ -86,7 +86,7 @@ public class CardinalSystemClient {
 			}
 			return segment.target != null && !segment.isParty;
 		}
-	
+		
 		public static boolean selectTeam() {
 			if (mc == null || mc.thePlayer == null) return false;
 			segment().isParty = true;
@@ -102,7 +102,7 @@ public class CardinalSystemClient {
 	public static class TimeStopSystemClient {
 		
 		public static LinkedList<TimeStopAreaClient> tsAreas = new LinkedList<TimeStopAreaClient>();
-
+		
 		public static void stop(double x, double y, double z, Party pt, int id) {
 			tsAreas.add(new TimeStopAreaClient(x, y, z, pt, id));
 		}
@@ -163,17 +163,18 @@ public class CardinalSystemClient {
 	
 	public static class PlayerSegmentClient implements Serializable {
 		
-	    private static final long serialVersionUID = 6871678638741684L;
-
+		private static final long serialVersionUID = 6871678638741684L;
+		
 		public HashMap<SpellBase, Integer> coolDown = new HashMap<SpellBase, Integer>();
 		public int[] hotSpells = new int[12];
+		// current and max spell init time (for blue bar)
 		public int init, initM;
 		
 		public Party party;
 		public static int partyIndex;
 		public EntityLivingBase target;
 		public boolean isParty;
-
+		
 		public static boolean[] knowledge;
 		
 		public String userName;

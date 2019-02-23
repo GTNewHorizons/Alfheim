@@ -8,6 +8,8 @@ import com.google.common.collect.Lists;
 
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
+import alfheim.api.ModInfo;
+import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
 import alfheim.common.block.AlfheimMultiblocks;
 import alfheim.common.block.BlockElvenOres;
@@ -32,7 +34,7 @@ public class AlfheimLexiconData {
 	public static KnowledgeType kt = (AlfheimCore.enableElvenStory) ? BotaniaAPI.basicKnowledge : BotaniaAPI.elvenKnowledge;
 	
 	public static LexiconCategory categoryAlfheim;
-
+	
 	/** Lore alfheim page */
 	public static LexiconEntry alfheim;
 	/** Lore elves page */
@@ -43,6 +45,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry amulCirs;
 	public static LexiconEntry amulNimb;
 	public static LexiconEntry aniTorch;
+	public static LexiconEntry anomaly;
 	public static LexiconEntry anyavil;
 	public static LexiconEntry astrolab;
 	public static LexiconEntry auraAlf;
@@ -58,6 +61,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry greenRod;
 	public static LexiconEntry infuser;
 	public static LexiconEntry itemHold;
+	public static LexiconEntry lootInt;
 	public static LexiconEntry mask;
 	//public static LexiconEntry mjolnir;
 	public static LexiconEntry mobs;
@@ -72,7 +76,7 @@ public class AlfheimLexiconData {
 	public static LexiconEntry trade;
 	//public static LexiconEntry trans;		// BACK
 	public static LexiconEntry worldgen;
-
+	
 	// Elven Story information
 	public static LexiconEntry es;
 	public static LexiconEntry races;
@@ -84,12 +88,13 @@ public class AlfheimLexiconData {
 	
 	public static void preInit() {
 		BotaniaAPI.addCategory(categoryAlfheim = new BLexiconCategory("Alfheim", 5));
-
+		
 		advMana	= new BLexiconEntry("advMana",	categoryAlfheim);
 		alfheim	= new BLexiconEntry("alfheim",	categoryAlfheim);
 		amulCirs= new BLexiconEntry("amulCirs",	categoryAlfheim);
 		amulNimb= new BLexiconEntry("amulNimb",	categoryAlfheim);
 		aniTorch= new BLexiconEntry("aniTorch",	categoryAlfheim);
+		anomaly	= new BLexiconEntry("anomaly",	categoryAlfheim);
 		anyavil	= new BLexiconEntry("anyavil",	categoryAlfheim);
 		astrolab= new BLexiconEntry("astrolab",	categoryAlfheim);
 		auraAlf = new BLexiconEntry("auraAlf",	categoryAlfheim);
@@ -105,6 +110,7 @@ public class AlfheimLexiconData {
 		greenRod= new BLexiconEntry("greenRod",	categoryAlfheim);
 		infuser	= new BLexiconEntry("infuser",	categoryAlfheim);
 		itemHold= new BLexiconEntry("itemHold",	categoryAlfheim);
+		lootInt	= new BLexiconEntry("lootInt",	categoryAlfheim);
 		mobs	= new BLexiconEntry("mobs",		categoryAlfheim);
 		ores	= new BLexiconEntry("ores",		categoryAlfheim);
 		pixie	= new BLexiconEntry("pixie", 	categoryAlfheim);
@@ -145,6 +151,19 @@ public class AlfheimLexiconData {
 		alfheim	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"));
 		
+		anomaly	.setPriority()
+				.setLexiconPages(new PageText("0"));
+		
+		int index = -1;
+		for (String name : AlfheimAPI.anomalies.keySet()) {
+			if (name.equals("Lightning")) index = anomaly.pages.size() + 1;
+			anomaly.setLexiconPages(new PageImage(name + ".t", ModInfo.MODID + ":textures/gui/entries/Anomaly" + name + ".png"), new PageText(name + ".d"));
+		}
+		
+		LexiconPage pg = new PageTextLearnableKnowledge("botania.page.anomalyLightning.d", Knowledge.PYLONS);
+		anomaly.pages.set(index, pg);
+		pg.onPageAdded(anomaly, index);
+		
 		elves	.setPriority()
 				.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"), new PageText("4"));
 		
@@ -167,11 +186,11 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe),
 								 new PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace))
 				.setIcon(new ItemStack(AlfheimBlocks.dreamLeaves));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenSand));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLog));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamLeaves));
-		worldgen.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.dreamSapling));
-
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenSand), worldgen, 3);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLog), worldgen, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamLeaves), worldgen, 1);
+		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1);
+		
 		aniTorch.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"),
 								 new PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch));
 		
@@ -188,6 +207,8 @@ public class AlfheimLexiconData {
 		amulNimb.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeCloudPendantSuper));
 		
 		astrolab.setLexiconPages(new PageText("0"), new PageText("1"), new PageCraftingRecipe("2", AlfheimRecipes.recipeAstrolabe));
+		
+		lootInt	.setLexiconPages(new PageText("0"), new PageCraftingRecipe("1", AlfheimRecipes.recipeLootInterceptor));
 		
 		ores	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
@@ -291,17 +312,19 @@ public class AlfheimLexiconData {
 		flugel	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(ModItems.flightTiara, 1, 1));
 		
-		soul	.setLexiconPages(new PageText("0"), new PageText("1"),
-								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAntiPylon), new PageText("3"),
+		soul	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("3"),
 								 new PageMultiblock("4", AlfheimMultiblocks.soul),
 								 new PageText("5"))
 				.setIcon(new ItemStack(AlfheimItems.flugelSoul));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.flugelSoul), soul, 1);
 		
 		mask	.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mask));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.mask), mask, 1);
 		
 		excalibr.setLexiconPages(new PageTextLearnableAchievement("0", AlfheimAchievements.excaliber))
 				.setIcon(new ItemStack(AlfheimItems.excaliber));
+		LexiconRecipeMappings.map(new ItemStack(AlfheimItems.excaliber), excalibr, 1);
 		
 		/*mjolnir.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mjolnir));*/
@@ -319,8 +342,8 @@ public class AlfheimLexiconData {
 				new PageText("3"));
 		
 		LexiconData.cosmeticBaubles.setLexiconPages(new PageCraftingRecipe("34", AlfheimRecipes.recipeThinkingHand));
-
-		LexiconPage pg = new PageText("botania.page.lens38");
+		
+		pg = new PageText("botania.page.lens38");
 		LexiconData.lenses.pages.add(14, pg);
 		pg.onPageAdded(LexiconData.lenses, 14);
 		pg = new PageCraftingRecipe("botania.page.lens39", AlfheimRecipes.recipeLensMessenger);
@@ -362,8 +385,13 @@ public class AlfheimLexiconData {
 																 new PageText("3"), new PageCraftingRecipe("4", AlfheimRecipes.recipePaperBreak))
 												.setIcon(null);
 		
-		if (spells	.pages.isEmpty())	spells	.setPriority()
-												.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+		if (spells	.pages.isEmpty())	{
+										spells	.setPriority()
+										.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"), new PageText("3"));
+										
+										postInitMMO();
+		}
+												
 		
 		if (targets	.pages.isEmpty())	targets	.setPriority()
 												.setLexiconPages(new PageText("0"), new PageText("1"));
@@ -388,6 +416,7 @@ public class AlfheimLexiconData {
 		kt();
 		
 		alfheim	.setKnowledgeType(BotaniaAPI.basicKnowledge);
+		anomaly	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		elves	.setKnowledgeType(kt);
 		pylons	.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		portal	.setKnowledgeType(kt);
@@ -401,6 +430,7 @@ public class AlfheimLexiconData {
 		amulCirs.setKnowledgeType(BotaniaAPI.basicKnowledge);
 		amulNimb.setKnowledgeType(kt);
 		astrolab.setKnowledgeType(kt);
+		lootInt	.setKnowledgeType(kt);
 		
 		ores	.setKnowledgeType(kt);
 		mobs	.setKnowledgeType(kt);
@@ -519,6 +549,7 @@ public class AlfheimLexiconData {
 		if (AlfheimCore.enableMMO) {
 			preInitMMO();
 			initMMO();
+			postInitMMO();
 		}
 		
 		if (!categoryAlfheim.entries.contains(es))		BotaniaAPI.addEntry(es		, categoryAlfheim);

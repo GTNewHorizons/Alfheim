@@ -41,7 +41,10 @@ public class CommandDimTP extends CommandBase {
 					if (w == null) {
 						throw new NullPointerException("Loaded dimension is null");
 					}
-					ChunkCoordinates s = w.getSpawnPoint();
+					
+					ChunkCoordinates s = ((EntityPlayer) sender).getBedLocation(id);
+					// stupid minecraft returns overworld coordinates in ANY dimension
+					if (s == null) s = w.getSpawnPoint();
 			   		ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, id, s.posX, s.posY, s.posZ);
 				} catch (Throwable e) {
 					throw new WrongUsageException("alfheim.commands.tpdim.worlderr", new Object[0]);

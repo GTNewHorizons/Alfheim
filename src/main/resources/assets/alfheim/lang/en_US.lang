@@ -5,6 +5,14 @@ tile.AnimatedTorch.name=Animated Torch
 tile.AnimatedTorch.desc.random=Random
 tile.AnimatedTorch.desc.rotate=Rotate
 tile.AnimatedTorch.desc.toggle=Toggle
+tile.Anomaly.ManaVoid.name=Manavortex
+tile.Anomaly.SpeedUp.name=Accelerator
+tile.Anomaly.Warp.name=Warp
+tile.Anomaly.Antigrav.name=Antigravity
+tile.Anomaly.Lightning.name=Clot of Dark Energy
+tile.Anomaly.ManaTornado.name=Mana Thunder
+tile.Anomaly.SpeedDown.name=Decelerator
+tile.Anomaly.Gravity.name=Gravity Vortex
 tile.Anyavil.name=Anyavil
 tile.botania:AlfheimPylons0.name=Elven Pylon
 tile.botania:AlfheimPylons1.name=Yordin Pylon
@@ -77,6 +85,7 @@ item.botania:lensMessenger.short=Messenger
 item.botania:lensTripwire.name=Mana Lens: Tripwire
 item.botania:lensTripwire.short=Tripwire
 item.LivingrockPickaxe.name=Livingrock Pickaxe
+item.LootInterceptor.name=Loot Interceptor
 item.ManaInfusionCore.name=Mana Infusion Core
 item.ManaRingElven.name=Elven Band of Mana
 item.ManaRingGod.name=God's Band of Mana
@@ -236,20 +245,26 @@ alfheimmisc.party.no=There is no such party
 alfheimmisc.party.notinpartyoffline=%s isn't a party member or is offline
 alfheimmisc.party.notpl=Only partyleader can do this
 
+alfheimmisc.waila.trade.available=%s more trade(s) available
+alfheimmisc.waila.trade.results=Results: 
+alfheimmisc.waila.trade.request=Request: 
+
 death.attack.bleeding=%s bleed out
-death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice 
+death.attack.corruption=%s got too close to anomaly
+death.attack.darkness_FF=%s was killed in exchange for %s's sacrifice
 death.attack.gravity=%s was crushed down by gravity
 death.attack.lightning=%s was charged to death by %s's lightning
 death.attack.mark=%s died from the curse
+death.attack.missile=%s was torn to shreds by %s's rocket storm
 death.attack.possession=%s was consumed by void
 death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
 death.attack.water=%s was cut into pieces by %s's water stream
 
-entity.Elf.name=Elf
-entity.Flugel.name=Flügel
-entity.Pixie.name=Pixie
-entity.Rook.name=Demigod's Rook
+entity.alfheim:Elf.name=Elf
+entity.alfheim:Flugel.name=Flügel
+entity.alfheim:Pixie.name=Pixie
+entity.alfheim:Rook.name=Demigod's Rook
 
 item.FlugelSoul.blockAway=1 Block Away
 item.FlugelSoul.blocksAway=%s Blocks Away
@@ -397,6 +412,7 @@ spell.healing.name=Healing
 spell.hollowbody.name=Hollow Body
 spell.icelens.name=Ice Lens
 spell.ignition.name=Ignition
+spell.isaacstorm.name=Isaac's Epic Missile Storm
 spell.mortar.name=Mortar 
 spell.night.name=Night
 spell.nightvision.name=Night Vision
@@ -462,6 +478,8 @@ spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
 #
 spell.icelens.words=§bIce Lens
 spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
+#
+spell.isaacstorm.words=§eIsaac's Epic Missile Storm
 #
 spell.mortar.words=§2Mortar
 spell.night.words=§5I replace the day with night, replace §5the light with darkness!

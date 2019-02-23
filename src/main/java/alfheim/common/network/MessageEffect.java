@@ -10,17 +10,23 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class MessageEffect extends ASJPacket {
-
+	
 	public int entity;
 	public int id;
 	public int amp;
 	public int dur;
+	public boolean upd;
 	
 	public MessageEffect(int e, int i, int d, int a) {
+		this(e, i, d, a, true);
+	}
+	
+	public MessageEffect(int e, int i, int d, int a, boolean u) {
 		entity = e;
 		id = i;
-        dur = d;
-        amp = a;
+		dur = d;
+		amp = a;
+		upd = u;
 	}
 	
 	public static class Handler implements IMessageHandler<MessageEffect, IMessage> {
@@ -40,11 +46,11 @@ public class MessageEffect extends ASJPacket {
 						l.addPotionEffect(new PotionEffect(packet.id, packet.dur, packet.amp, true));
 						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(l, l.getAttributeMap(), packet.amp);
 					} else {
-						Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(l, l.getAttributeMap(), packet.amp);
+						if (packet.upd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(l, l.getAttributeMap(), packet.amp);
 						pe.amplifier = packet.amp;
 						pe.duration = packet.dur;
 						pe.isAmbient = true;
-						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(l, l.getAttributeMap(), packet.amp);
+						if (packet.upd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(l, l.getAttributeMap(), packet.amp);
 					}
 				}
 			}

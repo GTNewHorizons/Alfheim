@@ -9,10 +9,12 @@ import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 
+import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import net.minecraft.entity.ai.attributes.BaseAttribute;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -23,6 +25,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 
 public class AlfheimAPI {
+	
 	public static final ArmorMaterial ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, new int[] {5, 10, 8, 5}, 30);
 	public static final ArmorMaterial ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, new int[] {2, 9, 5, 2}, 20);
 	public static final ToolMaterial REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3, 8, 30);
@@ -44,6 +47,10 @@ public class AlfheimAPI {
 	public static HashSet<SpellBase> spells = new HashSet<SpellBase>();
 	/** Map of elven spells associated with their race (affinity), sorted by name */
 	public static HashMap<EnumRace, HashSet<SpellBase>> spellMapping = new HashMap<EnumRace, HashSet<SpellBase>>();
+	/** Map of anomaly types and their subtiles, specifying their behavior */
+	public static HashMap<String, Class<? extends SubTileEntity>> anomalies = new HashMap<String, Class<? extends SubTileEntity>>();
+	/** Map of anomaly types and their subtile instances, used for render :o */
+	public static HashMap<String, SubTileEntity> anomalyInstances = new HashMap<String, SubTileEntity>();
 	
 	public static RecipeManaInfuser addInfuserRecipe(RecipeManaInfuser rec) {
 		if (rec != null) manaInfuserRecipes.add(rec);
@@ -115,7 +122,7 @@ public class AlfheimAPI {
 		else FMLRelaunchLog.log(ModInfo.MODID.toUpperCase(), Level.WARN, "Trying to register spell " + spell.name + " twice. Skipping.");
 		
 	}
-
+	
 	private static HashSet<SpellBase> checkGet(EnumRace affinity) {
 		if (!spellMapping.containsKey(affinity)) spellMapping.put(affinity, new HashSet<SpellBase>(8));
 		return spellMapping.get(affinity);
@@ -153,5 +160,24 @@ public class AlfheimAPI {
 			}
 		}
 		throw new IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name);
+	}
+	
+	public static void registerAnomaly(String name, Class<? extends SubTileEntity> behavior) {
+		anomalies.put(name, behavior);
+		try {
+			anomalyInstances.put(name, behavior.newInstance());
+		} catch (Throwable e) {
+			FMLRelaunchLog.log(Loader.instance().activeModContainer().getModId().toUpperCase(), Level.ERROR, "Cannot instantiate anomaly subtile for " + behavior.getCanonicalName());
+			e.printStackTrace();
+			throw new IllegalArgumentException("Uninstantiatable anomaly subtile.");
+		}
+	}
+	
+	public static Class<? extends SubTileEntity> getAnomaly(String name) {
+		return anomalies.get(name);
+	}
+	
+	public static SubTileEntity getAnomalyInstance(String name) {
+		return anomalyInstances.get(name);
 	}
 }

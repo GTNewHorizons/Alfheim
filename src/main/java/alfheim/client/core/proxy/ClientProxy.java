@@ -9,40 +9,51 @@ import alfheim.AlfheimCore;
 import alfheim.api.lib.*;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
 import alfheim.client.core.handler.EventHandlerClient;
+import alfheim.client.core.util.AlfheimBotaniaModifiersClient;
 import alfheim.client.gui.*;
 import alfheim.client.lib.LibResourceLocationsActual;
 import alfheim.client.model.entity.*;
 import alfheim.client.render.block.*;
 import alfheim.client.render.entity.*;
+import alfheim.client.render.item.*;
 import alfheim.client.render.tile.*;
 import alfheim.common.block.tile.*;
 import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
-import alfheim.common.core.util.AlfheimBotaniaModifiers;
+import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
-import alfheim.common.integration.travellersgear.handler.BotaniaInTravellersGearRenderer;
+import alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaRenderer;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 	
 	public static final KeyBinding keyCast = new KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.gameplay");
+	public static final KeyBinding keyUnCast = new KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.gameplay");
 	public static final KeyBinding keyFlight = new KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement");
 	public static final KeyBinding keySelMob = new KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.gameplay");
 	public static final KeyBinding keySelTeam = new KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay");
 	
+	static {
+		removeKeyBinding(keyCast);
+		removeKeyBinding(keyFlight);
+		removeKeyBinding(keySelMob);
+		removeKeyBinding(keySelTeam);
+	}
+	
 	private static final Gui guiIceLens = new GUIIceLens(Minecraft.getMinecraft());
 	private static final Gui guiParty = new GUIParty(Minecraft.getMinecraft());
-	//private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
+	private static final Gui guiRace = new GUIRace(Minecraft.getMinecraft());
 	private static final Gui guiSpells = new GUISpells(Minecraft.getMinecraft());
 	
 	@Override
@@ -53,7 +64,6 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerRenderThings() {
-		LibRenderIDs.idAniTorch = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
@@ -63,7 +73,9 @@ public class ClientProxy extends CommonProxy {
 		LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
 		LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
 		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
-
+		
+	    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), new RenderItemAnomaly());
+		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, new RenderBlockAnyavil());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, new RenderBlockItemHolder());
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, new RenderBlockAlfheimPylons());
@@ -72,12 +84,13 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal.class, new RenderTileAlfheimPortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylons.class, new RenderTileAlfheimPylons());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnimatedTorch.class, new RenderTileAnimatedTorch());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomaly.class, new RenderTileAnomaly());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil.class, new RenderTileAnyavil());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFlugelHead.class, new RenderTileFlugelHead());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder.class, new RenderTileItemHolder());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal.class, new RenderTileTradePortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer.class, new RenderTileTransferer());
-
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie.class, new RenderEntityAlfheimPixie());
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf.class, new RenderEntityElf(new ModelEntityElf(), 0.25F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel.class, new RenderEntityFlugel(new ModelEntityFlugel(), 0.25F));
@@ -90,37 +103,39 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar.class, new RenderEntityMortar());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade.class, new RenderEntityWindBlade());
 	}
-
+	
 	@Override
 	public void registerKeyBinds() {
 		if (AlfheimCore.enableElvenStory) addESMKeyBinds();
 		if (AlfheimCore.enableMMO) addMMOKeyBinds();
 	}
-
+	
 	@Override
 	public void initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers();
 		MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
 		FMLCommonHandler.instance().bus().register(new EventHandlerClient());
-		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(new BotaniaInTravellersGearRenderer());
+		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(new TGHandlerBotaniaRenderer());
+		if (AlfheimCore.enableElvenStory) enableESMGUIs();
 		if (AlfheimCore.enableMMO) enableMMOGUIs();
 	}
 	
 	@Override
 	public void postInit() {
 		super.postInit();
-		AlfheimBotaniaModifiers.postInit();
+		AlfheimBotaniaModifiersClient.postInit();
 	}
-
+	
 	public static void toggelModes(boolean b, boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (b) toggleESM(esm, mmo, esmOld, mmoOld);
 		else toggleMMO(esm, mmo, esmOld, mmoOld);
 	}
-
+	
 	public static void enableESM() {
 		if (AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = true;
 		AlfheimLexiconData.reEnableESM();
+		enableESMGUIs();
 		addESMKeyBinds();
 		EventHandler.checkAddAttrs();
 	}
@@ -129,6 +144,7 @@ public class ClientProxy extends CommonProxy {
 		if (!AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = false;
 		AlfheimLexiconData.disableESM();
+		disableESMGUIs();
 		removeESMKeyBinds();
 		disableMMO();
 	}
@@ -150,7 +166,7 @@ public class ClientProxy extends CommonProxy {
 		removeMMOKeyBinds();
 		TimeStopSystemClient.tsAreas.clear();
 	}
-
+	
 	private static void toggleESM(boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (esmOld == esm) return;
 		AlfheimCore.enableElvenStory = esm;
@@ -164,7 +180,7 @@ public class ClientProxy extends CommonProxy {
 			if (mmoOld != mmo) toggleMMO(esm, mmo, esmOld, mmoOld);
 		}
 	}
-
+	
 	private static void toggleMMO(boolean esm, boolean mmo, boolean esmOld, boolean mmoOld) {
 		if (mmoOld == mmo) return;
 		AlfheimCore.enableMMO = mmo;
@@ -182,12 +198,21 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 	
+	private static void enableESMGUIs() {
+		ASJUtilities.log("Registering ESM GUIs");
+		MinecraftForge.EVENT_BUS.register(guiRace);
+	}
+	
+	private static void disableESMGUIs() {
+		ASJUtilities.log("Unregistering ESM GUIs");
+		MinecraftForge.EVENT_BUS.unregister(guiRace);
+	}
+	
 	private static void enableMMOGUIs() {
 		ASJUtilities.log("Registering MMO GUIs");
 		MinecraftForge.EVENT_BUS.register(guiIceLens);
 		MinecraftForge.EVENT_BUS.register(guiParty);
 		MinecraftForge.EVENT_BUS.register(guiSpells);
-		MinecraftForge.EVENT_BUS.register(new GUIRace(Minecraft.getMinecraft()));
 	}
 	
 	private static void disableMMOGUIs() {
@@ -198,7 +223,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private static void addESMKeyBinds() {
-		ClientRegistry.registerKeyBinding(keyFlight);
+		addKeyBinding(keyFlight);
 	}
 	
 	private static void removeESMKeyBinds() {
@@ -206,20 +231,32 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	private static void addMMOKeyBinds() {
-		ClientRegistry.registerKeyBinding(keyCast);
-		ClientRegistry.registerKeyBinding(keySelMob);
-		ClientRegistry.registerKeyBinding(keySelTeam);
+		addKeyBinding(keyCast);
+		addKeyBinding(keyUnCast);
+		addKeyBinding(keySelMob);
+		addKeyBinding(keySelTeam);
 	}
 	
 	private static void removeMMOKeyBinds() {
 		unregisterKeyBinding(keyCast);
+		unregisterKeyBinding(keyUnCast);
 		unregisterKeyBinding(keySelMob);
 		unregisterKeyBinding(keySelTeam);
 	}
 	
 	private static void unregisterKeyBinding(KeyBinding key) {
+		removeKeyBinding(key);
 		int id = ASJUtilities.indexOfComparableArray(Minecraft.getMinecraft().gameSettings.keyBindings, key);
 		if (id < 0 || id > Minecraft.getMinecraft().gameSettings.keyBindings.length) return;
-        Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id);
+		Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id);
+	}
+	
+	private static void addKeyBinding(KeyBinding key) {
+		key.setKeyCode(key.getKeyCodeDefault());
+		ClientRegistry.registerKeyBinding(key);
+	}
+	
+	private static void removeKeyBinding(KeyBinding key) {
+		key.setKeyCode(0);
 	}
 }

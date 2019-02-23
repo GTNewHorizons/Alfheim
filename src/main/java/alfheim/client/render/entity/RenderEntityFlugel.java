@@ -42,7 +42,7 @@ public class RenderEntityFlugel extends RenderLiving {
 		@Override
 		public void postRender() {
 			glEnable(GL_CULL_FACE);
-			glEnable(GL_LIGHTING);
+			//glEnable(GL_LIGHTING); breaks some other stuuf, urgh -_-
 			glShadeModel(GL_FLAT);
 			glDisable(GL_BLEND);
 		}

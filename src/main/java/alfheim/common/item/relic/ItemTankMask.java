@@ -31,9 +31,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import vazkii.botania.api.item.IBaubleRender;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.relic.ItemRelicBauble;
 
 public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IManaUsingItem {
@@ -109,20 +111,35 @@ public class ItemTankMask extends ItemRelicBauble implements IBaubleRender, IMan
 	}
 	
 	@SubscribeEvent
-	public void onLivingAttacked(LivingAttackEvent e) {
-		if (e.entityLiving instanceof EntityPlayer && ASJUtilities.willEntityDie(e) && ((EntityPlayer) e.entityLiving).inventory.hasItem(AlfheimItems.mask)) {
-			EntityPlayer player = (EntityPlayer) e.entityLiving;
+	public void onEntityDeath(LivingDeathEvent e) {
+		EntityPlayer player;
+		if (e.entityLiving instanceof EntityPlayer) player = (EntityPlayer) e.entityLiving;
+		else return;
+			
+		mask: if (player.inventory.hasItem(AlfheimItems.mask)) {
 			int slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory);
-			if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return;
+			if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) break mask;
 			IInventory baubles = PlayerHandler.getPlayerBaubles(player);
 			if (baubles.getStackInSlot(0) != null)
 				if (((IBauble) baubles.getStackInSlot(0).getItem()).canUnequip(baubles.getStackInSlot(0), player)) {
 					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false);
 				}
-				else return;
+				else break mask;
 			baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy());
 			player.inventory.consumeInventoryItem(AlfheimItems.mask);
 			e.setCanceled(true);
+			return;
+		}
+		
+		if (e.source.damageType.equals(DamageSourceSpell.possession.damageType)) {
+			IInventory baubles = PlayerHandler.getPlayerBaubles(player);
+			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).getItem() == AlfheimItems.mask) {
+				ItemNBTHelper.setInt(baubles.getStackInSlot(0), ItemTankMask.TAG_POSSESSION, 0);
+				if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
+					player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false);
+                }
+				baubles.setInventorySlotContents(0, null);
+			}
 		}
 	}
 	

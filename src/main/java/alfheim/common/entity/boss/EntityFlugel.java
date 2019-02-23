@@ -71,6 +71,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public static final int RANGE = 24;
 	public static final float MAX_HP = 800F;
 
+	private static final String TAG_NAME			= "name";
 	private static final String TAG_STAGE			= "stage";
 	private static final String TAG_HARDMODE		= "hardmode";
 	private static final String TAG_SOURCE_X		= "sourceX";
@@ -163,10 +164,10 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.setSummoner(player.getCommandSenderName());
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
-				/*if (miku) { // FIXME BACK
+				if (miku) {
 					e.setAlwaysRenderNameTag(miku);
 					e.setCustomNameTag("Hatsune Miku");
-				}*/
+				}
 				
 				List<EntityPlayer> players = e.getPlayersAround();
 				int playerCount = 0;
@@ -682,6 +683,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	}
 	
 	public void setAITask(AITask ai) {
+//		dataWatcher.updateObject(27, AITask.NONE.ordinal());
 		if (ModInfo.DEV) for (EntityPlayer player : getPlayersAround()) ASJUtilities.say(player, "Set AI command to " + ai.toString());
 		dataWatcher.updateObject(27, ai.ordinal());
 	}
@@ -738,6 +740,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
+		if (hasCustomNameTag()) nbt.setString(TAG_NAME, getCustomNameTag());
+		
 		nbt.setInteger(TAG_STAGE, getStage());
 		nbt.setBoolean(TAG_HARDMODE, isHardMode());
 		
@@ -765,6 +769,8 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
+		if (nbt.hasKey(TAG_PLAYER_COUNT)) dataWatcher.updateObject(10, nbt.getString(TAG_NAME));
+		
 		setStage(nbt.getInteger(TAG_STAGE));
 		setHardMode(nbt.getBoolean(TAG_HARDMODE));
 		

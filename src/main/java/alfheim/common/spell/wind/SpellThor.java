@@ -11,11 +11,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class SpellThor extends SpellBase {
-
+	
 	public SpellThor() {
-		super("thor", EnumRace.SYLPH, 60000, 12000, 30);
+		super("thor", EnumRace.SYLPH, 6000, 1200, 30);
 	}
-
+	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result;
@@ -25,27 +25,27 @@ public class SpellThor extends SpellBase {
 		else hit = new Vector3(mop.blockX, mop.blockY, mop.blockZ);
 		
 		int x = MathHelper.floor_double(hit.x);
-    	int y = MathHelper.floor_double(hit.y);
-    	int z = MathHelper.floor_double(hit.z);
-    	
-    	if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK && mop.sideHit != -1) {
-	    	switch(mop.sideHit) {
-	    		case 0: --y; break;
-	    		case 1: ++y; break;
-	    		case 2: --z; break;
-	    		case 3: ++z; break;
-	    		case 4: --x; break;
-	    		case 5: ++x; break;
-	    	}
-    	}
-    	
-    	if (caster.worldObj.canBlockSeeTheSky(x, y, z) && caster.worldObj.getPrecipitationHeight(x, z) <= y) {
-    		result = checkCast(caster);
-   			if (result != SpellCastResult.OK) return result;
-   			caster.worldObj.addWeatherEffect(new EntityLightningBolt(caster.worldObj, x, y, z));
-   			return result;
-    	}
-    	
-    	return SpellCastResult.WRONGTGT;
+		int y = MathHelper.floor_double(hit.y);
+		int z = MathHelper.floor_double(hit.z);
+		
+		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK && mop.sideHit != -1) {
+			switch(mop.sideHit) {
+				case 0: --y; break;
+				case 1: ++y; break;
+				case 2: --z; break;
+				case 3: ++z; break;
+				case 4: --x; break;
+				case 5: ++x; break;
+			}
+		}
+		
+		if (caster.worldObj.canBlockSeeTheSky(x, y, z) && caster.worldObj.getPrecipitationHeight(x, z) <= y) {
+			result = checkCast(caster);
+			if (result != SpellCastResult.OK) return result;
+			caster.worldObj.addWeatherEffect(new EntityLightningBolt(caster.worldObj, x, y, z));
+			return result;
+		}
+		
+		return SpellCastResult.WRONGTGT;
 	}
 }

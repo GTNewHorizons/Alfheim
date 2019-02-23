@@ -1,23 +1,18 @@
 package alfheim.common.core.handler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.UUID;
+import static alfheim.common.network.Message2d.m2d.*;
+import static alfheim.common.network.Message3d.m3d.*;
+
+import java.io.*;
+import java.util.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
+import alfheim.api.event.EntityUpdateEvent;
+import alfheim.api.event.TileUpdateEvent;
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent;
 import alfheim.api.event.TimeStopCheckEvent.TimeStopTileCheckEvent;
 import alfheim.api.spell.ITimeStopSpecific;
@@ -26,14 +21,10 @@ import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
 import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.network.Message1d;
-import alfheim.common.network.Message2d;
-import alfheim.common.network.Message2d.m2d;
-import alfheim.common.network.Message3d;
-import alfheim.common.network.Message3d.m3d;
-import alfheim.common.network.MessageHotSpellC;
-import alfheim.common.network.MessageParty;
-import alfheim.common.network.MessageTimeStop;
+import alfheim.common.network.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -48,15 +39,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.ICreativeManaProvider;
 import vazkii.botania.api.mana.IManaItem;
 
 public class CardinalSystem {
-
+	
 	public static HashMap<String, PlayerSegment> playerSegments = new HashMap<String, PlayerSegment>();
 	
 	public static void load(String save) {
@@ -91,10 +85,14 @@ public class CardinalSystem {
 	}
 	
 	public static void transfer(EntityPlayerMP player) {
-		SpellCastingSystem.transfer(player);
-		HotSpellsSystem.transfer(player);
-		PartySystem.transfer(player);
-		TimeStopSystem.transfer(player, 0);
+		KnowledgeSystem.transfer(player);
+		
+		if (AlfheimCore.enableMMO) {
+			SpellCastingSystem.transfer(player);
+			HotSpellsSystem.transfer(player);
+			PartySystem.transfer(player);
+			TimeStopSystem.transfer(player, 0);
+		}
 	}
 	
 	public static void save(String save) {
@@ -126,7 +124,7 @@ public class CardinalSystem {
 	}
 	
 	public static class KnowledgeSystem {
-
+		
 		public static void learn(EntityPlayerMP player, Knowledge kn) {
 			PlayerSegment seg = forPlayer(player);
 			if (!seg.knowledge[kn.ordinal()]) AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal()), player);
@@ -142,7 +140,7 @@ public class CardinalSystem {
 		}
 		
 		public static enum Knowledge {
-			GLOWSTONE
+			GLOWSTONE, PYLONS
 		}
 	}
 	
@@ -151,7 +149,7 @@ public class CardinalSystem {
 		public static void transfer(EntityPlayerMP player) {
 			for (EnumRace affinity : EnumRace.values())
 				for (SpellBase spell : AlfheimAPI.getSpellsFor(affinity))
-					AlfheimCore.network.sendTo(new Message2d(m2d.COOLDOWN, ((affinity.ordinal() & 0xF) << 28) | (AlfheimAPI.getSpellID(spell) & 0xFFFFFFF), getCoolDown(player, spell)), player);
+					AlfheimCore.network.sendTo(new Message2d(COOLDOWN, ((affinity.ordinal() & 0xF) << 28) | (AlfheimAPI.getSpellID(spell) & 0xFFFFFFF), getCoolDown(player, spell)), player);
 		}
 		
 		public static int setCoolDown(EntityPlayer caster, SpellBase spell, int cd) {
@@ -182,7 +180,7 @@ public class CardinalSystem {
 						if (segment.init > 0) --segment.init;
 						else {
 							if (segment.ids != 0 && segment.castableSpell != null) {
-								AlfheimCore.network.sendTo(new Message2d(m2d.COOLDOWN, segment.ids, KeyBindingHandler.cast(player, (segment.ids >> 28) & 0xF, segment.ids & 0xFFFFFFF)), player);
+								AlfheimCore.network.sendTo(new Message2d(COOLDOWN, segment.ids, KeyBindingHandler.cast(player, (segment.ids >> 28) & 0xF, segment.ids & 0xFFFFFFF)), player);
 								segment.init = segment.ids = 0;
 								segment.castableSpell = null;
 							}
@@ -206,7 +204,7 @@ public class CardinalSystem {
 			}
 		}
 	}
-
+	
 	public static class ManaSystem {
 		
 		public static void handleManaChange(EntityPlayer player) {
@@ -215,23 +213,23 @@ public class CardinalSystem {
 		
 		public static int getMana(EntityPlayer player) {
 			int totalMana = 0;
-
+			
 			IInventory mainInv = player.inventory;
 			IInventory baublesInv = BotaniaAPI.internalHandler.getBaublesInventory(player);
-
+			
 			int invSize = mainInv.getSizeInventory();
 			int size = invSize;
 			if(baublesInv != null)
 				size += baublesInv.getSizeInventory();
-
+			
 			for(int i = 0; i < size; i++) {
 				boolean useBaubles = i >= invSize;
 				IInventory inv = useBaubles ? baublesInv : mainInv;
 				ItemStack stack = inv.getStackInSlot(i - (useBaubles ? invSize : 0));
-
+				
 				if(stack != null) {
 					Item item = stack.getItem();
-
+					
 					if(item instanceof ICreativeManaProvider && ((ICreativeManaProvider) item).isCreative(stack)) return Integer.MAX_VALUE;
 					
 					if(item instanceof IManaItem) 
@@ -248,6 +246,21 @@ public class CardinalSystem {
 		public static int getMana(EntityLivingBase mr) {
 			if (!(mr instanceof EntityPlayer)) return 0;
 			return getMana((EntityPlayer) mr);
+		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new ManaSyncHandler());
+		}
+		
+		public static class ManaSyncHandler {
+			
+			@SubscribeEvent
+			public void onLivingUpdate(LivingUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && e.entityLiving instanceof EntityPlayer) {
+					EntityPlayer player = (EntityPlayer) e.entityLiving;
+					if (player .worldObj.getTotalWorldTime() % 20 == 0) ManaSystem.handleManaChange(player);
+				}
+			}
 		}
 	}
 	
@@ -272,13 +285,13 @@ public class CardinalSystem {
 			}
 		}
 	}
-
+	
 	public static class PartySystem {
 		
 		public static void transfer(EntityPlayerMP player) {
 			AlfheimCore.network.sendTo(new MessageParty(forPlayer(player).party), player);
 		}
-
+		
 		public static void setParty(EntityPlayer player, Party party) {
 			forPlayer(player).party = party;
 			party.sendChanges();
@@ -299,7 +312,7 @@ public class CardinalSystem {
 				if (segment.party.isMember(id)) return segment.party;
 			return null;
 		}
-
+		
 		public static boolean sameParty(EntityPlayer p1, EntityLivingBase p2) {
 			return getParty(p1).isMember(p2);
 		}
@@ -316,6 +329,28 @@ public class CardinalSystem {
 			return false;
 		}
 		
+		public static boolean friendlyFire(EntityLivingBase entityLiving, DamageSource source) {
+			if (!AlfheimCore.enableMMO || source.damageType.contains("_FF")) return false;
+			
+			if (!ASJUtilities.isServer()) return false;
+			if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {
+				Party pt = getParty((EntityPlayer) source.getEntity());
+				if (pt != null && pt.isMember(entityLiving)) {
+					return true;
+				}
+			}
+			if (entityLiving instanceof EntityPlayer && source.getEntity() != null && source.getEntity() instanceof EntityLivingBase) {
+				Party pt = getParty((EntityPlayer) entityLiving);
+				if (pt != null && pt.isMember((EntityLivingBase) source.getEntity())) {
+					return true;
+				}
+			}
+			if (source.getEntity() != null && source.getEntity() instanceof EntityLivingBase && mobsSameParty(entityLiving, (EntityLivingBase) source.getEntity())) {
+				return true;
+			}
+			return false;
+		}
+		
 		public static void notifySpawn(Entity e) {
 			if (e != null && e instanceof EntityLivingBase) {
 				for (PlayerSegment segment : playerSegments.values()) {
@@ -324,7 +359,7 @@ public class CardinalSystem {
 							if (segment.party.isPlayer(i)) {
 								EntityLivingBase mr = segment.party.get(i);
 								if (mr != null && mr instanceof EntityPlayerMP) {
-									AlfheimCore.network.sendTo(new Message2d(m2d.UUID, e.getEntityId(), segment.party.indexOf((EntityLivingBase) e)), (EntityPlayerMP) mr);
+									AlfheimCore.network.sendTo(new Message2d(UUID, e.getEntityId(), segment.party.indexOf((EntityLivingBase) e)), (EntityPlayerMP) mr);
 								}
 							}
 						}
@@ -335,8 +370,8 @@ public class CardinalSystem {
 		
 		public static class Party implements Serializable, Cloneable {
 			
-		    private static final long serialVersionUID = 84616843168484257L;
-
+			private static final long serialVersionUID = 84616843168484257L;
+			
 			/** Flag for server's storing functions */
 			private static transient boolean serverIO = false;
 			
@@ -457,7 +492,7 @@ public class CardinalSystem {
 			public void setDead(int i, boolean d) {
 				if (!ASJUtilities.isServer()) members[i].isDead = d;
 			}
-	
+			
 			public void setDead(EntityLivingBase mr, boolean d) {
 				int i = indexOf(mr);
 				if (i != -1) {
@@ -488,7 +523,7 @@ public class CardinalSystem {
 				sendChanges();
 				return true;
 			}
-	
+			
 			public boolean remove(EntityLivingBase mr) {
 				if (mr == null) return false;
 				if (mr instanceof EntityPlayer && members[0].name.equals(mr.getCommandSenderName()))
@@ -561,7 +596,7 @@ public class CardinalSystem {
 				for (int i = 0; i < count; i++) {
 					EntityLivingBase e = get(i);
 					if (e != null && members[i].isPlayer && e instanceof EntityPlayerMP)
-						AlfheimCore.network.sendTo(new Message3d(m3d.PARTY_STATUS, PartyStatus.MANA.ordinal(), index, mana), (EntityPlayerMP) e);
+						AlfheimCore.network.sendTo(new Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal(), index, mana), (EntityPlayerMP) e);
 				}
 			}
 			
@@ -569,7 +604,7 @@ public class CardinalSystem {
 				for (int i = 0; i < count; i++) {
 					EntityLivingBase e = get(i);
 					if (e != null && members[i].isPlayer && e instanceof EntityPlayerMP)
-						AlfheimCore.network.sendTo(new Message3d(m3d.PARTY_STATUS, PartyStatus.DEAD.ordinal(), id, d ? -10 : -100), (EntityPlayerMP) e);
+						AlfheimCore.network.sendTo(new Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal(), id, d ? -10 : -100), (EntityPlayerMP) e);
 				}
 			}
 			
@@ -621,10 +656,10 @@ public class CardinalSystem {
 				result.count = count;
 				return result;
 			}
-	
+			
 			private static class Member implements Serializable, Cloneable {
 				
-			    private static final long serialVersionUID = 8416468367146381L;
+				private static final long serialVersionUID = 8416468367146381L;
 				public final String name;
 				public UUID uuid;
 				public int mana;
@@ -645,8 +680,25 @@ public class CardinalSystem {
 				}
 			}
 		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new PartyThingsListener());
+		}
+		
+		public static class PartyThingsListener {
+			
+			@SubscribeEvent
+			public void onClonePlayer(PlayerEvent.Clone e) {
+				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false);
+			}
+			
+			@SubscribeEvent
+			public void onPlayerRespawn(PlayerRespawnEvent e) {
+				if (AlfheimCore.enableMMO) getParty(e.player).setDead(e.player, false);
+			}
+		}
 	}
-
+	
 	public static class HotSpellsSystem {
 		
 		public static void transfer(EntityPlayerMP player) {
@@ -730,26 +782,53 @@ public class CardinalSystem {
 		
 		private static class TimeStopArea implements Serializable {
 			
-		    private static final long serialVersionUID = 4146871637815241L;
-		    
-		    public transient static int nextID = -1;
-		    public final Vector3 pos;
-		    public final UUID uuid;
-		    public transient final int id;
-		    public int life = 1200;
-		    
-		    public TimeStopArea(EntityLivingBase caster) {
-		    	uuid = caster.entityUniqueID;
+			private static final long serialVersionUID = 4146871637815241L;
+			
+			public transient static int nextID = -1;
+			public final Vector3 pos;
+			public final UUID uuid;
+			public transient final int id;
+			public int life = 1200;
+			
+			public TimeStopArea(EntityLivingBase caster) {
+				uuid = caster.entityUniqueID;
 				pos = Vector3.fromEntity(caster);
 				id = ++nextID;
+			}
+		}
+		
+		static {
+			MinecraftForge.EVENT_BUS.register(new TimeStopThingsListener());
+		}
+		
+		public static class TimeStopThingsListener {
+			@SubscribeEvent
+			public void onPlayerChangedDimension(PlayerChangedDimensionEvent e) {
+				if (AlfheimCore.enableMMO && e.player instanceof EntityPlayerMP) transfer((EntityPlayerMP) e.player, e.fromDim);
+			}
+			
+			@SubscribeEvent
+			public void onEntityUpdate(EntityUpdateEvent e) {
+				if (e.entity == null || !e.entity.isEntityAlive()) return;
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.entity)) e.setCanceled(true);
+			}
+			
+			@SubscribeEvent
+			public void onLivingUpdate(LivingUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.entity)) e.setCanceled(true);
+			}
+			
+			@SubscribeEvent
+			public void onTileUpdate(TileUpdateEvent e) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.tile)) e.setCanceled(true);
 			}
 		}
 	}
 	
 	public static class PlayerSegment implements Serializable {
 		
-	    private static final long serialVersionUID = 6871678638741684L;
-	    
+		private static final long serialVersionUID = 6871678638741684L;
+		
 		public HashMap<SpellBase, Integer> coolDown = new HashMap<SpellBase, Integer>();
 		public int[] hotSpells = new int[12];
 		

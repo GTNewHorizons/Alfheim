@@ -17,7 +17,7 @@ public class Message1d extends ASJPacket {
 	}
 	
 	public static enum m1d {
-		DEATH_TIMER, TIME_STOP_REMOVE, KNOWLEDGE
+		DEATH_TIMER, TIME_STOP_REMOVE, KNOWLEDGE, CL_SLOWDOWN
 	}
 	
 	public static class Handler implements IMessageHandler<Message1d, IMessage> {

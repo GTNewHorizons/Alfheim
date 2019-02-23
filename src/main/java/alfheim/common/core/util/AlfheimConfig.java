@@ -1,12 +1,9 @@
 package alfheim.common.core.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alexsocol.asjlib.render.RenderPostShaders;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -18,28 +15,36 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class AlfheimConfig extends Configuration {
-
+	
 	public static Configuration config;
 	
-	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "dimension";
-	public static final String CATEGORY_POTIONS		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "potions";
-	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL	 + CATEGORY_SPLITTER + "elvenstory";
-	public static final String CATEGORY_MMO			= CATEGORY_ESMODE	 + CATEGORY_SPLITTER + "mmo";
-	public static final String CATEGORY_HUD			= CATEGORY_MMO	 	+ CATEGORY_SPLITTER + "hud";
+	public static final String CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "Alfheim";
+	public static final String CATEGORY_WORLDGEN	= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "woldgen";
+	public static final String CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "potions";
+	public static final String CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "elvenstory";
+	public static final String CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo";
+	public static final String CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud";
 	
-	// DIMENSIONS
+	// DIMENSION
 	public static int		biomeIDAlfheim			= 152;
 	public static int		dimensionIDAlfheim		= -105;
+	public static boolean	enableAlfheimRespawn	= true;
+	
+	// WORLDGEN
+	public static int		anomaliesDispersion		= 50;
+	public static int		anomaliesUpdate			= 6000;
+	public static int		oregenMultiplier		= 3;
 	
 	// OHTER
 	public static boolean	destroyPortal			= true;
-	public static boolean	enableAlfheimRespawn	= true;
 	public static boolean	fancies					= true;
 	public static boolean	flugelBossBar			= true;
 	public static boolean 	info					= true;
+	public static int		lightningsSpeed			= 20;
 	public static boolean	looniumOverseed			= false;
+	public static boolean	minimalGraphics			= false;
 	public static boolean	numericalMana			= true;
-	public static int		oregenMultiplier		= 3;
+	public static boolean	slowDownClients			= false;
 	public static int		tradePortalRate			= 1200;
 	
 	// POTIONS
@@ -65,13 +70,15 @@ public class AlfheimConfig extends Configuration {
 	
 	// Elven Story
 	public static boolean	bothSpawnStructures		= false;
-	public static int		deathScreenAddTime		= 1200;
 	public static boolean	enableWingsNonAlfheim	= true;
 	public static int		flightTime				= 1200;
+	public static Vec3[]	zones					= new Vec3[9];
+	
+	// MMO
+	public static int		deathScreenAddTime		= 1200;
 	public static boolean	frienldyFire			= false;
 	public static int		maxPartyMembers			= 5;
-	public static Vec3[]	zones					= new Vec3[9];
-
+	
 	// HUD
 	public static double	partyHUDScale			= 1.0;
 	public static boolean	selfHealthUI			= true;
@@ -79,10 +86,13 @@ public class AlfheimConfig extends Configuration {
 	
 	public static void loadConfig(File suggestedConfigurationFile) {
 		config = new Configuration(suggestedConfigurationFile);
-
+		
 		config.load();
 		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings");
+		config.addCustomCategoryComment(CATEGORY_WORLDGEN,	"Alfheim worldgen settings");
+		config.addCustomCategoryComment(CATEGORY_POTIONS,	"Potion IDs");
 		config.addCustomCategoryComment(CATEGORY_ESMODE,	"Elven Story optional features");
+		config.addCustomCategoryComment(CATEGORY_MMO,		"Elven Story optional features");
 		config.addCustomCategoryComment(CATEGORY_HUD,		"HUD elements customizations");
 		
 		syncConfig();
@@ -92,17 +102,23 @@ public class AlfheimConfig extends Configuration {
 	public static void syncConfig() {
 		biomeIDAlfheim			= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",			biomeIDAlfheim,			true,	"Biome ID for standart biome");
 		dimensionIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",		dimensionIDAlfheim,		true,	"Dimension ID for Alfheim");
+		enableAlfheimRespawn	= loadProp(CATEGORY_DIMENSION,	"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
+		
+		anomaliesDispersion		= loadProp(CATEGORY_WORLDGEN,	"anomaliesDispersion",		anomaliesDispersion,	false,	"How rare anomalies are (1/(N*2)% to gen in chunk)");
+		anomaliesUpdate			= loadProp(CATEGORY_WORLDGEN,	"anomaliesUpdate",			anomaliesUpdate,		false,	"How many times anomaly will simulate tick while being generated");
+		oregenMultiplier		= loadProp(CATEGORY_WORLDGEN, 	"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
 		
 		destroyPortal			= loadProp(CATEGORY_GENERAL,	"destroyPortal",			destroyPortal,			false,	"Set this to false to disable destroying portals in non-zero coords in Alfheim");
-		enableAlfheimRespawn	= loadProp(CATEGORY_GENERAL,	"enableAlfheimRespawn",		enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim");
 		fancies					= loadProp(CATEGORY_GENERAL,	"fancies",					fancies,				false,	"Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)");
 		flugelBossBar			= loadProp(CATEGORY_GENERAL,	"flugelBossBar",			flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar");
 		info					= loadProp(CATEGORY_GENERAL,	"info",						info,					false,	"Set this to false to disable loading info about addon");
+		lightningsSpeed			= loadProp(CATEGORY_GENERAL,	"lightningsSpeed",			lightningsSpeed,		false,	"How many ticks it takes between two lightings are spawned in Lightning Anomaly render");
 		looniumOverseed			= loadProp(CATEGORY_GENERAL,	"looniumOverseed",			looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)");
+		minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",			minimalGraphics,		false,	"Set this to true to disable .obj models and shaders");
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
-		oregenMultiplier		= loadProp(CATEGORY_GENERAL, 	"oregenMultiplier",			oregenMultiplier,		true,	"Multiplier for Alfheim oregen");
+		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",			slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly");
 		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
-
+		
 		potionIDBleeding		= loadProp(CATEGORY_POTIONS, 	"potionIDBleeding",			potionIDBleeding,		true,	"Potion id for Bleeding");
 		potionIDButterShield	= loadProp(CATEGORY_POTIONS, 	"potionIDButterShield",		potionIDButterShield,	true,	"Potion id for Butterfly Shield");
 		potionIDDeathMark		= loadProp(CATEGORY_POTIONS, 	"potionIDDeathMark",		potionIDDeathMark,		true,	"Potion id for Death Mark");
@@ -132,10 +148,12 @@ public class AlfheimConfig extends Configuration {
 		partyHUDScale			= loadProp(CATEGORY_HUD,		"partyHUDScale",			partyHUDScale,			false,	"Party HUD Scale (1 < bigger; 1 > smaller)");
 		selfHealthUI			= loadProp(CATEGORY_HUD,		"selfHealthUI",				selfHealthUI,			false,	"Set this to false to hide player's healthbar");
 		targetUI				= loadProp(CATEGORY_HUD,		"targethUI",				targetUI,				false,	"Set this to false to hide target's healthbar");
-
+		
 		if (config.hasChanged()) {
 			config.save();
 		}
+		
+		RenderPostShaders.allowShaders = !minimalGraphics;
 	}
 	
 	public static int loadProp(String category, String propName, int default_, boolean restart, String desc) {
@@ -151,7 +169,7 @@ public class AlfheimConfig extends Configuration {
 		prop.setRequiresMcRestart(restart);
 		return prop.getDouble(default_);
 	}
-
+	
 	public static boolean loadProp(String category, String propName, boolean default_, boolean restart, String desc) {
 		Property prop = config.get(category, propName, default_);
 		prop.comment = desc;
@@ -184,7 +202,7 @@ public class AlfheimConfig extends Configuration {
 			makeDefaultWorldCoords(save);
 		}
 	}
-
+	
 	private static void makeDefaultWorldCoords(String save) {
 		try {
 			FileWriter fw = new FileWriter(save + "/data/AlfheimCoords.txt");
@@ -248,7 +266,7 @@ public class AlfheimConfig extends Configuration {
 	}
 	
 	public static void readModes() {
-		File f = new File("config/esm.cfg"); 
+		File f = new File("config/ElvenStoryMode.cfg"); 
 		if (!f.exists()) return;
 		try {
 			FileReader fr = new FileReader(f);
@@ -274,10 +292,10 @@ public class AlfheimConfig extends Configuration {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static void writeModes() {
 		if (!AlfheimCore.enableElvenStory && AlfheimCore.enableMMO) throw new IllegalArgumentException("Unable to write modes state when ESM is disabled and MMO is enabled");
-		File f = new File("config/esm.cfg"); 
+		File f = new File("config/ElvenStoryMode.cfg"); 
 		try {
 			FileWriter fw = new FileWriter(f);
 			fw.write(String.format("ESM mode, MMO mode (second requires first). Default \"true true\"\n%s %s", AlfheimCore.enableElvenStory ? "true" : "false", AlfheimCore.enableMMO ? "true" : "false"));

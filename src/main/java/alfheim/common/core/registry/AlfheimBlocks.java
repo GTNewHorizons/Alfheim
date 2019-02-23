@@ -22,6 +22,7 @@ public class AlfheimBlocks {
 	public static Block alfheimPortal;
 	public static Block alfheimPylons;
 	public static Block animatedTorch;
+	public static Block anomaly;
 	public static Block anyavil;
 	public static Block dreamLeaves;
 	public static Block dreamLog;
@@ -44,11 +45,12 @@ public class AlfheimBlocks {
 		reg();
 		regOreDict();
 	}
-
+	
 	private static void construct() {
 		alfheimPortal = new BlockAlfheimPortal();
 		alfheimPylons = new BlockAlfheimPylon();
 		animatedTorch = new BlockAnimatedTorch();
+		anomaly = new BlockAnomaly();
 		anyavil = new BlockAnyavil();
 		dreamLeaves = new BlockDreamLeaves();
 		dreamLog = new BlockDreamLog();
@@ -66,7 +68,7 @@ public class AlfheimBlocks {
 		tradePortal = new BlockTradePortal();
 		//transferer = new BlockTransferer(); BACK
 	}
-
+	
 	private static void reg() {
 		register(manaInfuser);
 		register(alfheimPortal);
@@ -85,15 +87,18 @@ public class AlfheimBlocks {
 		register(dreamSapling);
 		register(animatedTorch);
 		register(flugelHead);
+		registerBlock(anomaly, ItemBlockAnomaly.class, getBlockName(anomaly));
 		register(poisonIce);
 		register(redFlame);
 	}
-
+	
 	private static void regOreDict() {
 		registerOre(LibOreDict.DRAGON_ORE, new ItemStack(elvenOres, 1, 0));
 		registerOre(LibOreDict.ELEMENTIUM_ORE, new ItemStack(elvenOres, 1, 1));
 		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, new ItemStack(elvenOres, 1, 2));
 		registerOre(LibOreDict.GOLD_ORE, new ItemStack(elvenOres, 1, 3));
 		registerOre(LibOreDict.IFFESAL_ORE, new ItemStack(elvenOres, 1, 4));
+		
+		registerOre("sand", new ItemStack(elvenSand));
 	}
 }

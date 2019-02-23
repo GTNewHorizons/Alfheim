@@ -7,13 +7,15 @@ import alfheim.api.entity.EnumRace;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class TheRodOfTheDebug extends Item {
-
+	
 	public TheRodOfTheDebug() {
 		setCreativeTab(AlfheimCore.alfheimTab);
 		setMaxStackSize(1);
@@ -31,13 +33,16 @@ public class TheRodOfTheDebug extends Item {
 						PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
 					}
 					
+//					world.setBlock(0, 5, -50, AlfheimBlocks.anomaly);
+//					((TileAnomaly) world.getTileEntity(0, 5, -50)).addSubTile("Gravity").addSubTile("Lightning").addSubTile("ManaVoid");
+					
 //					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
 					
-//					int r = 32;
+//					int r = 12;
 //					for (int x = -r; x < r; x++) {
 //						for (int z = -r; z < r; z++) {
 //							for (int y = 1; y < 4; y++) {
-//								world.setBlock(x, y, z, Blocks.grass);
+//								world.setBlock(x, y, z + 50, Blocks.grass);
 //							}
 //						}
 //					}
@@ -53,5 +58,20 @@ public class TheRodOfTheDebug extends Item {
 			ASJUtilities.log("Oops!");
 			return stack;
 		}
+	}
+	
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		if (world.isRemote) return false;
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null) {
+//			NBTTagCompound nbt = new NBTTagCompound();
+//			te.writeToNBT(nbt);
+//			for (String s : ASJUtilities.toString(nbt).split("\n")) ASJUtilities.chatLog(s);
+			
+//			if (te instanceof TileAnomaly) ((TileAnomaly) te).addSubTile("Lightning");
+		}
+		return false;
 	}
 }

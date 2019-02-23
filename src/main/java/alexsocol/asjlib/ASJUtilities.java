@@ -613,6 +613,7 @@ public class ASJUtilities {
 	 */
 	public static void registerEntity(Class<? extends Entity> entityClass, String name, Object instance){
 		int ID = EntityRegistry.findGlobalUniqueEntityId();
+		name = FMLCommonHandler.instance().findContainerFor(instance).getModId() + ":" + name;
 		EntityRegistry.registerGlobalEntityID(entityClass, name, ID);
 		EntityRegistry.registerModEntity(entityClass, name, ID, instance, 128, 1, true);
 	}
@@ -626,6 +627,7 @@ public class ASJUtilities {
 	 */
 	public static void registerEntityEgg(Class<? extends Entity> entityClass, String name, int backColor, int frontColor, Object instance){
 		int ID = EntityRegistry.findGlobalUniqueEntityId();
+		name = FMLCommonHandler.instance().findContainerFor(instance).getModId() + ":" + name;
 		EntityRegistry.registerGlobalEntityID(entityClass, name, ID);
 		EntityRegistry.registerModEntity(entityClass, name, ID, instance, 128, 1, true);
 		EntityList.entityEggs.put(Integer.valueOf(ID), new EntityList.EntityEggInfo(ID, backColor, frontColor));
@@ -764,18 +766,20 @@ public class ASJUtilities {
 	}
 	
 	public static <T extends Comparable<T>> int indexOfComparableArray(T[] array, T key) {
-		int id = -1;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i].compareTo(key) == 0) {
-				id = i;
-				break;
-			}
-		}
-		return id;
+		for (int i = 0; i < array.length; i++)
+			if (array[i].compareTo(key) == 0)
+				return i;
+		return -1;
 	}
 	
 	public static <T extends Comparable<T>> int indexOfComparableColl(Collection<T> coll, T key) {
-		return indexOfComparableArray((T[]) coll.toArray(), key);
+		int id = -1;
+		for (T t : coll) {
+			++id;
+			if (t.compareTo(key) == 0)
+				return id;
+		}
+		return id;
 	}
 	
 	public static int[] colorCode = new int[32];

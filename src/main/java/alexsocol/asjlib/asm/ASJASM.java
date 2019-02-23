@@ -14,6 +14,7 @@ import org.objectweb.asm.tree.FieldNode;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
+/** Include this to your #getASMTransformerClass to make @HookField's work */
 public class ASJASM implements IClassTransformer {
 
 	public static HashMap<String, ArrayList<FieldData>> fieldsMap = new HashMap<String, ArrayList<FieldData>>();

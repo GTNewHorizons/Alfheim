@@ -6,17 +6,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
 public abstract class LivingPotionEvent extends LivingEvent {
-
+	
 	public final PotionEffect effect;
 	
 	public LivingPotionEvent(EntityLivingBase entity, PotionEffect pe) {
 		super(entity);
 		effect = pe;
 	}
-
+	
 	public abstract static class Add extends LivingPotionEvent {
 		public Add(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
-
+		
 		@Cancelable
 		@Deprecated
 		public static class Pre extends Add {
@@ -27,24 +27,31 @@ public abstract class LivingPotionEvent extends LivingEvent {
 			public Post(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
 		}
 	}
-
+	
 	public abstract static class Change extends LivingPotionEvent {
-		public Change(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
-
+		
+		/** Remove and add potion modifiers */
+		public boolean update;
+		
+		public Change(EntityLivingBase entity, PotionEffect pe, boolean update) {
+			super(entity, pe);
+			this.update = update;
+		}
+		
 		@Cancelable
 		@Deprecated
 		public static class Pre extends Change {
-			public Pre(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
+			public Pre(EntityLivingBase entity, PotionEffect pe, boolean update) { super(entity, pe, update); }
 		}
 		
 		public static class Post extends Change {
-			public Post(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
+			public Post(EntityLivingBase entity, PotionEffect pe, boolean update) { super(entity, pe, update); }
 		}
 	}
-
+	
 	public abstract static class Remove extends LivingPotionEvent {
 		public Remove(EntityLivingBase entity, PotionEffect pe) { super(entity, pe); }
-
+		
 		@Cancelable
 		@Deprecated
 		public static class Pre extends Remove {

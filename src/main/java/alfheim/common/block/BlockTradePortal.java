@@ -5,6 +5,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileTradePortal;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
 
-public class BlockTradePortal extends Block implements ITileEntityProvider, ILexiconable {
+public class BlockTradePortal extends BlockContainer implements ILexiconable {
 
 	public static IIcon[] textures = new IIcon[3];
 	
