@@ -57,7 +57,7 @@ public class BlockAlfheimPylon extends BlockModContainer implements ILexiconable
 	
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List subs) {
-		subs.add(new ItemStack(item, 1, 0)); // elven		(pink)
+		super.getSubBlocks(item, tab, subs); // elven		(pink)
 		subs.add(new ItemStack(item, 1, 1)); // elvorium	(orange)
 		subs.add(new ItemStack(item, 1, 2)); // anti		(red)
 	}

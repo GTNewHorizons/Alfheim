@@ -1,12 +1,16 @@
 package alfheim.common.block;
 
+import java.util.List;
+
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +28,14 @@ public class BlockPowerPylon extends Block implements ILexiconable {
 		setHardness(2);
 		setResistance(6000);
 		setStepSound(soundTypeStone);
+	}
+	
+	@Override
+	public void getSubBlocks(Item item, CreativeTabs tab, List subs) {
+		super.getSubBlocks(item, tab, subs); // berserk
+		subs.add(new ItemStack(item, 1, 1)); // overmage
+		subs.add(new ItemStack(item, 1, 2)); // tank
+		subs.add(new ItemStack(item, 1, 3)); // ninja
 	}
 	
 	@Override

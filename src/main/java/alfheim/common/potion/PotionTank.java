@@ -11,7 +11,7 @@ import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 public class PotionTank extends PotionAlfheim {
 	
 	public PotionTank() {
-		super(AlfheimConfig.potionIDTank, "tank", false, 0x00FF00);
+		super(AlfheimConfig.potionIDTank, "tank", false, 0xFFDD00);
 	}
 	
 	@Override
