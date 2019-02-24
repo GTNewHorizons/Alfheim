@@ -27,7 +27,7 @@ import vazkii.botania.common.item.equipment.bauble.*;
 import vazkii.botania.common.item.record.ItemModRecord;
 
 public class AlfheimItems {
-
+	
 	public static Item astrolabe;
 	public static Item auraRingElven;
 	public static Item auraRingGod;
@@ -131,7 +131,7 @@ public class AlfheimItems {
 		peacePipe = new ItemPeacePipe();
 		thinkingHand = new ItemThinkingHand();
 	}
-
+	
 	private static void reg() {
 		register(flugelHead);
 		register(holoProjector);
@@ -153,8 +153,11 @@ public class AlfheimItems {
 		register(elvenResource);
 		if (ModInfo.DEV) register(new TheRodOfTheDebug());
 	}
-
+	
 	private static void regOreDict() {
+		OreDictionary.registerOre("ingotCopper", new ItemStack(elfFirePendant, 1, OreDictionary.WILDCARD_VALUE));
+		OreDictionary.registerOre("ingotSilver", new ItemStack(elfIcePendant, 1, OreDictionary.WILDCARD_VALUE));
+		
 		OreDictionary.registerOre(LibOreDict.ELVORIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot));
 		OreDictionary.registerOre(LibOreDict.MAUFTRIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot));
 		OreDictionary.registerOre(LibOreDict.MUSPELHEIM_POWER_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot));

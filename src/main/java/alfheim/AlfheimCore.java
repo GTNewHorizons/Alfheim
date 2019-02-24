@@ -14,6 +14,7 @@ import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.InfoLoader;
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimConfig;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig;
 import alfheim.common.integration.waila.WAILAAlfheimConfig;
 import alfheim.common.network.*;
@@ -70,6 +71,7 @@ public class AlfheimCore {
 		
 		proxy.initializeAndRegisterHandlers();
 		proxy.preInit();
+		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.preInit();
 	}
 	
 	@EventHandler
@@ -84,7 +86,10 @@ public class AlfheimCore {
 		proxy.postInit();
 		AlfheimRegistry.loadAllPinkStuff();
 		if (MineTweakerLoaded) MinetweakerAlfheimConfig.loadConfig();
-		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimConfig.loadConfig();
+		if (Botania.thaumcraftLoaded) {
+			ThaumcraftAlfheimConfig.loadConfig();
+			ThaumcraftAlfheimModule.postInit();
+		}
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig();
 		if (WAILALoaded) WAILAAlfheimConfig.loadConfig();
 	}
