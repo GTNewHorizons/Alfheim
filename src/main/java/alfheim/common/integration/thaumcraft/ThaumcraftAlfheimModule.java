@@ -4,10 +4,8 @@ import static alfheim.api.lib.LibOreDict.*;
 import static vazkii.botania.common.lib.LibOreDict.*;
 
 import alexsocol.asjlib.ASJUtilities;
-import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
@@ -17,9 +15,7 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.WandCap;
-import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
-import vazkii.botania.common.item.ModItems;
 
 public class ThaumcraftAlfheimModule {
 	

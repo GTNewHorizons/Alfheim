@@ -8,6 +8,7 @@ import java.util.List;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.item.*;
 import alfheim.common.item.equipment.armor.elemental.*;
 import alfheim.common.item.equipment.armor.elvoruim.*;
@@ -20,9 +21,12 @@ import alfheim.common.item.material.*;
 import alfheim.common.item.relic.*;
 import alfheim.common.item.rod.*;
 import baubles.api.BaubleType;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import vazkii.botania.common.Botania;
+import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.bauble.*;
 import vazkii.botania.common.item.record.ItemModRecord;
 
@@ -87,13 +91,13 @@ public class AlfheimItems {
 	private static void construct() {
 		astrolabe = new ItemAstrolabe();
 		elementalHelmet = new ItemElementalWaterHelm();
-		elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
+		if (Botania.thaumcraftLoaded) elementalHelmetRevealing = new ItemElementalWaterHelmRevealing();
 		elementalChestplate = new ItemElementalEarthChest();
 		elementalLeggings = new ItemElementalFireLeggings();
 		elementalBoots = new ItemElementalAirBoots();
 		elementiumHoe = new ItemElementiumHoe();
 		elvoriumHelmet = new ItemElvoriumHelmet();
-		elvoriumHelmetRevealing = new ItemElvoriumHelmetRevealing();
+		if (Botania.thaumcraftLoaded) elvoriumHelmetRevealing = new ItemElvoriumHelmetRevealing();
 		elvoriumChestplate = new ItemElvoriumArmor(1, "ElvoriumChestplate");
 		elvoriumLeggings = new ItemElvoriumArmor(2, "ElvoriumLeggings");
 		elvoriumBoots = new ItemElvoriumArmor(3, "ElvoriumBoots");
@@ -130,6 +134,12 @@ public class AlfheimItems {
 		paperBreak = new ItemPaperBreak();
 		peacePipe = new ItemPeacePipe();
 		thinkingHand = new ItemThinkingHand();
+		
+		if (Botania.thaumcraftLoaded) {
+			ModItems.elementiumHelmRevealing.setCreativeTab(ThaumcraftAlfheimModule.tcnTab);
+			ModItems.manasteelHelmRevealing.setCreativeTab(ThaumcraftAlfheimModule.tcnTab);
+			ModItems.terrasteelHelmRevealing.setCreativeTab(ThaumcraftAlfheimModule.tcnTab);
+		}
 	}
 	
 	private static void reg() {
