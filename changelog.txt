@@ -3,5 +3,8 @@ Innovations:
  New blocks - Stones of Power, giving useful buffs
  WAILA suuport for Mana Accelerator
 
+Compat:
+ Thaumcraft caps from Botania and Alfheim metals
+ 
 Fixes:
  -- 
