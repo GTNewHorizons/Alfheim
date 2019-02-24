@@ -35,6 +35,10 @@ tile.MauftriumBlock.name=§6Блок Мауфтрия
 tile.MuspelheimFire.name=Вечный огонь Муспельхейма
 tile.NiflheimIce.name=Вечный лёд Нифльхейма
 tile.QuartzElvenOre.name=Руда эльфийского кварца
+tile.botania:PowerStone1.name=Камень Берсерка
+tile.botania:PowerStone2.name=Камень Овермага
+tile.botania:PowerStone3.name=Камень Танка
+tile.botania:PowerStone4.name=Камень ниндзя
 tile.TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 
@@ -245,6 +249,7 @@ alfheimmisc.party.no=Такой группы не существует!
 alfheimmisc.party.notinpartyoffline=%s не является участником группы или находится не в игре!
 alfheimmisc.party.notpl=Только лидер группы может сделать это!
 
+alfheimmisc.waila.holder.mana=Мана: %s
 alfheimmisc.waila.trade.available=Обменов доступно: %s
 alfheimmisc.waila.trade.results=Результаты: 
 alfheimmisc.waila.trade.request=Запрос: 

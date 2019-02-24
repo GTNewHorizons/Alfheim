@@ -36,7 +36,7 @@ public class AlfheimBlocks {
 	public static Block mauftriumBlock;
 	public static Block manaInfuser;
 	public static Block poisonIce;
-	public static Block powerPylon;
+	public static Block powerStone;
 	public static Block redFlame;
 	public static Block tradePortal;
 	//public static Block transferer; BACK
@@ -65,7 +65,7 @@ public class AlfheimBlocks {
 		mauftriumBlock = new BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0, 255, 5, "pickaxe", 1, 60, soundTypeMetal, true, true, false, AlfheimLexiconData.essences);
 		manaInfuser = new BlockManaInfuser();
 		poisonIce = new BlockPoisonIce();
-		powerPylon = new BlockPowerPylon();
+		powerStone = new BlockPowerStone();
 		redFlame = new BlockRedFlame();
 		tradePortal = new BlockTradePortal();
 		//transferer = new BlockTransferer(); BACK
@@ -78,7 +78,7 @@ public class AlfheimBlocks {
 		//register(transferer); BACK
 		register(itemHolder);
 		registerBlock(alfheimPylon, ItemBlockWithMetadataAndName.class, getBlockName(alfheimPylon));
-		registerBlock(powerPylon, ItemBlockWithMetadataAndName.class, getBlockName(powerPylon));
+		registerBlock(powerStone, ItemBlockWithMetadataAndName.class, getBlockName(powerStone));
 		register(anyavil);
 		register(elvoriumBlock);
 		register(mauftriumBlock);

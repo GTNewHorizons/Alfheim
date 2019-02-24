@@ -42,7 +42,6 @@ public class BlockAnomaly extends BlockContainer implements ILexiconable {
 		setBlockName("Anomaly");
 		setBlockTextureName(ModInfo.MODID + ":ManaInfuserTopDark"); // why not :)
 		setBlockUnbreakable();
-		setCreativeTab(AlfheimCore.alfheimTab);
 		setLightLevel(1);
 		setLightOpacity(0);
 		setResistance(Float.MAX_VALUE / 3.0F);

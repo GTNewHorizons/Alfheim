@@ -1,4 +1,7 @@
 Innovations:
- -- 
+ New worldgen feature - Shrines of Power, containing
+ New blocks - Stones of Power, giving useful buffs
+ WAILA suuport for Mana Accelerator
+
 Fixes:
  -- 

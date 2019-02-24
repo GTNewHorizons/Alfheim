@@ -35,6 +35,10 @@ tile.MauftriumBlock.name=§6Block of Mauftrium
 tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.NiflheimIce.name=Niflheim Ice Of Eternity
 tile.QuartzElvenOre.name=Elven Quartz Ore
+tile.botania:PowerStone1.name=Stone of Berserker
+tile.botania:PowerStone2.name=Stone of Overmage
+tile.botania:PowerStone3.name=Stone of Tank
+tile.botania:PowerStone4.name=Stone of Ninja
 tile.TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
 
@@ -245,6 +249,7 @@ alfheimmisc.party.no=There is no such party
 alfheimmisc.party.notinpartyoffline=%s isn't a party member or is offline
 alfheimmisc.party.notpl=Only partyleader can do this
 
+alfheimmisc.waila.holder.mana=Mana: %s
 alfheimmisc.waila.trade.available=%s more trade(s) available
 alfheimmisc.waila.trade.results=Results: 
 alfheimmisc.waila.trade.request=Request: 
