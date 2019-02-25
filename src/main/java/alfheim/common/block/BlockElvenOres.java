@@ -85,7 +85,7 @@ public class BlockElvenOres extends Block implements ILexiconable {
 
 	@Override
 	public int quantityDropped(int meta, int fortune, Random random) {
-		return	meta == 1 || meta == 2 ?	// Dragonstone and quartz
+		return	meta == 0 || meta == 2 ?	// Dragonstone and quartz
 				Math.max(random.nextInt(fortune + 2) - 1, 0) + 1 :
 				1;							// everything else
 	}
