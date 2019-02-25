@@ -2,20 +2,31 @@ package alfheim.common.integration.thaumcraft.handler;
 
 import static alfheim.common.core.registry.AlfheimBlocks.*;
 import static alfheim.common.core.registry.AlfheimItems.*;
+import static alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule.*;
 
 import alfheim.common.core.registry.AlfheimItems;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.config.ConfigBlocks;
 
 public class TCHandlerAspects {
 	
 	public static void addAspects() {
-		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 0),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("lucrum"),		3)	.add(Aspect.getAspect("vitreus"),	 	3));		// dragonstone
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 0),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("metallum"),		2)	.add(Aspect.getAspect("permutatio"),	2)	.add(Aspect.getAspect("venenum"),		1)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 7),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("vinculum"),		3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 1),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("aer"),			3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 2),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("ignis"),			3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 3),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("aqua"),			3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 4),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("terra"),			3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 5),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("ordo"),			3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimThaumOre, 1, 6),	(new AspectList())	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("perditio"),		3)	.add(Aspect.getAspect("vitreus"),		2)	);
+		
+		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 0),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("lucrum"),		3)	.add(Aspect.getAspect("vitreus"),	 	3)	);	// dragonstone
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 1),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("metallum"),		3)	);												// elementium
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 2),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("vitreus"),		3)	);												// quartz
-		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 3),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("lucrum"),		1)	.add(Aspect.getAspect("metallum"),		2));		// gold
+		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 3),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("lucrum"),		1)	.add(Aspect.getAspect("metallum"),		2)	);	// gold
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvenOres, 1, 4),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	1)	.add(Aspect.getAspect("terra"),			1)	.add(Aspect.getAspect("sensus"),		3)	);												// iffesal
 		ThaumcraftApi.registerObjectTag(new ItemStack(livingcobble), 			(new AspectList())	.add(Aspect.getAspect("perditio"), 		1)	.add(Aspect.getAspect("terra"),			1)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvenSand),				(new AspectList())	.add(Aspect.getAspect("perditio"), 		1)	.add(Aspect.getAspect("terra"),			1)	);
@@ -30,6 +41,7 @@ public class TCHandlerAspects {
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvoriumBlock),			(new AspectList())	.add(Aspect.getAspect("alienis"),		6)	.add(Aspect.getAspect("lucrum"),		20)	.add(Aspect.getAspect("metallum"),		27)	.add(Aspect.getAspect("praecantatio"),	54)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(mauftriumBlock),			(new AspectList())	.add(Aspect.getAspect("auram"),			64)	.add(Aspect.getAspect("alienis"),		64)	.add(Aspect.getAspect("lucrum"),		64)	.add(Aspect.getAspect("metallum"),		54)	.add(Aspect.getAspect("potentia"),		64)	.add(Aspect.getAspect("praecantatio"),	64)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(anyavil),					(new AspectList())	.add(Aspect.getAspect("lucrum"),		10)	.add(Aspect.getAspect("metallum"),		46)	.add(Aspect.getAspect("praecantatio"),	52)	);
+		
 		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimPylon, 1, 0),		(new AspectList())	.add(Aspect.getAspect("metallum"),		6)	.add(Aspect.getAspect("praecantatio"),	12)	.add(Aspect.getAspect("vitreus"),		4)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimPylon, 1, 1),		(new AspectList())	.add(Aspect.getAspect("auram"),			2)	.add(Aspect.getAspect("metallum"),		6)	.add(Aspect.getAspect("potentia"),		2)	.add(Aspect.getAspect("praecantatio"),	12)	.add(Aspect.getAspect("vitreus"),		4)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvenResource, 1, 0),		(new AspectList())	.add(Aspect.getAspect("alienis"),		8)	.add(Aspect.getAspect("iter"),			4)	.add(Aspect.getAspect("lux"),			8)	.add(Aspect.getAspect("ordo"),			8)	.add(Aspect.getAspect("praecantatio"),	8)	);												// Intercore
