@@ -4,6 +4,9 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
+import alfheim.common.core.handler.CardinalSystem.PartySystem;
+import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
+import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,6 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.tiles.TileNode;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 
@@ -29,8 +35,8 @@ public class TheRodOfTheDebug extends Item {
 			if (true/*!world.isRemote*/) {
 				if (!player.isSneaking()) {
 					if (!world.isRemote) {
-						//PartySystem.setParty(player, new Party(player));
-						//PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
+						PartySystem.setParty(player, new Party(player));
+						PartySystem.getParty(player).add(TargetingSystem.getTarget(player).target);
 					}
 					
 //					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
@@ -50,28 +56,34 @@ public class TheRodOfTheDebug extends Item {
 					ASJUtilities.chatLog(EnumRace.getRace(player).ordinal() + " - " + EnumRace.getRace(player), player);
 				}
 			}
-			return stack;
 		} catch (Throwable e) {
 			ASJUtilities.log("Oops!");
 			e.printStackTrace();
-			return stack;
 		}
+		
+		return stack;
 	}
 	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (world.isRemote) return false;
-		
-		TileEntity te = world.getTileEntity(x, y, z);
-		if (te != null) {
-//			NBTTagCompound nbt = new NBTTagCompound();
-//			te.writeToNBT(nbt);
-//			for (String s : ASJUtilities.toString(nbt).split("\n")) ASJUtilities.chatLog(s);
+		try {
+			if (world.isRemote) return false;
 			
-//			if (te instanceof TileAnomaly) ((TileAnomaly) te).addSubTile("Lightning");
-			
-//			if (te instanceof TileNode) ((TileNode) te).setAspects(new AspectList().add(Aspect.WATER, 500).add(Aspect.AIR, 500).add(Aspect.FIRE, 500).add(Aspect.EARTH, 500).add(Aspect.ORDER, 500).add(Aspect.ENTROPY, 500));
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te != null) {
+//				NBTTagCompound nbt = new NBTTagCompound();
+//				te.writeToNBT(nbt);
+//				for (String s : ASJUtilities.toString(nbt).split("\n")) ASJUtilities.chatLog(s);
+				
+//				if (te instanceof TileAnomaly) ((TileAnomaly) te).addSubTile("Lightning");
+				
+//				if (te instanceof TileNode) ((TileNode) te).setAspects(new AspectList().add(Aspect.WATER, 500).add(Aspect.AIR, 500).add(Aspect.FIRE, 500).add(Aspect.EARTH, 500).add(Aspect.ORDER, 500).add(Aspect.ENTROPY, 500));
+			}
+		} catch (Throwable e) {
+			ASJUtilities.log("Oops!");
+			e.printStackTrace();
 		}
+		
 		return false;
 	}
 	

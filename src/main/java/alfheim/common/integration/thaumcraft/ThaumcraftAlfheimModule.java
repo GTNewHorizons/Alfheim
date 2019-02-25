@@ -9,6 +9,7 @@ import static thaumcraft.api.ThaumcraftApi.*;
 import static vazkii.botania.common.lib.LibOreDict.*;
 
 import alexsocol.asjlib.ASJUtilities;
+import alfheim.AlfheimCore;
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre;
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap;
@@ -16,16 +17,16 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.WandCap;
-import thaumcraft.client.renderers.block.BlockCustomOreRenderer;
 import thaumcraft.common.blocks.BlockCustomOreItem;
-import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
 import thaumcraft.common.lib.utils.Utils;
@@ -35,6 +36,8 @@ public class ThaumcraftAlfheimModule {
 	public static Block alfheimThaumOre;
 	
 	public static Item naturalWandCap;
+	
+	public static IRecipe recipeElementiumWandCap;
 	
 	public static int renderIDOre = -1;
 	
@@ -142,11 +145,26 @@ public class ThaumcraftAlfheimModule {
 			)
 		);
 		
+		recipeElementiumWandCap = new ShapedOreRecipe(new ItemStack(naturalWandCap, 1, 2),
+			"NNN", "NIN",
+			'N', ELEMENTIUM_NUGGET,
+			'I', IFFESAL_DUST);
+		
+		if (AlfheimCore.enableElvenStory) addESMRecipes();
+		
 		addSmelting(new ItemStack(alfheimThaumOre, 1, 0),
 				new ItemStack(ConfigItems.itemResource, 1, 3), 1.0F);
 		
 		addSmelting(new ItemStack(alfheimThaumOre, 1, 7),
 				new ItemStack(ConfigItems.itemResource, 1, 6), 1.0F);
+	}
+	
+	public static void addESMRecipes() {
+		CraftingManager.getInstance().getRecipeList().add(recipeElementiumWandCap);
+	}
+	
+	public static void removeESMRecipes() {
+		CraftingManager.getInstance().getRecipeList().remove(recipeElementiumWandCap);
 	}
 	
 	public static void reigsterResearches() {

@@ -570,9 +570,6 @@ public class AlfheimLexiconData {
 		removeEntry(parties	, categoryAlfheim);
 		removeEntry(spells	, categoryAlfheim);
 		removeEntry(targets	, categoryAlfheim);
-		
-		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePaperBreak);
-		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	public static void reEnableMMO() {
@@ -590,9 +587,6 @@ public class AlfheimLexiconData {
 		if (!categoryAlfheim.entries.contains(targets))	BotaniaAPI.addEntry(targets	, categoryAlfheim);
 		
 		setKnowledgeTypes();
-		
-		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePaperBreak);
-		CraftingManager.getInstance().getRecipeList().add(AlfheimRecipes.recipePeacePipe);
 	}
 	
 	private static void removeEntry(LexiconEntry entry, LexiconCategory category) {

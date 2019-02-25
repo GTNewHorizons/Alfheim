@@ -21,9 +21,11 @@ import alfheim.common.block.tile.*;
 import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaRenderer;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -35,6 +37,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import vazkii.botania.common.Botania;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -136,6 +139,7 @@ public class ClientProxy extends CommonProxy {
 		if (AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = true;
 		AlfheimLexiconData.reEnableESM();
+		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes();
 		enableESMGUIs();
 		addESMKeyBinds();
 		EventHandler.checkAddAttrs();
@@ -145,6 +149,7 @@ public class ClientProxy extends CommonProxy {
 		if (!AlfheimCore.enableElvenStory) return;
 		AlfheimCore.enableElvenStory = false;
 		AlfheimLexiconData.disableESM();
+		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes();
 		disableESMGUIs();
 		removeESMKeyBinds();
 		disableMMO();
@@ -154,6 +159,7 @@ public class ClientProxy extends CommonProxy {
 		if (AlfheimCore.enableMMO) return;
 		AlfheimCore.enableMMO = true;
 		AlfheimLexiconData.reEnableMMO();
+		AlfheimRecipes.addMMORecipes();
 		enableMMOGUIs();
 		addMMOKeyBinds();
 		enableESM();
@@ -163,6 +169,7 @@ public class ClientProxy extends CommonProxy {
 		if (!AlfheimCore.enableMMO) return;
 		AlfheimCore.enableMMO = false;
 		AlfheimLexiconData.disableMMO();
+		AlfheimRecipes.removeMMORecipes();
 		disableMMOGUIs();
 		removeMMOKeyBinds();
 		TimeStopSystemClient.tsAreas.clear();

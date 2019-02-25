@@ -431,10 +431,7 @@ public class AlfheimRecipes {
 			"S  ", " S ", "  S",
 			'S', stick);
 		
-		if (AlfheimCore.enableMMO) {
-			CraftingManager.getInstance().getRecipeList().add(recipePaperBreak);
-			CraftingManager.getInstance().getRecipeList().add(recipePeacePipe);
-		}
+		if (AlfheimCore.enableMMO) addMMORecipes();
 			
 		addOreDictRecipe(new ItemStack(pixieAttractor),
 			"EDE", "EPE", " S ",
@@ -619,5 +616,15 @@ public class AlfheimRecipes {
 	
 	public static void init() {
 		ModCraftingRecipes.recipeGaiaPylon = recipeGaiaPylon;
+	}
+	
+	public static void addMMORecipes() {
+		CraftingManager.getInstance().getRecipeList().add(recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().add(recipePeacePipe);
+	}
+	
+	public static void removeMMORecipes() {
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePaperBreak);
+		CraftingManager.getInstance().getRecipeList().remove(AlfheimRecipes.recipePeacePipe);
 	}
 }

@@ -7,7 +7,9 @@ import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.common.core.handler.CardinalSystem;
 import alfheim.common.core.handler.EventHandler;
+import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.network.Message3d;
 import alfheim.common.network.Message3d.m3d;
 import net.minecraft.command.CommandBase;
@@ -17,9 +19,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import vazkii.botania.common.Botania;
 
 public class CommandAlfheim extends CommandBase {
-
+	
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 2;
@@ -27,19 +30,19 @@ public class CommandAlfheim extends CommandBase {
 	
 	@Override
 	public List getCommandAliases() {
-        return Arrays.asList(new String[] {"alf"});
+		return Arrays.asList(new String[] {"alf"});
 	}
 	
 	@Override
 	public String getCommandName() {
 		return "alfheim";
 	}
-
+	
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
 		return "alfheim.commands.alfheim.usage";
 	}
-
+	
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		if(args.length == 1) {
@@ -70,7 +73,9 @@ public class CommandAlfheim extends CommandBase {
 		if (on) {
 			AlfheimConfig.initWorldCoordsForElvenStory(AlfheimCore.save);
 			EventHandler.checkAddAttrs();
+			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes();
 		} else {
+			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes();
 			toggleMMO(AlfheimCore.enableMMO = false);
 		}
 	}
@@ -78,10 +83,12 @@ public class CommandAlfheim extends CommandBase {
 	public static void toggleMMO(boolean on) {
 		if (on) {
 			CardinalSystem.load(AlfheimCore.save);
+			AlfheimRecipes.addMMORecipes();
 			toggleESM(AlfheimCore.enableElvenStory = true);
 			for (Object o : MinecraftServer.getServer().getConfigurationManager().playerEntityList) CardinalSystem.transfer((EntityPlayerMP) o);
 		} else {
 			CardinalSystem.save(AlfheimCore.save);
+			AlfheimRecipes.removeMMORecipes();
 		}
 	}
 }
