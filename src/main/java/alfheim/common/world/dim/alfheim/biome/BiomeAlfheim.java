@@ -1,12 +1,17 @@
 package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.entity.EntityElf;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.WE_Biome;
 
 public class BiomeAlfheim extends WE_Biome {
 	
 	public BiomeAlfheim(int ID_FOR_ALL_WE_BIOMES, boolean r) {
 		super(ID_FOR_ALL_WE_BIOMES, r);
+		
+		BiomeDictionary.registerBiomeType(this, Type.MAGICAL);
+		
 		clearSpawn();
 		setBiomeName("Alfheim");
 		setColor(0xA67C00);

@@ -2,6 +2,8 @@ package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import vazkii.botania.common.block.ModBlocks;
 
@@ -9,6 +11,8 @@ public class BiomeBeach extends BiomeAlfheim {
 	
 	public BiomeBeach() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.SANDY, Type.SPARSE, Type.BEACH);
 		
 		biomeMinValueOnMap		=  -0.5;
 		biomeMaxValueOnMap		= -0.35;

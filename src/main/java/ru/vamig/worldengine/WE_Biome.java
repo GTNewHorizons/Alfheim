@@ -12,6 +12,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXYZ;
 import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
@@ -49,6 +51,8 @@ public class WE_Biome extends BiomeGenBase {
 	public WE_Biome(int ID_FOR_ALL_WE_BIOMES, boolean r) {
 		super(ID_FOR_ALL_WE_BIOMES, r);
 		setBiomeName("Alfheim");
+		
+		BiomeDictionary.registerBiomeType(this, Type.MAGICAL);
 		
 		WE_BiomeLayer standardBiomeLayers = new WE_BiomeLayer();
 		standardBiomeLayers.add(Blocks.dirt   , (byte)0, Blocks.stone, (byte)0, -256, 0,   -4, -2,  true);
@@ -158,13 +162,13 @@ public class WE_Biome extends BiomeGenBase {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getBiomeFoliageColor(int R, int G, int B) {
-        return 0x08F500;
-    }
+	public int getBiomeFoliageColor(int R, int G, int B) {
+		return 0x08F500;
+	}
 	
 	@Override
-    @SideOnly(Side.CLIENT)
-    public int getBiomeGrassColor(int R, int G, int B) {
-        return 0x08F500;
-    }
+	@SideOnly(Side.CLIENT)
+	public int getBiomeGrassColor(int R, int G, int B) {
+		return 0x08F500;
+	}
 }

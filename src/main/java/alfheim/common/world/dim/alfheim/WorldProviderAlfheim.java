@@ -3,6 +3,7 @@ package alfheim.common.world.dim.alfheim;
 import alfheim.AlfheimCore;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.world.dim.alfheim.biome.BiomeBeach;
 import alfheim.common.world.dim.alfheim.biome.BiomeField;
 import alfheim.common.world.dim.alfheim.biome.BiomeForest;
@@ -14,6 +15,8 @@ import alfheim.common.world.dim.alfheim.biome.BiomeMount3;
 import alfheim.common.world.dim.alfheim.biome.BiomeMount3Field;
 import alfheim.common.world.dim.alfheim.biome.BiomeMount3Trees;
 import alfheim.common.world.dim.alfheim.biome.BiomeSandbank;
+import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre;
+import net.minecraft.init.Blocks;
 import ru.vamig.worldengine.WE_Biome;
 import ru.vamig.worldengine.WE_ChunkProvider;
 import ru.vamig.worldengine.WE_WorldProvider;
@@ -23,6 +26,9 @@ import ru.vamig.worldengine.standardcustomgen.WE_OreGen;
 import ru.vamig.worldengine.standardcustomgen.WE_RavineGen;
 import ru.vamig.worldengine.standardcustomgen.WE_SnowGen;
 import ru.vamig.worldengine.standardcustomgen.WE_TerrainGenerator;
+import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigBlocks;
+import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 
 public class WorldProviderAlfheim extends WE_WorldProvider {
@@ -92,6 +98,10 @@ public class WorldProviderAlfheim extends WE_WorldProvider {
 		snowGen.snowPoint = 164;
 		snowGen.randomSnowPoint = 8;
 		cp.createChunkGen_InXZ_List.add(snowGen);
+		
+		if (Botania.thaumcraftLoaded)
+			cp.decorateChunkGen_List.add(new WorldGenAlfheimThaumOre());
+		
 		WE_OreGen ores = new WE_OreGen();
 		for (int i = 0; i < AlfheimConfig.oregenMultiplier; i++) {
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75,  1, 16);
@@ -100,6 +110,7 @@ public class WorldProviderAlfheim extends WE_WorldProvider {
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32);
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50,  1, 16);
 		}
+		
 		cp.decorateChunkGen_List.add(ores);
 		
 		//cp.decorateChunkGen_List.add(new StructureSpawnpoint()); WE generator is stupid

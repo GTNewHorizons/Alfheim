@@ -4,6 +4,8 @@ import alfheim.common.entity.EntityAlfheimPixie;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import alfheim.common.world.dim.alfheim.struct.StructureArena;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import ru.vamig.worldengine.standardcustomgen.WE_StructureGen;
 import vazkii.botania.common.block.ModBlocks;
@@ -12,6 +14,8 @@ public class BiomeField extends BiomeAlfheim {
 	
 	public BiomeField() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.PLAINS, Type.DENSE);
 		
 		biomeMinValueOnMap		=  -0.4;
 		biomeMaxValueOnMap		=  0.82;

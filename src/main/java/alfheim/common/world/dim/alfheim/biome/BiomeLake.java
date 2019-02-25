@@ -1,6 +1,8 @@
 package alfheim.common.world.dim.alfheim.biome;
 
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import vazkii.botania.common.block.ModBlocks;
 
@@ -8,6 +10,8 @@ public class BiomeLake extends BiomeAlfheim {
 	
 	public BiomeLake() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.RIVER, Type.WET);
 		
 		biomeMinValueOnMap		= -0.48;
 		biomeMaxValueOnMap		= -0.38;

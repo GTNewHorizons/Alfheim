@@ -4,6 +4,7 @@ import java.util.List;
 
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
+import alfheim.api.spell.SpellBase;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
@@ -34,8 +35,8 @@ public class BlockPowerStone extends Block implements ILexiconable {
 	}
 	
 	public int damageDropped(int meta) {
-        return meta;
-    }
+		return meta;
+	}
 	
 	@Override
 	public IIcon getIcon(int side, int meta) {
@@ -62,6 +63,11 @@ public class BlockPowerStone extends Block implements ILexiconable {
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (SpellBase.consumeMana(player, 10000, false) && press(world, x, y, z, player)) return SpellBase.consumeMana(player, 10000, true);
+		return false;
+	}	
+	
+	public boolean press(World world, int x, int y, int z, EntityPlayer player) {
 		switch (world.getBlockMetadata(x, y, z)) {
 			case 1: return makePlayerBerserk(player);
 			case 2: return makePlayerOvermage(player);
@@ -69,7 +75,7 @@ public class BlockPowerStone extends Block implements ILexiconable {
 			case 4: return makePlayerNinja(player);
 			default: return false;
 		}
-	}	
+	}
 	
 	// +20% DMG, -20% HP
 	private boolean makePlayerBerserk(EntityPlayer player) {

@@ -4,6 +4,8 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
 import ru.vamig.worldengine.standardcustomgen.WE_StructureGen;
@@ -13,6 +15,8 @@ import vazkii.botania.common.block.ModBlocks;
 public class BiomeMount1 extends BiomeAlfheim {
 	public BiomeMount1() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.HILLS, Type.FOREST, Type.PLAINS);
 		
 		biomeMinValueOnMap		=   0.2;
 		biomeMaxValueOnMap		=  0.78;

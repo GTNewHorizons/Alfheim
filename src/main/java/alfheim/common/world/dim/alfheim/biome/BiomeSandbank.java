@@ -2,6 +2,8 @@
 
 import alfheim.common.core.registry.AlfheimBlocks;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import vazkii.botania.common.block.ModBlocks;
 
@@ -9,6 +11,8 @@ public class BiomeSandbank extends BiomeAlfheim {
 	
 	public BiomeSandbank() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.SANDY, Type.SPARSE, Type.DRY);
 		
 		biomeMinValueOnMap		= -0.41;
 		biomeMaxValueOnMap		= -0.38;

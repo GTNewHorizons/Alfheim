@@ -2,12 +2,16 @@ package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import vazkii.botania.common.block.ModBlocks;
 
 public class BiomeMount3Field extends BiomeAlfheim {
 	public BiomeMount3Field() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.PLAINS, Type.MOUNTAIN, Type.DENSE, Type.LUSH);
 		
 		biomeMinValueOnMap		=  0.49;
 		biomeMaxValueOnMap		=  0.58;

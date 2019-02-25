@@ -4,6 +4,8 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import ru.vamig.worldengine.standardcustomgen.WE_StructureGen;
 import ru.vamig.worldengine.standardcustomgen.WE_WorldTreeGen;
@@ -13,6 +15,8 @@ public class BiomeForest extends BiomeAlfheim {
 	
 	public BiomeForest() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.FOREST, Type.DENSE, Type.LUSH);
 		
 		biomeMinValueOnMap		=  -1.0;
 		biomeMaxValueOnMap		=  0.82;

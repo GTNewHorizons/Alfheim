@@ -2,6 +2,8 @@ package alfheim.common.world.dim.alfheim.biome;
 
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
 import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
 import vazkii.botania.common.block.ModBlocks;
@@ -9,6 +11,8 @@ import vazkii.botania.common.block.ModBlocks;
 public class BiomeMount3 extends BiomeAlfheim {
 	public BiomeMount3() {
 		super(0);
+		
+		BiomeDictionary.registerBiomeType(this, Type.MOUNTAIN, Type.FOREST, Type.PLAINS);
 		
 		biomeMinValueOnMap		=   0.4;
 		biomeMaxValueOnMap		=   0.7;
