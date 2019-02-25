@@ -165,9 +165,6 @@ public class AlfheimItems {
 	}
 	
 	private static void regOreDict() {
-		OreDictionary.registerOre("ingotCopper", new ItemStack(elfFirePendant, 1, OreDictionary.WILDCARD_VALUE));
-		OreDictionary.registerOre("ingotSilver", new ItemStack(elfIcePendant, 1, OreDictionary.WILDCARD_VALUE));
-		
 		OreDictionary.registerOre(LibOreDict.ELVORIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot));
 		OreDictionary.registerOre(LibOreDict.MAUFTRIUM_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot));
 		OreDictionary.registerOre(LibOreDict.MUSPELHEIM_POWER_INGOT, new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot));
