@@ -26,7 +26,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("net.minecraft.server.management.ItemInWorldManager")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -42,7 +42,15 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
+		if (transformedName.equals("thaumcraft.common.items.ItemNugget")) {
+			ClassReader cr = new ClassReader(basicClass);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			ItemNugget$ClassVisitor ct = new ItemNugget$ClassVisitor(cw);
+			cr.accept(ct, ClassReader.SKIP_FRAMES);
+			return cw.toByteArray();
+		} else
+		
 		if (transformedName.equals("vazkii.botania.client.core.handler.BaubleRenderHandler")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -50,7 +58,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("vazkii.botania.common.entity.EntityDoppleganger")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -58,7 +66,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("vazkii.botania.common.lib.LibItemNames")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -66,7 +74,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("vazkii.botania.common.item.lens.ItemLens")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -74,7 +82,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("vazkii.botania.common.item.relic.ItemRelic")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -82,7 +90,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			cr.accept(ct, ClassReader.SKIP_FRAMES);
 			return cw.toByteArray();
 		} else
-			
+		
 		if (transformedName.equals("vazkii.botania.common.item.rod.ItemTerraformRod")) {
 			ClassReader cr = new ClassReader(basicClass);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -276,6 +284,73 @@ public class AlfheimClassTransformer implements IClassTransformer {
 					mv.visitFrame(F_APPEND, 1, new Object[] {"alfheim/api/event/EntityUpdateEvent"}, 0, null);
 					mv.visitMethodInsn(INVOKESTATIC, "alfheim/api/event/EntityUpdateEvent", "stub", "()V", false);
 				} else super.visitMethodInsn(opcode, owner, name, desc, itf);
+			}
+		}
+	}
+	
+	static class ItemNugget$ClassVisitor extends ClassVisitor {
+		
+		public ItemNugget$ClassVisitor(ClassVisitor cv) {
+			super(ASM5, cv);
+		}
+		
+		@Override
+		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+			if (name.equals("registerIcons")) {
+				System.out.println("Visiting ItemNugget#registerIcons: " + name + desc);
+				return new ItemNugget$registerIcons$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			if (name.equals("getSubItems")) {
+				System.out.println("Visiting ItemNugget#getSubItems: " + name + desc);
+				return new ItemNugget$getSubItems$MethodVisitor(super.visitMethod(access, name, desc, signature, exceptions));
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions);
+		}
+		
+		static class ItemNugget$registerIcons$MethodVisitor extends MethodVisitor {
+			
+			public ItemNugget$registerIcons$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitInsn(int opcode) {
+				if (opcode == RETURN) {
+					visitVarInsn(ALOAD, 0);
+					visitFieldInsn(GETFIELD, "thaumcraft/common/items/ItemNugget", "icon", "[Lnet/minecraft/util/IIcon;");
+					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta());
+					visitVarInsn(ALOAD, 1);
+					visitLdcInsn("thaumcraft:clusterelementium");
+					visitMethodInsn(INVOKEINTERFACE, "net/minecraft/client/renderer/texture/IIconRegister", "registerIcon", "(Ljava/lang/String;)Lnet/minecraft/util/IIcon;", true);
+					visitInsn(AASTORE);
+					Label l15_5 = new Label();
+					visitLabel(l15_5);
+					visitLineNumber(47, l15_5);
+				}
+				super.visitInsn(opcode);
+			}
+		}
+		
+		static class ItemNugget$getSubItems$MethodVisitor extends MethodVisitor {
+			
+			public ItemNugget$getSubItems$MethodVisitor(MethodVisitor mv) {
+				super(ASM5, mv);
+			}
+			
+			@Override
+			public void visitInsn(int opcode) {
+				if (opcode == RETURN) {
+					visitVarInsn(ALOAD, 3);
+					visitTypeInsn(NEW, "net/minecraft/item/ItemStack");
+					visitInsn(DUP);
+					visitVarInsn(ALOAD, 0);
+					visitInsn(ICONST_1);
+					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta());
+					visitMethodInsn(INVOKESPECIAL, "net/minecraft/item/ItemStack", "<init>", "(Lnet/minecraft/item/Item;II)V", false);
+					visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true);
+					visitInsn(POP);
+				}
+				super.visitInsn(opcode);
 			}
 		}
 	}

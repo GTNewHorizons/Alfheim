@@ -63,7 +63,7 @@ public class AlfheimCore {
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
 		WAILALoaded = Loader.isModLoaded("Waila");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory(), ModInfo.NAME + ".cfg"));
+		AlfheimConfig.loadConfig(new File(e.getModConfigurationDirectory() + "/Alfheim", ModInfo.NAME + ".cfg"));
 		
 		if (AlfheimConfig.info) InfoLoader.start();
 		

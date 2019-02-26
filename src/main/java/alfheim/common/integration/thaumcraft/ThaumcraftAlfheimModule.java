@@ -6,15 +6,25 @@ import static cpw.mods.fml.client.registry.RenderingRegistry.*;
 import static cpw.mods.fml.common.registry.GameRegistry.*;
 import static net.minecraftforge.oredict.OreDictionary.*;
 import static thaumcraft.api.ThaumcraftApi.*;
+import static thaumcraft.common.lib.utils.Utils.*;
 import static vazkii.botania.common.lib.LibOreDict.*;
 
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre;
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre;
+import alfheim.common.core.asm.AlfheimASMData;
+import alfheim.common.core.registry.AlfheimBlocks;
+import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -22,6 +32,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
@@ -29,7 +40,8 @@ import thaumcraft.api.wands.WandCap;
 import thaumcraft.common.blocks.BlockCustomOreItem;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
-import thaumcraft.common.lib.utils.Utils;
+import thaumcraft.common.items.equipment.ItemElementalPickaxe;
+import vazkii.botania.common.item.ModItems;
 
 public class ThaumcraftAlfheimModule {
 	
@@ -81,7 +93,8 @@ public class ThaumcraftAlfheimModule {
 		reigsterResearches();
 		registerOreDict();
 		
-		Utils.addSpecialMiningResult(new ItemStack(alfheimThaumOre, 1, 0), new ItemStack(ConfigItems.itemNugget, 1, 21), 0.9F);
+		addSpecialMiningResult(new ItemStack(alfheimThaumOre, 1, 0), new ItemStack(ConfigItems.itemNugget, 1, 21), 0.9F);
+		addSpecialMiningResult(new ItemStack(AlfheimBlocks.elvenOres, 1, 1), new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()), 1.0F);
 	}
 	
 	public static void registerRecipes() {
@@ -145,6 +158,26 @@ public class ThaumcraftAlfheimModule {
 			)
 		);
 		
+		ConfigResearch.recipes.put("PureElementium",
+			addCrucibleRecipe("PUREELEMENTIUM",
+				new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+				ELEMENTIUM_ORE,
+				new AspectList()
+				.merge(Aspect.METAL, 1)
+				.merge(Aspect.ORDER, 1)
+			)
+		);
+		
+		ConfigResearch.recipes.put("TransElementium",
+			addCrucibleRecipe("TRANSELEMENTIUM",
+				new ItemStack(ModItems.manaResource, 3, 19),
+				ELEMENTIUM_NUGGET,
+				new AspectList()
+				.merge(Aspect.METAL, 2)
+				.merge(Aspect.MAGIC, 2)
+			)
+		);
+		
 		recipeElementiumWandCap = new ShapedOreRecipe(new ItemStack(naturalWandCap, 1, 2),
 			"NNN", "NIN",
 			'N', ELEMENTIUM_NUGGET,
@@ -153,10 +186,27 @@ public class ThaumcraftAlfheimModule {
 		if (AlfheimCore.enableElvenStory) addESMRecipes();
 		
 		addSmelting(new ItemStack(alfheimThaumOre, 1, 0),
-				new ItemStack(ConfigItems.itemResource, 1, 3), 1.0F);
+			new ItemStack(ConfigItems.itemResource, 1, 3),	// Cinnabar
+			1.0F
+		);
 		
 		addSmelting(new ItemStack(alfheimThaumOre, 1, 7),
-				new ItemStack(ConfigItems.itemResource, 1, 6), 1.0F);
+			new ItemStack(ConfigItems.itemResource, 1, 6),	// Amber
+			1.0F
+		);
+		
+		addSmelting(new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+			new ItemStack(ModItems.manaResource, 2, 7),		// Elementium
+			1.0F
+		);
+		
+		addSmeltingBonus(ELEMENTIUM_ORE,
+			new ItemStack(ModItems.manaResource, 0, 19)		// from ore
+		);
+		
+		addSmeltingBonus(new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+			new ItemStack(ModItems.manaResource, 0, 19)		// from cluster
+		);
 	}
 	
 	public static void addESMRecipes() {
@@ -225,6 +275,24 @@ public class ThaumcraftAlfheimModule {
 						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapMauftrium")))
 			
 			.setParents("CAP_void").registerResearchItem();
+		
+		new ResearchItem("PUREELEMENTIUM", "ALCHEMY",
+			new AspectList().add(Aspect.METAL, 3).add(Aspect.ORDER, 2).add(Aspect.MAGIC, 1),
+			-3, 2, 1, new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()))
+		
+			.setPages(	new ResearchPage("tc.research_page.PUREELEMENTIUM.1"),
+						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get("PureElementium")))
+			
+			.setConcealed().setSecondary().setParents("PUREIRON").registerResearchItem();
+		
+		new ResearchItem("TRANSELEMENTIUM", "ALCHEMY",
+			new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 3),
+			1, 2, 1, new ItemStack(ModItems.manaResource, 1, 19))
+			
+			.setPages(	new ResearchPage("tc.research_page.TRANSELEMENTIUM.1"),
+						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get("TransElementium")))
+			
+			.setConcealed().setSecondary().setParents("TRANSIRON").registerResearchItem();
 	}
 	
 	public static void registerOreDict() {
@@ -235,6 +303,7 @@ public class ThaumcraftAlfheimModule {
 		registerOre("oreInfusedEarth", new ItemStack(alfheimThaumOre, 1, 4));
 		registerOre("oreInfusedOrder", new ItemStack(alfheimThaumOre, 1, 5));
 		registerOre("oreInfusedEntropy", new ItemStack(alfheimThaumOre, 1, 6));
+		registerOre("oreAmber", new ItemStack(alfheimThaumOre, 1, 7));
 	}
 	
 	public static CreativeTabs tcnTab = new CreativeTabs("NTC") {

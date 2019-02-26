@@ -3,13 +3,14 @@ package alfheim.common.integration.thaumcraft.handler;
 import static alfheim.common.core.registry.AlfheimBlocks.*;
 import static alfheim.common.core.registry.AlfheimItems.*;
 import static alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule.*;
+import static vazkii.botania.common.item.ModItems.*;
 
+import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.config.ConfigBlocks;
 
 public class TCHandlerAspects {
 	
@@ -91,5 +92,8 @@ public class TCHandlerAspects {
 		ThaumcraftApi.registerObjectTag(new ItemStack(peacePipe), 				(new AspectList())	.add(Aspect.getAspect("spiritus"),		4)	.add(Aspect.getAspect("arbor"),			2)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(paperBreak), 				(new AspectList())	.add(Aspect.getAspect("spiritus"),		4)	.add(Aspect.getAspect("sensus"),		2)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(AlfheimItems.flugelHead),	(new AspectList())	.add(Aspect.getAspect("alienis"),		8)	.add(Aspect.getAspect("humanus"),		4)	.add(Aspect.getAspect("mortuus"),		8)	.add(Aspect.getAspect("spiritus"),		16)	);
+		
+		// For transmutation recipe
+		ThaumcraftApi.registerObjectTag(new ItemStack(manaResource, 1, 19),		(new AspectList())	.add(Aspect.getAspect("metallum"),		1)	.add(Aspect.getAspect("praecantatio"), 1)	);
 	}
 }

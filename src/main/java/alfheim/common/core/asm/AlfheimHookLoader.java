@@ -5,7 +5,6 @@ import alexsocol.asjlib.asm.ASJASM;
 import alexsocol.asjlib.asm.ASJPacketCompleter;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.relauncher.CoreModManager;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import gloomyfolken.hooklib.minecraft.HookLoader;
 import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
@@ -13,14 +12,11 @@ import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer;
 @MCVersion(value = "1.7.10")
 public class AlfheimHookLoader extends HookLoader {
 	
-	public static final boolean hpSpells;
-	public static final boolean isThermos;
+	public static boolean hpSpells = true;
+	public static boolean isThermos = false;
 	
 	static {
-		hpSpells = !System.getProperty("alfheim.spells.hpasm", "on").equals("off");
-		if (!hpSpells) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable hooks into health system, thing may not go well: Shared HP spell is unavailable, \"leftover flame\" of other players can somehow be \"healed\" (seems to lead to nothing).", ModInfo.MODID.toUpperCase()));
-		isThermos = System.getProperty("alfheim.thermos.suppress", "off").equals("on");
-		if (isThermos) FMLRelaunchLog.warning(String.format("[%s] Alfheim is configured to disable some features to provide compatibility with Thermos Core - thing may not go well", ModInfo.MODID.toUpperCase()));
+		AlfheimASMData.load();
 		
 		ModInfo.OBF = !(Boolean) ASJReflectionHelper.getStaticValue(CoreModManager.class, "deobfuscatedEnvironment");
 		ASJReflectionHelper.setStaticFinalValue(ModInfo.class, !ModInfo.OBF, "DEV");

@@ -275,7 +275,7 @@ public class AlfheimConfig extends Configuration {
 	}
 	
 	public static void readModes() {
-		File f = new File("config/ElvenStoryMode.cfg"); 
+		File f = new File("config/Alfheim/ElvenStoryMode.cfg"); 
 		if (!f.exists()) return;
 		try {
 			FileReader fr = new FileReader(f);
@@ -304,7 +304,7 @@ public class AlfheimConfig extends Configuration {
 	
 	public static void writeModes() {
 		if (!AlfheimCore.enableElvenStory && AlfheimCore.enableMMO) throw new IllegalArgumentException("Unable to write modes state when ESM is disabled and MMO is enabled");
-		File f = new File("config/ElvenStoryMode.cfg"); 
+		File f = new File("config/Alfheim/ElvenStoryMode.cfg"); 
 		try {
 			FileWriter fw = new FileWriter(f);
 			fw.write(String.format("ESM mode, MMO mode (second requires first). Default \"true true\"\n%s %s", AlfheimCore.enableElvenStory ? "true" : "false", AlfheimCore.enableMMO ? "true" : "false"));
