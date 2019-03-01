@@ -39,7 +39,7 @@ public class ItemAlfheimWandCap extends Item {
 			list.add(new ItemStack(this, 1, i));
 	}
 	
-	public String getUnlocalizedName(ItemStack par1ItemStack) {
-		return super.getUnlocalizedName() + "." + par1ItemStack.getItemDamage();
+	public String getUnlocalizedName(ItemStack stack) {
+		return super.getUnlocalizedName() + "." + stack.getItemDamage();
 	}
 }

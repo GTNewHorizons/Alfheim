@@ -9,8 +9,10 @@ import static thaumcraft.api.ThaumcraftApi.*;
 import static thaumcraft.common.lib.utils.Utils.*;
 import static vazkii.botania.common.lib.LibOreDict.*;
 
+import alexsocol.asjlib.ASJReflectionHelper;
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
+import alfheim.api.ModInfo;
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre;
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre;
 import alfheim.common.core.asm.AlfheimASMData;
@@ -19,6 +21,8 @@ import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap;
+import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandRod;
+import alfheim.common.item.compat.thaumcraft.NaturalWandRodOnUpdate;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -37,6 +41,7 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.blocks.BlockCustomOreItem;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
@@ -48,6 +53,7 @@ public class ThaumcraftAlfheimModule {
 	public static Block alfheimThaumOre;
 	
 	public static Item naturalWandCap;
+	public static Item naturalWandRod;
 	
 	public static IRecipe recipeElementiumWandCap;
 	
@@ -67,12 +73,17 @@ public class ThaumcraftAlfheimModule {
 	
 	public static void constructItems() {
 		naturalWandCap = new ItemAlfheimWandCap();
+		naturalWandRod = new ItemAlfheimWandRod();
 	
-		new WandCap("manasteel", 1, new ItemStack(naturalWandCap, 1, 0), 3);
-		new WandCap("terrasteel", 0.85F, new ItemStack(naturalWandCap, 1, 1), 7);
-		new WandCap("elementium", 1, new ItemStack(naturalWandCap, 1, 2), 3);
-		new WandCap("elvorium", 0.85F, new ItemStack(naturalWandCap, 1, 3), 7);
-		new WandCap("mauftrium", 0.7F, new ItemStack(naturalWandCap, 1, 4), 11);
+		new WandCap(capManasteelName,	0.95F, new ItemStack(naturalWandCap, 1, 0), 5	);
+		new WandCap(capTerrasteelName,	0.85F, new ItemStack(naturalWandCap, 1, 1), 8	);
+		new WandCap(capElementiumName,	0.95F, new ItemStack(naturalWandCap, 1, 2), 5	);
+		new WandCap(capElvoriumName,	0.85F, new ItemStack(naturalWandCap, 1, 3), 8	);
+		new WandCap(capMauftriumName,	0.75F, new ItemStack(naturalWandCap, 1, 4), 11	);
+		
+		new WandRod(rodLivingwoodName,	35, new ItemStack(naturalWandRod, 1, 0), 2	);
+		new WandRod(rodDreamwoodName,	65, new ItemStack(naturalWandRod, 1, 1), 5	);
+		new WandRod(rodSpiritualName,	85, new ItemStack(naturalWandRod, 1, 2), 12	, new NaturalWandRodOnUpdate()).setGlowing(true);
 	}
 	
 	public static void registerBlocks() {
@@ -81,6 +92,7 @@ public class ThaumcraftAlfheimModule {
 	
 	public static void registerItems() {
 		register(naturalWandCap);
+		register(naturalWandRod);
 	}
 	
 	public static void registerRenders() {
@@ -98,68 +110,106 @@ public class ThaumcraftAlfheimModule {
 	}
 	
 	public static void registerRecipes() {
-		ConfigResearch.recipes.put("WandCapManasteel",
-			addArcaneCraftingRecipe("CAP_manasteel",
+		ConfigResearch.recipes.put(capManasteelRecipe,
+			addArcaneCraftingRecipe(capManasteelResearch,
 				new ItemStack(naturalWandCap, 1, 0),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get("manasteel")).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get("manasteel")).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get("manasteel")).getCraftCost()),
+				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
+				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
+				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost()),
 				"NNN", "N N",
 				'N', MANASTEEL_NUGGET
 			)
 		);
 		
-		ConfigResearch.recipes.put("WandCapTerrasteel",
-			addArcaneCraftingRecipe("CAP_terrasteel",
+		ConfigResearch.recipes.put(capTerrasteelRecipe,
+			addArcaneCraftingRecipe(capTerrasteelResearch,
 				new ItemStack(naturalWandCap, 1, 1),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get("terrasteel")).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get("terrasteel")).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get("terrasteel")).getCraftCost()),
+				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
+				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
+				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost()),
 				"NNN", "N N",
 				'N', TERRASTEEL_NUGGET
 			)
 		);
 		
-		ConfigResearch.recipes.put("WandCapElementium",
-			addArcaneCraftingRecipe("CAP_elementium",
+		ConfigResearch.recipes.put(capElementiumRecipe,
+			addArcaneCraftingRecipe(capElementiumResearch,
 				new ItemStack(naturalWandCap, 1, 2),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get("elementium")).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get("elementium")).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get("elementium")).getCraftCost()),
+				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
+				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
+				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', ELEMENTIUM_NUGGET
 			)
 		);
 		
-		ConfigResearch.recipes.put("WandCapElvorium",
-			addArcaneCraftingRecipe("CAP_elvorium",
+		ConfigResearch.recipes.put(capElvoriumRecipe,
+			addArcaneCraftingRecipe(capElvoriumResearch,
 				new ItemStack(naturalWandCap, 1, 3),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get("elvorium")).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get("elvorium")).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get("elvorium")).getCraftCost()),
+				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
+				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
+				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', ELVORIUM_NUGGET
 			)
 		);
 		
-		ConfigResearch.recipes.put("WandCapMauftrium",
-			addArcaneCraftingRecipe("CAP_mauftrium",
+		ConfigResearch.recipes.put(capMauftriumRecipe,
+			addArcaneCraftingRecipe(capMauftriumResearch,
 				new ItemStack(naturalWandCap, 1, 4),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get("mauftrium")).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get("mauftrium")).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get("mauftrium")).getCraftCost()),
+				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', MAUFTRIUM_NUGGET
 			)
 		);
 		
-		ConfigResearch.recipes.put("PureElementium",
-			addCrucibleRecipe("PUREELEMENTIUM",
+		ConfigResearch.recipes.put(rodLivingwoodRecipe,
+			addArcaneCraftingRecipe(rodLivingwoodResearch,
+				new ItemStack(naturalWandRod, 1, 0),
+				new AspectList()
+				.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost())
+				.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost()),
+				"  T", " T ", "T  ",
+				'T', LIVINGWOOD_TWIG
+			)
+		);
+		
+		ConfigResearch.recipes.put(rodDreamwoodRecipe,
+			addArcaneCraftingRecipe(rodDreamwoodResearch,
+				new ItemStack(naturalWandRod, 1, 1),
+				new AspectList()
+				.add(Aspect.ORDER, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
+				.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
+				.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost()),
+				"  I", " I ", "I  ",
+				'I', INFUSED_DREAM_TWIG
+			)
+		);
+		
+		ConfigResearch.recipes.put(rodSpiritualRecipe,
+				addArcaneCraftingRecipe("",
+					new ItemStack(naturalWandRod, 1, 2),
+					new AspectList()
+					.add(Aspect.ORDER, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost())
+					.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost())
+					.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost()),
+					" SD", " IS", "T  ",
+					'T', LIVINGWOOD_TWIG,
+					'I', INFUSED_DREAM_TWIG,
+					'S', LIFE_ESSENCE,
+					'D', DRAGONSTONE
+				)
+			);
+		
+		ConfigResearch.recipes.put(pureElementiumRecipe,
+			addCrucibleRecipe(pureElementiumResearch,
 				new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
 				ELEMENTIUM_ORE,
 				new AspectList()
@@ -168,8 +218,8 @@ public class ThaumcraftAlfheimModule {
 			)
 		);
 		
-		ConfigResearch.recipes.put("TransElementium",
-			addCrucibleRecipe("TRANSELEMENTIUM",
+		ConfigResearch.recipes.put(transElementiumRecipe,
+			addCrucibleRecipe(transElementiumResearch,
 				new ItemStack(ModItems.manaResource, 3, 19),
 				ELEMENTIUM_NUGGET,
 				new AspectList()
@@ -211,86 +261,134 @@ public class ThaumcraftAlfheimModule {
 	
 	public static void addESMRecipes() {
 		CraftingManager.getInstance().getRecipeList().add(recipeElementiumWandCap);
+		
+		WandCap elem = WandCap.caps.get(capElementiumName);
+		ASJReflectionHelper.setValue(elem, 0.95F, "baseCostModifier");
+		elem.setCraftCost(5);
 	}
 	
 	public static void removeESMRecipes() {
 		CraftingManager.getInstance().getRecipeList().remove(recipeElementiumWandCap);
+		
+		WandCap elem = WandCap.caps.get(capElementiumName);
+		ASJReflectionHelper.setValue(elem, 0.9F, "baseCostModifier");
+		elem.setCraftCost(7);
 	}
 	
 	public static void reigsterResearches() {
-		new ResearchItem("CAP_manasteel", "THAUMATURGY",
+		new ResearchItem(capManasteelResearch, "THAUMATURGY",
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 3).add(Aspect.TOOL, 3),
 			4, 0, 1,
 			new ItemStack(naturalWandCap, 1, 0))
 			
-			.setPages(	new ResearchPage("tc.research_page.CAP_manasteel.1"),
-						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapManasteel")))
+			.setPages(	new ResearchPage("tc.research_page." + capManasteelResearch + ".1"),
+						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(capManasteelRecipe)))
 			
 			.setParents("CAP_gold").registerResearchItem();
 		
 		
 		
-		new ResearchItem("CAP_terrasteel", "THAUMATURGY",
+		new ResearchItem(capTerrasteelResearch, "THAUMATURGY",
 			new AspectList().add(Aspect.METAL, 6).add(Aspect.MAGIC, 6).add(Aspect.TOOL, 3).add(Aspect.AURA, 3),
 			7, 4, 2,
 			new ItemStack(naturalWandCap, 1, 1))
 			
-			.setPages(	new ResearchPage("tc.research_page.CAP_terrasteel.1"),
-						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapTerrasteel")))
+			.setPages(	new ResearchPage("tc.research_page." + capTerrasteelResearch + ".1"),
+						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(capTerrasteelRecipe)))
 			
 			.setParents("CAP_thaumium").registerResearchItem();
 		
 		
 		
-		new ResearchItem("CAP_elementium", "THAUMATURGY",
+		new ResearchItem(capElementiumResearch, "THAUMATURGY",
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 3).add(Aspect.TOOL, 3),
 			6, 2, 1,
 			new ItemStack(naturalWandCap, 1, 2))
 			
-			.setPages(	new ResearchPage("tc.research_page.CAP_elementium.1"),
-						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapElementium")))
+			.setPages(	new ResearchPage("tc.research_page." + capElementiumResearch + ".1"),
+						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(capElementiumRecipe)))
 			
 			.setParents("CAP_gold").registerResearchItem();
 		
 		
 		
-		new ResearchItem("CAP_elvorium", "THAUMATURGY",
+		new ResearchItem(capElvoriumResearch, "THAUMATURGY",
 			new AspectList().add(Aspect.METAL, 6).add(Aspect.MAGIC, 6).add(Aspect.TOOL, 3).add(Aspect.AURA, 3),
 			5, 6, 2,
 			new ItemStack(naturalWandCap, 1, 3))
 			
-			.setPages(	new ResearchPage("tc.research_page.CAP_elvorium.1"),
-						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapElvorium")))
+			.setPages(	new ResearchPage("tc.research_page." + capElvoriumResearch + ".1"),
+						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(capElvoriumRecipe)))
 			
 			.setParents("CAP_thaumium").registerResearchItem();
 		
 		
 		
-		new ResearchItem("CAP_mauftrium", "THAUMATURGY",
+		new ResearchItem(capMauftriumResearch, "THAUMATURGY",
 			new AspectList().add(Aspect.VOID, 5).add(Aspect.ELDRITCH, 5).add(Aspect.TOOL, 3).add(Aspect.MAGIC, 3).add(Aspect.AURA, 3),
 			7, 6, 3,
 			new ItemStack(naturalWandCap, 1, 4))
 			
-			.setPages(	new ResearchPage("tc.research_page.CAP_mauftrium.1"),
-						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get("WandCapMauftrium")))
+			.setPages(	new ResearchPage("tc.research_page." + capMauftriumResearch + ".1"),
+						new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(capMauftriumRecipe)))
 			
 			.setParents("CAP_void").registerResearchItem();
 		
-		new ResearchItem("PUREELEMENTIUM", "ALCHEMY",
+		
+		
+		new ResearchItem(rodLivingwoodResearch, "THAUMATURGY",
+				new AspectList().add(Aspect.TOOL, 3).add(Aspect.TREE, 6).add(Aspect.MAGIC, 3),
+				-2, 2, 1,
+				new ItemStack(naturalWandRod, 1, 0))
+				
+				.setPages(	new ResearchPage("tc.research_page." + rodLivingwoodResearch + ".1"),
+							new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(rodLivingwoodRecipe)))
+				
+				.setParents("ROD_greatwood").registerResearchItem();
+		
+		
+		
+		new ResearchItem(rodDreamwoodResearch, "THAUMATURGY",
+				new AspectList().add(Aspect.TOOL, 4).add(Aspect.TREE, 6).add(Aspect.MAGIC, 5),
+				-4, 4, 2,
+				new ItemStack(naturalWandRod, 1, 1))
+				
+				.setPages(	new ResearchPage("tc.research_page." + rodDreamwoodResearch + ".1"),
+							new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(rodDreamwoodRecipe)))
+				
+				.setParents("ROD_greatwood").registerResearchItem();
+		
+		
+		
+		new ResearchItem(rodSpiritualResearch, "THAUMATURGY",
+				new AspectList().add(Aspect.TOOL, 6).add(Aspect.TREE, 6).add(Aspect.MAGIC, 12),
+				-3, 6, 2,
+				new ItemStack(naturalWandRod, 1, 2))
+				
+				.setPages(	new ResearchPage("tc.research_page." + rodSpiritualResearch + ".1"),
+							new ResearchPage((IArcaneRecipe) ConfigResearch.recipes.get(rodSpiritualRecipe)))
+				
+				.setParents("ROD_silverwood").registerResearchItem();
+		
+		
+		
+		new ResearchItem(pureElementiumResearch, "ALCHEMY",
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.ORDER, 2).add(Aspect.MAGIC, 1),
 			-3, 2, 1, new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()))
 		
 			.setPages(	new ResearchPage("tc.research_page.PUREELEMENTIUM.1"),
-						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get("PureElementium")))
+						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get(pureElementiumRecipe)))
 			
 			.setConcealed().setSecondary().setParents("PUREIRON").registerResearchItem();
 		
-		new ResearchItem("TRANSELEMENTIUM", "ALCHEMY",
+		
+		
+		new ResearchItem(transElementiumResearch, "ALCHEMY",
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 3),
 			1, 2, 1, new ItemStack(ModItems.manaResource, 1, 19))
 			
 			.setPages(	new ResearchPage("tc.research_page.TRANSELEMENTIUM.1"),
-						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get("TransElementium")))
+						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get(transElementiumRecipe)))
 			
 			.setConcealed().setSecondary().setParents("TRANSIRON").registerResearchItem();
 	}
@@ -316,4 +414,43 @@ public class ThaumcraftAlfheimModule {
 			return 1;
 		}
 	}.setNoTitle().setBackgroundImageName("NTC.png");
+	
+	public static final String
+								capManasteelName		= ModInfo.MODID + "Manasteel",
+								capManasteelRecipe		= ModInfo.MODID + "WandCapManasteel",
+								capManasteelResearch	= "CAP_" + capManasteelName,
+								
+								capTerrasteelName		= ModInfo.MODID + "Terrasteel",
+								capTerrasteelRecipe		= ModInfo.MODID + "WandCapTerrasteel",
+								capTerrasteelResearch	= "CAP_" + capTerrasteelName,
+								
+								capElementiumName		= ModInfo.MODID + "Elementium",
+								capElementiumRecipe		= ModInfo.MODID + "WandCapElementium",
+								capElementiumResearch	= "CAP_" + capElementiumName,
+								
+								capElvoriumName			= ModInfo.MODID + "Elvorium",
+								capElvoriumRecipe		= ModInfo.MODID + "WandCapElvorium",
+								capElvoriumResearch		= "CAP_" + capElvoriumName,
+								
+								capMauftriumName		= ModInfo.MODID + "Mauftrium",
+								capMauftriumRecipe		= ModInfo.MODID + "WandCapMauftrium",
+								capMauftriumResearch	= "CAP_" + capMauftriumName,
+								
+								rodLivingwoodName		= ModInfo.MODID + "Livingwood",
+								rodLivingwoodRecipe		= ModInfo.MODID + "WandRodLivingwood",
+								rodLivingwoodResearch	= "ROD_" + rodLivingwoodName,
+										
+								rodDreamwoodName		= ModInfo.MODID + "Dreamwood",
+								rodDreamwoodRecipe		= ModInfo.MODID + "WandRodDreamwood",
+								rodDreamwoodResearch	= "ROD_" + rodDreamwoodName,
+										
+								rodSpiritualName		= ModInfo.MODID + "Spiritual",
+								rodSpiritualRecipe		= ModInfo.MODID + "WandRodSpiritual",
+								rodSpiritualResearch	= "ROD_" + rodSpiritualName,
+								
+								pureElementiumRecipe	= ModInfo.MODID + "PUREELEMENTIUM",
+								pureElementiumResearch	= ModInfo.MODID + "PureElementium",
+								
+								transElementiumRecipe	= ModInfo.MODID + "TRANSELEMENTIUM",
+								transElementiumResearch	= ModInfo.MODID + "TransElementium";
 }

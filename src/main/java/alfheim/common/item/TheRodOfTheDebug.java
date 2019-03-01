@@ -7,6 +7,7 @@ import alfheim.api.entity.EnumRace;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem;
+import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -92,7 +93,7 @@ public class TheRodOfTheDebug extends Item {
 		
 		ItemStack stk = new ItemStack(GameRegistry.findItem("Thaumcraft", "WandCasting"), 1, 148);
 		ItemNBTHelper.setBoolean(stk, "sceptre", true);
-		ItemNBTHelper.setString(stk, "cap", "mauftrium");
+		ItemNBTHelper.setString(stk, "cap", ThaumcraftAlfheimModule.capMauftriumName);
 		ItemNBTHelper.setString(stk, "rod", "primal_staff");
 		ItemNBTHelper.setInt(stk, "aer", 37500);
 		ItemNBTHelper.setInt(stk, "terra", 37500);

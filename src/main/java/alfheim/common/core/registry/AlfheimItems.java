@@ -177,6 +177,7 @@ public class AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.ARUNE[0], new ItemStack(elvenResource, 1, ElvenResourcesMetas.PrimalRune));
 		OreDictionary.registerOre(LibOreDict.ARUNE[1], new ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune));
 		OreDictionary.registerOre(LibOreDict.ARUNE[2], new ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune));
+		OreDictionary.registerOre(LibOreDict.INFUSED_DREAM_TWIG, new ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig));
 	}
 	
 	public static class ElvenResourcesMetas {
@@ -194,7 +195,8 @@ public class AlfheimItems {
 		IffesalDust,
 		PrimalRune,
 		MuspelheimRune,
-		NiflheimRune
+		NiflheimRune,
+		InfusedDreamwoodTwig
 		//Transferer BACK
 		;
 		static {
@@ -213,6 +215,7 @@ public class AlfheimItems {
 			PrimalRune = items.indexOf("PrimalRune");
 			MuspelheimRune = items.indexOf("MuspelheimRune");
 			NiflheimRune = items.indexOf("NiflheimRune");
+			InfusedDreamwoodTwig = items.indexOf("InfusedDreamwoodTwig");
 			//Transferer = items.indexOf("Transferer"); BACK
 		}
 	}

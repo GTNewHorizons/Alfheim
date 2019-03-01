@@ -17,4 +17,5 @@ public interface LibOreDict {
 	public static String NIFLHEIM_ESSENCE = "essenceNiflheim";
 	public static String IFFESAL_DUST = "dustIffesal";
 	public static String[] ARUNE = { "runePrimalA", "runeMuspelheimA", "runeNiflheimA"};
+	public static String INFUSED_DREAM_TWIG = "twigDreamwoodInsufed";
 }
