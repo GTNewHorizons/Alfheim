@@ -51,6 +51,8 @@ public final class ASJShaderHelper {
 	 * @param fragLocation Fragment shader location
 	 * */
 	public static int createProgram(String vertLocation, String fragLocation) {
+		if(!OpenGlHelper.shadersSupported) return 0;
+		
 		int vertID = 0, fragID = 0, programID = 0;
 		
 		programID = glCreateProgram();
