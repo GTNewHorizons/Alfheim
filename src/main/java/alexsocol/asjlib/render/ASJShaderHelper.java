@@ -10,7 +10,6 @@ import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
-import vazkii.botania.client.core.handler.ClientTickHandler;
 
 /**
  * Almost all code is by Vazkii - ShaderHelper, I just ported it to GL20 and made lib-style
@@ -27,7 +26,7 @@ public final class ASJShaderHelper {
 
 		if(shaderID != 0) {
 			if (Minecraft.getMinecraft().theWorld != null) {
-				glUniform1i(glGetUniformLocation(shaderID, "time"), ClientTickHandler.ticksInGame);
+				glUniform1i(glGetUniformLocation(shaderID, "time"), (int) (Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
 				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20.0F);
 			}
 			

@@ -22,6 +22,7 @@ import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRecipes;
+import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
@@ -73,10 +74,12 @@ public class ClientProxy extends CommonProxy {
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idTransferer = RenderingRegistry.getNextAvailableRenderId();
 		
-		LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag");
-		LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
-		LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
-		LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
+		if (!AlfheimConfig.minimalGraphics) {
+			LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag");
+			LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
+			LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");
+			LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag");
+		}
 		
 	    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), new RenderItemAnomaly());
 		
