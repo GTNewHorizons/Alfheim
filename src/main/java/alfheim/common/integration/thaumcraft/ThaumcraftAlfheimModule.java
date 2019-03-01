@@ -40,6 +40,7 @@ import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
+import thaumcraft.api.wands.StaffRod;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.blocks.BlockCustomOreItem;
@@ -83,7 +84,7 @@ public class ThaumcraftAlfheimModule {
 		
 		new WandRod(rodLivingwoodName,	35, new ItemStack(naturalWandRod, 1, 0), 2	);
 		new WandRod(rodDreamwoodName,	65, new ItemStack(naturalWandRod, 1, 1), 5	);
-		new WandRod(rodSpiritualName,	85, new ItemStack(naturalWandRod, 1, 2), 12	, new NaturalWandRodOnUpdate()).setGlowing(true);
+		new StaffRod(rodSpiritualName,	85, new ItemStack(naturalWandRod, 1, 2), 12	, new NaturalWandRodOnUpdate()).setGlowing(true);
 	}
 	
 	public static void registerBlocks() {
@@ -114,9 +115,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capManasteelResearch,
 				new ItemStack(naturalWandCap, 1, 0),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
+				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost()),
 				"NNN", "N N",
 				'N', MANASTEEL_NUGGET
 			)
@@ -126,9 +127,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capTerrasteelResearch,
 				new ItemStack(naturalWandCap, 1, 1),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
+				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost()),
 				"NNN", "N N",
 				'N', TERRASTEEL_NUGGET
 			)
@@ -138,9 +139,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capElementiumResearch,
 				new ItemStack(naturalWandCap, 1, 2),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
+				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', ELEMENTIUM_NUGGET
 			)
@@ -150,9 +151,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capElvoriumResearch,
 				new ItemStack(naturalWandCap, 1, 3),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
+				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', ELVORIUM_NUGGET
 			)
@@ -162,9 +163,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capMauftriumResearch,
 				new ItemStack(naturalWandCap, 1, 4),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.FIRE, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.AIR, ((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', MAUFTRIUM_NUGGET
 			)
@@ -174,8 +175,8 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(rodLivingwoodResearch,
 				new ItemStack(naturalWandRod, 1, 0),
 				new AspectList()
-				.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost())
-				.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost())
+				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost()),
 				"  T", " T ", "T  ",
 				'T', LIVINGWOOD_TWIG
 			)
@@ -185,28 +186,31 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(rodDreamwoodResearch,
 				new ItemStack(naturalWandRod, 1, 1),
 				new AspectList()
-				.add(Aspect.ORDER, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
-				.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
-				.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost()),
+				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
+				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost()),
 				"  I", " I ", "I  ",
 				'I', INFUSED_DREAM_TWIG
 			)
 		);
 		
 		ConfigResearch.recipes.put(rodSpiritualRecipe,
-				addArcaneCraftingRecipe("",
-					new ItemStack(naturalWandRod, 1, 2),
-					new AspectList()
-					.add(Aspect.ORDER, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost())
-					.add(Aspect.AIR, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost())
-					.add(Aspect.EARTH, ((WandRod) WandRod.rods.get(rodSpiritualName)).getCraftCost()),
-					" SD", " IS", "T  ",
-					'T', LIVINGWOOD_TWIG,
-					'I', INFUSED_DREAM_TWIG,
-					'S', LIFE_ESSENCE,
-					'D', DRAGONSTONE
-				)
-			);
+			addArcaneCraftingRecipe("",
+				new ItemStack(naturalWandRod, 1, 2),
+				new AspectList()
+				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
+				.add(Aspect.FIRE,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
+				.add(Aspect.WATER,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
+				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
+				.add(Aspect.ORDER,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
+				.add(Aspect.ENTROPY,((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost()),
+				"DSP", " RS", "R D",
+				'R', new ItemStack(naturalWandRod, 1, 1),
+				'S', LIFE_ESSENCE,
+				'D', DRAGONSTONE,
+				'P', new ItemStack(ConfigItems.itemResource, 1, 15)
+			)
+		);
 		
 		ConfigResearch.recipes.put(pureElementiumRecipe,
 			addCrucibleRecipe(pureElementiumResearch,
@@ -262,17 +266,25 @@ public class ThaumcraftAlfheimModule {
 	public static void addESMRecipes() {
 		CraftingManager.getInstance().getRecipeList().add(recipeElementiumWandCap);
 		
-		WandCap elem = WandCap.caps.get(capElementiumName);
-		ASJReflectionHelper.setValue(elem, 0.95F, "baseCostModifier");
-		elem.setCraftCost(5);
+		WandCap cap = WandCap.caps.get(capElementiumName);
+		ASJReflectionHelper.setValue(cap, 0.95F, "baseCostModifier");
+		cap.setCraftCost(5);
+		
+		cap = WandCap.caps.get(capElvoriumName);
+		ASJReflectionHelper.setValue(cap, 0.85F, "baseCostModifier");
+		cap.setCraftCost(8);
 	}
 	
 	public static void removeESMRecipes() {
 		CraftingManager.getInstance().getRecipeList().remove(recipeElementiumWandCap);
 		
-		WandCap elem = WandCap.caps.get(capElementiumName);
-		ASJReflectionHelper.setValue(elem, 0.9F, "baseCostModifier");
-		elem.setCraftCost(7);
+		WandCap cap = WandCap.caps.get(capElementiumName);
+		ASJReflectionHelper.setValue(cap, 0.9F, "baseCostModifier");
+		cap.setCraftCost(6);
+		
+		cap = WandCap.caps.get(capElvoriumName);
+		ASJReflectionHelper.setValue(cap, 0.8F, "baseCostModifier");
+		cap.setCraftCost(9);
 	}
 	
 	public static void reigsterResearches() {
@@ -445,8 +457,9 @@ public class ThaumcraftAlfheimModule {
 								rodDreamwoodResearch	= "ROD_" + rodDreamwoodName,
 										
 								rodSpiritualName		= ModInfo.MODID + "Spiritual",
+								rodSpiritualStaff		= rodSpiritualName + "_staff",
 								rodSpiritualRecipe		= ModInfo.MODID + "WandRodSpiritual",
-								rodSpiritualResearch	= "ROD_" + rodSpiritualName,
+								rodSpiritualResearch	= "ROD_" + rodSpiritualStaff,
 								
 								pureElementiumRecipe	= ModInfo.MODID + "PUREELEMENTIUM",
 								pureElementiumResearch	= ModInfo.MODID + "PureElementium",

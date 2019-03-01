@@ -11,12 +11,10 @@ public class ItemBlockElvenOres extends ItemBlock {
 		super(block);
 		this.setHasSubtypes(true);
 	}
-
+	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		int i = stack.getItemDamage();
-		if (i < 0 || i >= BlockElvenOres.names.length) i = 0;
-		return "tile." + BlockElvenOres.names[i] + super.getUnlocalizedName().substring(5);
+		return "tile." + BlockElvenOres.names[Math.max(0, Math.min(stack.getItemDamage(), BlockElvenOres.names.length-1))] + super.getUnlocalizedName().substring(5);
 	}
 	
 	@Override

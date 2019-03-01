@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemAlfheimWandCap extends Item {
 	
-	public static IIcon[] icons = new IIcon[5];
+	public static IIcon[] textures = new IIcon[5];
 	
 	public ItemAlfheimWandCap() {
 		setCreativeTab(ThaumcraftAlfheimModule.tcnTab);
@@ -24,18 +24,18 @@ public class ItemAlfheimWandCap extends Item {
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < icons.length; i++) 
-			icons[i] = reg.registerIcon("thaumcraft:AlfCap" + i);
+		for (int i = 0; i < textures.length; i++) 
+			textures[i] = reg.registerIcon("thaumcraft:AlfCap" + i);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return icons[Math.max(0, Math.min(meta, icons.length-1))];
+		return textures[Math.max(0, Math.min(meta, textures.length-1))];
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < icons.length; i++)
+		for (int i = 0; i < textures.length; i++)
 			list.add(new ItemStack(this, 1, i));
 	}
 	

@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemAlfheimWandRod extends Item {
 	
-	public static IIcon[] icons = new IIcon[3];
+	public static IIcon[] textures = new IIcon[3];
 	
 	public ItemAlfheimWandRod() {
 		setCreativeTab(ThaumcraftAlfheimModule.tcnTab);
@@ -23,18 +23,18 @@ public class ItemAlfheimWandRod extends Item {
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < icons.length; i++) 
-			icons[i] = reg.registerIcon("thaumcraft:AlfRod" + i);
+		for (int i = 0; i < textures.length; i++) 
+			textures[i] = reg.registerIcon("thaumcraft:AlfRod" + i);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return icons[Math.max(0, Math.min(meta, icons.length-1))];
+		return textures[Math.max(0, Math.min(meta, textures.length-1))];
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < icons.length; i++)
+		for (int i = 0; i < textures.length; i++)
 			list.add(new ItemStack(this, 1, i));
 	}
 	

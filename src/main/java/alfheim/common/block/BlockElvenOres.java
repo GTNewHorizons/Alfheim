@@ -23,11 +23,11 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.common.item.ModItems;
 
 public class BlockElvenOres extends Block implements ILexiconable {
-
+	
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal" };
 	public IIcon[] textures = new IIcon[names.length];
 	public Item[] drops = { ModItems.manaResource, null, ModItems.quartz, null, AlfheimItems.elvenResource };
-	public int[] metas = {9, 1, 5, 3, ElvenResourcesMetas.IffesalDust};
+	public int[] metas = { 9, 1, 5, 3, ElvenResourcesMetas.IffesalDust };
 	public Random rand = new Random();
 	
 	public BlockElvenOres() {
@@ -46,17 +46,16 @@ public class BlockElvenOres extends Block implements ILexiconable {
 		for (int i = 0; i < names.length; i++)
 			textures[i] = reg.registerIcon(ModInfo.MODID + ':' + names[i] + "OreElven");
 	}
-
+	
 	@Override
 	public void getSubBlocks(Item block, CreativeTabs tab, List list) {
 		for (int i = 0; i < names.length; i++)
 			list.add(new ItemStack(block, 1, i));
 	}
-
+	
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		if (meta >= textures.length || meta < 0) return textures[0];
-		return textures[meta];
+		return textures[Math.max(0, Math.min(meta, textures.length-1))];
 	}
 	
 	@Override
@@ -68,21 +67,20 @@ public class BlockElvenOres extends Block implements ILexiconable {
 	
 	@Override
 	public int damageDropped(int meta) {
-		if (meta >= metas.length || meta < 0) return metas[0];
-		return metas[meta];
+		return metas[Math.max(0, Math.min(meta, metas.length-1))];
 	}
-
+	
 	@Override
 	public int getDamageValue(World world, int x, int y, int z) {
 		// how can damageDropped even be here if it isn't related to dropping stuff? -_-
-        return world.getBlockMetadata(x, y, z);
-    }
+		return world.getBlockMetadata(x, y, z);
+	}
 	
 	@Override
 	public int getExpDrop(IBlockAccess world, int meta, int fortune) {
 		return Item.getItemFromBlock(this) != this.getItemDropped(meta, new Random(), fortune) ? rand.nextInt(5) + 3 : 0;
 	}
-
+	
 	@Override
 	public int quantityDropped(int meta, int fortune, Random random) {
 		return	meta == 0 || meta == 2 ?	// Dragonstone and quartz
