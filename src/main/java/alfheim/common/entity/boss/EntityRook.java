@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 import java.awt.Rectangle;
 
+import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -132,29 +133,34 @@ public class EntityRook extends EntityCreature implements IBotaniaBoss { // Enti
 	
 	@Override
 	public void collideWithEntity(Entity collided) {
-		if (!(collided instanceof EntityPlayer && ((EntityPlayer) collided).capabilities.disableDamage) || !collided.isEntityInvulnerable() && this.getRNG().nextInt(20) == 0) 
-			setAttackTarget((EntityLivingBase) collided);
 		super.collideWithEntity(collided);
+		
+		// if (rand.nextInt(20) != 0) return;
+		if (collided instanceof EntityPlayer && ((EntityPlayer) collided).capabilities.disableDamage) return;
+		if (collided instanceof EntityLivingBase && collided.isEntityInvulnerable()) return;
+		
+		setAttackTarget((EntityLivingBase) collided);
 	}
 	
-	public boolean attackEntityAsMob(Entity entity) {
-		if (!(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.disableDamage) || !entity.isEntityInvulnerable() && getAttackTimer() <= 0) {
-			setAttackTimer(20);
-			worldObj.setEntityState(this, (byte) 4);
-			boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (12 + this.rand.nextInt(6)));
+	public boolean attackEntityAsMob(Entity target) {
+		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return false;
+		if (target instanceof EntityLivingBase && target.isEntityInvulnerable()) return false;
+		if (getAttackTimer() > 0) return false;
+		
+		setAttackTimer(20);
+		worldObj.setEntityState(this, (byte) 4);
+		boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (12 + this.rand.nextInt(6)));
 			
-			if (flag) {
-				Vector3 zis = Vector3.fromEntity(this);
-				Vector3 zat = Vector3.fromEntity(entity);
-				zis.sub(zat).set(zis.x, 0, zis.z).normalize().mul(0.2);
-				entity.motionX = zis.x;
-				entity.motionZ = zis.z;
-			}
-			
-			playSound("mob.irongolem.throw", 1.0F, 1.0F);
-			return flag;
+		if (flag) {
+			Vector3 zis = Vector3.fromEntity(this);
+			Vector3 zat = Vector3.fromEntity(target);
+			zis.sub(zat).set(zis.x, 0, zis.z).normalize().mul(0.2);
+			target.motionX = zis.x;
+			target.motionZ = zis.z;
 		}
-		return false;
+			
+		playSound("mob.irongolem.throw", 1.0F, 1.0F);
+		return flag;
 	}
 	
 	public boolean canAttackClass(Class clazz) {
