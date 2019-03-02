@@ -39,6 +39,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.common.Botania;
+import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -74,7 +75,7 @@ public class ClientProxy extends CommonProxy {
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId();
 		LibRenderIDs.idTransferer = RenderingRegistry.getNextAvailableRenderId();
 		
-		if (!AlfheimConfig.minimalGraphics) {
+		if (ConfigHandler.useShaders) {
 			LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag");
 			LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag");
 			LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag");

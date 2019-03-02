@@ -14,22 +14,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityGravityTrap extends Render {
-
+	
 	Random rand = new Random();
 	
 	public static ShadedObject so = new ShadedObject(LibShaderIDs.idGravity, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.gravity) {
-
+		
 		@Override
 		public void preRender() {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+			
 			glDisable(GL_CULL_FACE);
 			glShadeModel(GL_SMOOTH);
 			
 			// glColor4d(1, 1, 1, chargeMul); 
 		}
-
+		
 		@Override
 		public void drawMesh() {
 			Tessellator tes = Tessellator.instance;
@@ -63,24 +63,22 @@ public class RenderEntityGravityTrap extends Render {
 	public void doRender(Entity e, double x, double y, double z, float yaw, float partialTick) {
 		glPushMatrix();
 		glTranslated(x, y + 0.01, z);
-
+		
 		float live = e.ticksExisted;
 		float charge = Math.min(20F, live + partialTick);
 		float chargeMul = charge / 20F;
 		
 		rand.setSeed(e.getUniqueID().getMostSignificantBits());
-
+		
 		float s = chargeMul;
 		s += Math.min(1F, (live + partialTick) * 0.2F);
 		s *= 2F;
 		glScalef(s, s, s);
 		
 		glRotatef(charge * 9F + (e.ticksExisted + partialTick) * 0.5F + rand.nextFloat() * 360F, 0F, 1F, 0F);
-
+		
 		so.addTranslation();
-
+		
 		glPopMatrix();
-	}
-	
-	
+	}	
 }
