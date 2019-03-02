@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import travellersgear.api.TravellersGearAPI;
+import vazkii.botania.client.core.helper.RenderHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak;
 
 public class TGHandlerBotaniaAdapter {
@@ -51,20 +52,28 @@ public class TGHandlerBotaniaAdapter {
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
-	public static void addHiddenTooltip(ItemHolyCloak cloak, ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), par3List);
+	public static void addHiddenTooltip(ItemHolyCloak cloak, ItemStack stack, EntityPlayer player, List tooltip, boolean adv) {
+		try {
+			if (AlfheimCore.TravellersGearLoaded) {
+				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip);
+				String key = RenderHelper.getKeyDisplayString("TG.keybind.openInv");
+				if(key != null)
+					TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replaceAll("%key%", key), tooltip);
+			} else {
+				BaubleType type = cloak.getBaubleType(stack);
+				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name().toLowerCase()), tooltip);
+				String key = RenderHelper.getKeyDisplayString("Baubles Inventory");
+				if(key != null)
+					TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replaceAll("%key%", key), tooltip);
+			}
+		} catch (Throwable e) {}
 		
-		String key = vazkii.botania.client.core.helper.RenderHelper.getKeyDisplayString("TG.keybind.openInv");
-		
-		if(key != null)
-			addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replaceAll("%key%", key), par3List);
-		
-		ItemStack cosmetic = cloak.getCosmeticItem(par1ItemStack);
+		ItemStack cosmetic = cloak.getCosmeticItem(stack);
 		if(cosmetic != null)
-			addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName()), par3List);
+			addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName()), tooltip);
 		
-		if(cloak.hasPhantomInk(par1ItemStack))
-			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), par3List);
+		if(cloak.hasPhantomInk(stack))
+			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip);
 	}
 	
 	public static void addStringToTooltip(String s, List<String> tooltip) {

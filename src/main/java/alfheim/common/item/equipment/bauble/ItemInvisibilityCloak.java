@@ -15,6 +15,7 @@ import net.minecraft.util.StatCollector;
 import travellersgear.api.ITravellersGear;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.client.core.helper.RenderHelper;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
 import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak;
@@ -85,12 +86,18 @@ public class ItemInvisibilityCloak extends ItemBauble implements IManaUsingItem,
 	
 	@Override
 	public void addHiddenTooltip(ItemStack stack, EntityPlayer player, List tooltip, boolean adv) {
-		TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip);
-		
-		String key = vazkii.botania.client.core.helper.RenderHelper.getKeyDisplayString("TG.keybind.openInv");
-		
-		if(key != null)
-			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replaceAll("%key%", key), tooltip);
+		if (AlfheimCore.TravellersGearLoaded) {
+			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip);
+			String key = RenderHelper.getKeyDisplayString("TG.keybind.openInv");
+			if(key != null)
+				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replaceAll("%key%", key), tooltip);
+		} else {
+			BaubleType type = getBaubleType(stack);
+			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name().toLowerCase()), tooltip);
+			String key = RenderHelper.getKeyDisplayString("Baubles Inventory");
+			if(key != null)
+				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replaceAll("%key%", key), tooltip);
+		}
 		
 		ItemStack cosmetic = getCosmeticItem(stack);
 		if(cosmetic != null)
