@@ -2,6 +2,7 @@ package alfheim.api.spell;
 
 import java.util.List;
 
+import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.SpellCastEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -88,7 +89,11 @@ public abstract class SpellBase {
 	}
 	
 	public static float over(EntityLivingBase caster, double was) {
-		return (float) (caster.isPotionActive(overmag) ? was * 1.2 : was);
+		try {
+			return (float) (caster.isPotionActive(overmag) ? was * 1.2 : was);
+		} catch (Throwable e) {
+			return (float) was;
+		}
 	}
 	
 	public SpellCastResult checkCast(EntityLivingBase caster) {
