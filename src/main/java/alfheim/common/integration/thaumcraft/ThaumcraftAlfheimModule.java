@@ -17,18 +17,11 @@ import alfheim.client.render.block.RenderBlockAlfheimThaumOre;
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre;
 import alfheim.common.core.asm.AlfheimASMData;
 import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap;
 import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandRod;
 import alfheim.common.item.compat.thaumcraft.NaturalWandRodOnUpdate;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -46,7 +39,6 @@ import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.blocks.BlockCustomOreItem;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
-import thaumcraft.common.items.equipment.ItemElementalPickaxe;
 import vazkii.botania.common.item.ModItems;
 
 public class ThaumcraftAlfheimModule {
@@ -165,7 +157,10 @@ public class ThaumcraftAlfheimModule {
 				new AspectList()
 				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
 				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
+				.add(Aspect.WATER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.EARTH,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
+				.add(Aspect.ENTROPY,((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
 				"NNN", "N N",
 				'N', MAUFTRIUM_NUGGET
 			)
@@ -346,8 +341,6 @@ public class ThaumcraftAlfheimModule {
 			
 			.setParents("CAP_void").registerResearchItem();
 		
-		
-		
 		new ResearchItem(rodLivingwoodResearch, "THAUMATURGY",
 				new AspectList().add(Aspect.TOOL, 3).add(Aspect.TREE, 6).add(Aspect.MAGIC, 3),
 				-2, 2, 1,
@@ -388,7 +381,7 @@ public class ThaumcraftAlfheimModule {
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.ORDER, 2).add(Aspect.MAGIC, 1),
 			-3, 2, 1, new ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()))
 		
-			.setPages(	new ResearchPage("tc.research_page.PUREELEMENTIUM.1"),
+			.setPages(	new ResearchPage("tc.research_page." + pureElementiumResearch + ".1"),
 						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get(pureElementiumRecipe)))
 			
 			.setConcealed().setSecondary().setParents("PUREIRON").registerResearchItem();
@@ -399,10 +392,12 @@ public class ThaumcraftAlfheimModule {
 			new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 3),
 			1, 2, 1, new ItemStack(ModItems.manaResource, 1, 19))
 			
-			.setPages(	new ResearchPage("tc.research_page.TRANSELEMENTIUM.1"),
+			.setPages(	new ResearchPage("tc.research_page." + transElementiumResearch + ".1"),
 						new ResearchPage((CrucibleRecipe) ConfigResearch.recipes.get(transElementiumRecipe)))
 			
 			.setConcealed().setSecondary().setParents("TRANSIRON").registerResearchItem();
+		
+		addWarpToResearch(capMauftriumResearch, 2);
 	}
 	
 	public static void registerOreDict() {

@@ -42,6 +42,9 @@ public class TCHandlerAspects {
 		ThaumcraftApi.registerObjectTag(new ItemStack(elvoriumBlock),			(new AspectList())	.add(Aspect.getAspect("alienis"),		6)	.add(Aspect.getAspect("lucrum"),		20)	.add(Aspect.getAspect("metallum"),		27)	.add(Aspect.getAspect("praecantatio"),	54)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(mauftriumBlock),			(new AspectList())	.add(Aspect.getAspect("auram"),			64)	.add(Aspect.getAspect("alienis"),		64)	.add(Aspect.getAspect("lucrum"),		64)	.add(Aspect.getAspect("metallum"),		54)	.add(Aspect.getAspect("potentia"),		64)	.add(Aspect.getAspect("praecantatio"),	64)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(anyavil),					(new AspectList())	.add(Aspect.getAspect("lucrum"),		10)	.add(Aspect.getAspect("metallum"),		46)	.add(Aspect.getAspect("praecantatio"),	52)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(animatedTorch),			(new AspectList())	.add(Aspect.getAspect("motus"),			1)	.add(Aspect.getAspect("potentia"),		1)	.add(Aspect.getAspect("machina"),		1)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(itemHolder),				(new AspectList())	.add(Aspect.getAspect("terra"),			4)	.add(Aspect.getAspect("potentia"),		2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(anomaly),					(new AspectList())	.add(Aspect.getAspect("alienis"),		8)	.add(Aspect.getAspect("potentia"),		2)	.add(Aspect.getAspect("perditio"),		2)	);
 		
 		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimPylon, 1, 0),		(new AspectList())	.add(Aspect.getAspect("metallum"),		6)	.add(Aspect.getAspect("praecantatio"),	12)	.add(Aspect.getAspect("vitreus"),		4)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(alfheimPylon, 1, 1),		(new AspectList())	.add(Aspect.getAspect("auram"),			2)	.add(Aspect.getAspect("metallum"),		6)	.add(Aspect.getAspect("potentia"),		2)	.add(Aspect.getAspect("praecantatio"),	12)	.add(Aspect.getAspect("vitreus"),		4)	);
@@ -92,8 +95,16 @@ public class TCHandlerAspects {
 		ThaumcraftApi.registerObjectTag(new ItemStack(peacePipe), 				(new AspectList())	.add(Aspect.getAspect("spiritus"),		4)	.add(Aspect.getAspect("arbor"),			2)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(paperBreak), 				(new AspectList())	.add(Aspect.getAspect("spiritus"),		4)	.add(Aspect.getAspect("sensus"),		2)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(AlfheimItems.flugelHead),	(new AspectList())	.add(Aspect.getAspect("alienis"),		8)	.add(Aspect.getAspect("humanus"),		4)	.add(Aspect.getAspect("mortuus"),		8)	.add(Aspect.getAspect("spiritus"),		16)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(astrolabe),				(new AspectList())	.add(Aspect.getAspect("instrumentum"),	4)	.add(Aspect.getAspect("iter"),			2)	.add(Aspect.getAspect("metallum"),		8)	.add(Aspect.getAspect("praecantatio"),	6)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(invisibilityCloak),		(new AspectList())	.add(Aspect.getAspect("pannus"),		6)	.add(Aspect.getAspect("fabrico"),		1)	.add(Aspect.getAspect("sensus"),		4)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(dodgeRing),				(new AspectList())	.add(Aspect.getAspect("vitreus"),		3)	.add(Aspect.getAspect("metallum"),		8)	.add(Aspect.getAspect("lucrum"),		3)	.add(Aspect.getAspect("motus"),			6)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(lootInterceptor),			(new AspectList())	.add(Aspect.getAspect("praecantatio"),	5)	.add(Aspect.getAspect("metallum"),		4)	.add(Aspect.getAspect("auram"),			2)	.add(Aspect.getAspect("potentia"),		2)	.add(Aspect.getAspect("fames"),			16)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(rodGrass),				(new AspectList())	.add(Aspect.getAspect("herba"),			7)	.add(Aspect.getAspect("terra"),			3)	.add(Aspect.getAspect("sano"),			2)	.add(Aspect.getAspect("praecantatio"),	2)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(cloudPendant),			(new AspectList())	.add(Aspect.getAspect("tempestas"),		2)	.add(Aspect.getAspect("volatus"),		4)	.add(Aspect.getAspect("motus"),			4)	);
+		ThaumcraftApi.registerObjectTag(new ItemStack(cloudPendantSuper),		(new AspectList())	.add(Aspect.getAspect("tempestas"),		2)	.add(Aspect.getAspect("volatus"),		6)	.add(Aspect.getAspect("motus"),			8)	);
 		
 		// For transmutation recipe
+		ThaumcraftApi.registerObjectTag(new ItemStack(manaResource, 1, 7),		(new AspectList())	.add(Aspect.getAspect("metallum"),		3)	.add(Aspect.getAspect("praecantatio"), 2)	);
 		ThaumcraftApi.registerObjectTag(new ItemStack(manaResource, 1, 19),		(new AspectList())	.add(Aspect.getAspect("metallum"),		1)	.add(Aspect.getAspect("praecantatio"), 1)	);
 	}
 }

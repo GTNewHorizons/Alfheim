@@ -1,0 +1,70 @@
+##########################################################___ITEMS___###########################################################
+
+# item..name=
+item.ItemNugget.22.name=Native Elementium Cluster
+item.AlfheimCap.0.name=Manasteel Cap
+item.AlfheimCap.1.name=Terrasteel Cap
+item.AlfheimCap.2.name=Elementium Cap
+item.AlfheimCap.3.name=Elvorium Cap
+item.AlfheimCap.4.name=Mauftrium Cap
+item.AlfheimRod.0.name=Livingwood Rod
+item.AlfheimRod.1.name=Dreamwood Rod
+item.AlfheimRod.2.name=Spiritual Staff Core
+
+item.Wand.alfheimManasteel.cap=Manasteel Banded
+item.Wand.alfheimTerrasteel.cap=Terrasteel Bossed
+item.Wand.alfheimElementium.cap=Elementium Bandned
+item.Wand.alfheimElvorium.cap=Elvorium Bossed
+item.Wand.alfheimMauftrium.cap=Mauftrium Embraced
+item.Wand.alfheimLivingwood.rod=Livingwood
+item.Wand.alfheimDreamwood.rod=Dreamwood
+item.Wand.alfheimSpiritual.rod=Spiritual
+
+##########################################################___OTHER___###########################################################
+
+itemGroup.NTC=Natural Thaumaturgy
+
+######################################################___THAUMONOMICON___#######################################################
+
+#tc.research_name.=
+#tc.research_text.=
+#tc.research_page..=
+tc.research_name.CAP_alfheimManasteel=Manasteel Wand Caps
+tc.research_text.CAP_alfheimManasteel=[ALF] A little bit of nature
+tc.research_page.CAP_alfheimManasteel.1=As known, Manasteel is iron infused with mana, which increases its magical sensitivity. Making caps of it is slightly better choice comparing to gold. But who knows if there is even better one.
+
+tc.research_name.CAP_alfheimTerrasteel=Terrasteel Wand Caps
+tc.research_text.CAP_alfheimTerrasteel=[ALF] Power of Midgard
+tc.research_page.CAP_alfheimTerrasteel.1=Terrasteel - magical alloy, combined of various Midgard mana-infused resources. Amount of mana, used to create it highly rises it's channeling efficiency, overtaking even Thaumium. 
+
+tc.research_name.CAP_alfheimElementium=Elementium Wand Caps
+tc.research_text.CAP_alfheimElementium=[ALF] Capping things off with kawaii
+tc.research_page.CAP_alfheimElementium.1=Infused with the magical flows of Alfheim, Elementium is as much efficient way to channel vis as Manasteel (or even better). And it has fancy color!
+
+tc.research_name.CAP_alfheimElvorium=Elvorium Wand Caps
+tc.research_text.CAP_alfheimElvorium=[ALF] Power of Alfheim
+tc.research_page.CAP_alfheimElvorium.1=Elven magical alloy, as strong as terrasteel, it can be used to create caps as good as their Midgard counterpart.  
+
+tc.research_name.CAP_alfheimMauftrium=Mauftrium Wand Caps
+tc.research_text.CAP_alfheimMauftrium=[ALF] Conductivity of Gods
+tc.research_page.CAP_alfheimMauftrium.1=How you didn't noticed this earlier? Mauftrium, the alloy of the Gods, it is perfect material for making caps from, even better than void metal. So efficient, so shiny... Just don't blow things up.
+
+tc.research_name.ROD_alfheimLivingwood=Livingwood Wand Core
+tc.research_text.ROD_alfheimLivingwood=[ALF] Live magical storage
+tc.research_page.ROD_alfheimLivingwood.1=Livingwood is a good decision for those who haven't found Greatwood, but need a little bit more amount of vis stored at once - forty percent more will be enough.
+
+tc.research_name.ROD_alfheimDreamwood=Dreamwood Wand Core
+tc.research_text.ROD_alfheimDreamwood=[ALF] Rod of the dream
+tc.research_page.ROD_alfheimDreamwood.1=Dreamwood by itself is unstable for creating rods from. At first, you need to infuse it with some mana, to strengthen its structure.<BR><BR><BR>Now using Infused Dreamwood Twigs and some vis you can make a rod, capable to store 65 vis of each type. 
+
+tc.research_name.ROD_alfheimSpiritual_staff=Spiritual Staff Core
+tc.research_text.ROD_alfheimSpiritual_staff=[ALF] Rainbow regenerator
+tc.research_page.ROD_alfheimSpiritual_staff.1=After slaying the Guardian of Gaia his spirit was condensed into tangible form. Experimenting with those spirits gived unexpected results - using them to create a wand core will lead this core to collect all nearby mana and somehow transform it into vis.<BR>Such a core can store up to 85 vis of every type. You think this amount might be even higher, but you have no ideas how to increase it.
+
+tc.research_name.alfheimTransElementium=Elementium Transmutation
+tc.research_text.alfheimTransElementium=Transmutation of metals into elementium
+tc.research_page.alfheimTransElementium.1=You have discovered a way to multiply elementium by steeping elementium nuggets in §5metallum§0 harvested from other metals.
+
+tc.research_name.alfheimPureElementium=Elementium Purification
+tc.research_text.alfheimPureElementium=Purification of elementium into native clusters
+tc.research_page.alfheimPureElementium.1=Native clusters are rare concentrations of metals in its purest form. You have discovered a way to purify and concentrate normal elementium ore into a native elementium cluster.<BR>When smelted these clusters produces twice the normal amount of elementium ingots.

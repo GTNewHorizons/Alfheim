@@ -1,0 +1,70 @@
+#########################################################___ПРЕДМЕТЫ___#########################################################
+
+# item..name=
+item.ItemNugget.22.name=Природный кластер элементия 
+item.AlfheimCap.0.name=Наконечник из манастали
+item.AlfheimCap.1.name=Наконечник из терастали
+item.AlfheimCap.2.name=Наконечник из элементия
+item.AlfheimCap.3.name=Наконечник из эльвория
+item.AlfheimCap.4.name=Наконечник из мауфтрия
+item.AlfheimRod.0.name=Стержень из жизнедрева
+item.AlfheimRod.1.name=Стержень из древесины мечтаний
+item.AlfheimRod.2.name=Ядро посоха Гайи
+
+item.Wand.alfheimManasteel.cap=Окаймлённый манасталью
+item.Wand.alfheimTerrasteel.cap=Покрытый терасталью
+item.Wand.alfheimElementium.cap=Окаймлённый элементием
+item.Wand.alfheimElvorium.cap=Покрытый эльворием
+item.Wand.alfheimMauftrium.cap=Охваченный мауфтрием
+item.Wand.alfheimLivingwood.rod=живой
+item.Wand.alfheimDreamwood.rod=мечтательный
+item.Wand.alfheimSpiritual.rod=духовный
+
+##########################################################___OTHER___###########################################################
+
+itemGroup.NTC=Natural Thaumaturgy
+
+######################################################___THAUMONOMICON___#######################################################
+
+#tc.research_name.=
+#tc.research_text.=
+#tc.research_page..=
+tc.research_name.CAP_alfheimManasteel=Наконечники из манастали
+tc.research_text.CAP_alfheimManasteel=[ALF] Немного природы
+tc.research_page.CAP_alfheimManasteel.1=Как известно, манасталь - это  железо, обогащенное с помощью маны, что увеличивает его магическую чувствительность. Изготовление наконечников из него - немного лучший выбор по сравнению с золотом. Но кто знает, есть ли ещё лучший.
+
+tc.research_name.CAP_alfheimTerrasteel=Наконечники из терастали
+tc.research_text.CAP_alfheimTerrasteel=[ALF] Сила Мидгарда
+tc.research_page.CAP_alfheimTerrasteel.1=Террасталь - волшебный сплав, объединенный из различных ресурсов Мидгарда, наполненных маной. Количество маны, использованное для его создания, значительно повышает эффективность его использования, обгоняя даже таум-металл. 
+
+tc.research_name.CAP_alfheimElementium=Наконечники из элементия
+tc.research_text.CAP_alfheimElementium=[ALF] Милая обивка
+tc.research_page.CAP_alfheimElementium.1=Наполненный магическими потоками Альфхейма, элементий - такой же эффективный способ выкачки вис, как и манасталь (или даже лучше). И у него отличный цвет!
+
+tc.research_name.CAP_alfheimElvorium=Наконечники из эльвория
+tc.research_text.CAP_alfheimElvorium=[ALF] Сила Альвхейма
+tc.research_page.CAP_alfheimElvorium.1=Эльфийский волшебный сплав, такой же прочный, как террасталь, может использоваться для создания наконечников, столь же хороших, как и их аналог из Мидгарда.  
+
+tc.research_name.CAP_alfheimMauftrium=Наконечники из мауфтрия
+tc.research_text.CAP_alfheimMauftrium=[ALF] Проводимость богов
+tc.research_page.CAP_alfheimMauftrium.1=Как вы не замечали этого раньше? Мауфтрий, сплав богов, это идеальный материал для изготовления наконечников, даже лучше, чем пустотелый металл. Такой эффективный, такой блестящий... Только не взрывает вещи.
+
+tc.research_name.ROD_alfheimLivingwood=Стержень из жизнедрева
+tc.research_text.ROD_alfheimLivingwood=[ALF] Живое магическое хранилище
+tc.research_page.ROD_alfheimLivingwood.1=Ливингвуд - хорошее решение для тех, кто не нашел великодрево, но нуждается в немного большем количестве вис, хранимого одновременно - ещё сорока процентов будет достаточно.
+
+tc.research_name.ROD_alfheimDreamwood=Стержень из древесины мечтаний
+tc.research_text.ROD_alfheimDreamwood=[ALF] Ядро мечтаний
+tc.research_page.ROD_alfheimDreamwood.1=Древесина мечтаний сама по себе нестабильна для создания стержней. Сперва вам нужно добавить в неё немного маны, чтобы усилить её структуру.<BR><BR><BR>Теперь, используя наполненные ветки древа мечтаний и немного виса, вы можете сделать стержень, способный хранить 65 вис каждого типа. 
+
+tc.research_name.ROD_alfheimSpiritual_staff=Ядро посоха Гайи
+tc.research_text.ROD_alfheimSpiritual_staff=[ALF] Радужный регенератор
+tc.research_page.ROD_alfheimSpiritual_staff.1=После убийства Хранителя Гайи его дух был сконцентрирован в материальной форме. Эксперименты с этим духом дали неожиданные результаты - использование их для создания ядра палочки приведет к тому, что это ядро будет собирать всю близлежащую ману и каким-то образом превращать её в вис.<BR>Такое ядро может хранить до 85 вис любого типа. Вам кажется, что этот объём может быть даже выше, но у вас нет идей, как его увеличить.
+
+tc.research_name.alfheimTransElementium=Трансмутация элементия
+tc.research_text.alfheimTransElementium=Превращение металлов в элементий
+tc.research_page.alfheimTransElementium.1=Вы обнаружили способ получать бесплатный элементий путем смешивания в тигеле аспекта §5Metallum§0, собранного с других металлических предметов и амородков элементия
+
+tc.research_name.alfheimPureElementium=Очистка элементия
+tc.research_text.alfheimPureElementium=Очистка элементия в кластеры
+tc.research_page.alfheimPureElementium.1=Кластеры - редчайшие сконцентрированные чистые металлы. Вы открыли способ очистки руды элементия и превращение ее в кластер.<BR>При переплавке кластеры дают вдвое больше слитков элементия.
