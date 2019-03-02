@@ -609,6 +609,8 @@ public class AlfheimRecipes {
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), new ItemStack(nether_star));
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0);
 		
+		BotaniaAPI.registerManaInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), new ItemStack(manaResource, 1, 13), 10000);
+		
 		addRecipe(new HelmRevealingAlfheimRecipe());
 		addRecipe(new LootInterceptorRecipe());
 		addRecipe(new LootInterceptorClearRecipe());
