@@ -47,9 +47,10 @@ public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect
 	}
 	
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < subItems.length; ++i)
-			if (i == ElvenResourcesMetas.InfusedDreamwoodTwig && Botania.thaumcraftLoaded)
+		for (int i = 0; i < subItems.length; ++i) {
+			if (i == ElvenResourcesMetas.InfusedDreamwoodTwig && !Botania.thaumcraftLoaded) continue;
 				list.add(new ItemStack(item, 1, i));
+		}
 	}
 	/*
 	@Override
