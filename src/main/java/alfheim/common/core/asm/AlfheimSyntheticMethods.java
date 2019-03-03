@@ -7,11 +7,11 @@ import net.minecraft.tileentity.TileEntity;
 import vazkii.botania.common.block.tile.mana.TilePool;
 
 public class AlfheimSyntheticMethods {
-
+	
 	public static void onFinishedPotionEffect(EntityLivingBase e, PotionEffect pe) {
 		// e.public_onFinishedPotionEffect(pe);
 	}
-
+	
 	public static void onChangedPotionEffect(EntityLivingBase e, PotionEffect pe, boolean isNew) {
 		// e.public_onChangedPotionEffect(pe, isNew);
 	}
@@ -51,7 +51,6 @@ public class AlfheimSyntheticMethods {
 		// return e.cantUpdateE;
 	}
 	
-	/** Actually can<b>'T</b> Update */
 	public static boolean cantUpdate(TileEntity e) {
 		return e.canUpdate();
 		// return e.cantUpdateT;

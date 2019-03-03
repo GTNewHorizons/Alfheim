@@ -8,7 +8,7 @@ import org.objectweb.asm.*;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
-
+	
 	public static boolean doLog = System.getProperty("asjlib.asm.errorlog", "off").equals("on");
 	
 	@Override
@@ -81,10 +81,10 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 		}
 		
 		@Override
-	    public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
-	        if (name.equals("canAccept") || name.equals("canSpare")) access = Opcodes.ACC_PUBLIC;
-	        return super.visitField(access, name, desc, signature, value);
-	    }
+		public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
+			if (name.equals("canAccept") || name.equals("canSpare")) access = Opcodes.ACC_PUBLIC;
+			return super.visitField(access, name, desc, signature, value);
+		}
 	}
 	
 	static class AlfheimSyntheticMethods$ClassVisitor extends ClassVisitor {
@@ -169,7 +169,7 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 				if (name.equals("alchemy")) name = "canAccept"; else
 				if (name.equals("conjuration")) name = "canSpare";  else
-				if (name.equals("isDead")) name = "cantUpdateE";
+				if (name.equals("isDead") || name.equals("K")) name = "cantUpdateE";
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 			
@@ -181,7 +181,7 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 					super.visitMethodInsn(opcode, owner, name, desc, itf);
 			}
 		}
-
+		
 		static class AlfheimSyntheticMethods$SyntheticSetters$MethodVisitor extends MethodVisitor {
 			
 			public AlfheimSyntheticMethods$SyntheticSetters$MethodVisitor(MethodVisitor mv) {
@@ -190,8 +190,8 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			
 			@Override
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
-				if (name.equals("isDead")) name = "cantUpdateE"; else
-				if (name.equals("blockMetadata")) { name = "cantUpdateT"; desc = "Z"; }
+				if (name.equals("isDead") || name.equals("K")) name = "cantUpdateE"; else
+				if (name.equals("blockMetadata") || name.equals("g")) { name = "cantUpdateT"; desc = "Z"; }
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 		}
