@@ -169,7 +169,7 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
 				if (name.equals("alchemy")) name = "canAccept"; else
 				if (name.equals("conjuration")) name = "canSpare";  else
-				if (name.equals("isDead") || name.equals("K")) name = "cantUpdateE";
+				if (name.equals("isDead") || name.equals("field_70128_L") || name.equals("K")) name = "cantUpdateE";
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 			
@@ -190,8 +190,8 @@ public class AlfheimSyntheticMethodsInjector implements IClassTransformer {
 			
 			@Override
 			public void visitFieldInsn(int opcode, String owner, String name, String desc) {
-				if (name.equals("isDead") || name.equals("K")) name = "cantUpdateE"; else
-				if (name.equals("blockMetadata") || name.equals("g")) { name = "cantUpdateT"; desc = "Z"; }
+				if (name.equals("isDead") || name.equals("field_70128_L") || name.equals("K")) name = "cantUpdateE"; else
+				if (name.equals("blockMetadata") || name.equals("field_145847_g")  || name.equals("g")) { name = "cantUpdateT"; desc = "Z"; }
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}
 		}

@@ -46,6 +46,8 @@ public class WorldGenAlfheim implements IWorldGenerator {
 			}, "Alf Spawn Gen").start();
 		}
 		
+		if (AlfheimConfig.anomaliesDispersion <= 0) return;
+		
 		if (rand.nextInt(AlfheimConfig.anomaliesDispersion) == 0) {
 			int chance = rand.nextInt(32) + 1;
 			if (chance == 32) 

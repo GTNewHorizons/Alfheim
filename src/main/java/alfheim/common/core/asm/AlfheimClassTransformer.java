@@ -669,10 +669,10 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			@Override
 			public void visitIntInsn(int opcode, int operand) {
 				if (opcode == BIPUSH) {
-					if (operand == 22) {
+					if (operand == 22) {		// 4 injections for #SUBTYPES
 						operand = 24;
-					} else if (operand == 21) {
-						if (left--> 0) {
+					} else if (operand == 21) { // 2 injections for #SUBTYPES-1
+						if (left--> 0) {		// 4 injections total
 							operand = 23;
 						}
 					}
