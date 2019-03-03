@@ -1,10 +1,20 @@
 Innovations:
- New worldgen feature - Shrines of Power, containing
- New blocks - Stones of Power, giving useful buffs
+ New blocks - Stones of Power, giving useful buffs (WIP)
  WAILA suuport for Mana Accelerator
+ removed VM arguments
+ moved configs
+ added ASM data (see in /configs/ folder)
 
 Compat:
- Thaumcraft caps from Botania and Alfheim metals
+ Thaumcraft:
+  ores in worldgen
+  native elementium cluster
+  caps from Botania and Alfheim metals
+  rods from living- and dreamwood
+  staff core, regenerates vis using mana
  
 Fixes:
- -- 
+ #65 - (shaders crash)
+ Decelerator anomaly insta-kills everything
+ Cloaks description
+ Elven ore fortune meta
