@@ -18,3 +18,4 @@ Fixes:
  Decelerator anomaly insta-kills everything
  Cloaks description
  Elven ore fortune meta
+ Silverwood worldgen
