@@ -10,16 +10,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 
 public class SpellSacrifice extends SpellBase {
-
+	
 	public SpellSacrifice() {
 		super("sacrifice", EnumRace.IMP, 256000, 75000, 100, true);
 	}
-
+	
 	@Override
 	public SpellCastResult performCast(EntityLivingBase caster) {
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {
-			caster.addPotionEffect(new PotionEffect(AlfheimRegistry.sacrifice.id, 32, 0, false));
+			PotionEffect pe = new PotionEffect(AlfheimRegistry.sacrifice.id, 32, 0, false);
+			pe.getCurativeItems().clear();
+			caster.addPotionEffect(pe);
 			AlfheimCore.network.sendToAll(new MessageEffect(caster.getEntityId(), AlfheimRegistry.sacrifice.id, 32, 0));
 		}
 		return result;
