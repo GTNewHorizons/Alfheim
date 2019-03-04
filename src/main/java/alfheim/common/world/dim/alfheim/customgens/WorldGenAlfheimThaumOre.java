@@ -15,6 +15,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
+import vazkii.botania.common.block.ModBlocks;
 
 public class WorldGenAlfheimThaumOre implements IWorldGenerator {
 	
@@ -35,7 +36,7 @@ public class WorldGenAlfheimThaumOre implements IWorldGenerator {
 				randPosZ = random.nextInt(world.getHeight() / 5);
 				randPosY = chunkZ * 16 + random.nextInt(16);
 				md = world.getBlock(randPosX, randPosZ, randPosY);
-				if (md != null && md.isReplaceableOreGen(world, randPosX, randPosZ, randPosY, Blocks.glass)) {
+				if (md != null && md.isReplaceableOreGen(world, randPosX, randPosZ, randPosY, ModBlocks.livingrock)) {
 					world.setBlock(randPosX, randPosZ, randPosY, ThaumcraftAlfheimModule.alfheimThaumOre, 0, 0);
 				}
 			}
@@ -47,7 +48,7 @@ public class WorldGenAlfheimThaumOre implements IWorldGenerator {
 				randPosZ = chunkZ * 16 + random.nextInt(16);
 				randPosY = world.getHeightValue(randPosX, randPosZ) - random.nextInt(25);
 				md = world.getBlock(randPosX, randPosY, randPosZ);
-				if (md != null && md.isReplaceableOreGen(world, randPosX, randPosY, randPosZ, Blocks.glass)) {
+				if (md != null && md.isReplaceableOreGen(world, randPosX, randPosY, randPosZ, ModBlocks.livingrock)) {
 					world.setBlock(randPosX, randPosY, randPosZ, ThaumcraftAlfheimModule.alfheimThaumOre, 7, 2);
 				}
 			}
@@ -80,7 +81,7 @@ public class WorldGenAlfheimThaumOre implements IWorldGenerator {
 				}
 				
 				try {
-					(new WorldGenMinable(ThaumcraftAlfheimModule.alfheimThaumOre, meta, 6, Blocks.glass)).generate(world, random, randPosX, randPosY, randPosZ);
+					(new WorldGenMinable(ThaumcraftAlfheimModule.alfheimThaumOre, meta, 6, ModBlocks.livingrock)).generate(world, random, randPosX, randPosY, randPosZ);
 				} catch (Exception e) {
 					ASJUtilities.error("Something went wrong while generating Thaumcraft ores in Alfheim:");
 					e.printStackTrace();
