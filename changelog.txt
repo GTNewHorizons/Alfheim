@@ -1,9 +1,9 @@
 Innovations:
  New blocks - Stones of Power, giving useful buffs (WIP)
- WAILA suuport for Mana Accelerator
- removed VM arguments
+ WAILA support for Mana Accelerator
+ removed Thermos and HP hooks VM arguments
  moved configs
- added ASM data (see in /configs/ folder)
+ added ASM data (see in /configs/Alfheim/ folder)
 
 Compat:
  Thaumcraft:
@@ -11,11 +11,12 @@ Compat:
   native elementium cluster
   caps from Botania and Alfheim metals
   rods from living- and dreamwood
-  staff core, regenerates vis using mana
- 
+  staff core, regenerates vis with mana
+
 Fixes:
  #65 - (shaders crash)
  Decelerator anomaly insta-kills everything
  Cloaks description
  Elven ore fortune meta
  Silverwood worldgen
+ ...and more

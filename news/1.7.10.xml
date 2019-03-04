@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-16</val>
+		<val>BETA-17</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -42,5 +42,8 @@
 	</version>
 	<version id="BETA-15">
 		<val>Some diversity and interesting things in new Alfheim :D</val>
+	</version>
+	<version id="BETA-16">
+		<val>Thaumcraft compatibility (caps, rods, ores and more)!</val>
 	</version>
 </news>
