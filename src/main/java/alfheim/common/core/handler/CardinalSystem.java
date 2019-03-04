@@ -237,8 +237,10 @@ public class CardinalSystem {
 				}
 			}
 			
+			@SubscribeEvent
 			public void onSpellCasted(SpellCastEvent.Post e) {
-				if (ModInfo.DEV || (e.caster instanceof EntityPlayer && ((EntityPlayer) e.caster).capabilities.isCreativeMode)) e.cd = 5;
+				if (ModInfo.DEV || (e.caster instanceof EntityPlayer && ((EntityPlayer) e.caster).capabilities.isCreativeMode))
+					e.cd = 5;
 			}
 		}
 		
