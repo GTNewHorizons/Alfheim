@@ -374,7 +374,11 @@ public class AlfheimHookHandler {
 		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return;
 		glPushMatrix();
 		boolean f = Minecraft.getMinecraft().currentScreen == null;
-		boolean f1 = !f && Minecraft.getMinecraft().currentScreen instanceof GuiRecipe;
+		boolean f1 = !f;
+		
+		if (AlfheimCore.NEILoaded)
+			f1 &= Minecraft.getMinecraft().currentScreen instanceof GuiRecipe;
+		
 		String text = mana + "/" + maxMana;
 		int X = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2;
 		int Y = f1 ? y - 9 : y - 19;

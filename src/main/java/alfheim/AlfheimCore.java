@@ -50,16 +50,18 @@ public class AlfheimCore {
 	
 	public static String save = "";
 	
-	public static boolean enableElvenStory = true;
-	public static boolean enableMMO = true;
-	public static boolean MineTweakerLoaded = false;
-	public static boolean TravellersGearLoaded = false;
-	public static boolean WAILALoaded = false;
+	public static boolean enableElvenStory		= true;
+	public static boolean enableMMO				= true;
+	public static boolean MineTweakerLoaded		= false;
+	public static boolean NEILoaded				= false;
+	public static boolean TravellersGearLoaded	= false;
+	public static boolean WAILALoaded			= false;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		AlfheimConfig.readModes();
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3");
+		NEILoaded = Loader.isModLoaded("NotEnoughItems");
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear");
 		WAILALoaded = Loader.isModLoaded("Waila");
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
