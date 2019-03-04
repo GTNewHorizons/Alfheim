@@ -226,7 +226,7 @@ public class CardinalSystem {
 					return;
 				}
 				
-				if (!e.caster.isPotionActive(AlfheimRegistry.leftFlame)) {
+				if (e.caster.isPotionActive(AlfheimRegistry.leftFlame)) {
 					e.setCanceled(true);
 					return;
 				}
