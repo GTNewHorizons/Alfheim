@@ -60,6 +60,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent;
+import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.tile.TileAlfPortal;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.tool.ToolCommons;
@@ -120,7 +121,7 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimCore.enableElvenStory && !Botania.gardenOfGlassLoaded) {
 			ItemStack equipped = event.entityPlayer.getCurrentEquippedItem();
 			if (equipped != null && equipped.getItem() == Items.bowl && event.action == Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
 				MovingObjectPosition movingobjectposition = ToolCommons.raytraceFromEntity(event.world, event.entityPlayer, true, 4.5F);
