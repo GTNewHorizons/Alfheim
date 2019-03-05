@@ -33,7 +33,7 @@ public class AlfheimASMData {
 			int i = 0;
 			
 			for (String flag : flags) 
-				DATA[i] = Integer.parseInt(flag);
+				DATA[i++] = Integer.parseInt(flag);
 			
 			br.close();
 			fr.close();
