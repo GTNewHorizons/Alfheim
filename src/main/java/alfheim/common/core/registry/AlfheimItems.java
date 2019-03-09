@@ -73,6 +73,7 @@ public class AlfheimItems {
 	public static Item paperBreak;
 	public static Item peacePipe;
 	public static Item pixieAttractor;
+	public static Item storyToken;
 	public static Item realitySword;
 	public static Item rodFire;
 	public static Item rodGrass;
@@ -131,6 +132,7 @@ public class AlfheimItems {
 		rodFire = new ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame);
 		rodGrass = new ItemRodGrass();
 		rodIce = new ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce);
+		storyToken = new ItemStoryToken();
 		paperBreak = new ItemPaperBreak();
 		peacePipe = new ItemPeacePipe();
 		thinkingHand = new ItemThinkingHand();
@@ -158,6 +160,7 @@ public class AlfheimItems {
 		register(rodFire);
 		register(rodIce);
 		register(rodGrass);
+		register(storyToken);
 		register(peacePipe);
 		register(paperBreak);
 		register(elvenResource);

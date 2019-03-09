@@ -129,12 +129,19 @@ item.RealitySword.desc4=Ослепляет цель.
 item.RealitySword.desc5=Потребляет §n10§r§7 единиц §bманы§7 в тик.
 item.RealitySword.descZ=У тебя есть сила!
 item.RealitySword.DIE=%s получил меч создателя и был наказан Богами!
+item.StoryToken.name=Бантерская монета
 item.botania:TankMask.name=Загадочная маска
 item.TankMask.active=Активна
 item.TankMask.inactive=Неактивна
 item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
 item.botania:ThinkingHand.name=Думающая рука
 item.Transferer.name=Деструктуризатор
+
+item.StoryToken.story.1=Давным-давно в далёкой-далёкой галактике ...
+item.StoryToken.story.2=В тридевятом царстве, в тридевятом государстве, жили-были...
+item.StoryToken.story.3=Не каждый сейчас уже может вспомнить историю про...
+item.StoryToken.story.4=Эта легенда передавалась через поколения из уст в уста...
+item.StoryToken.story.5=Когда я был помоложе, у нас была одна интересная байка...
 
 ########################################################___ОСТАЛЬНОЕ___#########################################################
 

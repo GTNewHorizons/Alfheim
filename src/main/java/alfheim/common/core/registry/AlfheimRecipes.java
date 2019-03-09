@@ -102,6 +102,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeTradePortal;
 	
 	public static RecipeElvenTrade recipeInterdimensional;
+	public static RecipeElvenTrade recipeStoryToken;
 	
 	public static RecipePureDaisy recipeDreamwood;
 	
@@ -606,10 +607,11 @@ public class AlfheimRecipes {
 		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(brown_mushroom)));
 		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(new ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, new ItemStack(livingcobble), new ItemStack(obsidian), new ItemStack(red_mushroom)));
 		
+		BotaniaAPI.registerManaInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), new ItemStack(manaResource, 1, 13), 10000);
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), new ItemStack(nether_star));
+		recipeStoryToken = BotaniaAPI.registerElvenTradeRecipe(new ItemStack(storyToken, 1, 1), new ItemStack(storyToken, 1, 0));
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0);
 		
-		BotaniaAPI.registerManaInfusionRecipe(new ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), new ItemStack(manaResource, 1, 13), 10000);
 		
 		addRecipe(new HelmRevealingAlfheimRecipe());
 		addRecipe(new LootInterceptorRecipe());
