@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-17</val>
+		<val>BETA-18</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -45,5 +45,8 @@
 	</version>
 	<version id="BETA-16">
 		<val>Thaumcraft compatibility (caps, rods, ores and more)!</val>
+	</version>
+	<version id="BETA-17">
+		<val>Fixed ASMData</val>
 	</version>
 </news>
