@@ -46,7 +46,6 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	minimalGraphics			= false;
 	public static boolean	numericalMana			= true;
 	public static boolean	slowDownClients			= false;
-	public static int		storyLines				= 5;
 	public static int		tradePortalRate			= 1200;
 	
 	// POTIONS
@@ -123,7 +122,6 @@ public class AlfheimConfig extends Configuration {
 		minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",			minimalGraphics,		false,	"Set this to true to disable .obj models and shaders");
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",			numericalMana,			false,	"Set this to false to disable numerical mana representation");
 		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",			slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly");
-		storyLines				= loadProp(CATEGORY_GENERAL, 	"storyLines",				storyLines,				true,	"Number of lines for story token");
 		tradePortalRate			= loadProp(CATEGORY_GENERAL, 	"tradePortalRate",			tradePortalRate,		false,	"Portal updates every {N} ticks");
 		
 		potionIDBerserk			= loadProp(CATEGORY_POTIONS, 	"potionIDBerserk",			potionIDBerserk,		true,	"Potion id for Berserk");
