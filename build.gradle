@@ -17,7 +17,7 @@ buildscript {
 	}
 }
 
-version = "BETA-18"
+version = "BETA-pre19.1"
 group= "main"
 archivesBaseName = "Alfheim"
 
