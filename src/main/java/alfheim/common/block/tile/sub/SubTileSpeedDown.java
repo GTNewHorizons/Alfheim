@@ -54,8 +54,8 @@ public class SubTileSpeedDown extends SubTileEntity {
 	
 	@Override
 	public void performEffect(Object target) {
-		if (target instanceof Entity) AlfheimSyntheticMethods.denyUpdate((Entity) target);
-		if (target instanceof TileEntity) AlfheimSyntheticMethods.denyUpdate((TileEntity) target);
+		if (target instanceof Entity) ((Entity) target).canEntityUpdate = false;
+		if (target instanceof TileEntity) ((TileEntity) target).canTileUpdate = false;
 	}
 	
 	@Override

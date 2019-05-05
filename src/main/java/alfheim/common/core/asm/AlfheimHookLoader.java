@@ -32,6 +32,6 @@ public class AlfheimHookLoader extends HookLoader {
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender");
 		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter");
 		
-		ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler");
+		if (ModInfo.OBF) ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler");
 	}
 }

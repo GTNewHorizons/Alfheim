@@ -406,17 +406,17 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityUpdate(EntityUpdateEvent e) {
 		if (e.entity == null || !e.entity.isEntityAlive()) return;
-		if ((ASJUtilities.isServer() || AlfheimConfig.slowDownClients) && AlfheimSyntheticMethods.cantUpdate(e.entity)) {
+		if ((ASJUtilities.isServer() || AlfheimConfig.slowDownClients) && !e.entity.canEntityUpdate) {
 			e.setCanceled(true);
-			AlfheimSyntheticMethods.allowUpdate(e.entity);
+			e.entity.canEntityUpdate = true;
 		}
 	}
 	
 	@SubscribeEvent
 	public void onTileUpdate(TileUpdateEvent e) {
-		if (AlfheimSyntheticMethods.cantUpdate(e.tile)) {
+		if (!e.tile.canTileUpdate) {
 			e.setCanceled(true);
-			AlfheimSyntheticMethods.allowUpdate(e.tile);
+			e.tile.canTileUpdate = true;
 		}
 	}
 }

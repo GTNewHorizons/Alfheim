@@ -18,7 +18,7 @@ import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.lib.LibMisc;
 
 public class TileItemHolder extends ItemContainingTileEntity {
-
+	
 	// for some reason it updates as many times per tick as many times you right-click on it
 	private long lastTick = 0;
 	
@@ -47,7 +47,7 @@ public class TileItemHolder extends ItemContainingTileEntity {
 			
 			if(pool.isOutputtingPower() && mana.canReceiveManaFromPool(stack, pool) || !pool.isOutputtingPower() && mana.canExportManaToPool(stack, pool)) {
 				boolean didSomething = false;
-
+				
 				int bellowCount = 0;
 				if(pool.isOutputtingPower())
 					for(ForgeDirection dir : LibMisc.CARDINAL_DIRECTIONS) {
@@ -58,27 +58,27 @@ public class TileItemHolder extends ItemContainingTileEntity {
 				int transfRate = 1000 * (bellowCount + 2);
 				
 				if(pool.isOutputtingPower()) {
-					if(AlfheimSyntheticMethods.canSpare(pool)) {
+					if(pool.canSpare) {
 						if(pool.getCurrentMana() > 0 && mana.getMana(stack) < mana.getMaxMana(stack))
 							didSomething = true;
-
+						
 						int manaVal = Math.min(transfRate, Math.min(pool.getCurrentMana(), mana.getMaxMana(stack) - mana.getMana(stack)));
 						if(!worldObj.isRemote)
 							mana.addMana(stack, manaVal);
 						pool.recieveMana(-manaVal);
 					}
 				} else {
-					if(AlfheimSyntheticMethods.canAccept(pool)) {
+					if(pool.canAccept) {
 						if(mana.getMana(stack) > 0 && !pool.isFull())
 							didSomething = true;
-
+						
 						int manaVal = Math.min(transfRate, Math.min(pool.manaCap - pool.getCurrentMana(), mana.getMana(stack)));
 						if(!worldObj.isRemote)
 							mana.addMana(stack, -manaVal);
 						pool.recieveMana(manaVal);
 					}
 				}
-
+				
 				if(didSomething) {
 					if(worldObj.isRemote && ConfigHandler.chargingAnimationEnabled && worldObj.rand.nextInt(100) == 0) {
 						Vector3 itemVec = Vector3.fromTileEntity(pool).add(0.5, 0.5 + Math.random() * 0.3, 0.5);
