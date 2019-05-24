@@ -48,8 +48,8 @@ public class CommandAlfheim extends CommandBase {
 		if(args.length == 1) {
 			boolean esmOld = AlfheimCore.enableElvenStory;
 			boolean mmoOld = AlfheimCore.enableMMO;
-			if (args[0].equals("esm")) toggleESM(AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory); else
-			if (args[0].equals("mmo")) toggleMMO(AlfheimCore.enableMMO = !AlfheimCore.enableMMO); else
+			if (args[0].equalsIgnoreCase("ESM")) toggleESM(AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory); else
+			if (args[0].equalsIgnoreCase("MMO")) toggleMMO(AlfheimCore.enableMMO = !AlfheimCore.enableMMO); else
 			throw new WrongUsageException("alfheim.commands.alfheim.wrong", new Object[0]);
 			AlfheimConfig.writeModes();
 		
@@ -60,13 +60,13 @@ public class CommandAlfheim extends CommandBase {
 										AlfheimCore.enableMMO		? EnumChatFormatting.GREEN : EnumChatFormatting.DARK_RED,
 										EnumChatFormatting.RESET	));
 			
-			AlfheimCore.network.sendToAll(new Message3d(m3d.TOGGLER, args[0].equals("esm") ? 1 : 0, ((esmOld ? 1 : 0) << 1) | (AlfheimCore.enableElvenStory ? 1 : 0), ((mmoOld ? 1 : 0) << 1) | (AlfheimCore.enableMMO ? 1 : 0)));
+			AlfheimCore.network.sendToAll(new Message3d(m3d.TOGGLER, args[0].equalsIgnoreCase("ESM") ? 1 : 0, ((esmOld ? 1 : 0) << 1) | (AlfheimCore.enableElvenStory ? 1 : 0), ((mmoOld ? 1 : 0) << 1) | (AlfheimCore.enableMMO ? 1 : 0)));
 		} else throw new WrongUsageException("alfheim.commands.alfheim.wrong", new Object[0]);
 	}
 	
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
-		return getListOfStringsMatchingLastWord(args, "esm", "mmo");
+		return getListOfStringsMatchingLastWord(args, "ESM", "MMO");
 	}
 	
 	public static void toggleESM(boolean on) {
