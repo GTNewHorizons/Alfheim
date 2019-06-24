@@ -46,9 +46,9 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	
 	public ItemRealitySword() {
 		super(AlfheimAPI.REALITY);
-		this.setCreativeTab(AlfheimCore.alfheimTab);
-		this.setNoRepair();
-		this.setUnlocalizedName("RealitySword");
+		setCreativeTab(AlfheimCore.alfheimTab);
+		setNoRepair();
+		setUnlocalizedName("RealitySword");
 	}
 	
 	@Override
@@ -57,10 +57,9 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < 6; i++)
-		textures[i] = reg.registerIcon(ModInfo.MODID + ":RealitySword" + i);
+		for (int i = 0; i < textures.length; i++)
+			textures[i] = reg.registerIcon(ModInfo.MODID + ":RealitySword" + i);
 	}
 	
 	@Override
@@ -68,7 +67,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	public IIcon getIconIndex(ItemStack stack) {
 		return textures[getInt(stack, TAG_ELEMENT, 0)];
 	}
-
+	
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 		return getIconIndex(stack);
@@ -105,7 +104,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			}
 		return "";
 	}
-
+	
 	// Might as well be called sugar given it's not secure at all :D
 	String salt(String str) {
 		str = str += "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot";
@@ -122,7 +121,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			char c = (char) (chrs[indA] ^ chrs[indB]);
 			chrs[indA] = c;
 		}
-
+		
 		return String.copyValueOf(chrs);
 	}
 	
@@ -165,7 +164,6 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 		return super.hitEntity(stack, target, attacker);
 	}
 	
-	
 	private void useAbility(int i, EntityLivingBase attacker, EntityLivingBase target) {
 		switch (i) {
 			case 1: {
@@ -197,16 +195,13 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 			return;
 		}
 		
-		if (1 > elem || elem > 4) list.add(StatCollector.translateToLocal("item.RealitySword.desc0"));
-		switch (elem) {
-			case 1: list.add(StatCollector.translateToLocal("item.RealitySword.desc1")); break;
-			case 2: list.add(StatCollector.translateToLocal("item.RealitySword.desc2")); break;
-			case 3: list.add(StatCollector.translateToLocal("item.RealitySword.desc3")); break;
-			case 4: list.add(StatCollector.translateToLocal("item.RealitySword.desc4")); break;
-		}
-		if (0 < elem && elem < 5) list.add(StatCollector.translateToLocal("item.RealitySword.desc5"));
+		if (0 < elem && elem < 5) {
+			list.add(StatCollector.translateToLocal("item.RealitySword.desc" + elem));
+			list.add(StatCollector.translateToLocal("item.RealitySword.desc5"));
+		} else
+			list.add(StatCollector.translateToLocal("item.RealitySword.desc0"));
 	}
-
+	
 	@Override
 	public boolean usesMana(ItemStack stack) {
 		return (0 < getInt(stack, TAG_ELEMENT, 0) && getInt(stack, TAG_ELEMENT, 0) < 5);
