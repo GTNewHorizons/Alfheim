@@ -15,10 +15,12 @@ import ru.vamig.worldengine.standardcustomgen.help.WE_BigTreeGen;
 import ru.vamig.worldengine.standardcustomgen.help.WE_TreeGen;
 
 public class WE_WorldTreeGen implements IWorldGenerator {
-	public List<WE_TreeGen   > ug = new ArrayList();
-	public List<WE_BigTreeGen> bg = new ArrayList();
+	public final List<WE_TreeGen   > ug = new ArrayList();
+	public final List<WE_BigTreeGen> bg = new ArrayList();
 	//-//
-	public List<Integer> cwt = new ArrayList(), tfc = new ArrayList(), tfb = new ArrayList();
+	public final List<Integer> cwt = new ArrayList();
+	public final List<Integer> tfc = new ArrayList();
+	public final List<Integer> tfb = new ArrayList();
 	
 	public void add(Block bWood, int mWood, Block bLeaves, int mLeaves, Block bSapling, Block bVine, Block bCocoa,
 		int v1, int v2, int v3,

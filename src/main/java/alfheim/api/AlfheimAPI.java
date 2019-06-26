@@ -1,28 +1,22 @@
 package alfheim.api;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import org.apache.logging.log4j.Level;
-
-import com.google.common.collect.Lists;
-
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.crafting.recipe.RecipeManaInfuser;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
+import com.google.common.collect.Lists;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
-import net.minecraft.entity.ai.attributes.BaseAttribute;
-import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
+import org.apache.logging.log4j.Level;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
+
+import java.util.*;
 
 public class AlfheimAPI {
 	
@@ -38,19 +32,19 @@ public class AlfheimAPI {
 	}.setShouldWatch(true);
 	
 	/** List of {@link RecipeElvenTrade} outputs banned for re'trading in Alfheim trade portal */
-	public static ArrayList<ItemStack> bannedRetrades = new ArrayList();
+	public static final ArrayList<ItemStack> bannedRetrades = new ArrayList<ItemStack>();
 	/** List of recipies for mana infuser */
-	public static ArrayList<RecipeManaInfuser> manaInfuserRecipes = new ArrayList<RecipeManaInfuser>();
+	public static final ArrayList<RecipeManaInfuser> manaInfuserRecipes = new ArrayList<RecipeManaInfuser>();
 	/** List of all pink items with their relative pinkness */
-	public static HashMap<ItemStack, Integer> pinkness = new HashMap<ItemStack, Integer>();
+	public static final HashMap<ItemStack, Integer> pinkness = new HashMap<ItemStack, Integer>();
 	/** List of all spells for all races */
-	public static HashSet<SpellBase> spells = new HashSet<SpellBase>();
+	public static final HashSet<SpellBase> spells = new HashSet<SpellBase>();
 	/** Map of elven spells associated with their race (affinity), sorted by name */
-	public static HashMap<EnumRace, HashSet<SpellBase>> spellMapping = new HashMap<EnumRace, HashSet<SpellBase>>();
+	public static final HashMap<EnumRace, HashSet<SpellBase>> spellMapping = new HashMap<EnumRace, HashSet<SpellBase>>();
 	/** Map of anomaly types and their subtiles, specifying their behavior */
-	public static HashMap<String, Class<? extends SubTileEntity>> anomalies = new HashMap<String, Class<? extends SubTileEntity>>();
+	public static final HashMap<String, Class<? extends SubTileEntity>> anomalies = new HashMap<String, Class<? extends SubTileEntity>>();
 	/** Map of anomaly types and their subtile instances, used for render :o */
-	public static HashMap<String, SubTileEntity> anomalyInstances = new HashMap<String, SubTileEntity>();
+	public static final HashMap<String, SubTileEntity> anomalyInstances = new HashMap<String, SubTileEntity>();
 	
 	public static RecipeManaInfuser addInfuserRecipe(RecipeManaInfuser rec) {
 		if (rec != null) manaInfuserRecipes.add(rec);
@@ -87,7 +81,7 @@ public class AlfheimAPI {
 	
 	/** Map a stack to it's pinkness. Also can override old values */
 	public static Integer addPink(ItemStack pink, int weight) {
-		return pinkness.put(pink, Integer.valueOf(weight));
+		return pinkness.put(pink, weight);
 	}
 	
 	public static int getPinkness(ItemStack item) {
@@ -100,17 +94,17 @@ public class AlfheimAPI {
 	
 	/**
 	 * Registers spell for some race by affinity
-	 * @param spell.getRace() Which race this spell suits best
-	 * Note:
-	 * Salamander - Fire
-	 * Sylph - Wind
-	 * Cait Sith - Nature
-	 * Pooka - Sound
-	 * Gnome - Earth
-	 * Leprechaun - Tech
-	 * Spriggan - Illusion
-	 * Undine - Water
-	 * Imp - Darkness
+	 * <br>
+	 * Note:<br>
+	 * Salamander - Fire<br>
+	 * Sylph - Wind<br>
+	 * Cait Sith - Nature<br>
+	 * Pooka - Sound<br>
+	 * Gnome - Earth<br>
+	 * Leprechaun - Tech<br>
+	 * Spriggan - Illusion<br>
+	 * Undine - Water<br>
+	 * Imp - Darkness<br>
 	 */
 	public static void registerSpell(SpellBase spell) {
 		if (spell.race == EnumRace.HUMAN) throw new IllegalArgumentException("Spell race must be one of the elements");
@@ -130,7 +124,7 @@ public class AlfheimAPI {
 	
 	public static ArrayList<SpellBase> getSpellsFor(EnumRace affinity) {
 		ArrayList<SpellBase> l = Lists.newArrayList(checkGet(affinity));
-		l.sort(new Comparator<SpellBase>() {
+		Collections.sort(l, new Comparator<SpellBase>() {
 			@Override
 			public int compare(SpellBase s1, SpellBase s2) {
 				return s1.name.compareTo(s2.name);

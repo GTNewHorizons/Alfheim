@@ -23,15 +23,15 @@ public class WE_BigTreeGen extends WorldGenerator {
 	public int trunkSize = 1, heightLimitLimit = 12, leafDistanceLimit = 4, metaWood = 0, metaLeaves = 0;
 	public double heightAttenuation = 0.618D, branchSlope = 0.381D, scaleWidth = 1.0D, leafDensity = 1.0D;
 	
-	public List<Block   > ab = new ArrayList();
-	public List<Material> am = new ArrayList();
+	public final List<Block   > ab = new ArrayList();
+	public final List<Material> am = new ArrayList();
 	
 	public boolean cb(Block b) {
-		for(int i = 0; i < ab.size(); i++)
-			if(b               == ab.get(i))
+		for (Block block : ab)
+			if (b == block)
 				return true;
-		for(int i = 0; i < am.size(); i++)
-			if(b.getMaterial() == am.get(i))
+		for (Material material : am)
+			if (b.getMaterial() == material)
 				return true;
 		return false;
 	}
@@ -162,7 +162,7 @@ public class WE_BigTreeGen extends WorldGenerator {
 					float p1 = l_2 - leafNodes[i_1][1], p2 = p1 >= 0 && p1 < leafDistanceLimit ? (p1 != 0 && p1 != leafDistanceLimit - 1 ? 3.0F : 2.0F) : -1.0F;
 					byte b1_3 = otherCoordPairs[1], b2_3 = otherCoordPairs[4];
 					int[] aint_3 = new int[] {leafNodes[i_1][0], l_2, leafNodes[i_1][2]}, aint1_3 = new int[] {0, 0, 0};
-					int l_3 = (int)((double)p2 + 0.618D), i1_3 = -l_3, j1_3 = -l_3;
+					int l_3 = (int)((double)p2 + 0.618D), i1_3 = -l_3, j1_3;
 					//-//
 					for(aint1_3[1] = aint_3[1]; i1_3 <= l_3; ++i1_3) {
 						aint1_3[b1_3] = aint_3[b1_3] + i1_3;

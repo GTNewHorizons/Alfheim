@@ -1,8 +1,5 @@
 package alfheim.common.entity.boss.ai.flugel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
@@ -11,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.entity.EntityFallingStar;
+
+import java.util.*;
 
 public class AIDeathray extends AIBase {
 
@@ -25,14 +24,14 @@ public class AIDeathray extends AIBase {
 	
 	@Override
 	public void startExecuting() {
-		flugel.setAITaskTimer(flugel.DEATHRAY_TICKS);
+		flugel.setAITaskTimer(EntityFlugel.DEATHRAY_TICKS);
 	}
 
 	@Override
 	public boolean continueExecuting() {
 		int deathray = flugel.getAITaskTimer();
 		ChunkCoordinates source = flugel.getSource();
-		float range = flugel.RANGE;
+		float range = EntityFlugel.RANGE;
 		if (ModInfo.DEV) if (!flugel.worldObj.isRemote) for (EntityPlayer player : flugel.getPlayersAround()) ASJUtilities.chatLog("Deathray in " + deathray, player);
 		flugel.setPosition(source.posX + 0.5, source.posY + 3, source.posZ + 0.5);
 		flugel.motionX = 0;
@@ -98,7 +97,7 @@ public class AIDeathray extends AIBase {
 	
 	@Override
 	public void resetTask() {
-		flugel.setStage(flugel.STAGE_DEATHRAY);
+		flugel.setStage(EntityFlugel.STAGE_DEATHRAY);
 		flugel.setAITaskTimer(0);
 		flugel.setAITask(AITask.REGEN);
 	}

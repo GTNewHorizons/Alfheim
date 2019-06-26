@@ -1,26 +1,20 @@
 package alfheim.common.entity.spell;
 
-import java.util.List;
-
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.core.util.DamageSourceSpell;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.block.*;
+import net.minecraft.entity.*;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.lib.LibObfuscation;
+
+import java.util.List;
 
 public class EntitySpellIsaacMissile extends EntityThrowable {
 	
@@ -60,7 +54,7 @@ public class EntitySpellIsaacMissile extends EntityThrowable {
 	public EntityLivingBase getTargetEntity() {
 		int id = dataWatcher.getWatchableObjectInt(26);
 		Entity e = worldObj.getEntityByID(id);
-		if(e != null && e instanceof EntityLivingBase)
+		if(e instanceof EntityLivingBase)
 			return (EntityLivingBase) e;
 		
 		return null;
@@ -106,7 +100,7 @@ public class EntitySpellIsaacMissile extends EntityThrowable {
 			motionZ = motionVec.z;
 			
 			List<EntityLivingBase> targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5));
-			if(targetList.contains(target) && target != null) {
+			if(targetList.contains(target)) {
 				EntityLivingBase thrower = getThrower();
 				if(thrower != null)
 					target.attackEntityFrom(DamageSourceSpell.missile(this, thrower), 12);

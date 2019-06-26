@@ -1,23 +1,22 @@
 package alfheim.common.world.dim.alfheim.customgens;
 
-import java.util.Random;
-
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import vazkii.botania.common.block.BlockModFlower;
-import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.*;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
 import vazkii.botania.common.block.tile.TileSpecialFlower;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.lib.LibBlockNames;
 
+import java.util.Random;
+
 public class WorldGenGrass implements IWorldGenerator {
 	
 	public final boolean grass, flowers, doubleFlowers, botanicalFlowers;
-	public double mod;
+	public final double mod;
 	
 	public WorldGenGrass(boolean g, boolean f, boolean df, boolean bf, double m) {
 		grass = g;
@@ -38,17 +37,17 @@ public class WorldGenGrass implements IWorldGenerator {
 					int x = cx + rand.nextInt(16), z = cz + rand.nextInt(16), y = world.getTopSolidOrLiquidBlock(x, z), color = rand.nextInt(16);
 					boolean primus = rand.nextInt(380) == 0;
 					for (int j = 0; j < ConfigHandler.flowerDensity * ConfigHandler.flowerPatchChance; j++) {
-						int x1 = x + rand.nextInt(dist * 2) - dist, y1 = y, z1 = z + rand.nextInt(dist * 2) - dist;
-						if (world.isAirBlock(x1, y1, z1) && world.getBlock(x1, y1 - 1, z1) == Blocks.grass)
+						int x1 = x + rand.nextInt(dist * 2) - dist, z1 = z + rand.nextInt(dist * 2) - dist;
+						if (world.isAirBlock(x1, y, z1) && world.getBlock(x1, y - 1, z1) == Blocks.grass)
 							if (primus) {
-								world.setBlock(x1, y1, z1, ModBlocks.specialFlower, 0, 2);
-								TileSpecialFlower flower = (TileSpecialFlower) world.getTileEntity(x1, y1, z1);
+								world.setBlock(x1, y, z1, ModBlocks.specialFlower, 0, 2);
+								TileSpecialFlower flower = (TileSpecialFlower) world.getTileEntity(x1, y, z1);
 								flower.setSubTile(rand.nextBoolean() ? LibBlockNames.SUBTILE_NIGHTSHADE_PRIME : LibBlockNames.SUBTILE_DAYBLOOM_PRIME);
 								SubTileDaybloom subtile = (SubTileDaybloom) flower.getSubTile();
 								subtile.setPrimusPosition();
 							} else {
-								world.setBlock(x1, y1, z1, ModBlocks.flower, color, 2);
-								if (rand.nextDouble() < ConfigHandler.flowerTallChance && ((BlockModFlower) ModBlocks.flower).func_149851_a(world, x1, y1, z1, false)) BlockModFlower.placeDoubleFlower(world, x1, y1, z1, color, 0);
+								world.setBlock(x1, y, z1, ModBlocks.flower, color, 2);
+								if (rand.nextDouble() < ConfigHandler.flowerTallChance && ((BlockModFlower) ModBlocks.flower).func_149851_a(world, x1, y, z1, false)) BlockModFlower.placeDoubleFlower(world, x1, y, z1, color, 0);
 							}
 					}
 				}

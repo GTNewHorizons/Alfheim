@@ -33,10 +33,12 @@ public class PageMultiblockLearnable extends LexiconPage {
 
 	private static final ResourceLocation multiblockOverlay = new ResourceLocation(LibResources.GUI_MULTIBLOCK_OVERLAY);
 
-	Achievement achievement;
+	final Achievement achievement;
 	GuiButton button;
-	MultiblockSet set, setUn;
-	Multiblock mb, mbUn;
+	final MultiblockSet set;
+	final MultiblockSet setUn;
+	final Multiblock mb;
+	final Multiblock mbUn;
 	int ticksElapsed;
 
 	public PageMultiblockLearnable(String unName, MultiblockSet sU, MultiblockSet s, Achievement ach) {

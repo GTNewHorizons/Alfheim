@@ -31,7 +31,7 @@ public abstract class LivingPotionEvent extends LivingEvent {
 	public abstract static class Change extends LivingPotionEvent {
 		
 		/** Remove and add potion modifiers */
-		public boolean update;
+		public final boolean update;
 		
 		public Change(EntityLivingBase entity, PotionEffect pe, boolean update) {
 			super(entity, pe);

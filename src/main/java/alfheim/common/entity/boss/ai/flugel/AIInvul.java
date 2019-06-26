@@ -15,12 +15,12 @@ public class AIInvul extends AIBase {
 	
 	@Override
 	public void startExecuting() {
-		flugel.setAITaskTimer(flugel.SPAWN_TICKS);
+		flugel.setAITaskTimer(EntityFlugel.SPAWN_TICKS);
 	}
 
 	@Override
 	public boolean continueExecuting() {
-		flugel.setHealth(flugel.getHealth() + (flugel.getMaxHealth() - 1F) / flugel.SPAWN_TICKS);
+		flugel.setHealth(flugel.getHealth() + (flugel.getMaxHealth() - 1F) / EntityFlugel.SPAWN_TICKS);
 		flugel.motionX = flugel.motionY = flugel.motionZ = 0;
 		return canContinue();
 	}

@@ -10,8 +10,10 @@ import io.netty.buffer.ByteBuf;
 
 public class MessageTimeStop extends ASJPacket {
 
-	public int id;
-	public double x, y, z;
+	public final int id;
+	public final double x;
+	public final double y;
+	public final double z;
 	public Party party;
 	
 	public MessageTimeStop(Party pt, double x, double y, double z, int id) {

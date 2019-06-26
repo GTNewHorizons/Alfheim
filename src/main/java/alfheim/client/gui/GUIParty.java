@@ -46,7 +46,7 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 
 public class GUIParty extends Gui {
 	
-	private Minecraft mc;
+	private final Minecraft mc;
 	public static final DecimalFormat format = new DecimalFormat("0.0#");
 	
 	public GUIParty(Minecraft mc) {
@@ -61,7 +61,7 @@ public class GUIParty extends Gui {
 		EntityPlayer player = mc.thePlayer;
 		FontRenderer font = mc.fontRenderer;
 		Party pt = CardinalSystemClient.segment().party;
-		int color = 0xFFFFFFFF, R = 0xFFDD0000, Y = 0xFFDDDD00, G = 0xFF00DD00;
+		int color, R = 0xFFDD0000, Y = 0xFFDDDD00, G = 0xFF00DD00;
 		String data;
 		zLevel = -90;
 		double s = AlfheimConfig.partyHUDScale;
@@ -213,11 +213,11 @@ public class GUIParty extends Gui {
 		}
 		
 		// ################################################################ PARTY ################################################################
-		EntityLivingBase l = null;
+		EntityLivingBase l;
 		
 		{
 			glPushMatrix();
-			float hp = -1, hpm = -1;
+			float hp, hpm;
 			int y = 10, col = 0xFFDDDDDD; // bg color
 			boolean st = false, shadow = true;
 			
@@ -501,9 +501,6 @@ public class GUIParty extends Gui {
 				glPopMatrix();
 			}
 			
-			st = false;
-			shadow = true;
-			col = 0xFFDDDDDD;
 			glColor4d(1, 1, 1, 1);
 			glPopMatrix();
 		}
@@ -571,8 +568,6 @@ public class GUIParty extends Gui {
 					glPopMatrix();
 				}
 			}
-			
-			y = 0;
 			
 			tg_icon: {
 				l = CardinalSystemClient.segment().target;

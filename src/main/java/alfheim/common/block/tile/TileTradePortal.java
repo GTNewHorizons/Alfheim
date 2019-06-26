@@ -1,30 +1,26 @@
 package alfheim.common.block.tile;
 
-import java.util.List;
-
-import com.google.common.base.Function;
-
 import alfheim.api.AlfheimAPI;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
+import com.google.common.base.Function;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.lexicon.multiblock.Multiblock;
-import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
+import vazkii.botania.api.lexicon.multiblock.*;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.BlockStorage;
-import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.*;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.core.handler.ConfigHandler;
+
+import java.util.List;
 
 public class TileTradePortal extends TileMod {
 	
@@ -176,7 +172,6 @@ public class TileTradePortal extends TileMod {
 			setTradeRecipe(recipe);
 			recipeNum = i;
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			return;
 		} else setRandomRecipe();
 	}
 	
@@ -244,10 +239,10 @@ public class TileTradePortal extends TileMod {
 	}
 	
 	private boolean checkMultipleConverters(Function<int[], int[]>... converters) {
-		if (!check2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false;
-		if (!check2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false;
-		if (!check2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false;
-		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 1, converters)) return false;
+		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false;
+		if (wrong2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false;
+		if (wrong2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false;
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 1, converters)) return false;
 		
 		lightPylons(converters);
 		return true;
@@ -271,13 +266,13 @@ public class TileTradePortal extends TileMod {
 		}
 	}
 	
-	private boolean check2DArray(int[][] positions, Block block, int meta, Function<int[], int[]>... converters) {
+	private boolean wrong2DArray(int[][] positions, Block block, int meta, Function<int[], int[]>... converters) {
 		for (int[] pos : positions) {
 			for (Function<int[], int[]> f : converters) if (f != null) pos = f.apply(pos);
-			if (!checkPosition(pos, block, meta)) return false;
+			if (!checkPosition(pos, block, meta)) return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	private boolean checkPosition(int[] pos, Block block, int meta) {

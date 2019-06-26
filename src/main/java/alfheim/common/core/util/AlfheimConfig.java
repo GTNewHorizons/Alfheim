@@ -1,7 +1,5 @@
 package alfheim.common.core.util;
 
-import java.io.*;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.render.RenderPostShaders;
 import alfheim.AlfheimCore;
@@ -9,10 +7,10 @@ import alfheim.api.ModInfo;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import net.minecraft.util.*;
+import net.minecraftforge.common.config.*;
+
+import java.io.*;
 
 public class AlfheimConfig extends Configuration {
 	
@@ -59,7 +57,7 @@ public class AlfheimConfig extends Configuration {
 	public static int		potionIDIceLens			= potionID___COUNTER++;
 	public static int		potionIDLeftFlame		= potionID___COUNTER++;
 	public static int		potionIDNinja			= potionID___COUNTER++;
-	public static int		potionIDNineLifes		= potionID___COUNTER++;
+	public static final int		potionIDNineLifes		= potionID___COUNTER++;
 	public static int		potionIDNoclip			= potionID___COUNTER++;
 	public static int		potionIDOvermage		= potionID___COUNTER++;
 	public static int		potionIDPossession		= potionID___COUNTER++;
@@ -77,7 +75,7 @@ public class AlfheimConfig extends Configuration {
 	public static boolean	bothSpawnStructures		= false;
 	public static boolean	enableWingsNonAlfheim	= true;
 	public static int		flightTime				= 1200;
-	public static Vec3[]	zones					= new Vec3[9];
+	public static final Vec3[]	zones					= new Vec3[9];
 	
 	// MMO
 	public static int		deathScreenAddTime		= 1200;
@@ -235,7 +233,7 @@ public class AlfheimConfig extends Configuration {
 			s.append("Undine start city and players spawnpoint coords:\n");
 			s.append(writeStandardCoords(angle += 40));
 			s.append("Imp start city and players spawnpoint coords:\n");
-			s.append(writeStandardCoords(angle += 40));
+			s.append(writeStandardCoords(angle + 40));
 			fw.write(s.toString());
 			fw.close();
 		} catch (IOException e) {
@@ -250,13 +248,13 @@ public class AlfheimConfig extends Configuration {
 	
 	private static String writeStandardCoords(double angle) {
 		Vec3 v = mkVecLenRotMine(1000, angle);
-		return new String(MathHelper.floor_double(v.xCoord) + " : 300 : " + MathHelper.floor_double(v.zCoord) + "\n");
+		return MathHelper.floor_double(v.xCoord) + " : 300 : " + MathHelper.floor_double(v.zCoord) + "\n";
 	}
 	
 	private static Vec3 makeVectorFromString(String s) {
 		String[] ss = s.split(" : ");
 		if (ss.length != 3) throw new IllegalArgumentException(String.format("Wrong coords count. Expected 3 got %d", ss.length));
-		return Vec3.createVectorHelper(Integer.valueOf(ss[0]).intValue(), Integer.valueOf(ss[1]).intValue(), Integer.valueOf(ss[2]).intValue());
+		return Vec3.createVectorHelper(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]), Integer.valueOf(ss[2]));
 	}
 	
 	private static Vec3 mkVecLenRotMine(double length, double angle) {

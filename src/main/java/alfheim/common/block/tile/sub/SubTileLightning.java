@@ -3,7 +3,6 @@ package alfheim.common.block.tile.sub;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem;
@@ -11,26 +10,23 @@ import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.core.util.DamageSourceSpell;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
-import vazkii.botania.common.block.tile.TileRuneAltar;
 import vazkii.botania.common.core.helper.Vector3;
 import vazkii.botania.common.item.ModItems;
 
 public class SubTileLightning extends SubTileEntity {
 	
 	public static final double radius = 12;
-	Vector3 vt = new Vector3();
-	Vector3 ve = new Vector3();
+	final Vector3 vt = new Vector3();
+	final Vector3 ve = new Vector3();
 	
 	@Override
 	public void update() {
@@ -104,7 +100,7 @@ public class SubTileLightning extends SubTileEntity {
 	@Override
 	public void performEffect(Object target) {
 		if (ticks % 25 != 0) return;
-		if (target == null || !(target instanceof EntityLivingBase)) return;
+		if (!(target instanceof EntityLivingBase)) return;
 		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
 		
 		EntityLivingBase entity = (EntityLivingBase) target;

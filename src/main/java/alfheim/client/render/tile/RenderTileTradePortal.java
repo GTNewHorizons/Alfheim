@@ -1,21 +1,19 @@
 package alfheim.client.render.tile;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import alfheim.common.block.BlockTradePortal;
 import alfheim.common.block.tile.TileTradePortal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import vazkii.botania.client.core.handler.ClientTickHandler;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class RenderTileTradePortal extends TileEntitySpecialRenderer {
 
@@ -32,7 +30,7 @@ public class RenderTileTradePortal extends TileEntitySpecialRenderer {
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
-		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60) * 0.85);
+		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60.) * 0.85);
 
 		glTranslated(x - 1, y + 1, z + 0.25);
 		if(meta == 2) {

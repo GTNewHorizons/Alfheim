@@ -1,11 +1,10 @@
 package alfheim.common.core.asm;
 
-import static alfheim.api.ModInfo.OBF;
-import static org.objectweb.asm.Opcodes.*;
-
+import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.*;
 
-import net.minecraft.launchwrapper.IClassTransformer;
+import static alfheim.api.ModInfo.OBF;
+import static org.objectweb.asm.Opcodes.*;
 
 public class AlfheimClassTransformer implements IClassTransformer {
 	
@@ -206,7 +205,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			
 			@Override
 			public void visitTypeInsn(int opcode, String type) {
-				if (opcode == CHECKCAST && type.equals(OBF ? "yz" : "net/minecraft/entity/player/EntityPlayer")) {} else {
+				if (opcode != CHECKCAST || !type.equals(OBF ? "yz" : "net/minecraft/entity/player/EntityPlayer")) {
 					super.visitTypeInsn(opcode, type);
 				}
 			}
@@ -378,7 +377,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 			
 			@Override
 			public void visitLdcInsn(Object cst) {
-				if (cst instanceof Float && ((Float) cst).floatValue() == 0.2F) cst = new Float(0.33F);
+				if (cst instanceof Float && (Float) cst == 0.2F) cst = 0.33F;
 				super.visitLdcInsn(cst);
 			}
 		}
@@ -647,7 +646,7 @@ public class AlfheimClassTransformer implements IClassTransformer {
 		@Override
 		public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 			if (name.equals("SUBTYPES")) {
-				value = new Integer(24);
+				value = 24;
 			}
 			return super.visitField(access, name, desc, signature, value);
 		}

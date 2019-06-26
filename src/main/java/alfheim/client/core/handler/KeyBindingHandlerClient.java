@@ -1,34 +1,28 @@
 package alfheim.client.core.handler;
 
-import static alfheim.api.spell.SpellBase.SpellCastResult.*;
-import static alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase;
-import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient;
-import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.client.core.handler.CardinalSystemClient.*;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.Flight;
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant;
-import alfheim.common.network.Message2d;
+import alfheim.common.network.*;
 import alfheim.common.network.Message2d.m2d;
-import alfheim.common.network.MessageHotSpellS;
-import alfheim.common.network.MessageKeyBind;
 import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import org.lwjgl.input.*;
+
+import static alfheim.api.spell.SpellBase.SpellCastResult.*;
+import static alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*;
 
 @SideOnly(Side.CLIENT)
 public class KeyBindingHandlerClient {
@@ -103,7 +97,7 @@ public class KeyBindingHandlerClient {
 							
 							SpellBase spell = AlfheimAPI.getSpellByIDs(raceID, spellID);
 							if (spell == null) PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -DESYNC.ordinal()));
-							if (!player.capabilities.isCreativeMode && !spell.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
+							else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
 								PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -NOMANA.ordinal()));
 								break hotcast;
 							}
@@ -164,7 +158,7 @@ public class KeyBindingHandlerClient {
 						
 						SpellBase spell = AlfheimAPI.getSpellByIDs(raceID, spellID);
 						if (spell == null) PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -DESYNC.ordinal()));
-						if (!player.capabilities.isCreativeMode && !spell.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
+						else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
 							PacketHandlerClient.handle(new Message2d(m2d.COOLDOWN, 0, -NOMANA.ordinal()));
 							break cast;
 						}
@@ -214,7 +208,7 @@ public class KeyBindingHandlerClient {
 		} else AlfheimCore.network.sendToServer(new MessageKeyBind(FLIGHT.ordinal(), boost, 0));
 	}
 	
-	public static enum KeyBindingIDs {
+	public enum KeyBindingIDs {
 		ATTACK, CAST, UNCAST, FLIGHT, SEL
 	}
 }

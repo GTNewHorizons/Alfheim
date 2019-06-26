@@ -1,46 +1,20 @@
 package alfheim.common.entity.boss;
 
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
-
-import java.awt.Rectangle;
-
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.command.IEntitySelector;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import vazkii.botania.api.boss.IBotaniaBoss;
 import vazkii.botania.client.core.handler.BossBarHandler;
+
+import java.awt.*;
 
 public class EntityRook extends EntityCreature implements IBotaniaBoss { // EntityFlugel, EntityIronGolem, EntityWither
 	
@@ -139,7 +113,7 @@ public class EntityRook extends EntityCreature implements IBotaniaBoss { // Enti
 		if (collided instanceof EntityPlayer && ((EntityPlayer) collided).capabilities.disableDamage) return;
 		if (collided instanceof EntityLivingBase && collided.isEntityInvulnerable()) return;
 		
-		setAttackTarget((EntityLivingBase) collided);
+		if (collided instanceof EntityLivingBase) setAttackTarget((EntityLivingBase) collided);
 	}
 	
 	public boolean attackEntityAsMob(Entity target) {

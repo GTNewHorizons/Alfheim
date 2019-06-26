@@ -4,8 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import org.lwjgl.opengl.GL11;
-
 import alexsocol.asjlib.render.ASJShaderHelper;
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback;
 import alexsocol.asjlib.render.RenderPostShaders;
@@ -33,13 +31,12 @@ import net.minecraftforge.client.model.IModelCustom;
 import vazkii.botania.api.item.IBaubleRender.Helper;
 import vazkii.botania.client.core.helper.ShaderHelper;
 import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 
 public class RenderContributors {
 	
-	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
+	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/wing.obj"));
 	
-	public static ShaderCallback callback = new ShaderCallback() {
+	public static final ShaderCallback callback = new ShaderCallback() {
 		@Override
 		public void call(int shaderID) {
 			TextureManager r = Minecraft.getMinecraft().renderEngine;
@@ -61,7 +58,7 @@ public class RenderContributors {
 		}
 	};
 	
-	public static ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.babylon) {
+	public static final ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.babylon) {
 		
 		@Override
 		public void preRender() {
@@ -242,7 +239,7 @@ public class RenderContributors {
 			glRotated(60, 0, 0, 1);
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.lexica);
 			ModelBook model = new ModelBook();
-			model.render((Entity)null, 0, 0.075F + (float) (t * 0.025), 0.925F - (float) (t * 0.025), 1, 0.0F, 0.0625F);
+			model.render(null, 0, 0.075F + (float) (t * 0.025), 0.925F - (float) (t * 0.025), 1, 0.0F, 0.0625F);
 			glPopMatrix();
 		}
 		

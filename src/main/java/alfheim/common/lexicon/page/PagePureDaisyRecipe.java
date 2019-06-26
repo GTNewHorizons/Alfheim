@@ -22,7 +22,7 @@ import vazkii.botania.common.lib.LibBlockNames;
 
 public class PagePureDaisyRecipe extends PageRecipe {
 
-	private RecipePureDaisy recipe;
+	private final RecipePureDaisy recipe;
 	
 	public PagePureDaisyRecipe(String unlocalizedName, RecipePureDaisy recipe) {
 		super(unlocalizedName);

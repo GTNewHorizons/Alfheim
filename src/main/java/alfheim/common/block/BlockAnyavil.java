@@ -1,6 +1,5 @@
 package alfheim.common.block;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.api.lib.LibRenderIDs;
@@ -10,7 +9,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -28,7 +26,6 @@ import vazkii.botania.api.lexicon.ILexiconable;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.IManaTrigger;
 import vazkii.botania.api.wand.IWandHUD;
-import vazkii.botania.common.block.ModBlocks;
 
 public class BlockAnyavil extends BlockContainer implements IManaTrigger, IWandHUD, ILexiconable {
 	
@@ -145,7 +142,7 @@ public class BlockAnyavil extends BlockContainer implements IManaTrigger, IWandH
 	@Override
 	public void onBurstCollision(IManaBurst burst, World world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileAnyavil) ((TileAnyavil) tile).onBurstCollision(burst, world, x, y, z);
+		if (tile instanceof TileAnyavil) ((TileAnyavil) tile).onBurstCollision(burst, world, x, y, z);
 		world.notifyBlocksOfNeighborChange(x, y, z, this);
 	}
 	
@@ -153,7 +150,7 @@ public class BlockAnyavil extends BlockContainer implements IManaTrigger, IWandH
 	@SideOnly(Side.CLIENT)
 	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileAnyavil) ((TileAnyavil) tile).renderHUD(mc, res, world, x, y, z);
+		if (tile instanceof TileAnyavil) ((TileAnyavil) tile).renderHUD(mc, res, world, x, y, z);
 	}
 	
 	@Override

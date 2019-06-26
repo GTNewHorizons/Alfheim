@@ -31,7 +31,7 @@ public class SpellDispel extends SpellBase {
 		if (tg == null || tg.target == null) 
 			return SpellCastResult.NOTARGET;
 		
-		if (tg.target != caster && !ASJUtilities.isInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
+		if (tg.target != caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
 			
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {

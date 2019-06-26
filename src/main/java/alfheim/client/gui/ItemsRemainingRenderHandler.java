@@ -1,21 +1,19 @@
 package alfheim.client.gui;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-
-import java.util.regex.Pattern;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.regex.Pattern;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 public final class ItemsRemainingRenderHandler {
 
@@ -28,7 +26,7 @@ public final class ItemsRemainingRenderHandler {
 
 	@SideOnly(Side.CLIENT)
 	public static void render(ScaledResolution resolution, float partTicks) {
-		if(ticks > 0 && !isEmpty(stack)) {
+		if(ticks > 0 && isNotEmpty(stack)) {
 			int pos = maxTicks - ticks;
 			Minecraft mc = Minecraft.getMinecraft();
 			int x = resolution.getScaledWidth() / 2 + 10 + Math.max(0, pos - leaveTicks);
@@ -57,7 +55,7 @@ public final class ItemsRemainingRenderHandler {
 			String text = "";
 
 			if(customString == null) {
-				if(!isEmpty(stack)) {
+				if(isNotEmpty(stack)) {
 					text = EnumChatFormatting.GREEN + stack.getDisplayName();
 					if(count >= 0) {
 						int max = stack.getMaxStackSize();
@@ -105,14 +103,14 @@ public final class ItemsRemainingRenderHandler {
 		int count = 0;
 		for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
-			if(!isEmpty(stack) && pattern.matcher(stack.getDisplayName()).find())
+			if(isNotEmpty(stack) && pattern.matcher(stack.getDisplayName()).find())
 				count += stack.stackSize;
 		}
 
 		set(displayStack, count);
 	}
 
-	public static boolean isEmpty(ItemStack stack) {
-		return stack.getItem() == Item.getItemFromBlock(Blocks.air);
+	public static boolean isNotEmpty(ItemStack stack) {
+		return stack.getItem() != Item.getItemFromBlock(Blocks.air);
 	}
 }

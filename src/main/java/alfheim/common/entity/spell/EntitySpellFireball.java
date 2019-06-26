@@ -1,29 +1,21 @@
 package alfheim.common.entity.spell;
 
-import java.util.List;
-import java.util.UUID;
-
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.spell.ITimeStopSpecific;
-import alfheim.api.spell.SpellBase;
+import alfheim.api.spell.*;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.util.DamageSourceSpell;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
+
+import java.util.*;
 
 public class EntitySpellFireball extends Entity implements ITimeStopSpecific {
 	
@@ -74,7 +66,6 @@ public class EntitySpellFireball extends Entity implements ITimeStopSpecific {
 	public void onUpdate() {
 		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster != null && caster.isDead || !worldObj.blockExists((int)posX, (int)posY, (int)posZ)))) {
 			setDead();
-			return;
 		} else {
 			//if (!ASJUtilities.isServer()) return;
 			super.onUpdate();
@@ -103,7 +94,8 @@ public class EntitySpellFireball extends Entity implements ITimeStopSpecific {
 			float f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
 			rotationYaw = (float)(Math.atan2(motionZ, motionX) * 180.0D / Math.PI) + 90.0F;
 			
-			for (rotationPitch = (float)(Math.atan2((double)f1, motionY) * 180.0D / Math.PI) - 90.0F; rotationPitch - prevRotationPitch < -180.0F; prevRotationPitch -= 360.0F);
+			rotationPitch = (float)(Math.atan2((double)f1, motionY) * 180.0D / Math.PI) - 90.0F;
+			while (rotationPitch - prevRotationPitch < -180.0F) prevRotationPitch -= 360.0F;
 			while (rotationPitch - prevRotationPitch >= 180.0F) prevRotationPitch += 360.0F;
 			while (rotationYaw - prevRotationYaw < -180.0F) prevRotationYaw -= 360.0F;
 			while (rotationYaw - prevRotationYaw >= 180.0F) prevRotationYaw += 360.0F;

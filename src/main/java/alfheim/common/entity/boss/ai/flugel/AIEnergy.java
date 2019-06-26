@@ -1,17 +1,17 @@
 package alfheim.common.entity.boss.ai.flugel;
 
-import java.util.List;
-
 import alfheim.common.entity.EntityCharge;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
 import vazkii.botania.common.core.helper.Vector3;
 
+import java.util.List;
+
 public class AIEnergy extends AIBase {
 
 	int left = 0;
 	int max = 0;
-	Vector3 oY = new Vector3(0, 1, 0);
+	final Vector3 oY = new Vector3(0, 1, 0);
 	
 	public AIEnergy(EntityFlugel flugel, AITask task) {
 		super(flugel, task);
@@ -21,7 +21,7 @@ public class AIEnergy extends AIBase {
 	public void startExecuting() {
 		max = flugel.isHardMode() ? 10 : 5;
 		left = max;
-		flugel.setAITaskTimer(100);;
+		flugel.setAITaskTimer(100);
 	}
 	
 	@Override

@@ -3,12 +3,7 @@
 
 package ru.vamig.worldengine.standardcustomgen.help;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSapling;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
@@ -16,21 +11,23 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.*;
+
 public class WE_TreeGen extends WorldGenerator {
 	public Block bWood = Blocks.log, bLeaves = Blocks.leaves, bSapling = Blocks.sapling, bVine = Blocks.vine, bCocoa = Blocks.cocoa;
 	
 	public int minTreeHeight = 4, metaWood = 0, metaLeaves = 0;
 	public boolean vinesGrow = false;
 	
-	public List<Block   > ab = new ArrayList();
-	public List<Material> am = new ArrayList();
+	public final List<Block   > ab = new ArrayList();
+	public final List<Material> am = new ArrayList();
 	
 	public boolean cb(Block b) {
-		for(int i = 0; i < ab.size(); i++)
-			if(b               == ab.get(i))
+		for (Block block : ab)
+			if (b == block)
 				return true;
-		for(int i = 0; i < am.size(); i++)
-			if(b.getMaterial() == am.get(i))
+		for (Material material : am)
+			if (b.getMaterial() == material)
 				return true;
 		return false;
 	}
@@ -71,7 +68,6 @@ public class WE_TreeGen extends WorldGenerator {
 				for(int j1 = p_76484_3_ - b0; j1 <= p_76484_3_ + b0 && flag; ++j1)
 					for(k1 = p_76484_5_ - b0; k1 <= p_76484_5_ + b0 && flag; ++k1)
 						if(i1 >= 0 && i1 < 256) {
-							block = p_76484_1_.getBlock(j1, i1, k1);
 							if(!isReplaceable(p_76484_1_, j1, i1, k1))
 								flag = false;
 						}else

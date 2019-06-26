@@ -1,19 +1,17 @@
 package alfheim.common.core.registry;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 import vazkii.botania.api.item.IRelic;
 import vazkii.botania.common.item.ModItems;
 
+import java.util.*;
+
 public class AlfheimAchievements {
 
-	public static List<Achievement> achievements = new ArrayList();
+	public static final List<Achievement> achievements = new ArrayList();
 	public static Achievement alfheim;
 	public static Achievement excaliber;
 	public static Achievement flugelSoul;
@@ -31,7 +29,7 @@ public class AlfheimAchievements {
 		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null);
 		flugelKill = new AlfheimAchievement("flugelKill", 0, 4, ModItems.flightTiara, null);
 		
-		AchievementPage.registerAchievementPage(new AchievementPage("Alfheim", achievements.toArray(new Achievement[achievements.size()])));
+		AchievementPage.registerAchievementPage(new AchievementPage("Alfheim", achievements.toArray(new Achievement[0])));
 	}
 	
 	public static class AlfheimAchievement extends Achievement {

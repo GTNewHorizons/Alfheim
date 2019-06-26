@@ -2,7 +2,6 @@ package alfheim.common.item.compat.thaumcraft;
 
 import java.util.List;
 
-import alfheim.api.ModInfo;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,7 +13,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemAlfheimWandCap extends Item {
 	
-	public static IIcon[] textures = new IIcon[5];
+	public static final IIcon[] textures = new IIcon[5];
 	
 	public ItemAlfheimWandCap() {
 		setCreativeTab(ThaumcraftAlfheimModule.tcnTab);

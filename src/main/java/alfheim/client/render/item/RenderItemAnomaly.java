@@ -2,7 +2,6 @@ package alfheim.client.render.item;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.lib.LibResourceLocations;
@@ -10,11 +9,9 @@ import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.block.ItemBlockAnomaly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 

@@ -8,13 +8,14 @@ import vazkii.botania.common.lexicon.page.PageText;
 
 public class PageTextLearnableKnowledge extends PageText {
 
-	Knowledge knowledge;
+	final Knowledge knowledge;
 	
 	public PageTextLearnableKnowledge(String unName, Knowledge kn) {
 		super(unName);
 		knowledge = kn;
 	}
 	
+	@SuppressWarnings("AccessStaticViaInstance")
 	private boolean know() {
 		if (Minecraft.getMinecraft().thePlayer == null) return false;
 		return CardinalSystemClient.segment().knowledge[knowledge.ordinal()];

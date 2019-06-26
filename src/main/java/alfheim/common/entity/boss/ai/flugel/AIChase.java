@@ -1,11 +1,11 @@
 package alfheim.common.entity.boss.ai.flugel;
 
-import java.util.Collections;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.common.entity.boss.EntityFlugel;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.Collections;
 
 public class AIChase extends AIBase {
 	
@@ -24,7 +24,7 @@ public class AIChase extends AIBase {
 	public boolean continueExecuting() {
 		flugel.checkCollision();
 		if (flugel.getAITaskTimer() % 10 == 0) {
-			String name = "";
+			String name;
 			try {
 				name = ASJUtilities.mapGetKeyOrDefault(flugel.playersWhoAttacked, Collections.max(flugel.playersWhoAttacked.values()), "");
 			} catch (Throwable e) {

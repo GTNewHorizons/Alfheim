@@ -76,7 +76,7 @@ public class GUIDeathTimer extends GuiScreen {
     	--timer;
     	
     	if (!mc.thePlayer.isPotionActive(AlfheimRegistry.leftFlame)) {
-    		mc.displayGuiScreen((GuiScreen)null);
+    		mc.displayGuiScreen(null);
             mc.setIngameFocus();
     	}
     }

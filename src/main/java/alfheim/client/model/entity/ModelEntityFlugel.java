@@ -1,30 +1,25 @@
 package alfheim.client.model.entity;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.render.entity.RenderEntityFlugel;
 import alfheim.common.entity.boss.EntityFlugel;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
+import net.minecraft.util.*;
+import net.minecraftforge.client.model.*;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class ModelEntityFlugel extends ModelBipedNew {
 	
-	public static IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/Miku1.obj"));
+	public static final IModelCustom model = AdvancedModelLoader.loadModel(new ResourceLocation(ModInfo.MODID, "model/Miku1.obj"));
 	
 	public ModelEntityFlugel() {
 		super();
@@ -55,7 +50,7 @@ public class ModelEntityFlugel extends ModelBipedNew {
 			glScaled(s, s, s);
 			
 			glPushMatrix();
-			glTranslated(19, -5, (font.getStringWidth("01") / -2));
+			glTranslated(19, -5, (font.getStringWidth("01") / -2.));
 			glRotated(-90, 0, 1, 0);
 			font.drawString("01", 0, 0, 0xFF0000);
 			glPopMatrix();

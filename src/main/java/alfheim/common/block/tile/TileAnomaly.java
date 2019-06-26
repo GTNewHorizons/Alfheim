@@ -18,7 +18,7 @@ public class TileAnomaly extends TileMod {
 	public static final String TAG_SUBTILE_CMP = "subTileCmp";
 	public static final String TAG_SUBTILE_COUNT = "subTileCount";
 	
-	public HashMap<String, SubTileEntity> subTiles = new HashMap<String, SubTileEntity>();
+	public final HashMap<String, SubTileEntity> subTiles = new HashMap<String, SubTileEntity>();
 	public String mainSubTile;
 	public int compatibilityBit = 0; // not serializing because will be recalculated on load
 	

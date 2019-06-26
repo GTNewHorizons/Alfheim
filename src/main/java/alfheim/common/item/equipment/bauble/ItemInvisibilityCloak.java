@@ -18,7 +18,6 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.helper.RenderHelper;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemBauble;
-import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak;
 
 @Optional.Interface(modid = "TravellersGear", iface = "travellersgear.api.ITravellersGear", striprefs = true)
 public class ItemInvisibilityCloak extends ItemBauble implements IManaUsingItem, ITravellersGear {

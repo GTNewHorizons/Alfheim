@@ -22,7 +22,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper;
 
 public class ItemManaStorage extends Item implements IManaItem, IManaTooltipDisplay, IBauble {
 	
-	public BaubleType type;
+	public final BaubleType type;
 	public final int MAX_MANA;
 	public static final String TAG_MANA = "mana";
 	

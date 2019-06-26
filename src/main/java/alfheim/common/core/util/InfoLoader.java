@@ -17,7 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class InfoLoader {
 
-	public static List<String> info = new ArrayList<String>();
+	public static final List<String> info = new ArrayList<String>();
 	public static boolean outdated = false;
 	
 	public static boolean doneChecking = false;

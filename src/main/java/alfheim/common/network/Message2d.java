@@ -8,8 +8,9 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class Message2d extends ASJPacket {
 	
-	public int type;
-	public double data1, data2;
+	public final int type;
+	public final double data1;
+	public final double data2;
 	
 	public Message2d(m2d ty, double d1, double d2) {
 		type = ty.ordinal();
@@ -17,7 +18,7 @@ public class Message2d extends ASJPacket {
 		data2 = d2;
 	}
 	
-	public static enum m2d {
+	public enum m2d {
 		UUID, COOLDOWN, ATTRIBUTE, MODES
 	}
 	

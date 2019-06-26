@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 
 public class ItemPeacePipe extends Item {
 
-	public static String TAG_LEAD = "PARTYLEAD";
-	public static String TAG_MEMBER = "PARTYMEMBER";
-	public static String TAG_MEMBERS = "PARTYMEMBERS";
+	public static final String TAG_LEAD = "PARTYLEAD";
+	public static final String TAG_MEMBER = "PARTYMEMBER";
+	public static final String TAG_MEMBERS = "PARTYMEMBERS";
 	
 	public ItemPeacePipe() {
 		setCreativeTab(AlfheimCore.alfheimTab);

@@ -15,7 +15,7 @@ import gloomyfolken.hooklib.asm.Hook.ReturnValue;
 
 public class HookContainerParser {
 
-	private HookClassTransformer transformer;
+	private final HookClassTransformer transformer;
 	private String currentClassName;
 	private String currentMethodName;
 	private String currentMethodDesc;
@@ -30,7 +30,7 @@ public class HookContainerParser {
 	Ключ - номер параметра, значение - номер локальной переменной для перехвата
 	или -1 для перехвата значения наверху стека.
 	 */
-	private HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
+	private final HashMap<Integer, Integer> parameterAnnotations = new HashMap<Integer, Integer>();
 
 	private boolean inHookAnnotation;
 

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class EntitySpellFenrirStorm extends Entity implements ITimeStopSpecific {
 	
-	public OrientedBB area;
+	public final OrientedBB area;
 	public EntityLivingBase caster;
 	
 	public EntitySpellFenrirStorm(World world) {

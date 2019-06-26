@@ -1,22 +1,19 @@
 package alfheim.client.render.world;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.render.RenderPostShaders;
-import alexsocol.asjlib.render.ShadedObject;
+import alexsocol.asjlib.render.*;
 import alfheim.api.lib.LibShaderIDs;
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
-import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
-import vazkii.botania.common.core.handler.ConfigHandler;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 public class SpellVisualizations {
 
-	public static ShadedObject so;
+	public static final ShadedObject so;
 	
 	static {
 		so = new ShadedObject(LibShaderIDs.idNoise, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), null) {
@@ -35,7 +32,7 @@ public class SpellVisualizations {
 			
 			@Override
 			public void drawMesh() {
-				renderSphere(Tessellator.instance, 240.0, (float) 240.0/3.6F, 0.0D, 1.0F, 0); 
+				renderSphere(Tessellator.instance, 240.0, (float) 240.0/3.6F);
 			}
 			
 			@Override
@@ -66,11 +63,11 @@ public class SpellVisualizations {
 
 		glScaled(0.5, 0.5, 0.5); 
 		if (RenderPostShaders.allowShaders) so.addTranslation();
-		else renderSphere(Tessellator.instance, 240.0, (float) 240.0/3.6F, 0.0D, 1.0F, 0); 
+		else renderSphere(Tessellator.instance, 240.0, (float) 240.0/3.6F);
 		glColorMask(false, true, true, false); 
 		glCullFace(GL_FRONT);
 		if (inside)  glDisable(GL_DEPTH_TEST); 
-		renderSphere(Tessellator.instance, size, (float)size/3.6F, 0.0D, 1.0F, 0); 
+		renderSphere(Tessellator.instance, size, (float)size/3.6F);
 		if (inside)  glEnable(GL_DEPTH_TEST); 
 		glColorMask(true, true, true, true); 
 		glCullFace(GL_BACK);
@@ -111,7 +108,7 @@ public class SpellVisualizations {
 		glPopMatrix();
 		
 		glScaled(s, s, s);
-		renderSphere(tes, size, (float)size/3.6F, 0.0D, 1.0F, 0);
+		renderSphere(tes, size, (float)size/3.6F);
 		glScaled(1/s, 1/s, 1/s);
 
 		glEnable(GL_LIGHTING);
@@ -127,26 +124,26 @@ public class SpellVisualizations {
 	/**
 	 * @author thKaguya
 	 */
-	protected static void renderSphere(Tessellator tessellator, double length, float width, double zPos, float alpha, int time) {
-		float maxWidth = (float)width / 2.0F;
+	protected static void renderSphere(Tessellator tessellator, double length, float width) {
+		float maxWidth = width / 2.0F;
 		int zAngleDivNum = 18;
 		float zSpan = 360F / zAngleDivNum;
-		double angleZ = 0F;
+		double angleZ;
 		double angleSpanZ = Math.PI * 2.0D / (double)zAngleDivNum;
 		int zDivNum = 9;
 		double zLength = width;
 		double zDivLength = zLength / (double)(zDivNum - 1);
 		double zLength2 = zLength / 2.0D;
-		zPos = Math.sin(-Math.PI / 2.0D) * maxWidth;
+		double zPos = Math.sin(-Math.PI / 2.0D) * maxWidth;
 		double zPosOld = zPos;
-		float xPos = 0F;
-		float yPos = 0F;
-		float xPos2 = 0F;
-		float yPos2 = 0F;
-		float xPosOld = xPos;
-		float yPosOld = yPos;
-		float xPos2Old = xPos2;
-		float yPos2Old = yPos2;
+		float xPos;
+		float yPos;
+		float xPos2;
+		float yPos2;
+		float xPosOld;
+		float yPosOld;
+		float xPos2Old;
+		float yPos2Old;
 		float angle = -(float)Math.PI / 2.0F;
 		float angleSpan = (float)Math.PI / (float)(zDivNum);
 		angle += angleSpan;
@@ -154,8 +151,6 @@ public class SpellVisualizations {
 		for(int j = 0; j < zDivNum; j++) {
 			zPos = Math.sin(angle) * maxWidth;
 			width = (float)Math.cos(angle) * maxWidth;
-			xPos = width;
-			yPos = 0F;
 			angleZ = 0F;
 			xPosOld = (float)Math.cos(angleZ) * width;
 			yPosOld = (float)Math.sin(angleZ) * width;
@@ -168,12 +163,11 @@ public class SpellVisualizations {
 				xPos2 = (float)Math.cos(angleZ) * widthOld;
 				yPos2 = (float)Math.sin(angleZ) * widthOld;
 				double colorVar = 0.0D;
-				if(time != 0) colorVar = (time + j) / 10.0D;
 				tessellator.startDrawingQuads();
 				//tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F , alpha);
 				tessellator.setNormal(0.0F, 1.0F, 0.0F);
-				tessellator.addVertexWithUV(  xPos	, yPos	, zPos   , 1.0F, 0.0F);
-				tessellator.addVertexWithUV(  xPosOld , yPosOld , zPos   , 0.0F, 0.0F);
+				tessellator.addVertexWithUV(  xPos	, yPos	, zPos, 1.0F, 0.0F);
+				tessellator.addVertexWithUV(  xPosOld , yPosOld , zPos, 0.0F, 0.0F);
 				tessellator.addVertexWithUV(  xPos2Old, yPos2Old, zPosOld, 0.0F, 1.0F);
 				tessellator.addVertexWithUV(  xPos2   , yPos2   , zPosOld, 1.0F, 1.0F);
 				tessellator.draw();

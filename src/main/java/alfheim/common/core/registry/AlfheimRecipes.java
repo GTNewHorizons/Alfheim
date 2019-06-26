@@ -1,7 +1,25 @@
 package alfheim.common.core.registry;
 
+import alfheim.AlfheimCore;
+import alfheim.api.AlfheimAPI;
+import alfheim.api.crafting.recipe.RecipeManaInfuser;
+import alfheim.common.core.registry.AlfheimItems.*;
+import alfheim.common.crafting.recipe.*;
+import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.*;
+import net.minecraftforge.oredict.*;
+import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.api.recipe.*;
+import vazkii.botania.common.Botania;
+import vazkii.botania.common.block.tile.mana.TilePool;
+import vazkii.botania.common.crafting.*;
+import vazkii.botania.common.item.ModItems;
+
+import java.util.List;
+
 import static alexsocol.asjlib.ASJUtilities.*;
-import static alfheim.api.AlfheimAPI.*;
+import static alfheim.api.AlfheimAPI.addInfuserRecipe;
 import static alfheim.api.lib.LibOreDict.*;
 import static alfheim.common.core.registry.AlfheimBlocks.*;
 import static alfheim.common.core.registry.AlfheimItems.*;
@@ -11,32 +29,6 @@ import static net.minecraft.init.Items.*;
 import static vazkii.botania.common.block.ModBlocks.*;
 import static vazkii.botania.common.item.ModItems.*;
 import static vazkii.botania.common.lib.LibOreDict.*;
-
-import java.util.List;
-
-import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.crafting.recipe.RecipeManaInfuser;
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.crafting.recipe.HelmRevealingAlfheimRecipe;
-import alfheim.common.crafting.recipe.LootInterceptorClearRecipe;
-import alfheim.common.crafting.recipe.LootInterceptorRecipe;
-import alfheim.common.item.equipment.tool.ItemTwigWandExtender;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.recipe.RecipeElvenTrade;
-import vazkii.botania.api.recipe.RecipePureDaisy;
-import vazkii.botania.api.recipe.RecipeRuneAltar;
-import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.tile.mana.TilePool;
-import vazkii.botania.common.crafting.ModCraftingRecipes;
-import vazkii.botania.common.crafting.ModRuneRecipes;
-import vazkii.botania.common.item.ModItems;
 
 public class AlfheimRecipes {
 	
@@ -66,7 +58,7 @@ public class AlfheimRecipes {
 	public static IRecipe recipeEmentalBoots;
 	public static IRecipe recipeEmentiumHoe;
 	public static IRecipe recipeElvenPylon;
-	private static List<IRecipe> recipesElvenWand;
+	public static List<IRecipe> recipesElvenWand;
 	public static IRecipe recipeElvoriumHelmet;
 	public static IRecipe recipeElvoriumChestplate;
 	public static IRecipe recipeElvoriumLeggings;

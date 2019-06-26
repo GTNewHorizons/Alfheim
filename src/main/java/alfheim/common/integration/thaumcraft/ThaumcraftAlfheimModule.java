@@ -107,9 +107,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capManasteelResearch,
 				new ItemStack(naturalWandCap, 1, 0),
 				new AspectList()
-				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
-				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capManasteelName)).getCraftCost()),
+				.add(Aspect.AIR,	WandCap.caps.get(capManasteelName).getCraftCost())
+				.add(Aspect.FIRE,	WandCap.caps.get(capManasteelName).getCraftCost())
+				.add(Aspect.ORDER,	WandCap.caps.get(capManasteelName).getCraftCost()),
 				"NNN", "N N",
 				'N', MANASTEEL_NUGGET
 			)
@@ -119,9 +119,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capTerrasteelResearch,
 				new ItemStack(naturalWandCap, 1, 1),
 				new AspectList()
-				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
-				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capTerrasteelName)).getCraftCost()),
+				.add(Aspect.AIR,	WandCap.caps.get(capTerrasteelName).getCraftCost())
+				.add(Aspect.FIRE,	WandCap.caps.get(capTerrasteelName).getCraftCost())
+				.add(Aspect.ORDER,	WandCap.caps.get(capTerrasteelName).getCraftCost()),
 				"NNN", "N N",
 				'N', TERRASTEEL_NUGGET
 			)
@@ -131,9 +131,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capElementiumResearch,
 				new ItemStack(naturalWandCap, 1, 2),
 				new AspectList()
-				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
-				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capElementiumName)).getCraftCost()),
+				.add(Aspect.AIR,	WandCap.caps.get(capElementiumName).getCraftCost())
+				.add(Aspect.FIRE,	WandCap.caps.get(capElementiumName).getCraftCost())
+				.add(Aspect.ORDER,	WandCap.caps.get(capElementiumName).getCraftCost()),
 				"NNN", "N N",
 				'N', ELEMENTIUM_NUGGET
 			)
@@ -143,9 +143,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capElvoriumResearch,
 				new ItemStack(naturalWandCap, 1, 3),
 				new AspectList()
-				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
-				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capElvoriumName)).getCraftCost()),
+				.add(Aspect.AIR,	WandCap.caps.get(capElvoriumName).getCraftCost())
+				.add(Aspect.FIRE,	WandCap.caps.get(capElvoriumName).getCraftCost())
+				.add(Aspect.ORDER,	WandCap.caps.get(capElvoriumName).getCraftCost()),
 				"NNN", "N N",
 				'N', ELVORIUM_NUGGET
 			)
@@ -155,12 +155,12 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(capMauftriumResearch,
 				new ItemStack(naturalWandCap, 1, 4),
 				new AspectList()
-				.add(Aspect.AIR,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.FIRE,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.WATER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.EARTH,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost())
-				.add(Aspect.ENTROPY,((WandCap) WandCap.caps.get(capMauftriumName)).getCraftCost()),
+				.add(Aspect.AIR,	WandCap.caps.get(capMauftriumName).getCraftCost())
+				.add(Aspect.FIRE,	WandCap.caps.get(capMauftriumName).getCraftCost())
+				.add(Aspect.WATER,	WandCap.caps.get(capMauftriumName).getCraftCost())
+				.add(Aspect.EARTH,	WandCap.caps.get(capMauftriumName).getCraftCost())
+				.add(Aspect.ORDER,	WandCap.caps.get(capMauftriumName).getCraftCost())
+				.add(Aspect.ENTROPY, WandCap.caps.get(capMauftriumName).getCraftCost()),
 				"NNN", "N N",
 				'N', MAUFTRIUM_NUGGET
 			)
@@ -170,8 +170,8 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(rodLivingwoodResearch,
 				new ItemStack(naturalWandRod, 1, 0),
 				new AspectList()
-				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost())
-				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodLivingwoodName)).getCraftCost()),
+				.add(Aspect.AIR,	WandRod.rods.get(rodLivingwoodName).getCraftCost())
+				.add(Aspect.EARTH,	WandRod.rods.get(rodLivingwoodName).getCraftCost()),
 				"  T", " T ", "T  ",
 				'T', LIVINGWOOD_TWIG
 			)
@@ -181,9 +181,9 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe(rodDreamwoodResearch,
 				new ItemStack(naturalWandRod, 1, 1),
 				new AspectList()
-				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
-				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost())
-				.add(Aspect.ORDER,	((WandRod) WandRod.rods.get(rodDreamwoodName)).getCraftCost()),
+				.add(Aspect.AIR,	WandRod.rods.get(rodDreamwoodName).getCraftCost())
+				.add(Aspect.EARTH,	WandRod.rods.get(rodDreamwoodName).getCraftCost())
+				.add(Aspect.ORDER,	WandRod.rods.get(rodDreamwoodName).getCraftCost()),
 				"  I", " I ", "I  ",
 				'I', INFUSED_DREAM_TWIG
 			)
@@ -193,12 +193,12 @@ public class ThaumcraftAlfheimModule {
 			addArcaneCraftingRecipe("",
 				new ItemStack(naturalWandRod, 1, 2),
 				new AspectList()
-				.add(Aspect.AIR,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
-				.add(Aspect.FIRE,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
-				.add(Aspect.WATER,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
-				.add(Aspect.EARTH,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
-				.add(Aspect.ORDER,	((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost())
-				.add(Aspect.ENTROPY,((WandRod) WandRod.rods.get(rodSpiritualStaff)).getCraftCost()),
+				.add(Aspect.AIR,	WandRod.rods.get(rodSpiritualStaff).getCraftCost())
+				.add(Aspect.FIRE,	WandRod.rods.get(rodSpiritualStaff).getCraftCost())
+				.add(Aspect.WATER,	WandRod.rods.get(rodSpiritualStaff).getCraftCost())
+				.add(Aspect.EARTH,	WandRod.rods.get(rodSpiritualStaff).getCraftCost())
+				.add(Aspect.ORDER,	WandRod.rods.get(rodSpiritualStaff).getCraftCost())
+				.add(Aspect.ENTROPY, WandRod.rods.get(rodSpiritualStaff).getCraftCost()),
 				"DSP", " RS", "R D",
 				'R', new ItemStack(naturalWandRod, 1, 1),
 				'S', LIFE_ESSENCE,
@@ -411,7 +411,7 @@ public class ThaumcraftAlfheimModule {
 		registerOre("oreAmber", new ItemStack(alfheimThaumOre, 1, 7));
 	}
 	
-	public static CreativeTabs tcnTab = new CreativeTabs("NTC") {
+	public static final CreativeTabs tcnTab = new CreativeTabs("NTC") {
 		@Override
 		public Item getTabIconItem() {
 			return naturalWandCap;

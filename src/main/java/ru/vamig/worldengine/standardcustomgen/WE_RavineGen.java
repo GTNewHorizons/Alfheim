@@ -15,19 +15,19 @@ import ru.vamig.worldengine.additions.WE_CreateChunkGen;
 import ru.vamig.worldengine.additions.WE_GeneratorData;
 
 public class WE_RavineGen extends WE_CreateChunkGen {
-	public List<Block> replaceBlocksList     = new ArrayList();
-	public List<Byte > replaceBlocksMetaList = new ArrayList();
+	public final List<Block> replaceBlocksList     = new ArrayList();
+	public final List<Byte > replaceBlocksMetaList = new ArrayList();
 	//-//
-	public Block caveBlock     = null;
-	public byte  caveBlockMeta =    0;
+	public final Block caveBlock     = null;
+	public final byte  caveBlockMeta =    0;
 	//-//
-	public Block lavaBlock     = Blocks.lava;
-	public byte  lavaBlockMeta =           0;
-	public int lavaMaxY = 12;
+	public final Block lavaBlock     = Blocks.lava;
+	public final byte  lavaBlockMeta =           0;
+	public final int lavaMaxY = 12;
 	
-	public int range = 8;
-	public float[] field_75046_d = new float[1024];
-	Random rand = new Random();
+	public final int range = 8;
+	public final float[] field_75046_d = new float[1024];
+	final Random rand = new Random();
 	
 	public WE_RavineGen() {
 		replaceBlocksList    .add(Blocks.stone);

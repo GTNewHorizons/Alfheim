@@ -362,7 +362,7 @@ public class ASJUtilities {
 	 * Checks whether {@code e1} is in FOV of {@code e2}
 	 * @author a_dizzle (minecraftforum.net)
 	 */
-	public static boolean isInFieldOfVision(EntityLivingBase e1, EntityLivingBase e2){
+	public static boolean isNotInFieldOfVision(EntityLivingBase e1, EntityLivingBase e2){
 		//save Entity 2's original rotation variables
 		float rotationYawPrime = e2.rotationYaw;
 		float rotationPitchPrime = e2.rotationPitch;
@@ -383,7 +383,7 @@ public class ASJUtilities {
 		float pitchFOVMax = e2.rotationPitch + Y;
 		boolean flag1 = (yawFOVMin < 0F && (rotationYawPrime >= yawFOVMin + 360F || rotationYawPrime <= yawFOVMax)) || (yawFOVMax >= 360F && (rotationYawPrime <= yawFOVMax - 360F || rotationYawPrime >= yawFOVMin)) || (yawFOVMax < 360F && yawFOVMin >= 0F && rotationYawPrime <= yawFOVMax && rotationYawPrime >= yawFOVMin);
 		boolean flag2 = (pitchFOVMin <= -180F && (rotationPitchPrime >= pitchFOVMin + 360F || rotationPitchPrime <= pitchFOVMax)) || (pitchFOVMax > 180F && (rotationPitchPrime <= pitchFOVMax - 360F || rotationPitchPrime >= pitchFOVMin)) || (pitchFOVMax < 180F && pitchFOVMin >= -180F && rotationPitchPrime <= pitchFOVMax && rotationPitchPrime >= pitchFOVMin);
-		return flag1 && flag2 && e2.canEntityBeSeen(e1);
+		return !flag1 || !flag2 || !e2.canEntityBeSeen(e1);
 	}
 	
 	/** 

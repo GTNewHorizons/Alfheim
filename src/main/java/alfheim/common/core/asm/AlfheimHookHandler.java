@@ -1,47 +1,30 @@
 package alfheim.common.core.asm;
 
-import static gloomyfolken.hooklib.asm.ReturnCondition.*;
-import static org.lwjgl.opengl.GL11.*;
-
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.block.IHourglassTrigger;
-import alfheim.api.event.LivingPotionEvent;
-import alfheim.api.event.NetherPortalActivationEvent;
+import alfheim.api.event.*;
 import alfheim.client.render.entity.RenderButterflies;
-import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.boss.EntityFlugel;
-import alfheim.common.item.lens.LensMessanger;
-import alfheim.common.item.lens.LensTripwire;
+import alfheim.common.item.lens.*;
 import alfheim.common.potion.PotionSoulburn;
 import codechicken.nei.recipe.GuiRecipe;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import gloomyfolken.hooklib.asm.Hook;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockPortal;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.enchantment.*;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionHelper;
+import net.minecraft.item.*;
+import net.minecraft.potion.*;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,12 +36,9 @@ import vazkii.botania.api.subtile.SubTileEntity;
 import vazkii.botania.client.core.handler.HUDHandler;
 import vazkii.botania.client.core.proxy.ClientProxy;
 import vazkii.botania.common.Botania;
-import vazkii.botania.common.block.BlockPylon;
-import vazkii.botania.common.block.BlockSpecialFlower;
-import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.block.*;
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom;
-import vazkii.botania.common.block.tile.TileHourglass;
-import vazkii.botania.common.block.tile.TilePylon;
+import vazkii.botania.common.block.tile.*;
 import vazkii.botania.common.core.BotaniaCreativeTab;
 import vazkii.botania.common.core.proxy.CommonProxy;
 import vazkii.botania.common.entity.EntityDoppleganger;
@@ -67,6 +47,11 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 import vazkii.botania.common.item.lens.ItemLens;
 import vazkii.botania.common.item.relic.ItemFlugelEye;
 import vazkii.botania.common.lib.LibBlockNames;
+
+import java.util.*;
+
+import static gloomyfolken.hooklib.asm.ReturnCondition.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class AlfheimHookHandler {
 	
@@ -93,18 +78,18 @@ public class AlfheimHookHandler {
 	public static boolean isPotionActive(EntityLivingBase e, Potion p) {
 		if (p == Potion.resistance) {
 			return 
-			e.activePotionsMap.containsKey(Integer.valueOf(Potion.resistance.id)) ||
-			e.activePotionsMap.containsKey(Integer.valueOf(AlfheimRegistry.tank.id));
+			e.activePotionsMap.containsKey(Potion.resistance.id) ||
+			e.activePotionsMap.containsKey(AlfheimRegistry.tank.id);
 		}
-		return e.activePotionsMap.containsKey(Integer.valueOf(p.id));
+		return e.activePotionsMap.containsKey(p.id);
 	}
 	
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	public static PotionEffect getActivePotionEffect(EntityLivingBase e, Potion p) {
-		PotionEffect pe = (PotionEffect) e.activePotionsMap.get(Integer.valueOf(p.id));
+		PotionEffect pe = (PotionEffect) e.activePotionsMap.get(p.id);
 		if (p == Potion.resistance)
 			if (e.isPotionActive(AlfheimRegistry.tank)) {
-				PotionEffect tank = ((PotionEffect) e.activePotionsMap.get(Integer.valueOf(AlfheimRegistry.tank.id)));
+				PotionEffect tank = ((PotionEffect) e.activePotionsMap.get(AlfheimRegistry.tank.id));
 				if (pe == null) pe = new PotionEffect(Potion.resistance.id, tank.duration, 0);
 				pe.amplifier += tank.amplifier;
 			}
@@ -157,13 +142,13 @@ public class AlfheimHookHandler {
 			if (e.potionsNeedUpdate) {
 				if (!e.worldObj.isRemote) {
 					if (e.activePotionsMap.isEmpty()) {
-						e.getDataWatcher().updateObject(8, Byte.valueOf((byte)0));
-						e.getDataWatcher().updateObject(7, Integer.valueOf(0));
+						e.getDataWatcher().updateObject(8, (byte) 0);
+						e.getDataWatcher().updateObject(7, 0);
 						e.setInvisible(false);
 					} else {
 						i = PotionHelper.calcPotionLiquidColor(e.activePotionsMap.values());
-						e.getDataWatcher().updateObject(8, Byte.valueOf((byte)(PotionHelper.func_82817_b(e.activePotionsMap.values()) ? 1 : 0)));
-						e.getDataWatcher().updateObject(7, Integer.valueOf(i));
+						e.getDataWatcher().updateObject(8, (byte) (PotionHelper.func_82817_b(e.activePotionsMap.values()) ? 1 : 0));
+						e.getDataWatcher().updateObject(7, i);
 						e.setInvisible(e.isPotionActive(Potion.invisibility.id));
 					}
 				}
@@ -175,7 +160,7 @@ public class AlfheimHookHandler {
 			boolean flag1 = e.getDataWatcher().getWatchableObjectByte(8) > 0;
 			
 			if (i > 0) {
-				boolean flag = false;
+				boolean flag;
 				
 				if (!e.isInvisible()) {
 					flag = e.worldObj.rand.nextBoolean();
@@ -187,10 +172,10 @@ public class AlfheimHookHandler {
 					flag &= e.worldObj.rand.nextInt(5) == 0;
 				}
 				
-				if (flag && i > 0) {
+				if (flag) {
 					double d0 = (double)(i >> 16 & 255) / 255.0D;
 					double d1 = (double)(i >> 8 & 255) / 255.0D;
-					double d2 = (double)(i >> 0 & 255) / 255.0D;
+					double d2 = (double)(i & 255) / 255.0D;
 					e.worldObj.spawnParticle(flag1 ? "mobSpellAmbient" : "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, e.posY + e.worldObj.rand.nextDouble() * (double)e.height - (double)e.yOffset, e.posZ + (e.worldObj.rand.nextDouble() - 0.5D) * (double)e.width, d0, d1, d2);
 				}
 			}
@@ -282,11 +267,11 @@ public class AlfheimHookHandler {
 	
 	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
 	public static void ItemLens$clinit(ItemLens lens) {
-		lens.setProps(MESSANGER, 1);
-		lens.setProps(TRIPWIRE, 1 << 5);
+		ItemLens.setProps(MESSANGER, 1);
+		ItemLens.setProps(TRIPWIRE, 1 << 5);
 	
-		lens.setLens(MESSANGER, new LensMessanger());
-		lens.setLens(TRIPWIRE, new LensTripwire());
+		ItemLens.setLens(MESSANGER, new LensMessanger());
+		ItemLens.setLens(TRIPWIRE, new LensTripwire());
 	}
 	
 	@Hook(injectOnExit = true)
@@ -314,7 +299,7 @@ public class AlfheimHookHandler {
 		return MinecraftForge.EVENT_BUS.post(new NetherPortalActivationEvent(world, x, y, z));
 	}
 	
-	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false, isMandatory = true)
+	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	public static boolean matches(RecipePureDaisy recipe, World world, int x, int y, int z, SubTileEntity pureDaisy, Block block, int meta) {
 		return recipe.getOutput().equals(ModBlocks.livingwood) && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim;
 	}
@@ -325,7 +310,7 @@ public class AlfheimHookHandler {
 		return false;
 	}
 	
-	@Hook(returnCondition = ON_TRUE, booleanReturnConstant = false)
+	@Hook(returnCondition = ON_TRUE)
 	public static boolean spawn(EntityDoppleganger gaia, EntityPlayer player, ItemStack stack, World world, int x, int y, int z, boolean hard) {
 		for (int i = -1; i < 2; i++) 
 			for (int k = -1; k < 2; k++) 

@@ -8,15 +8,19 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageParticles extends ASJPacket {
 
-	public int i;
-	public double x, y, z, x2, y2, z2;
+	public final int i;
+	public final double x;
+	public final double y;
+	public final double z;
+	public double x2;
+	public double y2;
+	public double z2;
 	
 	public MessageParticles(int i, double x, double y, double z) {
 		this.i = i;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		x2 = y2 = z2 = 0;
 	}
 	
 	public MessageParticles(int i, double x, double y, double z, double x2, double y2, double z2) {

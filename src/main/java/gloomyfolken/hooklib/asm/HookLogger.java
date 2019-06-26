@@ -39,7 +39,7 @@ public interface HookLogger {
 
 	class VanillaLogger implements HookLogger {
 
-		private Logger logger;
+		private final Logger logger;
 
 		public VanillaLogger(Logger logger) {
 			this.logger = logger;

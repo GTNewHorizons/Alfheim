@@ -2,7 +2,6 @@ package alfheim.client.model.block;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
 
 /**
  * ModelSimpleItemHolder - AlexSocol
@@ -10,26 +9,26 @@ import net.minecraft.entity.Entity;
  */
 public class ModelSimpleItemHolder extends ModelBase {
 	
-    public ModelRenderer shape2;
-    public ModelRenderer shape3;
-    public ModelRenderer shape4;
-    public ModelRenderer shape5;
-    public ModelRenderer shape6;
-    public ModelRenderer shape7;
-    public ModelRenderer shape8;
-    public ModelRenderer shape9;
-    public ModelRenderer shape10;
-    public ModelRenderer shape11;
-    public ModelRenderer shape12;
-    public ModelRenderer shape13;
-    public ModelRenderer shape14;
-    public ModelRenderer shape15;
-    public ModelRenderer shape16;
-    public ModelRenderer shape17;
-    public ModelRenderer shape18;
-    public ModelRenderer shape19;
-    public ModelRenderer shape20;
-    public ModelRenderer shape21;
+    public final ModelRenderer shape2;
+    public final ModelRenderer shape3;
+    public final ModelRenderer shape4;
+    public final ModelRenderer shape5;
+    public final ModelRenderer shape6;
+    public final ModelRenderer shape7;
+    public final ModelRenderer shape8;
+    public final ModelRenderer shape9;
+    public final ModelRenderer shape10;
+    public final ModelRenderer shape11;
+    public final ModelRenderer shape12;
+    public final ModelRenderer shape13;
+    public final ModelRenderer shape14;
+    public final ModelRenderer shape15;
+    public final ModelRenderer shape16;
+    public final ModelRenderer shape17;
+    public final ModelRenderer shape18;
+    public final ModelRenderer shape19;
+    public final ModelRenderer shape20;
+    public final ModelRenderer shape21;
 
     public ModelSimpleItemHolder() {
         textureWidth = 16;

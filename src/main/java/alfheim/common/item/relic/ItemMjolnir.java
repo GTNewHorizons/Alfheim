@@ -31,7 +31,7 @@ public class ItemMjolnir extends ItemRelic {
 
 	public static final String TAG_CHARGE = "charge", TAG_CREATIVE = "creative";
 	public static final int MAX_CHARGE = 10000, CHARGE_PER_TICK = 1000;
-	public static IIcon[] icons = new IIcon[2];
+	public static final IIcon[] icons = new IIcon[2];
 	
 	public ItemMjolnir() {
 		super("Mjolnir");

@@ -35,18 +35,18 @@ Y
  */
 public class OrientedBB {
 	
-	public Vector3 pos;			// center
-	public Vector3 size;		// half size
-	public Matrix4 orient;		// rotation (orientation) matrix
+	public final Vector3 pos;			// center
+	public final Vector3 size;		// half size
+	public final Matrix4 orient;		// rotation (orientation) matrix
 	
-	public Vector3 a;
-	public Vector3 b;
-	public Vector3 c;
-	public Vector3 d;
-	public Vector3 e;
-	public Vector3 f;
-	public Vector3 g;
-	public Vector3 h;
+	public final Vector3 a;
+	public final Vector3 b;
+	public final Vector3 c;
+	public final Vector3 d;
+	public final Vector3 e;
+	public final Vector3 f;
+	public final Vector3 g;
+	public final Vector3 h;
 	
 	public OrientedBB() {
 		pos = new Vector3(0.5, 0.5, 0.5);

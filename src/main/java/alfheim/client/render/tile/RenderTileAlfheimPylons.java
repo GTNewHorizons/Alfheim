@@ -1,39 +1,34 @@
 package alfheim.client.render.tile;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-
-import java.util.Random;
-
-import alexsocol.asjlib.render.RenderPostShaders;
-import alexsocol.asjlib.render.ShadedObject;
+import alexsocol.asjlib.render.*;
 import alfheim.api.lib.LibResourceLocations;
-import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import vazkii.botania.client.core.handler.ClientTickHandler;
-import vazkii.botania.client.core.handler.MultiblockRenderHandler;
+import vazkii.botania.client.core.handler.*;
 import vazkii.botania.client.core.helper.ShaderHelper;
-import vazkii.botania.client.model.IPylonModel;
-import vazkii.botania.client.model.ModelPylon;
-import vazkii.botania.client.model.ModelPylonOld;
+import vazkii.botania.client.model.*;
 import vazkii.botania.common.core.handler.ConfigHandler;
+
+import java.util.Random;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 
 	public static IPylonModel model;
 	public static boolean orange = false, red = false, hand = false;
-	public Random rand = new Random();
+	public final Random rand = new Random();
 
-	public ShadedObjectPylon shObjRO = new ShadedObjectPylon(LibResourceLocations.antiPylonOld);
-	public ShadedObjectPylon shObjR = new ShadedObjectPylon(LibResourceLocations.antiPylon);
-	public ShadedObjectPylon shObjPO = new ShadedObjectPylon(LibResourceLocations.elvenPylonOld);
-	public ShadedObjectPylon shObjP = new ShadedObjectPylon(LibResourceLocations.elvenPylon);
-	public ShadedObjectPylon shObjOO = new ShadedObjectPylon(LibResourceLocations.yordinPylonOld);
-	public ShadedObjectPylon shObjO = new ShadedObjectPylon(LibResourceLocations.yordinPylon);
+	public final ShadedObjectPylon shObjRO = new ShadedObjectPylon(LibResourceLocations.antiPylonOld);
+	public final ShadedObjectPylon shObjR = new ShadedObjectPylon(LibResourceLocations.antiPylon);
+	public final ShadedObjectPylon shObjPO = new ShadedObjectPylon(LibResourceLocations.elvenPylonOld);
+	public final ShadedObjectPylon shObjP = new ShadedObjectPylon(LibResourceLocations.elvenPylon);
+	public final ShadedObjectPylon shObjOO = new ShadedObjectPylon(LibResourceLocations.yordinPylonOld);
+	public final ShadedObjectPylon shObjO = new ShadedObjectPylon(LibResourceLocations.yordinPylon);
 
 	public RenderTileAlfheimPylons() {
 		RenderPostShaders.registerShadedObject(shObjO);
@@ -68,8 +63,7 @@ public class RenderTileAlfheimPylons extends TileEntitySpecialRenderer {
 		double worldTime = tile.getWorldObj() == null ? 0 : (double) (ClientTickHandler.ticksInGame + ticks);
 
 		rand.setSeed(tile.xCoord ^ tile.yCoord ^ tile.zCoord);
-		if (tile != null)
-			worldTime += rand.nextInt(360);
+		worldTime += rand.nextInt(360);
 
 		if (ConfigHandler.oldPylonModel) {
 			glTranslated(x + 0.5, y + 2.2, z + 0.5);

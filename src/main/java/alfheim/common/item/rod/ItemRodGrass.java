@@ -1,27 +1,23 @@
 package alfheim.common.item.rod;
 
-import java.util.Arrays;
-import java.util.List;
-
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.item.IManaProficiencyArmor;
-import vazkii.botania.api.mana.IManaUsingItem;
-import vazkii.botania.api.mana.ManaItemHandler;
+import vazkii.botania.api.mana.*;
 import vazkii.botania.common.Botania;
+
+import java.util.*;
 
 public class ItemRodGrass extends Item implements IManaUsingItem {
 
-	static final List<String> validBlocks = Arrays.asList(new String[] { "dirt", "mycelium", "podzol" });
+	static final List<String> validBlocks = Arrays.asList("dirt", "mycelium", "podzol");
 	
 	public ItemRodGrass() {
 		setCreativeTab(AlfheimCore.alfheimTab);

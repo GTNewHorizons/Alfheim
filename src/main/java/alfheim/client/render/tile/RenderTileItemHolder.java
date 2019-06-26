@@ -1,10 +1,5 @@
 package alfheim.client.render.tile;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.Color;
-import java.util.Random;
-
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibResourceLocations;
@@ -16,11 +11,14 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
-import vazkii.botania.client.core.handler.ClientTickHandler;
-import vazkii.botania.client.core.handler.MultiblockRenderHandler;
+import net.minecraftforge.client.model.*;
+import vazkii.botania.client.core.handler.*;
 import vazkii.botania.common.block.tile.mana.TilePool;
+
+import java.awt.*;
+import java.util.Random;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 
@@ -31,7 +29,7 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 		renderTE((TileItemHolder)tile, x, y, z, partialTicks);		
 	}
 	
-	Random rand = new Random();
+	final Random rand = new Random();
 	
 	private void renderTE(TileItemHolder tile, double x, double y, double z, float partialTicks) {
 		boolean inf = false, dil = false, fab = false;
@@ -44,7 +42,7 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 			fab = meta == 3;
 			
 			TileEntity te = tile.getWorldObj().getTileEntity(tile.xCoord, tile.yCoord-1, tile.zCoord);
-			if (te != null && te instanceof TilePool) c = ((TilePool) te).color;
+			if (te instanceof TilePool) c = ((TilePool) te).color;
 		}
 		
 		glPushMatrix();
@@ -54,11 +52,9 @@ public class RenderTileItemHolder extends TileEntitySpecialRenderer {
 
 		if(fab) {
 			float time = ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks;
-			if(tile != null) {
-				rand.setSeed(tile.xCoord ^ tile.yCoord-1 ^ tile.zCoord);
-				time += rand.nextInt(100000);
-			}
-
+			rand.setSeed(tile.xCoord ^ tile.yCoord-1 ^ tile.zCoord);
+			time += rand.nextInt(100000);
+			
 			Color color = Color.getHSBColor(time * 0.005F, 0.6F, 1F);
 			glColor4ub((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue(), (byte) 255);
 		} else {

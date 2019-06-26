@@ -25,7 +25,7 @@ public class RenderEntityFenrirStorm extends Render {
 		return null;
 	}
 
-	Random rand = new Random();
+	final Random rand = new Random();
 	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
@@ -88,8 +88,9 @@ public class RenderEntityFenrirStorm extends Render {
 	}
 	
 	private class Fork {
-		public int parts;
-		public Vector3 start, dir;
+		public final int parts;
+		public final Vector3 start;
+		public final Vector3 dir;
 		public Fork(Vector3 s, Vector3 d, int p) {
 			start = s.copy();
 			dir = d.copy();

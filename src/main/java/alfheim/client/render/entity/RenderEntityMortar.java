@@ -12,7 +12,7 @@ import vazkii.botania.common.block.ModBlocks;
 
 public class RenderEntityMortar extends Render {
 
-	RenderBlocks render = new RenderBlocks();
+	final RenderBlocks render = new RenderBlocks();
 	
 	public RenderEntityMortar() {
 		shadowSize = 0.5F;

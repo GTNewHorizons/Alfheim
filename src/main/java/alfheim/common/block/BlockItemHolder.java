@@ -1,6 +1,5 @@
 package alfheim.common.block;
 
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
@@ -11,7 +10,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +24,6 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.block.mana.BlockPool;
-import vazkii.botania.common.block.tile.mana.TilePool;
 
 public class BlockItemHolder extends BlockContainer implements ILexiconable {
 

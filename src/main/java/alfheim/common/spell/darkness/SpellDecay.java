@@ -31,7 +31,7 @@ public class SpellDecay extends SpellBase {
 		if (tg.target == caster || tg.isParty)
 			return SpellCastResult.WRONGTGT;
 		
-		if (!ASJUtilities.isInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
+		if (ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
 		
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {

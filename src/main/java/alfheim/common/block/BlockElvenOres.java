@@ -25,10 +25,10 @@ import vazkii.botania.common.item.ModItems;
 public class BlockElvenOres extends Block implements ILexiconable {
 	
 	public static final String[] names = { "Dragonstone", "Elementium", "Quartz", "Gold", "Iffesal" };
-	public IIcon[] textures = new IIcon[names.length];
-	public Item[] drops = { ModItems.manaResource, null, ModItems.quartz, null, AlfheimItems.elvenResource };
-	public int[] metas = { 9, 1, 5, 3, ElvenResourcesMetas.IffesalDust };
-	public Random rand = new Random();
+	public final IIcon[] textures = new IIcon[names.length];
+	public final Item[] drops = { ModItems.manaResource, null, ModItems.quartz, null, AlfheimItems.elvenResource };
+	public final int[] metas = { 9, 1, 5, 3, ElvenResourcesMetas.IffesalDust };
+	public final Random rand = new Random();
 	
 	public BlockElvenOres() {
 		super(Material.rock);

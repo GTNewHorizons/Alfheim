@@ -9,6 +9,6 @@ import net.minecraft.world.World;
  */
 public interface IHourglassTrigger {
 
-	public void onTriggeredByHourglass(World world, int x, int y, int z, TileEntity hourglass);
+	void onTriggeredByHourglass(World world, int x, int y, int z, TileEntity hourglass);
 
 }

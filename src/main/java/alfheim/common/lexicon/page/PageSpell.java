@@ -21,7 +21,7 @@ import vazkii.botania.common.lexicon.page.PageText;
 
 public class PageSpell extends LexiconPage {
 
-	SpellBase spell;
+	final SpellBase spell;
 	
 	public PageSpell(SpellBase s) {
 		super("botania.page." + s.name);

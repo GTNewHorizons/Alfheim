@@ -1,25 +1,20 @@
 package alfheim.common.core.command;
 
-import java.util.Arrays;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
-import alfheim.common.core.handler.CardinalSystem;
-import alfheim.common.core.handler.EventHandler;
+import alfheim.common.core.handler.*;
 import alfheim.common.core.registry.AlfheimRecipes;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule;
 import alfheim.common.network.Message3d;
 import alfheim.common.network.Message3d.m3d;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import vazkii.botania.common.Botania;
+
+import java.util.*;
 
 public class CommandAlfheim extends CommandBase {
 	
@@ -30,7 +25,7 @@ public class CommandAlfheim extends CommandBase {
 	
 	@Override
 	public List getCommandAliases() {
-		return Arrays.asList(new String[] {"alf"});
+		return Arrays.asList("alf");
 	}
 	
 	@Override
@@ -50,7 +45,7 @@ public class CommandAlfheim extends CommandBase {
 			boolean mmoOld = AlfheimCore.enableMMO;
 			if (args[0].equalsIgnoreCase("ESM")) toggleESM(AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory); else
 			if (args[0].equalsIgnoreCase("MMO")) toggleMMO(AlfheimCore.enableMMO = !AlfheimCore.enableMMO); else
-			throw new WrongUsageException("alfheim.commands.alfheim.wrong", new Object[0]);
+			throw new WrongUsageException("alfheim.commands.alfheim.wrong");
 			AlfheimConfig.writeModes();
 		
 			ASJUtilities.sayToAllOnline(String.format(StatCollector.translateToLocal("alfheim.commands.alfheim.done"),
@@ -61,7 +56,7 @@ public class CommandAlfheim extends CommandBase {
 										EnumChatFormatting.RESET	));
 			
 			AlfheimCore.network.sendToAll(new Message3d(m3d.TOGGLER, args[0].equalsIgnoreCase("ESM") ? 1 : 0, ((esmOld ? 1 : 0) << 1) | (AlfheimCore.enableElvenStory ? 1 : 0), ((mmoOld ? 1 : 0) << 1) | (AlfheimCore.enableMMO ? 1 : 0)));
-		} else throw new WrongUsageException("alfheim.commands.alfheim.wrong", new Object[0]);
+		} else throw new WrongUsageException("alfheim.commands.alfheim.wrong");
 	}
 	
 	@Override

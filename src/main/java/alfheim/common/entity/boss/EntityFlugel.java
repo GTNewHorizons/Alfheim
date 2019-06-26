@@ -1,57 +1,36 @@
 package alfheim.common.entity.boss;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-
-import java.awt.Rectangle;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.regex.Pattern;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.ModInfo;
-import alfheim.common.core.registry.AlfheimAchievements;
-import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
-import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.core.util.DamageSourceSpell;
+import alfheim.common.core.util.*;
 import alfheim.common.entity.boss.ai.flugel.*;
 import alfheim.common.item.relic.ItemFlugelSoul;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.*;
+import net.minecraft.init.*;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemRecord;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.*;
 import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.*;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.common.util.FakePlayer;
 import vazkii.botania.api.boss.IBotaniaBoss;
-import vazkii.botania.api.lexicon.multiblock.Multiblock;
-import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
+import vazkii.botania.api.lexicon.multiblock.*;
 import vazkii.botania.api.lexicon.multiblock.component.MultiblockComponent;
 import vazkii.botania.client.core.handler.BossBarHandler;
 import vazkii.botania.common.Botania;
@@ -59,8 +38,16 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.relic.ItemFlugelEye;
-import vazkii.botania.common.item.relic.ItemRelic;
+import vazkii.botania.common.item.relic.*;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // EntityDoppleganger
 
@@ -88,7 +75,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public static final int STAGE_MAGIC				= 2;	//60%	hp
 	public static final int STAGE_DEATHRAY			= 3;	//12.5%	hp
 
-	public HashMap<String, Integer> playersWhoAttacked = new HashMap();
+	public final HashMap<String, Integer> playersWhoAttacked = new HashMap();
 	private static boolean isPlayingMusic = false;
 	
 	private float prevHP;
@@ -165,7 +152,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 				e.playersWhoAttacked.put(player.getCommandSenderName(), 1);
 	
 				if (miku) {
-					e.setAlwaysRenderNameTag(miku);
+					e.setAlwaysRenderNameTag(true);
 					e.setCustomNameTag("Hatsune Miku");
 				}
 				
@@ -191,7 +178,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float damage) {
 		Entity e = source.getEntity();
-		if((source.damageType.equals("player") || source instanceof DamageSourceSpell) && e != null && isTruePlayer(e) && !isEntityInvulnerable()) {
+		if((source.damageType.equals("player") || source instanceof DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable()) {
 			EntityPlayer player = (EntityPlayer) e;
 			float dmg = ModInfo.DEV ? damage : Math.min(isHardMode() ? 60 : 40, damage) * (getAITaskTimer() > 0 ? 0.1F : 1F); // this is OK
 			if(!playersWhoAttacked.containsKey(player.getCommandSenderName())) playersWhoAttacked.put(player.getCommandSenderName(), 1);
@@ -280,8 +267,9 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 						lot = false;
 					}
 					entityDropItem(new ItemStack(ModItems.ancientWill, 1, rand.nextInt(6)), 1F);
-					entityDropItem(new ItemStack(AlfheimItems.elvenResource, lot ? hard ? 8 : 4 : hard ? 5 : 3, ElvenResourcesMetas.MuspelheimEssence), 1F);
-					entityDropItem(new ItemStack(AlfheimItems.elvenResource, lot ? hard ? 8 : 4 : hard ? 5 : 3, ElvenResourcesMetas.NiflheimEssence), 1F);
+					int count = lot ? hard ? 8 : 4 : hard ? 5 : 3;
+					entityDropItem(new ItemStack(AlfheimItems.elvenResource, count, ElvenResourcesMetas.MuspelheimEssence), 1F);
+					entityDropItem(new ItemStack(AlfheimItems.elvenResource, count, ElvenResourcesMetas.NiflheimEssence), 1F);
 					lot = false;
 					if(Math.random() < 0.9) entityDropItem(new ItemStack(ModItems.manaResource, 16 + rand.nextInt(12)), 1F);	// Manasteel
 					if(Math.random() < 0.7) entityDropItem(new ItemStack(ModItems.manaResource, 8 + rand.nextInt(6), 1), 1F);	// Manapearl
@@ -491,35 +479,31 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		{ -4, 1, -4 }
 	};
 
-	private static final List<String> CHEATY_BLOCKS = Arrays.asList(new String[] {
-			"OpenBlocks:beartrap",
-			"ThaumicTinkerer:magnet"
-	});
+	private static final List<String> CHEATY_BLOCKS = Arrays.asList("OpenBlocks:beartrap", "ThaumicTinkerer:magnet");
 	
 	public void spawnPatyklz(boolean c) {
 		ChunkCoordinates source = getSource();
 		Vector3 pos = Vector3.fromEntityCenter(this).sub(0, 0.2, 0);
-		for(int i = 0; i < PYLON_LOCATIONS.length; i++) {
-			int[] arr = PYLON_LOCATIONS[i];
+		for (int[] arr : PYLON_LOCATIONS) {
 			int x = arr[0];
 			int y = arr[1];
 			int z = arr[2];
-
+			
 			Vector3 pylonPos = new Vector3(source.posX + x, source.posY + y, source.posZ + z);
 			double worldTime = ticksExisted;
 			worldTime /= 5;
-
+			
 			float rad = 0.75F + (float) Math.random() * 0.05F;
 			double xp = pylonPos.x + 0.5 + Math.cos(worldTime) * rad;
 			double zp = pylonPos.z + 0.5 + Math.sin(worldTime) * rad;
-
+			
 			Vector3 partPos = new Vector3(xp, pylonPos.y, zp);
 			Vector3 mot = pos.copy().sub(partPos).mul(0.04);
-
+			
 			float r = (c ? 0.2F : 0.7F) + (float) Math.random() * 0.3F;
 			float g = (float) Math.random() * 0.3F;
 			float b = (c ? 0.7F : 0.2F) + (float) Math.random() * 0.3F;
-
+			
 			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.25F + (float) Math.random() * 0.1F, -0.075F - (float) Math.random() * 0.015F);
 			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.4F, (float) mot.x, (float) mot.y, (float) mot.z);
 		}
@@ -550,8 +534,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 	public List<EntityPlayer> getPlayersAround() {
 		ChunkCoordinates source = getSource();
 		int range = RANGE + 3;
-		List<EntityPlayer> players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX + 0.5 + range, source.posY + 0.5 + range, source.posZ + 0.5 + range));
-		return players;
+		return (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX + 0.5 + range, source.posY + 0.5 + range, source.posZ + 0.5 + range));
 	}
 	
 	public static boolean isCheatyBlock(World world, int x, int y, int z) {
@@ -560,7 +543,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		return CHEATY_BLOCKS.contains(name);
 	}
 
-	private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
+	private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 	
 	public static boolean isTruePlayer(Entity e) {
 		if(!(e instanceof EntityPlayer)) return false;
@@ -871,18 +854,18 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		Entity entity = null;
 		List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
 		double d0 = 0.0;
-
-		for (int i = 0; i < list.size(); ++i) {
-			Entity entity1 = (Entity)list.get(i);
-
+		
+		for (Object o : list) {
+			Entity entity1 = (Entity) o;
+			
 			if (entity1.canBeCollidedWith()) {
 				float f = 0.3F;
-				AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double)f, (double)f, (double)f);
+				AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double) f, (double) f, (double) f);
 				MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
-
+				
 				if (movingobjectposition1 != null) {
 					double d1 = vec3.distanceTo(movingobjectposition1.hitVec);
-
+					
 					if (d1 < d0 || d0 == 0.0) {
 						entity = entity1;
 						d0 = d1;
@@ -904,7 +887,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		switch (mop.typeOfHit) {
 			case BLOCK: if (onGround) motionY += 0.5; break;
 			case ENTITY: {
-				if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer) mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this), isHardMode() ? 15.0F : 10.0F);
+				if (mop.entityHit instanceof EntityPlayer) mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this), isHardMode() ? 15.0F : 10.0F);
 				break;
 			}
 			case MISS: break;
@@ -988,7 +971,7 @@ public class EntityFlugel extends EntityCreature implements IBotaniaBoss { // En
 		@Override
 		public boolean matches(World world, int x, int y, int z) {
 			return world.getBlock(x, y, z).isBeaconBase(world, x, y, z, x - relPos.posX, y - relPos.posY, z - relPos.posZ);
-		};
+		}
 
 	}
 

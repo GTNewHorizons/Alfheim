@@ -1,31 +1,26 @@
 package alfheim.common.block;
 
-import java.util.Random;
-
 import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import baubles.api.BaublesApi;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.*;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.common.ForgeHooks;
-import vazkii.botania.api.lexicon.ILexiconable;
-import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.*;
 import vazkii.botania.api.mana.ManaItemHandler;
+
+import java.util.Random;
 
 public class BlockPoisonIce extends Block implements ILexiconable {
 
@@ -80,9 +75,7 @@ public class BlockPoisonIce extends Block implements ILexiconable {
 	}
 	
 	@Override
-	public void dropBlockAsItem(World w, int x, int y, int z, ItemStack s) {
-		return;
-	}
+	public void dropBlockAsItem(World w, int x, int y, int z, ItemStack s) {}
 
 	@Override
 	public void onEntityWalking(World w, int x, int y, int z, Entity e) {

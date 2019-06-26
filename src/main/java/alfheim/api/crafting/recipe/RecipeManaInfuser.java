@@ -5,7 +5,7 @@ import vazkii.botania.api.recipe.RecipePetals;
 
 public class RecipeManaInfuser extends RecipePetals {
 	
-	public int mana;
+	public final int mana;
 	
 	public RecipeManaInfuser(int mana, ItemStack out, Object... recipe) {
 		super(out, recipe);
@@ -13,8 +13,8 @@ public class RecipeManaInfuser extends RecipePetals {
 	}
 	
 	public String toString() {
-		String s = "";
-		for (Object ing : getInputs()) s += ((ing).toString() + " + ");
+		StringBuilder s = new StringBuilder();
+		for (Object ing : getInputs()) s.append((ing).toString()).append(" + ");
 		return "Recipe: " + s + " mana*" + mana + " => " + getOutput();
 	}
 

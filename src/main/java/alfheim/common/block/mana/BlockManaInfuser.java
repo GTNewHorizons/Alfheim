@@ -5,9 +5,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.block.tile.TileManaInfuser;
 import alfheim.common.core.registry.AlfheimAchievements;
 import alfheim.common.lexicon.AlfheimLexiconData;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -29,7 +27,7 @@ import vazkii.botania.common.block.ModFluffBlocks;
 
 public class BlockManaInfuser extends BlockContainer implements ILexiconable, IWandHUD, IWandable {
 
-	public static IIcon[] textures = new IIcon[7];
+	public static final IIcon[] textures = new IIcon[7];
 	
 	public BlockManaInfuser() {
 		super(Material.rock);

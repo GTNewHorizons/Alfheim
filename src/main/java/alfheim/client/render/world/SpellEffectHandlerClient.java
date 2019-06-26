@@ -18,7 +18,7 @@ import vazkii.botania.common.Botania;
 
 public class SpellEffectHandlerClient {
 	
-	static Vector3 m = new Vector3();
+	static final Vector3 m = new Vector3();
 	
 	public static void select(Spells s, double x, double y, double z, double x2, double y2, double z2) {
 		if (AlfheimCore.enableMMO) {
@@ -59,7 +59,7 @@ public class SpellEffectHandlerClient {
 	
 	public static void addMana(double enID, double mana) {
 		Entity e = Minecraft.getMinecraft().theWorld.getEntityByID((int) enID);
-		if (e != null && e instanceof EntityPlayer) {
+		if (e instanceof EntityPlayer) {
 			if (mana == 0) for (double d = 0.; d < 1.; d+= .2) spawnBurst(e.posX, e.posY + d, e.posZ, 0.975F, 0.85F, 0.1F);
 			else ((EntityPlayer) e).addPotionEffect(new PotionEffect(AlfheimRegistry.showMana.id, (int) mana, 100, true));
 		}
@@ -145,9 +145,6 @@ public class SpellEffectHandlerClient {
 	}
 	
 	public static void spawnMana(EntityLivingBase living, double mana) {
-		if (mana == 0) {
-			
-		}
 		double d = Math.random() * (mana *= 0.5);
 		m.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize().mul(Math.random()).mul((1.0 * (mana * 0.25)) - (d / mana * (mana * 2.0 / 7.0))).add(0, d, 0);
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, living.posX + m.x, living.posY + m.y, living.posZ + m.z,
@@ -194,7 +191,7 @@ public class SpellEffectHandlerClient {
 		}
 	}
 	
-	public static enum Spells {
+	public enum Spells {
 		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, UPHEAL
 	}
 	
@@ -214,7 +211,7 @@ public class SpellEffectHandlerClient {
 	}
 	
 	public static void onRespawned() {
-		Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
+		Minecraft.getMinecraft().displayGuiScreen(null);
 		Minecraft.getMinecraft().setIngameFocus();
 	}
 }

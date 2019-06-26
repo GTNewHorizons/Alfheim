@@ -51,7 +51,7 @@ public class PacketHandler {
 		ItemNBTHelper.setInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD);
 	}
 
-	public static Field fallBuffer;
+	public static final Field fallBuffer;
 	
 	static {
 		fallBuffer = ASJReflectionHelper.getField(ItemTravelBelt.class, "fallBuffer");
@@ -69,7 +69,7 @@ public class PacketHandler {
 			ItemStack belt = baublesInv.getStackInSlot(3);
 
 			if(belt != null && belt.getItem() instanceof ItemTravelBelt) {
-				float val = ASJReflectionHelper.getValue(fallBuffer, (ItemTravelBelt) belt.getItem(), false);
+				float val = ASJReflectionHelper.getValue(fallBuffer, belt.getItem(), false);
 				player.fallDistance = -val * ((ItemCloudPendant) amuletStack.getItem()).getMaxAllowedJumps();
 			}
 		}

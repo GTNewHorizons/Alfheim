@@ -30,7 +30,7 @@ import vazkii.botania.common.item.ModItems;
 
 public class BlockDreamLeaves extends BlockLeaves implements IGlowingLayerBlock, ILexiconable {
 
-	public IIcon[] textures = new IIcon[3];
+	public final IIcon[] textures = new IIcon[3];
 	
 	public BlockDreamLeaves() {
 		super();

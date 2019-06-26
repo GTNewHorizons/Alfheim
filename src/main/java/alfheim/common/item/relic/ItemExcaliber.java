@@ -46,7 +46,7 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 	private static final String TAG_ATTACKER_USERNAME = "attackerUsername";
 	private static final String TAG_HOME_ID = "homeID";
 	
-	public static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2F, 6.0F, 40);
+	public static final ToolMaterial toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2F, 6.0F, 40);
 	Achievement achievement;
 
 	public ItemExcaliber() {
@@ -161,7 +161,7 @@ public class ItemExcaliber extends ItemManasteelSword implements IRelic, ILensEf
 			}
 		}
 		for (EntityLivingBase living : entities) {
-			if ((!(living instanceof EntityPlayer)) || ((!((EntityPlayer) living).getCommandSenderName().equals(attacker)) && ((MinecraftServer.getServer() == null) || (MinecraftServer.getServer().isPVPEnabled())))) {
+			if ((!(living instanceof EntityPlayer)) || ((!living.getCommandSenderName().equals(attacker)) && ((MinecraftServer.getServer() == null) || (MinecraftServer.getServer().isPVPEnabled())))) {
 				if (living.hurtTime == 0) {
 					int cost = 1;
 					int mana = burst.getMana();

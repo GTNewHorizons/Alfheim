@@ -7,7 +7,6 @@ import alfheim.common.core.registry.AlfheimRegistry;
 import gloomyfolken.hooklib.asm.Hook;
 import gloomyfolken.hooklib.asm.Hook.ReturnValue;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
@@ -37,23 +36,23 @@ public class AlfheimHPHooks {
 			hp = 0.000000000000000000000000000000000000000000001F;
 		
 		if (AlfheimRegistry.sharedHP != null && e.activePotionsMap != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
-			if (flame) e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
+			if (flame) e.getDataWatcher().updateObject(6, MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth()));
 			return;
 		}
 		
 		Party pt = PartySystem.getMobParty(e);
 		if (pt == null) {
-			if (flame) e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
+			if (flame) e.getDataWatcher().updateObject(6, MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth()));
 			return;
 		}
 		
 		EntityLivingBase[] mr = new EntityLivingBase[pt.count];
 		for (int i = 0; i < pt.count; i++) mr[i] = pt.get(i);
 		
-		for (int i = 0; i < mr.length; i++) {
-			if (mr[i] != null) {
-				mr[i].getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, mr[i].getMaxHealth())));
-				if (hp < 0.0F) mr[i].onDeath(DamageSource.outOfWorld);
+		for (EntityLivingBase entityLivingBase : mr) {
+			if (entityLivingBase != null) {
+				entityLivingBase.getDataWatcher().updateObject(6, MathHelper.clamp_float(hp, 0.0F, entityLivingBase.getMaxHealth()));
+				if (hp < 0.0F) entityLivingBase.onDeath(DamageSource.outOfWorld);
 			}
 		}
 	}

@@ -5,8 +5,8 @@ import net.minecraft.entity.ai.EntityAIBase;
 
 public abstract class AIBase extends EntityAIBase {
 	
-	EntityFlugel flugel;
-	AITask task;
+	final EntityFlugel flugel;
+	final AITask task;
 	
 	public AIBase(EntityFlugel flugel, AITask task) {
 		this.flugel = flugel;

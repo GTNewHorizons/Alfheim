@@ -1,10 +1,5 @@
 package alfheim.api.block.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.lib.LibResourceLocations;
@@ -14,9 +9,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 // Used for anomalies - TileAnomaly
 public abstract class SubTileEntity {
@@ -27,7 +23,7 @@ public abstract class SubTileEntity {
 	
 	public static final String TAG_TICKS = "ticks";
 	public static final ArrayList<Object> EMPTY_LIST = new ArrayList<Object>(0);
-	public Random rand = new Random();
+	public final Random rand = new Random();
 	public TileEntity superTile;
 	public int ticks;
 	public boolean worldGen = false;

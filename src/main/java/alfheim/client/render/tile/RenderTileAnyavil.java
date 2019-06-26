@@ -9,7 +9,6 @@ import alfheim.client.model.block.ModelSimpleAnyavil;
 import alfheim.common.block.tile.TileAnyavil;
 import alfheim.common.core.util.AlfheimConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

@@ -1,10 +1,5 @@
 package alfheim.common.core.registry;
 
-import static alexsocol.asjlib.ASJUtilities.*;
-
-import java.util.Arrays;
-import java.util.List;
-
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.lib.LibOreDict;
@@ -17,18 +12,20 @@ import alfheim.common.item.equipment.tool.*;
 import alfheim.common.item.equipment.tool.elementuim.ItemElementiumHoe;
 import alfheim.common.item.equipment.tool.manasteel.ItemManasteelHoe;
 import alfheim.common.item.interaction.thaumcraft.*;
-import alfheim.common.item.material.*;
+import alfheim.common.item.material.ItemElvenResource;
 import alfheim.common.item.relic.*;
 import alfheim.common.item.rod.*;
 import baubles.api.BaubleType;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.item.ModItems;
-import vazkii.botania.common.item.equipment.bauble.*;
+import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak;
 import vazkii.botania.common.item.record.ItemModRecord;
+
+import java.util.*;
+
+import static alexsocol.asjlib.ASJUtilities.register;
 
 public class AlfheimItems {
 	
@@ -49,7 +46,7 @@ public class AlfheimItems {
 	public static Item elementiumHoe;
 	public static Item elfFirePendant;
 	public static Item elfIcePendant;
-	public static Item elvenResource = new ItemElvenResource(); // Because it MUST be constructed BEFORE blocks.
+	public static final Item elvenResource = new ItemElvenResource(); // Because it MUST be constructed BEFORE blocks.
 	public static Item elvoriumBoots;
 	public static Item elvoriumChestplate;
 	public static Item elvoriumHelmet;
@@ -116,8 +113,8 @@ public class AlfheimItems {
 		livingrockPickaxe = new ItemLivingrockPickaxe();
 		lootInterceptor = new ItemLootInterceptor();
 		manasteelHoe = new ItemManasteelHoe();
-		manaStone = new ItemManaStorage("ManaStone", 3, (BaubleType) null);
-		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, (BaubleType) null);
+		manaStone = new ItemManaStorage("ManaStone", 3, null);
+		manaStoneGreater = new ItemManaStorage("ManaStoneGreater", 8, null);
 		manaRingElven = new ItemManaStorage("ManaRingElven", 5, BaubleType.RING);
 		auraRingElven = new ItemAuraRingAlfheim("AuraRingElven");
 		manaRingGod = new ItemManaStorage("ManaRingGod", 10, BaubleType.RING);

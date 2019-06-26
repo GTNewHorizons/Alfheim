@@ -8,13 +8,13 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class Message0d extends ASJPacket {
 
-	public int type;
+	public final int type;
 	
 	public Message0d(m0d ty) {
 		type = ty.ordinal();
 	}
 	
-	public static enum m0d {
+	public enum m0d {
 		DODGE, JUMP
 	}
 	

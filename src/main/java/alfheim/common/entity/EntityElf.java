@@ -66,8 +66,7 @@ public class EntityElf extends EntityCreature implements IMerchant, INpc {
 	public boolean attackEntityAsMob(Entity entity) {
 		attackTimer = 10;
 		worldObj.setEntityState(this, (byte)4);
-		boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(3 + rand.nextInt(5)));
-		return flag;
+		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(3 + rand.nextInt(5)));
 	}
 	
 	@Override

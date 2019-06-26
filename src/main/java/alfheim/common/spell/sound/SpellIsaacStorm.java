@@ -7,8 +7,6 @@ import alfheim.common.entity.spell.EntitySpellIsaacMissile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.util.AxisAlignedBB;
-import vazkii.botania.common.entity.EntityMagicMissile;
-import vazkii.botania.common.item.rod.ItemMissileRod;
 
 public class SpellIsaacStorm extends SpellBase {
 

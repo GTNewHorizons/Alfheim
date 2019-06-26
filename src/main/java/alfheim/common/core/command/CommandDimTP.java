@@ -47,13 +47,13 @@ public class CommandDimTP extends CommandBase {
 					if (s == null) s = w.getSpawnPoint();
 			   		ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, id, s.posX, s.posY, s.posZ);
 				} catch (Throwable e) {
-					throw new WrongUsageException("alfheim.commands.tpdim.worlderr", new Object[0]);
+					throw new WrongUsageException("alfheim.commands.tpdim.worlderr");
 				}
 			} catch (NumberFormatException nfe) {
-				throw new WrongUsageException("alfheim.commands.tpdim.wrongid", new Object[0]);
+				throw new WrongUsageException("alfheim.commands.tpdim.wrongid");
 			}
 		} else {
-			throw new WrongUsageException("alfheim.commands.tpdim.wrong", new Object[0]);
+			throw new WrongUsageException("alfheim.commands.tpdim.wrong");
 		}
 	}
 }

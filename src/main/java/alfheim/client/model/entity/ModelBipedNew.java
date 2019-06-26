@@ -11,18 +11,18 @@ public class ModelBipedNew extends ModelBase {
 	
 	public static final ModelBipedNew model = new ModelBipedNew();
 	
-	public ModelRenderer head;
-	public ModelRenderer hair;
-	public ModelRenderer body;
-	public ModelRenderer chest;
-	public ModelRenderer rightarm;
-	public ModelRenderer rightglove;
-	public ModelRenderer leftarm;
-	public ModelRenderer leftglove;
-	public ModelRenderer rightleg;
-	public ModelRenderer rightboot;
-	public ModelRenderer leftleg;
-	public ModelRenderer leftboot;
+	public final ModelRenderer head;
+	public final ModelRenderer hair;
+	public final ModelRenderer body;
+	public final ModelRenderer chest;
+	public final ModelRenderer rightarm;
+	public final ModelRenderer rightglove;
+	public final ModelRenderer leftarm;
+	public final ModelRenderer leftglove;
+	public final ModelRenderer rightleg;
+	public final ModelRenderer rightboot;
+	public final ModelRenderer leftleg;
+	public final ModelRenderer leftboot;
 
 	public ModelBipedNew() { // ModelBiped
 		textureWidth = 64;

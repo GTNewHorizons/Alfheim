@@ -1,18 +1,13 @@
 package alfheim.common.block.tile;
 
-import java.util.List;
-import java.util.Random;
-
-import com.google.common.base.Function;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.entity.EnumRace;
-import alfheim.common.core.registry.AlfheimBlocks;
-import alfheim.common.core.registry.AlfheimItems;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
+import com.google.common.base.Function;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,16 +16,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import vazkii.botania.api.lexicon.multiblock.Multiblock;
-import vazkii.botania.api.lexicon.multiblock.MultiblockSet;
+import vazkii.botania.api.lexicon.multiblock.*;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileMod;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import vazkii.botania.common.core.handler.ConfigHandler;
+
+import java.util.*;
 
 public class TileAlfheimPortal extends TileMod {
 	
@@ -235,22 +230,22 @@ public class TileAlfheimPortal extends TileMod {
 	}
 	
 	private boolean checkMultipleConverters(Function<int[], int[]>... converters) {
-		if (!check2DArray(AIR_POSITIONS, Blocks.air, -1, converters))
+		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, converters))
 			return false;
-		if (!check2DArray(DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 0, converters))
+		if (wrong2DArray(DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 0, converters))
 			return false;
-		if (!check2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
+		if (wrong2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
 			return false;
-		if (!check2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false;
-		if (!check2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false;
 		
 		lightPylons(converters);
 		return true;
 	}
 	
-	Random rand = new Random();
+	final Random rand = new Random();
 	
 	private void lightPylons(Function<int[], int[]>... converters) {
 		if (ticksOpen < 50)
@@ -301,16 +296,16 @@ public class TileAlfheimPortal extends TileMod {
 		}
 	}
 	
-	private boolean check2DArray(int[][] positions, Block block, int meta, Function<int[], int[]>... converters) {
+	private boolean wrong2DArray(int[][] positions, Block block, int meta, Function<int[], int[]>... converters) {
 		for (int[] pos : positions) {
 			for (Function<int[], int[]> f : converters)
 				if (f != null)
 					pos = f.apply(pos);
 			
 			if (!checkPosition(pos, block, meta))
-				return false;
+				return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private boolean checkPosition(int[] pos, Block block, int meta) {

@@ -1,7 +1,5 @@
 package alfheim.common.entity.spell;
 
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
@@ -10,13 +8,13 @@ import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.SpellEffectHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.*;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public class EntitySpellHarp extends Entity implements ITimeStopSpecific {
 
@@ -34,10 +32,9 @@ public class EntitySpellHarp extends Entity implements ITimeStopSpecific {
 	}
 
     public void onUpdate() {
-    	if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster == null || (caster != null && caster.isDead)))) {
+    	if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster == null || caster.isDead)) {
             setDead();
-            return;
-        } else {
+	    } else {
         	if (!ASJUtilities.isServer()) return;
         	super.onUpdate();
         	

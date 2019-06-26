@@ -1,19 +1,15 @@
 package alfheim.common.core.command;
 
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
 import alfheim.common.core.util.AlfheimConfig;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandNotFoundException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
+
+import java.util.List;
 
 public class CommandRace extends CommandBase {
 
@@ -24,7 +20,7 @@ public class CommandRace extends CommandBase {
 	
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender sender) {
-		return AlfheimCore.enableElvenStory && sender instanceof EntityPlayer && AlfheimConfig.enableWingsNonAlfheim ? true : ((EntityPlayer) sender).dimension == AlfheimConfig.dimensionIDAlfheim && EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN;
+		return AlfheimCore.enableElvenStory && sender instanceof EntityPlayer && (AlfheimConfig.enableWingsNonAlfheim || ((EntityPlayer) sender).dimension == AlfheimConfig.dimensionIDAlfheim && EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN);
 	}
 	
 	@Override
@@ -39,10 +35,10 @@ public class CommandRace extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		if (!AlfheimCore.enableElvenStory) throw new CommandNotFoundException("elvenstory.commands.race.unavailable", new Object[0]);
+		if (!AlfheimCore.enableElvenStory) throw new CommandNotFoundException("elvenstory.commands.race.unavailable");
 		if (args.length == 1 && sender instanceof EntityPlayer) {
 			EnumRace r = EnumRace.valueOf(EnumRace.unlocalize(args[0]));
-			if (r == null || r == EnumRace.ALV || r == EnumRace.HUMAN) throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
+			if (r == EnumRace.ALV || r == EnumRace.HUMAN) throw new WrongUsageException(getCommandUsage(sender));
 			if (EnumRace.getRace((EntityPlayer) sender) == EnumRace.HUMAN) {
 				((EntityPlayer) sender).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
 				((EntityPlayer) sender).capabilities.allowFlying = true;
@@ -51,7 +47,7 @@ public class CommandRace extends CommandBase {
 				ASJUtilities.sendToDimensionWithoutPortal((EntityPlayer) sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal()].xCoord, AlfheimConfig.zones[r.ordinal()].yCoord, AlfheimConfig.zones[r.ordinal()].zCoord);
 			}
 		} else {
-			throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
+			throw new WrongUsageException(getCommandUsage(sender));
 		}
 	}
 

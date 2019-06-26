@@ -2,9 +2,9 @@ package alfheim;
 
 public interface DevInfo {
 	
-	public static final String[] fixes = {};
+	String[] fixes = {};
 	
-	public static final String[] todo = {
+	String[] todo = {
 		"Партиклы из OSM",
 			
 		// Магия:

@@ -1,25 +1,23 @@
 package alfheim.common.block.tile.sub;
 
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.block.tile.SubTileEntity;
-import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.Botania;
+
+import java.util.List;
 
 public class SubTileGravity extends SubTileEntity {
 	
 	public static final String TAG_POWER = "power";
 	public double power = 0.65;
-	Vector3 vt = new Vector3();
-	Vector3 ve = new Vector3();
+	final Vector3 vt = new Vector3();
+	final Vector3 ve = new Vector3();
 	
 	@Override
 	public void update() {
@@ -59,20 +57,20 @@ public class SubTileGravity extends SubTileEntity {
 	
 	@Override
 	public void performEffect(Object target) {
-		if (target == null || !(target instanceof Entity)) return;
+		if (!(target instanceof Entity)) return;
 		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
 		
 		Entity entity = (Entity) target;
-		double radius = power * 10, dist = 0, str = 0;
+		double radius = power * 10, dist, str = 0;
 		
 		ve.set(entity);
 		
 		if (!ASJUtilities.isServer()) if (entity == Minecraft.getMinecraft().thePlayer) ve.add(0, -1.62, 0);
 		
-		if ((dist = Math.sqrt(Math.pow(ve.x - x() + 0.5, 2) + Math.pow(ve.y - y() + 0.5, 2) + Math.pow(ve.z - z() + 0.5, 2))) > radius) return;;
+		if ((dist = Math.sqrt(Math.pow(ve.x - x() + 0.5, 2) + Math.pow(ve.y - y() + 0.5, 2) + Math.pow(ve.z - z() + 0.5, 2))) > radius) return;
 		
 		vt.set(superTile).add(0.5);
-		vt.set(vt).sub(ve).normalize().mul(str = power * 0.5 * 1/dist);
+		vt.set(vt).sub(ve).normalize().mul(power * 0.5 * 1/dist);
 		
 		entity.motionX += vt.x;
 		entity.motionY += vt.y * 1.25;

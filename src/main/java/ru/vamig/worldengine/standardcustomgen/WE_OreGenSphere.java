@@ -16,14 +16,14 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 
 public class WE_OreGenSphere implements IWorldGenerator {
 	
-	public List<Integer>
-		fieldMinY            = new ArrayList(),
-		fieldMaxY            = new ArrayList(),
-		fieldMinRadius       = new ArrayList(),
-		fieldMaxRadius       = new ArrayList(),
-		oreInMaxFieldDensity = new ArrayList(),
-		chunksForField       = new ArrayList();
-	public List<WorldGenMinable> oreGen = new ArrayList();
+	public final List<Integer>
+		fieldMinY            = new ArrayList();
+	public final List<Integer> fieldMaxY            = new ArrayList();
+	public final List<Integer> fieldMinRadius       = new ArrayList();
+	public final List<Integer> fieldMaxRadius       = new ArrayList();
+	public final List<Integer> oreInMaxFieldDensity = new ArrayList();
+	public final List<Integer> chunksForField       = new ArrayList();
+	public final List<WorldGenMinable> oreGen = new ArrayList();
 	
 	public void add(Block oreBlock, byte oreBlockMeta, Block replacingBlock, int oreBlockCountInLode, int p_fieldMinY, int p_fieldMaxY, int p_fieldMinRadius, int p_fieldMaxRadius, int p_oreInMaxFieldDensity, int p_chunksForField) {
 		oreGen.add(new WorldGenMinable(oreBlock, oreBlockMeta, oreBlockCountInLode, replacingBlock));

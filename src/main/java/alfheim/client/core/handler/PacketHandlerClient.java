@@ -5,8 +5,7 @@ import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.spell.SpellBase.SpellCastResult;
-import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
-import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.client.core.handler.CardinalSystemClient.*;
 import alfheim.client.core.proxy.ClientProxy;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
@@ -38,7 +37,7 @@ public class PacketHandlerClient {
 
 	public static void handle(MessageParty packet) {
 		CardinalSystemClient.segment().party = packet.party;
-		CardinalSystemClient.segment.partyIndex = 0;
+		PlayerSegmentClient.partyIndex = 0;
 	}
 
 	public static void handle(MessageHotSpellC packet) {
@@ -48,7 +47,7 @@ public class PacketHandlerClient {
 	public static void handle(MessageTileItem packet) {
 		World world = Minecraft.getMinecraft().theWorld;
 		TileEntity te = world.getTileEntity(packet.x, packet.y, packet.z);
-		if (te != null && te instanceof ItemContainingTileEntity) ((ItemContainingTileEntity) te).setItem(packet.s);
+		if (te instanceof ItemContainingTileEntity) ((ItemContainingTileEntity) te).setItem(packet.s);
 	}
 
 	public static void handle(MessageTimeStop packet) {
@@ -56,6 +55,7 @@ public class PacketHandlerClient {
 		TimeStopSystemClient.stop(packet.x, packet.y, packet.z, packet.party, packet.id);
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	public static void handle(Message1d packet) {
 		switch (m1d.values()[packet.type]) {
 			case DEATH_TIMER: AlfheimConfig.deathScreenAddTime = (int) packet.data1; break;

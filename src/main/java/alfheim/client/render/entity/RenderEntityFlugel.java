@@ -15,7 +15,7 @@ import vazkii.botania.client.core.helper.ShaderHelper;
 
 public class RenderEntityFlugel extends RenderLiving {
 
-	public static ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.halo) {
+	public static final ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.halo) {
 		
 		@Override
 		public void preRender() {

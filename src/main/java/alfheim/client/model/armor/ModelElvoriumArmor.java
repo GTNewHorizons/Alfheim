@@ -28,7 +28,7 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 	@Override
 	public void pre(Entity entity) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elvoriumArmor);
-		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
+		if (entity instanceof EntityPlayer && entity.getCommandSenderName().equals("GedeonGrays")) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			if (Minecraft.getMinecraft().thePlayer.getCommandSenderName().equals("GedeonGrays") && !AlfheimConfig.fancies) return;
@@ -38,7 +38,7 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 
 	@Override
 	public void post(Entity entity) {
-		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getCommandSenderName().equals("GedeonGrays")) {
+		if (entity instanceof EntityPlayer && entity.getCommandSenderName().equals("GedeonGrays")) {
 			glDisable(GL_BLEND);
 			ShaderHelper.releaseShader();
 		}
@@ -130,6 +130,6 @@ public class ModelElvoriumArmor extends AdvancedArmorModel {
 	
 	public static boolean ink(Entity e, int slot) {
 		slot = 3 - slot;
-		return e != null && e instanceof EntityPlayer && ((EntityPlayer) e).inventory.armorItemInSlot(slot) != null && ((EntityPlayer) e).inventory.armorItemInSlot(slot).getItem() instanceof IPhantomInkable && ((IPhantomInkable) ((EntityPlayer) e).inventory.armorItemInSlot(slot).getItem()).hasPhantomInk(((EntityPlayer) e).inventory.armorItemInSlot(slot));
+		return e instanceof EntityPlayer && ((EntityPlayer) e).inventory.armorItemInSlot(slot) != null && ((EntityPlayer) e).inventory.armorItemInSlot(slot).getItem() instanceof IPhantomInkable && ((IPhantomInkable) ((EntityPlayer) e).inventory.armorItemInSlot(slot).getItem()).hasPhantomInk(((EntityPlayer) e).inventory.armorItemInSlot(slot));
 	}
 }

@@ -4,8 +4,8 @@ import java.util.UUID;
 
 /**
  * Used to check whether this [tile]entity is affectable by time-stop
- * @see alfheim.common.core.handler.CardinalSystem.TimeStopSystem#affected(Entity e)
- * @see alfheim.common.core.handler.CardinalSystem.TimeStopSystem#affected(TileEntity te)
+ * @see alfheim.common.core.handler.CardinalSystem.TimeStopSystem#affected(net.minecraft.entity.Entity e)
+ * @see alfheim.common.core.handler.CardinalSystem.TimeStopSystem#affected(net.minecraft.tileentity.TileEntity te)
  * 
  */
 public interface ITimeStopSpecific {

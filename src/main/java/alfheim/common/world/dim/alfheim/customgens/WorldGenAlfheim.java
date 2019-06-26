@@ -1,8 +1,5 @@
 package alfheim.common.world.dim.alfheim.customgens;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import alfheim.api.AlfheimAPI;
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
@@ -15,11 +12,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import java.util.*;
+
 public class WorldGenAlfheim implements IWorldGenerator {
 	
-	public static ArrayList<String> common = new ArrayList<String>();
-	public static ArrayList<String> epic = new ArrayList<String>();
-	public static ArrayList<String> rare = new ArrayList<String>();
+	public static final ArrayList<String> common = new ArrayList<String>();
+	public static final ArrayList<String> epic = new ArrayList<String>();
+	public static final ArrayList<String> rare = new ArrayList<String>();
 	
 	static {
 		for (String s : AlfheimAPI.anomalies.keySet())
@@ -77,7 +76,7 @@ public class WorldGenAlfheim implements IWorldGenerator {
 		
 		world.setBlock(x, y, z, AlfheimBlocks.anomaly);
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te != null && te instanceof TileAnomaly) {
+		if (te instanceof TileAnomaly) {
 			SubTileEntity sub = SubTileEntity.forName(type);
 			sub.worldGen = true;
 			

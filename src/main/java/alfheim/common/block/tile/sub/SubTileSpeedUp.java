@@ -1,17 +1,12 @@
 package alfheim.common.block.tile.sub;
 
 import java.util.List;
-import java.util.Random;
 
-import alexsocol.asjlib.math.Vector3;
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import alfheim.common.block.tile.TileAnomaly;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import vazkii.botania.common.Botania;
 
 public class SubTileSpeedUp extends SubTileEntity {

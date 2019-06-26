@@ -1,29 +1,21 @@
 package alfheim.common.entity.spell;
 
-import java.util.List;
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.spell.ITimeStopSpecific;
-import alfheim.api.spell.SpellBase;
+import alfheim.api.spell.*;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.util.DamageSourceSpell;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import vazkii.botania.common.block.ModBlocks;
+
+import java.util.*;
 
 public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
 	
@@ -45,7 +37,7 @@ public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
 	
 	public void onImpact(MovingObjectPosition mop) {
 		if (!worldObj.isRemote) {
-			if (mop != null && mop.entityHit != null && mop.entityHit instanceof EntityLivingBase && !PartySystem.mobsSameParty((EntityLivingBase) mop.entityHit, caster)) {
+			if (mop != null && mop.entityHit instanceof EntityLivingBase && !PartySystem.mobsSameParty((EntityLivingBase) mop.entityHit, caster)) {
 				mop.entityHit.attackEntityFrom(DamageSource.fallingBlock, 8);
 				if (mop.entityHit instanceof EntityPlayer) ((EntityPlayer) mop.entityHit).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, 20)));
 			}
@@ -60,7 +52,6 @@ public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
 	public void onUpdate() {
 		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster != null && caster.isDead || !worldObj.blockExists((int)posX, (int)posY, (int)posZ)))) {
 			setDead();
-			return;
 		} else {
 			if (!ASJUtilities.isServer()) {
 				worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ModBlocks.livingrock) + "_0", posX + Math.random() - 0.5, posY, posZ + Math.random() - 0.5, motionX / -10, -0.05, motionX / -10);
@@ -93,7 +84,8 @@ public class EntitySpellMortar extends Entity implements ITimeStopSpecific {
 			float f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
 			rotationYaw = (float)(Math.atan2(motionZ, motionX) * 180.0D / Math.PI) + 90.0F;
 			
-			for (rotationPitch = (float)(Math.atan2((double)f1, motionY) * 180.0D / Math.PI) - 90.0F; rotationPitch - prevRotationPitch < -180.0F; prevRotationPitch -= 360.0F);
+			rotationPitch = (float)(Math.atan2((double)f1, motionY) * 180.0D / Math.PI) - 90.0F;
+			while (rotationPitch - prevRotationPitch < -180.0F) prevRotationPitch -= 360.0F;
 			while (rotationPitch - prevRotationPitch >= 180.0F) prevRotationPitch += 360.0F;
 			while (rotationYaw - prevRotationYaw < -180.0F) prevRotationYaw -= 360.0F;
 			while (rotationYaw - prevRotationYaw >= 180.0F) prevRotationYaw += 360.0F;

@@ -1,13 +1,10 @@
 package alfheim.common.block.tile.sub;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import alfheim.api.block.tile.SubTileEntity;
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity;
 import alfheim.common.block.tile.TileAnomaly;
-import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import vazkii.botania.common.Botania;

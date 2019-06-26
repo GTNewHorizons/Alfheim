@@ -23,20 +23,19 @@ public class TGHandlerBotaniaRenderer {
 		EntityPlayer player = event.entityPlayer;
 		ItemStack[] tgInv = TravellersGearAPI.getExtendedInventory(player);
 		
-		for(int i = 0; i < tgInv.length; i++) {
-			ItemStack stack = tgInv[i];
-			if(stack != null) {
+		for (ItemStack stack : tgInv) {
+			if (stack != null) {
 				Item item = stack.getItem();
 				
-				if(item instanceof IPhantomInkable) {
+				if (item instanceof IPhantomInkable) {
 					IPhantomInkable inkable = (IPhantomInkable) item;
-					if(inkable.hasPhantomInk(stack)) continue;
+					if (inkable.hasPhantomInk(stack)) continue;
 				}
 				
-				if(item instanceof ICosmeticAttachable) {
+				if (item instanceof ICosmeticAttachable) {
 					ICosmeticAttachable attachable = (ICosmeticAttachable) item;
 					ItemStack cosmetic = attachable.getCosmeticItem(stack);
-					if(cosmetic != null) {
+					if (cosmetic != null) {
 						glPushMatrix();
 						glColor4f(1F, 1F, 1F, 1F);
 						((IBaubleRender) cosmetic.getItem()).onPlayerBaubleRender(cosmetic, event, RenderType.BODY);
@@ -45,7 +44,7 @@ public class TGHandlerBotaniaRenderer {
 					}
 				}
 				
-				if(item instanceof IBaubleRender) {
+				if (item instanceof IBaubleRender) {
 					glPushMatrix();
 					glColor4f(1F, 1F, 1F, 1F);
 					((IBaubleRender) stack.getItem()).onPlayerBaubleRender(stack, event, RenderType.BODY);

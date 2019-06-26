@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class ItemPaperBreak extends Item {
 
-	public static IIcon[] textures = new IIcon[2];
+	public static final IIcon[] textures = new IIcon[2];
 	
 	public ItemPaperBreak() {
 		setCreativeTab(AlfheimCore.alfheimTab);

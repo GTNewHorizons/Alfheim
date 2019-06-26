@@ -1,22 +1,14 @@
 package alfheim.common.core.asm;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-import alexsocol.asjlib.ASJUtilities;
-import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 
+import java.io.*;
+import java.util.Arrays;
+
 public class AlfheimASMData {
 	
-	private static final int DATA[] = { 1, 1, 22 };
+	private static final int[] DATA = { 1, 1, 22 };
 	
 	static void load() {
 		new File("config/Alfheim").mkdirs();
@@ -81,7 +73,7 @@ public class AlfheimASMData {
 		
 		try {
 			FileWriter fw = new FileWriter(f);
-			fw.write(Arrays.toString(DATA).replaceAll(",", "").replaceAll("\\[", "").replaceAll("\\]", ""));
+			fw.write(Arrays.toString(DATA).replaceAll(",", "").replaceAll("\\[", "").replaceAll("]", ""));
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

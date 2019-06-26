@@ -16,7 +16,7 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class BlockDreamLog extends BlockLog implements ILexiconable {
 
-	public IIcon[] textures = new IIcon[2]; 
+	public final IIcon[] textures = new IIcon[2];
 	
 	public BlockDreamLog() {
 		super();

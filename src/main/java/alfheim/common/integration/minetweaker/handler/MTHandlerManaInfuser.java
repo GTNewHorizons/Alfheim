@@ -70,7 +70,7 @@ public class MTHandlerManaInfuser {
 	private static class Remove implements IUndoableAction {
 
 		private final ItemStack output;
-		ArrayList<RecipeManaInfuser> removed = new ArrayList<RecipeManaInfuser>();
+		final ArrayList<RecipeManaInfuser> removed = new ArrayList<RecipeManaInfuser>();
 		
 		public Remove(ItemStack stack) {
 			output = stack;
@@ -78,7 +78,7 @@ public class MTHandlerManaInfuser {
 
 		@Override
 		public void apply() {
-			RecipeManaInfuser rec = null; 
+			RecipeManaInfuser rec;
 			do {
 				removed.add(rec = AlfheimAPI.removeInfusionRecipe(output));
 			} while (rec != null);

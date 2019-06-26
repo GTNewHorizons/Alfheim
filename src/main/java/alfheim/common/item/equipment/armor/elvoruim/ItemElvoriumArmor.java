@@ -1,39 +1,31 @@
 package alfheim.common.item.equipment.armor.elvoruim;
 
-import java.util.List;
-import java.util.UUID;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
+import alfheim.api.*;
 import alfheim.client.model.armor.ModelElvoriumArmor;
 import alfheim.common.core.registry.AlfheimItems;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
+import com.google.common.collect.*;
 import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
 import vazkii.botania.api.item.IManaProficiencyArmor;
 import vazkii.botania.api.mana.IManaDiscountArmor;
-import vazkii.botania.client.lib.LibResources;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
+
+import java.util.*;
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
 public class ItemElvoriumArmor extends ItemManasteelArmor implements IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
@@ -57,7 +49,7 @@ public class ItemElvoriumArmor extends ItemManasteelArmor implements IManaDiscou
 
 	@Override
 	public boolean getIsRepairable(ItemStack armor, ItemStack material) {
-		return material.getItem() == AlfheimItems.elvenResource && material.getItemDamage() == ElvenResourcesMetas.ElvoriumIngot ? true : super.getIsRepairable(armor, material);
+		return material.getItem() == AlfheimItems.elvenResource && material.getItemDamage() == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material);
 	}
 
 	@Override
@@ -136,7 +128,7 @@ public class ItemElvoriumArmor extends ItemManasteelArmor implements IManaDiscou
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
 		super.onArmorTick(world, player, stack);
 		if (!stack.hasTagCompound()) stack.stackTagCompound = new NBTTagCompound();
-		if (player instanceof EntityPlayer) stack.stackTagCompound.setBoolean("SET", hasArmorSet((EntityPlayer) player));
+		if (player != null) stack.stackTagCompound.setBoolean("SET", hasArmorSet(player));
 	}
 	
 	@Override

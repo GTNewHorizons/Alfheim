@@ -1,26 +1,13 @@
 package alfheim.common.core.handler;
 
-import static alfheim.common.network.Message2d.m2d.*;
-import static alfheim.common.network.Message3d.m3d.*;
-
-import java.io.*;
-import java.util.*;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
+import alfheim.api.*;
 import alfheim.api.entity.EnumRace;
-import alfheim.api.event.EntityUpdateEvent;
-import alfheim.api.event.SpellCastEvent;
-import alfheim.api.event.TileUpdateEvent;
-import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent;
-import alfheim.api.event.TimeStopCheckEvent.TimeStopTileCheckEvent;
-import alfheim.api.spell.ITimeStopSpecific;
-import alfheim.api.spell.SpellBase;
-import alfheim.common.core.handler.CardinalSystem.PlayerSegment;
-import alfheim.common.core.handler.CardinalSystem.TimeStopSystem;
+import alfheim.api.event.*;
+import alfheim.api.event.TimeStopCheckEvent.*;
+import alfheim.api.spell.*;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
@@ -28,34 +15,33 @@ import alfheim.common.core.registry.AlfheimRegistry;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.network.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.*;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.boss.IBossDisplayData;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.*;
+import net.minecraft.potion.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.mana.ICreativeManaProvider;
-import vazkii.botania.api.mana.IManaItem;
+import vazkii.botania.api.mana.*;
+
+import java.io.*;
+import java.util.UUID;
+import java.util.*;
+
+import static alfheim.common.network.Message2d.m2d.*;
+import static alfheim.common.network.Message3d.m3d.PARTY_STATUS;
 
 public class CardinalSystem {
 	
@@ -147,7 +133,7 @@ public class CardinalSystem {
 			for (Knowledge kn : Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(new Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal()), player);
 		}
 		
-		public static enum Knowledge {
+		public enum Knowledge {
 			GLOWSTONE, PYLONS
 		}
 	}
@@ -233,7 +219,6 @@ public class CardinalSystem {
 				
 				if (TimeStopSystem.affected(e.caster)) {
 					e.setCanceled(true);
-					return;
 				}
 			}
 			
@@ -308,7 +293,6 @@ public class CardinalSystem {
 						player.addPotionEffect(new PotionEffect(AlfheimRegistry.quadDamage.id, 600, 0, false));
 						AlfheimCore.network.sendToAll(new MessageEffect(e.entity.getEntityId(), AlfheimRegistry.quadDamage.id, 600, 0));
 						e.setCanceled(true);
-						return;
 					}
 				}
 			}
@@ -455,20 +439,17 @@ public class CardinalSystem {
 					return true;
 				}
 			}
-			if (source.getEntity() != null && source.getEntity() instanceof EntityLivingBase && mobsSameParty(entityLiving, (EntityLivingBase) source.getEntity())) {
-				return true;
-			}
-			return false;
+			return source.getEntity() != null && source.getEntity() instanceof EntityLivingBase && mobsSameParty(entityLiving, (EntityLivingBase) source.getEntity());
 		}
 		
 		public static void notifySpawn(Entity e) {
-			if (e != null && e instanceof EntityLivingBase) {
+			if (e instanceof EntityLivingBase) {
 				for (PlayerSegment segment : playerSegments.values()) {
 					if (segment.party.isMember((EntityLivingBase) e)) {
 						for (int i = 0; i < segment.party.count; i++) {
 							if (segment.party.isPlayer(i)) {
 								EntityLivingBase mr = segment.party.get(i);
-								if (mr != null && mr instanceof EntityPlayerMP) {
+								if (mr instanceof EntityPlayerMP) {
 									AlfheimCore.network.sendTo(new Message2d(UUID, e.getEntityId(), segment.party.indexOf((EntityLivingBase) e)), (EntityPlayerMP) mr);
 								}
 							}
@@ -483,7 +464,7 @@ public class CardinalSystem {
 			private static final long serialVersionUID = 84616843168484257L;
 			
 			/** Flag for server's storing functions */
-			private static transient boolean serverIO = false;
+			private static final transient boolean serverIO = false;
 			
 			private Member[] members;
 			public int count;
@@ -519,7 +500,7 @@ public class CardinalSystem {
 						}
 					} else {
 						Entity e = Minecraft.getMinecraft().theWorld.getEntityByID((int) members[i].uuid.getMostSignificantBits());
-						return e != null && e instanceof EntityLivingBase ? (EntityLivingBase) e : null;
+						return e instanceof EntityLivingBase ? (EntityLivingBase) e : null;
 					}
 				}
 				return null;
@@ -614,7 +595,7 @@ public class CardinalSystem {
 						for (int j = 0; j < count; j++) {
 							if (members[j].isPlayer) {
 								EntityLivingBase e = get(j);
-								if (e != null && e instanceof EntityPlayer) ((EntityPlayer) e).addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("alfheimmisc.party.memberdied"), mr.getCommandSenderName())));;
+								if (e instanceof EntityPlayer) ((EntityPlayer) e).addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("alfheimmisc.party.memberdied"), mr.getCommandSenderName())));
 							}
 						}
 					}
@@ -718,7 +699,7 @@ public class CardinalSystem {
 				}
 			}
 			
-			public static enum PartyStatus {
+			public enum PartyStatus {
 				DEAD, MANA
 			}
 			
@@ -841,7 +822,7 @@ public class CardinalSystem {
 		}
 		
 		public static void tick() {
-			TimeStopArea tsa = null;
+			TimeStopArea tsa;
 			for (Integer dim : tsAreas.keySet()) {
 				LinkedList tsas = tsAreas.get(dim);
 				Iterator<TimeStopArea> i = tsas.iterator();
@@ -919,7 +900,7 @@ public class CardinalSystem {
 			
 			@SubscribeEvent
 			public void onEntityUpdate(EntityUpdateEvent e) {
-				if (e.entity == null || !e.entity.isEntityAlive()) return;
+				if (!e.entity.isEntityAlive()) return;
 				if (AlfheimCore.enableMMO && ASJUtilities.isServer() && affected(e.entity)) e.setCanceled(true);
 			}
 			
@@ -1002,7 +983,7 @@ public class CardinalSystem {
 			}
 		}
 		
-		private void readObjectNoData() throws ObjectStreamException {
+		private void readObjectNoData() {
 			for (SpellBase spell : AlfheimAPI.spells) coolDown.put(spell, 0);
 		}
 	}

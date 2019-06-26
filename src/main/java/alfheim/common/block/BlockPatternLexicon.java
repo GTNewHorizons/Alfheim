@@ -16,10 +16,10 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class BlockPatternLexicon extends BlockFalling implements ILexiconable {
 
-	private LexiconEntry entry;
-	private boolean isBeacon;
-	private boolean isOpaque;
-	private boolean isFalling;
+	private final LexiconEntry entry;
+	private final boolean isBeacon;
+	private final boolean isOpaque;
+	private final boolean isFalling;
 
 	public BlockPatternLexicon(String modid, Material material, String name, CreativeTabs tab, float lightlvl, int lightOpacity, float hardness, String harvTool, int harvLvl, float resistance, Block.SoundType sound, boolean isOpaque, boolean isBeaconBase, boolean isFalling, LexiconEntry entry) {
 		super(material);

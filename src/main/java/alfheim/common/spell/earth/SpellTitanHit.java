@@ -72,7 +72,7 @@ public class SpellTitanHit extends SpellBase {
 				int localMeta = world.getBlockMetadata(x, y, z);
 				if (remove) block.onBlockHarvested(world, x, y, z, localMeta, player);
 
-				if(remove && (flag = block.removedByPlayer(world, player, x, y, z, remove))) {
+				if(remove && (flag = block.removedByPlayer(world, player, x, y, z, true))) {
 					block.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
 
 //					if(!ItemElementiumPick.isDisposable(block))

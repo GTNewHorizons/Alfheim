@@ -11,11 +11,11 @@ import net.minecraft.potion.PotionEffect;
 
 public class MessageEffect extends ASJPacket {
 	
-	public int entity;
-	public int id;
-	public int amp;
-	public int dur;
-	public boolean upd;
+	public final int entity;
+	public final int id;
+	public final int amp;
+	public final int dur;
+	public final boolean upd;
 	
 	public MessageEffect(int e, int i, int d, int a) {
 		this(e, i, d, a, true);
@@ -33,7 +33,7 @@ public class MessageEffect extends ASJPacket {
 		@Override
 		public IMessage onMessage(MessageEffect packet, MessageContext message) {
 			Entity e = message.getClientHandler().clientWorldController.getEntityByID(packet.entity);
-			if (e != null && e instanceof EntityLivingBase) {
+			if (e instanceof EntityLivingBase) {
 				EntityLivingBase l = ((EntityLivingBase) e);
 				PotionEffect pe = l.getActivePotionEffect(Potion.potionTypes[packet.id]);
 				if (packet.dur <= 0) {

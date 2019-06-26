@@ -10,42 +10,42 @@ import net.minecraft.item.ItemStack;
 
 public class ModelElementalArmor extends ModelBiped {
 
-	public ModelRenderer helm;
-	public ModelRenderer body;
-	public ModelRenderer armR;
-	public ModelRenderer armL;
-	public ModelRenderer belt;
-	public ModelRenderer bootR;
-	public ModelRenderer bootL;
-	public ModelRenderer helm1;
-	public ModelRenderer helm2;
-	public ModelRenderer helm3;
-	public ModelRenderer fairy;
-	public ModelRenderer helmWing1;
-	public ModelRenderer helmWing2;
-	public ModelRenderer helmWing3;
-	public ModelRenderer helmWing4;
-	public ModelRenderer body2;
-	public ModelRenderer armRpauldron;
-	public ModelRenderer wing1;
-	public ModelRenderer wing2;
-	public ModelRenderer armLpauldron;
-	public ModelRenderer wing1_1;
-	public ModelRenderer wing2_1;
-	public ModelRenderer legR;
-	public ModelRenderer legL;
-	public ModelRenderer bootR1;
-	public ModelRenderer wing1_2;
-	public ModelRenderer wing2_2;
-	public ModelRenderer bootL1;
-	public ModelRenderer wing1_3;
-	public ModelRenderer wing2_3;
-	public ModelRenderer rightagem;
-	public ModelRenderer leftagem;
-	public ModelRenderer rightfgem;
-	public ModelRenderer leftfgem;
+	public final ModelRenderer helm;
+	public final ModelRenderer body;
+	public final ModelRenderer armR;
+	public final ModelRenderer armL;
+	public final ModelRenderer belt;
+	public final ModelRenderer bootR;
+	public final ModelRenderer bootL;
+	public final ModelRenderer helm1;
+	public final ModelRenderer helm2;
+	public final ModelRenderer helm3;
+	public final ModelRenderer fairy;
+	public final ModelRenderer helmWing1;
+	public final ModelRenderer helmWing2;
+	public final ModelRenderer helmWing3;
+	public final ModelRenderer helmWing4;
+	public final ModelRenderer body2;
+	public final ModelRenderer armRpauldron;
+	public final ModelRenderer wing1;
+	public final ModelRenderer wing2;
+	public final ModelRenderer armLpauldron;
+	public final ModelRenderer wing1_1;
+	public final ModelRenderer wing2_1;
+	public final ModelRenderer legR;
+	public final ModelRenderer legL;
+	public final ModelRenderer bootR1;
+	public final ModelRenderer wing1_2;
+	public final ModelRenderer wing2_2;
+	public final ModelRenderer bootL1;
+	public final ModelRenderer wing1_3;
+	public final ModelRenderer wing2_3;
+	public final ModelRenderer rightagem;
+	public final ModelRenderer leftagem;
+	public final ModelRenderer rightfgem;
+	public final ModelRenderer leftfgem;
 
-	int slot;
+	final int slot;
 
 	public ModelElementalArmor(int slot) {
 		this.slot = slot;
@@ -254,8 +254,8 @@ public class ModelElementalArmor extends ModelBiped {
 
 	public void prepareForRender(Entity entity) {
 		EntityLivingBase living = (EntityLivingBase) entity;
-		isSneak = living != null ? living.isSneaking() : false;
-		if(living != null && living instanceof EntityPlayer) {
+		isSneak = living != null && living.isSneaking();
+		if(living instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) living;
 
 			ItemStack itemstack = player.inventory.getCurrentItem();

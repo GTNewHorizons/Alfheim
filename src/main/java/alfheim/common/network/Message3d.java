@@ -8,8 +8,10 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class Message3d extends ASJPacket {
 	
-	public int type;
-	public double data1, data2, data3;
+	public final int type;
+	public final double data1;
+	public final double data2;
+	public final double data3;
 	
 	public Message3d(m3d ty, double d1, double d2, double d3) {
 		type = ty.ordinal();
@@ -18,7 +20,7 @@ public class Message3d extends ASJPacket {
 		data3 = d3;
 	}
 	
-	public static enum m3d {
+	public enum m3d {
 		PARTY_STATUS, KEY_BIND, WAETHER, TOGGLER
 	}
 	

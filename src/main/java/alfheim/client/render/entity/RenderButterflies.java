@@ -1,23 +1,20 @@
 package alfheim.client.render.entity;
 
-import static org.lwjgl.opengl.GL11.*;
+import alfheim.api.lib.LibResourceLocations;
+import alfheim.common.core.registry.AlfheimRegistry;
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.entity.*;
 
 import java.util.Random;
 
-import alfheim.api.lib.LibResourceLocations;
-import alfheim.common.core.registry.AlfheimRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import static org.lwjgl.opengl.GL11.*;
 
 public class RenderButterflies {
 	
-	static Random rand = new Random();
+	static final Random rand = new Random();
 	
 	@SideOnly(Side.CLIENT)
 	public static void render(Render render, Entity entity, double x, double y, double z, float partialTicks) {
@@ -44,7 +41,7 @@ public class RenderButterflies {
 			glTranslated(0, entity == Minecraft.getMinecraft().thePlayer ? -(Minecraft.getMinecraft().thePlayer.getDefaultEyeHeight() * s) : (entity.height / s) / 2, 0);
 			glRotated(rand.nextDouble() * 360 + entity.ticksExisted, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1);
 			glTranslated(0, 0, -1);
-			drawRect(Tessellator.instance);
+			drawRect();
 			glPopMatrix();
 		}
 
@@ -54,12 +51,12 @@ public class RenderButterflies {
 		glPopMatrix();
 	}
 	
-	private static void drawRect(Tessellator tessellator) {
-		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(-0.2, -0.2, 0, 0, 1);
-		tessellator.addVertexWithUV(-0.2, 0.2, 0, 0, 0);
-		tessellator.addVertexWithUV(0.2, 0.2, 0, 1, 0);
-		tessellator.addVertexWithUV(0.2, -0.2, 0, 1, 1);
-		tessellator.draw();
+	private static void drawRect() {
+		Tessellator.instance.startDrawingQuads();
+		Tessellator.instance.addVertexWithUV(-0.2, -0.2, 0, 0, 1);
+		Tessellator.instance.addVertexWithUV(-0.2, 0.2, 0, 0, 0);
+		Tessellator.instance.addVertexWithUV(0.2, 0.2, 0, 1, 0);
+		Tessellator.instance.addVertexWithUV(0.2, -0.2, 0, 1, 1);
+		Tessellator.instance.draw();
 	}
 }

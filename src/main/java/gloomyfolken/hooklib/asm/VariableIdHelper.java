@@ -12,7 +12,7 @@ import org.objectweb.asm.Type;
 
 public class VariableIdHelper {
 
-	private static ClassMetadataReader classMetadataReader = new ClassMetadataReader();
+	private static final ClassMetadataReader classMetadataReader = new ClassMetadataReader();
 
 	public static List<String> listLocalVariables(byte[] classData, final String methodName, Type... argTypes) {
 		final List<String> localVariables = new ArrayList<String>();

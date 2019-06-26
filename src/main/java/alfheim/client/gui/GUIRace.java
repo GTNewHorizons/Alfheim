@@ -18,7 +18,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
 public class GUIRace extends Gui {
 	
-	private Minecraft mc;
+	private final Minecraft mc;
 	
 	public GUIRace(Minecraft mc) {
 		super();

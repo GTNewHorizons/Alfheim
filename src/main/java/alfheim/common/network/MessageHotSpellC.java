@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
 
 public class MessageHotSpellC implements IMessage {
 
-	public int[] ids;
+	public final int[] ids;
 	
 	public MessageHotSpellC() {
 		ids = new int[12];
@@ -20,7 +20,7 @@ public class MessageHotSpellC implements IMessage {
 	
 	@Override
 	public void toBytes(ByteBuf buf) {
-		for (int i = 0; i < ids.length; i++) buf.writeInt(ids[i]);
+		for (int id : ids) buf.writeInt(id);
 	}
 	
 	@Override

@@ -109,4 +109,4 @@ public enum EnumRace {
 		player.getAttributeMap().registerAttribute(AlfheimAPI.RACE);
 		setRace(player, HUMAN);
 	}
-}; 
+}

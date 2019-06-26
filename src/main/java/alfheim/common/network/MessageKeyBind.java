@@ -70,7 +70,7 @@ public class MessageKeyBind extends ASJPacket {
 				case FLIGHT: KeyBindingHandler.enableFlight(player, packet.state); break;
 				case SEL: {
 					Entity e = player.worldObj.getEntityByID(packet.ticks);
-					if (e != null && e instanceof EntityLivingBase) TargetingSystem.setTarget(player, (EntityLivingBase) e, packet.state); break;
+					if (e instanceof EntityLivingBase) TargetingSystem.setTarget(player, (EntityLivingBase) e, packet.state); break;
 				}
 			}
 			return null;

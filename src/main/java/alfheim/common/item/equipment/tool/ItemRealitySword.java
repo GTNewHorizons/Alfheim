@@ -1,48 +1,33 @@
 package alfheim.common.item.equipment.tool;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
-
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.List;
-
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-
 import alexsocol.asjlib.ASJUtilities;
-import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
+import alfheim.api.*;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.util.DamageSourceSpell;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
+import net.minecraft.item.*;
+import net.minecraft.potion.*;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import vazkii.botania.api.mana.IManaUsingItem;
-import vazkii.botania.api.mana.ManaItemHandler;
-import vazkii.botania.common.Botania;
+import vazkii.botania.api.mana.*;
+
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+import java.nio.charset.Charset;
+import java.security.*;
+import java.util.List;
+
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 
 	public static final String TAG_ELEMENT = "element";
-	public static IIcon[] textures = new IIcon[6];
+	public static final IIcon[] textures = new IIcon[6];
 	
 	public ItemRealitySword() {
 		super(AlfheimAPI.REALITY);
@@ -89,9 +74,9 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	}
 	
 	String merge(String s1, String s2) {
-		String s = "";
-		for (int i = 0; i < s1.length(); i++) for (int j = 0; j < s2.length(); j++) s += (char) ((s1.charAt(i) * s2.charAt(j)) % 256);
-		return hash(s);
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < s1.length(); i++) for (int j = 0; j < s2.length(); j++) s.append((char) ((s1.charAt(i) * s2.charAt(j)) % 256));
+		return hash(s.toString());
 	}
 	
 	String hash(String str) {
@@ -107,7 +92,6 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	
 	// Might as well be called sugar given it's not secure at all :D
 	String salt(String str) {
-		str = str += "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot";
 		SecureRandom rand = new SecureRandom(str.getBytes(Charset.forName("UTF-8")));
 		int l = str.length();
 		int steps = rand.nextInt(l);
@@ -159,7 +143,7 @@ public class ItemRealitySword extends ItemSword implements IManaUsingItem {
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (attacker instanceof EntityPlayer) {
 			int elem = getInt(stack, TAG_ELEMENT, 0);
-			if (elem != 0 && (elem == 5 || ManaItemHandler.requestManaExact(stack, (EntityPlayer) attacker, 1000, !attacker.worldObj.isRemote && elem != 5))) useAbility(elem, attacker, target);
+			if (elem != 0 && (elem == 5 || ManaItemHandler.requestManaExact(stack, (EntityPlayer) attacker, 1000, !attacker.worldObj.isRemote))) useAbility(elem, attacker, target);
 		}
 		return super.hitEntity(stack, target, attacker);
 	}

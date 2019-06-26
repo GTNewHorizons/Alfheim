@@ -11,7 +11,6 @@ import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -26,7 +25,7 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class BlockAlfheimPortal extends BlockContainer implements ILexiconable {
 
-	public static IIcon[] textures = new IIcon[3];
+	public static final IIcon[] textures = new IIcon[3];
 	
 	public BlockAlfheimPortal() {
 		super(Material.wood);

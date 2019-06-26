@@ -40,9 +40,9 @@ public class WE_Biome extends BiomeGenBase {
 	//////////////////
 	//- Generators -//
 	//////////////////
-	public List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
-	public List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
-	public List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
+	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
+	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
+	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
 	
 	/////
 	//=//
@@ -65,7 +65,7 @@ public class WE_Biome extends BiomeGenBase {
 		decorateChunkGen_List.add(new WE_LakeGen());
 		//-//
 		WE_WorldTreeGen treeGen = new WE_WorldTreeGen();
-		treeGen.add(Blocks.log, 0, (Block)Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 8, 1, 8, 4, false,
+		treeGen.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 8, 1, 8, 4, false,
 			(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1, 1, 12, 4, 0.618D, 0.381D, 1.0D, 1.0D);
 		decorateChunkGen_List.add(treeGen);
 		//-//

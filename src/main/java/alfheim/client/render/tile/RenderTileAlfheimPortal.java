@@ -1,7 +1,5 @@
 package alfheim.client.render.tile;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import alfheim.common.block.BlockAlfheimPortal;
 import alfheim.common.block.tile.TileAlfheimPortal;
 import net.minecraft.client.Minecraft;
@@ -11,6 +9,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import vazkii.botania.client.core.handler.ClientTickHandler;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class RenderTileAlfheimPortal extends TileEntitySpecialRenderer {
 
@@ -27,7 +27,7 @@ public class RenderTileAlfheimPortal extends TileEntitySpecialRenderer {
 		glDisable(GL_ALPHA_TEST);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
-		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60) * 0.5);
+		glColor4d(1, 1, 1, Math.min(1, (Math.sin((ClientTickHandler.ticksInGame + ticks) / 8) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60.) * 0.5);
 
 		glTranslated(x - 1, y + 1, z + 0.25);
 		if(meta == 2) {
@@ -52,10 +52,10 @@ public class RenderTileAlfheimPortal extends TileEntitySpecialRenderer {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
 		tessellator.setBrightness(brightness);
-		tessellator.addVertexWithUV(par1 + 0, par2 + par5, 0, par3Icon.getMinU(), par3Icon.getMaxV());
+		tessellator.addVertexWithUV(par1, par2 + par5, 0, par3Icon.getMinU(), par3Icon.getMaxV());
 		tessellator.addVertexWithUV(par1 + par4, par2 + par5, 0, par3Icon.getMaxU(), par3Icon.getMaxV());
-		tessellator.addVertexWithUV(par1 + par4, par2 + 0, 0, par3Icon.getMaxU(), par3Icon.getMinV());
-		tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0, par3Icon.getMinU(), par3Icon.getMinV());
+		tessellator.addVertexWithUV(par1 + par4, par2, 0, par3Icon.getMaxU(), par3Icon.getMinV());
+		tessellator.addVertexWithUV(par1, par2, 0, par3Icon.getMinU(), par3Icon.getMinV());
 		tessellator.draw();
 	}
 }

@@ -14,7 +14,7 @@ import vazkii.botania.common.core.helper.MathHelper;
 public class SubTileAntigrav extends SubTileEntity {
 	
 	public static final double power = 0.7, radius = 15;
-	Vector3 v = new Vector3();
+	final Vector3 v = new Vector3();
 	
 	@Override
 	public void update() {
@@ -34,7 +34,7 @@ public class SubTileAntigrav extends SubTileEntity {
 	
 	@Override
 	public void performEffect(Object target) {
-		if (target == null || !(target instanceof Entity)) return;
+		if (!(target instanceof Entity)) return;
 		if (target instanceof EntityPlayer && ((EntityPlayer) target).capabilities.disableDamage) return;
 		
 		Entity entity = (Entity) target;

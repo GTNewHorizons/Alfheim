@@ -15,7 +15,7 @@ import vazkii.botania.common.Botania;
 public class ItemElvenResource extends Item /*implements IElvenItem, ILensEffect BACK*/ {
 	
 	public static final String[] subItems = new String[] { "InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig"/*, "Transferer" BACK*/ };
-	private IIcon[] texture = new IIcon[subItems.length];
+	private final IIcon[] texture = new IIcon[subItems.length];
 	
 	public static IIcon harp = null;
 	public static IIcon mine = null;

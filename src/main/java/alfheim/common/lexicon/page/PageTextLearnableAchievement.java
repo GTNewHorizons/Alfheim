@@ -7,7 +7,7 @@ import vazkii.botania.common.lexicon.page.PageText;
 
 public class PageTextLearnableAchievement extends PageText {
 
-	Achievement achievement;
+	final Achievement achievement;
 	
 	public PageTextLearnableAchievement(String unName, Achievement ach) {
 		super(unName);

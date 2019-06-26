@@ -15,9 +15,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityGravityTrap extends Render {
 	
-	Random rand = new Random();
+	final Random rand = new Random();
 	
-	public static ShadedObject so = new ShadedObject(LibShaderIDs.idGravity, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.gravity) {
+	public static final ShadedObject so = new ShadedObject(LibShaderIDs.idGravity, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.gravity) {
 		
 		@Override
 		public void preRender() {

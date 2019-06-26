@@ -1,35 +1,25 @@
 package alfheim.common.block;
 
-import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
 import alexsocol.asjlib.extendables.MaterialPublic;
-import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
+import alfheim.api.*;
 import alfheim.common.block.tile.TileAnomaly;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.item.block.ItemBlockAnomaly;
 import alfheim.common.lexicon.AlfheimLexiconData;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.material.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import vazkii.botania.api.lexicon.ILexiconable;
-import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.*;
+
+import java.util.*;
+
+import static vazkii.botania.common.core.helper.ItemNBTHelper.*;
 
 public class BlockAnomaly extends BlockContainer implements ILexiconable {
 	
@@ -65,7 +55,7 @@ public class BlockAnomaly extends BlockContainer implements ILexiconable {
 	}
 	
 	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
 		ItemStack anomaly = new ItemStack(AlfheimBlocks.anomaly);
 		initNBT(anomaly);
 		((TileAnomaly) world.getTileEntity(x, y, z)).writeCustomNBT(getNBT(anomaly));

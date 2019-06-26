@@ -28,7 +28,7 @@ import vazkii.botania.common.lexicon.page.PageRecipe;
 
 public class PageManaInfusorRecipe extends PageRecipe {
 
-	private RecipeManaInfuser recipe;
+	private final RecipeManaInfuser recipe;
 	private int ticksElapsed = 0;
 
 	public PageManaInfusorRecipe(String unlocalizedName, RecipeManaInfuser recipe) {
@@ -50,7 +50,7 @@ public class PageManaInfusorRecipe extends PageRecipe {
 
 		List<Object> inputs = recipe.getInputs();
 		int degreePerInput = (int) (360F / inputs.size());
-		float currentDegree = ConfigHandler.lexiconRotatingItems ? GuiScreen.isShiftKeyDown() ? ticksElapsed : (float) (ticksElapsed + ClientTickHandler.partialTicks) : 0;
+		float currentDegree = ConfigHandler.lexiconRotatingItems ? GuiScreen.isShiftKeyDown() ? ticksElapsed : (ticksElapsed + ClientTickHandler.partialTicks) : 0;
 
 		for(Object obj : inputs) {
 			Object input = obj;

@@ -1,8 +1,5 @@
 package alfheim.common.block.tile;
 
-import java.awt.Color;
-import java.util.List;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alexsocol.asjlib.math.Vector3;
@@ -24,6 +21,9 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.internal.IManaBurst;
 import vazkii.botania.common.Botania;
 import vazkii.botania.common.block.tile.mana.TilePool;
+
+import java.awt.*;
+import java.util.List;
 
 public class TileAnyavil extends ItemContainingTileEntity implements ISidedInventory {
 
@@ -160,7 +160,7 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64.0;
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64.0;
 	}
 
 	@Override
@@ -181,11 +181,11 @@ public class TileAnyavil extends ItemContainingTileEntity implements ISidedInven
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		return side == 1 ? isItemValidForSlot(slot, stack) : false;
+		return side == 1 && isItemValidForSlot(slot, stack);
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return side == 0 && slot == 0 ? !stack.isItemDamaged() : false;
+		return (side == 0 && slot == 0) && !stack.isItemDamaged();
 	}
 }

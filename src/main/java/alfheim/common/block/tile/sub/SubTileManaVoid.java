@@ -19,7 +19,7 @@ public class SubTileManaVoid extends SubTileEntity {
 	public static final String TAG_MANA = "mana";
 	public static int radius = 10;
 	public int mana;
-	Vector3 v = new Vector3();
+	final Vector3 v = new Vector3();
 	
 	@Override
 	public void update() {
@@ -48,7 +48,7 @@ public class SubTileManaVoid extends SubTileEntity {
 	
 	@Override
 	public void performEffect(Object target) {
-		if (target == null || !(target instanceof EntityPlayer)) return;
+		if (!(target instanceof EntityPlayer)) return;
 		EntityPlayer player = (EntityPlayer) target;
 		
 		int m = ManaItemHandler.requestMana(new ItemStack(Blocks.stone), player, 100, true);

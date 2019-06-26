@@ -2,7 +2,6 @@ package alfheim.client.model.block;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
 
 /**
  * ModelSimpleAnyavil - AlexSocol
@@ -10,10 +9,10 @@ import net.minecraft.entity.Entity;
  */
 public class ModelSimpleAnyavil extends ModelBase {
 	
-    public ModelRenderer shape1;
-    public ModelRenderer shape2;
-    public ModelRenderer shape3;
-    public ModelRenderer shape4;
+    public final ModelRenderer shape1;
+    public final ModelRenderer shape2;
+    public final ModelRenderer shape3;
+    public final ModelRenderer shape4;
 
     public ModelSimpleAnyavil() {
         textureWidth = 52;

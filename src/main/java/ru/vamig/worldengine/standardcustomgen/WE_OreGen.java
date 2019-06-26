@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 
 public class WE_OreGen implements IWorldGenerator {
 
-	public List<WorldGenMinableParametrized> oreGen = new ArrayList<WorldGenMinableParametrized>();
+	public final List<WorldGenMinableParametrized> oreGen = new ArrayList<WorldGenMinableParametrized>();
 	
 	public void add(Block ore, Block replace, int meta, int minVeinSize, int maxVeinSize, int minVeinsPerChunk, int maxVeinsPerChunk, int chanceToSpawn, int minY, int maxY) {
 		oreGen.add(new WorldGenMinableParametrized(ore, replace, meta, minVeinSize, maxVeinSize, minVeinsPerChunk, maxVeinsPerChunk, chanceToSpawn, minY, maxY));

@@ -53,6 +53,6 @@ public class MinetweakerAlfheimConfig {
 	}
 	
 	public static String getString(IOreDictEntry entry) {
-		return ((IOreDictEntry) entry).getName();
+		return entry.getName();
 	}
 }

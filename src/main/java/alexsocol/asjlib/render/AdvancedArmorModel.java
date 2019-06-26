@@ -18,7 +18,7 @@ import net.minecraft.util.MathHelper;
  * @author Timaxa007
  * */
 public abstract class AdvancedArmorModel extends ModelBiped {
-	public int color = -1;//��������� ����� � ����.
+	public final int color = -1;//��������� ����� � ����.
 	public abstract void pre(Entity entity);//�� ���� ������.
 	public abstract void post(Entity entity);//����� ���� ������.
 	public abstract void partHead(Entity entity);//�����: ������.

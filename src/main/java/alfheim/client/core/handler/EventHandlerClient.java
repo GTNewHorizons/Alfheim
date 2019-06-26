@@ -1,35 +1,26 @@
 package alfheim.client.core.handler;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
 import alfheim.api.AlfheimAPI;
 import alfheim.api.entity.EnumRace;
-import alfheim.api.event.EntityUpdateEvent;
-import alfheim.api.event.TileUpdateEvent;
+import alfheim.api.event.*;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.api.spell.SpellBase;
-import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient;
-import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient;
+import alfheim.client.core.handler.CardinalSystemClient.*;
 import alfheim.client.gui.ItemsRemainingRenderHandler;
-import alfheim.client.render.entity.RenderContributors;
-import alfheim.client.render.entity.RenderWings;
+import alfheim.client.render.entity.*;
 import alfheim.client.render.item.RenderItemFlugelHead;
 import alfheim.client.render.world.AstrolabePreviewHandler;
-import alfheim.common.core.registry.AlfheimItems;
-import alfheim.common.core.registry.AlfheimRegistry;
+import alfheim.common.core.registry.*;
 import alfheim.common.core.util.AlfheimConfig;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.*;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiScreen;
@@ -37,20 +28,18 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraft.util.*;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.*;
 import vazkii.botania.client.render.world.SkyblockSkyRenderer;
 import vazkii.botania.common.item.ModItems;
+
+import java.util.Arrays;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class EventHandlerClient {
 
@@ -206,8 +195,8 @@ public class EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (AlfheimCore.enableElvenStory) {
-			EnumRace r = EnumRace.getByID(((EntityPlayer) e.original).getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
-			((EntityPlayer) e.entityPlayer).getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
+			EnumRace r = EnumRace.getByID(e.original.getEntityAttribute(AlfheimAPI.RACE).getAttributeValue());
+			e.entityPlayer.getEntityAttribute(AlfheimAPI.RACE).setBaseValue(r.ordinal());
 		}
 	}
 	
@@ -221,7 +210,7 @@ public class EventHandlerClient {
 		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && e.showAdvancedItemTooltips) {
 			e.toolTip.add("");
 			e.toolTip.add("NBT Data:");
-			for (String s : ASJUtilities.toString(e.itemStack.getTagCompound()).split("\n")) e.toolTip.add(s);
+			e.toolTip.addAll(Arrays.asList(ASJUtilities.toString(e.itemStack.getTagCompound()).split("\n")));
 		}
 	}
 	

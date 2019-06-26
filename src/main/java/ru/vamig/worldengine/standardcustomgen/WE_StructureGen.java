@@ -11,7 +11,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class WE_StructureGen implements IWorldGenerator {
 	
-	public List<StrList> sttngs = new ArrayList<StrList>();
+	public final List<StrList> sttngs = new ArrayList<StrList>();
 	
 	public void add(StructureBaseClass str, int rarity) {
 		sttngs.add(new StrList(str, rarity));

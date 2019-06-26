@@ -45,7 +45,7 @@ public class RenderBlockAlfheimThaumOre extends BlockRenderer implements ISimple
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
-		if (metadata != 0 && metadata != 7 && metadata < 7) {
+		if (metadata != 0 && metadata < 7) {
 			Tessellator t = Tessellator.instance;
 			t.setColorOpaque_I(BlockCustomOreItem.colors[metadata]);
 			t.setBrightness(Math.max(bb, 160));

@@ -22,7 +22,6 @@ import alfheim.common.core.handler.EventHandler;
 import alfheim.common.core.proxy.CommonProxy;
 import alfheim.common.core.registry.AlfheimBlocks;
 import alfheim.common.core.registry.AlfheimRecipes;
-import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.entity.*;
 import alfheim.common.entity.boss.*;
 import alfheim.common.entity.spell.*;
@@ -189,7 +188,7 @@ public class ClientProxy extends CommonProxy {
 		} else {
 			AlfheimLexiconData.disableESM();
 			removeESMKeyBinds();
-			if (mmoOld != mmo) toggleMMO(esm, mmo, esmOld, mmoOld);
+			if (mmoOld != mmo) toggleMMO(false, mmo, esmOld, mmoOld);
 		}
 	}
 	
@@ -201,7 +200,7 @@ public class ClientProxy extends CommonProxy {
 			AlfheimLexiconData.reEnableMMO();
 			enableMMOGUIs();
 			addMMOKeyBinds();
-			if (mmoOld != esm) toggleESM(esm, mmo, esmOld, mmoOld);
+			if (mmoOld != esm) toggleESM(esm, true, esmOld, mmoOld);
 		} else {
 			AlfheimLexiconData.disableMMO();
 			disableMMOGUIs();

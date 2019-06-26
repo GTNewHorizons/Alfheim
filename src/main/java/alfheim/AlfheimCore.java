@@ -127,7 +127,7 @@ public class AlfheimCore {
 		AlfheimCore.network.registerMessage(MessageTimeStop.Handler.class,	MessageTimeStop.class,	nextPacketID++, Side.CLIENT);
 	}
 	
-	public static CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
+	public static final CreativeTabs alfheimTab = new CreativeTabs("Alfheim") {
 		@Override
 		public Item getTabIconItem() {
 			return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal);

@@ -62,7 +62,7 @@ public class DamageSourceSpell extends DamageSource {
 	}
 	
 	public static class EntityDamageSourceSpell extends DamageSourceSpell {
-		protected Entity attacker;
+		protected final Entity attacker;
 		
 		public EntityDamageSourceSpell(String source, Entity attacker) {
 			super(source);
@@ -77,7 +77,7 @@ public class DamageSourceSpell extends DamageSource {
 			ItemStack itemstack = this.attacker instanceof EntityLivingBase ? ((EntityLivingBase)this.attacker).getHeldItem() : null;
 			String s = "death.attack." + this.damageType;
 			String s1 = s + ".item";
-			return itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1) ? new ChatComponentTranslation(s1, new Object[] {target.func_145748_c_(), this.attacker.func_145748_c_(), itemstack.func_151000_E()}): new ChatComponentTranslation(s, new Object[] {target.func_145748_c_(), this.attacker.func_145748_c_()});
+			return itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1) ? new ChatComponentTranslation(s1, target.func_145748_c_(), this.attacker.func_145748_c_(), itemstack.func_151000_E()) : new ChatComponentTranslation(s, target.func_145748_c_(), this.attacker.func_145748_c_());
 		}
 		
 		public boolean isDifficultyScaled() {
@@ -86,7 +86,7 @@ public class DamageSourceSpell extends DamageSource {
 	}
 	
 	public static class EntityDamageSourceIndirectSpell extends EntityDamageSourceSpell {
-		private Entity indirectEntity;
+		private final Entity indirectEntity;
 		
 		public EntityDamageSourceIndirectSpell(String type, Entity attacker, Entity indirect) {
 			super(type, attacker);
@@ -102,7 +102,7 @@ public class DamageSourceSpell extends DamageSource {
 			ItemStack itemstack = this.indirectEntity instanceof EntityLivingBase ? ((EntityLivingBase)this.indirectEntity).getHeldItem() : null;
 			String s = "death.attack." + this.damageType;
 			String s1 = s + ".item";
-			return itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1) ? new ChatComponentTranslation(s1, new Object[] {target.func_145748_c_(), ichatcomponent, itemstack.func_151000_E()}): new ChatComponentTranslation(s, new Object[] {target.func_145748_c_(), ichatcomponent});
+			return itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1) ? new ChatComponentTranslation(s1, target.func_145748_c_(), ichatcomponent, itemstack.func_151000_E()) : new ChatComponentTranslation(s, target.func_145748_c_(), ichatcomponent);
 		}
 	}
 }

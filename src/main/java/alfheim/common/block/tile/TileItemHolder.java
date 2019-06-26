@@ -3,7 +3,6 @@ package alfheim.common.block.tile;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.extendables.ItemContainingTileEntity;
 import alfheim.AlfheimCore;
-import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import alfheim.common.network.MessageTileItem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,7 @@ public class TileItemHolder extends ItemContainingTileEntity {
 		if (lastTick == tick) return;
 			
 		TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
-		if (te == null || !(te instanceof TilePool)) {
+		if (!(te instanceof TilePool)) {
 			if (worldObj.isRemote) return;
 			worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, new ItemStack(worldObj.getBlock(xCoord, yCoord, zCoord), 1, worldObj.getBlockMetadata(xCoord, yCoord, zCoord))));
 			if (getItem() != null) worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, getItem().copy()));
@@ -52,7 +51,7 @@ public class TileItemHolder extends ItemContainingTileEntity {
 				if(pool.isOutputtingPower())
 					for(ForgeDirection dir : LibMisc.CARDINAL_DIRECTIONS) {
 						TileEntity tile = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord - 1, zCoord + dir.offsetZ);
-						if(tile != null && tile instanceof TileBellows && ((TileBellows) tile).getLinkedTile() == pool)
+						if(tile instanceof TileBellows && ((TileBellows) tile).getLinkedTile() == pool)
 							bellowCount++;
 					}
 				int transfRate = 1000 * (bellowCount + 2);

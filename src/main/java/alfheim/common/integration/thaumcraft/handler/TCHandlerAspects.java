@@ -5,7 +5,6 @@ import static alfheim.common.core.registry.AlfheimItems.*;
 import static alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule.*;
 import static vazkii.botania.common.item.ModItems.*;
 
-import alfheim.api.ModInfo;
 import alfheim.common.core.registry.AlfheimItems;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;

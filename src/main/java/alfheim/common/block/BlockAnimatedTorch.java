@@ -6,11 +6,8 @@ import alfheim.api.block.IHourglassTrigger;
 import alfheim.api.lib.LibRenderIDs;
 import alfheim.common.block.tile.TileAnimatedTorch;
 import alfheim.common.lexicon.AlfheimLexiconData;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -18,14 +15,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import vazkii.botania.api.internal.IManaBurst;
-import vazkii.botania.api.lexicon.ILexiconable;
-import vazkii.botania.api.lexicon.LexiconEntry;
+import vazkii.botania.api.lexicon.*;
 import vazkii.botania.api.mana.IManaTrigger;
-import vazkii.botania.api.wand.IWandHUD;
-import vazkii.botania.api.wand.IWandable;
+import vazkii.botania.api.wand.*;
 
 public class BlockAnimatedTorch extends BlockContainer implements IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 
@@ -67,7 +61,7 @@ public class BlockAnimatedTorch extends BlockContainer implements IHourglassTrig
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int id, int param) {
 		super.onBlockEventReceived(world, x, y, z, id, param);
         TileEntity tile = world.getTileEntity(x, y, z);
-        return tile != null ? tile.receiveClientEvent(id, param) : false;
+        return tile != null && tile.receiveClientEvent(id, param);
 	}
 	
 	@Override

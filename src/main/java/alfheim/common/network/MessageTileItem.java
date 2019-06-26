@@ -9,8 +9,10 @@ import net.minecraft.item.ItemStack;
 
 public class MessageTileItem extends ASJPacket {
 
-	public int x, y, z;
-	public ItemStack s;
+	public final int x;
+	public final int y;
+	public final int z;
+	public final ItemStack s;
 	
 	public MessageTileItem(int x, int y, int z, ItemStack s) {
 		this.s = s;

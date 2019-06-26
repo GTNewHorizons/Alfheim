@@ -1,13 +1,9 @@
 package alfheim.common.item.equipment.armor.elemental;
 
-import java.util.List;
-
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
+import alfheim.api.*;
 import alfheim.client.model.armor.ModelElementalArmor;
 import alfheim.common.core.registry.AlfheimItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,6 +12,8 @@ import vazkii.botania.api.item.IPixieSpawner;
 import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor;
+
+import java.util.List;
 
 public abstract class ElementalArmor extends ItemManasteelArmor implements IPixieSpawner {
 
@@ -37,7 +35,7 @@ public abstract class ElementalArmor extends ItemManasteelArmor implements IPixi
 
 	@Override
 	public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-		return par2ItemStack.getItem() == ModItems.manaResource && par2ItemStack.getItemDamage() == 7 ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
+		return par2ItemStack.getItem() == ModItems.manaResource && par2ItemStack.getItemDamage() == 7 || super.getIsRepairable(par1ItemStack, par2ItemStack);
 	}
 
 	static ItemStack[] armorset;

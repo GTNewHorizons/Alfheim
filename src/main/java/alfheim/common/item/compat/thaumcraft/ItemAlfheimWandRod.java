@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemAlfheimWandRod extends Item {
 	
-	public static IIcon[] textures = new IIcon[3];
+	public static final IIcon[] textures = new IIcon[3];
 	
 	public ItemAlfheimWandRod() {
 		setCreativeTab(ThaumcraftAlfheimModule.tcnTab);

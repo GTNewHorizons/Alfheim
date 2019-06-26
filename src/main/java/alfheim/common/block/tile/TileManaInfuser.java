@@ -95,7 +95,6 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 				if (l.size() > 1) break boom;
 				else {
 					if (blockMetadata != 2)	worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3);
-					boom = 5;
 					EntityDoppleganger dop = l.get(0);
 					boolean hard = dop.isHardMode();
 					
@@ -111,7 +110,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 						
 						TileEntity te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord);
 						
-						if (te != null && te instanceof TileBrewery) {
+						if (te instanceof TileBrewery) {
 							TileBrewery brew = (TileBrewery) te;
 							
 							if (brew.getStackInSlot(0) != null && brew.getStackInSlot(0).getItem() == AlfheimItems.flugelSoul) {
@@ -221,7 +220,7 @@ public class TileManaInfuser extends TileMod implements ISparkAttachable {
 		}
 	}
 	
-	Vector3 v = new Vector3();
+	final Vector3 v = new Vector3();
 	
 	void prepareParticles() {
 		int ci = 0;

@@ -11,5 +11,5 @@ public class ModInfo {
 	public static final String VERSION = MAJOR /*+ "." + MINOR*/ + "-" + BUILD;
 	
 	public static boolean OBF;
-	public static final boolean DEV = !OBF;
+	public static boolean DEV = !OBF;
 }

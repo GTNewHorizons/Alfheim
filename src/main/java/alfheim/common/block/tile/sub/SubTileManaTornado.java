@@ -15,7 +15,7 @@ import vazkii.botania.common.item.lens.ItemLens;
 
 public class SubTileManaTornado extends SubTileEntity {
 	
-	Vector3 v = new Vector3();
+	final Vector3 v = new Vector3();
 	
 	@Override
 	public void update() {
@@ -62,7 +62,7 @@ public class SubTileManaTornado extends SubTileEntity {
 	
 	@Override
 	public void performEffect(Object target) {
-		if (target != null && target instanceof EntityManaBurst) worldObj().spawnEntityInWorld((EntityManaBurst) target);
+		if (target instanceof EntityManaBurst) worldObj().spawnEntityInWorld((EntityManaBurst) target);
 	}
 	
 	@Override

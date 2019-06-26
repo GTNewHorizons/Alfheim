@@ -1,20 +1,17 @@
 package alfheim.common.block.tile.sub;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.api.block.tile.SubTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.Botania;
+
+import java.util.*;
 
 public class SubTileWarp extends SubTileEntity {
 	
@@ -176,7 +173,6 @@ public class SubTileWarp extends SubTileEntity {
 			Block block = worldObj().getBlock(v.x1, v.y1, v.z1);
 			worldObj().setBlock(v.x1, v.y1, v.z1, worldObj().getBlock(v.x2, v.y2, v.z2), v.m2, 3);
 			worldObj().setBlock(v.x2, v.y2, v.z2, block, v.m1, 3);
-			return;
 		}
 	}
 	
@@ -192,7 +188,7 @@ public class SubTileWarp extends SubTileEntity {
 	
 	private static class Vector8i {
 		
-		public static Vector3 v = new Vector3();
+		public static final Vector3 v = new Vector3();
 		public int x1, y1, z1, m1, x2, y2, z2, m2;
 		
 		public void set(int x, int y, int z, int radius, Random rand) {

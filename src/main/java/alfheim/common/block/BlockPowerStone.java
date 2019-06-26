@@ -2,7 +2,6 @@ package alfheim.common.block;
 
 import java.util.List;
 
-import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.spell.SpellBase;
 import alfheim.common.core.registry.AlfheimRegistry;
@@ -15,7 +14,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import vazkii.botania.api.lexicon.ILexiconable;
@@ -23,7 +21,7 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class BlockPowerStone extends Block implements ILexiconable {
 	
-	public static IIcon[] icons = new IIcon[5];
+	public static final IIcon[] icons = new IIcon[5];
 	
 	public BlockPowerStone() {
 		super(Material.rock);

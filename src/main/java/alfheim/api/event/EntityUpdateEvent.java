@@ -21,5 +21,6 @@ public class EntityUpdateEvent extends Event {
 	}
 	
 	/** Used in ASM */
+	@SuppressWarnings("EmptyMethod")
 	public static void stub() {}
 }

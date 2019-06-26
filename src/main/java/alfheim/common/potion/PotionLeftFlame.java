@@ -46,7 +46,7 @@ public class PotionLeftFlame extends PotionAlfheim {
 			player.capabilities.disableDamage = false;
 			player.capabilities.isFlying = false;
 			if(player instanceof EntityPlayerMP) ((EntityPlayerMP) player).theItemInWorldManager.setBlockReachDistance(5);
-			player.getDataWatcher().updateObject(6, Float.valueOf(ampl));
+			player.getDataWatcher().updateObject(6, (float) ampl);
 		}
 	}
 	

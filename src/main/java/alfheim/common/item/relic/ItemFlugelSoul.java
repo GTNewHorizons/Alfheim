@@ -1,42 +1,28 @@
 package alfheim.common.item.relic;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.Color;
-
 import alexsocol.asjlib.ASJUtilities;
 import alfheim.AlfheimCore;
 import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.entity.boss.EntityFlugel;
 import baubles.common.lib.PlayerHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.client.core.handler.ClientTickHandler;
@@ -47,6 +33,10 @@ import vazkii.botania.common.block.tile.TileBrewery;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara;
 import vazkii.botania.common.item.relic.ItemRelic;
+
+import java.awt.*;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class ItemFlugelSoul extends ItemRelic {
 	
@@ -299,7 +289,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		float base = getRotationBase(stack);
 		int angles = 360;
 		int segAngles = angles / SEGMENTS;
-		float shift = base - segAngles / 2;
+		float shift = base - segAngles / 2f;
 
 		float u = 1F;
 		float v = 0.25F;
@@ -373,7 +363,6 @@ public class ItemFlugelSoul extends ItemRelic {
 
 	@SideOnly(Side.CLIENT)
 	public void renderHUD(ScaledResolution resolution, EntityPlayer player, ItemStack stack) {
-		Minecraft.getMinecraft();
 		int slot = getSegmentLookedAt(stack, player);
 		MultiversePosition pos = getWarpPoint(stack, slot);
 
@@ -418,7 +407,7 @@ public class ItemFlugelSoul extends ItemRelic {
 		}
 
 		boolean isValid() {
-			return y > 0 && (ASJUtilities.isServer() ? MinecraftServer.getServer().worldServerForDimension(dim) != null : true);
+			return y > 0 && (!ASJUtilities.isServer() || MinecraftServer.getServer().worldServerForDimension(dim) != null);
 		}
 
 		int mana(EntityPlayer player) {

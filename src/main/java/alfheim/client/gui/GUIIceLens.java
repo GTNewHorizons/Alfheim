@@ -16,7 +16,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
 public class GUIIceLens extends Gui {
 	
-	private Minecraft mc;
+	private final Minecraft mc;
 	
 	public GUIIceLens(Minecraft mc) {
 		super();

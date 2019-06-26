@@ -1,26 +1,19 @@
 package alfheim.common.entity.spell;
 
-import java.util.List;
-import java.util.UUID;
-
-import alexsocol.asjlib.math.OrientedBB;
-import alexsocol.asjlib.math.Vector3;
+import alexsocol.asjlib.math.*;
 import alfheim.AlfheimCore;
-import alfheim.api.spell.ITimeStopSpecific;
-import alfheim.api.spell.SpellBase;
+import alfheim.api.spell.*;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
-import alfheim.common.core.util.AlfheimConfig;
-import alfheim.common.core.util.DamageSourceSpell;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import alfheim.common.core.util.*;
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import vazkii.botania.common.Botania;
+
+import java.util.*;
 
 public class EntitySpellFirewall extends Entity implements ITimeStopSpecific {
 
@@ -53,7 +46,6 @@ public class EntitySpellFirewall extends Entity implements ITimeStopSpecific {
 	public void onUpdate() {
 		if (!AlfheimCore.enableMMO || (!worldObj.isRemote && (caster != null && caster.isDead))) {
 			setDead();
-			return;
 		} else {
 			//if (!ASJUtilities.isServer()) return;
 			super.onUpdate();

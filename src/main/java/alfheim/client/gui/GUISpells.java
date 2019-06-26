@@ -24,7 +24,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
 public class GUISpells extends Gui {
 	
-	private Minecraft mc;
+	private final Minecraft mc;
 	
 	public GUISpells(Minecraft mc) {
 		super();

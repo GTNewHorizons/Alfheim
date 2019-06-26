@@ -1,11 +1,7 @@
 package alfheim.common.integration.waila.handler;
 
-import java.util.List;
-
 import alfheim.common.block.tile.TileTradePortal;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
+
+import java.util.List;
 
 public class WAILAHandlerTradePortal implements IWailaDataProvider {
 	
@@ -66,14 +64,13 @@ public class WAILAHandlerTradePortal implements IWailaDataProvider {
 	}
 	
 	private String getOreName(String o) {
-		for(ItemStack stack : OreDictionary.getOres(o)) {
-			ItemStack cstack = stack.copy();
-			if(cstack.getItemDamage() == Short.MAX_VALUE)
-				cstack.setItemDamage(0);
-	
-			return cstack.getDisplayName() + " x" + cstack.stackSize;
-		}
+		List<ItemStack> l = OreDictionary.getOres(o);
+		if (l.isEmpty()) return o;
 		
-		return o;
+		ItemStack stack = l.get(0).copy();
+		if(stack.getItemDamage() == Short.MAX_VALUE)
+			stack.setItemDamage(0);
+	
+		return stack.getDisplayName() + " x" + stack.stackSize;
 	}
 }

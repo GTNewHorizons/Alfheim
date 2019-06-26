@@ -42,7 +42,6 @@ public class RenderPostShaders {
 			if (obj.translations.isEmpty()) continue;
 			if (post && obj.materialID != prevObj.materialID) {
 				prevObj.postRender();
-				post = false;
 			}
 			if (obj.shaderID != prevShader) {
 				if (allowShaders) ASJShaderHelper.useShader(obj.shaderID);

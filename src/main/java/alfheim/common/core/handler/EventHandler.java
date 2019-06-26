@@ -3,12 +3,10 @@ package alfheim.common.core.handler;
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.*;
 import alfheim.client.render.world.SpellEffectHandlerClient;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
-import alfheim.common.core.asm.AlfheimSyntheticMethods;
 import alfheim.common.core.handler.CardinalSystem.*;
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party;
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target;
@@ -49,7 +47,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -157,8 +154,8 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone e) {
 		if (AlfheimCore.enableElvenStory) {
-			int r = EnumRace.getRaceID((EntityPlayer) e.original);
-			EnumRace.setRaceID((EntityPlayer) e.entityPlayer, r);
+			int r = EnumRace.getRaceID(e.original);
+			EnumRace.setRaceID(e.entityPlayer, r);
 			if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original));
 		}
 	}
@@ -300,8 +297,7 @@ public class EventHandler {
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield);
 			if (!e.source.isMagicDamage() && !e.source.isDamageAbsolute() && pe != null && pe.duration > 0) {
 				e.ammount /= 2.F;
-				int dur = (int) Math.max(pe.duration -= (e.ammount * 20), 0);
-				if (dur < 0) pe.duration = 0; // e.entityLiving.removePotionEffect(AlfheimRegistry.butterShield.id); <- same :(
+				int dur = Math.max(pe.duration -= (e.ammount * 20), 0);
 				if (ASJUtilities.isServer()) AlfheimCore.network.sendToAll(new MessageEffect(e.entityLiving.getEntityId(), pe.potionID, dur, pe.amplifier));
 			}
 		}
@@ -313,7 +309,7 @@ public class EventHandler {
 			if (e.entityLiving instanceof EntityPlayer && !MinecraftServer.getServer().isSinglePlayer()) {
 				e.entityLiving.clearActivePotions();
 				e.entityLiving.addPotionEffect(new PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfig.deathScreenAddTime, 0, true));
-				e.entityLiving.getDataWatcher().updateObject(6, Float.valueOf(1F));
+				e.entityLiving.getDataWatcher().updateObject(6, 1F);
 			}
 		
 			Party pt = PartySystem.getMobParty(e.entityLiving);
@@ -361,7 +357,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onPlayerUpdate(PlayerTickEvent e) {
 		if (e.phase == Phase.START) return;
-		EntityPlayer player = (EntityPlayer) e.player;
+		EntityPlayer player = e.player;
 		
 //		player.rotationYaw = player.rotationPitch = 90;
 		
@@ -405,7 +401,7 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public void onEntityUpdate(EntityUpdateEvent e) {
-		if (e.entity == null || !e.entity.isEntityAlive()) return;
+		if (!e.entity.isEntityAlive()) return;
 		if ((ASJUtilities.isServer() || AlfheimConfig.slowDownClients) && !e.entity.canEntityUpdate) {
 			e.setCanceled(true);
 			e.entity.canEntityUpdate = true;

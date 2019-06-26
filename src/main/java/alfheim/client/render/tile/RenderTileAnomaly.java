@@ -3,7 +3,6 @@ package alfheim.client.render.tile;
 import static org.lwjgl.opengl.GL11.*;
 
 import alfheim.api.block.tile.SubTileEntity;
-import alfheim.api.lib.LibResourceLocations;
 import alfheim.common.block.tile.TileAnomaly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -93,10 +92,10 @@ public class RenderTileAnomaly extends TileEntitySpecialRenderer {
 	
 	private static class QuadHelper {
 		
-		public double x;
-		public double y;
-		public double z;
-		public double angle;
+		public final double x;
+		public final double y;
+		public final double z;
+		public final double angle;
 		
 		public QuadHelper(double ang, double xx, double yy, double zz) {
 			this.x = xx;

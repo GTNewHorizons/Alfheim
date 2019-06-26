@@ -34,7 +34,7 @@ public class SpellResurrect extends SpellBase {
 		if (!tg.isParty || !tg.target.isPotionActive(AlfheimRegistry.leftFlame))
 			return SpellCastResult.WRONGTGT;
 		
-		if (tg.target != caster && !ASJUtilities.isInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
+		if (tg.target != caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
 		
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {

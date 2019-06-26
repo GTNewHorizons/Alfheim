@@ -1,7 +1,5 @@
 package alfheim.common.item;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import alfheim.AlfheimCore;
 import alfheim.api.ModInfo;
 import alfheim.api.entity.EnumRace;
@@ -9,28 +7,24 @@ import alfheim.api.lib.LibResourceLocations;
 import alfheim.client.model.entity.ModelBipedNew;
 import alfheim.common.core.command.CommandRace;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.client.core.handler.ClientTickHandler;
 import vazkii.botania.common.core.helper.ItemNBTHelper;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class ItemHoloProjector extends Item {
 
@@ -220,9 +214,7 @@ public class ItemHoloProjector extends Item {
 
 			glPushMatrix();
 			glRotatef(180F, 1F, 0F, 0F);
-			float a = alpha;
 			if(inside) {
-				a += 0.3F;
 				y0 = -y;
 			}
 
@@ -256,7 +248,6 @@ public class ItemHoloProjector extends Item {
 
 	@SideOnly(Side.CLIENT)
 	public void renderHUD(ScaledResolution resolution, EntityPlayer player, ItemStack stack) {
-		Minecraft.getMinecraft();
 		int seg = getSegmentLookedAt(stack, player);
 
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;

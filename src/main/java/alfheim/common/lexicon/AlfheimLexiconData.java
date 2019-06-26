@@ -1,25 +1,16 @@
 package alfheim.common.lexicon;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
 import alfheim.AlfheimCore;
-import alfheim.api.AlfheimAPI;
-import alfheim.api.ModInfo;
-import alfheim.api.lib.LibResourceLocations;
+import alfheim.api.*;
 import alfheim.api.spell.SpellBase;
-import alfheim.common.block.AlfheimMultiblocks;
-import alfheim.common.block.BlockElvenOres;
+import alfheim.common.block.*;
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge;
 import alfheim.common.core.registry.*;
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas;
 import alfheim.common.core.util.AlfheimConfig;
 import alfheim.common.lexicon.page.*;
+import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.*;
@@ -28,6 +19,8 @@ import vazkii.botania.common.block.ModMultiblocks;
 import vazkii.botania.common.item.ModItems;
 import vazkii.botania.common.lexicon.*;
 import vazkii.botania.common.lexicon.page.*;
+
+import java.util.*;
 
 public class AlfheimLexiconData {
 	
@@ -217,7 +210,7 @@ public class AlfheimLexiconData {
 		
 		ores	.setLexiconPages(new PageText("0"), new PageText("1"), new PageText("2"))
 				.setIcon(new ItemStack(AlfheimBlocks.elvenOres, 1, 4));
-		for (int i = 0; i < ((BlockElvenOres) AlfheimBlocks.elvenOres).names.length; i++) ores.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenOres, 1, i));
+		for (int i = 0; i < BlockElvenOres.names.length; i++) ores.addExtraDisplayedRecipe(new ItemStack(AlfheimBlocks.elvenOres, 1, i));
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 1), ores, 1);
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 0), ores, 2);
 		LexiconRecipeMappings.map(new ItemStack(AlfheimBlocks.elvenOres, 1, 2), ores, 2);
@@ -250,7 +243,7 @@ public class AlfheimLexiconData {
 								 new PageMultiblock("4", AlfheimMultiblocks.yordin))
 				.setIcon(new ItemStack(AlfheimBlocks.tradePortal));
 		
-		List<IRecipe> powerRecipes = new ArrayList();
+		List<IRecipe> powerRecipes = new ArrayList<IRecipe>();
 		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPowerIngot);
 		powerRecipes.add(AlfheimRecipes.recipeNiflheimPowerIngot);
 		essences.setLexiconPages(new PageText("0"),
@@ -262,7 +255,7 @@ public class AlfheimLexiconData {
 		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimEssence));
 		essences.addExtraDisplayedRecipe(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence));
 		
-		List<RecipeRuneAltar> runeRecipes = new ArrayList();
+		List<RecipeRuneAltar> runeRecipes = new ArrayList<RecipeRuneAltar>();
 		runeRecipes.add(AlfheimRecipes.recipeMuspelheimRune);
 		runeRecipes.add(AlfheimRecipes.recipeNiflheimRune);
 		runes	.setLexiconPages(new PageText("0"), new PageRuneRecipe("1", runeRecipes),
@@ -299,7 +292,7 @@ public class AlfheimLexiconData {
 								 new PageCraftingRecipe("2", AlfheimRecipes.recipeAuraRingGod))
 				.setIcon(new ItemStack(AlfheimItems.auraRingElven));
 		
-		List<IRecipe> amuletRecipes = new ArrayList();
+		List<IRecipe> amuletRecipes = new ArrayList<IRecipe>();
 		amuletRecipes.add(AlfheimRecipes.recipeMuspelheimPendant);
 		amuletRecipes.add(AlfheimRecipes.recipeNiflheimPendant);
 		ruling	.setLexiconPages(new PageText("0"), new PageText("1"),
@@ -408,7 +401,7 @@ public class AlfheimLexiconData {
 	
 	private static void postInitMMO() {
 		ArrayList<SpellBase> l = Lists.newArrayList(AlfheimAPI.spells);
-		l.sort(new Comparator<SpellBase>() {
+		Collections.sort(l, new Comparator<SpellBase>() {
 			@Override
 			public int compare(SpellBase s1, SpellBase s2) {
 				return s1.name.compareTo(s2.name);

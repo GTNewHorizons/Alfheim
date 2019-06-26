@@ -106,11 +106,6 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 	}
 
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
-	}
-
-	@Override
 	protected void updateAITasks() {
 		//super.updateAITasks();
 		if (this.spawnPosition != null && (!this.worldObj.isAirBlock(this.spawnPosition.posX, this.spawnPosition.posY, this.spawnPosition.posZ) || this.spawnPosition.posY < 1)) {
@@ -143,7 +138,7 @@ public class EntityAlfheimPixie extends EntityFlyingCreature {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return posY > 64 && (0 < (this.worldObj.getWorldTime() % 24000) && (this.worldObj.getWorldTime() % 24000) < 13333) || (22666 < (this.worldObj.getWorldTime() % 24000) && (this.worldObj.getWorldTime() % 24000) < 24000) && worldObj.getClosestPlayerToEntity(this, 64) != null && super.getCanSpawnHere();
+		return posY > 64 && 0 < this.worldObj.getWorldTime() % 24000 && this.worldObj.getWorldTime() % 24000 < 13333 || 22666 < this.worldObj.getWorldTime() % 24000 && worldObj.getClosestPlayerToEntity(this, 64) != null && super.getCanSpawnHere();
 	}
 	
 	@Override

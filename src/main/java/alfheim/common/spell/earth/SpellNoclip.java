@@ -27,7 +27,7 @@ public class SpellNoclip extends SpellBase {
 		Target tg = TargetingSystem.getTarget((EntityPlayer) caster);
 		if (tg == null || tg.target == null)  return SpellCastResult.NOTARGET;
 		if (!tg.isParty || !(tg.target instanceof EntityPlayer) || !((EntityPlayer) tg.target).capabilities.allowFlying) return SpellCastResult.WRONGTGT;
-		if (tg.target != caster && !ASJUtilities.isInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
+		if (tg.target != caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING;
 		
 		SpellCastResult result = checkCast(caster);
 		if (result == SpellCastResult.OK) {

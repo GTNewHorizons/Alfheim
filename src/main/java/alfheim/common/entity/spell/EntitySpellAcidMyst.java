@@ -1,23 +1,20 @@
 package alfheim.common.entity.spell;
 
-import java.util.List;
-import java.util.UUID;
-
 import alexsocol.asjlib.ASJUtilities;
 import alexsocol.asjlib.math.Vector3;
 import alfheim.AlfheimCore;
-import alfheim.api.spell.ITimeStopSpecific;
-import alfheim.api.spell.SpellBase;
+import alfheim.api.spell.*;
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells;
 import alfheim.common.core.handler.CardinalSystem.PartySystem;
 import alfheim.common.core.handler.SpellEffectHandler;
 import alfheim.common.core.util.DamageSourceSpell;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
 	
@@ -49,8 +46,8 @@ public class EntitySpellAcidMyst extends Entity implements ITimeStopSpecific {
 	}
 	
 	public int getTopBlock(World world, int x, int z) {
-		int y;
-		for (y = 255; y > 0 && world.isAirBlock(x, y, z); --y);
+		int y = 255;
+		while (y > 0 && world.isAirBlock(x, y, z)) --y;
 		return y;
 	}
 	

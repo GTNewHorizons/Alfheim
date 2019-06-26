@@ -1,25 +1,18 @@
 package alfheim.api.spell;
 
-import java.util.List;
-
-import alexsocol.asjlib.ASJUtilities;
 import alfheim.api.entity.EnumRace;
 import alfheim.api.event.SpellCastEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraftforge.common.MinecraftForge;
 import vazkii.botania.api.mana.ManaItemHandler;
+
+import java.util.List;
 
 public abstract class SpellBase {
 	
@@ -99,14 +92,14 @@ public abstract class SpellBase {
 	public SpellCastResult checkCast(EntityLivingBase caster) {
 		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
 		int cost = MathHelper.ceiling_double_int(getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5));
-		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true) : true;
+		boolean mana = !(caster instanceof EntityPlayer) || (((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true));
 		return mana ? SpellCastResult.OK : SpellCastResult.NOMANA;
 	}
 	
 	public SpellCastResult checkCastOver(EntityLivingBase caster) {
 		if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW;
 		int cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * (caster instanceof EntityPlayer && race.equals(EnumRace.getRace((EntityPlayer) caster)) || hard ? 1 : 1.5)));
-		boolean mana = caster instanceof EntityPlayer ? ((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true) : true;
+		boolean mana = !(caster instanceof EntityPlayer) || (((EntityPlayer) caster).capabilities.isCreativeMode || consumeMana((EntityPlayer) caster, cost, true));
 		return mana ? SpellCastResult.OK : SpellCastResult.NOMANA;
 	}
 	
@@ -129,11 +122,11 @@ public abstract class SpellBase {
 		return name;
 	}
 	
-	public static enum SpellCastResult {
-		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING;
+	public enum SpellCastResult {
+		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING
 	}
 	
-	public static final void say(EntityPlayerMP caster, SpellBase spell) {
+	public static void say(EntityPlayerMP caster, SpellBase spell) {
 		List<EntityPlayerMP> l = caster.worldObj.getEntitiesWithinAABB(EntityPlayerMP.class, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(40, 40, 40));
 		for (EntityPlayerMP player : l) if (Math.sqrt(Math.pow(caster.posX - player.posX, 2) + Math.pow(caster.posY - player.posY, 2) + Math.pow(caster.posZ - player.posZ, 2)) < 40) player.addChatMessage(new ChatComponentText(EnumChatFormatting.UNDERLINE + "* " + caster.getCommandSenderName() + ' ' + StatCollector.translateToLocal("spell.cast") + EnumChatFormatting.RESET + ": " + StatCollector.translateToLocal("spell." + spell.name + ".words")));
 	}

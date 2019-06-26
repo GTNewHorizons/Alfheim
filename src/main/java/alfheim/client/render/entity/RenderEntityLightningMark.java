@@ -16,7 +16,7 @@ import vazkii.botania.client.core.helper.ShaderHelper;
 
 public class RenderEntityLightningMark extends Render {
 
-	public static ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.mark) {
+	public static final ShadedObject so = new ShadedObject(ShaderHelper.halo, RenderPostShaders.getNextAvailableRenderObjectMaterialID(), LibResourceLocations.mark) {
 
 		@Override
 		public void preRender() {
@@ -60,7 +60,7 @@ public class RenderEntityLightningMark extends Render {
 		return null;
 	}
 
-	Random rand = new Random();
+	final Random rand = new Random();
 	
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {

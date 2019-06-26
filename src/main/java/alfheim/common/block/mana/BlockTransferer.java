@@ -32,7 +32,7 @@ import vazkii.botania.common.item.ModItems;
 
 public class BlockTransferer extends BlockModContainer implements IWandable, IWandHUD, ILexiconable, IWireframeAABBProvider {
 
-	Random random;
+	final Random random;
 	
 	public BlockTransferer() {
 		super(Material.wood);
@@ -106,7 +106,7 @@ public class BlockTransferer extends BlockModContainer implements IWandable, IWa
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(stack != null && stack.getItem() == ModItems.twigWand) return false;
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile == null || !(tile instanceof TileTransferer)) return false;
+		if (!(tile instanceof TileTransferer)) return false;
 		ItemContainingTileEntity te = (ItemContainingTileEntity) tile;
 		
 		if(te.getItem() != null) {
