@@ -2,8 +2,6 @@ package alexsocol.asjlib.render;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockCarrot;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -44,20 +42,20 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		{
 			if(entity instanceof EntityLivingBase) {
 				EntityLivingBase living = (EntityLivingBase) entity;
-				isSneak = living != null ? living.isSneaking() : false;
-				isChild = living != null ? living.isChild() : false;
-				isRiding = living != null ? living.isRiding() : false;
+				isSneak = living.isSneaking();
+				isChild = living.isChild();
+				isRiding = living.isRiding();
 				
 				ItemStack itemstack = living.getHeldItem();
 				heldItemRight = itemstack != null ? 1 : 0;
-
+				
 				if(entity instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) entity;
-
+					
 					aimedBow = false;
 					if (itemstack != null && player.getItemInUseCount() > 0) {
 						EnumAction enumaction = itemstack.getItemUseAction();
-	
+						
 						if (enumaction == EnumAction.block)
 							heldItemRight = 3;
 						else if(enumaction == EnumAction.bow)
@@ -72,41 +70,40 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 		if (entity instanceof EntityZombie || entity instanceof EntitySkeleton || entity instanceof EntityGiantZombie) {
 			float f6 = MathHelper.sin(onGround * (float)Math.PI);
 			float f7 = MathHelper.sin((1.0F - (1.0F - onGround) * (1.0F - onGround)) * (float)Math.PI);
-
+			
 			bipedRightArm.rotateAngleZ = 0.0F;
 			bipedRightArm.rotateAngleY = -(0.1F - f6 * 0.6F);
 			bipedRightArm.rotateAngleX = -((float)Math.PI / 2F);
 			bipedRightArm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
 			bipedRightArm.rotateAngleZ += MathHelper.cos(z * 0.09F) * 0.05F + 0.05F;
 			bipedRightArm.rotateAngleX += MathHelper.sin(z * 0.067F) * 0.05F;
-
+			
 			bipedLeftArm.rotateAngleZ = 0.0F;
 			bipedLeftArm.rotateAngleY = 0.1F - f6 * 0.6F;
 			bipedLeftArm.rotateAngleX = -((float)Math.PI / 2F);
 			bipedLeftArm.rotateAngleX -= f6 * 1.2F - f7 * 0.4F;
 			bipedLeftArm.rotateAngleZ -= MathHelper.cos(z * 0.09F) * 0.05F + 0.05F;
 			bipedLeftArm.rotateAngleX -= MathHelper.sin(z * 0.067F) * 0.05F;
-
+			
 			if (entity instanceof EntitySkeleton && ((EntitySkeleton)entity).getSkeletonType() == 1)
 				glScalef(1.2F, 1.2F, 1.2F);
-
+			
 			else if (entity instanceof EntityGiantZombie)
 				glScalef(6F, 6F, 6F);
-
+		
 		}
-
-
+		
 		if (color != -1) {
 			float red = (float)(color >> 16 & 255) / 255F;
 			float blue = (float)(color >> 8 & 255) / 255F;
 			float green = (float)(color & 255) / 255F;
 			glColor3f(red, blue, green);
 		}
-
+		
 		pre(entity);
-
+		
 		float f6 = 2.0F;
-
+		
 		{//partHead
 			glPushMatrix();
 			if (isChild) {
@@ -121,13 +118,13 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partHead(entity);
 			glPopMatrix();
 		}
-
+		
 		if (isChild) {
 			glPushMatrix();
 			glScalef(1.0F / f6, 1.0F / f6, 1.0F / f6);
 			glTranslatef(0.0F, 24.0F * parTicks, 0.0F);
 		}
-
+		
 		{//partBody
 			glPushMatrix();
 			glTranslatef(bipedBody.rotationPointX * parTicks, bipedBody.rotationPointY * parTicks, bipedBody.rotationPointZ * parTicks);
@@ -138,7 +135,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partBody(entity);
 			glPopMatrix();
 		}
-
+		
 		{//partRightArm
 			glPushMatrix();
 			glTranslatef(bipedRightArm.rotationPointX * parTicks, bipedRightArm.rotationPointY * parTicks, bipedRightArm.rotationPointZ * parTicks);
@@ -149,7 +146,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partRightArm(entity);
 			glPopMatrix();
 		}
-
+		
 		{//partLeftArm
 			glPushMatrix();
 			glTranslatef(bipedLeftArm.rotationPointX * parTicks, bipedLeftArm.rotationPointY * parTicks, bipedLeftArm.rotationPointZ * parTicks);
@@ -160,7 +157,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partLeftArm(entity);
 			glPopMatrix();
 		}
-
+		
 		{//partRightLeg
 			glPushMatrix();
 			glTranslatef(bipedRightLeg.rotationPointX * parTicks, bipedRightLeg.rotationPointY * parTicks, bipedRightLeg.rotationPointZ * parTicks);
@@ -171,7 +168,7 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partRightLeg(entity);
 			glPopMatrix();
 		}
-
+		
 		{//partLeftLeg
 			glPushMatrix();
 			glTranslatef(bipedLeftLeg.rotationPointX * parTicks, bipedLeftLeg.rotationPointY * parTicks, bipedLeftLeg.rotationPointZ * parTicks);
@@ -182,11 +179,11 @@ public abstract class AdvancedArmorModel extends ModelBiped {
 			partLeftLeg(entity);
 			glPopMatrix();
 		}
-
+		
 		if (isChild) {
 			glPopMatrix();
 		}
-
+		
 		post(entity);
 		
 		glColor3f(1F, 1, 1);

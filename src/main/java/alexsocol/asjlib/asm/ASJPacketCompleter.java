@@ -19,7 +19,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class ASJPacketCompleter implements IClassTransformer {
 
 	public static final List descriptors = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;");
-	public static boolean doLog = System.getProperty("asjlib.asm.errorlog", "off").equals("on");
+	public static final boolean doLog = System.getProperty("asjlib.asm.errorlog", "off").equals("on");
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -36,7 +36,7 @@ public class ASJPacketCompleter implements IClassTransformer {
 					if (mt.name.equals("fromBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[1] = true; continue; }
 					if (mt.name.equals("toBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[2] = true; continue; }
 					if (mt.name.equals("fromCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[3] = true; continue; }
-					if (mt.name.equals("toCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[4] = true; continue; }
+					if (mt.name.equals("toCustomBytes") && mt.desc.equals("(Lio/netty/buffer/ByteBuf;)V")) { fs[4] = true; }
 				}
 				
 				if (!fs[0]) makeConstructor(cn); 
@@ -66,7 +66,7 @@ public class ASJPacketCompleter implements IClassTransformer {
 		mv.visitInsn(RETURN);
 		mv.visitEnd();
 	}
-
+	
 	public void makeFromBytes(ClassNode cl, boolean callCustom) {
 		MethodVisitor mv = cl.visitMethod(ACC_PUBLIC, "fromBytes", "(Lio/netty/buffer/ByteBuf;)V", null, null);
 		mv.visitCode();

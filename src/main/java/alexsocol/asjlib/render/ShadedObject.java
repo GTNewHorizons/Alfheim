@@ -15,8 +15,8 @@ public abstract class ShadedObject implements Comparable<ShadedObject> {
 	public final int shaderID;
 	public final int materialID;
 	public final ResourceLocation texture;
-	public ArrayList<Matrix4f> translations = new ArrayList<Matrix4f>();
-	private static FloatBuffer usableBuffer = BufferUtils.createFloatBuffer(32);
+	public final ArrayList<Matrix4f> translations = new ArrayList<Matrix4f>();
+	private static final FloatBuffer usableBuffer = BufferUtils.createFloatBuffer(32);
 	
 	public ShadedObject(int shader, int material, ResourceLocation text) {
 		shaderID = shader;
@@ -49,7 +49,7 @@ public abstract class ShadedObject implements Comparable<ShadedObject> {
 	}
 	
 	public abstract void postRender();
-
+	
 	@Override
 	public final int compareTo(ShadedObject ro) {
 		if (shaderID < ro.shaderID) return -1;

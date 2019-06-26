@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
 
 public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
-
+	
 	public static final int glowBlockID = RenderingRegistry.getNextAvailableRenderId();
 	
 	static {
@@ -20,9 +20,9 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 	
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		this.renderInvNormalBlock(renderer, block, metadata);
+		renderInvNormalBlock(renderer, block, metadata);
 	}
-
+	
 	public static void renderInvNormalBlock(RenderBlocks renderer, Block block, int meta) {
 		glPushMatrix();
 		Tessellator tes = Tessellator.instance;
@@ -64,7 +64,7 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 		glEnable(GL_LIGHTING);
 		glPopMatrix();
 	}
-
+	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
@@ -73,7 +73,7 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 		tes.draw();
 		
 		glPushMatrix();
-
+		
 		tes.startDrawingQuads();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		tes.setColorRGBA_F(1, 1, 1, 1);
@@ -84,20 +84,20 @@ public class RenderGlowingLayerBlock implements ISimpleBlockRenderingHandler {
 		if (((IGlowingLayerBlock)block).getGlowIcon(4, meta) != null && block.shouldSideBeRendered(world, x, y, z - 1, 4)) renderer.renderFaceZNeg(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(4, meta));
 		if (((IGlowingLayerBlock)block).getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, x, y, z, ((IGlowingLayerBlock)block).getGlowIcon(5, meta));
 		tes.draw();
-				
+		
 		glPopMatrix();
 		
 		tes.startDrawingQuads();
 		return false;
 	}
-
+	
 	
 	
 	@Override
 	public boolean shouldRender3DInInventory(int modelId) {
 		return true;
 	}
-
+	
 	@Override
 	public int getRenderId() {
 		return glowBlockID;

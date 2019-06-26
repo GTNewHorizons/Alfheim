@@ -19,14 +19,15 @@ import java.util.logging.Logger;
  */
 public class ASJReflectionHelper {
 	
-	public static Field modifiersField;
+	public static final Field modifiersField;
 	
 	static {
+		Field f = null;
 		try {
-			modifiersField = Field.class.getDeclaredField("modifiers");
-			// Makes the 'modifiers' field of the class Field accessible
-			modifiersField.setAccessible(true);
-		} catch (ReflectiveOperationException ignored) { }
+			f = Field.class.getDeclaredField("modifiers");
+			f.setAccessible(true);
+		} catch (Throwable ignored) { }
+		modifiersField = f;
 	}
 	
 	/**
@@ -47,7 +48,7 @@ public class ASJReflectionHelper {
 				modifiers &= ~mod;
 			}
 			modifiersField.setInt(field, modifiers);
-		} catch (ReflectiveOperationException ex) {
+		} catch (Throwable ex) {
 			CSLog.error(ex);
 		}
 	}
@@ -69,18 +70,15 @@ public class ASJReflectionHelper {
 	}
 	
 	/**
-	 * Returns the name of the caller class.
-	 * 
 	 * @return the name of the caller class.
 	 */
 	public static String getCallerClassName() {
-		return getCaller().getClassName();
+		StackTraceElement ste = getCaller();
+		return ste != null ? ste.getClassName() : "java.lang.Object";
 	}
 	
 	/**
-	 * Returns the caller {@link StackTraceElement}.
-	 * 
-	 * @return the caller stack trace element
+	 * @return the caller {@link StackTraceElement}
 	 */
 	public static StackTraceElement getCaller() {
 		StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
@@ -273,8 +271,7 @@ public class ASJReflectionHelper {
 				if (c == fieldType || subtypes && fieldType.isAssignableFrom(c)) {
 					list.add(o);
 				}
-			} catch (Exception ex) {
-			}
+			} catch (Throwable ignore) { }
 		}
 		
 		return (T[]) list.toArray();
@@ -378,10 +375,10 @@ public class ASJReflectionHelper {
 	 * @param checkAccessible true if field is private
 	 * @return the value
 	 */
-	public static <T, R> R getValue(Field field, Object instance, boolean checkAccessible) {
+	public static <T> T getValue(Field field, Object instance, boolean checkAccessible) {
 		try {
 			if (checkAccessible) field.setAccessible(true);
-			return (R) field.get(instance);
+			return (T) field.get(instance);
 		} catch (Exception ex) {
 			CSLog.error(ex);
 			return null;
@@ -528,7 +525,7 @@ public class ASJReflectionHelper {
 	}
 	
 	public static class CSLog {
-		public static CSLogger logger = new CSLogger();
+		public static final CSLogger logger = new CSLogger();
 		
 		public static void print(String string) {
 			logger.log(Level.INFO, string);
@@ -583,7 +580,7 @@ public class ASJReflectionHelper {
 		}
 		
 		public static class CSLogger {
-			public static final Logger log = Logger.getGlobal();
+			public static final Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 			
 			public void log(Level level, String msg) {
 				log.log(level, msg);

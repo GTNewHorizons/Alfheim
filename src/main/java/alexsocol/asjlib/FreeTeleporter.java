@@ -7,8 +7,8 @@ import net.minecraft.world.WorldServer;
 
 public class FreeTeleporter extends Teleporter {
 
-	WorldServer world;
-	double x, y, z;
+	final WorldServer world;
+	final double x, y, z;
 	
 	public FreeTeleporter(WorldServer worldIn, double x, double y, double z) {
 		super(worldIn);
@@ -17,7 +17,7 @@ public class FreeTeleporter extends Teleporter {
 		this.y = y;
 		this.z = z;
 	}
-
+	
 	@Override
 	public boolean placeInExistingPortal(Entity entity, double x, double y, double z, float rotationYaw) {
 		entity.posX = this.x;

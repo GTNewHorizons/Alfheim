@@ -17,7 +17,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 /** Include this to your #getASMTransformerClass to make @HookField's work */
 public class ASJASM implements IClassTransformer {
 
-	public static HashMap<String, ArrayList<FieldData>> fieldsMap = new HashMap<String, ArrayList<FieldData>>();
+	public static final HashMap<String, ArrayList<FieldData>> fieldsMap = new HashMap<String, ArrayList<FieldData>>();
 
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 		if (!fieldsMap.containsKey(transformedName)) return basicClass;
@@ -57,11 +57,11 @@ public class ASJASM implements IClassTransformer {
 							}
 						}
 					}
-					if (flag && targetClassName != "") break;
+					if (flag && !targetClassName.isEmpty()) break;
 				}
 			}
 
-			if (!flag || targetClassName == "") continue;
+			if (!flag || targetClassName.isEmpty()) continue;
 
 			if (!fieldsMap.containsKey(targetClassName)) fieldsMap.put(targetClassName, new ArrayList<FieldData>());
 			fieldsMap.get(targetClassName).add(new FieldData(fn.access, fn.name, fn.desc));

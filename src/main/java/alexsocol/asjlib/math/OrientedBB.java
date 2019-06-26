@@ -34,7 +34,7 @@ Y
  * @author AlexSocol
  */
 public class OrientedBB {
-
+	
 	public Vector3 pos;			// center
 	public Vector3 size;		// half size
 	public Matrix4 orient;		// rotation (orientation) matrix
@@ -67,7 +67,7 @@ public class OrientedBB {
 		this();
 		fromAABB(aabb);
 	}
-
+	
 	/** Returns array of vertices for this BB */
 	public Vector3[] vertices() {
 		return new Vector3[] { a, b, c, d, e, f, g, h };
@@ -164,7 +164,7 @@ public class OrientedBB {
 		
 		return this;
 	}
-
+	
 	/** Rotates BB on given angle in DEG around given axis (axis coords are local, starting at pos[0, 0, 0]) */
 	public OrientedBB rotateLocal(double angle, Vector3 axis) {
 		double x = pos.x, y = pos.y, z = pos.z;
@@ -210,17 +210,17 @@ public class OrientedBB {
 	public boolean intersectsWith(Vector3 vec3) {
 		return intersectsWith(this, vec3);
 	}
-
+	
 	/** Checks if this OBB intersects with given AABB */
 	public boolean intersectsWith(AxisAlignedBB aabb) {
 		return intersectsWith(this, aabb);
 	}
-
+	
 	/** Checks if this OBB intersects with given OBB */
 	public boolean intersectsWith(OrientedBB obb) {
 		return intersectsWith(this, obb);
 	}
-
+	
 	public static boolean intersectsWith(OrientedBB obb, Vector3 point) {
 		Vector3 dir = point.copy().sub(obb.pos);
 		double[] o = { obb.orient.m00, obb.orient.m01, obb.orient.m02, obb.orient.m10, obb.orient.m11, obb.orient.m12, obb.orient.m20, obb.orient.m21, obb.orient.m22 };
@@ -228,13 +228,13 @@ public class OrientedBB {
 		
 		for (int i = 0; i < 3; ++i) {
 			Vector3 axis = new Vector3(o[i * 3], o[i * 3 + 1], o[i * 3 + 2]);
-
+			
 			double distance = dir.dotProduct(axis);
-
+			
 			if (distance > s[i]) return false;
 			if (distance < -s[i]) return false;
 		}
-
+		
 		return true;
 	}
 	
@@ -248,22 +248,22 @@ public class OrientedBB {
 		test[3] = new Vector3(obb.orient.m00, obb.orient.m01, obb.orient.m02);
 		test[4] = new Vector3(obb.orient.m10, obb.orient.m11, obb.orient.m12);
 		test[5] = new Vector3(obb.orient.m20, obb.orient.m21, obb.orient.m22);
-
+		
 		for (int i = 0; i < 3; ++i) { // Fill out rest of axis
-			test[6 + i * 3 + 0] = test[i].copy().crossProduct(test[0]);
+			test[6 + i * 3] = test[i].copy().crossProduct(test[0]);
 			test[6 + i * 3 + 1] = test[i].copy().crossProduct(test[1]);
 			test[6 + i * 3 + 2] = test[i].copy().crossProduct(test[2]);
 		}
-
+		
 		for (int i = 0; i < 15; ++i) {
 			if (!overlapOnAxis(aabb, obb, test[i])) {
 				return false; // Seperating axis found
 			}
 		}
-
+		
 		return true; // Seperating axis not found
 	}
-
+	
 	/** Checks if one OBB intersects with other */
 	public static boolean intersectsWith(OrientedBB obb1, OrientedBB obb2) {
 		Vector3[] test = new Vector3[15];
@@ -274,19 +274,19 @@ public class OrientedBB {
 		test[3] = new Vector3(obb2.orient.m00, obb2.orient.m01, obb2.orient.m02);
 		test[4] = new Vector3(obb2.orient.m10, obb2.orient.m11, obb2.orient.m12);
 		test[5] = new Vector3(obb2.orient.m20, obb2.orient.m21, obb2.orient.m22);
-
+		
 		for (int i = 0; i < 3; ++i) { // Fill out rest of axis
-			test[6 + i * 3 + 0] = test[i].copy().crossProduct(test[0]);
+			test[6 + i * 3] = test[i].copy().crossProduct(test[0]);
 			test[6 + i * 3 + 1] = test[i].copy().crossProduct(test[1]);
 			test[6 + i * 3 + 2] = test[i].copy().crossProduct(test[2]);
 		}
-
+		
 		for (int i = 0; i < 15; ++i) {
 			if (!overlapOnAxis(obb1, obb2, test[i])) {
 				return false; // Seperating axis found
 			}
 		}
-
+		
 		return true; // Seperating axis not found
 	}
 	
@@ -304,18 +304,18 @@ public class OrientedBB {
 	
 	protected static Interval getInterval(OrientedBB obb, Vector3 axis) {
 		Vector3[] vertex = new Vector3[8];
-
+		
 		Vector3 c = new Vector3(obb.pos.x, obb.pos.y, obb.pos.z);		// OBB Center
 		Vector3 e = new Vector3(obb.size.x, obb.size.y, obb.size.z);	// OBB Extents
 		
 		double[] o = { obb.orient.m00, obb.orient.m01, obb.orient.m02, obb.orient.m10, obb.orient.m11, obb.orient.m12, obb.orient.m20, obb.orient.m21, obb.orient.m22 };
 		
-		Vector3 a[] = {					// OBB Axis
+		Vector3[] a = {					// OBB Axis
 			new Vector3(o[0], o[1], o[2]),
 			new Vector3(o[3], o[4], o[5]),
 			new Vector3(o[6], o[7], o[8]),
 		};
-
+		
 		vertex[0] = c.copy().add(a[0].copy().mul(e.x)).add(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z));
 		vertex[1] = c.copy().sub(a[0].copy().mul(e.x)).add(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z));
 		vertex[2] = c.copy().add(a[0].copy().mul(e.x)).sub(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z));
@@ -324,23 +324,23 @@ public class OrientedBB {
 		vertex[5] = c.copy().add(a[0].copy().mul(e.x)).sub(a[1].copy().mul(e.y)).sub(a[2].copy().mul(e.z));
 		vertex[6] = c.copy().sub(a[0].copy().mul(e.x)).add(a[1].copy().mul(e.y)).sub(a[2].copy().mul(e.z));
 		vertex[7] = c.copy().sub(a[0].copy().mul(e.x)).sub(a[1].copy().mul(e.y)).add(a[2].copy().mul(e.z));
-
+		
 		Interval result = new Interval();
 		result.min = result.max = axis.copy().dotProduct(vertex[0]);
-
+		
 		for (int i = 1; i < 8; ++i) {
 			double projection = axis.copy().dotProduct(vertex[i]);
 			result.min = (projection < result.min) ? projection : result.min;
 			result.max = (projection > result.max) ? projection : result.max;
 		}
-
+		
 		return result;
 	}
 	
 	protected static Interval getInterval(AxisAlignedBB aabb, Vector3 axis) {
 		Vector3 min = getMin(aabb);
 		Vector3 max = getMax(aabb);
-
+		
 		Vector3[] vertex = {
 				new Vector3(min.x, max.y, max.z),
 				new Vector3(min.x, max.y, min.z),
@@ -351,30 +351,30 @@ public class OrientedBB {
 				new Vector3(max.x, min.y, max.z),
 				new Vector3(max.x, min.y, min.z)
 		};
-
+		
 		Interval result = new Interval();
 		result.min = result.max = axis.copy().dotProduct(vertex[0]);
-
+		
 		for (int i = 1; i < 8; ++i) {
 			double projection = axis.copy().dotProduct(vertex[i]);
 			result.min = (projection < result.min) ? projection : result.min;
 			result.max = (projection > result.max) ? projection : result.max;
 		}
-
+		
 		return result;
 	}
 	
 	protected static Vector3 getMin(AxisAlignedBB aabb) {
 		Vector3 p1 = getAABBPosition(aabb).add(getAABBSize(aabb));
 		Vector3 p2 = getAABBPosition(aabb).sub(getAABBSize(aabb));
-
+		
 		return new Vector3(Math.min(p1.x, p2.x), Math.min(p1.y, p2.y), Math.min(p1.z, p2.z));
 	}
 	
 	protected static Vector3 getMax(AxisAlignedBB aabb) {
 		Vector3 p1 = getAABBPosition(aabb).add(getAABBSize(aabb));
 		Vector3 p2 = getAABBPosition(aabb).sub(getAABBSize(aabb));
-
+		
 		return new Vector3(Math.max(p1.x, p2.x), Math.max(p1.y, p2.y), Math.max(p1.z, p2.z));
 	}
 	
@@ -434,7 +434,7 @@ public class OrientedBB {
 		d.glVertex();
 		d.glVertex();
 		a.glVertex();
-
+		
 		e.glVertex();
 		f.glVertex();
 		f.glVertex();

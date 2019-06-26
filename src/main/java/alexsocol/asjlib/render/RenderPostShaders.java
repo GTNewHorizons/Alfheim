@@ -18,7 +18,7 @@ public class RenderPostShaders {
 		MinecraftForge.EVENT_BUS.register(new RendererPostShaders());
 	}
 	
-	public static ArrayList<ShadedObject> shaders = new ArrayList<ShadedObject>();
+	public static final ArrayList<ShadedObject> shaders = new ArrayList<ShadedObject>();
 	private static int renderObjectMaterialID = 0;
 	
 	public static void registerShadedObject(ShadedObject renobj) {

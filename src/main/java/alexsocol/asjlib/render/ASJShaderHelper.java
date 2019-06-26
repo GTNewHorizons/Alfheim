@@ -15,15 +15,15 @@ import net.minecraft.util.ResourceLocation;
  * Almost all code is by Vazkii - ShaderHelper, I just ported it to GL20 and made lib-style
  * */
 public final class ASJShaderHelper {
-
+	
 	private static final int FRAG = GL_FRAGMENT_SHADER;
 	private static final int VERT = GL_VERTEX_SHADER;
 	
 	public static void useShader(int shaderID, ShaderCallback callback) {
 		if(!OpenGlHelper.shadersSupported) return;
-
+		
 		glUseProgram(shaderID);
-
+		
 		if(shaderID != 0) {
 			if (Minecraft.getMinecraft().theWorld != null) {
 				glUniform1i(glGetUniformLocation(shaderID, "time"), (int) (Minecraft.getMinecraft().theWorld.getTotalWorldTime() / 20));
@@ -33,15 +33,15 @@ public final class ASJShaderHelper {
 			if(callback != null) callback.call(shaderID);
 		}
 	}
-
+	
 	public static void useShader(int shaderID) {
 		useShader(shaderID, null);
 	}
-
+	
 	public static void releaseShader() {
 		useShader(0);
 	}
-
+	
 	// Most of the code taken from the LWJGL wiki
 	// http://lwjgl.org/wiki/index.php?title=GLSL_Shaders_with_LWJGL
 	/**
@@ -53,7 +53,7 @@ public final class ASJShaderHelper {
 	public static int createProgram(String vertLocation, String fragLocation) {
 		if(!OpenGlHelper.shadersSupported) return 0;
 		
-		int vertID = 0, fragID = 0, programID = 0;
+		int vertID, fragID, programID;
 		
 		programID = glCreateProgram();
 		if(programID == 0)
@@ -75,31 +75,31 @@ public final class ASJShaderHelper {
 			glDeleteProgram(programID);
 			throw new RuntimeException("Error Linking program: " + info);
 		}
-
+		
 		glValidateProgram(programID);
 		if (glGetProgrami(programID, GL_VALIDATE_STATUS) == GL_FALSE) {
 			String info = getProgramLogInfo(programID);
 			glDeleteProgram(programID);
 			throw new RuntimeException("Error Validating program: " + info);
 		}
-
+		
 		return programID;
 	}
-
+	
 	private static int createShader(String filename, int shaderType){
 		int shaderID = 0;
 		try {
 			shaderID = glCreateShader(shaderType);
-
+			
 			if(shaderID == 0)
 				return 0;
-
+			
 			glShaderSource(shaderID, readFileAsString(filename));
 			glCompileShader(shaderID);
-
+			
 			if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE)
 				throw new RuntimeException("Error Compiling shader: " + getShaderLogInfo(shaderID));
-
+			
 			return shaderID;
 		}
 		catch(Exception e) {
@@ -108,15 +108,15 @@ public final class ASJShaderHelper {
 			return -1;
 		}
 	}
-
+	
 	private static String getShaderLogInfo(int obj) {
 		return glGetShaderInfoLog(obj, glGetShaderi(obj, GL_INFO_LOG_LENGTH));
 	}
-
+	
 	private static String getProgramLogInfo(int obj) {
 		return glGetProgramInfoLog(obj, glGetProgrami(obj, GL_INFO_LOG_LENGTH));
 	}
-
+	
 	private static String readFileAsString(String filename) throws Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Loader.instance().activeModContainer().getModId(), filename)).getInputStream(), "UTF-8"));
 		StringBuilder source = new StringBuilder();
@@ -125,10 +125,10 @@ public final class ASJShaderHelper {
 		}
 		return source.toString();
 	}
-
+	
 	public static abstract class ShaderCallback {
-
+		
 		public abstract void call(int shaderID);
-
+		
 	}
 }
