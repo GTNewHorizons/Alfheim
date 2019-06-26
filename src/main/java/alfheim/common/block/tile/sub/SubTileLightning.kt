@@ -1,18 +1,13 @@
 package alfheim.common.block.tile.sub
 
-import java.util.ArrayList
-
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.registry.AlfheimBlocks
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
@@ -20,6 +15,8 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.item.ModItems
+import java.util.*
+import kotlin.math.min
 
 class SubTileLightning: SubTileEntity() {
 	internal val vt = Vector3()
@@ -27,18 +24,20 @@ class SubTileLightning: SubTileEntity() {
 	
 	override val targets: List<Any>
 		get() {
-			if (inWG()) return SubTileEntity.EMPTY_LIST
+			if (inWG()) return EMPTY_LIST
 			
-			f@ if (ticks % 50 == 0) {
-				val e = findNearestVulnerableEntity(radius) ?: break@f
-				
-				worldObj().playSoundEffect(x().toDouble(), y().toDouble(), z().toDouble(), "botania:runeAltarCraft", 1f, 1f)
-				
-				val l = ArrayList<Any>()
-				l.add(e)
-				return l
+			run {
+				if (ticks % 50 == 0) {
+					val e = findNearestVulnerableEntity(radius) ?: return@run
+					
+					worldObj().playSoundEffect(x().toDouble(), y().toDouble(), z().toDouble(), "botania:runeAltarCraft", 1f, 1f)
+					
+					val l = ArrayList<Any>()
+					l.add(e)
+					return l
+				}
 			}
-			return SubTileEntity.EMPTY_LIST
+			return EMPTY_LIST
 		}
 	
 	override val strip: Int
@@ -103,7 +102,7 @@ class SubTileLightning: SubTileEntity() {
 		if (target !is EntityLivingBase) return
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
 		
-		target.attackEntityFrom(DamageSourceSpell.corruption, Math.min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).toFloat() * 4f)
+		target.attackEntityFrom(DamageSourceSpell.corruption, min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).toFloat() * 4f)
 		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
 		ve.set(target.posX, target.posY, target.posZ).normalize()
@@ -114,11 +113,10 @@ class SubTileLightning: SubTileEntity() {
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.HEALTH
+		return HEALTH
 	}
 	
 	companion object {
-		
-		val radius = 12.0
+		const val radius = 12.0
 	}
 }

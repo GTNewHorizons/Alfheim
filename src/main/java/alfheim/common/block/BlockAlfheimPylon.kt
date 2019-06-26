@@ -6,6 +6,7 @@ import alfheim.common.block.tile.TileAlfheimPylon
 import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
+import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -24,16 +25,16 @@ import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)
-class BlockAlfheimPylon: BlockModContainer<*>(Material.iron), ILexiconable, IInfusionStabiliser {
+class BlockAlfheimPylon: BlockModContainer<TileEntity>(Material.iron), ILexiconable, IInfusionStabiliser {
 	
 	init {
 		val f = 1f / 16f * 2f
-		this.setBlockBounds(f, 0f, f, 1f - f, 1f / 16f * 21f, 1f - f)
-		this.setBlockName("AlfheimPylons")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
-		this.setLightLevel(0.5f)
-		this.setHardness(5.5f)
-		this.setStepSound(Block.soundTypeMetal)
+		setBlockBounds(f, 0f, f, 1f - f, 1f / 16f * 21f, 1f - f)
+		setBlockName("AlfheimPylons")
+		setCreativeTab(AlfheimCore.alfheimTab)
+		setLightLevel(0.5f)
+		setHardness(5.5f)
+		setStepSound(Block.soundTypeMetal)
 	}
 	
 	override fun shouldRegisterInNameSet(): Boolean {
@@ -48,7 +49,7 @@ class BlockAlfheimPylon: BlockModContainer<*>(Material.iron), ILexiconable, IInf
 		return meta
 	}
 	
-	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<*>) {
+	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<Any?>) {
 		super.getSubBlocks(item, tab, subs) // elven		(pink)
 		subs.add(ItemStack(item, 1, 1)) // elvorium	(orange)
 		subs.add(ItemStack(item, 1, 2)) // anti		(red)

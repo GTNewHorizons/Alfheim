@@ -15,6 +15,6 @@ class SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 1
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		SpellVisualizations.negateSphere(caster, 0.5)
+		SpellVisualizations.negateSphere(0.5)
 	}
 }

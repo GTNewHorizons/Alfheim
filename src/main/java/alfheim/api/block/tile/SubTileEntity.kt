@@ -29,7 +29,7 @@ abstract class SubTileEntity {
 	val frames: Int
 		get() = 32
 	
-	val strip: Int
+	open val strip: Int
 		get() = 0
 	
 	val color: Int
@@ -61,7 +61,7 @@ abstract class SubTileEntity {
 	/** Checks if two SubTiles can be mixed in single anomaly  */
 	abstract fun typeBits(): Int
 	
-	open fun onActivated(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
+	open fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
 		return false
 	}
 	
@@ -148,12 +148,12 @@ abstract class SubTileEntity {
 		return entity1
 	}
 	
-	fun <E> allAround(clazz: Class<E>, radius: Double): List<E> {
-		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as List<E>
+	fun <E> allAround(clazz: Class<E>, radius: Double): MutableList<E> {
+		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<E>
 	}
 	
-	fun allAroundRaw(clazz: Class<*>, radius: Double): List<*> {
-		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius))
+	fun allAroundRaw(clazz: Class<*>, radius: Double): MutableList<Any> {
+		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<Any>
 	}
 	
 	fun inWG(): Boolean {

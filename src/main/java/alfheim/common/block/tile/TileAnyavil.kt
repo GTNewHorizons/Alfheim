@@ -1,13 +1,12 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
+import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.network.MessageTileItem
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.passive.EntitySheep
@@ -21,10 +20,10 @@ import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.mana.TilePool
+import java.awt.Color
+import kotlin.math.*
 
-import java.awt.*
-
-class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
+class TileAnyavil: TileItemContainer(), ISidedInventory {
 	
 	var pinkCharge = 0
 	
@@ -37,14 +36,15 @@ class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
 			}
 		}
 	
-	fun onBurstCollision(burst: IManaBurst, world: World, x: Int, y: Int, z: Int) {
+	fun onBurstCollision(burst: IManaBurst, world: World) {
 		if (burst.isFake) return
 		if (item == null) return
 		if (burst.color != -0xd7f5a) return
 		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), yCoord.toDouble(), (zCoord - 1).toDouble(), (xCoord + 2).toDouble(), (yCoord + 2).toDouble(), (zCoord + 2).toDouble()).expand(5.0, 3.0, 5.0))
 		for (eitem in eitems) {
+			eitem as EntityItem
 			if (eitem.isDead) continue
-			val item = eitem.getEntityItem()
+			val item = eitem.entityItem
 			val pinkness = AlfheimAPI.getPinkness(item)
 			if (pinkness > 0) {
 				pinkCharge += pinkness * item.stackSize
@@ -52,10 +52,10 @@ class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
 			}
 		}
 		
-		var extraPink = Math.max(0, pinkCharge - MAX_PINK_CHARGE)
+		var extraPink = max(0, pinkCharge - MAX_PINK_CHARGE)
 		val col = EntitySheep.fleeceColorTable[6]
 		if (extraPink > 0) {
-			extraPink = Math.min(extraPink, 4000)
+			extraPink = min(extraPink, 4000)
 			pinkCharge = MAX_PINK_CHARGE
 			val m = Vector3()
 			while (extraPink > 0) {
@@ -66,14 +66,14 @@ class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
 		}
 		
 		val needed = item!!.itemDamage
-		val transfer = Math.max(0, Math.min(needed, pinkCharge))
+		val transfer = max(0, min(needed, pinkCharge))
 		pinkCharge -= transfer
 		item!!.itemDamage = item!!.itemDamage - transfer
 		
 		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), yCoord + 1.5, zCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
-	fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) {
+	fun renderHUD(res: ScaledResolution) {
 		val name = AlfheimBlocks.anyavil.localizedName
 		val col = EntitySheep.fleeceColorTable[6]
 		val color = Color(col[0], col[1], col[2]).rgb
@@ -105,14 +105,14 @@ class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
 		if (getStackInSlot(slot) != null) {
 			val itemstack: ItemStack?
 			
-			if (getStackInSlot(slot)!!.stackSize <= ammount) {
+			return if (getStackInSlot(slot)!!.stackSize <= ammount) {
 				itemstack = getStackInSlot(slot)
 				setInventorySlotContents(slot, null)
-				return itemstack
+				itemstack
 			} else {
 				itemstack = this.getStackInSlot(slot)!!.splitStack(ammount)
 				if (this.getStackInSlot(slot)!!.stackSize == 0) setInventorySlotContents(slot, null)
-				return itemstack
+				itemstack
 			}
 		}
 		return null
@@ -170,9 +170,9 @@ class TileAnyavil: ItemContainingTileEntity(), ISidedInventory {
 	
 	companion object {
 		
-		val MAX_PINK_CHARGE = TilePool.MAX_MANA_DILLUTED
-		private val TAG_MANA = "mana"
-		private val TAG_MANA_CAP = "manaCap"
-		private val TAG_METADATA = "metadata"
+		const val MAX_PINK_CHARGE = TilePool.MAX_MANA_DILLUTED
+		private const val TAG_MANA = "mana"
+		private const val TAG_MANA_CAP = "manaCap"
+		private const val TAG_METADATA = "metadata"
 	}
 }

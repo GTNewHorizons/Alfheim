@@ -1,40 +1,31 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL13.*
-import org.lwjgl.opengl.GL20.*
-
-import alexsocol.asjlib.render.ASJShaderHelper
+import alexsocol.asjlib.render.*
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
-import alexsocol.asjlib.render.RenderPostShaders
-import alexsocol.asjlib.render.ShadedObject
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibResourceLocations
-import alfheim.api.lib.LibShaderIDs
+import alfheim.api.lib.*
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBook
-import net.minecraft.client.renderer.ItemRenderer
-import net.minecraft.client.renderer.OpenGlHelper
-import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.texture.TextureManager
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
-import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
-import net.minecraft.util.IIcon
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.client.model.AdvancedModelLoader
-import net.minecraftforge.client.model.IModelCustom
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL13.GL_TEXTURE0
+import org.lwjgl.opengl.GL20.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.common.core.handler.ConfigHandler
+import kotlin.math.sin
 
 object RenderContributors {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))!!
 	
 	val callback: ShaderCallback = object: ShaderCallback() {
 		override fun call(shaderID: Int) {
@@ -89,10 +80,9 @@ object RenderContributors {
 	
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		if (player.isInvisible || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return
+		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) return
 		
-		AlexSocol@ if (player.commandSenderName == "AlexSocol") {
-			if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) break@AlexSocol
-			
+		if (player.commandSenderName == "AlexSocol") {
 			run {
 				// ring
 				glPushMatrix()
@@ -116,7 +106,7 @@ object RenderContributors {
 					val flying = player.capabilities.isFlying
 					
 					val rz = 120f
-					val rx = 20f + ((Math.sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).toFloat()
+					val rx = 20f + ((sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).toFloat()
 					val ry = 0f
 					val h = 0.2f
 					val i = 0.15f
@@ -125,10 +115,6 @@ object RenderContributors {
 					glEnable(GL_BLEND)
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 					glColor4d(1.0, 1.0, 1.0, 1.0)
-					
-					val light = 15728880
-					val lightmapX = light % 65536
-					val lightmapY = light / 65536
 					
 					val f = icon!!.minU
 					val f1 = icon.maxU
@@ -174,7 +160,7 @@ object RenderContributors {
 					
 					player.sendPlayerAbilities()
 					val flying = player.capabilities.isFlying
-					val ry = (if (flying) 30 else 15) + (Math.sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * if (flying) 0.4 else 0.2) + 0.5) * if (flying) 25.0 else 5.0
+					val ry = (if (flying) 30 else 15) + (sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * if (flying) 0.4 else 0.2) + 0.5) * if (flying) 25.0 else 5.0
 					
 					run {
 						// bones
@@ -229,12 +215,10 @@ object RenderContributors {
 			}
 		}
 		
-		DmitryWS@ if (player.commandSenderName == "DmitryWS") {
-			if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) break@DmitryWS
-			
+		if (player.commandSenderName == "DmitryWS") {
 			glPushMatrix()
 			glEnable(GL_CULL_FACE)
-			val t = Math.sin((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks) / 10.0)
+			val t = sin((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks) / 10.0)
 			
 			glTranslated(0.0, -(0.9 + t * 0.05), 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
@@ -246,9 +230,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		KAIIIAK@ if (player.commandSenderName == "KAIIIAK") {
-			if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) break@KAIIIAK
-			
+		if (player.commandSenderName == "KAIIIAK") {
 			glPushMatrix()
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)

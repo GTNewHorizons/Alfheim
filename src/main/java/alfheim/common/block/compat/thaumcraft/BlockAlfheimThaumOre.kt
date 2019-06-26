@@ -1,27 +1,20 @@
 package alfheim.common.block.compat.thaumcraft
 
-import java.util.ArrayList
-import java.util.Random
-
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.particle.EffectRenderer
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
-import net.minecraft.util.MathHelper
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.world.IBlockAccess
-import net.minecraft.world.World
+import net.minecraft.item.*
+import net.minecraft.util.*
+import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import thaumcraft.client.lib.UtilsFX
 import thaumcraft.common.config.ConfigItems
+import java.util.*
 
 class BlockAlfheimThaumOre: Block(Material.rock) {
 	val rand = Random()
@@ -33,7 +26,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 		setHarvestLevel("pickaxe", 2, 0)
 		setHarvestLevel("pickaxe", 2, 7)
 		setResistance(5f)
-		setStepSound(Block.soundTypeStone)
+		setStepSound(soundTypeStone)
 		tickRandomly = true
 	}
 	
@@ -47,7 +40,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int): IIcon {
-		return if (meta == 0) icon[0] else if (meta == 7) icon[3] else icon[1]
+		return if (meta == 0) icon[0]!! else if (meta == 7) icon[3]!! else icon[1]!!
 	}
 	
 	override fun canSilkHarvest(world: World?, player: EntityPlayer?, x: Int, y: Int, z: Int, metadata: Int): Boolean {
@@ -59,7 +52,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<*>) {
+	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<Any?>) {
 		subs.add(ItemStack(item, 1, 0))
 		subs.add(ItemStack(item, 1, 1))
 		subs.add(ItemStack(item, 1, 2))
@@ -74,24 +67,24 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	override fun addHitEffects(worldObj: World, target: MovingObjectPosition, effectRenderer: EffectRenderer?): Boolean {
 		val meta = worldObj.getBlockMetadata(target.blockX, target.blockY, target.blockZ)
 		
-		if (0 < meta && meta < 6) {
+		if (meta in 1..5) {
 			UtilsFX.infusedStoneSparkle(worldObj, target.blockX, target.blockY, target.blockZ, meta)
 		}
 		
 		return super.addHitEffects(worldObj, target, effectRenderer)
 	}
 	
-	override fun getDrops(world: World, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<*> {
-		val ret = ArrayList()
-		if (meta == 0) {
-			ret.add(ItemStack(ThaumcraftAlfheimModule.alfheimThaumOre, 1, 0))
-		} else if (meta == 7) {
-			ret.add(ItemStack(ConfigItems.itemResource, 1 + world.rand.nextInt(fortune + 1), 6))
-		} else {
-			val q = 1 + world.rand.nextInt(2 + fortune)
-			
-			for (a in 0 until q) {
-				ret.add(ItemStack(ConfigItems.itemShard, 1, meta - 1))
+	override fun getDrops(world: World, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<ItemStack> {
+		val ret = ArrayList<ItemStack>()
+		when (meta) {
+			0    -> ret.add(ItemStack(ThaumcraftAlfheimModule.alfheimThaumOre, 1, 0))
+			7    -> ret.add(ItemStack(ConfigItems.itemResource, 1 + world.rand.nextInt(fortune + 1), 6))
+			else -> {
+				val q = 1 + world.rand.nextInt(2 + fortune)
+				
+				for (a in 0 until q) {
+					ret.add(ItemStack(ConfigItems.itemShard, 1, meta - 1))
+				}
 			}
 		}
 		

@@ -1,25 +1,21 @@
 package alfheim.client.integration.nei.recipes
 
-import org.lwjgl.opengl.GL11.*
-
-import java.awt.Rectangle
-import java.util.ArrayList
-
-import alfheim.api.AlfheimAPI
-import alfheim.api.ModInfo
+import alfheim.api.*
 import alfheim.common.block.BlockTradePortal
 import codechicken.lib.gui.GuiDraw
-import codechicken.nei.NEIServerUtils
-import codechicken.nei.PositionedStack
+import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraftforge.oredict.OreDictionary
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.RecipeElvenTrade
 import vazkii.botania.client.lib.LibResources
+import java.awt.Rectangle
+import java.util.*
 
 class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 	
@@ -29,25 +25,22 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 	inner class CachedTradePortalRecipe(recipe: RecipeElvenTrade?): TemplateRecipeHandler.CachedRecipe() {
 		
 		val outputs: MutableList<PositionedStack> = ArrayList()
-		var input: PositionedStack
+		lateinit var input: PositionedStack
 		
 		init {
-			if (recipe == null)
-				return
-			
-			setIngredients(recipe!!.inputs)
-			input = PositionedStack(recipe.output, 107, 46)
+			if (recipe != null) {
+				setIngredients(recipe.inputs)
+				input = PositionedStack(recipe.output, 107, 46)
+			}
 		}
 		
 		fun setIngredients(inputs: List<Any>) {
-			var i = 0
-			for (o in inputs) {
+			for ((i, o) in inputs.withIndex()) {
 				if (o is String)
 					this.outputs.add(PositionedStack(OreDictionary.getOres(o), 60 + i * 18, 6))
 				else
 					this.outputs.add(PositionedStack(o, 60 + i * 18, 6))
 				
-				i++
 			}
 		}
 		
@@ -70,7 +63,7 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 	}
 	
 	override fun loadTransferRects() {
-		transferRects.add(TemplateRecipeHandler.RecipeTransferRect(Rectangle(35, 30, 48, 48), recipeID))
+		transferRects.add(RecipeTransferRect(Rectangle(35, 30, 48, 48), recipeID))
 	}
 	
 	override fun recipiesPerPage(): Int {

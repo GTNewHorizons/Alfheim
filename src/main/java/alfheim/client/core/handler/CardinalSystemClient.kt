@@ -13,7 +13,6 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
 import java.io.Serializable
@@ -26,7 +25,7 @@ object CardinalSystemClient {
 	
 	fun segment(): PlayerSegmentClient {
 		if (segment == null) segment = PlayerSegmentClient()
-		return segment
+		return segment!!
 	}
 	
 	object SpellCastingSystemClient {
@@ -37,20 +36,19 @@ object CardinalSystemClient {
 		}
 		
 		fun getCoolDown(spell: SpellBase?): Int {
-			try {
-				return if (spell == null) 0 else segment().coolDown[spell]
+			return try {
+				if (spell == null) 0 else segment().coolDown[spell]!!
 			} catch (e: Throwable) {
 				System.err.println(String.format("Something went wrong getting cooldown for %s. Returning 0.", spell))
 				e.printStackTrace()
-				return 0
+				0
 			}
-			
 		}
 		
 		fun tick() {
 			try {
 				for (spell in segment().coolDown.keys) {
-					val time = segment!!.coolDown[spell]
+					val time = segment!!.coolDown[spell]!!
 					if (time > 0) segment().coolDown[spell] = time - 1
 				}
 				if (segment!!.init > 0) --segment!!.init
@@ -71,7 +69,7 @@ object CardinalSystemClient {
 	object TargetingSystemClient {
 		
 		fun selectMob(): Boolean {
-			if (mc == null || mc.thePlayer == null) return false
+			if (mc?.thePlayer == null) return false
 			if (segment().party == null) segment!!.party = Party(mc.thePlayer)
 			val mop = ASJUtilities.getMouseOver(mc.thePlayer, 128.0, true)
 			if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit is EntityLivingBase) {
@@ -88,12 +86,14 @@ object CardinalSystemClient {
 		}
 		
 		fun selectTeam(): Boolean {
-			if (mc == null || mc.thePlayer == null) return false
+			if (mc?.thePlayer == null) return false
 			segment().isParty = true
 			if (segment!!.party == null) segment!!.party = Party(mc.thePlayer)
 			while (true) {
-				val team = segment!!.party!!.get(PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % segment!!.party!!.count)
-				if (team != null && Vector3.entityDistancePlane(mc.thePlayer, segment!!.target = team) < (if (team is IBossDisplayData) 128 else 32)) break
+				PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % segment!!.party!!.count
+				val team = segment!!.party!![PlayerSegmentClient.partyIndex]
+				segment!!.target = team
+				if (team != null && Vector3.entityDistancePlane(mc.thePlayer, segment!!.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
 			}
 			return segment!!.isParty
 		}
@@ -101,7 +101,9 @@ object CardinalSystemClient {
 	
 	object TimeStopSystemClient {
 		
-		val tsAreas = LinkedList<TimeStopAreaClient>()
+		private val tsAreas = LinkedList<TimeStopAreaClient>()
+		
+		fun clear() = tsAreas.clear()
 		
 		fun stop(x: Double, y: Double, z: Double, pt: Party, id: Int) {
 			tsAreas.add(TimeStopAreaClient(x, y, z, pt, id))
@@ -112,7 +114,7 @@ object CardinalSystemClient {
 			for (tsa in tsAreas) {
 				if (Vector3.vecEntityDistance(tsa.pos, e) < 16) {
 					if (e is EntityLivingBase) {
-						if (!tsa.cPt.isMember(e as EntityLivingBase?)) return true
+						if (!tsa.cPt?.isMember(e as EntityLivingBase?)!!) return true
 					} else {
 						return true
 					}
@@ -141,16 +143,12 @@ object CardinalSystemClient {
 			tsAreas.remove(TimeStopAreaClient(0.0, 0.0, 0.0, null, i))
 		}
 		
-		private class TimeStopAreaClient(x: Double, y: Double, z: Double, val cPt: Party, val id: Int) {
+		private class TimeStopAreaClient(x: Double, y: Double, z: Double, val cPt: Party?, val id: Int) {
 			
-			val pos: Vector3
+			val pos = Vector3(x, y, z)
 			
-			init {
-				pos = Vector3(x, y, z)
-			}
-			
-			override fun equals(obj: Any?): Boolean {
-				return if (obj !is TimeStopAreaClient) false else obj.id == id
+			override fun equals(other: Any?): Boolean {
+				return if (other !is TimeStopAreaClient) false else other.id == id
 			}
 		}
 	}
@@ -181,7 +179,7 @@ object CardinalSystemClient {
 			private const val serialVersionUID = 6871678638741684L
 			var partyIndex: Int = 0
 			
-			var knowledge: BooleanArray
+			lateinit var knowledge: BooleanArray
 		}
 	}
 }

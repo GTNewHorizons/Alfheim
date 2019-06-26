@@ -1,8 +1,8 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.extendables.*
 import org.lwjgl.opengl.GL11.*
 
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleAnyavil
@@ -45,7 +45,7 @@ class RenderTileAnyavil: TileEntitySpecialRenderer() {
 		glTranslated(0.0, 0.07, -0.6)
 		glScaled(1.5, 1.5, 1.5)
 		
-		ItemContainingTileEntity.renderItem(tile)
+		TileItemContainer.renderItem(tile)
 		glPopMatrix()
 	}
 	

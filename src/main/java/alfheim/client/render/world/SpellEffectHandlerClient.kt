@@ -1,5 +1,7 @@
 package alfheim.client.render.world
 
+import alfheim.client.render.world.SpellEffectHandlerClient.Spells.*
+
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
@@ -8,13 +10,12 @@ import alfheim.client.gui.GUIDeathTimer
 import alfheim.common.core.registry.AlfheimRegistry
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.MathHelper
 import vazkii.botania.common.Botania
+import kotlin.math.*
 
 object SpellEffectHandlerClient {
 	
@@ -23,32 +24,32 @@ object SpellEffectHandlerClient {
 	fun select(s: Spells, x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
 		if (AlfheimCore.enableMMO) {
 			when (s) {
-				SpellEffectHandlerClient.Spells.ACID           -> spawnAcid(x, y, z)
-				SpellEffectHandlerClient.Spells.AQUABIND       -> spawnAquaBind(x, y, z)
-				SpellEffectHandlerClient.Spells.AQUASTREAM     -> spawnAquaStream(x, y, z, x2, y2, z2)
-				SpellEffectHandlerClient.Spells.AQUASTREAM_HIT -> spawnAquaStreamHit(x, y, z)
-				SpellEffectHandlerClient.Spells.DISPEL         -> spawnBurst(x, y, z, 1f, 0f, 0f)
-				SpellEffectHandlerClient.Spells.ECHO           -> spawnEcho(x, y, z)
-				SpellEffectHandlerClient.Spells.ECHO_ENTITY    -> spawnEchoEntity(x, y, z)
-				SpellEffectHandlerClient.Spells.ECHO_ITEM      -> spawnEchoItem(x, y, z)
-				SpellEffectHandlerClient.Spells.ECHO_MOB       -> spawnEchoMob(x, y, z)
-				SpellEffectHandlerClient.Spells.ECHO_PLAYER    -> spawnEchoPlayer(x, y, z)
-				SpellEffectHandlerClient.Spells.EXPL           -> spawnExplosion(x, y, z)
-				SpellEffectHandlerClient.Spells.GRAVITY        -> spawnGravity(x, y, z, x2, y2, z2)
-				SpellEffectHandlerClient.Spells.HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
-				SpellEffectHandlerClient.Spells.ICELENS        -> addIceLens()
-				SpellEffectHandlerClient.Spells.MANA           -> addMana(x, y)
-				SpellEffectHandlerClient.Spells.NOTE           -> spawnNote(x, y, z)
-				SpellEffectHandlerClient.Spells.NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
-				SpellEffectHandlerClient.Spells.PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
-				SpellEffectHandlerClient.Spells.PURE_AREA      -> spawnPure(x, y, z)
-				SpellEffectHandlerClient.Spells.QUAD           -> quadDamage()
-				SpellEffectHandlerClient.Spells.QUADH          -> quadHurt()
-				SpellEffectHandlerClient.Spells.SMOKE          -> spawnSmoke(x, y, z)
-				SpellEffectHandlerClient.Spells.SPLASH         -> spawnSplash(x, y, z)
-				SpellEffectHandlerClient.Spells.THROW          -> spawnThrow(x, y, z, x2, y2, z2)
-				SpellEffectHandlerClient.Spells.TREMORS        -> spawnTremors(x, y, z)
-				SpellEffectHandlerClient.Spells.UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
+				ACID           -> spawnAcid(x, y, z)
+				AQUABIND       -> spawnAquaBind(x, y, z)
+				AQUASTREAM     -> spawnAquaStream(x, y, z, x2, y2, z2)
+				AQUASTREAM_HIT -> spawnAquaStreamHit(x, y, z)
+				DISPEL         -> spawnBurst(x, y, z, 1f, 0f, 0f)
+				ECHO           -> spawnEcho(x, y, z)
+				ECHO_ENTITY    -> spawnEchoEntity(x, y, z)
+				ECHO_ITEM      -> spawnEchoItem(x, y, z)
+				ECHO_MOB       -> spawnEchoMob(x, y, z)
+				ECHO_PLAYER    -> spawnEchoPlayer(x, y, z)
+				EXPL           -> spawnExplosion(x, y, z)
+				GRAVITY        -> spawnGravity(x, y, z, x2, y2, z2)
+				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
+				ICELENS        -> addIceLens()
+				MANA           -> addMana(x, y)
+				NOTE           -> spawnNote(x, y, z)
+				NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
+				PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
+				PURE_AREA      -> spawnPure(x, y, z)
+				QUAD           -> quadDamage()
+				QUADH          -> quadHurt()
+				SMOKE          -> spawnSmoke(x, y, z)
+				SPLASH         -> spawnSplash(x, y, z)
+				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
+				TREMORS        -> spawnTremors(x, y, z)
+				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
 			}
 		}
 	}
@@ -89,8 +90,8 @@ object SpellEffectHandlerClient {
 	fun spawnAquaBind(x: Double, y: Double, z: Double) {
 		var i = 0
 		while (i < 360) {
-			val X = Math.cos(i.toDouble()) * 3.5
-			val Z = Math.sin(i.toDouble()) * 3.5
+			val X = cos(i.toDouble()) * 3.5
+			val Z = sin(i.toDouble()) * 3.5
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + X, y, z + Z, 0f, 0.5f, 1f, 0.5f)
 			i += 5
 		}
@@ -154,7 +155,8 @@ object SpellEffectHandlerClient {
 	
 	fun spawnMana(living: EntityLivingBase, mana: Double) {
 		var mana = mana
-		val d = Math.random() * (mana *= 0.5)
+		mana *= 0.5
+		val d = Math.random() * mana
 		m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random()).mul(1.0 * (mana * 0.25) - d / mana * (mana * 2.0 / 7.0)).add(0.0, d, 0.0)
 		Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, living.posX + m.x, living.posY + m.y, living.posZ + m.z,
 							 0.025f, 0.15f, 0.9f, (Math.random() * (mana * 0.5) + 0.5).toFloat(),
@@ -162,8 +164,7 @@ object SpellEffectHandlerClient {
 	}
 	
 	fun spawnNote(x: Double, y: Double, z: Double) {
-		var y = y
-		Minecraft.getMinecraft().theWorld.spawnParticle("note", x, ++y, z, Minecraft.getMinecraft().theWorld.rand.nextInt(25) / 24.0, 0.0, 0.0)
+		Minecraft.getMinecraft().theWorld.spawnParticle("note", x, y, z, Minecraft.getMinecraft().theWorld.rand.nextInt(25) / 24.0, 0.0, 0.0)
 	}
 	
 	fun spawnPure(x: Double, y: Double, z: Double) {
@@ -196,7 +197,7 @@ object SpellEffectHandlerClient {
 		val block = Minecraft.getMinecraft().theWorld.getBlock(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z))
 		val meta = Minecraft.getMinecraft().theWorld.getBlockMetadata(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z))
 		for (i in 0..511) {
-			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 1.5 + 0.5).set(m.x, Math.random() * 0.25, m.z)
+			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 1.5 + 0.5)[m.x, Math.random() * 0.25] = m.z
 			Minecraft.getMinecraft().theWorld.spawnParticle("blockdust_" + Block.getIdFromBlock(block) + "_" + meta, x, y + 0.25, z, m.x, m.y, m.z)
 		}
 	}
@@ -216,7 +217,7 @@ object SpellEffectHandlerClient {
 		if (AlfheimCore.enableMMO) {
 			var c = 0xFFFFFF
 			if (target is EntityPlayer) c = EnumRace.getRace(target).rgbColor
-			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - if (Minecraft.getMinecraft().thePlayer === target) 1.5 else 0, target.posZ, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.5).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), (Math.random() * 0.025).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), 2f)
+			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - if (Minecraft.getMinecraft().thePlayer === target) 1.5 else 0.0, target.posZ, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.5).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), (Math.random() * 0.025).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), 2f)
 		}
 	}
 	

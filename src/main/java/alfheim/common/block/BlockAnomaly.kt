@@ -6,8 +6,8 @@ import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.item.block.ItemBlockAnomaly
 import alfheim.common.lexicon.AlfheimLexiconData
-import net.minecraft.block.BlockContainer
-import net.minecraft.block.material.*
+import net.minecraft.block.*
+import net.minecraft.block.material.MapColor
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -16,10 +16,8 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.*
-
-import java.util.*
-
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import java.util.*
 
 class BlockAnomaly: BlockContainer(anomaly), ILexiconable {
 	init {
@@ -41,7 +39,7 @@ class BlockAnomaly: BlockContainer(anomaly), ILexiconable {
 		return null
 	}
 	
-	override fun getSubBlocks(block: Item, tab: CreativeTabs?, list: MutableList<*>) {
+	override fun getSubBlocks(block: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (name in AlfheimAPI.anomalies.keys)
 			list.add(ItemBlockAnomaly.ofType(name))
 	}
@@ -84,6 +82,6 @@ class BlockAnomaly: BlockContainer(anomaly), ILexiconable {
 	companion object {
 		
 		val anomaly = MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility()
-		var iconUndefined: IIcon
+		lateinit var iconUndefined: IIcon
 	}
 }

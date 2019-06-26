@@ -9,13 +9,11 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.api.lexicon.*
 
 class BlockPowerStone: Block(Material.rock), ILexiconable {
 	init {
@@ -23,7 +21,7 @@ class BlockPowerStone: Block(Material.rock), ILexiconable {
 		setBlockTextureName(ModInfo.MODID + ":ManaInfuserBottomDark")
 		setHardness(2f)
 		setResistance(6000f)
-		setStepSound(Block.soundTypeStone)
+		setStepSound(soundTypeStone)
 	}
 	
 	override fun damageDropped(meta: Int): Int {
@@ -34,7 +32,7 @@ class BlockPowerStone: Block(Material.rock), ILexiconable {
 		var meta = meta
 		if (meta < 0 || icons.size <= meta) meta = 0
 		
-		return if (side == 1) icons[meta] else icons[0]
+		return if (side == 1) icons[meta]!! else icons[0]!!
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
@@ -44,24 +42,24 @@ class BlockPowerStone: Block(Material.rock), ILexiconable {
 			icons[i] = reg.registerIcon(ModInfo.MODID + ":PowerStone" + i)
 	}
 	
-	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<*>) {
+	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<Any?>) {
 		subs.add(ItemStack(item, 1, 1)) // berserk
 		subs.add(ItemStack(item, 1, 2)) // overmage
 		subs.add(ItemStack(item, 1, 3)) // tank
 		subs.add(ItemStack(item, 1, 4)) // ninja
 	}
 	
-	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		return if (SpellBase.consumeMana(player, 10000, false) && press(world!!, x, y, z, player)) SpellBase.consumeMana(player, 10000, true) else false
+	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		return if (SpellBase.consumeMana(player, 10000, false) && press(world, x, y, z, player)) SpellBase.consumeMana(player, 10000, true) else false
 	}
 	
 	fun press(world: World, x: Int, y: Int, z: Int, player: EntityPlayer): Boolean {
-		when (world.getBlockMetadata(x, y, z)) {
-			1    -> return makePlayerBerserk(player)
-			2    -> return makePlayerOvermage(player)
-			3    -> return makePlayerTank(player)
-			4    -> return makePlayerNinja(player)
-			else -> return false
+		return when (world.getBlockMetadata(x, y, z)) {
+			1    -> makePlayerBerserk(player)
+			2    -> makePlayerOvermage(player)
+			3    -> makePlayerTank(player)
+			4    -> makePlayerNinja(player)
+			else -> false
 		}
 	}
 	

@@ -21,9 +21,9 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
 
-class TileItemContainer: ASJTile() {
+open class TileItemContainer: ASJTile() {
 	
-	var item: ItemStack? = null
+	open var item: ItemStack? = null
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		val compound = NBTTagCompound()

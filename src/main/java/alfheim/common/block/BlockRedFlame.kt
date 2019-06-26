@@ -1,37 +1,30 @@
 package alfheim.common.block
 
-import net.minecraftforge.common.util.ForgeDirection.*
-
-import java.util.Random
-
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimItems
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.registry.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.BlockFire
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import net.minecraftforge.common.util.ForgeDirection.*
+import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.mana.ManaItemHandler
+import java.util.*
 
 class BlockRedFlame: BlockFire(), ILexiconable {
 	
-	var icons: Array<IIcon>
+	lateinit var icons: Array<IIcon>
 	
 	init {
 		setBlockName("MuspelheimFire")
@@ -110,8 +103,8 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	fun getChanceOfNeighborsEncouragingFire(world: World, x: Int, y: Int, z: Int): Int {
 		val b0: Byte = 0
 		
-		if (!world.isAirBlock(x, y, z)) {
-			return 0
+		return if (!world.isAirBlock(x, y, z)) {
+			0
 		} else {
 			var l = b0.toInt()
 			l = this.getChanceToEncourageFire(world, x + 1, y, z, l, WEST)
@@ -120,7 +113,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 			l = this.getChanceToEncourageFire(world, x, y + 1, z, l, DOWN)
 			l = this.getChanceToEncourageFire(world, x, y, z - 1, l, SOUTH)
 			l = this.getChanceToEncourageFire(world, x, y, z + 1, l, NORTH)
-			return l
+			l
 		}
 	}
 	

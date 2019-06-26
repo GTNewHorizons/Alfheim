@@ -6,10 +6,10 @@ import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.entity.EntityLivingBase
 
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
+import kotlin.math.*
 
 object SpellVisualizations {
 	
@@ -30,7 +30,7 @@ object SpellVisualizations {
 			}
 			
 			override fun drawMesh() {
-				renderSphere(Tessellator.instance, 240.0, 240.0.toFloat() / 3.6f)
+				renderSphere(Tessellator.instance, 240.0.toFloat() / 3.6f)
 			}
 			
 			override fun postRender() {
@@ -64,11 +64,11 @@ object SpellVisualizations {
 		if (RenderPostShaders.allowShaders)
 			so.addTranslation()
 		else
-			renderSphere(Tessellator.instance, 240.0, 240.0.toFloat() / 3.6f)
+			renderSphere(Tessellator.instance, 240.0.toFloat() / 3.6f)
 		glColorMask(false, true, true, false)
 		glCullFace(GL_FRONT)
 		if (inside) glDisable(GL_DEPTH_TEST)
-		renderSphere(Tessellator.instance, size, size.toFloat() / 3.6f)
+		renderSphere(Tessellator.instance, size.toFloat() / 3.6f)
 		if (inside) glEnable(GL_DEPTH_TEST)
 		glColorMask(true, true, true, true)
 		glCullFace(GL_BACK)
@@ -81,7 +81,7 @@ object SpellVisualizations {
 		glPopMatrix()
 	}
 	
-	fun negateSphere(caster: EntityLivingBase, s: Double) {
+	fun negateSphere(s: Double) {
 		glPushMatrix()
 		ASJUtilities.interpolatedTranslation(Minecraft.getMinecraft().thePlayer)
 		val tes = Tessellator.instance
@@ -109,7 +109,7 @@ object SpellVisualizations {
 		glPopMatrix()
 		
 		glScaled(s, s, s)
-		renderSphere(tes, size, size.toFloat() / 3.6f)
+		renderSphere(tes, size.toFloat() / 3.6f)
 		glScaled(1 / s, 1 / s, 1 / s)
 		
 		glEnable(GL_LIGHTING)
@@ -125,18 +125,14 @@ object SpellVisualizations {
 	/**
 	 * @author thKaguya
 	 */
-	internal fun renderSphere(tessellator: Tessellator, length: Double, width: Float) {
+	internal fun renderSphere(tessellator: Tessellator, width: Float) {
 		var width = width
 		val maxWidth = width / 2.0f
 		val zAngleDivNum = 18
-		val zSpan = 360f / zAngleDivNum
 		var angleZ: Double
 		val angleSpanZ = Math.PI * 2.0 / zAngleDivNum.toDouble()
 		val zDivNum = 9
-		val zLength = width.toDouble()
-		val zDivLength = zLength / (zDivNum - 1).toDouble()
-		val zLength2 = zLength / 2.0
-		var zPos = Math.sin(-Math.PI / 2.0) * maxWidth
+		var zPos = sin(-Math.PI / 2.0) * maxWidth
 		var zPosOld = zPos
 		var xPos: Float
 		var yPos: Float
@@ -151,20 +147,19 @@ object SpellVisualizations {
 		angle += angleSpan
 		var widthOld = 0.0f
 		for (j in 0 until zDivNum) {
-			zPos = Math.sin(angle.toDouble()) * maxWidth
-			width = Math.cos(angle.toDouble()).toFloat() * maxWidth
+			zPos = sin(angle.toDouble()) * maxWidth
+			width = cos(angle.toDouble()).toFloat() * maxWidth
 			angleZ = 0.0
-			xPosOld = Math.cos(angleZ).toFloat() * width
-			yPosOld = Math.sin(angleZ).toFloat() * width
-			xPos2Old = Math.cos(angleZ).toFloat() * widthOld
-			yPos2Old = Math.sin(angleZ).toFloat() * widthOld
+			xPosOld = cos(angleZ).toFloat() * width
+			yPosOld = sin(angleZ).toFloat() * width
+			xPos2Old = cos(angleZ).toFloat() * widthOld
+			yPos2Old = sin(angleZ).toFloat() * widthOld
 			angleZ = angleSpanZ
 			for (i in 1..zAngleDivNum) {
-				xPos = Math.cos(angleZ).toFloat() * width
-				yPos = Math.sin(angleZ).toFloat() * width
-				xPos2 = Math.cos(angleZ).toFloat() * widthOld
-				yPos2 = Math.sin(angleZ).toFloat() * widthOld
-				val colorVar = 0.0
+				xPos = cos(angleZ).toFloat() * width
+				yPos = sin(angleZ).toFloat() * width
+				xPos2 = cos(angleZ).toFloat() * widthOld
+				yPos2 = sin(angleZ).toFloat() * widthOld
 				tessellator.startDrawingQuads()
 				//tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F , alpha);
 				tessellator.setNormal(0.0f, 1.0f, 0.0f)

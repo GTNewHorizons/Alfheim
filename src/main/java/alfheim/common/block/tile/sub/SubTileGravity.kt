@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.Botania
+import kotlin.math.*
 
 class SubTileGravity: SubTileEntity() {
 	var power = 0.65
@@ -17,18 +18,16 @@ class SubTileGravity: SubTileEntity() {
 	
 	override val targets: List<Any>
 		get() {
-			if (inWG()) return SubTileEntity.EMPTY_LIST
+			if (inWG()) return EMPTY_LIST
 			val radius = power * 10
-			val dist = 0.0
-			val str = 0.0
 			return allAroundRaw(Entity::class.java, radius)
 		}
 	
 	override val strip: Int
 		get() = 0
 	
-	override val rarity: SubTileEntity.EnumAnomalityRarity
-		get() = SubTileEntity.EnumAnomalityRarity.COMMON
+	override val rarity: EnumAnomalityRarity
+		get() = EnumAnomalityRarity.COMMON
 	
 	public override fun update() {
 		if (inWG()) return
@@ -39,8 +38,6 @@ class SubTileGravity: SubTileEntity() {
 		}
 		
 		val radius = power * 10
-		val dist = 0.0
-		val str = 0.0
 		
 		vt.rand().sub(0.5).normalize().mul(Math.random() * radius / 2).add(superTile!!).add(0.5)
 		ve.set(superTile!!).add(0.5).sub(vt).mul(0.05)
@@ -63,14 +60,12 @@ class SubTileGravity: SubTileEntity() {
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
 		
 		val radius = power * 10
-		val dist: Double
-		val str = 0.0
 		
 		ve.set(target)
-		
 		if (!ASJUtilities.isServer) if (target === Minecraft.getMinecraft().thePlayer) ve.add(0.0, -1.62, 0.0)
 		
-		if ((dist = Math.sqrt(Math.pow(ve.x - x() + 0.5, 2.0) + Math.pow(ve.y - y() + 0.5, 2.0) + Math.pow(ve.z - z() + 0.5, 2.0))) > radius) return
+		val dist = sqrt((ve.x - x() + 0.5).pow(2.0) + (ve.y - y() + 0.5).pow(2.0) + (ve.z - z() + 0.5).pow(2.0))
+		if (dist > radius) return
 		
 		vt.set(superTile!!).add(0.5)
 		vt.set(vt).sub(ve).normalize().mul(power * 0.5 * 1.0 / dist)
@@ -81,7 +76,7 @@ class SubTileGravity: SubTileEntity() {
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.MOTION
+		return MOTION
 	}
 	
 	companion object {

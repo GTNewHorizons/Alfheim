@@ -7,7 +7,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler
 import cpw.mods.fml.common.network.simpleimpl.MessageContext
 import net.minecraft.item.ItemStack
 
-class MessageTileItem(val x: Int, val y: Int, val z: Int, val s: ItemStack): ASJPacket() {
+class MessageTileItem(val x: Int, val y: Int, val z: Int, val s: ItemStack?): ASJPacket() {
 	
 	class Handler: IMessageHandler<MessageTileItem, IMessage> {
 		

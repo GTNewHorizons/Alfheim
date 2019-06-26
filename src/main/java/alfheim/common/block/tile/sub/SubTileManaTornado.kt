@@ -1,16 +1,14 @@
 package alfheim.common.block.tile.sub
 
-import java.util.ArrayList
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.lens.ItemLens
+import java.util.*
 
 class SubTileManaTornado: SubTileEntity() {
 	
@@ -23,7 +21,7 @@ class SubTileManaTornado: SubTileEntity() {
 				l.add(spawnBurst())
 				return l
 			}
-			return SubTileEntity.EMPTY_LIST
+			return EMPTY_LIST
 		}
 	
 	override val strip: Int
@@ -69,6 +67,6 @@ class SubTileManaTornado: SubTileEntity() {
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.ALL
+		return ALL
 	}
 }

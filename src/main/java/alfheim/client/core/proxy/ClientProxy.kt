@@ -1,8 +1,5 @@
 package alfheim.client.core.proxy
 
-import org.apache.commons.lang3.ArrayUtils
-import org.lwjgl.input.Keyboard
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.AlfheimCore
@@ -15,28 +12,27 @@ import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.model.entity.*
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
-import alfheim.client.render.item.*
+import alfheim.client.render.item.RenderItemAnomaly
 import alfheim.client.render.tile.*
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.EventHandler
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.registry.AlfheimBlocks
-import alfheim.common.core.registry.AlfheimRecipes
+import alfheim.common.core.registry.*
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaRenderer
 import alfheim.common.lexicon.AlfheimLexiconData
-import cpw.mods.fml.client.registry.ClientRegistry
-import cpw.mods.fml.client.registry.RenderingRegistry
+import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Gui
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
 import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
+import org.apache.commons.lang3.ArrayUtils
+import org.lwjgl.input.Keyboard
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 
@@ -174,7 +170,7 @@ class ClientProxy: CommonProxy() {
 			AlfheimRecipes.removeMMORecipes()
 			disableMMOGUIs()
 			removeMMOKeyBinds()
-			TimeStopSystemClient.tsAreas.clear()
+			TimeStopSystemClient.clear()
 		}
 		
 		private fun toggleESM(esm: Boolean, mmo: Boolean, esmOld: Boolean, mmoOld: Boolean) {
@@ -204,7 +200,7 @@ class ClientProxy: CommonProxy() {
 				AlfheimLexiconData.disableMMO()
 				disableMMOGUIs()
 				removeMMOKeyBinds()
-				TimeStopSystemClient.tsAreas.clear()
+				TimeStopSystemClient.clear()
 			}
 		}
 		

@@ -2,7 +2,6 @@ package alfheim.common.block.tile.sub
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.AxisAlignedBB
@@ -13,7 +12,7 @@ class SubTileAntigrav: SubTileEntity() {
 	internal val v = Vector3()
 	
 	override val targets: List<Any>
-		get() = if (inWG()) SubTileEntity.EMPTY_LIST else worldObj().getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius * 2, radius))
+		get() = if (inWG()) EMPTY_LIST else worldObj().getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius * 2, radius)) as List<Any>
 	
 	override val strip: Int
 		get() = 7
@@ -40,12 +39,11 @@ class SubTileAntigrav: SubTileEntity() {
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.MOTION
+		return MOTION
 	}
 	
 	companion object {
-		
-		val power = 0.7
-		val radius = 15.0
+		const val power = 0.7
+		const val radius = 15.0
 	}
 }

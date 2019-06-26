@@ -3,7 +3,6 @@ package alfheim.common.block.tile.sub
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -17,7 +16,7 @@ class SubTileManaVoid: SubTileEntity() {
 	internal val v = Vector3()
 	
 	override val targets: List<Any>
-		get() = if (inWG()) SubTileEntity.EMPTY_LIST else allAroundRaw(EntityPlayer::class.java, radius.toDouble())
+		get() = if (inWG()) EMPTY_LIST else allAroundRaw(EntityPlayer::class.java, radius.toDouble())
 	
 	override val strip: Int
 		get() = 3
@@ -27,12 +26,13 @@ class SubTileManaVoid: SubTileEntity() {
 	
 	public override fun update() {
 		if (mana >= 120000) {
-			for (player in allAround<EntityPlayer>(EntityPlayer::class.java, radius.toDouble())) {
+			for (player in allAround(EntityPlayer::class.java, radius.toDouble())) {
 				radius = 50
 				for (i in 0..99) performEffect(player)
 			}
 			
-			worldObj().createExplosion(null, x().toDouble(), y().toDouble(), z().toDouble(), (radius = 10).toFloat(), false)
+			radius = 10
+			worldObj().createExplosion(null, x().toDouble(), y().toDouble(), z().toDouble(), radius.toFloat(), false)
 			
 			for (i in 0..127) {
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.1)
@@ -53,14 +53,14 @@ class SubTileManaVoid: SubTileEntity() {
 			var flag = false
 			if (!ASJUtilities.isServer) flag = Minecraft.getMinecraft().thePlayer !== target
 			
-			val l = v.set(superTile!!).add(0.5).sub(target.posX, target.posY + if (flag) 1 else -0.62, target.posZ).length()
+			val l = v.set(superTile!!).add(0.5).sub(target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ).length()
 			v.normalize().mul(l / 40)
-			Botania.proxy.wispFX(worldObj(), target.posX, target.posY + if (flag) 1 else -0.62, target.posZ, 0.01f, 0.75f, 1f, radius / 40f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
+			Botania.proxy.wispFX(worldObj(), target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ, 0.01f, 0.75f, 1f, radius / 40f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
 		}
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.MANA
+		return MANA
 	}
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
@@ -74,8 +74,7 @@ class SubTileManaVoid: SubTileEntity() {
 	}
 	
 	companion object {
-		
-		val TAG_MANA = "mana"
+		const val TAG_MANA = "mana"
 		var radius = 10
 	}
 }

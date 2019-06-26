@@ -9,16 +9,15 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.util.EnumChatFormatting
-
-import java.util.regex.Pattern
-
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
+import java.util.regex.Pattern
+import kotlin.math.max
 
 object ItemsRemainingRenderHandler {
 	
-	private val maxTicks = 30
-	private val leaveTicks = 20
+	private const val maxTicks = 30
+	private const val leaveTicks = 20
 	
 	private var stack = ItemStack(Blocks.stone)
 	private var customString: String? = null
@@ -30,7 +29,7 @@ object ItemsRemainingRenderHandler {
 		if (ticks > 0 && isNotEmpty(stack)) {
 			val pos = maxTicks - ticks
 			val mc = Minecraft.getMinecraft()
-			val x = resolution.scaledWidth / 2 + 10 + Math.max(0, pos - leaveTicks)
+			val x = resolution.scaledWidth / 2 + 10 + max(0, pos - leaveTicks)
 			val y = resolution.scaledHeight / 2
 			
 			val start = maxTicks - leaveTicks
@@ -63,15 +62,15 @@ object ItemsRemainingRenderHandler {
 						val stacks = count / max
 						val rem = count % max
 						
-						if (stacks == 0)
-							text = "" + count
+						text = if (stacks == 0)
+							"$count"
 						else
-							text = count.toString() + " (" + EnumChatFormatting.AQUA + stacks + EnumChatFormatting.RESET + "*" + EnumChatFormatting.GRAY + max + EnumChatFormatting.RESET + "+" + EnumChatFormatting.YELLOW + rem + EnumChatFormatting.RESET + ")"
+							"$count (${EnumChatFormatting.AQUA}stacks${EnumChatFormatting.RESET}*${EnumChatFormatting.GRAY}$max${EnumChatFormatting.RESET}+${EnumChatFormatting.YELLOW}$rem${EnumChatFormatting.RESET})"
 					} else if (count == -1)
 						text = "\u221E"
 				}
 			} else
-				text = customString
+				text = customString!!
 			
 			val color = 0x00FFFFFF or ((alpha * 0xFF).toInt() shl 24)
 			mc.fontRenderer.drawStringWithShadow(text, x + 20, y + 6, color)
@@ -95,7 +94,7 @@ object ItemsRemainingRenderHandler {
 	fun set(stack: ItemStack, count: Int, str: String? = null) {
 		ItemsRemainingRenderHandler.stack = stack
 		ItemsRemainingRenderHandler.count = count
-		ItemsRemainingRenderHandler.customString = str
+		customString = str
 		ticks = if (stack.item === Item.getItemFromBlock(Blocks.air)) 0 else maxTicks
 	}
 	

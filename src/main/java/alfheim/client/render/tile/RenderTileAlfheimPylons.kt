@@ -7,15 +7,14 @@ import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.client.core.handler.*
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.client.model.*
 import vazkii.botania.common.core.handler.ConfigHandler
-
-import java.util.Random
-
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
+import java.util.*
+import kotlin.math.sin
 
 class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 	val rand = Random()
@@ -56,7 +55,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		else
 			Minecraft.getMinecraft().renderEngine.bindTexture(if (red) LibResourceLocations.antiPylon else if (orange) LibResourceLocations.yordinPylon else LibResourceLocations.elvenPylon)
 		
-		var worldTime = if (tile.worldObj == null) 0 else (ClientTickHandler.ticksInGame + ticks).toDouble()
+		var worldTime = if (tile.worldObj == null) 0.0 else (ClientTickHandler.ticksInGame + ticks).toDouble()
 		
 		rand.setSeed((tile.xCoord xor tile.yCoord xor tile.zCoord).toLong())
 		worldTime += rand.nextInt(360).toDouble()
@@ -65,7 +64,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			glTranslated(x + 0.5, y + 2.2, z + 0.5)
 			glScalef(1f, -1.5f, -1f)
 		} else {
-			glTranslated(x + 0.2 + if (orange) -0.1 else 0, y + 0.05, z + 0.8 + if (orange) 0.1 else 0)
+			glTranslated(x + 0.2 + if (orange) -0.1 else 0.0, y + 0.05, z + 0.8 + if (orange) 0.1 else 0.0)
 			val scale = if (orange) 0.8f else 0.6f
 			glScalef(scale, 0.6f, scale)
 		}
@@ -79,13 +78,13 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 				glTranslatef(-0.5f, 0f, 0.5f)
 			
 			model!!.renderRing()
-			glTranslated(0.0, Math.sin(worldTime / 20.0) / 20 - 0.025, 0.0)
+			glTranslated(0.0, sin(worldTime / 20.0) / 20 - 0.025, 0.0)
 			model!!.renderGems()
 			glPopMatrix()
 		}
 		
 		glPushMatrix()
-		glTranslated(0.0, Math.sin(worldTime / 20.0) / 17.5, 0.0)
+		glTranslated(0.0, sin(worldTime / 20.0) / 17.5, 0.0)
 		
 		if (!ConfigHandler.oldPylonModel)
 			glTranslatef(0.5f, 0f, -0.5f)
@@ -101,7 +100,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		
 		if (!ShaderHelper.useShaders() || hand) {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-			val alpha = ((Math.sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
+			val alpha = ((sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
 			glColor4f(1f, 1f, 1f, a * (alpha + 0.183f))
 		}
 		
@@ -117,7 +116,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			val lightmapX = light % 65536
 			val lightmapY = light / 65536
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX.toFloat(), lightmapY.toFloat())
-			val alpha = ((Math.sin(worldTime / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
+			val alpha = ((sin(worldTime / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
 			glColor4f(1f, 1f, 1f, a * (alpha + 0.183f))
 		}
 		

@@ -11,9 +11,9 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
-import vazkii.botania.client.core.handler.ClientTickHandler
-
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.client.core.handler.ClientTickHandler
+import kotlin.math.*
 
 class RenderTileTradePortal: TileEntitySpecialRenderer() {
 	
@@ -29,7 +29,7 @@ class RenderTileTradePortal: TileEntitySpecialRenderer() {
 		glDisable(GL_ALPHA_TEST)
 		glDisable(GL_LIGHTING)
 		glDisable(GL_CULL_FACE)
-		glColor4d(1.0, 1.0, 1.0, Math.min(1.0, (Math.sin(((ClientTickHandler.ticksInGame + ticks) / 8).toDouble()) + 1) / 7 + 0.6) * (Math.min(60, portal.ticksOpen) / 60.0) * 0.85)
+		glColor4d(1.0, 1.0, 1.0, min(1.0, (sin(((ClientTickHandler.ticksInGame + ticks) / 8).toDouble()) + 1) / 7 + 0.6) * (min(60, portal.ticksOpen) / 60.0) * 0.85)
 		
 		glTranslated(x - 1, y + 1, z + 0.25)
 		if (meta == 2) {
@@ -38,9 +38,9 @@ class RenderTileTradePortal: TileEntitySpecialRenderer() {
 		}
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
-		renderIcon(0.0, 0.0, BlockTradePortal.textures[2], 3.0, 3.0, 240)
+		renderIcon(0.0, 0.0, BlockTradePortal.textures[2]!!, 3.0, 3.0, 240)
 		glTranslated(0.0, 0.0, 0.5)
-		renderIcon(0.0, 0.0, BlockTradePortal.textures[2], 3.0, 3.0, 240)
+		renderIcon(0.0, 0.0, BlockTradePortal.textures[2]!!, 3.0, 3.0, 240)
 		
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		if (portal.isTradeOn) {

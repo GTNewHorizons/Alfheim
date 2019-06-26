@@ -1,7 +1,5 @@
 package alfheim.common.block.tile
 
-import java.util.HashMap
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileEntity
 import net.minecraft.entity.player.EntityPlayer
@@ -9,6 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import vazkii.botania.common.block.tile.TileMod
+import java.util.*
 
 class TileAnomaly: TileMod() {
 	
@@ -17,13 +16,13 @@ class TileAnomaly: TileMod() {
 	var compatibilityBit = 0 // not serializing because will be recalculated on load
 	
 	override fun updateEntity() {
-		if (mainSubTile == null || mainSubTile!!.isEmpty() || subTiles.get(mainSubTile) == null) return
+		if (mainSubTile == null || mainSubTile!!.isEmpty() || subTiles[mainSubTile] == null) return
 		
-		val l = subTiles.get(mainSubTile).targets
-		for (subTile in subTiles.values) subTile.updateEntity(l)
+		val l = subTiles[mainSubTile]!!.targets
+		for (subTile in subTiles.values) subTile.updateEntity(l as MutableList<Any?>)
 	}
 	
-	fun onActivated(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
+	fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
 		var flag = false
 		for (subTile in subTiles.values) flag = flag or subTile.onActivated(stack, player, world, x, y, z)
 		return flag
@@ -41,7 +40,8 @@ class TileAnomaly: TileMod() {
 		if (mainSubTile == null || mainSubTile!!.isEmpty()) mainSubTile = name
 		
 		subTiles[name] = sub
-		return (sub.superTile = this) as TileAnomaly
+		sub.superTile = this
+		return sub.superTile as TileAnomaly
 	}
 	
 	fun canAdd(sub: SubTileEntity): Boolean {
@@ -67,7 +67,7 @@ class TileAnomaly: TileMod() {
 				subCmp = NBTTagCompound()
 				cmp.setTag(TAG_SUBTILE_CMP + c--, subCmp)
 				
-				subTiles[name].writeToNBT(subCmp)
+				subTiles[name]!!.writeToNBT(subCmp)
 			}
 		} catch (e: Throwable) {
 			ASJUtilities.error("Got exception writing anomaly data. It will be discarded.")
@@ -102,9 +102,9 @@ class TileAnomaly: TileMod() {
 	
 	companion object {
 		
-		val TAG_SUBTILE_MAIN = "subTileMain"
-		val TAG_SUBTILE_NAME = "subTileName"
-		val TAG_SUBTILE_CMP = "subTileCmp"
-		val TAG_SUBTILE_COUNT = "subTileCount"
+		const val TAG_SUBTILE_MAIN = "subTileMain"
+		const val TAG_SUBTILE_NAME = "subTileName"
+		const val TAG_SUBTILE_CMP = "subTileCmp"
+		const val TAG_SUBTILE_COUNT = "subTileCount"
 	}
 }

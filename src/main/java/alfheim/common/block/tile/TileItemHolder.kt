@@ -1,22 +1,20 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
+import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.common.network.MessageTileItem
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.client.core.handler.LightningHandler
-import vazkii.botania.common.block.tile.mana.TileBellows
-import vazkii.botania.common.block.tile.mana.TilePool
+import vazkii.botania.common.block.tile.mana.*
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.lib.LibMisc
+import kotlin.math.min
 
-class TileItemHolder: ItemContainingTileEntity() {
+class TileItemHolder: TileItemContainer() {
 	
 	// for some reason it updates as many times per tick as many times you right-click on it
 	private var lastTick: Long = 0
@@ -58,7 +56,7 @@ class TileItemHolder: ItemContainingTileEntity() {
 						if (te.currentMana > 0 && mana.getMana(stack) < mana.getMaxMana(stack))
 							didSomething = true
 						
-						val manaVal = Math.min(transfRate, Math.min(te.currentMana, mana.getMaxMana(stack) - mana.getMana(stack)))
+						val manaVal = min(transfRate, min(te.currentMana, mana.getMaxMana(stack) - mana.getMana(stack)))
 						if (!worldObj.isRemote)
 							mana.addMana(stack, manaVal)
 						te.recieveMana(-manaVal)
@@ -68,7 +66,7 @@ class TileItemHolder: ItemContainingTileEntity() {
 						if (mana.getMana(stack) > 0 && !te.isFull)
 							didSomething = true
 						
-						val manaVal = Math.min(transfRate, Math.min(te.manaCap - te.currentMana, mana.getMana(stack)))
+						val manaVal = min(transfRate, min(te.manaCap - te.currentMana, mana.getMana(stack)))
 						if (!worldObj.isRemote)
 							mana.addMana(stack, -manaVal)
 						te.recieveMana(manaVal)

@@ -43,7 +43,6 @@ class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 	fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.currentEquippedItem != null && player.currentEquippedItem.item === ModItems.manaResource && player.currentEquippedItem.itemDamage == 9) {
 			var eat = 2
-			val c = eat
 			val sides = BooleanArray(6)
 			
 			for (dir in ForgeDirection.values()) {
@@ -103,11 +102,11 @@ class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon {
-		return textures[if (Blocks.leaves.isOpaqueCube) 1 else 0]
+		return textures[if (Blocks.leaves.isOpaqueCube) 1 else 0]!!
 	}
 	
 	override fun getGlowIcon(side: Int, meta: Int): IIcon {
-		return textures[2]
+		return textures[2]!!
 	}
 	
 	@SideOnly(Side.CLIENT)

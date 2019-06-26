@@ -1,6 +1,6 @@
 package alfheim.client.render.tile
 
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
+import alexsocol.asjlib.extendables.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleItemHolder
@@ -11,30 +11,28 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.model.*
+import net.minecraftforge.client.model.AdvancedModelLoader
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.*
 import vazkii.botania.common.block.tile.mana.TilePool
-
-import java.awt.*
-import java.util.Random
-
-import org.lwjgl.opengl.GL11.*
+import java.awt.Color
+import java.util.*
 
 class RenderTileItemHolder: TileEntitySpecialRenderer() {
 	
 	internal val rand = Random()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		renderTE(tile as TileItemHolder, x, y, z, partialTicks)
+		renderTE(tile as TileItemHolder, x, y, z)
 	}
 	
-	private fun renderTE(tile: TileItemHolder, x: Double, y: Double, z: Double, partialTicks: Float) {
+	private fun renderTE(tile: TileItemHolder, x: Double, y: Double, z: Double) {
 		var inf = false
 		var dil = false
 		var fab = false
 		var c = 0
-		types@ run {
-			if (tile.worldObj == null) break@types
+		 run {
+			if (tile.worldObj == null) return@run
 			val meta = tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord - 1, tile.zCoord)
 			inf = meta == 1
 			dil = meta == 2
@@ -74,13 +72,13 @@ class RenderTileItemHolder: TileEntitySpecialRenderer() {
 		glRotated(135.0, 0.0, 0.0, 1.0)
 		glTranslated(0.0, 0.05, -0.33)
 		
-		ItemContainingTileEntity.renderItem(tile)
+		TileItemContainer.renderItem(tile)
 		glPopMatrix()
 	}
 	
 	companion object {
 		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))
+		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))!!
 		val modelSimple = ModelSimpleItemHolder()
 	}
 }

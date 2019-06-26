@@ -31,12 +31,12 @@ class BlockDreamLog: BlockLog(), ILexiconable {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getSideIcon(meta: Int): IIcon {
-		return textures[1]
+		return textures[1]!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getTopIcon(meta: Int): IIcon {
-		return textures[0]
+		return textures[0]!!
 	}
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {

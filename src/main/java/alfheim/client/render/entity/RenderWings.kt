@@ -16,6 +16,7 @@ import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.common.Botania
 
 import org.lwjgl.opengl.GL11.*
+import kotlin.math.*
 
 object RenderWings {
 	
@@ -36,7 +37,7 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		EnumRace.getRace(player).glColorA(if (Flight.get(player) / Flight.get(player) < 0.05) Math.min(0.75 + Math.cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1)
+		EnumRace.getRace(player).glColorA(if (Flight[player] / Flight[player] < 0.05) min(0.75 + cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
@@ -53,7 +54,7 @@ object RenderWings {
 		
 		player.sendPlayerAbilities()
 		val flying = player.capabilities.isFlying
-		val ry = 20f + ((Math.sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * (if (flying) 0.4f else 0.2f).toDouble()) + 0.5f) * if (flying) 30f else 5f).toFloat()
+		val ry = 20f + ((sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * (if (flying) 0.4f else 0.2f).toDouble()) + 0.5f) * if (flying) 30f else 5f).toFloat()
 		
 		// Wing left
 		glPushMatrix()
@@ -62,7 +63,7 @@ object RenderWings {
 		glScaled(swr, swr, swr)
 		//glRotated(10, 0, 0, 1);
 		glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
-		drawRect(getPlayerWingTexture(player), -1)
+		getPlayerWingTexture(player)?.let { drawRect(it, -1) }
 		glPopMatrix()
 		
 		// Wing right
@@ -72,7 +73,7 @@ object RenderWings {
 		glScaled(-swl, swl, swl)
 		//glRotated(10, 0, 0, 1);
 		glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
-		drawRect(getPlayerWingTexture(player), -1)
+		getPlayerWingTexture(player)?.let { drawRect(it, -1) }
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
@@ -87,7 +88,7 @@ object RenderWings {
 		
 		if (Minecraft.getMinecraft().theWorld.totalWorldTime % 10 == 0L && !Minecraft.getMinecraft().isGamePaused) {
 			val v = Vector3(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().add(0.0, Math.random(), 0.0).mul(Math.random(), 1.0, Math.random()).mul(player.width.toDouble(), player.height.toDouble(), player.width.toDouble())
-			Botania.proxy.sparkleFX(player.worldObj, player.posX + v.x, player.posY + v.y - if (Minecraft.getMinecraft().thePlayer === player) 1.62 else 0, player.posZ + v.z, 1f, 1f, 1f, 2f * Math.random().toFloat(), 20)
+			Botania.proxy.sparkleFX(player.worldObj, player.posX + v.x, player.posY + v.y - if (Minecraft.getMinecraft().thePlayer === player) 1.62 else 0.0, player.posZ + v.z, 1f, 1f, 1f, 2f * Math.random().toFloat(), 20)
 		}
 	}
 	
@@ -101,7 +102,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer): ResourceLocation {
+	fun getPlayerWingTexture(player: EntityPlayer): ResourceLocation? {
 		return LibResourceLocations.wings[EnumRace.getRaceID(player)]
 	}
 	

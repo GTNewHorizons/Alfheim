@@ -69,12 +69,13 @@ class TileTradePortal: TileMod() {
 					val items = worldObj.getEntitiesWithinAABB(EntityItem::class.java, aabb)
 					if (!worldObj.isRemote) {
 						for (item in items) {
+							item as EntityItem
 							if (item.isDead)
 								continue
 							
-							val stack = item.getEntityItem()
-							if (stack != null && isTradeAvailable(stack!!, tradeRecipe!!.output)) {
-								stack!!.stackSize -= tradeRecipe!!.output.stackSize
+							val stack = item.entityItem
+							if (stack != null && isTradeAvailable(stack, tradeRecipe!!.output)) {
+								stack.stackSize -= tradeRecipe!!.output.stackSize
 								performTrade()
 								break
 							}
@@ -137,13 +138,11 @@ class TileTradePortal: TileMod() {
 		if (recipeMult <= 0) return
 		val inputs = tradeRecipe!!.inputs
 		for (`in` in inputs) {
-			val stack: ItemStack
-			if (`in` is String) {
-				stack = OreDictionary.getOres(`in`)[0]
-			} else if (`in` is ItemStack) {
-				stack = `in`.copy()
-			} else
-				throw IllegalArgumentException("Invalid input")
+			val stack = when (`in`) {
+				is String 		-> OreDictionary.getOres(`in`)[0]
+				is ItemStack	-> `in`.copy()
+				else			-> throw IllegalArgumentException("Invalid input")
+			}
 			spawnItem(ItemStack(stack.item, 1, stack.itemDamage))
 		}
 		if (--recipeMult <= 0) setTradeRecipe(null)
@@ -158,14 +157,6 @@ class TileTradePortal: TileMod() {
 	fun setTradeRecipe(recipe: RecipeElvenTrade?) {
 		tradeRecipe = recipe
 		if (worldObj != null) worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType())
-	}
-	
-	override fun writeToNBT(nbt: NBTTagCompound) {
-		super.writeToNBT(nbt)
-	}
-	
-	override fun readFromNBT(nbt: NBTTagCompound) {
-		super.readFromNBT(nbt)
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -185,7 +176,7 @@ class TileTradePortal: TileMod() {
 		return checkMultipleConverters(baseConverter) || checkMultipleConverters(CONVERTER_Z_SWAP, baseConverter)
 	}
 	
-	private fun checkMultipleConverters(vararg converters: Function<IntArray, IntArray>): Boolean {
+	private fun checkMultipleConverters(vararg converters: Function<IntArray, IntArray>?): Boolean {
 		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, *converters)) return false
 		if (wrong2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, *converters)) return false
 		if (wrong2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, *converters)) return false
@@ -195,12 +186,13 @@ class TileTradePortal: TileMod() {
 		return true
 	}
 	
-	private fun lightPylons(vararg converters: Function<IntArray, IntArray>) {
+	private fun lightPylons(vararg converters: Function<IntArray, IntArray>?) {
 		if (ticksOpen < 50)
 			return
 		
 		for (pos in PYLON_POSITIONS) {
-			for (f in converters) if (f != null) pos = f.apply(pos)
+			var pos = pos
+			for (f in converters) pos = f?.apply(pos)!!
 			
 			val tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
@@ -212,9 +204,10 @@ class TileTradePortal: TileMod() {
 		}
 	}
 	
-	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, vararg converters: Function<IntArray, IntArray>): Boolean {
+	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, vararg converters: Function<IntArray, IntArray>?): Boolean {
 		for (pos in positions) {
-			for (f in converters) if (f != null) pos = f.apply(pos)
+			var pos = pos
+			for (f in converters) pos = f?.apply(pos)!!
 			if (!checkPosition(pos, block, meta)) return true
 		}
 		
@@ -256,27 +249,15 @@ class TileTradePortal: TileMod() {
 		
 		private val AIR_POSITIONS = arrayOf(intArrayOf(-1, 1, 0), intArrayOf(0, 1, 0), intArrayOf(1, 1, 0), intArrayOf(-1, 2, 0), intArrayOf(0, 2, 0), intArrayOf(1, 2, 0), intArrayOf(-1, 3, 0), intArrayOf(0, 3, 0), intArrayOf(1, 3, 0))
 		
-		val TAG_TICKS_OPEN = "ticksOpen"
-		val TAG_RECIPE_MULT = "recipeMult"
-		val TAG_RECIPE_NUM = "recipeNub"
+		const val TAG_TICKS_OPEN = "ticksOpen"
+		const val TAG_RECIPE_MULT = "recipeMult"
+		const val TAG_RECIPE_NUM = "recipeNub"
 		
-		private val CONVERTER_X_Z = object: Function<IntArray, IntArray> {
-			override fun apply(input: IntArray): IntArray {
-				return intArrayOf(input[2], input[1], input[0])
-			}
-		}
+		private val CONVERTER_X_Z = Function<IntArray, IntArray> { input -> intArrayOf(input!![2], input[1], input[0]) }
 		
-		private val CONVERTER_X_Z_FP = object: Function<DoubleArray, DoubleArray> {
-			override fun apply(input: DoubleArray): DoubleArray {
-				return doubleArrayOf(input[2], input[1], input[0])
-			}
-		}
+		private val CONVERTER_X_Z_FP = Function<DoubleArray, DoubleArray> { input -> doubleArrayOf(input!![2], input[1], input[0]) }
 		
-		private val CONVERTER_Z_SWAP = object: Function<IntArray, IntArray> {
-			override fun apply(input: IntArray): IntArray {
-				return intArrayOf(input[0], input[1], -input[2])
-			}
-		}
+		private val CONVERTER_Z_SWAP = Function<IntArray, IntArray> { input -> intArrayOf(input!![0], input[1], -input[2]) }
 		
 		fun makeMultiblockSet(): MultiblockSet {
 			val mb = Multiblock()

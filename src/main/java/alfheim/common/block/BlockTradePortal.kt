@@ -4,7 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileTradePortal
 import alfheim.common.lexicon.AlfheimLexiconData
-import net.minecraft.block.BlockContainer
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -24,7 +24,7 @@ class BlockTradePortal: BlockContainer(Material.rock), ILexiconable {
 		this.setHarvestLevel("pickaxe", 0)
 		this.setHardness(10.0f)
 		this.setResistance(600.0f)
-		this.setStepSound(Block.soundTypeStone)
+		this.setStepSound(soundTypeStone)
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
@@ -34,7 +34,7 @@ class BlockTradePortal: BlockContainer(Material.rock), ILexiconable {
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon {
-		return if (meta == 0) textures[0] else textures[1]
+		return if (meta == 0) textures[0]!! else textures[1]!!
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int): TileEntity {

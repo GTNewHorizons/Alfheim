@@ -1,16 +1,12 @@
 package alexsocol.asjlib.render
 
-import org.lwjgl.opengl.GL11.*
-
-import java.nio.FloatBuffer
-import java.util.ArrayList
-
-import org.lwjgl.BufferUtils
-import org.lwjgl.util.vector.Matrix4f
-
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.BufferUtils
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.util.vector.Matrix4f
+import java.util.*
 
-abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture: ResourceLocation): Comparable<ShadedObject> {
+abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture: ResourceLocation?): Comparable<ShadedObject> {
 	val translations = ArrayList<Matrix4f>()
 	
 	abstract fun preRender()
@@ -39,16 +35,16 @@ abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture:
 	
 	abstract fun postRender()
 	
-	override fun compareTo(ro: ShadedObject): Int {
-		if (shaderID < ro.shaderID) return -1
-		if (shaderID > ro.shaderID) return 1
-		if (materialID < ro.materialID) return -1
-		return if (materialID > ro.materialID) 1 else 0
+	override fun compareTo(other: ShadedObject): Int {
+		if (shaderID < other.shaderID) return -1
+		if (shaderID > other.shaderID) return 1
+		if (materialID < other.materialID) return -1
+		return if (materialID > other.materialID) 1 else 0
 		//if (texture != ro.texture) return -1;
 	}
 	
-	override fun equals(obj: Any?): Boolean {
-		return if (obj is ShadedObject) compareTo((obj as ShadedObject?)!!) == 0 else super.equals(obj)
+	override fun equals(other: Any?): Boolean {
+		return if (other is ShadedObject) compareTo((other as ShadedObject?)!!) == 0 else super.equals(other)
 	}
 	
 	companion object {

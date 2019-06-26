@@ -1,14 +1,12 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.entity.EntityAlfheimPixie
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.RenderLiving
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.model.ModelPixie
 
 class RenderEntityAlfheimPixie: RenderLiving(ModelPixie(), 0.25f) {
@@ -29,7 +27,7 @@ class RenderEntityAlfheimPixie: RenderLiving(ModelPixie(), 0.25f) {
 		glPopMatrix()
 	}
 	
-	protected fun setPixieBrightness(pixie: EntityAlfheimPixie, par2: Int, par3: Float): Int {
+	private fun setPixieBrightness(pixie: EntityAlfheimPixie, par2: Int, par3: Float): Int {
 		if (par2 != 0)
 			return -1
 		else {
@@ -53,7 +51,7 @@ class RenderEntityAlfheimPixie: RenderLiving(ModelPixie(), 0.25f) {
 		}
 	}
 	
-	override fun shouldRenderPass(entity: EntityLivingBase?, par2: Int, par3: Float): Int {
-		return setPixieBrightness(entity as EntityAlfheimPixie?, par2, par3)
+	override fun shouldRenderPass(entity: EntityLivingBase, par2: Int, par3: Float): Int {
+		return setPixieBrightness(entity as EntityAlfheimPixie, par2, par3)
 	}
 }

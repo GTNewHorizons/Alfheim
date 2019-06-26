@@ -9,11 +9,10 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import vazkii.botania.client.core.handler.ClientTickHandler
-
-import java.util.Random
-
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.client.core.handler.ClientTickHandler
+import java.util.*
+import kotlin.math.*
 
 class RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 	
@@ -24,7 +23,6 @@ class RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 	}
 	
 	fun render(tile: TileAnimatedTorch?, x: Double, y: Double, z: Double, partialTicks: Float) {
-		val mc = Minecraft.getMinecraft()
 		glPushMatrix()
 		glTranslated(x, y, z)
 		
@@ -36,10 +34,10 @@ class RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 			wtime += rand.nextInt(360)
 		}
 		
-		val time = if (wtime == 0) 0 else wtime + partialTicks
-		val xt = 0.5 + Math.cos(time * 0.05) * 0.025
-		val yt = 0.1 + (Math.sin(time * 0.04) + 1) * 0.05
-		val zt = 0.5 + Math.sin(time * 0.05) * 0.025
+		val time = if (wtime == 0) 0f else wtime + partialTicks
+		val xt = 0.5 + cos(time * 0.05) * 0.025
+		val yt = 0.1 + (sin(time * 0.04) + 1) * 0.05
+		val zt = 0.5 + sin(time * 0.05) * 0.025
 		glTranslated(xt, yt, zt)
 		
 		glScaled(2.0, 2.0, 2.0)

@@ -1,21 +1,18 @@
 package alfheim.client.render.world
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.item.ItemAstrolabe
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.RenderBlocks
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderWorldLastEvent
+import org.lwjgl.opengl.GL11.*
 
 object AstrolabePreviewHandler {
 	
@@ -24,8 +21,9 @@ object AstrolabePreviewHandler {
 		val world = Minecraft.getMinecraft().theWorld
 		val playerEntities = world.playerEntities
 		for (player in playerEntities) {
-			val currentStack = player.getHeldItem()
-			if (currentStack != null && currentStack!!.getItem() is ItemAstrolabe) {
+			player as EntityPlayer
+			val currentStack = player.heldItem
+			if (currentStack != null && currentStack.item is ItemAstrolabe) {
 				val block = ItemAstrolabe.getBlock(currentStack)
 				if (block !== Blocks.air)
 					renderPlayerLook(player, currentStack)
@@ -58,6 +56,7 @@ object AstrolabePreviewHandler {
 		}
 	}
 	
+	// FIXME meta
 	private fun renderBlockAt(player: EntityPlayer, block: Block, meta: Int, pos: Vector3) {
 		glPushMatrix()
 		ASJUtilities.interpolatedTranslationReverse(player)

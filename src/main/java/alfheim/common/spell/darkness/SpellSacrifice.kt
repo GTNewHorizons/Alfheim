@@ -23,6 +23,6 @@ class SpellSacrifice: SpellBase("sacrifice", EnumRace.IMP, 256000, 75000, 100, t
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		SpellVisualizations.negateSphere(caster, 1.0)
+		SpellVisualizations.negateSphere(1.0)
 	}
 }

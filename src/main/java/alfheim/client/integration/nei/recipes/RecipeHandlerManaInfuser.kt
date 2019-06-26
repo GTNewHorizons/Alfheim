@@ -14,14 +14,15 @@ import vazkii.botania.common.block.tile.mana.TilePool
 
 class RecipeHandlerManaInfuser: RecipeHandlerPetalApothecary() {
 	
-	inner class CachedManaInfuserRecipe(recipe: RecipeManaInfuser?): RecipeHandlerPetalApothecary.CachedPetalApothecaryRecipe(recipe, false) {
+	inner class CachedManaInfuserRecipe(recipe: RecipeManaInfuser?): CachedPetalApothecaryRecipe(recipe, false) {
 		
 		var manaUsage: Int = 0
 		
 		init {
-			if (recipe == null) return
-			manaUsage = recipe!!.manaUsage
-			inputs.add(PositionedStack(ItemStack(AlfheimBlocks.manaInfuser), 73, 55))
+			if (recipe != null) {
+				manaUsage = recipe.manaUsage
+				inputs.add(PositionedStack(ItemStack(AlfheimBlocks.manaInfuser), 73, 55))
+			}
 		}
 		
 	}
@@ -47,7 +48,7 @@ class RecipeHandlerManaInfuser: RecipeHandlerPetalApothecary() {
 		return AlfheimAPI.manaInfuserRecipes
 	}
 	
-	override fun getCachedRecipe(recipe: RecipePetals): RecipeHandlerPetalApothecary.CachedPetalApothecaryRecipe {
+	override fun getCachedRecipe(recipe: RecipePetals): CachedPetalApothecaryRecipe {
 		return CachedManaInfuserRecipe(recipe as RecipeManaInfuser)
 	}
 }

@@ -33,7 +33,7 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 		this.setHardness(3f)
 		this.setHarvestLevel("pickaxe", 1)
 		this.setResistance(60f)
-		this.setStepSound(Block.soundTypeStone)
+		this.setStepSound(soundTypeStone)
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int): TileEntity {
@@ -51,7 +51,7 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon {
-		return if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3]
+		return (if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3])!!
 	}
 	
 	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -83,11 +83,11 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 	}
 	
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) {
-		(world.getTileEntity(x, y, z) as TileManaInfuser).renderHUD(mc, res)
+		(world.getTileEntity(x, y, z) as TileManaInfuser).renderHUD(res)
 	}
 	
 	override fun onUsedByWand(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		(world.getTileEntity(x, y, z) as TileManaInfuser).onWanded(player, stack)
+		(world.getTileEntity(x, y, z) as TileManaInfuser).onWanded(player)
 		return true
 	}
 	

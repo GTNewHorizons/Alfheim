@@ -1,9 +1,9 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.extendables.*
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.*
 
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.block.tile.TileTransferer
 import net.minecraft.client.Minecraft
@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.model.ModelSpreader
+import kotlin.math.sin
 
 class RenderTileTransferer: TileEntitySpecialRenderer() {
 	
@@ -23,7 +24,7 @@ class RenderTileTransferer: TileEntitySpecialRenderer() {
 		
 		glTranslatef(0.5f, 1.5f, 0.5f)
 		
-		ItemContainingTileEntity.renderItem(spreader)
+		TileItemContainer.renderItem(spreader)
 		glRotatef(spreader.rotationX + 90f, 0f, 1f, 0f)
 		glTranslatef(0f, -1f, 0f)
 		glRotatef(spreader.rotationY, 1f, 0f, 0f)
@@ -38,9 +39,9 @@ class RenderTileTransferer: TileEntitySpecialRenderer() {
 		glColor3f(1f, 1f, 1f)
 		
 		glPushMatrix()
-		val worldTicks = if (tileentity.getWorldObj() == null) 0 else time
+		val worldTicks = if (tileentity.getWorldObj() == null) 0.0 else time
 		glRotatef(worldTicks.toFloat() % 360, 0f, 1f, 0f)
-		glTranslatef(0f, Math.sin(worldTicks / 20.0).toFloat() * 0.05f, 0f)
+		glTranslatef(0f, sin(worldTicks / 20.0).toFloat() * 0.05f, 0f)
 		model.renderCube()
 		glPopMatrix()
 		

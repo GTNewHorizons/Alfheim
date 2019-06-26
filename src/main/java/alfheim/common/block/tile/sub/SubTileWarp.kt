@@ -12,19 +12,20 @@ import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.Botania
 
 import java.util.*
+import kotlin.math.*
 
 class SubTileWarp: SubTileEntity() {
 	var radius = 20
 	
 	override val targets: List<Any>
 		get() {
-			if (!ASJUtilities.isServer) return SubTileEntity.EMPTY_LIST
+			if (!ASJUtilities.isServer) return EMPTY_LIST
 			
 			var l: MutableList<Any>? = null
 			
 			if (ticks % 100 == 0 && !inWG()) {
 				l = allAroundRaw(EntityLivingBase::class.java, radius.toDouble())
-				if (l != null && l.size > 0) {
+				if (l.size > 0) {
 					if (l.size == 1) {
 						l.add(LivingCoords(l.removeAt(0) as EntityLivingBase, x().toDouble(), y().toDouble(), z().toDouble(), radius))
 					} else {
@@ -59,15 +60,15 @@ class SubTileWarp: SubTileEntity() {
 				}
 			}
 			
-			if (l == null) l = SubTileEntity.EMPTY_LIST
+			if (l == null) l = EMPTY_LIST
 			return l
 		}
 	
 	override val strip: Int
 		get() = 6
 	
-	override val rarity: SubTileEntity.EnumAnomalityRarity
-		get() = SubTileEntity.EnumAnomalityRarity.RARE
+	override val rarity: EnumAnomalityRarity
+		get() = EnumAnomalityRarity.RARE
 	
 	public override fun update() {
 		if (inWG()) return
@@ -81,19 +82,16 @@ class SubTileWarp: SubTileEntity() {
 		val worldTime = (worldObj().totalWorldTime + rand.nextInt(1000)) / 5.0
 		val r = 0.75f + Math.random().toFloat() * 0.05f
 		
-		val x = x().toDouble() + 0.5 + Math.sin(worldTime) * r
-		val y = y().toDouble() + 0.5 + Math.sin(worldTime) * r
-		val z = z().toDouble() + 0.5 + Math.sin(worldTime) * r
-		val X = x().toDouble() + 0.5 + Math.cos(worldTime) * r
-		val Y = y().toDouble() + 0.5 + Math.cos(worldTime) * r
-		val Z = z().toDouble() + 0.5 + Math.cos(worldTime) * r
+		val x = x().toDouble() + 0.5 + sin(worldTime) * r
+		val y = y().toDouble() + 0.5 + sin(worldTime) * r
+		val z = z().toDouble() + 0.5 + sin(worldTime) * r
+		val X = x().toDouble() + 0.5 + cos(worldTime) * r
+		val Y = y().toDouble() + 0.5 + cos(worldTime) * r
+		val Z = z().toDouble() + 0.5 + cos(worldTime) * r
 		
-		val _x = x().toDouble() + 0.5 + Math.sin(-worldTime) * r
-		val _y = y().toDouble() + 0.5 + Math.sin(-worldTime) * r
-		val _z = z().toDouble() + 0.5 + Math.sin(-worldTime) * r
-		val _X = x().toDouble() + 0.5 + Math.cos(-worldTime) * r
-		val _Y = y().toDouble() + 0.5 + Math.cos(-worldTime) * r
-		val _Z = z().toDouble() + 0.5 + Math.cos(-worldTime) * r
+		val _x = x().toDouble() + 0.5 + sin(-worldTime) * r
+		val _y = y().toDouble() + 0.5 + sin(-worldTime) * r
+		val _z = z().toDouble() + 0.5 + sin(-worldTime) * r
 		
 		Botania.proxy.wispFX(worldObj(), x() + 0.5, Y, Z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
@@ -174,7 +172,7 @@ class SubTileWarp: SubTileEntity() {
 	}
 	
 	override fun typeBits(): Int {
-		return SubTileEntity.SPACE
+		return SPACE
 	}
 	
 	private class Vector8i {
@@ -196,25 +194,25 @@ class SubTileWarp: SubTileEntity() {
 			y2 = rand.nextInt(radius * 2) - radius
 			z2 = rand.nextInt(radius * 2) - radius
 			
-			v.set(x1.toDouble(), y1.toDouble(), z1.toDouble())
+			v[x1.toDouble(), y1.toDouble()] = z1.toDouble()
 			if (v.length() > radius) v.shrink(v.length() - radius)
 			x1 = MathHelper.floor_double(v.x)
 			y1 = MathHelper.floor_double(v.y)
 			z1 = MathHelper.floor_double(v.z)
 			
-			v.set(x2.toDouble(), y2.toDouble(), z2.toDouble())
+			v[x2.toDouble(), y2.toDouble()] = z2.toDouble()
 			if (v.length() > radius) v.shrink(v.length() - radius)
 			x2 = MathHelper.floor_double(v.x)
 			y2 = MathHelper.floor_double(v.y)
 			z2 = MathHelper.floor_double(v.z)
 			
-			x1 = Math.max(-30000000, Math.min(x + x1, 30000000))
-			y1 = Math.max(0, Math.min(y + y1, 255))
-			z1 = Math.max(-30000000, Math.min(z + z1, 30000000))
+			x1 = max(-30000000, min(x + x1, 30000000))
+			y1 = max(0, min(y + y1, 255))
+			z1 = max(-30000000, min(z + z1, 30000000))
 			
-			x2 = Math.max(-30000000, Math.min(x + x2, 30000000))
-			y2 = Math.max(0, Math.min(y + y2, 255))
-			z2 = Math.max(-30000000, Math.min(z + z2, 30000000))
+			x2 = max(-30000000, min(x + x2, 30000000))
+			y2 = max(0, min(y + y2, 255))
+			z2 = max(-30000000, min(z + z2, 30000000))
 		}
 		
 		companion object {
@@ -224,23 +222,16 @@ class SubTileWarp: SubTileEntity() {
 	}
 	
 	private class LivingCoords(val e: EntityLivingBase, posX: Double, posY: Double, posZ: Double, radius: Int) {
-		val x: Double
-		val y: Double
-		val z: Double
-		
-		init {
-			x = Math.max(-30000000.0, Math.min(posX + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
-			y = Math.max(1.0, Math.min(posY + Math.random() * radius.toDouble() * 2.0 - radius, 255.0))
-			z = Math.max(-30000000.0, Math.min(posZ + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
-		}
+		val x: Double = max(-30000000.0, min(posX + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
+		val y: Double = max(1.0, min(posY + Math.random() * radius.toDouble() * 2.0 - radius, 255.0))
+		val z: Double = max(-30000000.0, min(posZ + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
 	}
 	
 	private class LivingPair(val e1: EntityLivingBase, val e2: EntityLivingBase)
 	
 	companion object {
-		
 		// public static final List<String> validBlocks = Arrays.asList(new String[] { "stone", "dirt", "grass", "sand", "gravel", "hardenedClay", "snowLayer", "mycelium", "podzol", "sandstone", /* Mod support: */ "blockDiorite", "stoneDiorite", "blockGranite", "stoneGranite", "blockAndesite", "stoneAndesite", "marble", "blockMarble", "limestone", "blockLimestone" });
 		// maybe will change warp's behavior to swap only blocks from list above ^
-		val TAG_RADIUS = "radius"
+		const val TAG_RADIUS = "radius"
 	}
 }

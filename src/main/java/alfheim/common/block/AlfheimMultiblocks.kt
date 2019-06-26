@@ -7,11 +7,11 @@ import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 
 object AlfheimMultiblocks {
 	
-	var infuser: MultiblockSet
-	var infuserU: MultiblockSet
-	var portal: MultiblockSet
-	var soul: MultiblockSet
-	var yordin: MultiblockSet
+	lateinit var infuser: MultiblockSet
+	lateinit var infuserU: MultiblockSet
+	lateinit var portal: MultiblockSet
+	lateinit var soul: MultiblockSet
+	lateinit var yordin: MultiblockSet
 	
 	fun init() {
 		infuser = TileManaInfuser.makeMultiblockSet()

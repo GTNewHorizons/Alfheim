@@ -7,9 +7,8 @@ import alfheim.common.entity.boss.EntityFlugel
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.*
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.*
@@ -24,6 +23,7 @@ import net.minecraft.world.World
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.common.MinecraftForge
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.core.helper.IconHelper
@@ -33,15 +33,12 @@ import vazkii.botania.common.block.tile.TileBrewery
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import vazkii.botania.common.item.relic.ItemRelic
-
-import java.awt.*
-
-import org.lwjgl.opengl.GL11.*
+import java.awt.Color
+import kotlin.math.*
 
 class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 	
-	
-	internal var signs: Array<IIcon>
+	internal lateinit var signs: Array<IIcon>
 	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
@@ -56,27 +53,27 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(par1IconRegister: IIconRegister) {
 		super.registerIcons(par1IconRegister)
-		signs = arrayOfNulls(12)
+		signs = arrayOfNulls<IIcon>(12) as Array<IIcon>
 		for (i in 0..11) signs[i] = IconHelper.forName(par1IconRegister, "unused/sign$i")
 	}
 	
-	override fun onItemUse(stack: ItemStack?, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		if (block === Blocks.beacon) {
-			if (player!!.isSneaking && getBlocked(stack) < SEGMENTS) {
+			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true)
 				if (success) setDisabled(stack, getBlocked(stack), true)
 				return success
 			}
 		} else if (block === ModBlocks.brewery) {
 			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew.setInventorySlotContents(0, stack!!.splitStack(1))
+			brew.setInventorySlotContents(0, stack.splitStack(1))
 		}
 		return false
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack? {
-		if (ItemRelic.isRightPlayer(player!!, stack) && !player.isSneaking) {
+		if (isRightPlayer(player!!, stack) && !player.isSneaking) {
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
@@ -91,8 +88,8 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		return stack
 	}
 	
-	override fun onEntitySwing(player: EntityLivingBase, stack: ItemStack?): Boolean {
-		if (player.isSneaking && player is EntityPlayer && ItemRelic.isRightPlayer(player, stack)) {
+	override fun onEntitySwing(player: EntityLivingBase, stack: ItemStack): Boolean {
+		if (player.isSneaking && player is EntityPlayer && isRightPlayer(player, stack)) {
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
@@ -104,7 +101,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		return false
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World?, entity: Entity?, pos: Int, equipped: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity, pos: Int, equipped: Boolean) {
 		super.onUpdate(stack, world, entity, pos, equipped)
 		val eqLastTick = wasEquipped(stack)
 		val firstTick = isFirstTick(stack)
@@ -114,7 +111,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			val angles = 360
 			val segAngles = angles / SEGMENTS
 			val shift = (segAngles / 2).toFloat()
-			setRotationBase(stack, getCheckingAngle(entity as EntityLivingBase?) - shift)
+			setRotationBase(stack, getCheckingAngle(entity) - shift)
 			if (firstTick) tickFirst(stack)
 		}
 		
@@ -152,7 +149,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		glPushMatrix()
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		val alpha = (Math.sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).toDouble()).toFloat() * 0.5f + 0.5f) * 0.4f + 0.3f
+		val alpha = (sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).toDouble()).toFloat() * 0.5f + 0.5f) * 0.4f + 0.3f
 		
 		val posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks
 		val posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks
@@ -189,7 +186,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			glTranslatef(0f, 0f, 0.5f)
 			val icon = signs[seg]
 			glRotatef(90f, 0f, 1f, 0f)
-			glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1 else 0.2f)
+			glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1f else 0.2f)
 			val f = icon.minU
 			val f1 = icon.maxU
 			val f2 = icon.minV
@@ -217,14 +214,14 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			tess.startDrawingQuads()
 			for (i in 0 until segAngles) {
 				val ang = i.toFloat() + (seg * segAngles).toFloat() + shift
-				var xp = Math.cos(ang * Math.PI / 180f) * s
-				var zp = Math.sin(ang * Math.PI / 180f) * s
+				var xp = cos(ang * Math.PI / 180f) * s
+				var zp = sin(ang * Math.PI / 180f) * s
 				
 				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, u.toDouble(), v.toDouble())
 				tess.addVertexWithUV(xp, y0.toDouble(), zp, u.toDouble(), 0.0)
 				
-				xp = Math.cos((ang + 1) * Math.PI / 180f) * s
-				zp = Math.sin((ang + 1) * Math.PI / 180f) * s
+				xp = cos((ang + 1) * Math.PI / 180f) * s
+				zp = sin((ang + 1) * Math.PI / 180f) * s
 				
 				tess.addVertexWithUV(xp, y0.toDouble(), zp, 0.0, 0.0)
 				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, 0.0, v.toDouble())
@@ -246,31 +243,35 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		var s = StatCollector.translateToLocal("item.FlugelSoul.sign$slot")
 		font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 65, if (isDisabled(stack, slot)) 0xAAAAAA else 0xFFD409)
 		
-		if (pos.isValid) {
-			val dist = MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).toDouble())
-			
-			if (pos.dim != player.dimension) {
-				s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 50, 0x9999FF)
+		when {
+			pos.isValid             -> {
+				val dist = MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).toDouble())
+				
+				if (pos.dim != player.dimension) {
+					s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 50, 0x9999FF)
+				}
+				s = if (dist == 1) StatCollector.translateToLocal("item.FlugelSoul.blockAway") else String.format(StatCollector.translateToLocal("item.FlugelSoul.blocksAway"), dist)
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0x9999FF)
+				s = StatCollector.translateToLocal("item.FlugelSoul.clickToTeleport")
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
+				s = StatCollector.translateToLocal("item.FlugelSoul.clickToRemoveWarp")
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 20, 0xFFFFFF)
 			}
-			s = if (dist == 1) StatCollector.translateToLocal("item.FlugelSoul.blockAway") else String.format(StatCollector.translateToLocal("item.FlugelSoul.blocksAway"), dist)
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0x9999FF)
-			s = StatCollector.translateToLocal("item.FlugelSoul.clickToTeleport")
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
-			s = StatCollector.translateToLocal("item.FlugelSoul.clickToRemoveWarp")
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 20, 0xFFFFFF)
-		} else if (isDisabled(stack, slot)) {
-			s = StatCollector.translateToLocal("item.FlugelSoul.blockedWarp")
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xAAAAAA)
-		} else {
-			s = StatCollector.translateToLocal("item.FlugelSoul.unboundWarp")
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xFFFFFF)
-			s = StatCollector.translateToLocal("item.FlugelSoul.clickToAddWarp")
-			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
+			isDisabled(stack, slot) -> {
+				s = StatCollector.translateToLocal("item.FlugelSoul.blockedWarp")
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xAAAAAA)
+			}
+			else                    -> {
+				s = StatCollector.translateToLocal("item.FlugelSoul.unboundWarp")
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xFFFFFF)
+				s = StatCollector.translateToLocal("item.FlugelSoul.clickToAddWarp")
+				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
+			}
 		}
 	}
 	
-	private class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
+	class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
 		
 		internal val isValid: Boolean
 			get() = y > 0 && (!ASJUtilities.isServer || MinecraftServer.getServer().worldServerForDimension(dim) != null)
@@ -283,25 +284,25 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 	
 	companion object {
 		
-		private val SEGMENTS = 12
+		private const val SEGMENTS = 12
 		private val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
 		
-		private val TAG_EQUIPPED = "equipped"
-		private val TAG_ROTATION_BASE = "rotationBase"
-		private val TAG_WARP_PREFIX = "warp"
-		private val TAG_POS_X = "posX"
-		private val TAG_POS_Y = "posY"
-		private val TAG_POS_Z = "posZ"
-		private val TAG_DIMENSION = "dim"
-		private val TAG_FIRST_TICK = "firstTick"
-		private val TAG_DISABLED = "disabled"
-		private val TAG_BLOCKED = "blocked"
+		private const val TAG_EQUIPPED = "equipped"
+		private const val TAG_ROTATION_BASE = "rotationBase"
+		private const val TAG_WARP_PREFIX = "warp"
+		private const val TAG_POS_X = "posX"
+		private const val TAG_POS_Y = "posY"
+		private const val TAG_POS_Z = "posZ"
+		private const val TAG_DIMENSION = "dim"
+		private const val TAG_FIRST_TICK = "firstTick"
+		private const val TAG_DISABLED = "disabled"
+		private const val TAG_BLOCKED = "blocked"
 		
 		// ItemFlightTiara
-		private val TAG_TIME_LEFT = "timeLeft"
-		private val MAX_FLY_TIME = 1200
+		private const val TAG_TIME_LEFT = "timeLeft"
+		private const val MAX_FLY_TIME = 1200
 		
-		private fun getSegmentLookedAt(stack: ItemStack?, player: EntityLivingBase): Int {
+		private fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
 			val yaw = getCheckingAngle(player, getRotationBase(stack))
 			
 			val angles = 360
@@ -329,46 +330,46 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			yaw -= 360f - base
 			var angle = 360f - yaw + shift
 			
-			if (angle < 0) angle = 360f + angle
+			if (angle < 0) angle += 360f
 			
 			return angle
 		}
 		
-		fun isFirstTick(stack: ItemStack?): Boolean {
+		fun isFirstTick(stack: ItemStack): Boolean {
 			return ItemNBTHelper.getBoolean(stack, TAG_FIRST_TICK, true)
 		}
 		
-		fun tickFirst(stack: ItemStack?) {
-			ItemNBTHelper.setBoolean(stack!!, TAG_FIRST_TICK, false)
+		fun tickFirst(stack: ItemStack) {
+			ItemNBTHelper.setBoolean(stack, TAG_FIRST_TICK, false)
 		}
 		
-		fun wasEquipped(stack: ItemStack?): Boolean {
+		fun wasEquipped(stack: ItemStack): Boolean {
 			return ItemNBTHelper.getBoolean(stack, TAG_EQUIPPED, false)
 		}
 		
-		fun setEquipped(stack: ItemStack?, equipped: Boolean) {
-			ItemNBTHelper.setBoolean(stack!!, TAG_EQUIPPED, equipped)
+		fun setEquipped(stack: ItemStack, equipped: Boolean) {
+			ItemNBTHelper.setBoolean(stack, TAG_EQUIPPED, equipped)
 		}
 		
-		fun getRotationBase(stack: ItemStack?): Float {
+		fun getRotationBase(stack: ItemStack): Float {
 			return ItemNBTHelper.getFloat(stack, TAG_ROTATION_BASE, 0f)
 		}
 		
-		fun setRotationBase(stack: ItemStack?, rotation: Float) {
-			ItemNBTHelper.setFloat(stack!!, TAG_ROTATION_BASE, rotation)
+		fun setRotationBase(stack: ItemStack, rotation: Float) {
+			ItemNBTHelper.setFloat(stack, TAG_ROTATION_BASE, rotation)
 		}
 		
-		fun isDisabled(stack: ItemStack?, warp: Int): Boolean {
+		fun isDisabled(stack: ItemStack, warp: Int): Boolean {
 			return ItemNBTHelper.getBoolean(stack, TAG_DISABLED + warp, false)
 		}
 		
-		fun setDisabled(stack: ItemStack?, warp: Int, disable: Boolean) {
-			ItemNBTHelper.setBoolean(stack!!, TAG_DISABLED + (warp - if (disable) 0 else 1), disable)
+		fun setDisabled(stack: ItemStack, warp: Int, disable: Boolean) {
+			ItemNBTHelper.setBoolean(stack, TAG_DISABLED + (warp - if (disable) 0 else 1), disable)
 			stack.tagCompound.tagMap.remove(TAG_WARP_PREFIX + warp)
 			setBlocked(stack, getBlocked(stack) + if (disable) 1 else -1)
 		}
 		
-		fun getBlocked(item: ItemStack?): Int {
+		fun getBlocked(item: ItemStack): Int {
 			return ItemNBTHelper.getInt(item, TAG_BLOCKED, 0)
 		}
 		
@@ -376,7 +377,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			ItemNBTHelper.setInt(item, TAG_BLOCKED, blocked)
 		}
 		
-		fun setWarpPoint(stack: ItemStack?, warp: Int, x: Double, y: Double, z: Double, dim: Int) {
+		fun setWarpPoint(stack: ItemStack, warp: Int, x: Double, y: Double, z: Double, dim: Int) {
 			if (isDisabled(stack, warp)) return
 			val cmp = NBTTagCompound()
 			cmp.setDouble(TAG_POS_X, x)
@@ -386,7 +387,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 			ItemNBTHelper.setCompound(stack, TAG_WARP_PREFIX + warp, cmp)
 		}
 		
-		fun getWarpPoint(stack: ItemStack?, warp: Int): MultiversePosition {
+		fun getWarpPoint(stack: ItemStack, warp: Int): MultiversePosition {
 			if (isDisabled(stack, warp)) return FALLBACK_POSITION
 			val cmp = ItemNBTHelper.getCompound(stack, TAG_WARP_PREFIX + warp, true) ?: return FALLBACK_POSITION
 			

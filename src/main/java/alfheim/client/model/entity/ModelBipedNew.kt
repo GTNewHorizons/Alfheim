@@ -1,11 +1,9 @@
 package alfheim.client.model.entity
 
-import org.lwjgl.opengl.GL11.*
-
-import net.minecraft.client.model.ModelBase
-import net.minecraft.client.model.ModelRenderer
+import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper
+import org.lwjgl.opengl.GL11.*
 
 open class ModelBipedNew: ModelBase() {
 	
@@ -98,15 +96,15 @@ open class ModelBipedNew: ModelBase() {
 		leftleg.render(size)
 	}
 	
-	override fun setRotationAngles(time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
+	override fun setRotationAngles(limbSwing: Float, limbAmpl: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
 		head.rotateAngleY = yawHead / (180f / Math.PI.toFloat())
 		head.rotateAngleX = pitchHead / (180f / Math.PI.toFloat())
-		rightarm.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.toFloat()) * 2.0f * amplitude * 0.5f
-		leftarm.rotateAngleX = MathHelper.cos(time * 0.6662f) * 2.0f * amplitude * 0.5f
+		rightarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 2.0f * limbAmpl * 0.5f
+		leftarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbAmpl * 0.5f
 		rightarm.rotateAngleZ = 0.0f
 		leftarm.rotateAngleZ = 0.0f
-		rightleg.rotateAngleX = MathHelper.cos(time * 0.6662f) * 1.4f * amplitude
-		leftleg.rotateAngleX = MathHelper.cos(time * 0.6662f + Math.PI.toFloat()) * 1.4f * amplitude
+		rightleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbAmpl
+		leftleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 1.4f * limbAmpl
 		rightleg.rotateAngleY = 0.0f
 		leftleg.rotateAngleY = 0.0f
 		

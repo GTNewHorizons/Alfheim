@@ -1,8 +1,8 @@
 package alfheim.common.block.mana
 
+import alexsocol.asjlib.extendables.*
 import java.util.Random
 
-import alexsocol.asjlib.extendables.ItemContainingTileEntity
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileTransferer
@@ -30,7 +30,7 @@ import vazkii.botania.common.block.BlockModContainer
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 
-class BlockTransferer: BlockModContainer<*>(Material.wood), IWandable, IWandHUD, ILexiconable, IWireframeAABBProvider {
+class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, IWandHUD, ILexiconable, IWireframeAABBProvider {
 	
 	internal val random: Random
 	
@@ -89,7 +89,7 @@ class BlockTransferer: BlockModContainer<*>(Material.wood), IWandable, IWandHUD,
 		val stack = player.inventory.getCurrentItem()
 		if (stack != null && stack.item === ModItems.twigWand) return false
 		val tile = world!!.getTileEntity(x, y, z) as? TileTransferer ?: return false
-		val te = tile as ItemContainingTileEntity
+		val te = tile as TileItemContainer
 		
 		if (te.item != null) {
 			if (!world.isRemote) {
@@ -113,21 +113,19 @@ class BlockTransferer: BlockModContainer<*>(Material.wood), IWandable, IWandHUD,
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block?, meta: Int) {
-		val te = world.getTileEntity(x, y, z) as ItemContainingTileEntity
-		if (te != null) {
-			if (te.item != null) {
-				val entityitem = EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!.copy())
-				world.spawnEntityInWorld(entityitem)
-				te.item = null
-			}
-			world.func_147453_f(x, y, z, block)
+		val te = world.getTileEntity(x, y, z) as TileItemContainer
+		if (te.item != null) {
+			val entityitem = EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!.copy())
+			world.spawnEntityInWorld(entityitem)
+			te.item = null
 		}
+		world.func_147453_f(x, y, z, block)
 		
 		super.breakBlock(world, x, y, z, block, meta)
 	}
 	
 	override fun onUsedByWand(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		(world.getTileEntity(x, y, z) as TileTransferer).onWanded(player, stack)
+		(world.getTileEntity(x, y, z) as TileTransferer).onWanded(player)
 		return true
 	}
 	
