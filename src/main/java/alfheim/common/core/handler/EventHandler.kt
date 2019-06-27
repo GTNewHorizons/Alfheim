@@ -8,52 +8,31 @@ import alfheim.api.event.*
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.*
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target
 import alfheim.common.core.registry.*
 import alfheim.common.core.util.*
-import alfheim.common.entity.EntityAlfheimPixie
-import alfheim.common.entity.Flight
+import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
-import alfheim.common.network.Message1d
-import alfheim.common.network.Message2d
+import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
-import alfheim.common.network.MessageEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent
-import cpw.mods.fml.common.gameevent.TickEvent.Phase
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent
-import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent
+import cpw.mods.fml.common.gameevent.PlayerEvent.*
+import cpw.mods.fml.common.gameevent.TickEvent.*
 import net.minecraft.block.material.Material
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.enchantment.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.ChatComponentTranslation
-import net.minecraft.util.ChunkCoordinates
-import net.minecraft.util.DamageSource
-import net.minecraft.util.IChatComponent
-import net.minecraft.util.MathHelper
-import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.*
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
-import net.minecraftforge.event.entity.living.LivingAttackEvent
-import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.living.LivingDropsEvent
+import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
-import net.minecraftforge.event.entity.living.LivingHurtEvent
-import net.minecraftforge.event.entity.player.PlayerEvent
-import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
@@ -62,6 +41,7 @@ import vazkii.botania.common.block.tile.TileAlfPortal
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
+import kotlin.math.max
 
 class EventHandler {
 	
@@ -91,7 +71,7 @@ class EventHandler {
 					e.player.inventory.addItemStackToInventory(ItemStack(ModItems.lexicon))
 					e.player.setSpawnChunk(ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim)
 				}
-				if (AlfheimCore.enableMMO) CardinalSystem.transfer(e.player as EntityPlayerMP)
+				if (AlfheimCore.enableMMO) transfer(e.player as EntityPlayerMP)
 			}
 		}
 	}
@@ -160,7 +140,7 @@ class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			val r = EnumRace.getRaceID(e.original)
 			EnumRace.setRaceID(e.entityPlayer, r.toDouble())
-			if (!e.wasDeath) Flight.set(e.entityPlayer, Flight.get(e.original))
+			if (!e.wasDeath) Flight[e.entityPlayer] = Flight[e.original]
 		}
 	}
 	
@@ -177,7 +157,7 @@ class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
 				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 0.0, EnumRace.getRaceID(e.player).toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, Flight.get(e.player)), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, Flight[e.player]), e.player as EntityPlayerMP)
 			}
 		}
 	}
@@ -251,30 +231,32 @@ class EventHandler {
 			}
 			
 			var pe: PotionEffect? = e.entityLiving.getActivePotionEffect(AlfheimRegistry.nineLifes)
-			nl@ if (pe != null) {
-				val blockable = e.source.damageType == DamageSource.fall.damageType ||
-								e.source.damageType == DamageSource.drown.damageType ||
-								e.source.damageType == DamageSource.inFire.damageType ||
-								e.source.damageType == DamageSource.onFire.damageType ||
-								e.source.damageType == DamageSourceSpell.poison.damageType ||
-								e.source.damageType == DamageSource.wither.damageType
-				
-				if (blockable) {
-					if (pe.amplifier == 4) {
-						if (ASJUtilities.willEntityDie(e)) {
-							if (e.source.damageType == DamageSource.wither.damageType && e.entityLiving.worldObj.rand.nextBoolean()) break@nl
-							pe.amplifier = 0
-							pe.duration = 100
-							if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, pe.potionID, pe.duration, pe.amplifier))
+			run nl@ {
+				if (pe != null) {
+					val blockable = e.source.damageType == DamageSource.fall.damageType ||
+									e.source.damageType == DamageSource.drown.damageType ||
+									e.source.damageType == DamageSource.inFire.damageType ||
+									e.source.damageType == DamageSource.onFire.damageType ||
+									e.source.damageType == DamageSourceSpell.poison.damageType ||
+									e.source.damageType == DamageSource.wither.damageType
+					
+					if (blockable) {
+						if (pe!!.amplifier == 4) {
+							if (ASJUtilities.willEntityDie(e)) {
+								if (e.source.damageType == DamageSource.wither.damageType && e.entityLiving.worldObj.rand.nextBoolean()) return@nl
+								pe!!.amplifier = 0
+								pe!!.duration = 100
+								if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, pe!!.potionID, pe!!.duration, pe!!.amplifier))
+								e.isCanceled = true
+								return
+							}
+						} else if (pe!!.amplifier == 0) {
 							e.isCanceled = true
 							return
 						}
-					} else if (pe.amplifier == 0) {
-						e.isCanceled = true
-						return
+					} else if (e.source.entity != null && e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
+						e.source.entity.attackEntityFrom(e.source, e.ammount / 2)
 					}
-				} else if (e.source.entity != null && e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && e.entityLiving.worldObj.rand.nextInt(3) == 0) {
-					e.source.entity.attackEntityFrom(e.source, e.ammount / 2)
 				}
 			}
 			
@@ -299,7 +281,8 @@ class EventHandler {
 			pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.butterShield)
 			if (!e.source.isMagicDamage && !e.source.isDamageAbsolute && pe != null && pe.duration > 0) {
 				e.ammount /= 2f
-				val dur = Math.max(pe.duration -= (e.ammount * 20).toInt(), 0)
+				pe.duration -= (e.ammount * 20).toInt()
+				val dur = max(pe.duration, 0)
 				if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, pe.potionID, dur, pe.amplifier))
 			}
 		}
@@ -326,13 +309,13 @@ class EventHandler {
 				SpellCastingSystem.tick()
 				TimeStopSystem.tick()
 			}
-			for (name in CardinalSystem.playerSegments.keys) {
+			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
 				if (player == null)
-					CardinalSystem.playerSegments[name].target = Target(null, false)
+					playerSegments[name]?.target = Target(null, false)
 				else {
 					val tg = TargetingSystem.getTarget(player)
-					if (tg != null && tg.target != null && (!tg.target.isEntityAlive || Vector3.entityDistance(player, tg.target) > if (tg.target is IBossDisplayData) 128 else 32))
+					if (tg?.target != null && (!tg.target.isEntityAlive || Vector3.entityDistance(player, tg.target) > if (tg.target is IBossDisplayData) 128 else 32))
 						TargetingSystem.setTarget(player, null, false)
 				}
 			}
@@ -368,15 +351,15 @@ class EventHandler {
 		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
-				if (Flight.get(player) >= 0 && Flight.get(player) <= Flight.max()) {
+				if (Flight[player] >= 0 && Flight[player] <= Flight.max()) {
 					if (player.capabilities.isFlying) {
 						Flight.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
 						if (player.isSprinting) player.moveFlying(0f, 1f, 0.01f)
 					} else
-						Flight.add(player, (if (Flight.get(player) < Flight.max()) 1 else 0).toDouble())
+						Flight.add(player, (if (Flight[player] < Flight.max()) 1 else 0).toDouble())
 				}
 				
-				if (Flight.get(player) <= 0) player.capabilities.isFlying = false
+				if (Flight[player] <= 0) player.capabilities.isFlying = false
 			}
 		}
 	}

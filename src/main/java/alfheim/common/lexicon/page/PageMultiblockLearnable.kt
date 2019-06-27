@@ -1,37 +1,29 @@
 package alfheim.common.lexicon.page
 
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.*
-
-import java.util.ArrayList
-
 import alexsocol.asjlib.ASJUtilities
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
-import net.minecraft.client.gui.GuiButton
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.entity.RenderItem
-import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.stats.Achievement
-import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.StatCollector
+import net.minecraft.util.*
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.api.internal.IGuiLexiconEntry
 import vazkii.botania.api.lexicon.LexiconPage
-import vazkii.botania.api.lexicon.multiblock.Multiblock
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 import vazkii.botania.client.core.handler.MultiblockRenderHandler
 import vazkii.botania.client.lib.LibResources
+import java.util.*
+import kotlin.math.*
 
 class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet, internal val set: MultiblockSet, internal val achievement: Achievement): LexiconPage(unName) {
-	internal var button: GuiButton
-	internal val mb: Multiblock
-	internal val mbUn: Multiblock
+	internal lateinit var button: GuiButton
+	internal val mb  = set.getForIndex(0)
+	internal val mbUn = setUn.getForIndex(0)
 	internal var ticksElapsed: Int = 0
 	
 	internal val buttonStr: String
@@ -39,11 +31,6 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 			val set = if (known()) this.set else this.setUn
 			return StatCollector.translateToLocal(if (MultiblockRenderHandler.currentMultiblock === set) "botaniamisc.unvisualize" else "botaniamisc.visualize")
 		}
-	
-	init {
-		mb = set.getForIndex(0)
-		mbUn = setUn.getForIndex(0)
-	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
@@ -65,11 +52,11 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 		
 		val m = if (known()) mb else mbUn
 		
-		val diag = Math.sqrt((m.xSize * m.xSize + m.zSize * m.zSize).toDouble()).toFloat()
+		val diag = sqrt((m.xSize * m.xSize + m.zSize * m.zSize).toDouble()).toFloat()
 		val height = m.ySize.toFloat()
 		val scaleX = maxX / diag
 		val scaleY = maxY / height
-		val scale = -Math.min(scaleY, scaleX)
+		val scale = -min(scaleY, scaleX)
 		glScalef(scale, scale, scale)
 		
 		glRotatef(-20f, 1f, 0f, 0f)
@@ -97,7 +84,7 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 		glPushMatrix()
 		glTranslatef(0f, 0f, 200f)
 		if (mx >= x && mx < x + 16 && my >= y && my < y + 16) {
-			val mats = ArrayList()
+			val mats = ArrayList<String>()
 			mats.add(StatCollector.translateToLocal("botaniamisc.materialsRequired"))
 			for (stack in m.materials) {
 				var size = "" + stack.stackSize

@@ -56,15 +56,15 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 1 or 2)
 		
 		when (orientation) {
-			0    -> spreader.rotationY = -90f
-			1    -> spreader.rotationY = 90f
-			2    -> spreader.rotationX = 270f
-			3    -> spreader.rotationX = 90f
+			0    -> spreader.rotY = -90f
+			1    -> spreader.rotY = 90f
+			2    -> spreader.rotX = 270f
+			3    -> spreader.rotX = 90f
 			
 			4    -> {
 			}
 			
-			else -> spreader.rotationX = 180f
+			else -> spreader.rotX = 180f
 		}
 	}
 	

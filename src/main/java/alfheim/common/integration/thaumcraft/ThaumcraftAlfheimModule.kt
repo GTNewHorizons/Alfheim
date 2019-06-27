@@ -1,54 +1,46 @@
 package alfheim.common.integration.thaumcraft
 
-import alexsocol.asjlib.ASJUtilities.*
-import alfheim.api.lib.LibOreDict.*
-import cpw.mods.fml.client.registry.RenderingRegistry.*
-import cpw.mods.fml.common.registry.GameRegistry.*
-import net.minecraftforge.oredict.OreDictionary.*
-import thaumcraft.api.ThaumcraftApi.*
-import thaumcraft.common.lib.utils.Utils.*
-import vazkii.botania.common.lib.LibOreDict.*
-
-import alexsocol.asjlib.ASJReflectionHelper
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
+import alexsocol.asjlib.ASJUtilities.Companion.register
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.api.lib.LibOreDict.Companion.ELEMENTIUM_ORE
+import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_NUGGET
+import alfheim.api.lib.LibOreDict.Companion.IFFESAL_DUST
+import alfheim.api.lib.LibOreDict.Companion.INFUSED_DREAM_TWIG
+import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_NUGGET
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre
 import alfheim.common.core.asm.AlfheimASMData
 import alfheim.common.core.registry.AlfheimBlocks
-import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandCap
-import alfheim.common.item.compat.thaumcraft.ItemAlfheimWandRod
-import alfheim.common.item.compat.thaumcraft.NaturalWandRodOnUpdate
+import alfheim.common.item.compat.thaumcraft.*
+import cpw.mods.fml.client.registry.RenderingRegistry.*
+import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.crafting.CraftingManager
-import net.minecraft.item.crafting.IRecipe
+import net.minecraft.item.*
+import net.minecraft.item.crafting.*
+import net.minecraftforge.oredict.OreDictionary.registerOre
 import net.minecraftforge.oredict.ShapedOreRecipe
-import thaumcraft.api.aspects.Aspect
-import thaumcraft.api.aspects.AspectList
-import thaumcraft.api.crafting.CrucibleRecipe
-import thaumcraft.api.crafting.IArcaneRecipe
-import thaumcraft.api.research.ResearchItem
-import thaumcraft.api.research.ResearchPage
-import thaumcraft.api.wands.StaffRod
-import thaumcraft.api.wands.WandCap
-import thaumcraft.api.wands.WandRod
+import thaumcraft.api.ThaumcraftApi.*
+import thaumcraft.api.aspects.*
+import thaumcraft.api.crafting.*
+import thaumcraft.api.research.*
+import thaumcraft.api.wands.*
 import thaumcraft.common.blocks.BlockCustomOreItem
-import thaumcraft.common.config.ConfigItems
-import thaumcraft.common.config.ConfigResearch
+import thaumcraft.common.config.*
+import thaumcraft.common.lib.utils.Utils.addSpecialMiningResult
 import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.lib.LibOreDict.*
 
 object ThaumcraftAlfheimModule {
 	
-	var alfheimThaumOre: Block
+	lateinit var alfheimThaumOre: Block
 	
-	var naturalWandCap: Item
-	var naturalWandRod: Item
+	lateinit var naturalWandCap: Item
+	lateinit var naturalWandRod: Item
 	
-	var recipeElementiumWandCap: IRecipe
+	lateinit var recipeElementiumWandCap: IRecipe
 	
 	var renderIDOre = -1
 	
@@ -60,46 +52,46 @@ object ThaumcraftAlfheimModule {
 		override fun func_151243_f(): Int {
 			return 1
 		}
-	}.setNoTitle().setBackgroundImageName("NTC.png")
+	}.setNoTitle().setBackgroundImageName("NTC.png")!!
 	
-	val capManasteelName = ModInfo.MODID + "Manasteel"
-	val capManasteelRecipe = ModInfo.MODID + "WandCapManasteel"
-	val capManasteelResearch = "CAP_$capManasteelName"
+	const val capManasteelName = ModInfo.MODID + "Manasteel"
+	const val capManasteelRecipe = ModInfo.MODID + "WandCapManasteel"
+	const val capManasteelResearch = "CAP_$capManasteelName"
 	
-	val capTerrasteelName = ModInfo.MODID + "Terrasteel"
-	val capTerrasteelRecipe = ModInfo.MODID + "WandCapTerrasteel"
-	val capTerrasteelResearch = "CAP_$capTerrasteelName"
+	const val capTerrasteelName = ModInfo.MODID + "Terrasteel"
+	const val capTerrasteelRecipe = ModInfo.MODID + "WandCapTerrasteel"
+	const val capTerrasteelResearch = "CAP_$capTerrasteelName"
 	
-	val capElementiumName = ModInfo.MODID + "Elementium"
-	val capElementiumRecipe = ModInfo.MODID + "WandCapElementium"
-	val capElementiumResearch = "CAP_$capElementiumName"
+	const val capElementiumName = ModInfo.MODID + "Elementium"
+	const val capElementiumRecipe = ModInfo.MODID + "WandCapElementium"
+	const val capElementiumResearch = "CAP_$capElementiumName"
 	
-	val capElvoriumName = ModInfo.MODID + "Elvorium"
-	val capElvoriumRecipe = ModInfo.MODID + "WandCapElvorium"
-	val capElvoriumResearch = "CAP_$capElvoriumName"
+	const val capElvoriumName = ModInfo.MODID + "Elvorium"
+	const val capElvoriumRecipe = ModInfo.MODID + "WandCapElvorium"
+	const val capElvoriumResearch = "CAP_$capElvoriumName"
 	
-	val capMauftriumName = ModInfo.MODID + "Mauftrium"
-	val capMauftriumRecipe = ModInfo.MODID + "WandCapMauftrium"
-	val capMauftriumResearch = "CAP_$capMauftriumName"
+	const val capMauftriumName = ModInfo.MODID + "Mauftrium"
+	const val capMauftriumRecipe = ModInfo.MODID + "WandCapMauftrium"
+	const val capMauftriumResearch = "CAP_$capMauftriumName"
 	
-	val rodLivingwoodName = ModInfo.MODID + "Livingwood"
-	val rodLivingwoodRecipe = ModInfo.MODID + "WandRodLivingwood"
-	val rodLivingwoodResearch = "ROD_$rodLivingwoodName"
+	const val rodLivingwoodName = ModInfo.MODID + "Livingwood"
+	const val rodLivingwoodRecipe = ModInfo.MODID + "WandRodLivingwood"
+	const val rodLivingwoodResearch = "ROD_$rodLivingwoodName"
 	
-	val rodDreamwoodName = ModInfo.MODID + "Dreamwood"
-	val rodDreamwoodRecipe = ModInfo.MODID + "WandRodDreamwood"
-	val rodDreamwoodResearch = "ROD_$rodDreamwoodName"
+	const val rodDreamwoodName = ModInfo.MODID + "Dreamwood"
+	const val rodDreamwoodRecipe = ModInfo.MODID + "WandRodDreamwood"
+	const val rodDreamwoodResearch = "ROD_$rodDreamwoodName"
 	
-	val rodSpiritualName = ModInfo.MODID + "Spiritual"
-	val rodSpiritualStaff = rodSpiritualName + "_staff"
-	val rodSpiritualRecipe = ModInfo.MODID + "WandRodSpiritual"
-	val rodSpiritualResearch = "ROD_$rodSpiritualStaff"
+	const val rodSpiritualName = ModInfo.MODID + "Spiritual"
+	const val rodSpiritualStaff = rodSpiritualName + "_staff"
+	const val rodSpiritualRecipe = ModInfo.MODID + "WandRodSpiritual"
+	const val rodSpiritualResearch = "ROD_$rodSpiritualStaff"
 	
-	val pureElementiumRecipe = ModInfo.MODID + "PUREELEMENTIUM"
-	val pureElementiumResearch = ModInfo.MODID + "PureElementium"
+	const val pureElementiumRecipe = ModInfo.MODID + "PUREELEMENTIUM"
+	const val pureElementiumResearch = ModInfo.MODID + "PureElementium"
 	
-	val transElementiumRecipe = ModInfo.MODID + "TRANSELEMENTIUM"
-	val transElementiumResearch = ModInfo.MODID + "TransElementium"
+	const val transElementiumRecipe = ModInfo.MODID + "TRANSELEMENTIUM"
+	const val transElementiumResearch = ModInfo.MODID + "TransElementium"
 	
 	fun preInit() {
 		constructBlocks()
@@ -155,9 +147,9 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[capManasteelRecipe] = addArcaneCraftingRecipe(capManasteelResearch,
 																			 ItemStack(naturalWandCap, 1, 0),
 																			 AspectList()
-																				 .add(Aspect.AIR, WandCap.caps[capManasteelName].getCraftCost())
-																				 .add(Aspect.FIRE, WandCap.caps[capManasteelName].getCraftCost())
-																				 .add(Aspect.ORDER, WandCap.caps[capManasteelName].getCraftCost()),
+																				 .add(Aspect.AIR, WandCap.caps[capManasteelName]!!.craftCost)
+																				 .add(Aspect.FIRE, WandCap.caps[capManasteelName]!!.craftCost)
+																				 .add(Aspect.ORDER, WandCap.caps[capManasteelName]!!.craftCost),
 																			 "NNN", "N N",
 																			 'N', MANASTEEL_NUGGET
 		)
@@ -165,9 +157,9 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[capTerrasteelRecipe] = addArcaneCraftingRecipe(capTerrasteelResearch,
 																			  ItemStack(naturalWandCap, 1, 1),
 																			  AspectList()
-																				  .add(Aspect.AIR, WandCap.caps[capTerrasteelName].getCraftCost())
-																				  .add(Aspect.FIRE, WandCap.caps[capTerrasteelName].getCraftCost())
-																				  .add(Aspect.ORDER, WandCap.caps[capTerrasteelName].getCraftCost()),
+																				  .add(Aspect.AIR, WandCap.caps[capTerrasteelName]!!.craftCost)
+																				  .add(Aspect.FIRE, WandCap.caps[capTerrasteelName]!!.craftCost)
+																				  .add(Aspect.ORDER, WandCap.caps[capTerrasteelName]!!.craftCost),
 																			  "NNN", "N N",
 																			  'N', TERRASTEEL_NUGGET
 		)
@@ -175,9 +167,9 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[capElementiumRecipe] = addArcaneCraftingRecipe(capElementiumResearch,
 																			  ItemStack(naturalWandCap, 1, 2),
 																			  AspectList()
-																				  .add(Aspect.AIR, WandCap.caps[capElementiumName].getCraftCost())
-																				  .add(Aspect.FIRE, WandCap.caps[capElementiumName].getCraftCost())
-																				  .add(Aspect.ORDER, WandCap.caps[capElementiumName].getCraftCost()),
+																				  .add(Aspect.AIR, WandCap.caps[capElementiumName]!!.craftCost)
+																				  .add(Aspect.FIRE, WandCap.caps[capElementiumName]!!.craftCost)
+																				  .add(Aspect.ORDER, WandCap.caps[capElementiumName]!!.craftCost),
 																			  "NNN", "N N",
 																			  'N', ELEMENTIUM_NUGGET
 		)
@@ -185,9 +177,9 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[capElvoriumRecipe] = addArcaneCraftingRecipe(capElvoriumResearch,
 																			ItemStack(naturalWandCap, 1, 3),
 																			AspectList()
-																				.add(Aspect.AIR, WandCap.caps[capElvoriumName].getCraftCost())
-																				.add(Aspect.FIRE, WandCap.caps[capElvoriumName].getCraftCost())
-																				.add(Aspect.ORDER, WandCap.caps[capElvoriumName].getCraftCost()),
+																				.add(Aspect.AIR, WandCap.caps[capElvoriumName]!!.craftCost)
+																				.add(Aspect.FIRE, WandCap.caps[capElvoriumName]!!.craftCost)
+																				.add(Aspect.ORDER, WandCap.caps[capElvoriumName]!!.craftCost),
 																			"NNN", "N N",
 																			'N', ELVORIUM_NUGGET
 		)
@@ -195,12 +187,12 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[capMauftriumRecipe] = addArcaneCraftingRecipe(capMauftriumResearch,
 																			 ItemStack(naturalWandCap, 1, 4),
 																			 AspectList()
-																				 .add(Aspect.AIR, WandCap.caps[capMauftriumName].getCraftCost())
-																				 .add(Aspect.FIRE, WandCap.caps[capMauftriumName].getCraftCost())
-																				 .add(Aspect.WATER, WandCap.caps[capMauftriumName].getCraftCost())
-																				 .add(Aspect.EARTH, WandCap.caps[capMauftriumName].getCraftCost())
-																				 .add(Aspect.ORDER, WandCap.caps[capMauftriumName].getCraftCost())
-																				 .add(Aspect.ENTROPY, WandCap.caps[capMauftriumName].getCraftCost()),
+																				 .add(Aspect.AIR, WandCap.caps[capMauftriumName]!!.craftCost)
+																				 .add(Aspect.FIRE, WandCap.caps[capMauftriumName]!!.craftCost)
+																				 .add(Aspect.WATER, WandCap.caps[capMauftriumName]!!.craftCost)
+																				 .add(Aspect.EARTH, WandCap.caps[capMauftriumName]!!.craftCost)
+																				 .add(Aspect.ORDER, WandCap.caps[capMauftriumName]!!.craftCost)
+																				 .add(Aspect.ENTROPY, WandCap.caps[capMauftriumName]!!.craftCost),
 																			 "NNN", "N N",
 																			 'N', MAUFTRIUM_NUGGET
 		)
@@ -208,8 +200,8 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[rodLivingwoodRecipe] = addArcaneCraftingRecipe(rodLivingwoodResearch,
 																			  ItemStack(naturalWandRod, 1, 0),
 																			  AspectList()
-																				  .add(Aspect.AIR, WandRod.rods[rodLivingwoodName].getCraftCost())
-																				  .add(Aspect.EARTH, WandRod.rods[rodLivingwoodName].getCraftCost()),
+																				  .add(Aspect.AIR, WandRod.rods[rodLivingwoodName]!!.craftCost)
+																				  .add(Aspect.EARTH, WandRod.rods[rodLivingwoodName]!!.craftCost),
 																			  "  T", " T ", "T  ",
 																			  'T', LIVINGWOOD_TWIG
 		)
@@ -217,9 +209,9 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[rodDreamwoodRecipe] = addArcaneCraftingRecipe(rodDreamwoodResearch,
 																			 ItemStack(naturalWandRod, 1, 1),
 																			 AspectList()
-																				 .add(Aspect.AIR, WandRod.rods[rodDreamwoodName].getCraftCost())
-																				 .add(Aspect.EARTH, WandRod.rods[rodDreamwoodName].getCraftCost())
-																				 .add(Aspect.ORDER, WandRod.rods[rodDreamwoodName].getCraftCost()),
+																				 .add(Aspect.AIR, WandRod.rods[rodDreamwoodName]!!.craftCost)
+																				 .add(Aspect.EARTH, WandRod.rods[rodDreamwoodName]!!.craftCost)
+																				 .add(Aspect.ORDER, WandRod.rods[rodDreamwoodName]!!.craftCost),
 																			 "  I", " I ", "I  ",
 																			 'I', INFUSED_DREAM_TWIG
 		)
@@ -227,12 +219,12 @@ object ThaumcraftAlfheimModule {
 		ConfigResearch.recipes[rodSpiritualRecipe] = addArcaneCraftingRecipe("",
 																			 ItemStack(naturalWandRod, 1, 2),
 																			 AspectList()
-																				 .add(Aspect.AIR, WandRod.rods[rodSpiritualStaff].getCraftCost())
-																				 .add(Aspect.FIRE, WandRod.rods[rodSpiritualStaff].getCraftCost())
-																				 .add(Aspect.WATER, WandRod.rods[rodSpiritualStaff].getCraftCost())
-																				 .add(Aspect.EARTH, WandRod.rods[rodSpiritualStaff].getCraftCost())
-																				 .add(Aspect.ORDER, WandRod.rods[rodSpiritualStaff].getCraftCost())
-																				 .add(Aspect.ENTROPY, WandRod.rods[rodSpiritualStaff].getCraftCost()),
+																				 .add(Aspect.AIR, WandRod.rods[rodSpiritualStaff]!!.craftCost)
+																				 .add(Aspect.FIRE, WandRod.rods[rodSpiritualStaff]!!.craftCost)
+																				 .add(Aspect.WATER, WandRod.rods[rodSpiritualStaff]!!.craftCost)
+																				 .add(Aspect.EARTH, WandRod.rods[rodSpiritualStaff]!!.craftCost)
+																				 .add(Aspect.ORDER, WandRod.rods[rodSpiritualStaff]!!.craftCost)
+																				 .add(Aspect.ENTROPY, WandRod.rods[rodSpiritualStaff]!!.craftCost),
 																			 "DSP", " RS", "R D",
 																			 'R', ItemStack(naturalWandRod, 1, 1),
 																			 'S', LIFE_ESSENCE,
@@ -290,25 +282,25 @@ object ThaumcraftAlfheimModule {
 	fun addESMRecipes() {
 		CraftingManager.getInstance().recipeList.add(recipeElementiumWandCap)
 		
-		var cap = WandCap.caps[capElementiumName]
+		var cap = WandCap.caps[capElementiumName]!!
 		ASJReflectionHelper.setValue(cap, 0.95f, "baseCostModifier")
-		cap.setCraftCost(5)
+		cap.craftCost = 5
 		
-		cap = WandCap.caps[capElvoriumName]
+		cap = WandCap.caps[capElvoriumName]!!
 		ASJReflectionHelper.setValue(cap, 0.85f, "baseCostModifier")
-		cap.setCraftCost(8)
+		cap.craftCost = 8
 	}
 	
 	fun removeESMRecipes() {
 		CraftingManager.getInstance().recipeList.remove(recipeElementiumWandCap)
 		
-		var cap = WandCap.caps[capElementiumName]
+		var cap = WandCap.caps[capElementiumName]!!
 		ASJReflectionHelper.setValue(cap, 0.9f, "baseCostModifier")
-		cap.setCraftCost(6)
+		cap.craftCost = 6
 		
-		cap = WandCap.caps[capElvoriumName]
+		cap = WandCap.caps[capElvoriumName]!!
 		ASJReflectionHelper.setValue(cap, 0.8f, "baseCostModifier")
-		cap.setCraftCost(9)
+		cap.craftCost = 9
 	}
 	
 	fun reigsterResearches() {

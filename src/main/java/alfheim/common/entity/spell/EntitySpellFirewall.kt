@@ -58,7 +58,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 				obb = OrientedBB(AxisAlignedBB.getBoundingBox(-3.0, -1.0, -0.5, 3.0, 4.0, 0.5)).translate(posX, posY, posZ).rotateOY(rotationYaw.toDouble())
 			}
 			
-			val list = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, obb!!.toAABB())
+			val list = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, obb!!.toAABB()) as List<EntityLivingBase>
 			for (e in list) {
 				if (e !== caster && obb!!.intersectsWith(e.boundingBox)) {
 					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, 1.0))

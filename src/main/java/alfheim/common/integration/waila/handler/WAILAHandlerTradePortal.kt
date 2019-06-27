@@ -10,7 +10,6 @@ import net.minecraft.util.StatCollector
 import net.minecraft.world.World
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.recipe.RecipeElvenTrade
 
 class WAILAHandlerTradePortal: IWailaDataProvider {
 	
@@ -32,25 +31,26 @@ class WAILAHandlerTradePortal: IWailaDataProvider {
 	
 	override fun getWailaBody(itemStack: ItemStack, currenttip: MutableList<String>, accessor: IWailaDataAccessor, config: IWailaConfigHandler): List<String> {
 		val tag = accessor.nbtData
-		get@ if (tag.hasKey(TileTradePortal.TAG_RECIPE_MULT) && tag.hasKey(TileTradePortal.TAG_RECIPE_NUM)) {
-			val count = tag.getInteger(TileTradePortal.TAG_RECIPE_MULT)
-			if (count <= 0) break@get
-			
-			val num = tag.getInteger(TileTradePortal.TAG_RECIPE_NUM)
-			if (num < 0) break@get
-			
-			val recipe = BotaniaAPI.elvenTradeRecipes[num]
-			currenttip.add(StatCollector.translateToLocal("alfheimmisc.waila.trade.request") + recipe.output.displayName + " x" + recipe.output.stackSize)
-			currenttip.add(StatCollector.translateToLocal("alfheimmisc.waila.trade.results"))
-			for (o in recipe.inputs) {
-				if (o is String)
-					currenttip.add(getOreName(o))
-				else if (o is ItemStack)
-					currenttip.add(o.displayName + " x" + o.stackSize)
-				else
-					currenttip.add(o.toString())
+		run get@ {
+			if (tag.hasKey(TileTradePortal.TAG_RECIPE_MULT) && tag.hasKey(TileTradePortal.TAG_RECIPE_NUM)) {
+				val count = tag.getInteger(TileTradePortal.TAG_RECIPE_MULT)
+				if (count <= 0) return@get
+				
+				val num = tag.getInteger(TileTradePortal.TAG_RECIPE_NUM)
+				if (num < 0) return@get
+				
+				val recipe = BotaniaAPI.elvenTradeRecipes[num]
+				currenttip.add(StatCollector.translateToLocal("alfheimmisc.waila.trade.request") + recipe.output.displayName + " x" + recipe.output.stackSize)
+				currenttip.add(StatCollector.translateToLocal("alfheimmisc.waila.trade.results"))
+				for (o in recipe.inputs) {
+					when (o) {
+						is String        -> currenttip.add(getOreName(o))
+						is ItemStack -> currenttip.add(o.displayName + " x" + o.stackSize)
+						else     -> currenttip.add(o.toString())
+					}
+				}
+				currenttip.add(StatCollector.translateToLocalFormatted("alfheimmisc.waila.trade.available", count))
 			}
-			currenttip.add(StatCollector.translateToLocalFormatted("alfheimmisc.waila.trade.available", count))
 		}
 		return currenttip
 	}

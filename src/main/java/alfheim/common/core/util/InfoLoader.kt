@@ -1,18 +1,13 @@
 package alfheim.common.core.util
 
-import java.net.URL
-import java.util.ArrayList
-import java.util.Arrays
-
-import javax.xml.parsers.DocumentBuilderFactory
-
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import net.minecraft.util.StatCollector
 import net.minecraftforge.common.MinecraftForge
+import org.w3c.dom.Node
+import java.net.URL
+import java.util.*
+import javax.xml.parsers.DocumentBuilderFactory
 
 object InfoLoader {
 	
@@ -25,7 +20,6 @@ object InfoLoader {
 	
 	fun start() {
 		ThreadLoadInfo()
-		MinecraftForge.EVENT_BUS.register(InfoLoader())
 	}
 	
 	fun getNodeValue(root: Node, attributeValue: String): String {
@@ -57,15 +51,15 @@ object InfoLoader {
 			try {
 				val root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(URL("https://bitbucket.org/AlexSocol/alfheim/raw/" + (if (ModInfo.DEV) "development" else "master") + "/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).documentElement
 				val latest = getNodeValue(root, "LATEST")
-				onlineVersion = Integer.parseInt(latest.split("-".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()[1])
+				onlineVersion = Integer.parseInt(latest.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
 				outdated = onlineVersion > Integer.parseInt(ModInfo.BUILD.replace("\\D".toRegex(), ""))
 				if (outdated) info.add(StatCollector.translateToLocalFormatted("alfheimmisc.update", ModInfo.VERSION, latest))
 				var s: String? = getNodeValue(root, "UNIVERSAL")
-				info.addAll(Arrays.asList(*s!!.split("&".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()))
+				info.addAll(listOf(*s!!.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
 				s = getNodeValue(root, ModInfo.VERSION)
-				if (s != null && !s.isEmpty()) {
+				if (s.isNotEmpty()) {
 					info.add("=====================================================")
-					info.addAll(Arrays.asList(*s.split("&".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()))
+					info.addAll(listOf(*s.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
 				}
 			} catch (e: Exception) {
 				ASJUtilities.error("Unable to load news & version from official repo. Check your internet connection.")

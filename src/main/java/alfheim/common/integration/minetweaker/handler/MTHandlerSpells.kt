@@ -1,12 +1,8 @@
 package alfheim.common.integration.minetweaker.handler
 
-import alfheim.api.AlfheimAPI
-import alfheim.api.ModInfo
-import alfheim.api.spell.SpellBase
-import minetweaker.IUndoableAction
-import minetweaker.MineTweakerAPI
-import stanhebben.zenscript.annotations.ZenClass
-import stanhebben.zenscript.annotations.ZenMethod
+import alfheim.api.*
+import minetweaker.*
+import stanhebben.zenscript.annotations.*
 
 @ZenClass("mods." + ModInfo.MODID + ".Spells")
 object MTHandlerSpells {
@@ -28,12 +24,8 @@ object MTHandlerSpells {
 	
 	private class ManaCost(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell: SpellBase?
+		private var spell = AlfheimAPI.getSpellInstance(name)
 		internal var oldVal = 0
-		
-		init {
-			spell = AlfheimAPI.getSpellInstance(name)
-		}
 		
 		override fun apply() {
 			oldVal = spell!!.setManaCost(newVal)
@@ -44,7 +36,7 @@ object MTHandlerSpells {
 		}
 		
 		override fun undo() {
-			spell!!.manaCost = oldVal
+			spell!!.setManaCost(oldVal)
 		}
 		
 		override fun describe(): String {
@@ -62,12 +54,8 @@ object MTHandlerSpells {
 	
 	private class Cooldown(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell: SpellBase?
+		private val spell = AlfheimAPI.getSpellInstance(name)
 		internal var oldVal = 0
-		
-		init {
-			spell = AlfheimAPI.getSpellInstance(name)
-		}
 		
 		override fun apply() {
 			oldVal = spell!!.setCooldown(newVal)
@@ -78,7 +66,7 @@ object MTHandlerSpells {
 		}
 		
 		override fun undo() {
-			spell!!.cooldown = oldVal
+			spell!!.setCooldown(oldVal)
 		}
 		
 		override fun describe(): String {
@@ -96,12 +84,8 @@ object MTHandlerSpells {
 	
 	private class CastTime(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell: SpellBase?
+		private val spell = AlfheimAPI.getSpellInstance(name)
 		internal var oldVal = 0
-		
-		init {
-			spell = AlfheimAPI.getSpellInstance(name)
-		}
 		
 		override fun apply() {
 			oldVal = spell!!.setCastTime(newVal)
@@ -112,7 +96,7 @@ object MTHandlerSpells {
 		}
 		
 		override fun undo() {
-			spell!!.castTime = oldVal
+			spell!!.setCastTime(oldVal)
 		}
 		
 		override fun describe(): String {

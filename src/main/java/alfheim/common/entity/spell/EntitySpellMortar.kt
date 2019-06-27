@@ -16,6 +16,7 @@ import net.minecraft.world.World
 import vazkii.botania.common.block.ModBlocks
 
 import java.util.*
+import kotlin.math.atan2
 
 class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	
@@ -43,7 +44,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 				mop.entityHit.attackEntityFrom(DamageSource.fallingBlock, 8f)
 				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, 20.0)).toFloat())
 			}
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(2.0, 2.0, 2.0))
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(2.0, 2.0, 2.0)) as List<EntityLivingBase>
 			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, 5.0))
 			
 			setDead()
@@ -67,7 +68,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			var movingobjectposition: MovingObjectPosition? = worldObj.rayTraceBlocks(vec3, vec31)
 			
 			if (movingobjectposition == null) {
-				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ))
+				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ)) as MutableList<EntityLivingBase>
 				l.remove(caster)
 				
 				for (e in l)
@@ -84,9 +85,9 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			posY += motionY
 			posZ += motionZ
 			val f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ)
-			rotationYaw = (Math.atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() + 90.0f
+			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() + 90.0f
 			
-			rotationPitch = (Math.atan2(f1.toDouble(), motionY) * 180.0 / Math.PI).toFloat() - 90.0f
+			rotationPitch = (atan2(f1.toDouble(), motionY) * 180.0 / Math.PI).toFloat() - 90.0f
 			while (rotationPitch - prevRotationPitch < -180.0f) prevRotationPitch -= 360.0f
 			while (rotationPitch - prevRotationPitch >= 180.0f) prevRotationPitch += 360.0f
 			while (rotationYaw - prevRotationYaw < -180.0f) prevRotationYaw -= 360.0f

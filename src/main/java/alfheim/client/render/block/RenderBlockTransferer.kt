@@ -17,7 +17,7 @@ class RenderBlockTransferer: ISimpleBlockRenderingHandler {
 		glTranslated(-0.5, -0.5, -0.5)
 		
 		val spreader = TileTransferer()
-		spreader.rotationX = -180f
+		spreader.rotX = -180f
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0.0, 0.0, 0.0, 0f)
 		glPopMatrix()
 	}

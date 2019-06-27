@@ -40,7 +40,7 @@ class LootInterceptorClearRecipe: IRecipe {
 			}
 		}
 		
-		ItemLootInterceptor.setIDs(inter, ItemLootInterceptor.EMPTY)
+		ItemLootInterceptor.setIDs(inter!!, ItemLootInterceptor.EMPTY)
 		ItemLootInterceptor.setMetas(inter, ItemLootInterceptor.EMPTY)
 		
 		return inter

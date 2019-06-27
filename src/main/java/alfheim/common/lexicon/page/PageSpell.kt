@@ -1,18 +1,14 @@
 package alfheim.common.lexicon.page
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.util.AlfheimConfig
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
-import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.StatCollector
+import net.minecraft.util.*
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.internal.IGuiLexiconEntry
 import vazkii.botania.api.lexicon.LexiconPage
 import vazkii.botania.client.core.handler.HUDHandler
@@ -24,9 +20,7 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 	@SideOnly(Side.CLIENT)
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
 		val xn = gui.left
-		val xx = xn + gui.width
 		val yn = gui.top
-		val yx = yn + gui.height
 		val font = Minecraft.getMinecraft().fontRenderer
 		val unicode = font.unicodeFlag
 		font.unicodeFlag = true
@@ -55,9 +49,9 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 		
 		glPopMatrix()
 		val s = StatCollector.translateToLocal("lexicon.seconds")
-		text = String.format(StatCollector.translateToLocal("lexicon.time") + s, spell.castTime / 20.0).replace("\\.0$s".toRegex(), s)
+		text = String.format(StatCollector.translateToLocal("lexicon.time") + s, spell.getCastTime() / 20.0).replace("\\.0$s".toRegex(), s)
 		font.drawString(text, 16, 48, 0)
-		text = String.format(StatCollector.translateToLocal("lexicon.cd") + s, spell.cooldown / 20.0).replace("\\.0$s".toRegex(), s)
+		text = String.format(StatCollector.translateToLocal("lexicon.cd") + s, spell.getCooldown() / 20.0).replace("\\.0$s".toRegex(), s)
 		font.drawString(text, gui.width - font.getStringWidth(text) - 16, 48, 0)
 		
 		run {
@@ -74,12 +68,12 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 			if (AlfheimConfig.numericalMana) {
 				font.drawString(StatCollector.translateToLocal("lexicon.mana"), xn + 16, y - 8, 0)
 				font.drawString("/" + TilePool.MAX_MANA / ratio, xn + gui.width / 2, y - 8, 0x0000FF)
-				text = spell.manaCost.toString() + ""
+				text = spell.getManaCost().toString() + ""
 				font.drawString(text, xn + gui.width / 2 - font.getStringWidth(text), y - 8, 0x0000FF)
 			}
 			
 			AlfheimHookHandler.numMana = false
-			HUDHandler.renderManaBar(x, y, 0x0000FF, 0.75f, spell.manaCost, TilePool.MAX_MANA / ratio)
+			HUDHandler.renderManaBar(x, y, 0x0000FF, 0.75f, spell.getManaCost(), TilePool.MAX_MANA / ratio)
 			AlfheimHookHandler.numMana = true
 			
 			text = String.format(StatCollector.translateToLocal("botaniamisc.ratio"), ratio)

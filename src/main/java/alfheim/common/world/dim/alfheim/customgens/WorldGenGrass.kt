@@ -10,8 +10,8 @@ import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.TileSpecialFlower
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.lib.LibBlockNames
-
-import java.util.Random
+import java.util.*
+import kotlin.math.*
 
 class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers: Boolean, val botanicalFlowers: Boolean, val mod: Double): IWorldGenerator {
 	
@@ -20,9 +20,9 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 		val cx = chunkX * 16
 		val cz = chunkZ * 16
 		if (botanicalFlowers) {
-			val dist = Math.min(8, Math.max(1, ConfigHandler.flowerPatchSize))
+			val dist = min(8, max(1, ConfigHandler.flowerPatchSize))
 			for (i in 0 until ConfigHandler.flowerQuantity)
-				if (rand.nextInt(Math.round(ConfigHandler.flowerPatchChance / mod).toInt()) == 0) {
+				if (rand.nextInt((ConfigHandler.flowerPatchChance / mod).roundToLong().toInt()) == 0) {
 					val x = cx + rand.nextInt(16)
 					val z = cz + rand.nextInt(16)
 					val y = world.getTopSolidOrLiquidBlock(x, z)
@@ -55,7 +55,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 				world.setBlock(x, y, z, ModBlocks.mushroom, color, 2)
 		}
 		
-		var perChunk = Math.round(64 * mod).toInt()
+		var perChunk = (64 * mod).roundToLong().toInt()
 		var iteration = 256
 		
 		val types = arrayOf<Block>(Blocks.yellow_flower, Blocks.yellow_flower, // 0 1
@@ -74,25 +74,28 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 			if (!world.isAirBlock(x, y, z) || world.getBlock(x, y - 1, z) !== Blocks.grass) continue
 			
 			val type = rand.nextInt(20)
-			select@ run {
-				if (type > 12) continue
-				if (type > 10 && !doubleFlowers) break@select
-				if (type < 5 && !flowers) break@select
-				if (4 < type && type < 11 && !grass)
-					break@select
-				else if (type == 4)
-					metas[4] = (rand.nextInt(8) + 1).toByte()
-				else if (type == 11)
-					world.setBlock(x, y + 1, z, types[11], metas[11] + 8, 2)
-				else if (type == 12) {
-					metas[12] = rand.nextInt(6).toByte()
-					if (metas[12].toInt() == 2) continue
-					world.setBlock(x, y + 1, z, types[12], metas[12] + 8, 2)
+			
+			run loop@{
+				run select@{
+					if (type > 12) return@loop
+					if (type > 10 && !doubleFlowers) return@select
+					if (type < 5 && !flowers) return@select
+					if (type in 5..10 && !grass)
+						return@select
+					else if (type == 4)
+						metas[4] = (rand.nextInt(8) + 1).toByte()
+					else if (type == 11)
+						world.setBlock(x, y + 1, z, types[11], metas[11] + 8, 2)
+					else if (type == 12) {
+						metas[12] = rand.nextInt(6).toByte()
+						if (metas[12].toInt() == 2) return@loop
+						world.setBlock(x, y + 1, z, types[12], metas[12] + 8, 2)
+					}
+					
+					world.setBlock(x, y, z, types[type], metas[type].toInt(), 2)
 				}
-				
-				world.setBlock(x, y, z, types[type], metas[type].toInt(), 2)
+				--perChunk
 			}
-			--perChunk
 		}
 	}
 }

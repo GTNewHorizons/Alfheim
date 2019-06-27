@@ -1,17 +1,18 @@
 package alfheim.common.core.registry
 
-import alexsocol.asjlib.ASJUtilities.*
-import alfheim.api.AlfheimAPI.*
-import cpw.mods.fml.common.registry.GameRegistry.*
-
 import alexsocol.asjlib.ASJReflectionHelper
+import alexsocol.asjlib.ASJUtilities.Companion.registerEntity
+import alexsocol.asjlib.ASJUtilities.Companion.registerEntityEgg
 import alfheim.AlfheimCore
+import alfheim.api.AlfheimAPI.addPink
+import alfheim.api.AlfheimAPI.registerAnomaly
+import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.*
 import alfheim.common.core.asm.AlfheimHookLoader
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
@@ -27,9 +28,9 @@ import alfheim.common.spell.water.*
 import alfheim.common.spell.wind.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim
 import cpw.mods.fml.common.IWorldGenerator
+import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.ai.attributes.*
-import net.minecraft.init.Blocks
-import net.minecraft.init.Items
+import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
@@ -39,40 +40,45 @@ import vazkii.botania.common.brew.ModPotions
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.lib.LibBlockNames
+import kotlin.math.*
 
 object AlfheimRegistry {
 	
 	val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime.toDouble()) {
 		
 		override fun clampValue(d: Double): Double {
-			return Math.max(0.0, Math.min(AlfheimConfig.flightTime.toDouble(), d))
+			return max(0.0, min(AlfheimConfig.flightTime.toDouble(), d))
 		}
 	}.setShouldWatch(true)
 	
-	var berserk: Potion
-	var bleeding: Potion
-	var butterShield: Potion
-	var deathMark: Potion
-	var decay: Potion
-	var goldRush: Potion
-	var icelens: Potion
-	var leftFlame: Potion
-	var nineLifes: Potion
-	var ninja: Potion
-	var noclip: Potion
-	var overmage: Potion
-	var possession: Potion
-	var quadDamage: Potion
-	var sacrifice: Potion
-	var sharedHP: Potion
-	var showMana: Potion
-	var soulburn: Potion
-	var stoneSkin: Potion
-	var tank: Potion
-	var tHrOw: Potion
-	var wellOLife: Potion
 	
-	var worldGen: IWorldGenerator
+	
+	lateinit var berserk: Potion
+	lateinit var bleeding: Potion
+	lateinit var butterShield: Potion
+	lateinit var deathMark: Potion
+	lateinit var decay: Potion
+	lateinit var goldRush: Potion
+	lateinit var icelens: Potion
+	lateinit var leftFlame: Potion
+	fun leftFlameIsInitialized() = ::leftFlame.isInitialized
+	lateinit var nineLifes: Potion
+	lateinit var ninja: Potion
+	lateinit var noclip: Potion
+	lateinit var overmage: Potion
+	lateinit var possession: Potion
+	lateinit var quadDamage: Potion
+	lateinit var sacrifice: Potion
+	lateinit var sharedHP: Potion
+	fun sharedHPIsInitialized() = ::leftFlame.isInitialized
+	lateinit var showMana: Potion
+	lateinit var soulburn: Potion
+	lateinit var stoneSkin: Potion
+	lateinit var tank: Potion
+	lateinit var tHrOw: Potion
+	lateinit var wellOLife: Potion
+	
+	lateinit var worldGen: IWorldGenerator
 	
 	fun preInit() {
 		if (Potion.potionTypes.size < 256) ASJReflectionHelper.invokeStatic<ModPotions, Any>(ModPotions::class.java, null, "extendPotionArray")

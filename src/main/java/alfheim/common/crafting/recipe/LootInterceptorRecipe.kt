@@ -41,7 +41,7 @@ class LootInterceptorRecipe: IRecipe {
 			
 			val stack = inv.getStackInSlot(i)
 			if (stack != null && stack.item !is ItemLootInterceptor)
-				ItemLootInterceptor.add(inter, Item.getIdFromItem(stack.item), stack.itemDamage)
+				ItemLootInterceptor.add(inter!!, Item.getIdFromItem(stack.item), stack.itemDamage)
 		}
 		
 		return inter

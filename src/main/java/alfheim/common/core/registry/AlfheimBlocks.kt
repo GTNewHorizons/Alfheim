@@ -1,45 +1,45 @@
 package alfheim.common.core.registry
 
-import alexsocol.asjlib.ASJUtilities.*
-import cpw.mods.fml.common.registry.GameRegistry.*
-import net.minecraft.block.Block.*
-import net.minecraftforge.oredict.OreDictionary.*
-
+import alexsocol.asjlib.ASJUtilities.Companion.getBlockName
+import alexsocol.asjlib.ASJUtilities.Companion.register
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.*
-import alfheim.common.block.mana.*
+import alfheim.common.block.mana.BlockManaInfuser
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.AlfheimLexiconData
+import cpw.mods.fml.common.registry.GameRegistry.registerBlock
 import net.minecraft.block.Block
+import net.minecraft.block.Block.*
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
+import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName
 
 object AlfheimBlocks {
 	
-	var alfheimPortal: Block
-	var alfheimPylon: Block
-	var animatedTorch: Block
-	var anomaly: Block
-	var anyavil: Block
-	var dreamLeaves: Block
-	var dreamLog: Block
-	var dreamSapling: Block
-	var elvenOres: Block
-	var elvenSand: Block
-	var elvoriumBlock: Block
-	var flugelHead: Block
-	var itemHolder: Block
-	var livingcobble: Block
-	var mauftriumBlock: Block
-	var manaInfuser: Block
-	var poisonIce: Block
-	var powerStone: Block
-	var redFlame: Block
-	var tradePortal: Block
-	//public static Block transferer; BACK
+	lateinit var alfheimPortal: Block
+	lateinit var alfheimPylon: Block
+	lateinit var animatedTorch: Block
+	lateinit var anomaly: Block
+	lateinit var anyavil: Block
+	lateinit var dreamLeaves: Block
+	lateinit var dreamLog: Block
+	lateinit var dreamSapling: Block
+	lateinit var elvenOres: Block
+	lateinit var elvenSand: Block
+	lateinit var elvoriumBlock: Block
+	lateinit var flugelHead: Block
+	lateinit var itemHolder: Block
+	lateinit var livingcobble: Block
+	lateinit var mauftriumBlock: Block
+	lateinit var manaInfuser: Block
+	lateinit var poisonIce: Block
+	lateinit var powerStone: Block
+	lateinit var redFlame: Block
+	lateinit var tradePortal: Block
+	//lateinit var transferer: Block BACK
 	
 	fun init() {
 		construct()

@@ -21,7 +21,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
 import net.minecraft.init.*
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
@@ -29,6 +28,8 @@ import net.minecraft.tileentity.TileEntityBeacon
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraftforge.common.util.FakePlayer
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.lexicon.multiblock.component.MultiblockComponent
@@ -39,14 +40,10 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.*
-
-import java.awt.*
+import java.awt.Rectangle
 import java.util.*
-import kotlin.collections.Map.Entry
 import java.util.regex.Pattern
-
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
+import kotlin.math.*
 
 class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
 	
@@ -120,11 +117,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		val e = source.entity
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
-			val dmg = if (ModInfo.DEV) damage else Math.min((if (isHardMode) 60 else 40).toFloat(), damage) * if (aiTaskTimer > 0) 0.1f else 1f // this is OK
+			val dmg = if (ModInfo.DEV) damage else min((if (isHardMode) 60 else 40).toFloat(), damage) * if (aiTaskTimer > 0) 0.1f else 1f // this is OK
 			if (!playersWhoAttacked.containsKey(player.commandSenderName))
 				playersWhoAttacked[player.commandSenderName] = 1
 			else
-				playersWhoAttacked[player.commandSenderName] = playersWhoAttacked[player.commandSenderName] + 1
+				playersWhoAttacked[player.commandSenderName] = playersWhoAttacked[player.commandSenderName]!! + 1
 			reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}
@@ -151,7 +148,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	override fun setHealth(hp: Float) {
 		var hp = hp
 		prevHealth = health
-		hp = Math.max(prevHealth - if (isHardMode) 60f else 40f, hp)
+		hp = max(prevHealth - if (isHardMode) 60f else 40f, hp)
 		
 		if (aiTask != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return
 		
@@ -173,8 +170,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			return
 		}
 		super.onDeath(source)
-		val entitylivingbase = func_94060_bK()
-		//if(entitylivingbase instanceof EntityPlayer && isHardMode()) ((EntityPlayer) entitylivingbase).triggerAchievement(AlfheimAchievements.flugelKill);
 		if (isHardMode) for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelKill)
 		
 		worldObj.playSoundAtEntity(this, "random.explode", 20f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
@@ -300,10 +295,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersWhoAttacked.isEmpty()) playersWhoAttacked[summoner] = 1
 		val source = source
 		var players = playersAround
-		val playerCount = playerCount
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
-		if (worldObj.isRemote && !isPlayingMusic && !isDead && !players.isEmpty()) {
+		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
 			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, AlfheimItems.flugelDisc as ItemRecord)
 			isPlayingMusic = true
 		}
@@ -313,7 +307,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val mod = 10
 			var pitch = 0
 			while (pitch <= 180) {
-				{
+				run {
 					var yaw = 0
 					while (yaw < 360) {
 						// color
@@ -331,18 +325,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val Z = source.posZ + 0.5
 						
 						// local coords
-						val x = Math.sin(radP.toDouble()) * Math.cos(radY.toDouble()) * RANGE.toDouble()
-						val y = Math.cos(radP.toDouble()) * RANGE
-						val z = Math.sin(radP.toDouble()) * Math.sin(radY.toDouble()) * RANGE.toDouble()
+						val x = sin(radP.toDouble()) * cos(radY.toDouble()) * RANGE.toDouble()
+						val y = cos(radP.toDouble()) * RANGE
+						val z = sin(radP.toDouble()) * sin(radY.toDouble()) * RANGE.toDouble()
 						
 						// perticle source position
 						val nrm = Vector3(x, y, z).normalize()
 						
 						// noraml to pos
 						val radp = (pitch + 90f) * Math.PI.toFloat() / 180f
-						val kx = Math.sin(radp.toDouble()) * Math.cos(radY.toDouble())
-						val ky = Math.cos(radp.toDouble())
-						val kz = Math.sin(radp.toDouble()) * Math.sin(radY.toDouble())
+						val kx = sin(radp.toDouble()) * cos(radY.toDouble())
+						val ky = cos(radp.toDouble())
+						val kz = sin(radp.toDouble()) * sin(radY.toDouble())
 						val kos = Vector3(kx, ky, kz).normalize().rotate(Math.toRadians(Math.PI * 2.0 * Math.random()), nrm).mul(0.1)
 						
 						val motX = kos.x.toFloat()
@@ -359,8 +353,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		for (player in players) {
 			// No beacon potions allowed!
-			val remove = ArrayList()
-			val active = player.activePotionEffects
+			val remove = ArrayList<PotionEffect>()
+			val active = player.activePotionEffects as MutableList<PotionEffect>
 			for (effect in active) if (effect.getDuration() < 200 && effect.getIsAmbient() && !Potion.potionTypes[effect.getPotionID()].isBadEffect) remove.add(effect)
 			active.removeAll(remove)
 			
@@ -406,12 +400,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				}
 			} else {
 				val range = 3
-				players = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range))
-				if (!players.isEmpty()) damageEntity(DamageSource.causePlayerDamage(players[0]), 0f)
+				players = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)) as List<EntityPlayer>
+				if (players.isNotEmpty()) damageEntity(DamageSource.causePlayerDamage(players[0]), 0f)
 			}
 		}
 		
-		hurtTimeActual = Math.max(0, --hurtTimeActual)
+		hurtTimeActual = max(0, --hurtTimeActual)
 	}
 	
 	fun spawnPatyklz(c: Boolean) {
@@ -427,8 +421,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			worldTime /= 5.0
 			
 			val rad = 0.75f + Math.random().toFloat() * 0.05f
-			val xp = pylonPos.x + 0.5 + Math.cos(worldTime) * rad
-			val zp = pylonPos.z + 0.5 + Math.sin(worldTime) * rad
+			val xp = pylonPos.x + 0.5 + cos(worldTime) * rad
+			val zp = pylonPos.z + 0.5 + sin(worldTime) * rad
 			
 			val partPos = Vector3(xp, pylonPos.y, zp)
 			val mot = pos.copy().sub(partPos).mul(0.04)
@@ -471,7 +465,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	}
 	
 	override fun isEntityInvulnerable(): Boolean {
-		return !playersAround.isEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
+		return playersAround.isNotEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
 	}
 	
 	fun initAI() {
@@ -548,7 +542,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		for (ai in tasks.executingTaskEntries)
 			if ((ai as EntityAITaskEntry).action is AIBase) {
-				val path = ai.action.javaClass.getName().split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+				val path = ai.action.javaClass.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 				nbt.setString(TAG_AI, path[path.size - 1])
 			}
 		
@@ -571,17 +565,17 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		val z = nbt.getInteger(TAG_SOURCE_Z)
 		setSource(x, y, z)
 		
-		if (nbt.hasKey(TAG_PLAYER_COUNT))
-			playerCount = nbt.getInteger(TAG_PLAYER_COUNT)
+		playerCount = if (nbt.hasKey(TAG_PLAYER_COUNT))
+			nbt.getInteger(TAG_PLAYER_COUNT)
 		else
-			playerCount = 1
+			1
 		val TAG_AI_TASK = "task"
 		aiTask = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
 		
 		//if (ModInfo.DEV) ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
 		for (e in tasks.taskEntries) {
 			//if (ModInfo.DEV) ASJUtilities.log("At " + ((EntityAITaskEntry) e).action.getClass().getName());
-			val path = (e as EntityAITaskEntry).action.javaClass.getName().split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+			val path = (e as EntityAITaskEntry).action.javaClass.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 			if (e.action is AIBase && path[path.size - 1] == nbt.getString(TAG_AI)) {
 				tasks.executingTaskEntries.add(e)
 			}
@@ -698,14 +692,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	private fun onImpact(mop: MovingObjectPosition) {
 		when (mop.typeOfHit) {
-			MovingObjectPosition.MovingObjectType.BLOCK  -> if (onGround) motionY += 0.5
+			MovingObjectPosition.MovingObjectType.BLOCK  ->
+				if (onGround) motionY += 0.5
 			
-			MovingObjectPosition.MovingObjectType.ENTITY -> {
+			MovingObjectPosition.MovingObjectType.ENTITY ->
 				if (mop.entityHit is EntityPlayer) mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this), if (isHardMode) 15.0f else 10.0f)
-			}
 			
-			MovingObjectPosition.MovingObjectType.MISS   -> {
-			}
+			
+			else                                         -> {}
 		}
 	}
 	
@@ -720,14 +714,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	override fun getBossBarTextureRect(): Rectangle {
 		if (barRect == null)
 			barRect = Rectangle(0, 0, 185, 15)
-		return barRect
+		return barRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
 			hpBarRect = Rectangle(0, barRect!!.y + barRect!!.height, 181, 7)
-		return hpBarRect
+		return hpBarRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -768,29 +762,29 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	companion object {
 		
-		private val TAG_TIME_LEFT = "timeLeft" // from vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
+		private const val TAG_TIME_LEFT = "timeLeft" // from vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 		
-		val SPAWN_TICKS = 160
-		val DEATHRAY_TICKS = 200
-		val RANGE = 24
-		val MAX_HP = 800f
+		const val SPAWN_TICKS = 160
+		const val DEATHRAY_TICKS = 200
+		const val RANGE = 24
+		const val MAX_HP = 800f
 		
-		private val TAG_NAME = "name"
-		private val TAG_STAGE = "stage"
-		private val TAG_HARDMODE = "hardmode"
-		private val TAG_SOURCE_X = "sourceX"
-		private val TAG_SOURCE_Y = "sourceY"
-		private val TAG_SOURCE_Z = "sourceZ"
-		private val TAG_PLAYER_COUNT = "playerCount"
-		private val TAG_AI_TASK = "task"
-		private val TAG_AI = "ai"
-		private val TAG_AI_TIMER = "aiTime"
-		private val TAG_SUMMONER = "summoner"
-		private val TAG_ATTACKED = "attacked"
+		private const val TAG_NAME = "name"
+		private const val TAG_STAGE = "stage"
+		private const val TAG_HARDMODE = "hardmode"
+		private const val TAG_SOURCE_X = "sourceX"
+		private const val TAG_SOURCE_Y = "sourceY"
+		private const val TAG_SOURCE_Z = "sourceZ"
+		private const val TAG_PLAYER_COUNT = "playerCount"
+		private const val TAG_AI_TASK = "task"
+		private const val TAG_AI = "ai"
+		private const val TAG_AI_TIMER = "aiTime"
+		private const val TAG_SUMMONER = "summoner"
+		private const val TAG_ATTACKED = "attacked"
 		
-		val STAGE_AGGRO = 1    //100%	hp
-		val STAGE_MAGIC = 2    //60%	hp
-		val STAGE_DEATHRAY = 3    //12.5%	hp
+		const val STAGE_AGGRO = 1    //100%	hp
+		const val STAGE_MAGIC = 2    //60%	hp
+		const val STAGE_DEATHRAY = 3    //12.5%	hp
 		private var isPlayingMusic = false
 		
 		fun spawn(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
@@ -881,7 +875,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		private val PYLON_LOCATIONS = arrayOf(intArrayOf(4, 1, 4), intArrayOf(4, 1, -4), intArrayOf(-4, 1, 4), intArrayOf(-4, 1, -4))
 		
-		private val CHEATY_BLOCKS = Arrays.asList("OpenBlocks:beartrap", "ThaumicTinkerer:magnet")
+		private val CHEATY_BLOCKS = listOf("OpenBlocks:beartrap", "ThaumicTinkerer:magnet")
 		
 		private fun hasProperArena(world: World, sx: Int, sy: Int, sz: Int): Boolean {
 			var proper = true
@@ -889,7 +883,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			for (i in -RANGE until RANGE + 1)
 				for (j in -RANGE until RANGE + 1)
 					for (k in -RANGE until RANGE + 1) {
-						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && Math.abs(i) == 4 && Math.abs(j) == 4 || k == 0 && i == 0 && j == 0 || vazkii.botania.common.core.helper.MathHelper.pointDistancePlane(i.toDouble(), j.toDouble(), 0.0, 0.0) > RANGE)
+						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || vazkii.botania.common.core.helper.MathHelper.pointDistancePlane(i.toDouble(), j.toDouble(), 0.0, 0.0) > RANGE)
 							continue // Ignore pylons, beacon and out of circle
 						
 						val x = sx + i

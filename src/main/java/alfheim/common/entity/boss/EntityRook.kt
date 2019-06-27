@@ -13,8 +13,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.client.core.handler.BossBarHandler
-
-import java.awt.*
+import java.awt.Rectangle
 
 class EntityRook(world: World): EntityCreature(world), IBotaniaBoss { // EntityFlugel, EntityIronGolem, EntityWither
 	
@@ -144,14 +143,14 @@ class EntityRook(world: World): EntityCreature(world), IBotaniaBoss { // EntityF
 	override fun getBossBarTextureRect(): Rectangle {
 		if (barRect == null)
 			barRect = Rectangle(0, 0, 185, 15)
-		return barRect
+		return barRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
 			hpBarRect = Rectangle(0, barRect!!.y + barRect!!.height, 181, 7)
-		return hpBarRect
+		return hpBarRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -178,7 +177,7 @@ class EntityRook(world: World): EntityCreature(world), IBotaniaBoss { // EntityF
 	
 	companion object {
 		
-		private val MAX_HP = 1000.0
+		private const val MAX_HP = 1000.0
 		
 		fun spawn(world: World, x: Int, y: Int, z: Int) {
 			if (!world.isRemote) {

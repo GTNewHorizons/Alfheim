@@ -1,5 +1,6 @@
 package alfheim.common.core.registry
 
+import alexsocol.asjlib.ASJUtilities.Companion.register
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
@@ -23,58 +24,54 @@ import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak
 import vazkii.botania.common.item.record.ItemModRecord
 
-import java.util.*
-
-import alexsocol.asjlib.ASJUtilities.register
-
 object AlfheimItems {
 	
-	var astrolabe: Item
-	var auraRingElven: Item
-	var auraRingGod: Item
-	var balanceCloak: Item
-	var cloudPendant: Item
-	var cloudPendantSuper: Item
-	var creativeReachPendant: Item
-	var crescentMoonAmulet: Item
-	var dodgeRing: Item
-	var elementalBoots: Item
-	var elementalChestplate: Item
-	var elementalHelmet: Item
-	var elementalHelmetRevealing: Item
-	var elementalLeggings: Item
-	var elementiumHoe: Item
-	var elfFirePendant: Item
-	var elfIcePendant: Item
-	val elvenResource: Item = ItemElvenResource() // Because it MUST be constructed BEFORE blocks.
-	var elvoriumBoots: Item
-	var elvoriumChestplate: Item
-	var elvoriumHelmet: Item
-	var elvoriumHelmetRevealing: Item
-	var elvoriumLeggings: Item
-	var excaliber: Item
-	var flugelDisc: Item
-	var flugelHead: Item
-	var flugelSoul: Item
-	var holoProjector: Item
-	var invisibilityCloak: Item
-	var livingrockPickaxe: Item
-	var lootInterceptor: Item
-	var manaRingElven: Item
-	var manaRingGod: Item
-	var manasteelHoe: Item
-	var manaStone: Item
-	var manaStoneGreater: Item
-	var mask: Item
-	//public static Item mjolnir;
-	var paperBreak: Item
-	var peacePipe: Item
-	var pixieAttractor: Item
-	var realitySword: Item
-	var rodFire: Item
-	var rodGrass: Item
-	var rodIce: Item
-	var thinkingHand: Item
+	lateinit var astrolabe: Item
+	lateinit var auraRingElven: Item
+	lateinit var auraRingGod: Item
+	lateinit var balanceCloak: Item
+	lateinit var cloudPendant: Item
+	lateinit var cloudPendantSuper: Item
+	lateinit var creativeReachPendant: Item
+	lateinit var crescentMoonAmulet: Item
+	lateinit var dodgeRing: Item
+	lateinit var elementalBoots: Item
+	lateinit var elementalChestplate: Item
+	lateinit var elementalHelmet: Item
+	lateinit var elementalHelmetRevealing: Item
+	lateinit var elementalLeggings: Item
+	lateinit var elementiumHoe: Item
+	lateinit var elfFirePendant: Item
+	lateinit var elfIcePendant: Item
+			 val elvenResource: Item = ItemElvenResource() // Because it MUST be constructed BEFORE blocks.
+	lateinit var elvoriumBoots: Item
+	lateinit var elvoriumChestplate: Item
+	lateinit var elvoriumHelmet: Item
+	lateinit var elvoriumHelmetRevealing: Item
+	lateinit var elvoriumLeggings: Item
+	lateinit var excaliber: Item
+	lateinit var flugelDisc: Item
+	lateinit var flugelHead: Item
+	lateinit var flugelSoul: Item
+	lateinit var holoProjector: Item
+	lateinit var invisibilityCloak: Item
+	lateinit var livingrockPickaxe: Item
+	lateinit var lootInterceptor: Item
+	lateinit var manaRingElven: Item
+	lateinit var manaRingGod: Item
+	lateinit var manasteelHoe: Item
+	lateinit var manaStone: Item
+	lateinit var manaStoneGreater: Item
+	lateinit var mask: Item
+	//lateinit var mjolnir: Item
+	lateinit var paperBreak: Item
+	lateinit var peacePipe: Item
+	lateinit var pixieAttractor: Item
+	lateinit var realitySword: Item
+	lateinit var rodFire: Item
+	lateinit var rodGrass: Item
+	lateinit var rodIce: Item
+	lateinit var thinkingHand: Item
 	
 	fun init() {
 		construct()
@@ -198,7 +195,7 @@ object AlfheimItems {
 		val InfusedDreamwoodTwig: Int//Transferer BACK
 		
 		init {
-			val items = Arrays.asList(*ItemElvenResource.subItems)
+			val items = listOf(*ItemElvenResource.subItems)
 			InterdimensionalGatewayCore = items.indexOf("InterdimensionalGatewayCore")
 			ManaInfusionCore = items.indexOf("ManaInfusionCore")
 			ElvoriumIngot = items.indexOf("ElvoriumIngot")

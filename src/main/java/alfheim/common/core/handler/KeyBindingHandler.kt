@@ -1,19 +1,15 @@
 package alfheim.common.core.handler
 
-import alfheim.api.spell.SpellBase.SpellCastResult.*
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.event.SpellCastEvent
-import alfheim.api.spell.SpellBase
-import alfheim.api.spell.SpellBase.SpellCastResult
+import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.Flight
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.common.MinecraftForge
 
@@ -43,7 +39,7 @@ object KeyBindingHandler {
 		val result = spell.performCast(caster)
 		if (result == OK) {
 			// SpellBase.say(caster, spell);
-			val e = SpellCastEvent.Post(spell, caster, spell.cooldown)
+			val e = SpellCastEvent.Post(spell, caster, spell.getCooldown())
 			MinecraftForge.EVENT_BUS.post(e)
 			return SpellCastingSystem.setCoolDown(caster, spell, e.cd)
 		}

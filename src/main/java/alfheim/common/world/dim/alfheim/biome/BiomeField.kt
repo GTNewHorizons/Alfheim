@@ -37,6 +37,6 @@ class BiomeField: BiomeAlfheim(0) {
 		val g = WorldGenGrass(true, true, true, true, 1.0)
 		decorateChunkGen_List.add(g)
 		
-		spawnableCreatureList.add(BiomeGenBase.SpawnListEntry(EntityAlfheimPixie::class.java, 1, 1, 2))
+		spawnableCreatureList.add(SpawnListEntry(EntityAlfheimPixie::class.java, 1, 1, 2))
 	}
 }

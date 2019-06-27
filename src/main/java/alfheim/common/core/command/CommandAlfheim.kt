@@ -14,8 +14,6 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import vazkii.botania.common.Botania
 
-import java.util.*
-
 class CommandAlfheim: CommandBase() {
 	
 	override fun getRequiredPermissionLevel(): Int {
@@ -23,7 +21,7 @@ class CommandAlfheim: CommandBase() {
 	}
 	
 	override fun getCommandAliases(): List<*> {
-		return Arrays.asList("alf")
+		return listOf("alf")
 	}
 	
 	override fun getCommandName(): String {
@@ -38,12 +36,17 @@ class CommandAlfheim: CommandBase() {
 		if (args.size == 1) {
 			val esmOld = AlfheimCore.enableElvenStory
 			val mmoOld = AlfheimCore.enableMMO
-			if (args[0].equals("ESM", ignoreCase = true))
-				toggleESM(AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory)
-			else if (args[0].equals("MMO", ignoreCase = true))
-				toggleMMO(AlfheimCore.enableMMO = !AlfheimCore.enableMMO)
-			else
-				throw WrongUsageException("alfheim.commands.alfheim.wrong")
+			when {
+				args[0].equals("ESM", ignoreCase = true)	-> {
+					AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory
+					toggleESM(AlfheimCore.enableElvenStory)
+				}
+				args[0].equals("MMO", ignoreCase = true)	-> {
+					AlfheimCore.enableMMO = !AlfheimCore.enableMMO
+					toggleMMO(AlfheimCore.enableMMO)
+				}
+				else											-> throw WrongUsageException("alfheim.commands.alfheim.wrong")
+			}
 			AlfheimConfig.writeModes()
 			
 			ASJUtilities.sayToAllOnline(String.format(StatCollector.translateToLocal("alfheim.commands.alfheim.done"),
@@ -59,7 +62,7 @@ class CommandAlfheim: CommandBase() {
 	}
 	
 	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>?): List<*> {
-		return CommandBase.getListOfStringsMatchingLastWord(args, "ESM", "MMO")
+		return getListOfStringsMatchingLastWord(args, "ESM", "MMO")
 	}
 	
 	companion object {
@@ -71,7 +74,8 @@ class CommandAlfheim: CommandBase() {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			} else {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
-				toggleMMO(AlfheimCore.enableMMO = false)
+				AlfheimCore.enableMMO = false
+				toggleMMO(AlfheimCore.enableMMO)
 			}
 		}
 		
@@ -79,7 +83,8 @@ class CommandAlfheim: CommandBase() {
 			if (on) {
 				CardinalSystem.load(AlfheimCore.save)
 				AlfheimRecipes.addMMORecipes()
-				toggleESM(AlfheimCore.enableElvenStory = true)
+				AlfheimCore.enableElvenStory = true
+				toggleESM(AlfheimCore.enableElvenStory)
 				for (o in MinecraftServer.getServer().configurationManager.playerEntityList) CardinalSystem.transfer(o as EntityPlayerMP)
 			} else {
 				CardinalSystem.save(AlfheimCore.save)

@@ -1,10 +1,8 @@
 package alfheim.common.core.util
 
 import alfheim.common.entity.spell.*
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 
 open class DamageSourceSpell(type: String): DamageSource(type) {
@@ -27,7 +25,7 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		}
 	}
 	
-	class EntityDamageSourceIndirectSpell(type: String, attacker: Entity, private val indirectEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
+	class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val indirectEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
 		
 		override fun getSourceOfDamage(): Entity? {
 			return this.indirectEntity
@@ -44,51 +42,51 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 	
 	companion object {
 		
-		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()
-		val corruption = DamageSource("corruption").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()
-		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor().setDifficultyScaled()
-		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()
-		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()
-		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()
-		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()
-		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()
+		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
+		val corruption = DamageSource("corruption").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor().setDifficultyScaled()!!
+		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!
+		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
-		fun blades(wb: EntitySpellWindBlade, caster: EntityLivingBase): DamageSource {
+		fun blades(wb: EntitySpellWindBlade, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("windblade", caster, wb).setDamageBypassesArmor()
 		}
 		
 		/** Sacrifice type of damage to attack other mobs  */
-		fun darkness(attacker: EntityLivingBase): DamageSource {
+		fun darkness(attacker: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceSpell("darkness_FF", attacker).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()
 		}
 		
-		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase): DamageSource {
-			return EntityDamageSource("explosion.player", caster).setDifficultyScaled().setExplosion()
+		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase?): DamageSource {
+			return EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setDifficultyScaled().setExplosion()
 		}
 		
-		fun fireball(fb: EntitySpellFireball, caster: EntityLivingBase): DamageSource {
+		fun fireball(fb: EntitySpellFireball, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("fireball", caster, fb).setFireDamage().setExplosion().setProjectile()
 		}
 		
-		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase): DamageSource {
+		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()
 		}
 		
 		/** Fenrir Storm type of damage  */
-		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase): DamageSource {
+		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("lightning", caster, st).setDamageBypassesArmor().setFireDamage()
 		}
 		
-		fun missile(im: EntitySpellIsaacMissile, caster: EntityLivingBase): DamageSource {
+		fun missile(im: EntitySpellIsaacMissile, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("missile", caster, im).setMagicDamage()
 		}
 		
-		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase): DamageSource {
+		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceIndirectSpell("fallingBlock", caster, mt).setDifficultyScaled().setProjectile()
 		}
 		
 		/** Some water blades (?) type of damage  */
-		fun water(caster: EntityLivingBase): DamageSource {
+		fun water(caster: EntityLivingBase?): DamageSource {
 			return EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()
 		}
 	}

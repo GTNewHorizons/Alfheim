@@ -85,7 +85,7 @@ class AlfheimCore {
 	companion object {
 		
 		@Instance(MODID)
-		var instance: AlfheimCore? = null
+		lateinit var instance: AlfheimCore
 		
 		@SidedProxy(clientSide = "$MODID.client.core.proxy.ClientProxy", serverSide = "$MODID.common.core.proxy.CommonProxy")
 		var proxy: CommonProxy? = null

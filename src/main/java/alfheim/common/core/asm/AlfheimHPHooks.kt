@@ -2,19 +2,17 @@ package alfheim.common.core.asm
 
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import gloomyfolken.hooklib.asm.Hook
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.DamageSource
-import net.minecraft.util.MathHelper
+import net.minecraft.util.*
 
 object AlfheimHPHooks {
 	
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun getHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
-		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
+		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlameIsInitialized() && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
 			0.000000000000000000000000000000000000000000001f
 		else
 			hp
@@ -22,7 +20,7 @@ object AlfheimHPHooks {
 	
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun getMaxHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
-		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
+		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlameIsInitialized() && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
 			0.0f
 		else
 			hp
@@ -35,11 +33,11 @@ object AlfheimHPHooks {
 		// e.getDataWatcher().updateObject(6, Float.valueOf(MathHelper.clamp_float(hp, 0.0F, e.getMaxHealth())));
 			return
 		
-		val flame: Boolean
-		if (flame = AlfheimRegistry.leftFlame != null && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
+		val flame = AlfheimRegistry.leftFlameIsInitialized()
+		if (flame && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
 			hp = 0.000000000000000000000000000000000000000000001f
 		
-		if (AlfheimRegistry.sharedHP != null && e.activePotionsMap != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
+		if (AlfheimRegistry.sharedHPIsInitialized() && e.activePotionsMap != null && !e.isPotionActive(AlfheimRegistry.sharedHP)) {
 			if (flame) e.dataWatcher.updateObject(6, MathHelper.clamp_float(hp, 0.0f, e.maxHealth))
 			return
 		}
@@ -51,7 +49,7 @@ object AlfheimHPHooks {
 		}
 		
 		val mr = arrayOfNulls<EntityLivingBase>(pt.count)
-		for (i in 0 until pt.count) mr[i] = pt.get(i)
+		for (i in 0 until pt.count) mr[i] = pt[i]
 		
 		for (entityLivingBase in mr) {
 			if (entityLivingBase != null) {

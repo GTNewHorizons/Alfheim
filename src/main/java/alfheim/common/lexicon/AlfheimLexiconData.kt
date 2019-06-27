@@ -2,7 +2,6 @@ package alfheim.common.lexicon
 
 import alfheim.AlfheimCore
 import alfheim.api.*
-import alfheim.api.spell.SpellBase
 import alfheim.common.block.*
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.registry.*
@@ -19,57 +18,56 @@ import vazkii.botania.common.block.ModMultiblocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.lexicon.*
 import vazkii.botania.common.lexicon.page.*
-
 import java.util.*
 
 object AlfheimLexiconData {
 	
-	var kt = if (AlfheimCore.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge
+	var kt = (if (AlfheimCore.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge)!!
 	
-	var categoryAlfheim: LexiconCategory
+	lateinit var categoryAlfheim: LexiconCategory
 	
 	/** Lore alfheim page  */
-	var alfheim: LexiconEntry
+	lateinit var alfheim: LexiconEntry
 	/** Lore elves page  */
-	var elves: LexiconEntry
+	lateinit var elves: LexiconEntry
 	
 	// Main addon content
-	var advMana: LexiconEntry
-	var amulCirs: LexiconEntry
-	var amulNimb: LexiconEntry
-	var aniTorch: LexiconEntry
-	var anomaly: LexiconEntry
-	var anyavil: LexiconEntry
-	var astrolab: LexiconEntry
-	var auraAlf: LexiconEntry
-	var cloakInv: LexiconEntry
-	var crescent: LexiconEntry
-	var dodgRing: LexiconEntry
-	var elemSet: LexiconEntry
-	var elvenSet: LexiconEntry
-	var elvorium: LexiconEntry
-	var essences: LexiconEntry
-	var excalibr: LexiconEntry
-	var flugel: LexiconEntry
-	var greenRod: LexiconEntry
-	var infuser: LexiconEntry
-	var itemHold: LexiconEntry
-	var lootInt: LexiconEntry
-	var mask: LexiconEntry
+	lateinit var advMana: LexiconEntry
+	lateinit var amulCirs: LexiconEntry
+	lateinit var amulNimb: LexiconEntry
+	lateinit var aniTorch: LexiconEntry
+	lateinit var anomaly: LexiconEntry
+	lateinit var anyavil: LexiconEntry
+	lateinit var astrolab: LexiconEntry
+	lateinit var auraAlf: LexiconEntry
+	lateinit var cloakInv: LexiconEntry
+	lateinit var crescent: LexiconEntry
+	lateinit var dodgRing: LexiconEntry
+	lateinit var elemSet: LexiconEntry
+	lateinit var elvenSet: LexiconEntry
+	lateinit var elvorium: LexiconEntry
+	lateinit var essences: LexiconEntry
+	lateinit var excalibr: LexiconEntry
+	lateinit var flugel: LexiconEntry
+	lateinit var greenRod: LexiconEntry
+	lateinit var infuser: LexiconEntry
+	lateinit var itemHold: LexiconEntry
+	lateinit var lootInt: LexiconEntry
+	lateinit var mask: LexiconEntry
 	//public static LexiconEntry mjolnir;
-	var mobs: LexiconEntry
-	var ores: LexiconEntry
-	var pixie: LexiconEntry
-	var portal: LexiconEntry
-	var pylons: LexiconEntry
-	var reality: LexiconEntry
-	var ruling: LexiconEntry
-	var runes: LexiconEntry
-	var shrines: LexiconEntry
-	var soul: LexiconEntry
-	var trade: LexiconEntry
+	lateinit var mobs: LexiconEntry
+	lateinit var ores: LexiconEntry
+	lateinit var pixie: LexiconEntry
+	lateinit var portal: LexiconEntry
+	lateinit var pylons: LexiconEntry
+	lateinit var reality: LexiconEntry
+	lateinit var ruling: LexiconEntry
+	lateinit var runes: LexiconEntry
+	lateinit var shrines: LexiconEntry
+	lateinit var soul: LexiconEntry
+	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
-	var worldgen: LexiconEntry
+	lateinit var worldgen: LexiconEntry
 	
 	// Elven Story information
 	var es: LexiconEntry? = null
@@ -81,7 +79,8 @@ object AlfheimLexiconData {
 	var targets: LexiconEntry? = null
 	
 	fun preInit() {
-		BotaniaAPI.addCategory(categoryAlfheim = BLexiconCategory("Alfheim", 5))
+		categoryAlfheim = BLexiconCategory("Alfheim", 5)
+		BotaniaAPI.addCategory(categoryAlfheim)
 		
 		advMana = BLexiconEntry("advMana", categoryAlfheim)
 		alfheim = BLexiconEntry("alfheim", categoryAlfheim)
@@ -383,7 +382,7 @@ object AlfheimLexiconData {
 	
 	private fun postInitMMO() {
 		val l = Lists.newArrayList(AlfheimAPI.spells)
-		Collections.sort(l) { s1, s2 -> s1.name.compareTo(s2.name) }
+		l.sortWith(Comparator { s1, s2 -> s1.name.compareTo(s2.name) })
 		for (spell in l) spells!!.addPage(PageSpell(spell))
 	}
 	

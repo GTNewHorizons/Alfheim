@@ -3,26 +3,23 @@ package alfheim.common.item.equipment.bauble
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.util.AlfheimConfig
-import baubles.api.BaubleType
-import baubles.api.IBauble
+import baubles.api.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
-import vazkii.botania.api.mana.IManaItem
-import vazkii.botania.api.mana.IManaTooltipDisplay
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.helper.ItemNBTHelper
+import kotlin.math.min
 
-class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType): Item(), IManaItem, IManaTooltipDisplay, IBauble {
-	val MAX_MANA: Int
+class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType?): Item(), IManaItem, IManaTooltipDisplay, IBauble {
+	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
 	
 	init {
-		MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
 		this.creativeTab = AlfheimCore.alfheimTab
 		this.maxDamage = 1000
 		this.setMaxStackSize(1)
@@ -31,7 +28,7 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType): I
 		this.unlocalizedName = name
 	}
 	
-	override fun getSubItems(par1: Item, par2CreativeTabs: CreativeTabs?, par3List: MutableList<*>) {
+	override fun getSubItems(par1: Item, par2CreativeTabs: CreativeTabs?, par3List: MutableList<Any?>) {
 		par3List.add(ItemStack(par1, 1, 1000))
 		/*ItemStack full = new ItemStack(par1, 1, 1);
 		setMana(full, MAX_MANA);
@@ -60,7 +57,7 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType): I
 	}
 	
 	override fun addMana(stack: ItemStack, mana: Int) {
-		setMana(stack, Math.min(getMana(stack) + mana, getMaxMana(stack)))
+		setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))
 		stack.itemDamage = getDamage(stack)
 	}
 	
@@ -88,7 +85,7 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType): I
 		return getMana(stack).toFloat() / getMaxMana(stack).toFloat()
 	}
 	
-	override fun getBaubleType(stack: ItemStack): BaubleType {
+	override fun getBaubleType(stack: ItemStack): BaubleType? {
 		return type
 	}
 	
@@ -112,13 +109,13 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType): I
 		return true
 	}
 	
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<*>, b: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA))
 		if (AlfheimConfig.numericalMana) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)))
 	}
 	
 	companion object {
-		val TAG_MANA = "mana"
+		const val TAG_MANA = "mana"
 		
 		fun setMana(stack: ItemStack, mana: Int) {
 			ItemNBTHelper.setInt(stack, TAG_MANA, mana)

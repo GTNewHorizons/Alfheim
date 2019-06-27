@@ -8,10 +8,8 @@ import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.world.dim.alfheim.struct.StructureSpawnpoint
 import cpw.mods.fml.common.IWorldGenerator
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
-
 import java.util.*
 
 class WorldGenAlfheim: IWorldGenerator {
@@ -29,10 +27,10 @@ class WorldGenAlfheim: IWorldGenerator {
 		
 		init {
 			for (s in AlfheimAPI.anomalies.keys)
-				when (AlfheimAPI.anomalyInstances[s].rarity) {
-					SubTileEntity.EnumAnomalityRarity.COMMON -> common.add(s)
-					SubTileEntity.EnumAnomalityRarity.EPIC   -> epic.add(s)
-					SubTileEntity.EnumAnomalityRarity.RARE   -> rare.add(s)
+				when (AlfheimAPI.anomalyInstances[s]!!.rarity) {
+					EnumAnomalityRarity.COMMON -> common.add(s)
+					EnumAnomalityRarity.EPIC   -> epic.add(s)
+					EnumAnomalityRarity.RARE   -> rare.add(s)
 				}
 		}
 		
@@ -45,21 +43,19 @@ class WorldGenAlfheim: IWorldGenerator {
 			
 			if (rand.nextInt(AlfheimConfig.anomaliesDispersion) == 0) {
 				val chance = rand.nextInt(32) + 1
-				if (chance == 32)
-					genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.EPIC)
-				else if (chance >= 24)
-					genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.RARE)
-				else if (chance >= 16)
-					genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.COMMON)
+				when {
+					chance == 32 -> genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.EPIC)
+					chance >= 24 -> genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.RARE)
+					chance >= 16 -> genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.COMMON)
+				}
 			}
 		}
 		
 		private fun genRandomAnomalyOfRarity(rand: Random, chunkX: Int, chunkZ: Int, world: World, rarity: EnumAnomalityRarity) {
-			var type = ""
-			when (rarity) {
-				SubTileEntity.EnumAnomalityRarity.COMMON -> type = common[rand.nextInt(common.size)]
-				SubTileEntity.EnumAnomalityRarity.EPIC   -> type = epic[rand.nextInt(epic.size)]
-				SubTileEntity.EnumAnomalityRarity.RARE   -> type = rare[rand.nextInt(rare.size)]
+			val type = when (rarity) {
+				EnumAnomalityRarity.COMMON -> common[rand.nextInt(common.size)]
+				EnumAnomalityRarity.EPIC   -> epic[rand.nextInt(epic.size)]
+				EnumAnomalityRarity.RARE   -> rare[rand.nextInt(rare.size)]
 			}
 			
 			setAnomality(rand, chunkX, chunkZ, world, type)

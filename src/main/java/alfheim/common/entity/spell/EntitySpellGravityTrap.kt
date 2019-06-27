@@ -36,7 +36,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 		}
 		if (this.isDead || ticksExisted < 20 || !ASJUtilities.isServer) return
 		
-		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4.0, 8.0, 4.0))
+		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4.0, 8.0, 4.0)) as List<Entity>
 		for (e in l) {
 			if (e === this || e === caster || e is EntityLivingBase && PartySystem.mobsSameParty(caster, e) && !AlfheimConfig.frienldyFire || e is EntityPlayer && e.capabilities.isCreativeMode) continue
 			val dist = Vector3.fromEntity(e).sub(Vector3.fromEntity(this))

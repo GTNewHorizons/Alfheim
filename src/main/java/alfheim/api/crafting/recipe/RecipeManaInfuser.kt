@@ -11,9 +11,9 @@ class RecipeManaInfuser(val manaUsage: Int, out: ItemStack, vararg recipe: Any):
 		return "Recipe: $s mana*$manaUsage => $output"
 	}
 	
-	override fun equals(obj: Any?): Boolean {
-		if (obj is RecipeManaInfuser) {
-			val r = obj as RecipeManaInfuser?
+	override fun equals(other: Any?): Boolean {
+		if (other is RecipeManaInfuser) {
+			val r = other as RecipeManaInfuser?
 			return r!!.manaUsage == manaUsage && ItemStack.areItemStacksEqual(output, r.output) && inputs.containsAll(r.inputs) && r.inputs.containsAll(inputs)
 		}
 		return false

@@ -24,7 +24,7 @@ class PotionThrow: PotionAlfheim(AlfheimConfig.potionIDThrow, "throw", false, 0x
 		var pt = PartySystem.getMobParty(target)
 		if (pt == null) pt = Party()
 		
-		val l = target.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(1.0, 1.0, 1.0))
+		val l = target.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(1.0, 1.0, 1.0)) as MutableList<EntityLivingBase>
 		l.remove(target)
 		for (e in l) if (!pt.isMember(e)) e.attackEntityFrom(DamageSource.causeMobDamage(target), 5f)
 	}

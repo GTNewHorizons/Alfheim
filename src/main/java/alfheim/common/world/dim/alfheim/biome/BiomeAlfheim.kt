@@ -11,15 +11,15 @@ open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: 
 		
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
-		clearSpawn()
-		setBiomeName("Alfheim")
-		setColor(0xA67C00)
+		this.clearSpawn()
+		this.setBiomeName("Alfheim")
+		this.setColor(0xA67C00)
 		waterColorMultiplier = 0x1D1D4E
 		
 		createChunkGen_InXZ_List.clear()
 		createChunkGen_InXYZ_List.clear()
 		decorateChunkGen_List.clear()
 		
-		spawnableCreatureList.add(BiomeGenBase.SpawnListEntry(EntityElf::class.java, 1, 2, 4))
+		spawnableCreatureList.add(SpawnListEntry(EntityElf::class.java, 1, 2, 4))
 	}
 }

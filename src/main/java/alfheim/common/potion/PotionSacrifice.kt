@@ -31,7 +31,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfig.potionIDSacrifice, "sacrifice
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl)
 		if (!AlfheimCore.enableMMO) return
-		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(32.0, 32.0, 32.0))
+		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(32.0, 32.0, 32.0)) as List<EntityLivingBase>
 		var dmg: DamageSource
 		for (e in l) {
 			if (e is IBossDisplayData) continue

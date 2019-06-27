@@ -93,9 +93,9 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		// Will be set during preInit
 		var overmag: Potion? = null
 		
-		fun over(caster: EntityLivingBase, was: Double): Float {
+		fun over(caster: EntityLivingBase?, was: Double): Float {
 			return try {
-				(if (caster.isPotionActive(overmag!!)) was * 1.2 else was).toFloat()
+				(if (caster!!.isPotionActive(overmag!!)) was * 1.2 else was).toFloat()
 			} catch (e: Throwable) {
 				was.toFloat()
 			}

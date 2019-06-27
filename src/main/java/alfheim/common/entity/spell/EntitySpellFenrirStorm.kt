@@ -1,20 +1,16 @@
 package alfheim.common.entity.spell
 
-import java.util.UUID
-
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.math.OrientedBB
-import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
-import alfheim.api.spell.ITimeStopSpecific
-import alfheim.api.spell.SpellBase
+import alfheim.api.spell.*
 import alfheim.common.core.util.DamageSourceSpell
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
+import java.util.*
 
 class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 	
@@ -51,7 +47,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		if (this.isDead || !ASJUtilities.isServer) return
 		
 		if (ticksExisted == 4) {
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB())
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
 			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, 10.0))
 		}
 	}

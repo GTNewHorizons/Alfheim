@@ -8,9 +8,9 @@ import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.util.*
-import net.minecraftforge.common.config.*
-
+import net.minecraftforge.common.config.Configuration
 import java.io.*
+import kotlin.math.*
 
 class AlfheimConfig: Configuration() {
 	
@@ -23,15 +23,15 @@ class AlfheimConfig: Configuration() {
 	
 	companion object {
 		
-		var config: Configuration
+		lateinit var config: Configuration
 		
-		val CATEGORY_DIMENSION = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "Alfheim"
-		val CATEGORY_WORLDGEN = CATEGORY_DIMENSION + Configuration.CATEGORY_SPLITTER + "woldgen"
-		val CATEGORY_POTIONS = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "potions"
-		val CATEGORY_ESMODE = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "elvenstory"
-		val CATEGORY_MMO = CATEGORY_ESMODE + Configuration.CATEGORY_SPLITTER + "mmo"
-		val CATEGORY_MMOP = CATEGORY_MMO + Configuration.CATEGORY_SPLITTER + "potions"
-		val CATEGORY_HUD = CATEGORY_MMO + Configuration.CATEGORY_SPLITTER + "hud"
+		const val CATEGORY_DIMENSION = CATEGORY_GENERAL + CATEGORY_SPLITTER + "Alfheim"
+		const val CATEGORY_WORLDGEN = CATEGORY_DIMENSION + CATEGORY_SPLITTER + "woldgen"
+		const val CATEGORY_POTIONS = CATEGORY_GENERAL + CATEGORY_SPLITTER + "potions"
+		const val CATEGORY_ESMODE = CATEGORY_GENERAL + CATEGORY_SPLITTER + "elvenstory"
+		const val CATEGORY_MMO = CATEGORY_ESMODE + CATEGORY_SPLITTER + "mmo"
+		const val CATEGORY_MMOP = CATEGORY_MMO + CATEGORY_SPLITTER + "potions"
+		const val CATEGORY_HUD = CATEGORY_MMO + CATEGORY_SPLITTER + "hud"
 		
 		// DIMENSION
 		var biomeIDAlfheim = 152
@@ -120,16 +120,16 @@ class AlfheimConfig: Configuration() {
 			anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 			oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
 			
-			destroyPortal = loadProp(Configuration.CATEGORY_GENERAL, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
-			fancies = loadProp(Configuration.CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)")
-			flugelBossBar = loadProp(Configuration.CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
-			info = loadProp(Configuration.CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading info about addon")
-			lightningsSpeed = loadProp(Configuration.CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
-			looniumOverseed = loadProp(Configuration.CATEGORY_GENERAL, "looniumOverseed", looniumOverseed, true, "Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
-			minimalGraphics = loadProp(Configuration.CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
-			numericalMana = loadProp(Configuration.CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
-			slowDownClients = loadProp(Configuration.CATEGORY_GENERAL, "slowDownClients", slowDownClients, false, "Set this to true to slowdown players on clients while in anomaly")
-			tradePortalRate = loadProp(Configuration.CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
+			destroyPortal = loadProp(CATEGORY_GENERAL, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
+			fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)")
+			flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
+			info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading info about addon")
+			lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
+			looniumOverseed = loadProp(CATEGORY_GENERAL, "looniumOverseed", looniumOverseed, true, "Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
+			minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
+			numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
+			slowDownClients = loadProp(CATEGORY_GENERAL, "slowDownClients", slowDownClients, false, "Set this to true to slowdown players on clients while in anomaly")
+			tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
 			
 			potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
 			potionIDBleeding = loadProp(CATEGORY_MMOP, "potionIDBleeding", potionIDBleeding, true, "Potion id for Bleeding")
@@ -226,25 +226,24 @@ class AlfheimConfig: Configuration() {
 				val fw = FileWriter("$save/data/AlfheimCoords.txt")
 				
 				val s = StringBuilder()
-				var angle = 0.0
 				s.append("Salamander start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle))
+				s.append(writeStandardCoords(0.000))
 				s.append("Sylph start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(40.00))
 				s.append("Cait Sith start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(80.00))
 				s.append("Puca start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(120.0))
 				s.append("Gnome start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(160.0))
 				s.append("Leprechaun start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(200.0))
 				s.append("Spriggan start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(240.0))
 				s.append("Undine start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle += 40.0))
+				s.append(writeStandardCoords(280.0))
 				s.append("Imp start city and players spawnpoint coords:\n")
-				s.append(writeStandardCoords(angle + 40))
+				s.append(writeStandardCoords(320.0))
 				fw.write(s.toString())
 				fw.close()
 			} catch (e: IOException) {
@@ -264,7 +263,7 @@ class AlfheimConfig: Configuration() {
 		}
 		
 		private fun makeVectorFromString(s: String): Vec3 {
-			val ss = s.split(" : ".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+			val ss = s.split(" : ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 			if (ss.size != 3) throw IllegalArgumentException(String.format("Wrong coords count. Expected 3 got %d", ss.size))
 			return Vec3.createVectorHelper(Integer.valueOf(ss[0]).toDouble(), Integer.valueOf(ss[1]).toDouble(), Integer.valueOf(ss[2]).toDouble())
 		}
@@ -274,7 +273,7 @@ class AlfheimConfig: Configuration() {
 		}
 		
 		private fun makeVectorOfLengthRotated(length: Double, angle: Double): Vec3 {
-			return Vec3.createVectorHelper(Math.cos(Math.toRadians(angle)) * length, 64.0, Math.sin(Math.toRadians(angle)) * length)
+			return Vec3.createVectorHelper(cos(Math.toRadians(angle)) * length, 64.0, sin(Math.toRadians(angle)) * length)
 		}
 		
 		fun readModes() {
@@ -284,7 +283,7 @@ class AlfheimConfig: Configuration() {
 				val fr = FileReader(f)
 				val br = BufferedReader(fr)
 				br.readLine()
-				val flags = br.readLine().split(" ".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+				val flags = br.readLine().split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 				
 				br.close()
 				fr.close()
@@ -299,12 +298,11 @@ class AlfheimConfig: Configuration() {
 						throw IllegalArgumentException(if (flags[1] == "true") "Unable to enable MMO mode without ESM" else String.format("Unknown param value for MMO mode: %s", flags[1]))
 				} else if (flags[0] == "true") {
 					AlfheimCore.enableElvenStory = true
-					if (flags[1] == "false")
-						AlfheimCore.enableMMO = false
-					else if (flags[1] == "true")
-						AlfheimCore.enableMMO = true
-					else
-						throw IllegalArgumentException(String.format("Unknown param value for MMO mode: %s", flags[1]))
+					when {
+						flags[1] == "false" -> AlfheimCore.enableMMO = false
+						flags[1] == "true"  -> AlfheimCore.enableMMO = true
+						else                -> throw IllegalArgumentException(String.format("Unknown param value for MMO mode: %s", flags[1]))
+					}
 				} else
 					throw IllegalArgumentException(String.format("Unknown param value for ESM mode: %s", flags[0]))
 			} catch (e: IOException) {
@@ -324,7 +322,6 @@ class AlfheimConfig: Configuration() {
 				ASJUtilities.error("Unable to write modes state")
 				e.printStackTrace()
 			}
-			
 		}
 	}
 }

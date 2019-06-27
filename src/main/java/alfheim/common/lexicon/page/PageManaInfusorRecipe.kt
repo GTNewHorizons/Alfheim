@@ -1,26 +1,18 @@
 package alfheim.common.lexicon.page
 
-import org.lwjgl.opengl.GL11.*
-
-import java.util.ArrayList
-
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimBlocks
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraftforge.oredict.OreDictionary
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.internal.IGuiLexiconEntry
-import vazkii.botania.api.lexicon.LexiconEntry
-import vazkii.botania.api.lexicon.LexiconRecipeMappings
-import vazkii.botania.client.core.handler.ClientTickHandler
-import vazkii.botania.client.core.handler.HUDHandler
+import vazkii.botania.api.lexicon.*
+import vazkii.botania.client.core.handler.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.lexicon.page.PageRecipe
@@ -28,9 +20,7 @@ import vazkii.botania.common.lexicon.page.PageRecipe
 class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeManaInfuser): PageRecipe(unlocalizedName) {
 	private var ticksElapsed = 0
 	
-	override fun onPageAdded(entry: LexiconEntry?, index: Int) {
-		LexiconRecipeMappings.map(recipe.output, entry!!, index)
-	}
+	override fun onPageAdded(entry: LexiconEntry?, index: Int) = LexiconRecipeMappings.map(recipe.output, entry!!, index)
 	
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
 		val render = Minecraft.getMinecraft().renderEngine
@@ -40,7 +30,7 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 		
 		val inputs = recipe.inputs
 		val degreePerInput = (360f / inputs.size).toInt()
-		var currentDegree = if (ConfigHandler.lexiconRotatingItems) if (GuiScreen.isShiftKeyDown()) ticksElapsed else ticksElapsed + ClientTickHandler.partialTicks else 0
+		var currentDegree = if (ConfigHandler.lexiconRotatingItems) if (GuiScreen.isShiftKeyDown()) ticksElapsed.toFloat() else ticksElapsed + ClientTickHandler.partialTicks else 0f
 		
 		for (obj in inputs) {
 			var input = obj
@@ -101,9 +91,5 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 		++ticksElapsed
 	}
 	
-	override fun getDisplayedRecipes(): List<ItemStack> {
-		val list = ArrayList()
-		list.add(recipe.output)
-		return list
-	}
+	override fun getDisplayedRecipes() = listOf(recipe.output)
 }

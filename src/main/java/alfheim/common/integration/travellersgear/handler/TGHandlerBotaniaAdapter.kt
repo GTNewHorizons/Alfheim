@@ -2,8 +2,7 @@ package alfheim.common.integration.travellersgear.handler
 
 import alfheim.AlfheimCore
 import baubles.api.BaubleType
-import gloomyfolken.hooklib.asm.Hook
-import gloomyfolken.hooklib.asm.ReturnCondition
+import gloomyfolken.hooklib.asm.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
@@ -33,15 +32,15 @@ object TGHandlerBotaniaAdapter {
 			
 			val tg = TravellersGearAPI.getExtendedInventory(player)
 			
-			if (tg[0] != null && tg[0].item is ItemHolyCloak && !item.isInEffect(tg[0])) {
+			if (tg[0] != null && tg[0].item is ItemHolyCloak && !ItemHolyCloak.isInEffect(tg[0])) {
 				val cloak = tg[0].item as ItemHolyCloak
-				val cooldown = item.getCooldown(tg[0])
+				val cooldown = ItemHolyCloak.getCooldown(tg[0])
 				
 				// Used to prevent StackOverflows with mobs that deal damage when damaged
-				item.setInEffect(tg[0], true)
+				ItemHolyCloak.setInEffect(tg[0], true)
 				if (cooldown == 0 && cloak.effectOnDamage(event, player, tg[0]))
-					item.setCooldown(tg[0], cloak.getCooldownTime(tg[0]))
-				item.setInEffect(tg[0], false)
+					ItemHolyCloak.setCooldown(tg[0], cloak.getCooldownTime(tg[0]))
+				ItemHolyCloak.setInEffect(tg[0], false)
 			}
 			
 			TravellersGearAPI.setExtendedInventory(player, tg)
@@ -50,19 +49,19 @@ object TGHandlerBotaniaAdapter {
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
-	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<*>, adv: Boolean) {
+	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, adv: Boolean) {
 		try {
 			if (AlfheimCore.TravellersGearLoaded) {
-				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
+				addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
 				val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
 				if (key != null)
-					TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
+					addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
 			} else {
 				val type = cloak.getBaubleType(stack)
-				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name.toLowerCase()), tooltip)
+				addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name.toLowerCase()), tooltip)
 				val key = RenderHelper.getKeyDisplayString("Baubles Inventory")
 				if (key != null)
-					TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
+					addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
 			}
 		} catch (e: Throwable) {
 		}

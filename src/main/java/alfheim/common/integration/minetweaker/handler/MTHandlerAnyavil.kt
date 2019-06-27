@@ -1,15 +1,11 @@
 package alfheim.common.integration.minetweaker.handler
 
-import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.*
-
-import alfheim.api.AlfheimAPI
-import alfheim.api.ModInfo
-import minetweaker.IUndoableAction
-import minetweaker.MineTweakerAPI
+import alfheim.api.*
+import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getStack
+import minetweaker.*
 import minetweaker.api.item.IItemStack
 import net.minecraft.item.ItemStack
-import stanhebben.zenscript.annotations.ZenClass
-import stanhebben.zenscript.annotations.ZenMethod
+import stanhebben.zenscript.annotations.*
 
 @ZenClass("mods." + ModInfo.MODID + ".Anyavil")
 object MTHandlerAnyavil {

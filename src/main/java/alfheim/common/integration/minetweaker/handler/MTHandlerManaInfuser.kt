@@ -1,19 +1,14 @@
 package alfheim.common.integration.minetweaker.handler
 
-import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.*
-
-import java.util.ArrayList
-
-import alfheim.api.AlfheimAPI
-import alfheim.api.ModInfo
+import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeManaInfuser
-import minetweaker.IUndoableAction
-import minetweaker.MineTweakerAPI
-import minetweaker.api.item.IIngredient
-import minetweaker.api.item.IItemStack
+import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getObjects
+import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getStack
+import minetweaker.*
+import minetweaker.api.item.*
 import net.minecraft.item.ItemStack
-import stanhebben.zenscript.annotations.ZenClass
-import stanhebben.zenscript.annotations.ZenMethod
+import stanhebben.zenscript.annotations.*
+import java.util.*
 
 @ZenClass("mods." + ModInfo.MODID + ".ManaInfuser")
 object MTHandlerManaInfuser {
@@ -59,9 +54,10 @@ object MTHandlerManaInfuser {
 		internal val removed = ArrayList<RecipeManaInfuser>()
 		
 		override fun apply() {
-			val rec: RecipeManaInfuser?
+			var rec: RecipeManaInfuser?
 			do {
-				removed.add(rec = AlfheimAPI.removeInfusionRecipe(output))
+				rec = AlfheimAPI.removeInfusionRecipe(output)
+				removed.add(rec!!)
 			} while (rec != null)
 		}
 		

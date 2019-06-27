@@ -36,8 +36,8 @@ class CommandRace: CommandBase() {
 				sender.getEntityAttribute(AlfheimAPI.RACE).baseValue = r.ordinal.toDouble()
 				sender.capabilities.allowFlying = true
 				sender.sendPlayerAbilities()
-				sender.setSpawnChunk(ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal].xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal].yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal].zCoord)), true, AlfheimConfig.dimensionIDAlfheim)
-				ASJUtilities.sendToDimensionWithoutPortal(sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal].xCoord, AlfheimConfig.zones[r.ordinal].yCoord, AlfheimConfig.zones[r.ordinal].zCoord)
+				sender.setSpawnChunk(ChunkCoordinates(MathHelper.floor_double(AlfheimConfig.zones[r.ordinal]!!.xCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal]!!.yCoord), MathHelper.floor_double(AlfheimConfig.zones[r.ordinal]!!.zCoord)), true, AlfheimConfig.dimensionIDAlfheim)
+				ASJUtilities.sendToDimensionWithoutPortal(sender, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[r.ordinal]!!.xCoord, AlfheimConfig.zones[r.ordinal]!!.yCoord, AlfheimConfig.zones[r.ordinal]!!.zCoord)
 			}
 		} else {
 			throw WrongUsageException(getCommandUsage(sender))
@@ -46,10 +46,10 @@ class CommandRace: CommandBase() {
 	
 	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>?): List<*>? {
 		if (!AlfheimCore.enableElvenStory) return null
-		if (sender is EntityPlayer && args!!.size == 1 && EnumRace.getRace(sender as EntityPlayer?) == EnumRace.HUMAN) {
+		if (sender is EntityPlayer && args!!.size == 1 && EnumRace.getRace(sender) == EnumRace.HUMAN) {
 			val ss = arrayOfNulls<String>(9)
 			for (i in ss.indices) ss[i] = EnumRace.getByID((i + 1).toDouble()).localize()
-			return CommandBase.getListOfStringsMatchingLastWord(args, *ss)
+			return getListOfStringsMatchingLastWord(args, *ss)
 		}
 		return null
 	}

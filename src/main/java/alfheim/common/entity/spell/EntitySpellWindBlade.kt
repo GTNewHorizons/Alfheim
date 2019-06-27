@@ -1,20 +1,17 @@
 package alfheim.common.entity.spell
 
-import java.util.UUID
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.spell.ITimeStopSpecific
-import alfheim.api.spell.SpellBase
+import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
+import java.util.*
 
 class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 	
@@ -50,7 +47,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		val m = Vector3(ASJUtilities.getLookVec(this))
 		moveEntity(m.x, 0.0, m.z)
 		
-		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox)
+		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		l.remove(caster)
 		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), SpellBase.over(caster, 6.0))
 	}

@@ -1,102 +1,160 @@
 package alfheim.common.core.registry
 
+import alexsocol.asjlib.ASJUtilities.Companion.addOreDictRecipe
+import alexsocol.asjlib.ASJUtilities.Companion.addShapelessOreDictRecipe
+import alexsocol.asjlib.ASJUtilities.Companion.removeRecipe
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
+import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
-import alfheim.common.core.registry.AlfheimItems.*
+import alfheim.api.lib.LibOreDict.Companion.ARUNE
+import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_INGOT
+import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_NUGGET
+import alfheim.api.lib.LibOreDict.Companion.IFFESAL_DUST
+import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_INGOT
+import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_NUGGET
+import alfheim.api.lib.LibOreDict.Companion.MUSPELHEIM_ESSENCE
+import alfheim.api.lib.LibOreDict.Companion.MUSPELHEIM_POWER_INGOT
+import alfheim.api.lib.LibOreDict.Companion.NIFLHEIM_ESSENCE
+import alfheim.api.lib.LibOreDict.Companion.NIFLHEIM_POWER_INGOT
+import alfheim.common.core.registry.AlfheimBlocks.alfheimPortal
+import alfheim.common.core.registry.AlfheimBlocks.alfheimPylon
+import alfheim.common.core.registry.AlfheimBlocks.animatedTorch
+import alfheim.common.core.registry.AlfheimBlocks.anyavil
+import alfheim.common.core.registry.AlfheimBlocks.dreamLog
+import alfheim.common.core.registry.AlfheimBlocks.elvenOres
+import alfheim.common.core.registry.AlfheimBlocks.elvenSand
+import alfheim.common.core.registry.AlfheimBlocks.elvoriumBlock
+import alfheim.common.core.registry.AlfheimBlocks.itemHolder
+import alfheim.common.core.registry.AlfheimBlocks.livingcobble
+import alfheim.common.core.registry.AlfheimBlocks.manaInfuser
+import alfheim.common.core.registry.AlfheimBlocks.mauftriumBlock
+import alfheim.common.core.registry.AlfheimBlocks.tradePortal
+import alfheim.common.core.registry.AlfheimItems.astrolabe
+import alfheim.common.core.registry.AlfheimItems.auraRingElven
+import alfheim.common.core.registry.AlfheimItems.auraRingGod
+import alfheim.common.core.registry.AlfheimItems.balanceCloak
+import alfheim.common.core.registry.AlfheimItems.cloudPendant
+import alfheim.common.core.registry.AlfheimItems.cloudPendantSuper
+import alfheim.common.core.registry.AlfheimItems.crescentMoonAmulet
+import alfheim.common.core.registry.AlfheimItems.dodgeRing
+import alfheim.common.core.registry.AlfheimItems.elementalBoots
+import alfheim.common.core.registry.AlfheimItems.elementalChestplate
+import alfheim.common.core.registry.AlfheimItems.elementalHelmet
+import alfheim.common.core.registry.AlfheimItems.elementalHelmetRevealing
+import alfheim.common.core.registry.AlfheimItems.elementalLeggings
+import alfheim.common.core.registry.AlfheimItems.elementiumHoe
+import alfheim.common.core.registry.AlfheimItems.elfFirePendant
+import alfheim.common.core.registry.AlfheimItems.elfIcePendant
+import alfheim.common.core.registry.AlfheimItems.elvenResource
+import alfheim.common.core.registry.AlfheimItems.elvoriumBoots
+import alfheim.common.core.registry.AlfheimItems.elvoriumChestplate
+import alfheim.common.core.registry.AlfheimItems.elvoriumHelmet
+import alfheim.common.core.registry.AlfheimItems.elvoriumHelmetRevealing
+import alfheim.common.core.registry.AlfheimItems.elvoriumLeggings
+import alfheim.common.core.registry.AlfheimItems.invisibilityCloak
+import alfheim.common.core.registry.AlfheimItems.livingrockPickaxe
+import alfheim.common.core.registry.AlfheimItems.lootInterceptor
+import alfheim.common.core.registry.AlfheimItems.manaRingElven
+import alfheim.common.core.registry.AlfheimItems.manaRingGod
+import alfheim.common.core.registry.AlfheimItems.manaStone
+import alfheim.common.core.registry.AlfheimItems.manaStoneGreater
+import alfheim.common.core.registry.AlfheimItems.manasteelHoe
+import alfheim.common.core.registry.AlfheimItems.paperBreak
+import alfheim.common.core.registry.AlfheimItems.peacePipe
+import alfheim.common.core.registry.AlfheimItems.pixieAttractor
+import alfheim.common.core.registry.AlfheimItems.realitySword
+import alfheim.common.core.registry.AlfheimItems.rodFire
+import alfheim.common.core.registry.AlfheimItems.rodGrass
+import alfheim.common.core.registry.AlfheimItems.rodIce
+import alfheim.common.core.registry.AlfheimItems.thinkingHand
 import alfheim.common.crafting.recipe.*
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
+import cpw.mods.fml.common.registry.GameRegistry.*
+import net.minecraft.init.Blocks.*
+import net.minecraft.init.Items.*
 import net.minecraft.item.*
 import net.minecraft.item.crafting.*
 import net.minecraftforge.oredict.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
+import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.crafting.*
-import vazkii.botania.common.item.ModItems
-
-import alexsocol.asjlib.ASJUtilities.*
-import alfheim.api.AlfheimAPI.addInfuserRecipe
-import alfheim.api.lib.LibOreDict.*
-import alfheim.common.core.registry.AlfheimBlocks.*
-import cpw.mods.fml.common.registry.GameRegistry.*
-import net.minecraft.init.Blocks.*
-import net.minecraft.init.Items.*
-import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
 
 object AlfheimRecipes {
 	
-	var recipeElvorium: RecipeManaInfuser
+	lateinit var recipeElvorium: RecipeManaInfuser
 	//public static RecipeManaInfuser recipeMuspelheimEssence;
 	//public static RecipeManaInfuser recipeNiflheimEssence;
-	var recipeTerrasteel: RecipeManaInfuser
-	var recipeMauftrium: RecipeManaInfuser
-	var recipeManaStone: RecipeManaInfuser
-	var recipeManaStoneGreater: RecipeManaInfuser
+	lateinit var recipeTerrasteel: RecipeManaInfuser
+	lateinit var recipeMauftrium: RecipeManaInfuser
+	lateinit var recipeManaStone: RecipeManaInfuser
+	lateinit var recipeManaStoneGreater: RecipeManaInfuser
 	
-	var recipeAlfheimPortal: IRecipe
-	var recipeAnimatedTorch: IRecipe
-	var recipeAnyavil: IRecipe
-	var recipesApothecary: List<IRecipe>
-	var recipeAstrolabe: IRecipe
-	var recipeAuraRingElven: IRecipe
-	var recipeAuraRingGod: IRecipe
-	var recipeBalanceCloak: IRecipe
-	var recipeCloudPendant: IRecipe
-	var recipeCloudPendantSuper: IRecipe
-	var recipeCrescentAmulet: IRecipe
-	var recipeDodgeRing: IRecipe
-	var recipeEmentalHelmet: IRecipe
-	var recipeEmentalChestplate: IRecipe
-	var recipeEmentalLeggings: IRecipe
-	var recipeEmentalBoots: IRecipe
-	var recipeEmentiumHoe: IRecipe
-	var recipeElvenPylon: IRecipe
-	var recipesElvenWand: List<IRecipe>
-	var recipeElvoriumHelmet: IRecipe
-	var recipeElvoriumChestplate: IRecipe
-	var recipeElvoriumLeggings: IRecipe
-	var recipeElvoriumBoots: IRecipe
-	var recipeElvoriumPylon: IRecipe
-	var recipeFurnace: IRecipe
-	var recipeGaiaPylon: IRecipe
-	var recipeGreenRod: IRecipe
-	var recipeInvisibilityCloak: IRecipe
-	var recipeItemHolder: IRecipe
-	var recipeLensMessenger: IRecipe
-	var recipeLensTripwire: IRecipe
-	var recipeLivingcobble: IRecipe
-	var recipeLivingrockPickaxe: IRecipe
-	var recipeLootInterceptor: IRecipe
-	var recipeManaInfusionCore: IRecipe
-	var recipeManaInfuser: IRecipe
-	var recipeManaRingElven: IRecipe
-	var recipeManaRingGod: IRecipe
-	var recipeManasteelHoe: IRecipe
-	var recipeMuspelheimPendant: IRecipe
-	var recipeMuspelheimPowerIngot: IRecipe
-	var recipeMuspelheimRod: IRecipe
-	var recipeNiflheimPendant: IRecipe
-	var recipeNiflheimPowerIngot: IRecipe
-	var recipeNiflheimRod: IRecipe
-	var recipePaperBreak: IRecipe
-	var recipePeacePipe: IRecipe
-	var recipePixieAttractor: IRecipe
-	var recipesSpark: MutableList<IRecipe>
-	var recipeSword: IRecipe
-	var recipeThinkingHand: IRecipe
-	var recipeTradePortal: IRecipe
+	lateinit var recipeAlfheimPortal: IRecipe
+	lateinit var recipeAnimatedTorch: IRecipe
+	lateinit var recipeAnyavil: IRecipe
+	lateinit var recipesApothecary: List<IRecipe>
+	lateinit var recipeAstrolabe: IRecipe
+	lateinit var recipeAuraRingElven: IRecipe
+	lateinit var recipeAuraRingGod: IRecipe
+	lateinit var recipeBalanceCloak: IRecipe
+	lateinit var recipeCloudPendant: IRecipe
+	lateinit var recipeCloudPendantSuper: IRecipe
+	lateinit var recipeCrescentAmulet: IRecipe
+	lateinit var recipeDodgeRing: IRecipe
+	lateinit var recipeEmentalHelmet: IRecipe
+	lateinit var recipeEmentalChestplate: IRecipe
+	lateinit var recipeEmentalLeggings: IRecipe
+	lateinit var recipeEmentalBoots: IRecipe
+	lateinit var recipeEmentiumHoe: IRecipe
+	lateinit var recipeElvenPylon: IRecipe
+	lateinit var recipesElvenWand: List<IRecipe>
+	lateinit var recipeElvoriumHelmet: IRecipe
+	lateinit var recipeElvoriumChestplate: IRecipe
+	lateinit var recipeElvoriumLeggings: IRecipe
+	lateinit var recipeElvoriumBoots: IRecipe
+	lateinit var recipeElvoriumPylon: IRecipe
+	lateinit var recipeFurnace: IRecipe
+	lateinit var recipeGaiaPylon: IRecipe
+	lateinit var recipeGreenRod: IRecipe
+	lateinit var recipeInvisibilityCloak: IRecipe
+	lateinit var recipeItemHolder: IRecipe
+	lateinit var recipeLensMessenger: IRecipe
+	lateinit var recipeLensTripwire: IRecipe
+	lateinit var recipeLivingcobble: IRecipe
+	lateinit var recipeLivingrockPickaxe: IRecipe
+	lateinit var recipeLootInterceptor: IRecipe
+	lateinit var recipeManaInfusionCore: IRecipe
+	lateinit var recipeManaInfuser: IRecipe
+	lateinit var recipeManaRingElven: IRecipe
+	lateinit var recipeManaRingGod: IRecipe
+	lateinit var recipeManasteelHoe: IRecipe
+	lateinit var recipeMuspelheimPendant: IRecipe
+	lateinit var recipeMuspelheimPowerIngot: IRecipe
+	lateinit var recipeMuspelheimRod: IRecipe
+	lateinit var recipeNiflheimPendant: IRecipe
+	lateinit var recipeNiflheimPowerIngot: IRecipe
+	lateinit var recipeNiflheimRod: IRecipe
+	lateinit var recipePaperBreak: IRecipe
+	lateinit var recipePeacePipe: IRecipe
+	lateinit var recipePixieAttractor: IRecipe
+	lateinit var recipesSpark: MutableList<IRecipe>
+	lateinit var recipeSword: IRecipe
+	lateinit var recipeThinkingHand: IRecipe
+	lateinit var recipeTradePortal: IRecipe
 	
-	var recipeInterdimensional: RecipeElvenTrade
+	lateinit var recipeInterdimensional: RecipeElvenTrade
 	
-	var recipeDreamwood: RecipePureDaisy
+	lateinit var recipeDreamwood: RecipePureDaisy
 	
-	var recipeMuspelheimRune: RecipeRuneAltar
-	var recipeNiflheimRune: RecipeRuneAltar
-	var recipeRealityRune: RecipeRuneAltar
+	lateinit var recipeMuspelheimRune: RecipeRuneAltar
+	lateinit var recipeNiflheimRune: RecipeRuneAltar
+	lateinit var recipeRealityRune: RecipeRuneAltar
 	
 	fun preInit() {
 		registerCraftingRecipes()
@@ -272,20 +330,20 @@ object AlfheimRecipes {
 						 'P', icePendant)
 		recipeNiflheimPendant = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+		addOreDictRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 "PGP", "GDG", "PGP",
 						 'D', PIXIE_DUST,
 						 'G', "ingotGold",
 						 'P', IFFESAL_DUST)
 		recipeManaInfusionCore = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot),
+		addOreDictRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MuspelheimPowerIngot),
 						 " S ", "SIS", " S ",
 						 'S', MUSPELHEIM_ESSENCE,
 						 'I', ELVORIUM_INGOT)
 		recipeMuspelheimPowerIngot = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot),
+		addOreDictRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimPowerIngot),
 						 " S ", "SIS", " S ",
 						 'S', NIFLHEIM_ESSENCE,
 						 'I', ELVORIUM_INGOT)
@@ -307,7 +365,7 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelHelm,
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -317,7 +375,7 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelHelmRevealing,
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		
 		addOreDictRecipe(ItemStack(elvoriumChestplate),
@@ -326,7 +384,7 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelChest,
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumChestplate = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -336,7 +394,7 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelLegs,
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumLeggings = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -346,7 +404,7 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelBoots,
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumBoots = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -391,7 +449,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(manaInfuser),
 						 "DCD", "IRI", "SSS",
-						 'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
+						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'D', DRAGONSTONE,
 						 'I', ELEMENTIUM,
 						 'R', rainbowRod,
@@ -491,13 +549,13 @@ object AlfheimRecipes {
 			addShapelessRecipe(ItemStack(elvoriumHelmetRevealing), ItemStack(elvoriumHelmet), goggles)
 		}
 		
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumNugget), ELVORIUM_INGOT)
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumNugget), MAUFTRIUM_INGOT)
-		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), elvoriumBlock)
-		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumIngot), mauftriumBlock)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, AlfheimItems.ElvenResourcesMetas.ElvoriumNugget), ELVORIUM_INGOT)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, AlfheimItems.ElvenResourcesMetas.MauftriumNugget), MAUFTRIUM_INGOT)
+		addShapelessRecipe(ItemStack(elvenResource, 9, AlfheimItems.ElvenResourcesMetas.ElvoriumIngot), elvoriumBlock)
+		addShapelessRecipe(ItemStack(elvenResource, 9, AlfheimItems.ElvenResourcesMetas.MauftriumIngot), mauftriumBlock)
 		
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET)
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ElvoriumIngot), ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MauftriumIngot), MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET)
 		addShapelessOreDictRecipe(ItemStack(elvoriumBlock), ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT)
 		addShapelessOreDictRecipe(ItemStack(mauftriumBlock), MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT)
 		
@@ -544,13 +602,13 @@ object AlfheimRecipes {
 											MANA_PEARL,
 											MANA_DIAMOND)
 		
-		recipeElvorium = addInfuserRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot),
+		recipeElvorium = addInfuserRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ElvoriumIngot),
 										  TilePool.MAX_MANA / 2,
 										  ELEMENTIUM,
 										  PIXIE_DUST,
 										  DRAGONSTONE)
 		
-		recipeMauftrium = addInfuserRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot),
+		recipeMauftrium = addInfuserRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MauftriumIngot),
 										   TilePool.MAX_MANA,
 										   GAIA_INGOT,
 										   MUSPELHEIM_POWER_INGOT,
@@ -559,14 +617,14 @@ object AlfheimRecipes {
 		recipeManaStone = addInfuserRecipe(ItemStack(manaStone, 1, 1000),
 										   TilePool.MAX_MANA,
 										   DRAGONSTONE,
-										   ItemStack(elvenResource, 4, ElvenResourcesMetas.IffesalDust))
+										   ItemStack(elvenResource, 4, AlfheimItems.ElvenResourcesMetas.IffesalDust))
 		
 		recipeManaStoneGreater = addInfuserRecipe(ItemStack(manaStoneGreater, 1, 1000),
 												  TilePool.MAX_MANA * 4,
 												  ItemStack(manaStone, 1, OreDictionary.WILDCARD_VALUE),
 												  ItemStack(manaResource, 4, 5),
-												  ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
-												  ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence))
+												  ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MuspelheimEssence),
+												  ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimEssence))
 	}
 	
 	fun banRetrades() {
@@ -583,20 +641,20 @@ object AlfheimRecipes {
 		val costTier2 = 8000
 		val costTier3 = 12000
 		
-		recipeRealityRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.PrimalRune), costTier3,
+		recipeRealityRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.PrimalRune), costTier3,
 															   RUNE[0], RUNE[1], RUNE[2], RUNE[3], RUNE[8], ItemStack(manaResource, 1, 15), MAUFTRIUM_INGOT)
-		recipeMuspelheimRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimRune), costTier3,
-																  RUNE[1], RUNE[2], ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence), IFFESAL_DUST)
-		recipeNiflheimRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimRune), costTier3,
-																RUNE[0], RUNE[3], ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence), IFFESAL_DUST)
+		recipeMuspelheimRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MuspelheimRune), costTier3,
+																  RUNE[1], RUNE[2], ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MuspelheimEssence), ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.MuspelheimEssence), IFFESAL_DUST)
+		recipeNiflheimRune = BotaniaAPI.registerRuneAltarRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimRune), costTier3,
+																RUNE[0], RUNE[3], ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimEssence), ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimEssence), IFFESAL_DUST)
 		
-		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, ItemStack(livingcobble), ItemStack(obsidian), ItemStack(brown_mushroom)))
-		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(ItemStack(ModItems.rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, ItemStack(livingcobble), ItemStack(obsidian), ItemStack(red_mushroom)))
+		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(ItemStack(rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, ItemStack(livingcobble), ItemStack(obsidian), ItemStack(brown_mushroom)))
+		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(ItemStack(rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, ItemStack(livingcobble), ItemStack(obsidian), ItemStack(red_mushroom)))
 		
-		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), ItemStack(nether_star))
+		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.InterdimensionalGatewayCore), ItemStack(nether_star))
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0)
 		
-		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
+		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
 		
 		addRecipe(HelmRevealingAlfheimRecipe())
 		addRecipe(LootInterceptorRecipe())
@@ -613,7 +671,7 @@ object AlfheimRecipes {
 	}
 	
 	fun removeMMORecipes() {
-		CraftingManager.getInstance().recipeList.remove(AlfheimRecipes.recipePaperBreak)
-		CraftingManager.getInstance().recipeList.remove(AlfheimRecipes.recipePeacePipe)
+		CraftingManager.getInstance().recipeList.remove(recipePaperBreak)
+		CraftingManager.getInstance().recipeList.remove(recipePeacePipe)
 	}
 }

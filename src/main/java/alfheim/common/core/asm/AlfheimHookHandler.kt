@@ -13,6 +13,7 @@ import alfheim.common.potion.PotionSoulburn
 import codechicken.nei.recipe.GuiRecipe
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
+import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -29,6 +30,7 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.RecipePureDaisy
@@ -47,25 +49,22 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.lib.LibBlockNames
-
 import java.util.*
 
-import gloomyfolken.hooklib.asm.ReturnCondition.*
-import org.lwjgl.opengl.GL11.*
-
+@Suppress("UNUSED_PARAMETER")
 object AlfheimHookHandler {
 	
 	private var updatingTile = false
 	private var updatingEntity = false
-	private val TAG_TRANSFER_STACK = "transferStack"
+	private const val TAG_TRANSFER_STACK = "transferStack"
 	var numMana = true
 	
 	var rt = 0f
 	var gt = 0f
 	var bt = 0f
 	
-	val MESSANGER = 22
-	val TRIPWIRE = 23
+	const val MESSANGER = 22
+	const val TRIPWIRE = 23
 	
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun onNewPotionEffect(e: EntityLivingBase, pe: PotionEffect) {
@@ -103,16 +102,16 @@ object AlfheimHookHandler {
 	}
 	
 	@Hook(returnCondition = ON_TRUE)
-	fun requestManaExact(handler: ManaItemHandler, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
+	fun requestManaExact(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
 		return player.capabilities.isCreativeMode
 	}
 	
 	@Hook(returnCondition = ON_TRUE, returnType = "int", returnAnotherMethod = "requestManaChecked")
-	fun requestMana(handler: ManaItemHandler, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
+	fun requestMana(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
 		return player.capabilities.isCreativeMode
 	}
 	
-	fun requestManaChecked(handler: ManaItemHandler, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Int {
+	fun requestManaChecked(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Int {
 		return manaToGet
 	}
 	
@@ -169,10 +168,10 @@ object AlfheimHookHandler {
 			if (i > 0) {
 				var flag: Boolean
 				
-				if (!e.isInvisible) {
-					flag = e.worldObj.rand.nextBoolean()
+				flag = if (!e.isInvisible) {
+					e.worldObj.rand.nextBoolean()
 				} else {
-					flag = e.worldObj.rand.nextInt(15) == 0
+					e.worldObj.rand.nextInt(15) == 0
 				}
 				
 				if (flag1) {
@@ -265,8 +264,8 @@ object AlfheimHookHandler {
 		return updatingTile
 	}
 	
-	@Hook(returnCondition = ALWAYS)
-	fun getSubBlocks(flower: BlockSpecialFlower, item: Item, tab: CreativeTabs, list: MutableList<*>) {
+	@Hook(returnCondition = ALWAYS) // TODO check list
+	fun getSubBlocks(flower: BlockSpecialFlower, item: Item, tab: CreativeTabs, list: MutableList<Any?>) {
 		for (s in BotaniaAPI.subtilesForCreativeMenu) {
 			list.add(ItemBlockSpecialFlower.ofType(s))
 			if (BotaniaAPI.miniFlowers.containsKey(s))
@@ -279,7 +278,7 @@ object AlfheimHookHandler {
 	}
 	
 	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
-	fun `ItemLens$clinit`(lens: ItemLens) {
+	fun `ItemLens$clinit`(lens: ItemLens?) {
 		ItemLens.setProps(MESSANGER, 1)
 		ItemLens.setProps(TRIPWIRE, 1 shl 5)
 		
@@ -287,8 +286,8 @@ object AlfheimHookHandler {
 		ItemLens.setLens(TRIPWIRE, LensTripwire())
 	}
 	
-	@Hook(injectOnExit = true)
-	fun displayAllReleventItems(tab: BotaniaCreativeTab, list: List<*>) {
+	@Hook(injectOnExit = true) // TODO check list
+	fun displayAllReleventItems(tab: BotaniaCreativeTab, list: List<Any?>) {
 		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list)
 	}
 	
@@ -323,7 +322,7 @@ object AlfheimHookHandler {
 	}
 	
 	@Hook(returnCondition = ON_TRUE)
-	fun spawn(gaia: EntityDoppleganger, player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
+	fun spawn(gaia: EntityDoppleganger?, player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
 		for (i in -1..1)
 			for (k in -1..1)
 				if (!world.getBlock(x + i, y - 1, z + k).isBeaconBase(world, x + i, y - 1, z + k, x, y, z)) {
@@ -340,7 +339,7 @@ object AlfheimHookHandler {
 	}
 	
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
-	fun getFortuneModifier(h: EnchantmentHelper, e: EntityLivingBase): Int {
+	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase): Int {
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush)) 2 else 0
 	}
 	
@@ -370,7 +369,7 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@Hook(injectOnExit = true, isMandatory = true)
-	fun renderManaBar(hh: HUDHandler, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
+	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
 		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return
 		glPushMatrix()
 		val f = Minecraft.getMinecraft().currentScreen == null

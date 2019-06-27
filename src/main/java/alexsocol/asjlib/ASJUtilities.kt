@@ -492,7 +492,7 @@ class ASJUtilities {
 		 * @param dist Max distance for use
 		 * @param interact Can player interact with blocks (not sure)
 		 */
-		fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition {
+		fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
 			val vec3 = getPosition(entity, 1.0f)
 			vec3.yCoord += entity.eyeHeight.toDouble()
 			val vec31 = entity.lookVec
