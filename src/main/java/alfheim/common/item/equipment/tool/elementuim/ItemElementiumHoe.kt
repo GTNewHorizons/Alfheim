@@ -22,7 +22,7 @@ class ItemElementiumHoe: ItemManasteelHoe(BotaniaAPI.elementiumToolMaterial, "El
 		return _do
 	}
 	
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, info: MutableList<*>, extra: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, info: MutableList<Any?>, extra: Boolean) {
 		info.add(StatCollector.translateToLocal("item.ElementiumHoe.desc"))
 	}
 }

@@ -1,13 +1,10 @@
 package alfheim.common.block.mana
 
-import alexsocol.asjlib.extendables.*
-import java.util.Random
-
+import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileTransferer
-import net.minecraft.block.Block
-import net.minecraft.block.BlockPistonBase
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -17,18 +14,13 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.AxisAlignedBB
-import net.minecraft.util.IIcon
-import net.minecraft.world.EnumSkyBlock
-import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
-import vazkii.botania.api.wand.IWandHUD
-import vazkii.botania.api.wand.IWandable
-import vazkii.botania.api.wand.IWireframeAABBProvider
-import vazkii.botania.common.block.BlockModContainer
-import vazkii.botania.common.block.ModBlocks
+import net.minecraft.util.*
+import net.minecraft.world.*
+import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.wand.*
+import vazkii.botania.common.block.*
 import vazkii.botania.common.item.ModItems
+import java.util.*
 
 class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, IWandHUD, ILexiconable, IWireframeAABBProvider {
 	

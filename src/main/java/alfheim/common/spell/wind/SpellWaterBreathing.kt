@@ -6,13 +6,11 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.SpellEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
 
 class SpellWaterBreathing: SpellBase("waterbreathing", EnumRace.SYLPH, 2000, 600, 30) {
 	

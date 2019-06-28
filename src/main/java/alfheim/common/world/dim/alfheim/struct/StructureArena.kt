@@ -1,14 +1,12 @@
 package alfheim.common.world.dim.alfheim.struct
 
-import java.util.Random
-
 import alexsocol.asjlib.ASJUtilities
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
-import vazkii.botania.common.block.ModBlocks
-import vazkii.botania.common.block.ModFluffBlocks
+import vazkii.botania.common.block.*
+import java.util.*
 
 class StructureArena: StructureBaseClass() {
 	

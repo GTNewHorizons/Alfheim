@@ -4,7 +4,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.WorldServer
 
 class SpellNight: SpellBase("night", EnumRace.IMP, 30000, 6000, 50) {
 	

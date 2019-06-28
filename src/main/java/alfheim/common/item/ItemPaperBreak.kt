@@ -1,22 +1,16 @@
 package alfheim.common.item
 
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.IIcon
-import net.minecraft.util.StatCollector
+import net.minecraft.item.*
+import net.minecraft.util.*
 import net.minecraft.world.World
+import vazkii.botania.common.core.helper.ItemNBTHelper.getCompound
 
 class ItemPaperBreak: Item() {
 	init {
@@ -26,7 +20,7 @@ class ItemPaperBreak: Item() {
 	}
 	
 	override fun getIconIndex(stack: ItemStack): IIcon {
-		return textures[if (stack.hasDisplayName()) 1 else 0]
+		return textures[if (stack.hasDisplayName()) 1 else 0]!!
 	}
 	
 	override fun getIcon(stack: ItemStack, pass: Int): IIcon {
@@ -39,17 +33,17 @@ class ItemPaperBreak: Item() {
 		textures[1] = reg.registerIcon(ModInfo.MODID + ":PaperSigned")
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (!AlfheimCore.enableMMO) return stack
-		if (!world!!.isRemote) {
+		if (!world.isRemote) {
 			val name = getCompound(stack, "display", false).getString("Name")
 			val pt = PartySystem.getParty(player)
 			val pl = pt!!.pl
-			val flag1 = name != null && !name.isEmpty()
-			val flag2 = flag1 && name!!.equals(player!!.commandSenderName, ignoreCase = true)
+			val flag1 = name != null && name.isNotEmpty()
+			val flag2 = flag1 && name!!.equals(player.commandSenderName, ignoreCase = true)
 			
-			if (pl != null && player != pl && !flag2) {
-				ASJUtilities.say(player!!, "alfheimmisc.party.notpl")
+			if (player != pl && !flag2) {
+				ASJUtilities.say(player, "alfheimmisc.party.notpl")
 				return stack
 			}
 			
@@ -57,7 +51,7 @@ class ItemPaperBreak: Item() {
 				if (pt.remove(name))
 					--stack.stackSize
 				else
-					player!!.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("alfheimmisc.party.notinpartyoffline", name)))
+					player.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("alfheimmisc.party.notinpartyoffline", name)))
 				return stack
 			}
 			

@@ -1,7 +1,5 @@
 package alfheim.common.spell.earth
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -9,35 +7,34 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.SpellEffectHandler
-import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.DamageSource
-import net.minecraft.util.MathHelper
+import net.minecraft.util.*
 import net.minecraftforge.common.util.ForgeDirection
+import org.lwjgl.opengl.GL11.*
 
 class SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		if (!caster.onGround || caster.worldObj.isAirBlock(MathHelper.floor_double(caster.posX), MathHelper.floor_double(caster.posY) - 1, MathHelper.floor_double(caster.posZ))) return SpellBase.SpellCastResult.WRONGTGT
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (!caster.onGround || caster.worldObj.isAirBlock(MathHelper.floor_double(caster.posX), MathHelper.floor_double(caster.posY) - 1, MathHelper.floor_double(caster.posZ))) return SpellCastResult.WRONGTGT
 		
 		val result = checkCastOver(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		SpellEffectHandler.sendPacket(Spells.TREMORS, caster)
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(10.0, 2.0, 10.0))
+		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(10.0, 2.0, 10.0)) as MutableList<EntityLivingBase>
 		list.remove(caster)
 		for (living in list) {
 			val block = living.worldObj.getBlock(MathHelper.floor_double(living.posX), MathHelper.floor_double(living.posY - 1), MathHelper.floor_double(living.posZ))
 			if (living.onGround &&
-				block.getMaterial().isSolid() &&
+				block.material.isSolid &&
 				block.isSideSolid(living.worldObj, MathHelper.floor_double(living.posX), MathHelper.floor_double(living.posY - 1), MathHelper.floor_double(living.posZ), ForgeDirection.UP) &&
 				block.getBlockHardness(living.worldObj, MathHelper.floor_double(living.posX), MathHelper.floor_double(living.posY - 1), MathHelper.floor_double(living.posZ)) < 2 &&
 				!PartySystem.mobsSameParty(caster, living) &&
 				Vector3.entityDistancePlane(living, caster) < 10)
-				living.attackEntityFrom(DamageSource.inWall, SpellBase.over(caster, 10.0))
+				living.attackEntityFrom(DamageSource.inWall, over(caster, 10.0))
 		}
 		return result
 	}

@@ -1,13 +1,12 @@
 package alfheim.common.item.compat.thaumcraft
 
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.util.IIcon
+import kotlin.math.*
 
 class ItemAlfheimWandCap: Item() {
 	init {
@@ -24,11 +23,11 @@ class ItemAlfheimWandCap: Item() {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIconFromDamage(meta: Int): IIcon {
-		return textures[Math.max(0, Math.min(meta, textures.size - 1))]
+		return textures[max(0, min(meta, textures.size - 1))]!!
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<*>) {
+	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in textures.indices)
 			list.add(ItemStack(this, 1, i))
 	}

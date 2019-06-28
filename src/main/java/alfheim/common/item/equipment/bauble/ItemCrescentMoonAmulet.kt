@@ -5,13 +5,11 @@ import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingHurtEvent
-import vazkii.botania.api.mana.IManaUsingItem
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem {

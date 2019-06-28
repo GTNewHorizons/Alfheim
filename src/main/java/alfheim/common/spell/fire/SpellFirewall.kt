@@ -1,7 +1,5 @@
 package alfheim.common.spell.fire
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -10,6 +8,7 @@ import alfheim.common.entity.spell.EntitySpellFirewall
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
+import org.lwjgl.opengl.GL11.*
 
 class SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) {
 	

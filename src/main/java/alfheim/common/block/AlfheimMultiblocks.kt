@@ -1,8 +1,6 @@
 package alfheim.common.block
 
-import alfheim.common.block.tile.TileAlfheimPortal
-import alfheim.common.block.tile.TileManaInfuser
-import alfheim.common.block.tile.TileTradePortal
+import alfheim.common.block.tile.*
 import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 
 object AlfheimMultiblocks {

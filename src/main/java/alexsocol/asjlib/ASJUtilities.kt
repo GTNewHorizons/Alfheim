@@ -612,6 +612,7 @@ class ASJUtilities {
 		/**
 		 * @return random value in range [min, max] (inclusive)
 		 */
+		@JvmStatic
 		fun randInBounds(rand: Random, min: Int, max: Int): Int {
 			return rand.nextInt(max - min + 1) + min
 		}

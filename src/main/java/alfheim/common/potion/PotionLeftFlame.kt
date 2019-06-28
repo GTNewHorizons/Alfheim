@@ -3,14 +3,12 @@ package alfheim.common.potion
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.common.core.registry.AlfheimItems
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.registry.*
 import alfheim.common.core.util.AlfheimConfig
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.entity.player.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.item.ItemTossEvent
 import net.minecraftforge.event.entity.living.LivingHealEvent

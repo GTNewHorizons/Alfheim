@@ -11,7 +11,6 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.EntityMob
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.AxisAlignedBB
@@ -19,8 +18,7 @@ import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
 import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.mana.ManaItemHandler
-
-import java.util.Random
+import java.util.*
 
 class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
 	init {

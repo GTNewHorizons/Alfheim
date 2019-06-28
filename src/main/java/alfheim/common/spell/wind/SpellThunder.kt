@@ -7,7 +7,6 @@ import alfheim.common.network.Message3d
 import alfheim.common.network.Message3d.m3d
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.WorldServer
 
 class SpellThunder: SpellBase("thunder", EnumRace.SYLPH, 30000, 6000, 50) {
 	

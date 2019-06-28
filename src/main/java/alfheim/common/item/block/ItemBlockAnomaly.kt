@@ -1,20 +1,19 @@
 package alfheim.common.item.block
 
-import alfheim.common.block.tile.TileAnomaly.*
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
-
 import alfheim.api.ModInfo
 import alfheim.common.block.BlockAnomaly
 import alfheim.common.block.tile.TileAnomaly
+import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_COUNT
+import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_MAIN
+import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_NAME
 import alfheim.common.core.registry.AlfheimBlocks
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemBlock
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.api.internal.VanillaPacketDispatcher
+import vazkii.botania.common.core.helper.ItemNBTHelper.*
 
 class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 	
@@ -54,7 +53,7 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 	
 	companion object {
 		
-		val TYPE_UNDEFINED = "undefined"
+		const val TYPE_UNDEFINED = "undefined"
 		
 		fun getType(stack: ItemStack): String {
 			return if (detectNBT(stack)) getString(stack, TAG_SUBTILE_MAIN, TYPE_UNDEFINED) else TYPE_UNDEFINED

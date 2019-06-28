@@ -51,7 +51,7 @@ import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.lib.LibBlockNames
 import java.util.*
 
-@Suppress("UNUSED_PARAMETER")
+@Suppress("UNUSED_PARAMETER", "NAME_SHADOWING")
 object AlfheimHookHandler {
 	
 	private var updatingTile = false
@@ -66,21 +66,25 @@ object AlfheimHookHandler {
 	const val MESSANGER = 22
 	const val TRIPWIRE = 23
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun onNewPotionEffect(e: EntityLivingBase, pe: PotionEffect) {
 		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Add.Post(e, pe))
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun onChangedPotionEffect(e: EntityLivingBase, pe: PotionEffect, was: Boolean) {
 		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Change.Post(e, pe, was))
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun onFinishedPotionEffect(e: EntityLivingBase, pe: PotionEffect) {
 		MinecraftForge.EVENT_BUS.post(LivingPotionEvent.Remove.Post(e, pe))
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun isPotionActive(e: EntityLivingBase, p: Potion): Boolean {
 		return if (p === Potion.resistance) {
@@ -88,9 +92,10 @@ object AlfheimHookHandler {
 		} else e.activePotionsMap.containsKey(p.id)
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun getActivePotionEffect(e: EntityLivingBase, p: Potion): PotionEffect? {
-		var pe: PotionEffect? = e.activePotionsMap[p.id] as PotionEffect
+		var pe = e.activePotionsMap[p.id] as PotionEffect?
 		if (p === Potion.resistance)
 			if (e.isPotionActive(AlfheimRegistry.tank)) {
 				val tank = e.activePotionsMap[AlfheimRegistry.tank.id] as PotionEffect
@@ -101,11 +106,13 @@ object AlfheimHookHandler {
 		return pe
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun requestManaExact(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
 		return player.capabilities.isCreativeMode
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, returnType = "int", returnAnotherMethod = "requestManaChecked")
 	fun requestMana(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean): Boolean {
 		return player.capabilities.isCreativeMode
@@ -115,6 +122,7 @@ object AlfheimHookHandler {
 		return manaToGet
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun moveFlying(e: Entity, x: Float, y: Float, z: Float) {
 		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimRegistry.leftFlame)) {
@@ -124,6 +132,7 @@ object AlfheimHookHandler {
 		}
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun updatePotionEffects(e: EntityLivingBase) {
 		try {
@@ -192,16 +201,19 @@ object AlfheimHookHandler {
 		
 	}
 	
+	@JvmStatic
 	@Hook
 	fun onLivingUpdate(e: EntityDoppleganger) {
 		updatingEntity = true
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "onLivingUpdate")
 	fun onLivingUpdatePost(e: EntityDoppleganger) {
 		updatingEntity = false
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun wispFX(proxy: CommonProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, gravity: Float) {
 		var r = r
@@ -218,6 +230,7 @@ object AlfheimHookHandler {
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, gravity, 1f)
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun wispFX(proxy: CommonProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, motionx: Float, motiony: Float, motionz: Float) {
 		var r = r
@@ -231,6 +244,7 @@ object AlfheimHookHandler {
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, motionx, motiony, motionz, 1f)
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun `TileHourglass$updateEntity`(hourglass: TileHourglass) {
 		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
@@ -243,11 +257,13 @@ object AlfheimHookHandler {
 		}
 	}
 	
+	@JvmStatic
 	@Hook(targetMethod = "updateEntity")
 	fun `TilePylon$updateEntity`(entity: TilePylon) {
 		updatingTile = entity.worldObj.isRemote
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun `TilePylon$updateEntityPost`(entity: TilePylon) {
 		if (entity.worldObj.isRemote) {
@@ -259,13 +275,15 @@ object AlfheimHookHandler {
 		}
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun sparkleFX(proxy: ClientProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, m: Int, fake: Boolean): Boolean {
 		return updatingTile
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS) // TODO check list
-	fun getSubBlocks(flower: BlockSpecialFlower, item: Item, tab: CreativeTabs, list: MutableList<Any?>) {
+	fun getSubBlocks(flower: BlockSpecialFlower, item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (s in BotaniaAPI.subtilesForCreativeMenu) {
 			list.add(ItemBlockSpecialFlower.ofType(s))
 			if (BotaniaAPI.miniFlowers.containsKey(s))
@@ -277,6 +295,7 @@ object AlfheimHookHandler {
 		}
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
 	fun `ItemLens$clinit`(lens: ItemLens?) {
 		ItemLens.setProps(MESSANGER, 1)
@@ -286,41 +305,49 @@ object AlfheimHookHandler {
 		ItemLens.setLens(TRIPWIRE, LensTripwire())
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true) // TODO check list
 	fun displayAllReleventItems(tab: BotaniaCreativeTab, list: List<Any?>) {
 		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list)
 	}
 	
+	@JvmStatic
 	@Hook
 	fun onBlockPlacedBy(subtile: SubTileEntity, world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase, stack: ItemStack) {
 		if (subtile is SubTileDaybloom && subtile.isPrime) subtile.setPrimusPosition()
 	}
 	
+	@JvmStatic
 	@Hook
 	fun onBlockAdded(subtile: SubTileEntity, world: World, x: Int, y: Int, z: Int) {
 		if (subtile is SubTileDaybloom && subtile.isPrime) subtile.setPrimusPosition()
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getIcon(pylon: BlockPylon, side: Int, meta: Int): IIcon {
 		return if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0)
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
 	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int): Boolean {
 		return MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
 		return recipe.output == ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		return if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun spawn(gaia: EntityDoppleganger?, player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, hard: Boolean): Boolean {
 		for (i in -1..1)
@@ -332,17 +359,20 @@ object AlfheimHookHandler {
 		return false
 	}
 	
+	@JvmStatic
 	@Hook(createMethod = true)
 	fun onItemRightClick(item: ItemGaiaHead, stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1))
 		return stack
 	}
 	
+	@JvmStatic
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase): Int {
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush)) 2 else 0
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun extinguishFire(world: World, player: EntityPlayer?, x: Int, y: Int, z: Int, side: Int): Boolean {
 		var x = x
@@ -368,6 +398,7 @@ object AlfheimHookHandler {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
 		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return
@@ -386,12 +417,14 @@ object AlfheimHookHandler {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
 		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) if (entity.isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(isMandatory = true)
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
 		if (Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimRegistry.soulburn)) {

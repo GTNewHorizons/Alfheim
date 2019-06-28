@@ -4,17 +4,15 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileTradePortal
 import alfheim.common.lexicon.AlfheimLexiconData
-import net.minecraft.block.*
+import net.minecraft.block.BlockContainer
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
-import net.minecraft.world.IBlockAccess
-import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import net.minecraft.world.*
+import vazkii.botania.api.lexicon.*
 
 class BlockTradePortal: BlockContainer(Material.rock), ILexiconable {
 	init {

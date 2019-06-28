@@ -1,7 +1,6 @@
 package alfheim.common.entity
 
-import net.minecraft.util.DamageSource
-import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.*
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.world.World
 import vazkii.botania.common.Botania

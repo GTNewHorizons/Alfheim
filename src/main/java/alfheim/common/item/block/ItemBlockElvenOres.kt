@@ -2,8 +2,7 @@ package alfheim.common.item.block
 
 import alfheim.common.block.BlockElvenOres
 import net.minecraft.block.Block
-import net.minecraft.item.ItemBlock
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 
 class ItemBlockElvenOres(block: Block): ItemBlock(block) {
 	

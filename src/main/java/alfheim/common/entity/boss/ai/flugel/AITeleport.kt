@@ -1,7 +1,6 @@
 package alfheim.common.entity.boss.ai.flugel
 
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.util.ChunkCoordinates
 
 class AITeleport(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	

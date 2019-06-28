@@ -7,7 +7,6 @@ import alfheim.api.spell.SpellBase
 import codechicken.lib.math.MathHelper
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
 class SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {

@@ -2,7 +2,6 @@ package alfheim.common.entity.boss.ai.flugel
 
 import alfheim.common.entity.EntityCharge
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.entity.player.EntityPlayer
 import vazkii.botania.common.core.helper.Vector3
 
 class AIEnergy(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {

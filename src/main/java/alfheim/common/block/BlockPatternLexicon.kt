@@ -1,18 +1,14 @@
 package alfheim.common.block
 
-import java.util.Random
-
-import net.minecraft.block.Block
-import net.minecraft.block.BlockFalling
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.world.IBlockAccess
-import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import net.minecraft.world.*
+import vazkii.botania.api.lexicon.*
+import java.util.*
 
 class BlockPatternLexicon(modid: String, material: Material, name: String, tab: CreativeTabs, lightlvl: Float, lightOpacity: Int, hardness: Float, harvTool: String, harvLvl: Int, resistance: Float, sound: Block.SoundType, private val isOpaque: Boolean, private val isBeacon: Boolean, private val isFalling: Boolean, private val entry: LexiconEntry): BlockFalling(material), ILexiconable {
 	

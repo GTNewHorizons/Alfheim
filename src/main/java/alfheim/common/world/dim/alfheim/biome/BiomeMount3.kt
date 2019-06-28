@@ -4,8 +4,7 @@ import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
-import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
-import ru.vamig.worldengine.standardcustomgen.WE_LakeGen
+import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeMount3: BiomeAlfheim(0) {

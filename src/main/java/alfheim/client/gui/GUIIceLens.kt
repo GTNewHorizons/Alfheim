@@ -1,18 +1,15 @@
 package alfheim.client.gui
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
-import cpw.mods.fml.common.eventhandler.EventPriority
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Gui
-import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
+import org.lwjgl.opengl.GL11.*
 
 class GUIIceLens(private val mc: Minecraft): Gui() {
 	

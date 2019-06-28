@@ -4,13 +4,12 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.common.item.ItemAstrolabe.Companion.getBlockName
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
-import net.minecraft.util.*
+import net.minecraft.util.EnumFacing
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.item.IBlockProvider
@@ -18,8 +17,8 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 import vazkii.botania.common.item.rod.ItemExchangeRod
-
 import java.util.*
+import kotlin.math.floor
 
 class ItemAstrolabe: Item() {
 	init {
@@ -29,7 +28,7 @@ class ItemAstrolabe: Item() {
 		unlocalizedName = "Astrolabe"
 	}
 	
-	override fun onItemUse(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		val meta = world.getBlockMetadata(x, y, z)
 		
@@ -57,7 +56,7 @@ class ItemAstrolabe: Item() {
 			val size = getSize(stack)
 			val newSize = if (size == 11) 3 else size + 2
 			setSize(stack, newSize)
-			ItemsRemainingRenderHandler.set(stack, newSize.toString() + "x" + newSize)
+			ItemsRemainingRenderHandler[stack] = newSize.toString() + "x" + newSize
 			
 			world!!.playSoundAtEntity(player, "random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
 		}
@@ -65,7 +64,7 @@ class ItemAstrolabe: Item() {
 		return stack
 	}
 	
-	fun placeAllBlocks(stack: ItemStack?, player: EntityPlayer): Boolean {
+	fun placeAllBlocks(stack: ItemStack, player: EntityPlayer): Boolean {
 		val blocksToPlace = getBlocksToPlace(stack, player)
 		if (!hasBlocks(stack, player, blocksToPlace))
 			return false
@@ -115,7 +114,7 @@ class ItemAstrolabe: Item() {
 		}
 	}
 	
-	fun displayRemainderCounter(player: EntityPlayer, stack: ItemStack?) {
+	fun displayRemainderCounter(player: EntityPlayer, stack: ItemStack) {
 		val block = getBlock(stack)
 		val meta = getBlockMeta(stack)
 		val count = ItemExchangeRod.getInventoryItemCount(player, stack, block, meta)
@@ -132,7 +131,7 @@ class ItemAstrolabe: Item() {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun addInformation(par1ItemStack: ItemStack?, player: EntityPlayer?, par3List: MutableList<*>, flags: Boolean) {
+	override fun addInformation(par1ItemStack: ItemStack?, player: EntityPlayer?, par3List: MutableList<Any?>, flags: Boolean) {
 		val block = getBlock(par1ItemStack)
 		val size = getSize(par1ItemStack)
 		
@@ -142,9 +141,9 @@ class ItemAstrolabe: Item() {
 	
 	companion object {
 		
-		private val TAG_BLOCK_NAME = "blockName"
-		private val TAG_BLOCK_META = "blockMeta"
-		private val TAG_SIZE = "size"
+		private const val TAG_BLOCK_NAME = "blockName"
+		private const val TAG_BLOCK_META = "blockMeta"
+		private const val TAG_SIZE = "size"
 		
 		fun hasBlocks(stack: ItemStack?, player: EntityPlayer, blocks: List<Vector3>): Boolean {
 			if (player.capabilities.isCreativeMode)
@@ -194,7 +193,7 @@ class ItemAstrolabe: Item() {
 				val range = (getSize(stack) xor 1) / 2
 				
 				val dir = ForgeDirection.getOrientation(mop.sideHit)
-				val rot = Math.floor(player.rotationYaw / 90.0 + 0.5).toInt() and 3
+				val rot = floor(player.rotationYaw / 90.0 + 0.5).toInt() and 3
 				val rotationDir = if (rot == 0) EnumFacing.SOUTH else if (rot == 1) EnumFacing.WEST else if (rot == 2) EnumFacing.NORTH else EnumFacing.EAST
 				
 				val pitchedVertically = player.rotationPitch > 60 || player.rotationPitch < -60

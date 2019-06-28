@@ -3,7 +3,7 @@ package alfheim.api.crafting.recipe
 import net.minecraft.item.ItemStack
 import vazkii.botania.api.recipe.RecipePetals
 
-class RecipeManaInfuser(val manaUsage: Int, out: ItemStack, vararg recipe: Any): RecipePetals(out, recipe) {
+class RecipeManaInfuser(val manaUsage: Int, out: ItemStack, vararg recipe: Any): RecipePetals(out, *recipe) {
 	
 	override fun toString(): String {
 		val s = StringBuilder()

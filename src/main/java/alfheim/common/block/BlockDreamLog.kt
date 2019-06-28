@@ -3,16 +3,14 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.lexicon.AlfheimLexiconData
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.BlockLog
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.api.lexicon.*
 
 class BlockDreamLog: BlockLog(), ILexiconable {
 	

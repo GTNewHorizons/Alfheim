@@ -1,20 +1,17 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ItemRenderer
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
-import net.minecraftforge.client.model.IModelCustom
+import org.lwjgl.opengl.GL11.*
 
 class RenderEntityHarp: Render() {
 	init {

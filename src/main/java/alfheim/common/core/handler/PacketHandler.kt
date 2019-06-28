@@ -1,21 +1,18 @@
 package alfheim.common.core.handler
 
-import java.lang.reflect.Field
-
 import alexsocol.asjlib.ASJReflectionHelper
-import alfheim.common.item.equipment.bauble.ItemCloudPendant
-import alfheim.common.item.equipment.bauble.ItemDodgeRing
+import alfheim.common.item.equipment.bauble.*
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.network.simpleimpl.MessageContext
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.network.NetHandlerPlayServer
 import net.minecraft.util.ChatComponentTranslation
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemTravelBelt
+import java.lang.reflect.Field
 
 object PacketHandler {
 	

@@ -1,7 +1,5 @@
 package alfheim.common.world.dim.alfheim.customgens
 
-import java.util.Random
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.IWorldGenerator
@@ -13,6 +11,7 @@ import thaumcraft.api.aspects.Aspect
 import thaumcraft.common.config.Config
 import thaumcraft.common.lib.world.biomes.BiomeHandler
 import vazkii.botania.common.block.ModBlocks
+import java.util.*
 
 class WorldGenAlfheimThaumOre: IWorldGenerator {
 	

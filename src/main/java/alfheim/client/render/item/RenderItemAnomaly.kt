@@ -1,7 +1,5 @@
 package alfheim.client.render.item
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.lib.LibResourceLocations
@@ -10,10 +8,10 @@ import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.IItemRenderer.ItemRenderType
+import org.lwjgl.opengl.GL11.*
 
 //Render from Thaumcraft nodes by Azanor
 class RenderItemAnomaly: IItemRenderer {

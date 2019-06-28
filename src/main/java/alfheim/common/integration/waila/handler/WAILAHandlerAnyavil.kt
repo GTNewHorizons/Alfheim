@@ -1,9 +1,7 @@
 package alfheim.common.integration.waila.handler
 
 import alfheim.common.block.tile.TileAnyavil
-import mcp.mobius.waila.api.IWailaConfigHandler
-import mcp.mobius.waila.api.IWailaDataAccessor
-import mcp.mobius.waila.api.IWailaDataProvider
+import mcp.mobius.waila.api.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound

@@ -1,13 +1,11 @@
 package alfheim.common.entity.boss.ai.flugel
 
-import java.util.HashSet
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.entity.EntityLightningMark
 import alfheim.common.entity.boss.EntityFlugel
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.ChunkCoordinates
+import java.util.*
 
 class AILightning(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	

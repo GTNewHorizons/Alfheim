@@ -6,9 +6,7 @@ import alfheim.common.core.registry.AlfheimBlocks
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntitySkull
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World

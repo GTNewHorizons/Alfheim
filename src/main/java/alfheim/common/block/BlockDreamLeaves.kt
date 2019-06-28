@@ -1,32 +1,24 @@
 package alfheim.common.block
 
-import java.util.Random
-
-import alexsocol.asjlib.render.IGlowingLayerBlock
-import alexsocol.asjlib.render.RenderGlowingLayerBlock
+import alexsocol.asjlib.render.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.lexicon.AlfheimLexiconData
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.BlockLeaves
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.init.Blocks
-import net.minecraft.init.Items
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.*
+import net.minecraft.init.*
+import net.minecraft.item.*
 import net.minecraft.util.IIcon
-import net.minecraft.world.IBlockAccess
-import net.minecraft.world.World
+import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.api.lexicon.*
 import vazkii.botania.common.item.ModItems
+import java.util.*
 
 class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 	

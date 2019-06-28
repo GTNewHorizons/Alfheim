@@ -6,8 +6,8 @@ import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase.SpellCastResult.DESYNC
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs
-import alfheim.common.core.handler.CardinalSystem.*
-import alfheim.common.core.handler.KeyBindingHandler
+import alfheim.common.core.handler.*
+import alfheim.common.core.handler.CardinalSystem.forPlayer
 import alfheim.common.network.Message2d.m2d
 import cpw.mods.fml.common.network.simpleimpl.*
 import io.netty.buffer.ByteBuf
@@ -31,7 +31,7 @@ class MessageKeyBind(var action: Int, var state: Boolean, var ticks: Int): ASJPa
 				KeyBindingIDs.ATTACK                      -> KeyBindingHandler.atack(player)
 				
 				KeyBindingIDs.CAST -> {
-					val ids = if (packet.state) HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
+					val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
 					val seg = forPlayer(player)
 					val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
 					if (spell == null)
@@ -57,7 +57,7 @@ class MessageKeyBind(var action: Int, var state: Boolean, var ticks: Int): ASJPa
 				
 				KeyBindingIDs.SEL    -> {
 					val e = player.worldObj.getEntityByID(packet.ticks)
-					if (e is EntityLivingBase) TargetingSystem.setTarget(player, e, packet.state)
+					if (e is EntityLivingBase) CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
 				}
 			}
 			return null

@@ -2,9 +2,7 @@ package alfheim.api.entity
 
 import alfheim.api.AlfheimAPI
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.MathHelper
-import net.minecraft.util.StatCollector
+import net.minecraft.util.*
 
 enum class EnumRace {
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;

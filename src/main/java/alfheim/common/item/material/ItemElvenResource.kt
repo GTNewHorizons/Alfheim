@@ -5,10 +5,10 @@ import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import vazkii.botania.common.Botania
+import kotlin.math.*
 
 class ItemElvenResource: Item /*implements IElvenItem, ILensEffect BACK*/() {
 	private val texture = arrayOfNulls<IIcon>(subItems.size)
@@ -30,14 +30,14 @@ class ItemElvenResource: Item /*implements IElvenItem, ILensEffect BACK*/() {
 	}
 	
 	override fun getIconFromDamage(meta: Int): IIcon {
-		return texture[Math.max(0, Math.min(meta, texture.size - 1))]
+		return texture[max(0, min(meta, texture.size - 1))]!!
 	}
 	
 	override fun getUnlocalizedName(stack: ItemStack): String {
-		return "item." + subItems[Math.max(0, Math.min(stack.itemDamage, subItems.size - 1))]
+		return "item." + subItems[max(0, min(stack.itemDamage, subItems.size - 1))]
 	}
 	
-	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<*>) {
+	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) {
 			if (i == ElvenResourcesMetas.InfusedDreamwoodTwig && !Botania.thaumcraftLoaded) continue
 			list.add(ItemStack(item, 1, i))

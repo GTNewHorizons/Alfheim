@@ -1,29 +1,21 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
-import org.lwjgl.opengl.GL11.*
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ItemRenderer
-import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.client.renderer.texture.TextureMap
-import net.minecraft.entity.Entity
+import net.minecraft.client.renderer.*
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
-import net.minecraft.util.IIcon
-import net.minecraft.util.StatCollector
+import net.minecraft.potion.*
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingHurtEvent
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IAncientWillContainer
-import vazkii.botania.api.mana.IManaGivingItem
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
@@ -43,7 +35,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 		super.onArmorTick(world, player, stack)
 		if (hasArmorSet(player)) {
 			val food = player!!.foodStats.foodLevel
-			if (food > 0 && food < 18 && player.shouldHeal() && player.ticksExisted % 80 == 0)
+			if (food in 1..17 && player.shouldHeal() && player.ticksExisted % 80 == 0)
 				player.heal(1f)
 			ManaItemHandler.dispatchManaExact(stack, player, 1, true)
 		}
@@ -116,15 +108,15 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 		
 		val helm = player.inventory.armorItemInSlot(3)
 		if (helm != null && helm.item is ItemElvoriumHelmet)
-			ItemElvoriumHelmet.renderOnPlayer(helm, event)
+			renderOnPlayer(helm, event)
 		
 		glPopMatrix()
 	}
 	
 	companion object {
 		
-		private val TAG_ANCIENT_WILL = "AncientWill"
-		internal var willIcon: IIcon
+		private const val TAG_ANCIENT_WILL = "AncientWill"
+		internal lateinit var willIcon: IIcon
 		
 		fun hasAncientWill_(stack: ItemStack?, will: Int): Boolean {
 			return ItemNBTHelper.getBoolean(stack, TAG_ANCIENT_WILL + will, false)

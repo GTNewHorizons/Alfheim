@@ -1,7 +1,5 @@
 package alfheim.client.render.block
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibRenderIDs
 import alfheim.client.render.tile.RenderTileAlfheimPylons
 import alfheim.common.block.tile.TileAlfheimPylon
@@ -10,6 +8,7 @@ import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderBlocks
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
 import net.minecraft.world.IBlockAccess
+import org.lwjgl.opengl.GL11.*
 
 class RenderBlockAlfheimPylons: ISimpleBlockRenderingHandler {
 	

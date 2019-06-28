@@ -1,15 +1,13 @@
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import alexsocol.asjlib.ASJUtilities;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+
+import java.util.*;
 
 public class WE_OreGen implements IWorldGenerator {
 

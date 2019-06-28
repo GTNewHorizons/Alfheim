@@ -3,9 +3,7 @@ package alfheim.common.entity.boss.ai.flugel
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.entity.player.EntityPlayer
-
-import java.util.Collections
+import java.util.*
 
 class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	

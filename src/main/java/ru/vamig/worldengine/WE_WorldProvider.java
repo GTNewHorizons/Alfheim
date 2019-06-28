@@ -9,7 +9,7 @@ import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
-	final int we_id = AlfheimConfig.biomeIDAlfheim;
+	final int we_id = AlfheimConfig.Companion.getBiomeIDAlfheim();
 	final float rainfall = 0.1F;
 	
 	@Override

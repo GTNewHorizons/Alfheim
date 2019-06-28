@@ -1,15 +1,13 @@
 package alfheim.common.entity.boss.ai.flugel
 
-import java.awt.Color
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.ModItems
+import java.awt.Color
 
 class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	

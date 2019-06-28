@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraftforge.client.event.RenderPlayerEvent
+import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
 
@@ -27,7 +28,7 @@ class ItemCreativeReachPendant: ItemPendant("CreativeReachPendant") {
 		// NO-OP
 	}
 	
-	override fun registerIcons(reg: IIconRegister) {
-		itemIcon = IconHelper.forItem(reg, this)
+	override fun registerIcons(par1IconRegister: IIconRegister) {
+		itemIcon = IconHelper.forItem(par1IconRegister, this)
 	}
 }

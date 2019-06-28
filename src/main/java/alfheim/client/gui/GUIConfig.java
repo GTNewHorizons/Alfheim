@@ -4,8 +4,7 @@ import alfheim.api.ModInfo;
 import alfheim.common.core.util.AlfheimConfig;
 import cpw.mods.fml.client.config.GuiConfig;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.ConfigElement;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.*;
 
 public class GUIConfig extends GuiConfig {
 

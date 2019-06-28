@@ -1,8 +1,7 @@
 package alfheim.common.potion
 
 import alfheim.AlfheimCore
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 
 class PotionBleeding: PotionAlfheim(AlfheimConfig.potionIDBleeding, "bleeding", true, 0xFF0000) {

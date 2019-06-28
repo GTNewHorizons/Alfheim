@@ -1,13 +1,11 @@
 package alfheim.common.core.asm
 
 import alexsocol.asjlib.ASJReflectionHelper
-import alexsocol.asjlib.asm.ASJASM
-import alexsocol.asjlib.asm.ASJPacketCompleter
+import alexsocol.asjlib.asm.*
 import alfheim.api.ModInfo
 import cpw.mods.fml.relauncher.CoreModManager
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
-import gloomyfolken.hooklib.minecraft.HookLoader
-import gloomyfolken.hooklib.minecraft.PrimaryClassTransformer
+import gloomyfolken.hooklib.minecraft.*
 
 @MCVersion(value = "1.7.10")
 class AlfheimHookLoader: HookLoader() {

@@ -1,7 +1,5 @@
 package alfheim.common.spell.tech
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -10,8 +8,8 @@ import alfheim.common.entity.spell.EntitySpellGravityTrap
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
+import org.lwjgl.opengl.GL11.*
 
 class SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600, 20) {
 	

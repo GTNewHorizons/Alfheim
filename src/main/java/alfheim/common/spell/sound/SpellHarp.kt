@@ -7,7 +7,6 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.entity.spell.EntitySpellHarp
 import codechicken.lib.math.MathHelper
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
 class SpellHarp: SpellBase("harp", EnumRace.POOKA, 15000, 3600, 30) {

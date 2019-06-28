@@ -1,28 +1,26 @@
 package alfheim.common.item.equipment.tool
 
-import java.awt.Color
-
-import gloomyfolken.hooklib.asm.Hook
-import gloomyfolken.hooklib.asm.ReturnCondition
+import gloomyfolken.hooklib.asm.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.passive.EntitySheep
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import vazkii.botania.common.item.ItemTwigWand
-import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.item.*
+import java.awt.Color
+import kotlin.math.min
 
 /** This class adds new set of dreamwood wands and handles everything (I hope)  */
+@Suppress("UNUSED_PARAMETER")
 object ItemTwigWandExtender {
 	
-	var icons: Array<IIcon>
-	val TAG_COLOR1 = "color1"
-	val TAG_COLOR2 = "color2"
-	val TAG_ELVEN = "elven"
-	val TAG_BIND_MODE = "bindMode"
+	lateinit var icons: Array<IIcon>
+	const val TAG_COLOR1 = "color1"
+	const val TAG_COLOR2 = "color2"
+	const val TAG_ELVEN = "elven"
+	const val TAG_BIND_MODE = "bindMode"
 	
 	/**
 	 * Core 0 - livingwood, Core 1 - dreamwwod
@@ -54,9 +52,7 @@ object ItemTwigWandExtender {
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun registerIcons(wand: ItemTwigWand, par1IconRegister: IIconRegister) {
-		icons = arrayOfNulls(5)
-		for (i in icons.indices)
-			icons[i] = IconHelper.forItem(par1IconRegister, wand, i)
+		icons = Array(5) { IconHelper.forItem(par1IconRegister, wand, it) }
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -66,7 +62,7 @@ object ItemTwigWandExtender {
 		if (pass == 4 && !isElven(stack)) pass = 0
 		if (pass == 0 && isElven(stack)) pass = 4
 		
-		return icons[Math.min(icons.size - 1, pass)]
+		return icons[min(icons.size - 1, pass)]
 	}
 	
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -74,8 +70,8 @@ object ItemTwigWandExtender {
 		return 5
 	}
 	
-	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getSubItems(wand: ItemTwigWand, par1: Item, par2CreativeTabs: CreativeTabs, par3List: MutableList<*>) {
+	@Hook(returnCondition = ReturnCondition.ALWAYS) // TODO test
+	fun getSubItems(wand: ItemTwigWand, par1: Item, par2CreativeTabs: CreativeTabs, par3List: MutableList<Any?>) {
 		for (i in 0..15) par3List.add(forColors(i, i, false))
 		for (i in 0..15) par3List.add(forColors(i, i, true))
 	}

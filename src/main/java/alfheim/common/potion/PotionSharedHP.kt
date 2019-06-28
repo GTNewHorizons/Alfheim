@@ -1,13 +1,10 @@
 package alfheim.common.potion
 
-import java.util.UUID
-
 import alfheim.AlfheimCore
 import alfheim.common.core.util.AlfheimConfig
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.SharedMonsterAttributes
-import net.minecraft.entity.ai.attributes.AttributeModifier
-import net.minecraft.entity.ai.attributes.BaseAttributeMap
+import net.minecraft.entity.*
+import net.minecraft.entity.ai.attributes.*
+import java.util.*
 
 class PotionSharedHP: PotionAlfheim(AlfheimConfig.potionIDSharedHP, "sharedHP", false, 0xFF0000) {
 	

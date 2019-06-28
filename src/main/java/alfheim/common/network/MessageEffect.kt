@@ -1,13 +1,9 @@
 package alfheim.common.network
 
 import alexsocol.asjlib.network.ASJPacket
-import cpw.mods.fml.common.network.simpleimpl.IMessage
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler
-import cpw.mods.fml.common.network.simpleimpl.MessageContext
-import net.minecraft.entity.Entity
+import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
 
 class MessageEffect @JvmOverloads constructor(val entity: Int, val id: Int, val dur: Int, val amp: Int, val upd: Boolean = true): ASJPacket() {
 	

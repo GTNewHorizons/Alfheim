@@ -1,23 +1,17 @@
 package alfheim.common.lexicon.page
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.texture.TextureManager
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.util.StatCollector
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.internal.IGuiLexiconEntry
-import vazkii.botania.api.lexicon.LexiconEntry
-import vazkii.botania.api.lexicon.LexiconRecipeMappings
+import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
-import vazkii.botania.common.lexicon.page.PageRecipe
-import vazkii.botania.common.lexicon.page.PageText
+import vazkii.botania.common.lexicon.page.*
 import vazkii.botania.common.lib.LibBlockNames
 
 class PagePureDaisyRecipe(unlocalizedName: String, private val recipe: RecipePureDaisy): PageRecipe(unlocalizedName) {

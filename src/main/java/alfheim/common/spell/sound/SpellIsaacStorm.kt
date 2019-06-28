@@ -2,7 +2,6 @@ package alfheim.common.spell.sound
 
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.api.spell.SpellBase.SpellCastResult
 import alfheim.common.entity.spell.EntitySpellIsaacMissile
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.IMob

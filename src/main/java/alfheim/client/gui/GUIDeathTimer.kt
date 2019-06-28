@@ -1,14 +1,11 @@
 package alfheim.client.gui
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
-import net.minecraft.client.gui.FontRenderer
-import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
+import org.lwjgl.opengl.GL11.*
 
 class GUIDeathTimer: GuiScreen() {
 	

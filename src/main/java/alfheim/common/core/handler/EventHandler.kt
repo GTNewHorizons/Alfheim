@@ -7,8 +7,9 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.CardinalSystem.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target
+import alfheim.common.core.handler.CardinalSystem.playerSegments
+import alfheim.common.core.handler.CardinalSystem.transfer
 import alfheim.common.core.registry.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
@@ -196,7 +197,7 @@ class EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (PartySystem.friendlyFire(e.entityLiving, e.source)) {
+		if (CardinalSystem.PartySystem.friendlyFire(e.entityLiving, e.source)) {
 			e.isCanceled = true
 			return
 		}
@@ -213,7 +214,7 @@ class EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityHurt(e: LivingHurtEvent) {
-		if (PartySystem.friendlyFire(e.entityLiving, e.source)) {
+		if (CardinalSystem.PartySystem.friendlyFire(e.entityLiving, e.source)) {
 			e.isCanceled = true
 			return
 		}
@@ -297,7 +298,7 @@ class EventHandler {
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
 			}
 			
-			val pt = PartySystem.getMobParty(e.entityLiving)
+			val pt = CardinalSystem.PartySystem.getMobParty(e.entityLiving)
 			pt?.setDead(e.entityLiving, true)
 		}
 	}
@@ -306,17 +307,17 @@ class EventHandler {
 	fun onServerTick(e: ServerTickEvent) {
 		if (AlfheimCore.enableMMO) {
 			if (e.phase == Phase.START) {
-				SpellCastingSystem.tick()
-				TimeStopSystem.tick()
+				CardinalSystem.SpellCastingSystem.tick()
+				CardinalSystem.TimeStopSystem.tick()
 			}
 			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
 				if (player == null)
 					playerSegments[name]?.target = Target(null, false)
 				else {
-					val tg = TargetingSystem.getTarget(player)
-					if (tg?.target != null && (!tg.target.isEntityAlive || Vector3.entityDistance(player, tg.target) > if (tg.target is IBossDisplayData) 128 else 32))
-						TargetingSystem.setTarget(player, null, false)
+					val tg = CardinalSystem.TargetingSystem.getTarget(player)
+					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target is IBossDisplayData) 128 else 32)
+						CardinalSystem.TargetingSystem.setTarget(player, null, false)
 				}
 			}
 		}
@@ -336,7 +337,7 @@ class EventHandler {
 			}
 			
 			if (e.entityLiving.isDead) {
-				val pt = PartySystem.getMobParty(e.entityLiving)
+				val pt = CardinalSystem.PartySystem.getMobParty(e.entityLiving)
 				pt?.setDead(e.entityLiving, true)
 			}
 		}

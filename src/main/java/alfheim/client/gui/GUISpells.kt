@@ -1,26 +1,19 @@
 package alfheim.client.gui
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
-import alfheim.api.spell.SpellBase
-import alfheim.client.core.handler.CardinalSystemClient
+import alfheim.client.core.handler.*
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
-import alfheim.client.core.handler.KeyBindingHandlerClient
-import cpw.mods.fml.common.eventhandler.EventPriority
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.texture.TextureManager
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.StatCollector
+import net.minecraft.util.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
+import org.lwjgl.opengl.GL11.*
 
 class GUISpells(private val mc: Minecraft): Gui() {
 	

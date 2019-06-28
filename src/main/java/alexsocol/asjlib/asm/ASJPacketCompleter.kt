@@ -1,19 +1,11 @@
 package alexsocol.asjlib.asm
 
-import org.objectweb.asm.Opcodes.*
-
-import java.util.ArrayList
-
-import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.MethodVisitor
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.FieldNode
-import org.objectweb.asm.tree.MethodNode
-
 import com.google.common.collect.Lists
-
 import net.minecraft.launchwrapper.IClassTransformer
+import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes.*
+import org.objectweb.asm.tree.*
+import java.util.*
 
 class ASJPacketCompleter: IClassTransformer {
 	

@@ -3,8 +3,7 @@ package alfheim.common.item.rod
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.world.World
 import vazkii.botania.api.mana.IManaUsingItem
 

@@ -1,17 +1,13 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-
-import java.util.Random
-
-import alexsocol.asjlib.render.RenderPostShaders
-import alexsocol.asjlib.render.ShadedObject
-import alfheim.api.lib.LibResourceLocations
-import alfheim.api.lib.LibShaderIDs
+import alexsocol.asjlib.render.*
+import alfheim.api.lib.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.GL11.*
+import java.util.*
 
 class RenderEntityGravityTrap: Render() {
 	

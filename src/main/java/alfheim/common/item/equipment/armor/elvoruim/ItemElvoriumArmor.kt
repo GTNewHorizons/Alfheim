@@ -49,7 +49,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	}
 	
 	override fun getItemAttributeModifiers(): Multimap<*, *> {
-		val multimap = HashMultimap.create()
+		val multimap = HashMultimap.create<String, AttributeModifier>()
 		val uuid = UUID(unlocalizedName.hashCode().toLong(), 0)
 		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).toDouble() / 20, 0))
 		return multimap
@@ -59,7 +59,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		if (armorset == null)
 			armorset = arrayOf(ItemStack(AlfheimItems.elvoriumHelmet), ItemStack(AlfheimItems.elvoriumChestplate), ItemStack(AlfheimItems.elvoriumLeggings), ItemStack(AlfheimItems.elvoriumBoots))
 		
-		return armorset
+		return armorset!!
 	}
 	
 	override fun hasArmorSetItem(player: EntityPlayer, i: Int): Boolean {

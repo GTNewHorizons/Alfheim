@@ -2,7 +2,6 @@ package alfheim.client.core.util
 
 import alexsocol.asjlib.ASJReflectionHelper
 import alfheim.api.lib.LibResourceLocations
-import net.minecraft.util.ResourceLocation
 import vazkii.botania.client.render.tile.RenderTilePylon
 
 object AlfheimBotaniaModifiersClient {

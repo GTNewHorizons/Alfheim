@@ -1,13 +1,11 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-
 import net.minecraft.client.renderer.RenderBlocks
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
-import net.minecraft.util.MathHelper
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.*
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.block.ModBlocks
 
 class RenderEntityMortar: Render() {

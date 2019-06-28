@@ -1,11 +1,9 @@
 package alfheim.common.potion
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.brew.potion.PotionMod
 
 open class PotionAlfheim(id: Int, name: String, badEffect: Boolean, color: Int): PotionMod(id, name, badEffect, color, iconID++) {

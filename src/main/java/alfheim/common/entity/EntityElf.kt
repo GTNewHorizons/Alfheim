@@ -1,28 +1,12 @@
 package alfheim.common.entity
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityCreature
-import net.minecraft.entity.EntityLiving
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.IMerchant
-import net.minecraft.entity.INpc
-import net.minecraft.entity.SharedMonsterAttributes
-import net.minecraft.entity.ai.EntityAIAttackOnCollide
-import net.minecraft.entity.ai.EntityAIHurtByTarget
-import net.minecraft.entity.ai.EntityAILookIdle
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget
-import net.minecraft.entity.ai.EntityAISwimming
-import net.minecraft.entity.ai.EntityAIWander
-import net.minecraft.entity.ai.EntityAIWatchClosest
+import net.minecraft.entity.*
+import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
-import net.minecraft.village.MerchantRecipe
-import net.minecraft.village.MerchantRecipeList
+import net.minecraft.village.*
 import net.minecraft.world.World
 
 class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {

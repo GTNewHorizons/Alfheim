@@ -9,13 +9,10 @@ import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.ai.attributes.*
-import net.minecraft.item.Item.ToolMaterial
-import net.minecraft.item.ItemArmor.ArmorMaterial
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 import org.apache.logging.log4j.Level
 import vazkii.botania.api.recipe.RecipeElvenTrade
-
 import java.util.*
 
 object AlfheimAPI {

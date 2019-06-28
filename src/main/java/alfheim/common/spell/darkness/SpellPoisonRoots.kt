@@ -1,22 +1,19 @@
 package alfheim.common.spell.darkness
 
-import java.util.ArrayList
-
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
+import java.util.*
 
 class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
-				 ?: return SpellBase.SpellCastResult.NOTARGET
+				 ?: return SpellCastResult.NOTARGET
 		var flagBadEffs = false
 		var flagNotParty = false
 		var member: EntityLivingBase?
@@ -32,9 +29,9 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 			}
 		}
 		
-		if (!flagBadEffs) return SpellBase.SpellCastResult.WRONGTGT
+		if (!flagBadEffs) return SpellCastResult.WRONGTGT
 		
-		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(16.0, 16.0, 16.0))
+		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(16.0, 16.0, 16.0)) as List<EntityLivingBase>
 		for (e in l) {
 			if (pt.isMember(e)) {
 				flagNotParty = true
@@ -42,10 +39,10 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 			}
 		}
 		
-		if (!flagNotParty) return SpellBase.SpellCastResult.NOTARGET
+		if (!flagNotParty) return SpellCastResult.NOTARGET
 		
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		val remove = ArrayList<PotionEffect>()
 		var mobs = l.iterator()
@@ -58,7 +55,7 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 				pe = o as PotionEffect
 				
 				while (pt.isMember(target) && mobs.hasNext()) target = mobs.next()
-				if (pt.isMember(target)) return SpellBase.SpellCastResult.NOTARGET            // Some desync, sorry for your mana :(
+				if (pt.isMember(target)) return SpellCastResult.NOTARGET            // Some desync, sorry for your mana :(
 				
 				if (Potion.potionTypes[pe.getPotionID()].isBadEffect) {
 					target.addPotionEffect(PotionEffect(pe.potionID, pe.duration, pe.amplifier, pe.isAmbient))

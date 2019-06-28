@@ -1,18 +1,12 @@
 package alfheim.common.integration.travellersgear.handler
 
-import org.lwjgl.opengl.GL11.*
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent
+import org.lwjgl.opengl.GL11.*
 import travellersgear.api.TravellersGearAPI
-import vazkii.botania.api.item.IBaubleRender
+import vazkii.botania.api.item.*
 import vazkii.botania.api.item.IBaubleRender.RenderType
-import vazkii.botania.api.item.ICosmeticAttachable
-import vazkii.botania.api.item.IPhantomInkable
 
 class TGHandlerBotaniaRenderer {
 	

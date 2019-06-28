@@ -1,12 +1,11 @@
 package alfheim.client.render.tile
 
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.*
-
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.entity.ModelBipedNew
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer
 import net.minecraft.tileentity.TileEntitySkull
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 
 class RenderTileFlugelHead: TileEntitySkullRenderer() {
 	

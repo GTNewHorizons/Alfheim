@@ -3,12 +3,10 @@ package alfheim.common.item.equipment.armor.elemental
 import alfheim.AlfheimCore
 import alfheim.common.core.registry.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.MathHelper
-import net.minecraft.util.StatCollector
+import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
 import net.minecraftforge.event.entity.living.LivingFallEvent
@@ -25,7 +23,7 @@ class ItemElementalAirBoots: ElementalArmor(3, "ElementalAirBoots") {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<*>, b: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		list.add(StatCollector.translateToLocal("item.ElementalArmor.desc1"))
 		super.addInformation(stack, player, list, b)
 	}
@@ -51,6 +49,6 @@ class ItemElementalAirBoots: ElementalArmor(3, "ElementalAirBoots") {
 	
 	companion object {
 		
-		val ONEBLOCKCOST = 10
+		const val ONEBLOCKCOST = 10
 	}
 }

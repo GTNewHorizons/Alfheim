@@ -5,8 +5,7 @@ import baubles.api.BaubleType
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import vazkii.botania.api.mana.IManaGivingItem
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 open class ItemAuraRingAlfheim(name: String): ItemBauble(name), IManaGivingItem {

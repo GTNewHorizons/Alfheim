@@ -1,7 +1,5 @@
 package alfheim.common.item.compat.thaumcraft
 
-import java.util.ArrayList
-
 import alfheim.api.ModInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack

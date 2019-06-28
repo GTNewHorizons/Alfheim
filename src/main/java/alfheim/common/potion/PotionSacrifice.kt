@@ -3,8 +3,7 @@ package alfheim.common.potion
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.boss.IBossDisplayData

@@ -1,6 +1,6 @@
 package alfheim.client.render.tile
 
-import alexsocol.asjlib.extendables.*
+import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleItemHolder

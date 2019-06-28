@@ -6,9 +6,7 @@ import alfheim.api.spell.SpellBase
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.util.MovingObjectPosition
+import net.minecraft.entity.player.*
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
@@ -22,18 +20,17 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	var tcd = 0
 	var tmana = 0
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		if (caster !is EntityPlayer) return SpellBase.SpellCastResult.WRONGTGT
-		val result: SpellBase.SpellCastResult
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (caster !is EntityPlayer) return SpellCastResult.WRONGTGT
+		val result: SpellCastResult = checkCast(caster)
 		
 		val dist = (caster as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 5.0
 		val mop = ASJUtilities.getSelectedBlock(caster, dist, false)
-		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellBase.SpellCastResult.WRONGTGT
+		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellCastResult.WRONGTGT
 		
 		tmana = removeBlocksInIteration(caster.worldObj, caster, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, false)
 		
-		result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		removeBlocksInIteration(caster.worldObj, caster, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, true, false)
 		
@@ -72,8 +69,8 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 			if (!player.capabilities.isCreativeMode) {
 				val localMeta = world.getBlockMetadata(x, y, z)
 				if (remove) block.onBlockHarvested(world, x, y, z, localMeta, player)
-				
-				if (remove && (flag = block.removedByPlayer(world, player, x, y, z, true))) {
+				flag = block.removedByPlayer(world, player, x, y, z, true)
+				if (remove && flag) {
 					block.onBlockDestroyedByPlayer(world, x, y, z, localMeta)
 					
 					//					if(!ItemElementiumPick.isDisposable(block))

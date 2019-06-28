@@ -6,8 +6,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.world.*
-
-import java.util.Random
+import java.util.*
 
 class BlockPattern(modid: String, material: Material, name: String, tab: CreativeTabs, lightlvl: Float, lightOpacity: Int, hardness: Float, harvTool: String, harvLvl: Int, resistance: Float, sound: Block.SoundType, private val isOpaque: Boolean, private val isBeacon: Boolean, private val isFalling: Boolean): BlockFalling(material) {
 	

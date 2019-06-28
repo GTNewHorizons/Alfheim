@@ -33,7 +33,7 @@ abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type,
 		if (armorset == null)
 			armorset = arrayOf(ItemStack(AlfheimItems.elementalHelmet), ItemStack(AlfheimItems.elementalChestplate), ItemStack(AlfheimItems.elementalLeggings), ItemStack(AlfheimItems.elementalBoots))
 		
-		return armorset
+		return armorset!!
 	}
 	
 	override fun hasArmorSetItem(player: EntityPlayer, i: Int): Boolean {

@@ -4,30 +4,27 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import cpw.mods.fml.common.eventhandler.Event.Result
 import net.minecraft.block.Block
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.ItemHoe
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.player.UseHoeEvent
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.item.ISortableTool
-import vazkii.botania.api.mana.IManaUsingItem
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 
-open class ItemManasteelHoe @JvmOverloads constructor(mat: Item.ToolMaterial = BotaniaAPI.manasteelToolMaterial, name: String = "ManasteelHoe"): ItemHoe(mat), IManaUsingItem, ISortableTool {
+open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = BotaniaAPI.manasteelToolMaterial, name: String = "ManasteelHoe"): ItemHoe(mat), IManaUsingItem, ISortableTool {
 	
 	val manaPerDamage: Int
 		get() = MANA_PER_DAMAGE
 	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
-		setTextureName(ModInfo.MODID + ":" + name)
+		setTextureName("${ModInfo.MODID}:$name")
 		unlocalizedName = name
 	}
 	
@@ -58,19 +55,19 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: Item.ToolMaterial = B
 			
 			val block = world!!.getBlock(x, y, z)
 			
-			if (side != 0 && world.isAirBlock(x, y + 1, z) && (block === Blocks.grass || block === Blocks.dirt)) {
+			return if (side != 0 && world.isAirBlock(x, y + 1, z) && (block === Blocks.grass || block === Blocks.dirt)) {
 				val block1 = Blocks.farmland
 				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block1.stepSound.stepResourcePath, (block1.stepSound.getVolume() + 1) * 0.5f, block1.stepSound.pitch * 0.8f)
 				
 				if (world.isRemote) {
-					return true
+					true
 				} else {
 					world.setBlock(x, y, z, block1)
 					ToolCommons.damageItem(stack, 1, player, manaPerDamage)
-					return true
+					true
 				}
 			} else {
-				return false
+				false
 			}
 		}
 	}
@@ -97,7 +94,6 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: Item.ToolMaterial = B
 	}
 	
 	companion object {
-		
-		private val MANA_PER_DAMAGE = 60
+		const val MANA_PER_DAMAGE = 60
 	}
 }

@@ -1,14 +1,12 @@
 package alfheim.common.item.lens
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.IManaSpreader
 import vazkii.botania.common.block.tile.mana.TileSpreader
-import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.lens.Lens
 
 class LensTripwire: Lens() {

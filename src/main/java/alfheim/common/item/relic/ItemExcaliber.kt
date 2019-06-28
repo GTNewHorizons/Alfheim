@@ -1,35 +1,25 @@
 package alfheim.common.item.relic
 
-import com.google.common.collect.HashMultimap
-import com.google.common.collect.Multimap
-
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.SharedMonsterAttributes
+import com.google.common.collect.*
+import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
-import net.minecraft.item.EnumRarity
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
 import net.minecraft.server.MinecraftServer
 import net.minecraft.stats.Achievement
-import net.minecraft.util.AxisAlignedBB
-import net.minecraft.util.DamageSource
-import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.EnumHelper
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.item.IRelic
-import vazkii.botania.api.mana.BurstProperties
-import vazkii.botania.api.mana.ILensEffect
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
@@ -41,7 +31,7 @@ import vazkii.botania.common.item.relic.ItemRelic
  */
 class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILensEffect {
 	
-	internal var achievement: Achievement
+	internal lateinit var achievement: Achievement
 	
 	init {
 		this.creativeTab = AlfheimCore.alfheimTab
@@ -96,9 +86,9 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	}
 	
 	override fun getItemAttributeModifiers(): Multimap<*, *> {
-		val multimap = HashMultimap.create()
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", 10.0, 0))
-		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", 0.3, 1))
+		val multimap = HashMultimap.create<String, AttributeModifier>()
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 10.0, 0))
+		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 0.3, 1))
 		return multimap
 	}
 	
@@ -135,15 +125,15 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		var homeID = ItemNBTHelper.getInt(stack, TAG_HOME_ID, -1)
 		if (homeID == -1) {
 			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(5.0, 5.0, 5.0)
-			val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis1)
+			val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis1) as List<EntityLivingBase>
 			for (living in entities) {
 				if (living !is EntityPlayer && living !is IBossDisplayData && living is IMob && living.hurtTime == 0) {
-					homeID = living.getEntityId()
+					homeID = living.entityId
 					ItemNBTHelper.setInt(stack, TAG_HOME_ID, homeID)
 				}
 			}
 		}
-		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis)
+		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		val home: Entity?
 		if (homeID != -1) {
 			home = entity.worldObj.getEntityByID(homeID)
@@ -153,6 +143,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 				burst.setMotion(vecMotion.x, vecMotion.y, vecMotion.z)
 			}
 		}
+		
 		for (living in entities) {
 			if (living !is EntityPlayer || living.commandSenderName != attacker && (MinecraftServer.getServer() == null || MinecraftServer.getServer().isPVPEnabled)) {
 				if (living.hurtTime == 0) {
@@ -183,9 +174,9 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	
 	companion object {
 		
-		private val TAG_ATTACKER_USERNAME = "attackerUsername"
-		private val TAG_HOME_ID = "homeID"
+		const val TAG_ATTACKER_USERNAME = "attackerUsername"
+		const val TAG_HOME_ID = "homeID"
 		
-		val toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2f, 6.0f, 40)
+		val toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2f, 6.0f, 40)!!
 	}
 }

@@ -5,7 +5,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.SpellEffectHandler
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer

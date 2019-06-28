@@ -1,18 +1,14 @@
 package alfheim.common.item.equipment.armor.elemental
 
 import alfheim.AlfheimCore
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
-import net.minecraft.util.MathHelper
-import net.minecraft.util.StatCollector
+import net.minecraft.potion.*
+import net.minecraft.util.*
 import net.minecraft.world.World
-import vazkii.botania.api.mana.IManaDiscountArmor
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 
 open class ItemElementalWaterHelm: ElementalArmor, IManaDiscountArmor {
 	
@@ -40,7 +36,7 @@ open class ItemElementalWaterHelm: ElementalArmor, IManaDiscountArmor {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<*>, b: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		list.add(StatCollector.translateToLocal("item.ElementalArmor.desc4"))
 		super.addInformation(stack, player, list, b)
 	}

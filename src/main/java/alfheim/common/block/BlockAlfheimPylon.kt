@@ -12,16 +12,13 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import thaumcraft.api.crafting.IInfusionStabiliser
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
-import vazkii.botania.common.block.BlockModContainer
-import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.api.lexicon.*
+import vazkii.botania.common.block.*
 import vazkii.botania.common.core.handler.ConfigHandler
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)

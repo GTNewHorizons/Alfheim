@@ -1,14 +1,11 @@
 package alexsocol.asjlib.render
 
-import java.util.ArrayList
-import java.util.Collections
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.common.MinecraftForge
+import java.util.*
 
 object RenderPostShaders {
 	

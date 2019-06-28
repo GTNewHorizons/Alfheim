@@ -1,7 +1,5 @@
 package alfheim.common.spell.water
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -12,18 +10,18 @@ import alfheim.common.core.handler.SpellEffectHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
+import org.lwjgl.opengl.GL11.*
 
 class SpellPurifyingSurface: SpellBase("purifyingsurface", EnumRace.UNDINE, 5000, 600, 20) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		SpellEffectHandler.sendPacket(Spells.PURE_AREA, caster)
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(5.0, 0.5, 5.0))
+		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(5.0, 0.5, 5.0)) as List<EntityLivingBase>
 		for (living in list) {
 			if (!PartySystem.mobsSameParty(caster, living) || Vector3.entityDistancePlane(living, caster) > 5) continue
 			

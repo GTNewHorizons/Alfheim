@@ -3,24 +3,16 @@
 
 package ru.vamig.worldengine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXYZ;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
-import ru.vamig.worldengine.standardcustomgen.WE_GrassGen;
-import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
-import ru.vamig.worldengine.standardcustomgen.WE_SnowGen;
-import ru.vamig.worldengine.standardcustomgen.WE_WorldTreeGen;
+import ru.vamig.worldengine.additions.*;
+import ru.vamig.worldengine.standardcustomgen.*;
+
+import java.util.*;
 
 public class WE_Biome extends BiomeGenBase {
 	public int id;

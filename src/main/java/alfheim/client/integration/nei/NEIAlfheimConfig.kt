@@ -1,11 +1,9 @@
 package alfheim.client.integration.nei
 
 import alfheim.api.ModInfo
-import alfheim.client.integration.nei.recipes.RecipeHandlerManaInfuser
-import alfheim.client.integration.nei.recipes.RecipeHandlerTradePortal
+import alfheim.client.integration.nei.recipes.*
 import alfheim.common.core.registry.AlfheimBlocks
-import codechicken.nei.api.API
-import codechicken.nei.api.IConfigureNEI
+import codechicken.nei.api.*
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.block.ModBlocks
 

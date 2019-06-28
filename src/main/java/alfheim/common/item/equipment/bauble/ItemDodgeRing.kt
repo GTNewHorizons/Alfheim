@@ -1,7 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.AlfheimCore
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
@@ -10,19 +8,16 @@ import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Gui
-import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.gui.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
-import vazkii.botania.common.core.helper.ItemNBTHelper
-import vazkii.botania.common.core.helper.Vector3
+import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemDodgeRing: ItemBauble("DodgeRing") {

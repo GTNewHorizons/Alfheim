@@ -14,16 +14,11 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.IIcon
+import net.minecraft.util.*
 import net.minecraft.world.World
-import vazkii.botania.api.lexicon.ILexiconable
-import vazkii.botania.api.lexicon.LexiconEntry
-import vazkii.botania.api.wand.IWandHUD
-import vazkii.botania.api.wand.IWandable
-import vazkii.botania.common.block.ModBlocks
-import vazkii.botania.common.block.ModFluffBlocks
+import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.wand.*
+import vazkii.botania.common.block.*
 
 class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, IWandable {
 	init {

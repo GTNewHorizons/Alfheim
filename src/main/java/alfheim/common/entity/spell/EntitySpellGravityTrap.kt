@@ -1,23 +1,19 @@
 package alfheim.common.entity.spell
 
-import java.util.UUID
-
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.spell.ITimeStopSpecific
-import alfheim.api.spell.SpellBase
+import alfheim.api.spell.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.SpellEffectHandler
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.util.DamageSourceSpell
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import alfheim.common.core.util.*
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
+import java.util.*
 
 class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster: EntityLivingBase? = null, x: Double = 0.0, y: Double = 0.0, z: Double = 0.0): Entity(world), ITimeStopSpecific {
 	

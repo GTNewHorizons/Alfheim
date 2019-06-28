@@ -9,7 +9,7 @@ import alfheim.common.core.command.CommandRace
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.*
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.entity.*
@@ -21,10 +21,9 @@ import net.minecraft.world.World
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.common.MinecraftForge
-import vazkii.botania.client.core.handler.ClientTickHandler
-import vazkii.botania.common.core.helper.ItemNBTHelper
-
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.common.core.helper.ItemNBTHelper
+import kotlin.math.*
 
 class ItemHoloProjector: Item() {
 	init {
@@ -36,7 +35,7 @@ class ItemHoloProjector: Item() {
 	
 	// Shift+RMB - select race; RMB - rotate clockwise
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
-		val seg = getSegmentLookedAt(stack, player)
+		val seg = getSegmentLookedAt(player)
 		
 		if (player!!.isSneaking && !world!!.isRemote)
 			CommandRace().processCommand(player, arrayOf(EnumRace.values()[seg + 1].toString()))
@@ -50,7 +49,7 @@ class ItemHoloProjector: Item() {
 	// Shift+LMB - switch gender; LMB - rotate anti-clockwise
 	override fun onEntitySwing(player: EntityLivingBase?, stack: ItemStack?): Boolean {
 		if (player is EntityPlayer) {
-			val seg = getSegmentLookedAt(stack, player)
+			val seg = getSegmentLookedAt(player)
 			val pos = getModel(stack, seg)
 			if (player.isSneaking)
 				setModel(stack, seg, pos.rotation, !pos.isMale)
@@ -69,9 +68,6 @@ class ItemHoloProjector: Item() {
 		if (eqLastTick != equipped) setEquipped(stack, equipped)
 		
 		if ((!equipped || firstTick) && entity is EntityLivingBase) {
-			val angles = 360
-			val segAngles = angles / RACES
-			val shift = (segAngles / 2).toFloat()
 			if (firstTick) tickFirst(stack)
 		}
 	}
@@ -90,7 +86,7 @@ class ItemHoloProjector: Item() {
 		if (e.type != ElementType.ALL) return
 		val player = Minecraft.getMinecraft().thePlayer
 		val stack = player.currentEquippedItem
-		if (stack != null && stack.item === this) renderHUD(e.resolution, player, stack)
+		if (stack != null && stack.item === this) renderHUD(e.resolution, player)
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -103,7 +99,6 @@ class ItemHoloProjector: Item() {
 		glDisable(GL_CULL_FACE)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		val alpha = (Math.sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).toDouble()).toFloat() * 0.5f + 0.5f) * 0.4f + 0.3f
 		
 		val posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks
 		val posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks
@@ -123,7 +118,7 @@ class ItemHoloProjector: Item() {
 		val y = v * s * 2f
 		var y0 = 0f
 		
-		val segmentLookedAt = getSegmentLookedAt(stack, player)
+		val segmentLookedAt = getSegmentLookedAt(player)
 		
 		for (seg in 0 until RACES) {
 			var inside = false
@@ -156,14 +151,14 @@ class ItemHoloProjector: Item() {
 			tess.startDrawingQuads()
 			for (i in 0 until segAngles) {
 				val ang = i.toFloat() + (seg * segAngles).toFloat() + shift
-				var xp = Math.cos(ang * Math.PI / 180f) * s
-				var zp = Math.sin(ang * Math.PI / 180f) * s
+				var xp = cos(ang * Math.PI / 180f) * s
+				var zp = sin(ang * Math.PI / 180f) * s
 				
 				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, u.toDouble(), v.toDouble())
 				tess.addVertexWithUV(xp, y0.toDouble(), zp, u.toDouble(), 0.0)
 				
-				xp = Math.cos((ang + 1) * Math.PI / 180f) * s
-				zp = Math.sin((ang + 1) * Math.PI / 180f) * s
+				xp = cos((ang + 1) * Math.PI / 180f) * s
+				zp = sin((ang + 1) * Math.PI / 180f) * s
 				
 				tess.addVertexWithUV(xp, y0.toDouble(), zp, 0.0, 0.0)
 				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, 0.0, v.toDouble())
@@ -179,8 +174,8 @@ class ItemHoloProjector: Item() {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	fun renderHUD(resolution: ScaledResolution, player: EntityPlayer, stack: ItemStack) {
-		val seg = getSegmentLookedAt(stack, player)
+	fun renderHUD(resolution: ScaledResolution, player: EntityPlayer) {
+		val seg = getSegmentLookedAt(player)
 		
 		val font = Minecraft.getMinecraft().fontRenderer
 		var s = StatCollector.translateToLocal("race." + EnumRace.values()[seg + 1].toString() + ".name")
@@ -194,20 +189,20 @@ class ItemHoloProjector: Item() {
 		font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 + 65, 0xFFFFFF)
 	}
 	
-	private class ModelHolder(val rotation: Int, val isMale: Boolean)
+	data class ModelHolder(val rotation: Int, val isMale: Boolean)
 	
 	companion object {
 		
-		private val RACES = 9
+		private const val RACES = 9
 		private val FALLBACK_MODEL = ModelHolder(0, true)
 		
-		private val TAG_MODEL_PREFIX = "model"
-		private val TAG_GENDER = "gender"
-		private val TAG_ROTATION = "rotation"
-		private val TAG_EQUIPPED = "equipped"
-		private val TAG_FIRST_TICK = "firstTick"
+		private const val TAG_MODEL_PREFIX = "model"
+		private const val TAG_GENDER = "gender"
+		private const val TAG_ROTATION = "rotation"
+		private const val TAG_EQUIPPED = "equipped"
+		private const val TAG_FIRST_TICK = "firstTick"
 		
-		private fun getSegmentLookedAt(stack: ItemStack?, player: EntityLivingBase?): Int {
+		private fun getSegmentLookedAt(player: EntityLivingBase?): Int {
 			val yaw = getCheckingAngle(player!!, 360f)
 			
 			val angles = 360
@@ -231,7 +226,7 @@ class ItemHoloProjector: Item() {
 			yaw -= 360f - base
 			var angle = 360f - yaw + shift
 			
-			if (angle < 0) angle = 360f + angle
+			if (angle < 0) angle += 360f
 			
 			return angle
 		}

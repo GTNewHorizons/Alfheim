@@ -6,15 +6,13 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.SpellEffectHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
 import net.minecraft.world.World
-
-import java.util.UUID
+import java.util.*
 
 class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 	

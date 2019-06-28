@@ -16,9 +16,9 @@ class TileAnomaly: TileMod() {
 	var compatibilityBit = 0 // not serializing because will be recalculated on load
 	
 	override fun updateEntity() {
-		if (mainSubTile == null || mainSubTile!!.isEmpty() || subTiles[mainSubTile] == null) return
+		if (mainSubTile == null || mainSubTile!!.isEmpty() || subTiles[mainSubTile!!] == null) return
 		
-		val l = subTiles[mainSubTile]!!.targets
+		val l = subTiles[mainSubTile!!]!!.targets
 		for (subTile in subTiles.values) subTile.updateEntity(l as MutableList<Any?>)
 	}
 	

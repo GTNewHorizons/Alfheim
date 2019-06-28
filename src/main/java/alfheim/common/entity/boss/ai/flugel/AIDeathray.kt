@@ -4,11 +4,8 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.ChunkCoordinates
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFallingStar
-
 import java.util.*
 
 class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {

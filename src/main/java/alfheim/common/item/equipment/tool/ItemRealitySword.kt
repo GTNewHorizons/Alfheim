@@ -16,12 +16,12 @@ import net.minecraft.potion.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.mana.*
-
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter
+import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import java.nio.charset.Charset
 import java.security.*
-
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter
+import kotlin.experimental.xor
+import kotlin.math.max
 
 class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	init {
@@ -41,7 +41,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIconIndex(stack: ItemStack): IIcon {
-		return textures[getInt(stack, TAG_ELEMENT, 0)]
+		return textures[getInt(stack, TAG_ELEMENT, 0)]!!
 	}
 	
 	override fun getIcon(stack: ItemStack, pass: Int): IIcon {
@@ -58,7 +58,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 			}
 			
 			if (!ManaItemHandler.requestManaExact(stack, player, 1, !world!!.isRemote)) return stack
-			setInt(stack, TAG_ELEMENT, Math.max(0, getInt(stack, TAG_ELEMENT, 0) + 1) % 5)
+			setInt(stack, TAG_ELEMENT, max(0, getInt(stack, TAG_ELEMENT, 0) + 1) % 5)
 		} else
 			player.setItemInUse(stack, this.getMaxItemUseDuration(stack))
 		return stack
@@ -66,7 +66,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	
 	internal fun merge(s1: String, s2: String): String? {
 		val s = StringBuilder()
-		for (i in 0 until s1.length) for (j in 0 until s2.length) s.append((s1[i] * s2[j] % 256).toChar())
+		for (i in 0 until s1.length) for (j in 0 until s2.length) s.append(s1[i].toShort() * s2[j].toShort() % 256)
 		return hash(s.toString())
 	}
 	
@@ -94,38 +94,36 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 			do {
 				indB = rand.nextInt(l)
 			} while (indB == indA)
-			val c = (chrs[indA] xor chrs[indB]).toChar()
+			val c = (chrs[indA].toShort() xor chrs[indB].toShort()).toChar()
 			chrs[indA] = c
 		}
 		
 		return String(chrs)
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, slotID: Int, inHand: Boolean) {
 		if (world.isRemote) return
 		
 		val flag = getInt(stack, TAG_ELEMENT, 0) == 5
 		if (entity is EntityPlayer) {
 			if (!flag && 0 < getInt(stack, TAG_ELEMENT, 0) && getInt(stack, TAG_ELEMENT, 0) < 5)
 				if (!ManaItemHandler.requestManaExact(stack, entity as EntityPlayer?, 1, !world.isRemote))
-					setInt(stack!!, TAG_ELEMENT, 0)
+					setInt(stack, TAG_ELEMENT, 0)
 			
 			if (flag && entity.commandSenderName != "AlexSocol") {
-				val player = entity as EntityPlayer?
-				world.spawnEntityInWorld(EntityItem(world, player.posX, player.posY, player.posZ, stack!!.copy()))
-				player.inventory.consumeInventoryItem(AlfheimItems.realitySword)
-				player.setHealth(0f)
-				player.onDeath(DamageSource.outOfWorld)
-				ASJUtilities.sayToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", player.getCommandSenderName()))
+				world.spawnEntityInWorld(EntityItem(world, entity.posX, entity.posY, entity.posZ, stack.copy()))
+				entity.inventory.consumeInventoryItem(AlfheimItems.realitySword)
+				entity.health = 0f
+				entity.onDeath(DamageSource.outOfWorld)
+				ASJUtilities.sayToAllOnline(StatCollector.translateToLocalFormatted("item.RealitySword.DIE", entity.getCommandSenderName()))
 			}
 		} else if (flag && entity is EntityLivingBase) {
-			val living = entity as EntityLivingBase?
-			world.spawnEntityInWorld(EntityItem(world, living.posX, living.posY, living.posZ, stack!!.copy()))
+			world.spawnEntityInWorld(EntityItem(world, entity.posX, entity.posY, entity.posZ, stack.copy()))
 			stack.stackSize = 0
-			living.setHealth(0f)
-			living.onDeath(DamageSource.outOfWorld)
+			entity.health = 0f
+			entity.onDeath(DamageSource.outOfWorld)
 		} else if (flag) {
-			world.spawnEntityInWorld(EntityItem(world, 0.0, 666.0, 0.0, stack!!.copy()))
+			world.spawnEntityInWorld(EntityItem(world, 0.0, 666.0, 0.0, stack.copy()))
 			stack.stackSize = 0
 		}
 	}
@@ -161,27 +159,27 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 		}
 	}
 	
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<*>?, b: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		val elem = getInt(stack, TAG_ELEMENT, 0)
 		if (elem == 5) {
-			list!!.add(StatCollector.translateToLocal("item.RealitySword.descZ"))
+			list.add(StatCollector.translateToLocal("item.RealitySword.descZ"))
 			return
 		}
 		
-		if (0 < elem && elem < 5) {
-			list!!.add(StatCollector.translateToLocal("item.RealitySword.desc$elem"))
+		if (elem in 1..4) {
+			list.add(StatCollector.translateToLocal("item.RealitySword.desc$elem"))
 			list.add(StatCollector.translateToLocal("item.RealitySword.desc5"))
 		} else
-			list!!.add(StatCollector.translateToLocal("item.RealitySword.desc0"))
+			list.add(StatCollector.translateToLocal("item.RealitySword.desc0"))
 	}
 	
 	override fun usesMana(stack: ItemStack): Boolean {
-		return 0 < getInt(stack, TAG_ELEMENT, 0) && getInt(stack, TAG_ELEMENT, 0) < 5
+		return getInt(stack, TAG_ELEMENT, 0) in 1..4
 	}
 	
 	companion object {
 		
-		val TAG_ELEMENT = "element"
+		const val TAG_ELEMENT = "element"
 		val textures = arrayOfNulls<IIcon>(6)
 	}
 }

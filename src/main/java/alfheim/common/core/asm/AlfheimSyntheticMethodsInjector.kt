@@ -1,11 +1,9 @@
 package alfheim.common.core.asm
 
 import alfheim.api.ModInfo.OBF
-import org.objectweb.asm.Opcodes.*
-
-import org.objectweb.asm.*
-
 import net.minecraft.launchwrapper.IClassTransformer
+import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes.*
 
 class AlfheimSyntheticMethodsInjector: IClassTransformer {
 	

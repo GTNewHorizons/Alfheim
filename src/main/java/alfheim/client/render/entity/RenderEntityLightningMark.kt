@@ -1,18 +1,15 @@
 package alfheim.client.render.entity
 
-import org.lwjgl.opengl.GL11.*
-
-import java.util.Random
-
-import alexsocol.asjlib.render.RenderPostShaders
-import alexsocol.asjlib.render.ShadedObject
+import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.entity.EntityLightningMark
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.helper.ShaderHelper
+import java.util.*
 
 class RenderEntityLightningMark: Render() {
 	

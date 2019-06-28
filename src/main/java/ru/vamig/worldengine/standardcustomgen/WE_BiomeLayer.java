@@ -3,12 +3,10 @@
 
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.additions.*;
+
+import java.util.*;
 
 public class WE_BiomeLayer extends WE_CreateChunkGen_InXZ {
 	public final List<Block> layerBlock     = new ArrayList();

@@ -1,19 +1,14 @@
 package alfheim.common.potion
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.common.block.BlockRedFlame
 import alfheim.common.core.registry.AlfheimBlocks
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.util.DamageSourceSpell
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import alfheim.common.core.util.*
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.OpenGlHelper
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.IIcon
+import org.lwjgl.opengl.GL11.*
 
 class PotionSoulburn: PotionAlfheim(AlfheimConfig.potionIDSoulburn, "soulburn", true, 0xCC4400) {
 	

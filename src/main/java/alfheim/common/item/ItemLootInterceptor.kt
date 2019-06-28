@@ -1,21 +1,18 @@
 package alfheim.common.item
 
-import vazkii.botania.common.core.helper.ItemNBTHelper.*
-
-import org.apache.commons.lang3.ArrayUtils
-
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
-import vazkii.botania.api.mana.IManaItem
-import vazkii.botania.api.mana.IManaTooltipDisplay
+import org.apache.commons.lang3.ArrayUtils
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.block.tile.mana.TilePool
+import vazkii.botania.common.core.helper.ItemNBTHelper.*
+import kotlin.math.min
 
 class ItemLootInterceptor: Item(), IManaItem, IManaTooltipDisplay {
 	init {
@@ -35,10 +32,10 @@ class ItemLootInterceptor: Item(), IManaItem, IManaTooltipDisplay {
 			val metas = getMetas(stack)
 			
 			for (i in 0 until player!!.inventory.sizeInventory) {
-				slot = player!!.inventory.getStackInSlot(i)
+				slot = player.inventory.getStackInSlot(i)
 				
 				if (slot != null) {
-					val cid = Item.getIdFromItem(slot.item)
+					val cid = getIdFromItem(slot.item)
 					var pos = -1
 					
 					for (id in ids) {
@@ -70,7 +67,7 @@ class ItemLootInterceptor: Item(), IManaItem, IManaTooltipDisplay {
 	}
 	
 	override fun addMana(stack: ItemStack?, mana: Int) {
-		setMana(stack, Math.min(getMana(stack) + mana, getMaxMana(stack)))
+		setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))
 	}
 	
 	override fun canReceiveManaFromPool(stack: ItemStack, pool: TileEntity): Boolean {
@@ -95,11 +92,11 @@ class ItemLootInterceptor: Item(), IManaItem, IManaTooltipDisplay {
 	
 	companion object {
 		
-		val TAG_IDS = "ids"
-		val TAG_METAS = "metas"
-		val TAG_MANA = "mana"
+		const val TAG_IDS = "ids"
+		const val TAG_METAS = "metas"
+		const val TAG_MANA = "mana"
 		val EMPTY = IntArray(0)
-		val PER_ITEM = 60
+		const val PER_ITEM = 60
 		
 		fun add(stack: ItemStack, id: Int, meta: Int) {
 			setIDs(stack, ArrayUtils.add(getIDs(stack), id))

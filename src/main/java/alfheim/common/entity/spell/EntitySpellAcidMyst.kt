@@ -41,8 +41,8 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 		if (this.isDead || !ASJUtilities.isServer) return
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(4.5, 4.5, 4.5)) as MutableList<EntityLivingBase>
-		l.remove(caster)
-		for (e in l) if (!PartySystem.mobsSameParty(caster, e) && Vector3.entityDistance(caster!!, e) < 9) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, 1.0))
+		l.remove(caster!!)
+		for (e in l) if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) < 9) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, 1.0))
 	}
 	
 	fun getTopBlock(world: World, x: Int, z: Int): Int {

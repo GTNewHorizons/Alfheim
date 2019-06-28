@@ -1,6 +1,6 @@
 package alfheim.api.spell
 
-import java.util.UUID
+import java.util.*
 
 /**
  * Used to check whether this [tile]entity is affectable by time-stop

@@ -1,7 +1,6 @@
 package alexsocol.asjlib.extendables
 
-import net.minecraft.block.material.MapColor
-import net.minecraft.block.material.Material
+import net.minecraft.block.material.*
 
 // For inline purpose; first call methods from here, then from Material
 class MaterialPublic(color: MapColor): Material(color) {

@@ -6,10 +6,8 @@ package ru.vamig.worldengine.standardcustomgen;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
-import ru.vamig.worldengine.WE_Biome;
-import ru.vamig.worldengine.WE_PerlinNoise;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.*;
+import ru.vamig.worldengine.additions.*;
 
 public class WE_TerrainGenerator extends WE_CreateChunkGen {
 	public Block worldStoneBlock     = Blocks.stone;

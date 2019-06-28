@@ -3,9 +3,7 @@ package alfheim.common.network
 import alexsocol.asjlib.network.ASJPacket
 import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import cpw.mods.fml.common.network.simpleimpl.IMessage
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler
-import cpw.mods.fml.common.network.simpleimpl.MessageContext
+import cpw.mods.fml.common.network.simpleimpl.*
 import io.netty.buffer.ByteBuf
 
 class MessageParty(var party: Party): ASJPacket() {

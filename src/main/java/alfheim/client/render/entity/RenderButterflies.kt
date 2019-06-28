@@ -7,10 +7,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.*
-
-import java.util.Random
-
 import org.lwjgl.opengl.GL11.*
+import java.util.*
 
 object RenderButterflies {
 	

@@ -2,8 +2,7 @@ package alfheim.common.crafting.recipe
 
 import alfheim.common.item.ItemLootInterceptor
 import net.minecraft.inventory.InventoryCrafting
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.world.World
 

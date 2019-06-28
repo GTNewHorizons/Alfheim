@@ -14,8 +14,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-
-import java.awt.*
+import java.awt.Color
 
 class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaUsingItem {
 	private var rubyIcon: IIcon? = null

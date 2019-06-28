@@ -7,7 +7,6 @@ import alfheim.api.spell.SpellBase
 import codechicken.lib.math.MathHelper
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import vazkii.botania.common.Botania
 

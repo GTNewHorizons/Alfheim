@@ -2,12 +2,10 @@ package alfheim.common.item.equipment.armor.elemental
 
 import alfheim.AlfheimCore
 import alfheim.common.core.registry.AlfheimItems
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
+import net.minecraft.potion.*
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
@@ -26,7 +24,7 @@ class ItemElementalEarthChest: ElementalArmor(1, "ElementalEarthChest") {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<*>, b: Boolean) {
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		list.add(StatCollector.translateToLocal("item.ElementalArmor.desc3"))
 		super.addInformation(stack, player, list, b)
 	}

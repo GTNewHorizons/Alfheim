@@ -2,8 +2,7 @@ package alexsocol.asjlib
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.world.Teleporter
-import net.minecraft.world.WorldServer
+import net.minecraft.world.*
 
 class FreeTeleporter(internal val world: WorldServer, internal val x: Double, internal val y: Double, internal val z: Double): Teleporter(world) {
 	

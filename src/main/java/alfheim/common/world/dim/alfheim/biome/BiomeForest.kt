@@ -6,9 +6,7 @@ import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
-import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
-import ru.vamig.worldengine.standardcustomgen.WE_StructureGen
-import ru.vamig.worldengine.standardcustomgen.WE_WorldTreeGen
+import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeForest: BiomeAlfheim(0) {

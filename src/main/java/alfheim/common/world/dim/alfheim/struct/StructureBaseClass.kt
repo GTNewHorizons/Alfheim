@@ -1,8 +1,7 @@
 package alfheim.common.world.dim.alfheim.struct
 
-import java.util.Random
-
 import net.minecraft.world.World
+import java.util.*
 
 abstract class StructureBaseClass {
 	

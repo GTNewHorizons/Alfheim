@@ -4,11 +4,9 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.util.IProgressUpdate
 import net.minecraft.world.*
-import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.chunk.*
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage
 import net.minecraft.world.gen.*
-
 import java.util.*
 
 class ChunkProviderFlat(private val worldObj: World, seed: Long, genString: String): IChunkProvider {

@@ -12,10 +12,9 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.common.Botania
-
-import org.lwjgl.opengl.GL11.*
 import kotlin.math.*
 
 object RenderWings {

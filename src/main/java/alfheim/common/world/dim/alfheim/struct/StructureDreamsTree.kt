@@ -1,11 +1,10 @@
 package alfheim.common.world.dim.alfheim.struct
 
-import java.util.Random
-
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
+import java.util.*
 
 class StructureDreamsTree
 /**

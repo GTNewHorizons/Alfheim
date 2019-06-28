@@ -3,16 +3,14 @@
 
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+
+import java.util.*;
 
 public class WE_OreGenSphere implements IWorldGenerator {
 	

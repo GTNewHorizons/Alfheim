@@ -1,7 +1,6 @@
 package alexsocol.asjlib.math
 
-import java.util.Formatter
-import java.util.Locale
+import java.util.*
 
 /**
  * Class representing quaternion

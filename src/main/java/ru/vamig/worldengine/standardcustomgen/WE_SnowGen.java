@@ -6,8 +6,7 @@ package ru.vamig.worldengine.standardcustomgen;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.additions.*;
 
 public class WE_SnowGen extends WE_CreateChunkGen_InXZ {
 	public int snowPoint       = 111;

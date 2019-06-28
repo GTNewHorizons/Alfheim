@@ -1,8 +1,6 @@
 package alfheim.client.render.tile
 
-import alexsocol.asjlib.extendables.*
-import org.lwjgl.opengl.GL11.*
-
+import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleAnyavil
@@ -13,7 +11,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
-import net.minecraftforge.client.model.IModelCustom
+import org.lwjgl.opengl.GL11.*
 
 class RenderTileAnyavil: TileEntitySpecialRenderer() {
 	

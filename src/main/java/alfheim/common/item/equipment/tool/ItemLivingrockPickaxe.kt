@@ -4,7 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import net.minecraft.item.ItemPickaxe
 
-class ItemLivingrockPickaxe: ItemPickaxe(Item.ToolMaterial.STONE) {
+class ItemLivingrockPickaxe: ItemPickaxe(ToolMaterial.STONE) {
 	init {
 		this.creativeTab = AlfheimCore.alfheimTab
 		this.setTextureName(ModInfo.MODID + ":LivingrockPickaxe")

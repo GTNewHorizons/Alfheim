@@ -1,12 +1,9 @@
 package alfheim.client.model.armor
 
-import net.minecraft.client.model.ModelBiped
-import net.minecraft.client.model.ModelRenderer
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.client.model.*
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.EnumAction
-import net.minecraft.item.ItemStack
 
 class ModelElementalArmor(internal val slot: Int): ModelBiped() {
 	

@@ -1,14 +1,13 @@
 package alfheim.client.render.tile
 
-import alexsocol.asjlib.extendables.*
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.*
-
+import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.block.tile.TileTransferer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.model.ModelSpreader
 import kotlin.math.sin

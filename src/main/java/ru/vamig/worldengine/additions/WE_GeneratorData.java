@@ -4,8 +4,7 @@
 package ru.vamig.worldengine.additions;
 
 import net.minecraft.block.Block;
-import ru.vamig.worldengine.WE_Biome;
-import ru.vamig.worldengine.WE_ChunkProvider;
+import ru.vamig.worldengine.*;
 
 public class WE_GeneratorData {
 	public final WE_ChunkProvider chunkProvider;

@@ -1,7 +1,5 @@
 package alfheim.client.model.armor
 
-import org.lwjgl.opengl.GL11.*
-
 import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
@@ -11,7 +9,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
-import net.minecraftforge.client.model.IModelCustom
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IPhantomInkable
 import vazkii.botania.client.core.helper.ShaderHelper
 

@@ -1,7 +1,5 @@
 package alfheim.common.spell.water
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
@@ -9,6 +7,7 @@ import alfheim.common.entity.spell.EntitySpellAcidMyst
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
+import org.lwjgl.opengl.GL11.*
 
 class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 	

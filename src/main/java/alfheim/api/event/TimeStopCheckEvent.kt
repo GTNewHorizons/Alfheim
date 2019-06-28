@@ -1,7 +1,6 @@
 package alfheim.api.event
 
-import cpw.mods.fml.common.eventhandler.Cancelable
-import cpw.mods.fml.common.eventhandler.Event
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.Entity
 import net.minecraft.tileentity.TileEntity
 

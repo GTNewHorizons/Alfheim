@@ -5,8 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.DamageSource
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.*
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.common.Botania
 

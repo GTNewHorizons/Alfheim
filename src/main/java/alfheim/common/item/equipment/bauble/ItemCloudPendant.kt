@@ -1,12 +1,9 @@
 package alfheim.common.item.equipment.bauble
 
-import java.util.UUID
-
 import alfheim.AlfheimCore
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
-import cpw.mods.fml.relauncher.Side
-import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.EntityLivingBase

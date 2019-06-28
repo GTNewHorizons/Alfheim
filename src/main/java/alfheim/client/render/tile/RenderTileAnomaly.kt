@@ -1,17 +1,13 @@
 package alfheim.client.render.tile
 
-import org.lwjgl.opengl.GL11.*
-
-import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.block.tile.TileAnomaly
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ActiveRenderInfo
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.MathHelper
-import net.minecraft.util.Vec3
+import net.minecraft.util.*
+import org.lwjgl.opengl.GL11.*
 
 // Render from Thaumcraft nodes by Azanor
 class RenderTileAnomaly: TileEntitySpecialRenderer() {

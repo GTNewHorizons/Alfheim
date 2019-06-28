@@ -1,17 +1,15 @@
 package alfheim.common.item.equipment.bauble
 
-import org.lwjgl.opengl.GL11.*
-
 import baubles.api.BaubleType
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ItemRenderer
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraftforge.client.event.RenderPlayerEvent
-import vazkii.botania.api.item.ICosmeticBauble
+import org.lwjgl.opengl.GL11.*
+import vazkii.botania.api.item.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
@@ -29,7 +27,7 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 		
 		if (type == IBaubleRender.RenderType.HEAD) {
 			glPushMatrix()
-			glTranslated(0.0, (if (event.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0) - event.entityPlayer.defaultEyeHeight + if (event.entityPlayer.isSneaking) 0.0625 else 0, 0.0)
+			glTranslated(0.0, (if (event.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - event.entityPlayer.defaultEyeHeight + if (event.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 			glRotated(90.0, 0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.4, 0.1, -0.25)
@@ -41,7 +39,7 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 		}
 	}
 	
-	override fun addHiddenTooltip(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer?, par3List: MutableList<*>, par4: Boolean) {
+	override fun addHiddenTooltip(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>, par4: Boolean) {
 		par3List.add(StatCollector.translateToLocal("botaniamisc.cosmeticBauble").replace("&".toRegex(), "\u00a7"))
 		super.addHiddenTooltip(par1ItemStack, par2EntityPlayer, par3List, par4)
 	}

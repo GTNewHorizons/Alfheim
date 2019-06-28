@@ -6,7 +6,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target
 import alfheim.common.core.handler.SpellEffectHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect

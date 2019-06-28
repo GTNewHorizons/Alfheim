@@ -1,13 +1,12 @@
 package alfheim.client.render.item
 
-import org.lwjgl.opengl.GL11.*
-
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.entity.ModelBipedNew
 import alfheim.common.item.ItemFlugelHead
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.client.event.RenderPlayerEvent
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.client.render.entity.RenderDoppleganger
 import vazkii.botania.client.render.tile.RenderTileSkullOverride
