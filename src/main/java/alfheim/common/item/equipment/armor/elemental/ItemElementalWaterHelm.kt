@@ -29,9 +29,11 @@ open class ItemElementalWaterHelm: ElementalArmor, IManaDiscountArmor {
 	}
 	
 	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack?) {
-		if (world.getBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY) + 1, MathHelper.floor_double(player.posZ)).material == Material.water && armorType == 0 && player.getCurrentArmor(3) != null && player.getCurrentArmor(3).item === this && ManaItemHandler.requestManaExact(player.getCurrentArmor(3), player, 1, !world.isRemote)) {
-			player.addPotionEffect(PotionEffect(Potion.waterBreathing.id, 1, -1))
-			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 3, -1))
+		if (!world.isRemote && armorType == 0 && player.getCurrentArmor(3) != null && player.getCurrentArmor(3).item === this) {
+			if (world.getBlock(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY) + 1, MathHelper.floor_double(player.posZ)).material == Material.water && ManaItemHandler.requestManaExact(player.getCurrentArmor(3), player, 1, !world.isRemote)) {
+				player.addPotionEffect(PotionEffect(Potion.waterBreathing.id, 5, -1))
+				player.addPotionEffect(PotionEffect(Potion.nightVision.id, 5, -1))
+			}
 		}
 	}
 	

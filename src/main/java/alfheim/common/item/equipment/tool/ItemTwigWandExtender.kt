@@ -50,11 +50,13 @@ object ItemTwigWandExtender {
 		return ItemNBTHelper.getInt(stack, TAG_COLOR2, 0)
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun registerIcons(wand: ItemTwigWand, par1IconRegister: IIconRegister) {
-		icons = Array(5) { IconHelper.forItem(par1IconRegister, wand, it) }
+	fun registerIcons(wand: ItemTwigWand, reg: IIconRegister) {
+		icons = Array(5) { IconHelper.forItem(reg, wand, it) }
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getIcon(wand: ItemTwigWand, stack: ItemStack, pass: Int): IIcon {
 		var pass = pass
@@ -65,22 +67,25 @@ object ItemTwigWandExtender {
 		return icons[min(icons.size - 1, pass)]
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getRenderPasses(wand: ItemTwigWand, metadata: Int): Int {
 		return 5
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS) // TODO test
-	fun getSubItems(wand: ItemTwigWand, par1: Item, par2CreativeTabs: CreativeTabs, par3List: MutableList<Any?>) {
-		for (i in 0..15) par3List.add(forColors(i, i, false))
-		for (i in 0..15) par3List.add(forColors(i, i, true))
+	fun getSubItems(wand: ItemTwigWand, par1: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
+		for (i in 0..15) list.add(forColors(i, i, false))
+		for (i in 0..15) list.add(forColors(i, i, true))
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getColorFromItemStack(wand: ItemTwigWand, par1ItemStack: ItemStack, par2: Int): Int {
-		if (par2 == 0 || par2 == 3 || par2 == 4) return 0xFFFFFF
+	fun getColorFromItemStack(wand: ItemTwigWand, par1ItemStack: ItemStack, pass: Int): Int {
+		if (pass == 0 || pass == 3 || pass == 4) return 0xFFFFFF
 		
-		val color = EntitySheep.fleeceColorTable[if (par2 == 1) getColor1(par1ItemStack) else getColor2(par1ItemStack)]
+		val color = EntitySheep.fleeceColorTable[if (pass == 1) getColor1(par1ItemStack) else getColor2(par1ItemStack)]
 		return Color(color[0], color[1], color[2]).rgb
 	}
 }

@@ -48,7 +48,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		return material.item === AlfheimItems.elvenResource && material.itemDamage == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
 	}
 	
-	override fun getItemAttributeModifiers(): Multimap<*, *> {
+	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		val uuid = UUID(unlocalizedName.hashCode().toLong(), 0)
 		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).toDouble() / 20, 0))

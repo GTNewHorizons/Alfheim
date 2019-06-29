@@ -5,11 +5,12 @@ import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
+@Suppress("NAME_SHADOWING")
 class AlfheimSyntheticMethodsInjector: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		var basicClass = basicClass
-		if (basicClass == null || basicClass.size == 0) return basicClass
+		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		
 		var cr: ClassReader
 		var cw: ClassWriter
@@ -41,7 +42,7 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 	
 	internal class ClassVisitorPotionMethodPublicizer(cv: ClassVisitor, val className: String): ClassVisitor(ASM5, cv) {
 		
-		override fun visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array<String>): MethodVisitor {
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			var access = access
 			if (name == (if (OBF) "b" else "onFinishedPotionEffect") && desc == (if (OBF) "(Lrw;)V" else "(Lnet/minecraft/potion/PotionEffect;)V")) {
 				println("Publicizing onFinishedPotionEffect: $name$desc for $className")
@@ -57,7 +58,7 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 	
 	internal class `AlfheimSyntheticMethods$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
-		override fun visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array<String>): MethodVisitor {
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "onFinishedPotionEffect") {
 				println("Generating synthetic onFinishedPotionEffect")
 				return `AlfheimSyntheticMethods$onFinishedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))

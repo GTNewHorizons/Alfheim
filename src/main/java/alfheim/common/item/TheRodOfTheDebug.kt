@@ -4,13 +4,12 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.EnumRace
-import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.potion.Potion
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
@@ -23,13 +22,13 @@ class TheRodOfTheDebug: Item() {
 		unlocalizedName = "TheRodOfTheDebug"
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		try {
 			if (true/*!world.isRemote*/) {
-				if (!player!!.isSneaking) {
-					if (!world!!.isRemote) {
-						CardinalSystem.PartySystem.setParty(player, Party(player))
-						CardinalSystem.PartySystem.getParty(player)!!.add(CardinalSystem.TargetingSystem.getTarget(player).target)
+				if (!player.isSneaking) {
+					if (!world.isRemote) {
+//						CardinalSystem.PartySystem.setParty(player, Party(player))
+//						CardinalSystem.PartySystem.getParty(player)!!.add(CardinalSystem.TargetingSystem.getTarget(player).target)
 					}
 					
 					//					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();

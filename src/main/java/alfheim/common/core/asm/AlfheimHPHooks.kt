@@ -10,6 +10,7 @@ import net.minecraft.util.*
 
 object AlfheimHPHooks {
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun getHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
 		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlameIsInitialized() && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
@@ -18,6 +19,7 @@ object AlfheimHPHooks {
 			hp
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun getMaxHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
 		return if (AlfheimCore.enableMMO && AlfheimRegistry.leftFlameIsInitialized() && e.activePotionsMap != null && e.isPotionActive(AlfheimRegistry.leftFlame))
@@ -26,6 +28,7 @@ object AlfheimHPHooks {
 			hp
 	}
 	
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun setHealth(e: EntityLivingBase, hp: Float) {
 		var hp = hp

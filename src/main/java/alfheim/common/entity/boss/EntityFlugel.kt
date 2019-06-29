@@ -354,7 +354,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		for (player in players) {
 			// No beacon potions allowed!
 			val remove = ArrayList<PotionEffect>()
-			val active = player.activePotionEffects as MutableList<PotionEffect>
+			val active = player.activePotionEffects as MutableCollection<PotionEffect>
 			for (effect in active) if (effect.getDuration() < 200 && effect.getIsAmbient() && !Potion.potionTypes[effect.getPotionID()].isBadEffect) remove.add(effect)
 			active.removeAll(remove)
 			

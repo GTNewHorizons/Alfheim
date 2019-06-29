@@ -17,7 +17,7 @@ import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ItemRenderer
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
@@ -368,9 +368,8 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
-	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase): Int {
-		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush)) 2 else 0
-	}
+	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase) =
+		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush)) 2 else 0
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
@@ -396,6 +395,11 @@ object AlfheimHookHandler {
 		}
 		return false
 	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
+		if (player.getActivePotionEffect(Potion.nightVision)?.getDuration() ?: 0 > 0) 1f else 0f
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic

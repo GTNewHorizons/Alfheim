@@ -85,7 +85,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		return Integer.MAX_VALUE
 	}
 	
-	override fun getItemAttributeModifiers(): Multimap<*, *> {
+	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 10.0, 0))
 		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 0.3, 1))

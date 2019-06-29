@@ -13,16 +13,19 @@ import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak
 
 object TGHandlerBotaniaAdapter {
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getBaubleType(item: ItemHolyCloak, stack: ItemStack): BaubleType? {
 		return if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
 	}
 	
+	@JvmStatic
 	@Hook(createMethod = true)
 	fun onTravelGearTick(item: ItemHolyCloak, player: EntityPlayer, stack: ItemStack) {
 		if (AlfheimCore.TravellersGearLoaded) item.onWornTick(stack, player)
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ON_TRUE)
 	fun onPlayerDamage(item: ItemHolyCloak, event: LivingHurtEvent): Boolean {
 		if (!AlfheimCore.TravellersGearLoaded) return false
@@ -48,6 +51,7 @@ object TGHandlerBotaniaAdapter {
 		return true
 	}
 	
+	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
 	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, adv: Boolean) {
 		try {

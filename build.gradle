@@ -22,7 +22,7 @@ buildscript {
 	}
 }
 
-version = "BETA-pre19.3"
+version = "BETA-pre19.4"
 group= "main"
 archivesBaseName = "Alfheim"
 
@@ -38,7 +38,7 @@ configurations {
 
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'])
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+	embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }
 
 compileJava.options.encoding = "UTF-8"
