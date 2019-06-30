@@ -2,7 +2,6 @@ package alfheim.common.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.registry.AlfheimItems
-import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -14,6 +13,7 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFlyingCreature
 import vazkii.botania.common.item.ModItems
+import kotlin.math.*
 
 class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 	
@@ -58,7 +58,7 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun updateEntityActionState() {
-		rotationYaw = -Math.atan2(motionX, motionZ).toFloat() * 180.0f / Math.PI.toFloat()
+		rotationYaw = -atan2(motionX, motionZ).toFloat() * 180.0f / Math.PI.toFloat()
 		renderYawOffset = rotationYaw
 	}
 	
@@ -74,7 +74,7 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		}
 		
 		player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 4.0)
-		if (player != null && PlayerHandler.getPlayerBaubles(player) != null && BaublesApi.getBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(player).getStackInSlot(0), player, 1, true)) {
+		if (player != null && PlayerHandler.getPlayerBaubles(player) != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0).item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player).getStackInSlot(0), player, 1, true)) {
 			val vec = player.getLook(1.0f)
 			this.motionX = (player.posX + vec.xCoord - this.posX) / 8.0f
 			this.motionY = (player.posY + vec.yCoord + 1.5 - this.posY) / 8.0f
@@ -102,10 +102,10 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		val d0 = this.spawnPosition!!.posX.toDouble() + 0.5 - this.posX
 		val d1 = this.spawnPosition!!.posY.toDouble() + 0.1 - this.posY
 		val d2 = this.spawnPosition!!.posZ.toDouble() + 0.5 - this.posZ
-		this.motionX += (Math.signum(d0) * 0.5 - this.motionX) * 0.1
-		this.motionY += (Math.signum(d1) * 0.7 - this.motionY) * 0.1
-		this.motionZ += (Math.signum(d2) * 0.5 - this.motionZ) * 0.1
-		val f = (Math.atan2(this.motionZ, this.motionX) * 180.0 / Math.PI).toFloat() - 90.0f
+		this.motionX += (sign(d0) * 0.5 - this.motionX) * 0.1
+		this.motionY += (sign(d1) * 0.7 - this.motionY) * 0.1
+		this.motionZ += (sign(d2) * 0.5 - this.motionZ) * 0.1
+		val f = (atan2(this.motionZ, this.motionX) * 180.0 / Math.PI).toFloat() - 90.0f
 		val f1 = MathHelper.wrapAngleTo180_float(f - this.rotationYaw)
 		this.moveForward = 0.5f
 		this.rotationYaw += f1

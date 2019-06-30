@@ -367,17 +367,17 @@ class EventHandler {
 	
 	@SubscribeEvent
 	fun onNewPotionEffect(e: LivingPotionEvent.Add.Post) {
-		//if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier))
+		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier))
 	}
 	
 	@SubscribeEvent
 	fun onChangedPotionEffect(e: LivingPotionEvent.Change.Post) {
-		//if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier, e.update))
+		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier, e.update))
 	}
 	
 	@SubscribeEvent
 	fun onFinishedPotionEffect(e: LivingPotionEvent.Remove.Post) {
-		//if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier))
+		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(e.entityLiving.entityId, e.effect.potionID, e.effect.duration, e.effect.amplifier))
 	}
 	
 	@SubscribeEvent
