@@ -3,7 +3,9 @@ package alfheim.common.item
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimBlocks
+import net.minecraft.block.BlockPumpkin
 import net.minecraft.block.BlockSkull
+import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -20,6 +22,7 @@ class ItemFlugelHead: Item() {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+		Blocks.pumpkin
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1))
 		return stack
 	}
@@ -95,4 +98,6 @@ class ItemFlugelHead: Item() {
 		// Call it a success and leave.
 		return true
 	}
+
+	override fun isValidArmor(stack: ItemStack, armorType: Int, entity: Entity) = armorType == 0
 }

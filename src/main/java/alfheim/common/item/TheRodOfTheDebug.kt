@@ -9,8 +9,8 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.potion.Potion
 import net.minecraft.world.World
+import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 

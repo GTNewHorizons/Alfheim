@@ -32,7 +32,7 @@ import kotlin.math.*
 
 class GUIParty(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SubscribeEvent(receiveCanceled = true)
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
 		if (event.type != ElementType.HOTBAR) return
 		GuiIngameForge.renderBossHealth = false

@@ -67,7 +67,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	override fun addHitEffects(worldObj: World, target: MovingObjectPosition, effectRenderer: EffectRenderer?): Boolean {
 		val meta = worldObj.getBlockMetadata(target.blockX, target.blockY, target.blockZ)
 		
-		if (meta in 1..5) {
+		if (meta in 1..6) {
 			UtilsFX.infusedStoneSparkle(worldObj, target.blockX, target.blockY, target.blockZ, meta)
 		}
 		

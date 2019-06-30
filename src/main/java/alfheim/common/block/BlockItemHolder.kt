@@ -21,13 +21,14 @@ import vazkii.botania.client.lib.LibResources
 import vazkii.botania.common.block.mana.BlockPool
 import kotlin.math.*
 
-class BlockItemHolder: BlockContainer(Material.iron), ILexiconable {
+class BlockItemHolder: BlockContainer(Material.rock), ILexiconable {
+
 	init {
 		setBlockBounds(0f, -0.5f, 0f, 1f, -0.125f, 1f)
 		setBlockName("ItemHolder")
-		setBlockTextureName(ModInfo.MODID + ":ItemHolder")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setBlockTextureName(LibResources.PREFIX_MOD + "livingrock0")
+		setCreativeTab(AlfheimCore.alfheimTab)
+		setHardness(1f)
 	}
 	
 	override fun renderAsNormalBlock(): Boolean {

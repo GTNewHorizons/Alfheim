@@ -67,6 +67,7 @@ class ASJUtilities {
 		 * Returns the name of the block
 		 * @param block Block to get name from
 		 */
+		@JvmStatic
 		fun getBlockName(block: Block): String {
 			return block.unlocalizedName.substring(5)
 		}
@@ -75,6 +76,7 @@ class ASJUtilities {
 		 * Returns the name of the item
 		 * @param item Item to get name from
 		 */
+		@JvmStatic
 		fun getItemName(item: Item): String {
 			return item.unlocalizedName.substring(5)
 		}
@@ -83,6 +85,7 @@ class ASJUtilities {
 		 * Registers block by name
 		 * @param block Block to register
 		 */
+		@JvmStatic
 		fun register(block: Block) {
 			GameRegistry.registerBlock(block, getBlockName(block))
 		}
@@ -91,6 +94,7 @@ class ASJUtilities {
 		 * Registers item by name
 		 * @param item Item to register
 		 */
+		@JvmStatic
 		fun register(item: Item) {
 			GameRegistry.registerItem(item, getItemName(item))
 		}
@@ -99,6 +103,7 @@ class ASJUtilities {
 		 * Returns String ID of the mod this block/item is registered in
 		 * @param stack ItemStack with block/item for analysis
 		 */
+		@JvmStatic
 		fun getModId(stack: ItemStack): String {
 			val id = GameRegistry.findUniqueIdentifierFor(stack.item)
 			return if (id == null || id.modId == "") "minecraft" else id.modId
@@ -109,6 +114,7 @@ class ASJUtilities {
 		 * @param entity The entity to send
 		 * @param dimTo ID of the dimension the entity should be sent to
 		 */
+		@JvmStatic
 		fun sendToDimensionWithoutPortal(entity: Entity, dimTo: Int, x: Double, y: Double, z: Double) {
 			if (dimTo == entity.dimension) {
 				if (entity is EntityLivingBase)
@@ -121,6 +127,7 @@ class ASJUtilities {
 			}
 		}
 		
+		@JvmStatic
 		fun willEntityDie(event: LivingHurtEvent): Boolean {
 			return willEntityDie(LivingAttackEvent(event.entityLiving, event.source, event.ammount))
 		}
@@ -129,6 +136,7 @@ class ASJUtilities {
 		 * Determines whether entity will die from next hit
 		 * @param event Some event fired when entity's HP decreases
 		 */
+		@JvmStatic
 		fun willEntityDie(event: LivingAttackEvent): Boolean {
 			var amount = event.ammount
 			val source = event.source
@@ -137,11 +145,11 @@ class ASJUtilities {
 				val armor = 25 - living.totalArmorValue
 				amount = amount * armor / 25.0f
 			}
-			if (living.isPotionActive(Potion.resistance)) {
+			if (!source.isDamageAbsolute && living.isPotionActive(Potion.resistance)) {
 				val resistance = 25 - (living.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5
 				amount = amount * resistance / 25.0f
 			}
-			return ceil(amount.toDouble()) >= floor(living.health.toDouble())
+			return ceil(amount) >= floor(living.health)
 		}
 		
 		/**
@@ -149,6 +157,7 @@ class ASJUtilities {
 		 * @param item The item to compare
 		 * @param inventory The inventory to scan
 		 */
+		@JvmStatic
 		fun getSlotWithItem(item: Item, inventory: IInventory): Int {
 			for (i in 0 until inventory.sizeInventory) {
 				if (inventory.getStackInSlot(i) != null && inventory.getStackInSlot(i).item === item) {
@@ -164,6 +173,7 @@ class ASJUtilities {
 		 * @param stack ItemStack to remove
 		 * @return If the stack was removed
 		 */
+		@JvmStatic
 		fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
 			if (getAmount(inventory, stack) >= stack.stackSize) {
 				for (i in 0 until inventory.sizeInventory) {
@@ -188,6 +198,7 @@ class ASJUtilities {
 		 * @param stack Stack to compare item
 		 * @return Amount
 		 */
+		@JvmStatic
 		fun getAmount(inventory: IInventory, stack: ItemStack): Int {
 			var amount = 0
 			for (i in 0 until inventory.sizeInventory) {
@@ -201,6 +212,7 @@ class ASJUtilities {
 		/**
 		 * @return damage from stack itself, not through item
 		 */
+		@JvmStatic
 		fun getTrueDamage(stack: ItemStack): Int {
 			return Integer.valueOf(stack.toString().split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
 		}
@@ -208,6 +220,7 @@ class ASJUtilities {
 		/**
 		 * Checks if two itemstacks has same ID, size and metadata
 		 */
+		@JvmStatic
 		fun isItemStackEqual(stack1: ItemStack?, stack2: ItemStack?): Boolean {
 			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && stack1.itemDamage == stack2.itemDamage
 		}
@@ -215,6 +228,7 @@ class ASJUtilities {
 		/**
 		 * Checks if two itemstacks has same ID and metadata
 		 */
+		@JvmStatic
 		fun isItemStackEqualData(stack1: ItemStack?, stack2: ItemStack?): Boolean {
 			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage
 		}
@@ -222,6 +236,7 @@ class ASJUtilities {
 		/**
 		 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
 		 */
+		@JvmStatic
 		fun isItemStackTrueEqual(stack1: ItemStack?, stack2: ItemStack?): Boolean {
 			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2)
 		}
@@ -229,6 +244,7 @@ class ASJUtilities {
 		/**
 		 * Checks if two itemstacks has same ID and metadata (from stack itself)
 		 */
+		@JvmStatic
 		fun isItemStackTrueEqualData(stack1: ItemStack?, stack2: ItemStack?): Boolean {
 			return stack1 != null && stack2 != null && stack1.item === stack2.item && getTrueDamage(stack1) == getTrueDamage(stack2)
 		}
@@ -239,6 +255,7 @@ class ASJUtilities {
 		 * @param stack ItemStack to remove
 		 * @return If the stack was removed
 		 */
+		@JvmStatic
 		fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
 			if (getAmountNBT(inventory, stack) >= stack.stackSize) {
 				for (i in 0 until inventory.sizeInventory) {
@@ -263,6 +280,7 @@ class ASJUtilities {
 		 * @param stack Stack to compare item
 		 * @return Amount
 		 */
+		@JvmStatic
 		fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
 			var amount = 0
 			for (i in 0 until inventory.sizeInventory) {
@@ -278,6 +296,7 @@ class ASJUtilities {
 		 * @param stack1 First itemstack
 		 * @param stack2 Second itemstack
 		 */
+		@JvmStatic
 		fun isItemStackEqualNBT(stack1: ItemStack?, stack2: ItemStack?): Boolean {
 			return if (stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage) {
 				if (!stack1.hasTagCompound() && !stack2.hasTagCompound()) {
@@ -294,6 +313,7 @@ class ASJUtilities {
 		 * @param stack Stack to change its item
 		 * @param item Item to set in `stack`
 		 */
+		@JvmStatic
 		fun changeStackItem(stack: ItemStack, item: Item): ItemStack {
 			val newStack = ItemStack(item, stack.stackSize, stack.itemDamage)
 			newStack.stackTagCompound = stack.stackTagCompound
@@ -329,6 +349,7 @@ class ASJUtilities {
 		/**
 		 * Adds new recipe with [OreDictionary] support
 		 */
+		@JvmStatic
 		fun addOreDictRecipe(output: ItemStack, vararg recipe: Any) {
 			CraftingManager.getInstance().recipeList.add(ShapedOreRecipe(output, *recipe))
 		}
@@ -336,6 +357,7 @@ class ASJUtilities {
 		/**
 		 * Adds new shapeless recipe with [OreDictionary] support
 		 */
+		@JvmStatic
 		fun addShapelessOreDictRecipe(output: ItemStack, vararg recipe: Any) {
 			CraftingManager.getInstance().recipeList.add(ShapelessOreRecipe(output, *recipe))
 		}
@@ -345,6 +367,7 @@ class ASJUtilities {
 		 * @param resultItem Stack to remove recipe
 		 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 		 */
+		@JvmStatic
 		fun removeRecipe(resultItem: ItemStack) {
 			val i = CraftingManager.getInstance().recipeList.iterator()
 			while (i.hasNext()) {
@@ -360,6 +383,7 @@ class ASJUtilities {
 		 * Checks whether `e1` is in FOV of `e2`
 		 * @author a_dizzle (minecraftforum.net)
 		 */
+		@JvmStatic
 		fun isNotInFieldOfVision(e1: EntityLivingBase, e2: EntityLivingBase): Boolean {
 			//save Entity 2's original rotation variables
 			var rotationYawPrime = e2.rotationYaw
@@ -387,6 +411,7 @@ class ASJUtilities {
 		/**
 		 * Makes `e1` to face `e2`
 		 */
+		@JvmStatic
 		fun faceEntity(e1: EntityLivingBase, e2: Entity, yaw: Float, pitch: Float) {
 			val d0 = e2.posX - e1.posX
 			val d2 = e2.posZ - e1.posZ
@@ -403,6 +428,7 @@ class ASJUtilities {
 			e1.rotationYaw = updateRotation(e1.rotationYaw, f2, yaw)
 		}
 		
+		@JvmStatic
 		fun updateRotation(f: Float, f1: Float, f2: Float): Float {
 			var f3 = MathHelper.wrapAngleTo180_float(f1 - f)
 			if (f3 > f2) f3 = f2
@@ -417,6 +443,7 @@ class ASJUtilities {
 		 * @param interact Whether to get uncollidable entities
 		 * @author timaxa007
 		 */
+		@JvmStatic
 		fun getMouseOver(entity: EntityLivingBase?, dist: Double, interact: Boolean): MovingObjectPosition? {
 			if (entity?.worldObj == null) {
 				return null
@@ -492,6 +519,7 @@ class ASJUtilities {
 		 * @param dist Max distance for use
 		 * @param interact Can player interact with blocks (not sure)
 		 */
+		@JvmStatic
 		fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
 			val vec3 = getPosition(entity, 1.0f)
 			vec3.yCoord += entity.eyeHeight.toDouble()
@@ -503,6 +531,7 @@ class ASJUtilities {
 		/**
 		 * Interpolated position vector
 		 */
+		@JvmStatic
 		fun getPosition(living: EntityLivingBase, par1: Float): Vec3 {
 			val i = (living as? EntityPlayer)?.defaultEyeHeight ?: 0f
 			return if (par1 == 1.0f) {
@@ -515,6 +544,7 @@ class ASJUtilities {
 			}
 		}
 		
+		@JvmStatic
 		fun getLookVec(e: Entity): Vec3 {
 			val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
 			val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
@@ -528,6 +558,7 @@ class ASJUtilities {
 		 * ignoring invisibility and sneaking<br></br>
 		 * Can be null if none is found
 		 */
+		@JvmStatic
 		fun getClosestVulnerablePlayerToEntity(entity: Entity, distance: Double): EntityPlayer? {
 			return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance)
 		}
@@ -537,6 +568,7 @@ class ASJUtilities {
 		 * ignoring invisibility and sneaking<br></br>
 		 * Can be null if none is found
 		 */
+		@JvmStatic
 		fun getClosestVulnerablePlayer(world: World, x: Double, y: Double, z: Double, distance: Double): EntityPlayer? {
 			var prevDist = -1.0
 			var entityplayer: EntityPlayer? = null
@@ -562,6 +594,7 @@ class ASJUtilities {
 		 * @param entityClass Entity's class file
 		 * @param name The name of this entity
 		 */
+		@JvmStatic
 		fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any) {
 			val id = EntityRegistry.findGlobalUniqueEntityId()
 			val nama = "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name"
@@ -576,6 +609,7 @@ class ASJUtilities {
 		 * @param backColor Background egg color
 		 * @param frontColor The color of dots
 		 */
+		@JvmStatic
 		fun registerEntityEgg(entityClass: Class<out Entity>, name: String, backColor: Int, frontColor: Int, instance: Any) {
 			val id = EntityRegistry.findGlobalUniqueEntityId()
 			val nama = "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name"
@@ -592,6 +626,7 @@ class ASJUtilities {
 		 * @param biome The biome to set at this location
 		 */
 		@Deprecated("")
+		@JvmStatic
 		fun setBiomeAt(world: World, x: Int, z: Int, biome: BiomeGenBase?) {
 			if (biome == null) {
 				return
@@ -605,6 +640,7 @@ class ASJUtilities {
 		/**
 		 * @return random value in range [min, max] (inclusive)
 		 */
+		@JvmStatic
 		fun randInBounds(min: Int, max: Int): Int {
 			return randInBounds(Random(), min, max)
 		}
@@ -620,6 +656,7 @@ class ASJUtilities {
 		/**
 		 * Interpolates values, e.g. for smoother render
 		 */
+		@JvmStatic
 		fun interpolate(last: Double, now: Double): Double {
 			return last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks
 		}
@@ -627,6 +664,7 @@ class ASJUtilities {
 		/**
 		 * Translates matrix to follow player (if something is bound to world's zero coords)
 		 */
+		@JvmStatic
 		fun interpolatedTranslation(entity: Entity) {
 			glTranslated(interpolate(entity.lastTickPosX, entity.posX), interpolate(entity.lastTickPosY, entity.posY), interpolate(entity.lastTickPosZ, entity.posZ))
 		}
@@ -634,6 +672,7 @@ class ASJUtilities {
 		/**
 		 * Translates matrix not to follow player (if something is bound to camera's zero coords)
 		 */
+		@JvmStatic
 		fun interpolatedTranslationReverse(entity: Entity) {
 			glTranslated(-interpolate(entity.lastTickPosX, entity.posX), -interpolate(entity.lastTickPosY, entity.posY), -interpolate(entity.lastTickPosZ, entity.posZ))
 		}
@@ -644,6 +683,7 @@ class ASJUtilities {
 		 * Don't forget to call [.postRenderISBRH]
 		 * Use this before your render something in ISimpleBlockRenderingHandler
 		 */
+		@JvmStatic
 		fun preRenderISBRH(x: Int, z: Int) {
 			val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 			val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
@@ -658,6 +698,7 @@ class ASJUtilities {
 		 * Don't use unless you've used [.preRenderISBRH]
 		 * Use this after your render something in ISimpleBlockRenderingHandler
 		 */
+		@JvmStatic
 		fun postRenderISBRH(x: Int, z: Int) {
 			val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 			val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
@@ -669,6 +710,7 @@ class ASJUtilities {
 		/**
 		 * @return String which tolds you to hold shift-key
 		 */
+		@JvmStatic
 		fun holdShift(): String {
 			return StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " SHIFT " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.shift")
 		}
@@ -676,6 +718,7 @@ class ASJUtilities {
 		/**
 		 * @return String which tolds you to hold control-key
 		 */
+		@JvmStatic
 		fun holdCtrl(): String {
 			return StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl")
 		}
@@ -683,6 +726,7 @@ class ASJUtilities {
 		/**
 		 * @return String which tolds you that this block/item/stuff is only for creative use
 		 */
+		@JvmStatic
 		fun creativeOnly(): String {
 			return StatCollector.translateToLocal("tooltip.creativeonly")
 		}
@@ -690,6 +734,7 @@ class ASJUtilities {
 		/**
 		 * @return map key for specified value if persist (null if none)
 		 */
+		@JvmStatic
 		fun <K, V> mapGetKey(map: Map<K, V>, v: V): K? {
 			for ((key, value) in map) if (value == v) return key
 			return null
@@ -698,11 +743,13 @@ class ASJUtilities {
 		/**
 		 * @return map key for specified value if persist (default if none)
 		 */
+		@JvmStatic
 		fun <K, V> mapGetKeyOrDefault(map: Map<K, V>, v: V, def: K): K {
 			for ((key, value) in map) if (value == v) return key
 			return def
 		}
 		
+		@JvmStatic
 		fun <T: Comparable<T>> indexOfComparableArray(array: Array<T>, key: T): Int {
 			for (i in array.indices)
 				if (array[i].compareTo(key) == 0)
@@ -710,6 +757,7 @@ class ASJUtilities {
 			return -1
 		}
 		
+		@JvmStatic
 		fun <T: Comparable<T>> indexOfComparableColl(coll: Collection<T>, key: T): Int {
 			var id = -1
 			for (t in coll) {
@@ -747,6 +795,7 @@ class ASJUtilities {
 		 * @return enum color packed in uInt with max alpha
 		 * @author qiexie
 		 */
+		@JvmStatic
 		fun enumColorToRGB(eColor: EnumChatFormatting): Int {
 			return addAlpha(colorCode[eColor.ordinal], 0xff)
 		}
@@ -754,6 +803,7 @@ class ASJUtilities {
 		/**
 		 * Adds `alpha` value to @{code color}
 		 */
+		@JvmStatic
 		fun addAlpha(color: Int, alpha: Int): Int {
 			return alpha and 0xFF shl 24 or (color and 0x00FFFFFF)
 		}
@@ -761,6 +811,7 @@ class ASJUtilities {
 		/**
 		 * Sets render color unpacked from uInt
 		 */
+		@JvmStatic
 		fun glColor1u(color: Int) {
 			glColor4ub((color shr 16 and 0xFF).toByte(), (color shr 8 and 0xFF).toByte(), (color and 0xFF).toByte(), (color shr 24 and 0xFF).toByte())
 		}
@@ -768,6 +819,7 @@ class ASJUtilities {
 		/**
 		 * Registers IIcon for block. Call this in preInit
 		 */
+		@JvmStatic
 		fun registerBlockIcon(name: String) {
 			blockIconsNames.add(name)
 		}
@@ -775,6 +827,7 @@ class ASJUtilities {
 		/**
 		 * Registers IIcon for item. Call this in preInit
 		 */
+		@JvmStatic
 		fun registerItemIcon(name: String) {
 			itemsIconsNames.add(name)
 		}
@@ -782,6 +835,7 @@ class ASJUtilities {
 		/**
 		 * Returns block IIcon registered with [.registerBlockIcon]
 		 */
+		@JvmStatic
 		fun getBlockIcon(name: String): IIcon {
 			return blockIcons[name]!!
 		}
@@ -789,6 +843,7 @@ class ASJUtilities {
 		/**
 		 * Returns item IIcon registered with [.registerItemIcon]
 		 */
+		@JvmStatic
 		fun getItemIcon(name: String): IIcon {
 			return itemsIcons[name]!!
 		}
@@ -797,6 +852,7 @@ class ASJUtilities {
 		 * Registers dimension
 		 * @param keepLoaded Keep spawn chunks loaded
 		 */
+		@JvmStatic
 		fun registerDimension(id: Int, w: Class<out WorldProvider>, keepLoaded: Boolean) {
 			if (!DimensionManager.registerProviderType(id, w, keepLoaded)) throw IllegalArgumentException(String.format("Failed to register provider for id %d, One is already registered", id))
 			DimensionManager.registerDimension(id, id)
@@ -808,6 +864,7 @@ class ASJUtilities {
 		 * min, max blocks in one place, min, max block groups in chunk,
 		 * chance to be generated, min, max Y-level
 		 */
+		@JvmStatic
 		fun generateOre(ore: Block, meta: Int, replace: Block, world: World, rand: Random, blockXPos: Int, blockZPos: Int, minVeinSize: Int, maxVeinSize: Int, minVeinsPerChunk: Int, maxVeinsPerChunk: Int, chanceToSpawn: Int, minY: Int, maxY: Int) {
 			if (rand.nextInt(101) > chanceToSpawn) return
 			val veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk
@@ -824,6 +881,7 @@ class ASJUtilities {
 		 * Args: world, filler, x start, x end, upper height, z start, z end
 		 * @param radius Radius of cylinder-shaped structure's base (0 for square)
 		 */
+		@JvmStatic
 		fun fillGenHoles(world: World, filler: Block, meta: Int, xmn: Int, xmx: Int, ystart: Int, zmn: Int, zmx: Int, radius: Int) {
 			if (xmn < -29999999 || xmx > 29999999 || ystart < 0 || ystart > 255 || zmn < -29999999 || zmx > 29999999 || radius < 0) return
 			for (i in xmn..xmx) {
@@ -841,6 +899,7 @@ class ASJUtilities {
 			}
 		}
 		
+		@JvmStatic
 		fun isBlockReplaceable(block: Block): Boolean {
 			return block === Blocks.air ||
 				   block === Blocks.snow_layer ||
@@ -859,36 +918,43 @@ class ASJUtilities {
 		
 		private val format = DecimalFormat("000")
 		
-		private fun time(world: World): String {
-			return String.format("[%s] ", format.format(world.totalWorldTime % 1000))
+		private fun time(world: World?): String {
+			return String.format("[%s]", format.format(world?.let { it.totalWorldTime % 1000 } ?: 0))
 		}
 		
 		@SideOnly(Side.CLIENT)
+		@JvmStatic
 		fun chatLog(message: String) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(ChatComponentText(time(Minecraft.getMinecraft().theWorld) + message))
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(time(Minecraft.getMinecraft()?.theWorld) + message))
 		}
 		
 		@SideOnly(Side.CLIENT)
-		fun chatLog(message: String, world: World) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(ChatComponentText(time(world) + (if (world.isRemote) "[C] " else "[S] ") + message))
+		@JvmStatic
+		fun chatLog(message: String, world: World?) {
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"))
 		}
 		
+		@JvmStatic
 		fun chatLog(message: String, player: EntityPlayer) {
-			player.addChatMessage(ChatComponentText(time(player.worldObj) + (if (player.worldObj.isRemote) "[C] " else "[S] ") + message))
+			player.addChatMessage(ChatComponentText("${time(player.worldObj)} ${if (player.worldObj.isRemote) "[C]" else "[S]"} $message"))
 		}
 		
+		@JvmStatic
 		fun log(message: String) {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.INFO, message)
 		}
 		
+		@JvmStatic
 		fun debug(message: String) {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.DEBUG, message)
 		}
 		
+		@JvmStatic
 		fun warn(message: String) {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.WARN, message)
 		}
 		
+		@JvmStatic
 		fun error(message: String) {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, message)
 		}
@@ -897,16 +963,19 @@ class ASJUtilities {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.TRACE, message)
 		}
 		
+		@JvmStatic
 		fun printStackTrace() {
 			log("Stack trace: ")
 			val stes = Thread.currentThread().stackTrace
 			for (i in 2 until stes.size) trace("\tat " + stes[i].toString())
 		}
 		
+		@JvmStatic
 		fun say(player: EntityPlayer, message: String) {
 			player.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message)))
 		}
 		
+		@JvmStatic
 		fun sayToAllOnline(message: String) {
 			val list = MinecraftServer.getServer().configurationManager.playerEntityList
 			for (online in list) say(online as EntityPlayer, message)
@@ -915,6 +984,7 @@ class ASJUtilities {
 		
 		/** Untested!  */
 		@Deprecated("")
+		@JvmStatic
 		fun sayToAllOPs(message: String) {
 			for (op in MinecraftServer.getServer().configurationManager.func_152606_n()) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(op)
@@ -922,10 +992,12 @@ class ASJUtilities {
 			}
 			log(message)
 		}
-		
+
+		@JvmStatic
 		val isServer: Boolean
 			get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
-		
+
+		@JvmStatic
 		fun toString(nbt: NBTTagCompound): String {
 			val sb = StringBuilder("{\n")
 			for (o in nbt.tagMap.entries) {
@@ -945,6 +1017,7 @@ class ASJUtilities {
 			return sb.toString()
 		}
 		
+		@JvmStatic
 		fun toString(nbt: NBTTagList): String {
 			val sb = StringBuilder("list [\n")
 			for (obj in nbt.tagList)

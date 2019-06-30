@@ -16,12 +16,12 @@ import java.lang.reflect.Field
 
 object PacketHandler {
 	
-	val fallBuffer: Field?
-	
+	val fallBuffer = ASJReflectionHelper.getField(ItemTravelBelt::class.java, "fallBuffer") // FIXME transform access
+
 	fun handle(packet: Message0d, ctx: MessageContext) {
 		when (m0d.values()[packet.type]) {
-			Message0d.m0d.DODGE -> DOGIE(ctx.serverHandler)
-			Message0d.m0d.JUMP  -> jump(ctx.serverHandler.playerEntity)
+			m0d.DODGE -> DOGIE(ctx.serverHandler)
+			m0d.JUMP  -> jump(ctx.serverHandler.playerEntity)
 		}
 	}
 	
@@ -51,7 +51,6 @@ object PacketHandler {
 	}
 	
 	init {
-		fallBuffer = ASJReflectionHelper.getField(ItemTravelBelt::class.java!!, "fallBuffer")
 		fallBuffer!!.isAccessible = true
 	}
 	

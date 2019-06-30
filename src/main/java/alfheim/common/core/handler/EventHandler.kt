@@ -44,6 +44,7 @@ import vazkii.botania.common.item.equipment.tool.ToolCommons
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
 import kotlin.math.max
 
+@Suppress("unused")
 class EventHandler {
 	
 	@SubscribeEvent

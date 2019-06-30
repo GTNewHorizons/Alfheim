@@ -4,7 +4,7 @@ object ModInfo {
 	
 	const val MAJOR = "BETA"
 	//const val MINOR = ""
-	const val BUILD = "pre19.4"
+	const val BUILD = "pre19.5"
 	
 	const val MODID = "alfheim"
 	const val NAME = "Alfheim"

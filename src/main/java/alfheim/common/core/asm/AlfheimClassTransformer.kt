@@ -5,92 +5,93 @@ import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
-@Suppress("NAME_SHADOWING")
+@Suppress("NAME_SHADOWING", "ClassName", "unused")
 class AlfheimClassTransformer: IClassTransformer {
 	
-	override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		when (transformedName) {
-			"net.minecraft.entity.EntityTrackerEntry"                -> {
+			"net.minecraft.entity.EntityTrackerEntry"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityTrackerEntry$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"net.minecraft.potion.Potion"                            -> {
+			"net.minecraft.potion.Potion"								-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `Potion$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"net.minecraft.server.management.ItemInWorldManager"     -> {
+			"net.minecraft.server.management.ItemInWorldManager"		-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"net.minecraft.world.World"                              -> {
+			"net.minecraft.world.World"									-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `World$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"thaumcraft.common.items.ItemNugget"                     -> {
+			"thaumcraft.common.items.ItemNugget"						-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemNugget$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.client.core.handler.BaubleRenderHandler" -> {
+			"vazkii.botania.client.core.handler.BaubleRenderHandler"	-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BaubleRenderHandler$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.common.entity.EntityDoppleganger"        -> {
+			"vazkii.botania.common.entity.EntityDoppleganger"			-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityDoppleganger$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.common.lib.LibItemNames"                 -> {
+			"vazkii.botania.common.lib.LibItemNames"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `LibItemNames$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.common.item.lens.ItemLens"               -> {
+			"vazkii.botania.common.item.lens.ItemLens"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemLens$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.common.item.relic.ItemRelic"             -> {
+			"vazkii.botania.common.item.relic.ItemRelic"				-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemRelic$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			"vazkii.botania.common.item.rod.ItemTerraformRod"        -> {
+			"vazkii.botania.common.item.rod.ItemTerraformRod"			-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemTerraformRod$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				return cw.toByteArray()
 			}
-			else                                                     -> return basicClass
+			else														-> return basicClass
 		}
 	}
-	
+
 	internal class `EntityTrackerEntry$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -103,7 +104,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		
 		internal class `EntityTrackerEntry$tryStartWachingThis$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			var sended = false
+			private var sended = false
 			
 			override fun visitVarInsn(opcode: Int, `var`: Int) {
 				super.visitVarInsn(opcode, `var`)
@@ -134,7 +135,8 @@ class AlfheimClassTransformer: IClassTransformer {
 			override fun visitFieldInsn(opcode: Int, owner: String, name: String, desc: String) {
 				if (flag && opcode == GETSTATIC && (owner == "net/minecraft/util/DamageSource" || owner == "ro") && (name == "magic" || name == "k") && (desc == "Lnet/minecraft/util/DamageSource;" || desc == "Lro;")) {
 					flag = false
-					super.visitFieldInsn(GETSTATIC, "alfheim/common/core/util/DamageSourceSpell", "poison", if (OBF) "Lro;" else "Lnet/minecraft/util/DamageSource;")
+					super.visitFieldInsn(GETSTATIC, "alfheim/common/core/util/DamageSourceSpell", "Companion", "Lalfheim/common/core/util/DamageSourceSpell\$Companion;")
+					super.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/core/util/DamageSourceSpell\$Companion", "getPoison", if (OBF) "()Lro;" else "()Lnet/minecraft/util/DamageSource;", false)
 					return
 				} else if (opcode == GETSTATIC && (owner == "net/minecraft/potion/Potion" || owner == "rv") && (name == "poison" || name == "u") && (desc == "Lnet/minecraft/potion/Potion;" || desc == "Lrv;")) flag = true
 				
@@ -190,7 +192,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		
 		internal class `World$updateEntities$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			var insert = true
+			private var insert = true
 			
 			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String, itf: Boolean) {
 				if (insert && opcode == INVOKEVIRTUAL && owner == (if (OBF) "aor" else "net/minecraft/tileentity/TileEntity") && name == (if (OBF) "h" else "updateEntity") && desc == "()V" && !itf) {
@@ -627,8 +629,8 @@ class AlfheimClassTransformer: IClassTransformer {
 		
 		internal class `ItemTerraformRod$clinit$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			var injectLength = true
-			var injectNew = false
+			private var injectLength = true
+			private var injectNew = false
 			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
 				var operand = operand

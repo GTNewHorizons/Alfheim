@@ -15,6 +15,7 @@ import net.minecraft.block.Block.*
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary.registerOre
+import vazkii.botania.common.block.BlockHourglass
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName
 
 object AlfheimBlocks {

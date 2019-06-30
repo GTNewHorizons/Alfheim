@@ -18,18 +18,20 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		if (flugel.aiTaskTimer % 10 == 0) {
 			val name: String
 			try {
-				name = ASJUtilities.mapGetKeyOrDefault(flugel.playersWhoAttacked, Collections.max(flugel.playersWhoAttacked.values), "")
+				name = flugel.playersWhoAttacked.maxBy { it.value }?.key ?: "Notch"
 			} catch (e: Throwable) {
 				e.printStackTrace()
 				return canContinue()
 			}
 			
 			val target = flugel.worldObj.getPlayerEntityByName(name)
+
 			if (target != null) {
 				val mot = Vector3(target.posX - flugel.posX, target.posY - flugel.posY, target.posZ - flugel.posZ).normalize()
 				flugel.motionX = mot.x
 				flugel.motionY = mot.y
 				flugel.motionZ = mot.z
+
 			} else {
 				flugel.playersWhoAttacked.remove(name)
 			}

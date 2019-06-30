@@ -51,6 +51,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
 		if (player.isSneaking) {
 			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack
+
 			if (merge(player.commandSenderName, stack.displayName) == "35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0") {
 				setInt(stack, TAG_ELEMENT, 5)
 				stack.tagCompound.removeTag("display")
@@ -63,10 +64,10 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 			player.setItemInUse(stack, this.getMaxItemUseDuration(stack))
 		return stack
 	}
-	
+
 	internal fun merge(s1: String, s2: String): String? {
 		val s = StringBuilder()
-		for (i in 0 until s1.length) for (j in 0 until s2.length) s.append(s1[i].toShort() * s2[j].toShort() % 256)
+		for (i in 0 until s1.length) for (j in 0 until s2.length) s.append(((s1[i].toShort() * s2[j].toShort()) % 256).toChar())
 		return hash(s.toString())
 	}
 	
@@ -84,6 +85,8 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	
 	// Might as well be called sugar given it's not secure at all :D
 	internal fun salt(str: String): String {
+		var str = str
+		str += "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot"
 		val rand = SecureRandom(str.toByteArray(Charset.forName("UTF-8")))
 		val l = str.length
 		val steps = rand.nextInt(l)

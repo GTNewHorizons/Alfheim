@@ -17,7 +17,6 @@ class RenderTileAnomaly: TileEntitySpecialRenderer() {
 		
 		val mainSTE = tile.subTiles[tile.mainSubTile] ?: return
 		
-		val pt = Minecraft.getMinecraft().timer.renderPartialTicks
 		mainSTE.bindTexture()
 		
 		glPushMatrix()
@@ -29,7 +28,7 @@ class RenderTileAnomaly: TileEntitySpecialRenderer() {
 		
 		glTranslated(mainSTE.x() + 0.5, mainSTE.y() + 0.5, mainSTE.z() + 0.5)
 		
-		val frame = ((System.nanoTime() / 40000000L + x) % mainSTE.frames).toInt()
+		val frame = System.nanoTime().div(40000000L).plus(x).toLong().rem(mainSTE.frames).toInt()
 		
 		renderFacingStrip(0.0, 0.0, 0.0, 0f, 1f, 1f, mainSTE.frames, mainSTE.strip, frame, partialTicks, mainSTE.color)
 		

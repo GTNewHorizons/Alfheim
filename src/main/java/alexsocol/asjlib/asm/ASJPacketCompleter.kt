@@ -10,7 +10,7 @@ import java.util.*
 class ASJPacketCompleter: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
-		if (basicClass == null || basicClass.size == 0) return basicClass
+		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		try {
 			val cn = ClassNode()
 			val cr = ClassReader(basicClass)
@@ -60,7 +60,7 @@ class ASJPacketCompleter: IClassTransformer {
 		return basicClass
 	}
 	
-	fun makeConstructor(cl: ClassNode) {
+	private fun makeConstructor(cl: ClassNode) {
 		val mv = cl.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)
 		mv.visitCode()
 		mv.visitVarInsn(ALOAD, 0)
@@ -69,7 +69,7 @@ class ASJPacketCompleter: IClassTransformer {
 		mv.visitEnd()
 	}
 	
-	fun makeFromBytes(cl: ClassNode, callCustom: Boolean) {
+	private fun makeFromBytes(cl: ClassNode, callCustom: Boolean) {
 		val mv = cl.visitMethod(ACC_PUBLIC, "fromBytes", "(Lio/netty/buffer/ByteBuf;)V", null, null)
 		mv.visitCode()
 		if (callCustom) {
@@ -88,7 +88,7 @@ class ASJPacketCompleter: IClassTransformer {
 		mv.visitEnd()
 	}
 	
-	fun makeToBytes(cl: ClassNode, callCustom: Boolean) {
+	private fun makeToBytes(cl: ClassNode, callCustom: Boolean) {
 		val mv = cl.visitMethod(ACC_PUBLIC, "toBytes", "(Lio/netty/buffer/ByteBuf;)V", null, null)
 		mv.visitCode()
 		if (callCustom) {
@@ -107,7 +107,7 @@ class ASJPacketCompleter: IClassTransformer {
 		mv.visitEnd()
 	}
 	
-	fun getFileds(cl: ClassNode): List<FieldNode> {
+	private fun getFileds(cl: ClassNode): List<FieldNode> {
 		val fns = ArrayList<FieldNode>()
 		for (fn in cl.fields) {
 			if (fn.access and ACC_STATIC > 0 || fn.access and ACC_FINAL > 0) continue
@@ -117,8 +117,7 @@ class ASJPacketCompleter: IClassTransformer {
 	}
 	
 	companion object {
-		
-		val descriptors: List<*> = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;")
+		val descriptors: List<String> = Lists.newArrayList("Z", "B", "C", "D", "F", "I", "J", "S", "Ljava/lang/String;", "Lnet/minecraft/item/ItemStack;", "Lnet/minecraft/nbt/NBTTagCompound;")
 		val doLog = System.getProperty("asjlib.asm.errorlog", "off") == "on"
 	}
 }

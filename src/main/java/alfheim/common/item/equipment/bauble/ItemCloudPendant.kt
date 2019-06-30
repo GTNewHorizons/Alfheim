@@ -21,20 +21,19 @@ class ItemCloudPendant @JvmOverloads constructor(name: String = "CloudPendant", 
 	fun clientWornTick(stack: ItemStack, player: EntityLivingBase) {
 		if (player is EntityPlayerSP && player === Minecraft.getMinecraft().thePlayer) {
 			val playerSp = player as EntityPlayerSP
-			val uuid = playerSp.uniqueID
-			
+
 			if (playerSp.onGround)
 				timesJumped = 0
 			else {
-				if (playerSp.movementInput.jump) {
+				jumpDown = if (playerSp.movementInput.jump) {
 					if (!jumpDown && timesJumped < maxAllowedJumps) {
 						playerSp.jump()
 						AlfheimCore.network.sendToServer(Message0d(m0d.JUMP))
 						timesJumped++
 					}
-					jumpDown = true
+					true
 				} else
-					jumpDown = false
+					false
 			}
 		}
 	}

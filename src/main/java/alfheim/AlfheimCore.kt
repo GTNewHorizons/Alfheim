@@ -103,19 +103,19 @@ class AlfheimCore {
 		var WAILALoaded = false
 		
 		fun registerPackets() {
-			AlfheimCore.network.registerMessage(Message0d.Handler::class.java, Message0d::class.java, nextPacketID++, Side.SERVER)
-			AlfheimCore.network.registerMessage(MessageHotSpellS.Handler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
-			AlfheimCore.network.registerMessage(MessageKeyBind.Handler::class.java, MessageKeyBind::class.java, nextPacketID++, Side.SERVER)
+			AlfheimCore.network.registerMessage(Message0dHandler::class.java, Message0d::class.java, nextPacketID++, Side.SERVER)
+			AlfheimCore.network.registerMessage(MessageHotSpellSHandler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
+			AlfheimCore.network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBind::class.java, nextPacketID++, Side.SERVER)
 			
-			AlfheimCore.network.registerMessage(Message1d.Handler::class.java, Message1d::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(Message2d.Handler::class.java, Message2d::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(Message3d.Handler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageEffect.Handler::class.java, MessageEffect::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageHotSpellC.Handler::class.java, MessageHotSpellC::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageParticles.Handler::class.java, MessageParticles::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageParty.Handler::class.java, MessageParty::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageTileItem.Handler::class.java, MessageTileItem::class.java, nextPacketID++, Side.CLIENT)
-			AlfheimCore.network.registerMessage(MessageTimeStop.Handler::class.java, MessageTimeStop::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(Message1dHandler::class.java, Message1d::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(Message2dHandler::class.java, Message2d::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(Message3dHandler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessageEffectHandler::class.java, MessageEffect::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessageHotSpellCHandler::class.java, MessageHotSpellC::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessageParticlesHandler::class.java, MessageParticles::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessagePartyHandler::class.java, MessageParty::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessageTileItemHandler::class.java, MessageTileItem::class.java, nextPacketID++, Side.CLIENT)
+			AlfheimCore.network.registerMessage(MessageTimeStopHandler::class.java, MessageTimeStop::class.java, nextPacketID++, Side.CLIENT)
 		}
 		
 		val alfheimTab = object: CreativeTabs("Alfheim") {

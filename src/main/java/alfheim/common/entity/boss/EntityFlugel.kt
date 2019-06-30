@@ -31,13 +31,12 @@ import net.minecraftforge.common.util.FakePlayer
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.api.boss.IBotaniaBoss
-import vazkii.botania.api.lexicon.multiblock.*
-import vazkii.botania.api.lexicon.multiblock.component.MultiblockComponent
 import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
+import vazkii.botania.common.core.helper.MathHelper.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.*
 import java.awt.Rectangle
@@ -45,11 +44,12 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.*
 
+@Suppress("UNCHECKED_CAST")
 class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
 	
 	val playersWhoAttacked: HashMap<String, Int> = HashMap()
 	
-	private val prevHP: Float = 0.toFloat()
+	private var maxHit = 0f
 	private var hurtTimeActual: Int = 0
 	
 	val playersAround: List<EntityPlayer>
@@ -117,11 +117,24 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		val e = source.entity
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
-			val dmg = if (ModInfo.DEV) damage else min((if (isHardMode) 60 else 40).toFloat(), damage) * if (aiTaskTimer > 0) 0.1f else 1f // this is OK
+
+			val crit = player.fallDistance > 0.0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
+			maxHit = if (crit) 60f else 40f
+			var dmg = min(maxHit, damage) * if (isHardMode) 0.6f else 1f
+
 			if (!playersWhoAttacked.containsKey(player.commandSenderName))
 				playersWhoAttacked[player.commandSenderName] = 1
 			else
 				playersWhoAttacked[player.commandSenderName] = playersWhoAttacked[player.commandSenderName]!! + 1
+
+			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
+				dmg /= 2f
+				if (aiTask == AITask.REGEN) {
+					aiTaskTimer = 0
+					e.attackEntityFrom(source, dmg / 2f)
+				}
+			}
+
 			reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}
@@ -133,25 +146,23 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		val attacker = source.entity
 		if (attacker != null) {
-			val motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(attacker)).normalize().mul(0.75)
+			val motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(attacker)).normalize().mul(0.25)
 			
 			if (health > 0) {
-				motionX = -motionVector.x
-				motionY = 0.5
-				motionZ = -motionVector.z
+				motionX = motionVector.x
+				motionY = motionVector.y
+				motionZ = motionVector.z
 			}
-			
-			reUpdate()
 		}
 	}
 	
 	override fun setHealth(hp: Float) {
 		var hp = hp
 		prevHealth = health
-		hp = max(prevHealth - if (isHardMode) 60f else 40f, hp)
+		hp = max(prevHealth - maxHit * if (isHardMode) 0.6f else 1f, hp)
 		
 		if (aiTask != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return
-		
+
 		super.setHealth(hp)
 		hurtTimeActual = 20
 		
@@ -258,7 +269,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	override fun onLivingUpdate() {
 		super.onLivingUpdate()
-		
+
 		if (ridingEntity != null) {
 			if (ridingEntity.riddenByEntity != null)
 				ridingEntity.riddenByEntity = null
@@ -320,9 +331,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val radP = pitch * Math.PI.toFloat() / 180f
 						
 						// world coords
-						val X = source.posX + 0.5
-						val Y = source.posY + 0.5
-						val Z = source.posZ + 0.5
+						val wX = source.posX + 0.5
+						val wY = source.posY + 0.5
+						val wZ = source.posZ + 0.5
 						
 						// local coords
 						val x = sin(radP.toDouble()) * cos(radY.toDouble()) * RANGE.toDouble()
@@ -343,7 +354,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val motY = kos.y.toFloat()
 						val motZ = kos.z.toFloat()
 						
-						Botania.proxy.wispFX(worldObj, X - x, Y - y, Z - z, r, g, b, 1f, motX, motY, motZ)
+						Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, r, g, b, 1f, motX, motY, motZ)
 						yaw += mod
 					}
 				}
@@ -372,7 +383,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			}
 			
 			// Get player back!
-			if (vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
+			if (pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
 				val motion = Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).sub(Vector3.fromEntityCenter(player)).normalize()
 				
 				player.motionX = motion.x
@@ -390,8 +401,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (invul > 10) spawnPatyklz(false)
 		
 		if (invul <= 0) {
-			if (vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
+				try {
+					ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersWhoAttacked.maxBy { it.value }?.key ?: "Notch"), 360f, 360f)
+				} catch (e: Throwable) {}
+
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
 				if (isDying && stage < STAGE_DEATHRAY && aiTask != AITask.DEATHRAY) {
@@ -468,7 +483,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		return playersAround.isNotEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
 	}
 	
-	fun initAI() {
+	private fun initAI() {
 		tasks.taskEntries.clear()
 		var i = 0
 		tasks.addTask(i++, EntityAIWatchClosest(this, EntityPlayer::class.java, java.lang.Float.MAX_VALUE))
@@ -505,7 +520,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		playersWhoAttacked[summoner] = 1
 	}
 	
-	fun reUpdate() {
+	private fun reUpdate() {
 		if (worldObj.isRemote) return
 		if (stage < 0)
 			stage = -stage
@@ -569,7 +584,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			nbt.getInteger(TAG_PLAYER_COUNT)
 		else
 			1
-		val TAG_AI_TASK = "task"
+
 		aiTask = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
 		
 		//if (ModInfo.DEV) ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
@@ -619,7 +634,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			
 			// Prevent out of bounds teleporting
 			val source = source
-			if (vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) flag = false
+			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) flag = false
 		}
 		
 		if (!flag) {
@@ -745,21 +760,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		glPopMatrix()
 	}
 	
-	class BeaconComponent(relPos: ChunkCoordinates): MultiblockComponent(relPos, Blocks.iron_block, 0) {
-		
-		override fun matches(world: World, x: Int, y: Int, z: Int): Boolean {
-			return world.getBlock(x, y, z).isBeaconBase(world, x, y, z, x - relPos.posX, y - relPos.posY, z - relPos.posZ)
-		}
-		
-	}
-	
-	class BeaconBeamComponent(relPos: ChunkCoordinates): MultiblockComponent(relPos, Blocks.beacon, 0) {
-		
-		override fun matches(world: World, x: Int, y: Int, z: Int): Boolean {
-			return world.getTileEntity(x, y, z) is TileEntityBeacon
-		}
-	}
-	
 	companion object {
 		
 		private const val TAG_TIME_LEFT = "timeLeft" // from vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
@@ -781,7 +781,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		private const val TAG_AI_TIMER = "aiTime"
 		private const val TAG_SUMMONER = "summoner"
 		private const val TAG_ATTACKED = "attacked"
-		
+
 		const val STAGE_AGGRO = 1    //100%	hp
 		const val STAGE_MAGIC = 2    //60%	hp
 		const val STAGE_DEATHRAY = 3    //12.5%	hp
@@ -857,7 +857,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					for (p in players) if (isTruePlayer(p)) playerCount++
 					
 					e.playerCount = playerCount
-					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount.toFloat() * (if (hard) 2 else 1).toFloat()).toDouble()
+					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).toDouble()
 					
 					world.playSoundAtEntity(e, "mob.enderdragon.growl", 10f, 0.1f)
 					world.spawnEntityInWorld(e)
@@ -883,7 +883,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			for (i in -RANGE until RANGE + 1)
 				for (j in -RANGE until RANGE + 1)
 					for (k in -RANGE until RANGE + 1) {
-						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || vazkii.botania.common.core.helper.MathHelper.pointDistancePlane(i.toDouble(), j.toDouble(), 0.0, 0.0) > RANGE)
+						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || pointDistancePlane(i.toDouble(), j.toDouble(), 0.0, 0.0) > RANGE)
 							continue // Ignore pylons, beacon and out of circle
 						
 						val x = sx + i
@@ -918,23 +918,5 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		private var barRect: Rectangle? = null
 		@SideOnly(Side.CLIENT)
 		private var hpBarRect: Rectangle? = null
-		
-		/*	================================	LEXICON STUFF	================================	*/
-		
-		fun makeMultiblockSet(): MultiblockSet {
-			val mb = Multiblock()
-			
-			for (p in PYLON_LOCATIONS)
-				mb.addComponent(p[0], p[1] + 1, p[2], ModBlocks.pylon, 2)
-			
-			for (i in 0..2)
-				for (j in 0..2)
-					mb.addComponent(BeaconComponent(ChunkCoordinates(i - 1, 0, j - 1)))
-			
-			mb.addComponent(BeaconBeamComponent(ChunkCoordinates(0, 1, 0)))
-			mb.setRenderOffset(0, -1, 0)
-			
-			return mb.makeSet()
-		}
 	}
 }

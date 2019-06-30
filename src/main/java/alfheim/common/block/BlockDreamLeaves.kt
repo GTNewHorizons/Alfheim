@@ -16,23 +16,25 @@ import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.api.item.IHornHarvestable
 import vazkii.botania.api.lexicon.*
+import vazkii.botania.common.item.ItemGrassHorn
 import vazkii.botania.common.item.ModItems
 import java.util.*
 
 class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
-	
+
 	val textures = arrayOfNulls<IIcon>(3)
 	
 	init {
-		this.setBlockName("DreamLeaves")
-		this.setBlockTextureName(ModInfo.MODID + ":DreamLeaves")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
-		this.setLightOpacity(0)
+		setBlockName("DreamLeaves")
+		setBlockTextureName(ModInfo.MODID + ":DreamLeaves")
+		setCreativeTab(AlfheimCore.alfheimTab)
+		setLightOpacity(0)
 	}
 	
-	override// IDK whether this is good source of glowstone or not
-	fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	// IDK whether this is good source of glowstone or not
+	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.currentEquippedItem != null && player.currentEquippedItem.item === ModItems.manaResource && player.currentEquippedItem.itemDamage == 9) {
 			var eat = 2
 			val sides = BooleanArray(6)
@@ -65,29 +67,27 @@ class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 		return false
 	}
 	
-	override fun isLeaves(world: IBlockAccess?, x: Int, y: Int, z: Int): Boolean {
-		return false
+	override fun isLeaves(world: IBlockAccess, x: Int, y: Int, z: Int): Boolean {
+		return true
 	}
 	
 	override fun isOpaqueCube(): Boolean {
 		return Blocks.leaves.isOpaqueCube
 	}
 	
-	override fun getItemDropped(meta: Int, rand: Random?, p_149650_3_: Int): Item {
+	override fun getItemDropped(meta: Int, rand: Random, fortune: Int): Item {
 		return Item.getItemFromBlock(AlfheimBlocks.dreamSapling)
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	override fun getRenderColor(meta: Int): Int {
 		return Integer.parseInt("E5FFF9", 16)
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int): Int {
+	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int): Int {
 		return Integer.parseInt("E5FFF9", 16)
 	}
-	
-	public override fun func_150124_c(world: World?, x: Int, y: Int, z: Int, meta: Int, chance: Int) {}
 	
 	override fun func_150123_b(meta: Int): Int {
 		return 100
@@ -111,11 +111,11 @@ class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 	override fun getRenderType(): Int {
 		return RenderGlowingLayerBlock.glowBlockID
 	}
-	
+
 	override fun func_150125_e(): Array<String> {
 		return arrayOf("dream")
 	}
-	
+
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
 		return AlfheimLexiconData.worldgen
 	}

@@ -4,6 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.util.AlfheimConfig
 import baubles.api.*
+import baubles.common.lib.PlayerHandler
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -14,6 +15,7 @@ import net.minecraft.world.World
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.helper.ItemNBTHelper
+import vazkii.botania.common.entity.EntityDoppleganger
 import kotlin.math.min
 
 class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType?): Item(), IManaItem, IManaTooltipDisplay, IBauble {
@@ -27,7 +29,36 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType?): 
 		this.setTextureName(ModInfo.MODID + ':'.toString() + name)
 		this.unlocalizedName = name
 	}
-	
+
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (!EntityDoppleganger.isTruePlayer(player))
+			return stack
+
+		if (canEquip(stack, player)) {
+			val baubles = PlayerHandler.getPlayerBaubles(player)
+			for (i in 0 until baubles.sizeInventory) {
+				if (baubles.isItemValidForSlot(i, stack)) {
+					val stackInSlot = baubles.getStackInSlot(i)
+					if (stackInSlot == null || (stackInSlot.item as IBauble).canUnequip(stackInSlot, player)) {
+						if (!world.isRemote) {
+							baubles.setInventorySlotContents(i, stack.copy())
+							if (!player.capabilities.isCreativeMode)
+								player.inventory.setInventorySlotContents(player.inventory.currentItem, null)
+						}
+
+						if (stackInSlot != null) {
+							(stackInSlot.item as IBauble).onUnequipped(stackInSlot, player)
+							return stackInSlot.copy()
+						}
+						break
+					}
+				}
+			}
+		}
+
+		return stack
+	}
+
 	override fun getSubItems(par1: Item, par2CreativeTabs: CreativeTabs?, par3List: MutableList<Any?>) {
 		par3List.add(ItemStack(par1, 1, 1000))
 		/*ItemStack full = new ItemStack(par1, 1, 1);

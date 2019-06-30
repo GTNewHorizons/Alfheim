@@ -41,7 +41,7 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 			else {
 				if (player.getActivePotionEffect(Potion.invisibility) != null)
 					player.removePotionEffect(Potion.invisibility.id)
-				
+				ManaItemHandler.requestManaExact(stack, player, manaCost, true)
 				player.addPotionEffect(PotionEffect(Potion.invisibility.id, Integer.MAX_VALUE, -42, true))
 			}
 		}

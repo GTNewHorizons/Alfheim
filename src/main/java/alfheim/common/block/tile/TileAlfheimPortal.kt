@@ -170,26 +170,26 @@ class TileAlfheimPortal: TileMod() {
 	}
 	
 	private fun checkConverter(baseConverter: Function<IntArray, IntArray>?): Boolean {
-		return checkMultipleConverters(baseConverter) || checkMultipleConverters(CONVERTER_Z_SWAP, baseConverter)
+		return checkMultipleConverters(arrayOf(baseConverter)) || checkMultipleConverters(arrayOf(CONVERTER_Z_SWAP, baseConverter))
 	}
 	
-	private fun checkMultipleConverters(vararg converters: Function<IntArray, IntArray>?): Boolean {
-		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, *converters))
+	private fun checkMultipleConverters(converters: Array<Function<IntArray, IntArray>?>?): Boolean {
+		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, converters))
 			return false
-		if (wrong2DArray(DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 0, *converters))
+		if (wrong2DArray(DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 0, converters))
 			return false
-		if (wrong2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, *converters))
+		if (wrong2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
 			return false
-		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, *converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false
-		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, *converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false
 		
-		lightPylons(*converters)
+		lightPylons(converters)
 		return true
 	}
 	
-	private fun lightPylons(vararg converters: Function<IntArray, IntArray>?) {
+	private fun lightPylons(converters: Array<Function<IntArray, IntArray>?>?) {
 		if (ticksOpen < 50)
 			return
 		
@@ -197,10 +197,8 @@ class TileAlfheimPortal: TileMod() {
 		
 		for (pos in PYLON_POSITIONS) {
 			var pos = pos
-			for (f in converters)
-				if (f != null)
-					pos = f.apply(pos)!!
-			
+			converters?.forEach { pos = it?.apply(pos) ?: pos }
+
 			var tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
 				
@@ -239,13 +237,12 @@ class TileAlfheimPortal: TileMod() {
 		}
 	}
 	
-	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, vararg converters: Function<IntArray, IntArray>?): Boolean {
+	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		for (pos in positions) {
 			var pos = pos
-			for (f in converters)
-				if (f != null)
-					pos = f.apply(pos)!!
-			
+
+			converters?.forEach { pos = it?.apply(pos) ?: pos }
+
 			if (!checkPosition(pos, block, meta))
 				return true
 		}

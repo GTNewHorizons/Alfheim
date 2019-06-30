@@ -6,6 +6,7 @@ import alfheim.common.core.registry.*
 import alfheim.common.core.util.DamageSourceSpell
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
+import cpw.mods.fml.common.eventhandler.EventPriority
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.entity.*
@@ -18,13 +19,17 @@ import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.relic.ItemRelicBauble
+import kotlin.math.max
+import kotlin.math.min
 
 class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
+
 	init {
 		creativeTab = AlfheimCore.alfheimTab
 		MinecraftForge.EVENT_BUS.register(this)
@@ -81,43 +86,43 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		return getInt(stack, TAG_POSSESSION, 0) < 1800
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onEntityDeath(e: LivingDeathEvent) {
 		val player: EntityPlayer
 		if (e.entityLiving is EntityPlayer)
 			player = e.entityLiving as EntityPlayer
 		else
 			return
-		
-		run mask@ {
-			if (player.inventory.hasItem(AlfheimItems.mask)) {
-				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
-				if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return@mask
-				val baubles = PlayerHandler.getPlayerBaubles(player)
-				if (baubles.getStackInSlot(0) != null)
-					if ((baubles.getStackInSlot(0).item as IBauble).canUnequip(baubles.getStackInSlot(0), player)) {
-						if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
-					} else
-						return@mask
-				baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
-				player.inventory.consumeInventoryItem(AlfheimItems.mask)
-				e.isCanceled = true
-				return
-			}
-		}
-		
+
 		if (e.source.damageType == DamageSourceSpell.possession.damageType) {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			if (baubles.getStackInSlot(0) != null && baubles.getStackInSlot(0).item === AlfheimItems.mask) {
+			if (baubles.getStackInSlot(0)?.item === AlfheimItems.mask) {
 				setInt(baubles.getStackInSlot(0), TAG_POSSESSION, 0)
 				if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
 					player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
 				}
 				baubles.setInventorySlotContents(0, null)
 			}
+		} else {
+			if (player.inventory.hasItem(AlfheimItems.mask)) {
+				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
+				if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return
+				val baubles = PlayerHandler.getPlayerBaubles(player)
+				if (baubles.getStackInSlot(0) != null)
+					if ((baubles.getStackInSlot(0).item as IBauble).canUnequip(baubles.getStackInSlot(0), player)) {
+						if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+					} else
+						return
+
+				baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
+				player.inventory.consumeInventoryItem(AlfheimItems.mask)
+				e.isCanceled = true
+                val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
+				e.entityLiving.health = h
+			}
 		}
 	}
-	
+
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, advTT: Boolean) {
 		super.addHiddenTooltip(stack, player, list, advTT)
 		val e = if (getInt(stack, TAG_COOLDOWN, 0) > 0) EnumChatFormatting.DARK_GRAY else if (getBoolean(stack, TAG_ACTIVATED, false)) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED
