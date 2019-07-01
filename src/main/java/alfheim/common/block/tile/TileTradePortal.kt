@@ -173,26 +173,26 @@ class TileTradePortal: TileMod() {
 	}
 	
 	private fun checkConverter(baseConverter: Function<IntArray, IntArray>?): Boolean {
-		return checkMultipleConverters(baseConverter) || checkMultipleConverters(CONVERTER_Z_SWAP, baseConverter)
+		return checkMultipleConverters(arrayOf(baseConverter)) || checkMultipleConverters(arrayOf(CONVERTER_Z_SWAP, baseConverter))
 	}
 	
-	private fun checkMultipleConverters(vararg converters: Function<IntArray, IntArray>?): Boolean {
-		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, *converters)) return false
-		if (wrong2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, *converters)) return false
-		if (wrong2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, *converters)) return false
-		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 1, *converters)) return false
+	private fun checkMultipleConverters(converters: Array<Function<IntArray, IntArray>?>?): Boolean {
+		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, converters)) return false
+		if (wrong2DArray(LIVINGROCK_POSITIONS, ModBlocks.livingrock, 0, converters)) return false
+		if (wrong2DArray(GLOWSTONE_POSITIONS, Blocks.glowstone, 0, converters)) return false
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 1, converters)) return false
 		
-		lightPylons(*converters)
+		lightPylons(converters)
 		return true
 	}
 	
-	private fun lightPylons(vararg converters: Function<IntArray, IntArray>?) {
+	private fun lightPylons(converters: Array<Function<IntArray, IntArray>?>?) {
 		if (ticksOpen < 50)
 			return
 		
 		for (pos in PYLON_POSITIONS) {
 			var pos = pos
-			for (f in converters) pos = f?.apply(pos)!!
+			converters?.forEach { pos = it?.apply(pos) ?: pos }
 			
 			val tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
@@ -204,13 +204,15 @@ class TileTradePortal: TileMod() {
 		}
 	}
 	
-	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, vararg converters: Function<IntArray, IntArray>?): Boolean {
+	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		for (pos in positions) {
 			var pos = pos
-			for (f in converters) pos = f?.apply(pos)!!
-			if (!checkPosition(pos, block, meta)) return true
+			
+			converters?.forEach { pos = it?.apply(pos) ?: pos }
+			
+			if (!checkPosition(pos, block, meta))
+				return true
 		}
-		
 		return false
 	}
 	

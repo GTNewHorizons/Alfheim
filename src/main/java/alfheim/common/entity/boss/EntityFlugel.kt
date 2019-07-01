@@ -49,7 +49,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	val playersWhoAttacked: HashMap<String, Int> = HashMap()
 	
-	private var maxHit = 0f
+	private var maxHit = 1f
 	private var hurtTimeActual: Int = 0
 	
 	val playersAround: List<EntityPlayer>
@@ -117,16 +117,16 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		val e = source.entity
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
-
-			val crit = player.fallDistance > 0.0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
+			
+			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
 			maxHit = if (crit) 60f else 40f
 			var dmg = min(maxHit, damage) * if (isHardMode) 0.6f else 1f
-
+			
 			if (!playersWhoAttacked.containsKey(player.commandSenderName))
 				playersWhoAttacked[player.commandSenderName] = 1
 			else
 				playersWhoAttacked[player.commandSenderName] = playersWhoAttacked[player.commandSenderName]!! + 1
-
+			
 			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
 				dmg /= 2f
 				if (aiTask == AITask.REGEN) {
@@ -134,7 +134,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					e.attackEntityFrom(source, dmg / 2f)
 				}
 			}
-
+			
 			reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}
@@ -406,7 +406,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				try {
 					ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersWhoAttacked.maxBy { it.value }?.key ?: "Notch"), 360f, 360f)
 				} catch (e: Throwable) {}
-
+				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
 				if (isDying && stage < STAGE_DEATHRAY && aiTask != AITask.DEATHRAY) {
@@ -584,7 +584,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			nbt.getInteger(TAG_PLAYER_COUNT)
 		else
 			1
-
+		
 		aiTask = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
 		
 		//if (ModInfo.DEV) ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
@@ -781,7 +781,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		private const val TAG_AI_TIMER = "aiTime"
 		private const val TAG_SUMMONER = "summoner"
 		private const val TAG_ATTACKED = "attacked"
-
+		
 		const val STAGE_AGGRO = 1    //100%	hp
 		const val STAGE_MAGIC = 2    //60%	hp
 		const val STAGE_DEATHRAY = 3    //12.5%	hp

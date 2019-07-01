@@ -13,10 +13,9 @@ object Flight {
 	fun ensureExistence(player: EntityPlayer) {
 		if (player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT) == null) register(player)
 	}
-	
-	fun max(): Double {
-		return AlfheimRegistry.FLIGHT.defaultValue
-	}
+
+	val max: Double
+	get() = AlfheimRegistry.FLIGHT.defaultValue
 	
 	operator fun get(player: EntityPlayer): Double {
 		ensureExistence(player)

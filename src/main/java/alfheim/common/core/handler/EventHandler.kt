@@ -16,6 +16,8 @@ import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
+import baubles.api.BaublesApi
+import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -40,6 +42,7 @@ import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.TileAlfPortal
 import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
 import kotlin.math.max
@@ -313,11 +316,14 @@ class EventHandler {
 			}
 			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
-				if (player == null)
-					playerSegments[name]?.target = Target(null, false)
-				else {
+				if (player == null) {
+					val s = playerSegments[name]
+					s?.target = null
+					s?.isParty = false
+				} else {
 					val tg = CardinalSystem.TargetingSystem.getTarget(player)
-					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target is IBossDisplayData) 128 else 32)
+					
+					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target?.let { it is IBossDisplayData} == true) 128.0 else 32.0)
 						CardinalSystem.TargetingSystem.setTarget(player, null, false)
 				}
 			}
@@ -353,15 +359,17 @@ class EventHandler {
 		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
-				if (Flight[player] >= 0 && Flight[player] <= Flight.max()) {
-					if (player.capabilities.isFlying) {
-						Flight.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
-						if (player.isSprinting) player.moveFlying(0f, 1f, 0.01f)
-					} else
-						Flight.add(player, (if (Flight[player] < Flight.max()) 1 else 0).toDouble())
+				if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
+					if (Flight[player] >= 0 && Flight[player] <= Flight.max) {
+						if (player.capabilities.isFlying) {
+							Flight.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
+							if (player.isSprinting) player.moveFlying(0f, 1f, 0.01f)
+						} else
+							Flight.add(player, (if (Flight[player] < Flight.max) 1 else 0).toDouble())
+					}
+					
+					if (Flight[player] <= 0) player.capabilities.isFlying = false
 				}
-				
-				if (Flight[player] <= 0) player.capabilities.isFlying = false
 			}
 		}
 	}

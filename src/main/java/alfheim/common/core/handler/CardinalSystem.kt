@@ -101,7 +101,6 @@ object CardinalSystem {
 	fun ensureExistance(player: EntityPlayer): Boolean {
 		if (!playerSegments.containsKey(player.commandSenderName)) {
 			playerSegments[player.commandSenderName] = PlayerSegment(player)
-			return false
 		}
 		return true
 	}
@@ -359,14 +358,18 @@ object CardinalSystem {
 	object TargetingSystem {
 		
 		fun setTarget(player: EntityPlayer, target: EntityLivingBase?, isParty: Boolean) {
-			forPlayer(player).target = Target(target, isParty)
+			val c = forPlayer(player)
+			c.target = target
+			c.isParty = isParty
 		}
 		
 		fun getTarget(player: EntityPlayer): Target {
-			return forPlayer(player).target
+			val c = forPlayer(player)
+			// stupid kotlin -_-
+			return Target(c.target, c.isParty)
 		}
 		
-		class Target(val target: EntityLivingBase?, val isParty: Boolean)
+		data class Target(val target: EntityLivingBase?, val isParty: Boolean)
 	}
 	
 	object PartySystem {
@@ -908,9 +911,11 @@ object CardinalSystem {
 		var coolDown = HashMap<SpellBase, Int>()
 		var hotSpells = IntArray(12)
 		
-		var party: Party
+		var party: Party = Party(player)
 		@Transient
-		var target: Target
+		var target: EntityLivingBase? = null
+		@Transient
+		var isParty = false
 		
 		@Transient
 		var castableSpell: SpellBase? = null
@@ -919,19 +924,15 @@ object CardinalSystem {
 		@Transient
 		var init: Int = 0
 		
-		var knowledge: BooleanArray
+		var knowledge: BooleanArray = BooleanArray(Knowledge.values().size)
 		
-		var userName: String
+		var userName: String = player.commandSenderName
 		
 		@Transient
 		var quadStage = 0
 		
 		init {
 			for (spell in AlfheimAPI.spells) coolDown[spell] = 0
-			target = Target(player, true)
-			party = Party(player)
-			userName = player.commandSenderName
-			knowledge = BooleanArray(Knowledge.values().size)
 		}
 		
 		private fun writeObject(out: ObjectOutputStream) {

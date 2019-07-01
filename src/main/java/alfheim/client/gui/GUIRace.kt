@@ -46,7 +46,7 @@ class GUIRace(private val mc: Minecraft): Gui() {
 		
 		//		ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 		
-		val mod = MathHelper.floor_double(Flight[mc.thePlayer]) / Flight.max()
+		val mod = MathHelper.floor_double(Flight[mc.thePlayer]) / Flight.max
 		val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
 		EnumRace.glColorA(EnumRace.getRaceID(mc.thePlayer).toDouble(), if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 		
