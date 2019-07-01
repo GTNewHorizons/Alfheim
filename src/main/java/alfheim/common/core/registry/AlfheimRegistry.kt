@@ -1,6 +1,5 @@
 package alfheim.common.core.registry
 
-import alexsocol.asjlib.ASJReflectionHelper
 import alexsocol.asjlib.ASJUtilities.Companion.registerEntity
 import alexsocol.asjlib.ASJUtilities.Companion.registerEntityEgg
 import alfheim.AlfheimCore
@@ -36,7 +35,6 @@ import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.common.block.ModBlocks
-import vazkii.botania.common.brew.ModPotions
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.lib.LibBlockNames
@@ -81,7 +79,6 @@ object AlfheimRegistry {
 	lateinit var worldGen: IWorldGenerator
 	
 	fun preInit() {
-		if (Potion.potionTypes.size < 256) ASJReflectionHelper.invokeStatic<ModPotions, Any>(ModPotions::class.java, null, "extendPotionArray")
 		berserk = PotionBerserk()
 		bleeding = PotionBleeding()
 		butterShield = PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF)
@@ -114,10 +111,10 @@ object AlfheimRegistry {
 	fun init() {
 		registerWorldGenerator(worldGen, 1)
 		registerSpells()
+		loadAllPinkStuff()
 	}
 	
 	fun postInit() {
-		loadAllPinkStuff()
 		if (AlfheimConfig.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
 	}
 	

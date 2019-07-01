@@ -1,5 +1,6 @@
 package alfheim.client.integration.nei
 
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.client.integration.nei.recipes.*
 import alfheim.common.core.registry.AlfheimBlocks
@@ -23,10 +24,10 @@ class NEIAlfheimConfig: IConfigureNEI {
 	}
 	
 	override fun getName(): String {
-		return ModInfo.MODID
+		return AlfheimCore.meta.name
 	}
 	
 	override fun getVersion(): String {
-		return ModInfo.VERSION
+		return AlfheimCore.meta.version
 	}
 }

@@ -20,7 +20,8 @@ import java.util.*
 
 object CardinalSystemClient {
 	
-	private val mc = Minecraft.getMinecraft()
+	private val mc get() = Minecraft.getMinecraft()
+	
 	var segment: PlayerSegmentClient? = null
 	
 	fun segment(): PlayerSegmentClient {
@@ -70,10 +71,9 @@ object CardinalSystemClient {
 		
 		fun selectMob(): Boolean {
 			if (mc?.thePlayer == null) return false
-			if (segment().party == null) segment!!.party = Party(mc.thePlayer)
 			val mop = ASJUtilities.getMouseOver(mc.thePlayer, 128.0, true)
 			if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit is EntityLivingBase) {
-				if (!segment!!.party!!.isMember(mop.entityHit as EntityLivingBase)) {
+				if (!segment!!.party.isMember(mop.entityHit as EntityLivingBase)) {
 					val invis = (mop.entityHit as EntityLivingBase).isPotionActive(Potion.invisibility) || mop.entityHit.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)
 					if (Vector3.entityDistance(mop.entityHit, mc.thePlayer) < (if (mop.entityHit is IBossDisplayData) 128 else 32) && !invis) {
 						segment!!.target = mop.entityHit as EntityLivingBase
@@ -161,7 +161,7 @@ object CardinalSystemClient {
 		var init: Int = 0
 		var initM: Int = 0
 		
-		var party: Party? = null
+		var party: Party
 		var target: EntityLivingBase? = null
 		var isParty: Boolean = false
 		

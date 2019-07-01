@@ -2,8 +2,6 @@ package alfheim
 
 import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
-import alfheim.api.ModInfo.NAME
-import alfheim.api.ModInfo.VERSION
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.proxy.CommonProxy
@@ -22,11 +20,18 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import cpw.mods.fml.relauncher.Side
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
+import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
+import vazkii.botania.common.brew.ModPotions
 import java.io.File
 
-@Mod(modid = MODID, name = NAME, version = VERSION, guiFactory = "$MODID.client.gui.GUIFactory", dependencies = "required-after:Botania;before:elvenstory;after:MineTweaker3;after:Thaumcraft")
+@Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
+	
+	@EventHandler
+	fun constructing(e: FMLConstructionEvent) {
+		Potion.potionTypes = Potion.potionTypes.copyOf(1024)
+	}
 	
 	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
@@ -35,29 +40,29 @@ class AlfheimCore {
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear")
 		WAILALoaded = Loader.isModLoaded("Waila")
+		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
-		AlfheimConfig.loadConfig(File(e.modConfigurationDirectory.toString() + "/Alfheim", "$NAME.cfg"))
+		AlfheimConfig.loadConfig(File(e.modConfigurationDirectory.toString() + "/Alfheim", "${meta.name}.cfg"))
 		
 		if (AlfheimConfig.info) InfoLoader.start()
 		
 		registerPackets()
 		
-		proxy!!.initializeAndRegisterHandlers()
-		proxy!!.preInit()
+		proxy.preInit()
 		if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.preInit()
 	}
 	
 	@EventHandler
 	fun init(e: FMLInitializationEvent) {
-		proxy!!.init()
+		proxy.init()
+		proxy.initializeAndRegisterHandlers()
 	}
 	
 	@EventHandler
 	fun postInit(e: FMLPostInitializationEvent) {
-		proxy!!.registerKeyBinds()
-		proxy!!.registerRenderThings()
-		proxy!!.postInit()
-		AlfheimRegistry.loadAllPinkStuff()
+		proxy.registerKeyBinds()
+		proxy.registerRenderThings()
+		proxy.postInit()
 		if (MineTweakerLoaded) MinetweakerAlfheimConfig.loadConfig()
 		if (Botania.thaumcraftLoaded) {
 			ThaumcraftAlfheimConfig.loadConfig()
@@ -88,7 +93,10 @@ class AlfheimCore {
 		lateinit var instance: AlfheimCore
 		
 		@SidedProxy(clientSide = "$MODID.client.core.proxy.ClientProxy", serverSide = "$MODID.common.core.proxy.CommonProxy")
-		var proxy: CommonProxy? = null
+		lateinit var proxy: CommonProxy
+		
+		@Metadata(MODID)
+		lateinit var meta: ModMetadata
 		
 		lateinit var network: SimpleNetworkWrapper
 		var nextPacketID = 0

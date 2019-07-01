@@ -1,6 +1,7 @@
 package alfheim.common.core.util
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import net.minecraft.util.StatCollector
 import net.minecraftforge.common.MinecraftForge
@@ -52,11 +53,11 @@ object InfoLoader {
 				val root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(URL("https://bitbucket.org/AlexSocol/alfheim/raw/" + (if (ModInfo.DEV) "development" else "master") + "/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).documentElement
 				val latest = getNodeValue(root, "LATEST")
 				onlineVersion = Integer.parseInt(latest.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
-				outdated = onlineVersion > Integer.parseInt(ModInfo.BUILD.replace("\\D".toRegex(), ""))
-				if (outdated) info.add(StatCollector.translateToLocalFormatted("alfheimmisc.update", ModInfo.VERSION, latest))
+				outdated = onlineVersion > Integer.parseInt(AlfheimCore.meta.version.replace("\\D".toRegex(), ""))
+				if (outdated) info.add(StatCollector.translateToLocalFormatted("alfheimmisc.update", AlfheimCore.meta.version, latest))
 				var s: String? = getNodeValue(root, "UNIVERSAL")
 				info.addAll(listOf(*s!!.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
-				s = getNodeValue(root, ModInfo.VERSION)
+				s = getNodeValue(root, AlfheimCore.meta.version)
 				if (s.isNotEmpty()) {
 					info.add("=====================================================")
 					info.addAll(listOf(*s.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))

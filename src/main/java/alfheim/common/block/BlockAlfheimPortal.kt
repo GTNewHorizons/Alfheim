@@ -20,6 +20,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.*
 
 class BlockAlfheimPortal: BlockContainer(Material.wood), ILexiconable {
+	
 	init {
 		setBlockName("AlfheimPortal")
 		setBlockTextureName(ModInfo.MODID + ":AlfheimPortal")

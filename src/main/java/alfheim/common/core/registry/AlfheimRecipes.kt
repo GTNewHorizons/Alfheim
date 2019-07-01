@@ -156,7 +156,7 @@ object AlfheimRecipes {
 	lateinit var recipeNiflheimRune: RecipeRuneAltar
 	lateinit var recipeRealityRune: RecipeRuneAltar
 	
-	fun preInit() {
+	fun init() {
 		registerCraftingRecipes()
 		registerShapelessRecipes()
 		registerSmeltingRecipes()
@@ -166,7 +166,7 @@ object AlfheimRecipes {
 		//if (ModInfo.DEV && FMLCommonHandler.instance().getEffectiveSide().equals(Side.CLIENT)) (new NEIAlfheimConfig()).loadConfig();
 	}
 	
-	fun registerCraftingRecipes() {
+	private fun registerCraftingRecipes() {
 		addOreDictRecipe(ItemStack(alfheimPortal, 1),
 						 "DPD", "GSG", "DTD",
 						 'D', DREAM_WOOD,
@@ -267,6 +267,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeEmentalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
+		if (Botania.thaumcraftLoaded)
 		addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[0],
@@ -368,7 +369,8 @@ object AlfheimRecipes {
 						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-		
+
+		if (Botania.thaumcraftLoaded)
 		addOreDictRecipe(ItemStack(elvoriumHelmetRevealing),
 						 "TRT", "EPE", "CMC",
 						 'T', DREAMWOOD_TWIG,
@@ -536,7 +538,7 @@ object AlfheimRecipes {
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
 	}
 	
-	fun registerShapelessRecipes() {
+	private fun registerShapelessRecipes() {
 		addShapelessOreDictRecipe(ItemStack(auraRingElven), ELVORIUM_INGOT, auraRingGreater)
 		recipeAuraRingElven = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -574,14 +576,14 @@ object AlfheimRecipes {
 		addShapelessRecipe(ItemStack(red_mushroom), mushroom)
 	}
 	
-	fun registerSmeltingRecipes() {
+	private fun registerSmeltingRecipes() {
 		addSmelting(ItemStack(elvenOres, 1, 1), ItemStack(manaResource, 1, 7), 1.0f)
 		addSmelting(ItemStack(elvenOres, 1, 3), ItemStack(gold_ingot, 1, 0), 1.0f)
 		addSmelting(elvenSand, ItemStack(elfGlass), 1.0f)
 		addSmelting(manaGlass, ItemStack(glass), 0f)
 	}
 	
-	fun registerManaInfusionRecipes() {
+	private fun registerManaInfusionRecipes() {
 		// Why is this here?
 		/*addRecipe(new ItemStack(elfGlass), 100,
 			new ItemStack[] {new ItemStack(Modquartz, 1, 5), new ItemStack(elvenGlass)});*/
@@ -627,7 +629,7 @@ object AlfheimRecipes {
 												  ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.NiflheimEssence))
 	}
 	
-	fun banRetrades() {
+	private fun banRetrades() {
 		AlfheimAPI.banRetrade(AlfheimRecipes.recipeInterdimensional.output)
 		AlfheimAPI.banRetrade(ItemStack(iron_ingot))
 		AlfheimAPI.banRetrade(ItemStack(iron_block))
@@ -636,7 +638,7 @@ object AlfheimRecipes {
 		AlfheimAPI.banRetrade(ItemStack(diamond_block))
 	}
 	
-	fun registerRecipies() {
+	private fun registerRecipies() {
 		val costTier1 = 5200
 		val costTier2 = 8000
 		val costTier3 = 12000
@@ -661,7 +663,7 @@ object AlfheimRecipes {
 		addRecipe(LootInterceptorClearRecipe())
 	}
 	
-	fun init() {
+	fun postInit() {
 		ModCraftingRecipes.recipeGaiaPylon = recipeGaiaPylon
 	}
 	

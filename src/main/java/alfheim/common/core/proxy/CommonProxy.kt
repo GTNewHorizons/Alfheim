@@ -17,7 +17,6 @@ open class CommonProxy {
 		AlfheimLexiconData.preInit()
 		AlfheimBlocks.init()
 		AlfheimItems.init()
-		AlfheimRecipes.preInit()
 		AlfheimRegistry.preInit()
 		AlfheimAchievements.init()
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2()
@@ -29,13 +28,14 @@ open class CommonProxy {
 	open fun registerKeyBinds() {}
 	
 	fun init() {
-		AlfheimLexiconData.init()
-		AlfheimRegistry.init()
 		AlfheimRecipes.init()
+		AlfheimRegistry.init()
 		ASJUtilities.registerDimension(AlfheimConfig.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
 	}
 	
 	open fun postInit() {
+		AlfheimRecipes.postInit()
+		AlfheimLexiconData.init()
 		AlfheimLexiconData.postInit()
 		AlfheimRegistry.postInit()
 	}
