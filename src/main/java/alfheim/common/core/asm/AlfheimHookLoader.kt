@@ -11,14 +11,14 @@ import gloomyfolken.hooklib.minecraft.*
 class AlfheimHookLoader: HookLoader() {
 	
 	override fun getASMTransformerClass(): Array<String>? {
-		return arrayOf(PrimaryClassTransformer::class.java!!.getName(), AlfheimClassTransformer::class.java!!.getName(), ASJPacketCompleter::class.java!!.getName(), AlfheimSyntheticMethodsInjector::class.java!!.getName(), ASJASM::class.java!!.getName())
+		return arrayOf(PrimaryClassTransformer::class.java.name, AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, AlfheimSyntheticMethodsInjector::class.java.name, ASJASM::class.java.name)
 	}
 	
 	public override fun registerHooks() {
-		HookLoader.registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
-		if (hpSpells) HookLoader.registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
-		HookLoader.registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
-		HookLoader.registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter")
+		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
+		if (hpSpells) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
+		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
+		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter")
 		
 		if (ModInfo.OBF) ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler")
 	}
@@ -32,7 +32,7 @@ class AlfheimHookLoader: HookLoader() {
 			AlfheimASMData.load()
 			
 			ModInfo.OBF = !(ASJReflectionHelper.getStaticValue<CoreModManager, Any>(CoreModManager::class.java, "deobfuscatedEnvironment") as Boolean)
-			ASJReflectionHelper.setStaticFinalValue<ModInfo, Boolean>(ModInfo::class.java, !ModInfo.OBF, "DEV")
+			ASJReflectionHelper.setStaticFinalValue(ModInfo::class.java, !ModInfo.OBF, "DEV")
 		}
 	}
 }

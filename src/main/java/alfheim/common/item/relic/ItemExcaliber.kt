@@ -24,6 +24,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 import vazkii.botania.common.item.relic.ItemRelic
+import java.util.*
 
 /**
  * This code is completely copied from 208th Botania version and fully made by Vazkii or whoever... :D<br></br>
@@ -87,8 +88,8 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 10.0, 0))
-		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(field_111210_e, "Weapon modifier", 0.3, 1))
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(uuid, "Weapon modifier", 10.0, 0))
+		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(uuid, "Weapon modifier", 0.3, 1))
 		return multimap
 	}
 	
@@ -173,6 +174,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	}
 	
 	companion object {
+		val uuid = UUID.fromString("7d5ddaf0-15d2-435c-8310-bdfc5fd1522d")!!
 		
 		const val TAG_ATTACKER_USERNAME = "attackerUsername"
 		const val TAG_HOME_ID = "homeID"

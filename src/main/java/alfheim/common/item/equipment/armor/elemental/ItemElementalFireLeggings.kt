@@ -11,8 +11,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
+import java.util.*
 
 class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
+	
+	companion object {
+		val uuid = UUID.fromString("d162f3e4-87f5-43cc-b33e-85b8b4f4cb75")!!
+	}
+	
 	init {
 		this.creativeTab = AlfheimCore.alfheimTab
 	}
@@ -30,7 +36,7 @@ class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
 	
 	override fun getAttributeModifiers(stack: ItemStack?): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
-		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(ItemManasteelSword.field_111210_e, "Weapon modifier", 0.4, 1))
+		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(uuid, "Leggings modifier", 0.4, 2))
 		return multimap
 	}
 	
