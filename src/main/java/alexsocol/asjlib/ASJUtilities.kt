@@ -362,6 +362,8 @@ class ASJUtilities {
 			CraftingManager.getInstance().recipeList.add(ShapelessOreRecipe(output, *recipe))
 		}
 		
+		fun isOre(stack: ItemStack?, name: String) = OreDictionary.getOreIDs(stack).any { it == OreDictionary.getOreID(name) }
+		
 		/**
 		 * Removes recipe of `resultItem`
 		 * @param resultItem Stack to remove recipe

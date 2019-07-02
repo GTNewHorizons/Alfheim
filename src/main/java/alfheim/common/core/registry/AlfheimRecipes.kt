@@ -360,23 +360,12 @@ object AlfheimRecipes {
 			}
 		recipesElvenWand = BotaniaAPI.getLatestAddedRecipes(256)
 		
-		addOreDictRecipe(ItemStack(elvoriumHelmet),
+		recipeElvoriumHelmet = ShapedOreRecipe(ItemStack(elvoriumHelmet),
 						 "TRT", "EPE", "CMC",
 						 'T', DREAMWOOD_TWIG,
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelHelm,
-						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
-						 'M', MAUFTRIUM_INGOT)
-		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-
-		if (Botania.thaumcraftLoaded)
-		addOreDictRecipe(ItemStack(elvoriumHelmetRevealing),
-						 "TRT", "EPE", "CMC",
-						 'T', DREAMWOOD_TWIG,
-						 'R', ARUNE[0],
-						 'E', ELVORIUM_INGOT,
-						 'P', terrasteelHelmRevealing,
 						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
 						 'M', MAUFTRIUM_INGOT)
 		
@@ -658,9 +647,10 @@ object AlfheimRecipes {
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
 		
-		addRecipe(HelmRevealingAlfheimRecipe())
-		addRecipe(LootInterceptorRecipe())
-		addRecipe(LootInterceptorClearRecipe())
+		addRecipe(RecipeHelmetElvorium())
+		addRecipe(RecipeHelmRevealingAlfheim())
+		addRecipe(RecipeLootInterceptor())
+		addRecipe(RecipeLootInterceptorClear())
 	}
 	
 	fun postInit() {

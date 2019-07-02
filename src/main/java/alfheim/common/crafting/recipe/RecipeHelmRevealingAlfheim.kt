@@ -6,25 +6,22 @@ import net.minecraft.item.*
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import vazkii.botania.common.item.ModItems
 
-class HelmRevealingAlfheimRecipe: IRecipe {
+class RecipeHelmRevealingAlfheim: IRecipe {
 	
 	override fun matches(var1: InventoryCrafting, var2: World): Boolean {
-		val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") as Item ?: return false
-// NO TC loaded
+		val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") ?: return false // NO TC loaded
 		
 		var foundGoggles = false
 		var foundHelm = false
 		for (i in 0 until var1.sizeInventory) {
 			val stack = var1.getStackInSlot(i)
 			if (stack != null) {
-				if (checkHelm(stack))
-					foundHelm = true
-				else if (stack.item === goggles)
-					foundGoggles = true
-				else
-					return false // Found an invalid item, breaking the recipe
+				when {
+					checkHelm(stack) -> foundHelm = true
+					stack.item === goggles -> foundGoggles = true
+					else -> return false
+				} // Found an invalid item, breaking the recipe
 			}
 		}
 		return foundGoggles && foundHelm
@@ -47,12 +44,11 @@ class HelmRevealingAlfheimRecipe: IRecipe {
 		
 		val newHelm: ItemStack
 		
-		if (helmItem === AlfheimItems.elementalHelmet)
-			newHelm = ItemStack(AlfheimItems.elementalHelmetRevealing)
-		else if (helmItem === AlfheimItems.elvoriumHelmet)
-			newHelm = ItemStack(AlfheimItems.elvoriumHelmetRevealing)
-		else
-			return null
+		newHelm = when {
+			helmItem === AlfheimItems.elementalHelmet -> ItemStack(AlfheimItems.elementalHelmetRevealing)
+			helmItem === AlfheimItems.elvoriumHelmet -> ItemStack(AlfheimItems.elvoriumHelmetRevealing)
+			else -> return null
+		}
 		
 		// Copy Ancient Wills
 		for (i in 0..5)
@@ -76,7 +72,7 @@ class HelmRevealingAlfheimRecipe: IRecipe {
 	}
 	
 	override fun getRecipeOutput(): ItemStack {
-		return ItemStack(ModItems.manasteelHelmRevealing)
+		return ItemStack(AlfheimItems.elvoriumHelmetRevealing)
 	}
 	
 	private fun checkHelm(helmStack: ItemStack): Boolean {

@@ -2,11 +2,11 @@ package alfheim.common.crafting.recipe
 
 import alfheim.common.item.ItemLootInterceptor
 import net.minecraft.inventory.InventoryCrafting
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.world.World
 
-class LootInterceptorClearRecipe: IRecipe {
+class RecipeLootInterceptor: IRecipe {
 	
 	override fun matches(inv: InventoryCrafting, world: World): Boolean {
 		var inter = false
@@ -14,17 +14,13 @@ class LootInterceptorClearRecipe: IRecipe {
 		for (i in 0 until inv.sizeInventory) {
 			val stack = inv.getStackInSlot(i)
 			if (stack != null) {
-				if (stack.item is ItemLootInterceptor) {
-					if (!inter)
-						inter = true
-					else
-						return false
-				} else
-					return false // Found an invalid item, breaking the recipe
+				if (stack.item is ItemLootInterceptor)
+					inter = true
+				else if (inter) return true
 			}
 		}
 		
-		return inter
+		return false
 	}
 	
 	override fun getCraftingResult(inv: InventoryCrafting): ItemStack? {
@@ -40,8 +36,12 @@ class LootInterceptorClearRecipe: IRecipe {
 			}
 		}
 		
-		ItemLootInterceptor.setIDs(inter!!, ItemLootInterceptor.EMPTY)
-		ItemLootInterceptor.setMetas(inter, ItemLootInterceptor.EMPTY)
+		for (i in 0 until inv.sizeInventory) {
+			
+			val stack = inv.getStackInSlot(i)
+			if (stack != null && stack.item !is ItemLootInterceptor)
+				ItemLootInterceptor.add(inter!!, Item.getIdFromItem(stack.item), stack.itemDamage)
+		}
 		
 		return inter
 	}
