@@ -22,6 +22,11 @@ class EntityCharge: EntityThrowableCopy {
 	override fun onEntityUpdate() {
 		super.onEntityUpdate()
 		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.6f)
+		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.5f)
+		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.4f)
+		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.3f)
+		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.2f)
+		Botania.proxy.wispFX(worldObj, posX, posY, posZ, 0.2f, 0f, 0.8f, 0.1f)
 	}
 	
 	public override fun onImpact(pos: MovingObjectPosition?) {

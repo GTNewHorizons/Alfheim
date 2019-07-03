@@ -20,7 +20,7 @@ import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry
 import net.minecraft.entity.ai.EntityAIWatchClosest
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
-import net.minecraft.init.*
+import net.minecraft.init.Items
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
@@ -163,8 +163,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		if (aiTask != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return
 
-		super.setHealth(hp)
 		hurtTimeActual = 20
+		super.setHealth(hp)
 		
 		if (aiTask == AITask.INVUL) return
 		if (health < prevHealth && (health / (maxHealth / 10)).toInt() < (prevHealth / (maxHealth / 10)).toInt()) {
@@ -208,7 +208,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val relic = ItemStack(AlfheimItems.mask)
 						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)
-						entityDropItem(relic, 1f)
+						entityDropItem(relic, 1f) // FIXME make item invul
 						lot = false
 					}
 					entityDropItem(ItemStack(ModItems.ancientWill, 1, rand.nextInt(6)), 1f)
@@ -376,9 +376,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else {
 				if (!worldObj.isRemote) ASJUtilities.say(player, "alfheimmisc.notallowed")
-				var bed: ChunkCoordinates? = player.getBedLocation(player.dimension)
-				if (bed == null) bed = player.worldObj.spawnPoint
-				player.setPositionAndUpdate(bed!!.posX.toDouble(), bed.posY.toDouble(), bed.posZ.toDouble())
+				val bed = player.worldObj.spawnPoint
+				player.setPositionAndUpdate(bed.posX.toDouble(), bed.posY.toDouble(), bed.posZ.toDouble())
 				continue
 			}
 			

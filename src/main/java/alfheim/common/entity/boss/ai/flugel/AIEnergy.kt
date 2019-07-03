@@ -13,7 +13,7 @@ class AIEnergy(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	override fun startExecuting() {
 		max = if (flugel.isHardMode) 10 else 5
 		left = max
-		flugel.aiTaskTimer = 100
+		flugel.aiTaskTimer = max * 20
 	}
 	
 	override fun continueExecuting(): Boolean {

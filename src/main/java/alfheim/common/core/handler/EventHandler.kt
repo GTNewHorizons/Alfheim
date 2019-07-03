@@ -7,7 +7,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target
 import alfheim.common.core.handler.CardinalSystem.playerSegments
 import alfheim.common.core.handler.CardinalSystem.transfer
 import alfheim.common.core.registry.*
@@ -16,8 +15,6 @@ import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
-import baubles.api.BaublesApi
-import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -205,7 +202,7 @@ class EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (e.source.isFireDamage && !e.source.isUnblockable && e.entityLiving is EntityPlayer && (e.entityLiving as EntityPlayer).getCurrentArmor(1) != null && (e.entityLiving as EntityPlayer).getCurrentArmor(1).item === AlfheimItems.elementalLeggings && ManaItemHandler.requestManaExact((e.entityLiving as EntityPlayer).getCurrentArmor(1), e.entityLiving as EntityPlayer, MathHelper.ceiling_float_int(10 * ammount), !e.entityLiving.worldObj.isRemote)) {
+		if (e.source.isFireDamage && !e.source.isUnblockable && e.entityLiving is EntityPlayer && (e.entityLiving as EntityPlayer).getCurrentArmor(1)?.item === AlfheimItems.elementalLeggings && ManaItemHandler.requestManaExact((e.entityLiving as EntityPlayer).getCurrentArmor(1), e.entityLiving as EntityPlayer, MathHelper.ceiling_float_int(10 * ammount), !e.entityLiving.worldObj.isRemote)) {
 			e.isCanceled = true
 			return
 		}

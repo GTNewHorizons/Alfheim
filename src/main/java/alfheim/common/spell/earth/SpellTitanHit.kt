@@ -22,13 +22,14 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.WRONGTGT
-		val result: SpellCastResult = checkCast(caster)
 		
 		val dist = (caster as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 5.0
 		val mop = ASJUtilities.getSelectedBlock(caster, dist, false)
 		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellCastResult.WRONGTGT
 		
 		tmana = removeBlocksInIteration(caster.worldObj, caster, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, false)
+		
+		val result: SpellCastResult = checkCast(caster)
 		
 		if (result != SpellCastResult.OK) return result
 		
@@ -69,7 +70,7 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 			if (!player.capabilities.isCreativeMode) {
 				val localMeta = world.getBlockMetadata(x, y, z)
 				if (remove) block.onBlockHarvested(world, x, y, z, localMeta, player)
-				flag = block.removedByPlayer(world, player, x, y, z, true)
+				if (remove) flag = block.removedByPlayer(world, player, x, y, z, true)
 				if (remove && flag) {
 					block.onBlockDestroyedByPlayer(world, x, y, z, localMeta)
 					
@@ -104,15 +105,19 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	}
 	
 	override fun getManaCost(): Int {
-		val temp = tmana
-		tmana = 0
-		return temp * mana
+		try {
+			return tmana * mana
+		} finally {
+			tmana = 0
+		}
 	}
 	
 	override fun getCooldown(): Int {
-		val temp = tcd
-		tcd = 0
-		return temp * cldn
+		try {
+			return tcd * cldn
+		} finally {
+			tcd = 0
+		}
 	}
 	
 	override fun render(caster: EntityLivingBase) {

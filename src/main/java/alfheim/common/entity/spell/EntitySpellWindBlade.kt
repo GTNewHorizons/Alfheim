@@ -24,9 +24,11 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		setSize(3f, 0.1f)
 	}
 	
-	constructor(world: World, caster: EntityLivingBase): this(world) {
+	constructor(world: World, caster: EntityLivingBase): this(world, caster, .0)
+	
+	constructor(world: World, caster: EntityLivingBase, i: Double): this(world) {
 		this.caster = caster
-		setPositionAndRotation(caster.posX, caster.posY + caster.height * 0.75, caster.posZ, caster.rotationYaw, caster.rotationPitch)
+		setPositionAndRotation(caster.posX, caster.posY + i + caster.height * 0.75, caster.posZ, caster.rotationYaw, caster.rotationPitch)
 	}
 	
 	override fun onEntityUpdate() {

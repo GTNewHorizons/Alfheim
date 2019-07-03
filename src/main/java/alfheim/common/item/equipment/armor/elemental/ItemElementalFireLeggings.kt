@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
-import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 import java.util.*
 
 class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
@@ -29,7 +28,6 @@ class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
 	
 	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
 		if (!world.isRemote && armorType == 2 && player.getCurrentArmor(1) != null && player.getCurrentArmor(1).item === AlfheimItems.elementalLeggings) {
-			//if (player.isSprinting && ManaItemHandler.requestManaExact(player.getCurrentArmor(1), player, 1, !world.isRemote)) player.addPotionEffect(PotionEffect(Potion.moveSpeed.id, 1, 1))
 			if (player.isBurning) player.extinguish()
 		}
 	}

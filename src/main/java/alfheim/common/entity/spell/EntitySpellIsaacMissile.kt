@@ -13,6 +13,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.lib.LibObfuscation
+import kotlin.math.abs
 
 class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 	
@@ -61,7 +62,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 	}
 	
 	constructor(thrower: EntityLivingBase, evil: Boolean): this(thrower.worldObj) {
-		ReflectionHelper.setPrivateValue<EntitySpellIsaacMissile, EntityLivingBase>(EntityThrowable::class.java!!, this, thrower, *LibObfuscation.THROWER)
+		ReflectionHelper.setPrivateValue(EntityThrowable::class.java, this, thrower, *LibObfuscation.THROWER)
 		isEvil = evil
 	}
 	
@@ -109,7 +110,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 			motionX = motionVec.x
 			motionY = motionVec.y
 			if (time < 10)
-				motionY = Math.abs(motionY)
+				motionY = abs(motionY)
 			motionZ = motionVec.z
 			
 			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5))

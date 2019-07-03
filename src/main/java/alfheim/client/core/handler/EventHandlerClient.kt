@@ -32,7 +32,6 @@ import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
 import vazkii.botania.common.item.ModItems
-import java.util.*
 
 class EventHandlerClient {
 	
@@ -198,14 +197,10 @@ class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onItemTooltip(e: ItemTooltipEvent) {
-		if (e.itemStack.item === ModItems.gaiaHead || e.itemStack.item === AlfheimItems.flugelHead) {
-			e.toolTip.add(EnumChatFormatting.GRAY.toString() + StatCollector.translateToLocal("item.FlugelHead.desc"))
-		}
-		
 		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && e.showAdvancedItemTooltips) {
 			e.toolTip.add("")
 			e.toolTip.add("NBT Data:")
-			e.toolTip.addAll(Arrays.asList(*ASJUtilities.toString(e.itemStack.tagCompound).split("\n".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()))
+			e.toolTip.addAll(listOf(*ASJUtilities.toString(e.itemStack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
 		}
 	}
 	

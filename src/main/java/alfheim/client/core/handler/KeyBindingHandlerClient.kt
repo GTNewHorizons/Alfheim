@@ -73,7 +73,7 @@ object KeyBindingHandlerClient {
 				toggleJump = toggleAlt
 				toggleFlight(player, true)
 				if (Flight[player] >= 300) {
-					player.motionY += 3.0
+					player.motionY += 3.0 // FIXME move to server
 				}
 			} else if (toggleJump && toggleAlt) {
 				toggleAlt = false

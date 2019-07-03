@@ -1,8 +1,10 @@
 package alfheim.common.block
 
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.*
 import alfheim.common.lexicon.AlfheimLexiconData
+import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
@@ -68,14 +70,16 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		return this.icons[0]
 	}
 	
-	override fun onEntityCollidedWithBlock(world: World?, x: Int, y: Int, z: Int, entity: Entity?) {
-		if (entity is EntityPlayer && PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).getStackInSlot(0) != null && BaublesApi.getBaubles(entity as EntityPlayer?).getStackInSlot(0).item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity as EntityPlayer?).getStackInSlot(0), entity as EntityPlayer?, 50, true)) return
+	override fun onEntityCollidedWithBlock(world: World, x: Int, y: Int, z: Int, entity: Entity) {
+		if (entity is EntityPlayer && BaublesApi.getBaubles(entity).getStackInSlot(0)?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity).getStackInSlot(0), entity, 50, true)) return
+		
 		if (entity is EntityLivingBase) {
 			val soulburn = PotionEffect(AlfheimRegistry.soulburn.id, 200)
 			soulburn.curativeItems.clear()
 			entity.addPotionEffect(soulburn)
+			AlfheimCore.network.sendToAll(MessageEffect(entity.entityId, soulburn.potionID, soulburn.duration, soulburn.amplifier))
 		}
-		entity!!.setInWeb()
+		entity.setInWeb()
 	}
 	
 	fun tryCatchFire(world: World, x: Int, y: Int, z: Int, side: Int, rand: Random, meta: Int, face: ForgeDirection) {

@@ -1,8 +1,10 @@
 package alfheim.common.block
 
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
+import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
@@ -70,20 +72,21 @@ class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
 	
 	public override fun dropBlockAsItem(w: World, x: Int, y: Int, z: Int, s: ItemStack) {}
 	
-	override fun onEntityWalking(w: World?, x: Int, y: Int, z: Int, e: Entity?) {
-		if (e is EntityPlayer) {
-			val player = e as EntityPlayer?
-			if (PlayerHandler.getPlayerBaubles(player!!).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).item === AlfheimItems.elfIcePendant) return
-		}
-		e!!.setInWeb()
-		if (!w!!.isRemote && e is EntityLivingBase) {
-			val l = e as EntityLivingBase?
-			if (!l!!.isPotionActive(Potion.poison)) l.addPotionEffect(PotionEffect(Potion.poison.id, 100, 2))
-			l.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 25, 2))
+	override fun onEntityWalking(w: World, x: Int, y: Int, z: Int, e: Entity) {
+		if (e is EntityPlayer && BaublesApi.getBaubles(e).getStackInSlot(0)?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e).getStackInSlot(0), e, 50, true)) return
+		
+		e.setInWeb()
+		if (!w.isRemote && e is EntityLivingBase) {
+			if (!e.isPotionActive(Potion.poison)) {
+				e.addPotionEffect(PotionEffect(Potion.poison.id, 100, 2))
+				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.poison.id, 100, 2))
+			}
+			e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 25, 2))
+			AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, 25, 2))
 		}
 	}
 	
-	override fun onEntityCollidedWithBlock(w: World?, x: Int, y: Int, z: Int, e: Entity?) {
+	override fun onEntityCollidedWithBlock(w: World, x: Int, y: Int, z: Int, e: Entity) {
 		this.onEntityWalking(w, x, y, z, e)
 	}
 	

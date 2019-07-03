@@ -297,7 +297,7 @@ botania.page.spells1=Before using the spell, you will have to wait for some time
 botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [ctrl]+[shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [ctrl]. You can also cancel the current spell by pressing the [X] button.
 botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change.
 botania.page.spells3u=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
-botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures within 9 blocks
+botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures in 9 blocks diametered area
 botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness
 botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interrupts if you move
 botania.page.battlehorn=Adds courage to allies, imposing acceleration, boost and resistance
@@ -349,7 +349,7 @@ botania.page.uphealth=Imposes a health increasement on the target
 botania.page.wallwarp=Allows you to move through not very thick walls
 botania.page.waterbreathing=Imposes a waterbreathing effect on a party
 botania.page.wellolife=Imposes an effect on a party that gradually heals the target if it stays in the water
-botania.page.windbalde=Launches an air disc, causing average air damage to enemies on the way
+botania.page.windbaldes=Launches air discs, causing average air damage to enemies on the way
 
 botania.entry.targets= Targeting
 botania.tagline.targets=You can't hide from me

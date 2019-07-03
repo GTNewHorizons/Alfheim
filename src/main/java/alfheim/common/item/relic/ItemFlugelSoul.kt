@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.*
+import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -24,7 +25,8 @@ import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.opengl.GL11.*
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.internal.IManaBurst
+import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
@@ -36,7 +38,7 @@ import vazkii.botania.common.item.relic.ItemRelic
 import java.awt.Color
 import kotlin.math.*
 
-class ItemFlugelSoul: ItemRelic("FlugelSoul") {
+class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	internal lateinit var signs: Array<IIcon>
 	
@@ -287,6 +289,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		private const val SEGMENTS = 12
 		private val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
 		
+		const val TAG_ATTACKER_ID = "attackerId"
 		private const val TAG_EQUIPPED = "equipped"
 		private const val TAG_ROTATION_BASE = "rotationBase"
 		private const val TAG_WARP_PREFIX = "warp"
@@ -401,6 +404,31 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul") {
 		fun getFirstCoords(stack: ItemStack): ChunkCoordinates {
 			val pos = getWarpPoint(stack, getBlocked(stack))
 			return ChunkCoordinates(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
+		}
+	}
+	
+	override fun doParticles(burst: IManaBurst?, stack: ItemStack?) = true
+	
+	override fun collideBurst(burst: IManaBurst?, pos: MovingObjectPosition?, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?) = dead
+	
+	override fun apply(stack: ItemStack?, props: BurstProperties?) = Unit
+	
+	override fun updateBurst(burst: IManaBurst?, stack: ItemStack?) {
+		val entity = burst as EntityThrowable
+		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
+		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
+		val attacker = ItemNBTHelper.getInt(burst.sourceLens, TAG_ATTACKER_ID, -1)
+		
+		for (living in entities) {
+			if (living.entityId == attacker) continue
+			
+			if (living.hurtTime == 0) {
+				if (!burst.isFake && !entity.worldObj.isRemote) {
+					living.attackEntityFrom(DamageSource.magic, 8f)
+					entity.setDead()
+					break
+				}
+			}
 		}
 	}
 }

@@ -556,7 +556,8 @@ object AlfheimRecipes {
 		addShapelessOreDictRecipe(ItemStack(livingcobble), LIVING_ROCK)
 		recipeLivingcobble = BotaniaAPI.getLatestAddedRecipe()
 		
-		addShapelessOreDictRecipe(ItemStack(manaResource, 4, 5), ancientWill)
+		for (i in 0..5)
+		addShapelessOreDictRecipe(ItemStack(manaResource, 4, 5), ItemStack(ancientWill, 1, i))
 		
 		addShapelessOreDictRecipe(ItemStack(manaRingGod), MAUFTRIUM_INGOT, manaStoneGreater)
 		recipeManaRingGod = BotaniaAPI.getLatestAddedRecipe()

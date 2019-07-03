@@ -136,7 +136,7 @@ object AlfheimRegistry {
 		registerEntity(EntitySpellGravityTrap::class.java, "SpellGravityTrap", AlfheimCore.instance)
 		registerEntity(EntitySpellIsaacMissile::class.java, "SpellIsaacMissile", AlfheimCore.instance)
 		registerEntity(EntitySpellMortar::class.java, "SpellMortar", AlfheimCore.instance)
-		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlade", AlfheimCore.instance)
+		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlades", AlfheimCore.instance)
 	}
 	
 	private fun registerTileEntities() {
@@ -222,7 +222,7 @@ object AlfheimRegistry {
 		registerSpell(SpellWallWarp())
 		registerSpell(SpellWaterBreathing())
 		registerSpell(SpellWellOLife())
-		registerSpell(SpellWindBlade())
+		registerSpell(SpellWindBlades())
 	}
 	
 	fun loadAllPinkStuff() {

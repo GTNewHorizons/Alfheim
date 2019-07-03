@@ -13,12 +13,12 @@ class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
 		val result = checkCastOver(caster)
-		if (result == SpellBase.SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellAcidMyst(caster.worldObj, caster))
+		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellAcidMyst(caster.worldObj, caster))
 		return result
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val s = 8.0
+		val s = 4.5
 		glDisable(GL_CULL_FACE)
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glEnable(GL_BLEND)
