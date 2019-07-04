@@ -17,6 +17,7 @@ class AlfheimHookLoader: HookLoader() {
 	public override fun registerHooks() {
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
 		if (hpSpells) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
+		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
 		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter")
 		

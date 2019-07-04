@@ -10,85 +10,92 @@ class AlfheimClassTransformer: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
-		when (transformedName) {
+		return when (transformedName) {
 			"net.minecraft.entity.EntityTrackerEntry"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityTrackerEntry$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"net.minecraft.potion.Potion"								-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `Potion$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"net.minecraft.server.management.ItemInWorldManager"		-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"net.minecraft.world.World"									-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `World$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
+			}
+			"thaumcraft.common.blocks.BlockCustomOre"					-> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `BlockCustomOre$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
 			}
 			"thaumcraft.common.items.ItemNugget"						-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemNugget$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.client.core.handler.BaubleRenderHandler"	-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BaubleRenderHandler$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.common.entity.EntityDoppleganger"			-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityDoppleganger$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.common.lib.LibItemNames"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `LibItemNames$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.common.item.lens.ItemLens"					-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemLens$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.common.item.relic.ItemRelic"				-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemRelic$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
 			"vazkii.botania.common.item.rod.ItemTerraformRod"			-> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemTerraformRod$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
-				return cw.toByteArray()
+				cw.toByteArray()
 			}
-			else														-> return basicClass
+			else														-> basicClass
 		}
 	}
 
@@ -232,6 +239,25 @@ class AlfheimClassTransformer: IClassTransformer {
 					mv.visitMethodInsn(INVOKESTATIC, "alfheim/api/event/EntityUpdateEvent", "stub", "()V", false)
 				} else
 					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+		}
+	}
+	
+	internal class `BlockCustomOre$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "addHitEffects") {
+				println("Visiting BlockCustomOre#addHitEffects: $name$desc")
+				return `BlockCustomOre$addHitEffects$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `BlockCustomOre$addHitEffects$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			override fun visitIntInsn(opcode: Int, operand: Int) {
+				if (opcode == BIPUSH && operand == 6) super.visitIntInsn(opcode, 7)
+				else super.visitIntInsn(opcode, operand)
 			}
 		}
 	}

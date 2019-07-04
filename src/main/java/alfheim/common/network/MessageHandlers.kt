@@ -46,21 +46,38 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage> {
 		val e = message.clientHandler.clientWorldController.getEntityByID(packet.entity)
 		if (e is EntityLivingBase) {
 			val pe = e.getActivePotionEffect(Potion.potionTypes[packet.id])
-			if (packet.dur <= 0) {
-				if (pe != null) {
-					e.removePotionEffect(packet.id)
-					Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
+			when (packet.state) {
+				1	/* add	*/	-> {
+					if (pe == null) {
+						e.addPotionEffect(PotionEffect(packet.id, packet.dur, packet.amp, true))
+						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+					} else {
+						if (packet.readd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
+						pe.amplifier = packet.amp
+						pe.duration = packet.dur
+						pe.isAmbient = true
+						if (packet.readd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+					}
 				}
-			} else {
-				if (pe == null) {
-					e.addPotionEffect(PotionEffect(packet.id, packet.dur, packet.amp, true))
-					Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
-				} else {
-					if (packet.upd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
-					pe.amplifier = packet.amp
-					pe.duration = packet.dur
-					pe.isAmbient = true
-					if (packet.upd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+				
+				0	/* upd	*/	-> {
+					if (pe == null) {
+						e.addPotionEffect(PotionEffect(packet.id, packet.dur, packet.amp, true))
+						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+					} else {
+						if (packet.readd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
+						pe.amplifier = packet.amp
+						pe.duration = packet.dur
+						pe.isAmbient = true
+						if (packet.readd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+					}
+				}
+				
+				-1	/* rem	*/	-> {
+					if (pe != null) {
+						e.removePotionEffect(packet.id)
+						Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
+					}
 				}
 			}
 		}

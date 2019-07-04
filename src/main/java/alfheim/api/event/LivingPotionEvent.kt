@@ -10,7 +10,7 @@ abstract class LivingPotionEvent(entity: EntityLivingBase, val effect: PotionEff
 	abstract class Add(entity: EntityLivingBase, pe: PotionEffect): LivingPotionEvent(entity, pe) {
 		
 		@Cancelable
-		@Deprecated("")
+		@Deprecated("Unimplemented")
 		class Pre(entity: EntityLivingBase, pe: PotionEffect): Add(entity, pe)
 		
 		class Post(entity: EntityLivingBase, pe: PotionEffect): Add(entity, pe)
@@ -21,7 +21,7 @@ abstract class LivingPotionEvent(entity: EntityLivingBase, val effect: PotionEff
 						  val update: Boolean): LivingPotionEvent(entity, pe) {
 		
 		@Cancelable
-		@Deprecated("")
+		@Deprecated("Unimplemented")
 		class Pre(entity: EntityLivingBase, pe: PotionEffect, update: Boolean): Change(entity, pe, update)
 		
 		class Post(entity: EntityLivingBase, pe: PotionEffect, update: Boolean): Change(entity, pe, update)
@@ -30,7 +30,7 @@ abstract class LivingPotionEvent(entity: EntityLivingBase, val effect: PotionEff
 	abstract class Remove(entity: EntityLivingBase, pe: PotionEffect): LivingPotionEvent(entity, pe) {
 		
 		@Cancelable
-		@Deprecated("")
+		@Deprecated("Unimplemented")
 		class Pre(entity: EntityLivingBase, pe: PotionEffect): Remove(entity, pe)
 		
 		class Post(entity: EntityLivingBase, pe: PotionEffect): Remove(entity, pe)

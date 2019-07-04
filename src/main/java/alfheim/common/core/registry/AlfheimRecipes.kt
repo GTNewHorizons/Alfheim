@@ -11,6 +11,7 @@ import alfheim.api.lib.LibOreDict.Companion.ARUNE
 import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.Companion.IFFESAL_DUST
+import alfheim.api.lib.LibOreDict.Companion.INFUSED_DREAM_TWIG
 import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_INGOT
 import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_NUGGET
 import alfheim.api.lib.LibOreDict.Companion.MUSPELHEIM_ESSENCE
@@ -261,7 +262,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(elementalHelmet),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[0],
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'D', IFFESAL_DUST,
 						 'P', elementiumHelm,
 						 'M', RUNE[8])
@@ -271,7 +272,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[0],
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'D', IFFESAL_DUST,
 						 'P', elementiumHelmRevealing,
 						 'M', RUNE[8])
@@ -279,7 +280,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(elementalChestplate),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[2],
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'D', IFFESAL_DUST,
 						 'P', elementiumChest,
 						 'M', RUNE[8])
@@ -288,7 +289,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(elementalLeggings),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[1],
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'D', IFFESAL_DUST,
 						 'P', elementiumLegs,
 						 'M', RUNE[8])
@@ -297,7 +298,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(elementalBoots),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[3],
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'D', IFFESAL_DUST,
 						 'P', elementiumBoots,
 						 'M', RUNE[8])
@@ -360,18 +361,9 @@ object AlfheimRecipes {
 			}
 		recipesElvenWand = BotaniaAPI.getLatestAddedRecipes(256)
 		
-		recipeElvoriumHelmet = ShapedOreRecipe(ItemStack(elvoriumHelmet),
-						 "TRT", "EPE", "CMC",
-						 'T', DREAMWOOD_TWIG,
-						 'R', ARUNE[0],
-						 'E', ELVORIUM_INGOT,
-						 'P', terrasteelHelm,
-						 'C', ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.ManaInfusionCore),
-						 'M', MAUFTRIUM_INGOT)
-		
 		addOreDictRecipe(ItemStack(elvoriumChestplate),
 						 "TRT", "EPE", "CMC",
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelChest,
@@ -381,7 +373,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(elvoriumLeggings),
 						 "TRT", "EPE", "CMC",
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelLegs,
@@ -391,7 +383,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(elvoriumBoots),
 						 "TRT", "EPE", "CMC",
-						 'T', DREAMWOOD_TWIG,
+						 'T', INFUSED_DREAM_TWIG,
 						 'R', ARUNE[0],
 						 'E', ELVORIUM_INGOT,
 						 'P', terrasteelBoots,
@@ -648,7 +640,10 @@ object AlfheimRecipes {
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, AlfheimItems.ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)
 		
-		addRecipe(RecipeHelmetElvorium())
+		
+		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
+		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
+		addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
 		addRecipe(RecipeHelmRevealingAlfheim())
 		addRecipe(RecipeLootInterceptor())
 		addRecipe(RecipeLootInterceptorClear())

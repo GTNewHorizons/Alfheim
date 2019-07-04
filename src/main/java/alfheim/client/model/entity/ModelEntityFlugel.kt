@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
-import net.minecraft.entity.Entity
+import net.minecraft.entity.*
 import net.minecraft.util.*
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
@@ -18,8 +18,8 @@ import kotlin.math.sin
 
 class ModelEntityFlugel: ModelBipedNew() {
 	
-	override fun render(entity: Entity?, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
-		if (entity?.dataWatcher?.getWatchableObjectString(10) == "Hatsune Miku") {
+	override fun render(e: Entity?, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
+		if (e?.dataWatcher?.getWatchableObjectString(10) == "Hatsune Miku") {
 			val font = Minecraft.getMinecraft().fontRenderer
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -27,11 +27,22 @@ class ModelEntityFlugel: ModelBipedNew() {
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(0.0, -1.5, 0.0)
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku1)
-			model.renderAll()
+			model1.renderAll()
 			glPopMatrix()
 			
+			if (e is EntityLivingBase) {
+				glPushMatrix()
+				glRotated(ASJUtilities.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
+				glRotated(ASJUtilities.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
+				glRotated(ASJUtilities.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+				glRotated(-90.0, 0.0, 1.0, 0.0)
+				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku2)
+				model2.renderAll()
+				glPopMatrix()
+			}
+			
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku0)
-			super.render(entity, time, amplitude, ticksExisted, yawHead, pitchHead, size)
+			super.render(e, time, amplitude, ticksExisted, yawHead, pitchHead, size)
 			glDisable(GL_BLEND)
 			
 			glPushMatrix()
@@ -63,10 +74,10 @@ class ModelEntityFlugel: ModelBipedNew() {
 			return
 		}
 		
-		super.render(entity, time, amplitude, ticksExisted, yawHead, pitchHead, size) // ItemFlightTiara
-		if (entity != null) {
-			renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks)
-			renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks)
+		super.render(e, time, amplitude, ticksExisted, yawHead, pitchHead, size) // ItemFlightTiara
+		if (e != null) {
+			renderWings(e, Minecraft.getMinecraft().timer.renderPartialTicks)
+			renderHalo(e, Minecraft.getMinecraft().timer.renderPartialTicks)
 		}
 	}
 	
@@ -164,6 +175,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 	}
 	
 	companion object {
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
+		val model1 = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
+		val model2 = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
 	}
 }

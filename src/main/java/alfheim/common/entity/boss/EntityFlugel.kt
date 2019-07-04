@@ -208,7 +208,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val relic = ItemStack(AlfheimItems.mask)
 						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)
-						entityDropItem(relic, 1f) // FIXME make item invul
+						entityDropItem(relic, 1f)
 						lot = false
 					}
 					entityDropItem(ItemStack(ModItems.ancientWill, 1, rand.nextInt(6)), 1f)

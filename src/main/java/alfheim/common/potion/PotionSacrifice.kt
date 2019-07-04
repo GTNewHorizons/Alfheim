@@ -25,10 +25,6 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfig.potionIDSacrifice, "sacrifice
 			for (i in 0..7) target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000.0f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
 		else
 			particles(target, 32 - timeQueued)
-		
-		if (timeQueued == 16) {
-			removeAttributesModifiersFromEntity(target, target.attributeMap, mod)
-		}
 	}
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {

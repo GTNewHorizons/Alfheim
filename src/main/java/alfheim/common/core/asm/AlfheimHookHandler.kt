@@ -209,7 +209,6 @@ object AlfheimHookHandler {
 			ASJUtilities.log("Well, that was expected. Ignore.")
 			ex.printStackTrace()
 		}
-		
 	}
 	
 	@JvmStatic

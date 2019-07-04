@@ -1,5 +1,6 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import com.google.common.collect.*
@@ -152,9 +153,11 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 					val mana = burst.mana
 					if (mana >= cost) {
 						burst.mana = mana - cost
-						val damage = 4.0f + toolMaterial.damageVsEntity
+						var damage = 4.0f + toolMaterial.damageVsEntity
 						if (!burst.isFake && !entity.worldObj.isRemote) {
 							val player = living.worldObj.getPlayerEntityByName(attacker)
+							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.toFloat()
+							damage *= mod ?: 1f
 							living.attackEntityFrom(if (player == null) DamageSource.magic else DamageSource.causePlayerDamage(player), damage)
 							entity.setDead()
 							break
