@@ -2,7 +2,7 @@ package alfheim.common.entity.boss.ai.flugel
 
 import alfheim.common.entity.boss.EntityFlugel
 
-enum class AITask private constructor(c: Double,
+enum class AITask constructor(c: Double,
 									  /** Insta-AIs can't be selected twice in a row  */
 									  val instant: Boolean,
 									  /** Stage required for execurtion  */
@@ -19,9 +19,5 @@ enum class AITask private constructor(c: Double,
 	DEATHRAY(0.0, false, EntityFlugel.STAGE_MAGIC);
 	
 	/** Chance to **NOT** to apply  */
-	val chance: Double
-	
-	init {
-		chance = 1.0 - c
-	}
+	val chance = 1.0 - c
 }

@@ -162,7 +162,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		hp = max(prevHealth - maxHit * if (isHardMode) 0.6f else 1f, hp)
 		
 		if (aiTask != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return
-
+		
 		hurtTimeActual = 20
 		super.setHealth(hp)
 		
@@ -269,7 +269,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	override fun onLivingUpdate() {
 		super.onLivingUpdate()
-
+		
 		if (ridingEntity != null) {
 			if (ridingEntity.riddenByEntity != null)
 				ridingEntity.riddenByEntity = null
@@ -277,8 +277,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		}
 		
 		if (!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL) setDead()
-		
-		if (worldObj.isRemote && AlfheimConfig.flugelBossBar) BossBarHandler.setCurrentBoss(this)
 		
 		if (!worldObj.isRemote) {
 			val radius = 1
@@ -306,6 +304,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersWhoAttacked.isEmpty()) playersWhoAttacked[summoner] = 1
 		val source = source
 		var players = playersAround
+		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfig.flugelBossBar) BossBarHandler.setCurrentBoss(this)
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
@@ -321,11 +320,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				run {
 					var yaw = 0
 					while (yaw < 360) {
-						// color
-						val r = 0.5f
-						val g = 0f
-						val b = 1f
-						
 						// angle in rads
 						val radY = yaw * Math.PI.toFloat() / 180f
 						val radP = pitch * Math.PI.toFloat() / 180f
@@ -340,7 +334,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val y = cos(radP.toDouble()) * RANGE
 						val z = sin(radP.toDouble()) * sin(radY.toDouble()) * RANGE.toDouble()
 						
-						// perticle source position
+						// particle source position
 						val nrm = Vector3(x, y, z).normalize()
 						
 						// noraml to pos
@@ -354,7 +348,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val motY = kos.y.toFloat()
 						val motZ = kos.z.toFloat()
 						
-						Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, r, g, b, 1f, motX, motY, motZ)
+						if (customNameTag == "Hatsune Miku") Botania.proxy.wispFX (worldObj, wX - x, wY - y, wZ - z, 0f, 0.75f, 1f, 1f, motX, motY, motZ)
+						else Botania.proxy.wispFX (worldObj, wX - x, wY - y, wZ - z, 0.5f, 0f, 1f, 1f, motX, motY, motZ)
 						yaw += mod
 					}
 				}
@@ -415,16 +410,20 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			} else {
 				val range = 3
 				players = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)) as List<EntityPlayer>
-				if (players.isNotEmpty()) damageEntity(DamageSource.causePlayerDamage(players[0]), 0f)
+				if (players.isNotEmpty()) attackEntityFrom(DamageSource.causePlayerDamage(players[0]), 0f)
 			}
 		}
 		
 		hurtTimeActual = max(0, --hurtTimeActual)
 	}
 	
-	fun spawnPatyklz(c: Boolean) {
+	// from pylons
+	fun spawnPatyklz(deathRay: Boolean) {
 		val source = source
 		val pos = Vector3.fromEntityCenter(this).sub(0.0, 0.2, 0.0)
+		
+		val miku = customNameTag == "Hatsune Miku"
+		
 		for (arr in PYLON_LOCATIONS) {
 			val x = arr[0]
 			val y = arr[1]
@@ -441,9 +440,15 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val partPos = Vector3(xp, pylonPos.y, zp)
 			val mot = pos.copy().sub(partPos).mul(0.04)
 			
-			val r = (if (c) 0.2f else 0.7f) + Math.random().toFloat() * 0.3f
-			val g = Math.random().toFloat() * 0.3f
-			val b = (if (c) 0.7f else 0.2f) + Math.random().toFloat() * 0.3f
+			var r = (if (deathRay) 0.2f else 0.7f) + Math.random().toFloat() * 0.3f
+			var g = Math.random().toFloat() * 0.3f
+			var b = (if (deathRay) 0.7f else 0.2f) + Math.random().toFloat() * 0.3f
+			
+			if (miku) {
+				r = Math.random().toFloat() * 0.3f
+				g = (if (deathRay) 0.2f else 0.7f) + Math.random().toFloat() * 0.3f
+				b = 0.7f + Math.random().toFloat() * 0.3f
+			}
 			
 			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.25f + Math.random().toFloat() * 0.1f, -0.075f - Math.random().toFloat() * 0.015f)
 			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.4f, mot.x.toFloat(), mot.y.toFloat(), mot.z.toFloat())
@@ -706,8 +711,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	private fun onImpact(mop: MovingObjectPosition) {
 		when (mop.typeOfHit) {
-			MovingObjectPosition.MovingObjectType.BLOCK  ->
-				if (onGround) motionY += 0.5
+			/*MovingObjectPosition.MovingObjectType.BLOCK  ->
+				if (onGround) motionY += 0.5*/
 			
 			MovingObjectPosition.MovingObjectType.ENTITY ->
 				if (mop.entityHit is EntityPlayer) mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this), if (isHardMode) 15.0f else 10.0f)

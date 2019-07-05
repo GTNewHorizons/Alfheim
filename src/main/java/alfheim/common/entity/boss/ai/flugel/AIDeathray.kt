@@ -7,6 +7,7 @@ import alfheim.common.entity.boss.EntityFlugel
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFallingStar
 import java.util.*
+import kotlin.math.*
 
 class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	
@@ -31,7 +32,7 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		
 		if (deathray == 1) {
 			val stars = ArrayList<EntityFallingStar>(16)
-			val rang = Math.ceil(range.toDouble()).toInt()
+			val rang = ceil(range.toDouble()).toInt()
 			for (l in 0..3) {
 				var i = 0
 				while (i < 16) {
@@ -75,10 +76,10 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 					val r = 0.2f + Math.random().toFloat() * 0.3f
 					val g = Math.random().toFloat() * 0.3f
 					val b = 0.2f + Math.random().toFloat() * 0.3f
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, Math.cos(i.toDouble()).toFloat() * 0.4f, 0f, Math.sin(i.toDouble()).toFloat() * 0.4f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, Math.cos(i.toDouble()).toFloat() * 0.3f, 0f, Math.sin(i.toDouble()).toFloat() * 0.3f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, Math.cos(i.toDouble()).toFloat() * 0.2f, 0f, Math.sin(i.toDouble()).toFloat() * 0.2f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, Math.cos(i.toDouble()).toFloat() * 0.1f, 0f, Math.sin(i.toDouble()).toFloat() * 0.1f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.4f, 0f, sin(i.toDouble()).toFloat() * 0.4f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.3f, 0f, sin(i.toDouble()).toFloat() * 0.3f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.2f, 0f, sin(i.toDouble()).toFloat() * 0.2f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.1f, 0f, sin(i.toDouble()).toFloat() * 0.1f)
 				}
 			}
 		}

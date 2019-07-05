@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
 import java.awt.Color
+import kotlin.math.*
 
 class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaUsingItem {
 	private var rubyIcon: IIcon? = null
@@ -48,17 +49,21 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
 		if (stack.itemDamage > 0) return stack
 		if (!world!!.isRemote) {
+			var cd = false
 			for (x in -6..6)
 				for (z in -6..6)
 					for (y in -2..2)
-						if (3 < Math.sqrt(Math.pow(x.toDouble(), 2.0) + Math.pow(z.toDouble(), 2.0)) && Math.sqrt(Math.pow(x.toDouble(), 2.0) + Math.pow(z.toDouble(), 2.0)) < 6) {
+						if (3 < sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) && sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) < 6) {
 							val X = MathHelper.floor_double(player!!.posX) + x
 							val Y = MathHelper.floor_double(player.posY) + y
 							val Z = MathHelper.floor_double(player.posZ) + z
 							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)
-							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z)) place(stack, player, world, X, Y, Z, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.toFloat(), c.green.toFloat(), c.blue.toFloat())
+							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z)) {
+								cd = true
+								place(stack, player, world, X, Y, Z, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.toFloat(), c.green.toFloat(), c.blue.toFloat())
+							}
 						}
-			stack.itemDamage = this.maxDamage
+			if (cd) stack.itemDamage = this.maxDamage
 		}
 		return stack
 	}

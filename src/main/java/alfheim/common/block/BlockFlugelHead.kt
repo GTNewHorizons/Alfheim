@@ -7,7 +7,7 @@ import net.minecraft.block.BlockSkull
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
-import net.minecraft.tileentity.*
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import java.util.*
@@ -27,16 +27,12 @@ class BlockFlugelHead: BlockSkull() {
 		// NO-OP
 	}
 	
-	override fun getDrops(p_149749_1_: World, p_149749_2_: Int, p_149749_3_: Int, p_149749_4_: Int, p_149749_6_: Int, fortune: Int): ArrayList<ItemStack> {
+	override fun getDrops(world: World, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<ItemStack> {
 		val ret = ArrayList<ItemStack>()
 		
-		if (p_149749_6_ and 8 == 0) {
-			val itemstack = ItemStack(AlfheimItems.flugelHead, 1)
-			val tileentityskull = p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_) as TileEntitySkull
-								  ?: return ret
-			
-			ret.add(itemstack)
-		}
+		if (meta and 8 == 0)
+			ret.add(ItemStack(AlfheimItems.flugelHead, 1))
+		
 		return ret
 	}
 	

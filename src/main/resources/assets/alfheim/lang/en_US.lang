@@ -453,7 +453,7 @@ spell.uphealth.name=Uphealth
 spell.wallwarp.name=Wall Warp
 spell.waterbreathing.name=Water Breathing
 spell.wellolife.name=Well of Life
-spell.windbalde.name=Wind Balde
+spell.windblades.name=Wind Blades
 
 #
 spell.acidmyst.words=§bAcid Myst
@@ -532,4 +532,4 @@ spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendur
 #
 spell.wellolife.words=§bWell of Life
 #
-spell.windbalde.words=§aWind Balde
+spell.windblades.words=§aWind Blades

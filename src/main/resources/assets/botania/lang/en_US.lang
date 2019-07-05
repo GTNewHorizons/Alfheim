@@ -349,7 +349,7 @@ botania.page.uphealth=Imposes a health increasement on the target
 botania.page.wallwarp=Allows you to move through not very thick walls
 botania.page.waterbreathing=Imposes a waterbreathing effect on a party
 botania.page.wellolife=Imposes an effect on a party that gradually heals the target if it stays in the water
-botania.page.windbaldes=Launches air discs, causing average air damage to enemies on the way
+botania.page.windblades=Launches air discs, causing average air damage to enemies on the way
 
 botania.entry.targets= Targeting
 botania.tagline.targets=You can't hide from me

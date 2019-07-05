@@ -453,7 +453,7 @@ spell.uphealth.name=Увеличение Здоровья
 spell.wallwarp.name=Деформация Стен
 spell.waterbreathing.name=Подводное Дыхание
 spell.wellolife.name=Колодец Жизни
-spell.windbalde.name=Коса Ветра
+spell.windblades.name=Косы Ветра
 
 #
 spell.acidmyst.words=§bКислотный Туман
@@ -532,4 +532,4 @@ spell.waterbreathing.words=§aДай нам жизнь рыбы, и позвол
 #
 spell.wellolife.words=§bКолодец Жизни
 #
-spell.windbalde.words=§aКоса Ветра
+spell.windblade.words=§aКосы Ветра
