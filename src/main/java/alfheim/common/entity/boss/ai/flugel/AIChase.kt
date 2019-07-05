@@ -25,13 +25,13 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			}
 			
 			val target = flugel.worldObj.getPlayerEntityByName(name)
-
+			
 			if (target != null) {
 				val mot = Vector3(target.posX - flugel.posX, target.posY - flugel.posY, target.posZ - flugel.posZ).normalize()
 				flugel.motionX = mot.x
 				flugel.motionY = mot.y
 				flugel.motionZ = mot.z
-
+			
 			} else {
 				flugel.playersWhoAttacked.remove(name)
 			}
