@@ -93,7 +93,7 @@ class EventHandler {
 		if (event.recentlyHit && event.source.entity != null && event.source.entity is EntityPlayer) {
 			val weapon = (event.source.entity as EntityPlayer).currentEquippedItem
 			if (weapon != null && weapon.item is ItemElementiumAxe && event.entityLiving is EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
-				val entityitem = EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemStack(AlfheimItems.flugelHead))
+				val entityitem = EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemStack(if ((event.entityLiving as EntityFlugel).customNameTag == "Hatsune Miku") AlfheimItems.flugelHead2 else AlfheimItems.flugelHead))
 				entityitem.delayBeforeCanPickup = 10
 				event.drops.add(entityitem)
 			}

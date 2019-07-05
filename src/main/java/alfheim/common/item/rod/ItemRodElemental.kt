@@ -59,8 +59,7 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 							val Z = MathHelper.floor_double(player.posZ) + z
 							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)
 							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z)) {
-								cd = true
-								place(stack, player, world, X, Y, Z, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.toFloat(), c.green.toFloat(), c.blue.toFloat())
+								cd = cd or place(stack, player, world, X, Y, Z, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.toFloat(), c.green.toFloat(), c.blue.toFloat())
 							}
 						}
 			if (cd) stack.itemDamage = this.maxDamage
@@ -79,7 +78,7 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 	companion object {
 		
 		// Modified code from ItemDirtRod
-		fun place(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float, block: Block, cost: Int, r: Float, g: Float, b: Float) {
+		fun place(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
 				val dir = ForgeDirection.getOrientation(par7)
 				
@@ -89,8 +88,10 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 				if (stackToPlace.stackSize == 0) {
 					ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, true)
 					for (i in 0..5) Botania.proxy.sparkleFX(par3World, par4.toDouble() + dir.offsetX.toDouble() + Math.random(), par5.toDouble() + dir.offsetY.toDouble() + Math.random(), par6.toDouble() + dir.offsetZ.toDouble() + Math.random(), r, g, b, 1f, 5)
+					return true
 				}
 			}
+			return false
 		}
 	}
 }

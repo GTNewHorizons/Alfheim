@@ -1,8 +1,8 @@
 package alfheim.client.render.item
 
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.model.entity.ModelBipedNew
-import alfheim.common.item.ItemFlugelHead
+import alfheim.client.model.entity.*
+import alfheim.common.item.*
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.client.event.RenderPlayerEvent
@@ -18,7 +18,8 @@ object RenderItemFlugelHead {
 	var notSwap = true
 	
 	fun render(e: RenderPlayerEvent.Pre, player: EntityPlayer) {
-		if (player.getCurrentArmor(3) != null && (player.getCurrentArmor(3).item is ItemFlugelHead || player.getCurrentArmor(3).item is ItemGaiaHead)) {
+		val head = player.getCurrentArmor(3)?.item
+		if (head is ItemHeadFlugel || head is ItemHeadMiku || head is ItemGaiaHead) {
 			notSwap = false
 			e.renderer.modelBipedMain.bipedHeadwear.showModel = notSwap
 			e.renderer.modelBipedMain.bipedHead.showModel = e.renderer.modelBipedMain.bipedHeadwear.showModel
@@ -37,11 +38,20 @@ object RenderItemFlugelHead {
 			glRotated(pitch.toDouble(), 0.0, 0.0, 1.0)
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			
-			if (player.getCurrentArmor(3) != null) {
-				if (player.getCurrentArmor(3).item is ItemFlugelHead) {
+			when (player.getCurrentArmor(3)?.item) {
+				is ItemHeadFlugel       -> {
 					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.jibril)
 					ModelBipedNew.model.head.render(0.0625f)
-				} else if (player.getCurrentArmor(3).item is ItemGaiaHead) {
+				}
+				
+				is ItemHeadMiku     -> {
+					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku0)
+					ModelBipedNew.model.head.render(0.0625f)
+					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku2)
+					ModelEntityFlugel.model2.renderAll()
+				}
+				
+				is ItemGaiaHead -> {
 					Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().thePlayer.locationSkin)
 					ShaderHelper.useShader(ShaderHelper.doppleganger, RenderDoppleganger.defaultCallback)
 					RenderTileSkullOverride.modelSkull.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f)

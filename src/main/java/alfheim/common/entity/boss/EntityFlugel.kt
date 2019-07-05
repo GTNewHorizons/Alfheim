@@ -141,18 +141,15 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		return false
 	}
 	
-	public override fun damageEntity(source: DamageSource, damage: Float) {
+	override fun damageEntity(source: DamageSource, damage: Float) {
 		super.damageEntity(source, damage)
 		
-		val attacker = source.entity
-		if (attacker != null) {
-			val motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(attacker)).normalize().mul(0.25)
+		if (source.entity != null && health > 0) {
+			val motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(source.entity)).normalize().mul(0.25)
 			
-			if (health > 0) {
-				motionX = motionVector.x
-				motionY = motionVector.y
-				motionZ = motionVector.z
-			}
+			motionX = motionVector.x
+			motionY = motionVector.y
+			motionZ = motionVector.z
 		}
 	}
 	
@@ -238,7 +235,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						droppedRecord = true
 					}
 					
-					if (!droppedRecord && Math.random() < 0.2) entityDropItem(ItemStack(AlfheimItems.flugelDisc), 1f)
+					if (!droppedRecord && Math.random() < 0.2) entityDropItem(ItemStack(if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc), 1f)
 				}
 			}
 			
@@ -308,7 +305,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
-			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, AlfheimItems.flugelDisc as ItemRecord)
+			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, (if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc) as ItemRecord)
 			isPlayingMusic = true
 		}
 		

@@ -1,7 +1,6 @@
 package alfheim.client.integration.nei
 
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.client.integration.nei.recipes.*
 import alfheim.common.core.registry.AlfheimBlocks
 import codechicken.nei.api.*
@@ -19,6 +18,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(ModBlocks.gaiaHead))
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHead))
+		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2))
 		API.hideItem(ItemStack(AlfheimBlocks.poisonIce))
 		API.hideItem(ItemStack(AlfheimBlocks.redFlame))
 	}

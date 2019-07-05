@@ -3,7 +3,6 @@ package alfheim.common.item
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimBlocks
-import net.minecraft.block.BlockPumpkin
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -14,11 +13,11 @@ import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
-class ItemFlugelHead: Item() {
+class ItemHeadMiku: Item() {
 	init {
 		creativeTab = AlfheimCore.alfheimTab
-		setTextureName(ModInfo.MODID + ":FlugelHead")
-		unlocalizedName = "FlugelHead"
+		setTextureName(ModInfo.MODID + ":MikuHead")
+		unlocalizedName = "MikuHead"
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
@@ -72,11 +71,11 @@ class ItemFlugelHead: Item() {
 			return true
 		
 		// If the skull says no, who are we to argue?
-		if (!AlfheimBlocks.flugelHead.canPlaceBlockOnSide(world, x, y, z, side))
+		if (!AlfheimBlocks.flugelHead2.canPlaceBlockOnSide(world, x, y, z, side))
 			return false
 		
-		// Flugel head, instead of skull
-		world.setBlock(x, y, z, AlfheimBlocks.flugelHead, sideDir.ordinal, 2)
+		// Miku head, instead of skull
+		world.setBlock(x, y, z, AlfheimBlocks.flugelHead2, sideDir.ordinal, 2)
 		var headAngle = 0
 		
 		// If we place the skull on top of a block, we should also make it
@@ -98,6 +97,6 @@ class ItemFlugelHead: Item() {
 		// Call it a success and leave.
 		return true
 	}
-
+	
 	override fun isValidArmor(stack: ItemStack, armorType: Int, entity: Entity) = armorType == 0
 }

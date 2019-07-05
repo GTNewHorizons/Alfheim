@@ -51,7 +51,9 @@ object AlfheimItems {
 	lateinit var elvoriumLeggings: Item
 	lateinit var excaliber: Item
 	lateinit var flugelDisc: Item
+	lateinit var flugelDisc2: Item
 	lateinit var flugelHead: Item
+	lateinit var flugelHead2: Item
 	lateinit var flugelSoul: Item
 	lateinit var holoProjector: Item
 	lateinit var invisibilityCloak: Item
@@ -95,7 +97,8 @@ object AlfheimItems {
 		elvoriumChestplate = ItemElvoriumArmor(1, "ElvoriumChestplate")
 		elvoriumLeggings = ItemElvoriumArmor(2, "ElvoriumLeggings")
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")
-		flugelHead = ItemFlugelHead()
+		flugelHead = ItemHeadFlugel()
+		flugelHead2 = ItemHeadMiku()
 		realitySword = ItemRealitySword()
 		excaliber = ItemExcaliber()
 		holoProjector = ItemHoloProjector()
@@ -103,6 +106,7 @@ object AlfheimItems {
 		mask = ItemTankMask()
 		flugelSoul = ItemFlugelSoul()
 		flugelDisc = ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimCore.alfheimTab)
+		flugelDisc2 = ItemModRecord("miku", "MikuDisc").setCreativeTab(AlfheimCore.alfheimTab)
 		elfFirePendant = ItemPendant("FirePendant")
 		elfIcePendant = ItemPendant("IcePendant")
 		creativeReachPendant = ItemCreativeReachPendant()
@@ -141,6 +145,7 @@ object AlfheimItems {
 	
 	private fun reg() {
 		register(flugelHead)
+		register(flugelHead2)
 		register(holoProjector)
 		register(realitySword)
 		register(livingrockPickaxe)

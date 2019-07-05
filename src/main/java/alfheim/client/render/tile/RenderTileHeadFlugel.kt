@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntitySkull
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 
-class RenderTileFlugelHead: TileEntitySkullRenderer() {
+class RenderTileHeadFlugel: TileEntitySkullRenderer() {
 	
 	override fun renderTileEntityAt(skull: TileEntitySkull, x: Double, y: Double, z: Double, ticks: Float) {
 		render(skull, x, y, z, skull.getBlockMetadata() and 7, skull.func_145906_b() * 360 / 16.0f, skull.func_145904_a())

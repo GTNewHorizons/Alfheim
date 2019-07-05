@@ -15,7 +15,6 @@ import net.minecraft.block.Block.*
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary.registerOre
-import vazkii.botania.common.block.BlockHourglass
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName
 
 object AlfheimBlocks {
@@ -32,6 +31,7 @@ object AlfheimBlocks {
 	lateinit var elvenSand: Block
 	lateinit var elvoriumBlock: Block
 	lateinit var flugelHead: Block
+	lateinit var flugelHead2: Block
 	lateinit var itemHolder: Block
 	lateinit var livingcobble: Block
 	lateinit var mauftriumBlock: Block
@@ -60,7 +60,8 @@ object AlfheimBlocks {
 		elvenOres = BlockElvenOres()
 		elvenSand = BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimCore.alfheimTab, 0f, 255, 1f, "shovel", 0, 5f, soundTypeGravel, true, false, true, AlfheimLexiconData.worldgen)
 		elvoriumBlock = BlockPatternLexicon(ModInfo.MODID, Material.iron, "ElvoriumBlock", AlfheimCore.alfheimTab, 0f, 255, 5f, "pickaxe", 1, 60f, soundTypeMetal, true, true, false, AlfheimLexiconData.elvorium)
-		flugelHead = BlockFlugelHead()
+		flugelHead = BlockHeadFlugel()
+		flugelHead2 = BlockHeadMiku()
 		itemHolder = BlockItemHolder()
 		livingcobble = BlockPatternLexicon(ModInfo.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0f, 255, 2f, "pickaxe", 0, 60f, soundTypeStone, true, false, false, AlfheimLexiconData.worldgen)
 		mauftriumBlock = BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0f, 255, 5f, "pickaxe", 1, 60f, soundTypeMetal, true, true, false, AlfheimLexiconData.essences)
@@ -91,6 +92,7 @@ object AlfheimBlocks {
 		register(dreamSapling)
 		register(animatedTorch)
 		register(flugelHead)
+		register(flugelHead2)
 		registerBlock(anomaly, ItemBlockAnomaly::class.java, getBlockName(anomaly))
 		register(poisonIce)
 		register(redFlame)

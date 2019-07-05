@@ -21,6 +21,8 @@ object SpellEffectHandlerClient {
 	internal val m = Vector3()
 	
 	fun select(s: Spells, x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
+		if (s == SPLASH) spawnSplash(x, y, z)
+		
 		if (AlfheimCore.enableMMO) {
 			when (s) {
 				ACID           -> spawnAcid(x, y, z)
@@ -45,10 +47,10 @@ object SpellEffectHandlerClient {
 				QUAD           -> quadDamage()
 				QUADH          -> quadHurt()
 				SMOKE          -> spawnSmoke(x, y, z)
-				SPLASH         -> spawnSplash(x, y, z)
 				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
 				TREMORS        -> spawnTremors(x, y, z)
 				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
+				else           -> {}
 			}
 		}
 	}

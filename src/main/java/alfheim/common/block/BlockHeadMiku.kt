@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alfheim.common.block.tile.TileFlugelHead
+import alfheim.common.block.tile.TileHeadMiku
 import alfheim.common.core.registry.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.BlockSkull
@@ -12,15 +12,16 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import java.util.*
 
-class BlockFlugelHead: BlockSkull() {
+class BlockHeadMiku: BlockSkull() {
+	
 	init {
-		setBlockName("FlugelHeadBlock")
+		setBlockName("MikuHeadBlock")
 		setHardness(1.0f)
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getItem(p_149694_1_: World?, p_149694_2_: Int, p_149694_3_: Int, p_149694_4_: Int): Item {
-		return AlfheimItems.flugelHead
+		return AlfheimItems.flugelHead2
 	}
 	
 	override fun registerBlockIcons(p_149651_1_: IIconRegister?) {
@@ -29,15 +30,18 @@ class BlockFlugelHead: BlockSkull() {
 	
 	override fun getDrops(world: World, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<ItemStack> {
 		val ret = ArrayList<ItemStack>()
-		
-		if (meta and 8 == 0)
-			ret.add(ItemStack(AlfheimItems.flugelHead, 1))
+		if (meta and 8 == 0) {
+			val itemstack = ItemStack(AlfheimItems.flugelHead2, 1)
+			world.getTileEntity(x, y, z) ?: return ret
+			
+			ret.add(itemstack)
+		}
 		
 		return ret
 	}
 	
 	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int): Item {
-		return AlfheimItems.flugelHead
+		return AlfheimItems.flugelHead2
 	}
 	
 	override fun getDamageValue(p_149643_1_: World, p_149643_2_: Int, p_149643_3_: Int, p_149643_4_: Int): Int {
@@ -49,7 +53,7 @@ class BlockFlugelHead: BlockSkull() {
 	}
 	
 	override fun createNewTileEntity(p_149915_1_: World?, p_149915_2_: Int): TileEntity {
-		return TileFlugelHead()
+		return TileHeadMiku()
 	}
 	
 	@SideOnly(Side.CLIENT)
