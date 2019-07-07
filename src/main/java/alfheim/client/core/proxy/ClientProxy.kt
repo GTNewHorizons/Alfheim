@@ -220,6 +220,8 @@ class ClientProxy: CommonProxy() {
 			MinecraftForge.EVENT_BUS.register(guiIceLens)
 			MinecraftForge.EVENT_BUS.register(guiParty)
 			MinecraftForge.EVENT_BUS.register(guiSpells)
+			
+			MinecraftForge.EVENT_BUS.unregister(guiRace)
 		}
 		
 		private fun disableMMOGUIs() {
@@ -227,6 +229,8 @@ class ClientProxy: CommonProxy() {
 			MinecraftForge.EVENT_BUS.unregister(guiIceLens)
 			MinecraftForge.EVENT_BUS.unregister(guiParty)
 			MinecraftForge.EVENT_BUS.unregister(guiSpells)
+			
+			MinecraftForge.EVENT_BUS.register(guiRace)
 		}
 		
 		private fun addESMKeyBinds() {

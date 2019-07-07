@@ -366,7 +366,7 @@ class EventHandler {
 					}
 					
 					if (Flight[player] <= 0) player.capabilities.isFlying = false
-				}
+				} else Flight.add(player, (if (Flight[player] < Flight.max) 1 else 0).toDouble())
 			}
 		}
 	}

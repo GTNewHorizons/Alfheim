@@ -5,7 +5,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.Flight
-import cpw.mods.fml.common.eventhandler.*
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -19,7 +19,7 @@ class GUIRace(private val mc: Minecraft): Gui() {
 	
 	@SubscribeEvent(receiveCanceled = true)
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableElvenStory || AlfheimCore.enableMMO && AlfheimConfig.selfHealthUI) return
+		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfig.selfHealthUI)) return
 		if (e.type != ElementType.EXPERIENCE || EnumRace.getRace(mc.thePlayer) == EnumRace.HUMAN) return
 		
 		glPushMatrix()

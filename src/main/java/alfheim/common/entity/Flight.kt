@@ -3,6 +3,7 @@ package alfheim.common.entity
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.entity.player.EntityPlayer
+import kotlin.math.*
 
 object Flight {
 	
@@ -13,7 +14,7 @@ object Flight {
 	fun ensureExistence(player: EntityPlayer) {
 		if (player.getAttributeMap().getAttributeInstance(AlfheimRegistry.FLIGHT) == null) register(player)
 	}
-
+	
 	val max: Double
 	get() = AlfheimRegistry.FLIGHT.defaultValue
 	
@@ -28,7 +29,7 @@ object Flight {
 	}
 	
 	fun add(player: EntityPlayer, `val`: Double) {
-		set(player, Math.max(0.0, Math.min(get(player) + `val`, AlfheimConfig.flightTime.toDouble())))
+		set(player, max(0.0, min(get(player) + `val`, AlfheimConfig.flightTime.toDouble())))
 	}
 	
 	fun sub(player: EntityPlayer, `val`: Double) {

@@ -15,7 +15,7 @@ object RecipeAncientWillsFix {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun matches(rec: AncientWillRecipe, var1: InventoryCrafting, var2: World): Boolean {
+	fun matches(rec: AncientWillRecipe, var1: InventoryCrafting, var2: World?): Boolean {
 		foundWill.fill(false)
 		var foundItem = false
 		
