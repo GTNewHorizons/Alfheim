@@ -34,6 +34,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
@@ -262,7 +263,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.elementiumBoots), 36)
 		addPink(ItemStack(ModItems.elementiumChest), 72)
 		addPink(ItemStack(ModItems.elementiumHelm), 45)
-		addPink(ItemStack(ModItems.elementiumHelmRevealing), 45)
+		if (Botania.thaumcraftLoaded) addPink(ItemStack(ModItems.elementiumHelmRevealing), 45)
 		addPink(ItemStack(ModItems.elementiumLegs), 56)
 		addPink(ItemStack(ModItems.elementiumPick), 27)
 		addPink(ItemStack(ModItems.elementiumShears), 18)
@@ -287,7 +288,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.elementalBoots), 36)
 		addPink(ItemStack(AlfheimItems.elementalChestplate), 72)
 		addPink(ItemStack(AlfheimItems.elementalHelmet), 45)
-		addPink(ItemStack(AlfheimItems.elementalHelmetRevealing), 45)
+		if (Botania.thaumcraftLoaded) addPink(ItemStack(AlfheimItems.elementalHelmetRevealing), 45)
 		addPink(ItemStack(AlfheimItems.elementalLeggings), 56)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 36)
 		//addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);

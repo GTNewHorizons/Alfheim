@@ -643,8 +643,10 @@ object AlfheimRecipes {
 		
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-		addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
-		addRecipe(RecipeHelmRevealingAlfheim())
+		if (Botania.thaumcraftLoaded) {
+			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
+			addRecipe(RecipeHelmRevealingAlfheim())
+		}
 		addRecipe(RecipeLootInterceptor())
 		addRecipe(RecipeLootInterceptorClear())
 	}
