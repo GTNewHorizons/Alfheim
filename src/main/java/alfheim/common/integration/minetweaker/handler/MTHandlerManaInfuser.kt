@@ -14,11 +14,13 @@ import java.util.*
 object MTHandlerManaInfuser {
 	
 	@ZenMethod
-	fun addRecipe(output: IItemStack, mana: Int, vararg inputs: IIngredient) {
+	@JvmStatic
+	fun addRecipe(output: IItemStack, mana: Int, inputs: Array<IIngredient?>) {
 		MineTweakerAPI.apply(Add(RecipeManaInfuser(mana, getStack(output), *getObjects(inputs))))
 	}
 	
 	@ZenMethod
+	@JvmStatic
 	fun removeRecipe(output: IItemStack) {
 		MineTweakerAPI.apply(Remove(getStack(output)))
 	}
@@ -54,11 +56,11 @@ object MTHandlerManaInfuser {
 		internal val removed = ArrayList<RecipeManaInfuser>()
 		
 		override fun apply() {
-			var rec: RecipeManaInfuser?
-			do {
+			var rec = AlfheimAPI.removeInfusionRecipe(output)
+			while (rec != null) {
+				removed.add(rec)
 				rec = AlfheimAPI.removeInfusionRecipe(output)
-				removed.add(rec!!)
-			} while (rec != null)
+			}
 		}
 		
 		override fun canUndo(): Boolean {

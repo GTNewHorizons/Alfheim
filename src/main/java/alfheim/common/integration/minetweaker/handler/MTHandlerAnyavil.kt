@@ -11,6 +11,7 @@ import stanhebben.zenscript.annotations.*
 object MTHandlerAnyavil {
 	
 	@ZenMethod
+	@JvmStatic
 	fun pinkify(input: IItemStack, pinkness: Int) {
 		MineTweakerAPI.apply(Pinkifier(getStack(input), pinkness))
 	}

@@ -1,5 +1,16 @@
 Innovations:
- --
+ reworked flugel to be easier
+ hourglass now accept elven sand for 30 sec/block
+ extending potion array to 1024 entries
 
 Fixes:
- --
+ #75 - elemental armor bugs (fire leggings now works in flight)
+ #78 - ancient wills from terrasteel helmets now are moved to elvorium on crafting
+ multiple ancient wills now can be added in one recipe
+ all ancient wills can be uncrafted to gaia spirits
+ mana accelerator can be mined
+ heads can be equiped in inventory
+ flugels hprizontal attack now damages
+ [ESM] flight time now won't decrease with tiara
+ [MMO] added two more wing blades to spell
+ [MMO] fixed minetweaker setCooldown function crash

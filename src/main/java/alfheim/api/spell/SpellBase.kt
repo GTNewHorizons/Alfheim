@@ -77,7 +77,9 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	}
 	
 	override fun hashCode(): Int {
-		return getManaCost() shl 16 and -0x10000 or (getCooldown() and 0xFFFF)
+		var result = name.hashCode()
+		result = 31 * result + race.hashCode()
+		return result
 	}
 	
 	override fun toString(): String {

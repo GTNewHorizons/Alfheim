@@ -932,7 +932,7 @@ object CardinalSystem {
 		var quadStage = 0
 		
 		init {
-			for (spell in AlfheimAPI.spells) coolDown[spell] = 0
+			for (spell in AlfheimAPI.spells) coolDown[spell] = 0 // TODO maybe remove (fixed NPE when getting from map)
 		}
 		
 		private fun writeObject(out: ObjectOutputStream) {

@@ -34,15 +34,15 @@ object MinetweakerAlfheimConfig {
 		}
 	}
 	
-	fun getObjects(ingredient: Array<out IIngredient?>?): Array<Any> {
+	fun getObjects(ingredient: Array<IIngredient?>?): Array<Any> {
 		return if (ingredient == null)
 			emptyArray()
 		else {
-			val output = arrayOf<Any>(ingredient.size)
+			val output = ArrayList<Any>()
 			for (i in ingredient.indices)
-				output[i] = if (ingredient[i] != null) getObject(ingredient[i]) else ""
+				output.add(if (ingredient[i] != null) getObject(ingredient[i]) else "")
 			
-			output
+			output.toArray()
 		}
 	}
 	

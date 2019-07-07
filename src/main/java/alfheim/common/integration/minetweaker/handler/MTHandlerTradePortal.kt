@@ -11,6 +11,7 @@ import stanhebben.zenscript.annotations.*
 object MTHandlerTradePortal {
 	
 	@ZenMethod
+	@JvmStatic
 	fun banRetrade(output: IItemStack) {
 		MineTweakerAPI.apply(Ban(getStack(output)))
 	}

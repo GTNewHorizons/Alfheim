@@ -8,18 +8,21 @@ import stanhebben.zenscript.annotations.*
 object MTHandlerSpells {
 	
 	@ZenMethod
+	@JvmStatic
 	fun setManaCost(name: String, mana: Int) {
 		MineTweakerAPI.apply(ManaCost(name, mana))
 	}
 	
 	@ZenMethod
-	fun setCooldown(name: String, mana: Int) {
-		MineTweakerAPI.apply(Cooldown(name, mana))
+	@JvmStatic
+	fun setCooldown(name: String, cd: Int) {
+		MineTweakerAPI.apply(Cooldown(name, cd))
 	}
 	
 	@ZenMethod
-	fun setCastTime(name: String, mana: Int) {
-		MineTweakerAPI.apply(CastTime(name, mana))
+	@JvmStatic
+	fun setCastTime(name: String, time: Int) {
+		MineTweakerAPI.apply(CastTime(name, time))
 	}
 	
 	private class ManaCost(name: String, private val newVal: Int): IUndoableAction {

@@ -40,7 +40,7 @@ class RecipeHandlerManaInfuser: RecipeHandlerPetalApothecary() {
 		super.drawBackground(recipe)
 		val mana = (arecipes[recipe] as CachedManaInfuserRecipe).manaUsage
 		HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75f, mana, TilePool.MAX_MANA * 5)
-		val m = (((mana * 10).toDouble() / TilePool.MAX_MANA.toDouble() / 10.0).toString() + " x mana pool(s)").replace("\\.0".toRegex(), "")
+		val m = ("${(mana * 10 / TilePool.MAX_MANA.toDouble() / 10)} x mana pool(s)").replace("\\.0 ".toRegex(), " ")
 		Minecraft.getMinecraft().fontRenderer.drawString(m, (168 - Minecraft.getMinecraft().fontRenderer.getStringWidth(m)) / 2, 120, 0x0000FF)
 	}
 	
