@@ -4,7 +4,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.entity.Flight
+import alfheim.common.core.helper.ElvenFlightHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -36,7 +36,7 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		EnumRace.getRace(player).glColorA(if (Flight[player] / Flight[player] < 0.05) min(0.75 + cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
+		EnumRace.getRace(player).glColorA(if (ElvenFlightHelper[player] / ElvenFlightHelper[player] < 0.05) min(0.75 + cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)

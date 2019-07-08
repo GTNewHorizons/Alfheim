@@ -27,6 +27,7 @@ import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.entity.RenderHorse
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
 import net.minecraftforge.client.MinecraftForgeClient
@@ -77,8 +78,9 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie())
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf(ModelEntityElf(), 0.25f))
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel(ModelEntityFlugel(), 0.25f))
-		RenderingRegistry.registerEntityRenderingHandler(EntityRook::class.java, RenderEntityRook(ModelEntityRook(), 1.5f))
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark())
+		RenderingRegistry.registerEntityRenderingHandler(EntityLolicorn::class.java, RenderLolicorn(ModelEntityLolicorn(), 0.5f))
+		RenderingRegistry.registerEntityRenderingHandler(EntityRook::class.java, RenderEntityRook(ModelEntityRook(), 1.5f))
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp::class.java, RenderEntityHarp())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine::class.java, RenderEntityDriftingMine())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellGravityTrap::class.java, RenderEntityGravityTrap())

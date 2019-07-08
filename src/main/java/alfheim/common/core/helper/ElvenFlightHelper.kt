@@ -1,11 +1,11 @@
-package alfheim.common.entity
+package alfheim.common.core.helper
 
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.*
 
-object Flight {
+object ElvenFlightHelper {
 	
 	fun register(player: EntityPlayer) {
 		player.getAttributeMap().registerAttribute(AlfheimRegistry.FLIGHT)

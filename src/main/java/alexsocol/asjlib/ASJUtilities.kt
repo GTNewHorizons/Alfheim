@@ -973,8 +973,8 @@ class ASJUtilities {
 		}
 		
 		@JvmStatic
-		fun say(player: EntityPlayer, message: String) {
-			player.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message)))
+		fun say(player: EntityPlayer?, message: String) {
+			player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message)))
 		}
 		
 		@JvmStatic

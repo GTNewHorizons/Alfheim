@@ -33,9 +33,9 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		return false
 	}
 	
-	public override fun collideWithEntity(p_82167_1_: Entity) {}
+	override fun collideWithEntity(p_82167_1_: Entity) {}
 	
-	public override fun collideWithNearbyEntities() {}
+	override fun collideWithNearbyEntities() {}
 	
 	override fun isAIEnabled(): Boolean {
 		return true

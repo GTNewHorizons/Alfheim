@@ -10,7 +10,7 @@ import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.entity.Flight
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
@@ -72,7 +72,7 @@ object KeyBindingHandlerClient {
 				toggleAlt = true
 				toggleJump = toggleAlt
 				toggleFlight(player, true)
-				if (Flight[player] >= 300) {
+				if (ElvenFlightHelper[player] >= 300) {
 					player.motionY += 3.0 // FIXME move to server
 				}
 			} else if (toggleJump && toggleAlt) {

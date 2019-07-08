@@ -9,6 +9,7 @@ import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.playerSegments
 import alfheim.common.core.handler.CardinalSystem.transfer
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.registry.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
@@ -132,7 +133,7 @@ class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			if (e.entity is EntityPlayer) {
 				EnumRace.ensureExistance(e.entity as EntityPlayer)
-				Flight.ensureExistence(e.entity as EntityPlayer)
+				ElvenFlightHelper.ensureExistence(e.entity as EntityPlayer)
 			}
 		}
 	}
@@ -142,7 +143,7 @@ class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			val r = EnumRace.getRaceID(e.original)
 			EnumRace.setRaceID(e.entityPlayer, r.toDouble())
-			if (!e.wasDeath) Flight[e.entityPlayer] = Flight[e.original]
+			if (!e.wasDeath) ElvenFlightHelper[e.entityPlayer] = ElvenFlightHelper[e.original]
 		}
 	}
 	
@@ -159,7 +160,7 @@ class EventHandler {
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
 				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 0.0, EnumRace.getRaceID(e.player).toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, Flight[e.player]), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, ElvenFlightHelper[e.player]), e.player as EntityPlayerMP)
 			}
 		}
 	}
@@ -357,16 +358,16 @@ class EventHandler {
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {
 				if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
-					if (Flight[player] >= 0 && Flight[player] <= Flight.max) {
+					if (ElvenFlightHelper[player] >= 0 && ElvenFlightHelper[player] <= ElvenFlightHelper.max) {
 						if (player.capabilities.isFlying) {
-							Flight.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
+							ElvenFlightHelper.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
 							if (player.isSprinting) player.moveFlying(0f, 1f, 0.01f)
 						} else
-							Flight.add(player, (if (Flight[player] < Flight.max) 1 else 0).toDouble())
+							ElvenFlightHelper.add(player, (if (ElvenFlightHelper[player] < ElvenFlightHelper.max) 1 else 0).toDouble())
 					}
 					
-					if (Flight[player] <= 0) player.capabilities.isFlying = false
-				} else Flight.add(player, (if (Flight[player] < Flight.max) 1 else 0).toDouble())
+					if (ElvenFlightHelper[player] <= 0) player.capabilities.isFlying = false
+				} else ElvenFlightHelper.add(player, (if (ElvenFlightHelper[player] < ElvenFlightHelper.max) 1 else 0).toDouble())
 			}
 		}
 	}
@@ -410,7 +411,7 @@ class EventHandler {
 			for (o in MinecraftServer.getServer().configurationManager.playerEntityList) {
 				val player = o as EntityPlayerMP
 				EnumRace.ensureExistance(player)
-				Flight.ensureExistence(player)
+				ElvenFlightHelper.ensureExistence(player)
 			}
 		}
 	}

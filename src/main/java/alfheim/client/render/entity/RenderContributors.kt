@@ -27,7 +27,7 @@ object RenderContributors {
 	
 	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))!!
 	
-	val callback: ShaderCallback = object: ShaderCallback() {
+	private val callback: ShaderCallback = object: ShaderCallback() {
 		override fun call(shaderID: Int) {
 			val r = Minecraft.getMinecraft().renderEngine
 			

@@ -11,7 +11,7 @@ import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.entity.Flight
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.network.*
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
@@ -61,7 +61,7 @@ object PacketHandlerClient {
 			m2d.ATTRIBUTE -> {
 				when (packet.data1.toInt()) {
 					0 -> EnumRace.setRaceID(Minecraft.getMinecraft().thePlayer, packet.data2)
-					1 -> Flight[Minecraft.getMinecraft().thePlayer] = packet.data2
+					1 -> ElvenFlightHelper[Minecraft.getMinecraft().thePlayer] = packet.data2
 				}
 			}
 			
