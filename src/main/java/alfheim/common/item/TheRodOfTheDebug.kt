@@ -26,8 +26,15 @@ class TheRodOfTheDebug: Item() {
 			if (true/*!world.isRemote*/) {
 				if (!player.isSneaking) {
 					if (!world.isRemote) {
-//						CardinalSystem.PartySystem.setParty(player, Party(player))
-//						CardinalSystem.PartySystem.getParty(player)!!.add(CardinalSystem.TargetingSystem.getTarget(player).target)
+						/*PartySystem.setParty(player, Party(player))
+						PartySystem.getParty(player)!!.add(TargetingSystem.getTarget(player).target)*/
+					}
+					
+					val mop = ASJUtilities.getMouseOver(player, 16.0, true)
+					if (mop?.entityHit != null) {
+						player.ridingEntity = mop.entityHit
+						mop.entityHit.riddenByEntity = player
+						mop.entityHit.updateRiderPosition()
 					}
 					
 					//					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();

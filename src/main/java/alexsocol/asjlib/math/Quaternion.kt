@@ -1,6 +1,7 @@
 package alexsocol.asjlib.math
 
 import java.util.*
+import kotlin.math.*
 
 /**
  * Class representing quaternion
@@ -64,7 +65,7 @@ class Quaternion {
 	}
 	
 	fun mag(): Double {
-		return Math.sqrt(x * x + y * y + z * z + s * s)
+		return sqrt(x * x + y * y + z * z + s * s)
 	}
 	
 	fun normalize() {
@@ -102,8 +103,8 @@ class Quaternion {
 		fun aroundAxis(ax: Double, ay: Double, az: Double, angle: Double): Quaternion {
 			var angle = angle
 			angle *= 0.5
-			val d4 = Math.sin(angle)
-			return Quaternion(Math.cos(angle), ax * d4, ay * d4, az * d4)
+			val d4 = sin(angle)
+			return Quaternion(cos(angle), ax * d4, ay * d4, az * d4)
 		}
 		
 		fun aroundAxis(axis: Vector3, angle: Double): Quaternion {

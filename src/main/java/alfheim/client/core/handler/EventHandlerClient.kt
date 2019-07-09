@@ -11,7 +11,7 @@ import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -23,7 +23,6 @@ import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.boss.IBossDisplayData
-import net.minecraft.util.*
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
@@ -31,8 +30,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
-import vazkii.botania.common.item.ModItems
 
+@Suppress("UNUSED_PARAMETER")
 class EventHandlerClient {
 	
 	@SubscribeEvent

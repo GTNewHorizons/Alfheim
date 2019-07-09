@@ -61,9 +61,7 @@ abstract class SubTileEntity {
 	/** Checks if two SubTiles can be mixed in single anomaly  */
 	abstract fun typeBits(): Int
 	
-	open fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
-		return false
-	}
+	open fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int) = false
 	
 	fun writeToNBT(cmp: NBTTagCompound) {
 		cmp.setInteger(TAG_TICKS, ticks)
@@ -81,33 +79,20 @@ abstract class SubTileEntity {
 	
 	// ################################ SUPERTILE ################################
 	
-	fun worldObj(): World {
-		return superTile!!.worldObj
-	}
+	val worldObj
+	get() = superTile!!.worldObj!!
 	
-	fun x(): Int {
-		return superTile!!.xCoord
-	}
+	fun x() = superTile!!.xCoord
 	
-	fun x(x: Double): Int {
-		return x() + MathHelper.floor_double(x)
-	}
+	fun x(x: Double) = x() + MathHelper.floor_double(x)
 	
-	fun y(): Int {
-		return superTile!!.yCoord
-	}
+	fun y() = superTile!!.yCoord
 	
-	fun y(y: Double): Int {
-		return y() + MathHelper.floor_double(y)
-	}
+	fun y(y: Double) = y() + MathHelper.floor_double(y)
 	
-	fun z(): Int {
-		return superTile!!.zCoord
-	}
+	fun z() = superTile!!.zCoord
 	
-	fun z(z: Double): Int {
-		return z() + MathHelper.floor_double(z)
-	}
+	fun z(z: Double) = z() + MathHelper.floor_double(z)
 	
 	// ################################ UTILS ################################
 	
@@ -148,17 +133,13 @@ abstract class SubTileEntity {
 		return entity1
 	}
 	
-	fun <E> allAround(clazz: Class<E>, radius: Double): MutableList<E> {
-		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<E>
-	}
+	fun <E> allAround(clazz: Class<E>, radius: Double) =
+		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<E>
 	
-	fun allAroundRaw(clazz: Class<*>, radius: Double): MutableList<Any> {
-		return worldObj().getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<Any>
-	}
+	fun allAroundRaw(clazz: Class<*>, radius: Double) =
+		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<Any>
 	
-	fun inWG(): Boolean {
-		return worldGen
-	}
+	fun inWG() = worldGen
 	
 	// ################################ RENDER ################################
 	

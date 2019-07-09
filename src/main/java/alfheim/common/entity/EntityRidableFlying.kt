@@ -1,33 +1,20 @@
 package alfheim.common.entity
 
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
+import kotlin.math.*
 
 open class EntityRidableFlying(world: World): EntityRidable(world) {
 	
-	var flySpeed = 0.91f
-	
-	init {
-		walkSpeed = 0.14f
-	}
+	var flySpeed = 0.85f
 	
 	override fun fall(f: Float) = Unit // NO-OP
 	
 	override fun moveEntityWithHeading(mS: Float, mF: Float) {
-		var par1 = mS
-		var par2 = mF
 		onGround = !worldObj.isAirBlock(MathHelper.floor_double(posX), MathHelper.ceiling_double_int(posY - 1.0), MathHelper.floor_double(posZ))
-		var bo = !worldObj.gameRules.getGameRuleBooleanValue("animalbikesFlying")
-		if (!worldObj.isRemote && !MinecraftServer.getServer().worldServerForDimension(0).gameRules.getGameRuleBooleanValue("animalbikesFlying")) {
-			bo = true
-		}
-		if (rider == null || bo) {
-			if (!worldObj.isRemote) {
-				super.moveEntityWithHeading(par1, par2)
-			}
-		} else {
+		
+		if (rider != null) {
 			rotationYaw = riddenByEntity.rotationYaw
 			prevRotationYaw = rotationYaw
 			rotationPitch = riddenByEntity.rotationPitch * 0.5f
@@ -36,29 +23,40 @@ open class EntityRidableFlying(world: World): EntityRidable(world) {
 			rotationYawHead = renderYawOffset
 			if (onGround && !isJumping) {
 				if (!worldObj.isRemote) {
-					super.moveEntityWithHeading(par1, par2)
+					super.moveEntityWithHeading(mS, mF)
 				}
 			} else if (riddenByEntity is EntityLivingBase) {
-				par1 = (riddenByEntity as EntityLivingBase).moveStrafing * 0.5f
-				par2 = (riddenByEntity as EntityLivingBase).moveForward
+				var par2 = (riddenByEntity as EntityLivingBase).moveForward
 				
 				aiMoveSpeed = flySpeed
 				if (!worldObj.isRemote) {
 					if (isJumping) {
 						motionY = (0.5f * flySpeed).toDouble()
 					} else if (!onGround) {
-						motionY = (-0.2f * flySpeed).toDouble()
+						motionY = 0.0
 					}
+					
+					if (par2 != 0f && !isJumping) {
+						val rad = Math.toRadians(rider!!.rotationPitch.toDouble())
+						motionY = -sin(rad) * flySpeed
+						
+						par2 = abs(cos(rad)).toFloat() * flySpeed
+						if (par2 < 0.05) par2 = 0f
+					}
+					
 					val f2 = flySpeed
 					val f3 = 0.1627714f / (f2 * f2 * f2)
-					moveFlying(par1, par2, if (onGround) 0.1f * f3 else 0.085f)
+					moveFlying(0f, par2, if (onGround) 0.1f * f3 else 0.085f)
 					moveEntity(motionX, motionY, motionZ)
 					motionX *= f2.toDouble()
 					motionY *= f2.toDouble()
 					motionZ *= f2.toDouble()
 				}
 			}
+		} else if (!worldObj.isRemote) {
+			super.moveEntityWithHeading(mS, mF)
 		}
+		
 		prevLimbSwingAmount = limbSwingAmount
 		val var10 = posX - prevPosX
 		val var9 = posZ - prevPosZ

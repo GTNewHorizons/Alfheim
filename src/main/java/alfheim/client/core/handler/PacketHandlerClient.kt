@@ -10,8 +10,8 @@ import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.network.*
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
@@ -79,7 +79,7 @@ object PacketHandlerClient {
 				}
 			}
 			
-			m2d.UUID      -> CardinalSystemClient.segment().party!!.setUUID(packet.data2.toInt(), packet.data1.toInt())
+			m2d.UUID      -> CardinalSystemClient.segment().party.setUUID(packet.data2.toInt(), packet.data1.toInt())
 			
 			m2d.MODES     -> {
 				if (packet.data1 > 0) ClientProxy.enableESM() else ClientProxy.disableESM()
@@ -95,8 +95,8 @@ object PacketHandlerClient {
 			
 			m3d.PARTY_STATUS -> {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
-					PartyStatus.DEAD -> CardinalSystemClient.segment().party!!.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
-					PartyStatus.MANA -> CardinalSystemClient.segment().party!!.setMana(packet.data2.toInt(), packet.data3.toInt())
+					PartyStatus.DEAD -> CardinalSystemClient.segment().party.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
+					PartyStatus.MANA -> CardinalSystemClient.segment().party.setMana(packet.data2.toInt(), packet.data3.toInt())
 				}
 			}
 			

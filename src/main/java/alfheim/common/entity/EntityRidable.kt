@@ -6,7 +6,7 @@ import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.Potion
-import net.minecraft.util.*
+import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 
@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeHooks
 open class EntityRidable(world: World): EntityCreature(world) {
 	
 	var rider: EntityPlayer? = null
-	var walkSpeed = 0.22f
+	var walkSpeed = 0.25
 	
 	var owner: String
 		get() = dataWatcher.getWatchableObjectString(15)
@@ -23,9 +23,9 @@ open class EntityRidable(world: World): EntityCreature(world) {
 	init {
 		navigator.avoidsWater = true
 		tasks.addTask(0, EntityAISwimming(this))
-		tasks.addTask(2, EntityAIWander(this, 1.0))
-		tasks.addTask(3, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
-		tasks.addTask(4, EntityAILookIdle(this))
+		tasks.addTask(1, EntityAIWander(this, 1.0))
+		tasks.addTask(2, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
+		tasks.addTask(3, EntityAILookIdle(this))
 	}
 	
 	override fun entityInit() {
@@ -33,12 +33,16 @@ open class EntityRidable(world: World): EntityCreature(world) {
 		dataWatcher.addObject(15, "")
 	}
 	
+	fun panics() = true
+	
+	fun wanders() = true
+	
 	override fun isAIEnabled() = true
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 35.0
-		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.25
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 36.0
+		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = walkSpeed
 	}
 	
 	override fun writeEntityToNBT(nbt: NBTTagCompound) {
@@ -52,9 +56,7 @@ open class EntityRidable(world: World): EntityCreature(world) {
 	}
 	
 	override fun playLivingSound() {
-		if (rng.nextInt(8) == 1) {
-			super.playLivingSound()
-		}
+		if (rng.nextInt(8) == 1) super.playLivingSound()
 	}
 	
 	override fun onLivingUpdate() {
@@ -63,9 +65,11 @@ open class EntityRidable(world: World): EntityCreature(world) {
 		} else {
 			rider = null
 		}
+		
 		if (rider != null && rider!!.isJumping) {
 			jumpHelper.setJumping()
 		}
+		
 		super.onLivingUpdate()
 	}
 	
@@ -78,21 +82,21 @@ open class EntityRidable(world: World): EntityCreature(world) {
 	override fun canDespawn() = false
 	
 	override fun interact(player: EntityPlayer?): Boolean {
+		if (player == null) return false
+		
 		if (worldObj.isRemote) {
 			return false
-		}
-		if (owner.isNotEmpty() && player?.commandSenderName != owner) {
+		} else if (owner.isNotEmpty() && player.commandSenderName != owner) {
 			ASJUtilities.say(player, "Owned by $owner")
 			return false
 		}
-		if (rider == null && player != null) {
+		
+		return if (rider == null) {
 			mount(player)
-			if (riddenByEntity != null && riddenByEntity is EntityPlayer) {
+			if (riddenByEntity != null && riddenByEntity is EntityPlayer)
 				rider = riddenByEntity as EntityPlayer
-			}
-			return true
-		}
-		return false
+			true
+		} else true
 	}
 	
 	override fun moveEntityWithHeading(mS: Float, mF: Float) {
@@ -108,11 +112,12 @@ open class EntityRidable(world: World): EntityCreature(world) {
 			par1 = rider!!.moveStrafing * 0.5f
 			par2 = rider!!.moveForward
 			if (!worldObj.isRemote) {
-				aiMoveSpeed = walkSpeed
+				this.aiMoveSpeed = walkSpeed.toFloat()
 				super.moveEntityWithHeading(par1, par2)
 			} else {
 				super.moveEntityWithHeading(par1, par2)
 			}
+			
 			prevLimbSwingAmount = limbSwingAmount
 			val d0 = posX - prevPosX
 			val d1 = posZ - prevPosZ
@@ -120,32 +125,37 @@ open class EntityRidable(world: World): EntityCreature(world) {
 			if (f4 > 1.0f) {
 				f4 = 1.0f
 			}
+			
 			limbSwingAmount += (f4 - limbSwingAmount) * 0.4f
 			limbSwing += limbSwingAmount
 		} else {
 			super.moveEntityWithHeading(par1, par2)
 		}
+		
 	}
 	
 	override fun jump() {
 		motionY = 0.5
-		if (isPotionActive(Potion.jump)) {
-			motionY += ((getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1f).toDouble()
+		if (this.isPotionActive(Potion.jump)) {
+			motionY += ((getActivePotionEffect(Potion.jump).getAmplifier() + 1).toFloat() * 0.1f).toDouble()
 		}
-		val f = rotationYaw * 0.017453292f
-		motionX -= (MathHelper.sin(f) * 0.2f).toDouble()
-		motionZ += (MathHelper.cos(f) * 0.2f).toDouble()
 		
+		/*val f = rotationYaw * 0.017453292f
+		motionX -= (MathHelper.sin(f) * 0.2f).toDouble()
+		motionZ += (MathHelper.cos(f) * 0.2f).toDouble()*/
 		isAirBorne = true
 		ForgeHooks.onLivingJump(this)
 	}
 	
-	private fun mount(player: EntityPlayer) {
-		rotationYaw = player.rotationYaw
-		rotationPitch = player.rotationPitch
+	fun mount(player: EntityPlayer) {
+		player.rotationYaw = rotationYaw
+		player.rotationPitch = rotationPitch
 		if (!worldObj.isRemote) {
 			player.mountEntity(this)
 		}
+		
+		owner = player.commandSenderName
+		customNameTag = owner
 	}
 	
 	override fun shouldDismountInWater(rider: Entity?) = false

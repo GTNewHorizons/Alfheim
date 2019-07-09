@@ -21,17 +21,13 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	 */
 	abstract fun performCast(caster: EntityLivingBase): SpellCastResult
 	
-	// public abstract String[] getWords();
-	
 	fun setManaCost(newVal: Int): Int {
 		val temp = mana
 		mana = newVal
 		return temp
 	}
 	
-	open fun getManaCost(): Int {
-		return mana
-	}
+	open fun getManaCost() = mana
 	
 	fun setCooldown(newVal: Int): Int {
 		val temp = cldn
@@ -39,9 +35,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		return temp
 	}
 	
-	open fun getCooldown(): Int {
-		return cldn
-	}
+	open fun getCooldown() = cldn
 	
 	fun setCastTime(newVal: Int): Int {
 		val temp = cast
@@ -49,9 +43,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		return temp
 	}
 	
-	fun getCastTime(): Int {
-		return cast
-	}
+	fun getCastTime() = cast
 	
 	@SideOnly(Side.CLIENT)
 	open fun render(caster: EntityLivingBase) {
@@ -72,9 +64,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}
 	
-	override fun equals(other: Any?): Boolean {
-		return other is SpellBase && name == other.name && race == other.race
-	}
+	override fun equals(other: Any?) = other is SpellBase && name == other.name && race == other.race
 	
 	override fun hashCode(): Int {
 		var result = name.hashCode()
@@ -82,9 +72,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 		return result
 	}
 	
-	override fun toString(): String {
-		return name
-	}
+	override fun toString() = name
 	
 	enum class SpellCastResult {
 		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING
@@ -103,13 +91,14 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 			}
 		}
 		
-		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean): Boolean {
-			return ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, mana, req)
-		}
+		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean) =
+			ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, mana, req)
 		
 		fun say(caster: EntityPlayerMP, spell: SpellBase) {
 			val l = caster.worldObj.getEntitiesWithinAABB(EntityPlayerMP::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(40.0, 40.0, 40.0)) as List<EntityPlayerMP>
-			for (player in l) if (sqrt((caster.posX - player.posX).pow(2.0) + (caster.posY - player.posY).pow(2.0) + (caster.posZ - player.posZ).pow(2.0)) < 40) player.addChatMessage(ChatComponentText(EnumChatFormatting.UNDERLINE.toString() + "* " + caster.commandSenderName + ' '.toString() + StatCollector.translateToLocal("spell.cast") + EnumChatFormatting.RESET + ": " + StatCollector.translateToLocal("spell." + spell.name + ".words")))
+			l
+				.filter { sqrt((caster.posX - it.posX).pow(2.0) + (caster.posY - it.posY).pow(2.0) + (caster.posZ - it.posZ).pow(2.0)) < 40 }
+				.forEach { it.addChatMessage(ChatComponentText(EnumChatFormatting.UNDERLINE.toString() + "* " + caster.commandSenderName + ' '.toString() + StatCollector.translateToLocal("spell.cast") + EnumChatFormatting.RESET + ": " + StatCollector.translateToLocal("spell." + spell.name + ".words"))) }
 		}
 	}
 }

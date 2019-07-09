@@ -27,7 +27,7 @@ object RenderPostShaders {
 	
 	fun dispatchObjects() {
 		if (shaders.isEmpty()) return
-		Collections.sort(shaders)
+		shaders.sort()
 		
 		var post = false
 		var prevShader = 0
@@ -58,6 +58,7 @@ object RenderPostShaders {
 	
 	class RendererPostShaders {
 		
+		@Suppress("UNUSED_PARAMETER")
 		@SubscribeEvent
 		@SideOnly(Side.CLIENT)
 		fun onWorldLastRender(e: RenderWorldLastEvent) {

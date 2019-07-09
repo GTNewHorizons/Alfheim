@@ -10,14 +10,12 @@ import net.minecraft.world.gen.*
 import java.util.*
 
 class ChunkProviderFlat(private val worldObj: World, seed: Long, genString: String): IChunkProvider {
-	private val random: Random
+	private val random = Random(seed)
 	private val cachedBlockIDs = arrayOfNulls<Block>(256)
 	private val cachedBlockMetadata = ByteArray(256)
 	
 	init {
-		this.random = Random(seed)
 		val flatWorldGenInfo = FlatGeneratorInfo.createFlatGeneratorFromString(genString)
-		
 		
 		for (o in flatWorldGenInfo.flatLayers) {
 			val flatlayerinfo = o as FlatLayerInfo
@@ -76,10 +74,6 @@ class ChunkProviderFlat(private val worldObj: World, seed: Long, genString: Stri
 	}
 	
 	override fun populate(p_73153_1_: IChunkProvider, x: Int, z: Int) {
-		val k = x * 16
-		val l = z * 16
-		val biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16)
-		val flag = false
 		this.random.setSeed(this.worldObj.seed)
 		val i1 = this.random.nextLong() / 2L * 2L + 1L
 		val j1 = this.random.nextLong() / 2L * 2L + 1L

@@ -42,7 +42,7 @@ class SubTileGravity: SubTileEntity() {
 		vt.rand().sub(0.5).normalize().mul(Math.random() * radius / 2).add(superTile!!).add(0.5)
 		ve.set(superTile!!).add(0.5).sub(vt).mul(0.05)
 		
-		Botania.proxy.wispFX(worldObj(), vt.x, vt.y, vt.z, 1f, 1f, 1f, 0.5f, ve.x.toFloat(), ve.y.toFloat(), ve.z.toFloat(), 0.5f)
+		Botania.proxy.wispFX(worldObj, vt.x, vt.y, vt.z, 1f, 1f, 1f, 0.5f, ve.x.toFloat(), ve.y.toFloat(), ve.z.toFloat(), 0.5f)
 	}
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
@@ -75,12 +75,9 @@ class SubTileGravity: SubTileEntity() {
 		target.motionZ += vt.z
 	}
 	
-	override fun typeBits(): Int {
-		return MOTION
-	}
+	override fun typeBits() = MOTION
 	
 	companion object {
-		
-		val TAG_POWER = "power"
+		const val TAG_POWER = "power"
 	}
 }

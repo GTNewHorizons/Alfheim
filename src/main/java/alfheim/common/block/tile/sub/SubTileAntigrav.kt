@@ -12,7 +12,7 @@ class SubTileAntigrav: SubTileEntity() {
 	internal val v = Vector3()
 	
 	override val targets: List<Any>
-		get() = if (inWG()) EMPTY_LIST else worldObj().getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius * 2, radius)) as List<Any>
+		get() = if (inWG()) EMPTY_LIST else worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius * 2, radius)) as List<Any>
 	
 	override val strip: Int
 		get() = 7
@@ -25,7 +25,7 @@ class SubTileAntigrav: SubTileEntity() {
 		
 		for (i in 0..3) {
 			v.rand().sub(0.5).set(v.x, 0.0, v.z).normalize().mul(Math.random() * radius).add(superTile!!).add(0.0, Math.random() * radius * 4.0 - radius * 2, 0.0)
-			Botania.proxy.wispFX(worldObj(), v.x, v.y, v.z, 0.5f, 0.9f, 1f, 0.1f, -0.1f, 10f)
+			Botania.proxy.wispFX(worldObj, v.x, v.y, v.z, 0.5f, 0.9f, 1f, 0.1f, -0.1f, 10f)
 		}
 	}
 	
@@ -38,9 +38,7 @@ class SubTileAntigrav: SubTileEntity() {
 		target.motionY += power * 0.125
 	}
 	
-	override fun typeBits(): Int {
-		return MOTION
-	}
+	override fun typeBits() = MOTION
 	
 	companion object {
 		const val power = 0.7

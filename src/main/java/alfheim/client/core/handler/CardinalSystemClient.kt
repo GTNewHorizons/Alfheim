@@ -90,8 +90,8 @@ object CardinalSystemClient {
 			segment().isParty = true
 			if (segment!!.party == null) segment!!.party = Party(mc.thePlayer)
 			while (true) {
-				PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % segment!!.party!!.count
-				val team = segment!!.party!![PlayerSegmentClient.partyIndex]
+				PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % segment!!.party.count
+				val team = segment!!.party[PlayerSegmentClient.partyIndex]
 				segment!!.target = team
 				if (team != null && Vector3.entityDistancePlane(mc.thePlayer, segment!!.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
 			}
@@ -111,29 +111,24 @@ object CardinalSystemClient {
 		
 		fun affected(e: Entity?): Boolean {
 			if (e == null || e is IBossDisplayData) return false
-			for (tsa in tsAreas) {
-				if (Vector3.vecEntityDistance(tsa.pos, e) < 16) {
+			tsAreas
+				.filter { Vector3.vecEntityDistance(it.pos, e) < 16 }
+				.forEach {
 					if (e is EntityLivingBase) {
-						if (!tsa.cPt?.isMember(e as EntityLivingBase?)!!) return true
+						if (!it.cPt?.isMember(e as EntityLivingBase?)!!) return true
 					} else {
 						return true
 					}
 				}
-			}
 			return false
 		}
 		
 		fun affected(te: TileEntity?): Boolean {
 			if (te == null || !te.hasWorldObj()) return false
-			for (tsa in tsAreas)
-				if (Vector3.vecTileDistance(tsa.pos, te) < 16) return true
-			return false
+			return tsAreas.any { Vector3.vecTileDistance(it.pos, te) < 16 }
 		}
 		
-		fun inside(pl: EntityPlayer): Boolean {
-			for (tsa in tsAreas) if (Vector3.vecEntityDistance(tsa.pos, pl) < 16.5) return true
-			return false
-		}
+		fun inside(pl: EntityPlayer) = tsAreas.any { Vector3.vecEntityDistance(it.pos, pl) < 16.5 }
 		
 		fun render() {
 			for (tsa in tsAreas) SpellVisualizations.redSphere(tsa.pos.x, tsa.pos.y, tsa.pos.z)
@@ -147,9 +142,7 @@ object CardinalSystemClient {
 			
 			val pos = Vector3(x, y, z)
 			
-			override fun equals(other: Any?): Boolean {
-				return if (other !is TimeStopAreaClient) false else other.id == id
-			}
+			override fun equals(other: Any?) = if (other !is TimeStopAreaClient) false else other.id == id
 		}
 	}
 	

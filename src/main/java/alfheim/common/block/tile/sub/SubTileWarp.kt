@@ -40,20 +40,20 @@ class SubTileWarp: SubTileEntity() {
 				var tries = 50
 				
 				while (tries-- > 0) {
-					v[x(), y(), z(), radius] = worldObj().rand
+					v[x(), y(), z(), radius] = worldObj.rand
 					
-					b1 = worldObj().getBlock(v.x1, v.y1, v.z1)
-					b2 = worldObj().getBlock(v.x2, v.y2, v.z2)
+					b1 = worldObj.getBlock(v.x1, v.y1, v.z1)
+					b2 = worldObj.getBlock(v.x2, v.y2, v.z2)
 					
-					if (worldObj().isAirBlock(v.x1, v.y1, v.z1) && worldObj().isAirBlock(v.x2, v.y2, v.z2) ||
-						b1.getBlockHardness(worldObj(), v.x1, v.y1, v.z1) < 0 ||
-						b2.getBlockHardness(worldObj(), v.x2, v.y2, v.z2) < 0 ||
-						worldObj().getTileEntity(v.x1, v.y1, v.z1) != null ||
-						worldObj().getTileEntity(v.x2, v.y2, v.z2) != null)
+					if (worldObj.isAirBlock(v.x1, v.y1, v.z1) && worldObj.isAirBlock(v.x2, v.y2, v.z2) ||
+						b1.getBlockHardness(worldObj, v.x1, v.y1, v.z1) < 0 ||
+						b2.getBlockHardness(worldObj, v.x2, v.y2, v.z2) < 0 ||
+						worldObj.getTileEntity(v.x1, v.y1, v.z1) != null ||
+						worldObj.getTileEntity(v.x2, v.y2, v.z2) != null)
 						continue
 					
-					v.m1 = worldObj().getBlockMetadata(v.x1, v.y1, v.z1)
-					v.m2 = worldObj().getBlockMetadata(v.x2, v.y2, v.z2)
+					v.m1 = worldObj.getBlockMetadata(v.x1, v.y1, v.z1)
+					v.m2 = worldObj.getBlockMetadata(v.x2, v.y2, v.z2)
 					l = ArrayList()
 					l.add(v)
 					break
@@ -74,12 +74,12 @@ class SubTileWarp: SubTileEntity() {
 		if (inWG()) return
 		
 		if (ASJUtilities.isServer && ticks % 600 == 0) {
-			radius = worldObj().rand.nextInt(8) + 16
+			radius = worldObj.rand.nextInt(8) + 16
 			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile!!)
 		}
 		
 		rand.setSeed((x() xor y() xor z()).toLong())
-		val worldTime = (worldObj().totalWorldTime + rand.nextInt(1000)) / 5.0
+		val worldTime = (worldObj.totalWorldTime + rand.nextInt(1000)) / 5.0
 		val r = 0.75f + Math.random().toFloat() * 0.05f
 		
 		val x = x().toDouble() + 0.5 + sin(worldTime) * r
@@ -93,39 +93,39 @@ class SubTileWarp: SubTileEntity() {
 		val _y = y().toDouble() + 0.5 + sin(-worldTime) * r
 		val _z = z().toDouble() + 0.5 + sin(-worldTime) * r
 		
-		Botania.proxy.wispFX(worldObj(), x() + 0.5, Y, Z,
+		Botania.proxy.wispFX(worldObj, x() + 0.5, Y, Z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), x() + 0.5, _y, z,
+		Botania.proxy.wispFX(worldObj, x() + 0.5, _y, z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), X, y() + 0.5, Z,
+		Botania.proxy.wispFX(worldObj, X, y() + 0.5, Z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), x, y() + 0.5, _z,
+		Botania.proxy.wispFX(worldObj, x, y() + 0.5, _z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), X, Y, z() + 0.5,
+		Botania.proxy.wispFX(worldObj, X, Y, z() + 0.5,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), _x, y, z() + 0.5,
+		Botania.proxy.wispFX(worldObj, _x, y, z() + 0.5,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), x() + 0.5, y() + 0.5, Z,
+		Botania.proxy.wispFX(worldObj, x() + 0.5, y() + 0.5, Z,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), x() + 0.5, y, z() + 0.5,
+		Botania.proxy.wispFX(worldObj, x() + 0.5, y, z() + 0.5,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj(), X, y() + 0.5, z() + 0.5,
+		Botania.proxy.wispFX(worldObj, X, y() + 0.5, z() + 0.5,
 							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
 							 0.1f + Math.random().toFloat() * 0.1f)
 	}
@@ -140,9 +140,7 @@ class SubTileWarp: SubTileEntity() {
 		radius = cmp.getInteger(TAG_RADIUS)
 	}
 	
-	private fun rand(l: MutableList<Any>): EntityLivingBase {
-		return l.removeAt(worldObj().rand.nextInt(l.size)) as EntityLivingBase
-	}
+	private fun rand(l: MutableList<Any>) = l.removeAt(worldObj.rand.nextInt(l.size)) as EntityLivingBase
 	
 	override fun performEffect(target: Any) {
 		if (!ASJUtilities.isServer) return
@@ -165,15 +163,13 @@ class SubTileWarp: SubTileEntity() {
 		}
 		
 		if (target is Vector8i) {
-			val block = worldObj().getBlock(target.x1, target.y1, target.z1)
-			worldObj().setBlock(target.x1, target.y1, target.z1, worldObj().getBlock(target.x2, target.y2, target.z2), target.m2, 3)
-			worldObj().setBlock(target.x2, target.y2, target.z2, block, target.m1, 3)
+			val block = worldObj.getBlock(target.x1, target.y1, target.z1)
+			worldObj.setBlock(target.x1, target.y1, target.z1, worldObj.getBlock(target.x2, target.y2, target.z2), target.m2, 3)
+			worldObj.setBlock(target.x2, target.y2, target.z2, block, target.m1, 3)
 		}
 	}
 	
-	override fun typeBits(): Int {
-		return SPACE
-	}
+	override fun typeBits() = SPACE
 	
 	private class Vector8i {
 		var x1: Int = 0

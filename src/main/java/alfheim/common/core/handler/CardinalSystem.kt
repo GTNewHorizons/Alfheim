@@ -10,7 +10,6 @@ import alfheim.api.event.TimeStopCheckEvent.*
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.handler.CardinalSystem.TargetingSystem.Target
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.network.*

@@ -5,7 +5,7 @@ import alfheim.api.ModInfo.MODID
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.core.util.*
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
@@ -22,9 +22,9 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
-import vazkii.botania.common.brew.ModPotions
 import java.io.File
 
+@Suppress("UNUSED_PARAMETER")
 @Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
 	
@@ -130,6 +130,6 @@ class AlfheimCore {
 			override fun getTabIconItem(): Item {
 				return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal)
 			}
-		}.setNoTitle().setBackgroundImageName("Alfheim.png")
+		}.setNoTitle().setBackgroundImageName("Alfheim.png")!!
 	}
 }

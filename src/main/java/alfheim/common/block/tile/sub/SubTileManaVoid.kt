@@ -32,11 +32,11 @@ class SubTileManaVoid: SubTileEntity() {
 			}
 			
 			radius = 10
-			worldObj().createExplosion(null, x().toDouble(), y().toDouble(), z().toDouble(), radius.toFloat(), false)
+			worldObj.createExplosion(null, x().toDouble(), y().toDouble(), z().toDouble(), radius.toFloat(), false)
 			
 			for (i in 0..127) {
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.1)
-				Botania.proxy.wispFX(worldObj(), x() + 0.5, y() + 0.5, z() + 0.5, 0.01f, 0.75f, 1f, 0.25f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
+				Botania.proxy.wispFX(worldObj, x() + 0.5, y() + 0.5, z() + 0.5, 0.01f, 0.75f, 1f, 0.25f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
 			}
 			
 			mana = 0
@@ -55,13 +55,11 @@ class SubTileManaVoid: SubTileEntity() {
 			
 			val l = v.set(superTile!!).add(0.5).sub(target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ).length()
 			v.normalize().mul(l / 40)
-			Botania.proxy.wispFX(worldObj(), target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ, 0.01f, 0.75f, 1f, radius / 40f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
+			Botania.proxy.wispFX(worldObj, target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ, 0.01f, 0.75f, 1f, radius / 40f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 2f)
 		}
 	}
 	
-	override fun typeBits(): Int {
-		return MANA
-	}
+	override fun typeBits() = MANA
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
 		super.writeCustomNBT(cmp)

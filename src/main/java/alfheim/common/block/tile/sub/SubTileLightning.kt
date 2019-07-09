@@ -30,7 +30,7 @@ class SubTileLightning: SubTileEntity() {
 				if (ticks % 50 == 0) {
 					val e = findNearestVulnerableEntity(radius) ?: return@run
 					
-					worldObj().playSoundEffect(x().toDouble(), y().toDouble(), z().toDouble(), "botania:runeAltarCraft", 1f, 1f)
+					worldObj.playSoundEffect(x().toDouble(), y().toDouble(), z().toDouble(), "botania:runeAltarCraft", 1f, 1f)
 					
 					val l = ArrayList<Any>()
 					l.add(e)
@@ -51,10 +51,10 @@ class SubTileLightning: SubTileEntity() {
 		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
 		
-		if (worldObj().rand.nextInt(6000) == 0) {
+		if (worldObj.rand.nextInt(6000) == 0) {
 			val x = x() + Math.random() * 10 - 5
 			val z = z() + Math.random() * 10 - 5
-			worldObj().addWeatherEffect(EntityLightningBolt(worldObj(), x, worldObj().getTopSolidOrLiquidBlock(MathHelper.floor_double(x), MathHelper.floor_double(z)).toDouble(), z))
+			worldObj.addWeatherEffect(EntityLightningBolt(worldObj, x, worldObj.getTopSolidOrLiquidBlock(MathHelper.floor_double(x), MathHelper.floor_double(z)).toDouble(), z))
 			return
 		}
 		
@@ -62,7 +62,7 @@ class SubTileLightning: SubTileEntity() {
 			ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
 			vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
 			ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5)
-			Botania.proxy.lightningFX(worldObj(), vt, ve, 50f, worldObj().rand.nextLong(), 0, 0xFF0000)
+			Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
 		}
 	}
 	
@@ -89,7 +89,7 @@ class SubTileLightning: SubTileEntity() {
 				ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
 				vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
 				ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5)
-				Botania.proxy.lightningFX(worldObj(), vt, ve, 50f, worldObj().rand.nextLong(), 0, 0xFF0000)
+				Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
 			}
 			
 			KnowledgeSystem.learn(player, Knowledge.PYLONS)
@@ -109,12 +109,10 @@ class SubTileLightning: SubTileEntity() {
 		vt.add(ve.x / 2, ve.y / 2, ve.z / 2)
 		ve.set(target.posX, target.posY, target.posZ)
 		
-		Botania.proxy.lightningFX(worldObj(), vt, ve, 1f, worldObj().rand.nextLong(), 0, 0xFF0000)
+		Botania.proxy.lightningFX(worldObj, vt, ve, 1f, worldObj.rand.nextLong(), 0, 0xFF0000)
 	}
 	
-	override fun typeBits(): Int {
-		return HEALTH
-	}
+	override fun typeBits() = HEALTH
 	
 	companion object {
 		const val radius = 12.0
