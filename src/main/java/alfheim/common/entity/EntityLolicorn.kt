@@ -116,7 +116,8 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		playSound(getAngrySoundName(), soundVolume, soundPitch)
 	}
 	
-	private fun openHorseMouth() {
+	@Deprecated("NO-OP")
+	private fun openMouth() {
 		if (!worldObj.isRemote) {
 			openMouthCounter = 1
 			setHorseWatchableBoolean(128, true)
@@ -138,7 +139,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		try {
 			"mob.horse.idle"
 		} finally {
-			openHorseMouth()
+			openMouth()
 			if (rand.nextInt(10) == 0 && !isMovementBlocked) makeHorseRear()
 		}
 	
@@ -146,7 +147,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		try {
 			"mob.horse.angry"
 		} finally {
-			openHorseMouth()
+			openMouth()
 			makeHorseRear()
 		}
 	
@@ -154,7 +155,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		try {
 			"mob.horse.hit"
 		} finally {
-			openHorseMouth()
+			openMouth()
 			if (rand.nextInt(3) == 0) makeHorseRear()
 		}
 	
@@ -162,7 +163,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		try {
 			"mob.horse.death"
 		} finally {
-			openHorseMouth()
+			openMouth()
 		}
 	
 	override fun func_145780_a(x: Int, y: Int, z: Int, block: Block) {

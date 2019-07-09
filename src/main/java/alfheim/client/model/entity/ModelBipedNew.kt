@@ -77,14 +77,14 @@ open class ModelBipedNew: ModelBase() {
 	override fun render(entity: Entity?, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
 		setRotationAngles(time, amplitude, ticksExisted, yawHead, pitchHead, size, entity)
 		
-		if (this.isChild) {
+		if (isChild) {
 			glPushMatrix()
 			glScalef(0.5f, 0.5f, 0.5f)
 			glTranslatef(0.0f, 24.0f * size, 0.0f)
 		}
 		
 		render(size)
-		if (this.isChild) glPopMatrix()
+		if (isChild) glPopMatrix()
 	}
 	
 	fun render(size: Float) {
@@ -108,7 +108,7 @@ open class ModelBipedNew: ModelBase() {
 		rightleg.rotateAngleY = 0.0f
 		leftleg.rotateAngleY = 0.0f
 		
-		if (entity != null && entity.isRiding) {
+		if (entity?.isRiding == true) {
 			rightarm.rotateAngleX += -(Math.PI.toFloat() / 5f)
 			leftarm.rotateAngleX += -(Math.PI.toFloat() / 5f)
 			rightleg.rotateAngleX = -(Math.PI.toFloat() * 2f / 5f)
@@ -146,7 +146,7 @@ open class ModelBipedNew: ModelBase() {
 			rightarm.rotateAngleZ = MathHelper.sin(onGround * Math.PI.toFloat()) * -0.4f
 		}
 		
-		if (entity != null && entity.isSneaking) {
+		if (entity?.isSneaking == true) {
 			body.rotateAngleX = 0.5f
 			rightarm.rotateAngleX += 0.4f
 			leftarm.rotateAngleX += 0.4f
