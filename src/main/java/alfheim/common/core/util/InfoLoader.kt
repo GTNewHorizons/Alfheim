@@ -62,13 +62,13 @@ object InfoLoader {
 					info.add("=====================================================")
 					info.addAll(listOf(*s.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
 				}
+				ASJUtilities.log("Successfully loaded news & version")
 			} catch (e: Exception) {
 				ASJUtilities.error("Unable to load news & version from official repo. Check your internet connection.")
 				e.printStackTrace(System.err)
 			}
 			
 			doneChecking = true
-			ASJUtilities.log("Successfully loaded news & version")
 		}
 	}
 }

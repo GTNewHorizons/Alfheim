@@ -1,5 +1,6 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.math.Vector3
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
@@ -10,18 +11,14 @@ import net.minecraft.world.World
 
 class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	
-	var mouthOpenness = 0f
-	var prevMouthOpenness = 0f
-	var rearingAmount = 0f
-	var prevRearingAmount = 0f
-	private var openMouthCounter = 0
-	private var jumpRearingCounter = 0
 	var tailMovement = 0
 	var tugudukCounter = 0
 	
 	init {
 		stepHeight = 1.5f
 		flySpeed = 0.95f
+		
+		setSize(1.4f, 1.6f)
 	}
 	
 	override fun setHealth(hp: Float) = Unit // NO-OP
@@ -45,7 +42,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	
 	override fun interact(player: EntityPlayer?): Boolean {
 		val sup = super.interact(player)
-		if (!worldObj.isRemote && !sup) makeHorseRearWithSound()
+		if (!worldObj.isRemote && !sup) playSound(getAngrySoundName(), soundVolume, soundPitch)
 		return sup
 	}
 	
@@ -73,34 +70,6 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	override fun onUpdate() {
 		super.onUpdate()
 		
-		if (openMouthCounter > 0 && ++openMouthCounter > 30) {
-			openMouthCounter = 0
-			setHorseWatchableBoolean(128, false)
-		}
-		
-		if (!worldObj.isRemote && jumpRearingCounter > 0 && ++jumpRearingCounter > 20) {
-			jumpRearingCounter = 0
-			setRearing(false)
-		}
-		
-		prevRearingAmount = rearingAmount
-		if (isRearing()) {
-			rearingAmount += (1.0f - rearingAmount) * 0.4f + 0.05f
-			if (rearingAmount > 1.0f) rearingAmount = 1.0f
-		} else {
-			rearingAmount += (0.8f * rearingAmount * rearingAmount * rearingAmount - rearingAmount) * 0.6f - 0.05f
-			if (rearingAmount < 0.0f) rearingAmount = 0.0f
-		}
-		
-		prevMouthOpenness = mouthOpenness
-		if (getHorseWatchableBoolean(128)) {
-			mouthOpenness += (1.0f - mouthOpenness) * 0.7f + 0.05f
-			if (mouthOpenness > 1.0f) mouthOpenness = 1.0f
-		} else {
-			mouthOpenness += (0.0f - mouthOpenness) * 0.7f - 0.05f
-			if (mouthOpenness < 0.0f) mouthOpenness = 0.0f
-		}
-		
 		if (tailMovement > 0 && ++tailMovement > 8) tailMovement = 0
 	}
 	
@@ -108,63 +77,16 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		if (mF <= 0f) tugudukCounter = 0
 		super.moveEntityWithHeading(mS, mF)
 	}
-														// TODO test remove
-	override fun isMovementBlocked() = if (rider != null && !rider!!.isJumping) true else isRearing()
+													 // TODO test remove
+	override fun isMovementBlocked() = rider != null && !rider!!.isJumping
 	
-	private fun makeHorseRearWithSound() {
-		makeHorseRear()
-		playSound(getAngrySoundName(), soundVolume, soundPitch)
-	}
+	override fun getLivingSound() = "mob.horse.idle"
 	
-	@Deprecated("NO-OP")
-	private fun openMouth() {
-		if (!worldObj.isRemote) {
-			openMouthCounter = 1
-			setHorseWatchableBoolean(128, true)
-		}
-	}
+	private fun getAngrySoundName() = "mob.horse.angry"
 	
-	private fun makeHorseRear() {
-		if (!worldObj.isRemote) {
-			jumpRearingCounter = 1
-			setRearing(true)
-		}
-	}
+	override fun getHurtSound() = "mob.horse.hit"
 	
-	private fun setRearing(read: Boolean) = setHorseWatchableBoolean(64, read)
-	
-	private fun isRearing() = getHorseWatchableBoolean(64)
-	
-	override fun getLivingSound() =
-		try {
-			"mob.horse.idle"
-		} finally {
-			openMouth()
-			if (rand.nextInt(10) == 0 && !isMovementBlocked) makeHorseRear()
-		}
-	
-	private fun getAngrySoundName() =
-		try {
-			"mob.horse.angry"
-		} finally {
-			openMouth()
-			makeHorseRear()
-		}
-	
-	override fun getHurtSound() =
-		try {
-			"mob.horse.hit"
-		} finally {
-			openMouth()
-			if (rand.nextInt(3) == 0) makeHorseRear()
-		}
-	
-	override fun getDeathSound() =
-		try {
-			"mob.horse.death"
-		} finally {
-			openMouth()
-		}
+	override fun getDeathSound() = "mob.horse.death"
 	
 	override fun func_145780_a(x: Int, y: Int, z: Int, block: Block) {
 		var soundtype: Block.SoundType = block.stepSound
@@ -195,31 +117,12 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		}
 	}
 	
-	private fun getHorseWatchableBoolean(index: Int) = dataWatcher.getWatchableObjectInt(16) and index != 0
-	
-	private fun setHorseWatchableBoolean(index: Int, value: Boolean) {
-		val j = dataWatcher.getWatchableObjectInt(16)
-		
-		if (value) {
-			dataWatcher.updateObject(16, (j or index))
-		} else {
-			dataWatcher.updateObject(16, (j and index.inv()))
-		}
-	}
+	var look = Vector3()
 	
 	override fun updateRiderPosition() {
-		super.updateRiderPosition()
-		
-		if (prevRearingAmount > 0.0f) {
-			val f = MathHelper.sin(renderYawOffset * Math.PI.toFloat() / 180.0f)
-			val f1 = MathHelper.cos(renderYawOffset * Math.PI.toFloat() / 180.0f)
-			val f2 = 0.7f * prevRearingAmount
-			val f3 = 0.15f * prevRearingAmount
-			riddenByEntity.setPosition(posX + (f2 * f).toDouble(), posY + mountedYOffset + riddenByEntity.getYOffset() + f3.toDouble(), posZ - (f2 * f1).toDouble())
-			
-			if (riddenByEntity is EntityLivingBase) {
-				(riddenByEntity as EntityLivingBase).renderYawOffset = renderYawOffset
-			}
+		if (riddenByEntity != null) {
+			look.set(lookVec).mul(1.0, 0.0, 1.0).normalize().mul(-0.25)
+			riddenByEntity.setPosition(posX + look.x, posY + mountedYOffset + riddenByEntity.getYOffset(), posZ + look.z)
 		}
 	}
 }
