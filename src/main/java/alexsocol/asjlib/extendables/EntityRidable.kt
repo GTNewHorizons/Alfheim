@@ -1,4 +1,4 @@
-package alfheim.common.entity
+package alexsocol.asjlib.extendables
 
 import alexsocol.asjlib.ASJUtilities
 import net.minecraft.entity.*
@@ -6,12 +6,12 @@ import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.Potion
-import net.minecraft.util.MathHelper
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 
 @Suppress("LeakingThis")
-open class EntityRidable(world: World): EntityCreature(world) {
+abstract class EntityRidable(world: World): EntityCreature(world) {
 	
 	var rider: EntityPlayer? = null
 	var walkSpeed = 0.25
@@ -33,11 +33,9 @@ open class EntityRidable(world: World): EntityCreature(world) {
 		dataWatcher.addObject(15, "")
 	}
 	
-	fun panics() = true
-	
-	fun wanders() = true
-	
 	override fun isAIEnabled() = true
+	
+	override fun attackEntityFrom(src: DamageSource?, dmg: Float) = if (rider != null && src?.entity == rider) false else super.attackEntityFrom(src, dmg)
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
@@ -147,7 +145,7 @@ open class EntityRidable(world: World): EntityCreature(world) {
 		ForgeHooks.onLivingJump(this)
 	}
 	
-	fun mount(player: EntityPlayer) {
+	open fun mount(player: EntityPlayer) {
 		player.rotationYaw = rotationYaw
 		player.rotationPitch = rotationPitch
 		if (!worldObj.isRemote) {
@@ -155,7 +153,7 @@ open class EntityRidable(world: World): EntityCreature(world) {
 		}
 		
 		owner = player.commandSenderName
-		customNameTag = owner
+		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim:Lolicorn.desc", owner)
 	}
 	
 	override fun shouldDismountInWater(rider: Entity?) = false

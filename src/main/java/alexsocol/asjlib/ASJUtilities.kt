@@ -68,36 +68,28 @@ class ASJUtilities {
 		 * @param block Block to get name from
 		 */
 		@JvmStatic
-		fun getBlockName(block: Block): String {
-			return block.unlocalizedName.substring(5)
-		}
+		fun getBlockName(block: Block) = block.unlocalizedName.substring(5)
 		
 		/**
 		 * Returns the name of the item
 		 * @param item Item to get name from
 		 */
 		@JvmStatic
-		fun getItemName(item: Item): String {
-			return item.unlocalizedName.substring(5)
-		}
+		fun getItemName(item: Item) = item.unlocalizedName.substring(5)
 		
 		/**
 		 * Registers block by name
 		 * @param block Block to register
 		 */
 		@JvmStatic
-		fun register(block: Block) {
-			GameRegistry.registerBlock(block, getBlockName(block))
-		}
+		fun register(block: Block) = GameRegistry.registerBlock(block, getBlockName(block))!!
 		
 		/**
 		 * Registers item by name
 		 * @param item Item to register
 		 */
 		@JvmStatic
-		fun register(item: Item) {
-			GameRegistry.registerItem(item, getItemName(item))
-		}
+		fun register(item: Item) = GameRegistry.registerItem(item, getItemName(item))
 		
 		/**
 		 * Returns String ID of the mod this block/item is registered in
@@ -128,9 +120,8 @@ class ASJUtilities {
 		}
 		
 		@JvmStatic
-		fun willEntityDie(event: LivingHurtEvent): Boolean {
-			return willEntityDie(LivingAttackEvent(event.entityLiving, event.source, event.ammount))
-		}
+		fun willEntityDie(event: LivingHurtEvent) =
+			willEntityDie(LivingAttackEvent(event.entityLiving, event.source, event.ammount))
 		
 		/**
 		 * Determines whether entity will die from next hit
@@ -158,14 +149,8 @@ class ASJUtilities {
 		 * @param inventory The inventory to scan
 		 */
 		@JvmStatic
-		fun getSlotWithItem(item: Item, inventory: IInventory): Int {
-			for (i in 0 until inventory.sizeInventory) {
-				if (inventory.getStackInSlot(i) != null && inventory.getStackInSlot(i).item === item) {
-					return i
-				}
-			}
-			return -1
-		}
+		fun getSlotWithItem(item: Item, inventory: IInventory) =
+			(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it) != null && inventory.getStackInSlot(it).item === item } ?: -1
 		
 		/**
 		 * Removes itemstack from inventory
@@ -213,41 +198,36 @@ class ASJUtilities {
 		 * @return damage from stack itself, not through item
 		 */
 		@JvmStatic
-		fun getTrueDamage(stack: ItemStack): Int {
-			return Integer.valueOf(stack.toString().split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1])
-		}
+		fun getTrueDamage(stack: ItemStack) =
+			"$stack".split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].toInt()
 		
 		/**
 		 * Checks if two itemstacks has same ID, size and metadata
 		 */
 		@JvmStatic
-		fun isItemStackEqual(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && stack1.itemDamage == stack2.itemDamage
-		}
+		fun isItemStackEqual(stack1: ItemStack?, stack2: ItemStack?) =
+			stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && stack1.itemDamage == stack2.itemDamage
 		
 		/**
 		 * Checks if two itemstacks has same ID and metadata
 		 */
 		@JvmStatic
-		fun isItemStackEqualData(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage
-		}
+		fun isItemStackEqualData(stack1: ItemStack?, stack2: ItemStack?) =
+			stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage
 		
 		/**
 		 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
 		 */
 		@JvmStatic
-		fun isItemStackTrueEqual(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-			return stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2)
-		}
+		fun isItemStackTrueEqual(stack1: ItemStack?, stack2: ItemStack?) =
+			stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2)
 		
 		/**
 		 * Checks if two itemstacks has same ID and metadata (from stack itself)
 		 */
 		@JvmStatic
-		fun isItemStackTrueEqualData(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-			return stack1 != null && stack2 != null && stack1.item === stack2.item && getTrueDamage(stack1) == getTrueDamage(stack2)
-		}
+		fun isItemStackTrueEqualData(stack1: ItemStack?, stack2: ItemStack?) =
+			stack1 != null && stack2 != null && stack1.item === stack2.item && getTrueDamage(stack1) == getTrueDamage(stack2)
 		
 		/**
 		 * Removes itemstack with NBT from inventory
@@ -284,9 +264,8 @@ class ASJUtilities {
 		fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
 			var amount = 0
 			for (i in 0 until inventory.sizeInventory) {
-				if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack)) {
+				if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack))
 					amount += inventory.getStackInSlot(i).stackSize
-				}
 			}
 			return amount
 		}
@@ -561,9 +540,8 @@ class ASJUtilities {
 		 * Can be null if none is found
 		 */
 		@JvmStatic
-		fun getClosestVulnerablePlayerToEntity(entity: Entity, distance: Double): EntityPlayer? {
-			return getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance)
-		}
+		fun getClosestVulnerablePlayerToEntity(entity: Entity, distance: Double) =
+			getClosestVulnerablePlayer(entity.worldObj, entity.posX, entity.posY, entity.posZ, distance)
 		
 		/**
 		 * @return Closest vulnerable player to coords within the given radius,
@@ -643,41 +621,33 @@ class ASJUtilities {
 		 * @return random value in range [min, max] (inclusive)
 		 */
 		@JvmStatic
-		fun randInBounds(min: Int, max: Int): Int {
-			return randInBounds(Random(), min, max)
-		}
+		fun randInBounds(min: Int, max: Int) = randInBounds(Random(), min, max)
 		
 		/**
 		 * @return random value in range [min, max] (inclusive)
 		 */
 		@JvmStatic
-		fun randInBounds(rand: Random, min: Int, max: Int): Int {
-			return rand.nextInt(max - min + 1) + min
-		}
+		fun randInBounds(rand: Random, min: Int, max: Int) = rand.nextInt(max - min + 1) + min
 		
 		/**
 		 * Interpolates values, e.g. for smoother render
 		 */
 		@JvmStatic
-		fun interpolate(last: Double, now: Double): Double {
-			return last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks
-		}
+		fun interpolate(last: Double, now: Double) = last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks
 		
 		/**
 		 * Translates matrix to follow player (if something is bound to world's zero coords)
 		 */
 		@JvmStatic
-		fun interpolatedTranslation(entity: Entity) {
+		fun interpolatedTranslation(entity: Entity) =
 			glTranslated(interpolate(entity.lastTickPosX, entity.posX), interpolate(entity.lastTickPosY, entity.posY), interpolate(entity.lastTickPosZ, entity.posZ))
-		}
 		
 		/**
 		 * Translates matrix not to follow player (if something is bound to camera's zero coords)
 		 */
 		@JvmStatic
-		fun interpolatedTranslationReverse(entity: Entity) {
+		fun interpolatedTranslationReverse(entity: Entity) =
 			glTranslated(-interpolate(entity.lastTickPosX, entity.posX), -interpolate(entity.lastTickPosY, entity.posY), -interpolate(entity.lastTickPosZ, entity.posZ))
-		}
 		
 		/**
 		 * Sets matrix and translation to world's zero coordinates
@@ -713,25 +683,21 @@ class ASJUtilities {
 		 * @return String which tolds you to hold shift-key
 		 */
 		@JvmStatic
-		fun holdShift(): String {
-			return StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " SHIFT " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.shift")
-		}
+		fun holdShift() =
+			StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " SHIFT " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.shift")
 		
 		/**
 		 * @return String which tolds you to hold control-key
 		 */
 		@JvmStatic
-		fun holdCtrl(): String {
-			return StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl")
-		}
+		fun holdCtrl() =
+			StatCollector.translateToLocal("tooltip.hold") + EnumChatFormatting.WHITE + " CTRL " + EnumChatFormatting.GRAY + StatCollector.translateToLocal("tooltip.ctrl")
 		
 		/**
 		 * @return String which tolds you that this block/item/stuff is only for creative use
 		 */
 		@JvmStatic
-		fun creativeOnly(): String {
-			return StatCollector.translateToLocal("tooltip.creativeonly")
-		}
+		fun creativeOnly() = StatCollector.translateToLocal("tooltip.creativeonly")!!
 		
 		/**
 		 * @return map key for specified value if persist (null if none)
@@ -752,12 +718,8 @@ class ASJUtilities {
 		}
 		
 		@JvmStatic
-		fun <T: Comparable<T>> indexOfComparableArray(array: Array<T>, key: T): Int {
-			for (i in array.indices)
-				if (array[i].compareTo(key) == 0)
-					return i
-			return -1
-		}
+		fun <T: Comparable<T>> indexOfComparableArray(array: Array<T>, key: T) =
+			array.indices.firstOrNull { array[it].compareTo(key) == 0 } ?: -1
 		
 		@JvmStatic
 		fun <T: Comparable<T>> indexOfComparableColl(coll: Collection<T>, key: T): Int {
@@ -798,17 +760,13 @@ class ASJUtilities {
 		 * @author qiexie
 		 */
 		@JvmStatic
-		fun enumColorToRGB(eColor: EnumChatFormatting): Int {
-			return addAlpha(colorCode[eColor.ordinal], 0xff)
-		}
+		fun enumColorToRGB(eColor: EnumChatFormatting) = addAlpha(colorCode[eColor.ordinal], 0xff)
 		
 		/**
 		 * Adds `alpha` value to @{code color}
 		 */
 		@JvmStatic
-		fun addAlpha(color: Int, alpha: Int): Int {
-			return alpha and 0xFF shl 24 or (color and 0x00FFFFFF)
-		}
+		fun addAlpha(color: Int, alpha: Int) = alpha and 0xFF shl 24 or (color and 0x00FFFFFF)
 		
 		/**
 		 * Sets render color unpacked from uInt
@@ -838,17 +796,13 @@ class ASJUtilities {
 		 * Returns block IIcon registered with [.registerBlockIcon]
 		 */
 		@JvmStatic
-		fun getBlockIcon(name: String): IIcon {
-			return blockIcons[name]!!
-		}
+		fun getBlockIcon(name: String) = blockIcons[name]!!
 		
 		/**
 		 * Returns item IIcon registered with [.registerItemIcon]
 		 */
 		@JvmStatic
-		fun getItemIcon(name: String): IIcon {
-			return itemsIcons[name]!!
-		}
+		fun getItemIcon(name: String) = itemsIcons[name]!!
 		
 		/**
 		 * Registers dimension
@@ -920,14 +874,12 @@ class ASJUtilities {
 		
 		private val format = DecimalFormat("000")
 		
-		private fun time(world: World?): String {
-			return String.format("[%s]", format.format(world?.let { it.totalWorldTime % 1000 } ?: 0))
-		}
+		private fun time(world: World?) = "[${format.format(world?.let { it.totalWorldTime % 1000 } ?: 0)}]"
 		
 		@SideOnly(Side.CLIENT)
 		@JvmStatic
 		fun chatLog(message: String) {
-			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(time(Minecraft.getMinecraft()?.theWorld) + message))
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(Minecraft.getMinecraft()?.theWorld)} $message"))
 		}
 		
 		@SideOnly(Side.CLIENT)
@@ -969,7 +921,7 @@ class ASJUtilities {
 		fun printStackTrace() {
 			log("Stack trace: ")
 			val stes = Thread.currentThread().stackTrace
-			for (i in 2 until stes.size) trace("\tat " + stes[i].toString())
+			for (i in 2 until stes.size) trace("\tat $stes[i]")
 		}
 		
 		@JvmStatic
@@ -988,10 +940,9 @@ class ASJUtilities {
 		@Deprecated("")
 		@JvmStatic
 		fun sayToAllOPs(message: String) {
-			for (op in MinecraftServer.getServer().configurationManager.func_152606_n()) {
-				val player = MinecraftServer.getServer().configurationManager.func_152612_a(op)
-				if (player != null) say(player, message)
-			}
+			MinecraftServer.getServer().configurationManager.func_152606_n()
+				.mapNotNull { MinecraftServer.getServer().configurationManager.func_152612_a(it) }
+				.forEach { say(it, message) }
 			log(message)
 		}
 
@@ -1016,7 +967,7 @@ class ASJUtilities {
 					sb.append("    ").append(e.key).append(" = ").append(e.value).append("\n")
 			}
 			sb.append("}")
-			return sb.toString()
+			return "$sb"
 		}
 		
 		@JvmStatic
@@ -1032,7 +983,7 @@ class ASJUtilities {
 				} else
 					sb.append(obj).append("\n")
 			sb.append("]")
-			return sb.toString()
+			return "$sb"
 		}
 	}
 }

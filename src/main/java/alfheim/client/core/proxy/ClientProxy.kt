@@ -27,7 +27,6 @@ import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.entity.RenderHorse
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
 import net.minecraftforge.client.MinecraftForgeClient
@@ -110,6 +109,7 @@ class ClientProxy: CommonProxy() {
 	
 	companion object {
 		
+		val keyLolicorn = KeyBinding("key.lolicorn.desc", Keyboard.KEY_L, "key.categories.misc")
 		val keyCast = KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.gameplay")
 		val keyUnCast = KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.gameplay")
 		val keyFlight = KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement")

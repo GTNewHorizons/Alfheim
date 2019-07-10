@@ -2,6 +2,7 @@ Innovations:
  reworked flugel to be easier
  hourglass now accept elven sand for 30 sec/block
  extending potion array to 1024 entries
+ Lolicorn - invincible personal mount
 
 Fixes:
  #75 - elemental armor bugs (fire leggings now works in flight)

@@ -307,6 +307,8 @@ class EventHandler {
 	
 	@SubscribeEvent
 	fun onServerTick(e: ServerTickEvent) {
+		EntityLolicorn.tick()
+		
 		if (AlfheimCore.enableMMO) {
 			if (e.phase == Phase.START) {
 				CardinalSystem.SpellCastingSystem.tick()

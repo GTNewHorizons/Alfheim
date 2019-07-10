@@ -3,8 +3,10 @@ package alfheim.common.network
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
-import alfheim.client.core.handler.*
+import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
+import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.common.core.handler.*
+import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
@@ -105,11 +107,13 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 
 	override fun onMessage(packet: MessageKeyBind, message: MessageContext): IMessage? {
 		val player = message.serverHandler.playerEntity
-
-		when (KeyBindingHandlerClient.KeyBindingIDs.values()[packet.action]) {
-			KeyBindingHandlerClient.KeyBindingIDs.ATTACK                      -> KeyBindingHandler.atack(player)
-
-			KeyBindingHandlerClient.KeyBindingIDs.CAST -> {
+		
+		when (values()[packet.action]) {
+			CORN   -> EntityLolicorn.call(player.commandSenderName)
+			
+			ATTACK -> KeyBindingHandler.atack(player)
+			
+			CAST   -> {
 				val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
@@ -121,8 +125,8 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 					seg.castableSpell = spell
 				}
 			}
-
-			KeyBindingHandlerClient.KeyBindingIDs.UNCAST -> {
+			
+			UNCAST -> {
 				run {
 					val seg = CardinalSystem.forPlayer(player)
 					seg.ids = 0
@@ -131,10 +135,10 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 				}
 				KeyBindingHandler.enableFlight(player, packet.state)
 			}
-
-			KeyBindingHandlerClient.KeyBindingIDs.FLIGHT -> KeyBindingHandler.enableFlight(player, packet.state)
-
-			KeyBindingHandlerClient.KeyBindingIDs.SEL    -> {
+			
+			FLIGHT -> KeyBindingHandler.enableFlight(player, packet.state)
+			
+			SEL    -> {
 				val e = player.worldObj.getEntityByID(packet.ticks)
 				if (e is EntityLivingBase) CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
 			}

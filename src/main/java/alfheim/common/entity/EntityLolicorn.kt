@@ -1,18 +1,24 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.entity.*
+import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.item.ItemStack
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
+import vazkii.botania.api.mana.ManaItemHandler
 
 class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	
 	var tailMovement = 0
 	var tugudukCounter = 0
+	var unmountCounter = 0
 	
 	init {
 		stepHeight = 1.5f
@@ -68,16 +74,34 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	}
 	
 	override fun onUpdate() {
+		if (ASJUtilities.isServer && rider == null && riddenByEntity == null) doTPorDIE()
+		
 		super.onUpdate()
 		
 		if (tailMovement > 0 && ++tailMovement > 8) tailMovement = 0
+	}
+	
+	fun doTPorDIE() {
+		val master = MinecraftServer.getServer()?.configurationManager?.func_152612_a(owner) ?: run { setDead(); return }
+		if (master.dimension != dimension) { setDead(); return }
+		if (requests.remove(owner))
+			master.also {
+				setPosition(it.posX, it.posY, it.posZ)
+				unmountCounter = 0
+			}
+		else
+			if (Vector3.entityDistancePlane(this, master) > 32.0) setDead()
+			else {
+				++unmountCounter
+				if (unmountCounter >= 600) setDead()
+			}
 	}
 	
 	override fun moveEntityWithHeading(mS: Float, mF: Float) {
 		if (mF <= 0f) tugudukCounter = 0
 		super.moveEntityWithHeading(mS, mF)
 	}
-													 // TODO test remove
+	
 	override fun isMovementBlocked() = rider != null && !rider!!.isJumping
 	
 	override fun getLivingSound() = "mob.horse.idle"
@@ -117,12 +141,45 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		}
 	}
 	
+	override fun mount(player: EntityPlayer) {
+		super.mount(player)
+		unmountCounter = 0
+	}
+	
 	var look = Vector3()
 	
 	override fun updateRiderPosition() {
 		if (riddenByEntity != null) {
 			look.set(lookVec).mul(1.0, 0.0, 1.0).normalize().mul(-0.25)
 			riddenByEntity.setPosition(posX + look.x, posY + mountedYOffset + riddenByEntity.getYOffset(), posZ + look.z)
+		}
+	}
+	
+	companion object {
+		val requests = mutableSetOf<String>()
+		val timing = mutableMapOf<String, Int>()
+		
+		fun call(caller: String) {
+			requests.add(caller)
+			timing[caller] = 5
+		}
+		
+		fun tick() {
+			val i = EntityLolicorn.requests.iterator()
+			while(i.hasNext()) {
+				val cr = i.next()
+				timing[cr] = timing[cr]!!-1
+				if (timing[cr]!! <= 0) {
+					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let {
+						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, 1000, false)
+						if (can) can = it.worldObj.spawnEntityInWorld(EntityLolicorn(it.worldObj).apply { owner = it.commandSenderName }.apply { setPosition(it.posX, it.posY, it.posZ) })
+						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, 1000, true)
+					}
+					
+					i.remove()
+					timing.remove(cr)
+				}
+			}
 		}
 	}
 }

@@ -1,11 +1,11 @@
-package alfheim.common.entity
+package alexsocol.asjlib.extendables
 
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import kotlin.math.*
 
-open class EntityRidableFlying(world: World): EntityRidable(world) {
+abstract class EntityRidableFlying(world: World): EntityRidable(world) {
 	
 	var flySpeed = 0.85f
 	

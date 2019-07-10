@@ -8,9 +8,9 @@ import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
@@ -26,6 +26,7 @@ import org.lwjgl.input.*
 object KeyBindingHandlerClient {
 	
 	/** Toggle Keys  */
+	var toggleCorn: Boolean = false
 	var toggleFlight: Boolean = false
 	var toggleJump: Boolean = false
 	var toggleCast: Boolean = false
@@ -57,6 +58,15 @@ object KeyBindingHandlerClient {
 			toggleLMB = false
 		}
 		
+		if (Keyboard.isKeyDown(ClientProxy.keyLolicorn.keyCode)) {
+			if (!toggleCorn) {
+				toggleCorn = true
+				AlfheimCore.network.sendToServer(MessageKeyBind(CORN.ordinal, false, 0))
+			}
+		} else if (toggleCorn) {
+			toggleCorn = false
+		}
+		
 		if (AlfheimCore.enableElvenStory) {
 			if (Keyboard.isKeyDown(ClientProxy.keyFlight.keyCode)) {
 				if (!toggleFlight) {
@@ -83,13 +93,7 @@ object KeyBindingHandlerClient {
 		
 		if (AlfheimCore.enableMMO) {
 			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-				var flag = false
-				for (i in CardinalSystemClient.segment().hotSpells.indices) {
-					if (Keyboard.isKeyDown(i + 2)) {
-						flag = true
-						break
-					}
-				}
+				val flag = CardinalSystemClient.segment().hotSpells.indices.any { Keyboard.isKeyDown(it + 2) }
 				
 				if (flag) Minecraft.getMinecraft().thePlayer.inventory.currentItem = prevHotSlot
 			} else
@@ -231,6 +235,6 @@ object KeyBindingHandlerClient {
 	}
 	
 	enum class KeyBindingIDs {
-		ATTACK, CAST, UNCAST, FLIGHT, SEL
+		CORN, ATTACK, CAST, UNCAST, FLIGHT, SEL
 	}
 }

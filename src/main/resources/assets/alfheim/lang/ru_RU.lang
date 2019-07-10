@@ -1,4 +1,4 @@
-###########################################################___БЛОКИ___##########################################################
+# ##########################################################___БЛОКИ___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Ядро портала в Альвхейм
 tile.AnimatedTorch.name=Подвижный факел
@@ -158,7 +158,7 @@ alfheim.armorset.elemental.name=Повелитель элементов
 alfheim.armorset.elvorium.name=Королевский эльфийский страж
 alfheim.armorset.elvorium.desc0=Потребление маны на 30% меньше для инструментов и жезлов
 alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный эффект
-alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20% 
+alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
 alfheim.commands.alfheim.done=%s изменил режим Альфхейма на [%sESM%s|%sMMO%s]
@@ -228,7 +228,7 @@ alfheim.potion.soulburn.postfix=Зелье горящей души
 alfheim.potion.stoneSkin=Каменная кожа
 alfheim.potion.stoneSkin.postfix=Зелье каменной кожи
 alfheim.potion.tank=Танк
-alfheim.potion.throw.postfix=Зелье твёрдой воли
+alfheim.potion.tank.postfix=Зелье твёрдой воли
 alfheim.potion.throw=Потоки ветра
 alfheim.potion.throw.postfix=Зелье лёгкости
 alfheim.potion.wellolife=Колодец жизни
@@ -264,8 +264,8 @@ alfheimmisc.party.notpl=Только лидер группы может сдел
 
 alfheimmisc.waila.holder.mana=Мана: %s
 alfheimmisc.waila.trade.available=Обменов доступно: %s
-alfheimmisc.waila.trade.results=Результаты: 
-alfheimmisc.waila.trade.request=Запрос: 
+alfheimmisc.waila.trade.results=Результаты:
+alfheimmisc.waila.trade.request=Запрос:
 
 death.attack.bleeding=%s истёк кровью
 death.attack.corruption=%s подошёл слишком близко к аномалии
@@ -281,6 +281,8 @@ death.attack.water=%s разрезан на части водным потоко
 
 entity.alfheim:Elf.name=Эльф
 entity.alfheim:Flugel.name=Флюгель
+entity.alfheim:Lolicorn.name=Лоликорн
+entity.alfheim:Lolicorn.desc=Лоликорн %s
 entity.alfheim:Pixie.name=Пикси
 entity.alfheim:Rook.name=Ладья Полубога
 
@@ -353,7 +355,7 @@ item.aesirRing.poem3=Над ними не будет никого.
 
 item.kingKey.poem0=Все сокровища древнего царства
 item.kingKey.poem1=Хранит этот ключ по сей день,
-item.kingKey.poem2=Лишь достойный короля героев 
+item.kingKey.poem2=Лишь достойный короля героев
 item.kingKey.poem3=Получит право им владеть.
 
 item.FlugelSoul.poem0=Взгляд назад во времени,
@@ -374,7 +376,9 @@ elvenstory.welcome2=§4САЛАМАНДР§r, §aСИЛЬФ§r, §6КАЙТШИ�
 elvenstory.commands.race.usage=/race <РАСА>
 elvenstory.commands.race.unavailable=Команда недоступна: режим Эльфийской истории отключён.
 
+key.lolicorn.desc=Призвать Лоликорна
 key.cast.desc=Каст заклинания
+key.uncast.desc=Отмена каста
 key.flight.desc=Эльфийский полёт
 key.selmob.desc=Выбор вражеской цели
 key.selteam.desc=Выбор участника группы
@@ -431,7 +435,7 @@ spell.hollowbody.name=Прозрачное Тело
 spell.icelens.name=Ледяная Линза
 spell.ignition.name=Поджёг
 spell.isaacstorm.name=Эпический Ракетный Шторм Исаака
-spell.mortar.name=Мортира 
+spell.mortar.name=Мортира
 spell.night.name=Ночь
 spell.nightvision.name=Ночное Зрение
 spell.ninelifes.name=Девять жизней
@@ -499,7 +503,7 @@ spell.ignition.words=§4Я призываю энергию энтропии, в�
 #
 spell.isaacstorm.words=§eЭпический Ракетный Шторм Исаака
 #
-spell.mortar.words=§2Мортира 
+spell.mortar.words=§2Мортира
 spell.night.words=§5Я заменяю день ночью, заменяю свет тьмой!
 spell.nightvision.words=§8Дай нам глаза, которые осветят ночь!
 #
@@ -535,4 +539,4 @@ spell.waterbreathing.words=§aДай нам жизнь рыбы, и позвол
 #
 spell.wellolife.words=§bКолодец Жизни
 #
-spell.windblade.words=§aКосы Ветра
+spell.windblades.words=§aКосы Ветра

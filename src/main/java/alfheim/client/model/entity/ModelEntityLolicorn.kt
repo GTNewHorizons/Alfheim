@@ -1,6 +1,5 @@
 package alfheim.client.model.entity
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.entity.EntityLolicorn
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.*
@@ -23,6 +22,7 @@ class ModelEntityLolicorn: ModelBase() {
 	val rightglove: ModelRenderer
 	val leftarm: ModelRenderer
 	val leftglove: ModelRenderer
+	val horn: ModelRenderer
 	
 	val horseSaddleBack: ModelRenderer
 	val tailBase: ModelRenderer
@@ -54,7 +54,7 @@ class ModelEntityLolicorn: ModelBase() {
 		
 		head = ModelRenderer(this, 0, 68)
 		head.addBox(-4f, -8f, -4f, 8, 8, 8)
-		head.setRotationPoint(0f, -19f, -8f)
+		head.setRotationPoint(0f, -9f, -8f)
 		
 		hair = ModelRenderer(this, 32, 68)
 		hair.addBox(-4f, -8f, -4f, 8, 8, 8, 0.5f)
@@ -83,6 +83,12 @@ class ModelEntityLolicorn: ModelBase() {
 		leftglove = ModelRenderer(this, 96, 84)
 		leftglove.addBox(-1f, -2f, -2f, 4, 12, 4, 0.5f)
 		leftarm.addChild(leftglove)
+		
+		horn = ModelRenderer(this, 0, 0)
+		horn.setRotationPoint(0.0f, 0.0f, 0.0f)
+		horn.addBox(-0.5f, 7.0f, -2.5f, 1, 4, 1, 0.0f)
+		setRotateAngle(horn, -2.35f, 0.0f, 0.0f)
+		head.addChild(horn)
 		
 		horseLeftSaddleRope = ModelRenderer(this, 70, 0)
 		horseLeftSaddleRope.setRotationPoint(5.0f, 3.0f, 2.0f)
@@ -252,12 +258,68 @@ class ModelEntityLolicorn: ModelBase() {
 		val f5 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * ticks
 		var f7 = f5 / (180f / Math.PI.toFloat())
 		if (prevLimb > 0.2f) f7 += MathHelper.cos(limb * 0.4f) * 0.15f * prevLimb
-
 		val flag = lolicorn.tailMovement != 0
 		val flag2 = lolicorn.riddenByEntity != null
 		val f12 = entity.ticksExisted.toFloat() + ticks
 		val f13 = MathHelper.cos(limb * 0.6662f + Math.PI.toFloat())
 		val f14 = f13 * 0.8f * prevLimb
+		
+		tailBase.rotationPointY = 3f
+		tailMiddle.rotationPointZ = 14f
+		body2.rotateAngleX = 0f
+		tailBase.rotationPointY = tailBase.rotationPointY
+		tailMiddle.rotationPointZ = 10 * tailMiddle.rotationPointZ
+		body2.rotateAngleX = body2.rotateAngleX
+		frontLeftLeg.rotationPointY = 9f
+		frontLeftLeg.rotationPointZ = -8f
+		frontRightLeg.rotationPointY = frontLeftLeg.rotationPointY
+		frontRightLeg.rotationPointZ = frontLeftLeg.rotationPointZ
+		backLeftShin.rotationPointY = backLeftLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + -f13 * 0.5f * prevLimb) * 7f
+		backLeftShin.rotationPointZ = backLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + -f13 * 0.5f * prevLimb) * 7f
+		backRightShin.rotationPointY = backRightLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f13 * 0.5f * prevLimb) * 7f
+		backRightShin.rotationPointZ = backRightLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f13 * 0.5f * prevLimb) * 7f
+		frontLeftShin.rotationPointY = frontLeftLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f + f14) * 7f
+		frontLeftShin.rotationPointZ = frontLeftLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f + f14) * 7f
+		frontRightShin.rotationPointY = frontRightLeg.rotationPointY + MathHelper.sin(Math.PI.toFloat() / 2f - f14) * 7f
+		frontRightShin.rotationPointZ = frontRightLeg.rotationPointZ + MathHelper.cos(Math.PI.toFloat() * 3f / 2f - f14) * 7f
+		backLeftLeg.rotateAngleX = -f13 * 0.5f * prevLimb
+		backLeftShin.rotateAngleX = -f13 * 0.5f * prevLimb - max(0f, f13 * 0.5f * prevLimb)
+		backLeftHoof.rotateAngleX = backLeftShin.rotateAngleX
+		backRightLeg.rotateAngleX = f13 * 0.5f * prevLimb
+		backRightShin.rotateAngleX = f13 * 0.5f * prevLimb - max(0f, -f13 * 0.5f * prevLimb)
+		backRightHoof.rotateAngleX = backRightShin.rotateAngleX
+		frontLeftLeg.rotateAngleX = f14
+		frontLeftShin.rotateAngleX = f14 + max(0f, f13 * 0.5f * prevLimb)
+		frontLeftHoof.rotateAngleX = frontLeftShin.rotateAngleX
+		frontRightLeg.rotateAngleX = -f14
+		frontRightShin.rotateAngleX = -f14 + max(0f, -f13 * 0.5f * prevLimb)
+		frontRightHoof.rotateAngleX = frontRightShin.rotateAngleX
+		backLeftHoof.rotationPointY = backLeftShin.rotationPointY
+		backLeftHoof.rotationPointZ = backLeftShin.rotationPointZ
+		backRightHoof.rotationPointY = backRightShin.rotationPointY
+		backRightHoof.rotationPointZ = backRightShin.rotationPointZ
+		frontLeftHoof.rotationPointY = frontLeftShin.rotationPointY
+		frontLeftHoof.rotationPointZ = frontLeftShin.rotationPointZ
+		frontRightHoof.rotationPointY = frontRightShin.rotationPointY
+		frontRightHoof.rotationPointZ = frontRightShin.rotationPointZ
+		
+		horseSaddleBottom.rotationPointY = 2f
+		horseSaddleBottom.rotationPointZ = 2f
+		horseSaddleFront.rotationPointY = horseSaddleBottom.rotationPointY
+		horseSaddleBack.rotationPointY = horseSaddleBottom.rotationPointY
+		horseLeftSaddleRope.rotationPointY = horseSaddleBottom.rotationPointY
+		horseRightSaddleRope.rotationPointY = horseSaddleBottom.rotationPointY
+		horseLeftSaddleMetal.rotationPointY = horseSaddleBottom.rotationPointY
+		horseRightSaddleMetal.rotationPointY = horseSaddleBottom.rotationPointY
+		horseSaddleFront.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseSaddleBack.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseLeftSaddleRope.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseRightSaddleRope.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseLeftSaddleMetal.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseRightSaddleMetal.rotationPointZ = horseSaddleBottom.rotationPointZ
+		horseSaddleBottom.rotateAngleX = body2.rotateAngleX
+		horseSaddleFront.rotateAngleX = body2.rotateAngleX
+		horseSaddleBack.rotateAngleX = body2.rotateAngleX
 		
 		if (flag2) {
 			horseLeftSaddleRope.rotateAngleX = -1.0471976f

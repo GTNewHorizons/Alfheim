@@ -228,7 +228,7 @@ alfheim.potion.soulburn.postfix=Potion of Burning Soul
 alfheim.potion.stoneSkin=Stone Skin
 alfheim.potion.stoneSkin.postfix=Potion of Stone Skin
 alfheim.potion.tank=Tank
-alfheim.potion.throw.postfix=Potion of Strong Will
+alfheim.potion.tank.postfix=Potion of Strong Will
 alfheim.potion.throw=Wind Flows
 alfheim.potion.throw.postfix=Potion of Lightness
 alfheim.potion.wellolife=Well of Life
@@ -281,6 +281,8 @@ death.attack.water=%s was cut into pieces by %s's water stream
 
 entity.alfheim:Elf.name=Elf
 entity.alfheim:Flugel.name=Flügel
+entity.alfheim:Lolicorn.name=Lolicorn
+entity.alfheim:Lolicorn.desc=%s's Lolicorn
 entity.alfheim:Pixie.name=Pixie
 entity.alfheim:Rook.name=Demigod's Rook
 
@@ -374,7 +376,9 @@ elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, 
 elvenstory.commands.race.usage=/race <RACE>
 elvenstory.commands.race.unavailable=Command unavailable: Elven Story Mode is disabled.
 
+key.lolicorn.desc=Call Lolicorn
 key.cast.desc=Spell Cast
+key.uncast.desc=Cancel Cast
 key.flight.desc=Elven Flight
 key.selmob.desc=Select Mob
 key.selteam.desc=Select Party Member
