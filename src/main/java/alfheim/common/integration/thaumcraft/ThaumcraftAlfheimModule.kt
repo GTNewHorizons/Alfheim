@@ -4,11 +4,11 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.ASJUtilities.Companion.register
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibOreDict.Companion.ELEMENTIUM_ORE
-import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_NUGGET
-import alfheim.api.lib.LibOreDict.Companion.IFFESAL_DUST
-import alfheim.api.lib.LibOreDict.Companion.INFUSED_DREAM_TWIG
-import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_NUGGET
+import alfheim.api.lib.LibOreDict.ELEMENTIUM_ORE
+import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
+import alfheim.api.lib.LibOreDict.IFFESAL_DUST
+import alfheim.api.lib.LibOreDict.INFUSED_DREAM_TWIG
+import alfheim.api.lib.LibOreDict.MAUFTRIUM_NUGGET
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre
 import alfheim.common.core.asm.AlfheimASMData

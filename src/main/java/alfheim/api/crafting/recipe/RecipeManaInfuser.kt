@@ -7,7 +7,7 @@ class RecipeManaInfuser(val manaUsage: Int, out: ItemStack, vararg recipe: Any):
 	
 	override fun toString(): String {
 		val s = StringBuilder()
-		for (ing in inputs) s.append(ing.toString()).append(" + ")
+		for (ing in inputs) s.append("$ing + ")
 		return "Recipe: $s mana*$manaUsage => $output"
 	}
 	

@@ -10,7 +10,7 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.server.MinecraftServer
 import net.minecraft.stats.Achievement
@@ -55,37 +55,27 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		}
 	}
 	
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, infoList: List<*>?, advTooltip: Boolean) {
-		ItemRelic.addBindInfo(infoList!!, stack, player)
-	}
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, infoList: List<Any?>, advTooltip: Boolean) =
+		ItemRelic.addBindInfo(infoList, stack, player)
 	
-	override fun bindToUsername(playerName: String, stack: ItemStack) {
+	
+	override fun bindToUsername(playerName: String, stack: ItemStack) =
 		ItemRelic.bindToUsernameS(playerName, stack)
-	}
 	
-	override fun getSoulbindUsername(stack: ItemStack): String {
-		return ItemRelic.getSoulbindUsernameS(stack)
-	}
 	
-	override fun getBindAchievement(): Achievement {
-		return this.achievement
-	}
+	override fun getSoulbindUsername(stack: ItemStack) = ItemRelic.getSoulbindUsernameS(stack)!!
+	
+	override fun getBindAchievement() = achievement
 	
 	override fun setBindAchievement(achievement: Achievement) {
 		this.achievement = achievement
 	}
 	
-	override fun usesMana(stack: ItemStack?): Boolean {
-		return false
-	}
+	override fun usesMana(stack: ItemStack?) = false
 	
-	override fun isItemTool(p_77616_1_: ItemStack): Boolean {
-		return true
-	}
+	override fun isItemTool(p_77616_1_: ItemStack) = true
 	
-	override fun getEntityLifespan(itemStack: ItemStack?, world: World?): Int {
-		return Integer.MAX_VALUE
-	}
+	override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = Integer.MAX_VALUE
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
@@ -113,11 +103,9 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		return burst
 	}
 	
-	override fun apply(stack: ItemStack, props: BurstProperties) {}
+	override fun apply(stack: ItemStack, props: BurstProperties) = Unit
 	
-	override fun collideBurst(burst: IManaBurst, pos: MovingObjectPosition, isManaBlock: Boolean, dead: Boolean, stack: ItemStack): Boolean {
-		return dead
-	}
+	override fun collideBurst(burst: IManaBurst, pos: MovingObjectPosition, isManaBlock: Boolean, dead: Boolean, stack: ItemStack) = dead
 	
 	override fun updateBurst(burst: IManaBurst, stack: ItemStack) {
 		val entity = burst as EntityThrowable
@@ -157,7 +145,9 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 						if (!burst.isFake && !entity.worldObj.isRemote) {
 							val player = living.worldObj.getPlayerEntityByName(attacker)
 							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.toFloat()
-							damage *= mod ?: 1f
+							damage = mod ?: damage
+							// TODO add sharpness check
+							ASJUtilities.chatLog("$damage")
 							living.attackEntityFrom(if (player == null) DamageSource.magic else DamageSource.causePlayerDamage(player), damage)
 							entity.setDead()
 							break
@@ -168,13 +158,9 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		}
 	}
 	
-	override fun doParticles(burst: IManaBurst, stack: ItemStack): Boolean {
-		return true
-	}
+	override fun doParticles(burst: IManaBurst, stack: ItemStack) = true
 	
-	override fun getRarity(p_77613_1_: ItemStack): EnumRarity {
-		return BotaniaAPI.rarityRelic
-	}
+	override fun getRarity(sta: ItemStack) = BotaniaAPI.rarityRelic!!
 	
 	companion object {
 		val uuid = UUID.fromString("7d5ddaf0-15d2-435c-8310-bdfc5fd1522d")!!

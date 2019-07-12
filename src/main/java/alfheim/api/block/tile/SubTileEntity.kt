@@ -15,6 +15,7 @@ import net.minecraft.world.World
 import java.util.*
 
 // Used for anomalies - TileAnomaly
+@Suppress("UNCHECKED_CAST")
 abstract class SubTileEntity {
 	
 	val rand = Random()

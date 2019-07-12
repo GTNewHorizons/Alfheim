@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.*
 import vazkii.botania.api.internal.IManaBurst
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaTrigger
 import vazkii.botania.api.wand.*
 
@@ -67,13 +67,10 @@ class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, 
 		(world.getTileEntity(x, y, z) as TileAnimatedTorch).renderHUD(mc, res)
 	}
 	
-	override fun canProvidePower(): Boolean {
-		return true
-	}
+	override fun canProvidePower() = true
 	
-	override fun isProvidingStrongPower(world: IBlockAccess?, x: Int, y: Int, z: Int, side: Int): Int {
-		return isProvidingWeakPower(world!!, x, y, z, side)
-	}
+	override fun isProvidingStrongPower(world: IBlockAccess?, x: Int, y: Int, z: Int, side: Int) =
+		isProvidingWeakPower(world!!, x, y, z, side)
 	
 	override fun isProvidingWeakPower(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int): Int {
 		val tile = world.getTileEntity(x, y, z) as TileAnimatedTorch
@@ -81,28 +78,19 @@ class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, 
 		return if (TileAnimatedTorch.SIDES[tile.side].ordinal == side) 15 else 0
 	}
 	
-	override fun getRenderType(): Int {
-		return LibRenderIDs.idAniTorch
-	}
+	override fun getRenderType() = LibRenderIDs.idAniTorch
 	
-	override fun isOpaqueCube(): Boolean {
-		return false
-	}
+	override fun isOpaqueCube() = false
 	
-	override fun isNormalCube(): Boolean {
-		return false
-	}
+	override fun isNormalCube() = false
 	
 	override fun onBlockDestroyedByPlayer(world: World, x: Int, y: Int, z: Int, meta: Int) {
 		world.notifyBlocksOfNeighborChange(x, y, z, this)
 		super.onBlockDestroyedByPlayer(world, x, y, z, meta)
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.aniTorch
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) =
+		AlfheimLexiconData.aniTorch
 	
-	override fun createNewTileEntity(p_149915_1_: World, p_149915_2_: Int): TileEntity {
-		return TileAnimatedTorch()
-	}
+	override fun createNewTileEntity(p_149915_1_: World, p_149915_2_: Int) = TileAnimatedTorch()
 }

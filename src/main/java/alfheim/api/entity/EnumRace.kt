@@ -21,9 +21,8 @@ enum class EnumRace {
 		glColorA(ordinal.toDouble(), alpha)
 	}
 	
-	fun localize(): String {
-		return StatCollector.translateToLocal("race." + toString() + ".name")
-	}
+	fun localize() =
+		StatCollector.translateToLocal("race." + toString() + ".name")!!
 	
 	companion object {
 		
@@ -61,21 +60,18 @@ enum class EnumRace {
 			glColor1u(addAlpha(getRGBColor(id), (alpha * 255).toInt()))
 		}
 		
-		private fun addAlpha(color: Int, alpha: Int): Int {
-			return alpha and 0xFF shl 24 or (color and 0x00FFFFFF)
-		}
+		private fun addAlpha(color: Int, alpha: Int) =
+			alpha and 0xFF shl 24 or (color and 0x00FFFFFF)
 		
 		private fun glColor1u(color: Int) {
 			org.lwjgl.opengl.GL11.glColor4ub((color shr 16 and 0xFF).toByte(), (color shr 8 and 0xFF).toByte(), (color and 0xFF).toByte(), (color shr 24 and 0xFF).toByte())
 		}
 		
-		fun getByID(id: Double): EnumRace {
-			return if (0 > id || id > EnumRace.values().size) HUMAN else EnumRace.values()[MathHelper.floor_double(id)]
-		}
+		fun getByID(id: Double) =
+			if (0 > id || id > EnumRace.values().size) HUMAN else values()[MathHelper.floor_double(id)]
 		
-		fun unlocalize(name: String): String {
-			return StatCollector.translateToLocal("race.$name.reverse")
-		}
+		fun unlocalize(name: String) =
+			StatCollector.translateToLocal("race.$name.reverse")!!
 		
 		fun ensureExistance(player: EntityPlayer) {
 			if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.RACE) == null) registerRace(player)

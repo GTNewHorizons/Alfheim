@@ -6,7 +6,9 @@ import alfheim.api.ModInfo
 import alfheim.api.entity.EnumRace
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
@@ -30,12 +32,12 @@ class TheRodOfTheDebug: Item() {
 						PartySystem.getParty(player)!!.add(TargetingSystem.getTarget(player).target)*/
 					}
 					
-					val mop = ASJUtilities.getMouseOver(player, 16.0, true)
+					/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)
 					if (mop?.entityHit != null) {
 						player.ridingEntity = mop.entityHit
 						mop.entityHit.riddenByEntity = player
 						mop.entityHit.updateRiderPosition()
-					}
+					}*/
 					
 					//					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
 					

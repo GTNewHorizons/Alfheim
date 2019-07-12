@@ -12,9 +12,8 @@ class EntityUpdateEvent(val entity: Entity): Event() {
 		
 		/** Used in ASM  */
 		@JvmStatic
-		fun instantiate(e: Entity): EntityUpdateEvent {
-			return EntityUpdateEvent(e)
-		}
+		fun instantiate(e: Entity) =
+			EntityUpdateEvent(e)
 		
 		/** Used in ASM  */
 		@JvmStatic

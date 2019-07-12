@@ -44,6 +44,7 @@ class ClientProxy: CommonProxy() {
 	}
 	
 	override fun registerRenderThings() {
+		LibRenderIDs.idAniTorch = RenderingRegistry.getNextAvailableRenderId()
 		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId()
 		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId()
 		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId()

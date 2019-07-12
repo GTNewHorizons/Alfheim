@@ -108,6 +108,9 @@ class ASJUtilities {
 		 */
 		@JvmStatic
 		fun sendToDimensionWithoutPortal(entity: Entity, dimTo: Int, x: Double, y: Double, z: Double) {
+			entity.ridingEntity?.riddenByEntity = null
+			entity.ridingEntity = null
+			
 			if (dimTo == entity.dimension) {
 				if (entity is EntityLivingBase)
 					entity.setPositionAndUpdate(x, y, z)

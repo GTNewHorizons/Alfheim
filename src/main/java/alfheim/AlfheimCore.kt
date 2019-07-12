@@ -30,7 +30,7 @@ class AlfheimCore {
 	
 	@EventHandler
 	fun constructing(e: FMLConstructionEvent) {
-		Potion.potionTypes = Potion.potionTypes.copyOf(1024)
+		Potion.potionTypes = Potion.potionTypes.copyOf(AlfheimConfig.potionSlots)
 	}
 	
 	@EventHandler
@@ -127,9 +127,7 @@ class AlfheimCore {
 		}
 		
 		val alfheimTab = object: CreativeTabs("Alfheim") {
-			override fun getTabIconItem(): Item {
-				return Item.getItemFromBlock(AlfheimBlocks.alfheimPortal)
-			}
+			override fun getTabIconItem() = Item.getItemFromBlock(AlfheimBlocks.alfheimPortal)
 		}.setNoTitle().setBackgroundImageName("Alfheim.png")!!
 	}
 }

@@ -10,9 +10,8 @@ class TileUpdateEvent(val tile: TileEntity): Event() {
 		
 		/** Used in ASM  */
 		@JvmStatic
-		fun instantiate(te: TileEntity): TileUpdateEvent {
-			return TileUpdateEvent(te)
-		}
+		fun instantiate(te: TileEntity) =
+			TileUpdateEvent(te)
 		
 		/** Used in ASM  */
 		@JvmStatic

@@ -1,9 +1,9 @@
 package alfheim.common.crafting.recipe
 
-import alfheim.api.lib.LibOreDict.Companion.ARUNE
-import alfheim.api.lib.LibOreDict.Companion.ELVORIUM_INGOT
-import alfheim.api.lib.LibOreDict.Companion.INFUSED_DREAM_TWIG
-import alfheim.api.lib.LibOreDict.Companion.MAUFTRIUM_INGOT
+import alfheim.api.lib.LibOreDict.ARUNE
+import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
+import alfheim.api.lib.LibOreDict.INFUSED_DREAM_TWIG
+import alfheim.api.lib.LibOreDict.MAUFTRIUM_INGOT
 import alfheim.common.core.registry.AlfheimItems
 import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas.ManaInfusionCore
 import alfheim.common.core.registry.AlfheimItems.elvenResource

@@ -17,14 +17,12 @@ import java.util.*
 
 object AlfheimAPI {
 	
-	val ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)
-	val ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)
-	val REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 30)
+	val ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
+	val ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
+	val REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 30)!!
 	
 	val RACE: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0) {
-		override fun clampValue(d: Double): Double {
-			return d
-		}
+		override fun clampValue(d: Double) = d
 	}.setShouldWatch(true)
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
@@ -53,40 +51,31 @@ object AlfheimAPI {
 		return rec
 	}
 	
-	fun removeInfusionRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? {
-		return if (rec != null && manaInfuserRecipes.remove(rec)) rec else null
-	}
+	fun removeInfusionRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? =
+		if (rec != null && manaInfuserRecipes.remove(rec)) rec else null
 	
-	fun removeInfusionRecipe(result: ItemStack): RecipeManaInfuser? {
-		for (i in manaInfuserRecipes.indices)
-			if (ItemStack.areItemStacksEqual(manaInfuserRecipes[i].output, result))
-				return manaInfuserRecipes.removeAt(i)
-		return null
-	}
+	fun removeInfusionRecipe(result: ItemStack): RecipeManaInfuser? =
+		manaInfuserRecipes.indices
+			.firstOrNull { ItemStack.areItemStacksEqual(manaInfuserRecipes[it].output, result) }
+			?.let { manaInfuserRecipes.removeAt(it) }
+	
 	
 	/** Remove `output` from Alfheim trade portal  */
-	fun banRetrade(output: ItemStack) {
+	fun banRetrade(output: ItemStack) =
 		bannedRetrades.add(output)
-	}
 	
 	/** Check if `output` isn't banned to be obtained through Alfheim trade portal  */
-	fun isRetradeable(output: ItemStack): Boolean {
-		for (out in bannedRetrades) if (ItemStack.areItemStacksEqual(output, out)) return false
-		return true
-	}
+	fun isRetradeable(output: ItemStack) =
+		bannedRetrades.none { ItemStack.areItemStacksEqual(output, it) }
 	
 	/** Map a stack to it's pinkness. Also can override old values  */
-	fun addPink(pink: ItemStack, weight: Int): Int? {
-		return pinkness.put(pink, weight)
-	}
+	fun addPink(pink: ItemStack, weight: Int) =
+		pinkness.put(pink, weight)
 	
-	fun getPinkness(item: ItemStack): Int {
-		for (pink in pinkness.keys)
-			if (pink.item === item.item && pink.itemDamage == item.itemDamage) {
-				return pinkness[pink]!!
-			}
-		return 0
-	}
+	fun getPinkness(item: ItemStack) =
+		pinkness.keys
+			.firstOrNull { it.item === item.item && it.itemDamage == item.itemDamage }
+			?.let { pinkness[it]!! } ?: 0
 	
 	/**
 	 * Registers spell for some race by affinity
@@ -124,10 +113,8 @@ object AlfheimAPI {
 		return l
 	}
 	
-	fun getSpellInstance(name: String): SpellBase? {
-		for (spell in spells) if (spell.name == name) return spell
-		return null
-	}
+	fun getSpellInstance(name: String) =
+		spells.firstOrNull { it.name == name }
 	
 	fun getSpellByIDs(raceID: Int, spellID: Int): SpellBase? {
 		var i = 0
@@ -159,11 +146,9 @@ object AlfheimAPI {
 		
 	}
 	
-	fun getAnomaly(name: String): Class<out SubTileEntity> {
-		return anomalies[name]!!
-	}
+	fun getAnomaly(name: String): Class<out SubTileEntity> =
+		anomalies[name]!!
 	
-	fun getAnomalyInstance(name: String): SubTileEntity {
-		return anomalyInstances[name]!!
-	}
+	fun getAnomalyInstance(name: String) =
+		anomalyInstances[name]!!
 }
