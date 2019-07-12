@@ -86,7 +86,7 @@ class ModelEntityLolicorn: ModelBase() {
 		
 		horn = ModelRenderer(this, 0, 0)
 		horn.setRotationPoint(0.0f, 0.0f, 0.0f)
-		horn.addBox(-0.5f, 7.0f, -2.5f, 1, 4, 1, 0.0f)
+		horn.addBox(-0.5f, 7.0f, -2.5f, 1, 7, 1, 0.0f)
 		setRotateAngle(horn, -2.35f, 0.0f, 0.0f)
 		head.addChild(horn)
 		
@@ -168,11 +168,6 @@ class ModelEntityLolicorn: ModelBase() {
 	
 	override fun render(entity: Entity?, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity)
-		
-		head.showModel = !(Minecraft.getMinecraft()?.thePlayer?.ridingEntity === entity && Minecraft.getMinecraft()?.gameSettings?.thirdPersonView == 0)
-		body.showModel = head.showModel
-		rightarm.showModel = body.showModel
-		leftarm.showModel = body.showModel
 		
 		head.render(f5)
 		rightarm.render(f5)

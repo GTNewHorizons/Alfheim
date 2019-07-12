@@ -3,14 +3,16 @@ package alfheim.common.entity
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.entity.SharedMonsterAttributes
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
+import net.minecraft.init.*
 import net.minecraft.item.ItemStack
+import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
-import net.minecraft.util.MathHelper
+import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
 
@@ -25,6 +27,15 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		flySpeed = 0.95f
 		
 		setSize(1.4f, 1.6f)
+	}
+	
+	override fun attackEntityFrom(src: DamageSource, dmg: Float): Boolean {
+		if (src.entity is EntityLivingBase && (src.entity as EntityLivingBase).heldItem?.item === Items.slime_ball) {
+			addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 50, 4))
+			rider?.addPotionEffect(PotionEffect(Potion.confusion.id, 100, 0))
+		}
+		
+		return false
 	}
 	
 	override fun setHealth(hp: Float) = Unit // NO-OP
@@ -93,13 +104,24 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 			if (Vector3.entityDistancePlane(this, master) > 32.0) setDead()
 			else {
 				++unmountCounter
-				if (unmountCounter >= 600) setDead()
+				if (unmountCounter >= AlfheimConfig.lolicornLife) setDead()
 			}
 	}
 	
 	override fun moveEntityWithHeading(mS: Float, mF: Float) {
 		if (mF <= 0f) tugudukCounter = 0
 		super.moveEntityWithHeading(mS, mF)
+		
+		if (mF > 0f)
+			for (i in 1..8)
+				worldObj.spawnParticle("reddust",
+									   posX + Math.random() - 0.5,
+									   posY + Math.random() - 0.5,
+									   posZ + Math.random() - 0.5,
+									   if (Math.random() < 0.5) 0.0 else 1.0,
+									   if (Math.random() < 0.5) 0.0 else 1.0,
+									   if (Math.random() < 0.5) 0.0 else 1.0
+				)
 	}
 	
 	override fun isMovementBlocked() = rider != null && !rider!!.isJumping
@@ -159,9 +181,11 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		val requests = mutableSetOf<String>()
 		val timing = mutableMapOf<String, Int>()
 		
-		fun call(caller: String) {
-			requests.add(caller)
-			timing[caller] = 5
+		fun call(caller: EntityPlayer) {
+			if (caller.dimension != AlfheimConfig.dimensionIDAlfheim && AlfheimConfig.lolicornAlfheimOnly)
+				ASJUtilities.say(caller, "alfheimmisc.mount.unavailable").also { return }
+			requests.add(caller.commandSenderName)
+			timing[caller.commandSenderName] = 5
 		}
 		
 		fun tick() {
@@ -171,9 +195,9 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 				timing[cr] = timing[cr]!!-1
 				if (timing[cr]!! <= 0) {
 					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let {
-						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, 1000, false)
+						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfig.lolicornCost, false)
 						if (can) can = it.worldObj.spawnEntityInWorld(EntityLolicorn(it.worldObj).apply { owner = it.commandSenderName }.apply { setPosition(it.posX, it.posY, it.posZ) })
-						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, 1000, true)
+						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfig.lolicornCost, true)
 					}
 					
 					i.remove()

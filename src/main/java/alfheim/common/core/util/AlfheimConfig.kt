@@ -49,6 +49,9 @@ class AlfheimConfig: Configuration() {
 		var flugelBossBar			= true
 		var info					= true
 		var lightningsSpeed			= 20
+		var lolicornAlfheimOnly		= true
+		var lolicornCost			= 1000
+		var lolicornLife			= 600
 		var looniumOverseed			= false
 		var minimalGraphics			= false
 		var numericalMana			= true
@@ -127,6 +130,9 @@ class AlfheimConfig: Configuration() {
 			flugelBossBar			= loadProp(CATEGORY_GENERAL,	"flugelBossBar",				flugelBossBar,			false,	"Set this to false to disable displaying flugel's boss bar")
 			info					= loadProp(CATEGORY_GENERAL,	"info",							info,					false,	"Set this to false to disable loading info about addon")
 			lightningsSpeed			= loadProp(CATEGORY_GENERAL,	"lightningsSpeed",				lightningsSpeed,		false,	"How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
+			lolicornAlfheimOnly		= loadProp(CATEGORY_GENERAL,	"lolicornAlfheimOnly",			lolicornAlfheimOnly,	false,	"Set this to false to make lolicorn summonable in any dimension")
+			lolicornCost			= loadProp(CATEGORY_GENERAL,	"lolicornCost",					lolicornCost,			false,	"How much mana lolicorn consumes on summoning (not teleporting)")
+			lolicornLife			= loadProp(CATEGORY_GENERAL,	"lolicornLife",					lolicornLife,			false,	"How long lolicorn can stay unmounted")
 			looniumOverseed			= loadProp(CATEGORY_GENERAL,	"looniumOverseed",				looniumOverseed,		true,	"Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
 			minimalGraphics			= loadProp(CATEGORY_GENERAL,	"minimalGraphics",				minimalGraphics,		false,	"Set this to true to disable .obj models and shaders")
 			numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",				numericalMana,			false,	"Set this to false to disable numerical mana representation")

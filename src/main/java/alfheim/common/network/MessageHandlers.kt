@@ -109,7 +109,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 		val player = message.serverHandler.playerEntity
 		
 		when (values()[packet.action]) {
-			CORN   -> EntityLolicorn.call(player.commandSenderName)
+			CORN   -> EntityLolicorn.call(player)
 			
 			ATTACK -> KeyBindingHandler.atack(player)
 			

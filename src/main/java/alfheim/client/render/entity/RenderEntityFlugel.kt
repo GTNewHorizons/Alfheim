@@ -6,7 +6,6 @@ import net.minecraft.client.model.ModelBase
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderLiving
 import net.minecraft.entity.Entity
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.helper.ShaderHelper
 
@@ -16,9 +15,7 @@ class RenderEntityFlugel(model: ModelBase, shadowSize: Float): RenderLiving(mode
 		RenderPostShaders.registerShadedObject(so)
 	}
 	
-	public override fun getEntityTexture(par1Entity: Entity): ResourceLocation {
-		return LibResourceLocations.jibril
-	}
+	override fun getEntityTexture(par1Entity: Entity) = LibResourceLocations.jibril
 	
 	companion object {
 		

@@ -35,7 +35,7 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	
 	override fun isAIEnabled() = true
 	
-	override fun attackEntityFrom(src: DamageSource?, dmg: Float) = if (rider != null && src?.entity == rider) false else super.attackEntityFrom(src, dmg)
+	override fun attackEntityFrom(src: DamageSource, dmg: Float) = if (rider != null && src.entity === rider) false else super.attackEntityFrom(src, dmg)
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
