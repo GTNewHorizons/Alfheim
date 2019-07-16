@@ -9,7 +9,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class RecipeHelmRevealingAlfheim: IRecipe {
 	
-	override fun matches(var1: InventoryCrafting, var2: World): Boolean {
+	override fun matches(var1: InventoryCrafting, var2: World?): Boolean {
 		val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") ?: return false // NO TC loaded
 		
 		var foundGoggles = false
@@ -45,8 +45,8 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		val newHelm: ItemStack
 		
 		newHelm = when {
-			helmItem === AlfheimItems.elementalHelmet -> ItemStack(AlfheimItems.elementalHelmetRevealing)
-			helmItem === AlfheimItems.elvoriumHelmet -> ItemStack(AlfheimItems.elvoriumHelmetRevealing)
+			helmItem === AlfheimItems.elementalHelmet -> if (AlfheimItems.elementalHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elementalHelmetRevealing) else return null
+			helmItem === AlfheimItems.elvoriumHelmet -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
 			else -> return null
 		}
 		

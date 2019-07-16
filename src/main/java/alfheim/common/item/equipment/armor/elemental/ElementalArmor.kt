@@ -40,7 +40,7 @@ abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type,
 		val stack = player.inventory.armorInventory[3 - i] ?: return false
 		
 		when (i) {
-			0 -> return stack.item === AlfheimItems.elementalHelmet || stack.item === AlfheimItems.elementalHelmetRevealing
+			0 -> return stack.item === AlfheimItems.elementalHelmet || (AlfheimItems.elementalHelmetRevealingIsInitialized() && stack.item === AlfheimItems.elementalHelmetRevealing)
 			1 -> return stack.item === AlfheimItems.elementalChestplate
 			2 -> return stack.item === AlfheimItems.elementalLeggings
 			3 -> return stack.item === AlfheimItems.elementalBoots

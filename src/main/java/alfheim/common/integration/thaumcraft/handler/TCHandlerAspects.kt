@@ -30,6 +30,7 @@ import alfheim.common.core.registry.AlfheimItems.elementalBoots
 import alfheim.common.core.registry.AlfheimItems.elementalChestplate
 import alfheim.common.core.registry.AlfheimItems.elementalHelmet
 import alfheim.common.core.registry.AlfheimItems.elementalHelmetRevealing
+import alfheim.common.core.registry.AlfheimItems.elementalHelmetRevealingIsInitialized
 import alfheim.common.core.registry.AlfheimItems.elementalLeggings
 import alfheim.common.core.registry.AlfheimItems.elementiumHoe
 import alfheim.common.core.registry.AlfheimItems.elfFirePendant
@@ -39,6 +40,7 @@ import alfheim.common.core.registry.AlfheimItems.elvoriumBoots
 import alfheim.common.core.registry.AlfheimItems.elvoriumChestplate
 import alfheim.common.core.registry.AlfheimItems.elvoriumHelmet
 import alfheim.common.core.registry.AlfheimItems.elvoriumHelmetRevealing
+import alfheim.common.core.registry.AlfheimItems.elvoriumHelmetRevealingIsInitialized
 import alfheim.common.core.registry.AlfheimItems.elvoriumLeggings
 import alfheim.common.core.registry.AlfheimItems.excaliber
 import alfheim.common.core.registry.AlfheimItems.flugelDisc
@@ -118,11 +120,13 @@ object TCHandlerAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 13), AspectList().add(Aspect.getAspect("auram"), 3).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("terra"), 2).add(Aspect.getAspect("gelum"), 12))                                                                                            // Ice rune
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 14), AspectList().add(Aspect.getAspect("arbor"), 1).add(Aspect.getAspect("praecantatio"), 2))                                                                                            // Twig
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalHelmet), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8))
+		if (elementalHelmetRevealingIsInitialized())
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalHelmetRevealing), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8).add(Aspect.getAspect("sensus"), 4))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalChestplate), AspectList().add(Aspect.getAspect("metallum"), 24).add(Aspect.getAspect("praecantatio"), 18).add(Aspect.getAspect("tutamen"), 8).add(Aspect.getAspect("terra"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalLeggings), AspectList().add(Aspect.getAspect("metallum"), 21).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("tutamen"), 7).add(Aspect.getAspect("ignis"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalBoots), AspectList().add(Aspect.getAspect("metallum"), 12).add(Aspect.getAspect("praecantatio"), 10).add(Aspect.getAspect("tutamen"), 4).add(Aspect.getAspect("aer"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumHelmet), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
+		if (elvoriumHelmetRevealingIsInitialized())
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumHelmetRevealing), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumChestplate), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 56).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 24).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumLeggings), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 49).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 21).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))

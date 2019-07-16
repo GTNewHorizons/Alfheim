@@ -43,6 +43,7 @@ import alfheim.common.core.registry.AlfheimItems.elementalBoots
 import alfheim.common.core.registry.AlfheimItems.elementalChestplate
 import alfheim.common.core.registry.AlfheimItems.elementalHelmet
 import alfheim.common.core.registry.AlfheimItems.elementalHelmetRevealing
+import alfheim.common.core.registry.AlfheimItems.elementalHelmetRevealingIsInitialized
 import alfheim.common.core.registry.AlfheimItems.elementalLeggings
 import alfheim.common.core.registry.AlfheimItems.elementiumHoe
 import alfheim.common.core.registry.AlfheimItems.elfFirePendant
@@ -268,7 +269,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeEmentalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (Botania.thaumcraftLoaded)
+		if (elementalHelmetRevealingIsInitialized())
 		addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 						 "RTR", "DPD", " M ",
 						 'R', RUNE[0],

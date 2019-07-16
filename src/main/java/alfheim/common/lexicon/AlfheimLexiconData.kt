@@ -256,14 +256,14 @@ object AlfheimLexiconData {
 								 PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeElvoriumLeggings),
 								 PageCraftingRecipe("4", AlfheimRecipes.recipeElvoriumBoots)).icon = ItemStack(AlfheimItems.elvoriumHelmet)
-		elvenSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvoriumHelmetRevealing))
+		if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) elvenSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvoriumHelmetRevealing))
 		
 		elemSet.setLexiconPages(PageText("0"),
 								PageCraftingRecipe("1", AlfheimRecipes.recipeEmentalHelmet),
 								PageCraftingRecipe("2", AlfheimRecipes.recipeEmentalChestplate),
 								PageCraftingRecipe("3", AlfheimRecipes.recipeEmentalLeggings),
 								PageCraftingRecipe("4", AlfheimRecipes.recipeEmentalBoots)).icon = ItemStack(AlfheimItems.elementalHelmet)
-		elemSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elementalHelmetRevealing))
+		if (AlfheimItems.elementalHelmetRevealingIsInitialized()) elemSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elementalHelmetRevealing))
 		
 		advMana.setLexiconPages(PageText("0"), PageText("1"),
 								PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),

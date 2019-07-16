@@ -39,6 +39,7 @@ object AlfheimItems {
 	lateinit var elementalChestplate: Item
 	lateinit var elementalHelmet: Item
 	lateinit var elementalHelmetRevealing: Item
+	fun elementalHelmetRevealingIsInitialized() = ::elementalHelmetRevealing.isInitialized
 	lateinit var elementalLeggings: Item
 	lateinit var elementiumHoe: Item
 	lateinit var elfFirePendant: Item
@@ -48,6 +49,7 @@ object AlfheimItems {
 	lateinit var elvoriumChestplate: Item
 	lateinit var elvoriumHelmet: Item
 	lateinit var elvoriumHelmetRevealing: Item
+	fun elvoriumHelmetRevealingIsInitialized() = ::elvoriumHelmetRevealing.isInitialized
 	lateinit var elvoriumLeggings: Item
 	lateinit var excaliber: Item
 	lateinit var flugelDisc: Item
