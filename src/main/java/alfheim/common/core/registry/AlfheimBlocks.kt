@@ -2,6 +2,7 @@ package alfheim.common.core.registry
 
 import alexsocol.asjlib.ASJUtilities.Companion.getBlockName
 import alexsocol.asjlib.ASJUtilities.Companion.register
+import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
@@ -42,11 +43,19 @@ object AlfheimBlocks {
 	lateinit var tradePortal: Block
 	//lateinit var transferer: Block BACK
 	
+	lateinit var shrineLight: Block
+	lateinit var shrineRock: Block
+	lateinit var shrinePillar: Block
+	lateinit var shrineGlass: Block
+	lateinit var shrinePanel: Block
+	
 	fun init() {
 		construct()
 		reg()
 		regOreDict()
 	}
+	
+	fun Block.setHarvestLevelI(toolClass: String, level: Int) = also { it.setHarvestLevel(toolClass, level) }
 	
 	private fun construct() {
 		alfheimPortal = BlockAlfheimPortal()
@@ -71,6 +80,34 @@ object AlfheimBlocks {
 		redFlame = BlockRedFlame()
 		tradePortal = BlockTradePortal()
 		//transferer = new BlockTransferer(); BACK
+		
+		shrineRock = BlockModMeta(Material.rock, 16, "shrines")	.setBlockName("ShrineRock")
+																.setCreativeTab(AlfheimCore.alfheimTab)
+																.setHardness(10f)
+																.setResistance(10000f)
+																.setStepSound(soundTypeStone)
+																.setHarvestLevelI("pickaxe", 2)
+		
+		shrineLight = BlockModMeta(Material.glass, 4, "shrines").setBlockName("ShrineLight")
+																.setCreativeTab(AlfheimCore.alfheimTab)
+																.setLightLevel(1f)
+																.setLightOpacity(0)
+																.setHardness(1f)
+																.setResistance(6000f)
+																.setStepSound(soundTypeGlass)
+																.setHarvestLevelI("pickaxe", 1)
+		
+		shrinePillar = BlockShrinePillar()
+		shrineGlass = BlockShrineGlass()
+		shrinePanel = BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines").setBlockName("ShrinePanel")
+																.setCreativeTab(AlfheimCore.alfheimTab)
+																.setLightOpacity(0)
+																.setHardness(1f)
+																.setResistance(600f)
+																.setStepSound(soundTypeGlass)
+																.setHarvestLevelI("pickaxe", 1)
+		
+		
 	}
 	
 	private fun reg() {

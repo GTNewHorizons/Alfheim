@@ -44,11 +44,7 @@ class ClientProxy: CommonProxy() {
 	}
 	
 	override fun registerRenderThings() {
-		LibRenderIDs.idAniTorch = RenderingRegistry.getNextAvailableRenderId()
-		LibRenderIDs.idAnyavil = RenderingRegistry.getNextAvailableRenderId()
-		LibRenderIDs.idItemHolder = RenderingRegistry.getNextAvailableRenderId()
-		LibRenderIDs.idPylon = RenderingRegistry.getNextAvailableRenderId()
-		LibRenderIDs.idTransferer = RenderingRegistry.getNextAvailableRenderId()
+		LibRenderIDs.init()
 		
 		if (ConfigHandler.useShaders) {
 			LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag")
@@ -62,6 +58,7 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, RenderBlockItemHolder())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, RenderBlockAlfheimPylons())
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idShrinePanel, RenderBlockShrinePanel())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, RenderBlockTransferer())
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal::class.java, RenderTileAlfheimPortal())

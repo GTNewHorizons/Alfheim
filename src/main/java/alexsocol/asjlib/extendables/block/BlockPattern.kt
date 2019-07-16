@@ -1,4 +1,4 @@
-package alexsocol.asjlib.extendables
+package alexsocol.asjlib.extendables.block
 
 import alexsocol.asjlib.ASJUtilities
 import net.minecraft.block.BlockFalling

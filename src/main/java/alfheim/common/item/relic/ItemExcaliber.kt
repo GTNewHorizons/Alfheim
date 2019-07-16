@@ -1,6 +1,5 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import com.google.common.collect.*
@@ -147,7 +146,6 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.toFloat()
 							damage = mod ?: damage
 							// TODO add sharpness check
-							ASJUtilities.chatLog("$damage")
 							living.attackEntityFrom(if (player == null) DamageSource.magic else DamageSource.causePlayerDamage(player), damage)
 							entity.setDead()
 							break

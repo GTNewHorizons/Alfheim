@@ -14,6 +14,7 @@ import alfheim.common.core.registry.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -294,7 +295,7 @@ class EventHandler {
 	@SubscribeEvent
 	fun onEntityDeath(e: LivingDeathEvent) {
 		if (AlfheimCore.enableMMO) {
-			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer) {
+			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				e.entityLiving.clearActivePotions()
 				e.entityLiving.addPotionEffect(PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfig.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)

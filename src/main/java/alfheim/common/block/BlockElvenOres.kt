@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.item.ModItems
 import java.util.*
 import kotlin.math.*
@@ -25,13 +25,13 @@ class BlockElvenOres: Block(Material.rock), ILexiconable {
 	val rand = Random()
 	
 	init {
-		this.setBlockName("ElvenOre")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
-		this.setHardness(2f)
-		this.setHarvestLevel("pickaxe", 2)
-		this.setHarvestLevel("pickaxe", 1, 1)
-		this.setResistance(5.0f)
-		this.setStepSound(soundTypeStone)
+		setBlockName("ElvenOre")
+		setCreativeTab(AlfheimCore.alfheimTab)
+		setHardness(2f)
+		setHarvestLevel("pickaxe", 2)
+		setHarvestLevel("pickaxe", 1, 1)
+		setResistance(5.0f)
+		setStepSound(soundTypeStone)
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
@@ -40,31 +40,23 @@ class BlockElvenOres: Block(Material.rock), ILexiconable {
 	}
 	
 	override fun getSubBlocks(block: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
-		for (i in names.indices)
-			list.add(ItemStack(block, 1, i))
+		names.indices.mapTo(list) { ItemStack(block, 1, it) }
 	}
 	
-	override fun getIcon(side: Int, meta: Int): IIcon {
-		return textures[max(0, min(meta, textures.size - 1))]!!
-	}
+	override fun getIcon(side: Int, meta: Int) = textures[max(0, min(meta, textures.size - 1))]!!
 	
 	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int): Item {
 		if (meta < 0 || drops.size <= meta) return drops[0]!!
 		return if (drops[meta] == null) Item.getItemFromBlock(this) else drops[meta]!!
 	}
 	
-	override fun damageDropped(meta: Int): Int {
-		return metas[max(0, min(meta, metas.size - 1))]
-	}
+	override fun damageDropped(meta: Int) = metas[max(0, min(meta, metas.size - 1))]
 	
-	override fun getDamageValue(world: World, x: Int, y: Int, z: Int): Int {
-		// how can damageDropped even be here if it isn't related to dropping stuff? -_-
-		return world.getBlockMetadata(x, y, z)
-	}
+	// how can damageDropped even be here if it isn't related to dropping stuff? -_-
+	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	
-	override fun getExpDrop(world: IBlockAccess?, meta: Int, fortune: Int): Int {
-		return if (Item.getItemFromBlock(this) !== this.getItemDropped(meta, Random(), fortune)) rand.nextInt(5) + 3 else 0
-	}
+	override fun getExpDrop(world: IBlockAccess?, meta: Int, fortune: Int) =
+		if (Item.getItemFromBlock(this) !== getItemDropped(meta, Random(), fortune)) rand.nextInt(5) + 3 else 0
 	
 	override fun quantityDropped(meta: Int, fortune: Int, random: Random): Int {
 		return if (meta == 0 || meta == 2)
@@ -74,9 +66,8 @@ class BlockElvenOres: Block(Material.rock), ILexiconable {
 			1                            // everything else
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.ores
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) =
+		AlfheimLexiconData.ores
 	
 	companion object {
 		

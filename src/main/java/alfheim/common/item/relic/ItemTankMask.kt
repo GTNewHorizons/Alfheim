@@ -6,8 +6,7 @@ import alfheim.common.core.registry.*
 import alfheim.common.core.util.DamageSourceSpell
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
-import cpw.mods.fml.common.eventhandler.EventPriority
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
@@ -19,14 +18,12 @@ import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingDeathEvent
-import net.minecraftforge.event.entity.living.LivingHurtEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import vazkii.botania.common.item.relic.ItemRelicBauble
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.math.*
 
 class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 
@@ -35,9 +32,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		MinecraftForge.EVENT_BUS.register(this)
 	}
 	
-	override fun getBaubleType(stack: ItemStack): BaubleType {
-		return BaubleType.AMULET
-	}
+	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
 		if (!player.isSneaking) return stack
@@ -78,22 +73,22 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		if (entity.isPotionActive(AlfheimRegistry.possession)) entity.removePotionEffect(AlfheimRegistry.possession.id)
 	}
 	
-	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?): Boolean {
-		return false
-	}
+	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) = false
 	
-	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?): Boolean {
-		return getInt(stack, TAG_POSSESSION, 0) < 1800
-	}
+	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?) =
+		getInt(stack, TAG_POSSESSION, 0) < 1800
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onEntityDeath(e: LivingDeathEvent) {
+		if (AlfheimRegistry.leftFlameIsInitialized() && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))
+			return
+		
 		val player: EntityPlayer
 		if (e.entityLiving is EntityPlayer)
 			player = e.entityLiving as EntityPlayer
 		else
 			return
-
+		
 		if (e.source.damageType == DamageSourceSpell.possession.damageType) {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			if (baubles.getStackInSlot(0)?.item === AlfheimItems.mask) {
@@ -103,31 +98,25 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 				}
 				baubles.setInventorySlotContents(0, null)
 			}
-		} else {
-			if (player.inventory.hasItem(AlfheimItems.mask)) {
-				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
-				if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return
-				val baubles = PlayerHandler.getPlayerBaubles(player)
-				if (baubles.getStackInSlot(0) != null)
-					if ((baubles.getStackInSlot(0).item as IBauble).canUnequip(baubles.getStackInSlot(0), player)) {
-						if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
-					} else
-						return
-
-				baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
-				player.inventory.consumeInventoryItem(AlfheimItems.mask)
-				e.isCanceled = true
-                val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
-				e.entityLiving.health = h
-			}
+		} else if (canBeSaved(player)) {
+			val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
+			val baubles = PlayerHandler.getPlayerBaubles(player)
+			if (baubles.getStackInSlot(0) != null)
+				if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+			
+			baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
+			player.inventory.consumeInventoryItem(AlfheimItems.mask)
+			e.isCanceled = true
+            val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
+			e.entityLiving.health = h
 		}
 	}
-
+	
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, advTT: Boolean) {
 		super.addHiddenTooltip(stack, player, list, advTT)
 		val e = if (getInt(stack, TAG_COOLDOWN, 0) > 0) EnumChatFormatting.DARK_GRAY else if (getBoolean(stack, TAG_ACTIVATED, false)) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED
 		list.add("")
-		list.add(e.toString() + StatCollector.translateToLocal(unlocalizedName + '.'.toString() + (if (getBoolean(stack, TAG_ACTIVATED, false)) "" else "in") + "active"))
+		list.add("$e${StatCollector.translateToLocal("$unlocalizedName.${if (getBoolean(stack, TAG_ACTIVATED, false)) "" else "in"}active")}")
 	}
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, e: RenderPlayerEvent, type: IBaubleRender.RenderType) {
@@ -150,15 +139,28 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		glPopMatrix()
 	}
 	
-	override fun usesMana(stack: ItemStack): Boolean {
-		return getInt(stack, TAG_COOLDOWN, 0) > 0
-	}
+	override fun usesMana(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0) > 0
 	
 	companion object {
-		
 		const val TAG_POSSESSION = "possession"
 		const val TAG_ACTIVATED = "activated"
 		const val TAG_COOLDOWN = "cooldown"
 		const val MAX_COOLDOWN = 12000
+		
+		fun canBeSaved(player: EntityPlayer): Boolean {
+			if (player.inventory.hasItem(AlfheimItems.mask)) {
+				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
+				if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return false
+				
+				val baubles = PlayerHandler.getPlayerBaubles(player)
+				if (baubles.getStackInSlot(0) != null)
+					if (!(baubles.getStackInSlot(0).item as IBauble).canUnequip(baubles.getStackInSlot(0), player))
+						return false
+				
+				return true
+			}
+			
+			return false
+		}
 	}
 }
