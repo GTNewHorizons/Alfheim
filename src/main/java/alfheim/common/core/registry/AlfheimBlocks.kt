@@ -69,6 +69,7 @@ object AlfheimBlocks {
 	lateinit var shrinePanel: Block
 	lateinit var shrinePillar: Block
 	lateinit var shrineRock: Block
+	lateinit var waterSlab: Block
 	
 	fun init() {
 		construct()
@@ -209,6 +210,8 @@ object AlfheimBlocks {
 																													.setHardness(2F)
 																													.setResistance(5F)
 																													.setStepSound(soundTypeWood)
+		
+		waterSlab = BlockWaterSlab()
 	}
 	
 	private fun reg() {
