@@ -6,9 +6,9 @@ import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 import java.util.*
+import kotlin.math.*
 
 class RenderEntityFenrirStorm: Render() {
 	
@@ -18,9 +18,7 @@ class RenderEntityFenrirStorm: Render() {
 		shadowSize = 0.0f
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation? {
-		return null
-	}
+	override fun getEntityTexture(entity: Entity) = null
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTick: Float) {
 		val e = entity as EntitySpellFenrirStorm
@@ -28,16 +26,16 @@ class RenderEntityFenrirStorm: Render() {
 		glPushMatrix()
 		glTranslated(x, y, z)
 		
-		/*if (true) {
-			OrientedBB area = new OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8, 0.5, 0.5, 8));
-			area.rotateOX(e.rotationPitch);
-			area.rotateOY(-e.rotationYaw);
-			Vector3 v = new Vector3(e.getLookVec()).multiply(8.5);
-			area.translate(v.x, v.y, v.z);
-			area.draw(0);
-		}*/
+		/*try {
+			val area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8.0, 0.5, 0.5, 8.0))
+			area.rotateOX(e.rotationPitch.toDouble())
+			area.rotateOY(-e.rotationYaw.toDouble())
+			val v = Vector3(ASJUtilities.getLookVec(e)).mul(8.5)
+			area.translate(v.x, v.y, v.z)
+			area.draw(0)
+		} catch (ignore: Throwable) {}*/
 		
-		val parts = Math.max(1, Math.min(e.ticksExisted * 2, 16))
+		val parts = max(1, min(e.ticksExisted * 2, 16))
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
@@ -82,14 +80,8 @@ class RenderEntityFenrirStorm: Render() {
 	}
 	
 	private inner class Fork(s: Vector3, d: Vector3, p: Int) {
-		val parts: Int
-		val start: Vector3
-		val dir: Vector3
-		
-		init {
-			start = s.copy()
-			dir = d.copy()
-			parts = Math.max(p, 1)
-		}
+		val parts = max(p, 1)
+		val start = s.copy()
+		val dir = d.copy()
 	}
 }

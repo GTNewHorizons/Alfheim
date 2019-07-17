@@ -2,7 +2,7 @@ package alfheim.common.core.registry
 
 import alexsocol.asjlib.ASJUtilities.Companion.getBlockName
 import alexsocol.asjlib.ASJUtilities.Companion.register
-import alexsocol.asjlib.extendables.block.BlockModMeta
+import alexsocol.asjlib.extendables.block.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
@@ -16,6 +16,10 @@ import net.minecraft.block.Block.*
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary.registerOre
+import vazkii.botania.client.lib.LibResources
+import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.block.decor.slabs.BlockModSlab
+import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.item.block.ItemBlockWithMetadataAndName
 
 object AlfheimBlocks {
@@ -43,11 +47,28 @@ object AlfheimBlocks {
 	lateinit var tradePortal: Block
 	//lateinit var transferer: Block BACK
 	
+	lateinit var dreamwoodFence: Block
+	lateinit var dreamwoodFenceGate: Block
+	lateinit var dreamwoodBarkFence: Block
+	lateinit var dreamwoodBarkFenceGate: Block
+	lateinit var elvenSandstone: Block
+	lateinit var elvenSandstoneStairs: Block
+	lateinit var elvenSandstoneSlab: Block
+	lateinit var elvenSandstoneSlabFull: Block
+	lateinit var livingcobbleStairs: Block
+	lateinit var livingcobbleSlab: Block
+	lateinit var livingcobbleSlabFull: Block
+	lateinit var livingcobbleWall: Block
+	lateinit var livingrockBrickWall: Block
+	lateinit var livingwoodFence: Block
+	lateinit var livingwoodFenceGate: Block
+	lateinit var livingwoodBarkFence: Block
+	lateinit var livingwoodBarkFenceGate: Block
 	lateinit var shrineLight: Block
-	lateinit var shrineRock: Block
-	lateinit var shrinePillar: Block
 	lateinit var shrineGlass: Block
 	lateinit var shrinePanel: Block
+	lateinit var shrinePillar: Block
+	lateinit var shrineRock: Block
 	
 	fun init() {
 		construct()
@@ -100,14 +121,94 @@ object AlfheimBlocks {
 		shrinePillar = BlockShrinePillar()
 		shrineGlass = BlockShrineGlass()
 		shrinePanel = BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines").setBlockName("ShrinePanel")
+																				.setCreativeTab(AlfheimCore.alfheimTab)
+																				.setLightOpacity(0)
+																				.setHardness(1f)
+																				.setResistance(600f)
+																				.setStepSound(soundTypeGlass)
+																				.setHarvestLevelI("pickaxe", 1)
+		
+		elvenSandstone = BlockElvenSandstone()
+		
+		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0).setBlockName("ElvenSandStoneStairs")
 																.setCreativeTab(AlfheimCore.alfheimTab)
-																.setLightOpacity(0)
-																.setHardness(1f)
-																.setResistance(600f)
-																.setStepSound(soundTypeGlass)
-																.setHarvestLevelI("pickaxe", 1)
+		
+		elvenSandstoneSlab = BlockElvenSandstoneSlab(false)
+		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true)
+		elvenSandstoneSlab.setCreativeTab(AlfheimCore.alfheimTab)
+		(elvenSandstoneSlab as BlockModSlab).register()
+		(elvenSandstoneSlabFull as BlockModSlab).register()
+		
+		livingcobbleStairs = BlockModStairs(livingcobble, 0).setBlockName("LivingCobbleStairs")
+															.setCreativeTab(AlfheimCore.alfheimTab)
+		
+		livingcobbleSlab = BlockLivingСobbleSlab(false)
+		livingcobbleSlabFull = BlockLivingСobbleSlab(true)
+		livingcobbleSlab.setCreativeTab(AlfheimCore.alfheimTab)
+		(livingcobbleSlab as BlockModSlab).register()
+		(livingcobbleSlabFull as BlockModSlab).register()
+		
+		livingcobbleWall = BlockModWall(livingcobble, 0).setCreativeTab(AlfheimCore.alfheimTab)
+														.setHardness(5f)
+														.setResistance(8000f)
+														.setStepSound(soundTypeStone)
+														.setHarvestLevelI("pickaxe", 2)
+		
+		livingrockBrickWall = BlockModWall(ModBlocks.livingrock, 1).setCreativeTab(AlfheimCore.alfheimTab)
+																	.setHardness(5f)
+																	.setResistance(8000f)
+																	.setStepSound(soundTypeStone)
+																	.setHarvestLevelI("pickaxe", 2)
 		
 		
+		
+		livingwoodBarkFenceGate = BlockModFenceGate(ModBlocks.livingwood, 0)	.setBlockName("LivingwoodBarkFenceGate")
+																				.setCreativeTab(AlfheimCore.alfheimTab)
+																				.setHardness(2F)
+																				.setResistance(5F)
+																				.setStepSound(soundTypeWood)
+		
+		livingwoodBarkFence = BlockModFence(LibResources.PREFIX_MOD + "livingwood0", Material.wood, livingwoodBarkFenceGate)	.setBlockName("LivingwoodBarkFence")
+																																.setCreativeTab(AlfheimCore.alfheimTab)
+																																.setHardness(2F)
+																																.setResistance(5F)
+																																.setStepSound(soundTypeWood)
+		
+		dreamwoodBarkFenceGate = BlockModFenceGate(ModBlocks.dreamwood, 0)	.setBlockName("DreamwoodBarkFenceGate")
+																			.setCreativeTab(AlfheimCore.alfheimTab)
+																			.setHardness(2F)
+																			.setResistance(5F)
+																			.setStepSound(soundTypeWood)
+		
+		dreamwoodBarkFence = BlockModFence(LibResources.PREFIX_MOD + "dreamwood0", Material.wood, dreamwoodBarkFenceGate)	.setBlockName("DreamwoodBarkFence")
+																															.setCreativeTab(AlfheimCore.alfheimTab)
+																															.setHardness(2F)
+																															.setResistance(5F)
+																															.setStepSound(soundTypeWood)
+		
+		livingwoodFenceGate = BlockModFenceGate(ModBlocks.livingwood, 1)	.setBlockName("LivingwoodFenceGate")
+																			.setCreativeTab(AlfheimCore.alfheimTab)
+																			.setHardness(2F)
+																			.setResistance(5F)
+																			.setStepSound(soundTypeWood)
+		
+		livingwoodFence = BlockModFence(LibResources.PREFIX_MOD + "livingwood1", Material.wood, livingwoodFenceGate)	.setBlockName("LivingwoodFence")
+																														.setCreativeTab(AlfheimCore.alfheimTab)
+																														.setHardness(2F)
+																														.setResistance(5F)
+																														.setStepSound(soundTypeWood)
+		
+		dreamwoodFenceGate = BlockModFenceGate(ModBlocks.dreamwood, 1)	.setBlockName("DreamwoodFenceGate")
+																		.setCreativeTab(AlfheimCore.alfheimTab)
+																		.setHardness(2F)
+																		.setResistance(5F)
+																		.setStepSound(soundTypeWood)
+		
+		dreamwoodFence = BlockModFence(LibResources.PREFIX_MOD + "dreamwood1", Material.wood, dreamwoodFenceGate)	.setBlockName("DreamwoodFence")
+																													.setCreativeTab(AlfheimCore.alfheimTab)
+																													.setHardness(2F)
+																													.setResistance(5F)
+																													.setStepSound(soundTypeWood)
 	}
 	
 	private fun reg() {
@@ -133,6 +234,15 @@ object AlfheimBlocks {
 		registerBlock(anomaly, ItemBlockAnomaly::class.java, getBlockName(anomaly))
 		register(poisonIce)
 		register(redFlame)
+		
+		register(livingwoodBarkFence)
+		register(livingwoodFence)
+		register(dreamwoodBarkFence)
+		register(dreamwoodFence)
+		register(livingwoodBarkFenceGate)
+		register(livingwoodFenceGate)
+		register(dreamwoodBarkFenceGate)
+		register(dreamwoodFenceGate)
 	}
 	
 	private fun regOreDict() {

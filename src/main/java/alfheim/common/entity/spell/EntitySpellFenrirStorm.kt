@@ -21,7 +21,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		get() = false
 	
 	init {
-		setSize(0.1f, 0.1f)
+		setSize(16f, 16f)
 		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8.0, 0.5, 0.5, 8.0))
 		renderDistanceWeight = 4.0
 	}
@@ -32,8 +32,8 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		setPositionAndRotation(caster.posX + l.x, caster.posY + caster.eyeHeight.toDouble() + l.y, caster.posZ + l.z, caster.rotationYaw, caster.rotationPitch)
 		
 		area!!.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
-		area.rotateOX(caster.rotationPitch.toDouble())
-		area.rotateOY((-caster.rotationYaw).toDouble())
+		area.rotateOX(-caster.rotationPitch.toDouble())
+		area.rotateOY((caster.rotationYaw).toDouble())
 		
 		val v = Vector3(caster.lookVec).mul(8.5)
 		area.translate(v.x, v.y, v.z)
@@ -44,7 +44,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 			setDead()
 			return
 		}
-		if (this.isDead || !ASJUtilities.isServer) return
+		if (isDead || !ASJUtilities.isServer) return
 		
 		if (ticksExisted == 4) {
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
@@ -52,9 +52,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		}
 	}
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
 	public override fun entityInit() {}
 	

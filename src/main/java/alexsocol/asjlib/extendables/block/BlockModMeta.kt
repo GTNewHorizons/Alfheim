@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
+import net.minecraft.world.World
 import kotlin.math.*
 
 open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val folder: String? = null): Block(mat) {
@@ -33,4 +34,8 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = texture[max(0, min(meta, texture.size - 1))]
+	
+	override fun damageDropped(meta: Int) = meta
+	
+	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 }
