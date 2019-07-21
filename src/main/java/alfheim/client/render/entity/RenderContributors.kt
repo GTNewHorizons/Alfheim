@@ -1,5 +1,6 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.*
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
 import alfheim.api.ModInfo
@@ -20,7 +21,9 @@ import org.lwjgl.opengl.GL13.GL_TEXTURE0
 import org.lwjgl.opengl.GL20.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.client.core.helper.ShaderHelper
+import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
+import java.awt.Color
 import kotlin.math.sin
 
 object RenderContributors {
@@ -235,12 +238,15 @@ object RenderContributors {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDisable(GL_CULL_FACE)
+			glDisable(GL_LIGHTING)
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 			glShadeModel(GL_SMOOTH)
 			
 			glTranslated(0.0, if (player === Minecraft.getMinecraft().thePlayer) 1.25 else 0.25, 0.0)
 			glRotated(Minecraft.getMinecraft().theWorld.totalWorldTime / 2.0 + Minecraft.getMinecraft().timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScaled(2.0, 2.0, 2.0)
 			
+			ASJUtilities.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.aura)
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()
@@ -249,8 +255,10 @@ object RenderContributors {
 			tes.addVertexWithUV(1.0, 0.0, 1.0, 1.0, 1.0)
 			tes.addVertexWithUV(1.0, 0.0, -1.0, 1.0, 0.0)
 			tes.draw()
+			glColor4f(1f, 1f, 1f, 1f)
 			
 			glShadeModel(GL_FLAT)
+			glEnable(GL_LIGHTING)
 			glEnable(GL_CULL_FACE)
 			glDisable(GL_BLEND)
 			glPopMatrix()
