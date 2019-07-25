@@ -129,11 +129,13 @@ class EventHandlerClient {
 		AstrolabePreviewHandler.onWorldRenderLast(e)
 		if (AlfheimCore.enableMMO) renderMMO()
 		
-		//		glPushMatrix();
-		//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer, e.partialTicks);
-		//		glTranslated(0, 4, 0);
-		//		// render
-		//		glPopMatrix();
+//		glPushMatrix()
+//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
+//		glTranslatef(0.5f, 5.5f, 0.5f)
+//		glRotatef(180f, 1f, 0f, 0f)
+//		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.male[8])
+//		ModelBipedNew().render(0.0625f)
+//		glPopMatrix()
 	}
 	
 	private fun renderMMO() {

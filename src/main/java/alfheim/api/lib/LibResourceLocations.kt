@@ -63,31 +63,86 @@ object LibResourceLocations {
 	val yordinPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png")
 	val yordinPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png")
 	
-	val wings = arrayOf(null, ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png"))
+	val wings = arrayOf(
+		null,
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SYLPH_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/CAITSITH_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/POOKA_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/GNOME_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/LEPRECHAUN_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SPRIGGAN_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/UNDINE_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
+	)
 	
-	val icons = arrayOf(ResourceLocation(ModInfo.MODID, "textures/misc/icons/HUMAN.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/SALAMANDER.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/SYLPH.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/CAITSITH.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/POOKA.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/GNOME.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/LEPRECHAUN.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/SPRIGGAN.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/UNDINE.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/IMP.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/ALV.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/MOB.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/NPC.png"), ResourceLocation(ModInfo.MODID, "textures/misc/icons/BOSS.png"))
+	val icons = arrayOf(
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/HUMAN.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/SALAMANDER.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/SYLPH.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/CAITSITH.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/POOKA.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/GNOME.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/LEPRECHAUN.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/SPRIGGAN.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/UNDINE.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/IMP.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/ALV.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/MOB.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/NPC.png"),
+		ResourceLocation(ModInfo.MODID, "textures/misc/icons/BOSS.png")
+	)
 	
-	val affinities = arrayOf(ResourceLocation("Omg dat's weird"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SALAMANDER.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SYLPH.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/CAITSITH.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/POOKA.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/GNOME.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/LEPRECHAUN.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SPRIGGAN.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/UNDINE.png"), ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/IMP.png"))
+	val affinities = arrayOf(
+		ResourceLocation("Omg dat's weird"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SALAMANDER.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SYLPH.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/CAITSITH.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/POOKA.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/GNOME.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/LEPRECHAUN.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/SPRIGGAN.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/UNDINE.png"),
+		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/IMP.png")
+	)
 	
 	const val MOB = 11
 	const val NPC = 12
 	const val BOSS = 13
 	
-	val male = arrayOf(ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Salamander.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Sylph.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/CaitSith.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Pooka.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Gnome.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Leprechaun.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Spriggan.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Undine.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Imp.png"))
+	val male = arrayOf(
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Salamander.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Sylph.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/CaitSith.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Pooka.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Gnome.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Leprechaun.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Spriggan.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Undine.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Imp.png")
+	)
 	
-	val female = arrayOf(ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Salamander.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Sylph.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/CaitSith.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Pooka.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Gnome.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Leprechaun.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Spriggan.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Undine.png"), ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Imp.png"))
+	val female = arrayOf(
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Salamander.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Sylph.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/CaitSith.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Pooka.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Gnome.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Leprechaun.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Spriggan.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Undine.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Imp.png")
+	)
 	
 	private val spells = HashMap<String, ResourceLocation>()
 	
 	val inventory = ResourceLocation("textures/gui/container/inventory.png")
 	val widgets = ResourceLocation("textures/gui/widgets.png")
 	
-	fun add(name: String): ResourceLocation? {
-		return spells.put(name, ResourceLocation(ModInfo.MODID, "textures/gui/spells/$name.png"))
-	}
+	fun add(name: String) =
+		spells.put(name, ResourceLocation(ModInfo.MODID, "textures/gui/spells/$name.png"))
 	
-	fun spell(name: String): ResourceLocation {
-		val r = spells[name]
-		return r ?: affinities[0]
-	}
+	fun spell(name: String) =
+		spells[name] ?: affinities[0]
 }

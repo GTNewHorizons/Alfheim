@@ -26,11 +26,11 @@ open class ModelBipedNew: ModelBase() {
 		isChild = false
 		
 		head = ModelRenderer(this, 0, 0)
-		head.addBox(-4f, -8f, -4f, 8, 8, 8)
+		head.addBox(-4f, -8.001f, -4f, 8, 8, 8)
 		head.setRotationPoint(0f, 0f, 0f)
 		
 		hair = ModelRenderer(this, 32, 0)
-		hair.addBox(-4f, -8f, -4f, 8, 8, 8, 0.5f)
+		hair.addBox(-4f, -8.001f, -4f, 8, 8, 8, 0.5f)
 		head.addChild(hair)
 		
 		body = ModelRenderer(this, 16, 16)
@@ -42,35 +42,35 @@ open class ModelBipedNew: ModelBase() {
 		body.addChild(chest)
 		
 		rightarm = ModelRenderer(this, 40, 16)
-		rightarm.addBox(-3f, -2f, -2f, 4, 12, 4)
+		rightarm.addBox(-3.001f, -2f, -2f, 4, 12, 4)
 		rightarm.setRotationPoint(-5f, 2f, 0f)
 		
 		rightglove = ModelRenderer(this, 40, 32)
-		rightglove.addBox(-3f, -2f, -2f, 4, 12, 4, 0.5f)
+		rightglove.addBox(-3.001f, -2f, -2f, 4, 12, 4, 0.5f)
 		rightarm.addChild(rightglove)
 		
 		leftarm = ModelRenderer(this, 32, 48)
-		leftarm.addBox(-1f, -2f, -2f, 4, 12, 4)
+		leftarm.addBox(-1.001f, -2f, -2f, 4, 12, 4)
 		leftarm.setRotationPoint(5f, 2f, 0f)
 		
 		leftglove = ModelRenderer(this, 48, 48)
-		leftglove.addBox(-1f, -2f, -2f, 4, 12, 4, 0.5f)
+		leftglove.addBox(-1.001f, -2f, -2f, 4, 12, 4, 0.5f)
 		leftarm.addChild(leftglove)
 		
 		rightleg = ModelRenderer(this, 0, 16)
-		rightleg.addBox(-2f, 0f, -2f, 4, 12, 4)
+		rightleg.addBox(-2f, 0.001f, -2f, 4, 12, 4)
 		rightleg.setRotationPoint(-2f, 12f, 0f)
 		
 		rightboot = ModelRenderer(this, 0, 32)
-		rightboot.addBox(-2f, 0f, -2f, 4, 12, 4, 0.5f)
+		rightboot.addBox(-2f, 0.001f, -2f, 4, 12, 4, 0.5f)
 		rightleg.addChild(rightboot)
 		
 		leftleg = ModelRenderer(this, 16, 48)
-		leftleg.addBox(-2f, 0f, -2f, 4, 12, 4)
+		leftleg.addBox(-2f, 0.001f, -2f, 4, 12, 4)
 		leftleg.setRotationPoint(2f, 12f, 0f)
 		
 		leftboot = ModelRenderer(this, 0, 48)
-		leftboot.addBox(-2f, 0f, -2f, 4, 12, 4, 0.5f)
+		leftboot.addBox(-2f, 0.001f, -2f, 4, 12, 4, 0.5f)
 		leftleg.addChild(leftboot)
 	}
 	
@@ -88,12 +88,14 @@ open class ModelBipedNew: ModelBase() {
 	}
 	
 	fun render(size: Float) {
+		glDisable(GL_CULL_FACE)
 		head.render(size)
 		body.render(size)
 		rightarm.render(size)
 		leftarm.render(size)
 		rightleg.render(size)
 		leftleg.render(size)
+		glEnable(GL_CULL_FACE)
 	}
 	
 	override fun setRotationAngles(limbSwing: Float, limbAmpl: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
