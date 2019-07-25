@@ -103,14 +103,14 @@ object AlfheimBlocks {
 		tradePortal = BlockTradePortal()
 		//transferer = new BlockTransferer(); BACK
 		
-		shrineRock = BlockModMeta(Material.rock, 16, "shrines")	.setBlockName("ShrineRock")
+		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "shrines")	.setBlockName("ShrineRock")
 																.setCreativeTab(AlfheimCore.alfheimTab)
 																.setHardness(10f)
 																.setResistance(10000f)
 																.setStepSound(soundTypeStone)
 																.setHarvestLevelI("pickaxe", 2)
 		
-		shrineLight = BlockModMeta(Material.glass, 4, "shrines").setBlockName("ShrineLight")
+		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "shrines").setBlockName("ShrineLight")
 																.setCreativeTab(AlfheimCore.alfheimTab)
 																.setLightLevel(1f)
 																.setLightOpacity(0)

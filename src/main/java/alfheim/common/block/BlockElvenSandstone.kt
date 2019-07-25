@@ -10,7 +10,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 
-class BlockElvenSandstone: BlockModMeta(Material.rock, 5) {
+class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID) {
 	
 	lateinit var sides: Array<IIcon>
 	lateinit var top: IIcon

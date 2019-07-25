@@ -4,7 +4,7 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.world.World
 
-abstract class BlockModContainerMeta(mat: Material, subtypes: Int): BlockModMeta(mat, subtypes), ITileEntityProvider {
+abstract class BlockModContainerMeta(mat: Material, subtypes: Int, modid: String): BlockModMeta(mat, subtypes, modid), ITileEntityProvider {
 	
 	init {
 		isBlockContainer = true

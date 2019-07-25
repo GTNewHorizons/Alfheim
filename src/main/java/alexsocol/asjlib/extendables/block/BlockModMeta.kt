@@ -1,7 +1,6 @@
 package alexsocol.asjlib.extendables.block
 
 import alexsocol.asjlib.extendables.ItemBlockMetaName
-import alfheim.api.ModInfo
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -12,7 +11,7 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import kotlin.math.*
 
-open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val folder: String? = null): Block(mat) {
+open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val folder: String? = null): Block(mat) {
 	
 	lateinit var name: String
 	lateinit var texture: Array<IIcon>
@@ -25,7 +24,7 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		texture = Array(subtypes) {
-			reg.registerIcon("${ModInfo.MODID}:${if (folder != null) "$folder/" else ""}$name$it")
+			reg.registerIcon("$modid:${if (folder != null) "$folder/" else ""}$name$it")
 		}
 	}
 	
