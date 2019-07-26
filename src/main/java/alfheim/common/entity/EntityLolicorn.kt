@@ -7,9 +7,11 @@ import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
+import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
@@ -22,12 +24,29 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	var tugudukCounter = 0
 	var unmountCounter = 0
 	
+	var owner: String
+		get() = dataWatcher.getWatchableObjectString(15)
+		set(owner) = dataWatcher.updateObject(15, owner)
+	
 	init {
 		stepHeight = 1.5f
 		flySpeed = 0.95f
 		
 		setSize(1.4f, 1.6f)
+		
+		navigator.avoidsWater = true
+		tasks.addTask(0, EntityAISwimming(this))
+		tasks.addTask(1, EntityAIWander(this, 1.0))
+		tasks.addTask(2, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
+		tasks.addTask(3, EntityAILookIdle(this))
 	}
+	
+	override fun entityInit() {
+		super.entityInit()
+		dataWatcher.addObject(15, "")
+	}
+	
+	override fun isAIEnabled() = true
 	
 	override fun attackEntityFrom(src: DamageSource, dmg: Float): Boolean {
 		if (src.entity is EntityLivingBase && (src.entity as EntityLivingBase).heldItem?.item === Items.slime_ball) {
@@ -58,14 +77,19 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	}
 	
 	override fun interact(player: EntityPlayer?): Boolean {
-		val sup = super.interact(player)
-		if (!worldObj.isRemote && !sup) playSound(getAngrySoundName(), soundVolume, soundPitch)
-		return sup
-	}
-	
-	override fun entityInit() {
-		super.entityInit()
-		dataWatcher.addObject(16, 0)
+		var sup = false
+		try {
+			if (player == null) return sup
+			if (owner.isNotEmpty() && player.commandSenderName != owner) {
+				ASJUtilities.say(player, "Owned by $owner")
+				return sup
+			}
+			
+			sup = super.interact(player)
+			return sup
+		} finally {
+			if (!worldObj.isRemote && !sup) playSound(getAngrySoundName(), soundVolume, soundPitch)
+		}
 	}
 	
 	override fun applyEntityAttributes() {
@@ -81,7 +105,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		
 		super.onLivingUpdate()
 		
-		if (rider == null && posY < -1000) setDead()
+		if (rider == null && posY < -256) setDead()
 	}
 	
 	override fun onUpdate() {
@@ -126,6 +150,10 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	
 	override fun isMovementBlocked() = rider != null && !rider!!.isJumping
 	
+	override fun playLivingSound() {
+		if (rng.nextInt(8) == 1) super.playLivingSound()
+	}
+	
 	override fun getLivingSound() = "mob.horse.idle"
 	
 	private fun getAngrySoundName() = "mob.horse.angry"
@@ -166,6 +194,9 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	override fun mount(player: EntityPlayer) {
 		super.mount(player)
 		unmountCounter = 0
+		
+		owner = player.commandSenderName
+		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim:Lolicorn.desc", owner)
 	}
 	
 	var look = Vector3()
@@ -175,6 +206,16 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 			look.set(lookVec).mul(1.0, 0.0, 1.0).normalize().mul(-0.25)
 			riddenByEntity.setPosition(posX + look.x, posY + mountedYOffset + riddenByEntity.getYOffset(), posZ + look.z)
 		}
+	}
+	
+	override fun writeEntityToNBT(nbt: NBTTagCompound) {
+		super.writeEntityToNBT(nbt)
+		nbt.setString("Owner", owner)
+	}
+	
+	override fun readEntityFromNBT(nbt: NBTTagCompound) {
+		super.readEntityFromNBT(nbt)
+		owner = nbt.getString("Owner")
 	}
 	
 	companion object {

@@ -37,7 +37,7 @@ class TheRodOfTheDebug: Item() {
 						mop.entityHit.updateRiderPosition()
 					}*/
 					
-					//					for (Object o : world.loadedEntityList) if (o instanceof Entity && !(o instanceof EntityPlayer)) ((Entity) o).setDead();
+					// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
 					
 					//					int r = 12;
 					//					for (int x = -r; x < r; x++) {

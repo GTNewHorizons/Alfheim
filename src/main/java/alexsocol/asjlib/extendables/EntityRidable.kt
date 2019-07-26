@@ -1,10 +1,7 @@
 package alexsocol.asjlib.extendables
 
-import alexsocol.asjlib.ASJUtilities
 import net.minecraft.entity.*
-import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.Potion
 import net.minecraft.util.*
 import net.minecraft.world.World
@@ -16,45 +13,12 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	var rider: EntityPlayer? = null
 	var walkSpeed = 0.25
 	
-	var owner: String
-		get() = dataWatcher.getWatchableObjectString(15)
-		set(owner) = dataWatcher.updateObject(15, owner)
-	
-	init {
-		navigator.avoidsWater = true
-		tasks.addTask(0, EntityAISwimming(this))
-		tasks.addTask(1, EntityAIWander(this, 1.0))
-		tasks.addTask(2, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
-		tasks.addTask(3, EntityAILookIdle(this))
-	}
-	
-	override fun entityInit() {
-		super.entityInit()
-		dataWatcher.addObject(15, "")
-	}
-	
-	override fun isAIEnabled() = true
-	
 	override fun attackEntityFrom(src: DamageSource, dmg: Float) = if (rider != null && src.entity === rider) false else super.attackEntityFrom(src, dmg)
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
 		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 36.0
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = walkSpeed
-	}
-	
-	override fun writeEntityToNBT(nbt: NBTTagCompound) {
-		super.writeEntityToNBT(nbt)
-		nbt.setString("Owner", owner)
-	}
-	
-	override fun readEntityFromNBT(nbt: NBTTagCompound) {
-		super.readEntityFromNBT(nbt)
-		owner = nbt.getString("Owner")
-	}
-	
-	override fun playLivingSound() {
-		if (rng.nextInt(8) == 1) super.playLivingSound()
 	}
 	
 	override fun onLivingUpdate() {
@@ -80,14 +44,7 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	override fun canDespawn() = false
 	
 	override fun interact(player: EntityPlayer?): Boolean {
-		if (player == null) return false
-		
-		if (worldObj.isRemote) {
-			return false
-		} else if (owner.isNotEmpty() && player.commandSenderName != owner) {
-			ASJUtilities.say(player, "Owned by $owner")
-			return false
-		}
+		if (worldObj.isRemote || player == null) return false
 		
 		return if (rider == null) {
 			mount(player)
@@ -138,9 +95,6 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 			motionY += ((getActivePotionEffect(Potion.jump).getAmplifier() + 1).toFloat() * 0.1f).toDouble()
 		}
 		
-		/*val f = rotationYaw * 0.017453292f
-		motionX -= (MathHelper.sin(f) * 0.2f).toDouble()
-		motionZ += (MathHelper.cos(f) * 0.2f).toDouble()*/
 		isAirBorne = true
 		ForgeHooks.onLivingJump(this)
 	}
@@ -151,9 +105,6 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 		if (!worldObj.isRemote) {
 			player.mountEntity(this)
 		}
-		
-		owner = player.commandSenderName
-		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim:Lolicorn.desc", owner)
 	}
 	
 	override fun shouldDismountInWater(rider: Entity?) = false
