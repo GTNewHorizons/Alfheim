@@ -2,17 +2,21 @@ package alfheim.common.lexicon
 
 import alfheim.AlfheimCore
 import alfheim.api.*
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.*
+import alfheim.common.block.tile.*
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.registry.*
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.crafting.recipe.AlfheimRecipes
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.lexicon.page.*
 import com.google.common.collect.Lists
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 import vazkii.botania.api.recipe.RecipeRuneAltar
 import vazkii.botania.common.block.ModMultiblocks
 import vazkii.botania.common.item.ModItems
@@ -565,5 +569,22 @@ object AlfheimLexiconData {
 	
 	private fun kt() {
 		kt = if (AlfheimCore.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge
+	}
+}
+
+object AlfheimMultiblocks {
+	
+	lateinit var infuser: MultiblockSet
+	lateinit var infuserU: MultiblockSet
+	lateinit var portal: MultiblockSet
+	lateinit var soul: MultiblockSet
+	lateinit var yordin: MultiblockSet
+	
+	fun init() {
+		infuser = TileManaInfuser.makeMultiblockSet()
+		infuserU = TileManaInfuser.makeMultiblockSetUnknown()
+		portal = TileAlfheimPortal.makeMultiblockSet()
+		soul = TileManaInfuser.makeMultiblockSetSoul()
+		yordin = TileTradePortal.makeMultiblockSet()
 	}
 }

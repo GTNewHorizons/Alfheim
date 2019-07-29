@@ -1,6 +1,6 @@
 package alfheim.common.world.dim.alfheim.biome
 
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type

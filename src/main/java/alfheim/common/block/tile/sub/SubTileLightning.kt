@@ -3,7 +3,7 @@ package alfheim.common.block.tile.sub
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt

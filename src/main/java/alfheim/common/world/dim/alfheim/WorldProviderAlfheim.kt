@@ -1,7 +1,7 @@
 package alfheim.common.world.dim.alfheim
 
 import alfheim.AlfheimCore
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.world.dim.alfheim.biome.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre

@@ -5,7 +5,6 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.BlockLeaves
@@ -16,9 +15,7 @@ import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.item.IHornHarvestable
 import vazkii.botania.api.lexicon.*
-import vazkii.botania.common.item.ItemGrassHorn
 import vazkii.botania.common.item.ModItems
 import java.util.*
 

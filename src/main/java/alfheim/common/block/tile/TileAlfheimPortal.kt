@@ -4,9 +4,10 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
-import alfheim.common.core.registry.*
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.block.AlfheimBlocks
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.AlfheimItems
 import com.google.common.base.Function
 import net.minecraft.block.Block
 import net.minecraft.entity.item.EntityItem

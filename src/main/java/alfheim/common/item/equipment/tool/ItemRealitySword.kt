@@ -5,7 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.SpellEffectHandler
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*

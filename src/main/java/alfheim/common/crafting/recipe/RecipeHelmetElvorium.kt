@@ -4,9 +4,9 @@ import alfheim.api.lib.LibOreDict.ARUNE
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.INFUSED_DREAM_TWIG
 import alfheim.api.lib.LibOreDict.MAUFTRIUM_INGOT
-import alfheim.common.core.registry.AlfheimItems
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas.ManaInfusionCore
-import alfheim.common.core.registry.AlfheimItems.elvenResource
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas.ManaInfusionCore
+import alfheim.common.item.AlfheimItems.elvenResource
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.*
 import net.minecraftforge.oredict.ShapedOreRecipe

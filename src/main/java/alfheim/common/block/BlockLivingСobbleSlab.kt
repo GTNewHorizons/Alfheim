@@ -1,6 +1,5 @@
 package alfheim.common.block
 
-import alfheim.common.core.registry.AlfheimBlocks
 import net.minecraft.block.BlockSlab
 import vazkii.botania.common.block.decor.slabs.BlockLivingSlab
 

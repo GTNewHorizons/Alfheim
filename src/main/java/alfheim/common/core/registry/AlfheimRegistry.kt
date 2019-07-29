@@ -8,6 +8,7 @@ import alfheim.api.AlfheimAPI.registerAnomaly
 import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.*
 import alfheim.common.core.asm.AlfheimHookLoader
@@ -15,6 +16,7 @@ import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
+import alfheim.common.item.AlfheimItems
 import alfheim.common.potion.*
 import alfheim.common.spell.darkness.*
 import alfheim.common.spell.earth.*
@@ -27,12 +29,15 @@ import alfheim.common.spell.water.*
 import alfheim.common.spell.wind.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheim
 import cpw.mods.fml.common.IWorldGenerator
+import cpw.mods.fml.common.registry.EntityRegistry
 import cpw.mods.fml.common.registry.GameRegistry.*
+import net.minecraft.entity.EnumCreatureType
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.world.biome.BiomeGenBase
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
@@ -41,13 +46,11 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.lib.LibBlockNames
 import kotlin.math.*
 
+// FIXME decentralize
 object AlfheimRegistry {
 	
 	val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime.toDouble()) {
-		
-		override fun clampValue(d: Double): Double {
-			return max(0.0, min(AlfheimConfig.flightTime.toDouble(), d))
-		}
+		override fun clampValue(d: Double) = max(0.0, min(AlfheimConfig.flightTime.toDouble(), d))
 	}.setShouldWatch(true)
 	
 	lateinit var berserk: Potion
@@ -59,6 +62,7 @@ object AlfheimRegistry {
 	lateinit var icelens: Potion
 	lateinit var leftFlame: Potion
 	fun leftFlameIsInitialized() = ::leftFlame.isInitialized
+	lateinit var manaVoid: Potion
 	lateinit var nineLifes: Potion
 	lateinit var ninja: Potion
 	lateinit var noclip: Potion
@@ -78,28 +82,7 @@ object AlfheimRegistry {
 	lateinit var worldGen: IWorldGenerator
 	
 	fun preInit() {
-		berserk = PotionBerserk()
-		bleeding = PotionBleeding()
-		butterShield = PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF)
-		deathMark = PotionDeathMark()
-		decay = PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355)
-		goldRush = PotionGoldRush()
-		icelens = PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF)
-		leftFlame = PotionLeftFlame()
-		nineLifes = PotionAlfheim(AlfheimConfig.potionIDNineLifes, "nineLifes", false, 0xDD2222)
-		ninja = PotionNinja()
-		noclip = PotionNoclip()
-		overmage = PotionAlfheim(AlfheimConfig.potionIDOvermage, "overmage", false, 0x88FFFF)
-		possession = PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000)
-		quadDamage = PotionQuadDamage()
-		sacrifice = PotionSacrifice()
-		sharedHP = PotionSharedHP()
-		showMana = PotionShowMana()
-		soulburn = PotionSoulburn()
-		stoneSkin = PotionAlfheim(AlfheimConfig.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
-		tank = PotionTank()
-		tHrOw = PotionThrow()
-		wellOLife = PotionWellOLife()
+		registerPotions()
 		registerEntities()
 		registerTileEntities()
 		
@@ -117,6 +100,32 @@ object AlfheimRegistry {
 		if (AlfheimConfig.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
 	}
 	
+	fun registerPotions() {
+		berserk = PotionBerserk()
+		bleeding = PotionBleeding()
+		butterShield = PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		deathMark = PotionDeathMark()
+		decay = PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355)
+		goldRush = PotionGoldRush()
+		icelens = PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF)
+		leftFlame = PotionLeftFlame()
+		manaVoid = PotionManaVoid()
+		nineLifes = PotionAlfheim(AlfheimConfig.potionIDNineLifes, "nineLifes", false, 0xDD2222)
+		ninja = PotionNinja()
+		noclip = PotionNoclip()
+		overmage = PotionAlfheim(AlfheimConfig.potionIDOvermage, "overmage", false, 0x88FFFF)
+		possession = PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000)
+		quadDamage = PotionQuadDamage()
+		sacrifice = PotionSacrifice()
+		sharedHP = PotionSharedHP()
+		showMana = PotionShowMana()
+		soulburn = PotionSoulburn()
+		stoneSkin = PotionAlfheim(AlfheimConfig.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
+		tank = PotionTank()
+		tHrOw = PotionThrow()
+		wellOLife = PotionWellOLife()
+	}
+	
 	private fun registerEntities() {
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance)
 		registerEntityEgg(EntityElf::class.java, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance)
@@ -125,6 +134,17 @@ object AlfheimRegistry {
 		registerEntityEgg(EntityLolicorn::class.java, "Lolicorn", 0xFFFFFF, 0xFF00FF, AlfheimCore.instance)
 		registerEntityEgg(EntityAlfheimPixie::class.java, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance)
+		
+		if (AlfheimConfig.uberCreepers)
+		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
+		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
+		
+		for (i in BiomeGenBase.getBiomeGenArray()) {
+			if (i != null && i != BiomeGenBase.hell && i != BiomeGenBase.sky && i != BiomeGenBase.mushroomIsland && i != BiomeGenBase.mushroomIslandShore)
+				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
+		}
+		
+		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance)
 		registerEntity(EntitySpellHarp::class.java, "SpellArfa", AlfheimCore.instance)

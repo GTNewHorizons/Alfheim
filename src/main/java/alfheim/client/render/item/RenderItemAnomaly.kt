@@ -3,7 +3,7 @@ package alfheim.client.render.item
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator

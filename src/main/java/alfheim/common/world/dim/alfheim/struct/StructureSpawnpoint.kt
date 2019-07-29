@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim.struct
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.init.Blocks
 import net.minecraft.world.World

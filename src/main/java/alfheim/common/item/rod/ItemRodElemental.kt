@@ -2,7 +2,7 @@ package alfheim.common.item.rod
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister

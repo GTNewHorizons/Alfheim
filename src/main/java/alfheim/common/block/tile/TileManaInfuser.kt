@@ -4,7 +4,8 @@ import alexsocol.asjlib.ASJUtilities.Companion.getTrueDamage
 import alexsocol.asjlib.ASJUtilities.Companion.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.registry.*
+import alfheim.common.block.AlfheimBlocks
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution

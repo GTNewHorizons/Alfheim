@@ -5,6 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.common.core.registry.*
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap

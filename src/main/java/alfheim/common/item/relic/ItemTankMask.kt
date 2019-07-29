@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.registry.*
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.item.AlfheimItems
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.*

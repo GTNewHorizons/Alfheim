@@ -1,6 +1,6 @@
 package alfheim.common.integration.travellersgear
 
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.event.FMLInterModComms
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.item.ModItems

@@ -3,10 +3,11 @@ package alfheim.common.entity.boss
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.*
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.ai.flugel.*
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.item.relic.ItemFlugelSoul
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
@@ -153,8 +154,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		}
 	}
 	
-	override fun setHealth(hp: Float) {
-		var hp = hp
+	override fun setHealth(set: Float) {
+		var hp = set
 		prevHealth = health
 		hp = max(prevHealth - maxHit * if (isHardMode) 0.6f else 1f, hp)
 		
@@ -345,8 +346,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val motY = kos.y.toFloat()
 						val motZ = kos.z.toFloat()
 						
-						if (customNameTag == "Hatsune Miku") Botania.proxy.wispFX (worldObj, wX - x, wY - y, wZ - z, 0f, 0.75f, 1f, 1f, motX, motY, motZ)
-						else Botania.proxy.wispFX (worldObj, wX - x, wY - y, wZ - z, 0.5f, 0f, 1f, 1f, motX, motY, motZ)
+						if (customNameTag == "Hatsune Miku") Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, 0f, 0.75f, 1f, 1f, motX, motY, motZ)
+						else Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, 0.5f, 0f, 1f, 1f, motX, motY, motZ)
 						yaw += mod
 					}
 				}
@@ -356,10 +357,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		for (player in players) {
 			// No beacon potions allowed!
-			val remove = ArrayList<PotionEffect>()
-			val active = player.activePotionEffects as MutableCollection<PotionEffect>
-			for (effect in active) if (effect.getDuration() < 200 && effect.getIsAmbient() && !Potion.potionTypes[effect.getPotionID()].isBadEffect) remove.add(effect)
-			active.removeAll(remove)
+			(player.activePotionEffects as MutableCollection<PotionEffect>).removeIf {
+				it.getDuration() < 200 && it.getIsAmbient() && !Potion.potionTypes[it.getPotionID()].isBadEffect
+			}
 			
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)
@@ -395,8 +395,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
 				try {
-					ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersWhoAttacked.maxBy { it.value }?.key ?: "Notch"), 360f, 360f)
-				} catch (e: Throwable) {}
+					ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersWhoAttacked.maxBy { it.value }?.key
+																				 ?: "Notch"), 360f, 360f)
+				} catch (e: Throwable) {
+				}
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
@@ -461,13 +463,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		getEntityAttribute(SharedMonsterAttributes.knockbackResistance).baseValue = 1.0
 	}
 	
-	public override fun canDespawn(): Boolean {
-		return false
-	}
+	public override fun canDespawn() = false
 	
-	public override fun isAIEnabled(): Boolean {
-		return true
-	}
+	public override fun isAIEnabled() = true
 	
 	public override fun entityInit() {
 		super.entityInit()
@@ -480,9 +478,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		dataWatcher.addObject(27, 0)                                // Current AI task
 	}
 	
-	override fun isEntityInvulnerable(): Boolean {
-		return playersAround.isNotEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
-	}
+	override fun isEntityInvulnerable() = playersAround.isNotEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
 	
 	private fun initAI() {
 		tasks.taskEntries.clear()
@@ -641,41 +637,41 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (!flag) {
 			setPosition(d3, d4, d5)
 			return false
-		} else {
-			val short1: Short = 128
-			
-			for (l in 0 until short1) {
-				val d6 = l / (short1 - 1.0)
-				val f = (rand.nextFloat() - 0.5f) * 0.2f
-				val f1 = (rand.nextFloat() - 0.5f) * 0.2f
-				val f2 = (rand.nextFloat() - 0.5f) * 0.2f
-				val d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
-				val d8 = d4 + (posY - d4) * d6 + rand.nextDouble() * height
-				val d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
-				worldObj.spawnParticle("portal", d7, d8, d9, f.toDouble(), f1.toDouble(), f2.toDouble())
-			}
-			
-			worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f)
-			playSound("mob.endermen.portal", 1.0f, 1.0f)
-			return true
 		}
+		
+		val short1: Short = 128
+		
+		for (l in 0 until short1) {
+			val d6 = l / (short1 - 1.0)
+			val f = (rand.nextFloat() - 0.5f) * 0.2f
+			val f1 = (rand.nextFloat() - 0.5f) * 0.2f
+			val f2 = (rand.nextFloat() - 0.5f) * 0.2f
+			val d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
+			val d8 = d4 + (posY - d4) * d6 + rand.nextDouble() * height
+			val d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
+			worldObj.spawnParticle("portal", d7, d8, d9, f.toDouble(), f1.toDouble(), f2.toDouble())
+		}
+		
+		worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f)
+		playSound("mob.endermen.portal", 1.0f, 1.0f)
+		return true
 	}
 	
 	// EntityFireball code below ============================================================================
 	
 	fun checkCollision() {
-		var vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ)
-		var vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
-		var mop: MovingObjectPosition? = this.worldObj.rayTraceBlocks(vec3, vec31)
-		vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ)
-		vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
+		var vec3 = Vec3.createVectorHelper(posX, posY, posZ)
+		var vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)
+		var mop: MovingObjectPosition? = worldObj.rayTraceBlocks(vec3, vec31)
+		vec3 = Vec3.createVectorHelper(posX, posY, posZ)
+		vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)
 		
 		if (mop != null) {
 			vec31 = Vec3.createVectorHelper(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord)
 		}
 		
 		var entity: Entity? = null
-		val list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0))
+		val list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0, 1.0, 1.0))
 		var d0 = 0.0
 		
 		for (o in list) {
@@ -702,7 +698,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		}
 		
 		if (mop != null) {
-			this.onImpact(mop)
+			onImpact(mop)
 		}
 	}
 	
@@ -714,17 +710,15 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			MovingObjectPosition.MovingObjectType.ENTITY ->
 				if (mop.entityHit is EntityPlayer) mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this), if (isHardMode) 15.0f else 10.0f)
 			
-			
-			else                                         -> {}
+			else                                         -> {
+			}
 		}
 	}
 	
 	/*	================================	HEALTHBAR STUFF	================================	*/
 	
 	@SideOnly(Side.CLIENT)
-	override fun getBossBarTexture(): ResourceLocation {
-		return BossBarHandler.defaultBossBar
-	}
+	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTextureRect(): Rectangle {
@@ -854,8 +848,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					}
 					
 					val players = e.playersAround
-					var playerCount = 0
-					for (p in players) if (isTruePlayer(p)) playerCount++
+					val playerCount = players.count { isTruePlayer(it) }
 					
 					e.playerCount = playerCount
 					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).toDouble()

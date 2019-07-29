@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*

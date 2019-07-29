@@ -7,13 +7,15 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
 import alfheim.common.core.handler.CardinalSystem.transfer
 import alfheim.common.core.helper.ElvenFlightHelper
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
@@ -235,7 +237,7 @@ class EventHandler {
 			}
 			
 			var pe: PotionEffect? = e.entityLiving.getActivePotionEffect(AlfheimRegistry.nineLifes)
-			run nl@ {
+			run nl@{
 				if (pe != null) {
 					val blockable = e.source.damageType == DamageSource.fall.damageType ||
 									e.source.damageType == DamageSource.drown.damageType ||
@@ -324,7 +326,7 @@ class EventHandler {
 				} else {
 					val tg = CardinalSystem.TargetingSystem.getTarget(player)
 					
-					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target?.let { it is IBossDisplayData} == true) 128.0 else 32.0)
+					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target?.let { it is IBossDisplayData } == true) 128.0 else 32.0)
 						CardinalSystem.TargetingSystem.setTarget(player, null, false)
 				}
 			}

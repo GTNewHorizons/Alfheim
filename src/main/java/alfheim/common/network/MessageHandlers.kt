@@ -178,3 +178,22 @@ class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
 		return null
 	}
 }
+
+class MessagePlayerItemHandler : IMessageHandler<MessagePlayerItem, IMessage> {
+	
+	override fun onMessage(message: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
+		if (ctx != null && message != null && message.item != null && ctx.side.isServer) {
+			val player = ctx.serverHandler.playerEntity
+			
+			val heldItem = player.currentEquippedItem
+			
+			if (heldItem == null) {
+				player.setCurrentItemOrArmor(0, message.item!!.copy())
+			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
+				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
+			}
+		}
+		
+		return null
+	}
+}

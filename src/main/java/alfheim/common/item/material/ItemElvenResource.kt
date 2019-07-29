@@ -2,7 +2,7 @@ package alfheim.common.item.material
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*

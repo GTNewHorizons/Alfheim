@@ -1,7 +1,6 @@
 package alfheim.common.integration.waila
 
 import alfheim.common.block.tile.*
-import alfheim.common.integration.waila.handler.*
 import mcp.mobius.waila.api.impl.ModuleRegistrar
 
 object WAILAAlfheimConfig {

@@ -16,6 +16,7 @@ import kotlin.math.*
 object AlfheimConfig {
 	lateinit var config: Configuration
 	
+	const val CATEGORY_BA			= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "BotanicalAddons"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER	+ "woldgen"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
@@ -50,6 +51,17 @@ object AlfheimConfig {
 	var slowDownClients			= false
 	var tradePortalRate			= 1200
 	
+	// BOTANICAL ADDONS
+	var realLightning			= false
+	var uberCreepers			= false
+	//var passiveLightning		= true
+	var blackLotusDropRate		= 0.05
+	var addTincturemAspect		= true
+	var addAspectsToBotania		= true
+	var addThaumTreeSuffusion	= true
+	var schemaArray				= IntArray(17) { i: Int -> -1 + i }
+	var grantWireUnlimitedPower = true
+	
 	// POTIONS
 	var potionSlots				= 1024
 	var potionID___COUNTER		= 30
@@ -61,6 +73,7 @@ object AlfheimConfig {
 	var potionIDGoldRush		= potionID___COUNTER++
 	var potionIDIceLens			= potionID___COUNTER++
 	var potionIDLeftFlame		= potionID___COUNTER++
+	var potionIDManaVoid		= potionID___COUNTER++
 	var potionIDNinja			= potionID___COUNTER++
 	var potionIDNineLifes		= potionID___COUNTER++
 	var potionIDNoclip			= potionID___COUNTER++
@@ -131,6 +144,16 @@ object AlfheimConfig {
 		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",				slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly")
 		tradePortalRate			= loadProp(CATEGORY_GENERAL,	"tradePortalRate",				tradePortalRate,		false,	"Portal updates every {N} ticks")
 		
+		realLightning			= loadProp(CATEGORY_BA,			"realLightning.enabled",		realLightning,			false,	"Lightning rod creates real lightning")
+		uberCreepers			= loadProp(CATEGORY_BA,			"uberCreepers.enabled",			uberCreepers,			true,	"Uber Creepers can be spawned by OP or Creative players")
+		//passiveLightning		= loadProp(CATEGORY_BA,			"passiveLightning.enabled",		passiveLightning,		false,	"Lightning rod can hit passive mobs")
+		addTincturemAspect		= loadProp(CATEGORY_BA,			"tincturem.enabled",			addTincturemAspect,		true,	"Add a Color aspect to thaumcraft")
+		addAspectsToBotania		= loadProp(CATEGORY_BA,			"botaniaAspects.enabled",		addAspectsToBotania,	true,	"Add aspects to Botania")
+		addThaumTreeSuffusion	= loadProp(CATEGORY_BA,			"TCTrees.enabled",				addThaumTreeSuffusion,	true,	"[TC] [GoG] Add a Dendric Suffusion recipe for Greatwood and Silverwood trees")
+		grantWireUnlimitedPower = loadProp(CATEGORY_BA,			"wire.overpowered",				grantWireUnlimitedPower,true,	"Allow WireSegal far more power than any one person should have")
+		blackLotusDropRate		= loadProp(CATEGORY_BA,			"voidCreepers.dropRate",		blackLotusDropRate,		false,	"Rate of black loti dropping from Manaseal Creepers")
+		schemaArray				= loadProp(CATEGORY_BA,			"schemas.enabled",				schemaArray,			true,	"Which schemas are allowed to be generated")
+		
 		potionSlots				= loadProp(CATEGORY_POTIONS,	"potionSlots",					potionSlots,			true,	"Available potions ids in range [0-potionSlots)")
 		potionIDBerserk			= loadProp(CATEGORY_POTIONS,	"potionIDBerserk",				potionIDBerserk,		true,	"Potion id for Berserk")
 		potionIDBleeding		= loadProp(CATEGORY_MMOP,		"potionIDBleeding",				potionIDBleeding,		true,	"Potion id for Bleeding")
@@ -140,6 +163,7 @@ object AlfheimConfig {
 		potionIDGoldRush		= loadProp(CATEGORY_MMOP,		"potionIDGoldRush",				potionIDGoldRush,		true,	"Potion id for Gold Rush")
 		potionIDIceLens			= loadProp(CATEGORY_MMOP,		"potionIDIceLens",				potionIDIceLens,		true,	"Potion id for Ice Lense")
 		potionIDLeftFlame		= loadProp(CATEGORY_MMOP,		"potionIDLeftFlame",			potionIDLeftFlame,		true,	"Potion id for Leftover Flame")
+		potionIDManaVoid		= loadProp(CATEGORY_POTIONS,	"potionIDManaVoid",				potionIDManaVoid,		true,	"Potion id for Mana Void")
 		potionIDNineLifes		= loadProp(CATEGORY_POTIONS,	"potionIDNineLifes",			potionIDNineLifes,		true,	"Potion id for Nine Lifes")
 		potionIDNinja			= loadProp(CATEGORY_POTIONS,	"potionIDNinja",				potionIDNinja,			true,	"Potion id for Ninja")
 		potionIDNoclip			= loadProp(CATEGORY_MMOP,		"potionIDNoclip",				potionIDNoclip,			true,	"Potion id for Noclip")
@@ -174,25 +198,28 @@ object AlfheimConfig {
 		RenderPostShaders.allowShaders = !minimalGraphics
 	}
 	
-	fun loadProp(category: String, propName: String, default_: Int, restart: Boolean, desc: String): Int {
-		val prop = config.get(category, propName, default_)
-		prop.comment = desc
+	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String): Int {
+		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.getInt(default_)
+		return prop.getInt(default)
 	}
 	
-	fun loadProp(category: String, propName: String, default_: Double, restart: Boolean, desc: String): Double {
-		val prop = config.get(category, propName, default_)
-		prop.comment = desc
+	fun loadProp(category: String, propName: String, default: Double, restart: Boolean, desc: String): Double {
+		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.getDouble(default_)
+		return prop.getDouble(default)
 	}
 	
-	fun loadProp(category: String, propName: String, default_: Boolean, restart: Boolean, desc: String): Boolean {
-		val prop = config.get(category, propName, default_)
-		prop.comment = desc
+	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
+		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.getBoolean(default_)
+		return prop.getBoolean(default)
+	}
+	
+	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.intList
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

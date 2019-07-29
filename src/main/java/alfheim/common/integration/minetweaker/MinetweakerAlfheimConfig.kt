@@ -1,11 +1,9 @@
 package alfheim.common.integration.minetweaker
 
-import alfheim.common.integration.minetweaker.handler.*
 import minetweaker.MineTweakerAPI
 import minetweaker.api.item.*
 import minetweaker.api.minecraft.MineTweakerMC
 import minetweaker.api.oredict.IOreDictEntry
-import net.minecraft.item.ItemStack
 
 object MinetweakerAlfheimConfig {
 	
@@ -16,9 +14,7 @@ object MinetweakerAlfheimConfig {
 		MineTweakerAPI.registerClass(MTHandlerTradePortal::class.java)
 	}
 	
-	fun getStack(istack: IItemStack): ItemStack {
-		return MineTweakerMC.getItemStack(istack)
-	}
+	fun getStack(istack: IItemStack) = MineTweakerMC.getItemStack(istack)!!
 	
 	/// #### original code from modtweaker2.helpers.InputHelper ####
 	
@@ -46,7 +42,5 @@ object MinetweakerAlfheimConfig {
 		}
 	}
 	
-	fun getString(entry: IOreDictEntry): String {
-		return entry.name
-	}
+	fun getString(entry: IOreDictEntry) = entry.name!!
 }

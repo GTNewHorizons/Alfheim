@@ -2,7 +2,7 @@ package alfheim.common.lexicon.page
 
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen

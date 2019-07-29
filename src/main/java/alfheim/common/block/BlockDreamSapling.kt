@@ -2,7 +2,6 @@ package alfheim.common.block
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree
 import net.minecraft.block.*

@@ -12,6 +12,11 @@ object LibRenderIDs {
 	var idShrinePanel = -1
 	var idTransferer = -1
 	
+	// Botanical Addons
+	var idDoubleFlower = -1
+	var idMultipass = -1
+	var idHopper = -1
+	
 	fun init() {
 		idAniTorch = RenderingRegistry.getNextAvailableRenderId()
 		idAnomaly = RenderingRegistry.getNextAvailableRenderId()
@@ -20,5 +25,9 @@ object LibRenderIDs {
 		idPylon = RenderingRegistry.getNextAvailableRenderId()
 		idShrinePanel = RenderingRegistry.getNextAvailableRenderId()
 		idTransferer = RenderingRegistry.getNextAvailableRenderId()
+		
+		idDoubleFlower = RenderingRegistry.getNextAvailableRenderId()
+		idMultipass = RenderingRegistry.getNextAvailableRenderId()
+		idHopper = RenderingRegistry.getNextAvailableRenderId()
 	}
 }

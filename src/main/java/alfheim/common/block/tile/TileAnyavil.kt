@@ -5,7 +5,7 @@ import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.network.MessageTileItem
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem

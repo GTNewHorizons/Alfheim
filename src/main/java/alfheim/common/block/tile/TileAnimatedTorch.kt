@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution

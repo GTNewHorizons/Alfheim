@@ -3,8 +3,8 @@ package alfheim.common.item.equipment.armor.elvoruim
 import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
-import alfheim.common.core.registry.AlfheimItems
-import alfheim.common.core.registry.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import com.google.common.collect.*
 import cpw.mods.fml.common.Optional
 import cpw.mods.fml.relauncher.*

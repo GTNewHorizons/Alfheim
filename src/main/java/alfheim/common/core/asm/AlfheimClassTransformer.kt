@@ -11,94 +11,131 @@ class AlfheimClassTransformer: IClassTransformer {
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		return when (transformedName) {
-			"net.minecraft.entity.EntityTrackerEntry"					-> {
+			"net.minecraft.entity.EntityTrackerEntry"                       -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityTrackerEntry$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"net.minecraft.potion.Potion"								-> {
+			
+			"net.minecraft.potion.Potion"                                   -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `Potion$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"net.minecraft.server.management.ItemInWorldManager"		-> {
+			
+			"net.minecraft.server.management.ItemInWorldManager"            -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"net.minecraft.world.World"									-> {
+			
+			"net.minecraft.world.World"                                     -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `World$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"thaumcraft.common.blocks.BlockCustomOre"					-> {
+			
+			"thaumcraft.common.blocks.BlockCustomOre"                       -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BlockCustomOre$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"thaumcraft.common.items.ItemNugget"						-> {
+			
+			"thaumcraft.common.items.ItemNugget"                            -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemNugget$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.client.core.handler.BaubleRenderHandler"	-> {
+			
+			"vazkii.botania.client.core.handler.BaubleRenderHandler"        -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BaubleRenderHandler$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.common.entity.EntityDoppleganger"			-> {
+			
+			"vazkii.botania.client.render.tile.RenderTileFloatingFlower"    -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `RenderTileFloatingFlower$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"vazkii.botania.common.block.decor.IFloatingFlower\$IslandType" -> {
+				if (OBF) {
+					val cr = ClassReader(basicClass)
+					val cw = ClassWriter(cr, ClassWriter.COMPUTE_MAXS)
+					val cv = object: ClassVisitor(ASM5, cw) {}
+					cr.accept(cv, ASM5)
+					
+					val mw = cw.visitMethod(ACC_PUBLIC, "getColor", "()I", null, null)
+					mw.visitLdcInsn(Integer(16777215))
+					mw.visitInsn(IRETURN)
+					mw.visitMaxs(0, 0)
+					mw.visitEnd()
+					
+					cw.toByteArray()
+				} else basicClass
+			}
+			
+			"vazkii.botania.common.entity.EntityDoppleganger"               -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityDoppleganger$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.common.lib.LibItemNames"					-> {
+			
+			"vazkii.botania.common.lib.LibItemNames"                        -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `LibItemNames$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.common.item.lens.ItemLens"					-> {
+			
+			"vazkii.botania.common.item.lens.ItemLens"                      -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemLens$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.common.item.relic.ItemRelic"				-> {
+			
+			"vazkii.botania.common.item.relic.ItemRelic"                    -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemRelic$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			"vazkii.botania.common.item.rod.ItemTerraformRod"			-> {
+			
+			"vazkii.botania.common.item.rod.ItemTerraformRod"               -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemTerraformRod$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
-			else														-> basicClass
+			
+			else                                                            -> basicClass
 		}
 	}
-
+	
 	internal class `EntityTrackerEntry$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -330,6 +367,63 @@ class AlfheimClassTransformer: IClassTransformer {
 				var cst = cst
 				if (cst is Float && cst == 0.2f) cst = 0.33f
 				super.visitLdcInsn(cst)
+			}
+		}
+	}
+	
+	internal class `RenderTileFloatingFlower$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "renderTileEntityAt") {
+				println("Visiting RenderTileFloatingFlower#renderTileEntityAt: $name$desc")
+				return `RenderTileFloatingFlower$renderTileEntityAt$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `RenderTileFloatingFlower$renderTileEntityAt$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			var before = false
+			var after = true
+			
+			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String?, itf: Boolean) {
+				if (name == "glPushMatrix") {
+					if (before) {
+						mv.visitTypeInsn(NEW, "java/awt/Color")
+						mv.visitInsn(DUP)
+						mv.visitVarInsn(ALOAD, 9)
+						mv.visitMethodInsn(INVOKEINTERFACE, "vazkii/botania/common/block/decor/IFloatingFlower", "getIslandType", "()Lvazkii/botania/common/block/decor/IFloatingFlower\$IslandType;", true)
+						mv.visitMethodInsn(INVOKEVIRTUAL, "vazkii/botania/common/block/decor/IFloatingFlower\$IslandType", "getColor", "()I", false)
+						mv.visitMethodInsn(INVOKESPECIAL, "java/awt/Color", "<init>", "(I)V", false)
+						mv.visitVarInsn(ASTORE, 12)
+						
+						mv.visitVarInsn(ALOAD, 12)
+						mv.visitMethodInsn(INVOKEVIRTUAL, "java/awt/Color", "getRed", "()I", false)
+						mv.visitInsn(I2F)
+						mv.visitLdcInsn(java.lang.Float("255.0"))
+						mv.visitInsn(FDIV)
+						mv.visitVarInsn(ALOAD, 12)
+						mv.visitMethodInsn(INVOKEVIRTUAL, "java/awt/Color", "getGreen", "()I", false)
+						mv.visitInsn(I2F)
+						mv.visitLdcInsn(java.lang.Float("255.0"))
+						mv.visitInsn(FDIV)
+						mv.visitVarInsn(ALOAD, 12)
+						mv.visitMethodInsn(INVOKEVIRTUAL, "java/awt/Color", "getBlue", "()I", false)
+						mv.visitInsn(I2F)
+						mv.visitLdcInsn(java.lang.Float("255.0"))
+						mv.visitInsn(FDIV)
+						mv.visitMethodInsn(INVOKESTATIC, "org/lwjgl/opengl/GL11", "glColor3f", "(FFF)V", false)
+					} else before = true
+				} else if (name == "glPopMatrix") {
+					if (after) {
+						mv.visitInsn(FCONST_1)
+						mv.visitInsn(FCONST_1)
+						mv.visitInsn(FCONST_1)
+						mv.visitMethodInsn(INVOKESTATIC, "org/lwjgl/opengl/GL11", "glColor3f", "(FFF)V", false)
+					} else after = false
+				}
+				
+				super.visitMethodInsn(opcode, owner, name, desc, itf)
 			}
 		}
 	}

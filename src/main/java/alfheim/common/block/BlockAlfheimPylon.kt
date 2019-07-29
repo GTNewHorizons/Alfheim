@@ -3,7 +3,6 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileAlfheimPylon
-import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.Block

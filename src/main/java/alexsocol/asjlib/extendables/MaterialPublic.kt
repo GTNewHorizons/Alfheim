@@ -12,38 +12,22 @@ class MaterialPublic(color: MapColor): Material(color) {
 	var solid = true
 	
 	// BLOCKS WATER
-	override fun blocksMovement(): Boolean {
-		return blocker
-	}
+	override fun blocksMovement() = blocker
 	
-	override fun getCanBlockGrass(): Boolean {
-		return grass
-	}
+	override fun getCanBlockGrass() = grass
 	
-	override fun isLiquid(): Boolean {
-		return liquid
-	}
+	override fun isLiquid() = liquid
 	
-	override fun isOpaque(): Boolean {
-		return opaque
-	}
+	override fun isOpaque() = opaque
 	
 	/** Can be replaced -_-  */
-	override fun isSolid(): Boolean {
-		return solid
-	}
+	override fun isSolid() = solid
 	
-	public override fun setAdventureModeExempt(): Material {
-		return super.setAdventureModeExempt()
-	}
+	public override fun setAdventureModeExempt() = super.setAdventureModeExempt()!!
 	
-	public override fun setBurning(): Material {
-		return super.setBurning()
-	}
+	public override fun setBurning() = super.setBurning()!!
 	
-	public override fun setImmovableMobility(): Material {
-		return super.setImmovableMobility()
-	}
+	public override fun setImmovableMobility() = super.setImmovableMobility()!!
 	
 	fun setLiquid(): MaterialPublic {
 		liquid = true
@@ -55,9 +39,7 @@ class MaterialPublic(color: MapColor): Material(color) {
 		return this
 	}
 	
-	public override fun setNoPushMobility(): Material {
-		return super.setNoPushMobility()
-	}
+	public override fun setNoPushMobility() = super.setNoPushMobility()!!
 	
 	/** Can be washed away  */
 	fun setNotBlocker(): MaterialPublic {
@@ -75,7 +57,5 @@ class MaterialPublic(color: MapColor): Material(color) {
 		return this
 	}
 	
-	public override fun setRequiresTool(): Material {
-		return super.setRequiresTool()
-	}
+	public override fun setRequiresTool() = super.setRequiresTool()!!
 }

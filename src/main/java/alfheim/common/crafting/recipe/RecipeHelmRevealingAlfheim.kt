@@ -1,6 +1,6 @@
 package alfheim.common.crafting.recipe
 
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.*
 import net.minecraft.item.crafting.IRecipe
@@ -46,8 +46,8 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		
 		newHelm = when {
 			helmItem === AlfheimItems.elementalHelmet -> if (AlfheimItems.elementalHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elementalHelmetRevealing) else return null
-			helmItem === AlfheimItems.elvoriumHelmet -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
-			else -> return null
+			helmItem === AlfheimItems.elvoriumHelmet  -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
+			else                                                          -> return null
 		}
 		
 		// Copy Ancient Wills

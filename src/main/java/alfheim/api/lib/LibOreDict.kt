@@ -1,6 +1,7 @@
 package alfheim.api.lib
 
 object LibOreDict {
+	
 	const val DRAGON_ORE = "oreDragonstone"
 	const val ELEMENTIUM_ORE = "oreElementium"
 	const val ELVEN_QUARTZ_ORE = "oreElvenQuartz"
@@ -17,4 +18,28 @@ object LibOreDict {
 	const val IFFESAL_DUST = "dustIffesal"
 	val ARUNE = arrayOf("runePrimalA", "runeMuspelheimA", "runeNiflheimA")
 	const val INFUSED_DREAM_TWIG = "twigDreamwoodInsufed"
+	
+	// Botanical Addons
+	const val TWIG_THUNDERWOOD = "twigThunderwood"
+	const val TWIG_NETHERWOOD = "twigNetherwood"
+	const val SPLINTERS_THUNDERWOOD = "splinterThunderwood"
+	const val SPLINTERS_NETHERWOOD = "splinterNetherwood"
+	const val COAL_NETHERWOOD = "coalFlame"
+	const val HOLY_PENDANT = "holyPendant"
+	val COLORS = arrayOf("White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black", "Rainbow")
+	const val IRIS_WOOD = "irisWood"
+	const val IRIS_LEAVES = "irisLeaves"
+	const val IRIS_DIRT = "irisDirt"
+	val WOOD = Array(COLORS.size) { i -> "$IRIS_WOOD${COLORS[i]}" }
+	val LEAVES = Array(COLORS.size) { i -> "$IRIS_LEAVES${COLORS[i]}" }
+	val DIRT = Array(COLORS.size) { i -> "$IRIS_DIRT${COLORS[i]}" }
+	val DYES = Array(COLORS.size) { i -> "dye${COLORS[i]}" }
+	const val FLORAL_POWDER = "dyeFloralPowder"
+	const val PETAL = "petalMystic"
+	const val MUSHROOM = "mushroomShimmer"
+	const val RAINBOW_PETAL = "petalRainbow"
+	const val RAINBOW_FLOWER = "mysticFlowerRainbow"
+	const val RAINBOW_DOUBLE_FLOWER = "${RAINBOW_FLOWER}Double"
+	
+	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated")
 }

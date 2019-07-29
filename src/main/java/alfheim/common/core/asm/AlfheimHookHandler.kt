@@ -6,9 +6,11 @@ import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.event.*
 import alfheim.client.render.entity.RenderButterflies
-import alfheim.common.core.registry.*
+import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
 import alfheim.common.potion.PotionSoulburn
 import codechicken.nei.recipe.GuiRecipe
@@ -292,7 +294,7 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ALWAYS) // TODO check list
+	@Hook(returnCondition = ALWAYS)
 	fun getSubBlocks(flower: BlockSpecialFlower, item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (s in BotaniaAPI.subtilesForCreativeMenu) {
 			list.add(ItemBlockSpecialFlower.ofType(s))
@@ -320,7 +322,7 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true) // TODO check list
+	@Hook(injectOnExit = true)
 	fun displayAllReleventItems(tab: BotaniaCreativeTab, list: List<Any?>) {
 		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list)
 	}

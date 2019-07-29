@@ -14,15 +14,17 @@ import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemAnomaly
 import alfheim.client.render.tile.*
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.EventHandler
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.registry.*
+import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
-import alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaRenderer
+import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
+import alfheim.common.item.ShadowFoxItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
@@ -33,6 +35,7 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
+import vazkii.botania.client.render.item.RenderLens
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 
@@ -84,6 +87,22 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellFenrirStorm::class.java, RenderEntityFenrirStorm())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade())
+		
+		// Botanical Addons:
+		
+		MinecraftForgeClient.registerItemRenderer(ShadowFoxItems.invisibleFlameLens, RenderLens())
+		
+		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
+		RenderingRegistry.registerBlockHandler(MultipassRenderer())
+		RenderingRegistry.registerBlockHandler(RenderBlockHopper())
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay())
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar())
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderThrownItem())
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderGrieferCreeper())
 	}
 	
 	override fun registerKeyBinds() {

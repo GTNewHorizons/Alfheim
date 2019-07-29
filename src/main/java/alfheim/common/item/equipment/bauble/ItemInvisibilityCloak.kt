@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
-import alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter
+import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional
 import net.minecraft.entity.EntityLivingBase

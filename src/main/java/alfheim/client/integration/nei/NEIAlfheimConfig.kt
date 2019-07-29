@@ -2,7 +2,7 @@ package alfheim.client.integration.nei
 
 import alfheim.AlfheimCore
 import alfheim.client.integration.nei.recipes.*
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import codechicken.nei.api.*
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.block.ModBlocks
@@ -14,6 +14,8 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.registerUsageHandler(RecipeHandlerManaInfuser())
 		API.registerRecipeHandler(RecipeHandlerTradePortal())
 		API.registerUsageHandler(RecipeHandlerTradePortal())
+		API.registerRecipeHandler(RecipeHandlerTreeCrafting())
+		API.registerUsageHandler(RecipeHandlerTreeCrafting())
 		
 		API.hideItem(ItemStack(ModBlocks.gaiaHead))
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
@@ -23,11 +25,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.redFlame))
 	}
 	
-	override fun getName(): String {
-		return AlfheimCore.meta.name
-	}
+	override fun getName() = AlfheimCore.meta.name!!
 	
-	override fun getVersion(): String {
-		return AlfheimCore.meta.version
-	}
+	override fun getVersion() = AlfheimCore.meta.version!!
 }

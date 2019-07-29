@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.*
+import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi

@@ -6,7 +6,7 @@ import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_COUNT
 import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_MAIN
 import alfheim.common.block.tile.TileAnomaly.Companion.TAG_SUBTILE_NAME
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*

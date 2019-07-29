@@ -19,7 +19,7 @@ class AlfheimHookLoader: HookLoader() {
 		if (hpSpells) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
 		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
-		registerHookContainer("alfheim.common.integration.travellersgear.handler.TGHandlerBotaniaAdapter")
+		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter")
 		
 		if (ModInfo.OBF) ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler")
 	}

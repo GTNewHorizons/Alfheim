@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.armor.elemental
 
 import alfheim.AlfheimCore
-import alfheim.common.core.registry.AlfheimItems
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack

@@ -34,21 +34,13 @@ object ItemTwigWandExtender {
 		return stack
 	}
 	
-	fun getBindMode(stack: ItemStack): Boolean {
-		return ItemNBTHelper.getBoolean(stack, TAG_BIND_MODE, true)
-	}
+	fun getBindMode(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, TAG_BIND_MODE, true)
 	
-	fun isElven(stack: ItemStack): Boolean {
-		return ItemNBTHelper.getBoolean(stack, TAG_ELVEN, false)
-	}
+	fun isElven(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, TAG_ELVEN, false)
 	
-	fun getColor1(stack: ItemStack): Int {
-		return ItemNBTHelper.getInt(stack, TAG_COLOR1, 0)
-	}
+	fun getColor1(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COLOR1, 0)
 	
-	fun getColor2(stack: ItemStack): Int {
-		return ItemNBTHelper.getInt(stack, TAG_COLOR2, 0)
-	}
+	fun getColor2(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COLOR2, 0)
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
@@ -69,12 +61,10 @@ object ItemTwigWandExtender {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getRenderPasses(wand: ItemTwigWand, metadata: Int): Int {
-		return 5
-	}
+	fun getRenderPasses(wand: ItemTwigWand, metadata: Int) = 5
 	
 	@JvmStatic
-	@Hook(returnCondition = ReturnCondition.ALWAYS) // TODO test
+	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getSubItems(wand: ItemTwigWand, par1: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in 0..15) list.add(forColors(i, i, false))
 		for (i in 0..15) list.add(forColors(i, i, true))

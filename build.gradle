@@ -22,7 +22,15 @@ buildscript {
 	}
 }
 
-version = "BETA-pre19.17"
+repositories {
+	maven {
+		name = "chickenbones"
+		url = "http://chickenbones.net/maven/"
+	}
+	mavenCentral()
+}
+
+version = "BETA-pre19.18"
 group= "main"
 archivesBaseName = "Alfheim"
 
@@ -37,6 +45,10 @@ configurations {
 }
 
 dependencies {
+	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
+	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
+	
 	compile fileTree(dir: 'lib', include: ['*.jar'])
 	embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }

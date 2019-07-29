@@ -3,7 +3,6 @@ package alfheim.common.block
 import alexsocol.asjlib.extendables.MaterialPublic
 import alfheim.api.*
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.registry.AlfheimBlocks
 import alfheim.common.item.block.ItemBlockAnomaly
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.*

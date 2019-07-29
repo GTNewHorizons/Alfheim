@@ -2,7 +2,7 @@ package alfheim.common.item
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer

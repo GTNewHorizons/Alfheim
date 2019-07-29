@@ -12,7 +12,7 @@ import alfheim.api.lib.LibOreDict.MAUFTRIUM_NUGGET
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre
 import alfheim.common.core.asm.AlfheimASMData
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.compat.thaumcraft.*
 import cpw.mods.fml.client.registry.RenderingRegistry.*
 import cpw.mods.fml.common.registry.GameRegistry.*

@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.registry.AlfheimBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimConfig
 import com.google.common.base.Function
 import net.minecraft.block.Block
