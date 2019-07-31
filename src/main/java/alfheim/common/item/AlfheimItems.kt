@@ -6,6 +6,7 @@ import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
+import alfheim.common.item.creator.ItemRoyalStaff
 import alfheim.common.item.equipment.armor.elemental.*
 import alfheim.common.item.equipment.armor.elvoruim.*
 import alfheim.common.item.equipment.bauble.*
@@ -77,6 +78,8 @@ object AlfheimItems {
 	lateinit var rodIce: Item
 	lateinit var thinkingHand: Item
 	
+	lateinit var royalStaff: Item
+	
 	fun init() {
 		construct()
 		reg()
@@ -143,6 +146,8 @@ object AlfheimItems {
 			ModItems.manasteelHelmRevealing.creativeTab = ThaumcraftAlfheimModule.tcnTab
 			ModItems.terrasteelHelmRevealing.creativeTab = ThaumcraftAlfheimModule.tcnTab
 		}
+		
+		royalStaff = ItemRoyalStaff()
 	}
 	
 	private fun reg() {

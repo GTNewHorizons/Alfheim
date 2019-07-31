@@ -24,14 +24,16 @@ abstract class AdvancedArmorModel: ModelBiped() {
 	abstract fun partRightLeg(entity: Entity) //�����: ������ ����.
 	abstract fun partLeftLeg(entity: Entity) //�����: ����� ����.
 	
+	abstract fun hasOffhand(entity: Entity): Boolean
+	
 	override fun render(entity: Entity, x: Float, y: Float, z: Float, yaw: Float, pitch: Float, parTicks: Float) {
-		this.bipedHead.showModel = false
-		this.bipedBody.showModel = false
-		this.bipedHeadwear.showModel = false
-		this.bipedLeftArm.showModel = false
-		this.bipedLeftLeg.showModel = false
-		this.bipedRightArm.showModel = false
-		this.bipedRightLeg.showModel = false
+		bipedHead.showModel = false
+		bipedBody.showModel = false
+		bipedHeadwear.showModel = false
+		bipedLeftArm.showModel = false
+		bipedLeftLeg.showModel = false
+		bipedRightArm.showModel = false
+		bipedRightLeg.showModel = false
 		
 		glPushMatrix()
 		
@@ -44,6 +46,7 @@ abstract class AdvancedArmorModel: ModelBiped() {
 				
 				val itemstack = living.heldItem
 				heldItemRight = if (itemstack != null) 1 else 0
+				heldItemLeft = if (hasOffhand(entity)) 1 else 0
 				
 				if (entity is EntityPlayer) {
 					val player = entity as EntityPlayer?

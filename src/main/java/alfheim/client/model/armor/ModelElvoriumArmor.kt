@@ -4,6 +4,7 @@ import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.AlfheimItems
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -109,9 +110,11 @@ class ModelElvoriumArmor
 		}
 	}
 	
+	override fun hasOffhand(entity: Entity) = entity is EntityPlayer && entity.commandSenderName == "AlexSocol" && entity.heldItem?.item !== AlfheimItems.royalStaff
+	
 	companion object {
 		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/ElvoriumArmor.obj"))
+		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/ElvoriumArmor.obj"))!!
 		
 		fun ink(e: Entity, slot: Int): Boolean {
 			var slot = slot

@@ -7,16 +7,17 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
+import vazkii.botania.api.recipe.IElvenItem
 import vazkii.botania.common.Botania
 import kotlin.math.*
 
-class ItemElvenResource: Item /*implements IElvenItem, ILensEffect BACK*/() {
+class ItemElvenResource: Item(), IElvenItem/*, ILensEffect*/ {
 	private val texture = arrayOfNulls<IIcon>(subItems.size)
 	
 	init {
-		this.creativeTab = AlfheimCore.alfheimTab
-		this.setHasSubtypes(true)
-		this.unlocalizedName = "ElvenItems"
+		creativeTab = AlfheimCore.alfheimTab
+		setHasSubtypes(true)
+		unlocalizedName = "ElvenItems"
 	}
 	
 	override fun registerIcons(reg: IIconRegister) {
@@ -27,15 +28,14 @@ class ItemElvenResource: Item /*implements IElvenItem, ILensEffect BACK*/() {
 		mine = reg.registerIcon(ModInfo.MODID + ":misc/mine")
 		wind = reg.registerIcon(ModInfo.MODID + ":misc/wind")
 		wing = reg.registerIcon(ModInfo.MODID + ":misc/wing")
+		
+		orn = reg.registerIcon(ModInfo.MODID + ":misc/focus_whatever_orn")
+		dep = reg.registerIcon(ModInfo.MODID + ":misc/focus_warding_depth")
 	}
 	
-	override fun getIconFromDamage(meta: Int): IIcon {
-		return texture[max(0, min(meta, texture.size - 1))]!!
-	}
+	override fun getIconFromDamage(meta: Int) = texture[max(0, min(meta, texture.size - 1))]!!
 	
-	override fun getUnlocalizedName(stack: ItemStack): String {
-		return "item." + subItems[max(0, min(stack.itemDamage, subItems.size - 1))]
-	}
+	override fun getUnlocalizedName(stack: ItemStack) = "item.${subItems[max(0, min(stack.itemDamage, subItems.size - 1))]}"
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) {
@@ -48,18 +48,18 @@ class ItemElvenResource: Item /*implements IElvenItem, ILensEffect BACK*/() {
 		
 		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig"/*, "Transferer" BACK*/)
 		
-		var harp: IIcon? = null
-		var mine: IIcon? = null
-		var wind: IIcon? = null
-		var wing: IIcon? = null
-	}
-	/*
-	@Override
-	public boolean isElvenItem(ItemStack stack) {
-		return stack.getItemDamage() == ElvenResourcesMetas.InterdimensionalGatewayCore;
+		lateinit var harp: IIcon
+		lateinit var mine: IIcon
+		lateinit var wind: IIcon
+		lateinit var wing: IIcon
+		
+		lateinit var orn: IIcon
+		lateinit var dep: IIcon
 	}
 	
-	@Override
+	override fun isElvenItem(stack: ItemStack) = stack.itemDamage == ElvenResourcesMetas.InterdimensionalGatewayCore
+	
+	/*@Override
 	public void apply(ItemStack stack, BurstProperties props) {}
 	
 	@Override

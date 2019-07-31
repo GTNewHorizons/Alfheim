@@ -12,7 +12,7 @@ import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.model.entity.*
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
-import alfheim.client.render.item.RenderItemAnomaly
+import alfheim.client.render.item.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
@@ -24,7 +24,7 @@ import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
@@ -57,6 +57,7 @@ class ClientProxy: CommonProxy() {
 		}
 		
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff())
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, RenderBlockItemHolder())

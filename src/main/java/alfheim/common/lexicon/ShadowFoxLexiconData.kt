@@ -41,7 +41,7 @@ object ShadowFoxLexiconData {
 	val lamp: LexiconEntry
 	val silencer: LexiconEntry
 	val amp: LexiconEntry
-	//    val crysanthermum: LexiconEntry
+	val crysanthermum: LexiconEntry
 	val specialAxe: LexiconEntry
 	val frozenStar: LexiconEntry
 	val dagger: LexiconEntry
@@ -154,7 +154,7 @@ object ShadowFoxLexiconData {
 									  PageFurnaceRecipe("6", ItemStack(ShadowFoxBlocks.netherWood)),
 									  PageFurnaceRecipe("7", ItemStack(ShadowFoxBlocks.netherPlanks)))
 		
-		calicoSapling = ShadowfoxLexiconEntry("calicoTree", dendrology, ShadowFoxBlocks.circuitSapling)
+		calicoSapling = ShadowfoxLexiconEntry("calicoTree", dendrology, ShadowFoxBlocks.calicoSapling)
 		calicoSapling.setLexiconPages(PageText("0"),
 									  PageTreeCrafting("1", ShadowFoxRecipes.recipesCalicoTree),
 									  PageCraftingRecipe("2", ShadowFoxRecipes.recipesCalicoPlanks),
@@ -187,10 +187,10 @@ object ShadowFoxLexiconData {
 		amp.setLexiconPages(PageText("0"),
 							PageCraftingRecipe("1", ShadowFoxRecipes.recipesAmplifier))
 		
-		//        crysanthermum = ShadowfoxLexiconEntry("crysanthermum", BotaniaAPI.categoryGenerationFlowers, BotaniaAPI.internalHandler.getSubTileAsStack("crysanthermum"))
-		//        crysanthermum.setLexiconPages(PageText("0"),
-		//                PageText("1"),
-		//                PagePetalRecipe("2", ModRecipes.recipeCrysanthermum))
+		crysanthermum = ShadowfoxLexiconEntry("crysanthermum", BotaniaAPI.categoryGenerationFlowers, BotaniaAPI.internalHandler.getSubTileAsStack("crysanthermum"))
+		crysanthermum.setLexiconPages(PageText("0"),
+									  PageText("1"),
+									  PagePetalRecipe("2", ShadowFoxRecipes.recipeCrysanthermum))
 		
 		specialAxe = ShadowFoxRelicEntry("andmyaxe", BotaniaAPI.categoryAlfhomancy, ShadowFoxItems.wireAxe).setKnowledgeType(BotaniaAPI.relicKnowledge)
 		specialAxe.setLexiconPages(PageText("0"),

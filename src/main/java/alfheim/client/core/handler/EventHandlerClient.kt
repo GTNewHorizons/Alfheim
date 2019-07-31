@@ -8,11 +8,13 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.gui.ItemsRemainingRenderHandler
+import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.AlfheimItems
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -79,6 +81,9 @@ class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
+		if (e.entityPlayer.commandSenderName == "AlexSocol")
+			e.renderer.modelBipedMain.heldItemLeft = if (e.entityPlayer.heldItem?.item !== AlfheimItems.royalStaff) 1 else 0
+		
 		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
 			e.isCanceled = true
 			return
@@ -90,8 +95,52 @@ class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerSpecialPreRender(e: RenderPlayerEvent.Specials.Pre) {
-		if (e.entityPlayer.commandSenderName == "AlexSocol")
+		if (e.entityPlayer.commandSenderName == "AlexSocol") {
 			(e.entityPlayer as AbstractClientPlayer).func_152121_a(Type.SKIN, LibResourceLocations.skin)
+			
+			if (e.entityPlayer.heldItem?.item !== AlfheimItems.royalStaff) run {
+				glPushMatrix()
+				var f1: Float
+				
+				if (e.renderer.mainModel.isChild) {
+					f1 = 0.5f
+					glTranslatef(0.0f, 0.625f, 0.0f)
+					glRotatef(-20.0f, -1.0f, 0.0f, 0.0f)
+					glScalef(f1, f1, f1)
+				}
+				
+				e.renderer.modelBipedMain.bipedLeftArm.postRender(0.0625f)
+				glTranslatef(-0.0625f, 0.4375f, 0.0625f)
+				
+				f1 = 0.625f
+				
+				glTranslatef(0.0f, 0.1875f, 0.0f)
+				glScalef(f1, -f1, f1)
+				glRotatef(-100.0f, 1.0f, 0.0f, 0.0f)
+				glRotatef(45.0f, 0.0f, 1.0f, 0.0f)
+				
+				val f2: Float
+				val i = 0xFFFFFF
+				val f5: Float
+				
+				val f4 = (i shr 16 and 255).toFloat() / 255.0f
+				f5 = (i shr 8 and 255).toFloat() / 255.0f
+				f2 = (i and 255).toFloat() / 255.0f
+				glColor4f(f4, f5, f2, 1.0f)
+				
+				glPushMatrix()
+				glTranslated(0.1, 1.5, 0.15)
+				glRotatef(180f, 1f, 0f, 0f)
+				
+				glEnable(GL_BLEND)
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+				ModelCreatorStaff.instance.render()
+				glDisable(GL_BLEND)
+				glPopMatrix()
+				
+				glPopMatrix()
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -128,7 +177,7 @@ class EventHandlerClient {
 	fun onWorldLastRender(e: RenderWorldLastEvent) {
 		AstrolabePreviewHandler.onWorldRenderLast(e)
 		if (AlfheimCore.enableMMO) renderMMO()
-		
+
 //		glPushMatrix()
 //		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
 //		glTranslatef(0.5f, 5.5f, 0.5f)
