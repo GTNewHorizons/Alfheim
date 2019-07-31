@@ -1,6 +1,9 @@
 package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -9,9 +12,6 @@ import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.block.material.MaterialCustomSmeltingWood
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
@@ -60,6 +60,5 @@ class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 		return ItemStack(this, 1, meta)
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =
-		ShadowFoxLexiconData.netherSapling
+	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling
 }

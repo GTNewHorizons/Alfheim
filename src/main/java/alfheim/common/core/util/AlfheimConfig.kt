@@ -7,7 +7,7 @@ import alfheim.api.ModInfo
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.util.*
+import net.minecraft.util.Vec3
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -288,7 +288,7 @@ object AlfheimConfig {
 	
 	private fun writeStandardCoords(angle: Double): String {
 		val v = mkVecLenRotMine(citiesDistance, angle)
-		return MathHelper.floor_double(v.xCoord).toString() + " : 300 : " + MathHelper.floor_double(v.zCoord) + "\n"
+		return "${v.xCoord.mfloor()} : 300 : ${v.zCoord.mfloor()}\n"
 	}
 	
 	private fun makeVectorFromString(s: String): Vec3 {

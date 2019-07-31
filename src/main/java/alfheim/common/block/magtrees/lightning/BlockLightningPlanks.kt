@@ -1,6 +1,9 @@
 package alfheim.common.block.magtrees.lightning
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -8,13 +11,10 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
-import alfheim.common.block.material.MaterialCustomSmeltingWood
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockLightningPlanks(): BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler {
+class BlockLightningPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler {
 	
 	private val name = "lightningPlanks"
 	

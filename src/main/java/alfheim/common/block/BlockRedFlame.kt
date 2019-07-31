@@ -2,7 +2,7 @@ package alfheim.common.block
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
@@ -52,24 +52,18 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 			player.getBreakSpeed(this, false, metadata, x, y, z) / hardness / 30f
 	}
 	
-	override fun isCollidable(): Boolean {
-		return false
-	}
+	override fun isCollidable() = false
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(reg: IIconRegister) {
-		this.icons = arrayOf(reg.registerIcon(ModInfo.MODID + ":MuspelheimFire0"), reg.registerIcon(ModInfo.MODID + ":MuspelheimFire1"))
+		icons = arrayOf(reg.registerIcon(ModInfo.MODID + ":MuspelheimFire0"), reg.registerIcon(ModInfo.MODID + ":MuspelheimFire1"))
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getFireIcon(i: Int): IIcon {
-		return this.icons[i]
-	}
+	override fun getFireIcon(i: Int) = icons[i]
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIcon(p_149691_1_: Int, p_149691_2_: Int): IIcon {
-		return this.icons[0]
-	}
+	override fun getIcon(p_149691_1_: Int, p_149691_2_: Int) = icons[0]
 	
 	override fun onEntityCollidedWithBlock(world: World, x: Int, y: Int, z: Int, entity: Entity) {
 		if (entity is EntityPlayer && BaublesApi.getBaubles(entity).getStackInSlot(0)?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity).getStackInSlot(0), entity, 50, true)) return
@@ -100,9 +94,9 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	}
 	
 	fun canNeighborBurn(world: World, x: Int, y: Int, z: Int): Boolean {
-		return (this.canCatchFire(world, x + 1, y, z, WEST) || this.canCatchFire(world, x - 1, y, z, EAST)
-				|| this.canCatchFire(world, x, y - 1, z, UP) || this.canCatchFire(world, x, y + 1, z, DOWN)
-				|| this.canCatchFire(world, x, y, z - 1, SOUTH) || this.canCatchFire(world, x, y, z + 1, NORTH))
+		return (canCatchFire(world, x + 1, y, z, WEST) || canCatchFire(world, x - 1, y, z, EAST)
+				|| canCatchFire(world, x, y - 1, z, UP) || canCatchFire(world, x, y + 1, z, DOWN)
+				|| canCatchFire(world, x, y, z - 1, SOUTH) || canCatchFire(world, x, y, z + 1, NORTH))
 	}
 	
 	fun getChanceOfNeighborsEncouragingFire(world: World, x: Int, y: Int, z: Int): Int {
@@ -112,12 +106,12 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 			0
 		} else {
 			var l = b0.toInt()
-			l = this.getChanceToEncourageFire(world, x + 1, y, z, l, WEST)
-			l = this.getChanceToEncourageFire(world, x - 1, y, z, l, EAST)
-			l = this.getChanceToEncourageFire(world, x, y - 1, z, l, UP)
-			l = this.getChanceToEncourageFire(world, x, y + 1, z, l, DOWN)
-			l = this.getChanceToEncourageFire(world, x, y, z - 1, l, SOUTH)
-			l = this.getChanceToEncourageFire(world, x, y, z + 1, l, NORTH)
+			l = getChanceToEncourageFire(world, x + 1, y, z, l, WEST)
+			l = getChanceToEncourageFire(world, x - 1, y, z, l, EAST)
+			l = getChanceToEncourageFire(world, x, y - 1, z, l, UP)
+			l = getChanceToEncourageFire(world, x, y + 1, z, l, DOWN)
+			l = getChanceToEncourageFire(world, x, y, z - 1, l, SOUTH)
+			l = getChanceToEncourageFire(world, x, y, z + 1, l, NORTH)
 			l
 		}
 	}
@@ -185,7 +179,5 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		}
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.ruling
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.ruling
 }

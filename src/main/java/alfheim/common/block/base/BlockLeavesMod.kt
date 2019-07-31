@@ -2,6 +2,7 @@ package alfheim.common.block.base
 
 import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
+import alfheim.common.item.block.ItemSubtypedBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -13,7 +14,6 @@ import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.*
-import alfheim.common.item.block.ItemSubtypedBlockMod
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
@@ -82,8 +82,8 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	
 	override fun beginLeavesDecay(world: World?, x: Int, y: Int, z: Int) = Unit
 	
-	override fun updateTick(world: World?, x: Int, y: Int, z: Int, random: Random?) {
-		if (!world!!.isRemote) {
+	override fun updateTick(world: World, x: Int, y: Int, z: Int, random: Random) {
+		if (!world.isRemote) {
 			val meta = world.getBlockMetadata(x, y, z)
 			if (!canDecay(meta)) return
 			

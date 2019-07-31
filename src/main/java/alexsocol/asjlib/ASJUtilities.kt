@@ -924,7 +924,7 @@ class ASJUtilities {
 		fun printStackTrace() {
 			log("Stack trace: ")
 			val stes = Thread.currentThread().stackTrace
-			for (i in 2 until stes.size) trace("\tat $stes[i]")
+			for (i in 2 until stes.size) log("\tat ${stes[i]}")
 		}
 		
 		@JvmStatic

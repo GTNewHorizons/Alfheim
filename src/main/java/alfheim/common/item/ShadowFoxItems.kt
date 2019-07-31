@@ -1,6 +1,5 @@
 package alfheim.common.item
 
-import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict.COAL_NETHERWOOD
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
@@ -11,7 +10,7 @@ import alfheim.api.lib.LibOreDict.SPLINTERS_NETHERWOOD
 import alfheim.api.lib.LibOreDict.SPLINTERS_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
-import alfheim.common.item.block.ItemStarPlacer
+import alfheim.common.item.block.*
 import alfheim.common.item.creator.*
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.rod.*
@@ -40,9 +39,10 @@ object ShadowFoxItems {
 	val flameRod: Item
 	val wireAxe: Item
 	val star: Item
+	val star2: Item
 	val trisDagger: Item
-	val fireGrenade: Item // TODO check
-	val splashPotion: Item // TODO check
+	val fireGrenade: Item
+	val splashPotion: Item
 	
 	init {
 		irisSeeds = ItemColorSeeds()
@@ -62,18 +62,17 @@ object ShadowFoxItems {
 		flameRod = ItemFlameRod()
 		wireAxe = ItemWireAxe()
 		star = ItemStarPlacer()
+		star2 = ItemStarPlacer2()
 		trisDagger = ItemTrisDagger()
-		splashPotion = ItemSplashPotion() // TODO check
-		fireGrenade = ItemFireGrenade() // TODO check
+		splashPotion = ItemSplashPotion()
+		fireGrenade = ItemFireGrenade()
 		initOreDict()
 		
-		if (!ModInfo.DEV) {
-			EventHandlerTooltip.register()
-			EventHandlerTooltip.registerStack(ItemStack(flameRod, 1, OreDictionary.WILDCARD_VALUE))
-			EventHandlerTooltip.registerStack(ItemBlockSpecialFlower.ofType("crysanthermum"))
-			EventHandlerTooltip.registerStack(ItemBlockFloatingSpecialFlower.ofType("crysanthermum"))
-			EventHandlerTooltip.registerStack(ItemStack(emblem, 1, 3))
-		}
+		EventHandlerTooltip.register()
+		EventHandlerTooltip.registerStack(ItemStack(flameRod, 1, OreDictionary.WILDCARD_VALUE))
+		EventHandlerTooltip.registerStack(ItemBlockSpecialFlower.ofType("crysanthermum"))
+		EventHandlerTooltip.registerStack(ItemBlockFloatingSpecialFlower.ofType("crysanthermum"))
+		EventHandlerTooltip.registerStack(ItemStack(emblem, 1, 3))
 	}
 	
 	fun initOreDict() {

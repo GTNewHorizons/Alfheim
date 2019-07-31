@@ -99,6 +99,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar())
 		
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderThrownPotion())
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderThrownItem())
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderGrieferCreeper())

@@ -1,4 +1,4 @@
-package alfheim.common.block.subtile
+package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.ModInfo
 import net.minecraft.client.Minecraft

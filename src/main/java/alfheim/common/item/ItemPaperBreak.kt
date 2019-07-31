@@ -19,13 +19,9 @@ class ItemPaperBreak: Item() {
 		unlocalizedName = "PaperBreak"
 	}
 	
-	override fun getIconIndex(stack: ItemStack): IIcon {
-		return textures[if (stack.hasDisplayName()) 1 else 0]!!
-	}
+	override fun getIconIndex(stack: ItemStack) = textures[if (stack.hasDisplayName()) 1 else 0]!!
 	
-	override fun getIcon(stack: ItemStack, pass: Int): IIcon {
-		return getIconIndex(stack)
-	}
+	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
@@ -38,7 +34,7 @@ class ItemPaperBreak: Item() {
 		if (!world.isRemote) {
 			val name = getCompound(stack, "display", false).getString("Name")
 			val pt = PartySystem.getParty(player)
-			val pl = pt!!.pl
+			val pl = pt.pl
 			val flag1 = name != null && name.isNotEmpty()
 			val flag2 = flag1 && name!!.equals(player.commandSenderName, ignoreCase = true)
 			

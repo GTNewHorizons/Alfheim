@@ -7,6 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 
 class BlockNetherWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.netherPlanks): BlockRainbowWoodSlab(full, source) {
+	
 	override fun getFullBlock() = ShadowFoxBlocks.netherSlabsFull as BlockSlab
 	
 	override fun register() {

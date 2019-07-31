@@ -1,4 +1,4 @@
-package alfheim.common.block.tile.sub
+package alfheim.common.block.tile.sub.anomaly
 
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem

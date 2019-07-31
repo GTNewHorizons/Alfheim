@@ -257,7 +257,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			ASJUtilities.warn("If the server'd crashed next tick - report this to mod author, ignore otherwise.")
 			return
 		}
-		val source = source
 		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null)
 		isPlayingMusic = false
 		if (worldObj.isRemote) BossBarHandler.setCurrentBoss(null)

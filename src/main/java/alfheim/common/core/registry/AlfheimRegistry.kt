@@ -11,6 +11,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.*
+import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.asm.AlfheimHookLoader
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.*
@@ -145,6 +146,7 @@ object AlfheimRegistry {
 		}
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
+		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance)
 		registerEntity(EntitySpellHarp::class.java, "SpellArfa", AlfheimCore.instance)

@@ -64,13 +64,13 @@ class TheRodOfTheDebug: Item() {
 	
 	override fun onItemUse(stack: ItemStack?, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		try {
-			if (world!!.isRemote) return false
+			// if (world!!.isRemote) return false
 			
-			val te = world.getTileEntity(x, y, z)
+			val te = world!!.getTileEntity(x, y, z)
 			if (te != null) {
-				//				NBTTagCompound nbt = new NBTTagCompound();
-				//				te.writeToNBT(nbt);
-				//				for (String s : ASJUtilities.toString(nbt).split("\n")) ASJUtilities.chatLog(s);
+				val nbt = NBTTagCompound()
+				te.writeToNBT(nbt)
+				for (s in ASJUtilities.toString(nbt).split("\n")) ASJUtilities.chatLog(s, world)
 				
 				//				if (te instanceof TileAnomaly) ((TileAnomaly) te).addSubTile("Lightning");
 				

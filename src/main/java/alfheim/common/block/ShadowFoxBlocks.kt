@@ -7,12 +7,14 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
+import alfheim.common.block.magtrees.calico.*
+import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
 import alfheim.common.block.magtrees.nether.*
 import alfheim.common.block.magtrees.sealing.*
 import alfheim.common.block.schema.*
-import alfheim.common.block.subtile.*
 import alfheim.common.block.tile.*
+import alfheim.common.block.tile.sub.flower.*
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
@@ -37,10 +39,12 @@ object ShadowFoxBlocks {
 	
 	var coloredDirtBlock: Block
 	var rainbowDirtBlock: Block
+	var auroraDirt: Block
 	var irisSapling: Block
 	var irisLeaves0: Block
 	var irisLeaves1: Block
 	var rainbowLeaves: Block
+	var auroraLeaves: Block
 	var irisGrass: Block
 	var rainbowGrass: BlockRainbowGrass
 	
@@ -49,9 +53,11 @@ object ShadowFoxBlocks {
 	var irisWood2: Block
 	var irisWood3: Block
 	var rainbowWood: Block
+	var auroraWood: Block
 	
 	var coloredPlanks: Block
 	var rainbowPlanks: Block
+	var auroraPlanks: Block
 	
 	var irisTallGrass0: Block
 	var irisTallGrass1: Block
@@ -59,12 +65,15 @@ object ShadowFoxBlocks {
 	
 	var coloredSlabs: Array<Block>
 	var rainbowSlabs: Block
+	var auroraSlabs: Block
 	
 	var coloredSlabsFull: Array<Block>
 	var rainbowSlabsFull: Block
+	var auroraSlabsFull: Block
 	
 	var coloredStairs: Array<Block>
 	var rainbowStairs: Block
+	var auroraStairs: Block
 	
 	var itemDisplay: Block
 	var treeCrafter: MultiblockSet
@@ -75,7 +84,6 @@ object ShadowFoxBlocks {
 	var lightningWood: Block
 	var lightningLeaves: Block
 	var lightningPlanks: Block
-	
 	var lightningStairs: Block
 	var lightningSlabs: Block
 	var lightningSlabsFull: Block
@@ -92,6 +100,22 @@ object ShadowFoxBlocks {
 	var netherSlabsFull: Block
 	var netherStairs: Block
 	
+	var circuitSapling: Block
+	var circuitWood: Block
+	var circuitLeaves: Block
+	var circuitPlanks: Block
+	var circuitSlabs: Block
+	var circuitSlabsFull: Block
+	var circuitStairs: Block
+	
+	var calicoSapling: Block
+	var calicoWood: Block
+	var calicoLeaves: Block
+	var calicoPlanks: Block
+	var calicoSlabs: Block
+	var calicoSlabsFull: Block
+	var calicoStairs: Block
+	
 	var altWood0: Block
 	var altWood1: Block
 	var altLeaves: Block
@@ -104,11 +128,11 @@ object ShadowFoxBlocks {
 	
 	var kindling: Block
 	
-	lateinit var markerBlock: Block
-	lateinit var schemaBlock: Block
-	lateinit var schemaGenBlock: Block
-	lateinit var fillerBlock: Block
-	lateinit var annihilatorBlock: Block
+	var markerBlock: Block
+	var schemaBlock: Block
+	var schemaGenBlock: Block
+	var fillerBlock: Block
+	var annihilatorBlock: Block
 	
 	var irisLamp: Block
 	
@@ -123,6 +147,7 @@ object ShadowFoxBlocks {
 	var amp: Block
 	
 	var star: Block
+	var star2: Block
 	
 	var shimmerQuartz: BlockShimmerQuartz
 	var shimmerQuartzSlab: BlockShimmerQuartzSlab
@@ -134,16 +159,20 @@ object ShadowFoxBlocks {
 	var iridescentTree2: IIridescentSaplingVariant
 	var iridescentTree3: IIridescentSaplingVariant
 	var bifrostTree: IIridescentSaplingVariant
+	var auroraTree: IIridescentSaplingVariant
 	var altTree0: IIridescentSaplingVariant
 	var altTree1: IIridescentSaplingVariant
 	
 	init {
 		coloredDirtBlock = BlockColoredDirt()
 		rainbowDirtBlock = BlockRainbowDirt()
+		auroraDirt = BlockAuroraDirt()
+		
 		irisSapling = BlockColoredSapling()
 		irisLeaves0 = BlockColoredLeaves(0)
 		irisLeaves1 = BlockColoredLeaves(1)
 		rainbowLeaves = BlockRainbowLeaves()
+		auroraLeaves = BlockAuroraLeaves()
 		irisGrass = BlockColoredGrass()
 		rainbowGrass = BlockRainbowGrass()
 		invisibleFlame = BlockManaFlame("invisibleFlame", TileInvisibleManaFlame::class.java)
@@ -154,9 +183,11 @@ object ShadowFoxBlocks {
 		irisWood2 = BlockColoredWood(2)
 		irisWood3 = BlockColoredWood(3)
 		rainbowWood = BlockRainbowWood()
+		auroraWood = BlockAuroraWood()
 		
 		coloredPlanks = BlockColoredPlanks()
 		rainbowPlanks = BlockRainbowPlanks()
+		auroraPlanks = BlockAuroraPlanks()
 		
 		coloredSlabs = Array(16) { i -> BlockColoredWoodSlab(false, i) }
 		coloredSlabsFull = Array(16) { i -> BlockColoredWoodSlab(true, i) }
@@ -165,6 +196,10 @@ object ShadowFoxBlocks {
 		rainbowSlabsFull = BlockRainbowWoodSlab(true)
 		rainbowSlabs = BlockRainbowWoodSlab(false)
 		rainbowStairs = BlockRainbowWoodStairs()
+		
+		auroraSlabsFull = BlockAuroraWoodSlab(true)
+		auroraSlabs = BlockAuroraWoodSlab(false)
+		auroraStairs = BlockAuroraWoodStairs()
 		
 		irisTallGrass0 = BlockColoredDoubleGrass(0)
 		irisTallGrass1 = BlockColoredDoubleGrass(1)
@@ -192,6 +227,22 @@ object ShadowFoxBlocks {
 		netherSlabsFull = BlockNetherWoodSlab(true)
 		netherStairs = BlockNetherWoodStairs()
 		
+		circuitSapling = BlockCircuitSapling()
+		circuitWood = BlockCircuitWood()
+		circuitLeaves = BlockCircuitLeaves()
+		circuitPlanks = BlockCircuitPlanks()
+		circuitSlabs = BlockCircuitWoodSlab(false)
+		circuitSlabsFull = BlockCircuitWoodSlab(true)
+		circuitStairs = BlockCircuitWoodStairs()
+		
+		calicoSapling = BlockCalicoSapling()
+		calicoWood = BlockCalicoWood()
+		calicoLeaves = BlockCalicoLeaves()
+		calicoPlanks = BlockCalicoPlanks()
+		calicoSlabs = BlockCalicoWoodSlab(false)
+		calicoSlabsFull = BlockCalicoWoodSlab(true)
+		calicoStairs = BlockCalicoWoodStairs()
+		
 		altWood0 = BlockAltWood(0)
 		altWood1 = BlockAltWood(1)
 		altLeaves = BlockAltLeaves()
@@ -205,13 +256,11 @@ object ShadowFoxBlocks {
 		
 		kindling = BlockKindling()
 		
-		if (ModInfo.DEV) {
-			schemaBlock = BlockSchema()
-			markerBlock = BlockMarker()
-			schemaGenBlock = BlockSchematicOak()
-			fillerBlock = BlockFiller()
-			annihilatorBlock = BlockSchematicAnnihilator()
-		}
+		schemaBlock = BlockSchema()
+		markerBlock = BlockMarker()
+		schemaGenBlock = BlockSchematicOak()
+		fillerBlock = BlockFiller()
+		annihilatorBlock = BlockSchematicAnnihilator()
 		
 		irisLamp = BlockColoredLamp()
 		
@@ -226,6 +275,7 @@ object ShadowFoxBlocks {
 		amp = BlockAmp()
 		
 		star = BlockStar()
+		star2 = BlockCracklingStar()
 		
 		shimmerQuartz = BlockShimmerQuartz()
 		shimmerQuartzSlab = BlockShimmerQuartzSlab(shimmerQuartz, false)
@@ -242,11 +292,10 @@ object ShadowFoxBlocks {
 		GameRegistry.registerTileEntity(TileLivingwoodFunnel::class.java, "${ModInfo.MODID}:livingwoodFunnel")
 		GameRegistry.registerTileEntity(TileLightningRod::class.java, "${ModInfo.MODID}:lightningRod")
 		GameRegistry.registerTileEntity(TileEntityStar::class.java, "${ModInfo.MODID}:star")
+		GameRegistry.registerTileEntity(TileCracklingStar::class.java, "${ModInfo.MODID}:star2")
 		
-		if (ModInfo.DEV) {
-			GameRegistry.registerTileEntity(TileSchema::class.java, "${ModInfo.MODID}:schema")
-			GameRegistry.registerTileEntity(TileSchematicAnnihilator::class.java, "${ModInfo.MODID}:schematicAnnihilator")
-		}
+		GameRegistry.registerTileEntity(TileSchema::class.java, "${ModInfo.MODID}:schema")
+		GameRegistry.registerTileEntity(TileSchematicAnnihilator::class.java, "${ModInfo.MODID}:schematicAnnihilator")
 		
 		BotaniaAPI.registerPaintableBlock(coloredDirtBlock)
 		
@@ -255,6 +304,7 @@ object ShadowFoxBlocks {
 		iridescentTree2 = ShadowFoxAPI.addTreeVariant(coloredDirtBlock, irisWood2, irisLeaves1, 8, 11, 8)
 		iridescentTree3 = ShadowFoxAPI.addTreeVariant(coloredDirtBlock, irisWood3, irisLeaves1, 12, 15, 8)
 		bifrostTree = ShadowFoxAPI.addTreeVariant(rainbowDirtBlock, rainbowWood, rainbowLeaves)
+		auroraTree = ShadowFoxAPI.addTreeVariant(auroraDirt, auroraWood, auroraLeaves)
 		altTree0 = ShadowFoxAPI.addTreeVariant(BotaniaBlocks.altGrass, altWood0, altLeaves, 0, 3)
 		altTree1 = ShadowFoxAPI.addTreeVariant(BotaniaBlocks.altGrass, altWood1, altLeaves, 4, 5)
 		
@@ -270,22 +320,27 @@ object ShadowFoxBlocks {
 		setBurnable(irisWood2, 5, 5)
 		setBurnable(irisWood3, 5, 5)
 		setBurnable(rainbowWood, 5, 5)
+		setBurnable(auroraWood, 5, 5)
 		setBurnable(altWood0, 5, 5)
 		setBurnable(altWood1, 5, 5)
 		
 		setBurnable(coloredPlanks, 5, 20)
 		setBurnable(rainbowPlanks, 5, 20)
+		setBurnable(auroraPlanks, 5, 20)
 		setBurnable(altPlanks, 5, 20)
 		
 		setBurnable(coloredSlabs, 5, 20)
 		setBurnable(coloredSlabsFull, 5, 20)
 		setBurnable(rainbowSlabs, 5, 20)
 		setBurnable(rainbowSlabsFull, 5, 20)
+		setBurnable(auroraSlabs, 5, 20)
+		setBurnable(auroraSlabsFull, 5, 20)
 		setBurnable(altSlabs, 5, 20)
 		setBurnable(altSlabsFull, 5, 20)
 		
 		setBurnable(coloredStairs, 5, 20)
 		setBurnable(rainbowStairs, 5, 20)
+		setBurnable(auroraStairs, 5, 20)
 		setBurnable(altStairs, 5, 20)
 		
 		setBurnable(irisLeaves0, 30, 60)
@@ -334,11 +389,20 @@ object ShadowFoxBlocks {
 		(rainbowSlabs as BlockSlabMod).register()
 		(rainbowSlabsFull as BlockSlabMod).register()
 		
+		(auroraSlabs as BlockSlabMod).register()
+		(auroraSlabsFull as BlockSlabMod).register()
+		
 		(lightningSlabs as BlockSlabMod).register()
 		(lightningSlabsFull as BlockSlabMod).register()
 		
 		(netherSlabs as BlockSlabMod).register()
 		(netherSlabsFull as BlockSlabMod).register()
+		
+		(calicoSlabs as BlockSlabMod).register()
+		(calicoSlabsFull as BlockSlabMod).register()
+		
+		(circuitSlabs as BlockSlabMod).register()
+		(circuitSlabsFull as BlockSlabMod).register()
 		
 		for (i in altSlabs) {
 			(i as BlockSlabMod).register()

@@ -52,25 +52,18 @@ class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
 			player.getBreakSpeed(this, false, metadata, x, y, z) / hardness / 30f
 	}
 	
-	override fun isOpaqueCube(): Boolean {
-		return false
-	}
+	override fun isOpaqueCube() = false
 	
 	@SideOnly(Side.CLIENT)
-	override fun getRenderBlockPass(): Int {
-		return 1
-	}
+	override fun getRenderBlockPass() = 1
 	
 	@SideOnly(Side.CLIENT)
-	override fun shouldSideBeRendered(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int): Boolean {
-		return world.getBlock(x, y, z) !== this && !world.getBlock(x, y, z).isOpaqueCube
-	}
+	override fun shouldSideBeRendered(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) =
+		world.getBlock(x, y, z) !== this && !world.getBlock(x, y, z).isOpaqueCube
 	
-	override fun quantityDropped(r: Random?): Int {
-		return 0
-	}
+	override fun quantityDropped(r: Random?) = 0
 	
-	public override fun dropBlockAsItem(w: World, x: Int, y: Int, z: Int, s: ItemStack) {}
+	override fun dropBlockAsItem(w: World, x: Int, y: Int, z: Int, s: ItemStack) = Unit
 	
 	override fun onEntityWalking(w: World, x: Int, y: Int, z: Int, e: Entity) {
 		if (e is EntityPlayer && BaublesApi.getBaubles(e).getStackInSlot(0)?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e).getStackInSlot(0), e, 50, true)) return
@@ -87,7 +80,7 @@ class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
 	}
 	
 	override fun onEntityCollidedWithBlock(w: World, x: Int, y: Int, z: Int, e: Entity) {
-		this.onEntityWalking(w, x, y, z, e)
+		onEntityWalking(w, x, y, z, e)
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
@@ -98,11 +91,7 @@ class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
 		}
 	}
 	
-	override fun tickRate(world: World?): Int {
-		return 1
-	}
+	override fun tickRate(world: World?) = 1
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.ruling
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.ruling
 }

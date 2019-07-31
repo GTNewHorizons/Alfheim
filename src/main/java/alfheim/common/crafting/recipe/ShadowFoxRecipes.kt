@@ -43,6 +43,11 @@ import vazkii.botania.common.lib.LibOreDict.PETAL as PETALS
 @Suppress("SameParameterValue")
 object ShadowFoxRecipes {
 	
+	val recipeAuroraDirt: IRecipe
+	val recipeAuroraPlanks: IRecipe
+	val recipeAuroraStairsR: IRecipe
+	val recipeAuroraStairsL: IRecipe
+	val recipeAuroraSlabs: IRecipe
 	val recipesColoredDirt: List<IRecipe>
 	val recipesWoodPanel: List<IRecipe>
 	val recipesSlabs: List<IRecipe>
@@ -77,6 +82,14 @@ object ShadowFoxRecipes {
 	val recipesInfernalStairsR: IRecipe
 	val recipesInfernalSlabs: IRecipe
 	val recipesInfernalTwig: IRecipe
+	val recipesCalicoPlanks: IRecipe
+	val recipesCalicoStairsL: IRecipe
+	val recipesCalicoStairsR: IRecipe
+	val recipesCalicoSlabs: IRecipe
+	val recipesCircuitPlanks: IRecipe
+	val recipesCircuitStairsL: IRecipe
+	val recipesCircuitStairsR: IRecipe
+	val recipesCircuitSlabs: IRecipe
 	val recipesSixTorches: IRecipe
 	val recipesAltPlanks: List<IRecipe>
 	val recipesAltSlabs: List<IRecipe>
@@ -107,6 +120,8 @@ object ShadowFoxRecipes {
 	val recipesLightningTree: RecipeTreeCrafting
 	val recipesInfernalTree: RecipeTreeCrafting
 	val recipesSealingTree: RecipeTreeCrafting
+	val recipesCalicoTree: RecipeTreeCrafting
+	val recipesCircuitTree: RecipeTreeCrafting
 	
 	val recipeCrysanthermum: RecipePetals
 	
@@ -119,15 +134,21 @@ object ShadowFoxRecipes {
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(ShadowFoxBlocks.coloredDirtBlock, 8, i),
-																			 "DDD",
-																			 "DPD",
-																			 "DDD", 'P', DYES[i], 'D', ItemStack(Blocks.dirt, 1))
+							 "DDD",
+							 "DPD",
+							 "DDD", 'P', DYES[i], 'D', ItemStack(Blocks.dirt, 1))
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.rainbowDirtBlock, 8),
-																		 "DDD",
-																		 "DPD",
-																		 "DDD", 'P', DYES[16], 'D', ItemStack(Blocks.dirt, 1))
+						 "DDD",
+						 "DPD",
+						 "DDD", 'P', DYES[16], 'D', ItemStack(Blocks.dirt, 1))
 		
 		recipesColoredDirt = BotaniaAPI.getLatestAddedRecipes(17)
+		
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.auroraDirt),
+						 "DDD",
+						 "DPD", "DDD", 'P', MANA_PEARL, 'D', ItemStack(Blocks.dirt, 1))
+		
+		recipeAuroraDirt = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			addShapelessOreDictRecipe(ItemStack(BotaniaItems.dye, 1, i), LEAVES[i], PESTLE_AND_MORTAR)
@@ -140,6 +161,10 @@ object ShadowFoxRecipes {
 		
 		recipesWoodPanel = BotaniaAPI.getLatestAddedRecipes(17)
 		
+		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.auroraPlanks, 4), ShadowFoxBlocks.auroraWood)
+		
+		recipeAuroraPlanks = BotaniaAPI.getLatestAddedRecipe()
+		
 		for (i in 0..15)
 			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.coloredSlabs[i], 6),
 								   "QQQ",
@@ -149,6 +174,12 @@ object ShadowFoxRecipes {
 							   'Q', ItemStack(ShadowFoxBlocks.rainbowPlanks))
 		
 		recipesSlabs = BotaniaAPI.getLatestAddedRecipes(17)
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.auroraSlabs, 6),
+							   "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.auroraPlanks))
+		
+		recipeAuroraSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.coloredStairs[i], 4),
@@ -160,6 +191,12 @@ object ShadowFoxRecipes {
 		
 		recipesStairsR = BotaniaAPI.getLatestAddedRecipes(17)
 		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.auroraStairs, 4),
+							   "  Q", " QQ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.auroraPlanks))
+		
+		recipeAuroraStairsR = BotaniaAPI.getLatestAddedRecipe()
+		
 		for (i in 0..15)
 			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.coloredStairs[i], 4),
 								   "Q  ", "QQ ", "QQQ",
@@ -168,7 +205,13 @@ object ShadowFoxRecipes {
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.rainbowPlanks))
 		
-		recipesStairsL = BotaniaAPI.getLatestAddedRecipes(17)
+		recipesStairsL = BotaniaAPI.getLatestAddedRecipes(18)
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.auroraStairs, 4),
+							   "Q  ", "QQ ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.auroraPlanks))
+		
+		recipeAuroraStairsL = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			GameRegistry.addShapelessRecipe(ItemStack(ShadowFoxBlocks.coloredPlanks, 1, i),
@@ -177,6 +220,9 @@ object ShadowFoxRecipes {
 										ItemStack(ShadowFoxBlocks.rainbowSlabs), ItemStack(ShadowFoxBlocks.rainbowSlabs))
 		
 		recipesSlabsFull = BotaniaAPI.getLatestAddedRecipes(17)
+		
+		GameRegistry.addShapelessRecipe(ItemStack(ShadowFoxBlocks.auroraPlanks),
+										ItemStack(ShadowFoxBlocks.auroraSlabs), ItemStack(ShadowFoxBlocks.auroraSlabs))
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(ShadowFoxItems.colorfulSkyDirtRod, 1, i),
@@ -292,11 +338,11 @@ object ShadowFoxRecipes {
 		recipesAttribution = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.kindling),
-																		 " S ",
-																		 "SBS",
-																		 " S ",
-																		 'B', "powderBlaze",
-																		 'S', MANA_STRING)
+						 " S ",
+						 "SBS",
+						 " S ",
+						 'B', "powderBlaze",
+						 'S', MANA_STRING)
 		
 		recipesKindling = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -336,33 +382,33 @@ object ShadowFoxRecipes {
 		recipesRainbowRod = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.itemDisplay),
-																		 "N",
-																		 "W",
-																		 'N', MANASTEEL_NUGGET,
-																		 'W', ItemStack(BotaniaDecorBlocks.livingwoodSlab))
+						 "N",
+						 "W",
+						 'N', MANASTEEL_NUGGET,
+						 'W', ItemStack(BotaniaDecorBlocks.livingwoodSlab))
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.itemDisplay, 1, 1),
-																		 "N",
-																		 "W",
-																		 'N', TERRASTEEL_NUGGET,
-																		 'W', ItemStack(BotaniaDecorBlocks.livingwoodSlab))
+						 "N",
+						 "W",
+						 'N', TERRASTEEL_NUGGET,
+						 'W', ItemStack(BotaniaDecorBlocks.livingwoodSlab))
 		
 		recipesItemDisplay = BotaniaAPI.getLatestAddedRecipes(2)
 		
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.itemDisplay, 1, 2),
-																		 "N",
-																		 "W",
-																		 'N', ELEMENTIUM_NUGGET,
-																		 'W', ItemStack(BotaniaDecorBlocks.dreamwoodSlab))
+						 "N",
+						 "W",
+						 'N', ELEMENTIUM_NUGGET,
+						 'W', ItemStack(BotaniaDecorBlocks.dreamwoodSlab))
 		
 		recipesItemDisplayElven = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesLightningTree = ShadowFoxAPI.addTreeRecipe(50000,
-																										  ShadowFoxBlocks.lightningSapling, 0,
-																										  350,
-																										  MANA_STEEL, MANA_STEEL, MANA_STEEL,
-																										  RUNE[13], // Wrath
-																										  LEAVES[10], LEAVES[10], LEAVES[10], // Purple
-																										  ItemStack(BotaniaBlocks.teruTeruBozu))
+														  ShadowFoxBlocks.lightningSapling, 0,
+														  350,
+														  MANA_STEEL, MANA_STEEL, MANA_STEEL,
+														  RUNE[13], // Wrath
+														  LEAVES[10], LEAVES[10], LEAVES[10], // Purple
+														  ItemStack(BotaniaBlocks.teruTeruBozu))
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.lightningPlanks, 4), ShadowFoxBlocks.lightningWood)
 		
@@ -394,20 +440,20 @@ object ShadowFoxRecipes {
 		recipesThunderousTwig = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.livingwoodFunnel, 1),
-																		 "L L",
-																		 "LCL",
-																		 " L ",
-																		 'L', LIVING_WOOD, 'C', ItemStack(Blocks.chest))
+						 "L L",
+						 "LCL",
+						 " L ",
+						 'L', LIVING_WOOD, 'C', ItemStack(Blocks.chest))
 		
 		recipesLivingwoodFunnel = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesInfernalTree = ShadowFoxAPI.addTreeRecipe(10000,
-																										 ShadowFoxBlocks.netherSapling, 0,
-																										 70,
-																										 "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
-																										 RUNE[1], // Fire
-																										 LEAVES[14], LEAVES[14], LEAVES[14], // Red
-																										 BLAZE_BLOCK)
+														 ShadowFoxBlocks.netherSapling, 0,
+														 70,
+														 "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
+														 RUNE[1], // Fire
+														 LEAVES[14], LEAVES[14], LEAVES[14], // Red
+														 BLAZE_BLOCK)
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.netherPlanks, 4), ShadowFoxBlocks.netherWood)
 		
@@ -430,6 +476,66 @@ object ShadowFoxRecipes {
 							   'Q', ItemStack(ShadowFoxBlocks.netherPlanks))
 		
 		recipesInfernalStairsR = BotaniaAPI.getLatestAddedRecipe()
+		
+		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(10000, // TODO
+													   ShadowFoxBlocks.calicoSapling, 0,
+													   70,
+													   "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
+													   RUNE[1], // Fire
+													   LEAVES[14], LEAVES[14], LEAVES[14], // Red
+													   BLAZE_BLOCK)
+		
+		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.calicoPlanks, 4), ShadowFoxBlocks.calicoWood)
+		
+		recipesCalicoPlanks = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.calicoSlabs, 6),
+							   "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.calicoPlanks))
+		
+		recipesCalicoSlabs = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.calicoStairs, 4),
+							   "Q  ", "QQ ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.calicoPlanks))
+		
+		recipesCalicoStairsL = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.calicoStairs, 4),
+							   "  Q", " QQ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.calicoPlanks))
+		
+		recipesCalicoStairsR = BotaniaAPI.getLatestAddedRecipe()
+		
+		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000, // TODO
+														ShadowFoxBlocks.circuitSapling, 0,
+														70,
+														"ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
+														RUNE[1], // Fire
+														LEAVES[14], LEAVES[14], LEAVES[14], // Red
+														BLAZE_BLOCK)
+		
+		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.circuitPlanks, 4), ShadowFoxBlocks.circuitWood)
+		
+		recipesCircuitPlanks = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.circuitSlabs, 6),
+							   "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.circuitPlanks))
+		
+		recipesCircuitSlabs = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.circuitStairs, 4),
+							   "Q  ", "QQ ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.circuitPlanks))
+		
+		recipesCircuitStairsL = BotaniaAPI.getLatestAddedRecipe()
+		
+		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.circuitStairs, 4),
+							   "  Q", " QQ", "QQQ",
+							   'Q', ItemStack(ShadowFoxBlocks.circuitPlanks))
+		
+		recipesCircuitStairsR = BotaniaAPI.getLatestAddedRecipe()
 		
 		GameRegistry.addRecipe(ItemStack(ShadowFoxItems.resource, 1, 2), // Infernal Twig
 							   "Q",
@@ -486,11 +592,11 @@ object ShadowFoxRecipes {
 		recipesToolbelt = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(ShadowFoxBlocks.irisLamp),
-																		 " B ",
-																		 "BLB",
-																		 " B ",
-																		 'L', ItemStack(Blocks.redstone_lamp),
-																		 'B', DYES[16])
+						 " B ",
+						 "BLB",
+						 " B ",
+						 'L', ItemStack(Blocks.redstone_lamp),
+						 'B', DYES[16])
 		
 		recipesLamp = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -499,12 +605,12 @@ object ShadowFoxRecipes {
 		}
 		
 		recipesSealingTree = ShadowFoxAPI.addTreeRecipe(50000,
-																										ShadowFoxBlocks.sealingSapling, 0,
-																										350,
-																										ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
-																										RUNE[7], // Winter
-																										LEAVES[0], LEAVES[0], LEAVES[0], // White
-																										ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE))
+														ShadowFoxBlocks.sealingSapling, 0,
+														350,
+														ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
+														RUNE[7], // Winter
+														LEAVES[0], LEAVES[0], LEAVES[0], // White
+														ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE))
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.sealingPlanks, 4), ShadowFoxBlocks.sealingWood)
 		
@@ -541,12 +647,12 @@ object ShadowFoxRecipes {
 			val stack = ItemStarPlacer.forColor(i)
 			stack.stackSize = 3
 			addOreDictRecipe(stack,
-																			 " E ",
-																			 "GDG",
-																			 " G ",
-																			 'E', ENDER_AIR_BOTTLE,
-																			 'G', "dustGlowstone",
-																			 'D', DYES[i])
+							 " E ",
+							 "GDG",
+							 " G ",
+							 'E', ENDER_AIR_BOTTLE,
+							 'G', "dustGlowstone",
+							 'D', DYES[i])
 		}
 		
 		recipesStar = BotaniaAPI.getLatestAddedRecipes(17)
@@ -602,11 +708,11 @@ object ShadowFoxRecipes {
 		// Tris - The only item that remotely fits me.
 		
 		recipeCrysanthermum = BotaniaAPI.registerPetalRecipe(BotaniaAPI.internalHandler.getSubTileAsStack("crysanthermum"),
-																											 PETALS[1], PETALS[1], // Orange
-																											 PETALS[15], // Black
-																											 PETALS[3], PETALS[3], // Light Blue
-																											 RUNE[7], // Winter
-																											 RUNE[5]) // Summer
+															 PETALS[1], PETALS[1], // Orange
+															 PETALS[15], // Black
+															 PETALS[3], PETALS[3], // Light Blue
+															 RUNE[7], // Winter
+															 RUNE[5]) // Summer
 		
 		GameRegistry.addSmelting(ShadowFoxBlocks.irisWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(ShadowFoxBlocks.irisWood1, ItemStack(Items.coal, 1, 1), 0.15F)

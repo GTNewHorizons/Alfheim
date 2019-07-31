@@ -1,9 +1,9 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.block.ShadowFoxBlocks
 import codechicken.core.CommonUtils
-import codechicken.nei.*
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.FMLLaunchHandler
@@ -307,24 +307,26 @@ open class TileSchema: TileMod() {
 	}
 	
 	open fun blockActivated(p0: EntityPlayer?) {
-		if (ticksAlive - lastDump > 60) {
+		if (!worldObj.isRemote && ticksAlive - lastDump > 60) {
 			lastDump = ticksAlive
 			if (pos_x != null && pos_y != null && pos_z != null && mark_x != null && mark_z != null) {
-				dumpFile()
+				dumpFile(p0)
 			} else {
 				p0?.addChatMessage(ChatComponentText("Missing Markers"))
 			}
 		}
 	}
 	
-	fun dumpFile() {
+	fun dumpFile(p0: EntityPlayer?) {
 		try {
 			val e = getNewFile()
 			dumpTo(e)
 			
-			NEIClientUtils.printChatMessage(ChatComponentText("Schema dumped to: ${e.path}"))
+			ASJUtilities.say(p0, "Schema dumped to: ${e.path}")
 		} catch (var2: Exception) {
-			NEIClientConfig.logger.error("Error dumping schema_0.txt", var2)
+			ASJUtilities.say(p0, "Error dumping schema")
+			ASJUtilities.error("Error dumping schema: ${var2.message}")
+			var2.printStackTrace()
 		}
 	}
 	
@@ -400,4 +402,3 @@ open class TileSchema: TileMod() {
 	
 	override fun readCustomNBT(nbttagcompound: NBTTagCompound) = Unit
 }
-

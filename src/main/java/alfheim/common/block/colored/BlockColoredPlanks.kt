@@ -2,6 +2,10 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockMod
+import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.item.block.ItemSubtypedBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -12,10 +16,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
-import alfheim.common.block.material.MaterialCustomSmeltingWood
-import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.item.block.ItemSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandable
 import java.awt.Color
@@ -85,7 +85,7 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
 	
 	internal fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemSubtypedBlockMod::class.java, name)

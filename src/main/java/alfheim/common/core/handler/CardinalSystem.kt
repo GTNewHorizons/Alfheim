@@ -36,6 +36,9 @@ import vazkii.botania.api.mana.*
 import java.io.*
 import java.util.*
 
+
+
+@Suppress("UNCHECKED_CAST")
 object CardinalSystem {
 	
 	var playerSegments = HashMap<String, PlayerSegment>()
@@ -118,9 +121,7 @@ object CardinalSystem {
 			seg.knowledge[kn.ordinal] = true
 		}
 		
-		fun know(player: EntityPlayerMP, kn: Knowledge): Boolean {
-			return forPlayer(player).knowledge[kn.ordinal]
-		}
+		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge[kn.ordinal]
 		
 		fun transfer(player: EntityPlayerMP) {
 			for (kn in Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
@@ -221,8 +222,7 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun onSpellCasted(e: SpellCastEvent.Post) {
-				if (ModInfo.DEV || e.caster is EntityPlayer && e.caster.capabilities.isCreativeMode)
-					e.cd = 5
+				if (ModInfo.DEV || e.caster is EntityPlayer && e.caster.capabilities.isCreativeMode) e.cd = 5
 			}
 		}
 		
@@ -297,7 +297,7 @@ object CardinalSystem {
 	object ManaSystem {
 		
 		fun handleManaChange(player: EntityPlayer) {
-			PartySystem.getParty(player)!!.sendMana(player, getMana(player))
+			PartySystem.getParty(player).sendMana(player, getMana(player))
 		}
 		
 		fun getMana(player: EntityPlayer): Int {
@@ -325,8 +325,7 @@ object CardinalSystem {
 						if (!(item as IManaItem).isNoExport(stack)) {
 							if (Integer.MAX_VALUE - (item as IManaItem).getMana(stack) <= totalMana)
 								return Integer.MAX_VALUE
-							else
-								totalMana += (item as IManaItem).getMana(stack)
+							totalMana += (item as IManaItem).getMana(stack)
 						}
 				}
 			}
@@ -334,9 +333,7 @@ object CardinalSystem {
 			return totalMana
 		}
 		
-		fun getMana(mr: EntityLivingBase): Int {
-			return (mr as? EntityPlayer)?.let { getMana(it) } ?: 0
-		}
+		fun getMana(mr: EntityLivingBase) = (mr as? EntityPlayer)?.let { getMana(it) } ?: 0
 		
 		init {
 			MinecraftForge.EVENT_BUS.register(ManaSyncHandler())
@@ -382,53 +379,33 @@ object CardinalSystem {
 			party.sendChanges()
 		}
 		
-		fun getParty(player: EntityPlayer): Party? {
-			return forPlayer(player).party
-		}
+		fun getParty(player: EntityPlayer) = forPlayer(player).party
 		
-		fun getMobParty(living: EntityLivingBase?): Party? {
-			for (segment in playerSegments.values)
-				if (segment.party.isMember(living)) return segment.party
-			return null
-		}
+		fun getMobParty(living: EntityLivingBase?): Party? =
+			playerSegments.values.firstOrNull { it.party.isMember(living) } ?.party
 		
-		fun getUUIDParty(id: UUID?): Party? {
-			for (segment in playerSegments.values)
-				if (segment.party.isMember(id)) return segment.party
-			return null
-		}
+		fun getUUIDParty(id: UUID?): Party? =
+			playerSegments.values.firstOrNull { it.party.isMember(id) } ?.party
 		
-		fun sameParty(p1: EntityPlayer, p2: EntityLivingBase?): Boolean {
-			return getParty(p1)!!.isMember(p2)
-		}
+		fun sameParty(p1: EntityPlayer, p2: EntityLivingBase?) = getParty(p1).isMember(p2)
 		
-		fun sameParty(id: UUID?, e: EntityLivingBase?): Boolean {
-			for (segment in playerSegments.values)
-				if (segment.party.isMember(id) && segment.party.isMember(e)) return true
-			return false
-		}
+		fun sameParty(id: UUID?, e: EntityLivingBase?) =
+			playerSegments.values.any { it.party.isMember(id) && it.party.isMember(e) }
 		
-		fun mobsSameParty(e1: EntityLivingBase?, e2: EntityLivingBase?): Boolean {
-			for (segment in playerSegments.values)
-				if (segment.party.isMember(e1) && segment.party.isMember(e2)) return true
-			return false
-		}
+		fun mobsSameParty(e1: EntityLivingBase?, e2: EntityLivingBase?) =
+			playerSegments.values.any { it.party.isMember(e1) && it.party.isMember(e2) }
 		
 		fun friendlyFire(entityLiving: EntityLivingBase, source: DamageSource): Boolean {
 			if (!AlfheimCore.enableMMO || source.damageType.contains("_FF")) return false
 			
 			if (!ASJUtilities.isServer) return false
 			if (source.entity != null && source.entity is EntityPlayer) {
-				val pt = getParty(source.entity as EntityPlayer)
-				if (pt != null && pt.isMember(entityLiving)) {
+				if (getParty(source.entity as EntityPlayer).isMember(entityLiving))
 					return true
-				}
 			}
 			if (entityLiving is EntityPlayer && source.entity != null && source.entity is EntityLivingBase) {
-				val pt = getParty(entityLiving)
-				if (pt != null && pt.isMember(source.entity as EntityLivingBase)) {
+				if (getParty(entityLiving).isMember(source.entity as EntityLivingBase))
 					return true
-				}
 			}
 			return source.entity != null && source.entity is EntityLivingBase && mobsSameParty(entityLiving, source.entity as EntityLivingBase)
 		}
@@ -456,8 +433,8 @@ object CardinalSystem {
 			private var members: Array<Member?>
 			var count: Int = 0
 			
-			val pl: EntityPlayer
-				get() = get(0) as EntityPlayer
+			val pl: EntityPlayer?
+				get() = get(0) as EntityPlayer?
 			
 			constructor() {
 				members = arrayOfNulls(AlfheimConfig.maxPartyMembers)
@@ -478,38 +455,28 @@ object CardinalSystem {
 					} else {
 						Minecraft.getMinecraft().theWorld.getPlayerEntityByName(members[i]?.name)
 					}
-				} else {
-					if (ASJUtilities.isServer) {
-						for (world in MinecraftServer.getServer().worldServers) {
-							for (entity in world.loadedEntityList) {
-								if (entity is EntityLivingBase && entity.uniqueID == members[i]?.uuid) {
-									return entity
-								}
+				}
+				if (ASJUtilities.isServer) {
+					for (world in MinecraftServer.getServer().worldServers) {
+						for (entity in world.loadedEntityList) {
+							if (entity is EntityLivingBase && entity.uniqueID == members[i]?.uuid) {
+								return entity
 							}
 						}
-					} else {
-						val e = Minecraft.getMinecraft().theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.toInt() ?: 0)
-						return if (e is EntityLivingBase) e else null
 					}
+				} else {
+					val e = Minecraft.getMinecraft().theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.toInt() ?: 0)
+					return if (e is EntityLivingBase) e else null
 				}
 				return null
 			}
 			
-			operator fun get(name: String): EntityLivingBase? {
-				for (i in 0 until count)
-					
-					if (members[i] != null && members[i]!!.name == name)
-						return get(i)
-				return null
-			}
+			operator fun get(name: String) =
+				(0 until count).firstOrNull { members[it] != null && members[it]!!.name == name } ?.let { get(it) }
 			
-			fun getName(i: Int): String {
-				return if (members[i] != null) members[i]!!.name else ""
-			}
+			fun getName(i: Int) = if (members[i] != null) members[i]!!.name else ""
 			
-			fun getMana(i: Int): Int {
-				return if (members[i] != null) members[i]!!.mana else 0
-			}
+			fun getMana(i: Int) = if (members[i] != null) members[i]!!.mana else 0
 			
 			fun setMana(i: Int, mana: Int) {
 				if (members[i] != null) members[i]!!.mana = mana
@@ -517,18 +484,12 @@ object CardinalSystem {
 			
 			fun indexOf(mr: EntityLivingBase?): Int {
 				if (mr == null) return -1
-				for (i in 0 until count)
-					if (mr.uniqueID == members[i]?.uuid)
-						return i
-				return -1
+				return (0 until count).firstOrNull { mr.uniqueID == members[it]?.uuid } ?: -1
 			}
 			
 			fun indexOf(name: String?): Int {
 				if (name == null || name.isEmpty()) return -1
-				for (i in 0 until count)
-					if (name == members[i]?.name)
-						return i
-				return -1
+				return (0 until count).firstOrNull { name == members[it]?.name } ?: -1
 			}
 			
 			fun isMember(mr: EntityLivingBase?): Boolean {
@@ -607,7 +568,8 @@ object CardinalSystem {
 			}
 			
 			private fun removePL(): Boolean {
-				setParty(pl, Party(pl))
+				if (pl == null) return false
+				setParty(pl!!, Party(pl!!))
 				var i = 1
 				while (i < count) {
 					if (members[i]?.isPlayer == true) {
@@ -719,12 +681,9 @@ object CardinalSystem {
 			
 			private class Member(val name: String, var uuid: UUID, var mana: Int, val isPlayer: Boolean, var isDead: Boolean): Serializable, Cloneable {
 				
-				public override fun clone(): Any {
-					return Member(name, uuid, mana, isPlayer, isDead)
-				}
+				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead)
 				
 				companion object {
-					
 					private const val serialVersionUID = 8416468367146381L
 				}
 			}
@@ -767,25 +726,21 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun onClonePlayer(e: PlayerEvent.Clone) {
-				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer)!!.setDead(e.entityPlayer, false)
+				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false)
 			}
 			
 			@SubscribeEvent
 			fun onPlayerRespawn(e: PlayerRespawnEvent) {
-				if (AlfheimCore.enableMMO) getParty(e.player)!!.setDead(e.player, false)
+				if (AlfheimCore.enableMMO) getParty(e.player).setDead(e.player, false)
 			}
 		}
 	}
 	
 	object HotSpellsSystem {
 		
-		fun transfer(player: EntityPlayerMP) {
-			AlfheimCore.network.sendTo(MessageHotSpellC(forPlayer(player).hotSpells), player)
-		}
+		fun transfer(player: EntityPlayerMP) = AlfheimCore.network.sendTo(MessageHotSpellC(forPlayer(player).hotSpells), player)
 		
-		fun getHotSpellID(player: EntityPlayer, slot: Int): Int {
-			return forPlayer(player).hotSpells[slot]
-		}
+		fun getHotSpellID(player: EntityPlayer, slot: Int) = forPlayer(player).hotSpells[slot]
 		
 		fun setHotSpellID(player: EntityPlayer, slot: Int, id: Int) {
 			forPlayer(player).hotSpells[slot] = id
@@ -852,7 +807,8 @@ object CardinalSystem {
 			if (tsAreas[te.worldObj.provider.dimensionId] == null) return false
 			for (tsa in tsAreas[te.worldObj.provider.dimensionId]!!)
 				if (Vector3.vecTileDistance(tsa.pos, te) < 16) {
-					return if (te is ITimeStopSpecific && (te as ITimeStopSpecific).affectedBy(tsa.uuid)) true else true
+					return if (te is ITimeStopSpecific) (te as ITimeStopSpecific).affectedBy(tsa.uuid)
+					else true
 				}
 			return false
 		}

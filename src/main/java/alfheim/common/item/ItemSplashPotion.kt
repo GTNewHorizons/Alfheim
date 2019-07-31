@@ -36,7 +36,7 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 	override fun onItemRightClick(stack: ItemStack?, world: World?, player: EntityPlayer?): ItemStack? {
 		if (stack != null && world != null && player != null) {
 			if (!world.isRemote) {
-				val potion = EntityThrownPotion(player, getBrew(stack).getPotionEffects(stack))
+				val potion = EntityThrownPotion(player, stack)
 				world.spawnEntityInWorld(potion)
 				
 				stack.stackSize--
@@ -46,21 +46,23 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 		return stack
 	}
 	
-	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
+	fun getColor(stack: ItemStack?): Int {
 		if (stack != null) {
-			return if (pass == 0) {
-				0xCCCCCFF
-			} else {
-				val color = Color(getBrew(stack).getColor(stack))
-				val add = (sin(ClientTickHandler.ticksInGame.toDouble() * 0.1) * 16.0).toInt()
-				val r = max(0, min(255, color.red + add))
-				val g = max(0, min(255, color.green + add))
-				val b = max(0, min(255, color.blue + add))
-				(r shl 16) or (g shl 8) or b
-			}
+			val color = Color(getBrew(stack).getColor(stack))
+			val add = (sin(ClientTickHandler.ticksInGame.toDouble() * 0.1) * 16.0).toInt()
+			val r = max(0, min(255, color.red + add))
+			val g = max(0, min(255, color.green + add))
+			val b = max(0, min(255, color.blue + add))
+			return (r shl 16) or (g shl 8) or b
 		}
 		
 		return 0xFFFFFF
+	}
+	
+	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
+		return if (pass == 0) {
+			0xCCCCCFF
+		} else getColor(stack)
 	}
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {
@@ -93,6 +95,8 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 	}
 	
 	override fun requiresMultipleRenderPasses() = true
+	
+	override fun getRenderPasses(metadata: Int) = 2
 	
 	override fun getIcon(stack: ItemStack, pass: Int) = (if (pass == 0) itemIcon else itemIconFluid)!!
 	

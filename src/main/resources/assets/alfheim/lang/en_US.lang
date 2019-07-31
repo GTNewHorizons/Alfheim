@@ -545,7 +545,7 @@ spell.windblades.words=§aWind Blades
 #########################################################___BOTADS___###########################################################
 ################################################################################################################################
 
-itemGroup.Iridescence=Botanical Addons
+itemGroup.Iridescence=Iridescence
 
 death.attack.alfheim.lackOfFaith=%1$s has suffered a crisis of faith
 misc.alfheim.lackOfFaith=&cUnequipping this bauble can be bad for your health.&r
@@ -958,7 +958,7 @@ alfheim.page.silencer3=Slabs
 alfheim.page.silencer4=Stairs
 
 alfheim.page.amp0=By dampening the air within &1Note Blocks&0, the &1Sonic Amplifier&0 reverberates sound, making sounds within a block or two sound far louder. The more you have, the louder the sound.
-alfheim.page.amp1:Soaryn + Amp + Cacophonium = Dire rage
+alfheim.page.amp1=Soaryn + Amp + Cacophonium = Dire rage
 
 alfheim.page.crysanthermum0=The &1Crysanthermum&0 is a hardy flower that can survive in any climate. However, its mana generation isn't indifferent to the climate. By feeding it &1Metamorphic Stone&0, you change its temperature. The closer its temperature is to the biome you're in, the more mana it will generate. The hotter or colder the biome the stone comes from, the hotter or colder the flower will be after eating that stone.
 alfheim.page.crysanthermum1=There are, however, a few caveats.<br>Feeding the flower &1Fungal&0 stone can do anything, from cool the flower rapidly to heat it up immensely.<br>If a flower becomes too cold or too hot, it'll stop working until it gets back to normal temperature.<br>Using a stone that was used within the last eight will give you diminishing returns for the next 8 stones, meaning that you'll occasionally have to course-correct.

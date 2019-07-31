@@ -2,6 +2,8 @@ package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.colored.BlockColoredSapling
+import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.world.gen.HeartWoodTreeGen
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
@@ -11,8 +13,6 @@ import net.minecraft.world.World
 import net.minecraft.world.gen.feature.WorldGenerator
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
 import net.minecraftforge.event.terraingen.TerrainGen
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.world.gen.HeartWoodTreeGen
 import java.util.*
 
 class BlockSealingSapling: BlockColoredSapling(name = "sealingSapling"), ISoundSilencer {
@@ -30,8 +30,7 @@ class BlockSealingSapling: BlockColoredSapling(name = "sealingSapling"), ISoundS
 			if (canGrowHere(plantedOn)) {
 				val l = world.getBlockMetadata(x, y, z)
 				
-				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.sealingWood, 0,
-																					ShadowFoxBlocks.sealingWood, 0, ShadowFoxBlocks.sealingLeaves, 0)
+				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.sealingWood, 0, ShadowFoxBlocks.sealingWood, 0, ShadowFoxBlocks.sealingLeaves, 0)
 				
 				world.setBlock(x, y, z, Blocks.air, 0, 4)
 				

@@ -3,9 +3,11 @@ package alfheim.common.core.util
 import net.minecraft.entity.Entity
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.core.helper.Vector3
+
+fun Double.mfloor() = MathHelper.floor_double(this)
 
 fun Entity.boundingBox(range: Int = 1) =
     AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)!!

@@ -7,9 +7,9 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderWings
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.core.helper.ElvenFlightHelper
-import cpw.mods.fml.common.eventhandler.*
+import alfheim.common.core.util.*
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -17,7 +17,7 @@ import net.minecraft.entity.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
-import net.minecraft.util.*
+import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.client.GuiIngameForge
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
@@ -77,7 +77,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			run {
 				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).toInt() / 158.0
 				ASJUtilities.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
-				val length = MathHelper.floor_double(158 * mod)
+				val length = (158 * mod).mfloor()
 				
 				if (length <= 10) {
 					drawTexturedModalRect(38, 14 + (10 - length), 38, 54 + (10 - length), 1, length)
@@ -208,11 +208,11 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			var shadow = true
 			
 			// ################ rest: ################
-			for (i in 0 until pt!!.count) {
+			for (i in 0 until pt.count) {
 				
 				// ################ colors: ################
 				
-				l = pt.get(i)
+				l = pt[i]
 				if (l === mc.thePlayer) continue
 				
 				color = when {
@@ -267,7 +267,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 						ASJUtilities.glColor1u(-0xbbbbbc)
 					}
 					
-					val length = MathHelper.floor_double(100 * mod)
+					val length = (100 * mod).mfloor()
 					
 					when {
 						length < 2  -> drawTexturedModalRect(34, y + 17 + 2, 133, 137, 1, 4)
@@ -433,7 +433,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				val mod = (hp / max(hpm, 1f) * 200.0).toInt() / 200.0
 				ASJUtilities.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
-				val length = MathHelper.floor_double(200 * mod)
+				val length = (200 * mod).mfloor()
 				
 				when {
 					length >= 107 -> {
@@ -536,7 +536,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow)
 				
-				val mod = MathHelper.floor_double(ElvenFlightHelper[mc.thePlayer]) / ElvenFlightHelper.max
+				val mod = ElvenFlightHelper[mc.thePlayer].mfloor() / ElvenFlightHelper.max
 				val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
 				glColor4d(1.0, 1.0, 1.0, if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 				
@@ -553,8 +553,8 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			y += 20
 			
 			glColor4d(1.0, 1.0, 1.0, 1.0)
-			for (i in 0 until pt!!.count) {
-				l = pt.get(i)
+			for (i in 0 until pt.count) {
+				l = pt[i]
 				if (l === mc.thePlayer) continue
 				
 				run icon@{

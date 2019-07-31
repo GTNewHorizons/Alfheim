@@ -81,9 +81,10 @@ object KeyBindingHandlerClient {
 				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.keyCode, false)
 				toggleAlt = true
 				toggleJump = toggleAlt
-				toggleFlight(player, true)
-				if (ElvenFlightHelper[player] >= 300) {
-					player.motionY += 3.0 // FIXME move to server
+				val boost = ElvenFlightHelper[player] >= 300
+				toggleFlight(player, boost)
+				if (boost && EnumRace.getRace(Minecraft.getMinecraft().thePlayer) != EnumRace.HUMAN) {
+					player.motionY += 3.0
 				}
 			} else if (toggleJump && toggleAlt) {
 				toggleAlt = false

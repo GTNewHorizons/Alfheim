@@ -7,6 +7,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.client.gui.GUIDeathTimer
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells.*
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.mfloor
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
@@ -195,8 +196,8 @@ object SpellEffectHandlerClient {
 	}
 	
 	fun spawnTremors(x: Double, y: Double, z: Double) {
-		val block = Minecraft.getMinecraft().theWorld.getBlock(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z))
-		val meta = Minecraft.getMinecraft().theWorld.getBlockMetadata(MathHelper.floor_double(x), MathHelper.floor_double(y) - 1, MathHelper.floor_double(z))
+		val block = Minecraft.getMinecraft().theWorld.getBlock(x.mfloor(), y.mfloor() - 1, z.mfloor())
+		val meta = Minecraft.getMinecraft().theWorld.getBlockMetadata(x.mfloor(), y.mfloor() - 1, z.mfloor())
 		for (i in 0..511) {
 			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 1.5 + 0.5)[m.x, Math.random() * 0.25] = m.z
 			Minecraft.getMinecraft().theWorld.spawnParticle("blockdust_" + Block.getIdFromBlock(block) + "_" + meta, x, y + 0.25, z, m.x, m.y, m.z)

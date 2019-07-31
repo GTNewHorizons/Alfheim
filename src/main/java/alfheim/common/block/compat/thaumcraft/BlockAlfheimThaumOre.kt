@@ -17,6 +17,7 @@ import thaumcraft.common.config.ConfigItems
 import java.util.*
 
 class BlockAlfheimThaumOre: Block(Material.rock) {
+	
 	val rand = Random()
 	
 	init {
@@ -32,24 +33,20 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(ir: IIconRegister) {
-		icon[0] = ir.registerIcon("thaumcraft:cinnibarAlf")
-		icon[1] = ir.registerIcon("thaumcraft:infusedorestoneAlf")
-		icon[2] = ir.registerIcon("thaumcraft:infusedore")
-		icon[3] = ir.registerIcon("thaumcraft:amberoreAlf")
+		icon = arrayOf(
+			ir.registerIcon("thaumcraft:cinnibarAlf"),
+			ir.registerIcon("thaumcraft:infusedorestoneAlf"),
+			ir.registerIcon("thaumcraft:infusedore"),
+			ir.registerIcon("thaumcraft:amberoreAlf")
+		)
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIcon(side: Int, meta: Int): IIcon {
-		return if (meta == 0) icon[0]!! else if (meta == 7) icon[3]!! else icon[1]!!
-	}
+	override fun getIcon(side: Int, meta: Int): IIcon = if (meta == 0) icon[0]!! else if (meta == 7) icon[3]!! else icon[1]!!
 	
-	override fun canSilkHarvest(world: World?, player: EntityPlayer?, x: Int, y: Int, z: Int, metadata: Int): Boolean {
-		return true
-	}
+	override fun canSilkHarvest(world: World?, player: EntityPlayer?, x: Int, y: Int, z: Int, metadata: Int) = true
 	
-	override fun damageDropped(meta: Int): Int {
-		return meta
-	}
+	override fun damageDropped(meta: Int) = meta
 	
 	@SideOnly(Side.CLIENT)
 	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<Any?>) {
@@ -100,20 +97,13 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 			super.getExpDrop(world, meta, fortune)
 	}
 	
-	override fun isSideSolid(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection): Boolean {
-		return true
-	}
+	override fun isSideSolid(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) = true
 	
-	override fun renderAsNormalBlock(): Boolean {
-		return false
-	}
+	override fun renderAsNormalBlock() = false
 	
-	override fun getRenderType(): Int {
-		return ThaumcraftAlfheimModule.renderIDOre
-	}
+	override fun getRenderType() = ThaumcraftAlfheimModule.renderIDOre
 	
 	companion object {
-		
-		val icon = arrayOfNulls<IIcon>(4)
+		lateinit var icon: Array<IIcon>
 	}
 }

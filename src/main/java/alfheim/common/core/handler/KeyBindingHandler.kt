@@ -7,8 +7,8 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.registry.AlfheimRegistry
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.common.MinecraftForge
@@ -16,8 +16,7 @@ import net.minecraftforge.common.MinecraftForge
 object KeyBindingHandler {
 	
 	fun enableFlight(player: EntityPlayerMP, boost: Boolean) {
-		if (!AlfheimCore.enableElvenStory) return
-		if (player.capabilities.isCreativeMode || EnumRace.getRace(player) == EnumRace.HUMAN) return
+		if (!AlfheimCore.enableElvenStory || EnumRace.getRace(player) == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
 		player.capabilities.allowFlying = true
 		player.capabilities.isFlying = !player.capabilities.isFlying
 		player.sendPlayerAbilities()

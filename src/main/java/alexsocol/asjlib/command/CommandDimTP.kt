@@ -9,21 +9,13 @@ import net.minecraft.util.ChunkCoordinates
 
 class CommandDimTP private constructor(): CommandBase() {
 	
-	override fun getRequiredPermissionLevel(): Int {
-		return 2
-	}
+	override fun getRequiredPermissionLevel() = 2
 	
-	override fun canCommandSenderUseCommand(sender: ICommandSender): Boolean {
-		return sender is EntityPlayer
-	}
+	override fun canCommandSenderUseCommand(sender: ICommandSender) = sender is EntityPlayer
 	
-	override fun getCommandName(): String {
-		return "tpdim"
-	}
+	override fun getCommandName() = "tpdim"
 	
-	override fun getCommandUsage(sender: ICommandSender): String {
-		return "alfheim.commands.tpdim.usage"
-	}
+	override fun getCommandUsage(sender: ICommandSender) = "alfheim.commands.tpdim.usage"
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		if (args.size == 1 && args[0].matches("-?\\d+".toRegex()) && sender is EntityPlayer) {

@@ -70,7 +70,7 @@ open class ItemFlameRod(name: String = "flameRod"): ItemMod(name), IManaUsingIte
 				val mop = ASJUtilities.getMouseOver(player, power.toDouble(), true)
 				
 				val hit = if (mop?.hitVec == null)
-					Vector3(player.lookVec).normalize().mul(32.0).add(player.posX, player.posY + player.eyeHeight, player.posZ)
+					Vector3(player.lookVec).normalize().mul(power.toDouble()).add(player.posX, player.posY + player.eyeHeight, player.posZ)
 				else
 					Vector3(mop.hitVec)
 				

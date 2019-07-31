@@ -20,6 +20,10 @@ class Vector3: Serializable {
 	var y = 0.0
 	var z = 0.0
 	
+	operator fun component1() = x
+	operator fun component2() = y
+	operator fun component3() = z
+	
 	val isZero: Boolean
 		get() = x == 0.0 && y == 0.0 && z == 0.0
 	

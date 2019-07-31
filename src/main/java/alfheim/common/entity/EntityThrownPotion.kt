@@ -1,17 +1,47 @@
 package alfheim.common.entity
 
+import alfheim.common.item.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
+import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.MovingObjectPosition
+import net.minecraft.world.World
 import kotlin.math.*
 
-class EntityThrownPotion(player: EntityPlayer, val effects: List<PotionEffect>): EntityThrowable(player.worldObj, player) {
+class EntityThrownPotion: EntityThrowable {
 	
-	init {
+	constructor(world: World) : super(world) {
+		stack = ItemStack(ShadowFoxItems.splashPotion)
+		effects = emptyList()
+		
+		color = 0xFFFFFF
+	}
+	
+	constructor(player: EntityPlayer, st: ItemStack) : super(player.worldObj, player) {
+		stack = st
+		val brew = stack.item as ItemSplashPotion
+		effects = brew.getBrew(stack).getPotionEffects(stack)
+		color = brew.getColor(stack)
+	}
+	
+	val effects: List<PotionEffect>
+	val stack: ItemStack
+	
+	var color
+		get() = dataWatcher.getWatchableObjectInt(31)
+		set(value) {
+			dataWatcher.updateObject(31, value)
+		}
+	
+	override fun entityInit() {
+		super.entityInit()
 		dataWatcher.addObject(30, 0.3f)
 		dataWatcher.setObjectWatched(30)
+		
+		dataWatcher.addObject(31, 0)
+		dataWatcher.setObjectWatched(31)
 	}
 	
 	override fun onImpact(movingObject: MovingObjectPosition?) {

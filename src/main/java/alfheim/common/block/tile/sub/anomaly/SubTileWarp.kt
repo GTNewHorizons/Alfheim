@@ -1,4 +1,4 @@
-package alfheim.common.block.tile.sub
+package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
