@@ -18,7 +18,6 @@ import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.block.*
 
 object ShadowFoxItems {
 	
@@ -67,12 +66,6 @@ object ShadowFoxItems {
 		splashPotion = ItemSplashPotion()
 		fireGrenade = ItemFireGrenade()
 		initOreDict()
-		
-		EventHandlerTooltip.register()
-		EventHandlerTooltip.registerStack(ItemStack(flameRod, 1, OreDictionary.WILDCARD_VALUE))
-		EventHandlerTooltip.registerStack(ItemBlockSpecialFlower.ofType("crysanthermum"))
-		EventHandlerTooltip.registerStack(ItemBlockFloatingSpecialFlower.ofType("crysanthermum"))
-		EventHandlerTooltip.registerStack(ItemStack(emblem, 1, 3))
 	}
 	
 	fun initOreDict() {

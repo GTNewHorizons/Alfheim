@@ -16,7 +16,7 @@ import kotlin.math.*
 object AlfheimConfig {
 	lateinit var config: Configuration
 	
-	const val CATEGORY_BA			= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "BotanicalAddons"
+	const val CATEGORY_BA			= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Iridescence"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER	+ "woldgen"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
@@ -53,13 +53,12 @@ object AlfheimConfig {
 	
 	// BOTANICAL ADDONS
 	var realLightning			= false
-	var uberCreepers			= false
-	//var passiveLightning		= true
 	var blackLotusDropRate		= 0.05
 	var addTincturemAspect		= true
 	var addAspectsToBotania		= true
 	var addThaumTreeSuffusion	= true
-	var schemaArray				= IntArray(17) { i: Int -> -1 + i }
+	var schemaArray				= IntArray(17) { -1 + it }
+	var voidCreepersBiomeBL		= IntArray(4)
 	var grantWireUnlimitedPower = true
 	
 	// POTIONS
@@ -74,8 +73,8 @@ object AlfheimConfig {
 	var potionIDIceLens			= potionID___COUNTER++
 	var potionIDLeftFlame		= potionID___COUNTER++
 	var potionIDManaVoid		= potionID___COUNTER++
-	var potionIDNinja			= potionID___COUNTER++
 	var potionIDNineLifes		= potionID___COUNTER++
+	var potionIDNinja			= potionID___COUNTER++
 	var potionIDNoclip			= potionID___COUNTER++
 	var potionIDOvermage		= potionID___COUNTER++
 	var potionIDPossession		= potionID___COUNTER++
@@ -121,6 +120,11 @@ object AlfheimConfig {
 	}
 	
 	fun syncConfig() {
+		voidCreepersBiomeBL[0] = 8
+		voidCreepersBiomeBL[1] = 9
+		voidCreepersBiomeBL[2] = 14
+		voidCreepersBiomeBL[3] = 15
+		
 		biomeIDAlfheim			= loadProp(CATEGORY_DIMENSION,	"biomeIDAlfheim",				biomeIDAlfheim,			true,	"Biome ID for standart biome")
 		dimensionIDAlfheim		= loadProp(CATEGORY_DIMENSION,	"dimensionIDAlfheim",			dimensionIDAlfheim,		true,	"Dimension ID for Alfheim")
 		enableAlfheimRespawn	= loadProp(CATEGORY_DIMENSION,	"enableAlfheimRespawn",			enableAlfheimRespawn,	false,	"Set this to false to disable respawning in Alfheim")
@@ -144,15 +148,14 @@ object AlfheimConfig {
 		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",				slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly")
 		tradePortalRate			= loadProp(CATEGORY_GENERAL,	"tradePortalRate",				tradePortalRate,		false,	"Portal updates every {N} ticks")
 		
-		realLightning			= loadProp(CATEGORY_BA,			"realLightning.enabled",		realLightning,			false,	"Lightning rod creates real lightning")
-		uberCreepers			= loadProp(CATEGORY_BA,			"uberCreepers.enabled",			uberCreepers,			true,	"Uber Creepers can be spawned by OP or Creative players")
-		//passiveLightning		= loadProp(CATEGORY_BA,			"passiveLightning.enabled",		passiveLightning,		false,	"Lightning rod can hit passive mobs")
-		addTincturemAspect		= loadProp(CATEGORY_BA,			"tincturem.enabled",			addTincturemAspect,		true,	"Add a Color aspect to thaumcraft")
-		addAspectsToBotania		= loadProp(CATEGORY_BA,			"botaniaAspects.enabled",		addAspectsToBotania,	true,	"Add aspects to Botania")
-		addThaumTreeSuffusion	= loadProp(CATEGORY_BA,			"TCTrees.enabled",				addThaumTreeSuffusion,	true,	"[TC] [GoG] Add a Dendric Suffusion recipe for Greatwood and Silverwood trees")
+		realLightning			= loadProp(CATEGORY_BA,			"realLightning",				realLightning,			false,	"Set this to true to make lightning rod summon real (weather) lightning")
+		addTincturemAspect		= loadProp(CATEGORY_BA,			"TC.tincturem",					addTincturemAspect,		true,	"[TC] Set this to false to use Sensus instead of Color aspect")
+		addAspectsToBotania		= loadProp(CATEGORY_BA,			"TC.botaniaAspects",			addAspectsToBotania,	true,	"[TC] Set this to false to disable adding aspects to Botania")
+		addThaumTreeSuffusion	= loadProp(CATEGORY_BA,			"TC.treeCrafting",				addThaumTreeSuffusion,	true,	"[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		grantWireUnlimitedPower = loadProp(CATEGORY_BA,			"wire.overpowered",				grantWireUnlimitedPower,true,	"Allow WireSegal far more power than any one person should have")
 		blackLotusDropRate		= loadProp(CATEGORY_BA,			"voidCreepers.dropRate",		blackLotusDropRate,		false,	"Rate of black loti dropping from Manaseal Creepers")
 		schemaArray				= loadProp(CATEGORY_BA,			"schemas.enabled",				schemaArray,			true,	"Which schemas are allowed to be generated")
+		voidCreepersBiomeBL		= loadProp(CATEGORY_BA,			"schemas.enabled",				voidCreepersBiomeBL,	true,	"Which schemas are allowed to be generated")
 		
 		potionSlots				= loadProp(CATEGORY_POTIONS,	"potionSlots",					potionSlots,			true,	"Available potions ids in range [0-potionSlots)")
 		potionIDBerserk			= loadProp(CATEGORY_POTIONS,	"potionIDBerserk",				potionIDBerserk,		true,	"Potion id for Berserk")

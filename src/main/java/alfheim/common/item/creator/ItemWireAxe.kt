@@ -110,7 +110,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, inUseTicks: Int) {
 		if (!ManaItemHandler.requestManaExact(stack, player, 1, false)) return
 		val range = min(getMaxItemUseDuration(stack) - inUseTicks, 200) / 20 + 1
-		val entities = world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX + range, player.posY + range, player.posZ + range, player.posX - range, player.posY - range, player.posZ - range))
+		val entities = world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range))
 		if (!player.capabilities.isCreativeMode) stack.damageStack(1, player)
 		var count = 0
 		for (entity in entities) {
@@ -169,13 +169,13 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		return super.onLeftClickEntity(stack, player, entity)
 	}
 	
-	fun attackEntity(player: EntityLivingBase, entity: Entity, f0: Double, damageSource: DamageSource) {
-		var f = f0
-		var f1 = 0.0f
+	fun attackEntity(player: EntityLivingBase, entity: Entity, amount: Double, damageSource: DamageSource) {
+		var damage = amount
+		var extraDmg = 0.0f
 		if (entity is EntityLivingBase)
-			f1 = EnchantmentHelper.getEnchantmentModifierLiving(player, entity)
+			extraDmg = EnchantmentHelper.getEnchantmentModifierLiving(player, entity)
 		
-		if (f > 0.0 || f1 > 0.0f) {
+		if (damage > 0.0 || extraDmg > 0.0f) {
 			val flag = player.fallDistance > 0.0f &&
 					   !player.onGround &&
 					   !player.isOnLadder &&
@@ -183,14 +183,14 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 					   !player.isPotionActive(Potion.blindness) &&
 					   player.ridingEntity == null &&
 					   entity is EntityLivingBase
-			if (flag && f > 0.0)
-				f *= 1.5
-			f += f1.toDouble()
-			val flag2 = entity.attackEntityFrom(damageSource, f.toFloat())
+			if (flag && damage > 0.0)
+				damage *= 1.5
+			damage += extraDmg.toDouble()
+			val flag2 = entity.attackEntityFrom(damageSource, damage.toFloat())
 			if (flag2) {
 				if (flag && player is EntityPlayer)
 					player.onCriticalHit(entity)
-				if (f1 > 0.0f && player is EntityPlayer)
+				if (extraDmg > 0.0f && player is EntityPlayer)
 					player.onEnchantmentCritical(entity)
 				player.setLastAttacker(entity)
 				if (entity is EntityLivingBase)

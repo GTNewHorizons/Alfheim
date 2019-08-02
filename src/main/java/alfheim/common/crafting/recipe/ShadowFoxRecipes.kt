@@ -2,6 +2,7 @@ package alfheim.common.crafting.recipe
 
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
+import alfheim.api.lib.LibOreDict.COAL_NETHERWOOD
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
 import alfheim.api.lib.LibOreDict.HOLY_PENDANT
@@ -12,14 +13,16 @@ import alfheim.api.lib.LibOreDict.PETAL
 import alfheim.api.lib.LibOreDict.RAINBOW_DOUBLE_FLOWER
 import alfheim.api.lib.LibOreDict.RAINBOW_FLOWER
 import alfheim.api.lib.LibOreDict.RAINBOW_PETAL
+import alfheim.api.lib.LibOreDict.SPLINTERS_NETHERWOOD
 import alfheim.api.lib.LibOreDict.SPLINTERS_THUNDERWOOD
+import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.WOOD
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.integration.thaumcraft.ThaumcraftSuffusionRecipes
 import alfheim.common.item.ShadowFoxItems
-import alfheim.common.item.block.ItemStarPlacer
+import alfheim.common.item.block.*
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.init.*
@@ -59,6 +62,8 @@ object ShadowFoxRecipes {
 	val recipesCoatOfArms: List<IRecipe>
 	val recipesLightningRod: IRecipe
 	val recipesPriestOfThor: IRecipe
+	val recipesFlameRod: IRecipe
+	val recipesPriestOfLoki: IRecipe
 	val recipesLeafDyes: List<IRecipe>
 	val recipesInterdictionRod: IRecipe
 	val recipesPriestOfNjord: IRecipe
@@ -103,6 +108,7 @@ object ShadowFoxRecipes {
 	val recipesSealingSlabs: IRecipe
 	val recipesAmplifier: IRecipe
 	val recipesStar: List<IRecipe>
+	val recipesStar2: List<IRecipe>
 	
 	val recipeShimmerQuartz: IRecipe
 	
@@ -124,6 +130,8 @@ object ShadowFoxRecipes {
 	val recipesCircuitTree: RecipeTreeCrafting
 	
 	val recipeCrysanthermum: RecipePetals
+	
+	val recipesSplashPotions: IRecipe
 	
 	init {
 		
@@ -255,6 +263,17 @@ object ShadowFoxRecipes {
 		
 		recipesLightningRod = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(ShadowFoxItems.flameRod, 1),
+						 " EW",
+						 " SD",
+						 "S  ",
+						 'E', SPLINTERS_NETHERWOOD,
+						 'D', COAL_NETHERWOOD,
+						 'S', TWIG_NETHERWOOD,
+						 'W', RUNE[1]) // Fire
+		
+		recipesFlameRod = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(ShadowFoxItems.emblem, 1, 0),
 						 "EGE",
 						 "TAT",
@@ -278,6 +297,19 @@ object ShadowFoxRecipes {
 						 'A', HOLY_PENDANT)
 		
 		recipesPriestOfSif = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(ShadowFoxItems.emblem, 1, 3),
+						 "WGO",
+						 "NAN",
+						 " P ",
+						 'O', RUNE[6],
+						 'W', RUNE[7],
+						 'N', ELEMENTIUM_NUGGET,
+						 'G', LIFE_ESSENCE,
+						 'P', RUNE[8], // Mana
+						 'A', HOLY_PENDANT)
+		
+		recipesPriestOfLoki = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(ShadowFoxItems.coatOfArms, 1, i),
@@ -657,7 +689,19 @@ object ShadowFoxRecipes {
 		
 		recipesStar = BotaniaAPI.getLatestAddedRecipes(17)
 		
+		for (i in 0..16) {
+			val stack = ItemStarPlacer2.forColor(i)
+			stack.stackSize = 6
+			addOreDictRecipe(stack,
+							 " E ",
+							 "GDG",
+							 " G ",
+							 'E', ENDER_AIR_BOTTLE,
+							 'G', MANA_PEARL,
+							 'D', DYES[i])
+		}
 		
+		recipesStar2 = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		addShapelessOreDictRecipe(ItemStack(BotaniaItems.fertilizer, if (Botania.gardenOfGlassLoaded) 3 else 1), ItemStack(Items.dye, 1, 15), FLORAL_POWDER, FLORAL_POWDER, FLORAL_POWDER, FLORAL_POWDER)
 		CraftingManager.getInstance().recipeList.remove(ModCraftingRecipes.recipeFertilizerPowder)
@@ -727,6 +771,8 @@ object ShadowFoxRecipes {
 		GameRegistry.addSmelting(ShadowFoxBlocks.netherPlanks, ItemStack(ShadowFoxItems.resource, 2, 3), 0.1F) // Infernal Splinters
 		GameRegistry.addSmelting(ShadowFoxBlocks.netherWood, ItemStack(ShadowFoxItems.resource, 1, 4), 0.15F) // Flame-Laced Coal
 		
+		recipesSplashPotions = ShapelessOreRecipe(ItemStack(ShadowFoxItems.splashPotion), BotaniaItems.brewVial, Items.gunpowder)
+		GameRegistry.addRecipe(RecipeThrowablePotion())
 	}
 	
 	private fun addQuartzRecipes(block: Block, stairs: Block, slab: Block): IRecipe {

@@ -130,7 +130,7 @@ object AlfheimBlocks {
 		
 		elvenSandstone = BlockElvenSandstone()
 		
-		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0).setBlockName("ElvenSandStoneStairs")
+		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0).setBlockName("ElvenSandstoneStairs")
 																.setCreativeTab(AlfheimCore.alfheimTab)
 		
 		elvenSandstoneSlab = BlockElvenSandstoneSlab(false)
@@ -209,8 +209,6 @@ object AlfheimBlocks {
 																													.setHardness(2F)
 																													.setResistance(5F)
 																													.setStepSound(soundTypeWood)
-		
-		waterSlab = BlockWaterSlab()
 	}
 	
 	private fun reg() {

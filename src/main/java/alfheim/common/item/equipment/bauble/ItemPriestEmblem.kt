@@ -28,6 +28,7 @@ import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 import java.awt.Color
 import kotlin.math.min
+import alexsocol.asjlib.math.Vector3 as ASJVec
 
 class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingItem {
 	
@@ -77,8 +78,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	}
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
-		for (i in 0 until TYPES)
-			list.add(ItemStack(item, 1, i))
+		(0 until TYPES).mapTo(list) { ItemStack(item, 1, it) }
 	}
 	
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>, par4: Boolean) {
@@ -165,37 +165,54 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type == IBaubleRender.RenderType.BODY) {
 			val player = event.entityPlayer
-			if (player.ticksExisted % 10 == 0 && isActive(stack)) {
+			if (isActive(stack)) {
 				when (stack.itemDamage) {
 					0 -> {
-						val playerHead = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
-						val playerShift = playerHead.copy().add(getHeadOrientation(player))
-						val color = Color(ColorOverrideHelper.getColor(player, 0x0079C4))
-						val innerColor = Color(color.rgb).brighter().brighter()
-						Botania.proxy.lightningFX(player.worldObj, playerHead, playerShift, 2.0f, color.rgb, innerColor.rgb)
+						if (player.ticksExisted % 10 == 0) {
+							val playerHead = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
+							val playerShift = playerHead.copy().add(getHeadOrientation(player))
+							val color = Color(ColorOverrideHelper.getColor(player, 0x0079C4))
+							val innerColor = Color(color.rgb).brighter().brighter()
+							Botania.proxy.lightningFX(player.worldObj, playerHead, playerShift, 2.0f, color.rgb, innerColor.rgb)
+						}
 					}
 					
 					1 -> {
-						for (i in 0..6) {
-							val xmotion = (Math.random() - 0.5).toFloat() * 0.15f
-							val zmotion = (Math.random() - 0.5).toFloat() * 0.15f
-							// 964B00 is brown
-							val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
-							val r = color.red.toFloat() / 255F
-							val g = color.green.toFloat() / 255F
-							val b = color.blue.toFloat() / 255F
-							Botania.proxy.wispFX(player.worldObj, player.posX, player.posY - player.yOffset, player.posZ, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, xmotion, 0.0075f, zmotion)
+						if (player.ticksExisted % 10 == 0) {
+							for (i in 0..6) {
+								val xmotion = (Math.random() - 0.5).toFloat() * 0.15f
+								val zmotion = (Math.random() - 0.5).toFloat() * 0.15f
+								val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
+								val r = color.red.toFloat() / 255F
+								val g = color.green.toFloat() / 255F
+								val b = color.blue.toFloat() / 255F
+								Botania.proxy.wispFX(player.worldObj, player.posX, player.posY - player.yOffset, player.posZ, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, xmotion, 0.0075f, zmotion)
+							}
 						}
 					}
 					
 					2 -> {
-						for (i in 0..6) {
-							val vec = getHeadOrientation(player).multiply(0.52)
-							val color = Color(ColorOverrideHelper.getColor(player, 0x0000FF))
-							val r = color.red.toFloat() / 255F
-							val g = color.green.toFloat() / 255F
-							val b = color.blue.toFloat() / 255F
-							Botania.proxy.sparkleFX(player.worldObj, player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r, g, b, 1.0f, 5)
+						if (player.ticksExisted % 10 == 0) {
+							for (i in 0..6) {
+								val vec = getHeadOrientation(player).multiply(0.52)
+								val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
+								val r = color.red.toFloat() / 255F
+								val g = color.green.toFloat() / 255F
+								val b = color.blue.toFloat() / 255F
+								Botania.proxy.sparkleFX(player.worldObj, player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r, g, b, 1.0f, 5)
+							}
+						}
+					}
+					
+					3 -> {
+						val color = Color(ColorOverrideHelper.getColor(player, 0xF94407))
+						val r = color.red / 255f
+						val g = color.green / 255f
+						val b = color.blue / 255f
+						
+						for (i in 1..9) {
+							val pos = ASJVec.fromEntity(player).add(0.0, -player.yOffset + 0.25, 0.0).add(ASJVec(0.0, 0.0, 0.5).rotate(Botania.proxy.worldElapsedTicks * 5 % 360 + i*40.0, ASJVec.oY))
+							Botania.proxy.sparkleFX(player.worldObj, pos.x, pos.y, pos.z, r, g, b, 1f, 4)
 						}
 					}
 				}

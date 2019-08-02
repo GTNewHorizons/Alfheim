@@ -10,8 +10,8 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.brew.*
-import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.core.helper.IconHelper
+import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.awt.Color
 import kotlin.math.*
@@ -20,9 +20,11 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 	
 	lateinit var itemIconFluid: IIcon
 	
+	init {
+		maxStackSize = 1
+	}
+	
 	override fun getSubItems(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
-		super.getSubItems(item, tab, list)
-		
 		if (item != null && list != null) {
 			for (brew in BotaniaAPI.brewMap.keys) {
 				val brewStack = getItemForBrew(BotaniaAPI.brewMap[brew] as Brew, ItemStack(this))
@@ -49,7 +51,7 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 	fun getColor(stack: ItemStack?): Int {
 		if (stack != null) {
 			val color = Color(getBrew(stack).getColor(stack))
-			val add = (sin(ClientTickHandler.ticksInGame.toDouble() * 0.1) * 16.0).toInt()
+			val add = (sin(Botania.proxy.worldElapsedTicks.toDouble() * 0.1) * 16.0).toInt()
 			val r = max(0, min(255, color.red + add))
 			val g = max(0, min(255, color.green + add))
 			val b = max(0, min(255, color.blue + add))
@@ -83,11 +85,10 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 		}
 	}
 	
-	override fun getItemForBrew(brew: Brew, stack: ItemStack): ItemStack? {
+	override fun getItemForBrew(brew: Brew, stack: ItemStack?): ItemStack? {
 		val brewStack = ItemStack(this)
 		setBrew(brewStack, brew)
 		return brewStack
-		
 	}
 	
 	internal fun addStringToTooltip(s: String, tooltip: MutableList<Any?>?) {

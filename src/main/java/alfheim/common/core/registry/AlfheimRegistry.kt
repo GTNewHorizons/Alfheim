@@ -10,7 +10,6 @@ import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
-import alfheim.common.block.tile.sub.*
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.asm.AlfheimHookLoader
 import alfheim.common.core.util.AlfheimConfig
@@ -136,12 +135,11 @@ object AlfheimRegistry {
 		registerEntityEgg(EntityAlfheimPixie::class.java, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance)
 		
-		if (AlfheimConfig.uberCreepers)
 		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
 		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
 		
 		for (i in BiomeGenBase.getBiomeGenArray()) {
-			if (i != null && i != BiomeGenBase.hell && i != BiomeGenBase.sky && i != BiomeGenBase.mushroomIsland && i != BiomeGenBase.mushroomIslandShore)
+			if (i != null && !AlfheimConfig.voidCreepersBiomeBL.contains(i.biomeID))
 				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
 		}
 		

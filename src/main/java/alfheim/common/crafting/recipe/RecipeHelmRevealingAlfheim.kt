@@ -18,9 +18,9 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 			val stack = var1.getStackInSlot(i)
 			if (stack != null) {
 				when {
-					checkHelm(stack) -> foundHelm = true
+					checkHelm(stack)       -> foundHelm = true
 					stack.item === goggles -> foundGoggles = true
-					else -> return false
+					else                   -> return false
 				} // Found an invalid item, breaking the recipe
 			}
 		}
@@ -40,14 +40,12 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 			return null
 		
 		val helmCopy = helm.copy()
-		val helmItem = helmCopy.item
-		
 		val newHelm: ItemStack
 		
 		newHelm = when {
-			helmItem === AlfheimItems.elementalHelmet -> if (AlfheimItems.elementalHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elementalHelmetRevealing) else return null
-			helmItem === AlfheimItems.elvoriumHelmet  -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
-			else                                                          -> return null
+			helmCopy.item === AlfheimItems.elementalHelmet -> if (AlfheimItems.elementalHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elementalHelmetRevealing) else return null
+			helmCopy.item === AlfheimItems.elvoriumHelmet  -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
+			else                                           -> return null
 		}
 		
 		// Copy Ancient Wills

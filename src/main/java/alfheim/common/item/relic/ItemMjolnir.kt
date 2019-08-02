@@ -20,7 +20,7 @@ import vazkii.botania.common.item.relic.ItemRelic
 import java.awt.Color
 import kotlin.math.sin
 
-@Deprecated("")
+@Deprecated("unused")
 class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	init {
@@ -42,17 +42,11 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIcon(stack: ItemStack, pass: Int): IIcon {
-		return icons[pass]!!
-	}
+	override fun getIcon(stack: ItemStack, pass: Int) = icons[pass]!!
 	
-	override fun requiresMultipleRenderPasses(): Boolean {
-		return true
-	}
+	override fun requiresMultipleRenderPasses() = true
 	
-	override fun getRenderPasses(meta: Int): Int {
-		return 2
-	}
+	override fun getRenderPasses(meta: Int) = 2
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		list.add(ItemStack(item))
@@ -76,13 +70,9 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		if (getCharge(stack) < MAX_CHARGE) addCharge(stack, if (player.capabilities.isCreativeMode) CHARGE_PER_TICK else ManaItemHandler.requestMana(stack, player, CHARGE_PER_TICK, true))
 	}
 	
-	override fun getMaxItemUseDuration(stack: ItemStack): Int {
-		return 72000
-	}
+	override fun getMaxItemUseDuration(stack: ItemStack) = 72000
 	
-	override fun getItemUseAction(stack: ItemStack): EnumAction {
-		return EnumAction.bow
-	}
+	override fun getItemUseAction(stack: ItemStack) = EnumAction.bow
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, MAX_CHARGE, false)) player.setItemInUse(stack, this.getMaxItemUseDuration(stack))
@@ -110,8 +100,6 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 			setInt(stack!!, TAG_CHARGE, charge)
 		}
 		
-		fun getCharge(stack: ItemStack?): Int {
-			return getInt(stack, TAG_CHARGE, 0)
-		}
+		fun getCharge(stack: ItemStack?) = getInt(stack, TAG_CHARGE, 0)
 	}
 }
