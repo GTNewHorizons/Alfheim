@@ -69,6 +69,7 @@ object AlfheimConfig {
 	var potionIDButterShield	= potionID___COUNTER++
 	var potionIDDeathMark		= potionID___COUNTER++
 	var potionIDDecay			= potionID___COUNTER++
+	var potionIDEternity		= potionID___COUNTER++
 	var potionIDGoldRush		= potionID___COUNTER++
 	var potionIDIceLens			= potionID___COUNTER++
 	var potionIDLeftFlame		= potionID___COUNTER++
@@ -163,6 +164,7 @@ object AlfheimConfig {
 		potionIDButterShield	= loadProp(CATEGORY_MMOP,		"potionIDButterShield",			potionIDButterShield,	true,	"Potion id for Butterfly Shield")
 		potionIDDeathMark		= loadProp(CATEGORY_MMOP,		"potionIDDeathMark",			potionIDDeathMark,		true,	"Potion id for Death Mark")
 		potionIDDecay			= loadProp(CATEGORY_MMOP,		"potionIDDecay",				potionIDDecay,			true,	"Potion id for Decay")
+		potionIDEternity		= loadProp(CATEGORY_POTIONS,	"potionIDEternity",				potionIDEternity,		true,	"Potion id for Eternity")
 		potionIDGoldRush		= loadProp(CATEGORY_MMOP,		"potionIDGoldRush",				potionIDGoldRush,		true,	"Potion id for Gold Rush")
 		potionIDIceLens			= loadProp(CATEGORY_MMOP,		"potionIDIceLens",				potionIDIceLens,		true,	"Potion id for Ice Lense")
 		potionIDLeftFlame		= loadProp(CATEGORY_MMOP,		"potionIDLeftFlame",			potionIDLeftFlame,		true,	"Potion id for Leftover Flame")

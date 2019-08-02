@@ -18,6 +18,7 @@ object AlfheimAchievements {
 	lateinit var flugelSoul: Achievement
 	lateinit var infuser: Achievement
 	lateinit var mask: Achievement
+	lateinit var subspace: Achievement
 	//lateinit var mjolnir: Achievement
 	lateinit var flugelKill: Achievement
 	
@@ -25,8 +26,9 @@ object AlfheimAchievements {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
 		excaliber = AlfheimAchievement("excaliber", 2, 0, AlfheimItems.excaliber, null)
 		flugelSoul = AlfheimAchievement("flugelSoul", -2, 0, AlfheimItems.flugelSoul, null)
-		infuser = AlfheimAchievement("infuser", 0, -2, AlfheimBlocks.manaInfuser, null)
+		infuser = AlfheimAchievement("infuser", 0, -4, AlfheimBlocks.manaInfuser, null)
 		mask = AlfheimAchievement("mask", 0, 2, AlfheimItems.mask, null)
+		subspace = AlfheimAchievement("subspace", 0, -2, AlfheimItems.subspaceSpear, null)
 		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null);
 		flugelKill = AlfheimAchievement("flugelKill", 0, 4, ModItems.flightTiara, null)
 		

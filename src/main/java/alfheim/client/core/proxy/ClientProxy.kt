@@ -20,6 +20,8 @@ import alfheim.common.core.handler.EventHandler
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
+import alfheim.common.entity.EntitySubspace
+import alfheim.common.entity.EntitySubspaceSpear
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
@@ -102,6 +104,9 @@ class ClientProxy: CommonProxy() {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderThrownPotion())
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderThrownItem())
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderSubspace())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderSubspaceSpear())
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderGrieferCreeper())
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderGrieferCreeper())

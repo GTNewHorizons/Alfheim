@@ -58,6 +58,7 @@ object AlfheimRegistry {
 	lateinit var butterShield: Potion
 	lateinit var deathMark: Potion
 	lateinit var decay: Potion
+	lateinit var eternity: Potion
 	lateinit var goldRush: Potion
 	lateinit var icelens: Potion
 	lateinit var leftFlame: Potion
@@ -71,7 +72,7 @@ object AlfheimRegistry {
 	lateinit var quadDamage: Potion
 	lateinit var sacrifice: Potion
 	lateinit var sharedHP: Potion
-	fun sharedHPIsInitialized() = ::leftFlame.isInitialized
+	fun sharedHPIsInitialized() = ::sharedHP.isInitialized
 	lateinit var showMana: Potion
 	lateinit var soulburn: Potion
 	lateinit var stoneSkin: Potion
@@ -106,6 +107,7 @@ object AlfheimRegistry {
 		butterShield = PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF)
 		deathMark = PotionDeathMark()
 		decay = PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355)
+		eternity = PotionEternity()
 		goldRush = PotionGoldRush()
 		icelens = PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF)
 		leftFlame = PotionLeftFlame()
@@ -145,6 +147,9 @@ object AlfheimRegistry {
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)
+		
+		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance)
+		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance)
 		registerEntity(EntitySpellHarp::class.java, "SpellArfa", AlfheimCore.instance)
