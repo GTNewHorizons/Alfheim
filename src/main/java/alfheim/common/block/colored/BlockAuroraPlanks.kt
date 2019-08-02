@@ -4,10 +4,12 @@ import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
+import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
@@ -28,6 +30,13 @@ class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 		tickRandomly = true
 		GameRegistry.registerFuelHandler(this)
 	}
+	
+	override fun setBlockName(par1Str: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockAurora::class.java, par1Str)
+		return super.setBlockName(par1Str)
+	}
+	
+	override fun shouldRegisterInNameSet() = false
 	
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = BlockAuroraDirt.getBlockColor(x, y, z)

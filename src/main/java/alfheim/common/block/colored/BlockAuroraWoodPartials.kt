@@ -2,6 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.*
+import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -11,12 +12,16 @@ import net.minecraft.item.*
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 
-open class BlockAuroraWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "")), IFuelHandler {
+open class BlockAuroraWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17"), IFuelHandler {
     
     init {
         setResistance(10.0f)
         GameRegistry.registerFuelHandler(this)
     }
+	
+	override fun register() {
+		GameRegistry.registerBlock(this, ItemColoredSlabMod::class.java, name)
+	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = BlockAuroraDirt.getBlockColor(x, y, z)
@@ -35,7 +40,7 @@ open class BlockAuroraWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.au
 }
 
 open class BlockAuroraWoodStairs(source: Block = ShadowFoxBlocks.auroraPlanks):
-    BlockStairsMod(source, 0, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs"), ILexiconable {
+    BlockStairsMod(source, 0, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs17"), ILexiconable {
 	
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = BlockAuroraDirt.getBlockColor(x, y, z)

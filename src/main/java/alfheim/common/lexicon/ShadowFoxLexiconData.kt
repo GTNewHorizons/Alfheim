@@ -288,6 +288,12 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.resource, 1, 3), netherSapling, 6)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.resource, 1, 4), netherSapling, 7)
 		
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.circuitWood), circuitSapling, 1)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.circuitLeaves), circuitSapling, 1)
+		
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.calicoWood), calicoSapling, 1)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.calicoLeaves), calicoSapling, 1)
+		
 		for (i in 0..2)
 			LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.shimmerQuartz, 1, i), shimmer, 0)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.shimmerQuartzSlab), shimmer, 0)
