@@ -1,23 +1,31 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import com.sun.xml.internal.fastinfoset.stax.events.AttributeBase
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.enchantment.*
-import net.minecraft.entity.SharedMonsterAttributes
+import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
+import net.minecraft.stats.Achievement
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.opengl.GL11.glColor4f
+import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.relic.ItemRelic
 import vazkii.botania.common.lib.LibMisc
 import java.util.*
@@ -26,13 +34,18 @@ import kotlin.math.min
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
-class ItemSunrayBow: ItemRelic("SunrayBow") {
+class ItemSunrayBow: ItemBow(), IRelic {
 	
 	lateinit var icon: Array<IIcon>
 	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
-		MinecraftForge.EVENT_BUS.register(this)
+		setFull3D()
+		
+		setMaxStackSize(1)
+		unlocalizedName = "SunrayBow"
+		
+		if (!ASJUtilities.isServer) MinecraftForge.EVENT_BUS.register(this)
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeBase> {
@@ -82,29 +95,31 @@ class ItemSunrayBow: ItemRelic("SunrayBow") {
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("${getUnlocalizedNameInefficiently(stack)}.desc", 2 * EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)))
 		list.add("")
+		addBindInfo(list, stack, player)
 		super.addInformation(stack, player, list, adv)
 	}
 	
 	override fun registerIcons(reg: IIconRegister) {
-		super.registerIcons(reg)
+		itemIcon = reg.registerIcon("${LibMisc.MOD_ID}:SunrayBow")
+		
 		icon = Array(4) {
 			reg.registerIcon("${LibMisc.MOD_ID}:SunrayBow_${it + 1}")
 		}
 	}
 	
-	fun getItemIconForUseDuration(dur: Int) = icon[dur]
+	override fun getItemIconForUseDuration(dur: Int) = icon[dur]
 	
 	override fun getIcon(stack: ItemStack, renderPass: Int, player: EntityPlayer?, usingItem: ItemStack?, useRemaining: Int): IIcon {
 		val m = maxDmg / 10
-		val j = ((((stack.maxItemUseDuration - useRemaining) * chargeVelocityMultiplier).toInt() - m) / 5) * 2 + m
+		val j = (((stack.maxItemUseDuration - useRemaining) * chargeVelocityMultiplier - m) / 5) * 2 + m
 		
 		return if (usingItem == null) {
 			itemIcon
 		} else if (j >= maxDmg) {
 			getItemIconForUseDuration(3)
-		} else if (j >= maxDmg/3*2) {
+		} else if (j >= maxDmg/3f*2f) {
 			getItemIconForUseDuration(2)
-		} else if (j > maxDmg/3) {
+		} else if (j > maxDmg/3f) {
 			getItemIconForUseDuration(1)
 		} else {
 			if (j > 0) getItemIconForUseDuration(0) else itemIcon
@@ -113,6 +128,8 @@ class ItemSunrayBow: ItemRelic("SunrayBow") {
 	
 	@SubscribeEvent
 	fun damageOverlay(e: RenderGameOverlayEvent.Post) {
+		if (e.type != RenderGameOverlayEvent.ElementType.CROSSHAIRS) return
+		
 		val mc = Minecraft.getMinecraft()
 		if (mc.thePlayer.itemInUse?.item !== this) return
 		
@@ -125,4 +142,86 @@ class ItemSunrayBow: ItemRelic("SunrayBow") {
 			glColor4f(1f, 1f, 1f, 1f)
 		} catch (t: Throwable) {}
 	}
+	
+	// ################################ ItemMod ################################
+	
+	override fun setUnlocalizedName(str: String): Item {
+		GameRegistry.registerItem(this, str)
+		return super.setUnlocalizedName(str)
+	}
+	
+	// ################################ ItemRelic ################################
+	
+	val TAG_SOULBIND = "soulbind"
+	
+	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity?, slot: Int, inHand: Boolean) {
+		if (entity is EntityPlayer) {
+			updateRelic(stack, entity)
+		}
+	}
+	
+	fun addBindInfo(list: MutableList<in String>, stack: ItemStack, player: EntityPlayer) {
+		if (GuiScreen.isShiftKeyDown()) {
+			val bind = getSoulbindUsernameS(stack)
+			if (bind.isEmpty()) {
+				addStringToTooltip(StatCollector.translateToLocal("botaniamisc.relicUnbound"), list)
+			} else {
+				addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.relicSoulbound"), bind), list)
+				if (!isRightPlayer(player, stack)) {
+					addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.notYourSagittarius"), bind), list)
+				}
+			}
+		} else {
+			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
+		}
+	}
+	
+	fun shouldDamageWrongPlayer() = true
+	
+	override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = Int.MAX_VALUE
+	
+	fun addStringToTooltip(s: String, tooltip: MutableList<in String>) {
+		tooltip.add(s.replace("&".toRegex(), "§"))
+	}
+	
+	fun getSoulbindUsernameS(stack: ItemStack?) = ItemNBTHelper.getString(stack, "soulbind", "")!!
+	
+	fun updateRelic(stack: ItemStack?, player: EntityPlayer) {
+		if (stack != null && stack.item is IRelic) {
+			if (getSoulbindUsernameS(stack).isEmpty()) {
+				player.addStat((stack.item as IRelic).bindAchievement, 1)
+				bindToPlayer(player, stack)
+			}
+			
+			if (!isRightPlayer(player, stack) && player.ticksExisted % 10 == 0 && (stack.item !is ItemRelic || (stack.item as ItemRelic).shouldDamageWrongPlayer())) {
+				player.attackEntityFrom(damageSource(), 2.0f)
+			}
+		}
+	}
+	
+	fun bindToPlayer(player: EntityPlayer, stack: ItemStack) {
+		bindToUsernameS(player.commandSenderName, stack)
+	}
+	
+	fun bindToUsernameS(username: String, stack: ItemStack) {
+		ItemNBTHelper.setString(stack, "soulbind", username)
+	}
+	
+	fun isRightPlayer(player: EntityPlayer, stack: ItemStack?) = isRightPlayer(player.commandSenderName, stack)
+	
+	fun isRightPlayer(player: String, stack: ItemStack?) = getSoulbindUsernameS(stack) == player
+	
+	fun damageSource() = DamageSource("botania-relic")
+	
+	override fun bindToUsername(playerName: String, stack: ItemStack) {
+		bindToUsernameS(playerName, stack)
+	}
+	
+	override fun getSoulbindUsername(stack: ItemStack) = getSoulbindUsernameS(stack)
+	
+	override fun getBindAchievement() = AlfheimAchievements.sunray
+	
+	override fun setBindAchievement(achievement: Achievement?) = Unit // NO-OP
+	
+	override fun getRarity(stack: ItemStack?) = BotaniaAPI.rarityRelic!!
 }

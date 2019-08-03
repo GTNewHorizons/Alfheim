@@ -2,11 +2,11 @@ package alfheim.common.item
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.item.*
-import alfheim.common.core.helper.IconHelper
 
 open class ItemMod(name: String): Item() {
 	
@@ -15,19 +15,19 @@ open class ItemMod(name: String): Item() {
 		unlocalizedName = name
 	}
 	
-	override fun setUnlocalizedName(par1Str: String): Item {
-		GameRegistry.registerItem(this, par1Str)
-		return super.setUnlocalizedName(par1Str)
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	override fun getItemStackDisplayName(stack: ItemStack) =
 		super.getItemStackDisplayName(stack).replace("&".toRegex(), "\u00a7")
 	
-	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		super.getUnlocalizedNameInefficiently(stack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = IconHelper.forItem(par1IconRegister, this)
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forItem(reg, this)
 	}
 }

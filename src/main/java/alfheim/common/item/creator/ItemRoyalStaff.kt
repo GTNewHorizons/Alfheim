@@ -1,6 +1,7 @@
 package alfheim.common.item.creator
 
 import alfheim.common.item.ItemMod
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -34,4 +35,6 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
+	
+	override fun registerIcons(reg: IIconRegister) = Unit // NO-OP
 }

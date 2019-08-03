@@ -2,7 +2,6 @@ package alfheim.common.item.relic
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
@@ -43,30 +42,34 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		return attrib
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World, entity: Entity?, slot: Int, selected: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slot: Int, selected: Boolean) {
 		if (!world.isRemote && entity is EntityPlayer) {
 			updateRelic(stack, entity)
-			if (entity.swingProgressInt == 1) {
-				if (entity.heldItem?.item === this && ManaItemHandler.requestManaExact(stack, entity, 500, true)) {
-					val sub = EntitySubspace(world, entity)
-					sub.liveTicks = 24
-					sub.delay = 6
-					sub.posX = entity.posX
-					sub.posY = entity.posY - entity.yOffset + 2.5 + (world.rand.nextFloat() * 0.2f).toDouble()
-					sub.posZ = entity.posZ
-					sub.rotationYaw = entity.rotationYaw
-					sub.rotation = MathHelper.wrapAngleTo180_float(-entity.rotationYaw + 180)
-					sub.type = 1
-					sub.size = 0.40f + world.rand.nextFloat() * 0.15f
-					if (!world.isRemote && ManaItemHandler.requestManaExactForTool(stack, entity, 400, true))
-						world.spawnEntityInWorld(sub)
+			if (icd(stack)) {
+				if (entity.swingProgressInt == 1) {
+					if (entity.heldItem?.item === this && ManaItemHandler.requestManaExact(stack, entity, 500, true)) {
+						val sub = EntitySubspace(world, entity)
+						sub.liveTicks = 24
+						sub.delay = 6
+						sub.posX = entity.posX
+						sub.posY = entity.posY - entity.yOffset + 2.5 + (world.rand.nextFloat() * 0.2f).toDouble()
+						sub.posZ = entity.posZ
+						sub.rotationYaw = entity.rotationYaw
+						sub.rotation = MathHelper.wrapAngleTo180_float(-entity.rotationYaw + 180)
+						sub.type = 1
+						sub.size = 0.40f + world.rand.nextFloat() * 0.15f
+						if (!world.isRemote && ManaItemHandler.requestManaExactForTool(stack, entity, 400, true))
+							world.spawnEntityInWorld(sub)
+					}
+					
+					scd(stack, 25)
 				}
-			}
+			} else scd(stack, gcd(stack) - 1)
 		}
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		player.setItemInUse(stack, getMaxItemUseDuration(stack))
+		if (!ManaItemHandler.requestManaExactForTool(stack, player, 1000, true)) player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
 	
@@ -75,8 +78,8 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
-		if (isRightPlayer(player, stack)) {
-			if (!ManaItemHandler.requestManaExactForTool(stack, player, 10000, true)) return
+		if (isRightPlayer(player, stack) && icd(stack)) {
+			if (!ManaItemHandler.requestManaExactForTool(stack, player, 1000, true)) return
 			
 			player.isSprinting = true
 			player.setJumping(true)
@@ -154,14 +157,18 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1.0f, 1.0f + player.worldObj.rand.nextFloat() * 3.0f)
 				}
 			player.addPotionEffect(PotionEffect(AlfheimRegistry.eternity.id, 120, 0))
+			
+			scd(stack, 200)
 		}
 		
 		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 	}
 	
-	override fun usesMana(arg0: ItemStack) = true
+	fun gcd(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0)
+	fun icd(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) == 0
+	fun scd(stack: ItemStack, cd: Int) = ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd)
 	
-	override fun getBindAchievement() = AlfheimAchievements.subspace
+	override fun usesMana(arg0: ItemStack) = true
 	
 	private val MANA_PER_DAMAGE = 160
 	
@@ -169,8 +176,10 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	
 	override fun collideBurst(burst: IManaBurst, mop: MovingObjectPosition, arg2: Boolean, dead: Boolean, stack: ItemStack): Boolean {
 		val entity = burst as EntityThrowable
-		if (burst.color == 0XFFAF00)
+		if (burst.color == 0XFFAF00) {
 			entity.worldObj.spawnParticle("hugeexplosion", entity.posX, entity.posY, entity.posZ, 1.0, 0.0, 0.0)
+			entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "random.explode", 4.0f, (1.0f + (entity.worldObj.rand.nextFloat() - entity.worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+		}
 		return dead
 	}
 	
@@ -250,6 +259,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	}
 	
 	val TAG_ATTACKER_USERNAME = "attackerUsername"
+	val TAG_COOLDOWN = "cooldown"
 	
 	fun getBurst(player: EntityPlayer, stack: ItemStack): EntityManaBurst {
 		val burst = EntityManaBurst(player)

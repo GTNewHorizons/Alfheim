@@ -71,17 +71,17 @@ abstract class ASJPacket: IMessage {
 		}
 		
 		@JvmStatic
-		fun write(buf: ByteBuf, w: String) {
+		fun write(buf: ByteBuf, w: String?) {
 			ByteBufUtils.writeUTF8String(buf, w)
 		}
 		
 		@JvmStatic
-		fun write(buf: ByteBuf, w: ItemStack) {
+		fun write(buf: ByteBuf, w: ItemStack?) {
 			ByteBufUtils.writeItemStack(buf, w)
 		}
 		
 		@JvmStatic
-		fun write(buf: ByteBuf, w: NBTTagCompound) {
+		fun write(buf: ByteBuf, w: NBTTagCompound?) {
 			ByteBufUtils.writeTag(buf, w)
 		}
 		
@@ -126,17 +126,17 @@ abstract class ASJPacket: IMessage {
 		}
 		
 		@JvmStatic
-		fun readLjavalangString(buf: ByteBuf): String {
+		fun readLjavalangString(buf: ByteBuf): String? {
 			return ByteBufUtils.readUTF8String(buf)
 		}
 		
 		@JvmStatic
-		fun readLnetminecraftitemItemStack(buf: ByteBuf): ItemStack {
+		fun readLnetminecraftitemItemStack(buf: ByteBuf): ItemStack? {
 			return ByteBufUtils.readItemStack(buf)
 		}
 		
 		@JvmStatic
-		fun readLnetminecraftnbtNBTTagCompound(buf: ByteBuf): NBTTagCompound {
+		fun readLnetminecraftnbtNBTTagCompound(buf: ByteBuf): NBTTagCompound? {
 			return ByteBufUtils.readTag(buf)
 		}
 	}

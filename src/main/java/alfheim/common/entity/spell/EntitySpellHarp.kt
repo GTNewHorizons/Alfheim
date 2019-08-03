@@ -46,11 +46,12 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 			}
 			
 			if (worldObj.rand.nextInt() % (20 / pt.count) == 0) {
-				var mr = pt.get(worldObj.rand.nextInt(pt.count))
-				if (Vector3.entityDistance(this, mr!!) > 16) return
+				var mr = pt[worldObj.rand.nextInt(pt.count)] ?: return
+				if (Vector3.entityDistance(this, mr) > 16) return
 				mr.heal(0.5f)
-				mr = pt.get(worldObj.rand.nextInt(pt.count))
-				for (o in mr!!.activePotionEffects) {
+				
+				mr = pt[worldObj.rand.nextInt(pt.count)] ?: return
+				for (o in mr.activePotionEffects) {
 					if (Potion.potionTypes[(o as PotionEffect).potionID].isBadEffect) {
 						mr.removePotionEffect(o.potionID)
 						break
@@ -62,9 +63,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 		}
 	}
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster?.uniqueID != uuid
 	
 	public override fun entityInit() {}
 	

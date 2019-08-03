@@ -8,6 +8,7 @@ import alfheim.api.AlfheimAPI
 import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibOreDict.ARUNE
+import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.IFFESAL_DUST
@@ -30,6 +31,7 @@ import alfheim.common.block.AlfheimBlocks.itemHolder
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.manaInfuser
 import alfheim.common.block.AlfheimBlocks.mauftriumBlock
+import alfheim.common.block.AlfheimBlocks.shrineRock
 import alfheim.common.block.AlfheimBlocks.tradePortal
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -518,6 +520,14 @@ object AlfheimRecipes {
 						 'L', LIVING_ROCK,
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
+		
+		// ################ DECO BLOCKS ################
+		
+		addOreDictRecipe(ItemStack(shrineRock, 8, 7),
+						 "LLL", "LDL", "LLL",
+						 'L', LIVING_ROCK,
+						 'D', DYES[16])
+		
 	}
 	
 	private fun registerShapelessRecipes() {

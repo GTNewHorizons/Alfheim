@@ -41,13 +41,11 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	constructor(world: World, shooter: EntityLivingBase): this(world, shooter.posX, shooter.posY + shooter.eyeHeight, shooter.posZ, shooter.lookVec.xCoord, shooter.lookVec.yCoord, shooter.lookVec.zCoord) {
-		this.caster = shooter
+		caster = shooter
 		setRotation(shooter.rotationYaw, shooter.rotationPitch)
 	}
 	
-	override fun attackEntityFrom(source: DamageSource?, damage: Float): Boolean {
-		return false
-	}
+	override fun attackEntityFrom(source: DamageSource?, damage: Float) = false
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
@@ -133,22 +131,14 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 		}
 	}
 	
-	override fun canBeCollidedWith(): Boolean {
-		return true
-	}
+	override fun canBeCollidedWith() = true
 	
-	override fun getCollisionBorderSize(): Float {
-		return 1.0f
-	}
+	override fun getCollisionBorderSize() = 1.0f
 	
 	@SideOnly(Side.CLIENT)
-	override fun getShadowSize(): Float {
-		return 0.0f
-	}
+	override fun getShadowSize() = 0.0f
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
 	public override fun entityInit() {}
 	
