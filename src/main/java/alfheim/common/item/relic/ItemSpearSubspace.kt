@@ -74,7 +74,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
 	
-	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, timeLeft: Int) {
+	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
 		if (isRightPlayer(player, stack)) {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, 10000, true)) return
 			
@@ -156,7 +156,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 			player.addPotionEffect(PotionEffect(AlfheimRegistry.eternity.id, 120, 0))
 		}
 		
-		super.onPlayerStoppedUsing(stack, world, player, timeLeft)
+		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 	}
 	
 	override fun usesMana(arg0: ItemStack) = true

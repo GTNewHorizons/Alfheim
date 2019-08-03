@@ -148,6 +148,7 @@ object AlfheimRegistry {
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)
 		
+		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance)
 		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance)
 		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance)
 		

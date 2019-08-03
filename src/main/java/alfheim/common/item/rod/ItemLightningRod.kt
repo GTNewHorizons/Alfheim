@@ -80,8 +80,8 @@ open class ItemLightningRod(name: String = "lightningRod"): ItemMod(name), IMana
 	
 	override fun getMaxItemUseDuration(par1ItemStack: ItemStack?) = 72000
 	
-	override fun onPlayerStoppedUsing(stack: ItemStack?, world: World?, player: EntityPlayer?, count: Int) {
-		super.onPlayerStoppedUsing(stack, world, player, count)
+	override fun onPlayerStoppedUsing(stack: ItemStack?, world: World?, player: EntityPlayer?, itemInUse: Int) {
+		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 		ItemNBTHelper.setInt(stack, "target", -1)
 	}
 	

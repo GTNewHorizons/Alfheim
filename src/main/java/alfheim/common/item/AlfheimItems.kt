@@ -77,6 +77,7 @@ object AlfheimItems {
 	lateinit var rodGrass: Item
 	lateinit var rodIce: Item
 	lateinit var subspaceSpear: Item
+	lateinit var sunrayBow: Item
 	lateinit var thinkingHand: Item
 	
 	lateinit var royalStaff: Item
@@ -148,7 +149,8 @@ object AlfheimItems {
 			ModItems.terrasteelHelmRevealing.creativeTab = ThaumcraftAlfheimModule.tcnTab
 		}
 		
-		subspaceSpear = ItemSpearSubspace();
+		subspaceSpear = ItemSpearSubspace()
+		sunrayBow = ItemSunrayBow()
 		royalStaff = ItemRoyalStaff()
 	}
 	
