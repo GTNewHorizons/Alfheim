@@ -113,7 +113,7 @@ class EventHandlerClient {
 				
 				glTranslatef(0.0f, 0.1875f, 0.0f)
 				glScalef(f1, -f1, f1)
-				glRotatef(-100.0f, 1.0f, 0.0f, 0.0f)
+				glRotatef(-80.0f, 1.0f, 0.0f, 0.0f)
 				glRotatef(45.0f, 0.0f, 1.0f, 0.0f)
 				
 				val f2: Float

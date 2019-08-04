@@ -5,9 +5,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import com.google.common.base.Function
 import net.minecraft.block.Block
 import net.minecraft.entity.item.EntityItem
@@ -24,7 +24,6 @@ import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.handler.ConfigHandler
-
 import java.util.*
 import kotlin.math.*
 
@@ -33,6 +32,10 @@ class TileAlfheimPortal: TileMod() {
 	var ticksOpen = 0
 	private var closeNow = false
 	private var hasUnloadedParts = false
+	
+	var posX = 0
+	var posY = -1
+	var posZ = 0
 	
 	internal val portalAABB: AxisAlignedBB
 		get() {
@@ -79,14 +82,14 @@ class TileAlfheimPortal: TileMod() {
 							if (coords == null) coords = MinecraftServer.getServer().worldServerForDimension(0).spawnPoint
 							if (coords == null) coords = ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0) + 3, 0)
 							
-							if (AlfheimConfig.destroyPortal && (this.xCoord != 0 || this.zCoord != 0)) {
-								this.worldObj.newExplosion(player, this.xCoord.toDouble(), this.yCoord.toDouble(), this.zCoord.toDouble(), 5f, false, false)
+							if (AlfheimConfig.destroyPortal && (xCoord != 0 || zCoord != 0)) {
+								worldObj.newExplosion(player, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), 5f, false, false)
 								val x = if (meta == 1) 2 else 0
 								val z = if (meta == 1) 0 else 2
-								this.worldObj.setBlockToAir(this.xCoord - x, this.yCoord + 2, this.zCoord - z)
-								this.worldObj.setBlockToAir(this.xCoord + x, this.yCoord + 2, this.zCoord + z)
-								this.worldObj.setBlockToAir(this.xCoord, this.yCoord + 4, this.zCoord)
-								this.worldObj.setBlockToAir(this.xCoord, this.yCoord, this.zCoord)
+								worldObj.setBlockToAir(xCoord - x, yCoord + 2, zCoord - z)
+								worldObj.setBlockToAir(xCoord + x, yCoord + 2, zCoord + z)
+								worldObj.setBlockToAir(xCoord, yCoord + 4, zCoord)
+								worldObj.setBlockToAir(xCoord, yCoord, zCoord)
 							}
 							
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.toDouble(), coords.posY.toDouble(), coords.posZ.toDouble())
@@ -112,13 +115,13 @@ class TileAlfheimPortal: TileMod() {
 		
 		if (closeNow) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-			if (!worldObj.isRemote) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+			if (!worldObj.isRemote && posX == xCoord && posY == yCoord  && posZ == zCoord) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 			for (i in 0..35)
 				blockParticle(meta)
 			closeNow = false
 		} else if (newMeta != meta) {
 			if (newMeta == 0) {
-				if (!worldObj.isRemote) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+				if (!worldObj.isRemote && posX == xCoord && posY == yCoord  && posZ == zCoord) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 				for (i in 0..35)
 					blockParticle(meta)
 			}
@@ -156,6 +159,9 @@ class TileAlfheimPortal: TileMod() {
 		val meta = getBlockMetadata()
 		if (meta == 0 && newMeta != 0) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3)
+			posX = xCoord
+			posY = yCoord
+			posZ = zCoord
 			return true
 		}
 		
@@ -164,15 +170,20 @@ class TileAlfheimPortal: TileMod() {
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
 		cmp.setInteger(TAG_TICKS_OPEN, ticksOpen)
+		cmp.setInteger(TAG_POS_X, posX)
+		cmp.setInteger(TAG_POS_Y, posY)
+		cmp.setInteger(TAG_POS_Z, posZ)
 	}
 	
 	override fun readCustomNBT(cmp: NBTTagCompound) {
 		ticksOpen = cmp.getInteger(TAG_TICKS_OPEN)
+		posX = cmp.getInteger(TAG_POS_X)
+		posY = cmp.getInteger(TAG_POS_Y)
+		posZ = cmp.getInteger(TAG_POS_Z)
 	}
 	
-	private fun checkConverter(baseConverter: Function<IntArray, IntArray>?): Boolean {
-		return checkMultipleConverters(arrayOf(baseConverter)) || checkMultipleConverters(arrayOf(CONVERTER_Z_SWAP, baseConverter))
-	}
+	private fun checkConverter(baseConverter: Function<IntArray, IntArray>?) =
+		checkMultipleConverters(arrayOf(baseConverter)) || checkMultipleConverters(arrayOf(CONVERTER_Z_SWAP, baseConverter))
 	
 	private fun checkMultipleConverters(converters: Array<Function<IntArray, IntArray>?>?): Boolean {
 		if (wrong2DArray(AIR_POSITIONS, Blocks.air, -1, converters))
@@ -181,9 +192,9 @@ class TileAlfheimPortal: TileMod() {
 			return false
 		if (wrong2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
 			return false
-		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false
-		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
 			return false
 		
 		lightPylons(converters)
@@ -206,7 +217,7 @@ class TileAlfheimPortal: TileMod() {
 				val centerBlock = Vector3(xCoord + 0.5, yCoord.toDouble() + 0.75 + (Math.random() - 0.5 * 0.25), zCoord + 0.5)
 				
 				if (ConfigHandler.elfPortalParticlesEnabled) {
-					var worldTime = this.worldObj.totalWorldTime.toDouble()
+					var worldTime = worldObj.totalWorldTime.toDouble()
 					rand.setSeed((xCoord + pos[0] xor yCoord + pos[1] xor zCoord + pos[2]).toLong())
 					worldTime += rand.nextInt(1000).toDouble()
 					worldTime /= 5.0
@@ -271,9 +282,7 @@ class TileAlfheimPortal: TileMod() {
 		return false
 	}
 	
-	override fun getRenderBoundingBox(): AxisAlignedBB {
-		return TileEntity.INFINITE_EXTENT_AABB
-	}
+	override fun getRenderBoundingBox() = TileEntity.INFINITE_EXTENT_AABB
 	
 	companion object {
 		
@@ -284,6 +293,9 @@ class TileAlfheimPortal: TileMod() {
 		private val AIR_POSITIONS = arrayOf(intArrayOf(-1, 1, 0), intArrayOf(0, 1, 0), intArrayOf(1, 1, 0), intArrayOf(-1, 2, 0), intArrayOf(0, 2, 0), intArrayOf(1, 2, 0), intArrayOf(-1, 3, 0), intArrayOf(0, 3, 0), intArrayOf(1, 3, 0))
 		
 		private const val TAG_TICKS_OPEN = "ticksOpen"
+		private const val TAG_POS_X = "posX"
+		private const val TAG_POS_Y = "posY"
+		private const val TAG_POS_Z = "posZ"
 		
 		private const val activation = 75000
 		private const val idle = 2

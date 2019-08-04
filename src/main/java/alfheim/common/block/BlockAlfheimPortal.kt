@@ -40,19 +40,19 @@ class BlockAlfheimPortal: BlockContainer(Material.wood), ILexiconable {
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileAlfheimPortal()
 	
-	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val newMeta = (world.getTileEntity(x, y, z) as TileAlfheimPortal).validMetadata
 		if (newMeta == 0) return false
 		
 		if (world.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) {
-			if (world.getBlockMetadata(x, y, z) == 0 && player!!.currentEquippedItem != null && player.currentEquippedItem.item === AlfheimItems.elvenResource && player.currentEquippedItem.itemDamage == ElvenResourcesMetas.InterdimensionalGatewayCore) {
+			if (world.getBlockMetadata(x, y, z) == 0 && player.currentEquippedItem?.item === AlfheimItems.elvenResource && player.currentEquippedItem.itemDamage == ElvenResourcesMetas.InterdimensionalGatewayCore) {
 				ASJUtilities.consumeItemStack(player.inventory, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore))
 			} else
 				return false
 		}
 		
 		val did = (world.getTileEntity(x, y, z) as TileAlfheimPortal).onWanded(newMeta)
-		if (did && player != null) player.addStat(AlfheimAchievements.alfheim, 1)
+		if (did) player.addStat(AlfheimAchievements.alfheim, 1)
 		return did
 	}
 	
