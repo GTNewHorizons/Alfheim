@@ -13,9 +13,9 @@ import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
-import net.minecraft.util.MathHelper
 import vazkii.botania.common.Botania
 import kotlin.math.*
+import vazkii.botania.common.core.helper.Vector3 as VVec3
 
 object SpellEffectHandlerClient {
 	
@@ -51,9 +51,24 @@ object SpellEffectHandlerClient {
 				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
 				TREMORS        -> spawnTremors(x, y, z)
 				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
+				WIRE           -> spawnWire(x, y, z, x2)
 				else           -> {}
 			}
 		}
+	}
+	
+	fun spawnWire(x: Double, y: Double, z: Double, range: Double) {
+		val v = VVec3(x, y, z)
+		for (var11 in 0..20) {
+			Botania.proxy.lightningFX(Minecraft.getMinecraft().theWorld, v, v.add(randomVec(range)), (range * 0.01).toFloat(), 255 shl 16, 0)
+		}
+	}
+	
+	private fun randomVec(length: Double): vazkii.botania.common.core.helper.Vector3 {
+		val vec = VVec3(0.0, Math.random() * length, 0.0)
+		vec.rotate(Math.random() * Math.PI * 2, VVec3(1.0, 0.0, 0.0))
+		vec.rotate(Math.random() * Math.PI * 2, VVec3(0.0, 0.0, 1.0))
+		return vec
 	}
 	
 	fun addIceLens() {
@@ -205,7 +220,7 @@ object SpellEffectHandlerClient {
 	}
 	
 	enum class Spells {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

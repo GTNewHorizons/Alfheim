@@ -2,6 +2,10 @@ package alfheim.common.block.colored
 
 import alfheim.AlfheimCore
 import alfheim.api.ShadowFoxAPI
+import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.world.gen.SimpleTreeGen
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -15,10 +19,6 @@ import net.minecraft.world.*
 import net.minecraft.world.gen.feature.WorldGenerator
 import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.core.helper.IconHelper
-import alfheim.common.world.gen.SimpleTreeGen
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
@@ -67,11 +67,6 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
                 markOrGrowMarked(world, x, y, z, random)
 			}
 		}
-	}
-	
-	override fun onNeighborBlockChange(world: World?, x: Int, y: Int, z: Int, block: Block) {
-		super.onNeighborBlockChange(world, x, y, z, block)
-		checkAndDropBlock(world, x, y, z)
 	}
 	
 	override fun checkAndDropBlock(world: World?, x: Int, y: Int, z: Int) {

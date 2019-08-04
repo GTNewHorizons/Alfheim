@@ -2,6 +2,8 @@ package alfheim.common.item.creator
 
 import alfheim.AlfheimCore
 import alfheim.api.*
+import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.common.core.handler.SpellEffectHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
@@ -25,8 +27,6 @@ import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 import java.util.*
 import kotlin.math.min
@@ -98,13 +98,6 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		return par1ItemStack
 	}
 	
-	private fun randomVec(length: Int): Vector3 {
-		val vec = Vector3(0.0, Math.random() * length, 0.0)
-		vec.rotate(Math.random() * Math.PI * 2, Vector3(1.0, 0.0, 0.0))
-		vec.rotate(Math.random() * Math.PI * 2, Vector3(0.0, 0.0, 1.0))
-		return vec
-	}
-	
 	override fun isFull3D() = true
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, inUseTicks: Int) {
@@ -124,9 +117,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
-			for (var11 in 0..20) {
-				Botania.proxy.lightningFX(world, Vector3.fromEntityCenter(player), Vector3.fromEntityCenter(player).add(randomVec(range)), range * 0.01f, 255 shl 16, 0)
-			}
+			if (!world.isRemote) SpellEffectHandler.sendPacket(Spells.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.toDouble(), 0.0, 0.0)
 			player.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 2 * count, 0, true))
 		}
 	}

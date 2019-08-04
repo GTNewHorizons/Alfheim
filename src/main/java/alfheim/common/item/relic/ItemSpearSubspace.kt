@@ -69,7 +69,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		if (!ManaItemHandler.requestManaExactForTool(stack, player, 1000, true)) player.setItemInUse(stack, getMaxItemUseDuration(stack))
+		if (ManaItemHandler.requestManaExactForTool(stack, player, 1000, false)) player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
 	

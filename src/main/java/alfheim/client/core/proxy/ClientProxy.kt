@@ -37,7 +37,7 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
-import vazkii.botania.client.render.item.RenderLens
+import vazkii.botania.client.render.item.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 
@@ -94,6 +94,7 @@ class ClientProxy: CommonProxy() {
 		// Botanical Addons:
 		
 		MinecraftForgeClient.registerItemRenderer(ShadowFoxItems.invisibleFlameLens, RenderLens())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.sunrayBow, RenderBow())
 		
 		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
 		RenderingRegistry.registerBlockHandler(MultipassRenderer())

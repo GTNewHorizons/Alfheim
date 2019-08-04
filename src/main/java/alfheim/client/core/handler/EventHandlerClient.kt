@@ -81,15 +81,12 @@ class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
-		if (e.entityPlayer.commandSenderName == "AlexSocol")
-			e.renderer.modelBipedMain.heldItemLeft = if (e.entityPlayer.heldItem?.item !== AlfheimItems.royalStaff) 1 else 0
+		RenderItemFlugelHead.render(e, e.entityPlayer)
 		
 		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
 			e.isCanceled = true
 			return
 		}
-		
-		RenderItemFlugelHead.render(e, e.entityPlayer)
 	}
 	
 	@SubscribeEvent
