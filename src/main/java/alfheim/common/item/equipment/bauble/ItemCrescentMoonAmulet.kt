@@ -11,6 +11,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
+import kotlin.math.max
 
 class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem {
 	init {
@@ -30,24 +31,22 @@ class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem 
 		if (!e.source.isDamageAbsolute && e.entityLiving is EntityPlayer) {
 			val player = e.entityLiving as EntityPlayer
 			val bbls = PlayerHandler.getPlayerBaubles(player)
-			if (bbls != null && bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item is ItemCrescentMoonAmulet)
+			if (bbls?.getStackInSlot(0)?.item is ItemCrescentMoonAmulet)
 				if (e.source.isMagicDamage) {
 					if (ItemNBTHelper.getInt(bbls.getStackInSlot(0), TAG_COOLDOWN, 0) <= 0) {
 						ItemNBTHelper.setInt(bbls.getStackInSlot(0), TAG_COOLDOWN, 100)
-						e.ammount = Math.max(0f, e.ammount - 10)
+						e.ammount = max(0f, e.ammount - 10)
 					}
 				} else
 					e.ammount -= ManaItemHandler.requestMana(bbls.getStackInSlot(0), player, MathHelper.ceiling_float_int(e.ammount * MANA_PER_DAMAGE), true) / (MANA_PER_DAMAGE * 10f)
 		}
 	}
 	
-	override fun usesMana(stack: ItemStack): Boolean {
-		return true
-	}
+	override fun usesMana(stack: ItemStack) = true
 	
 	companion object {
 		
-		val MANA_PER_DAMAGE = 100
-		private val TAG_COOLDOWN = "cooldown"
+		const val MANA_PER_DAMAGE = 100
+		private const val TAG_COOLDOWN = "cooldown"
 	}
 }

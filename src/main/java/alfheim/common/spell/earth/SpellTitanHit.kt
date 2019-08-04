@@ -47,10 +47,13 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 		val ye = if (direction.offsetY == 0) 2 else 1
 		val ze = if (direction.offsetZ == 0) 2 else 1
 		var mana = 0
-		for (x1 in xs until xe)
-			for (y1 in ys until ye)
-				for (z1 in zs until ze)
-					mana += removeBlockWithDrops(world, player, x1 + x, y1 + y, z1 + z, remove, draw, MATERIALS)
+		if (player.isSneaking)
+			mana = removeBlockWithDrops(world, player, x, y, z, remove, draw, MATERIALS)
+		else
+			for (x1 in xs until xe)
+				for (y1 in ys until ye)
+					for (z1 in zs until ze)
+						mana += removeBlockWithDrops(world, player, x1 + x, y1 + y, z1 + z, remove, draw, MATERIALS)
 		return mana
 	}
 	

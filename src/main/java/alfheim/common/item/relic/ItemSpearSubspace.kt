@@ -187,13 +187,11 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	
 	override fun updateBurst(burst: IManaBurst, stack: ItemStack) {
 		val entity = burst as EntityThrowable
-		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX,
-												entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
+		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
 		val attacker = ItemNBTHelper.getString(burst.sourceLens, TAG_ATTACKER_USERNAME, "")
 		
 		if (burst.color == 0XFFAF00 || burst.color == 0XFFD700) {
-			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX - 2.5f, entity.posY - 2.5f, entity.posZ - 2.5f,
-													 entity.lastTickPosX + 2.5f, entity.lastTickPosY + 2.5f, entity.lastTickPosZ + 2.5f)
+			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX - 2.5f, entity.posY - 2.5f, entity.posZ - 2.5f, entity.lastTickPosX + 2.5f, entity.lastTickPosY + 2.5f, entity.lastTickPosZ + 2.5f)
 			if (burst.color == 0XFFD700)
 				axis1.expand(1.5, 1.5, 1.5)
 			val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis1) as List<EntityLivingBase>
@@ -202,16 +200,13 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					continue
 				if (entity.ticksExisted % 3 == 0)
 					EntitySubspaceSpear.dealTrueDamage(living, living, if (burst.color == 0XFFD700) 1.8f else 2.2f)
-				if (living.hurtTime == 0)
-					living.attackEntityFrom(damageSource(), if (burst.color == 0XFFD700) 7f else 8f)
 			}
 			return
 		}
 		
 		var homeID = ItemNBTHelper.getInt(stack, ItemExcaliber.TAG_HOME_ID, -1)
 		if (homeID == -1) {
-			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX - 5f, entity.posY - 5f, entity.posZ - 5f,
-													 entity.lastTickPosX + 5f, entity.lastTickPosY + 5f, entity.lastTickPosZ + 5f)
+			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX - 5f, entity.posY - 5f, entity.posZ - 5f, entity.lastTickPosX + 5f, entity.lastTickPosY + 5f, entity.lastTickPosZ + 5f)
 			val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis1) as List<EntityLivingBase>
 			for (living in entities) {
 				if (living is EntityPlayer || living !is IMob || living.hurtTime != 0)
@@ -246,10 +241,9 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					val damage = BotaniaAPI.terrasteelToolMaterial.damageVsEntity + 3f
 					if (!burst.isFake && !entity.worldObj.isRemote) {
 						val player = living.worldObj.getPlayerEntityByName(attacker)
-						living.attackEntityFrom(
-							if (player == null) damageSource() else DamageSource.causePlayerDamage(player),
-							damage)
-						EntitySubspaceSpear.dealTrueDamage(player!!, living, 3f)
+						if (player != null) {
+							EntitySubspaceSpear.dealTrueDamage(player, living, 3f)
+						}
 						entity.setDead()
 						break
 					}

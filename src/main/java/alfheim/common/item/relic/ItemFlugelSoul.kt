@@ -3,6 +3,7 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.core.util.mfloor
 import alfheim.common.entity.boss.EntityFlugel
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -74,8 +75,8 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		return false
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack? {
-		if (isRightPlayer(player!!, stack) && !player.isSneaking) {
+	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack? {
+		if (isRightPlayer(player, stack) && !player.isSneaking) {
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
@@ -83,8 +84,10 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 					world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
 					ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
 				}
-			} else
-				setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world!!.provider.dimensionId)
+			} else {
+				if (player.canPlayerEdit(player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor(), 1, stack))
+					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world!!.provider.dimensionId)
+			}
 		}
 		
 		return stack

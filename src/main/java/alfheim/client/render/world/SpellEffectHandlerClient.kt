@@ -60,7 +60,7 @@ object SpellEffectHandlerClient {
 	fun spawnWire(x: Double, y: Double, z: Double, range: Double) {
 		val v = VVec3(x, y, z)
 		for (var11 in 0..20) {
-			Botania.proxy.lightningFX(Minecraft.getMinecraft().theWorld, v, v.add(randomVec(range)), (range * 0.01).toFloat(), 255 shl 16, 0)
+			Botania.proxy.lightningFX(Minecraft.getMinecraft().theWorld, v, v.copy().add(randomVec(range)), (range * 0.01).toFloat(), 255 shl 16, 0)
 		}
 	}
 	

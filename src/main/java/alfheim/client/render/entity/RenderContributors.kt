@@ -15,7 +15,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
-import net.minecraftforge.client.model.AdvancedModelLoader
+import net.minecraftforge.client.model.*
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL13.GL_TEXTURE0
 import org.lwjgl.opengl.GL20.*
@@ -28,7 +28,7 @@ import kotlin.math.sin
 
 object RenderContributors {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))!!
+	lateinit var model: IModelCustom
 	
 	private val callback: ShaderCallback = object: ShaderCallback() {
 		override fun call(shaderID: Int) {
@@ -119,7 +119,7 @@ object RenderContributors {
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 					glColor4d(1.0, 1.0, 1.0, 1.0)
 					
-					val f = icon!!.minU
+					val f = icon.minU
 					val f1 = icon.maxU
 					val f2 = icon.minV
 					val f3 = icon.maxV
@@ -164,6 +164,10 @@ object RenderContributors {
 					player.sendPlayerAbilities()
 					val flying = player.capabilities.isFlying
 					val ry = (if (flying) 30 else 15) + (sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * if (flying) 0.4 else 0.2) + 0.5) * if (flying) 25.0 else 5.0
+					
+					if (!::model.isInitialized) {
+						model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))
+					}
 					
 					run {
 						// bones

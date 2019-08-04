@@ -1,17 +1,20 @@
 Credits:
-DmitryWS            -	lore and most of textures
-Vamig Aliev         -	worldgen
-pandorarose22       -	wings textures
-anonymous..es       -	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
-lie_mander's friend -   gnome(m,f) base skins
-Inga Akuma          -   spriggan(m), salamander(f) base skins
-noppes              -   lolicorn base code
-Xinzhou Hong        -	chinese translation
-vidar90             -   black dots shader on gravity spell
+yrsegal, L0neKitsune    -	Botanical Addons and Natural Pledge content (Iridescence tab)
+DmitryWS                -	lore and most of textures
+Vamig Aliev             -	worldgen
+ExtraMeteorP, 2CKATEPTb -	ExtraBotany content (Subspace Spear, Sunray (Failnaught) Bow)
+pandorarose22           -	wings textures
+anonymous..es           -	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
+lie_mander's friend     -	gnome(m,f) base skins
+Inga Akuma              -	spriggan(m), salamander(f) base skins
+noppes                  -	lolicorn base code
+Xinzhou Hong            -	chinese translation
+vidar90                 -	black dots shader on gravity spell
+Azanor					-	textures of anomalies
 
 Thanks:
-GedeonGrays     	- for testing and material support
-KAIIIAK     	    - for testing
-GloomyFolken 		- for awesome hooklib wich allowed me to change Botania so flexible
-JustAGod            - for ObjectWeb ASM tutorial and explaining some features
-Vazkii				- for making Botania, 'cause without it Alfheim would never have existed
+GedeonGrays     	    - for testing and material support
+KAIIIAK     	        - for testing
+GloomyFolken 		    - for awesome hooklib wich allowed me to change Botania so flexible
+JustAGod                - for ObjectWeb ASM tutorial and explaining some features
+Vazkii				    - for making Botania, 'cause without it Alfheim would never have existed

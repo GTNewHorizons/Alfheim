@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-
 import java.util.*
 
 class ItemRodGrass: Item(), IManaUsingItem {
@@ -71,6 +70,7 @@ class ItemRodGrass: Item(), IManaUsingItem {
 		
 		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return false
+			
 			world.setBlock(x, y, z, block)
 			ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 			for (i in 0..5) Botania.proxy.sparkleFX(world, x + Math.random(), y + Math.random(), z + Math.random(), r, g, b, 1f, 5)

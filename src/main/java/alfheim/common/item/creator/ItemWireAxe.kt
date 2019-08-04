@@ -108,9 +108,11 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		var count = 0
 		for (entity in entities) {
 			if (entity is EntityPlayer && ManaItemHandler.requestManaExact(stack, entity, 1, false)) {
-				count++
-				if (!world.isRemote) entity.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
-				entity.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 10, 0, true))
+				if (entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 0.001f)) {
+					count++
+					if (!world.isRemote) entity.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
+					entity.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 10, 0, true))
+				}
 			}
 		}
 		if (count > 0) {

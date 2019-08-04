@@ -34,6 +34,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GLContext
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.RecipePureDaisy
@@ -52,7 +53,9 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.lib.LibBlockNames
+import java.nio.FloatBuffer
 import java.util.*
+import kotlin.math.min
 
 @Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused")
 object AlfheimHookHandler {
@@ -451,6 +454,131 @@ object AlfheimHookHandler {
 			glDisable(GL_ALPHA_TEST)
 			PotionSoulburn.renderFireInFirstPerson(partialTicks)
 			glEnable(GL_ALPHA_TEST)
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun setupFog(renderer: EntityRenderer, fogMode: Int, renderPartialTicks: Float) {
+		val entitylivingbase = renderer.mc.renderViewEntity
+		var flag = false
+		
+		if (entitylivingbase is EntityPlayer) {
+			flag = entitylivingbase.capabilities.isCreativeMode
+		}
+		
+		fun setFogColorBuffer(p_78469_1_: Float, p_78469_2_: Float, p_78469_3_: Float, p_78469_4_: Float): FloatBuffer {
+			renderer.fogColorBuffer.clear()
+			renderer.fogColorBuffer.put(p_78469_1_).put(p_78469_2_).put(p_78469_3_).put(p_78469_4_)
+			renderer.fogColorBuffer.flip()
+			return renderer.fogColorBuffer
+		}
+		
+		if (fogMode == 999) {
+			glFog(GL_FOG_COLOR, setFogColorBuffer(0.0f, 0.0f, 0.0f, 1.0f))
+			glFogi(GL_FOG_MODE, GL_LINEAR)
+			glFogf(GL_FOG_START, 0.0f)
+			glFogf(GL_FOG_END, 8.0f)
+			
+			if (GLContext.getCapabilities().GL_NV_fog_distance) {
+				glFogi(34138, 34139)
+			}
+			
+			glFogf(GL_FOG_START, 0.0f)
+		} else {
+			glFog(GL_FOG_COLOR, setFogColorBuffer(renderer.fogColorRed, renderer.fogColorGreen, renderer.fogColorBlue, 1.0f))
+			glNormal3f(0.0f, -1.0f, 0.0f)
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+			val block = ActiveRenderInfo.getBlockAtEntityViewpoint(renderer.mc.theWorld, entitylivingbase, renderPartialTicks)
+			var f1: Float
+			
+			val event = net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity(renderer, entitylivingbase, block, renderPartialTicks.toDouble(), 0.1f)
+			
+			if (MinecraftForge.EVENT_BUS.post(event)) {
+				glFogf(GL_FOG_DENSITY, event.density)
+			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
+				f1 = 5.0f
+				val j = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration()
+				
+				if (j < 20) {
+					f1 = 5.0f + (renderer.farPlaneDistance - 5.0f) * (1.0f - j.toFloat() / 20.0f)
+				}
+				
+				glFogi(GL_FOG_MODE, GL_LINEAR)
+				
+				if (fogMode < 0) {
+					glFogf(GL_FOG_START, 0.0f)
+					glFogf(GL_FOG_END, f1 * 0.8f)
+				} else {
+					glFogf(GL_FOG_START, f1 * 0.25f)
+					glFogf(GL_FOG_END, f1)
+				}
+				
+				if (GLContext.getCapabilities().GL_NV_fog_distance) {
+					glFogi(34138, 34139) // wtf magic numbers
+				}
+			} else if (renderer.cloudFog) {
+				glFogi(GL_FOG_MODE, GL_EXP)
+				glFogf(GL_FOG_DENSITY, 0.1f)
+			} else if (block.material === Material.water) {
+				glFogi(GL_FOG_MODE, GL_EXP)
+				
+				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimRegistry.noclip))) {
+					glFogf(GL_FOG_DENSITY, 0.05f)
+				} else {
+					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).toFloat() * 0.03f)
+				}
+			} else if (block.material === Material.lava) {
+				glFogi(GL_FOG_MODE, GL_EXP)
+				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimRegistry.noclip)) 0.05f else 2.0f)
+			} else {
+				f1 = renderer.farPlaneDistance
+				
+				if (renderer.mc.theWorld.provider.worldHasVoidParticles && !flag) {
+					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).toDouble() / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.toDouble() + 4.0) / 32.0
+					
+					if (d0 < 1.0) {
+						if (d0 < 0.0) {
+							d0 = 0.0
+						}
+						
+						d0 *= d0
+						var f2 = 100.0f * d0.toFloat()
+						
+						if (f2 < 5.0f) {
+							f2 = 5.0f
+						}
+						
+						if (f1 > f2) {
+							f1 = f2
+						}
+					}
+				}
+				
+				glFogi(GL_FOG_MODE, GL_LINEAR)
+				
+				if (fogMode < 0) {
+					glFogf(GL_FOG_START, 0.0f)
+					glFogf(GL_FOG_END, f1)
+				} else {
+					glFogf(GL_FOG_START, f1 * 0.75f)
+					glFogf(GL_FOG_END, f1)
+				}
+				
+				if (GLContext.getCapabilities().GL_NV_fog_distance) {
+					glFogi(34138, 34139)
+				}
+				
+				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.toInt(), entitylivingbase.posZ.toInt())) {
+					glFogf(GL_FOG_START, f1 * 0.05f)
+					glFogf(GL_FOG_END, min(f1, 192.0f) * 0.5f)
+				}
+				MinecraftForge.EVENT_BUS.post(net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent(renderer, entitylivingbase, block, renderPartialTicks.toDouble(), fogMode, f1))
+			}
+			
+			glEnable(GL_COLOR_MATERIAL)
+			glColorMaterial(GL_FRONT, GL_AMBIENT)
 		}
 	}
 }

@@ -12,6 +12,7 @@ import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
+import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.AlfheimItems
@@ -20,18 +21,26 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent
 import cpw.mods.fml.relauncher.*
+import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.boss.IBossDisplayData
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.*
+import net.minecraftforge.client.event.EntityViewRenderEvent.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GLContext
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
+import kotlin.math.min
 
 @Suppress("UNUSED_PARAMETER")
 class EventHandlerClient {

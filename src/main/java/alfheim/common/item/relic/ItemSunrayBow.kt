@@ -1,14 +1,11 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import com.sun.xml.internal.fastinfoset.stax.events.AttributeBase
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.enchantment.*
@@ -19,9 +16,6 @@ import net.minecraft.item.*
 import net.minecraft.stats.Achievement
 import net.minecraft.util.*
 import net.minecraft.world.World
-import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.common.MinecraftForge
-import org.lwjgl.opengl.GL11.glColor4f
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
@@ -41,11 +35,9 @@ class ItemSunrayBow: ItemBow(), IRelic {
 	init {
 		creativeTab = AlfheimCore.alfheimTab
 		setFull3D()
-		
+		maxDamage = 0
 		setMaxStackSize(1)
 		unlocalizedName = "SunrayBow"
-		
-		if (!ASJUtilities.isServer) MinecraftForge.EVENT_BUS.register(this)
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeBase> {
@@ -124,23 +116,6 @@ class ItemSunrayBow: ItemBow(), IRelic {
 		} else {
 			if (j > 0) getItemIconForUseDuration(0) else itemIcon
 		}
-	}
-	
-	@SubscribeEvent
-	fun damageOverlay(e: RenderGameOverlayEvent.Post) {
-		if (e.type != RenderGameOverlayEvent.ElementType.CROSSHAIRS) return
-		
-		val mc = Minecraft.getMinecraft()
-		if (mc.thePlayer.itemInUse?.item !== this) return
-		
-		try {
-			val m = maxDmg / 10
-			val i = ((getMaxItemUseDuration(mc.thePlayer.itemInUse) - mc.thePlayer.itemInUseCount) * chargeVelocityMultiplier).toInt()
-			val dmg = if (i < m) 0 else min(maxDmg, m + ((i - m) / 5) * 2)
-			val str = "Base dmg: $dmg"
-			mc.fontRenderer.drawString(str, e.resolution.scaledWidth / 2 + 16, e.resolution.scaledHeight / 2 - 16, 0xFFFFFF)
-			glColor4f(1f, 1f, 1f, 1f)
-		} catch (t: Throwable) {}
 	}
 	
 	// ################################ ItemMod ################################

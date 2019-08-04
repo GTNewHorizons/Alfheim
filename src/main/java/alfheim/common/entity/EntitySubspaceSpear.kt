@@ -120,12 +120,12 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 			if (amount < 0)
 				return result
 			
-			target.attackEntityFrom(DamageSource.magic.setDamageIsAbsolute().setDamageBypassesArmor(), 0.01f)
+			// target.attackEntityFrom(DamageSource.magic.setDamageIsAbsolute().setDamageBypassesArmor(), 0.01f)
 			if (target is EntityPlayer)
 				if (target.capabilities.isCreativeMode)
 					return result
 			
-			target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, target), amount)
+			target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), amount)
 			
 			return result
 		}

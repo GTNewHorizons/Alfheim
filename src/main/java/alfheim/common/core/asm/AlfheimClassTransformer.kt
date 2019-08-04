@@ -302,11 +302,11 @@ class AlfheimClassTransformer: IClassTransformer {
 	internal class `ItemNugget$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (name == "registerIcons") {
+			if (name == "registerIcons" || (name == "func_94581_a")) {
 				println("Visiting ItemNugget#registerIcons: $name$desc")
 				return `ItemNugget$registerIcons$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
-			if (name == "getSubItems") {
+			if (name == "getSubItems" || (name == "func_150895_a")) {
 				println("Visiting ItemNugget#getSubItems: $name$desc")
 				return `ItemNugget$getSubItems$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
@@ -318,11 +318,11 @@ class AlfheimClassTransformer: IClassTransformer {
 			override fun visitInsn(opcode: Int) {
 				if (opcode == RETURN) {
 					visitVarInsn(ALOAD, 0)
-					visitFieldInsn(GETFIELD, "thaumcraft/common/items/ItemNugget", "icon", "[Lnet/minecraft/util/IIcon;")
+					visitFieldInsn(GETFIELD, "thaumcraft/common/items/ItemNugget", "icon", if (OBF) "[Lrf;" else "[Lnet/minecraft/util/IIcon;")
 					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
 					visitVarInsn(ALOAD, 1)
 					visitLdcInsn("thaumcraft:clusterelementium")
-					visitMethodInsn(INVOKEINTERFACE, "net/minecraft/client/renderer/texture/IIconRegister", "registerIcon", "(Ljava/lang/String;)Lnet/minecraft/util/IIcon;", true)
+					visitMethodInsn(INVOKEINTERFACE, if (OBF) "rg" else "net/minecraft/client/renderer/texture/IIconRegister", if (OBF) "a" else "registerIcon", if (OBF) "(Ljava/lang/String;)Lrf;" else "(Ljava/lang/String;)Lnet/minecraft/util/IIcon;", true)
 					visitInsn(AASTORE)
 					val l15_5 = Label()
 					visitLabel(l15_5)
@@ -337,12 +337,12 @@ class AlfheimClassTransformer: IClassTransformer {
 			override fun visitInsn(opcode: Int) {
 				if (opcode == RETURN) {
 					visitVarInsn(ALOAD, 3)
-					visitTypeInsn(NEW, "net/minecraft/item/ItemStack")
+					visitTypeInsn(NEW, if (OBF) "add" else "net/minecraft/item/ItemStack")
 					visitInsn(DUP)
 					visitVarInsn(ALOAD, 0)
 					visitInsn(ICONST_1)
 					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
-					visitMethodInsn(INVOKESPECIAL, "net/minecraft/item/ItemStack", "<init>", "(Lnet/minecraft/item/Item;II)V", false)
+					visitMethodInsn(INVOKESPECIAL, if (OBF) "add" else "net/minecraft/item/ItemStack", "<init>", if (OBF) "(Ladb;II)V" else "(Lnet/minecraft/item/Item;II)V", false)
 					visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true)
 					visitInsn(POP)
 				}

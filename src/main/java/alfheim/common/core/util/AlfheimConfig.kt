@@ -154,9 +154,9 @@ object AlfheimConfig {
 		addAspectsToBotania		= loadProp(CATEGORY_BA,			"TC.botaniaAspects",			addAspectsToBotania,	true,	"[TC] Set this to false to disable adding aspects to Botania")
 		addThaumTreeSuffusion	= loadProp(CATEGORY_BA,			"TC.treeCrafting",				addThaumTreeSuffusion,	true,	"[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		grantWireUnlimitedPower = loadProp(CATEGORY_BA,			"wire.overpowered",				grantWireUnlimitedPower,true,	"Allow WireSegal far more power than any one person should have")
-		blackLotusDropRate		= loadProp(CATEGORY_BA,			"voidCreepers.dropRate",		blackLotusDropRate,		false,	"Rate of black loti dropping from Manaseal Creepers")
-		schemaArray				= loadProp(CATEGORY_BA,			"schemas.enabled",				schemaArray,			true,	"Which schemas are allowed to be generated")
-		voidCreepersBiomeBL		= loadProp(CATEGORY_BA,			"schemas.enabled",				voidCreepersBiomeBL,	true,	"Which schemas are allowed to be generated")
+		blackLotusDropRate		= loadProp(CATEGORY_BA,			"blackLotusDropRate",			blackLotusDropRate,		false,	"Rate of black loti dropping from Manaseal Creepers")
+		schemaArray				= loadProp(CATEGORY_BA,			"schemaArray",					schemaArray,			true,	"Which schemas are allowed to be generated")
+		voidCreepersBiomeBL		= loadProp(CATEGORY_BA,			"voidCreepersBiomeBL",			voidCreepersBiomeBL,	true,	"Biome blacklist for Manaseal Creepers")
 		
 		potionSlots				= loadProp(CATEGORY_POTIONS,	"potionSlots",					potionSlots,			true,	"Available potions ids in range [0-potionSlots)")
 		potionIDBerserk			= loadProp(CATEGORY_POTIONS,	"potionIDBerserk",				potionIDBerserk,		true,	"Potion id for Berserk")

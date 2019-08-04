@@ -36,6 +36,8 @@ class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, 
 		texture.indices.mapTo(list) { ItemStack(block, 1, it) }
 	}
 	
+	override fun damageDropped(meta: Int) = meta
+	
 	override fun getIcon(side: Int, meta: Int) = texture[max(0, min(meta, texture.size - 1))]
 	
 	fun getTopIcon(meta: Int) = textureTop[max(0, min(meta, texture.size - 1))]

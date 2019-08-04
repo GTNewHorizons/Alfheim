@@ -3,6 +3,7 @@ package alfheim.common.item.rod
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.mfloor
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -86,22 +87,22 @@ open class ItemInterdictionRod(name: String = "interdictionRod"): ItemMod(name),
 		}
 	}
 	
-	fun pushEntities(x: Int, y: Int, z: Int, range: Int, velocity: Double, entities: List<Any?>) =
-		pushEntities(x.toDouble(), y.toDouble(), z.toDouble(), range, velocity, entities)
+	fun pushEntities(x: Int, y: Int, z: Int, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>) =
+		pushEntities(x.toDouble(), y.toDouble(), z.toDouble(), range, velocity, player, entities)
 	
-	fun pushEntities(x: Double, y: Double, z: Double, range: Int, velocity: Double, entities: List<Any?>): Boolean {
+	fun pushEntities(x: Double, y: Double, z: Double, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>): Boolean {
 		var flag = false
-		for (entityLiving in entities) {
-			if (entityLiving is Entity) {
-				val xDif = entityLiving.posX - x
-				val yDif = entityLiving.posY - (y + 1)
-				val zDif = entityLiving.posZ - z
+		for (entity in entities) {
+			if (entity is Entity && player?.canPlayerEdit(entity.posX.mfloor(), entity.posY.mfloor(), entity.posZ.mfloor(), 1, player.currentEquippedItem) == true) {
+				val xDif = entity.posX - x
+				val yDif = entity.posY - (y + 1)
+				val zDif = entity.posZ - z
 				val dist = sqrt(xDif * xDif + yDif * yDif + zDif * zDif)
 				if (dist <= range) {
-					entityLiving.motionX = velocity * xDif
-					entityLiving.motionY = velocity * yDif
-					entityLiving.motionZ = velocity * zDif
-					entityLiving.fallDistance = 0f
+					entity.motionX = velocity * xDif
+					entity.motionY = velocity * yDif
+					entity.motionZ = velocity * zDif
+					entity.fallDistance = 0f
 					flag = true
 				}
 			}
@@ -133,7 +134,7 @@ open class ItemInterdictionRod(name: String = "interdictionRod"): ItemMod(name),
 				val exclude: EntityLivingBase = player
 				val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR)
 				
-				if (pushEntities(x, y, z, range, velocity, entities)) {
+				if (pushEntities(x, y, z, range, velocity, player, entities)) {
 					if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
 					ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 				}
@@ -181,7 +182,7 @@ open class ItemInterdictionRod(name: String = "interdictionRod"): ItemMod(name),
 														  AxisAlignedBB.getBoundingBox(x - RANGE, y - RANGE, z - RANGE,
 																					   x + RANGE, y + RANGE, z + RANGE), AVATAR_SELECTOR)
 			
-			if (pushEntities(x, y, z, RANGE, VELOCITY, entities)) {
+			if (pushEntities(x, y, z, RANGE, VELOCITY, null, entities)) {
 				if (tile.elapsedFunctionalTicks % 3 == 0) world.playSoundEffect(x, y, z, "${ModInfo.MODID}:wind", 0.4F, 1F)
 				tile.recieveMana(-AVATAR_COST)
 			}

@@ -42,7 +42,7 @@ class BlockAlfheimThaumOre: Block(Material.rock) {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIcon(side: Int, meta: Int): IIcon = if (meta == 0) icon[0]!! else if (meta == 7) icon[3]!! else icon[1]!!
+	override fun getIcon(side: Int, meta: Int): IIcon = if (meta == 0) icon[0] else if (meta == 7) icon[3] else icon[1]
 	
 	override fun canSilkHarvest(world: World?, player: EntityPlayer?, x: Int, y: Int, z: Int, metadata: Int) = true
 	

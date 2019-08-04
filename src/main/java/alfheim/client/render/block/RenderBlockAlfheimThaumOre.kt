@@ -32,6 +32,7 @@ class RenderBlockAlfheimThaumOre: BlockRenderer(), ISimpleBlockRenderingHandler 
 				block.setBlockBounds(0.005f, 0.005f, 0.005f, 0.995f, 0.995f, 0.995f)
 				renderer.setRenderBoundsFromBlock(block)
 				drawFaces(renderer, block, BlockAlfheimThaumOre.icon[2], false)
+				block.setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f)
 				glColor3f(1.0f, 1.0f, 1.0f)
 			}
 		}
