@@ -24,12 +24,10 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	
 	var flowerIcon: IIcon? = null
 	var glowingIcon: IIcon? = null
-	var shroomIcon: IIcon? = null
 	
 	val GRASS = 0
 	val FLOWER = 1
 	val GLIMMER = 2
-	val SHROOM = 3
 	
 	init {
 		setCreativeTab(AlfheimCore.baTab)
@@ -38,6 +36,8 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 			MinecraftForge.EVENT_BUS.register(this)
 		setBlockName("rainbowGrass")
 	}
+	
+	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 2) 15 else 0
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBlockColor() = 0xFFFFFF
@@ -87,7 +87,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun isShearable(item: ItemStack?, world: IBlockAccess?, x: Int, y: Int, z: Int) = item?.itemDamage == GRASS
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
-		for (i in 0..3)
+		for (i in 0..2)
 			list.add(ItemStack(item, 1, i))
 	}
 	
@@ -100,8 +100,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 		if (event.map.textureType == 0) {
 			blockIcon = InterpolatedIconHelper.forBlock(event.map, this)
 			flowerIcon = InterpolatedIconHelper.forBlock(event.map, this, "Flower")
-			glowingIcon = InterpolatedIconHelper.forBlock(event.map, this, "Glimmer")
-			shroomIcon = InterpolatedIconHelper.forBlock(event.map, this, "Shroom")
+			glowingIcon = InterpolatedIconHelper.forBlock(event.map, this, "FlowerGlimmer")
 		}
 	}
 	
@@ -111,7 +110,6 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 			GRASS   -> blockIcon
 			FLOWER  -> flowerIcon
 			GLIMMER -> glowingIcon
-			SHROOM  -> shroomIcon
 			else    -> null
 		}
 	}
@@ -121,7 +119,6 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 			GRASS   -> ShadowFoxLexiconData.pastoralSeeds
 			FLOWER  -> null // todo
 			GLIMMER -> null // todo
-			SHROOM  -> null // todo
 			else    -> null
 		}
 	}

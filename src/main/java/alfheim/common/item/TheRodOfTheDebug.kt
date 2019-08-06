@@ -4,7 +4,6 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.EnumRace
-import alfheim.api.lib.LibOreDict.COLORS
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer

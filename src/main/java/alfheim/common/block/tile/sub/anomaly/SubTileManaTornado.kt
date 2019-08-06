@@ -1,7 +1,7 @@
 package alfheim.common.block.tile.sub.anomaly
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.block.tile.SubTileEntity
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
@@ -33,7 +33,7 @@ class SubTileManaTornado: SubTileEntity() {
 	public override fun update() {
 		if (inWG()) return
 		
-		val c = ASJUtilities.colorCode[worldObj.rand.nextInt(ASJUtilities.colorCode.size)]
+		val c = ASJRenderHelper.colorCode[worldObj.rand.nextInt(ASJRenderHelper.colorCode.size)]
 		v.rand().sub(0.5).normalize().mul(Math.random()).add(superTile!!).add(0.5)
 		Botania.proxy.wispFX(worldObj, v.x, v.y, v.z, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.25 + 0.25).toFloat(), 0f, (Math.random() * 2 + 1).toFloat())
 	}
@@ -41,7 +41,7 @@ class SubTileManaTornado: SubTileEntity() {
 	fun spawnBurst(): EntityManaBurst {
 		val burst = EntityManaBurst(worldObj)
 		val motionModifier = 0.5f
-		burst.color = ASJUtilities.colorCode[worldObj.rand.nextInt(ASJUtilities.colorCode.size)]
+		burst.color = ASJRenderHelper.colorCode[worldObj.rand.nextInt(ASJRenderHelper.colorCode.size)]
 		burst.mana = 120
 		burst.startingMana = 340
 		burst.minManaLoss = 50

@@ -36,8 +36,6 @@ import vazkii.botania.api.mana.*
 import java.io.*
 import java.util.*
 
-
-
 @Suppress("UNCHECKED_CAST")
 object CardinalSystem {
 	
@@ -382,10 +380,10 @@ object CardinalSystem {
 		fun getParty(player: EntityPlayer) = forPlayer(player).party
 		
 		fun getMobParty(living: EntityLivingBase?): Party? =
-			playerSegments.values.firstOrNull { it.party.isMember(living) } ?.party
+			playerSegments.values.firstOrNull { it.party.isMember(living) }?.party
 		
 		fun getUUIDParty(id: UUID?): Party? =
-			playerSegments.values.firstOrNull { it.party.isMember(id) } ?.party
+			playerSegments.values.firstOrNull { it.party.isMember(id) }?.party
 		
 		fun sameParty(p1: EntityPlayer, p2: EntityLivingBase?) = getParty(p1).isMember(p2)
 		
@@ -465,14 +463,15 @@ object CardinalSystem {
 						}
 					}
 				} else {
-					val e = Minecraft.getMinecraft().theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.toInt() ?: 0)
+					val e = Minecraft.getMinecraft().theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.toInt()
+																			?: 0)
 					return if (e is EntityLivingBase) e else null
 				}
 				return null
 			}
 			
 			operator fun get(name: String) =
-				(0 until count).firstOrNull { members[it] != null && members[it]!!.name == name } ?.let { get(it) }
+				(0 until count).firstOrNull { members[it] != null && members[it]!!.name == name }?.let { get(it) }
 			
 			fun getName(i: Int) = if (members[i] != null) members[i]!!.name else ""
 			

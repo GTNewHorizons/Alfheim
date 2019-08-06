@@ -1,6 +1,6 @@
 package alfheim.client.model.entity
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderEntityFlugel
@@ -32,9 +32,9 @@ class ModelEntityFlugel: ModelBipedNew() {
 			
 			if (e is EntityLivingBase) {
 				glPushMatrix()
-				glRotated(ASJUtilities.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
-				glRotated(ASJUtilities.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
-				glRotated(ASJUtilities.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+				glRotated(ASJRenderHelper.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
+				glRotated(ASJRenderHelper.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
+				glRotated(ASJRenderHelper.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
 				glRotated(-90.0, 0.0, 1.0, 0.0)
 				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku2)
 				model2.renderAll()
@@ -162,9 +162,9 @@ class ModelEntityFlugel: ModelBipedNew() {
 		glPushMatrix()
 		
 		glTranslated(0.0, -(0.12 + if (e.isSneaking) 0.0625 else 0.0), 0.0)
-		glRotated(ASJUtilities.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
-		glRotated(ASJUtilities.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
-		glRotated(ASJUtilities.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+		glRotated(ASJRenderHelper.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
+		glRotated(ASJRenderHelper.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
+		glRotated(ASJRenderHelper.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
 		glRotated(30.0, 1.0, 0.0, -1.0)
 		glTranslated(0.1, -0.5, -0.1)
 		glRotated((e.ticksExisted + partialTicks).toDouble(), 0.0, 1.0, 0.0)

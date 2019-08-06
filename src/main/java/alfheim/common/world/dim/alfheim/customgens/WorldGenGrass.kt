@@ -1,5 +1,6 @@
 package alfheim.common.world.dim.alfheim.customgens
 
+import alfheim.common.block.ShadowFoxBlocks
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
@@ -26,7 +27,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 					val x = cx + rand.nextInt(16)
 					val z = cz + rand.nextInt(16)
 					val y = world.getTopSolidOrLiquidBlock(x, z)
-					val color = rand.nextInt(16)
+					val color = rand.nextInt(17)
 					val primus = rand.nextInt(380) == 0
 					for (j in 0 until ConfigHandler.flowerDensity * ConfigHandler.flowerPatchChance) {
 						val x1 = x + rand.nextInt(dist * 2) - dist
@@ -39,8 +40,23 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 								val subtile = flower.subTile as SubTileDaybloom
 								subtile.setPrimusPosition()
 							} else {
-								world.setBlock(x1, y, z1, ModBlocks.flower, color, 2)
-								if (rand.nextDouble() < ConfigHandler.flowerTallChance && (ModBlocks.flower as BlockModFlower).func_149851_a(world, x1, y, z1, false)) BlockModFlower.placeDoubleFlower(world, x1, y, z1, color, 0)
+								val rainbow = color == 16
+								
+								world.setBlock(x1, y, z1, if (rainbow) ShadowFoxBlocks.rainbowGrass else ModBlocks.flower, if (rainbow) 1 else color, 2)
+								// `can place` condition start
+								if (rand.nextDouble() < ConfigHandler.flowerTallChance
+									&& (
+										if (rainbow)
+											ShadowFoxBlocks.rainbowGrass.func_149851_a(world, x1, y, z1, false)
+										else
+											(ModBlocks.flower as BlockModFlower).func_149851_a(world, x1, y, z1, false)
+									   ))
+								// `can place` condition end
+									if (rainbow) {
+										world.setBlock(x1, y, z1, ShadowFoxBlocks.rainbowTallGrass, 1, 0)
+										world.setBlock(x1, y + 1, z1, ShadowFoxBlocks.rainbowTallGrass, 11, 0)
+									} else
+										BlockModFlower.placeDoubleFlower(world, x1, y, z1, color, 0)
 							}
 					}
 				}
@@ -50,9 +66,20 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 			val x = cx + rand.nextInt(16)
 			val z = cz + rand.nextInt(16)
 			val y = rand.nextInt(28) + 4
-			val color = rand.nextInt(16)
-			if (world.isAirBlock(x, y, z) && ModBlocks.mushroom.canBlockStay(world, x, y, z))
-				world.setBlock(x, y, z, ModBlocks.mushroom, color, 2)
+			val color = rand.nextInt(17)
+			val rainbow = color == 16
+			
+			// `can place` condition start
+			if (world.isAirBlock(x, y, z)
+				&& (
+					if (rainbow)
+						ShadowFoxBlocks.rainbowMushroom.canBlockStay(world, x, y, z)
+					else
+						ModBlocks.mushroom.canBlockStay(world, x, y, z)
+				   )) {
+				// `can place` condition end
+				world.setBlock(x, y, z, if (rainbow) ShadowFoxBlocks.rainbowMushroom else ModBlocks.mushroom, if (rainbow) 3 else color, 2)
+			}
 		}
 		
 		var perChunk = (64 * mod).roundToLong().toInt()

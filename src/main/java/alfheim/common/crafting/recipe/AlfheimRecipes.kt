@@ -769,6 +769,7 @@ object AlfheimRecipes {
 		}
 		addRecipe(RecipeLootInterceptor())
 		addRecipe(RecipeLootInterceptorClear())
+		addRecipe(RecipeCleanRelic())
 	}
 	
 	fun postInit() {

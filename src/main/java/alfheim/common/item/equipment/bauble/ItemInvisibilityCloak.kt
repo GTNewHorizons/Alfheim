@@ -22,9 +22,8 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 		creativeTab = AlfheimCore.alfheimTab
 	}
 	
-	override fun getBaubleType(arg0: ItemStack): BaubleType? {
-		return if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
-	}
+	override fun getBaubleType(arg0: ItemStack) =
+		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
 	
 	override fun onUnequipped(stack: ItemStack?, player: EntityLivingBase) {
 		val effect = player.getActivePotionEffect(Potion.invisibility)
@@ -42,20 +41,17 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 				if (player.getActivePotionEffect(Potion.invisibility) != null)
 					player.removePotionEffect(Potion.invisibility.id)
 				ManaItemHandler.requestManaExact(stack, player, manaCost, true)
-				player.addPotionEffect(PotionEffect(Potion.invisibility.id, Integer.MAX_VALUE, -42, true))
+				player.addPotionEffect(PotionEffect(Potion.invisibility.id, 10, -42, true))
 			}
 		}
 	}
 	
-	override fun usesMana(stack: ItemStack): Boolean {
-		return true
-	}
+	override fun usesMana(stack: ItemStack) = true
 	
-	override fun getSlot(stack: ItemStack): Int {
-		return 0
-	}
+	override fun getSlot(stack: ItemStack) = 0
 	
-	override fun onTravelGearTick(player: EntityPlayer, stack: ItemStack) { // because for some reason it gots called AFTER unequip :/
+	override fun onTravelGearTick(player: EntityPlayer, stack: ItemStack) {
+		// because for some reason it gots called AFTER unequip :/
 		if (ItemNBTHelper.getBoolean(stack, TAG_EQUIPPED, false)) onWornTick(stack, player)
 	}
 	

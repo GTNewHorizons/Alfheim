@@ -39,10 +39,10 @@ class ItemResource: ItemMod("resource"), IFlowerComponent, IFuelHandler {
 	private fun isFlowerComponent(meta: Int) = meta == 4 || meta == 7
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
+	override fun registerIcons(reg: IIconRegister) {
 		for (i in 0 until TYPES) {
 			if (!isInterpolated(i)) {
-				icons[i] = IconHelper.forItem(par1IconRegister, this, i)
+				icons[i] = IconHelper.forItem(reg, this, i)
 			}
 		}
 	}

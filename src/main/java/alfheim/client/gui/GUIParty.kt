@@ -1,8 +1,7 @@
 package alfheim.client.gui
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.ASJShaderHelper
+import alexsocol.asjlib.render.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient
@@ -70,13 +69,13 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			mc.renderEngine.bindTexture(LibResourceLocations.health)
 			drawTexturedModalRect(0, 0, 0, 0, 200, 40)
-			ASJUtilities.glColor1u(ASJUtilities.addAlpha(EnumRace.getRace(player).rgbColor, 255))
+			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(EnumRace.getRace(player).rgbColor, 255))
 			drawTexturedModalRect(0, 0, 0, 40, 38, 40)
 			
 			// ################ health: ################
 			run {
 				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).toInt() / 158.0
-				ASJUtilities.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+				ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
 				val length = (158 * mod).mfloor()
 				
 				if (length <= 10) {
@@ -97,7 +96,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				var totalMana = 0
 				var totalMaxMana = 0
 				var anyRequest = false
-				var creative = false
+				var creative = player.capabilities.isCreativeMode
 				
 				val mainInv = player.inventory
 				val baublesInv = BotaniaAPI.internalHandler.getBaublesInventory(player)
@@ -117,6 +116,8 @@ class GUIParty(private val mc: Minecraft): Gui() {
 						if (item is IManaUsingItem)
 							anyRequest = anyRequest || (item as IManaUsingItem).usesMana(stack)
 						
+						if (creative) continue
+						
 						if (item is IManaItem) {
 							if (!(item as IManaItem).isNoExport(stack)) {
 								totalMana += (item as IManaItem).getMana(stack)
@@ -135,10 +136,12 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				var length = 158
 				
 				if (!creative) {
-					if (totalMaxMana == 0)
-						length = 0
-					else
-						length *= (totalMana.toDouble() / totalMaxMana.toDouble()).toInt()
+					length = if (totalMaxMana == 0)
+						0
+					else {
+						val temp = totalMana.toDouble() / totalMaxMana.toDouble() * length
+						temp.toInt()
+					}
 				}
 				
 				if (length == 0) {
@@ -251,7 +254,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				y += 40
 				drawTexturedModalRect(0, y, 0, 80, 136, 40)
 				// ################ ava bg: ################
-				ASJUtilities.glColor1u(ASJUtilities.addAlpha(col, 255))
+				ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(col, 255))
 				drawTexturedModalRect(0, y, 0, 120, 32, 40)
 				
 				// ################ health: ################
@@ -261,10 +264,10 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					val mod: Double
 					if (hp != -1f && hpm != -1f) {
 						mod = (hp / max(hpm, 1f) * 100.0).toInt() / 100.0
-						ASJUtilities.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+						ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
 					} else {
 						mod = 1.0
-						ASJUtilities.glColor1u(-0xbbbbbc)
+						ASJRenderHelper.glColor1u(-0xbbbbbc)
 					}
 					
 					val length = (100 * mod).mfloor()
@@ -293,9 +296,9 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					
 					if (length <= 0) return@mana
 					
-					ASJUtilities.glColor1u(-0xff4d01)
+					ASJRenderHelper.glColor1u(-0xff4d01)
 					
-					if (l == null) ASJUtilities.glColor1u(-0xbbbbbc)
+					if (l == null) ASJRenderHelper.glColor1u(-0xbbbbbc)
 					
 					when {
 						length < 2  -> drawTexturedModalRect(34, y + 25, 133, 145, 1, 4)
@@ -424,7 +427,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			mc.renderEngine.bindTexture(LibResourceLocations.health)
 			drawTexturedModalRect(0, 0, 0, 160, 240, 50)
 			// ################ ava bg: ################
-			ASJUtilities.glColor1u(ASJUtilities.addAlpha(col, 255))
+			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(col, 255))
 			drawTexturedModalRect(0, 2, 0, 210, 34, 48)
 			
 			// ################ health: ################
@@ -432,7 +435,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				if (!l!!.isEntityAlive) return@health
 				
 				val mod = (hp / max(hpm, 1f) * 200.0).toInt() / 200.0
-				ASJUtilities.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+				ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
 				val length = (200 * mod).mfloor()
 				
 				when {

@@ -1,6 +1,7 @@
 package alfheim.client.gui
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
@@ -57,9 +58,9 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		// ################ cast time ################
 		if (CardinalSystemClient.segment().init > 0) {
 			glDisable(GL_TEXTURE_2D)
-			ASJUtilities.glColor1u(-0x779f8a80)
+			ASJRenderHelper.glColor1u(-0x779f8a80)
 			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 25, e.resolution.scaledHeight / 2 + 8, 0, 0, 52, 5)
-			ASJUtilities.glColor1u(-0x77ff5501)
+			ASJRenderHelper.glColor1u(-0x77ff5501)
 			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 24, e.resolution.scaledHeight / 2 + 9, 0, 0, 50 - (50.0 * (CardinalSystemClient.segment!!.init / CardinalSystemClient.segment!!.initM.toDouble())).toInt(), 3)
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glEnable(GL_TEXTURE_2D)
@@ -168,7 +169,7 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		
 		// ################ Spell name ################
 		var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJUtilities.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.toDouble())))
+		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.toDouble())))
 		
 		// ################################################################ HOTSPELLS ################################################################
 		

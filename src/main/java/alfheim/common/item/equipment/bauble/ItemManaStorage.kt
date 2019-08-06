@@ -22,12 +22,12 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType?): 
 	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
 	
 	init {
-		this.creativeTab = AlfheimCore.alfheimTab
-		this.maxDamage = 1000
-		this.setMaxStackSize(1)
-		this.setNoRepair()
-		this.setTextureName(ModInfo.MODID + ':'.toString() + name)
-		this.unlocalizedName = name
+		creativeTab = AlfheimCore.alfheimTab
+		maxDamage = 1000
+		setMaxStackSize(1)
+		setNoRepair()
+		setTextureName("${ModInfo.MODID}:$name")
+		unlocalizedName = name
 	}
 
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
@@ -71,74 +71,42 @@ class ItemManaStorage(name: String, maxManaCap: Double, val type: BaubleType?): 
 		return 1000 - (mana / getMaxMana(stack) * 1000).toInt()
 	}
 	
-	override fun getDisplayDamage(stack: ItemStack): Int {
-		return getDamage(stack)
-	}
+	override fun getDisplayDamage(stack: ItemStack) = getDamage(stack)
 	
-	override fun getEntityLifespan(itemStack: ItemStack?, world: World?): Int {
-		return Integer.MAX_VALUE
-	}
+	override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = Integer.MAX_VALUE
 	
-	override fun getMana(stack: ItemStack?): Int {
-		return ItemNBTHelper.getInt(stack, TAG_MANA, 0)
-	}
+	override fun getMana(stack: ItemStack?) = ItemNBTHelper.getInt(stack, TAG_MANA, 0)
 	
-	override fun getMaxMana(stack: ItemStack?): Int {
-		return MAX_MANA
-	}
+	override fun getMaxMana(stack: ItemStack?) = MAX_MANA
 	
 	override fun addMana(stack: ItemStack, mana: Int) {
 		setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))
 		stack.itemDamage = getDamage(stack)
 	}
 	
-	override fun canReceiveManaFromPool(stack: ItemStack, pool: TileEntity): Boolean {
-		return true
-	}
+	override fun canReceiveManaFromPool(stack: ItemStack, pool: TileEntity) = true
 	
-	override fun canReceiveManaFromItem(stack: ItemStack, otherStack: ItemStack): Boolean {
-		return true
-	}
+	override fun canReceiveManaFromItem(stack: ItemStack, otherStack: ItemStack) = true
 	
-	override fun canExportManaToPool(stack: ItemStack, pool: TileEntity): Boolean {
-		return true
-	}
+	override fun canExportManaToPool(stack: ItemStack, pool: TileEntity) = true
 	
-	override fun canExportManaToItem(stack: ItemStack, otherStack: ItemStack): Boolean {
-		return true
-	}
+	override fun canExportManaToItem(stack: ItemStack, otherStack: ItemStack) = true
 	
-	override fun isNoExport(stack: ItemStack): Boolean {
-		return false
-	}
+	override fun isNoExport(stack: ItemStack) = false
 	
-	override fun getManaFractionForDisplay(stack: ItemStack): Float {
-		return getMana(stack).toFloat() / getMaxMana(stack).toFloat()
-	}
+	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()
 	
-	override fun getBaubleType(stack: ItemStack): BaubleType? {
-		return type
-	}
+	override fun getBaubleType(stack: ItemStack) = type
 	
-	override fun onWornTick(stack: ItemStack, entity: EntityLivingBase) {
-		// NO-OP
-	}
+	override fun onWornTick(stack: ItemStack, entity: EntityLivingBase) = Unit
 	
-	override fun onEquipped(stack: ItemStack, entity: EntityLivingBase) {
-		// NO-OP
-	}
+	override fun onEquipped(stack: ItemStack, entity: EntityLivingBase) = Unit
 	
-	override fun onUnequipped(stack: ItemStack, entity: EntityLivingBase) {
-		// NO-OP
-	}
+	override fun onUnequipped(stack: ItemStack, entity: EntityLivingBase) = Unit
 	
-	override fun canEquip(stack: ItemStack, entity: EntityLivingBase): Boolean {
-		return true
-	}
+	override fun canEquip(stack: ItemStack, entity: EntityLivingBase) = true
 	
-	override fun canUnequip(stack: ItemStack, entity: EntityLivingBase): Boolean {
-		return true
-	}
+	override fun canUnequip(stack: ItemStack, entity: EntityLivingBase) = true
 	
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>, b: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA))

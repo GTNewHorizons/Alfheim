@@ -47,6 +47,7 @@ object ShadowFoxBlocks {
 	var auroraLeaves: Block
 	var irisGrass: Block
 	var rainbowGrass: BlockRainbowGrass
+	var rainbowMushroom: Block
 	
 	var irisWood0: Block
 	var irisWood1: Block
@@ -175,6 +176,7 @@ object ShadowFoxBlocks {
 		auroraLeaves = BlockAuroraLeaves()
 		irisGrass = BlockColoredGrass()
 		rainbowGrass = BlockRainbowGrass()
+		rainbowMushroom = BlockRainbowMushroom()
 		invisibleFlame = BlockManaFlame("invisibleFlame", TileInvisibleManaFlame::class.java)
 		rainbowFlame = BlockManaFlame("rainbowFlame", TileRainbowManaFlame::class.java)
 		
@@ -425,7 +427,7 @@ object ShadowFoxBlocks {
 		OreDictionary.registerOre(LibOreDict.RAINBOW_DOUBLE_FLOWER, ItemStack(rainbowTallGrass, 1, 1))
 		
 		OreDictionary.registerOre(LibOreDict.MUSHROOM, ItemStack(BotaniaBlocks.mushroom, 1, OreDictionary.WILDCARD_VALUE))
-		OreDictionary.registerOre(LibOreDict.MUSHROOM, ItemStack(rainbowGrass, 1, rainbowGrass.SHROOM))
+		OreDictionary.registerOre(LibOreDict.MUSHROOM, ItemStack(rainbowMushroom))
 		
 		OreDictionary.registerOre("treeSapling", irisSapling)
 		

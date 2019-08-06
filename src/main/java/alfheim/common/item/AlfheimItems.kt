@@ -14,7 +14,7 @@ import alfheim.common.item.equipment.tool.*
 import alfheim.common.item.equipment.tool.elementuim.ItemElementiumHoe
 import alfheim.common.item.equipment.tool.manasteel.ItemManasteelHoe
 import alfheim.common.item.interaction.thaumcraft.*
-import alfheim.common.item.material.ItemElvenResource
+import alfheim.common.item.material.*
 import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
 import baubles.api.BaubleType
@@ -68,11 +68,13 @@ object AlfheimItems {
 	lateinit var manaStone: Item
 	lateinit var manaStoneGreater: Item
 	lateinit var mask: Item
+	lateinit var multibauble: Item
 	//lateinit var mjolnir: Item
 	lateinit var paperBreak: Item
 	lateinit var peacePipe: Item
 	lateinit var pixieAttractor: Item
 	lateinit var realitySword: Item
+	lateinit var relicCleaner: Item
 	lateinit var rodFire: Item
 	lateinit var rodGrass: Item
 	lateinit var rodIce: Item
@@ -149,8 +151,11 @@ object AlfheimItems {
 			ModItems.terrasteelHelmRevealing.creativeTab = ThaumcraftAlfheimModule.tcnTab
 		}
 		
+		relicCleaner = ItemRelicCleaner()
+		multibauble = ItemMultibauble()
 		subspaceSpear = ItemSpearSubspace()
 		sunrayBow = ItemSunrayBow()
+		
 		royalStaff = ItemRoyalStaff()
 	}
 	

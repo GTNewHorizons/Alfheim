@@ -1,6 +1,6 @@
 package alfheim.common.spell.fire
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
@@ -12,9 +12,9 @@ import org.lwjgl.opengl.GL11.*
 
 class SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
-		if (result == SpellBase.SpellCastResult.OK)
+		if (result == SpellCastResult.OK)
 			caster.worldObj.spawnEntityInWorld(EntitySpellFirewall(caster.worldObj, caster))
 		return result
 	}
@@ -25,7 +25,7 @@ class SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) {
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		ASJUtilities.interpolatedTranslation(caster)
+		ASJRenderHelper.interpolatedTranslation(caster)
 		glRotated((-caster.rotationYaw).toDouble(), 0.0, 1.0, 0.0)
 		glTranslated(0.0, -1.62, 5.0)
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.targetq)

@@ -1,7 +1,7 @@
 package alfheim.client.render.world
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.common.item.ItemAstrolabe
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
@@ -59,7 +59,7 @@ object AstrolabePreviewHandler {
 	// FIXME meta
 	private fun renderBlockAt(player: EntityPlayer, block: Block, meta: Int, pos: Vector3) {
 		glPushMatrix()
-		ASJUtilities.interpolatedTranslationReverse(player)
+		ASJRenderHelper.interpolatedTranslationReverse(player)
 		glDisable(GL_DEPTH_TEST)
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)

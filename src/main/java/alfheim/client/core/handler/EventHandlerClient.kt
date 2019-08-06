@@ -2,45 +2,36 @@ package alfheim.client.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
-import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.item.AlfheimItems
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.*
-import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.boss.IBossDisplayData
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.*
-import net.minecraftforge.client.event.EntityViewRenderEvent.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
+import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GLContext
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
-import kotlin.math.min
 
 @Suppress("UNUSED_PARAMETER")
 class EventHandlerClient {
@@ -101,52 +92,10 @@ class EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerSpecialPreRender(e: RenderPlayerEvent.Specials.Pre) {
-		if (e.entityPlayer.commandSenderName == "AlexSocol") {
+		if (e.entityPlayer.commandSenderName == "AlexSocol")
 			(e.entityPlayer as AbstractClientPlayer).func_152121_a(Type.SKIN, LibResourceLocations.skin)
-			
-			if (e.entityPlayer.heldItem?.item !== AlfheimItems.royalStaff) run {
-				glPushMatrix()
-				var f1: Float
-				
-				if (e.renderer.mainModel.isChild) {
-					f1 = 0.5f
-					glTranslatef(0.0f, 0.625f, 0.0f)
-					glRotatef(-20.0f, -1.0f, 0.0f, 0.0f)
-					glScalef(f1, f1, f1)
-				}
-				
-				e.renderer.modelBipedMain.bipedLeftArm.postRender(0.0625f)
-				glTranslatef(-0.0625f, 0.4375f, 0.0625f)
-				
-				f1 = 0.625f
-				
-				glTranslatef(0.0f, 0.1875f, 0.0f)
-				glScalef(f1, -f1, f1)
-				glRotatef(-80.0f, 1.0f, 0.0f, 0.0f)
-				glRotatef(45.0f, 0.0f, 1.0f, 0.0f)
-				
-				val f2: Float
-				val i = 0xFFFFFF
-				val f5: Float
-				
-				val f4 = (i shr 16 and 255).toFloat() / 255.0f
-				f5 = (i shr 8 and 255).toFloat() / 255.0f
-				f2 = (i and 255).toFloat() / 255.0f
-				glColor4f(f4, f5, f2, 1.0f)
-				
-				glPushMatrix()
-				glTranslated(0.1, 1.5, 0.15)
-				glRotatef(180f, 1f, 0f, 0f)
-				
-				glEnable(GL_BLEND)
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-				ModelCreatorStaff.instance.render()
-				glDisable(GL_BLEND)
-				glPopMatrix()
-				
-				glPopMatrix()
-			}
-		}
+		
+		RenderEntitysLeftHand.render(e)
 	}
 	
 	@SubscribeEvent
@@ -199,7 +148,7 @@ class EventHandlerClient {
 			if (CardinalSystemClient.SpellCastingSystemClient.getCoolDown(spell) > 0) return@run
 			
 			glPushMatrix()
-			ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
+			ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
 			spell!!.render(Minecraft.getMinecraft().thePlayer)
 			glPopMatrix()
 		}
@@ -214,14 +163,14 @@ class EventHandlerClient {
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				if (CardinalSystemClient.segment!!.target != Minecraft.getMinecraft().thePlayer) {
-					ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-					ASJUtilities.interpolatedTranslation(CardinalSystemClient.segment!!.target!!)
+					ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
+					ASJRenderHelper.interpolatedTranslation(CardinalSystemClient.segment!!.target!!)
 				} else {
 					glTranslated(0.0, -(1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight), 0.0)
 				}
 				glRotated((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble(), 0.0, 1.0, 0.0)
 				glScalef(CardinalSystemClient.segment!!.target!!.width, CardinalSystemClient.segment!!.target!!.width, CardinalSystemClient.segment!!.target!!.width)
-				ASJUtilities.glColor1u(if (CardinalSystemClient.segment!!.isParty) -0xff0100 else -0x10000)
+				ASJRenderHelper.glColor1u(if (CardinalSystemClient.segment!!.isParty) -0xff0100 else -0x10000)
 				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.cross)
 				Tessellator.instance.startDrawingQuads()
 				Tessellator.instance.addVertexWithUV(-1.0, 0.1, -1.0, 0.0, 0.0)

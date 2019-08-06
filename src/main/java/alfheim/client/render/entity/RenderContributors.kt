@@ -1,6 +1,5 @@
 package alfheim.client.render.entity
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.*
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
 import alfheim.api.ModInfo
@@ -250,7 +249,7 @@ object RenderContributors {
 			glRotated(Minecraft.getMinecraft().theWorld.totalWorldTime / 2.0 + Minecraft.getMinecraft().timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScaled(2.0, 2.0, 2.0)
 			
-			ASJUtilities.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
+			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.aura)
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()

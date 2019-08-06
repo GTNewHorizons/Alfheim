@@ -1,6 +1,5 @@
 package alfheim.client.render.world
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
@@ -47,7 +46,7 @@ object SpellVisualizations {
 	
 	fun redSphere(x: Double, y: Double, z: Double) {
 		glPushMatrix()
-		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
+		ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
 		val inside = TimeStopSystemClient.inside(Minecraft.getMinecraft().thePlayer)
 		glTranslated(x, y, z)
 		glEnable(GL_RESCALE_NORMAL)
@@ -83,7 +82,7 @@ object SpellVisualizations {
 	
 	fun negateSphere(s: Double) {
 		glPushMatrix()
-		ASJUtilities.interpolatedTranslation(Minecraft.getMinecraft().thePlayer)
+		ASJRenderHelper.interpolatedTranslation(Minecraft.getMinecraft().thePlayer)
 		val tes = Tessellator.instance
 		
 		glEnable(GL_RESCALE_NORMAL)

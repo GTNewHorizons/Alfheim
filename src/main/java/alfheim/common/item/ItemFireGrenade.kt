@@ -1,24 +1,42 @@
 package alfheim.common.item
 
+import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.entity.EntityThrowableItem
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.relauncher.*
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import net.minecraftforge.client.event.TextureStitchEvent
+import net.minecraftforge.common.MinecraftForge
 
-class ItemFireGrenade : ItemMod("fireGrenade") {
-
-    override fun onItemRightClick(stack: ItemStack?, world: World?, player: EntityPlayer?): ItemStack? {
-        if (stack != null && world != null && player != null) {
-            if (!world.isRemote) {
-                val potion = EntityThrowableItem(player)
-                world.spawnEntityInWorld(potion)
-                stack.stackSize--
-            }
-        }
-
-        return stack
-    }
-
-    override fun getIcon(stack: ItemStack, pass: Int) = Items.fire_charge.getIconFromDamage(0)!!
+class ItemFireGrenade: ItemMod("fireGrenade") {
+	
+	init {
+		if (FMLLaunchHandler.side().isClient)
+			MinecraftForge.EVENT_BUS.register(this)
+	}
+	
+	override fun onItemRightClick(stack: ItemStack?, world: World?, player: EntityPlayer?): ItemStack? {
+		if (stack != null && world != null && player != null) {
+			if (!world.isRemote) {
+				val potion = EntityThrowableItem(player)
+				world.spawnEntityInWorld(potion)
+				stack.stackSize--
+			}
+		}
+		
+		return stack
+	}
+	
+	override fun registerIcons(reg: IIconRegister) = Unit // NO-OP
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun loadTextures(event: TextureStitchEvent.Pre) {
+		if (event.map.textureType == 1) {
+			itemIcon = InterpolatedIconHelper.forItem(event.map, this)
+		}
+	}
 }

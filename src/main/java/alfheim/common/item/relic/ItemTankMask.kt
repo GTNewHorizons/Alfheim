@@ -2,7 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.item.AlfheimItems
 import baubles.api.*
@@ -49,6 +49,8 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	
 	override fun onWornTick(stack: ItemStack, entity: EntityLivingBase) {
 		if (entity.worldObj.isRemote) return
+		// Multibauble exploit fix
+		if (entity is EntityPlayer && PlayerHandler.getPlayerBaubles(entity)?.getStackInSlot(0)?.item !is ItemTankMask) return
 		setInt(stack, TAG_POSSESSION, getInt(stack, TAG_POSSESSION, 0) + 1)
 		entity.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 4))
 		entity.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 4))

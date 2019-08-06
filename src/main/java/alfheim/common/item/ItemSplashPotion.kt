@@ -67,9 +67,9 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 		} else getColor(stack)
 	}
 	
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = IconHelper.forName(par1IconRegister, "vial" + "0")
-		itemIconFluid = IconHelper.forName(par1IconRegister, "vial" + "1_0")
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forName(reg, "vial" + "0")
+		itemIconFluid = IconHelper.forName(reg, "vial" + "1_0")
 	}
 	
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>?, adv: Boolean) {

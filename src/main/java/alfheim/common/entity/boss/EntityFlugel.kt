@@ -255,6 +255,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			ASJUtilities.warn("Someone tried to force flugel to die. They failed.")
 			ASJUtilities.printStackTrace()
 			ASJUtilities.warn("If the server'd crashed next tick - report this to mod author, ignore otherwise.")
+			AITeleport.tryToTP(this)
 			return
 		}
 		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null)
