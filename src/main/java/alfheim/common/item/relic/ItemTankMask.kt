@@ -2,15 +2,17 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.item.AlfheimItems
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.*
-import net.minecraft.client.renderer.entity.*
+import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.*
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.*
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
@@ -28,9 +30,11 @@ import kotlin.math.*
 
 class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 
+	lateinit var jojocon: IIcon
+	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
-		MinecraftForge.EVENT_BUS.register(this)
+		MinecraftForge.EVENT_BUS.register(Companion)
 	}
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
@@ -81,38 +85,12 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?) =
 		getInt(stack, TAG_POSSESSION, 0) < 1800
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	fun onEntityDeath(e: LivingDeathEvent) {
-		if (AlfheimRegistry.leftFlameIsInitialized() && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))
-			return
-		
-		val player: EntityPlayer
-		if (e.entityLiving is EntityPlayer)
-			player = e.entityLiving as EntityPlayer
-		else
-			return
-		
-		if (e.source.damageType == DamageSourceSpell.possession.damageType) {
-			val baubles = PlayerHandler.getPlayerBaubles(player)
-			if (baubles.getStackInSlot(0)?.item === AlfheimItems.mask) {
-				setInt(baubles.getStackInSlot(0), TAG_POSSESSION, 0)
-				if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
-					player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
-				}
-				baubles.setInventorySlotContents(0, null)
-			}
-		} else if (canBeSaved(player)) {
-			val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
-			val baubles = PlayerHandler.getPlayerBaubles(player)
-			if (baubles.getStackInSlot(0) != null)
-				if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
-			
-			baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
-			player.inventory.consumeInventoryItem(AlfheimItems.mask)
-			e.isCanceled = true
-            val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
-			e.entityLiving.health = h
+	override fun addInformation(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
+		if (stack.displayName.toLowerCase().trim() == "kono dio da") list.also {
+			it.add("${EnumChatFormatting.DARK_RED}${EnumChatFormatting.BOLD}${EnumChatFormatting.UNDERLINE}SONO CHI NO SADAME")
+			it.add("")
 		}
+		super.addInformation(stack, player, list, adv)
 	}
 	
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, advTT: Boolean) {
@@ -124,31 +102,77 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, e: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type != IBaubleRender.RenderType.HEAD) return
-		val entityitem = EntityItem(e.entityPlayer.worldObj, 0.0, 0.0, 0.0, stack)
-		entityitem.entityItem.stackSize = 1
-		entityitem.hoverStart = 0.0f
+		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+		val stone = stack.displayName.toLowerCase().trim() == "kono dio da"
+		val icon = if (stone) jojocon else itemIcon
 		glPushMatrix()
-		glDisable(GL_CULL_FACE)
-		glRotated(180.0, 0.0, 0.0, 1.0)
-		glRotated(-90.0, 0.0, 1.0, 0.0)
-		glTranslated(0.0, 0.3, 0.275)
-		// Tessellator.instance.setBrightness(Blocks.air.getMixedBrightnessForBlock(e.entityPlayer.worldObj, MathHelper.floor_double(e.entityPlayer.posX), MathHelper.floor_double(e.entityPlayer.posY + 1), MathHelper.floor_double(e.entityPlayer.posZ)));
 		
-		RenderItem.renderInFrame = true
-		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0f, 0.0f)
-		RenderItem.renderInFrame = false
+		glTranslated(0.0, (if (e.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - e.entityPlayer.defaultEyeHeight + if (e.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
+		glRotated(90.0, 0.0, 1.0, 0.0)
+		glRotated(180.0, 1.0, 0.0, 0.0)
+		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.0, -0.2 * 8/7)
+		glScaled(0.5 * 7.75/7, 0.5 * 7.75/7, 0.5 * 7.75/7)
 		
-		glEnable(GL_CULL_FACE)
+		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)
+		
+		//glEnable(GL_CULL_FACE)
 		glPopMatrix()
 	}
 	
 	override fun usesMana(stack: ItemStack) = getInt(stack, TAG_COOLDOWN, 0) > 0
 	
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forItem(reg, this)
+		jojocon = IconHelper.forItem(reg, this, "Stone")
+	}
+	
+	override fun getIconIndex(stack: ItemStack) =
+		if (stack.displayName.toLowerCase().trim() == "kono dio da") jojocon else super.getIconIndex(stack)!!
+	
+	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
+	
 	companion object {
+		
 		const val TAG_POSSESSION = "possession"
 		const val TAG_ACTIVATED = "activated"
 		const val TAG_COOLDOWN = "cooldown"
 		const val MAX_COOLDOWN = 12000
+		
+		@SubscribeEvent(priority = EventPriority.LOWEST)
+		fun onEntityDeath(e: LivingDeathEvent) {
+			val player: EntityPlayer
+			if (e.entityLiving is EntityPlayer)
+				player = e.entityLiving as EntityPlayer
+			else
+				return
+			
+			if (e.source.damageType == DamageSourceSpell.possession.damageType) {
+				val baubles = PlayerHandler.getPlayerBaubles(player)
+				if (baubles.getStackInSlot(0)?.item === AlfheimItems.mask) {
+					setInt(baubles.getStackInSlot(0), TAG_POSSESSION, 0)
+					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
+						player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+					}
+					baubles.setInventorySlotContents(0, null)
+				}
+			}
+			
+			if (AlfheimRegistry.leftFlameIsInitialized() && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))
+				return
+			
+			if (canBeSaved(player)) {
+				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
+				val baubles = PlayerHandler.getPlayerBaubles(player)
+				if (baubles.getStackInSlot(0) != null)
+					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+				
+				baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
+				player.inventory.consumeInventoryItem(AlfheimItems.mask)
+				e.isCanceled = true
+				val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
+				e.entityLiving.health = h
+			}
+		}
 		
 		fun canBeSaved(player: EntityPlayer): Boolean {
 			if (player.inventory.hasItem(AlfheimItems.mask)) {

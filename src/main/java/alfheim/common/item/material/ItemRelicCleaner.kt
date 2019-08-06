@@ -20,7 +20,7 @@ class ItemRelicCleaner: ItemMod("relicCleaner") {
 	
 	override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, target: Entity): Boolean {
 		return if (target is EntityPlayer)
-			ItemNBTHelper.setString(stack, TAG_UUID, target.uniqueID.toString()).let { true }
+			ItemNBTHelper.setString(stack, TAG_UUID, target.commandSenderName).let { true }
 		else
 			super.onLeftClickEntity(stack, player, target)
 	}
