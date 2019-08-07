@@ -110,7 +110,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		glTranslated(0.0, (if (e.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - e.entityPlayer.defaultEyeHeight + if (e.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 		glRotated(90.0, 0.0, 1.0, 0.0)
 		glRotated(180.0, 1.0, 0.0, 0.0)
-		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.0, -0.2 * 8/7)
+		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.5, -0.2 * 8/7)
 		glScaled(0.5 * 7.75/7, 0.5 * 7.75/7, 0.5 * 7.75/7)
 		
 		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)

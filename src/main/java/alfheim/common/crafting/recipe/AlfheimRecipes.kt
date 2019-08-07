@@ -98,7 +98,8 @@ import net.minecraft.init.Blocks.*
 import net.minecraft.init.Items.*
 import net.minecraft.item.*
 import net.minecraft.item.crafting.*
-import net.minecraftforge.oredict.*
+import net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE
+import net.minecraftforge.oredict.ShapedOreRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
@@ -550,9 +551,9 @@ object AlfheimRecipes {
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 4, 3), "SS", "SS", 'S', ItemStack(elvenSandstone, 1, 2))
 		
-		addOreDictRecipe(ItemStack(elvenSandstoneStairs, 4), true, "  S", " SS", "SSS", 'S', ItemStack(elvenSandstone))
+		addOreDictRecipe(ItemStack(elvenSandstoneStairs, 4), true, "  S", " SS", "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
 		
-		addOreDictRecipe(ItemStack(elvenSandstoneSlab, 6), "SSS", 'S', ItemStack(elvenSandstone))
+		addOreDictRecipe(ItemStack(elvenSandstoneSlab, 6), "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "  L", " LL", "LLL", 'L', ItemStack(livingcobble))
 		
@@ -722,7 +723,7 @@ object AlfheimRecipes {
 		
 		recipeManaStoneGreater = addInfuserRecipe(ItemStack(manaStoneGreater, 1, 1000),
 												  TilePool.MAX_MANA * 4,
-												  ItemStack(manaStone, 1, OreDictionary.WILDCARD_VALUE),
+												  ItemStack(manaStone, 1, WILDCARD_VALUE),
 												  ItemStack(manaResource, 4, 5),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence))

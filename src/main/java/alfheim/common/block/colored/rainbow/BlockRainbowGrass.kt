@@ -72,11 +72,14 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	}
 	
 	override fun getDrops(world: World?, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<ItemStack>? {
-		return when (world?.getBlockMetadata(x, y, z)) {
+		return when (meta) {
 			GRASS -> super.getDrops(world, x, y, z, meta, fortune)
 			else  -> arrayListOf(ItemStack(this, 1, meta))
 		}
 	}
+	
+	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int) =
+		if (meta == GRASS) null else Item.getItemFromBlock(this)
 	
 	override fun onSheared(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int, fortune: Int): ArrayList<ItemStack> {
 		val ret = ArrayList<ItemStack>()

@@ -40,7 +40,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 		tickRandomly = false
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setCreativeTab(AlfheimCore.alfheimTab)
+		setCreativeTab(AlfheimCore.baTab)
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random) = Unit

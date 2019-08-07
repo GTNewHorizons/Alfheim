@@ -11,18 +11,19 @@ import net.minecraft.entity.player.EntityPlayer
 
 class SpellHealing: SpellBase("healing", EnumRace.UNDINE, 2000, 200, 10) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
-				 ?: return SpellBase.SpellCastResult.NOTARGET
+				 ?: return SpellCastResult.NOTARGET
 		
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		for (i in 0 until pt.count) {
-			val living = pt.get(i)
-			if (living != null && Vector3.entityDistance(living!!, caster) < 32) {
-				living!!.heal(5.0f)
-				SpellEffectHandler.sendPacket(Spells.HEAL, living!!)
+			val living = pt[i]
+			if (living != null && Vector3.entityDistance(living, caster) < 32) {
+				living.heal(5.0f)
+				if (living is EntityPlayer) living.foodStats.addStats(living.foodStats.foodLevel + 1, 1f)
+				SpellEffectHandler.sendPacket(Spells.HEAL, living)
 			}
 		}
 		

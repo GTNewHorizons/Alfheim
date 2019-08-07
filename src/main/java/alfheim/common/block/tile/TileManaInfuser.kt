@@ -53,6 +53,8 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 			if (isReadyToKillGaia) {
 				val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 3).toDouble(), (zCoord + 1).toDouble()))
 				run boom@ {
+					
+					
 					if (l.isNotEmpty()) {
 						if (l.size > 1)
 							return@boom
@@ -186,12 +188,14 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	}
 	
 	internal fun prepareParticles() {
+		Botania.proxy.setSparkleFXNoClip(true)
 		for ((ci, c) in PYLONS.withIndex()) {
 			for (i in -1..83) {
 				v.set(0.0, 0.0, 0.1).rotate((-45 - 90 * ci).toDouble(), Vector3.oY).extend(i / 10.0).add(c[0].toDouble(), c[1].toDouble(), c[2].toDouble())
 				Botania.proxy.sparkleFX(worldObj, xCoord.toDouble() + v.x + 0.5, yCoord.toDouble() + v.y + 0.65, zCoord.toDouble() + v.z + 0.5, 1f, 0.01f, 0.01f, 1f, 2)
 			}
 		}
+		Botania.proxy.setSparkleFXNoClip(false)
 	}
 	
 	internal fun soulParticles() {

@@ -53,14 +53,14 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 		return false
 	}
 	
-	override fun onBlockPlacedBy(world: World?, x: Int, y: Int, z: Int, placer: EntityLivingBase?, stack: ItemStack?) {
+	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, placer: EntityLivingBase?, stack: ItemStack?) {
 		super.onBlockPlacedBy(world, x, y, z, placer, stack)
 		if (placer is EntityPlayer) {
-			if (world!!.getBlock(x + 1, y, z) === ModFluffBlocks.elfQuartz &&
-				world!!.getBlock(x - 1, y, z) === ModFluffBlocks.elfQuartz &&
-				world!!.getBlock(x, y, z + 1) === ModFluffBlocks.elfQuartz &&
-				world!!.getBlock(x, y, z - 1) === ModFluffBlocks.elfQuartz &&
-				world!!.getBlock(x + 1, y, z + 1) === ModBlocks.storage && world!!.getBlockMetadata(x + 1, y, z + 1) == 2 &&
+			if (world.getBlock(x + 1, y, z) === ModFluffBlocks.elfQuartz &&
+				world.getBlock(x - 1, y, z) === ModFluffBlocks.elfQuartz &&
+				world.getBlock(x, y, z + 1) === ModFluffBlocks.elfQuartz &&
+				world.getBlock(x, y, z - 1) === ModFluffBlocks.elfQuartz &&
+				world.getBlock(x + 1, y, z + 1) === ModBlocks.storage && world.getBlockMetadata(x + 1, y, z + 1) == 2 &&
 				world.getBlock(x + 1, y, z - 1) === ModBlocks.storage && world.getBlockMetadata(x + 1, y, z - 1) == 2 &&
 				world.getBlock(x - 1, y, z + 1) === ModBlocks.storage && world.getBlockMetadata(x - 1, y, z + 1) == 2 &&
 				world.getBlock(x - 1, y, z - 1) === ModBlocks.storage && world.getBlockMetadata(x - 1, y, z - 1) == 2)

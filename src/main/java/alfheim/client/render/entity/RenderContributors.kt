@@ -5,12 +5,16 @@ import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
 import alfheim.api.ModInfo
 import alfheim.api.lib.*
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
+import alfheim.common.item.relic.ItemTankMask
+import baubles.common.lib.PlayerHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
@@ -18,10 +22,13 @@ import net.minecraftforge.client.model.*
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL13.GL_TEXTURE0
 import org.lwjgl.opengl.GL20.*
+import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
+import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import java.awt.Color
 import kotlin.math.sin
 
@@ -85,8 +92,32 @@ object RenderContributors {
 		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) return
 		
 		if (player.commandSenderName == "AlexSocol") {
-			run {
-				// ring
+			run { // jojo's mask
+				if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
+					val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+					val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+					val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+					
+					glPushMatrix()
+					glRotatef(yawOffset, 0f, -1f, 0f)
+					glRotatef(yaw - 270, 0f, 1f, 0f)
+					glRotatef(pitch, 0f, 0f, 1f)
+					glColor4f(0.375f, 0f, 0f, 1f)
+					val mask = ItemStack(AlfheimItems.mask)
+					mask.setStackDisplayName("kono dio da")
+					(AlfheimItems.mask as ItemTankMask).onPlayerBaubleRender(mask, e, IBaubleRender.RenderType.HEAD)
+					
+					glPopMatrix()
+				}
+			}
+			
+			run { // devil wings
+				if (AlfheimConfig.minimalGraphics) {
+					(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
+				}
+			}
+			
+			run { // babylon circle
 				glPushMatrix()
 				glRotated(90.0, 1.0, 0.0, 0.0)
 				Helper.rotateIfSneaking(player)
@@ -99,8 +130,7 @@ object RenderContributors {
 				glPopMatrix()
 			}
 			
-			run {
-				// wings
+			run { // wings
 				if (AlfheimConfig.minimalGraphics) {
 					val icon = ItemElvenResource.wing
 					Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
@@ -168,8 +198,7 @@ object RenderContributors {
 						model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/wing.obj"))
 					}
 					
-					run {
-						// bones
+					run { // bones
 						glPushMatrix()
 						glRotated(-ry, 0.0, 1.0, 0.0)
 						glTranslated(-0.35, 0.05, 0.025)
@@ -194,8 +223,7 @@ object RenderContributors {
 						Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.explosion)
 					}
 					
-					run {
-						// leather
+					run { // leather
 						glPushMatrix()
 						glRotated(-ry, 0.0, 1.0, 0.0)
 						glTranslated(-0.35, 0.05, 0.025)
@@ -245,7 +273,7 @@ object RenderContributors {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 			glShadeModel(GL_SMOOTH)
 			
-			glTranslated(0.0, if (player === Minecraft.getMinecraft().thePlayer) 1.25 else 0.25, 0.0)
+			glTranslated(0.0, 1.35, 0.0)
 			glRotated(Minecraft.getMinecraft().theWorld.totalWorldTime / 2.0 + Minecraft.getMinecraft().timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScaled(2.0, 2.0, 2.0)
 			

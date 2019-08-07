@@ -100,10 +100,11 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"vazkii.botania.common.lib.LibItemNames"                        -> {
+			"vazkii.botania.common.item.equipment.bauble.ItemMiningRing",
+			"vazkii.botania.common.item.equipment.bauble.ItemWaterRing"     -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-				val ct = `LibItemNames$ClassVisitor`(cw)
+				val ct = `ItemInfiniEffect$ClassVisitor`(transformedName.split("\\.".toRegex())[6], cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
@@ -128,6 +129,14 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemTerraformRod$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"vazkii.botania.common.lib.LibItemNames"                        -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `LibItemNames$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
@@ -613,59 +622,23 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 	}
 	
-	internal class `LibItemNames$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+	internal class `ItemInfiniEffect$ClassVisitor`(val className: String, cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (name == "<clinit>") {
-				println("Visiting LibItemNames#<clinit>: $name$desc")
-				return `LibItemNames$clinit$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			if (name == "onWornTick") {
+				println("Visiting $className#onWornTick: $name$desc")
+				return `ItemInfiniEffect$onWornTick$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `LibItemNames$clinit$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+		internal class `ItemInfiniEffect$onWornTick$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			private var twotwo_twofour = true
-			private var add = false
-			private var twoone = true
-			
-			override fun visitIntInsn(opcode: Int, operand: Int) {
-				var operand = operand
-				if (opcode == BIPUSH) {
-					if (operand == 22) {
-						if (twotwo_twofour) {
-							twotwo_twofour = false
-							operand = 24
-						}
-					}
-					
-					if (operand == 21) {
-						if (twoone) {
-							twoone = false
-							add = true
-						}
-					}
-				}
-				
-				super.visitIntInsn(opcode, operand)
-			}
-			
-			override fun visitInsn(opcode: Int) {
-				super.visitInsn(opcode)
-				
-				if (opcode == AASTORE) {
-					if (add) {
-						add = false
-						mv.visitInsn(DUP)
-						mv.visitIntInsn(BIPUSH, 22)
-						mv.visitLdcInsn("lensMessenger")
-						mv.visitInsn(AASTORE)
-						mv.visitInsn(DUP)
-						mv.visitIntInsn(BIPUSH, 23)
-						mv.visitLdcInsn("lensTripwire")
-						mv.visitInsn(AASTORE)
-					}
-				}
+			override fun visitLdcInsn(cst: Any?) {
+				if (cst == Integer.MAX_VALUE)
+					super.visitLdcInsn(10)
+				else
+					super.visitLdcInsn(cst)
 			}
 		}
 	}
@@ -774,6 +747,63 @@ class AlfheimClassTransformer: IClassTransformer {
 					super.visitIntInsn(BIPUSH, 20)
 					super.visitLdcInsn("livingrock")
 					super.visitInsn(AASTORE)
+				}
+			}
+		}
+	}
+	
+	internal class `LibItemNames$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "<clinit>") {
+				println("Visiting LibItemNames#<clinit>: $name$desc")
+				return `LibItemNames$clinit$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `LibItemNames$clinit$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			private var twotwo_twofour = true
+			private var add = false
+			private var twoone = true
+			
+			override fun visitIntInsn(opcode: Int, operand: Int) {
+				var operand = operand
+				if (opcode == BIPUSH) {
+					if (operand == 22) {
+						if (twotwo_twofour) {
+							twotwo_twofour = false
+							operand = 24
+						}
+					}
+					
+					if (operand == 21) {
+						if (twoone) {
+							twoone = false
+							add = true
+						}
+					}
+				}
+				
+				super.visitIntInsn(opcode, operand)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				super.visitInsn(opcode)
+				
+				if (opcode == AASTORE) {
+					if (add) {
+						add = false
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 22)
+						mv.visitLdcInsn("lensMessenger")
+						mv.visitInsn(AASTORE)
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 23)
+						mv.visitLdcInsn("lensTripwire")
+						mv.visitInsn(AASTORE)
+					}
 				}
 			}
 		}

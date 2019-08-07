@@ -359,7 +359,8 @@ EventHandler {
 		if (e.phase == Phase.START) return
 		val player = e.player
 		
-		//		player.rotationYaw = player.rotationPitch = 90;
+//		player.rotationYaw = 0f
+//		player.rotationPitch = 0f
 		
 		if (!player.capabilities.isCreativeMode) {
 			if (AlfheimCore.enableElvenStory) {

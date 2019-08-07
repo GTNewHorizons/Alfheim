@@ -103,7 +103,7 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 			renderIcon(stack.itemDamage)
 			if (stack.itemDamage == 16) {
 				ShaderHelper.releaseShader()
-				GL11.glAlphaFunc(GL11.GL_ALWAYS, 1F)
+				GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F)
 				GL11.glDisable(GL11.GL_BLEND)
 			}
 		}

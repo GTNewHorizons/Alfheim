@@ -17,7 +17,6 @@ import alfheim.common.item.interaction.thaumcraft.*
 import alfheim.common.item.material.*
 import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
-import baubles.api.BaubleType
 import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -123,11 +122,11 @@ object AlfheimItems {
 		livingrockPickaxe = ItemLivingrockPickaxe()
 		lootInterceptor = ItemLootInterceptor()
 		manasteelHoe = ItemManasteelHoe()
-		manaStone = ItemManaStorage("ManaStone", 3.0, null)
-		manaStoneGreater = ItemManaStorage("ManaStoneGreater", 8.0, null)
-		manaRingElven = ItemManaStorage("ManaRingElven", 5.0, BaubleType.RING)
+		manaStone = ItemManaStorage("ManaStone", 3.0)
+		manaStoneGreater = ItemManaStorage("ManaStoneGreater", 8.0)
+		manaRingElven = ItemManaStorageRing("ManaRingElven", 5.0)
 		auraRingElven = ItemAuraRingAlfheim("AuraRingElven")
-		manaRingGod = ItemManaStorage("ManaRingGod", 10.0, BaubleType.RING)
+		manaRingGod = ItemManaStorageRing("ManaRingGod", 10.0)
 		auraRingGod = object: ItemAuraRingAlfheim("AuraRingGod") {
 			override val delay: Int
 				get() = 2
@@ -167,10 +166,6 @@ object AlfheimItems {
 		register(livingrockPickaxe)
 		register(manasteelHoe)
 		register(elementiumHoe)
-		register(manaStone)
-		register(manaStoneGreater)
-		register(manaRingElven)
-		register(manaRingGod)
 		register(astrolabe)
 		register(lootInterceptor)
 		register(rodFire)

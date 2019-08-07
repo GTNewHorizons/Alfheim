@@ -7,6 +7,7 @@ import alfheim.common.core.helper.IconHelper
 import alfheim.common.network.MessagePlayerItem
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
+import baubles.common.network.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -53,8 +54,11 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 		const val TAG_ROTATION_BASE = "rotationBase"
 		
 		fun isEquipped(stack: ItemStack): Boolean = ItemNBTHelper.getBoolean(stack, TAG_EQUIPPED, false)
+		
 		fun setEquipped(stack: ItemStack, equipped: Boolean) = ItemNBTHelper.setBoolean(stack, TAG_EQUIPPED, equipped)
+		
 		fun getRotationBase(stack: ItemStack): Float = ItemNBTHelper.getFloat(stack, TAG_ROTATION_BASE, 0F)
+		
 		fun setRotationBase(stack: ItemStack, rotation: Float) = ItemNBTHelper.setFloat(stack, TAG_ROTATION_BASE, rotation)
 		
 		fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
@@ -67,7 +71,7 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 				if (yaw >= calcAngle && yaw < calcAngle + segAngles)
 					return seg
 			}
-			return -1
+			return 0
 		}
 		
 		fun getCheckingAngle(player: EntityLivingBase): Float = getCheckingAngle(player, 0F)
@@ -98,19 +102,21 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 		
 		fun getItemForSlot(stack: ItemStack, slot: Int): ItemStack? {
 			if (slot >= SEGMENTS) return null
-			val cmp = getStoredCompound(stack, slot)
-					  ?: return null
+			val cmp = getStoredCompound(stack, slot) ?: return null
 			return ItemStack.loadItemStackFromNBT(cmp)
 		}
 		
 		fun getStoredCompound(stack: ItemStack, slot: Int): NBTTagCompound? = ItemNBTHelper.getCompound(stack, TAG_ITEM_PREFIX + slot, true)
-		fun setItem(beltStack: ItemStack, stack: ItemStack?, pos: Int) {
+		
+		fun setItem(player: EntityPlayer?, beltStack: ItemStack, stack: ItemStack?, pos: Int) {
 			if (stack == null) ItemNBTHelper.setCompound(beltStack, TAG_ITEM_PREFIX + pos, NBTTagCompound())
 			else {
 				val tag = NBTTagCompound()
 				stack.writeToNBT(tag)
 				ItemNBTHelper.setCompound(beltStack, TAG_ITEM_PREFIX + pos, tag)
 			}
+			
+			if (player?.worldObj?.isRemote == false) PacketHandler.INSTANCE.sendToAll(PacketSyncBauble(player, 3))
 		}
 		
 		fun getEquippedBelt(player: EntityPlayer): ItemStack? {
@@ -147,7 +153,7 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 				val slotItem = slotStack.item
 				if (slotItem is IBlockProvider) {
 					val count = slotItem.getBlockCount(p0, p1, slotStack, p3, p4)
-					setItem(p2, slotStack, segment)
+					setItem(p0, p2, slotStack, segment)
 					if (count == -1) return -1
 					total += count
 				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.itemDamage == p4) {
@@ -165,13 +171,13 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 				val slotItem = slotStack.item
 				if (slotItem is IBlockProvider) {
 					val provided = slotItem.provideBlock(p0, p1, slotStack, p3, p4, p5)
-					setItem(p2, slotStack, segment)
+					setItem(p0, p2, slotStack, segment)
 					if (provided) return true
 				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.itemDamage == p4) {
 					if (p5) slotStack.stackSize--
 					
-					if (slotStack.stackSize == 0) setItem(p2, null, segment)
-					else setItem(p2, slotStack, segment)
+					if (slotStack.stackSize == 0) setItem(p0, p2, null, segment)
+					else setItem(p0, p2, slotStack, segment)
 					return true
 				}
 			}
@@ -270,7 +276,7 @@ class ToolbeltEventHandler {
 						if (!event.world.isRemote) {
 							val item = heldItem.copy()
 							
-							ItemToolbelt.setItem(beltStack, item, segment)
+							ItemToolbelt.setItem(player, beltStack, item, segment)
 							
 							player.inventory.decrStackSize(player.inventory.currentItem, 64)
 							player.inventory.markDirty()
@@ -280,7 +286,7 @@ class ToolbeltEventHandler {
 				} else if (toolStack != null) {
 					AlfheimCore.network.sendToServer(MessagePlayerItem(toolStack))
 					
-					ItemToolbelt.setItem(beltStack, null, segment)
+					ItemToolbelt.setItem(player, beltStack, null, segment)
 					event.isCanceled = true
 				}
 			}

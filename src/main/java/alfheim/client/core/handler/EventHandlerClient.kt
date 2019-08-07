@@ -9,6 +9,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.gui.ItemsRemainingRenderHandler
+import alfheim.client.model.entity.ModelBipedNew
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
@@ -29,7 +30,6 @@ import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
-import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
 
@@ -133,13 +133,13 @@ class EventHandlerClient {
 		AstrolabePreviewHandler.onWorldRenderLast(e)
 		if (AlfheimCore.enableMMO) renderMMO()
 
-//		glPushMatrix()
-//		ASJUtilities.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-//		glTranslatef(0.5f, 5.5f, 0.5f)
-//		glRotatef(180f, 1f, 0f, 0f)
-//		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.male[8])
-//		ModelBipedNew().render(0.0625f)
-//		glPopMatrix()
+		glPushMatrix()
+		ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
+		glTranslatef(0.5f, 5.5f, 0.5f)
+		glRotatef(180f, 1f, 0f, 0f)
+		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.male[5])
+		ModelBipedNew().render(0.0625f)
+		glPopMatrix()
 	}
 	
 	private fun renderMMO() {

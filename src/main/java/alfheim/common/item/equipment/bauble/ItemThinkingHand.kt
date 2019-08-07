@@ -30,7 +30,7 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 			glTranslated(0.0, (if (event.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - event.entityPlayer.defaultEyeHeight + if (event.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 			glRotated(90.0, 0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
-			glTranslated(-0.4, 0.1, -0.25)
+			glTranslated(-0.4, 0.1, -0.1175)
 			glScaled(0.495, 0.495, 0.495)
 			glTranslated(0.4, -0.7, -0.27)
 			glRotated(15.0, 0.0, 0.0, -1.0)
