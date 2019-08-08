@@ -96,7 +96,7 @@ object AlfheimBlocks {
 		flugelHead = BlockHeadFlugel()
 		flugelHead2 = BlockHeadMiku()
 		itemHolder = BlockItemHolder()
-		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID).setBlockName("Livingsubstone").setCreativeTab(AlfheimCore.alfheimTab).setHardness(2f).setResistance(60f).setStepSound(soundTypeStone).setHarvestLevelI("pickaxe", 1)
+		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID).setBlockName("LivingCobble").setCreativeTab(AlfheimCore.alfheimTab).setHardness(2f).setResistance(60f).setStepSound(soundTypeStone).setHarvestLevelI("pickaxe", 1)
 		mauftriumBlock = BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0f, 255, 5f, "pickaxe", 1, 60f, soundTypeMetal, true, true, false, AlfheimLexiconData.essences)
 		manaInfuser = BlockManaInfuser()
 		poisonIce = BlockPoisonIce()

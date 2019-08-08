@@ -263,10 +263,14 @@ class ClientProxy: CommonProxy() {
 		
 		private fun addESMKeyBinds() {
 			addKeyBinding(keyFlight)
+			
+			KeyBinding.resetKeyBindingArrayAndHash()
 		}
 		
 		private fun removeESMKeyBinds() {
 			unregisterKeyBinding(keyFlight)
+			
+			KeyBinding.resetKeyBindingArrayAndHash()
 		}
 		
 		private fun addMMOKeyBinds() {
@@ -274,6 +278,8 @@ class ClientProxy: CommonProxy() {
 			addKeyBinding(keyUnCast)
 			addKeyBinding(keySelMob)
 			addKeyBinding(keySelTeam)
+			
+			KeyBinding.resetKeyBindingArrayAndHash()
 		}
 		
 		private fun removeMMOKeyBinds() {
@@ -281,6 +287,8 @@ class ClientProxy: CommonProxy() {
 			unregisterKeyBinding(keyUnCast)
 			unregisterKeyBinding(keySelMob)
 			unregisterKeyBinding(keySelTeam)
+			
+			KeyBinding.resetKeyBindingArrayAndHash()
 		}
 		
 		private fun unregisterKeyBinding(key: KeyBinding) {
