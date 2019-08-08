@@ -512,10 +512,10 @@ object ShadowFoxRecipes {
 		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(50000,
 													   ShadowFoxBlocks.calicoSapling, 0,
 													   70,
-													   Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand,
+													   ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand),
 													   RUNE[11], // Greed
-													   LEAVES[1], LEAVES[0], LEAVES[4], // Orange White Brown
-													   Blocks.obsidian)
+													   LEAVES[1], LEAVES[0], LEAVES[12], // Orange White Brown
+													   ItemStack(Blocks.obsidian))
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.calicoPlanks, 4), ShadowFoxBlocks.calicoWood)
 		
@@ -542,7 +542,7 @@ object ShadowFoxRecipes {
 		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000,
 														ShadowFoxBlocks.circuitSapling, 0,
 														70,
-														Items.repeater, Items.comparator, Items.repeater,
+														ItemStack(Items.repeater), ItemStack(Items.comparator), ItemStack(Items.repeater),
 														RUNE[9], // Lust
 														LEAVES[14], LEAVES[14], LEAVES[14], // Red
 														"blockRedstone")
