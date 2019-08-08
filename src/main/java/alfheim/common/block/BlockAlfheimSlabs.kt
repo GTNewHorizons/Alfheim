@@ -29,7 +29,7 @@ class BlockLivingRockTileSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlock
 	override fun getSingleBlock() = AlfheimBlocks.livingrockTileSlab as BlockSlab
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		sideIcon = IconHelper.forName(reg, "Livingsubstone2Slab")
+		sideIcon = IconHelper.forName(reg, "LivingCobble2Slab")
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = if (side > 1) sideIcon else super.getIcon(side, meta)!!
