@@ -1,13 +1,13 @@
 package alfheim.common.core.util
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.RenderPostShaders
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.util.Vec3
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -93,7 +93,7 @@ object AlfheimConfig {
 	var bothSpawnStructures		= false
 	var enableWingsNonAlfheim	= true
 	var flightTime				= 1200
-	val zones					= arrayOfNulls<Vec3>(9)
+	val zones					= Array(9) { Vector3(0.0) }
 	
 	// MMO
 	var deathScreenAddTime		= 1200
@@ -285,7 +285,7 @@ object AlfheimConfig {
 			e.printStackTrace()
 			
 			for (i in zones.indices) {
-				zones[i] = Vec3.createVectorHelper(0.0, 300.0, 0.0)
+				zones[i].set(0.0, 300.0, 0.0)
 			}
 		}
 		
@@ -293,20 +293,20 @@ object AlfheimConfig {
 	
 	private fun writeStandardCoords(angle: Double): String {
 		val v = mkVecLenRotMine(citiesDistance, angle)
-		return "${v.xCoord.mfloor()} : 300 : ${v.zCoord.mfloor()}\n"
+		return "${v.x.mfloor()} : 300 : ${v.z.mfloor()}\n"
 	}
 	
-	private fun makeVectorFromString(s: String): Vec3 {
+	private fun makeVectorFromString(s: String): Vector3 {
 		val ss = s.split(" : ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 		if (ss.size != 3) throw IllegalArgumentException(String.format("Wrong coords count. Expected 3 got %d", ss.size))
-		return Vec3.createVectorHelper(Integer.valueOf(ss[0]).toDouble(), Integer.valueOf(ss[1]).toDouble(), Integer.valueOf(ss[2]).toDouble())
+		return Vector3(ss[0].toDouble(), ss[1].toDouble(), ss[2].toDouble())
 	}
 	
 	private fun mkVecLenRotMine(length: Int, angle: Double) =
 		makeVectorOfLengthRotated(length, angle + 90)
 	
 	private fun makeVectorOfLengthRotated(length: Int, angle: Double) =
-		Vec3.createVectorHelper(cos(Math.toRadians(angle)) * length, 64.0, sin(Math.toRadians(angle)) * length)
+		Vector3(cos(Math.toRadians(angle)) * length, 64.0, sin(Math.toRadians(angle)) * length)
 	
 	fun readModes() {
 		val f = File("config/Alfheim/ElvenStoryMode.cfg")

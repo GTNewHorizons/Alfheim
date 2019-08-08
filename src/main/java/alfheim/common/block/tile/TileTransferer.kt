@@ -197,7 +197,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			axis = AxisAlignedBB.getBoundingBox(x.toDouble(), y.toDouble(), z.toDouble(), (x + 1).toDouble(), (y + 1).toDouble(), (z + 1).toDouble())
 		
 		if (!blockVec.isInside(axis!!))
-			blockVec[axis.minX + (axis.maxX - axis.minX) / 2, axis.minY + (axis.maxY - axis.minY) / 2] = axis.minZ + (axis.maxZ - axis.minZ) / 2
+			blockVec.set(axis.minX + (axis.maxX - axis.minX) / 2, axis.minY + (axis.maxY - axis.minY) / 2, axis.minZ + (axis.maxZ - axis.minZ) / 2)
 		
 		val diffVec = blockVec.copy().sub(thisVec)
 		val rotVec = Vector3(0.0, 1.0, 0.0)
@@ -208,7 +208,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		
 		rotX = angle.toFloat() + 90
 		
-		rotVec[diffVec.x, 0.0] = diffVec.z
+		rotVec.set(diffVec.x, 0.0, diffVec.z)
 		angle = diffVec.angle(rotVec) * 180f / Math.PI
 		if (blockVec.y < thisVec.y)
 			angle = -angle

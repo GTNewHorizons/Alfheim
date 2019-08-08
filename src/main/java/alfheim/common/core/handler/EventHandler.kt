@@ -38,6 +38,7 @@ import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action
+import net.minecraftforge.event.world.BlockEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.Botania
@@ -332,6 +333,12 @@ EventHandler {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	fun onBlockBreak(e: BlockEvent.BreakEvent) {
+		val item = e.player.currentEquippedItem?.item ?: return
+		if (item === AlfheimItems.flugelSoul) e.isCanceled = true
 	}
 	
 	@SubscribeEvent

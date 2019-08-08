@@ -1,6 +1,8 @@
 package alfheim.api.entity
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.AlfheimAPI
+import alfheim.common.core.util.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
 
@@ -70,9 +72,6 @@ enum class EnumRace {
 		fun getByID(id: Double) =
 			if (0 > id || id > EnumRace.values().size) HUMAN else values()[MathHelper.floor_double(id)]
 		
-		fun unlocalize(name: String) =
-			StatCollector.translateToLocal("race.$name.reverse")!!
-		
 		fun ensureExistance(player: EntityPlayer) {
 			if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.RACE) == null) registerRace(player)
 		}
@@ -85,6 +84,16 @@ enum class EnumRace {
 		fun getRaceID(player: EntityPlayer): Int {
 			ensureExistance(player)
 			return MathHelper.floor_double(player.getEntityAttribute(AlfheimAPI.RACE).attributeValue)
+		}
+		
+		fun selectRace(player: EntityPlayer, race: EnumRace) {
+			setRace(player, race)
+			player.capabilities.allowFlying = true
+			player.sendPlayerAbilities()
+			
+			val (x, y, z) = AlfheimConfig.zones[race.ordinal]
+			player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfig.dimensionIDAlfheim)
+			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, x, y, z)
 		}
 		
 		fun setRace(player: EntityPlayer, race: EnumRace) {

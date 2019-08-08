@@ -1,7 +1,6 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModContainer
-import alfheim.AlfheimCore
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
 import net.minecraft.block.material.Material
@@ -17,10 +16,19 @@ class BlockRaceSelector: BlockModContainer(Material.glass) {
 	init {
 		setBlockBounds(0f, 0f, 3f / 16, 1f, 3f / 16, 13f / 16)
 		setBlockName("RaceSelector")
-		setCreativeTab(AlfheimCore.alfheimTab)
+		setBlockUnbreakable()
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		val ret = onBlockActivated2(world, x, y, z, player, side, hitX, hitZ)
+		if (ret) {
+			world.getTileEntity(x, y, z).markDirty()
+			world.markBlockForUpdate(x,  y, z)
+		}
+		return ret
+	}
+	
+	fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitZ: Float): Boolean {
 		if (side != 1) return false
 		
 		val meta = world.getBlockMetadata(x, y, z)
@@ -39,29 +47,32 @@ class BlockRaceSelector: BlockModContainer(Material.glass) {
 			
 			return true
 		} else if (meta == 1) {
+			
 			fun isMid(hX: Float, hZ: Float): Boolean {
 				val leftest = hX in (5f / 16)..(6f / 16)
 				val rightest = hX in (10f / 16)..(11f / 16)
+				val height = hZ in (6f / 16)..(10f / 16)
 				
 				// left/right button side
-				if (leftest || rightest && hZ in (6f / 16)..(10f / 16)) return true
+				if ((leftest || rightest) && height) return true
 				
 				// button middle
 				return hX in (6f / 16)..(10f / 16) && hZ in (5f / 16)..(11f / 16)
 			}
 			
 			if (isMid(hitX, hitZ)) {
-				tile.giveRaceAndReset(player)
-				return true
+				return tile.giveRaceAndReset(player)
 			}
 			
 			if (isLeft(hitX, hitZ)) {
 				--tile.rotation
+				tile.activeRotation = 20
 				return true
 			}
 			
 			if (isRight(hitX, hitZ)) {
 				++tile.rotation
+				tile.activeRotation = -20
 				return true
 			}
 			

@@ -57,7 +57,6 @@ object AlfheimItems {
 	lateinit var flugelHead: Item
 	lateinit var flugelHead2: Item
 	lateinit var flugelSoul: Item
-	lateinit var holoProjector: Item
 	lateinit var invisibilityCloak: Item
 	lateinit var livingrockPickaxe: Item
 	lateinit var lootInterceptor: Item
@@ -109,7 +108,6 @@ object AlfheimItems {
 		flugelHead2 = ItemHeadMiku()
 		realitySword = ItemRealitySword()
 		excaliber = ItemExcaliber()
-		holoProjector = ItemHoloProjector()
 		//mjolnir = new ItemMjolnir();
 		mask = ItemTankMask()
 		flugelSoul = ItemFlugelSoul()
@@ -161,7 +159,6 @@ object AlfheimItems {
 	private fun reg() {
 		register(flugelHead)
 		register(flugelHead2)
-		register(holoProjector)
 		register(realitySword)
 		register(livingrockPickaxe)
 		register(manasteelHoe)

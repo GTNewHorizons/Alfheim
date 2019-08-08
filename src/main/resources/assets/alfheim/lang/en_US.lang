@@ -450,10 +450,9 @@ item.TankMask.poem3=Here :(
 #######################################################___ELVEN STORY___########################################################
 
 elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
-elvenstory.welcome1=§6Please, select one of the following races using "/race"
-elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
-elvenstory.commands.race.usage=/race <RACE>
-elvenstory.commands.race.unavailable=Command unavailable: Elven Story Mode is disabled.
+elvenstory.welcome1=§6Please, select gender and race using panel in front of you
+elvenstory.selectgender=Select Gender
+elvenstory.selectrace=Select Race
 
 key.lolicorn.desc=Call Lolicorn
 key.cast.desc=Spell Cast
@@ -472,16 +471,6 @@ race.LEPRECHAUN.name=LEPRECHAUN
 race.SPRIGGAN.name=SPRIGGAN
 race.UNDINE.name=UNDINE
 race.IMP.name=IMP
-
-race.SALAMANDER.reverse=SALAMANDER
-race.SYLPH.reverse=SYLPH
-race.CAITSITH.reverse=CAITSITH
-race.POOKA.reverse=POOKA
-race.GNOME.reverse=GNOME
-race.LEPRECHAUN.reverse=LEPRECHAUN
-race.SPRIGGAN.reverse=SPRIGGAN
-race.UNDINE.reverse=UNDINE
-race.IMP.reverse=IMP
 
 #########################################################___SPELLS___###########################################################
 

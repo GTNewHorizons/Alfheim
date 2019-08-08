@@ -3,8 +3,8 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.util.AlfheimConfig
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -91,7 +91,7 @@ object RenderWings {
 		}
 	}
 	
-	private fun drawRect(texture: ResourceLocation, i: Int) {
+	fun drawRect(texture: ResourceLocation, i: Int) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture)
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.addVertexWithUV(0.0, i.toDouble(), 0.0, 1.0, 0.0)

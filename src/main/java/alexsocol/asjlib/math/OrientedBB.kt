@@ -57,14 +57,14 @@ open class OrientedBB() {
 		pos.set(getAABBPosition(aabb))
 		size.set(getAABBSize(aabb))
 		
-		a[aabb.minX, aabb.minY] = aabb.minZ
-		b[aabb.maxX, aabb.minY] = aabb.minZ
-		c[aabb.maxX, aabb.minY] = aabb.maxZ
-		d[aabb.minX, aabb.minY] = aabb.maxZ
-		e[aabb.minX, aabb.maxY] = aabb.minZ
-		f[aabb.maxX, aabb.maxY] = aabb.minZ
-		g[aabb.maxX, aabb.maxY] = aabb.maxZ
-		h[aabb.minX, aabb.maxY] = aabb.maxZ
+		a.set(aabb.minX, aabb.minY, aabb.minZ)
+		b.set(aabb.maxX, aabb.minY, aabb.minZ)
+		c.set(aabb.maxX, aabb.minY, aabb.maxZ)
+		d.set(aabb.minX, aabb.minY, aabb.maxZ)
+		e.set(aabb.minX, aabb.maxY, aabb.minZ)
+		f.set(aabb.maxX, aabb.maxY, aabb.minZ)
+		g.set(aabb.maxX, aabb.maxY, aabb.maxZ)
+		h.set(aabb.minX, aabb.maxY, aabb.maxZ)
 		
 		return this
 	}
@@ -79,7 +79,7 @@ open class OrientedBB() {
 	
 	/** Sets BB's center to this coords  */
 	fun setPosition(x: Double, y: Double, z: Double): OrientedBB {
-		pos[x, y] = z
+		pos.set(x, y, z)
 		
 		a.set(pos).add(-size.x, -size.y, -size.z)
 		b.set(pos).add(size.x, -size.y, -size.z)

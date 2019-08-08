@@ -3,9 +3,8 @@ package alfheim.common.potion
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.common.core.registry.*
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -55,7 +54,6 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfig.potionIDLeftFlame, "leftFlame
 	@SubscribeEvent
 	fun onBlockBreak(e: BlockEvent.BreakEvent) {
 		if (AlfheimCore.enableMMO && e.player.isPotionActive(AlfheimRegistry.leftFlame)) e.isCanceled = true
-		if (e.player.currentEquippedItem != null && (e.player.currentEquippedItem.item === AlfheimItems.flugelSoul || e.player.currentEquippedItem.item === AlfheimItems.holoProjector)) e.isCanceled = true
 	}
 	
 	@SubscribeEvent

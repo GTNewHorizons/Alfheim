@@ -33,6 +33,8 @@ class Vector3: Serializable {
 	
 	constructor()
 	
+	constructor(d: Double) : this(d, d, d)
+	
 	constructor(d: Double, d1: Double, d2: Double) {
 		x = d
 		y = d1
@@ -61,7 +63,7 @@ class Vector3: Serializable {
 		return set(0.0, 0.0, 0.0)
 	}
 	
-	operator fun set(d: Double, d1: Double, d2: Double): Vector3 {
+	fun set(d: Double, d1: Double, d2: Double): Vector3 {
 		x = d
 		y = d1
 		z = d2

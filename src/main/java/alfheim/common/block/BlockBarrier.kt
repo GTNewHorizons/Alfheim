@@ -20,7 +20,7 @@ class BlockBarrier: BlockMod(Material.cake) {
 		setBlockName("barrier")
 	}
 	
-	override fun getIcon(side: Int, meta: Int) = Blocks.bedrock.getIcon(side, meta)
+	override fun getIcon(side: Int, meta: Int) = Blocks.bedrock.getIcon(side, meta)!!
 	
 	override fun getRenderType(): Int = -1
 	

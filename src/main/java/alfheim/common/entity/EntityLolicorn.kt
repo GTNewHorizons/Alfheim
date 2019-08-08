@@ -225,6 +225,9 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		fun call(caller: EntityPlayer) {
 			if (caller.dimension != AlfheimConfig.dimensionIDAlfheim && AlfheimConfig.lolicornAlfheimOnly)
 				ASJUtilities.say(caller, "alfheimmisc.mount.unavailable").also { return }
+			
+			if (caller.ridingEntity is EntityLolicorn) return
+			
 			requests.add(caller.commandSenderName)
 			timing[caller.commandSenderName] = 5
 		}

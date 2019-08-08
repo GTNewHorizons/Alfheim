@@ -190,13 +190,13 @@ class SubTileWarp: SubTileEntity() {
 			y2 = rand.nextInt(radius * 2) - radius
 			z2 = rand.nextInt(radius * 2) - radius
 			
-			v[x1.toDouble(), y1.toDouble()] = z1.toDouble()
+			v.set(x1.toDouble(), y1.toDouble(), z1.toDouble())
 			if (v.length() > radius) v.shrink(v.length() - radius)
 			x1 = MathHelper.floor_double(v.x)
 			y1 = MathHelper.floor_double(v.y)
 			z1 = MathHelper.floor_double(v.z)
 			
-			v[x2.toDouble(), y2.toDouble()] = z2.toDouble()
+			v.set(x2.toDouble(), y2.toDouble(), z2.toDouble())
 			if (v.length() > radius) v.shrink(v.length() - radius)
 			x2 = MathHelper.floor_double(v.x)
 			y2 = MathHelper.floor_double(v.y)

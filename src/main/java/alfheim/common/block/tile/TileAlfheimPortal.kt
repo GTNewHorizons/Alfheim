@@ -97,7 +97,7 @@ class TileAlfheimPortal: TileMod() {
 							if (AlfheimCore.enableElvenStory) {
 								val race = EnumRace.getRaceID(player) - 1 // for array length
 								if (race in 0..8)
-									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race]!!.xCoord, AlfheimConfig.zones[race]!!.yCoord, AlfheimConfig.zones[race]!!.zCoord)
+									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].x, AlfheimConfig.zones[race].y, AlfheimConfig.zones[race].z)
 								else {
 									if (AlfheimConfig.bothSpawnStructures)
 										findAndTP(player)
@@ -282,7 +282,7 @@ class TileAlfheimPortal: TileMod() {
 		return false
 	}
 	
-	override fun getRenderBoundingBox() = TileEntity.INFINITE_EXTENT_AABB
+	override fun getRenderBoundingBox() = TileEntity.INFINITE_EXTENT_AABB!!
 	
 	companion object {
 		

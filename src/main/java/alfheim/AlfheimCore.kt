@@ -3,7 +3,7 @@ package alfheim
 import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.command.*
+import alfheim.common.core.command.CommandAlfheim
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
@@ -113,7 +113,6 @@ class AlfheimCore {
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
 		CommandDimTP.register(e)
-		e.registerServerCommand(CommandRace())
 	}
 	
 	@EventHandler
