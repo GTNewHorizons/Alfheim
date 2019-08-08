@@ -60,6 +60,8 @@ object AlfheimBlocks {
 	lateinit var livingcobbleSlabFull: Block
 	lateinit var livingcobbleWall: Block
 	lateinit var livingrockBrickWall: Block
+	lateinit var livingrockTileSlab: Block
+	lateinit var livingrockTileSlabFull: Block
 	lateinit var livingwoodFence: Block
 	lateinit var livingwoodFenceGate: Block
 	lateinit var livingwoodBarkFence: Block
@@ -94,7 +96,7 @@ object AlfheimBlocks {
 		flugelHead = BlockHeadFlugel()
 		flugelHead2 = BlockHeadMiku()
 		itemHolder = BlockItemHolder()
-		livingcobble = BlockPatternLexicon(ModInfo.MODID, Material.rock, "LivingCobble", AlfheimCore.alfheimTab, 0f, 255, 2f, "pickaxe", 0, 60f, soundTypeStone, true, false, false, AlfheimLexiconData.worldgen)
+		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID).setBlockName("Livingsubstone").setCreativeTab(AlfheimCore.alfheimTab).setHardness(2f).setResistance(60f).setStepSound(soundTypeStone).setHarvestLevelI("pickaxe", 1)
 		mauftriumBlock = BlockPatternLexicon(ModInfo.MODID, Material.iron, "MauftriumBlock", AlfheimCore.alfheimTab, 0f, 255, 5f, "pickaxe", 1, 60f, soundTypeMetal, true, true, false, AlfheimLexiconData.essences)
 		manaInfuser = BlockManaInfuser()
 		poisonIce = BlockPoisonIce()
@@ -144,11 +146,17 @@ object AlfheimBlocks {
 		livingcobbleStairs = BlockModStairs(livingcobble, 0).setBlockName("LivingCobbleStairs")
 															.setCreativeTab(AlfheimCore.alfheimTab)
 		
-		livingcobbleSlab = BlockLivingСobbleSlab(false)
-		livingcobbleSlabFull = BlockLivingСobbleSlab(true)
+		livingcobbleSlab = BlockLivingCobbleSlab(false)
+		livingcobbleSlabFull = BlockLivingCobbleSlab(true)
 		livingcobbleSlab.setCreativeTab(AlfheimCore.alfheimTab)
 		(livingcobbleSlab as BlockModSlab).register()
 		(livingcobbleSlabFull as BlockModSlab).register()
+		
+		livingrockTileSlab = BlockLivingRockTileSlab(false)
+		livingrockTileSlabFull = BlockLivingRockTileSlab(true)
+		livingrockTileSlab.setCreativeTab(AlfheimCore.alfheimTab)
+		(livingrockTileSlab as BlockModSlab).register()
+		(livingrockTileSlabFull as BlockModSlab).register()
 		
 		livingcobbleWall = BlockModWall(livingcobble, 0).setCreativeTab(AlfheimCore.alfheimTab)
 														.setHardness(5f)
@@ -225,7 +233,6 @@ object AlfheimBlocks {
 		register(elvoriumBlock)
 		register(mauftriumBlock)
 		registerBlock(elvenOres, ItemBlockElvenOres::class.java, getBlockName(elvenOres))
-		register(livingcobble)
 		register(elvenSand)
 		register(dreamLog)
 		register(dreamLeaves)

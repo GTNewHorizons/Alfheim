@@ -484,7 +484,7 @@ object ShadowFoxRecipes {
 														 70,
 														 "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
 														 RUNE[1], // Fire
-														 LEAVES[14], LEAVES[14], LEAVES[14], // Red
+														 LEAVES[1], LEAVES[1], LEAVES[1], // orange
 														 BLAZE_BLOCK)
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.netherPlanks, 4), ShadowFoxBlocks.netherWood)
@@ -509,13 +509,13 @@ object ShadowFoxRecipes {
 		
 		recipesInfernalStairsR = BotaniaAPI.getLatestAddedRecipe()
 		
-		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(10000, // TODO
+		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(50000,
 													   ShadowFoxBlocks.calicoSapling, 0,
 													   70,
-													   "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
-													   RUNE[1], // Fire
-													   LEAVES[14], LEAVES[14], LEAVES[14], // Red
-													   BLAZE_BLOCK)
+													   Blocks.soul_sand, Blocks.soul_sand, Blocks.soul_sand,
+													   RUNE[11], // Greed
+													   LEAVES[1], LEAVES[0], LEAVES[4], // Orange White Brown
+													   Blocks.obsidian)
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.calicoPlanks, 4), ShadowFoxBlocks.calicoWood)
 		
@@ -539,13 +539,13 @@ object ShadowFoxRecipes {
 		
 		recipesCalicoStairsR = BotaniaAPI.getLatestAddedRecipe()
 		
-		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000, // TODO
+		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000,
 														ShadowFoxBlocks.circuitSapling, 0,
 														70,
-														"ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
-														RUNE[1], // Fire
+														Items.repeater, Items.comparator, Items.repeater,
+														RUNE[9], // Lust
 														LEAVES[14], LEAVES[14], LEAVES[14], // Red
-														BLAZE_BLOCK)
+														"blockRedstone")
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.circuitPlanks, 4), ShadowFoxBlocks.circuitWood)
 		

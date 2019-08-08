@@ -104,7 +104,7 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
             inputs.add(PositionedStack(ItemStack(ShadowFoxBlocks.irisSapling), 73, 55))
         }
 
-        fun setIngredients(inputs: MutableList<Any?>) {
+        fun setIngredients(inputs: List<Any>) {
             val degreePerInput = 360.0f / inputs.size.toFloat()
             var currentDegree = -90.0f
 
