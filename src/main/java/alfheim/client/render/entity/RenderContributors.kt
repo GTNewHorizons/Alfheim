@@ -113,6 +113,7 @@ object RenderContributors {
 			
 			run { // devil wings
 				if (AlfheimConfig.minimalGraphics) {
+					glDisable(GL_CULL_FACE)
 					(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
 				}
 			}

@@ -11,21 +11,14 @@ import net.minecraft.util.*
 
 class CommandRace: CommandBase() {
 	
-	override fun getRequiredPermissionLevel(): Int {
-		return 0
-	}
+	override fun getRequiredPermissionLevel() = 0
 	
-	override fun canCommandSenderUseCommand(sender: ICommandSender): Boolean {
-		return AlfheimCore.enableElvenStory && sender is EntityPlayer && (AlfheimConfig.enableWingsNonAlfheim || sender.dimension == AlfheimConfig.dimensionIDAlfheim && EnumRace.getRace(sender) == EnumRace.HUMAN)
-	}
+	override fun canCommandSenderUseCommand(sender: ICommandSender) =
+		AlfheimCore.enableElvenStory && sender is EntityPlayer && (AlfheimConfig.enableWingsNonAlfheim || sender.dimension == AlfheimConfig.dimensionIDAlfheim && EnumRace.getRace(sender) == EnumRace.HUMAN)
 	
-	override fun getCommandName(): String {
-		return "race"
-	}
+	override fun getCommandName() = "race"
 	
-	override fun getCommandUsage(sender: ICommandSender): String {
-		return "elvenstory.commands.race.usage"
-	}
+	override fun getCommandUsage(sender: ICommandSender) = "elvenstory.commands.race.usage"
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		if (!AlfheimCore.enableElvenStory) throw CommandNotFoundException("elvenstory.commands.race.unavailable")

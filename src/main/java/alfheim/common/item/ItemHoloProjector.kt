@@ -38,7 +38,7 @@ class ItemHoloProjector: Item() {
 		val seg = getSegmentLookedAt(player)
 		
 		if (player!!.isSneaking && !world!!.isRemote)
-			CommandRace().processCommand(player, arrayOf(EnumRace.values()[seg + 1].toString()))
+			CommandRace().processCommand(player, arrayOf("${EnumRace.values()[seg + 1]}"))
 		else {
 			val pos = getModel(stack, seg)
 			setModel(stack, seg, (pos.rotation + 20) % 360, pos.isMale)
@@ -178,7 +178,7 @@ class ItemHoloProjector: Item() {
 		val seg = getSegmentLookedAt(player)
 		
 		val font = Minecraft.getMinecraft().fontRenderer
-		var s = StatCollector.translateToLocal("race." + EnumRace.values()[seg + 1].toString() + ".name")
+		var s = StatCollector.translateToLocal("race.${EnumRace.values()[seg + 1]}.name")
 		font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 65, EnumRace.getRGBColor((seg + 1).toDouble()))
 		
 		s = StatCollector.translateToLocal("item.HoloProjector.select")

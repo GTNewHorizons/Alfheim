@@ -14,16 +14,18 @@ import vazkii.botania.common.core.helper.ItemNBTHelper.*
 class ItemPeacePipe: Item() {
 	init {
 		creativeTab = AlfheimCore.alfheimTab
+		setFull3D()
 		setTextureName(ModInfo.MODID + ":PeacePipe")
 		unlocalizedName = "PeacePipe"
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack? {
+		setFull3D()
 		if (!AlfheimCore.enableMMO) return stack
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {
 				val pt = PartySystem.getParty(player)
-				if (pt!!.count >= AlfheimConfig.maxPartyMembers) {
+				if (pt.count >= AlfheimConfig.maxPartyMembers) {
 					ASJUtilities.say(player, "alfheimmisc.party.full")
 					return stack
 				}
@@ -32,7 +34,7 @@ class ItemPeacePipe: Item() {
 				for (i in 1 until pt.count) setString(stack, TAG_MEMBER + i, pt.getName(i))
 			} else {
 				val pt = PartySystem.getParty(player)
-				if (pt!!.count > 1) {
+				if (pt.count > 1) {
 					ASJUtilities.say(player, "alfheimmisc.party.leave")
 					return stack
 				}
@@ -59,6 +61,8 @@ class ItemPeacePipe: Item() {
 		}
 		return stack
 	}
+	
+	override fun shouldRotateAroundWhenRendering() = true
 	
 	companion object {
 		

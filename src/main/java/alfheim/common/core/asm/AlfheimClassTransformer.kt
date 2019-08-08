@@ -636,7 +636,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			
 			override fun visitLdcInsn(cst: Any?) {
 				if (cst == Integer.MAX_VALUE)
-					super.visitLdcInsn(10)
+					super.visitLdcInsn(20)
 				else
 					super.visitLdcInsn(cst)
 			}

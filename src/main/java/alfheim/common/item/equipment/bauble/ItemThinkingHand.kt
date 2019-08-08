@@ -18,9 +18,7 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 		creativeTab = BotaniaCreativeTab.INSTANCE
 	}
 	
-	override fun getBaubleType(itemstack: ItemStack): BaubleType {
-		return BaubleType.AMULET
-	}
+	override fun getBaubleType(itemstack: ItemStack) = BaubleType.AMULET
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)

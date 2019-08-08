@@ -158,6 +158,7 @@ class ModelCreatorStaff: ModelBase() {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j.toFloat() / 1.0f, k.toFloat() / 1.0f)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE)
 			
+			glDisable(GL_CULL_FACE)
 			for (rot in 0..9) {
 				glPushMatrix()
 				glRotated((36 * rot + player.ticksExisted).toDouble(), 0.0, 1.0, 0.0)

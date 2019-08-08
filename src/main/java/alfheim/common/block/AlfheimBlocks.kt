@@ -42,6 +42,7 @@ object AlfheimBlocks {
 	lateinit var manaInfuser: Block
 	lateinit var poisonIce: Block
 	lateinit var powerStone: Block
+	lateinit var raceSelector: Block
 	lateinit var redFlame: Block
 	lateinit var tradePortal: Block
 	//lateinit var transferer: Block BACK
@@ -98,6 +99,7 @@ object AlfheimBlocks {
 		manaInfuser = BlockManaInfuser()
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
+		raceSelector = BlockRaceSelector()
 		redFlame = BlockRedFlame()
 		tradePortal = BlockTradePortal()
 		//transferer = new BlockTransferer(); BACK

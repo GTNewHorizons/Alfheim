@@ -175,6 +175,7 @@ object AlfheimRegistry {
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileItemHolder::class.java, "ItemHolder")
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
+		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		

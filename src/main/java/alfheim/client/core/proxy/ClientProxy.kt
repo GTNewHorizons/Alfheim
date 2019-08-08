@@ -75,6 +75,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadFlugel::class.java, RenderTileHeadFlugel())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadMiku::class.java, RenderTileHeadMiku())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder::class.java, RenderTileItemHolder())
+		ClientRegistry.bindTileEntitySpecialRenderer(TileRaceSelector::class.java, RenderTileRaceSelector())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal::class.java, RenderTileTradePortal())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer())
 		
