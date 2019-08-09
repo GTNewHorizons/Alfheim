@@ -12,7 +12,7 @@ import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import kotlin.math.*
 
-class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val texName: String, val folder: String? = null): BlockPane(texName, "${texName}Top", mat, true) {
+open class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val texName: String, val folder: String? = null): BlockPane(texName, "${texName}Top", mat, true) {
 	
 	lateinit var texture: Array<IIcon>
 	lateinit var textureTop: Array<IIcon>

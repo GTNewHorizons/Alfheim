@@ -6,6 +6,13 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import vazkii.botania.common.block.decor.slabs.BlockLivingSlab
 
+class BlockRockShrineWhiteSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.shrineRock, 0) {
+	
+	override fun getFullBlock() = AlfheimBlocks.shrineRockWhiteSlabFull as BlockSlab
+	
+	override fun getSingleBlock() = AlfheimBlocks.shrineRockWhiteSlab as BlockSlab
+}
+
 class BlockElvenSandstoneSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.elvenSandstone, 0) {
 	
 	override fun getFullBlock() = AlfheimBlocks.elvenSandstoneSlabFull as BlockSlab

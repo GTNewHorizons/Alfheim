@@ -71,6 +71,9 @@ object AlfheimBlocks {
 	lateinit var shrinePanel: Block
 	lateinit var shrinePillar: Block
 	lateinit var shrineRock: Block
+	lateinit var shrineRockWhiteSlab: Block
+	lateinit var shrineRockWhiteSlabFull: Block
+	lateinit var shrineRockWhiteStairs: Block
 	lateinit var waterSlab: Block
 	
 	fun init() {
@@ -107,30 +110,42 @@ object AlfheimBlocks {
 		//transferer = new BlockTransferer(); BACK
 		
 		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "shrines")	.setBlockName("ShrineRock")
+																				.setCreativeTab(AlfheimCore.alfheimTab)
+																				.setHardness(10f)
+																				.setResistance(10000f)
+																				.setStepSound(soundTypeStone)
+																				.setHarvestLevelI("pickaxe", 2)
+		
+		shrineRockWhiteStairs = BlockModStairs(shrineRock, 0)	.setBlockName("ShrineRockWhiteStairs")
 																.setCreativeTab(AlfheimCore.alfheimTab)
-																.setHardness(10f)
-																.setResistance(10000f)
-																.setStepSound(soundTypeStone)
-																.setHarvestLevelI("pickaxe", 2)
+		
+		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false)
+		shrineRockWhiteSlabFull = BlockRockShrineWhiteSlab(true)
+		shrineRockWhiteSlab.setCreativeTab(AlfheimCore.alfheimTab)
+		(shrineRockWhiteSlab as BlockModSlab).register()
+		(shrineRockWhiteSlabFull as BlockModSlab).register()
 		
 		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "shrines").setBlockName("ShrineLight")
-																.setCreativeTab(AlfheimCore.alfheimTab)
-																.setLightLevel(1f)
-																.setLightOpacity(0)
-																.setHardness(1f)
-																.setResistance(6000f)
-																.setStepSound(soundTypeGlass)
-																.setHarvestLevelI("pickaxe", 1)
+																			   .setCreativeTab(AlfheimCore.alfheimTab)
+																			   .setLightLevel(1f)
+																			   .setLightOpacity(0)
+																			   .setHardness(1f)
+																			   .setResistance(6000f)
+																			   .setStepSound(soundTypeGlass)
+																			   .setHarvestLevelI("pickaxe", 1)
 		
 		shrinePillar = BlockShrinePillar()
 		shrineGlass = BlockShrineGlass()
-		shrinePanel = BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines").setBlockName("ShrinePanel")
-																				.setCreativeTab(AlfheimCore.alfheimTab)
-																				.setLightOpacity(0)
-																				.setHardness(1f)
-																				.setResistance(600f)
-																				.setStepSound(soundTypeGlass)
-																				.setHarvestLevelI("pickaxe", 1)
+		shrinePanel = object : BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines") {
+			override fun
+			 getRenderBlockPass() = 1
+		}	.setBlockName("ShrinePanel")
+			.setCreativeTab(AlfheimCore.alfheimTab)
+			.setLightOpacity(0)
+			.setHardness(1f)
+			.setResistance(600f)
+			.setStepSound(soundTypeGlass)
+			.setHarvestLevelI("pickaxe", 1)
 		
 		elvenSandstone = BlockElvenSandstone()
 		
@@ -164,7 +179,7 @@ object AlfheimBlocks {
 														.setStepSound(soundTypeStone)
 														.setHarvestLevelI("pickaxe", 2)
 		
-		livingrockBrickWall = BlockModWall(ModBlocks.livingrock, 1).setCreativeTab(AlfheimCore.alfheimTab)
+		livingrockBrickWall = BlockModWall(ModBlocks.livingrock, 1)	.setCreativeTab(AlfheimCore.alfheimTab)
 																	.setHardness(5f)
 																	.setResistance(8000f)
 																	.setStepSound(soundTypeStone)

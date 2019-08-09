@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.extendables.block.BlockMod
+import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import cpw.mods.fml.relauncher.*
@@ -8,11 +8,10 @@ import net.minecraft.block.material.Material
 import net.minecraft.util.Facing
 import net.minecraft.world.IBlockAccess
 
-class BlockShrineGlass: BlockMod(Material.glass) {
+class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "shrines") {
 	
 	init {
 		setBlockName("ShrineGlass")
-		setBlockTextureName(ModInfo.MODID + ":shrines/ShrineGlass")
 		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(1f)
 		setHarvestLevel("pickaxe", 1)
