@@ -1,4 +1,4 @@
-package alfheim.common.world.dim.alfheim.struct
+package alfheim.common.world.dim.alfheim.structure
 
 import net.minecraft.world.World
 import java.util.*

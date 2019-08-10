@@ -1,6 +1,6 @@
 package ru.vamig.worldengine.standardcustomgen;
 
-import alfheim.common.world.dim.alfheim.struct.StructureBaseClass;
+import alfheim.common.world.dim.alfheim.structure.StructureBaseClass;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;

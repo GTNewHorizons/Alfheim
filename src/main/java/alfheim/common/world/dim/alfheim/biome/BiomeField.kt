@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim.biome
 
 import alfheim.common.entity.EntityAlfheimPixie
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
-import alfheim.common.world.dim.alfheim.struct.StructureArena
+import alfheim.common.world.dim.alfheim.structure.*
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
@@ -32,6 +32,7 @@ class BiomeField: BiomeAlfheim(0) {
 		createChunkGen_InXZ_List.add(standardBiomeLayers)
 		val t = WE_StructureGen()
 		t.add(StructureArena(), 1000)
+		t.add(StructureShrine(), 5000)
 		decorateChunkGen_List.add(t)
 		val g = WorldGenGrass(true, true, true, true, 1.0)
 		decorateChunkGen_List.add(g)

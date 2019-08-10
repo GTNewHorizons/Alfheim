@@ -1,4 +1,4 @@
-package alfheim.common.world.dim.alfheim.struct
+package alfheim.common.world.dim.alfheim.structure
 
 import alexsocol.asjlib.ASJUtilities
 import net.minecraft.block.Block

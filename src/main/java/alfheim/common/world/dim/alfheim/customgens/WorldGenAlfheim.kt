@@ -3,10 +3,10 @@ package alfheim.common.world.dim.alfheim.customgens
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
-import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.world.dim.alfheim.struct.StructureSpawnpoint
+import alfheim.common.world.dim.alfheim.structure.StructureSpawnpoint
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider

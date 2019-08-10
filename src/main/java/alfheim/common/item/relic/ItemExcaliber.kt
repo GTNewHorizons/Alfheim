@@ -57,10 +57,8 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, infoList: List<Any?>, advTooltip: Boolean) =
 		ItemRelic.addBindInfo(infoList, stack, player)
 	
-	
 	override fun bindToUsername(playerName: String, stack: ItemStack) =
 		ItemRelic.bindToUsernameS(playerName, stack)
-	
 	
 	override fun getSoulbindUsername(stack: ItemStack) = ItemRelic.getSoulbindUsernameS(stack)!!
 	

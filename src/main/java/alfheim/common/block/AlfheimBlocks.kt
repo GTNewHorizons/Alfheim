@@ -14,6 +14,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.Block.*
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
+import net.minecraft.world.IBlockAccess
+import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.common.block.ModBlocks
@@ -137,8 +139,12 @@ object AlfheimBlocks {
 		shrinePillar = BlockShrinePillar()
 		shrineGlass = BlockShrineGlass()
 		shrinePanel = object : BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines") {
-			override fun
+				override fun
 			 getRenderBlockPass() = 1
+				override fun
+			 canPaneConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, dir: ForgeDirection) =
+				super
+			.canPaneConnectTo(world, x, y, z, dir) || world.getBlock(x, y, z) == shrineGlass
 		}	.setBlockName("ShrinePanel")
 			.setCreativeTab(AlfheimCore.alfheimTab)
 			.setLightOpacity(0)

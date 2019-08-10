@@ -6,7 +6,6 @@ import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import com.sun.xml.internal.fastinfoset.stax.events.AttributeBase
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -87,7 +86,7 @@ class ItemSunrayBow: ItemBow(), IRelic {
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("${getUnlocalizedNameInefficiently(stack)}.desc", 2 * EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)))
 		list.add("")
-		addBindInfo(list, stack, player)
+		ItemRelic.addBindInfo(list, stack, player)
 		super.addInformation(stack, player, list, adv)
 	}
 	
@@ -132,22 +131,6 @@ class ItemSunrayBow: ItemBow(), IRelic {
 	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity?, slot: Int, inHand: Boolean) {
 		if (entity is EntityPlayer) {
 			updateRelic(stack, entity)
-		}
-	}
-	
-	fun addBindInfo(list: MutableList<in String>, stack: ItemStack, player: EntityPlayer) {
-		if (GuiScreen.isShiftKeyDown()) {
-			val bind = getSoulbindUsernameS(stack)
-			if (bind.isEmpty()) {
-				addStringToTooltip(StatCollector.translateToLocal("botaniamisc.relicUnbound"), list)
-			} else {
-				addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.relicSoulbound"), bind), list)
-				if (!isRightPlayer(player, stack)) {
-					addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.notYourSagittarius"), bind), list)
-				}
-			}
-		} else {
-			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
 		}
 	}
 	

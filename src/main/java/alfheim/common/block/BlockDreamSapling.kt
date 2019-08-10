@@ -3,23 +3,24 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.lexicon.AlfheimLexiconData
-import alfheim.common.world.dim.alfheim.struct.StructureDreamsTree
+import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
 class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
+	
 	init {
-		this.setBlockName("DreamSapling")
-		this.setBlockTextureName(ModInfo.MODID + ":DreamSapling")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
-		this.setLightLevel(9.0f / 15.0f)
-		this.setLightOpacity(0)
-		this.tickRandomly = true
+		setBlockName("DreamSapling")
+		setBlockTextureName(ModInfo.MODID + ":DreamSapling")
+		setCreativeTab(AlfheimCore.alfheimTab)
+		setLightLevel(9.0f / 15.0f)
+		setLightOpacity(0)
+		tickRandomly = true
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
@@ -27,7 +28,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 			super.updateTick(world, x, y, z, rand)
 			
 			if (world.getBlockLightValue(x, y + 1, z) >= 9 && rand!!.nextInt(7) == 0) {
-				this.func_149879_c(world, x, y, z, rand)
+				func_149879_c(world, x, y, z, rand)
 			}
 		}
 	}
@@ -38,7 +39,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		if (l and 8 == 0) {
 			world.setBlockMetadataWithNotify(x, y, z, l or 8, 4)
 		} else {
-			this.func_149878_d(world, x, y, z, rand)
+			func_149878_d(world, x, y, z, rand)
 		}
 	}
 	
@@ -52,27 +53,20 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 	/** Can the block grow
 	 * @param b == world.isRemote
 	 */
-	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, b: Boolean): Boolean {
-		return true
-	}
+	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, b: Boolean) = true
 	
 	/** Applying chance to grow
 	 * @return true to grow tree
 	 */
-	override fun func_149852_a(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
-		return world.rand.nextDouble() < 0.45
-	}
+	override fun func_149852_a(world: World, rand: Random, x: Int, y: Int, z: Int) = world.rand.nextDouble() < 0.45
 	
 	/** Grow block  */
 	override fun func_149853_b(world: World, rand: Random, x: Int, y: Int, z: Int) {
-		this.func_149879_c(world, x, y, z, rand)
+		func_149879_c(world, x, y, z, rand)
 	}
 	
-	override fun damageDropped(meta: Int): Int {
-		return 0
-	}
+	override fun damageDropped(meta: Int) = 0
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.worldgen
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) =
+		AlfheimLexiconData.worldgen
 }

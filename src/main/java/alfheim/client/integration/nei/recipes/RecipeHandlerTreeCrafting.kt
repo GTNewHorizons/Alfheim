@@ -6,7 +6,6 @@ import alfheim.common.block.ShadowFoxBlocks
 import codechicken.lib.gui.GuiDraw
 import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler
-import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraftforge.oredict.OreDictionary
@@ -52,9 +51,10 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
             val var3 = recipes.iterator()
 
             while (var3.hasNext()) {
-                if (var3.next().output.item !== Items.skull) {
-                    arecipes.add(getCachedRecipe(var3.next()))
-                }
+                val rec = var3.next()
+                //if (rec.output.item !== Items.skull) {
+                    arecipes.add(getCachedRecipe(rec))
+              //  }
             }
         } else {
             super.loadCraftingRecipes(outputId, *results)
@@ -75,7 +75,7 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
 
                     recipe = var2.next()
                 } while (recipe == null)
-            } while ((recipe!!.output.stackTagCompound == null || !NEIServerUtils.areStacksSameType(recipe.output, result)) && (recipe.output.stackTagCompound != null || !NEIServerUtils.areStacksSameTypeCrafting(recipe.output, result) || recipe.output.item === Items.skull))
+            } while ((recipe!!.output.stackTagCompound == null || !NEIServerUtils.areStacksSameType(recipe.output, result)) && (recipe.output.stackTagCompound != null || !NEIServerUtils.areStacksSameTypeCrafting(recipe.output, result) /*|| recipe.output.item === Items.skull*/))
 
             arecipes.add(getCachedRecipe(recipe))
         }
