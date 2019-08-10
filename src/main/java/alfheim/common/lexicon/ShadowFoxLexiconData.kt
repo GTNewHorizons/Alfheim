@@ -63,7 +63,7 @@ object ShadowFoxLexiconData {
 		aurora.setLexiconPages(PageText("0"),
 							   PageCraftingRecipe("1", ShadowFoxRecipes.recipeAuroraDirt),
 							   PageCraftingRecipe("2", ShadowFoxRecipes.recipeAuroraPlanks),
-							   PageCraftingRecipe("3", ShadowFoxRecipes.recipeAuroraStairsR),
+							   PageCraftingRecipe("3", ShadowFoxRecipes.recipeAuroraStairs),
 							   PageCraftingRecipe("4", ShadowFoxRecipes.recipeAuroraSlabs))
 		
 		technicolor = ShadowfoxLexiconEntry("technicolorRod", BotaniaAPI.categoryTools, ItemStack(ShadowFoxItems.colorfulSkyDirtRod, 1, 16)).setKnowledgeType(BotaniaAPI.elvenKnowledge)
@@ -87,7 +87,7 @@ object ShadowFoxLexiconData {
 		irisSapling = ShadowfoxLexiconEntry("irisSapling", dendrology, ShadowFoxBlocks.irisSapling)
 		irisSapling.setPriority().setLexiconPages(PageText("0"),
 												  PageCraftingRecipe("1", ShadowFoxRecipes.recipesWoodPanel),
-												  PageCraftingRecipe("2", ShadowFoxRecipes.recipesStairsR + ShadowFoxRecipes.recipesStairsL),
+												  PageCraftingRecipe("2", ShadowFoxRecipes.recipesStairs),
 												  PageCraftingRecipe("3", ShadowFoxRecipes.recipesSlabs),
 												  PageCraftingRecipe("4", ShadowFoxRecipes.recipesSlabsFull),
 												  PageCraftingRecipe("5", ShadowFoxRecipes.recipesLeafDyes))
@@ -148,7 +148,7 @@ object ShadowFoxLexiconData {
 		lightningSapling.setLexiconPages(PageText("0"),
 										 PageTreeCrafting("1", ShadowFoxRecipes.recipesLightningTree),
 										 PageCraftingRecipe("2", ShadowFoxRecipes.recipesThunderousPlanks),
-										 PageCraftingRecipe("3", ShadowFoxRecipes.recipesThunderousStairsR),
+										 PageCraftingRecipe("3", ShadowFoxRecipes.recipesThunderousStairs),
 										 PageCraftingRecipe("4", ShadowFoxRecipes.recipesThunderousSlabs),
 										 PageCraftingRecipe("5", ShadowFoxRecipes.recipesThunderousTwig),
 										 PageFurnaceRecipe("6", ItemStack(ShadowFoxBlocks.lightningPlanks)))
@@ -157,7 +157,7 @@ object ShadowFoxLexiconData {
 		netherSapling.setLexiconPages(PageText("0"),
 									  PageTreeCrafting("1", ShadowFoxRecipes.recipesInfernalTree),
 									  PageCraftingRecipe("2", ShadowFoxRecipes.recipesInfernalPlanks),
-									  PageCraftingRecipe("3", ShadowFoxRecipes.recipesInfernalStairsR),
+									  PageCraftingRecipe("3", ShadowFoxRecipes.recipesInfernalStairs),
 									  PageCraftingRecipe("4", ShadowFoxRecipes.recipesInfernalSlabs),
 									  PageCraftingRecipe("5", ShadowFoxRecipes.recipesInfernalTwig),
 									  PageFurnaceRecipe("6", ItemStack(ShadowFoxBlocks.netherWood)),
@@ -167,14 +167,14 @@ object ShadowFoxLexiconData {
 		circuitSapling.setLexiconPages(PageText("0"),
 									   PageTreeCrafting("1", ShadowFoxRecipes.recipesCircuitTree),
 									   PageCraftingRecipe("2", ShadowFoxRecipes.recipesCircuitPlanks),
-									   PageCraftingRecipe("3", ShadowFoxRecipes.recipesCircuitStairsR),
+									   PageCraftingRecipe("3", ShadowFoxRecipes.recipesCircuitStairs),
 									   PageCraftingRecipe("4", ShadowFoxRecipes.recipesCircuitSlabs))
 		
 		calicoSapling = ShadowfoxLexiconEntry("calicoSapling", dendrology, ShadowFoxBlocks.calicoSapling)
 		calicoSapling.setLexiconPages(PageText("0"),
 									  PageTreeCrafting("1", ShadowFoxRecipes.recipesCalicoTree),
 									  PageCraftingRecipe("2", ShadowFoxRecipes.recipesCalicoPlanks),
-									  PageCraftingRecipe("3", ShadowFoxRecipes.recipesCalicoStairsR),
+									  PageCraftingRecipe("3", ShadowFoxRecipes.recipesCalicoStairs),
 									  PageCraftingRecipe("4", ShadowFoxRecipes.recipesCalicoSlabs))
 		
 		toolbelt = ShadowfoxLexiconEntry("toolbelt", BotaniaAPI.categoryBaubles, ShadowFoxItems.toolbelt).setKnowledgeType(BotaniaAPI.elvenKnowledge)
@@ -190,7 +190,7 @@ object ShadowFoxLexiconData {
 								 PageTreeCrafting("1", ShadowFoxRecipes.recipesSealingTree),
 								 PageCraftingRecipe("2", ShadowFoxRecipes.recipesSealingPlanks),
 								 PageCraftingRecipe("3", ShadowFoxRecipes.recipesSealingSlabs),
-								 PageCraftingRecipe("4", ShadowFoxRecipes.recipesSealingStairsR))
+								 PageCraftingRecipe("4", ShadowFoxRecipes.recipesSealingStairs))
 		
 		amp = ShadowfoxLexiconEntry("amp", BotaniaAPI.categoryMisc, ShadowFoxBlocks.amp).setKnowledgeType(BotaniaAPI.elvenKnowledge)
 		amp.setLexiconPages(PageText("0"),
@@ -242,11 +242,9 @@ object ShadowFoxLexiconData {
 		}
 		
 		var memes = LexiconData.tinyPotato
-		for (entry in BotaniaAPI.getAllEntries()) {
-			if (entry.getUnlocalizedName() == "botania.entry.wrap") {
+		for (entry in BotaniaAPI.getAllEntries())
+			if (entry.getUnlocalizedName() == "botania.entry.wrap")
 				memes = entry
-			}
-		}
 		
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.irisSapling), irisSapling, 0)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.lightningRod), lightningRod, 1)

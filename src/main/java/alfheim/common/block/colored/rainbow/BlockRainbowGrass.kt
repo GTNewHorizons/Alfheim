@@ -37,6 +37,13 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 		setBlockName("rainbowGrass")
 	}
 	
+	override fun setBlockBoundsBasedOnState(world: IBlockAccess, x: Int, y: Int, z: Int) {
+		when (world.getBlockMetadata(x, y, z)) {
+			0	 -> setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
+			1, 2 -> setBlockBounds(0.3f, 0f, 0.3f, 0.8f, 1.0f, 0.8f)
+		}
+	}
+	
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 2) 15 else 0
 	
 	@SideOnly(Side.CLIENT)

@@ -191,7 +191,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				}
 				
 				glTranslated(0.0, 0.0, -89.0)
-				font.drawString(data, 88 - font.getStringWidth(data) / 2, 3, if (CardinalSystemClient.segment!!.target === mc.thePlayer) G else if (pt!![0] === mc.thePlayer) R else -0x1, shadow)
+				font.drawString(data, 88 - font.getStringWidth(data) / 2, 3, if (CardinalSystemClient.segment!!.target === mc.thePlayer) G else if (pt[0] === mc.thePlayer) R else -0x1, shadow)
 				glTranslated(0.0, 0.0, 89.0)
 			}
 			glColor4d(1.0, 1.0, 1.0, 1.0)

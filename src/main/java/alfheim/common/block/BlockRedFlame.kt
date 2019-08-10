@@ -1,5 +1,6 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimRegistry
@@ -21,7 +22,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.common.util.ForgeDirection.*
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.ManaItemHandler
 import java.util.*
 
@@ -72,7 +73,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 			val soulburn = PotionEffect(AlfheimRegistry.soulburn.id, 200)
 			soulburn.curativeItems.clear()
 			entity.addPotionEffect(soulburn)
-			AlfheimCore.network.sendToAll(MessageEffect(entity.entityId, soulburn.potionID, soulburn.duration, soulburn.amplifier))
+			if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(entity.entityId, soulburn.potionID, soulburn.duration, soulburn.amplifier))
 		}
 		entity.setInWeb()
 	}

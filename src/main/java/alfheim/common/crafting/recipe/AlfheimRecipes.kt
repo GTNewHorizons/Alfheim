@@ -51,6 +51,8 @@ import alfheim.common.block.AlfheimBlocks.shrineLight
 import alfheim.common.block.AlfheimBlocks.shrinePanel
 import alfheim.common.block.AlfheimBlocks.shrinePillar
 import alfheim.common.block.AlfheimBlocks.shrineRock
+import alfheim.common.block.AlfheimBlocks.shrineRockWhiteSlab
+import alfheim.common.block.AlfheimBlocks.shrineRockWhiteStairs
 import alfheim.common.block.AlfheimBlocks.tradePortal
 import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -551,11 +553,11 @@ object AlfheimRecipes {
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 4, 3), "SS", "SS", 'S', ItemStack(elvenSandstone, 1, 2))
 		
-		addOreDictRecipe(ItemStack(elvenSandstoneStairs, 4), true, "  S", " SS", "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
+		addOreDictRecipe(ItemStack(elvenSandstoneStairs, 4), true, "S  ", "SS ", "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
 		
 		addOreDictRecipe(ItemStack(elvenSandstoneSlab, 6), "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
 		
-		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "  L", " LL", "LLL", 'L', ItemStack(livingcobble))
+		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
 		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble))
 		
@@ -612,6 +614,14 @@ object AlfheimRecipes {
 						 'L', LIVING_ROCK,
 						 'D', DYES[16])
 		
+		addOreDictRecipe(ItemStack(shrineRockWhiteStairs, 4),
+						 "L  ", "LL ", "LLL",
+						 'L', ItemStack(shrineRock, 1, 0))
+		
+		addOreDictRecipe(ItemStack(shrineRockWhiteSlab, 6),
+						 "LLL",
+						 'L', ItemStack(shrineRock, 1, 0))
+		
 		for (i in 0..3) {
 			addOreDictRecipe(ItemStack(shrineLight, 8, i),
 							 "LLL", "LDL", "LLL",
@@ -621,16 +631,33 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(shrinePillar, 2), "S", "S", 'S', ItemStack(shrineRock, 1, 0))
 		
-		addOreDictRecipe(ItemStack(shrineGlass, 8),
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 0),
 						 "GGG", "GDG", "GGG",
 						 'G', elfGlass,
 						 'D', DYES[0])
+		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 1),
+						 "GGG", "GDG", "GGG",
+						 'G', elfGlass,
+						 'D', DYES[14])
+		
+		addOreDictRecipe(ItemStack(livingcobble, 4, 1),
+						 "LL", "LL",
+						 'L', ItemStack(livingcobble, 1, 2))
+		
+		addOreDictRecipe(ItemStack(livingcobble, 8, 2),
+						 "LLL", "L L", "LLL",
+						 'L', LIVING_ROCK)
+		
+		addOreDictRecipe(ItemStack(livingcobbleSlab, 6),
+						 "LLL",
+						 'L', ItemStack(livingcobble, 1, 2))
 		
 		val dyes = arrayOf(4, 1, 14, 11)
 		for (i in 0..3) {
 			addOreDictRecipe(ItemStack(shrinePanel, 16, i),
 							 "GGG", "DDD", "GGG",
-							 'G', shrineGlass,
+							 'G', ItemStack(shrineGlass, 1, 0),
 							 'D', DYES[dyes[i]])
 		}
 		

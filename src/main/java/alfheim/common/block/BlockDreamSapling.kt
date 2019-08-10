@@ -15,6 +15,7 @@ import java.util.*
 class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 	
 	init {
+		setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
 		setBlockName("DreamSapling")
 		setBlockTextureName(ModInfo.MODID + ":DreamSapling")
 		setCreativeTab(AlfheimCore.alfheimTab)

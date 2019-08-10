@@ -48,14 +48,12 @@ object ShadowFoxRecipes {
 	
 	val recipeAuroraDirt: IRecipe
 	val recipeAuroraPlanks: IRecipe
-	val recipeAuroraStairsR: IRecipe
-	val recipeAuroraStairsL: IRecipe
+	val recipeAuroraStairs: IRecipe
 	val recipeAuroraSlabs: IRecipe
 	val recipesColoredDirt: List<IRecipe>
 	val recipesWoodPanel: List<IRecipe>
 	val recipesSlabs: List<IRecipe>
-	val recipesStairsL: List<IRecipe>
-	val recipesStairsR: List<IRecipe>
+	val recipesStairs: List<IRecipe>
 	val recipesSlabsFull: List<IRecipe>
 	val recipesColoredSkyDirtRod: List<IRecipe>
 	val recipesPriestOfSif: IRecipe
@@ -77,34 +75,28 @@ object ShadowFoxRecipes {
 	val recipesItemDisplay: List<IRecipe>
 	val recipesItemDisplayElven: IRecipe
 	val recipesThunderousPlanks: IRecipe
-	val recipesThunderousStairsL: IRecipe
-	val recipesThunderousStairsR: IRecipe
+	val recipesThunderousStairs: IRecipe
 	val recipesThunderousSlabs: IRecipe
 	val recipesThunderousTwig: IRecipe
 	val recipesLivingwoodFunnel: IRecipe
 	val recipesInfernalPlanks: IRecipe
-	val recipesInfernalStairsL: IRecipe
-	val recipesInfernalStairsR: IRecipe
+	val recipesInfernalStairs: IRecipe
 	val recipesInfernalSlabs: IRecipe
 	val recipesInfernalTwig: IRecipe
 	val recipesCalicoPlanks: IRecipe
-	val recipesCalicoStairsL: IRecipe
-	val recipesCalicoStairsR: IRecipe
+	val recipesCalicoStairs: IRecipe
 	val recipesCalicoSlabs: IRecipe
 	val recipesCircuitPlanks: IRecipe
-	val recipesCircuitStairsL: IRecipe
-	val recipesCircuitStairsR: IRecipe
+	val recipesCircuitStairs: IRecipe
 	val recipesCircuitSlabs: IRecipe
 	val recipesSixTorches: IRecipe
 	val recipesAltPlanks: List<IRecipe>
 	val recipesAltSlabs: List<IRecipe>
-	val recipesAltStairsR: List<IRecipe>
-	val recipesAltStairsL: List<IRecipe>
+	val recipesAltStairs: List<IRecipe>
 	val recipesToolbelt: IRecipe
 	val recipesLamp: IRecipe
 	val recipesSealingPlanks: IRecipe
-	val recipesSealingStairsL: IRecipe
-	val recipesSealingStairsR: IRecipe
+	val recipesSealingStairs: IRecipe
 	val recipesSealingSlabs: IRecipe
 	val recipesAmplifier: IRecipe
 	val recipesStar: List<IRecipe>
@@ -190,36 +182,21 @@ object ShadowFoxRecipes {
 		recipeAuroraSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.coloredStairs[i], 4),
-								   "  Q", " QQ", "QQQ",
-								   'Q', ItemStack(ShadowFoxBlocks.coloredPlanks, 1, i))
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.rainbowStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.rainbowPlanks))
-		
-		recipesStairsR = BotaniaAPI.getLatestAddedRecipes(17)
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.auroraStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.auroraPlanks))
-		
-		recipeAuroraStairsR = BotaniaAPI.getLatestAddedRecipe()
-		
-		for (i in 0..15)
-			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.coloredStairs[i], 4),
+			addOreDictRecipe(ItemStack(ShadowFoxBlocks.coloredStairs[i], 4), true,
 								   "Q  ", "QQ ", "QQQ",
 								   'Q', ItemStack(ShadowFoxBlocks.coloredPlanks, 1, i))
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.rainbowStairs, 4),
+		
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.rainbowStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.rainbowPlanks))
 		
-		recipesStairsL = BotaniaAPI.getLatestAddedRecipes(18)
+		recipesStairs = BotaniaAPI.getLatestAddedRecipes(17)
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.auroraStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.auroraStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.auroraPlanks))
 		
-		recipeAuroraStairsL = BotaniaAPI.getLatestAddedRecipe()
+		recipeAuroraStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			GameRegistry.addShapelessRecipe(ItemStack(ShadowFoxBlocks.coloredPlanks, 1, i),
@@ -452,17 +429,11 @@ object ShadowFoxRecipes {
 		
 		recipesThunderousSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.lightningStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.lightningStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.lightningPlanks))
 		
-		recipesThunderousStairsL = BotaniaAPI.getLatestAddedRecipe()
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.lightningStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.lightningPlanks))
-		
-		recipesThunderousStairsR = BotaniaAPI.getLatestAddedRecipe()
+		recipesThunderousStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		GameRegistry.addRecipe(ItemStack(ShadowFoxItems.resource, 1, 0), // Thunderous Twig
 							   "Q",
@@ -497,17 +468,11 @@ object ShadowFoxRecipes {
 		
 		recipesInfernalSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.netherStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.netherStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.netherPlanks))
 		
-		recipesInfernalStairsL = BotaniaAPI.getLatestAddedRecipe()
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.netherStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.netherPlanks))
-		
-		recipesInfernalStairsR = BotaniaAPI.getLatestAddedRecipe()
+		recipesInfernalStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(50000,
 													   ShadowFoxBlocks.calicoSapling, 0,
@@ -527,17 +492,11 @@ object ShadowFoxRecipes {
 		
 		recipesCalicoSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.calicoStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.calicoStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.calicoPlanks))
 		
-		recipesCalicoStairsL = BotaniaAPI.getLatestAddedRecipe()
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.calicoStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.calicoPlanks))
-		
-		recipesCalicoStairsR = BotaniaAPI.getLatestAddedRecipe()
+		recipesCalicoStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000,
 														ShadowFoxBlocks.circuitSapling, 0,
@@ -557,17 +516,11 @@ object ShadowFoxRecipes {
 		
 		recipesCircuitSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.circuitStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.circuitStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.circuitPlanks))
 		
-		recipesCircuitStairsL = BotaniaAPI.getLatestAddedRecipe()
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.circuitStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.circuitPlanks))
-		
-		recipesCircuitStairsR = BotaniaAPI.getLatestAddedRecipe()
+		recipesCircuitStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		GameRegistry.addRecipe(ItemStack(ShadowFoxItems.resource, 1, 2), // Infernal Twig
 							   "Q",
@@ -599,18 +552,11 @@ object ShadowFoxRecipes {
 		recipesAltSlabs = BotaniaAPI.getLatestAddedRecipes(6)
 		
 		for (i in 0..5)
-			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.altStairs[i], 4),
-								   "  Q", " QQ", "QQQ",
-								   'Q', ItemStack(ShadowFoxBlocks.altPlanks, 1, i))
-		
-		recipesAltStairsR = BotaniaAPI.getLatestAddedRecipes(6)
-		
-		for (i in 0..5)
-			GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.altStairs[i], 4),
+			addOreDictRecipe(ItemStack(ShadowFoxBlocks.altStairs[i], 4), true,
 								   "Q  ", "QQ ", "QQQ",
 								   'Q', ItemStack(ShadowFoxBlocks.altPlanks, 1, i))
 		
-		recipesAltStairsL = BotaniaAPI.getLatestAddedRecipes(6)
+		recipesAltStairs = BotaniaAPI.getLatestAddedRecipes(6)
 		
 		addOreDictRecipe(ItemStack(ShadowFoxItems.toolbelt),
 						 "CL ",
@@ -654,17 +600,11 @@ object ShadowFoxRecipes {
 		
 		recipesSealingSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.sealingStairs, 4),
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.sealingStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
 							   'Q', ItemStack(ShadowFoxBlocks.sealingPlanks))
 		
-		recipesSealingStairsL = BotaniaAPI.getLatestAddedRecipe()
-		
-		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.sealingStairs, 4),
-							   "  Q", " QQ", "QQQ",
-							   'Q', ItemStack(ShadowFoxBlocks.sealingPlanks))
-		
-		recipesSealingStairsR = BotaniaAPI.getLatestAddedRecipe()
+		recipesSealingStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		GameRegistry.addRecipe(ItemStack(ShadowFoxBlocks.amp),
 							   " N ",
