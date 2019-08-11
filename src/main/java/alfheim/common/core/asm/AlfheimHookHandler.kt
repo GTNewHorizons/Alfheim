@@ -355,9 +355,9 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ON_TRUE, isMandatory = true)
+	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
-		return recipe.output == ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
+		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
 	}
 	
 	@JvmStatic

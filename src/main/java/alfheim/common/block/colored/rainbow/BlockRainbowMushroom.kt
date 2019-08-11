@@ -24,6 +24,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.integration.coloredlights.ColoredLightHelper
+import vazkii.botania.common.lexicon.LexiconData
 import java.util.*
 
 @Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)
@@ -32,7 +33,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	var originalLight: Int = 0
 	
 	init {
-		setBlockName("rainbowMushoom")
+		setBlockName("rainbowMushroom")
 		setLightLevel(0.2f)
 		setHardness(0.0f)
 		setStepSound(Block.soundTypeGrass)
@@ -94,7 +95,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	
 	override fun canStabaliseInfusion(world: World, x: Int, y: Int, z: Int) = ConfigHandler.enableThaumcraftStablizers
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = null // TODO
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = LexiconData.mushrooms!!
 	
 	override fun canHornHarvest(world: World, x: Int, y: Int, z: Int, stack: ItemStack, hornType: IHornHarvestable.EnumHornType) = false
 	

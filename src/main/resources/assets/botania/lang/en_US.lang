@@ -363,6 +363,8 @@ lexicon.mana=Mana:
 
 ################################################################ IRI ################################################################
 
+alfheim.entry.rainbowFlora=Bifrost Flora
+alfheim.tagline.rainbowFlora=Gifts of Heimdall
 alfheim.entry.coloredDirt=Iridescent Dirt
 alfheim.tagline.coloredDirt=Rainbow dirt for your decoration needs
 alfheim.entry.technicolorRod=Rod of the Vibrant Plains
@@ -427,6 +429,11 @@ alfheim.entry.throwablePotions=Throwable Potions
 alfheim.tagline.throwablePotions=Distant support
 
 alfheim.category.dendrology=Dendrology
+
+alfheim.page.rainbowFlora0=In Alfheim you can find unique &1Bifrost Flowers&0 and &1Mushrooms&0, apperaing to be world-specific and unavailable in other dimensions. Those have nothing different from single-colored flowers but their rainbow color, so they can be used like default ones. Can be obtained by painting &1Mystical Flowers&0 with &1Floral Bifrost Powder&0
+alfheim.page.rainbowFlora1=Plucking Petals
+alfheim.page.rainbowFlora2=And grinding them
+alfheim.page.rainbowFlora3=Pack into blocks
 
 alfheim.page.coloredDirt0=Using the latent power in &1Mystical Flowers&0, you can make dirt that shimmers every color of the rainbow. This mystical dirt is capable of growing trees and plants without water or a hoe. If put next to a &1Pure Daisy&0, it will revert to its uncolored state.
 alfheim.page.coloredDirt1=Beauty from the dross

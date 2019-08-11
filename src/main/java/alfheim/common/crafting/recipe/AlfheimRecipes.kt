@@ -660,7 +660,6 @@ object AlfheimRecipes {
 							 'G', ItemStack(shrineGlass, 1, 0),
 							 'D', DYES[dyes[i]])
 		}
-		
 	}
 	
 	private fun registerShapelessRecipes() {

@@ -2,6 +2,7 @@ package alfheim.common.item.block
 
 import alfheim.api.ModInfo
 import alfheim.common.block.base.IDoublePlant
+import alfheim.common.block.colored.rainbow.BlockRainbowGrass
 import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -60,8 +61,9 @@ open class ItemRainbowGrassMod(var par2Block: Block): ItemBlockWithMetadata(par2
 	
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
 		if (par1ItemStack == null) return
-		if (par1ItemStack.itemDamage == 0)
-			addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.16") + "&r", par3List)
+		val meta = par1ItemStack.itemDamage
+		if (meta == BlockRainbowGrass.GRASS || meta == BlockRainbowGrass.AURORA)
+			addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.${meta + 16}") + "&r", par3List)
 	}
 }
 

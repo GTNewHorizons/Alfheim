@@ -1,6 +1,7 @@
 package alfheim.common.item
 
 import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.colored.rainbow.BlockRainbowGrass
 import alfheim.common.core.helper.*
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -75,13 +76,14 @@ class ItemResource: ItemMod("resource"), IFlowerComponent, IFuelHandler {
 		}
 	}
 	
-	override fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, par7: Int, par8: Float, par9: Float, par10: Float): Boolean {
-		if (world.getBlock(x, y, z) == ModBlocks.pool && world.getBlockMetadata(x, y, z) == 0 && stack.itemDamage == 6) {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
+		val block = world.getBlock(x, y, z)
+		if (block == ModBlocks.pool && world.getBlockMetadata(x, y, z) == 0 && stack.itemDamage == 6) {
 			world.setBlockMetadataWithNotify(x, y, z, 3, 2)
 			stack.stackSize--
 			return true
-		} else if (world.getBlock(x, y, z) == ModBlocks.flower && stack.itemDamage == 6) {
-			world.setBlock(x, y, z, ShadowFoxBlocks.rainbowGrass, 1, 3)
+		} else if (block == ModBlocks.flower && stack.itemDamage == 6) {
+			world.setBlock(x, y, z, ShadowFoxBlocks.rainbowGrass, BlockRainbowGrass.FLOWER, 3)
 			for (i in 0..40) {
 				val color = Color.getHSBColor(Math.random().toFloat() + 1f / 2f, 1f, 1f)
 				Botania.proxy.wispFX(world,
@@ -90,6 +92,10 @@ class ItemResource: ItemMod("resource"), IFlowerComponent, IFuelHandler {
 									 0.5f, 0f, 0.125f, 0f)
 			}
 			world.playSoundEffect(x.toDouble(), y.toDouble(), z.toDouble(), "botania:enchanterEnchant", 1f, 1f)
+			stack.stackSize--
+			return true
+		} else if (side == 1 && ShadowFoxBlocks.rainbowGrass.canBlockStay(world, x, y + 1, z)) {
+			world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowGrass, BlockRainbowGrass.BURIED, 3)
 			stack.stackSize--
 			return true
 		}

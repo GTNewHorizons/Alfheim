@@ -59,6 +59,7 @@ open class CommonProxy {
 	
 	open fun postInit() {
 		AlfheimRecipes.postInit()
+		ShadowFoxRecipes.postInit()
 		AlfheimLexiconData.init()
 		AlfheimLexiconData.postInit()
 		AlfheimRegistry.postInit()

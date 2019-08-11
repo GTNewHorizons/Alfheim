@@ -2,6 +2,9 @@ package alfheim.common.block.colored
 
 import alfheim.AlfheimCore
 import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemIridescentGrassMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -11,9 +14,6 @@ import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.*
-import alfheim.common.item.block.ItemIridescentGrassMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.core.helper.IconHelper
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 import java.util.*
@@ -26,7 +26,6 @@ class BlockColoredGrass: BlockTallGrass(), ILexiconable {
 		setCreativeTab(AlfheimCore.baTab)
 		setStepSound(Block.soundTypeGrass)
 		setBlockName("irisGrass")
-		
 	}
 	
 	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, remote: Boolean) = true

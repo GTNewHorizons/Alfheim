@@ -17,6 +17,7 @@ import vazkii.botania.common.lexicon.page.*
 @Suppress("JoinDeclarationAndAssignment")
 object ShadowFoxLexiconData {
 	
+	val rainbowFlora: LexiconEntry
 	val aurora: LexiconEntry
 	val coloredDirt: LexiconEntry
 	val irisSapling: LexiconEntry
@@ -55,6 +56,12 @@ object ShadowFoxLexiconData {
 	init {
 		
 		dendrology = ShadowFoxLexiconCategory("dendrology", 1)
+		
+		rainbowFlora = ShadowfoxLexiconEntry("rainbowFlora", AlfheimLexiconData.categoryAlfheim, ItemStack(ShadowFoxBlocks.rainbowGrass, 1, 2))
+		rainbowFlora.setLexiconPages(PageText("0"),
+									 PageCraftingRecipe("1", ShadowFoxRecipes.recipesRainbowPetal),
+									 PageCraftingRecipe("2", ShadowFoxRecipes.recipeRainbowPetalGrinding),
+									 PageCraftingRecipe("3", ShadowFoxRecipes.recipeRainbowPetalBlock))
 		
 		coloredDirt = ShadowfoxLexiconEntry("coloredDirt", BotaniaAPI.categoryMisc, ShadowFoxBlocks.rainbowDirtBlock)
 		coloredDirt.setLexiconPages(PageText("0"), PageCraftingRecipe("1", ShadowFoxRecipes.recipesColoredDirt))
@@ -340,7 +347,9 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowSlabs), irisSapling, 2)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowStairs), irisSapling, 3)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowDirtBlock), coloredDirt, 1)
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowGrass), pastoralSeeds, 0)
+		for (i in 0..1)
+			LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowGrass, 1, i), pastoralSeeds, 0)
+		
 		for (i in 0..16) {
 			LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.colorfulSkyDirtRod, 1, i), technicolor, 1)
 			LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.irisSeeds, 1, i), pastoralSeeds, 2)
@@ -353,8 +362,11 @@ object ShadowFoxLexiconData {
 			LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.irisTallGrass1, 1, i), pastoralSeeds, 0)
 		}
 		
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowTallGrass), pastoralSeeds, 0)
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.invisibleFlameLens), LexiconData.lenses, 0)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowLeaves), irisSapling, 0)
 		
+		for (i in 0..1)
+			LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.rainbowTallGrass, 1, i), pastoralSeeds, 0)
+		
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.invisibleFlameLens), LexiconData.lenses, 0)
 	}
 }

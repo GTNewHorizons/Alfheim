@@ -4,6 +4,7 @@ package alfheim.common.item
 // import vazkii.botania.common.item.IFloatingFlowerVariant
 import alfheim.api.ModInfo
 import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.colored.BlockAuroraDirt
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
@@ -34,12 +35,23 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 	}
 	
 	companion object {
+		
+		const val AURORA = 17
+		
 		val islandTypes: Array<IFloatingFlower.IslandType>
 		
 		init {
 			islandTypes = Array(TYPES + 1) { i ->
 				IridescentIslandType("IRIDESCENT$i", ResourceLocation(ModInfo.MODID, "textures/model/block/miniIsland.png"), i)
 			}
+		}
+		
+		fun dirtFromMeta(meta: Int): Block? {
+			if (meta == AURORA)
+				return ShadowFoxBlocks.auroraDirt
+			if (meta == TYPES)
+				return ShadowFoxBlocks.rainbowDirtBlock
+			return ShadowFoxBlocks.coloredDirtBlock
 		}
 		
 		class IridescentIslandType(name: String, rs: ResourceLocation, val colorIndex: Int): IFloatingFlower.IslandType(name, rs) {
@@ -56,61 +68,64 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		}
 	}
 	
-	override fun getIslandType(stack: ItemStack) = islandTypes[stack.itemDamage % (TYPES + 1)]
+	override fun getIslandType(stack: ItemStack) = run {
+		if (stack.itemDamage == AURORA) null
+		else islandTypes[stack.itemDamage % (TYPES + 1)]
+	}
 	
 	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.itemDamage == TYPES
 	
 	override fun getParticleColor(stack: ItemStack) = rainbowColor()
 	
 	override fun getSubItems(par1: Item, par2: CreativeTabs?, par3: MutableList<Any?>) {
-		for (i in 0..(TYPES))
+		for (i in 0..AURORA)
 			par3.add(ItemStack(par1, 1, i))
 	}
 	
-	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float): Boolean {
-		val block = par3World.getBlock(par4, par5, par6)
-		val bmeta = par3World.getBlockMetadata(par4, par5, par6)
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
+		val block = world.getBlock(x, y, z)
+		val bmeta = world.getBlockMetadata(x, y, z)
+		val meta = stack.itemDamage
 		
-		val color = Color(getColorFromItemStack(par1ItemStack, 0))
+		val color = Color(if (meta == AURORA) BlockAuroraDirt.getBlockColor(x, y, z) else getColorFromItemStack(stack, 0))
 		val r = color.red / 255F
 		val g = color.green / 255F
 		val b = color.blue / 255F
 		
-		var x: Double
-		var y: Double
-		var z: Double
+		var px: Double
+		var py: Double
+		var pz: Double
 		val velMul = 0.025f
 		
 		if ((block === Blocks.dirt || block === Blocks.grass) && bmeta == 0) {
-			val meta = par1ItemStack.itemDamage
-			val swapper = addBlockSwapper(par3World, par4, par5, par6, meta)
-			par3World.setBlock(par4, par5, par6, swapper.blockToSet, swapper.metaToSet, 1 or 2)
-			if (par3World.getBlock(par4, par5 + 1, par6) == Blocks.tallgrass && par3World.getBlockMetadata(par4, par5 + 1, par6) == 1) {
-				if (isRainbow(meta))
-					par3World.setBlock(par4, par5 + 1, par6, ShadowFoxBlocks.rainbowGrass, 0, 1 or 2)
+			val swapper = addBlockSwapper(world, x, y, z, meta)
+			world.setBlock(x, y, z, swapper.blockToSet, swapper.metaToSet, 3)
+			if (world.getBlock(x, y + 1, z) == Blocks.tallgrass && world.getBlockMetadata(x, y + 1, z) == 1) {
+				if (meta >= 16)
+					world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowGrass, meta - 16, 4)
 				else
-					par3World.setBlock(par4, par5 + 1, par6, ShadowFoxBlocks.irisGrass, swapper.metaToSet, 1 or 2)
-			} else if (par3World.getBlock(par4, par5 + 1, par6) == Blocks.double_plant && par3World.getBlockMetadata(par4, par5 + 1, par6) == 2) {
-				if (isRainbow(meta)) {
-					par3World.setBlock(par4, par5 + 1, par6, ShadowFoxBlocks.rainbowTallGrass, 0, 2)
-					par3World.setBlock(par4, par5 + 2, par6, ShadowFoxBlocks.rainbowTallGrass, 8, 2)
+					world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisGrass, swapper.metaToSet, 4)
+			} else if (world.getBlock(x, y + 1, z) == Blocks.double_plant && world.getBlockMetadata(x, y + 1, z) == 2) {
+				if (meta >= 16) {
+					world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowTallGrass, meta - 16, 2)
+					world.setBlock(x, y + 2, z, ShadowFoxBlocks.rainbowTallGrass, meta - 8, 2)
 				} else {
 					if (swapper.metaToSet < 8) {
-						par3World.setBlock(par4, par5 + 1, par6, ShadowFoxBlocks.irisTallGrass0, swapper.metaToSet, 2)
-						par3World.setBlock(par4, par5 + 2, par6, ShadowFoxBlocks.irisTallGrass0, 8, 2)
+						world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass0, swapper.metaToSet, 2)
+						world.setBlock(x, y + 2, z, ShadowFoxBlocks.irisTallGrass0, 8, 2)
 					} else {
-						par3World.setBlock(par4, par5 + 1, par6, ShadowFoxBlocks.irisTallGrass1, swapper.metaToSet - 8, 2)
-						par3World.setBlock(par4, par5 + 2, par6, ShadowFoxBlocks.irisTallGrass1, 8, 2)
+						world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass1, swapper.metaToSet - 8, 2)
+						world.setBlock(x, y + 2, z, ShadowFoxBlocks.irisTallGrass1, 8, 2)
 					}
 				}
 			}
 			for (i in 0..49) {
-				x = (Math.random() - 0.5) * 3
-				y = Math.random() - 0.5 + 1
-				z = (Math.random() - 0.5) * 3
-				Botania.proxy.wispFX(par3World, par4 + 0.5 + x, par5 + 0.5 + y, par6 + 0.5 + z, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, (-x).toFloat() * velMul, (-y).toFloat() * velMul, (-z).toFloat() * velMul)
+				px = (Math.random() - 0.5) * 3
+				py = Math.random() - 0.5 + 1
+				pz = (Math.random() - 0.5) * 3
+				Botania.proxy.wispFX(world, x + 0.5 + px, y + 0.5 + py, z + 0.5 + pz, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, (-px).toFloat() * velMul, (-py).toFloat() * velMul, (-pz).toFloat() * velMul)
 			}
-			par1ItemStack.stackSize--
+			stack.stackSize--
 		}
 		return true
 	}
@@ -164,7 +179,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		init {
 			this.world = world
 			blockToSet = dirtFromMeta(meta)
-			rainbow = isRainbow(meta)
+			rainbow = meta >= 16
 			metaToSet = meta % 16
 			val seed = coords.posX xor coords.posY xor coords.posZ
 			rand = Random(seed.toLong())

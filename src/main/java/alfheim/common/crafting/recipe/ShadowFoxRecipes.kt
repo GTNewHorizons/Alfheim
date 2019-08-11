@@ -35,6 +35,7 @@ import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.crafting.*
+import vazkii.botania.common.crafting.ModCraftingRecipes.*
 import vazkii.botania.common.lib.LibItemNames.PESTLE_AND_MORTAR
 import vazkii.botania.common.lib.LibOreDict.*
 import java.util.*
@@ -105,15 +106,15 @@ object ShadowFoxRecipes {
 	val recipeShimmerQuartz: IRecipe
 	
 	val recipeRainbowPetalGrinding: IRecipe
-	val recipeRainbowPetal: IRecipe
-	val recipeRainbowDoublePetal: IRecipe
+	val recipesRainbowPetal: List<IRecipe>
+	val recipeRainbowPetalBlock: IRecipe
 	
 	val recipesPastoralSeeds: List<RecipeManaInfusion>
 	
 	val recipesAttributionHeads: List<RecipePetals>
 	
-	val recipesPlainDirt: RecipePureDaisy
-	val recipesIrisSapling: RecipePureDaisyExclusion
+	val recipePlainDirt: RecipePureDaisy
+	val recipeIrisSapling: RecipePureDaisyExclusion
 	
 	val recipesLightningTree: RecipeTreeCrafting
 	val recipesInfernalTree: RecipeTreeCrafting
@@ -367,18 +368,21 @@ object ShadowFoxRecipes {
 		
 		for (i in 0..15)
 			addShapelessOreDictRecipe(ItemStack(BotaniaItems.manaResource, 1, 6), "dustRedstone", ItemStack(ShadowFoxBlocks.irisGrass, 1, i))
-		addShapelessOreDictRecipe(ItemStack(BotaniaItems.manaResource, 1, 6), "dustRedstone", ItemStack(ShadowFoxBlocks.rainbowGrass))
-		recipesRedstoneRoot = BotaniaAPI.getLatestAddedRecipes(17)
+		for (i in 0..1)
+			addShapelessOreDictRecipe(ItemStack(BotaniaItems.manaResource, 1, 6), "dustRedstone", ItemStack(ShadowFoxBlocks.rainbowGrass, 1, i))
+		
+		recipesRedstoneRoot = BotaniaAPI.getLatestAddedRecipes(18)
 		
 		recipesPastoralSeeds = ArrayList()
 		for (i in 0..15)
 			recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(ShadowFoxItems.irisSeeds, 1, i), ItemStack(ShadowFoxBlocks.irisGrass, 1, i), 2500))
-		recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(ShadowFoxItems.irisSeeds, 1, 16), ItemStack(ShadowFoxBlocks.rainbowGrass), 2500))
+		for (i in 0..1)
+		recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(ShadowFoxItems.irisSeeds, 1, 16+i), ItemStack(ShadowFoxBlocks.rainbowGrass, 1, i), 2500))
 		
-		recipesPlainDirt = BotaniaAPI.registerPureDaisyRecipe(IRIS_DIRT, Blocks.dirt, 0)
+		recipePlainDirt = BotaniaAPI.registerPureDaisyRecipe(IRIS_DIRT, Blocks.dirt, 0)
 		
-		recipesIrisSapling = RecipePureDaisyExclusion("treeSapling", ShadowFoxBlocks.irisSapling, 0)
-		BotaniaAPI.pureDaisyRecipes.add(recipesIrisSapling as RecipePureDaisy)
+		recipeIrisSapling = RecipePureDaisyExclusion("treeSapling", ShadowFoxBlocks.irisSapling, 0)
+		BotaniaAPI.pureDaisyRecipes.add(recipeIrisSapling as RecipePureDaisy)
 		
 		addOreDictRecipe(ItemStack(ShadowFoxItems.rainbowRod),
 						 " GB",
@@ -644,18 +648,18 @@ object ShadowFoxRecipes {
 		recipesStar2 = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		addShapelessOreDictRecipe(ItemStack(BotaniaItems.fertilizer, if (Botania.gardenOfGlassLoaded) 3 else 1), ItemStack(Items.dye, 1, 15), FLORAL_POWDER, FLORAL_POWDER, FLORAL_POWDER, FLORAL_POWDER)
-		CraftingManager.getInstance().recipeList.remove(ModCraftingRecipes.recipeFertilizerPowder)
-		ModCraftingRecipes.recipeFertilizerPowder = BotaniaAPI.getLatestAddedRecipe()
+		CraftingManager.getInstance().recipeList.remove(recipeFertilizerPowder)
+		recipeFertilizerPowder = BotaniaAPI.getLatestAddedRecipe()
 		
 		ModManaInfusionRecipes.manaPowderRecipes.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(BotaniaItems.manaResource, 1, 23), ItemStack(ShadowFoxItems.resource, 1, 6), 400))
 		
 		addShapelessOreDictRecipe(ItemStack(BotaniaBlocks.shimmerrock), "livingrock", DYES[16])
-		CraftingManager.getInstance().recipeList.remove(ModCraftingRecipes.recipeShimmerrock)
-		ModCraftingRecipes.recipeShimmerrock = BotaniaAPI.getLatestAddedRecipe()
+		CraftingManager.getInstance().recipeList.remove(recipeShimmerrock)
+		recipeShimmerrock = BotaniaAPI.getLatestAddedRecipe()
 		
 		addShapelessOreDictRecipe(ItemStack(BotaniaBlocks.shimmerwoodPlanks), ItemStack(BotaniaBlocks.dreamwood, 1, 1), DYES[16])
-		CraftingManager.getInstance().recipeList.remove(ModCraftingRecipes.recipeShimmerwoodPlanks)
-		ModCraftingRecipes.recipeShimmerwoodPlanks = BotaniaAPI.getLatestAddedRecipe()
+		CraftingManager.getInstance().recipeList.remove(recipeShimmerwoodPlanks)
+		recipeShimmerwoodPlanks = BotaniaAPI.getLatestAddedRecipe()
 		
 		addShapelessOreDictRecipe(ItemStack(Items.mushroom_stew), MUSHROOM, MUSHROOM, ItemStack(Items.bowl))
 		
@@ -669,17 +673,18 @@ object ShadowFoxRecipes {
 		ModCraftingRecipes.recipesDreamwoodSpreader.add(BotaniaAPI.getLatestAddedRecipe())
 		
 		addOreDictRecipe(ItemStack(BotaniaItems.flowerBag), "WPW", "W W", " W ", 'P', PETAL, 'W', ItemStack(Blocks.wool, 1, 32767))
-		CraftingManager.getInstance().recipeList.remove(ModCraftingRecipes.recipeFlowerBag)
-		ModCraftingRecipes.recipeFlowerBag = BotaniaAPI.getLatestAddedRecipe()
+		CraftingManager.getInstance().recipeList.remove(recipeFlowerBag)
+		recipeFlowerBag = BotaniaAPI.getLatestAddedRecipe()
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxItems.resource, 1, 6), RAINBOW_PETAL, PESTLE_AND_MORTAR)
 		recipeRainbowPetalGrinding = BotaniaAPI.getLatestAddedRecipe()
 		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxItems.resource, 2, 7), RAINBOW_FLOWER)
-		recipeRainbowDoublePetal = BotaniaAPI.getLatestAddedRecipe()
-		
 		addShapelessOreDictRecipe(ItemStack(ShadowFoxItems.resource, 4, 7), RAINBOW_DOUBLE_FLOWER)
-		recipeRainbowPetal = BotaniaAPI.getLatestAddedRecipe()
+		recipesRainbowPetal = BotaniaAPI.getLatestAddedRecipes(2)
+		
+		addOreDictRecipe(ItemStack(ShadowFoxBlocks.rainbowPetals), "PPP", "PPP", "PPP", 'P', ItemStack(ShadowFoxItems.resource, 1, 7))
+		recipeRainbowPetalBlock = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipeShimmerQuartz = addQuartzRecipes(ShadowFoxBlocks.shimmerQuartz, ShadowFoxBlocks.shimmerQuartzStairs, ShadowFoxBlocks.shimmerQuartzSlab)
 		
@@ -756,6 +761,16 @@ object ShadowFoxRecipes {
 							   'Q', ItemStack(block, 1, meta))
 	}
 	
+	fun postInit() {
+		addShapelessOreDictRecipe(ItemStack(ShadowFoxBlocks.rainbowGrass, 1, 3), "dustGlowstone", "dustGlowstone", ItemStack(ShadowFoxBlocks.rainbowGrass, 1, 2))
+		recipesShinyFlowers.add(BotaniaAPI.getLatestAddedRecipe())
+		
+		GameRegistry.addShapelessRecipe(ItemStack(ShadowFoxBlocks.rainbowMushroom), ItemStack(Blocks.red_mushroom), ItemStack(ShadowFoxItems.resource, 1, 6))
+		GameRegistry.addShapelessRecipe(ItemStack(ShadowFoxBlocks.rainbowMushroom), ItemStack(Blocks.brown_mushroom), ItemStack(ShadowFoxItems.resource, 1, 6))
+		
+		recipesMushrooms.addAll(BotaniaAPI.getLatestAddedRecipes(2))
+	}
+	
 	fun skullStack(name: String): ItemStack {
 		val stack = ItemStack(Items.skull, 1, 3)
 		ItemNBTHelper.setString(stack, "SkullOwner", name)
@@ -770,4 +785,5 @@ object ShadowFoxRecipes {
 	
 	private fun addShapelessOreDictRecipe(output: ItemStack, vararg recipe: Any) =
 		GameRegistry.addRecipe(ShapelessOreRecipe(output, *recipe))
+	
 }

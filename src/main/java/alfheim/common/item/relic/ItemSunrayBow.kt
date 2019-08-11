@@ -1,11 +1,13 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import com.sun.xml.internal.fastinfoset.stax.events.AttributeBase
 import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -18,6 +20,7 @@ import net.minecraft.world.World
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.relic.ItemRelic
 import vazkii.botania.common.lib.LibMisc
@@ -47,7 +50,8 @@ class ItemSunrayBow: ItemBow(), IRelic {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		player.setItemInUse(stack, getMaxItemUseDuration(stack))
+		if (isRightPlayer(player, stack))
+			player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
 	
@@ -55,12 +59,33 @@ class ItemSunrayBow: ItemBow(), IRelic {
 	
 	override fun getItemUseAction(stack: ItemStack) = EnumAction.bow
 	
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
+		if (player.worldObj.isRemote) {
+			val v = Vector3()
+			val l = player.lookVec
+			val look = Vector3()
+			val p = Vector3(0.0, if (player === Minecraft.getMinecraft().thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
+			val ds = arrayOf(0.3, 0.8)
+			for (d in ds) {
+				for (i in 1..36) {
+					v.set(0.0, d, 0.0)
+					v.rotate(i * 10.0, Vector3.oZ)
+					v.rotate(player.rotationPitch.toDouble(), Vector3.oX)
+					v.rotate(-player.rotationYaw.toDouble(), Vector3.oY)
+					v.add(look.set(l).mul(if (d == 0.3) 1.75 else 1.0)).add(p)
+					Botania.proxy.wispFX(player.worldObj, v.x, v.y, v.z, 0.1f, 0.85f, 0.1f, if (d == 0.3) 0.1f else  0.25f, 0f, 0.1f)
+				}
+			}
+		}
+	}
+	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
+		if (!isRightPlayer(player, stack)) return
 		val m = maxDmg / 10
 		val i = ((getMaxItemUseDuration(stack) - itemInUse) * chargeVelocityMultiplier).toInt()
 		if (i < m) return
 		val rank = (i - m) / 5
-		if (isRightPlayer(player, stack) && ManaItemHandler.requestManaExactForTool(stack, player, min(maxDmg * 10, maxDmg + rank * 20), true)) {
+		if (ManaItemHandler.requestManaExactForTool(stack, player, min(maxDmg * 10, maxDmg + rank * 20), true)) {
 			val arrow = EntityMagicArrow(world, player)
 			arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0.0f, 3.0f, 1.0f)
 			arrow.damage = min(maxDmg, m + rank * 2)

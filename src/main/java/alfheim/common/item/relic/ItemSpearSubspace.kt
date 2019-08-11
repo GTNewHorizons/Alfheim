@@ -45,6 +45,8 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slot: Int, selected: Boolean) {
 		if (!world.isRemote && entity is EntityPlayer) {
 			updateRelic(stack, entity)
+			if (!isRightPlayer(entity, stack)) return
+			
 			if (icd(stack)) {
 				if (entity.swingProgressInt == 1) {
 					if (entity.heldItem?.item === this && ManaItemHandler.requestManaExact(stack, entity, 500, true)) {

@@ -76,6 +76,8 @@ object ShadowFoxBlocks {
 	var rainbowStairs: Block
 	var auroraStairs: Block
 	
+	var rainbowPetals: Block
+	
 	var itemDisplay: Block
 	var treeCrafter: MultiblockSet
 	var treeCrafterBlock: Block
@@ -168,6 +170,8 @@ object ShadowFoxBlocks {
 		coloredDirtBlock = BlockColoredDirt()
 		rainbowDirtBlock = BlockRainbowDirt()
 		auroraDirt = BlockAuroraDirt()
+		
+		rainbowPetals = BlockRainbowPetalBlock()
 		
 		irisSapling = BlockColoredSapling()
 		irisLeaves0 = BlockColoredLeaves(0)
@@ -362,6 +366,22 @@ object ShadowFoxBlocks {
 		setBurnable(lightningSlabsFull, 5, 20)
 		setBurnable(lightningStairs, 5, 20)
 		
+		setBurnable(calicoLeaves, 30, 60)
+		setBurnable(calicoWood, 5, 5)
+		setBurnable(calicoPlanks, 5, 20)
+		
+		setBurnable(calicoSlabs, 5, 20)
+		setBurnable(calicoSlabsFull, 5, 20)
+		setBurnable(calicoStairs, 5, 20)
+		
+		setBurnable(circuitLeaves, 30, 60)
+		setBurnable(circuitWood, 5, 5)
+		setBurnable(circuitPlanks, 5, 20)
+		
+		setBurnable(circuitSlabs, 5, 20)
+		setBurnable(circuitSlabsFull, 5, 20)
+		setBurnable(circuitStairs, 5, 20)
+		
 		setBurnable(sealingLeaves, 30, 60)
 		setBurnable(sealingWood, 5, 5)
 		setBurnable(sealingPlanks, 5, 20)
@@ -423,8 +443,8 @@ object ShadowFoxBlocks {
 	}
 	
 	private fun initOreDict() {
-		OreDictionary.registerOre(LibOreDict.RAINBOW_FLOWER, ItemStack(rainbowGrass, 1, 1))
-		OreDictionary.registerOre(LibOreDict.RAINBOW_DOUBLE_FLOWER, ItemStack(rainbowTallGrass, 1, 1))
+		OreDictionary.registerOre(LibOreDict.RAINBOW_FLOWER, ItemStack(rainbowGrass, 1, 2))
+		OreDictionary.registerOre(LibOreDict.RAINBOW_DOUBLE_FLOWER, ItemStack(rainbowTallGrass, 1, 2))
 		
 		OreDictionary.registerOre(LibOreDict.MUSHROOM, ItemStack(BotaniaBlocks.mushroom, 1, OreDictionary.WILDCARD_VALUE))
 		OreDictionary.registerOre(LibOreDict.MUSHROOM, ItemStack(rainbowMushroom))
@@ -445,6 +465,20 @@ object ShadowFoxBlocks {
 		
 		OreDictionary.registerOre("slabWood", ItemStack(lightningSlabs))
 		OreDictionary.registerOre("stairWood", ItemStack(lightningStairs))
+		
+		OreDictionary.registerOre("treeLeaves", ItemStack(calicoLeaves))
+		OreDictionary.registerOre("plankWood", ItemStack(calicoPlanks))
+		OreDictionary.registerOre("treeSapling", ItemStack(calicoSapling))
+		
+		OreDictionary.registerOre("slabWood", ItemStack(calicoSlabs))
+		OreDictionary.registerOre("stairWood", ItemStack(calicoStairs))
+		
+		OreDictionary.registerOre("treeLeaves", ItemStack(circuitLeaves))
+		OreDictionary.registerOre("plankWood", ItemStack(circuitPlanks))
+		OreDictionary.registerOre("treeSapling", ItemStack(circuitSapling))
+		
+		OreDictionary.registerOre("slabWood", ItemStack(circuitSlabs))
+		OreDictionary.registerOre("stairWood", ItemStack(circuitStairs))
 		
 		OreDictionary.registerOre("treeLeaves", ItemStack(netherLeaves))
 		OreDictionary.registerOre("plankWood", ItemStack(netherPlanks))
@@ -503,6 +537,8 @@ object ShadowFoxBlocks {
 			OreDictionary.registerOre("logWood", ItemStack(lightningWood, 1, i))
 			OreDictionary.registerOre("logWood", ItemStack(netherWood, 1, i))
 			OreDictionary.registerOre("logWood", ItemStack(sealingWood, 1, i))
+			OreDictionary.registerOre("logWood", ItemStack(calicoWood, 1, i))
+			OreDictionary.registerOre("logWood", ItemStack(circuitWood, 1, i))
 			
 			t = ItemStack(rainbowWood, 1, i)
 			OreDictionary.registerOre("logWood", t)
