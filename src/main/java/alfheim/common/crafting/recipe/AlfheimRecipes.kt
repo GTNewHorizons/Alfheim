@@ -40,6 +40,7 @@ import alfheim.common.block.AlfheimBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimBlocks.livingrockBrickWall
+import alfheim.common.block.AlfheimBlocks.livingrockTileSlab
 import alfheim.common.block.AlfheimBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimBlocks.livingwoodFence
@@ -559,7 +560,9 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
-		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble))
+		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 1))
+		
+		addShapedRecipe(ItemStack(livingrockTileSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
 		
 		addShapedRecipe(ItemStack(livingcobbleWall, 6), "LLL", "LLL", 'L', ItemStack(livingcobble))
 		
