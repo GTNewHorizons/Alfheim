@@ -37,7 +37,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 	}
 	
 	constructor(worldIn: World): super(worldIn)
-	constructor(world: World, thrower: EntityLivingBase): super(world, thrower)
+	constructor(world: World, thrower: EntityPlayer): super(world, thrower)
 	
 	override fun entityInit() {
 		super.entityInit()
@@ -55,6 +55,8 @@ class EntityMagicArrow: EntityThrowableCopy {
 			return
 		}
 		
+		val player = thrower as EntityPlayer
+		
 		super.onUpdate()
 
 //		for (i in 0..5)
@@ -71,6 +73,8 @@ class EntityMagicArrow: EntityThrowableCopy {
 			val og = g
 			val ob = if (fromMoon) g else b
 			var size = (damage / (AlfheimItems.moonlightBow as ItemMoonlightBow).maxDmg) * 0.75f
+			if (fromMoon) size *= 5
+			val life = if (fromMoon) 3f else 1f
 			val osize = size
 			val savedPosX = posX
 			val savedPosY = posY
@@ -87,7 +91,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 				g = og + (Math.random().toFloat() - 0.5f) * rn
 				b = ob + (Math.random().toFloat() - 0.5f) * rn
 				size = osize + (Math.random().toFloat() - 0.5f) * 0.065f + sin(Random(entityUniqueID.mostSignificantBits).nextInt(9001).toDouble()).toFloat() * 0.4f
-				Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.2f * size, (-motionX).toFloat() * 0.01f, (-motionY).toFloat() * 0.01f, (-motionZ).toFloat() * 0.01f)
+				Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.2f * size, (-motionX).toFloat() * 0.01f, (-motionY).toFloat() * 0.01f, (-motionZ).toFloat() * 0.01f, life)
 				this.posX += diffVecNorm.x * distance
 				this.posY += diffVecNorm.y * distance
 				this.posZ += diffVecNorm.z * distance
@@ -95,25 +99,25 @@ class EntityMagicArrow: EntityThrowableCopy {
 				diffVec = oldPos.copy().sub(currentPos)
 			} while (abs(diffVec.length()) > distance)
 			
-			Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.1f * size, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f)
+			Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.1f * size, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f, life)
 			posX = savedPosX
 			posY = savedPosY
 			posZ = savedPosZ
 		}
 		
-		if (ticksExisted > life) {
+		if (posY >= 256) {
 			if (!worldObj.isRemote) {
 				if (toMoon) {
-					for (i in 1..66) {
+					for (i in 1..100) {
 						val arrow = EntityMagicArrow(worldObj, thrower)
 						val yaw = (Math.random() * 360).toFloat()
-						arrow.shoot(thrower, 90f, yaw, 0f, 5f, 1f)
-						arrow.damage = -20f
+						arrow.shoot(thrower, 90f, yaw, 0f, (Math.random() * 2 + 4).toFloat(), 5f)
+						arrow.damage = -(Math.random() * 5 + 5).toFloat()
 						arrow.rotationYaw = thrower.rotationYaw
 						arrow.rotation = MathHelper.wrapAngleTo180_float(yaw)
 						arrow.life = 256
 						
-						arrow.setPosition(thrower.posX, 256.0, thrower.posZ)
+						arrow.setPosition(posX, Math.random() * 20 + 256, posZ)
 						
 						worldObj.spawnEntityInWorld(arrow)
 					}
@@ -124,40 +128,52 @@ class EntityMagicArrow: EntityThrowableCopy {
 			return
 		}
 		
+		if (ticksExisted > life) {
+			if (toMoon)
+				explode()
+			
+			setDead()
+			return
+		}
+		
 		if (!worldObj.isRemote) {
-			val player = thrower as EntityPlayer?
+			val axis = if (fromMoon) bb.expand(1.0, 1.0, 1.0) else bb.expand(0.5, 0.5, 0.5)
 			
-			val axis = AxisAlignedBB.getBoundingBox(min(posX, lastTickPosX), min(posY, lastTickPosY), min(posZ, lastTickPosZ), max(posX, lastTickPosX), max(posY, lastTickPosY), max(posZ, lastTickPosZ)).expand(0.5, 0.5, 0.5)
-			
-			var entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
+			val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 			for (living in entities) {
 				if (living === player) continue
 				if (toMoon) {
-					axis.expand(5.0, 5.0, 5.0)
-					entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
-					entities.forEach {
-						attackedFrom(it, player, 66f)
-					}
-					
-					SpellEffectHandler.sendPacket(Spells.MOON, this)
-					
+					explode()
 					setDead()
-					break
+					return
 				}
-				val attribute = player?.getEntityAttribute(SharedMonsterAttributes.attackDamage)?.attributeValue ?: 0.0
-				if (living.hurtTime == 0) {
-					attackedFrom(living, player, damage + attribute.toFloat())
-				}
+				val attribute = player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue
+				attackedFrom(living, player, abs(damage) + attribute.toFloat())
 			}
 		}
 	}
 	
+	val bb: AxisAlignedBB
+		get() = AxisAlignedBB.getBoundingBox(min(posX, lastTickPosX), min(posY, lastTickPosY), min(posZ, lastTickPosZ), max(posX, lastTickPosX), max(posY, lastTickPosY), max(posZ, lastTickPosZ))
+	
+	fun explode() {
+		val axis = bb.expand(5.0, 5.0, 5.0)
+		val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
+		entities.forEach {
+			attackedFrom(it, thrower as EntityPlayer?, max(20.0, 20 / Vector3.entityDistance(this, it)).toFloat())
+		}
+		
+		SpellEffectHandler.sendPacket(Spells.MOON, this)
+	}
+	
 	fun attackedFrom(target: EntityLivingBase, player: EntityPlayer?, dmg: Float) {
-		val d = abs(dmg)
+		target.hurtResistantTime = 0
+		target.hurtTime = 0
+		
 		if (player != null)
-			target.attackEntityFrom(DamageSource.causePlayerDamage(player), d)
+			target.attackEntityFrom(DamageSource.causePlayerDamage(player), dmg)
 		else
-			target.attackEntityFrom(DamageSource.generic, d)
+			target.attackEntityFrom(DamageSource.generic, dmg)
 	}
 	
 	override fun onImpact(pos: MovingObjectPosition) = Unit // NO-OP

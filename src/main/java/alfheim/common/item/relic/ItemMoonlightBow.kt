@@ -92,15 +92,17 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		var dmg = min(maxDmg, m + rank * 2).toFloat()
 		var mana = min(maxDmg * 10, maxDmg + rank * 20) * 5
 		var life = min(150, 5 + i * 4)
-		if (dmg >= maxDmg && isLookingAtMoon(world, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)) {
+		var dispersion = 1f
+		if (dmg >= maxDmg && isLookingAtMoon(world, player, 0f, false)) {
 			dmg = -1f
-			mana = 5000
-			life = 50
+			mana = 20000
+			life = 256
+			dispersion = 0f
 		}
 		
 		if (ManaItemHandler.requestManaExactForTool(stack, player, mana, true)) {
 			val arrow = EntityMagicArrow(world, player)
-			arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0f, 2.5f, 1f)
+			arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0f, 2.5f, dispersion)
 			arrow.damage = dmg
 			arrow.rotationYaw = player.rotationYaw
 			arrow.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180)
@@ -126,8 +128,8 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		get() = 20
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
-		list.add(StatCollector.translateToLocalFormatted("${getUnlocalizedNameInefficiently(stack)}.desc", 2 * EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)))
-		list.add("")
+//		list.add(StatCollector.translateToLocalFormatted("${getUnlocalizedNameInefficiently(stack)}.desc", 2 * EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)))
+//		list.add("")
 		ItemRelic.addBindInfo(list, stack, player)
 		super.addInformation(stack, player, list, adv)
 	}
