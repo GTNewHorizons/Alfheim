@@ -55,8 +55,6 @@ class EntityMagicArrow: EntityThrowableCopy {
 			return
 		}
 		
-		val player = thrower as EntityPlayer
-		
 		super.onUpdate()
 
 //		for (i in 0..5)
@@ -109,7 +107,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 			if (!worldObj.isRemote) {
 				if (toMoon) {
 					for (i in 1..100) {
-						val arrow = EntityMagicArrow(worldObj, thrower)
+						val arrow = EntityMagicArrow(worldObj, thrower as EntityPlayer) // non-null check above
 						val yaw = (Math.random() * 360).toFloat()
 						arrow.shoot(thrower, 90f, yaw, 0f, (Math.random() * 2 + 4).toFloat(), 5f)
 						arrow.damage = -(Math.random() * 5 + 5).toFloat()
@@ -137,6 +135,8 @@ class EntityMagicArrow: EntityThrowableCopy {
 		}
 		
 		if (!worldObj.isRemote) {
+			val player = thrower as EntityPlayer
+			
 			val axis = if (fromMoon) bb.expand(1.0, 1.0, 1.0) else bb.expand(0.5, 0.5, 0.5)
 			
 			val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
