@@ -132,8 +132,8 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline1")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline2")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline3")}", list)
-			addStringToTooltip("${grey}I awaken the ancients within all of you!", list)
-			addStringToTooltip("${grey}From my soul's fire the world burns anew!", list)
+			addStringToTooltip("$grey\"I awaken the ancients within all of you!", list)
+			addStringToTooltip("${grey}From my soul's fire the world burns anew!\"", list)
 		} else addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
 	}
 	

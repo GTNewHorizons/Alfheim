@@ -2,20 +2,18 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.DamageSourceSpell
-import cpw.mods.fml.relauncher.ReflectionHelper
 import net.minecraft.block.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
-import vazkii.botania.common.lib.LibObfuscation
+import vazkii.botania.common.entity.EntityThrowableCopy
 import kotlin.math.abs
 
-class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
+class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	
 	internal var time = 0
 	
@@ -28,7 +26,6 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 			val id = dataWatcher.getWatchableObjectInt(26)
 			val e = worldObj.getEntityByID(id)
 			return if (e is EntityLivingBase) e else null
-			
 		}
 	
 	// Just in case...
@@ -62,7 +59,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 	}
 	
 	constructor(thrower: EntityLivingBase, evil: Boolean): this(thrower.worldObj) {
-		ReflectionHelper.setPrivateValue(EntityThrowable::class.java, this, thrower, *LibObfuscation.THROWER)
+		this.thrower = thrower
 		isEvil = evil
 	}
 	
@@ -76,9 +73,9 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 	}
 	
 	override fun onUpdate() {
-		val lastTickPosX = this.lastTickPosX
-		val lastTickPosY = this.lastTickPosY
-		val lastTickPosZ = this.lastTickPosZ
+		val lastTickPosX = lastTickPosX
+		val lastTickPosY = lastTickPosY
+		val lastTickPosZ = lastTickPosZ
 		
 		super.onUpdate()
 		
@@ -148,7 +145,6 @@ class EntitySpellIsaacMissile(world: World): EntityThrowable(world) {
 	}
 	
 	companion object {
-		
-		private val TAG_TIME = "time"
+		private const val TAG_TIME = "time"
 	}
 }

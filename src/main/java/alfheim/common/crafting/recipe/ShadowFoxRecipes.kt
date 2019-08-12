@@ -750,11 +750,6 @@ object ShadowFoxRecipes {
 							   "QQQ",
 							   'Q', ItemStack(block, 1, meta))
 		GameRegistry.addRecipe(ItemStack(stairs, 4),
-							   "  Q",
-							   " QQ",
-							   "QQQ",
-							   'Q', ItemStack(block, 1, meta))
-		GameRegistry.addRecipe(ItemStack(stairs, 4),
 							   "Q  ",
 							   "QQ ",
 							   "QQQ",

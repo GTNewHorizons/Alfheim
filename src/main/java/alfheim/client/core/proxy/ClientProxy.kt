@@ -95,7 +95,7 @@ class ClientProxy: CommonProxy() {
 		// Botanical Addons:
 		
 		MinecraftForgeClient.registerItemRenderer(ShadowFoxItems.invisibleFlameLens, RenderLens())
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.sunrayBow, RenderBow())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderBow())
 		
 		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
 		RenderingRegistry.registerBlockHandler(MultipassRenderer())

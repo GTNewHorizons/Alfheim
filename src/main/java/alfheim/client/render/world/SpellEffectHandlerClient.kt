@@ -41,6 +41,7 @@ object SpellEffectHandlerClient {
 				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
 				ICELENS        -> addIceLens()
 				MANA           -> addMana(x, y)
+				MOON           -> moonBoom(x, y, z)
 				NOTE           -> spawnNote(x, y, z)
 				NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
 				PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
@@ -52,7 +53,8 @@ object SpellEffectHandlerClient {
 				TREMORS        -> spawnTremors(x, y, z)
 				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
 				WIRE           -> spawnWire(x, y, z, x2)
-				else           -> {}
+				
+				else           -> Unit
 			}
 		}
 	}
@@ -86,6 +88,13 @@ object SpellEffectHandlerClient {
 				}
 			} else
 				e.addPotionEffect(PotionEffect(AlfheimRegistry.showMana.id, mana.toInt(), 100, true))
+		}
+	}
+	
+	fun moonBoom(x: Double, y: Double, z: Double) {
+		for (i in 0..63) {
+			m.rand().sub(0.5).normalize().mul(0.1)
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y, z, 0.3f + (Math.random().toFloat() - 0.5f) * 0.1f, 0.85f + (Math.random().toFloat() - 0.5f) * 0.1f, 0.85f + (Math.random().toFloat() - 0.5f) * 0.1f, 0.5f, m.x.toFloat(), m.y.toFloat(), m.z.toFloat())
 		}
 	}
 	
@@ -220,7 +229,7 @@ object SpellEffectHandlerClient {
 	}
 	
 	enum class Spells {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GRAVITY, HEAL, ICELENS, MANA, MOON, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

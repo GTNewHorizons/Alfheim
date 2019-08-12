@@ -77,7 +77,7 @@ object AlfheimItems {
 	lateinit var rodGrass: Item
 	lateinit var rodIce: Item
 	lateinit var subspaceSpear: Item
-	lateinit var sunrayBow: Item
+	lateinit var moonlightBow: Item
 	lateinit var thinkingHand: Item
 	
 	lateinit var royalStaff: Item
@@ -151,7 +151,7 @@ object AlfheimItems {
 		relicCleaner = ItemRelicCleaner()
 		multibauble = ItemMultibauble()
 		subspaceSpear = ItemSpearSubspace()
-		sunrayBow = ItemSunrayBow()
+		moonlightBow = ItemMoonlightBow()
 		
 		royalStaff = ItemRoyalStaff()
 	}

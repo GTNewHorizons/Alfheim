@@ -1,6 +1,5 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJReflectionHelper
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
@@ -12,12 +11,9 @@ import net.minecraft.network.NetHandlerPlayServer
 import net.minecraft.util.ChatComponentTranslation
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemTravelBelt
-import java.lang.reflect.Field
 
 object PacketHandler {
 	
-	val fallBuffer = ASJReflectionHelper.getField(ItemTravelBelt::class.java, "fallBuffer") // FIXME transform access
-
 	fun handle(packet: Message0d, ctx: MessageContext) {
 		when (m0d.values()[packet.type]) {
 			m0d.DODGE -> DOGIE(ctx.serverHandler)
@@ -50,10 +46,6 @@ object PacketHandler {
 		ItemNBTHelper.setInt(ringStack, ItemDodgeRing.TAG_DODGE_COOLDOWN, ItemDodgeRing.MAX_CD)
 	}
 	
-	init {
-		fallBuffer!!.isAccessible = true
-	}
-	
 	private fun jump(player: EntityPlayerMP) {
 		val baublesInv = PlayerHandler.getPlayerBaubles(player)
 		val amuletStack = baublesInv.getStackInSlot(0)
@@ -65,8 +57,8 @@ object PacketHandler {
 			val belt = baublesInv.getStackInSlot(3)
 			
 			if (belt != null && belt.item is ItemTravelBelt) {
-				val `val` = ASJReflectionHelper.getValue<Float>(fallBuffer, belt.item, false)!!
-				player.fallDistance = -`val` * (amuletStack.item as ItemCloudPendant).maxAllowedJumps
+				val fall = (belt.item as ItemTravelBelt).fallBuffer
+				player.fallDistance = -fall * (amuletStack.item as ItemCloudPendant).maxAllowedJumps
 			}
 		}
 	}
