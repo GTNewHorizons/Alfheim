@@ -115,7 +115,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 						arrow.rotation = MathHelper.wrapAngleTo180_float(yaw)
 						arrow.life = 256
 						
-						arrow.setPosition(posX, Math.random() * 20 + 256, posZ)
+						arrow.setPosition(thrower.posX, 255.0, thrower.posZ)
 						
 						worldObj.spawnEntityInWorld(arrow)
 					}

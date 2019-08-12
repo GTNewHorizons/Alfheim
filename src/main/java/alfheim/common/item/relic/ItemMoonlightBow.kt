@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.entity.*
 import alfheim.common.item.relic.ShootHelper.isLookingAtMoon
@@ -25,18 +26,17 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.relic.ItemRelic
-import vazkii.botania.common.lib.LibMisc
 import java.util.*
 import kotlin.math.*
-
-
 
 /**
  * @author ExtraMeteorP, CKATEPTb, AlexSocol
  */
 class ItemMoonlightBow: ItemBow(), IRelic {
 	
-	lateinit var icon: Array<IIcon>
+	lateinit var icons: Array<IIcon>
+	lateinit var moonD: IIcon
+	lateinit var moons: Array<IIcon>
 	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
@@ -70,6 +70,11 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			val look = Vector3()
 			val p = Vector3(0.0, if (player === Minecraft.getMinecraft().thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
 			val ds = arrayOf(0.3, 0.8)
+			val moon = isLookingAtMoon(player.entityWorld, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)
+			val r = 0.1f * if (moon) 3 else 1
+			val g = 0.85f
+			val b = if (moon) g else 0.1f
+			
 			for (d in ds) {
 				for (i in 1..36) {
 					v.set(0.0, d, 0.0)
@@ -77,7 +82,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 					v.rotate(player.rotationPitch.toDouble(), Vector3.oX)
 					v.rotate(-player.rotationYaw.toDouble(), Vector3.oY)
 					v.add(look.set(l).mul(if (d == 0.3) 1.75 else 1.0)).add(p)
-					Botania.proxy.wispFX(player.worldObj, v.x, v.y, v.z, 0.1f, 0.85f, 0.1f, if (d == 0.3) 0.1f else 0.25f, 0f, 0.1f)
+					Botania.proxy.wispFX(player.worldObj, v.x, v.y, v.z, r, g, b, if (d == 0.3) 0.1f else 0.25f, 0f, 0.1f)
 				}
 			}
 		}
@@ -93,16 +98,18 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		var mana = min(maxDmg * 10, maxDmg + rank * 20) * 5
 		var life = min(150, 5 + i * 4)
 		var dispersion = 1f
+		var speed = 2.5f
 		if (dmg >= maxDmg && isLookingAtMoon(world, player, 0f, false)) {
 			dmg = -1f
 			mana = 20000
-			life = 256
+			life = 200
 			dispersion = 0f
+			speed = 5f
 		}
 		
 		if (ManaItemHandler.requestManaExactForTool(stack, player, mana, true)) {
 			val arrow = EntityMagicArrow(world, player)
-			arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0f, 2.5f, dispersion)
+			arrow.shoot(player, player.rotationPitch, player.rotationYaw, 0f, speed, dispersion)
 			arrow.damage = dmg
 			arrow.rotationYaw = player.rotationYaw
 			arrow.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180)
@@ -135,29 +142,44 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	}
 	
 	override fun registerIcons(reg: IIconRegister) {
-		itemIcon = reg.registerIcon("${LibMisc.MOD_ID}:SunrayBow")
+		itemIcon = reg.registerIcon("${ModInfo.MODID}:PhoebusBow")
+		moonD = reg.registerIcon("${ModInfo.MODID}:MoonBow")
 		
-		icon = Array(4) {
-			reg.registerIcon("${LibMisc.MOD_ID}:SunrayBow_${it + 1}")
+		icons = Array(4) {
+			reg.registerIcon("${ModInfo.MODID}:PhoebusBow_${it + 1}")
+		}
+		
+		moons = Array(4) {
+			reg.registerIcon("${ModInfo.MODID}:MoonBow_${it + 1}")
 		}
 	}
 	
-	override fun getItemIconForUseDuration(dur: Int) = icon[dur]
+	override fun getItemIconForUseDuration(dur: Int) = icons[dur]
 	
 	override fun getIcon(stack: ItemStack, renderPass: Int, player: EntityPlayer?, usingItem: ItemStack?, useRemaining: Int): IIcon {
 		val m = maxDmg / 10
 		val j = (((stack.maxItemUseDuration - useRemaining) * chargeVelocityMultiplier - m) / 5) * 2 + m
 		
+		var iconD = itemIcon
+		var iconA = icons
+		
+		if (player != null) {
+			if (isLookingAtMoon(player.worldObj, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)) {
+				iconD = moonD
+				iconA = moons
+			}
+		}
+		
 		return if (usingItem == null) {
-			itemIcon
+			iconD
 		} else if (j >= maxDmg) {
-			getItemIconForUseDuration(3)
+			iconA[3]
 		} else if (j >= maxDmg / 3f * 2f) {
-			getItemIconForUseDuration(2)
+			iconA[2]
 		} else if (j > maxDmg / 3f) {
-			getItemIconForUseDuration(1)
+			iconA[1]
 		} else {
-			if (j > 0) getItemIconForUseDuration(0) else itemIcon
+			if (j > 0) iconA[0] else iconD
 		}
 	}
 	
@@ -257,7 +279,9 @@ private object ShootHelper {
 		var de = 2.71828183
 		var f = world.getCelestialAngle(1f)
 		
-		if (f !in 0.26..0.74) return false
+		if (f !in 0.26f..0.74f) return false
+		
+		if (ent.rotationPitch !in -120f..-60f) return false
 		
 		// val f2 = if (f > 0.5f) f - 0.5f else 0.5f - f // unused
 		var f3 = (if (ent.rotationYaw > 0f) 270 else -90).toFloat()
