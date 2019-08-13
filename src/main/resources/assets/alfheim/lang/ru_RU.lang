@@ -41,7 +41,7 @@ tile.alfheim:circuitSapling.name=Саженец красного дерева
 tile.alfheim:circuitWood.name=Древесина красного дерева
 tile.alfheim:cracklingStar.name=Потрескавшаяся звезда
 tile.DragonstoneElvenOre.name=Руда драконьего камня
-tile.DreamLeaves.name=Листья древа мечтаний
+tile.DreamLeaves.name=Листва древа мечтаний
 tile.DreamLog.name=Ствол древа мечтаний
 tile.DreamSapling.name=Саженец древа мечтаний
 tile.DreamwoodBarkFence.name=Забор из древесины мечтаний
@@ -54,22 +54,26 @@ tile.ElvenSand.name=Эльфийский песок
 tile.ElvenSandstone0.name=Эльфийский песчаник
 tile.ElvenSandstone1.name=Резной эльфийский песчаник
 tile.ElvenSandstone2.name=Гладкий эльфийский песчаник
-tile.ElvenSandstone3.name=Полированный эльфийский песчаник
+tile.ElvenSandstone3.name=Прессованный эльфийский песчаник
 tile.ElvenSandstone4.name=Растрескавшийся эльфийский песчаник
 tile.botania:ElvenSandstone0Slab.name=Плита из эльфийского песчаника
 tile.botania:ElvenSandstone0SlabFull.name=Плита из эльфийского песчаника
 tile.ElvenSandstoneStairs.name=Ступеньки из эльфийского песчаника
 tile.ElvoriumBlock.name=Блок эльвория
-tile.alfheim:fillerBlock.name=Заполнитель схемы
 tile.FlugelHeadBlock.name=Голова Флюгеля
+tile.alfheim:fillerBlock.name=Заполнитель схемы
 tile.MikuHeadBlock.name=Голова Мику
 tile.GoldElvenOre.name=Золотая руда
 tile.IffesalElvenOre.name=Руда иффесалия
 tile.ItemHolder.name=Ускоритель маны
 tile.LivingCobble0.name=Жизнебулыжник
+tile.LivingCobble1.name=Прессованный жизнекамень
+tile.LivingCobble2.name=Полированный жизнекамень
 tile.botania:LivingCobble0Slab.name=Плита из жизнебулыжника
 tile.botania:LivingCobble0SlabFull.name=Плита из жизнебулыжника
 tile.botania:LivingCobble0Wall.name=Ограда из жизнебулыжника
+tile.botania:LivingCobble2Slab.name=Плита из полированного жизнекамня
+tile.botania:LivingCobble2SlabFull.name=Плита из полированного жизнекамня
 tile.LivingCobbleStairs.name=Ступеньки из жизнебулыжника
 tile.botania:livingrock1Wall.name=Ограда из живого кирпича
 tile.LivingwoodBarkFence.name=Забор из жизнедерева
@@ -85,6 +89,7 @@ tile.botania:PowerStone1.name=Камень берсерка
 tile.botania:PowerStone2.name=Камень овермага
 tile.botania:PowerStone3.name=Камень танка
 tile.botania:PowerStone4.name=Камень ниндзя
+tile.RaceSelector.name=Панель выбора расы
 tile.alfheim:schemaBlock.name=Контроллер схемы
 tile.alfheim:schemaMarker.name=Маркер схемы
 tile.alfheim:schematicAnnihilator.name=Уничтожитель схемы
@@ -116,6 +121,9 @@ tile.ShrineRock12.name=Блок храма
 tile.ShrineRock13.name=Блок храма
 tile.ShrineRock14.name=Блок храма
 tile.ShrineRock15.name=Блок храма
+tile.ShrineRockWhiteStairs.name=Ступеньки из блока храма
+tile.botania:ShrineRock0Slab.name=Плита из блока храма
+tile.botania:ShrineRock0SlabFull.name=Плита из блока храма
 tile.TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 
@@ -183,6 +191,7 @@ item.manastorage.desc1=Содержит §b%s§7/§b%s§7 единиц маны
 item.MauftriumIngot.name=§6Слиток мауфтрия
 item.MauftriumNugget.name=§6Самородок мауфтрия
 item.botania:Mjolnir.name=Мьёльнир
+item.MoonlightBow.name=Катастрофа Феба
 item.MuspelheimEssence.name=Эссенция Муспельхейма
 item.MuspelheimPowerIngot.name=Слиток силы Муспельхейма
 item.MuspelheimRod.name=Жезл владыки Муспельхейма
@@ -315,9 +324,9 @@ alfheim.potion.wellolife=Колодец жизни
 alfheim.potion.wellolife.postfix=Зелье водной регенерации
 
 alfheimmisc.badArena=Как бы Вы ни старались, ритуал не активируется. Вам кажется, что Вы допустили ошибку в подготовке территории. Чтобы убедиться в этом, проверьте территорию на наличие препятствий.
-alfheimmisc.fakeplayer=Только настоящие игроки могут призвать Флюгеля
-alfheimmisc.inactive=У маяка обязан быть хотя бы один уровень
-alfheimmisc.invalidDodge=Неверный пакет уклонения
+alfheimmisc.fakeplayer=Только настоящие игроки могут призвать Флюгеля.
+alfheimmisc.inactive=У маяка обязан быть хотя бы один уровень.
+alfheimmisc.invalidDodge=Неверный пакет уклонения.
 alfheimmisc.needsCatalysts=Как бы Вы ни старались, ритуал не активируется. Возможно, Вы допустили ошибку в расположении или конфигурации пилонов.
 alfheimmisc.notallowed=Глупый смертный! Ты даже не можешь летать без помощи! Ты слишком слаб, чтобы драться со мной! Уходи, пока я не передумала и не убила тебя.
 alfheimmisc.notbeacon=Это не тот блок, либо он повреждён (во втором случае обратитесь к администратору).
@@ -398,10 +407,10 @@ lang.name=ru_RU
 
 ######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################
 
-item.infiniteFruit.poem0=Плод запретного сада
-item.infiniteFruit.poem1=От голода вечно спасает,
-item.infiniteFruit.poem2=Мякоть свою восстанавливая,
-item.infiniteFruit.poem3=Молодость себе возвращает.
+item.aesirRing.poem0=Силы высших богов Асгарда
+item.aesirRing.poem1=Представляют части одного,
+item.aesirRing.poem2=И при объединении воедино
+item.aesirRing.poem3=Над ними не будет никого.
 
 item.Excaliber.poem0=Меч истинного героя
 item.Excaliber.poem1=Лишь для добра сойдёт,
@@ -413,40 +422,50 @@ item.flugelEye.poem1=Матрицы памяти вращение,
 item.flugelEye.poem2=С жизнью её взаимодействие
 item.flugelEye.poem3=Вернёт душу к началу движения.
 
-item.thorRing.poem0=Сила Бога-Громовержца
-item.thorRing.poem1=Разрушит основу Терры,
-item.thorRing.poem2=С мощью непреодолимой
-item.thorRing.poem3=Даст начало новой эры.
+item.FlugelSoul.poem0=Взгляд назад во времени,
+item.FlugelSoul.poem1=В пространстве движение,
+item.FlugelSoul.poem2=Лишь суть ангела смерти
+item.FlugelSoul.poem3=Даёт власть перемещения.
 
-item.odinRing.poem0=Мудрый Всеотец свою милость проявляя,
-item.odinRing.poem1=Дарами жизни и божественности наделяет,
-item.odinRing.poem2=С препятствием смерти в одной лишь руке
-item.odinRing.poem3=Святую Троицу они олицетворяют.
-
-item.lokiRing.poem0=Рук свободных тайное движение,
-item.lokiRing.poem1=Один раз в центре, затем вокруг,
-item.lokiRing.poem2=Потом к началу для завершения
-item.lokiRing.poem3=И сила создания проявится вдруг.
-
-item.aesirRing.poem0=Силы высших богов Асгарда
-item.aesirRing.poem1=Представляют части одного,
-item.aesirRing.poem2=И при объединении воедино
-item.aesirRing.poem3=Над ними не будет никого.
+item.infiniteFruit.poem0=Плод запретного сада
+item.infiniteFruit.poem1=От голода вечно спасает,
+item.infiniteFruit.poem2=Мякоть свою восстанавливая,
+item.infiniteFruit.poem3=Молодость себе возвращает.
 
 item.kingKey.poem0=Все сокровища древнего царства
 item.kingKey.poem1=Хранит этот ключ по сей день,
 item.kingKey.poem2=Лишь достойный короля героев
 item.kingKey.poem3=Получит право им владеть.
 
-item.FlugelSoul.poem0=Взгляд назад во времени,
-item.FlugelSoul.poem1=В пространстве движение,
-item.FlugelSoul.poem2=Лишь суть ангела смерти
-item.FlugelSoul.poem3=Даёт власть перемещения
+item.lokiRing.poem0=Рук свободных тайное движение,
+item.lokiRing.poem1=Один раз в центре, затем вокруг,
+item.lokiRing.poem2=Потом к началу для завершения
+item.lokiRing.poem3=И сила создания проявится вдруг.
+
+item.odinRing.poem0=Мудрый Всеотец свою милость проявляя,
+item.odinRing.poem1=Дарами жизни и божественности наделяет,
+item.odinRing.poem2=С препятствием смерти в одной лишь руке
+item.odinRing.poem3=Святую Троицу они олицетворяют.
+
+item.SpearSubspace.poem0=Копьё героя легендарного
+item.SpearSubspace.poem1=Лучами света армии испепеляет,
+item.SpearSubspace.poem2=Энергию беря из подпространства
+item.SpearSubspace.poem3=Границы мироздания уничтожает.
+
+item.MoonlightBow.poem0=Стрелок умелый и отважный
+item.MoonlightBow.poem1=К богам о помощи взывает,
+item.MoonlightBow.poem2=От солнца и охоты близнецов
+item.MoonlightBow.poem3=Благую силу получает.
 
 item.TankMask.poem0=Пеленой ужаса неподдельного
 item.TankMask.poem1=Взгляд маски сей одолевает,
 item.TankMask.poem2=И гневом жертва одержимая
 item.TankMask.poem3=Огромной силой обладает.
+
+item.thorRing.poem0=Сила Бога-Громовержца
+item.thorRing.poem1=Разрушит основу Терры,
+item.thorRing.poem2=С мощью непреодолимой
+item.thorRing.poem3=Даст начало новой эры.
 
 ####################################################___ЭЛЬФИЙСКАЯ ИСТОРИЯ___####################################################
 
@@ -609,3 +628,276 @@ spell.waterbreathing.words=§aДай нам жизнь рыбы и позвол�
 spell.wellolife.words=§bКолодец жизни
 #
 spell.windblades.words=§aКосы ветра
+
+################################################################################################################################
+######################################################___BOTANICAL ADDONS___####################################################
+################################################################################################################################
+
+itemGroup.Iridescence=Iridescence
+
+death.attack.alfheim.lackOfFaith=%1$s не пережил кризис веры
+misc.alfheim.lackOfFaith=&cСнятие этого ожерелья может навредить Вашему здоровью.&r
+misc.alfheim.crisisOfFaith=&4Снятие этого ожерелья может стать для Вас смертным приговором.&r
+misc.alfheim.healthWarning=&cУтрата веры в богов может быть смертельной...&r
+misc.alfheim.healthDanger=&4Утрата веры в богов может быть &lсмертельной&4...&r
+
+misc.alfheim.color.0=Белый
+misc.alfheim.color.1=Оранжевый
+misc.alfheim.color.2=Пурпурный
+misc.alfheim.color.3=Голубой
+misc.alfheim.color.4=Жёлтый
+misc.alfheim.color.5=Лаймовый
+misc.alfheim.color.6=Розовый
+misc.alfheim.color.7=Серый
+misc.alfheim.color.8=Светло-серый
+misc.alfheim.color.9=Бирюзовый
+misc.alfheim.color.10=Фиолетовый
+misc.alfheim.color.11=Синий
+misc.alfheim.color.12=Коричневый
+misc.alfheim.color.13=Зелёный
+misc.alfheim.color.14=Красный
+misc.alfheim.color.15=Чёрный
+misc.alfheim.color.16=Биврёст
+misc.alfheim.color.17=Аврора
+
+misc.alfheim.customSize=Радиус: %1$s блоков
+
+tc.aspect.tincturem=Цвет, Радужность
+tc.aspect.help.tincturem=радужные вещи
+
+misc.alfheim.creative=Только для творческого режима
+misc.alfheim.contains=Содержит:
+misc.alfheim.containsNothing=Пусто
+
+misc.alfheim.wayOfUndoing=&4Вы чувствуете, что Ваша душа покидает Ваше тело...
+misc.alfheim.youAreNotTheChosenOneMale=Ты не он.
+misc.alfheim.youAreNotTheChosenOneFemale=Ты не она.
+
+misc.alfheim.wline1=Узрев пустыни лик перед собой,
+misc.alfheim.wline2=На грани мира воспылав душой,
+misc.alfheim.wline3=Он закричал судьбе наперебой!
+
+misc.alfheim.tline1=И меж людской толпы умело проскользнув,
+misc.alfheim.tline2=К лазурным небесам подняв души клинок,
+misc.alfheim.tline3=Она воскликнула о развращённости вокруг!
+
+attribute.name.alfheim.godSlayingAttackDamage=к когнитивному урону
+
+death.attack.alfheim.oculus.player=%1$s был убит идеальным решением %2$s
+
+misc.alfheim:temperature.0=Предупреждение о переохлаждении
+misc.alfheim:temperature.1=Мучительно холодно
+misc.alfheim:temperature.2=Морозно
+misc.alfheim:temperature.3=Морозно
+misc.alfheim:temperature.4=Холодно
+misc.alfheim:temperature.5=Холодно
+misc.alfheim:temperature.6=Прохладно
+misc.alfheim:temperature.7=Прохладно
+misc.alfheim:temperature.8=Умеренно
+misc.alfheim:temperature.9=Тепло
+misc.alfheim:temperature.10=Тепло
+misc.alfheim:temperature.11=Жарко
+misc.alfheim:temperature.12=Жарко
+misc.alfheim:temperature.13=Обжигающе
+misc.alfheim:temperature.14=Обжигающе
+misc.alfheim:temperature.15=Палящая жара
+misc.alfheim:temperature.16=Жарче, чем в преисподней
+
+item.alfheim:wiltedLotus0.name=Увядший лотос
+item.alfheim:wiltedLotus1.name=Мёртвый лотос
+misc.alfheim:lotusDesc=Испускает диссонирующие магические вибрации
+
+item.alfheim:attributionBauble0.name=Священный символ
+item.alfheim:attributionBauble1.name=Кулон призыва Картофелеголова
+
+item.alfheim:starPlacer.name=Застывшая звезда
+tile.alfheim:star.name=Застывшая звезда
+
+item.alfheim:colorfulSkyDirtRod.name=Жезл дрожащих равнин
+item.alfheim:lightningRod.name=Жезл грозовых вершин
+item.alfheim:interdictionRod.name=Жезл бурного моря
+item.alfheim:rainbowLightRod.name=Жезл призматического озера
+
+item.alfheim:priestEmblem0.name=Эмблема жреца: Тор
+item.alfheim:priestEmblem1.name=Эмблема жреца: Сиф
+item.alfheim:priestEmblem2.name=Эмблема жреца: Ньёрд
+item.alfheim:priestEmblem3.name=Эмблема жреца: Локи
+item.alfheim:aesirEmblem.name=Эмблема жреца: &6Асы&r
+
+item.alfheim:resource0.name=Грозовая ветвь
+item.alfheim:resource1.name=Грозовые щепки
+item.alfheim:resource2.name=Адская ветвь
+item.alfheim:resource3.name=Адские щепки
+item.alfheim:resource4.name=Опалённый древесный уголь
+item.alfheim:resource5.name=Светящийся кварц
+item.alfheim:resource6.name=Цветочный порошок Биврёста
+item.alfheim:resource7.name=Мистический лепесток Биврёста
+
+item.alfheim:toolbelt.name=Пояс ботаника
+
+entity.alfheim:VoidCreeper.name=Манапоглощающий крипер
+entity.alfheim:GrieferCreeper.name=Сверхкрипер
+
+tile.alfheim:barrier.name=Барьер
+
+tile.alfheim:itemDisplay0.name=Предметная платформа из манастали
+tile.alfheim:itemDisplay1.name=Предметная платформа из террастали
+tile.alfheim:itemDisplay2.name=Предметная платформа из элементия
+
+tile.alfheim:rainbowDirt.name=Цветная земля
+tile.alfheim:rainbowPetalBlock.name=Блок лепестков Биврёста
+tile.alfheim:coloredDirt.name=Цветная земля
+tile.alfheim:rainbowLeaves.name=Цветная листва
+tile.alfheim:irisLeaves.name=Цветная листва
+tile.alfheim:rainbowWood.name=Цветная древесина
+tile.alfheim:irisWood.name=Цветная древесина
+tile.alfheim:irisSapling.name=Цветной саженец
+tile.alfheim:rainbowPlanks.name=Цветные доски
+tile.alfheim:irisPlanks.name=Цветные доски
+tile.alfheim:rainbowGrass0.name=Цветная трава
+tile.alfheim:rainbowGrass1.name=Цветная трава
+tile.alfheim:rainbowGrass2.name=Мистический цветок Биврёста
+tile.alfheim:rainbowGrass3.name=Светящийся цветок Биврёста
+tile.alfheim:rainbowGrass4.name=Закопанный лепесток Биврёста
+tile.alfheim:rainbowMushroom.name=Светящийся гриб Биврёста
+tile.alfheim:irisGrass.name=Цветная трава
+tile.alfheim:rainbowDoubleGrass0.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass1.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass2.name=Высокий мистический цветок Биврёста
+tile.alfheim:irisDoubleGrass.name=Цветная высокая трава
+
+alfheim.nei.treeCrafter=Древесный наполнитель
+tile.alfheim:treeCrafter.name=Древесный наполнитель
+tile.alfheim:treeCrafterRB.name=Древесный наполнитель
+
+item.alfheim:irisSeeds.name=Цветное семя
+
+tile.alfheim:invisibleFlame.name=Фантомная вспышка маны
+tile.alfheim:rainbowFlame.name=Радужная вспышка маны
+item.botania:lensPhantomLight.short=Фантомная вспышка
+
+item.alfheim:livingwoodFunnel.name=Воронка из жизнедерева
+tile.alfheim:livingwoodFunnel.name=Воронка из жизнедерева
+
+item.alfheim:coatOfArms0.name=Чилийский щит
+item.alfheim:coatOfArms1.name=Французский щит
+item.alfheim:coatOfArms2.name=Японский щит
+item.alfheim:coatOfArms3.name=Германский щит
+item.alfheim:coatOfArms4.name=Греческий щит
+item.alfheim:coatOfArms5.name=Исландский щит
+item.alfheim:coatOfArms6.name=Ирландский щит
+item.alfheim:coatOfArms7.name=Израильский щит
+item.alfheim:coatOfArms8.name=Ямайский щит
+item.alfheim:coatOfArms9.name=Сингапурский щит
+item.alfheim:coatOfArms10.name=Южно-Африканский щит
+item.alfheim:coatOfArms11.name=Испанский щит
+item.alfheim:coatOfArms12.name=Швейцарский щит
+item.alfheim:coatOfArms13.name=Техасский щит
+item.alfheim:coatOfArms14.name=Украинский щит
+item.alfheim:coatOfArms15.name=Американский щит
+item.alfheim:coatOfArms16.name=Сказочный щит
+item.alfheim:coatOfArms17.name=Парижский щит
+
+item.alfheim:colorOverride.name=Кольцо художника
+
+item.alfheim:axeRevelation.name=Священное лезвие Откровения
+item.alfheim:reactionDagger.name=Кинжал безупречной Души
+
+tile.alfheim:kindling.name=Воспламенитель
+
+tile.alfheim:rainbowPlanksSlab.name=Цветная плита
+tile.alfheim:rainbowPlanksSlabFull.name=Цветная плита
+tile.alfheim:irisPlanksSlab.name=Цветная плита
+tile.alfheim:irisPlanksSlabFull.name=Цветная плита
+tile.alfheim:lightningPlanksSlab.name=Плита из грозовой древесины
+tile.alfheim:lightningPlanksSlabFull.name=Плита из грозовой древесины
+tile.alfheim:netherPlanksSlab.name=Плита из адской древесины
+tile.alfheim:netherPlanksSlabFull.name=Плита из адской древесины
+tile.alfheim:sealingPlanksSlab.name=Плита из уплотнённой древесины
+tile.alfheim:sealingPlanksSlabFull.name=Плита из уплотнённой древесины
+
+tile.alfheim:amplifier.name=Усилитель звука
+
+tile.alfheim:rainbowPlanksStairs.name=Цветные ступеньки
+tile.alfheim:irisPlanksStairs.name=Цветные ступеньки
+tile.alfheim:lightningPlanksStairs.name=Ступеньки из грозовой древесины
+tile.alfheim:netherPlanksStairs.name=Ступеньки из адской древесины
+tile.alfheim:sealingPlanksStairs.name=Ступеньки из уплотнённой древесины
+
+tile.alfheim:lightningSapling.name=Саженец грозового дерева
+tile.alfheim:lightningWood.name=Грозовая древесина
+tile.alfheim:lightningLeaves.name=Листва грозового дерева
+tile.alfheim:lightningPlanks.name=Доски из грозовой древесины
+
+tile.alfheim:netherSapling.name=Саженец адского дерева
+tile.alfheim:netherWood.name=Адская древесина
+tile.alfheim:netherLeaves.name=Листва адского дерева
+tile.alfheim:netherPlanks.name=Доски из адской древесины
+
+tile.alfheim:sealingSapling.name=Саженец уплотнённого дерева
+tile.alfheim:sealingWood.name=Уплотнённая древесина
+tile.alfheim:sealingLeaves.name=Листва уплотнённого дерева
+tile.alfheim:sealingPlanks.name=Доски из уплотнённой древесины
+
+tile.alfheim:altLeaves0.name=Сухие листья
+tile.alfheim:altLeaves1.name=Золотые листья
+tile.alfheim:altLeaves2.name=Яркие листья
+tile.alfheim:altLeaves3.name=Выжженные листья
+tile.alfheim:altLeaves4.name=Настоянные листья
+tile.alfheim:altLeaves5.name=Видоизменённые листья
+tile.alfheim:altLeaves8.name=Сухие листья
+tile.alfheim:altLeaves9.name=Золотые листья
+tile.alfheim:altLeaves10.name=Яркие листья
+tile.alfheim:altLeaves11.name=Выжженные листья
+tile.alfheim:altLeaves12.name=Настоянные листья
+tile.alfheim:altLeaves13.name=Видоизменённые листья
+
+tile.alfheim:altPlanks0.name=Сухие доски
+tile.alfheim:altPlanks1.name=Золотые доски
+tile.alfheim:altPlanks2.name=Яркие доски
+tile.alfheim:altPlanks3.name=Выжженные доски
+tile.alfheim:altPlanks4.name=Настоянные доски
+tile.alfheim:altPlanks5.name=Видоизменённые доски
+
+tile.alfheim:altWood00.name=Сухая древесина
+tile.alfheim:altWood01.name=Золотая древесина
+tile.alfheim:altWood02.name=Яркая древесина
+tile.alfheim:altWood03.name=Выжженная древесина
+tile.alfheim:altWood10.name=Настоянная древесина
+tile.alfheim:altWood11.name=Видоизменённая древесина
+
+tile.alfheim:altPlanksSlab0.name=Плита из сухой древесины
+tile.alfheim:altPlanksSlab1.name=Плита из золотой древесины
+tile.alfheim:altPlanksSlab2.name=Плита из яркой древесины
+tile.alfheim:altPlanksSlab3.name=Плита из выжженной древесины
+tile.alfheim:altPlanksSlab4.name=Плита из настоянной древесины
+tile.alfheim:altPlanksSlab5.name=Плита из видоизменённой древесины
+
+tile.alfheim:altPlanksSlabFull0.name=Плита из сухой древесины
+tile.alfheim:altPlanksSlabFull1.name=Плита из золотой древесины
+tile.alfheim:altPlanksSlabFull2.name=Плита из яркой древесины
+tile.alfheim:altPlanksSlabFull3.name=Плита из выжженной древесины
+tile.alfheim:altPlanksSlabFull4.name=Плита из настоянной древесины
+tile.alfheim:altPlanksSlabFull5.name=Плита из видоизменённой древесины
+
+tile.alfheim:altPlanksStairs0.name=Ступеньки из сухой древесины
+tile.alfheim:altPlanksStairs1.name=Ступеньки из золотой древесины
+tile.alfheim:altPlanksStairs2.name=Ступеньки из яркой древесины
+tile.alfheim:altPlanksStairs3.name=Ступеньки из выжженной древесины
+tile.alfheim:altPlanksStairs4.name=Ступеньки из настоянной древесины
+tile.alfheim:altPlanksStairs5.name=Ступеньки из видоизменённой древесины
+
+tile.alfheim:irisLamp.name=Цветная лампа
+
+tile.alfheim:quartzStairsShimmer.name=Ступеньки из светящегося кварца
+tile.alfheim:quartzSlabShimmerHalf.name=Плита из светящегося кварца
+tile.alfheim:quartzSlabShimmerFull.name=Плита из светящегося кварца
+tile.alfheim:blockShimmerQuartz.name=Блок светящегося кварца
+tile.alfheim:chiseledShimmerQuartz.name=Резной блок светящегося кварца
+tile.alfheim:pillarShimmerQuartz.name=Колонна из светящегося кварца
+
+tile.alfheim:crysanthermum.name=Кризантерма
+tile.botania:flower.crysanthermum.name=Кризантерма
+tile.alfheim:crysanthermum.lore=Провернуть термостат
+
+alfheim.potion.manaVoid=Истощение маны

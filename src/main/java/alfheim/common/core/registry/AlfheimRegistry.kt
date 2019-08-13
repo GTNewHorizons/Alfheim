@@ -32,7 +32,6 @@ import cpw.mods.fml.common.IWorldGenerator
 import cpw.mods.fml.common.registry.EntityRegistry
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.EnumCreatureType
-import net.minecraft.entity.ai.attributes.*
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
@@ -44,14 +43,9 @@ import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.lib.LibBlockNames
-import kotlin.math.*
 
 // FIXME decentralize
 object AlfheimRegistry {
-	
-	val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime.toDouble()) {
-		override fun clampValue(d: Double) = max(0.0, min(AlfheimConfig.flightTime.toDouble(), d))
-	}.setShouldWatch(true)
 	
 	lateinit var berserk: Potion
 	lateinit var bleeding: Potion

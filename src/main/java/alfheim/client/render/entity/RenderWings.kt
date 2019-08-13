@@ -1,9 +1,9 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.flight
 import alfheim.common.core.util.AlfheimConfig
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -22,7 +22,7 @@ object RenderWings {
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		if (!AlfheimConfig.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return
-		if (EnumRace.getRace(player) == EnumRace.HUMAN) return
+		if (player.race == EnumRace.HUMAN) return
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) return
 		if (player.commandSenderName == "AlexSocol") return
 		
@@ -36,7 +36,7 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		EnumRace.getRace(player).glColorA(if (ElvenFlightHelper[player] / ElvenFlightHelper[player] < 0.05) min(0.75 + cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
+		player.race.glColorA(if (player.flight / player.flight < 0.05) min(0.75 + cos((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
@@ -101,11 +101,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer): ResourceLocation? {
-		return LibResourceLocations.wings[EnumRace.getRaceID(player)]
-	}
+	fun getPlayerWingTexture(player: EntityPlayer) = LibResourceLocations.wings[player.raceID]
 	
-	fun getPlayerIconTexture(player: EntityPlayer): ResourceLocation {
-		return LibResourceLocations.icons[EnumRace.getRaceID(player)]
-	}
+	fun getPlayerIconTexture(player: EntityPlayer) = LibResourceLocations.icons[player.raceID]
 }

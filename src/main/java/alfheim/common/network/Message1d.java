@@ -13,6 +13,6 @@ public class Message1d extends ASJPacket {
 	}
 	
 	public enum m1d {
-		DEATH_TIMER, TIME_STOP_REMOVE, KNOWLEDGE, CL_SLOWDOWN
+		CL_SLOWDOWN, DEATH_TIMER, ELVEN_FLIGHT_MAX, KNOWLEDGE, TIME_STOP_REMOVE
 	}
 }

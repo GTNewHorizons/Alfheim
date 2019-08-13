@@ -3,7 +3,7 @@ package alfheim.client.render.world
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.client.gui.GUIDeathTimer
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells.*
 import alfheim.common.core.registry.AlfheimRegistry
@@ -242,7 +242,7 @@ object SpellEffectHandlerClient {
 	fun onDeathTick(target: EntityLivingBase) {
 		if (AlfheimCore.enableMMO) {
 			var c = 0xFFFFFF
-			if (target is EntityPlayer) c = EnumRace.getRace(target).rgbColor
+			if (target is EntityPlayer) c = target.race.rgbColor
 			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - if (Minecraft.getMinecraft().thePlayer === target) 1.5 else 0.0, target.posZ, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.5).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), (Math.random() * 0.025).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), 2f)
 		}
 	}

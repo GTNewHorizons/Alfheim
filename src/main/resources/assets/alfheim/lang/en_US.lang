@@ -845,6 +845,12 @@ tile.alfheim:altLeaves2.name=Vivid Leaves
 tile.alfheim:altLeaves3.name=Scorched Leaves
 tile.alfheim:altLeaves4.name=Infused Leaves
 tile.alfheim:altLeaves5.name=Mutated Leaves
+tile.alfheim:altLeaves8.name=Dry Leaves
+tile.alfheim:altLeaves9.name=Golden Leaves
+tile.alfheim:altLeaves10.name=Vivid Leaves
+tile.alfheim:altLeaves11.name=Scorched Leaves
+tile.alfheim:altLeaves12.name=Infused Leaves
+tile.alfheim:altLeaves13.name=Mutated Leaves
 
 tile.alfheim:altPlanks0.name=Dry Planks
 tile.alfheim:altPlanks1.name=Golden Planks

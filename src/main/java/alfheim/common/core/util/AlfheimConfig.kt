@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.RenderPostShaders
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.registry.AlfheimRegistry
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -94,7 +95,7 @@ object AlfheimConfig {
 	// Elven Story
 	var bothSpawnStructures		= false
 	var enableWingsNonAlfheim	= true
-	var flightTime				= 1200
+	var flightTime				= 12000
 	val zones					= Array(9) { Vector3(0.0) }
 	
 	// MMO

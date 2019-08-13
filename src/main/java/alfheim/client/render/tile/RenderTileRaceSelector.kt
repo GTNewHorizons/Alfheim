@@ -99,7 +99,7 @@ class RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 				val spd = 0.5
-				EnumRace.values()[tile.rotation + 1].glColorA(1.0)
+				EnumRace[tile.rotation + 1].glColorA(1.0)
 				
 				glTranslated(0.0, -0.15, 0.0)
 				
@@ -150,7 +150,7 @@ class RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				val s = 1f / 64
 				glScalef(s, s, s)
 				
-				val race = EnumRace.values()[tile.rotation + 1]
+				val race = EnumRace[tile.rotation + 1]
 				val text = StatCollector.translateToLocal("race.$race.name")
 				val width = font.getStringWidth(text) / -2
 				val w = -width.toDouble()

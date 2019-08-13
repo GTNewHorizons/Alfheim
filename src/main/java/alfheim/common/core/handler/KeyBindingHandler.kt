@@ -3,7 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem
@@ -16,11 +16,11 @@ import net.minecraftforge.common.MinecraftForge
 object KeyBindingHandler {
 	
 	fun enableFlight(player: EntityPlayerMP, boost: Boolean) {
-		if (!AlfheimCore.enableElvenStory || EnumRace.getRace(player) == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
+		if (!AlfheimCore.enableElvenStory || player.race == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
 		player.capabilities.allowFlying = true
 		player.capabilities.isFlying = !player.capabilities.isFlying
 		player.sendPlayerAbilities()
-		if (boost) ElvenFlightHelper.sub(player, 300.0)
+		if (boost) ElvenFlightHelper.sub(player, 300)
 	}
 	
 	fun atack(player: EntityPlayerMP) {

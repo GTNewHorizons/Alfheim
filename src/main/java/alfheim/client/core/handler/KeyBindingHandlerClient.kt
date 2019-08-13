@@ -3,12 +3,12 @@ package alfheim.client.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
@@ -81,9 +81,9 @@ object KeyBindingHandlerClient {
 				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.keyCode, false)
 				toggleAlt = true
 				toggleJump = toggleAlt
-				val boost = ElvenFlightHelper[player] >= 300
+				val boost = player.flight >= 300
 				toggleFlight(player, boost)
-				if (boost && EnumRace.getRace(Minecraft.getMinecraft().thePlayer) != EnumRace.HUMAN) {
+				if (boost && Minecraft.getMinecraft().thePlayer.race != EnumRace.HUMAN) {
 					player.motionY += 3.0
 				}
 			} else if (toggleJump && toggleAlt) {
@@ -134,7 +134,7 @@ object KeyBindingHandlerClient {
 				if (!toggleUp) {
 					toggleUp = true
 					raceID = if (++raceID > 9) 1 else raceID
-					val size = AlfheimAPI.getSpellsFor(EnumRace.getByID(raceID.toDouble())).size
+					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
 					spellID = if (size == 0) 0 else spellID % size
 				}
 			} else if (toggleUp) {
@@ -145,7 +145,7 @@ object KeyBindingHandlerClient {
 				if (!toggleDown) {
 					toggleDown = true
 					raceID = if (--raceID < 1) 9 else raceID
-					val size = AlfheimAPI.getSpellsFor(EnumRace.getByID(raceID.toDouble())).size
+					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
 					spellID = if (size == 0) 0 else spellID % size
 				}
 			} else if (toggleDown) {
@@ -155,7 +155,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 				if (!toggleRight) {
 					toggleRight = true
-					val size = AlfheimAPI.getSpellsFor(EnumRace.getByID(raceID.toDouble())).size
+					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
 					spellID = if (size == 0) 0 else ++spellID % size
 				}
 			} else if (toggleRight) {
@@ -165,7 +165,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 				if (!toggleLeft) {
 					toggleLeft = true
-					val size = AlfheimAPI.getSpellsFor(EnumRace.getByID(raceID.toDouble())).size
+					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
 					spellID = if (size == 0) 0 else (--spellID + size) % size
 				}
 			} else if (toggleLeft) {

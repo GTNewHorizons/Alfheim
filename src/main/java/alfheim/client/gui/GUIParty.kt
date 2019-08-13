@@ -2,11 +2,11 @@ package alfheim.client.gui
 
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.*
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderWings
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
@@ -69,7 +69,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			mc.renderEngine.bindTexture(LibResourceLocations.health)
 			drawTexturedModalRect(0, 0, 0, 0, 200, 40)
-			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(EnumRace.getRace(player).rgbColor, 255))
+			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(player.race.rgbColor, 255))
 			drawTexturedModalRect(0, 0, 0, 40, 38, 40)
 			
 			// ################ health: ################
@@ -230,7 +230,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					hpm = -1f
 					hp = hpm
 				} else {
-					if (l is EntityPlayer) col = EnumRace.getRace(l as EntityPlayer).rgbColor
+					if (l is EntityPlayer) col = (l as EntityPlayer).race.rgbColor
 					if (l is INpc) {
 						color = -0xff5501
 						col = color
@@ -403,7 +403,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				if (l is EntityPlayer) {
 					color = 0xFFFFFF
-					col = EnumRace.getRace(l as EntityPlayer).rgbColor
+					col = (l as EntityPlayer).race.rgbColor
 				}
 				if (l is INpc) {
 					color = -0xff5501
@@ -539,7 +539,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow)
 				
-				val mod = ElvenFlightHelper[mc.thePlayer].mfloor() / ElvenFlightHelper.max
+				val mod = if (mc.thePlayer.race == EnumRace.HUMAN) 1.0 else mc.thePlayer.flight.mfloor() / ElvenFlightHelper.max
 				val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
 				glColor4d(1.0, 1.0, 1.0, if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 				

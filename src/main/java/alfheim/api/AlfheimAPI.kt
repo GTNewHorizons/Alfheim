@@ -8,7 +8,6 @@ import alfheim.api.spell.SpellBase
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
-import net.minecraft.entity.ai.attributes.*
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 import org.apache.logging.log4j.Level
@@ -20,10 +19,6 @@ object AlfheimAPI {
 	val ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
 	val ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
 	val REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 30)!!
-	
-	val RACE: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0) {
-		override fun clampValue(d: Double) = d
-	}.setShouldWatch(true)
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()
@@ -118,7 +113,7 @@ object AlfheimAPI {
 	
 	fun getSpellByIDs(raceID: Int, spellID: Int): SpellBase? {
 		var i = 0
-		for (sb in getSpellsFor(EnumRace.getByID(raceID.toDouble()))) if (i++ == spellID) return sb
+		for (sb in getSpellsFor(EnumRace[raceID])) if (i++ == spellID) return sb
 		return null
 	}
 	

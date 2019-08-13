@@ -3,7 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.item.AlfheimItems
@@ -95,7 +95,7 @@ class TileAlfheimPortal: TileMod() {
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.toDouble(), coords.posY.toDouble(), coords.posZ.toDouble())
 						} else {
 							if (AlfheimCore.enableElvenStory) {
-								val race = EnumRace.getRaceID(player) - 1 // for array length
+								val race = player.raceID - 1 // for array length
 								if (race in 0..8)
 									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].x, AlfheimConfig.zones[race].y, AlfheimConfig.zones[race].z)
 								else {

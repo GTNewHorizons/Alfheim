@@ -3,14 +3,14 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
 import alfheim.common.core.handler.CardinalSystem.transfer
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.*
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
@@ -68,8 +68,9 @@ EventHandler {
 		if (e.player is EntityPlayerMP) {
 			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimCore.enableElvenStory) 1 else 0).toDouble(), (if (AlfheimCore.enableMMO) 1 else 0).toDouble()), e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.CL_SLOWDOWN, if (AlfheimConfig.slowDownClients) 1.0 else 0.0), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfig.flightTime.toDouble()), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.CL_SLOWDOWN, (if (AlfheimConfig.slowDownClients) 1 else 0).toDouble()), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253.0, 0.5)
 					e.player.triggerAchievement(AlfheimAchievements.alfheim)
@@ -146,9 +147,8 @@ EventHandler {
 	@SubscribeEvent
 	fun onClonePlayer(e: PlayerEvent.Clone) {
 		if (AlfheimCore.enableElvenStory) {
-			val r = EnumRace.getRaceID(e.original)
-			EnumRace.setRaceID(e.entityPlayer, r.toDouble())
-			if (!e.wasDeath) ElvenFlightHelper[e.entityPlayer] = ElvenFlightHelper[e.original]
+			e.entityPlayer.raceID = e.original.raceID
+			e.entityPlayer.flight = if (e.wasDeath) 0.0 else e.original.flight
 		}
 	}
 	
@@ -156,7 +156,7 @@ EventHandler {
 	fun onPlayerRespawn(e: PlayerRespawnEvent) {
 		if (AlfheimCore.enableElvenStory) {
 			if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return
-			e.player.capabilities.allowFlying = EnumRace.getRace(e.player) != EnumRace.HUMAN
+			e.player.capabilities.allowFlying = e.player.race != EnumRace.HUMAN
 		}
 	}
 	
@@ -164,8 +164,8 @@ EventHandler {
 	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
-				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 0.0, EnumRace.getRaceID(e.player).toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, ElvenFlightHelper[e.player]), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 0.0, e.player.raceID.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message2d(m2d.ATTRIBUTE, 1.0, e.player.flight), e.player as EntityPlayerMP)
 			}
 		}
 	}
@@ -200,7 +200,7 @@ EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (AlfheimCore.enableElvenStory && e.entityLiving is EntityPlayer && e.source.getDamageType() == DamageSource.fall.getDamageType() && EnumRace.getRace(e.entityLiving as EntityPlayer) != EnumRace.HUMAN) {
+		if (AlfheimCore.enableElvenStory && e.entityLiving is EntityPlayer && e.source.getDamageType() == DamageSource.fall.getDamageType() && (e.entityLiving as EntityPlayer).race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
@@ -365,24 +365,34 @@ EventHandler {
 	fun onPlayerUpdate(e: PlayerTickEvent) {
 		if (e.phase == Phase.START) return
 		val player = e.player
-		
+
 //		player.rotationYaw = 0f
-//		player.rotationPitch = -60f
+//		player.rotationPitch = 0f
 		
-		if (!player.capabilities.isCreativeMode) {
-			if (AlfheimCore.enableElvenStory) {
+		if (AlfheimCore.enableElvenStory) {
+			if (!player.capabilities.isCreativeMode) {
 				if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
-					if (ElvenFlightHelper[player] >= 0 && ElvenFlightHelper[player] <= ElvenFlightHelper.max) {
+					if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 						if (player.capabilities.isFlying) {
-							ElvenFlightHelper.sub(player, (if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1).toDouble())
+							ElvenFlightHelper.sub(player, if (player.isSprinting) 4 else if (player.motionX != 0.0 || player.motionY > 0.0 || player.motionZ != 0.0) 2 else 1)
 							if (player.isSprinting) player.moveFlying(0f, 1f, 0.01f)
-						} else
-							ElvenFlightHelper.add(player, (if (ElvenFlightHelper[player] < ElvenFlightHelper.max) 1 else 0).toDouble())
+						} else {
+							ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
+						}
 					}
 					
-					if (ElvenFlightHelper[player] <= 0) player.capabilities.isFlying = false
-				} else ElvenFlightHelper.add(player, (if (ElvenFlightHelper[player] < ElvenFlightHelper.max) 1 else 0).toDouble())
+					if (player.flight <= 0) player.capabilities.isFlying = false
+				} else ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
+			} else {
+				player.flight = ElvenFlightHelper.max
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	fun onPlayerSleeped(e: PlayerWakeUpEvent) {
+		if (AlfheimCore.enableElvenStory) {
+			e.entityPlayer.flight = ElvenFlightHelper.max
 		}
 	}
 	

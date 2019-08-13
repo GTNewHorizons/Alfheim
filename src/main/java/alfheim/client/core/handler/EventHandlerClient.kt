@@ -5,11 +5,10 @@ import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.raceID
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.client.model.entity.ModelBipedNew
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
@@ -194,8 +193,7 @@ class EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	fun onClonePlayer(e: PlayerEvent.Clone) {
 		if (AlfheimCore.enableElvenStory) {
-			val r = EnumRace.getByID(e.original.getEntityAttribute(AlfheimAPI.RACE).attributeValue)
-			e.entityPlayer.getEntityAttribute(AlfheimAPI.RACE).baseValue = r.ordinal.toDouble()
+			e.entityPlayer.raceID = e.original.raceID
 		}
 	}
 	

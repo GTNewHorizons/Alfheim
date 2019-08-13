@@ -13,6 +13,8 @@ import java.io.*
  */
 object ASJShaderHelper {
 	
+	var crashOnError = false
+	
 	private const val FRAG = GL_FRAGMENT_SHADER
 	private const val VERT = GL_VERTEX_SHADER
 	
@@ -45,6 +47,15 @@ object ASJShaderHelper {
 	 * @param fragLocation Fragment shader location
 	 */
 	fun createProgram(vertLocation: String?, fragLocation: String?): Int {
+		return try {
+			createProgramInner(vertLocation, fragLocation)
+		} catch (e: Throwable) {
+			if (crashOnError) throw e
+			else 0
+		}
+	}
+	
+	private fun createProgramInner(vertLocation: String?, fragLocation: String?): Int {
 		if (!OpenGlHelper.shadersSupported) return 0
 		
 		val vertID: Int

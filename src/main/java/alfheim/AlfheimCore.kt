@@ -110,6 +110,7 @@ class AlfheimCore {
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
 		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save)
+		AlfheimConfig.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
 		CommandDimTP.register(e)

@@ -3,7 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
@@ -14,6 +14,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class TheRodOfTheDebug: Item() {
+	
 	init {
 		creativeTab = AlfheimCore.alfheimTab
 		setMaxStackSize(1)
@@ -50,8 +51,8 @@ class TheRodOfTheDebug: Item() {
 					
 					//					ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 				} else {
-					EnumRace.setRaceID(player, ((EnumRace.getRace(player).ordinal + 1) % 11).toDouble())
-					ASJUtilities.chatLog(EnumRace.getRace(player).ordinal.toString() + " - " + EnumRace.getRace(player), player)
+					player.raceID = (player.race.ordinal + 1) % 11
+					ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
 				}
 			}
 		} catch (e: Throwable) {

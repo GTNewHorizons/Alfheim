@@ -1,8 +1,9 @@
 package alfheim.api.entity
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.api.AlfheimAPI
+import alfheim.api.ModInfo
 import alfheim.common.core.util.*
+import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
 
@@ -27,6 +28,10 @@ enum class EnumRace {
 		StatCollector.translateToLocal("race." + toString() + ".name")!!
 	
 	companion object {
+		
+		private val RACE: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0) {
+			override fun clampValue(d: Double) = d
+		}.setShouldWatch(true)
 		
 		fun getRGBColor(id: Double): Int {
 			//return ASJUtilities.enumColorToRGB(getEnumColor(id));
@@ -69,25 +74,27 @@ enum class EnumRace {
 			org.lwjgl.opengl.GL11.glColor4ub((color shr 16 and 0xFF).toByte(), (color shr 8 and 0xFF).toByte(), (color and 0xFF).toByte(), (color shr 24 and 0xFF).toByte())
 		}
 		
-		fun getByID(id: Double) =
-			if (0 > id || id > EnumRace.values().size) HUMAN else values()[MathHelper.floor_double(id)]
+		private fun getByID(id: Double) =
+			if (0 > id || id > EnumRace.values().size) HUMAN else values()[id.mfloor()]
 		
 		fun ensureExistance(player: EntityPlayer) {
-			if (player.getAttributeMap().getAttributeInstance(AlfheimAPI.RACE) == null) registerRace(player)
+			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
 		}
 		
-		fun getRace(player: EntityPlayer): EnumRace {
+		operator fun get(id: Int) = getByID(id.toDouble())
+		
+		operator fun get(player: EntityPlayer): EnumRace {
 			ensureExistance(player)
-			return getByID(player.getEntityAttribute(AlfheimAPI.RACE).attributeValue)
+			return getByID(player.getEntityAttribute(RACE).attributeValue)
 		}
 		
 		fun getRaceID(player: EntityPlayer): Int {
 			ensureExistance(player)
-			return MathHelper.floor_double(player.getEntityAttribute(AlfheimAPI.RACE).attributeValue)
+			return MathHelper.floor_double(player.getEntityAttribute(RACE).attributeValue)
 		}
 		
 		fun selectRace(player: EntityPlayer, race: EnumRace) {
-			setRace(player, race)
+			set(player, race)
 			player.capabilities.allowFlying = true
 			player.sendPlayerAbilities()
 			
@@ -96,18 +103,30 @@ enum class EnumRace {
 			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, x, y, z)
 		}
 		
-		fun setRace(player: EntityPlayer, race: EnumRace) {
+		operator fun set(player: EntityPlayer, race: EnumRace) {
 			ensureExistance(player)
-			player.getEntityAttribute(AlfheimAPI.RACE).baseValue = race.ordinal.toDouble()
+			player.getEntityAttribute(RACE).baseValue = race.ordinal.toDouble()
 		}
 		
 		fun setRaceID(player: EntityPlayer, raceID: Double) {
-			player.getEntityAttribute(AlfheimAPI.RACE).baseValue = raceID
+			player.getEntityAttribute(RACE).baseValue = raceID
 		}
 		
 		private fun registerRace(player: EntityPlayer) {
-			player.getAttributeMap().registerAttribute(AlfheimAPI.RACE)
-			setRace(player, HUMAN)
+			player.getAttributeMap().registerAttribute(RACE)
+			set(player, HUMAN)
 		}
 	}
 }
+
+var EntityPlayer.race
+	get() = EnumRace[this]
+	set(value) {
+		EnumRace[this] = value
+	}
+
+var EntityPlayer.raceID
+	get() = EnumRace.getRaceID(this)
+	set(value) {
+		EnumRace.setRaceID(this, value.toDouble())
+	}

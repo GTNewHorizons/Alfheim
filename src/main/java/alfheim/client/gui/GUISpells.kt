@@ -1,6 +1,5 @@
 package alfheim.client.gui
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
@@ -33,7 +32,7 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		
 		zLevel = -90.0f
 		
-		val count = AlfheimAPI.getSpellsFor(EnumRace.getByID(KeyBindingHandlerClient.raceID.toDouble())).size
+		val count = AlfheimAPI.getSpellsFor(EnumRace[KeyBindingHandlerClient.raceID]).size
 		val length = if (count >= 5) 81 else 1 + (count - 1) * 20
 		val rID = KeyBindingHandlerClient.raceID
 		var pos = KeyBindingHandlerClient.spellID
