@@ -30,8 +30,8 @@ import java.util.*
 class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	val name = "rainbowDoubleGrass"
-	var topIcon: IIcon? = null
-	var bottomIcon: IIcon? = null
+	lateinit var topIcon: IIcon
+	lateinit var bottomIcon: IIcon
 	
 	val GRASS = 0
 	val AURORA = 1
@@ -190,15 +190,13 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	override fun getBottomIcon(lowerMeta: Int) =
 		when (lowerMeta) {
-			GRASS  -> bottomIcon
 			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getBottomIcon(0)
-			else   -> null
+			else   -> bottomIcon
 		}
 	
 	override fun getTopIcon(lowerMeta: Int) =
 		when (lowerMeta) {
-			GRASS  -> topIcon
 			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getTopIcon(0)
-			else   -> null
+			else   -> topIcon
 		}
 }

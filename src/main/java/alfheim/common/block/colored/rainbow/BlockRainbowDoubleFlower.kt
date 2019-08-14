@@ -28,8 +28,8 @@ import java.util.*
 class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	val name = "rainbowDoubleFlower"
-	var topFlowerIcon: IIcon? = null
-	var bottomFlowerIcon: IIcon? = null
+	lateinit var topFlowerIcon: IIcon
+	lateinit var bottomFlowerIcon: IIcon
 	
 	init {
 		setCreativeTab(AlfheimCore.baTab)

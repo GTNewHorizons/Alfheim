@@ -147,6 +147,12 @@ class EntityMagicArrow: EntityThrowableCopy {
 					setDead()
 					return
 				}
+				
+				if (fromMoon) {
+					living.hurtResistantTime = 0
+					living.hurtTime = 0
+				}
+				
 				val attribute = player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue
 				attackedFrom(living, player, abs(damage) + attribute.toFloat())
 			}
@@ -167,9 +173,6 @@ class EntityMagicArrow: EntityThrowableCopy {
 	}
 	
 	fun attackedFrom(target: EntityLivingBase, player: EntityPlayer?, dmg: Float) {
-		target.hurtResistantTime = 0
-		target.hurtTime = 0
-		
 		if (player != null)
 			target.attackEntityFrom(DamageSource.causePlayerDamage(player), dmg)
 		else

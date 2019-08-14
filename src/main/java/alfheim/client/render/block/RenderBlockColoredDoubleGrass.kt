@@ -5,7 +5,6 @@ import alfheim.common.block.base.IDoublePlant
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
-import net.minecraft.util.IIcon
 import net.minecraft.world.IBlockAccess
 
 class RenderBlockColoredDoubleGrass: ISimpleBlockRenderingHandler {
@@ -48,10 +47,11 @@ class RenderBlockColoredDoubleGrass: ISimpleBlockRenderingHandler {
 		if (flag && world.getBlock(x, y - 1, z) !== block && world.getBlock(x, y - 1, z) !== block) {
 			return false
 		}
-		var iicon: IIcon? = null
-		if (block is IDoublePlant)
-			iicon = if ((i1 and 8) != 0) block.getTopIcon(world.getBlockMetadata(x, y - 1, z)) else block.getBottomIcon(world.getBlockMetadata(x, y, z))
-		renderer.drawCrossedSquares(iicon, d19, d0, d1, 1.0f)
+		
+		if (block is IDoublePlant) {
+			val iicon = if ((i1 and 8) != 0) block.getTopIcon(world.getBlockMetadata(x, y - 1, z)) else block.getBottomIcon(world.getBlockMetadata(x, y, z))
+			renderer.drawCrossedSquares(iicon, d19, d0, d1, 1.0f)
+		}
 		return true
 	}
 }

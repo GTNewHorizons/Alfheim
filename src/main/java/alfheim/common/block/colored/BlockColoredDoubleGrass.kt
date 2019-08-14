@@ -24,14 +24,13 @@ import net.minecraftforge.event.ForgeEventFactory
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 import java.util.*
-import kotlin.properties.Delegates
 
 class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePlant, ILexiconable {
 	
 	val name = "irisDoubleGrass$colorSet"
 	val TYPES: Int = 8
-	var topIcon: IIcon by Delegates.notNull()
-	var bottomIcon: IIcon by Delegates.notNull()
+	lateinit var topIcon: IIcon
+	lateinit var bottomIcon: IIcon
 	
 	init {
 		setCreativeTab(AlfheimCore.baTab)
@@ -55,7 +54,7 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 		return super.setBlockName(par1Str)
 	}
 	
-	override fun setBlockName(par1Str: String) = null
+	override fun setBlockName(par1Str: String) = this
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBlockColor() = 0xFFFFFF
