@@ -46,6 +46,7 @@ object AlfheimLexiconData {
 	lateinit var auraAlf: LexiconEntry
 	lateinit var cloakInv: LexiconEntry
 	lateinit var crescent: LexiconEntry
+	lateinit var dasGold: LexiconEntry
 	lateinit var dodgRing: LexiconEntry
 	lateinit var elemSet: LexiconEntry
 	lateinit var elvenSet: LexiconEntry
@@ -60,6 +61,8 @@ object AlfheimLexiconData {
 	lateinit var mask: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
+	lateinit var moonbow: LexiconEntry
+	lateinit var multbaub: LexiconEntry
 	lateinit var ores: LexiconEntry
 	lateinit var pixie: LexiconEntry
 	lateinit var portal: LexiconEntry
@@ -69,6 +72,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
+	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
 	lateinit var worldgen: LexiconEntry
@@ -97,6 +101,7 @@ object AlfheimLexiconData {
 		auraAlf = BLexiconEntry("auraAlf", categoryAlfheim)
 		cloakInv = BLexiconEntry("cloakInv", categoryAlfheim)
 		crescent = BLexiconEntry("crescent", categoryAlfheim)
+		dasGold = BLexiconEntry("dasGold", categoryAlfheim)
 		dodgRing = BLexiconEntry("dodgRing", categoryAlfheim)
 		elemSet = BLexiconEntry("elemSet", categoryAlfheim)
 		elvenSet = BLexiconEntry("elvenSet", categoryAlfheim)
@@ -109,6 +114,8 @@ object AlfheimLexiconData {
 		itemHold = BLexiconEntry("itemHold", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
+		moonbow = BLexiconEntry("moonbow", categoryAlfheim)
+		multbaub = BLexiconEntry("multbaub", categoryAlfheim)
 		ores = BLexiconEntry("ores", categoryAlfheim)
 		pixie = BLexiconEntry("pixie", categoryAlfheim)
 		portal = BLexiconEntry("portal", categoryAlfheim)
@@ -117,8 +124,9 @@ object AlfheimLexiconData {
 		ruling = BLexiconEntry("ruling", categoryAlfheim)
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
+		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
-		//trans	= new BLexiconEntry("trans",	categoryAlfheim); BACK
+		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory()
@@ -255,6 +263,10 @@ object AlfheimLexiconData {
 							  PageText("2"), PageText("3"), PageRuneRecipe("4", AlfheimRecipes.recipeRealityRune)).icon = ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.PrimalRune)
 		runes.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimRune))
 		
+		dasGold.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeRelicCleaner))
+		
+		multbaub.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeMultibauble))
+		
 		elvenSet.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", AlfheimRecipes.recipeElvoriumHelmet),
 								 PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
@@ -305,6 +317,12 @@ object AlfheimLexiconData {
 		
 		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber)).icon = ItemStack(AlfheimItems.excaliber)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
+		
+		moonbow.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.moonlightBow)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.moonlightBow), moonbow, 1)
+		
+		subspear.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.subspaceSpear)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.subspaceSpear), subspear, 1)
 		
 		/*mjolnir.setLexiconPages(new PageText("0"))
 				.setIcon(new ItemStack(AlfheimItems.mjolnir));*/

@@ -2,9 +2,7 @@ package alfheim.common.block.colored.rainbow
 
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
-import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.IDoublePlant
-import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.block.ItemRainbowDoubleGrassMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -27,14 +25,11 @@ import net.minecraftforge.event.ForgeEventFactory
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
+class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
-	val name = "rainbowDoubleGrass"
-	var topIcon: IIcon? = null
-	var bottomIcon: IIcon? = null
-	
-	val GRASS = 0
-	val AURORA = 1
+	val name = "rainbowDoubleFlower"
+	var topFlowerIcon: IIcon? = null
+	var bottomFlowerIcon: IIcon? = null
 	
 	init {
 		setCreativeTab(AlfheimCore.baTab)
@@ -48,8 +43,8 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	@SideOnly(Side.CLIENT)
 	fun loadTextures(event: TextureStitchEvent.Pre) {
 		if (event.map.textureType == 0) {
-			topIcon = InterpolatedIconHelper.forBlock(event.map, this, "Top")!!
-			bottomIcon = InterpolatedIconHelper.forBlock(event.map, this)!!
+			topFlowerIcon = InterpolatedIconHelper.forBlock(event.map, this, "Top")!!
+			bottomFlowerIcon = InterpolatedIconHelper.forBlock(event.map, this)!!
 		}
 	}
 	
@@ -75,17 +70,10 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	override fun getRenderColor(meta: Int) = 0xFFFFFF
 	
 	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = run {
-		when (world.getBlockMetadata(x, y, z)) {
-			AURORA     -> BlockAuroraDirt.getBlockColor(x, y, z)
-			AURORA + 8 -> BlockAuroraDirt.getBlockColor(x, y + 1, z)
-			else       -> 0xFFFFFF
-		}
-	}
+	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = 0xFFFFFF
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
-		list.add(ItemStack(item, 1, GRASS))
-		list.add(ItemStack(item, 1, AURORA))
+		list.add(ItemStack(item))
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -165,40 +153,15 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = null
 	
-	override fun onSheared(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int, fortune: Int): ArrayList<ItemStack> {
-		val ret = ArrayList<ItemStack>()
-		val meta = world.getBlockMetadata(x, y, z)
-		if (func_149887_c(meta)) {
-			if (y > 0 && world.getBlock(x, y - 1, z) == this) {
-				ret.add(ItemStack(ShadowFoxBlocks.rainbowGrass, 2, world.getBlockMetadata(x, y - 1, z)))
-			}
-		} else {
-			ret.add(ItemStack(ShadowFoxBlocks.rainbowGrass, 2, meta))
-		}
-		return ret
-	}
+	override fun onSheared(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int, fortune: Int) = arrayListOf(ItemStack(this))
 	
 	override fun getRenderType() = LibRenderIDs.idDoubleFlower
 	
 	override fun isShearable(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) =
-		when (world.getBlockMetadata(x, y, z)) {
-			GRASS, AURORA -> ShadowFoxLexiconData.pastoralSeeds
-			else          -> null
-		}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) = ShadowFoxLexiconData.rainbowFlora
 	
-	override fun getBottomIcon(lowerMeta: Int) =
-		when (lowerMeta) {
-			GRASS  -> bottomIcon
-			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getBottomIcon(0)
-			else   -> null
-		}
+	override fun getBottomIcon(lowerMeta: Int) = bottomFlowerIcon
 	
-	override fun getTopIcon(lowerMeta: Int) =
-		when (lowerMeta) {
-			GRASS  -> topIcon
-			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getTopIcon(0)
-			else   -> null
-		}
+	override fun getTopIcon(lowerMeta: Int) = topFlowerIcon
 }

@@ -442,20 +442,20 @@ item.lokiRing.poem1=Once on the center, then around the track,
 item.lokiRing.poem2=Back to the start one'd go to complete
 item.lokiRing.poem3=The power of creating back-to-back.
 
+item.MoonlightBow.poem0=No
+item.MoonlightBow.poem1=English
+item.MoonlightBow.poem2=Poem
+item.MoonlightBow.poem3=Here :(
+
 item.odinRing.poem0=The wise old God lays its blessings,
 item.odinRing.poem1=Of virtue, life and divinity,
 item.odinRing.poem2=With the hindrance of death on one's hands,
 item.odinRing.poem3=They'll form the Holy Trinity.
 
-item.botania:SpearSubspace.poem0=No
-item.botania:SpearSubspace.poem1=English
-item.botania:SpearSubspace.poem2=Poem
-item.botania:SpearSubspace.poem3=Here :(
-
-item.SunrayBow.poem0=No
-item.SunrayBow.poem1=English
-item.SunrayBow.poem2=Poem
-item.SunrayBow.poem3=Here :(
+item.SpearSubspace.poem0=No
+item.SpearSubspace.poem1=English
+item.SpearSubspace.poem2=Poem
+item.SpearSubspace.poem3=Here :(
 
 item.TankMask.poem0=No
 item.TankMask.poem1=English

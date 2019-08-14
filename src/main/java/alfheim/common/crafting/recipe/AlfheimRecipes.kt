@@ -87,10 +87,12 @@ import alfheim.common.item.AlfheimItems.manaRingGod
 import alfheim.common.item.AlfheimItems.manaStone
 import alfheim.common.item.AlfheimItems.manaStoneGreater
 import alfheim.common.item.AlfheimItems.manasteelHoe
+import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
 import alfheim.common.item.AlfheimItems.realitySword
+import alfheim.common.item.AlfheimItems.relicCleaner
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
@@ -109,6 +111,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.crafting.*
+import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
 
@@ -161,6 +164,7 @@ object AlfheimRecipes {
 	lateinit var recipeManaRingElven: IRecipe
 	lateinit var recipeManaRingGod: IRecipe
 	lateinit var recipeManasteelHoe: IRecipe
+	lateinit var recipeMultibauble: IRecipe
 	lateinit var recipeMuspelheimPendant: IRecipe
 	lateinit var recipeMuspelheimPowerIngot: IRecipe
 	lateinit var recipeMuspelheimRod: IRecipe
@@ -170,6 +174,7 @@ object AlfheimRecipes {
 	lateinit var recipePaperBreak: IRecipe
 	lateinit var recipePeacePipe: IRecipe
 	lateinit var recipePixieAttractor: IRecipe
+	lateinit var recipeRelicCleaner: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
@@ -469,6 +474,13 @@ object AlfheimRecipes {
 						 'T', LIVINGWOOD_TWIG)
 		recipeManasteelHoe = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(multibauble),
+						 "QT ", "T E", " E ",
+						 'E', ELEMENTIUM,
+						 'T', TERRA_STEEL,
+						 'Q', ItemStack(ModItems.quartz, 1, 5))
+		recipeMultibauble = BotaniaAPI.getLatestAddedRecipe()
+		
 		recipePaperBreak = ShapedOreRecipe(ItemStack(paperBreak),
 										   "  P", " P ", "P  ",
 										   'P', paper)
@@ -501,6 +513,13 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'S', ItemStack(manaResource, 1, 3))
 		recipeSword = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(relicCleaner),
+						 "SCS", "CGC", "SCS",
+						 'G', "ingotGold",
+						 'S', LIFE_ESSENCE,
+						 'C', spellCloth)
+		recipeRelicCleaner = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(rodFire),
 						 " MR", " BM", "B  ",

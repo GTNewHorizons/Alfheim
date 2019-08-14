@@ -23,7 +23,7 @@ object ShadowFoxItems {
 	
 	val irisSeeds: Item
 	val colorfulSkyDirtRod: Item
-	val rainbowRod: Item
+	val prismaticRod: Item
 	val lightningRod: Item
 	val interdictionRod: Item
 	val emblem: Item
@@ -46,7 +46,7 @@ object ShadowFoxItems {
 	init {
 		irisSeeds = ItemColorSeeds()
 		colorfulSkyDirtRod = ItemIridescentRod()
-		rainbowRod = ItemRainbowLightRod()
+		prismaticRod = ItemPrismaticRod()
 		lightningRod = ItemLightningRod()
 		interdictionRod = ItemInterdictionRod()
 		emblem = ItemPriestEmblem()

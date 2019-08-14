@@ -98,10 +98,16 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun func_149853_b(world: World, random: Random, x: Int, y: Int, z: Int) {
 		var meta = world.getBlockMetadata(x, y, z)
 		if (meta == GRASS || meta == AURORA || meta == FLOWER || meta == BURIED) {
-			if (meta == BURIED) meta = FLOWER
-			if (ShadowFoxBlocks.rainbowTallGrass.canPlaceBlockAt(world, x, y, z)) {
-				world.setBlock(x, y, z, ShadowFoxBlocks.rainbowTallGrass, meta, 2)
-				world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowTallGrass, 8, 2)
+			var block = ShadowFoxBlocks.rainbowTallGrass
+			
+			if (meta == FLOWER || meta == BURIED) {
+				block = ShadowFoxBlocks.rainbowTallFlower
+				meta = FLOWER
+			}
+			
+			if (block.canPlaceBlockAt(world, x, y, z)) {
+				world.setBlock(x, y, z, block, meta, 2)
+				world.setBlock(x, y + 1, z, block, 8, 2)
 			}
 		}
 	}

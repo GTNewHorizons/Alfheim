@@ -139,7 +139,7 @@ object ShadowFoxLexiconData {
 		kindling.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesKindling))
 		
-		waveRod = ShadowfoxLexiconEntry("waveRod", BotaniaAPI.categoryTools, ShadowFoxItems.rainbowRod).setKnowledgeType(BotaniaAPI.elvenKnowledge)
+		waveRod = ShadowfoxLexiconEntry("waveRod", BotaniaAPI.categoryTools, ShadowFoxItems.prismaticRod).setKnowledgeType(BotaniaAPI.elvenKnowledge)
 		waveRod.setLexiconPages(PageText("0"),
 								PageCraftingRecipe("1", ShadowFoxRecipes.recipesRainbowRod))
 		
@@ -196,8 +196,8 @@ object ShadowFoxLexiconData {
 		silencer.setLexiconPages(PageText("0"),
 								 PageTreeCrafting("1", ShadowFoxRecipes.recipesSealingTree),
 								 PageCraftingRecipe("2", ShadowFoxRecipes.recipesSealingPlanks),
-								 PageCraftingRecipe("3", ShadowFoxRecipes.recipesSealingSlabs),
-								 PageCraftingRecipe("4", ShadowFoxRecipes.recipesSealingStairs))
+								 PageCraftingRecipe("3", ShadowFoxRecipes.recipesSealingStairs),
+								 PageCraftingRecipe("4", ShadowFoxRecipes.recipesSealingSlabs))
 		
 		amp = ShadowfoxLexiconEntry("amp", BotaniaAPI.categoryMisc, ShadowFoxBlocks.amp).setKnowledgeType(BotaniaAPI.elvenKnowledge)
 		amp.setLexiconPages(PageText("0"),
@@ -256,7 +256,7 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.irisSapling), irisSapling, 0)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.lightningRod), lightningRod, 1)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.interdictionRod), interdictionRod, 1)
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.rainbowRod), waveRod, 1)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.prismaticRod), waveRod, 1)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.emblem, 1, 0), lightningRod, 3)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.emblem, 1, 1), technicolor, 3)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.emblem, 1, 2), interdictionRod, 3)
@@ -309,8 +309,8 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingWood), silencer, 1)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingLeaves), silencer, 1)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingPlanks), silencer, 2)
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingSlabs), silencer, 3)
-		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingStairs), silencer, 4)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingStairs), silencer, 3)
+		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.sealingSlabs), silencer, 4)
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxBlocks.amp), amp, 1)
 		
 		LexiconRecipeMappings.map(ItemStack(ShadowFoxItems.toolbelt), toolbelt, 1)

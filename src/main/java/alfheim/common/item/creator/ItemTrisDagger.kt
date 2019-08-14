@@ -37,7 +37,7 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	
 	companion object {
 		const val minBlockLength = 0
-		const val maxBlockLength = 10
+		const val maxBlockLength = 20
 	}
 	
 	init {
@@ -180,9 +180,8 @@ class DaggerEventHandler {
 			val enemyEntity = damage.entity
 			if (enemyEntity is EntityLivingBase) {
 				val itemInUse = player.itemInUse
-				val itemInUseCount = player.itemInUseCount
+				val itemInUseCount = player.itemInUse.maxItemUseDuration - player.itemInUseCount
 				if (itemInUse.item is ItemTrisDagger && itemInUseCount <= ItemTrisDagger.maxBlockLength && itemInUseCount >= ItemTrisDagger.minBlockLength) {
-					// Perfect timing indeed.
 					
 					val lookVec = Vector3(player.lookVec)
 					val targetVec = Vector3.fromEntityCenter(enemyEntity).sub(Vector3.fromEntityCenter(player))

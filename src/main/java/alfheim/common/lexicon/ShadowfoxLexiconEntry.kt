@@ -34,7 +34,7 @@ open class ShadowfoxLexiconEntry: LexiconEntry, IAddonEntry {
 	
 	override fun getTagline() = "${ModInfo.MODID}.tagline.${super.getUnlocalizedName()}"
 	
-	override fun getSubtitle() = "[Botanical Addons]"
+	override fun getSubtitle() = "[Iridescence]"
 	
 	fun getLazyUnlocalizedName() = super.getUnlocalizedName()!!
 }

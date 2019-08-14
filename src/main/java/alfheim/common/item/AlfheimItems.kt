@@ -66,6 +66,7 @@ object AlfheimItems {
 	lateinit var manaStone: Item
 	lateinit var manaStoneGreater: Item
 	lateinit var mask: Item
+	lateinit var moonlightBow: Item
 	lateinit var multibauble: Item
 	//lateinit var mjolnir: Item
 	lateinit var paperBreak: Item
@@ -77,7 +78,6 @@ object AlfheimItems {
 	lateinit var rodGrass: Item
 	lateinit var rodIce: Item
 	lateinit var subspaceSpear: Item
-	lateinit var moonlightBow: Item
 	lateinit var thinkingHand: Item
 	
 	lateinit var royalStaff: Item

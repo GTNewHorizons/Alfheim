@@ -17,7 +17,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.properties.Delegates
 
-class ItemRainbowLightRod: ItemMod("rainbowLightRod"), IManaUsingItem, IPhantomInkable {
+class ItemPrismaticRod: ItemMod("rainbowLightRod"), IManaUsingItem, IPhantomInkable {
 	
 	val COST = 100
 	

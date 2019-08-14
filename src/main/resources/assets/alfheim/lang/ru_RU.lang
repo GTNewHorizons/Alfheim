@@ -442,6 +442,11 @@ item.lokiRing.poem1=Один раз в центре, затем вокруг,
 item.lokiRing.poem2=Потом к началу для завершения
 item.lokiRing.poem3=И сила создания проявится вдруг.
 
+item.MoonlightBow.poem0=Стрелок умелый и отважный
+item.MoonlightBow.poem1=К богам о помощи взывает,
+item.MoonlightBow.poem2=От солнца и охоты близнецов
+item.MoonlightBow.poem3=Благую силу получает.
+
 item.odinRing.poem0=Мудрый Всеотец свою милость проявляя,
 item.odinRing.poem1=Дарами жизни и божественности наделяет,
 item.odinRing.poem2=С препятствием смерти в одной лишь руке
@@ -452,17 +457,12 @@ item.SpearSubspace.poem1=Лучами света армии испепеляет
 item.SpearSubspace.poem2=Энергию беря из подпространства
 item.SpearSubspace.poem3=Границы мироздания уничтожает.
 
-item.MoonlightBow.poem0=Стрелок умелый и отважный
-item.MoonlightBow.poem1=К богам о помощи взывает,
-item.MoonlightBow.poem2=От солнца и охоты близнецов
-item.MoonlightBow.poem3=Благую силу получает.
-
 item.TankMask.poem0=Пеленой ужаса неподдельного
 item.TankMask.poem1=Взгляд маски сей одолевает,
 item.TankMask.poem2=И гневом жертва одержимая
 item.TankMask.poem3=Огромной силой обладает.
 
-item.thorRing.poem0=Сила Бога-Громовержца
+item.thorRing.poem0=Сила Бога-громовержца
 item.thorRing.poem1=Разрушит основу Терры,
 item.thorRing.poem2=С мощью непреодолимой
 item.thorRing.poem3=Даст начало новой эры.
@@ -800,8 +800,8 @@ item.alfheim:coatOfArms17.name=Парижский щит
 
 item.alfheim:colorOverride.name=Кольцо художника
 
-item.alfheim:axeRevelation.name=Священное лезвие Откровения
-item.alfheim:reactionDagger.name=Кинжал безупречной Души
+item.alfheim:axeRevelation.name=Священное лезвие Откровение
+item.alfheim:reactionDagger.name=Кинжал безупречной души
 
 tile.alfheim:kindling.name=Воспламенитель
 

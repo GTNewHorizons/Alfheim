@@ -939,7 +939,7 @@ object TCHandlerShadowFoxAspects {
 		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.colorfulSkyDirtRod), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.LIGHT, 6).add(colorAspect, 2).add(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.rainbowRod), list)
+		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.prismaticRod), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.WEATHER, 8).add(Aspect.MAGIC, 4)
 		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.lightningRod), list)

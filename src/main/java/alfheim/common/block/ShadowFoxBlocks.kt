@@ -63,6 +63,7 @@ object ShadowFoxBlocks {
 	var irisTallGrass0: Block
 	var irisTallGrass1: Block
 	var rainbowTallGrass: Block
+	var rainbowTallFlower: Block
 	
 	var coloredSlabs: Array<Block>
 	var rainbowSlabs: Block
@@ -210,6 +211,8 @@ object ShadowFoxBlocks {
 		irisTallGrass0 = BlockColoredDoubleGrass(0)
 		irisTallGrass1 = BlockColoredDoubleGrass(1)
 		rainbowTallGrass = BlockRainbowDoubleGrass()
+		rainbowTallFlower = BlockRainbowDoubleFlower()
+		
 		itemDisplay = BlockItemDisplay()
 		treeCrafter = TileTreeCrafter.makeMultiblockSet()
 		treeCrafterBlock = BlockTreeCrafter("treeCrafter", coloredPlanks)
@@ -316,7 +319,7 @@ object ShadowFoxBlocks {
 		
 		BotaniaAPI.registerSubTile("crysanthermum", SubTileCrysanthermum::class.java)
 		BotaniaAPI.registerSubTileSignature(SubTileCrysanthermum::class.java, ShadowFoxSignature("crysanthermum"))
-		BotaniaAPI.subTileMods["crysanthermum"] = "Botanical Addons"
+		BotaniaAPI.subTileMods["crysanthermum"] = "Iridescense"
 		BotaniaAPI.addSubTileToCreativeMenu("crysanthermum")
 	}
 	
