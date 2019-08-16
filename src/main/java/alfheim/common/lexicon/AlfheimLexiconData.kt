@@ -529,6 +529,8 @@ object AlfheimLexiconData {
 		if (LexiconData.relics != null) LexiconData.relics.knowledgeType = kt
 		LexiconData.headCreating.knowledgeType = kt
 		LexiconData.starfield.knowledgeType = kt
+		
+		ShadowFoxLexiconData.setKnowledgeTypes(kt)
 	}
 	
 	fun disableESM() {

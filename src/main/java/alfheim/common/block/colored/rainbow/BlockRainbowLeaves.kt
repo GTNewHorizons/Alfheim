@@ -2,13 +2,13 @@ package alfheim.common.block.colored.rainbow
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.item.block.ItemIridescentBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.*
-import alfheim.common.item.block.ItemIridescentBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import java.util.*
 
 class BlockRainbowLeaves: BlockLeavesMod() {

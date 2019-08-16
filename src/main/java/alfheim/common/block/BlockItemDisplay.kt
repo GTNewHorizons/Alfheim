@@ -1,5 +1,10 @@
 package alfheim.common.block
 
+import alfheim.common.block.base.BlockMod
+import alfheim.common.block.tile.TileItemDisplay
+import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -13,11 +18,6 @@ import net.minecraft.inventory.*
 import net.minecraft.item.*
 import net.minecraft.util.*
 import net.minecraft.world.World
-import alfheim.common.block.base.BlockMod
-import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.core.helper.IconHelper
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 import kotlin.math.min

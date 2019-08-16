@@ -1,13 +1,13 @@
 package alfheim.common.potion
 
 import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.item.ShadowFoxItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent
-import alfheim.common.item.ShadowFoxItems
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.common.item.ModItems

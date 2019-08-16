@@ -1,6 +1,7 @@
 package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.material.Material
@@ -9,7 +10,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 
 class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {

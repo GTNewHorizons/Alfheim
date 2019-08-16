@@ -2,12 +2,12 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.magtrees.sealing.ISoundSilencer
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 
 class BlockAmp: BlockMod(Material.wood), ISoundSilencer, ILexiconable {

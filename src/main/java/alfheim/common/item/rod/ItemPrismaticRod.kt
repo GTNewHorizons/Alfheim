@@ -2,6 +2,7 @@ package alfheim.common.item.rod
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -11,7 +12,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.core.helper.IconHelper
 import vazkii.botania.api.item.IPhantomInkable
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper

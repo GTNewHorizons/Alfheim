@@ -1,9 +1,9 @@
 package alfheim.common.integration.etfuturum
 
 import alfheim.api.ModInfo
+import alfheim.common.item.ShadowFoxItems
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
-import alfheim.common.item.ShadowFoxItems
 
 object EtFuturumAlfheimConfig {
 	

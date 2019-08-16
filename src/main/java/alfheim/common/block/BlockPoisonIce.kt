@@ -18,7 +18,7 @@ import net.minecraft.potion.*
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.ManaItemHandler
 import java.util.*
 

@@ -2,6 +2,7 @@ package alfheim.common.block.base
 
 import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
+import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -12,7 +13,6 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
-import alfheim.common.item.block.ItemBlockMod
 
 abstract class BlockContainerMod<T: TileEntity>(material: Material): BlockContainer(material) {
 	

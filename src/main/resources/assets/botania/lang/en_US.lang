@@ -268,6 +268,27 @@ botania.page.dodgRing1=Dexterity bonus
 botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
 botania.page.judgementCloaks4=Pain split
 
+################################################################ EBT ################################################################
+
+botania.entry.subspear=Spear of Subspace
+botania.tagline.subspear=There is no sense
+botania.page.spearsubspace0=The &1Spear of Subspace&0 can tear apart the very fabric of reality, summoning deathly rays of energy from subspace to attack enemies. It can also be launched forward by hitting the air.
+
+botania.entry.moonbow=Phoebus Catastrophe
+botania.tagline.moonbow=Purer than the Sun
+botania.page.moonbow0=The &1Phoebus Catastrophe&0 uses &4Mana&0 to shoot magic arrows which pierce through enemies and deal damage to the creatures in the area. The longer you draw the bow, the more damage it will deal (not unlimited).
+#botania.page.moonbow1=A hundred shots, a hundred bullseyes.
+
+botania.entry.dasGold=Das Rheingold
+botania.tagline.dasGold=Relic Unbinder
+botania.page.dasGold0=&1Das Rheingold&0 can empty the binding of a relic, just crafting the relic with it. If you want to bind the relic to a specific person, hold the Das Rheingold and right-click him, then the crafting will make the relic bind to him.
+botania.page.dasGold1=We need more gold
+
+botania.entry.multbaub=Ring of Elven King
+botania.tagline.multbaub=Five more active baubles
+botania.page.multbaub0=&1Ring of Elven King&0 can perform six common baubles' abilities. Just carry a &1Bauble Case&0 and put the bauble you want in the upper line. Not all the baubles can be simulated, like Relics.
+botania.page.multbaub1=You don't fool me
+
 ################################################################ ESM ################################################################
 
 botania.entry.es= Elven Story
@@ -367,6 +388,8 @@ alfheim.entry.rainbowFlora=Bifrost Flora
 alfheim.tagline.rainbowFlora=Gifts of Heimdall
 alfheim.entry.coloredDirt=Iridescent Dirt [IRI]
 alfheim.tagline.coloredDirt=Rainbow dirt for your decoration needs
+alfheim.entry.aurora=Aurora Dirt
+alfheim.tagline.aurora=One dirt, lots of colors
 alfheim.entry.technicolorRod=Rod of the Vibrant Plains [IRI]
 alfheim.tagline.technicolorRod=Rainbow dirt made from thin air
 alfheim.entry.lightningRod=Rod of the Thundering Peaks [IRI]
@@ -437,6 +460,13 @@ alfheim.page.rainbowFlora3=Pack into blocks
 
 alfheim.page.coloredDirt0=Using the latent power in &1Mystical Flowers&0, you can make dirt that shimmers every color of the rainbow. This mystical dirt is capable of growing trees and plants without water or a hoe. If put next to a &1Pure Daisy&0, it will revert to its uncolored state.
 alfheim.page.coloredDirt1=Beauty from the dross
+
+alfheim.page.aurora0=By combining dirt with the shimmering essence of a &1Mana Pearl&0, you can make dirt that captures the threads of magic in the world, having a different color based on its location. This mystical dirt is also capable of growing trees and plants without water or a hoe. It can be converted back to regular dirt using a &1Pure Daisy&0.
+alfheim.page.aurora1=Seek the hour of twilight in the forest of silence
+alfheim.page.aurora2=Planks
+alfheim.page.aurora3=Stairs
+alfheim.page.aurora4=Slabs
+alfheim.page.aurora5=And back again
 
 alfheim.page.technicolorRod0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
 alfheim.page.technicolorRod1=Simply drowning in colors

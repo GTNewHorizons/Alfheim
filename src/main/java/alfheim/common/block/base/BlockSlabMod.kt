@@ -1,6 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.AlfheimCore
+import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -8,7 +9,6 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
-import alfheim.common.item.block.ItemColoredSlabMod
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

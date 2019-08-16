@@ -1,11 +1,11 @@
 package alfheim.common.crafting.recipe
 
+import alfheim.common.item.equipment.bauble.ItemColorOverride
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.world.World
-import alfheim.common.item.equipment.bauble.ItemColorOverride
 import java.awt.Color
 import vazkii.botania.common.item.ModItems as BotaniaItems
 

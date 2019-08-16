@@ -126,6 +126,7 @@ object ShadowFoxRecipes {
 	val recipeAuroraPlanks: IRecipe
 	val recipeAuroraStairs: IRecipe
 	val recipeAuroraSlabs: IRecipe
+	val recipeAuroraSlabsToPlanks: IRecipe
 	val recipesColoredDirt: List<IRecipe>
 	val recipesWoodPanel: List<IRecipe>
 	val recipesSlabs: List<IRecipe>
@@ -202,7 +203,6 @@ object ShadowFoxRecipes {
 	val recipesSplashPotions: IRecipe
 	
 	init {
-		
 		GameRegistry.addRecipe(RecipeRingDyes())
 		RecipeSorter.register("${ModInfo.MODID}:ringdye", RecipeRingDyes::class.java, Category.SHAPELESS, "")
 		GameRegistry.addRecipe(RecipeRainbowLensDye())
@@ -284,6 +284,8 @@ object ShadowFoxRecipes {
 		
 		GameRegistry.addShapelessRecipe(ItemStack(auroraPlanks),
 										ItemStack(auroraSlabs), ItemStack(auroraSlabs))
+		
+		recipeAuroraSlabsToPlanks = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(colorfulSkyDirtRod, 1, i),

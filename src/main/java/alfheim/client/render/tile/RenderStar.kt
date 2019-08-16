@@ -1,8 +1,8 @@
 package alfheim.client.render.tile
 
+import alfheim.common.block.tile.TileEntityStar
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
-import alfheim.common.block.tile.TileEntityStar
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import vazkii.botania.client.core.handler.ClientTickHandler

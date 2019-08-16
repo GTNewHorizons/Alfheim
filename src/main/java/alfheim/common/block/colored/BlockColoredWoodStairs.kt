@@ -2,13 +2,13 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockStairsMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 

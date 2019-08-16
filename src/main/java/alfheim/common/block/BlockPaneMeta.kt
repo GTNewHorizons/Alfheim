@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
-import net.minecraft.world.IBlockAccess
-import net.minecraftforge.common.util.ForgeDirection
 import kotlin.math.*
 
 open class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val texName: String, val folder: String? = null): BlockPane(texName, "${texName}Top", mat, true) {

@@ -4,6 +4,7 @@ import alfheim.api.lib.LibRenderIDs
 import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -11,7 +12,6 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandHUD
 import java.util.*

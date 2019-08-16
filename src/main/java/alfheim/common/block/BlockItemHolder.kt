@@ -2,7 +2,6 @@ package alfheim.common.block
 
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileItemHolder
 import alfheim.common.lexicon.AlfheimLexiconData

@@ -3,7 +3,7 @@ package alfheim.client.render.world
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.api.entity.*
+import alfheim.api.entity.race
 import alfheim.client.gui.GUIDeathTimer
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells.*
 import alfheim.common.core.registry.AlfheimRegistry

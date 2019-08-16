@@ -2,13 +2,13 @@ package alfheim.common.block.magtrees.lightning
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.*
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import java.util.*
 
 class BlockLightningLeaves: BlockLeavesMod() {

@@ -2,6 +2,8 @@ package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -9,8 +11,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.*
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import java.util.*
 
 class BlockSealingLeaves: BlockLeavesMod(), ISoundSilencer {

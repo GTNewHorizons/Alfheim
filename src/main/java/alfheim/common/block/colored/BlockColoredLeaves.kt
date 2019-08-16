@@ -2,6 +2,8 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.item.block.ItemIridescentLeavesMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.creativetab.CreativeTabs
@@ -9,8 +11,6 @@ import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.*
-import alfheim.common.item.block.ItemIridescentLeavesMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import java.awt.Color
 import java.util.*
 

@@ -1,6 +1,8 @@
 package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.base.BlockModRotatedPillar
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -8,8 +10,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

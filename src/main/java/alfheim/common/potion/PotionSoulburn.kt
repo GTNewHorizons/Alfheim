@@ -1,7 +1,6 @@
 package alfheim.common.potion
 
-import alfheim.common.block.BlockRedFlame
-import alfheim.common.block.AlfheimBlocks
+import alfheim.common.block.*
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft

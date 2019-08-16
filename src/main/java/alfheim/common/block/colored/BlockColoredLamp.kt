@@ -1,6 +1,8 @@
 package alfheim.common.block.colored
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -13,8 +15,6 @@ import net.minecraft.world.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.core.helper.InterpolatedIconHelper
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 import kotlin.math.max

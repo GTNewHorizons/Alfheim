@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import net.minecraftforge.event.terraingen.TerrainGen
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
@@ -45,7 +46,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 	}
 	
 	fun func_149878_d(world: World, x: Int, y: Int, z: Int, rand: Random) {
-		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)) return
+		if (!TerrainGen.saplingGrowTree(world, rand, x, y, z)) return
 		val l = world.getBlockMetadata(x, y, z) and 7
 		world.setBlock(x, y, z, Blocks.air, 0, 4)
 		if (!StructureDreamsTree(AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4)

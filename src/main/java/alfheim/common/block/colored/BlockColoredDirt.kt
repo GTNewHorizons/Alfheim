@@ -2,6 +2,8 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockMod
+import alfheim.common.item.block.ItemSubtypedBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -14,8 +16,6 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.item.block.ItemSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 import java.util.*

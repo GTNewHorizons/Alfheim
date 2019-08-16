@@ -1,6 +1,8 @@
 package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.base.BlockModRotatedPillar
+import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.FMLLaunchHandler
 import net.minecraft.block.Block
@@ -10,8 +12,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.item.block.ItemBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

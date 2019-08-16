@@ -3,6 +3,8 @@ package alfheim.common.block.tile
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.core.util.itemEquals
+import alfheim.common.lexicon.MultiblockComponentRainbow
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -13,8 +15,6 @@ import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
-import alfheim.common.lexicon.MultiblockComponentRainbow
-import alfheim.common.core.util.itemEquals
 import org.lwjgl.opengl.*
 import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.api.lexicon.multiblock.*

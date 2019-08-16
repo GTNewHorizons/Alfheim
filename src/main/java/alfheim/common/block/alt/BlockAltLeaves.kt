@@ -3,6 +3,9 @@ package alfheim.common.block.alt
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -12,9 +15,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
-import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
-import alfheim.common.core.helper.IconHelper
 import java.util.*
 
 class BlockAltLeaves(): BlockLeavesMod() {

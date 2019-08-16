@@ -2,6 +2,8 @@ package alfheim.common.block.colored.rainbow
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockMod
+import alfheim.common.item.block.ItemIridescentBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -10,8 +12,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.item.block.ItemIridescentBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

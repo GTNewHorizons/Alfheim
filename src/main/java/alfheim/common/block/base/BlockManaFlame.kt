@@ -1,5 +1,7 @@
 package alfheim.common.block.base
 
+import alfheim.common.block.tile.TileManaFlame
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -7,8 +9,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
-import alfheim.common.block.tile.TileManaFlame
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.*
 import vazkii.botania.common.lexicon.LexiconData
 import java.util.*

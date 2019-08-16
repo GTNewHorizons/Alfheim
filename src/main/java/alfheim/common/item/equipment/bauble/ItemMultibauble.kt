@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import vazkii.botania.api.item.IRelic
-import vazkii.botania.api.mana.IManaGivingItem
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
@@ -34,7 +34,8 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 			if (i < 6 && bauble != null) {
 				val item = bauble.item
 				if (item is IBauble && item !is ItemMultibauble && item !is IRelic) {
-					item.onWornTick(bauble, player)
+					if (ManaItemHandler.requestManaExact(stack, player, 10, true))
+						item.onWornTick(bauble, player)
 				}
 			}
 		}

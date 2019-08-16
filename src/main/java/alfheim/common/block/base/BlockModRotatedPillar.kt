@@ -1,6 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.core.helper.*
+import alfheim.common.item.block.ItemIridescentBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -11,7 +12,6 @@ import net.minecraft.item.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent
-import alfheim.common.item.block.ItemIridescentBlockMod
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

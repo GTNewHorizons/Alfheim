@@ -1,6 +1,8 @@
 package alfheim.common.block.schema
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.block.tile.TileSchema
+import alfheim.common.core.helper.IconHelper
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -9,8 +11,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import alfheim.common.block.tile.TileSchema
-import alfheim.common.core.helper.IconHelper
 import vazkii.botania.api.wand.IWandable
 
 class BlockSchema: BlockMod(Material.wood), IWandable, ITileEntityProvider {

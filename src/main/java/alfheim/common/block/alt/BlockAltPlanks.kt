@@ -1,6 +1,11 @@
 package alfheim.common.block.alt
 
 import alfheim.api.lib.LibOreDict.ALT_TYPES
+import alfheim.common.block.base.BlockMod
+import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.core.helper.*
+import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -15,11 +20,6 @@ import net.minecraft.world.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
-import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
-import alfheim.common.core.helper.*
-import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 

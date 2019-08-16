@@ -3,6 +3,9 @@ package alfheim.common.block.colored.rainbow
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.item.block.ItemIridescentBlockMod
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -10,9 +13,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
-import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.item.block.ItemIridescentBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandable
 import java.util.*

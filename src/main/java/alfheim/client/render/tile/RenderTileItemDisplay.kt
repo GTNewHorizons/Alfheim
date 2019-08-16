@@ -1,5 +1,6 @@
 package alfheim.client.render.tile
 
+import alfheim.common.block.tile.TileItemDisplay
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
@@ -11,7 +12,6 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemBlock
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.client.ForgeHooksClient
-import alfheim.common.block.tile.TileItemDisplay
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import java.awt.Color

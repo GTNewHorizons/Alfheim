@@ -1,6 +1,9 @@
 package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
+import alfheim.common.block.tile.TileEntityStar
+import alfheim.common.item.block.ItemStarPlacer
+import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -10,9 +13,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.*
-import alfheim.common.block.tile.TileEntityStar
-import alfheim.common.item.block.ItemStarPlacer
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
