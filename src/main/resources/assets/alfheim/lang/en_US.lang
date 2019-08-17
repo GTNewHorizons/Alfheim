@@ -1,6 +1,7 @@
 ##########################################################___BLOCKS___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
+tile.botania:altar9.name=Living Petal Apothecary
 tile.AnimatedTorch.name=Animated Torch
 tile.AnimatedTorch.desc.random=Random
 tile.AnimatedTorch.desc.rotate=Rotate
@@ -160,7 +161,6 @@ item.ElvoriumNugget.name=Elvorium Nugget
 item.botania:Excaliber.name=Holy Sword Excaliber
 item.alfheim:fireGrenade.name=Fire Grenade
 item.botania:FirePendant.name=Pendant Of Muspelheim Protection
-item.alfheim:flameRod.name=Rod of the Tricky Flame
 item.botania:FlugelDisc.name=Glowing Music Disc
 item.botania:MikuDisc.name=Shiny Music Disc
 item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
@@ -717,6 +717,7 @@ item.alfheim:starPlacer.name=Frozen Star
 tile.alfheim:star.name=Frozen Star
 
 item.alfheim:colorfulSkyDirtRod.name=Rod of the Vibrant Plains
+item.alfheim:flameRod.name=Rod of the Tricky Flame
 item.alfheim:lightningRod.name=Rod of the Thundering Peaks
 item.alfheim:interdictionRod.name=Rod of the Stormy Sea
 item.alfheim:rainbowLightRod.name=Rod of the Prismatic Lake

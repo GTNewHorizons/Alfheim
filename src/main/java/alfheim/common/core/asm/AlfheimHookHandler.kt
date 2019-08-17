@@ -5,6 +5,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.event.*
+import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.registry.AlfheimRegistry
@@ -22,6 +23,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
+import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -29,7 +31,8 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.potion.*
-import net.minecraft.util.IIcon
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
@@ -41,6 +44,7 @@ import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.proxy.ClientProxy
+import vazkii.botania.client.render.tile.RenderTileAltar
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
@@ -419,6 +423,41 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS)
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
 		if (player.getActivePotionEffect(Potion.nightVision)?.getDuration() ?: 0 > 0) 1f else 0f
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun getSubBlocks(block: BlockAltar, item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
+		list.add(ItemStack(item, 1, 9))
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getIcon(block: BlockAltar, side: Int, meta: Int): IIcon =
+		if (meta == 9) AlfheimBlocks.livingcobble.getIcon(0, 0) else if (meta in 1..8) ModFluffBlocks.biomeStoneA.getIcon(side, meta + 7) else Blocks.cobblestone.getIcon(side, meta)
+	
+	private var renderingTile = false
+	
+	@JvmStatic
+	@Hook
+	fun renderTileEntityAt(renderer: RenderTileAltar, tile: TileEntity, x: Double, y: Double, z: Double, pticks: Float) {
+		val blockMeta = if (tile.blockMetadata == -1) {
+			tile.worldObj?.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) ?: 0
+		} else tile.blockMetadata
+		
+		if (RenderTileAltar.forceMeta == 9 || blockMeta == 9)
+			renderingTile = true
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun bindTexture(tm: TextureManager, loc: ResourceLocation): Boolean {
+		if (renderingTile) {
+			renderingTile = false
+			tm.bindTexture(LibResourceLocations.altar9)
+			return true
+		}
+		return false
+	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic

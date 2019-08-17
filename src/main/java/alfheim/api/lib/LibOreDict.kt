@@ -19,7 +19,7 @@ object LibOreDict {
 	val ARUNE = arrayOf("runePrimalA", "runeMuspelheimA", "runeNiflheimA")
 	const val INFUSED_DREAM_TWIG = "twigDreamwoodInsufed"
 	
-	// Botanical Addons
+	// Iridescence
 	const val TWIG_THUNDERWOOD = "twigThunderwood"
 	const val TWIG_NETHERWOOD = "twigNetherwood"
 	const val SPLINTERS_THUNDERWOOD = "splinterThunderwood"

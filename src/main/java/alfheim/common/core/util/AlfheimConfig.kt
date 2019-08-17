@@ -53,7 +53,7 @@ object AlfheimConfig {
 	
 	var detectShrines			= false // TODO remove
 	
-	// BOTANICAL ADDONS
+	// Iridescence
 	var realLightning			= false
 	var blackLotusDropRate		= 0.05
 	var addTincturemAspect		= true

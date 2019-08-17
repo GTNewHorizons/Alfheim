@@ -1,6 +1,7 @@
-# ##########################################################___БЛОКИ___##########################################################
+# #########################################################___БЛОКИ___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Ядро портала в Альвхейм
+tile.botania:altar9.name=Живой лепестковый аптекарь
 tile.AnimatedTorch.name=Подвижный факел
 tile.AnimatedTorch.desc.random=Случайно
 tile.AnimatedTorch.desc.rotate=Поворот
@@ -32,13 +33,13 @@ tile.alfheim:calicoPlanksSlabFull.name=Плита из досок кошачье
 tile.alfheim:calicoPlanksStairs.name=Ступеньки из досок кошачьего дерева
 tile.alfheim:calicoSapling.name=Саженец кошачьего дерева
 tile.alfheim:calicoWood.name=Древесина кошачьего дерева
-tile.alfheim:circuitLeaves.name=Листва красного дерева
-tile.alfheim:circuitPlanks.name=Доски красного дерева
-tile.alfheim:circuitPlanksSlab.name=Плита из досок красного дерева
-tile.alfheim:circuitPlanksSlabFull.name=Плита из досок красного дерева
-tile.alfheim:circuitPlanksStairs.name=Ступеньки из досок красного дерева
-tile.alfheim:circuitSapling.name=Саженец красного дерева
-tile.alfheim:circuitWood.name=Древесина красного дерева
+tile.alfheim:circuitLeaves.name=Листва схемодрева
+tile.alfheim:circuitPlanks.name=Доски схемодрева
+tile.alfheim:circuitPlanksSlab.name=Плита из досок схемодрева
+tile.alfheim:circuitPlanksSlabFull.name=Плита из досок схемодрева
+tile.alfheim:circuitPlanksStairs.name=Ступеньки из досок схемодрева
+tile.alfheim:circuitSapling.name=Саженец схемодрева
+tile.alfheim:circuitWood.name=Древесина схемодрева
 tile.alfheim:cracklingStar.name=Потрескавшаяся звезда
 tile.DragonstoneElvenOre.name=Руда драконьего камня
 tile.DreamLeaves.name=Листва древа мечтаний
@@ -231,7 +232,7 @@ item.TheRodOfTheDebug.name=dev.TheRodOfTheDebug.null
 item.botania:ThinkingHand.name=Думающая рука
 item.Transferer.name=Деструктуризатор
 
-########################################################___ОСТАЛЬНОЕ___#########################################################
+#########################################################___ОСТАЛЬНОЕ___########################################################
 
 achievement.alfheim=Новые земли
 achievement.alfheim.desc=Попадите в Альвхейм
@@ -495,7 +496,7 @@ race.SPRIGGAN.name=СПРИГГАН
 race.UNDINE.name=УНДИНА
 race.IMP.name=ИМП
 
-#########################################################___ЗАКЛИНАНИЯ___#######################################################
+########################################################___ЗАКЛИНАНИЯ___########################################################
 
 spell.cast=заклинает
 
@@ -633,7 +634,7 @@ spell.wellolife.words=§bКолодец жизни
 spell.windblades.words=§aКосы ветра
 
 ################################################################################################################################
-######################################################___BOTANICAL ADDONS___####################################################
+########################################################___IRIDESCENCE___#######################################################
 ################################################################################################################################
 
 itemGroup.Iridescence=Iridescence

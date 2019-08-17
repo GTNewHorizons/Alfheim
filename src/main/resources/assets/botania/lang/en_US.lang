@@ -272,7 +272,7 @@ botania.page.judgementCloaks4=Pain split
 
 botania.entry.subspear=Spear of Subspace
 botania.tagline.subspear=There is no sense
-botania.page.spearsubspace0=The &1Spear of Subspace&0 can tear apart the very fabric of reality, summoning deathly rays of energy from subspace to attack enemies. It can also be launched forward by hitting the air.
+botania.page.subspear0=The &1Spear of Subspace&0 can tear apart the very fabric of reality, summoning deathly rays of energy from subspace to attack enemies. It can also be launched forward by hitting the air.
 
 botania.entry.moonbow=Phoebus Catastrophe
 botania.tagline.moonbow=Purer than the Sun
@@ -394,7 +394,7 @@ alfheim.entry.technicolorRod=Rod of the Vibrant Plains [IRI]
 alfheim.tagline.technicolorRod=Rainbow dirt made from thin air
 alfheim.entry.lightningRod=Rod of the Thundering Peaks [IRI]
 alfheim.tagline.lightningRod=Stike fear and thunder into your foes
-alfheim.entry.flameRod=Rod of Tricky Flame [IRI]
+alfheim.entry.flameRod=Rod of the Tricky Flame [IRI]
 alfheim.tagline.flameRod=Pinpoint flamethrower
 alfheim.entry.interdictionRod=Rod of the Stormy Sea [IRI]
 alfheim.tagline.interdictionRod=Push enemies out of your personal space
@@ -478,13 +478,13 @@ alfheim.page.lightningRod1=The experimental results are shocking
 alfheim.page.lightningRod2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. By donning the &1Priestly Emblem: Thor&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
 alfheim.page.lightningRod3=In anger smite the earth
 
-alfheim.page.flameRod0=The &1Rod of the Tricky Flame&0<br><br><br>TODO
-alfheim.page.flameRod1=TODO
+alfheim.page.flameRod0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
+alfheim.page.flameRod1=Hot Shots
 alfheim.page.flameRod2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. By donning the &1Priestly Emblem: Loki&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
-alfheim.page.flameRod3=TODO
+alfheim.page.flameRod3=Sneaking past your defenses
 
 alfheim.page.interdictionRod0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
-alfheim.page.interdictionRod1=really not feelin up to it right now
+alfheim.page.interdictionRod1=Really not feelin up to it right now
 alfheim.page.interdictionRod2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air. By donning the &1Priestly Emblem: Njord&0, the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
 alfheim.page.interdictionRod3=At the doom of men he will come back
 

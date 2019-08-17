@@ -232,7 +232,7 @@ object ShadowFoxLexiconData {
 		
 		if (ThaumcraftSuffusionRecipes.recipesLoaded) {
 			tctrees = object: ShadowfoxLexiconEntry("tctrees", dendrology, ItemStack(ThaumcraftSuffusionRecipes.plantBlock)) {
-				override fun getSubtitle() = "[Botanical Addons x Thaumcraft]"
+				override fun getSubtitle() = "[Iridescence x Thaumcraft]"
 			}
 			tctrees.setLexiconPages(PageText("0"),
 									PageTreeCrafting("1", ThaumcraftSuffusionRecipes.greatwoodRecipe),

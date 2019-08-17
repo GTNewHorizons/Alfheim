@@ -12,7 +12,7 @@ object LibRenderIDs {
 	var idShrinePanel = -1
 	var idTransferer = -1
 	
-	// Botanical Addons
+	// Iridescence
 	var idDoubleFlower = -1
 	var idMultipass = -1
 	var idHopper = -1

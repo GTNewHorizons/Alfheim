@@ -6,6 +6,7 @@ import java.util.*
 
 object LibResourceLocations {
 	
+	val altar9 = ResourceLocation(ModInfo.MODID, "textures/model/block/altar9.png");
 	val anomalies = ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png")
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")
 	val antiPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png")

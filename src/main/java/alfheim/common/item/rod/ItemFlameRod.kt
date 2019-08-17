@@ -84,7 +84,7 @@ open class ItemFlameRod(name: String = "flameRod"): ItemMod(name), IManaUsingIte
 				Botania.proxy.sparkleFX(world, x, y, z, r, g, b, 1f, 5)
 				
 				if (count % 20 == 0) {
-					val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1))
+					val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5))
 					val cost = getCost(prowess, priest)
 					for (entity in entities) {
 						if (entity is EntityLivingBase && entity != player && entity.health > 0) {

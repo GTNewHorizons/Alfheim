@@ -92,7 +92,7 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade())
 		
-		// Botanical Addons:
+		// Iridescence:
 		
 		MinecraftForgeClient.registerItemRenderer(ShadowFoxItems.invisibleFlameLens, RenderLens())
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderBow())

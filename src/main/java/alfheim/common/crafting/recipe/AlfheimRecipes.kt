@@ -223,11 +223,11 @@ object AlfheimRecipes {
 		recipeElvoriumPylon = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			addOreDictRecipe(ItemStack(altar),
+			addOreDictRecipe(ItemStack(altar, 1, 9),
 							 "SPS", " C ", "CCC",
-							 'S', livingcobble,
+							 'S', livingcobbleSlab,
 							 'P', PETAL[i],
-							 'C', LIVING_ROCK)
+							 'C', ItemStack(livingcobble))
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16)
 		
 		addOreDictRecipe(ItemStack(animatedTorch),
