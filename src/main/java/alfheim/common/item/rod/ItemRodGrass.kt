@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-import java.util.*
 
 class ItemRodGrass: Item(), IManaUsingItem {
 	init {
@@ -22,13 +21,9 @@ class ItemRodGrass: Item(), IManaUsingItem {
 		unlocalizedName = "grassRod"
 	}
 	
-	override fun getItemUseAction(stack: ItemStack?): EnumAction {
-		return EnumAction.bow
-	}
+	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
 	
-	override fun getMaxItemUseDuration(stack: ItemStack?): Int {
-		return 72000
-	}
+	override fun getMaxItemUseDuration(stack: ItemStack?) = 72000
 	
 	override fun onUsingTick(stack: ItemStack?, player: EntityPlayer?, count: Int) {
 		if (count != getMaxItemUseDuration(stack) && count % 5 == 0) terraform(stack, player!!.worldObj, player)
@@ -60,16 +55,15 @@ class ItemRodGrass: Item(), IManaUsingItem {
 		}
 	}
 	
-	override fun usesMana(stack: ItemStack): Boolean {
-		return true
-	}
+	override fun usesMana(stack: ItemStack) = true
 	
 	companion object {
 		
-		internal val validBlocks = Arrays.asList("dirt", "mycelium", "podzol")
+		internal val validBlocks = listOf("dirt", "mycelium", "podzol")
 		
 		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return false
+			if (!player.canPlayerEdit(x, y, z, side, stack)) return false
 			
 			world.setBlock(x, y, z, block)
 			ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
