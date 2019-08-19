@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
+import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
@@ -63,7 +64,7 @@ class ItemRodGrass: Item(), IManaUsingItem {
 		
 		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return false
-			if (!player.canPlayerEdit(x, y, z, side, stack)) return false
+			if (!player.canPlayerEdit(x, y, z, side, stack)) return false // FIXME ignores
 			
 			world.setBlock(x, y, z, block)
 			ManaItemHandler.requestManaExactForTool(stack, player, cost, true)

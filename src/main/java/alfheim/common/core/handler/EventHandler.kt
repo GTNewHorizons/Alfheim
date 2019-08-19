@@ -50,8 +50,7 @@ import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
 import kotlin.math.max
 
 @Suppress("unused")
-class
-EventHandler {
+class EventHandler {
 	
 	@SubscribeEvent
 	fun onPlayerLoggedIn(e: PlayerLoggedInEvent) {
@@ -72,13 +71,14 @@ EventHandler {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfig.flightTime.toDouble()), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
-					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253.0, 0.5)
+					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 250.0, 0.5)
+					e.player.rotationYaw = 180f
+					e.player.rotationPitch = 0f
 					e.player.triggerAchievement(AlfheimAchievements.alfheim)
 					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome0"))
 					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome1"))
-					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome2"))
 					e.player.inventory.addItemStackToInventory(ItemStack(ModItems.lexicon))
-					e.player.setSpawnChunk(ChunkCoordinates(0, 253, 0), true, AlfheimConfig.dimensionIDAlfheim)
+					e.player.setSpawnChunk(ChunkCoordinates(0, 250, 0), true, AlfheimConfig.dimensionIDAlfheim)
 				}
 				if (AlfheimCore.enableMMO) transfer(e.player as EntityPlayerMP)
 			}

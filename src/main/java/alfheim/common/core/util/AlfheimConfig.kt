@@ -51,8 +51,6 @@ object AlfheimConfig {
 	var slowDownClients			= false
 	var tradePortalRate			= 1200
 	
-	var detectShrines			= false // TODO remove
-	
 	// Iridescence
 	var realLightning			= false
 	var blackLotusDropRate		= 0.05
@@ -150,8 +148,6 @@ object AlfheimConfig {
 		numericalMana			= loadProp(CATEGORY_GENERAL,	"numericalMana",				numericalMana,			false,	"Set this to false to disable numerical mana representation")
 		slowDownClients			= loadProp(CATEGORY_GENERAL,	"slowDownClients",				slowDownClients,		false,	"Set this to true to slowdown players on clients while in anomaly")
 		tradePortalRate			= loadProp(CATEGORY_GENERAL,	"tradePortalRate",				tradePortalRate,		false,	"Portal updates every {N} ticks")
-		
-		detectShrines			= loadProp(CATEGORY_GENERAL,	"detectShrines",				detectShrines,			false,	"Detect shrine when generating and tp everyone in Alfheim to it")
 		
 		realLightning			= loadProp(CATEGORY_BA,			"realLightning",				realLightning,			false,	"Set this to true to make lightning rod summon real (weather) lightning")
 		addTincturemAspect		= loadProp(CATEGORY_BA,			"TC.tincturem",					addTincturemAspect,		true,	"[TC] Set this to false to use Sensus instead of Color aspect")

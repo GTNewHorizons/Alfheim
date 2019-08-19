@@ -43,6 +43,9 @@ class TileRaceSelector: ASJTile() {
 	
 	override fun updateEntity() {
 		if (activeRotation != 0) if (activeRotation > 0) --activeRotation else ++activeRotation
+		
+		// TODO remove when there will be races
+		if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
 	}
 	
 	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.toDouble(), zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
