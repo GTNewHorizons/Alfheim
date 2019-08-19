@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
-import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
