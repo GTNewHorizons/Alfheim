@@ -18,6 +18,7 @@ import alfheim.api.lib.LibOreDict.SPLINTERS_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.WOOD
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.ShadowFoxBlocks.altPlanks
 import alfheim.common.block.ShadowFoxBlocks.altSlabs
 import alfheim.common.block.ShadowFoxBlocks.altStairs
@@ -220,7 +221,7 @@ object ShadowFoxRecipes {
 		
 		recipesColoredDirt = BotaniaAPI.getLatestAddedRecipes(17)
 		
-		addOreDictRecipe(ItemStack(auroraDirt),
+		addOreDictRecipe(ItemStack(auroraDirt, 8),
 						 "DDD",
 						 "DPD", "DDD", 'P', MANA_PEARL, 'D', ItemStack(Blocks.dirt, 1))
 		
@@ -743,6 +744,7 @@ object ShadowFoxRecipes {
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.altar), "SPS", " C ", "CCC", 'S', "slabCobblestone", 'P', RAINBOW_PETAL, 'C', "cobblestone")
 		ModCraftingRecipes.recipesApothecary.add(BotaniaAPI.getLatestAddedRecipe())
+		addOreDictRecipe(ItemStack(BotaniaBlocks.altar, 1, 9), "SPS", " C ", "CCC", 'S', AlfheimBlocks.livingcobbleSlab, 'P', RAINBOW_PETAL, 'C', AlfheimBlocks.livingcobble)
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.spreader), "WWW", "GP ", "WWW", 'W', LIVING_WOOD, 'P', RAINBOW_PETAL, 'G', if (Botania.gardenOfGlassLoaded) LIVING_WOOD else "ingotGold")
 		ModCraftingRecipes.recipesSpreader.add(BotaniaAPI.getLatestAddedRecipe())
