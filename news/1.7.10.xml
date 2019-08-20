@@ -49,4 +49,7 @@
 	<version id="BETA-17">
 		<val>Fixed ASMData</val>
 	</version>
+	<version id="BETA-18">
+		<val>Added really a lot of new stuff and major security fixes were made, go for update!</val>
+	</version>
 </news>
