@@ -1,10 +1,6 @@
 package alfheim.common.network;
 
 import alexsocol.asjlib.network.ASJPacket;
-import alfheim.client.core.handler.PacketHandlerClient;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageParticles extends ASJPacket {
 
@@ -24,14 +20,5 @@ public class MessageParticles extends ASJPacket {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.z2 = z2;
-	}
-
-	public static class Handler implements IMessageHandler<MessageParticles, IMessage> {
-
-		@Override
-		public IMessage onMessage(MessageParticles packet, MessageContext message) {
-			PacketHandlerClient.handle(packet);
-			return null;
-		}
 	}
 }

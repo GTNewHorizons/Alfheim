@@ -2,13 +2,15 @@
   "modid": "alfheim",
   "name": "Alfheim",
   "description": "Botania addon alowing you to travel to Alfheim",
-  "version": "BETA-18",
-  "mcversion": "1.7.10",
-  "url": "",
-  "updateUrl": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/alfheim",
+  "updateUrl": "https://www.curseforge.com/minecraft/mc-mods/alfheim/download",
   "authorList": ["AlexSocol", "VamigA"],
   "credits": "see credits.txt in mod file",
   "logoFile": "alfheim_logo.png",
-  "screenshots": [],
-  "dependencies": []
+  "useDependencyInformation": true,
+  "requiredMods": ["Botania"],
+  "dependencies": ["Botania", "MineTweaker3", "Thaumcraft"],
+  "dependants": ["elvenstory"]
 }]

@@ -1,19 +1,15 @@
 package gloomyfolken.hooklib.asm;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.objectweb.asm.*;
 
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import java.util.*;
 
 public class HookInjectorClassVisitor extends ClassVisitor {
 
-	List<AsmHook> hooks;
-	List<AsmHook> injectedHooks = new ArrayList<AsmHook>(1);
+	final List<AsmHook> hooks;
+	final List<AsmHook> injectedHooks = new ArrayList<AsmHook>(1);
 	boolean visitingHook;
-	HookClassTransformer transformer;
+	final HookClassTransformer transformer;
 
 	String superName;
 

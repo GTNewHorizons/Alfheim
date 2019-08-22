@@ -3,27 +3,25 @@
 
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.additions.*;
+
+import java.util.*;
 
 public class WE_BiomeLayer extends WE_CreateChunkGen_InXZ {
-	public List<Block> layerBlock     = new ArrayList();
-	public List<Byte > layerBlockMeta = new ArrayList();
+	public final List<Block> layerBlock     = new ArrayList();
+	public final List<Byte > layerBlockMeta = new ArrayList();
 	//-//
-	public List<Block> layerReplacingBlock     = new ArrayList();
-	public List<Byte > layerReplacingBlockMeta = new ArrayList();
+	public final List<Block> layerReplacingBlock     = new ArrayList();
+	public final List<Byte > layerReplacingBlockMeta = new ArrayList();
 	//-//
-	public List<Integer>
-		layerStart       = new ArrayList(),
-		layerRandomStart = new ArrayList(),
-		layerEnd         = new ArrayList(),
-		layerRandomEnd   = new ArrayList();
+	public final List<Integer>
+		layerStart       = new ArrayList();
+	public final List<Integer> layerRandomStart = new ArrayList();
+	public final List<Integer> layerEnd         = new ArrayList();
+	public final List<Integer> layerRandomEnd   = new ArrayList();
 	//-//
-	public List<Boolean> layerUnderWaterGen = new ArrayList();
+	public final List<Boolean> layerUnderWaterGen = new ArrayList();
 	
 	public void add(Block block, byte meta, Block replacingBlock, byte replacingBlockMeta, int start, int r_start, int end, int r_end, boolean underWater) {
 		layerBlock    .add(block);

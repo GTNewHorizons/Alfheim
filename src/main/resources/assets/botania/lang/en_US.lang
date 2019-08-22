@@ -6,7 +6,7 @@ botania.page.alfheim0=Alfheim... A beautiful world where magic lives forever... 
 botania.page.alfheim1=But he also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed... Those that the travelers knew happened to have been in Helheim or Walhall for a long time... Oh, let the heavenly light shines upon the souls of the dead!
 
 botania.entry.anomaly=Anomalies
-botania.tagline.=The dangers of this world
+botania.tagline.anomaly=The dangers of this world
 botania.page.anomaly0=We all know that in the past, Alfheim, like the other worlds, suffered from The Shattering. And since this event was not only physical, but magical in nature, it is clear that anomalies were formed in the world.
 botania.page.anomalyManaVoid.t=&1Manavortex&0
 botania.page.anomalyManaVoid.d=Pulls &1Mana&0 from players nearby. One brave man decided to check how much it could hold. Gained a lot of mana and came closer to it. According to the observers, after about a minute the vortex &4exploded&0, killing the experimenter on the spot, and a huge sphere of mana flew in it's direction.
@@ -268,6 +268,27 @@ botania.page.dodgRing1=Dexterity bonus
 botania.page.judgementCloaks1n=The &1Cloak of Virtue&0 will, when active, block the full extent of a piece of damage taken.<br>The &1Cloak of Sin&0 will damage all nearby hostile mobs for the same amount of damage that was taken.<br>The &1Cloak of Balance&0 will evenly split the damage between the attacker and the target. It also prevents the target from dying.
 botania.page.judgementCloaks4=Pain split
 
+################################################################ EBT ################################################################
+
+botania.entry.subspear=Spear of Subspace
+botania.tagline.subspear=There is no sense
+botania.page.subspear0=The &1Spear of Subspace&0 can tear apart the very fabric of reality, summoning deathly rays of energy from subspace to attack enemies. It can also be launched forward by hitting the air.
+
+botania.entry.moonbow=Phoebus Catastrophe
+botania.tagline.moonbow=Purer than the Sun
+botania.page.moonbow0=The &1Phoebus Catastrophe&0 uses &4Mana&0 to shoot magic arrows which pierce through enemies and deal damage to the creatures in the area. The longer you draw the bow, the more damage it will deal (not unlimited).
+#botania.page.moonbow1=A hundred shots, a hundred bullseyes.
+
+botania.entry.dasGold=Das Rheingold
+botania.tagline.dasGold=Relic Unbinder
+botania.page.dasGold0=&1Das Rheingold&0 can empty the binding of a relic, just crafting the relic with it. If you want to bind the relic to a specific person, hold the Das Rheingold and right-click him, then the crafting will make the relic bind to him.
+botania.page.dasGold1=We need more gold
+
+botania.entry.multbaub=Ring of Elven King
+botania.tagline.multbaub=Five more active baubles
+botania.page.multbaub0=&1Ring of Elven King&0 can perform six common baubles' abilities. Just carry a &1Bauble Case&0 and put the bauble you want in the upper line. Not all the baubles can be simulated, like Relics.
+botania.page.multbaub1=You don't fool me
+
 ################################################################ ESM ################################################################
 
 botania.entry.es= Elven Story
@@ -294,10 +315,10 @@ botania.entry.spells= Spells
 botania.tagline.spells=No magic outside Hogwarts!
 botania.page.spells0=Each elven race has its own set of spells, with a certain affinity. So, Salamanders are skillful fire mages, Sylphs - wind, Kait Sith can subdue the nature, Pookas are excellent musicians, Gnomes specialize in earth magic, Leprechauns on various technologies, Spriggans are masters of illusions, Undines - water mages, and Imps are servants of Darkness.
 botania.page.spells1=Before using the spell, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
-botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [ctrl]+[shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [ctrl]. You can also cancel the current spell by pressing the [X] button.
+botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [Ctrl]+[Shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [Ctrl]. You can also cancel the current spell by pressing the [X] button.
 botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change.
 botania.page.spells3u=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
-botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures within 9 blocks
+botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures in 9 blocks diametered area
 botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness
 botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interrupts if you move
 botania.page.battlehorn=Adds courage to allies, imposing acceleration, boost and resistance
@@ -319,7 +340,7 @@ botania.page.goldrush=Grants the party increased digging speed and luck when min
 botania.page.gravitytrap=Creates a gravity trap, which draws in everything within a radius of 4 blocks and at a height of up to 16 blocks; and causing minor gravity damage
 botania.page.hammerfall=Deals a great suffocation damage to all opponents within a radius of 10 blocks, standing on a not too hard surface
 botania.page.harp=Summons a Harp, which grants minor healing to allies within a radius of 16 blocks and gradually removes negative effects
-botania.page.healing=Grants average healing to all party members
+botania.page.healing=Grants average healing and little saturation to all party members
 botania.page.hollowbody=Imposes an invisibility effect on target
 botania.page.icelens=Allows the caster to see 10 times better through an ice lens
 botania.page.ignition=Ignites the selected block at a distance of up to 16 blocks
@@ -342,14 +363,14 @@ botania.page.sun=Stops rain/thunder
 botania.page.thor=Summons lightning on distance up to 32 blocks under the sky
 botania.page.throw=Launches the caster forward, additionally inflicting average standard damage on anyone in the way
 botania.page.thunder=Causes a thunderstorm/increases rain
-botania.page.timestop=Stops time in a radius of 16 blocks
+botania.page.timestop=Stops time in a radius of 16 blocks<br><br><br>         ZA WARUDO
 botania.page.titanhit=Breaks blocks in the area of 3x3, consuming the more mana, the harder were the blocks
 botania.page.truesigh=Allows you to find out approximately how much mana the target has - the brighter and higher the "flame" - the more mana
 botania.page.uphealth=Imposes a health increasement on the target
 botania.page.wallwarp=Allows you to move through not very thick walls
 botania.page.waterbreathing=Imposes a waterbreathing effect on a party
 botania.page.wellolife=Imposes an effect on a party that gradually heals the target if it stays in the water
-botania.page.windbalde=Launches an air disc, causing average air damage to enemies on the way
+botania.page.windblades=Launches air discs, causing average air damage to enemies on the way
 
 botania.entry.targets= Targeting
 botania.tagline.targets=You can't hide from me
@@ -360,3 +381,224 @@ lexicon.time=Cast: %.2f
 lexicon.cd=Cooldown: %.2f
 lexicon.seconds=s
 lexicon.mana=Mana:
+
+################################################################ IRI ################################################################
+
+alfheim.entry.rainbowFlora=Bifrost Flora
+alfheim.tagline.rainbowFlora=Gifts of Heimdall
+alfheim.entry.coloredDirt=Iridescent Dirt [IRI]
+alfheim.tagline.coloredDirt=Rainbow dirt for your decoration needs
+alfheim.entry.aurora=Aurora Dirt
+alfheim.tagline.aurora=One dirt, lots of colors
+alfheim.entry.technicolorRod=Rod of the Vibrant Plains [IRI]
+alfheim.tagline.technicolorRod=Rainbow dirt made from thin air
+alfheim.entry.lightningRod=Rod of the Thundering Peaks [IRI]
+alfheim.tagline.lightningRod=Stike fear and thunder into your foes
+alfheim.entry.flameRod=Rod of the Tricky Flame [IRI]
+alfheim.tagline.flameRod=Pinpoint flamethrower
+alfheim.entry.interdictionRod=Rod of the Stormy Sea [IRI]
+alfheim.tagline.interdictionRod=Push enemies out of your personal space
+alfheim.entry.irisSapling=Iridescent Trees
+alfheim.tagline.irisSapling=Grow trees with all the colors of the wind
+alfheim.entry.treeCrafting=Tree Suffusion
+alfheim.tagline.treeCrafting=Infusing trees with mana and material
+alfheim.entry.irisSeeds=Iridescent Grass [IRI]
+alfheim.tagline.irisSeeds=Rainbow grass for your colorful landscapes
+alfheim.entry.coatOfArms=Coats of Arms [IRI]
+alfheim.tagline.coatOfArms=Declare your allegiance
+alfheim.entry.colorOverride=Clerical Colorization [IRI]
+alfheim.tagline.colorOverride=Colorful magic
+alfheim.entry.attribution=Holy Symbols [IRI]
+alfheim.tagline.attribution=Keys to something greater
+alfheim.entry.sealCreepers=Manaseal Creepers [IRI]
+alfheim.tagline.sealCreepers=A storm in the Manatide
+alfheim.entry.kindling=Blaze Kindling [IRI]
+alfheim.tagline.kindling=Quickened firespread
+alfheim.entry.waveRod=Rod of the Prismatic Lake [IRI]
+alfheim.tagline.waveRod=Rainbow lights
+alfheim.entry.itemDisplay=Item Platforms [IRI]
+alfheim.tagline.itemDisplay=Display items without letting them despawn
+alfheim.entry.lightningSapling=Thunderous Oak
+alfheim.tagline.lightningSapling=A lightning-absorbing tree
+alfheim.entry.infernalSapling=Infernal Oak
+alfheim.tagline.infernalSapling=A fireproof tree
+alfheim.entry.circuitSapling=Circuitree
+alfheim.tagline.circuitSapling=A redstone emitter
+alfheim.entry.calicoSapling=Calico Tree
+alfheim.tagline.calicoSapling=An explosion absorber
+alfheim.entry.livingwoodFunnel=Livingwood Funnel [IRI]
+alfheim.tagline.livingwoodFunnel=A filterable hopper that only carries one item
+alfheim.entry.toolbelt=Botanist's Toolbelt [IRI]
+alfheim.tagline.toolbelt=12 stacks of at-the-ready storage
+alfheim.entry.lamp=Iridescent Lamp [IRI]
+alfheim.tagline.lamp=A signal-strength tester
+alfheim.entry.tctrees=Thaumic Suffusion
+alfheim.tagline.tctrees=Life from the void
+alfheim.entry.silencer=Sealing Oak
+alfheim.tagline.silencer=Softer sounds
+alfheim.entry.amp=Sonic Amplifier [IRI]
+alfheim.tagline.amp=Louder sounds
+alfheim.entry.crysanthermum=Crysanthermum [IRI]
+alfheim.tagline.crysanthermum=Mana from temperature
+alfheim.entry.andmyaxe=Holy Blade Revelation [IRI]
+alfheim.tagline.andmyaxe=The weapon of the First Godslayer
+alfheim.entry.star=Frozen Stars [IRI]
+alfheim.tagline.star=An ender light source
+alfheim.entry.dagger=Dagger of the Perfect Soul [IRI]
+alfheim.tagline.dagger=The weapon of the Gaterender
+alfheim.entry.shimmer=Shimmerquartz [IRI]
+alfheim.tagline.shimmer=Quartz but rainbow
+alfheim.entry.throwablePotions=Throwable Potions [IRI]
+alfheim.tagline.throwablePotions=Distant support
+
+alfheim.category.dendrology=Dendrology
+
+alfheim.page.rainbowFlora0=In Alfheim you can find unique &1Bifrost Flowers&0 and &1Mushrooms&0, apperaing to be world-specific and unavailable in other dimensions. Those have nothing different from single-colored flowers but their rainbow color, so they can be used like default ones. Can be obtained by painting &1Mystical Flowers&0 with &1Floral Bifrost Powder&0.
+alfheim.page.rainbowFlora1=Plucking Petals
+alfheim.page.rainbowFlora2=And grinding them
+alfheim.page.rainbowFlora3=Pack into blocks
+
+alfheim.page.coloredDirt0=Using the latent power in &1Mystical Flowers&0, you can make dirt that shimmers every color of the rainbow. This mystical dirt is capable of growing trees and plants without water or a hoe. If put next to a &1Pure Daisy&0, it will revert to its uncolored state.
+alfheim.page.coloredDirt1=Beauty from the dross
+
+alfheim.page.aurora0=By combining dirt with the shimmering essence of a &1Mana Pearl&0, you can make dirt that captures the threads of magic in the world, having a different color based on its location. This mystical dirt is also capable of growing trees and plants without water or a hoe. It can be converted back to regular dirt using a &1Pure Daisy&0.
+alfheim.page.aurora1=Seek the hour of twilight in the forest of silence
+alfheim.page.aurora2=Planks
+alfheim.page.aurora3=Stairs
+alfheim.page.aurora4=Slabs
+alfheim.page.aurora5=And back again
+
+alfheim.page.technicolorRod0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
+alfheim.page.technicolorRod1=Simply drowning in colors
+alfheim.page.technicolorRod2=It appears that connecting your soul to the ancient god of earth, &4Sif&0, can increase your ability to use the &1Rod of the Vibrant Plains&0. By donning the &1Priestly Emblem: Sif&0, your range extends beyond this rod's normal limits. Wearing the &1Ring of Far Reach&0 will increase your range further with the Emblem's power.
+alfheim.page.technicolorRod3=Welcome now, and take the crystal cup
+
+alfheim.page.lightningRod0=The &1Rod of the Thundering Peaks&0, much like its sword cousin, the &1Thundercaller&0, can summon lightning to strike your enemies. It will leap from enemy to enemy, killing them all in turn.<br>A &1Livingwood Avatar&0 can also wield this rod.
+alfheim.page.lightningRod1=The experimental results are shocking
+alfheim.page.lightningRod2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. By donning the &1Priestly Emblem: Thor&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
+alfheim.page.lightningRod3=In anger smite the earth
+
+alfheim.page.flameRod0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
+alfheim.page.flameRod1=Hot Shots
+alfheim.page.flameRod2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. By donning the &1Priestly Emblem: Loki&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
+alfheim.page.flameRod3=Sneaking past your defenses
+
+alfheim.page.interdictionRod0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
+alfheim.page.interdictionRod1=Really not feelin up to it right now
+alfheim.page.interdictionRod2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air. By donning the &1Priestly Emblem: Njord&0, the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
+alfheim.page.interdictionRod3=At the doom of men he will come back
+
+alfheim.page.irisSapling0=Blessed by the goddess of rainbows, these saplings are made from their earthly counterparts by the purifying magic of a &1Pure Daisy&0. These saplings will only grow on &1Iridescent Dirt&0 and take on the hue of the dirt they lay their roots in.<br><br>They're just &oreally&0 big carnations
+alfheim.page.irisSapling1=Planks
+alfheim.page.irisSapling2=Stairs
+alfheim.page.irisSapling3=Slabs
+alfheim.page.irisSapling4=And back again
+alfheim.page.irisSapling5=Grinding them down
+
+alfheim.page.treeCrafting0=Affecting life is much harder than making or destroying it. The &1Iridescent Tree&0 has a natural lack of regular life, which lends itself to making beautiful spectrums of wood. It seems possible to re-add this life, by drawing mana into a &4Dendric Suffuser&0. This structure, of &1Obsidian&0 and materials of &4Iridesence&0, will suffuse the purified tree with life, creating interesting new varieties of life.
+alfheim.page.treeCrafting1=When a &1Wand of the Forest&0 is used on the apex plank of the structure, it will complete it. For a tree to be made, you must plant a lifeless &1Iridescent Sapling&0 on the dirt below, and pump &4Mana&0 into the apex block. The components must be placed on the &1Item Platforms&0, and the crafting will begin on its own.
+alfheim.page.treeCrafting2=The Dendric Suffuser
+
+alfheim.page.irisSeeds0=If &1Bone Meal&0 is used on &1Iridescent Dirt&0, it will grow &1Iridescent Grass&0 instead of &1Tall Grass&0. When this &1Iridescent Grass&0 is thrown into a &4Mana Pool&0, you get out something quite like the &1Pasture Seed&0. It will transmute &1Grass&0 and &1Dirt&0 into &1Iridescent Dirt&0, with a simple right click.
+alfheim.page.irisSeeds1=/etc/sudoers
+alfheim.page.irisSeeds2=Tiger Orchid monoculture
+
+alfheim.page.coatOfArms0=Much like &1Cosmetic Baubles&0, the &1Coat of Arms&0 can add a touch of style to any baubles a player has equipped. These can be worn as an &4Amulet&0, or crafted alongside another &4Bauble&0 much like &4Cosmetic Overrides&0.<br>Wearing a &1Coat of Arms&0 will act as a &1Clerical Colorizer&0, changing the color of any clerical abilities you might use so as to declare your allegiance.
+alfheim.page.coatOfArms1=Papers, please
+
+alfheim.page.colorOverride0=The &1Clerical Colorizer&0, the &4Ring&0 form of the &1Paintslinger's Lens&0 can change even the color of magic. Wearing one will affect any clerically aligned abilities, changing their color. These can be crafted alongside another &4Bauble&0 much like &4Cosmetic Overrides&0. They can by dyed much like leather with &1Floral Powder&0, and cleared by simply putting one in a crafting table.
+alfheim.page.colorOverride1=Beware of the dark clerics
+
+alfheim.page.attribution0=The &1Holy Symbol&0 is an artifact with what seems to be a wild storm of unrealized potential. Although crafted of simple materials, it has a ready acceptance of other materials.<br>There seems to be no overworldly way of fully combining them, however, and the &4Nether&0 and the &4End&0 have given no clues. Perhaps you must look in &2other places&0.
+alfheim.page.attribution1=Priestly fashion
+
+alfheim.page.sealCreepers0=The &4Manatide&0 flows throughout the world, but as with a river, there are always bumps and rapids. The &4Manaseal Creeper&0 is a walking rift in the flow of &4Mana&0. Should it explode near you, you'll find yourself stricken with a &4Manatide Storm&0, which will eat away at your mana, taking away what could be hours of generation. It's recommended to stay away from them at all costs.
+alfheim.page.sealCreepers1Drop=However, they do have one interesting property. They crystallize their mana inside, occasionally resulting in a &1Black Lotus&0 found on their corpse. Their storming energy, combined with this crystallized mana, can react with fully-formed &1Loti&0. When a &4Manatide Storm&0 comes into contact with a &1Black Lotus&0, it will break their harmony and result in a &1Wilted Lotus&0, a powerful magical resource.
+alfheim.page.sealCreepers1NoDrop=However, they do have one interesting property. Their storming energy can react with fully-formed &1Black Loti&0. When a &4Manatide Storm&0 comes into contact with one of these flowers, it will break their harmony and result in a &1Wilted Lotus&0, a powerful magical resource.
+
+alfheim.page.kindling0=&1Blaze Kindling&0 is like &1Netherrack&0 on steroids. Not only will it sustain flames, but it will take them in from nearby blocks, very quickly, It can also be extinguished and lit simply by using it with an open hand.
+alfheim.page.kindling1=Stop drop and roll
+
+alfheim.page.livingwoodFunnel0=For some people, the &1Hopper&0 is too lax. It allows items through when it shouldn't, and sometimes moves them too fast. The &1Livingwood Funnel&0 is far, far stricter. It only allows one item through at a time, and can be filtered by placing an &1Item Frame&0 on one of its sides.
+alfheim.page.livingwoodFunnel1=One at a time, please
+
+alfheim.page.waveRod0=One particularly frustrating property of the &1Mana Lens: Flash&0 is its tendency to lock the color of a &1Mana Flash&0 immidiately upon making it. Even if you want to make a rainbow &1Flash&0, you'll get one color. By using the power of the &1Rod of the Prismatic Lake&0, you can make the rainbow you've been searching for.<br>It can be tinged with &1Phantom Ink&0.
+alfheim.page.waveRod1=All the colors of the wind
+
+alfheim.page.schemaOak0=A &1Schematic Oak&0, when grown, can form a living treehouse.  Growing &1Schematic Oak&0 of special dirt can change the final form it takes to allow for many designs.
+alfheim.page.schemaOak1=Treehouses Galore
+
+alfheim.page.itemDisplay0=The &1Item Platform&0 is a neat way to display an item without having it despawn. Giving it an item via right click or hopper will show it floating above the platform. It's a neat way to show off your piles of resources.
+alfheim.page.itemDisplay1=Terrasteel makes you look rich
+
+alfheim.page.lightningSapling0=The &1Thunderous Oak&0 is a tree that acts like a lightning rod. It absorbs lightning from the surrounding area and redirects it to itself. The process of drawing in the lightning can sometimes damage items and creatures, and light terrain on fire where the lightning was. The effect is reduced by the existence of the Oak, though.
+alfheim.page.lightningSapling1=Thor will hate you
+alfheim.page.lightningSapling2=Planks
+alfheim.page.lightningSapling3=Stairs
+alfheim.page.lightningSapling4=Slabs
+alfheim.page.lightningSapling5=Twigs
+alfheim.page.lightningSapling6=And splinters
+
+alfheim.page.infernalSapling0=The &1Infernal Oak&0 is a tree so saturated with fire energy, it repulses external flames. Its leaves, logs, and planks are all completely immune to conventional flames.
+alfheim.page.infernalSapling1=Just pour more fire on it, it'll work eventually
+alfheim.page.infernalSapling2=Planks
+alfheim.page.infernalSapling3=Stairs
+alfheim.page.infernalSapling4=Slabs
+alfheim.page.infernalSapling5=Twigs
+alfheim.page.infernalSapling6=Coal
+alfheim.page.infernalSapling7=And splinters
+
+alfheim.page.circuitSapling0=The &1Circuitree&0 emits a redstone signal of a strength equal to the number of &1Circuitree&0 blocks consecutively above it. Any block from the tree can be used in the stack, including the sapling.
+alfheim.page.circuitSapling1=I deeply apologize for the pun
+alfheim.page.circuitSapling2=The planks work too
+alfheim.page.circuitSapling3=And Stairs
+alfheim.page.circuitSapling4=And even Slabs
+
+naturalpledge.page.calico0=The &1Calico Tree&0 is so cat-like, it scares more than just creepers away, it actually scares off any explosion at all. Any block from the tree can be used for this, including the sapling.
+naturalpledge.page.calico1=Not a scratching post
+naturalpledge.page.calico2=The planks work too
+naturalpledge.page.calico3=And Stairs
+naturalpledge.page.calico4=And even Slabs
+
+alfheim.page.toolbelt0=The &1Botanist's Toolbelt&0 is an easy-access extra inventory. By sneaking, you gain access to 12 extra stacks of storage, which can be used by interacting with the air around where they appear. Any items or blocks in it will provide for the &1Rod of the Shifting Crust&0.
+alfheim.page.toolbelt1=Not quite hammerspace
+
+alfheim.page.lamp0=The &1Iridescent Lantern&0 glows with all the colors of the rainbow. While black in appearance when first set down, giving it a redstone signal will change its color. The higher the signal, the farther down the rainbow the color becomes.<br>If given a full signal, the &1Iridescent Lantern&0 will glow like the &4Bifrost&0 itself.
+alfheim.page.lamp1=Left by a Piggah
+
+alfheim.page.tctrees0=The &2Garden of Glass&0 is truly empty. It's so devoid of life you can't find even a remnant of the trees considered necessary for the &5Thaumic&0 arts. However, it appears that the shards of magic occasionally produced by the &1Orechid&0 might be of use in recreating these trees. By applying these shards of power via &4Dendric Suffusion&0, you can make what you cannot find.
+alfheim.page.tctrees1=That's what she said
+alfheim.page.tctrees2=Over 70 rides and attractions
+alfheim.page.tctrees3=Forgoing the natural pattern of ingots, leaves, and catalyst, and substituting the power of &1Pixie Dust&0 in their place, it is possible to 'corrupt' an &1Iridescent Sapling&0. This process removes the essence of trees and wood, &4Arbor&0, and replaces it with something else entirely. Using this theorem, the mryiad plants of &5Thaumaturgy&0 can be produced.
+alfheim.page.tctrees4=Version control with added snakes
+alfheim.page.tctrees5=Burn, baby, burn
+alfheim.page.tctrees6=Don't do drugs, kids
+
+alfheim.page.silencer0=The &1Sealing Oak&0 has a strange dampening effect on the air around it. Any sounds within eight blocks of any &4Sealing&0 wood block will sound half as loud as it would have otherwise.
+alfheim.page.silencer1=An extra utility
+alfheim.page.silencer2=Planks
+alfheim.page.silencer3=Slabs
+alfheim.page.silencer4=Stairs
+
+alfheim.page.amp0=By dampening the air within &1Note Blocks&0, the &1Sonic Amplifier&0 reverberates sound, making sounds within a block or two sound far louder. The more you have, the louder the sound.
+alfheim.page.amp1=Soaryn + Amp + Cacophonium = Dire rage
+
+alfheim.page.crysanthermum0=The &1Crysanthermum&0 is a hardy flower that can survive in any climate. However, its mana generation isn't indifferent to the climate. By feeding it &1Metamorphic Stone&0, you change its temperature. The farther its temperature is to the biome you're in, the more mana it will generate. The hotter or colder the biome the stone comes from, the hotter or colder the flower will be after eating that stone.
+alfheim.page.crysanthermum1=There are, however, a few caveats. Feeding the flower &1Fungal&0 stone can do anything, from cool the flower rapidly to heat it up immensely. If a flower becomes too cold or too hot, it'll stop working until it gets back to normal temperature. Using a stone that was used within the last eight will give you diminishing returns for the next 8 stones, meaning that you'll occasionally have to course-correct.
+alfheim.page.crysanthermum2=Left by a Fortanono
+
+alfheim.page.andmyaxe0=&1Elementium&0 is a highly enchantable substance. So enchantable, in fact, it seems one can enchant it with spells and power outside the normal cycles. By flooding an axe of the stuff with six powers, you have recreated a legendary weapon: the &1Holy Blade Revelation&0. It attacks not the body, but the mind. This has interesting effects when used to attack an immortal.
+alfheim.page.andmyaxe1=&1Revelation&0 has two main abilities. It can attack like a sword, and mine like an axe. It cannot, however, recieve any axe enchantments. The other ability is its soul-draining power. Drawing it back, like a bow, will drain a little mana from anyone foolish enough to be within the blade's range. The range increases with time held back.
+
+alfheim.page.star0=The &1Frozen Star&0 is the light of the stars, trapped upon earth. They are relatively cheap light sources, and give off light with the same strength as &1Glowstone&0. Due to their instability, they can only be harvested by players.
+alfheim.page.star1=Find Polaris to find your way
+alfheim.page.star2=The &1Crackling Star&0 is the form of the stars, trapped upon earth, and brought forth through &4Iridescence&0. They appear as a ball of light, but will distribute their mass to a &1Crackling Star&0 it's bound to with a &1Wand of the Forest&0. They give off light with the same strength as &1Glowstone&0, and can be made in any of the colors of &4Iridescence&0.
+alfheim.page.star3=Wire's frames
+
+alfheim.page.dagger0=&1The Dagger of the Perfect Soul&0 is the manifestation of rebellion. It, paradoxically, is stronger when on the defense than on the attack. As a weapon, it's weaker than a sword of wood. When you parry with it, however, if you can block before the blade becomes dun, it will reflect the strength of the attack upon the attacker. It has been said that this blade has freed many from oppression's clutches.
+
+alfheim.page.shimmer0=&1Nether Quartz&0, combined with the energies of the &4Bifrost&0, turns into a variant of quartz displaying all the colors of the rainbow. As with the more mundane quartz varieties, &1Shimmerquartz&0 can be crafted into all its decorative block counterparts just like regular &1Quartz&0 blocks. It cannot be used to make a &1Flügel Tiara&0 variant; something about matrices stops you from doing so.
+alfheim.page.shimmer1=Wire's scraping the bottom of the barrel here
+
+alfheim.page.throwablePotions0=By applying &1Gunpowder&0 effect to any &1Vial&0 one can make it explodable on contact with the ground or entities. By reducing the number of uses the speed and size of the AoE are increased.
+alfheim.page.throwablePotions1=Incoming!

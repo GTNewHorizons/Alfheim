@@ -4,20 +4,22 @@
 package ru.vamig.worldengine.additions;
 
 import net.minecraft.block.Block;
-import ru.vamig.worldengine.WE_Biome;
-import ru.vamig.worldengine.WE_ChunkProvider;
+import ru.vamig.worldengine.*;
 
 public class WE_GeneratorData {
-	public WE_ChunkProvider chunkProvider;
+	public final WE_ChunkProvider chunkProvider;
 	//-//
-	public Block[] chunkBlocks    ;
-	public byte [] chunkBlocksMeta;
+	public final Block[] chunkBlocks    ;
+	public final byte [] chunkBlocksMeta;
 	//-//
-	public long chunk_X, chunk_Z;
+	public final long chunk_X;
+	public final long chunk_Z;
 	//-//
-	public WE_Biome[][] biomes;
+	public final WE_Biome[][] biomes;
 	//-//
-	public int cr_x, cr_y, cr_z;
+	public final int cr_x;
+	public final int cr_y;
+	public final int cr_z;
 	
 	public WE_GeneratorData(WE_ChunkProvider cp, Block[] cb, byte[] cbm, long cx, long cz, WE_Biome[][] b, int x, int y, int z) {
 		chunkProvider = cp;

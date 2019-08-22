@@ -31,24 +31,22 @@ public class WE_ChunkSmartLight extends Chunk {
 				
 				if(!worldObj.provider.hasNoSky) {
 					int k1 = 15, i1 = i + 15;
-					while(true) {
+					do {
 						int j1 = func_150808_b(j, i1, k);
-						if(j1 == 0 && k1 != 15)
+						if (j1 == 0 && k1 != 15)
 							j1 = 1;
 						//-//
 						k1 -= j1;
-						if(k1 > 0) {
+						if (k1 > 0) {
 							ExtendedBlockStorage extendedblockstorage = getBlockStorageArray()[i1 >> 4];
-							if(extendedblockstorage != null) {
+							if (extendedblockstorage != null) {
 								extendedblockstorage.setExtSkylightValue(j, i1 & 15, k, k1);
 								worldObj.func_147479_m((xPosition << 4) + j, i1, (zPosition << 4) + k);
 							}
 						}
 						//-//
 						--i1;
-						if(i1 <= 0 || k1 <= 0)
-							break;
-					}
+					} while (i1 > 0 && k1 > 0);
 				}
 			}
 		}

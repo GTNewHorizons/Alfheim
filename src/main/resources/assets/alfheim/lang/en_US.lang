@@ -1,6 +1,7 @@
 ##########################################################___BLOCKS___##########################################################
 # tile..name=
 tile.AlfheimPortal.name=Alfheim Portal Core
+tile.botania:altar9.name=Living Petal Apothecary
 tile.AnimatedTorch.name=Animated Torch
 tile.AnimatedTorch.desc.random=Random
 tile.AnimatedTorch.desc.rotate=Rotate
@@ -18,19 +19,68 @@ tile.Anyavil.name=Anyavil
 tile.botania:AlfheimPylons0.name=Elven Pylon
 tile.botania:AlfheimPylons1.name=Yordin Pylon
 tile.botania:AlfheimPylons2.name=§4Anti-Pylon
+tile.auroraDirt.name=Iridescent Dirt
+tile.auroraLeaves.name=Iridescent Leaves
+tile.auroraPlanks.name=Iridescent Planks
+tile.alfheim:auroraPlanksSlab.name=Iridescent Planks Slabs
+tile.alfheim:auroraPlanksSlabFull.name=Iridescent Planks Slabs
+tile.alfheim:auroraPlanksStairs.name=Iridescent Planks Stairs
+tile.auroraWood.name=Iridescent Wood
+tile.alfheim:calicoLeaves.name=Calico Leaves
+tile.alfheim:calicoPlanks.name=Calico Planks
+tile.alfheim:calicoPlanksSlab.name=Calico Planks Slab
+tile.alfheim:calicoPlanksSlabFull.name=Calico Planks Slab
+tile.alfheim:calicoPlanksStairs.name=Calico Planks Stairs
+tile.alfheim:calicoSapling.name=Calico Sapling
+tile.alfheim:calicoWood.name=Calico Wood
+tile.alfheim:circuitLeaves.name=Circuitree Leaves
+tile.alfheim:circuitPlanks.name=Circuitree Planks
+tile.alfheim:circuitPlanksSlab.name=Circuitree Planks Slab
+tile.alfheim:circuitPlanksSlabFull.name=Circuitree Planks Slabs
+tile.alfheim:circuitPlanksStairs.name=Circuitree Planks Stairs
+tile.alfheim:circuitSapling.name=Circuitree Sapling
+tile.alfheim:circuitWood.name=Circuitree Wood
+tile.alfheim:cracklingStar.name=Crackling Star
 tile.DragonstoneElvenOre.name=Dragonstone Ore
 tile.DreamLeaves.name=Dreamwood Leaves
 tile.DreamLog.name=Dreamwood Log
 tile.DreamSapling.name=Dreamwood Sapling
+tile.DreamwoodBarkFence.name=Dreamwood Bark Fence
+tile.DreamwoodBarkFenceGate.name=Dreamwood Bark Fence Gate
+tile.DreamwoodFence.name=Dreamwood Planks Fence
+tile.DreamwoodFenceGate.name=Dreamwood Planks Fence Gate
 tile.ElementiumElvenOre.name=Elementium Ore
 tile.ElvenPylon.name=Elven Pylon
 tile.ElvenSand.name=Elven Sand
+tile.ElvenSandstone0.name=Elven Sandstone
+tile.ElvenSandstone1.name=Chiseled Elven Sandstone
+tile.ElvenSandstone2.name=Smooth Elven Sandstone
+tile.ElvenSandstone3.name=Compressed Elven Sandstone
+tile.ElvenSandstone4.name=Cracked Elven Sandstone
+tile.botania:ElvenSandstone0Slab.name=Elven Sandstone Slab
+tile.botania:ElvenSandstone0SlabFull.name=Elven Sandstone Slab
+tile.ElvenSandstoneStairs.name=Elven Sandstone Stairs
 tile.ElvoriumBlock.name=Block of Elvorium
-tile.FlugelHeadBlock.name=Flugel Head
+tile.FlugelHeadBlock.name=Flügel Head
+tile.alfheim:fillerBlock.name=Schematic Filler Block
+tile.MikuHeadBlock.name=Miku Head
 tile.GoldElvenOre.name=Gold Ore
 tile.IffesalElvenOre.name=Iffesal Ore
 tile.ItemHolder.name=Mana Accelerator
-tile.LivingCobble.name=Livingrock Cobblestone
+tile.LivingCobble0.name=Livingrock Cobblestone
+tile.LivingCobble1.name=Compressed Livingrock
+tile.LivingCobble2.name=Polished Cobblestone
+tile.botania:LivingCobble0Slab.name=Livingrock Cobblestone Slab
+tile.botania:LivingCobble0SlabFull.name=Livingrock Cobblestone Slab
+tile.botania:LivingCobble0Wall.name=Livingrock Cobblestone Wall
+tile.botania:LivingCobble2Slab.name=Polished Cobblestone Slab
+tile.botania:LivingCobble2SlabFull.name=Polished Cobblestone Slab
+tile.LivingCobbleStairs.name=Livingrock Cobblestone Stairs
+tile.botania:livingrock1Wall.name=Livingrock Bricks Wall
+tile.LivingwoodBarkFence.name=Livingwood Bark Fence
+tile.LivingwoodBarkFenceGate.name=Livingwood Bark Fence Gate
+tile.LivingwoodFence.name=Livingwood Planks Fence
+tile.LivingwoodFenceGate.name=Livingwood Planks Fence Gate
 tile.ManaInfuser.name=Mana Infuser
 tile.MauftriumBlock.name=§6Block of Mauftrium
 tile.MuspelheimFire.name=Muspelheim Fire Of Eternity
@@ -40,6 +90,41 @@ tile.botania:PowerStone1.name=Stone of Berserker
 tile.botania:PowerStone2.name=Stone of Overmage
 tile.botania:PowerStone3.name=Stone of Tank
 tile.botania:PowerStone4.name=Stone of Ninja
+tile.RaceSelector.name=Race Panel
+tile.alfheim:schemaBlock.name=Schematic Controller
+tile.alfheim:schemaMarker.name=Schematic Marker
+tile.alfheim:schematicAnnihilator.name=Schematic Annihilator
+tile.alfheim:schematicOak.name=Schematic Sapling
+tile.ShrineGlass0.name=Shrine Glass
+tile.ShrineGlass1.name=Shrine Glass
+tile.ShrineLight0.name=Shrine Light
+tile.ShrineLight1.name=Shrine Light
+tile.ShrineLight2.name=Shrine Light
+tile.ShrineLight3.name=Shrine Light
+tile.ShrinePanel0.name=Shrine Panel
+tile.ShrinePanel1.name=Shrine Panel
+tile.ShrinePanel2.name=Shrine Panel
+tile.ShrinePanel3.name=Shrine Panel
+tile.ShrinePillar.name=Shrine Pillar
+tile.ShrineRock0.name=Shrine Rock
+tile.ShrineRock1.name=Shrine Rock
+tile.ShrineRock2.name=Shrine Rock
+tile.ShrineRock3.name=Shrine Rock
+tile.ShrineRock4.name=Shrine Rock
+tile.ShrineRock5.name=Shrine Rock
+tile.ShrineRock6.name=Shrine Rock
+tile.ShrineRock7.name=Shrine Rock
+tile.ShrineRock8.name=Shrine Rock
+tile.ShrineRock9.name=Shrine Rock
+tile.ShrineRock10.name=Shrine Rock
+tile.ShrineRock11.name=Shrine Rock
+tile.ShrineRock12.name=Shrine Rock
+tile.ShrineRock13.name=Shrine Rock
+tile.ShrineRock14.name=Shrine Rock
+tile.ShrineRock15.name=Shrine Rock
+tile.ShrineRockWhiteStairs.name=Shrine Rock Stairs
+tile.botania:ShrineRock0Slab.name=Shrine Rock Slab
+tile.botania:ShrineRock0SlabFull.name=Shrine Rock Slab
 tile.TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
 
@@ -61,7 +146,7 @@ item.botania:ElementalEarthChest.name=Elemental Chestplate of Earth
 item.botania:ElementalWaterHelm.name=Elemental Helmet of Water
 item.botania:ElementalWaterHelmRevealing.name=Elemental Revealing Helmet of Water
 item.ElementalArmor.desc1=Light like a feather (§eJumpboost +4§7)
-item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cFireresist§7
+item.ElementalArmor.desc2=Fast like a fire (§cSpeed +2§7) Bonus: §cBurnresist§7
 item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
 item.ElementalArmor.desc4=Affined like a fish (§bWaterbreathin§7 + §bNightvision§7)
 item.ElementiumHoe.name=Elementium Hoe
@@ -74,11 +159,14 @@ item.ElvoriumIngot.name=Elvorium Ingot
 item.ElvoriumLeggings.name=Elvorium Leggings
 item.ElvoriumNugget.name=Elvorium Nugget
 item.botania:Excaliber.name=Holy Sword Excaliber
+item.alfheim:fireGrenade.name=Fire Grenade
 item.botania:FirePendant.name=Pendant Of Muspelheim Protection
-item.botania:FlugelDisc.name=Shiny Music Disc
+item.botania:FlugelDisc.name=Glowing Music Disc
+item.botania:MikuDisc.name=Shiny Music Disc
 item.record.botania:flugel.desc=Kain Vinosec - Defend The Dormant
-item.FlugelHead.name=Flugel Head
-item.FlugelHead.desc=To equip press right-click in hand
+item.record.botania:miku.desc=Miku Hatsune - Senbonzakura
+item.FlugelHead.name=Flügel Head
+item.MikuHead.name=Miku Head
 item.botania:FlugelSoul.name=Flügel Soul
 item.grassRod.name=Rod of the Green Hills
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
@@ -93,16 +181,18 @@ item.botania:lensTripwire.short=Tripwire
 item.LivingrockPickaxe.name=Livingrock Pickaxe
 item.LootInterceptor.name=Loot Interceptor
 item.ManaInfusionCore.name=Mana Infusion Core
-item.ManaRingElven.name=Elven Band of Mana
-item.ManaRingGod.name=God's Band of Mana
+item.botania:ManaRingElven.name=Elven Band of Mana
+item.botania:ManaRingGod.name=God's Band of Mana
 item.ManasteelHoe.name=Manasteel Hoe
-item.ManaStone.name=Iffesal Mana Gem
-item.ManaStoneGreater.name=Primal Mana Gem
+item.alfheim:ManaStone.name=Iffesal Mana Gem
+item.alfheim:ManaStoneGreater.name=Primal Mana Gem
 item.manastorage.desc0=Stores up to %s manapools capacity!
 item.manastorage.desc1=Currently stored §b%s§7/§b%s§7 mana pts
 item.MauftriumIngot.name=§6Mauftrium Ingot
 item.MauftriumNugget.name=§6Mauftrium Nugget
 item.botania:Mjolnir.name=Mjölnir
+item.MoonlightBow.name=Phoebus Catastrophe
+item.botania:multibauble.name=Ring of Elven King
 item.MuspelheimEssence.name=Muspelheim Essence
 item.MuspelheimPowerIngot.name=Muspelheim Power Ingot
 item.MuspelheimRod.name=Muspelheim Overlord Rod
@@ -129,6 +219,11 @@ item.RealitySword.desc4=Blinds target.
 item.RealitySword.desc5=Requires §n10§r§7 §bmana§7/tick.
 item.RealitySword.descZ=You've got a power!
 item.RealitySword.DIE=%s got Sword of Creator and was punished by Gods!
+item.alfheim:relicCleaner.name=Das Rheingold
+item.alfheim:RoyalStaff.name=Royal Staff
+item.botania:SpearSubspace.name=Spear of Subspace
+item.alfheim:splashPotion.name=Splash Vial
+item.alfheim:starPlacer2.name=Crackling Star
 item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive
@@ -142,14 +237,18 @@ achievement.alfheim=New Lands
 achievement.alfheim.desc=Enter Alfheim
 achievement.excaliber=Streaming Heart
 achievement.excaliber.desc=Be rewarded the Holy Sword Excaliber for a heroic feat
-achievement.infuser=Mana Infuser
-achievement.infuser.desc=Discover secret elven mana-infusion technology
-achievement.mask=Unstoppable
-achievement.mask.desc=Be rewarded the Mysterious Mask for a heroic feat
 achievement.flugelSoul=You're my soul
 achievement.flugelSoul.desc=Be rewarded the Flügel Soul for a heroic feat
 achievement.flugelKill=Godslayer
 achievement.flugelKill.desc=Survive agains most powerful creature - Flügel
+achievement.infuser=Mana Infuser
+achievement.infuser.desc=Discover secret elven mana-infusion technology
+achievement.mask=Unstoppable
+achievement.mask.desc=Be rewarded the Mysterious Mask for a heroic feat
+achievement.moonlightBow=To the Moon
+achievement.moonlightBow.desc=Be rewarded the Phoebus Catastrophe for a heroic feat
+achievement.subspace=Nightglow
+achievement.subspace.desc=Be rewarded the Spear of Subspace for a heroic feat
 
 alfheim.armorset.elemental.name=Elemental Master
 alfheim.armorset.elvorium.name=Royal Elven Guardian
@@ -225,7 +324,7 @@ alfheim.potion.soulburn.postfix=Potion of Burning Soul
 alfheim.potion.stoneSkin=Stone Skin
 alfheim.potion.stoneSkin.postfix=Potion of Stone Skin
 alfheim.potion.tank=Tank
-alfheim.potion.throw.postfix=Potion of Strong Will
+alfheim.potion.tank.postfix=Potion of Strong Will
 alfheim.potion.throw=Wind Flows
 alfheim.potion.throw.postfix=Potion of Lightness
 alfheim.potion.wellolife=Well of Life
@@ -278,6 +377,8 @@ death.attack.water=%s was cut into pieces by %s's water stream
 
 entity.alfheim:Elf.name=Elf
 entity.alfheim:Flugel.name=Flügel
+entity.alfheim:Lolicorn.name=Lolicorn
+entity.alfheim:Lolicorn.desc=%s's Lolicorn
 entity.alfheim:Pixie.name=Pixie
 entity.alfheim:Rook.name=Demigod's Rook
 
@@ -313,10 +414,10 @@ lang.name=en_US
 
 #######################################################___RELIC POEMS___########################################################
 
-item.infiniteFruit.poem0=The fruit of the forbidden garden
-item.infiniteFruit.poem1=Eternally cleanses one's hunger,
-item.infiniteFruit.poem2=For that it rebuilds its pulp
-item.infiniteFruit.poem3=And makes itself younger.
+item.aesirRing.poem0=The forces of the Gods
+item.aesirRing.poem1=In this band form as one,
+item.aesirRing.poem2=And when combined all together
+item.aesirRing.poem3=Above them will be none.
 
 item.Excaliber.poem0=A sword of a true hero
 item.Excaliber.poem1=Fit for only one of the kind,
@@ -328,50 +429,61 @@ item.flugelEye.poem1=Round and round is the memory matrix,
 item.flugelEye.poem2=And their viable interactions
 item.flugelEye.poem3=Will take the psyche back to basics.
 
-item.thorRing.poem0=The force of the Thunder God
-item.thorRing.poem1=Will Shatter the salt of the Terra,
-item.thorRing.poem2=With unstoppable strength
-item.thorRing.poem3=It'll begin anew a new era.
+item.FlugelSoul.poem0=No
+item.FlugelSoul.poem1=English
+item.FlugelSoul.poem2=Poem
+item.FlugelSoul.poem3=Here :(
 
-item.odinRing.poem0=The wise old God lays its blessings,
-item.odinRing.poem1=Of virtue, life and divinity,
-item.odinRing.poem2=With the hindrance of death on one's hands,
-item.odinRing.poem3=They'll form the Holy Trinity.
+item.infiniteFruit.poem0=The fruit of the forbidden garden
+item.infiniteFruit.poem1=Eternally cleanses one's hunger,
+item.infiniteFruit.poem2=For that it rebuilds its pulp
+item.infiniteFruit.poem3=And makes itself younger.
+
+item.kingKey.poem0=No
+item.kingKey.poem1=English
+item.kingKey.poem2=Poem
+item.kingKey.poem3=Here :(
 
 item.lokiRing.poem0=Empty handed, a sneaking interaction,
 item.lokiRing.poem1=Once on the center, then around the track,
 item.lokiRing.poem2=Back to the start one'd go to complete
 item.lokiRing.poem3=The power of creating back-to-back.
 
-item.aesirRing.poem0=The forces of the Gods
-item.aesirRing.poem1=In this band form as one,
-item.aesirRing.poem2=And when combined all together
-item.aesirRing.poem3=Above them will be none.
+item.MoonlightBow.poem0=No
+item.MoonlightBow.poem1=English
+item.MoonlightBow.poem2=Poem
+item.MoonlightBow.poem3=Here :(
 
-item.kingKey.poem0=No
-item.kingKey.poem1=English
-item.kingKey.poem2=Poem 
-item.kingKey.poem3=Here :(
+item.odinRing.poem0=The wise old God lays its blessings,
+item.odinRing.poem1=Of virtue, life and divinity,
+item.odinRing.poem2=With the hindrance of death on one's hands,
+item.odinRing.poem3=They'll form the Holy Trinity.
 
-item.FlugelSoul.poem0=No
-item.FlugelSoul.poem1=English
-item.FlugelSoul.poem2=Poem
-item.FlugelSoul.poem3=Here :(
+item.SpearSubspace.poem0=No
+item.SpearSubspace.poem1=English
+item.SpearSubspace.poem2=Poem
+item.SpearSubspace.poem3=Here :(
 
 item.TankMask.poem0=No
 item.TankMask.poem1=English
 item.TankMask.poem2=Poem
 item.TankMask.poem3=Here :(
 
+item.thorRing.poem0=The force of the Thunder God
+item.thorRing.poem1=Will Shatter the salt of the Terra,
+item.thorRing.poem2=With unstoppable strength
+item.thorRing.poem3=It'll begin anew a new era.
+
 #######################################################___ELVEN STORY___########################################################
 
 elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
-elvenstory.welcome1=§6Please, select one of the following races using "/race"
-elvenstory.welcome2=§4SALAMANDER§r, §aSYLPH§r, §6CAITSITH§r, §ePOOKA§r, §2GNOME§r, §7LEPRECHAUN§r, §8SPRIGGAN§r, §bUNDINE§r, §5IMP§r
-elvenstory.commands.race.usage=/race <RACE>
-elvenstory.commands.race.unavailable=Command unavailable: Elven Story Mode is disabled.
+elvenstory.welcome1=§6Please, select gender and race using panel in front of you
+elvenstory.selectgender=Select Gender
+elvenstory.selectrace=Select Race
 
+key.lolicorn.desc=Call Lolicorn
 key.cast.desc=Spell Cast
+key.uncast.desc=Cancel Cast
 key.flight.desc=Elven Flight
 key.selmob.desc=Select Mob
 key.selteam.desc=Select Party Member
@@ -386,16 +498,6 @@ race.LEPRECHAUN.name=LEPRECHAUN
 race.SPRIGGAN.name=SPRIGGAN
 race.UNDINE.name=UNDINE
 race.IMP.name=IMP
-
-race.SALAMANDER.reverse=SALAMANDER
-race.SYLPH.reverse=SYLPH
-race.CAITSITH.reverse=CAITSITH
-race.POOKA.reverse=POOKA
-race.GNOME.reverse=GNOME
-race.LEPRECHAUN.reverse=LEPRECHAUN
-race.SPRIGGAN.reverse=SPRIGGAN
-race.UNDINE.reverse=UNDINE
-race.IMP.reverse=IMP
 
 #########################################################___SPELLS___###########################################################
 
@@ -453,7 +555,7 @@ spell.uphealth.name=Uphealth
 spell.wallwarp.name=Wall Warp
 spell.waterbreathing.name=Water Breathing
 spell.wellolife.name=Well of Life
-spell.windbalde.name=Wind Balde
+spell.windblades.name=Wind Blades
 
 #
 spell.acidmyst.words=§bAcid Myst
@@ -532,4 +634,278 @@ spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendur
 #
 spell.wellolife.words=§bWell of Life
 #
-spell.windbalde.words=§aWind Balde
+spell.windblades.words=§aWind Blades
+
+################################################################################################################################
+#########################################################___BOTADS___###########################################################
+################################################################################################################################
+
+itemGroup.Iridescence=Iridescence
+
+death.attack.alfheim.lackOfFaith=%1$s has suffered a crisis of faith
+misc.alfheim.lackOfFaith=&cUnequipping this bauble can be bad for your health.&r
+misc.alfheim.crisisOfFaith=&4Unequipping this bauble could be a death sentence.&r
+misc.alfheim.healthWarning=&cLosing faith in the gods can be deadly...&r
+misc.alfheim.healthDanger=&4Losing faith in the gods can be &ldeadly&4...&r
+
+misc.alfheim.color.0=White
+misc.alfheim.color.1=Orange
+misc.alfheim.color.2=Magenta
+misc.alfheim.color.3=Light Blue
+misc.alfheim.color.4=Yellow
+misc.alfheim.color.5=Lime
+misc.alfheim.color.6=Pink
+misc.alfheim.color.7=Gray
+misc.alfheim.color.8=Light Gray
+misc.alfheim.color.9=Cyan
+misc.alfheim.color.10=Purple
+misc.alfheim.color.11=Blue
+misc.alfheim.color.12=Brown
+misc.alfheim.color.13=Green
+misc.alfheim.color.14=Red
+misc.alfheim.color.15=Black
+misc.alfheim.color.16=Bifrost
+misc.alfheim.color.17=Aurora
+
+misc.alfheim.customSize=Radius: %1$s Blocks
+
+tc.aspect.tincturem=Color, Iridescence
+tc.aspect.help.tincturem=rainbow things
+
+misc.alfheim.creative=Creative
+misc.alfheim.contains=Contains:
+misc.alfheim.containsNothing=Empty
+
+misc.alfheim.wayOfUndoing=&4You feel your soul draining from your body...
+misc.alfheim.youAreNotTheChosenOneMale=You are not him.
+misc.alfheim.youAreNotTheChosenOneFemale=You are not her.
+
+misc.alfheim.wline1=And the man looked upon a desolate view;
+misc.alfheim.wline2=Despite the world falling down he imbued.
+misc.alfheim.wline3=And in defiance of fate and the gods he yelled!
+
+misc.alfheim.tline1=And the girl slipped between the crowd;
+misc.alfheim.tline2=Pretense behind, she held her glowing blade high;
+misc.alfheim.tline3=And she yelled in defiance of the corruption of men!
+
+attribute.name.alfheim.godSlayingAttackDamage=Cognitive Damage
+
+death.attack.alfheim.oculus.player=%1$s was slain by %2$s's perfect resolve
+
+misc.alfheim:temperature.0=Hypothermia Warning
+misc.alfheim:temperature.1=Painfully Cold
+misc.alfheim:temperature.2=Frosty
+misc.alfheim:temperature.3=Frosty
+misc.alfheim:temperature.4=Wintry
+misc.alfheim:temperature.5=Wintry
+misc.alfheim:temperature.6=Chilly
+misc.alfheim:temperature.7=Chilly
+misc.alfheim:temperature.8=Temperate
+misc.alfheim:temperature.9=Warm
+misc.alfheim:temperature.10=Warm
+misc.alfheim:temperature.11=Hot
+misc.alfheim:temperature.12=Hot
+misc.alfheim:temperature.13=Burning
+misc.alfheim:temperature.14=Burning
+misc.alfheim:temperature.15=Scorching Hot
+misc.alfheim:temperature.16=Hotter than the Nether
+
+item.alfheim:wiltedLotus0.name=Wilted Lotus
+item.alfheim:wiltedLotus1.name=Deathly Lotus
+misc.alfheim:lotusDesc=It emits discordant magical vibes
+
+item.alfheim:attributionBauble0.name=Holy Symbol
+item.alfheim:attributionBauble1.name=Pendant of Headtato Summoning
+
+item.alfheim:starPlacer.name=Frozen Star
+tile.alfheim:star.name=Frozen Star
+
+item.alfheim:colorfulSkyDirtRod.name=Rod of the Vibrant Plains
+item.alfheim:flameRod.name=Rod of the Tricky Flame
+item.alfheim:lightningRod.name=Rod of the Thundering Peaks
+item.alfheim:interdictionRod.name=Rod of the Stormy Sea
+item.alfheim:rainbowLightRod.name=Rod of the Prismatic Lake
+
+item.alfheim:priestEmblem0.name=Priestly Emblem: Thor
+item.alfheim:priestEmblem1.name=Priestly Emblem: Sif
+item.alfheim:priestEmblem2.name=Priestly Emblem: Njord
+item.alfheim:priestEmblem3.name=Priestly Emblem: Loki
+item.alfheim:aesirEmblem.name=Priestly Emblem: &6Aesir&r
+
+item.alfheim:resource0.name=Thunderous Twig
+item.alfheim:resource1.name=Thunderous Splinters
+item.alfheim:resource2.name=Infernal Twig
+item.alfheim:resource3.name=Infernal Splinters
+item.alfheim:resource4.name=Flame-Laced Charcoal
+item.alfheim:resource5.name=Shimmerquartz
+item.alfheim:resource6.name=Floral Bifrost Powder
+item.alfheim:resource7.name=Mystical Bifrost Petal
+
+item.alfheim:toolbelt.name=Botanist's Toolbelt
+
+entity.alfheim:VoidCreeper.name=Manaseal Creeper
+entity.alfheim:GrieferCreeper.name=Ubercrieper
+
+tile.alfheim:barrier.name=Barrier
+
+tile.alfheim:itemDisplay0.name=Manasteel Item Platform
+tile.alfheim:itemDisplay1.name=Terrasteel Item Platform
+tile.alfheim:itemDisplay2.name=Elementium Item Platform
+
+tile.alfheim:rainbowDirt.name=Iridescent Dirt
+tile.alfheim:rainbowPetalBlock.name=Bifrost Petal Block
+tile.alfheim:coloredDirt.name=Iridescent Dirt
+tile.alfheim:rainbowLeaves.name=Iridescent Leaves
+tile.alfheim:irisLeaves.name=Iridescent Leaves
+tile.alfheim:rainbowWood.name=Iridescent Log
+tile.alfheim:irisWood.name=Iridescent Log
+tile.alfheim:irisSapling.name=Iridescent Sapling
+tile.alfheim:rainbowPlanks.name=Iridescent Planks
+tile.alfheim:irisPlanks.name=Iridescent Planks
+tile.alfheim:rainbowGrass0.name=Iridescent Grass
+tile.alfheim:rainbowGrass1.name=Iridescent Grass
+tile.alfheim:rainbowGrass2.name=Mystical Bifrost Flower
+tile.alfheim:rainbowGrass3.name=Glimmering Bifrost Flower
+tile.alfheim:rainbowGrass4.name=Buried Bifrost Petal
+tile.alfheim:rainbowMushroom.name=Bifrost Shimmering Mushroom
+tile.alfheim:irisGrass.name=Iridescent Grass
+tile.alfheim:rainbowDoubleGrass0.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass1.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass2.name=Tall Mystical Bifrost Flower
+tile.alfheim:irisDoubleGrass.name=Iridescent Double Grass
+
+alfheim.nei.treeCrafter=Dendric Suffuser
+tile.alfheim:treeCrafter.name=Dendric Suffuser
+tile.alfheim:treeCrafterRB.name=Dendric Suffuser
+
+item.alfheim:irisSeeds.name=Iridescent Seeds
+
+tile.alfheim:invisibleFlame.name=Phantom Mana Flash
+tile.alfheim:rainbowFlame.name=Rainbow Mana Flash
+item.botania:lensPhantomLight.short=Phantom Flash
+
+item.alfheim:livingwoodFunnel.name=Livingwood Funnel
+tile.alfheim:livingwoodFunnel.name=Livingwood Funnel
+
+item.alfheim:coatOfArms0.name=Chilean Shield
+item.alfheim:coatOfArms1.name=French Shield
+item.alfheim:coatOfArms2.name=Japanese Shield
+item.alfheim:coatOfArms3.name=Germanic Shield
+item.alfheim:coatOfArms4.name=Greek Shield
+item.alfheim:coatOfArms5.name=Icelandic Shield
+item.alfheim:coatOfArms6.name=Irish Shield
+item.alfheim:coatOfArms7.name=Israeli Shield
+item.alfheim:coatOfArms8.name=Jamaican Shield
+item.alfheim:coatOfArms9.name=Singaporean Shield
+item.alfheim:coatOfArms10.name=South African Shield
+item.alfheim:coatOfArms11.name=Spanish Shield
+item.alfheim:coatOfArms12.name=Swiss Shield
+item.alfheim:coatOfArms13.name=Texan Shield
+item.alfheim:coatOfArms14.name=Ukranian Shield
+item.alfheim:coatOfArms15.name=American Shield
+item.alfheim:coatOfArms16.name=Fabulous Shield
+item.alfheim:coatOfArms17.name=Parisian Shield
+
+item.alfheim:colorOverride.name=Clerical Colorizer
+
+item.alfheim:axeRevelation.name=Holy Blade Revelation
+item.alfheim:reactionDagger.name=Dagger of the Perfect Soul
+
+tile.alfheim:kindling.name=Blaze Kindling
+
+tile.alfheim:rainbowPlanksSlab.name=Iridescent Slab
+tile.alfheim:rainbowPlanksSlabFull.name=Iridescent Slab
+tile.alfheim:irisPlanksSlab.name=Iridescent Slab
+tile.alfheim:irisPlanksSlabFull.name=Iridescent Slab
+tile.alfheim:lightningPlanksSlab.name=Thunderous Slab
+tile.alfheim:lightningPlanksSlabFull.name=Thunderous Slab
+tile.alfheim:netherPlanksSlab.name=Infernal Slab
+tile.alfheim:netherPlanksSlabFull.name=Infernal Slab
+tile.alfheim:sealingPlanksSlab.name=Sealing Slab
+tile.alfheim:sealingPlanksSlabFull.name=Sealing Slab
+
+tile.alfheim:amplifier.name=Sonic Amplifier
+
+tile.alfheim:rainbowPlanksStairs.name=Iridescent Stairs
+tile.alfheim:irisPlanksStairs.name=Iridescent Stairs
+tile.alfheim:lightningPlanksStairs.name=Thunderous Stairs
+tile.alfheim:netherPlanksStairs.name=Infernal Stairs
+tile.alfheim:sealingPlanksStairs.name=Sealing Stairs
+
+tile.alfheim:lightningSapling.name=Thunderous Oak Sapling
+tile.alfheim:lightningWood.name=Thunderous Log
+tile.alfheim:lightningLeaves.name=Thunderous Leaves
+tile.alfheim:lightningPlanks.name=Thunderous Planks
+
+tile.alfheim:netherSapling.name=Infernal Oak Sapling
+tile.alfheim:netherWood.name=Infernal Log
+tile.alfheim:netherLeaves.name=Infernal Leaves
+tile.alfheim:netherPlanks.name=Infernal Planks
+
+tile.alfheim:sealingSapling.name=Sealing Oak Sapling
+tile.alfheim:sealingWood.name=Sealing Log
+tile.alfheim:sealingLeaves.name=Sealing Leaves
+tile.alfheim:sealingPlanks.name=Sealing Planks
+
+tile.alfheim:altLeaves0.name=Dry Leaves
+tile.alfheim:altLeaves1.name=Golden Leaves
+tile.alfheim:altLeaves2.name=Vivid Leaves
+tile.alfheim:altLeaves3.name=Scorched Leaves
+tile.alfheim:altLeaves4.name=Infused Leaves
+tile.alfheim:altLeaves5.name=Mutated Leaves
+tile.alfheim:altLeaves8.name=Dry Leaves
+tile.alfheim:altLeaves9.name=Golden Leaves
+tile.alfheim:altLeaves10.name=Vivid Leaves
+tile.alfheim:altLeaves11.name=Scorched Leaves
+tile.alfheim:altLeaves12.name=Infused Leaves
+tile.alfheim:altLeaves13.name=Mutated Leaves
+
+tile.alfheim:altPlanks0.name=Dry Planks
+tile.alfheim:altPlanks1.name=Golden Planks
+tile.alfheim:altPlanks2.name=Vivid Planks
+tile.alfheim:altPlanks3.name=Scorched Planks
+tile.alfheim:altPlanks4.name=Infused Planks
+tile.alfheim:altPlanks5.name=Mutated Planks
+
+tile.alfheim:altWood00.name=Dry Wood
+tile.alfheim:altWood01.name=Golden Wood
+tile.alfheim:altWood02.name=Vivid Wood
+tile.alfheim:altWood03.name=Scorched Wood
+tile.alfheim:altWood10.name=Infused Wood
+tile.alfheim:altWood11.name=Mutated Wood
+
+tile.alfheim:altPlanksSlab0.name=Dry Planks Slab
+tile.alfheim:altPlanksSlab1.name=Golden Planks Slab
+tile.alfheim:altPlanksSlab2.name=Vivid Planks Slab
+tile.alfheim:altPlanksSlab3.name=Scorched Planks Slab
+tile.alfheim:altPlanksSlab4.name=Infused Planks Slab
+tile.alfheim:altPlanksSlab5.name=Mutated Planks Slab
+
+tile.alfheim:altPlanksSlabFull0.name=Dry Planks Slab
+tile.alfheim:altPlanksSlabFull1.name=Golden Planks Slab
+tile.alfheim:altPlanksSlabFull2.name=Vivid Planks Slab
+tile.alfheim:altPlanksSlabFull3.name=Scorched Planks Slab
+tile.alfheim:altPlanksSlabFull4.name=Infused Planks Slab
+tile.alfheim:altPlanksSlabFull5.name=Mutated Planks Slab
+
+tile.alfheim:altPlanksStairs0.name=Dry Planks Stairs
+tile.alfheim:altPlanksStairs1.name=Golden Planks Stairs
+tile.alfheim:altPlanksStairs2.name=Vivid Planks Stairs
+tile.alfheim:altPlanksStairs3.name=Scorched Planks Stairs
+tile.alfheim:altPlanksStairs4.name=Infused Planks Stairs
+tile.alfheim:altPlanksStairs5.name=Mutated Planks Stairs
+
+tile.alfheim:irisLamp.name=Iridescent Lantern
+
+tile.alfheim:quartzStairsShimmer.name=Shimmerquartz Stairs
+tile.alfheim:quartzSlabShimmerHalf.name=Shimmerquartz Slab
+tile.alfheim:quartzSlabShimmerFull.name=Shimmerquartz Slab
+tile.alfheim:blockShimmerQuartz.name=Block of Shimmerquartz
+tile.alfheim:chiseledShimmerQuartz.name=Chiseled Shimmerquartz Block
+tile.alfheim:pillarShimmerQuartz.name=Pillar Shimmerquartz Block
+
+tile.alfheim:crysanthermum.name=Crysanthermum
+tile.botania:flower.crysanthermum.name=Crysanthermum
+tile.alfheim:crysanthermum.lore=Crank up the thermostat
+
+alfheim.potion.manaVoid=Manatide Storm

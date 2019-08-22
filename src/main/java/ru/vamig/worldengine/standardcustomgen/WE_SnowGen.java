@@ -6,22 +6,21 @@ package ru.vamig.worldengine.standardcustomgen;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.additions.*;
 
 public class WE_SnowGen extends WE_CreateChunkGen_InXZ {
 	public int snowPoint       = 111;
 	public int randomSnowPoint =   2;
 	//-//
-	public Block   snowBlock     = Blocks.snow_layer;
-	public byte    snowBlockMeta =                 0;
-	public boolean genSnow       =              true;
+	public final Block   snowBlock     = Blocks.snow_layer;
+	public final byte    snowBlockMeta =                 0;
+	public final boolean genSnow       =              true;
 	//-//
-	public Block    iceBlock       =     Blocks.ice;
-	public byte     iceBlockMeta   =              0;
-	public Material freezeMaterial = Material.water;
+	public final Block    iceBlock       =     Blocks.ice;
+	public final byte     iceBlockMeta   =              0;
+	public final Material freezeMaterial = Material.water;
 	//-//
-	public int snowOnWaterRandom = 2;
+	public final int snowOnWaterRandom = 2;
 	
 	@Override
 	public void gen(WE_GeneratorData data) {

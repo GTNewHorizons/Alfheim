@@ -3,24 +3,16 @@
 
 package ru.vamig.worldengine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
+import cpw.mods.fml.relauncher.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXYZ;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer;
-import ru.vamig.worldengine.standardcustomgen.WE_GrassGen;
-import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
-import ru.vamig.worldengine.standardcustomgen.WE_SnowGen;
-import ru.vamig.worldengine.standardcustomgen.WE_WorldTreeGen;
+import ru.vamig.worldengine.additions.*;
+import ru.vamig.worldengine.standardcustomgen.*;
+
+import java.util.*;
 
 public class WE_Biome extends BiomeGenBase {
 	public int id;
@@ -40,9 +32,9 @@ public class WE_Biome extends BiomeGenBase {
 	//////////////////
 	//- Generators -//
 	//////////////////
-	public List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
-	public List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
-	public List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
+	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
+	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
+	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
 	
 	/////
 	//=//
@@ -65,7 +57,7 @@ public class WE_Biome extends BiomeGenBase {
 		decorateChunkGen_List.add(new WE_LakeGen());
 		//-//
 		WE_WorldTreeGen treeGen = new WE_WorldTreeGen();
-		treeGen.add(Blocks.log, 0, (Block)Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 8, 1, 8, 4, false,
+		treeGen.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 8, 1, 8, 4, false,
 			(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1, 1, 12, 4, 0.618D, 0.381D, 1.0D, 1.0D);
 		decorateChunkGen_List.add(treeGen);
 		//-//

@@ -1,17 +1,15 @@
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import alfheim.common.world.dim.alfheim.struct.StructureBaseClass;
+import alfheim.common.world.dim.alfheim.structure.StructureBaseClass;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import java.util.*;
+
 public class WE_StructureGen implements IWorldGenerator {
 	
-	public List<StrList> sttngs = new ArrayList<StrList>();
+	public final List<StrList> sttngs = new ArrayList<StrList>();
 	
 	public void add(StructureBaseClass str, int rarity) {
 		sttngs.add(new StrList(str, rarity));

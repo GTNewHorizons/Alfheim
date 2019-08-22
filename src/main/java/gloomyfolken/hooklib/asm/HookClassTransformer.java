@@ -1,20 +1,15 @@
 package gloomyfolken.hooklib.asm;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-
 import gloomyfolken.hooklib.asm.HookLogger.SystemOutLogger;
+import org.objectweb.asm.*;
+
+import java.util.*;
 
 public class HookClassTransformer {
 
-	public HookLogger logger = new SystemOutLogger();
-	protected HashMap<String, List<AsmHook>> hooksMap = new HashMap<String, List<AsmHook>>();
-	private HookContainerParser containerParser = new HookContainerParser(this);
+	public final HookLogger logger = new SystemOutLogger();
+	protected final HashMap<String, List<AsmHook>> hooksMap = new HashMap<String, List<AsmHook>>();
+	private final HookContainerParser containerParser = new HookContainerParser(this);
 	protected ClassMetadataReader classMetadataReader = new ClassMetadataReader();
 
 	public void registerHook(AsmHook hook) {
