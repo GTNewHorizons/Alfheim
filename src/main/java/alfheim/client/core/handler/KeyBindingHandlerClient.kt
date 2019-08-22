@@ -10,7 +10,7 @@ import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
@@ -229,7 +229,7 @@ object KeyBindingHandlerClient {
 	}
 	
 	fun toggleFlight(player: EntityPlayer, boost: Boolean) {
-		if (!AlfheimConfig.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) {
+		if (!AlfheimConfigHandler.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) {
 			ASJUtilities.say(player, "mes.flight.unavailable")
 		} else
 			AlfheimCore.network.sendToServer(MessageKeyBind(FLIGHT.ordinal, boost, 0))

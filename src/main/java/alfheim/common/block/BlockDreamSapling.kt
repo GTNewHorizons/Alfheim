@@ -2,8 +2,10 @@ package alfheim.common.block
 
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -23,6 +25,11 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setLightLevel(9.0f / 15.0f)
 		setLightOpacity(0)
 		tickRandomly = true
+	}
+	
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {

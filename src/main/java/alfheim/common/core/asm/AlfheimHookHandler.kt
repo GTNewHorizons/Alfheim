@@ -9,7 +9,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
@@ -361,7 +361,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
-		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
+		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
 	}
 	
 	@JvmStatic
@@ -463,7 +463,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
-		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return
+		if (mana < 0 || !AlfheimConfigHandler.numericalMana || !numMana) return
 		glPushMatrix()
 		val f = Minecraft.getMinecraft().currentScreen == null
 		var f1 = false

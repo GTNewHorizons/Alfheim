@@ -4,10 +4,10 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.lib.LibRenderIDs
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnimatedTorch
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.BlockContainer
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -21,7 +21,8 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaTrigger
 import vazkii.botania.api.wand.*
 
-class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
+class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
+	
 	init {
 		setCreativeTab(AlfheimCore.alfheimTab)
 		setBlockBounds(0f, 0f, 0f, 1f, 0.25f, 1f)
@@ -39,18 +40,6 @@ class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, 
 		return false
 	}
 	
-	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase?, stack: ItemStack?) {
-		(world.getTileEntity(x, y, z) as TileAnimatedTorch).onPlace(entity)
-	}
-	
-	override fun onBurstCollision(burst: IManaBurst, world: World, x: Int, y: Int, z: Int) {
-		if (!burst.isFake) (world.getTileEntity(x, y, z) as TileAnimatedTorch).toggle()
-	}
-	
-	override fun onTriggeredByHourglass(world: World, x: Int, y: Int, z: Int, hourglass: TileEntity) {
-		(world.getTileEntity(x, y, z) as TileAnimatedTorch).toggle()
-	}
-	
 	override fun onBlockEventReceived(world: World, x: Int, y: Int, z: Int, id: Int, param: Int): Boolean {
 		super.onBlockEventReceived(world, x, y, z, id, param)
 		val tile = world.getTileEntity(x, y, z)
@@ -62,15 +51,14 @@ class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, 
 		return true
 	}
 	
+	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase?, stack: ItemStack?) = (world.getTileEntity(x, y, z) as TileAnimatedTorch).onPlace(entity)
+	override fun onBurstCollision(burst: IManaBurst, world: World, x: Int, y: Int, z: Int) = if (!burst.isFake) (world.getTileEntity(x, y, z) as TileAnimatedTorch).toggle() else Unit
+	override fun onTriggeredByHourglass(world: World, x: Int, y: Int, z: Int, hourglass: TileEntity) = (world.getTileEntity(x, y, z) as TileAnimatedTorch).toggle()
+	
 	@SideOnly(Side.CLIENT)
-	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) {
-		(world.getTileEntity(x, y, z) as TileAnimatedTorch).renderHUD(mc, res)
-	}
-	
+	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) = (world.getTileEntity(x, y, z) as TileAnimatedTorch).renderHUD(mc, res)
 	override fun canProvidePower() = true
-	
-	override fun isProvidingStrongPower(world: IBlockAccess?, x: Int, y: Int, z: Int, side: Int) =
-		isProvidingWeakPower(world!!, x, y, z, side)
+	override fun isProvidingStrongPower(world: IBlockAccess?, x: Int, y: Int, z: Int, side: Int) = isProvidingWeakPower(world!!, x, y, z, side)
 	
 	override fun isProvidingWeakPower(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int): Int {
 		val tile = world.getTileEntity(x, y, z) as TileAnimatedTorch
@@ -79,18 +67,13 @@ class BlockAnimatedTorch: BlockContainer(Material.circuits), IHourglassTrigger, 
 	}
 	
 	override fun getRenderType() = LibRenderIDs.idAniTorch
-	
 	override fun isOpaqueCube() = false
-	
 	override fun isNormalCube() = false
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.aniTorch
+	override fun createNewTileEntity(p_149915_1_: World, p_149915_2_: Int) = TileAnimatedTorch()
 	
 	override fun onBlockDestroyedByPlayer(world: World, x: Int, y: Int, z: Int, meta: Int) {
 		world.notifyBlocksOfNeighborChange(x, y, z, this)
 		super.onBlockDestroyedByPlayer(world, x, y, z, meta)
 	}
-	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) =
-		AlfheimLexiconData.aniTorch
-	
-	override fun createNewTileEntity(p_149915_1_: World, p_149915_2_: Int) = TileAnimatedTorch()
 }

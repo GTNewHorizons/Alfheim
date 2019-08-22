@@ -3,6 +3,7 @@ package alfheim.common.potion
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -10,7 +11,7 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.util.DamageSource
 import vazkii.botania.common.Botania
 
-class PotionSacrifice: PotionAlfheim(AlfheimConfig.potionIDSacrifice, "sacrifice", false, 0) {
+class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sacrifice", false, 0) {
 	
 	var timeQueued: Int = 0
 	

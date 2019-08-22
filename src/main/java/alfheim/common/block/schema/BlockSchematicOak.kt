@@ -2,7 +2,7 @@ package alfheim.common.block.schema
 
 import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.block.colored.BlockColoredSapling
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import codechicken.core.CommonUtils
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -19,7 +19,7 @@ class BlockSchematicOak: BlockColoredSapling(name = "schematicOak") {
 			if (canGrowHere(plantedOn)) {
 				val l = if (plantedOn === ShadowFoxBlocks.coloredDirtBlock) world.getBlockMetadata(x, y - 1, z) else -1
 				
-				if (l in AlfheimConfig.schemaArray) {
+				if (l in AlfheimConfigHandler.schemaArray) {
 					val schemaText = getSchema(l)
 					
 					if (schemaText != null) {

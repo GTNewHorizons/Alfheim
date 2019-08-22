@@ -1,11 +1,11 @@
 package alfheim.common.potion
 
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.*
 import java.util.*
 
-class PotionBerserk: PotionAlfheim(AlfheimConfig.potionIDBerserk, "berserk", false, 0xAA1111) {
+class PotionBerserk: PotionAlfheim(AlfheimConfigHandler.potionIDBerserk, "berserk", false, 0xAA1111) {
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, map: BaseAttributeMap, mod: Int) {
 		super.applyAttributesModifiersToEntity(target, map, mod)

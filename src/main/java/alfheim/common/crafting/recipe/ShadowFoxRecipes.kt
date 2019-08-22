@@ -18,7 +18,7 @@ import alfheim.api.lib.LibOreDict.SPLINTERS_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.WOOD
-import alfheim.common.block.AlfheimBlocks
+import alfheim.common.block.*
 import alfheim.common.block.ShadowFoxBlocks.altPlanks
 import alfheim.common.block.ShadowFoxBlocks.altSlabs
 import alfheim.common.block.ShadowFoxBlocks.altStairs
@@ -81,7 +81,7 @@ import alfheim.common.block.ShadowFoxBlocks.sealingWood
 import alfheim.common.block.ShadowFoxBlocks.shimmerQuartz
 import alfheim.common.block.ShadowFoxBlocks.shimmerQuartzSlab
 import alfheim.common.block.ShadowFoxBlocks.shimmerQuartzStairs
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.integration.thaumcraft.ThaumcraftSuffusionRecipes
 import alfheim.common.item.ShadowFoxItems.attributionBauble
 import alfheim.common.item.ShadowFoxItems.coatOfArms
@@ -661,7 +661,7 @@ object ShadowFoxRecipes {
 		
 		recipesLamp = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (Botania.thaumcraftLoaded && (Botania.gardenOfGlassLoaded || ModInfo.DEV) && AlfheimConfig.addThaumTreeSuffusion) {
+		if (Botania.thaumcraftLoaded && (Botania.gardenOfGlassLoaded || ModInfo.DEV) && AlfheimConfigHandler.addThaumTreeSuffusion) {
 			ThaumcraftSuffusionRecipes.initRecipes()
 		}
 		
@@ -744,7 +744,7 @@ object ShadowFoxRecipes {
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.altar), "SPS", " C ", "CCC", 'S', "slabCobblestone", 'P', RAINBOW_PETAL, 'C', "cobblestone")
 		ModCraftingRecipes.recipesApothecary.add(BotaniaAPI.getLatestAddedRecipe())
-		addOreDictRecipe(ItemStack(BotaniaBlocks.altar, 1, 9), "SPS", " C ", "CCC", 'S', AlfheimBlocks.livingcobbleSlab, 'P', RAINBOW_PETAL, 'C', AlfheimBlocks.livingcobble)
+		addOreDictRecipe(ItemStack(BotaniaBlocks.altar, 1, 9), "SPS", " C ", "CCC", 'S', AlfheimFluffBlocks.livingcobbleSlab, 'P', RAINBOW_PETAL, 'C', AlfheimBlocks.livingcobble)
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.spreader), "WWW", "GP ", "WWW", 'W', LIVING_WOOD, 'P', RAINBOW_PETAL, 'G', if (Botania.gardenOfGlassLoaded) LIVING_WOOD else "ingotGold")
 		ModCraftingRecipes.recipesSpreader.add(BotaniaAPI.getLatestAddedRecipe())

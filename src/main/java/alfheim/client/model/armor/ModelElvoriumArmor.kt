@@ -3,7 +3,7 @@ package alfheim.client.model.armor
 import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
@@ -23,7 +23,7 @@ class ModelElvoriumArmor
 		if (entity is EntityPlayer && entity.getCommandSenderName() == "GedeonGrays") {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			if (Minecraft.getMinecraft().thePlayer.commandSenderName == "GedeonGrays" && !AlfheimConfig.fancies) return
+			if (Minecraft.getMinecraft().thePlayer.commandSenderName == "GedeonGrays" && !AlfheimConfigHandler.fancies) return
 			ShaderHelper.useShader(ShaderHelper.halo)
 		}
 	}

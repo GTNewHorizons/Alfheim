@@ -5,7 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World
@@ -25,7 +25,7 @@ class ItemPeacePipe: Item() {
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {
 				val pt = PartySystem.getParty(player)
-				if (pt.count >= AlfheimConfig.maxPartyMembers) {
+				if (pt.count >= AlfheimConfigHandler.maxPartyMembers) {
 					ASJUtilities.say(player, "alfheimmisc.party.full")
 					return stack
 				}
@@ -44,7 +44,7 @@ class ItemPeacePipe: Item() {
 					return stack
 				}
 				val py = segment.party
-				if (py.count >= AlfheimConfig.maxPartyMembers) {
+				if (py.count >= AlfheimConfigHandler.maxPartyMembers) {
 					ASJUtilities.say(player, "alfheimmisc.party.full")
 					return stack
 				}

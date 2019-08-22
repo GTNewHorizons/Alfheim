@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 
+@Suppress("LeakingThis")
 open class BlockMod(par2Material: Material): Block(par2Material) {
 	
 	var originalLight: Int = 0

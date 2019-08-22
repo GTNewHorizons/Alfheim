@@ -12,6 +12,7 @@ import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
 import alfheim.common.block.magtrees.nether.*
 import alfheim.common.block.magtrees.sealing.*
+import alfheim.common.block.mana.BlockTreeCrafter
 import alfheim.common.block.schema.*
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.flower.*

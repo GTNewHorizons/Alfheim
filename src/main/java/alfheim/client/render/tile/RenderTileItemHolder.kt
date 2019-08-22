@@ -4,8 +4,8 @@ import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleItemHolder
-import alfheim.common.block.tile.TileItemHolder
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.block.tile.TileManaAccelerator
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.passive.EntitySheep
@@ -23,10 +23,10 @@ class RenderTileItemHolder: TileEntitySpecialRenderer() {
 	internal val rand = Random()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		renderTE(tile as TileItemHolder, x, y, z)
+		renderTE(tile as TileManaAccelerator, x, y, z)
 	}
 	
-	private fun renderTE(tile: TileItemHolder, x: Double, y: Double, z: Double) {
+	private fun renderTE(tile: TileManaAccelerator, x: Double, y: Double, z: Double) {
 		var inf = false
 		var dil = false
 		var fab = false
@@ -59,7 +59,7 @@ class RenderTileItemHolder: TileEntitySpecialRenderer() {
 			glColor4f(acolor[0], acolor[1], acolor[2], if (MultiblockRenderHandler.rendering) 0.6f else 1f)
 		}
 		
-		if (AlfheimConfig.minimalGraphics) {
+		if (AlfheimConfigHandler.minimalGraphics) {
 			glPushMatrix()
 			glTranslated(0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)

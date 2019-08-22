@@ -2,7 +2,7 @@ package alfheim.client.gui
 
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import org.lwjgl.opengl.GL11.*
@@ -13,7 +13,7 @@ class GUIDeathTimer: GuiScreen() {
 	
 	override fun initGui() {
 		super.initGui()
-		timer = AlfheimConfig.deathScreenAddTime
+		timer = AlfheimConfigHandler.deathScreenAddTime
 	}
 	
 	override fun drawScreen(p_73863_1_: Int, p_73863_2_: Int, p_73863_3_: Float) {

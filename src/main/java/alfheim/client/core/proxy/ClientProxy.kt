@@ -62,7 +62,7 @@ class ClientProxy: CommonProxy() {
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff())
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idItemHolder, RenderBlockItemHolder())
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, RenderBlockAlfheimPylons())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idShrinePanel, RenderBlockShrinePanel())
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, RenderBlockTransferer())
@@ -74,7 +74,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil::class.java, RenderTileAnyavil())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadFlugel::class.java, RenderTileHeadFlugel())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadMiku::class.java, RenderTileHeadMiku())
-		ClientRegistry.bindTileEntitySpecialRenderer(TileItemHolder::class.java, RenderTileItemHolder())
+		ClientRegistry.bindTileEntitySpecialRenderer(TileManaAccelerator::class.java, RenderTileItemHolder())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRaceSelector::class.java, RenderTileRaceSelector())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal::class.java, RenderTileTradePortal())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer())

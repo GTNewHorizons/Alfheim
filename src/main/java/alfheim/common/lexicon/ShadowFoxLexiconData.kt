@@ -1,7 +1,7 @@
 package alfheim.common.lexicon
 
 import alfheim.common.block.ShadowFoxBlocks
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.crafting.recipe.ShadowFoxRecipes
 import alfheim.common.integration.thaumcraft.ThaumcraftSuffusionRecipes
 import alfheim.common.item.*
@@ -129,7 +129,7 @@ object ShadowFoxLexiconData {
 									PageCraftingRecipe("1", ShadowFoxRecipes.recipesAttribution))
 		
 		sealCreepers = ShadowfoxLexiconEntry("sealCreepers", BotaniaAPI.categoryBasics, ShadowFoxItems.wiltedLotus)
-		if (AlfheimConfig.blackLotusDropRate > 0.0)
+		if (AlfheimConfigHandler.blackLotusDropRate > 0.0)
 			sealCreepers.setLexiconPages(PageText("0"),
 										 PageText("1Drop"))
 		else

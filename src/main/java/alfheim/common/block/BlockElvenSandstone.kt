@@ -10,18 +10,11 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 
-class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID) {
+class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenSandstone", AlfheimCore.alfheimTab) {
 	
 	lateinit var sides: Array<IIcon>
 	lateinit var top: IIcon
 	lateinit var bottom: IIcon
-	
-	init {
-		setBlockName("ElvenSandstone")
-		setCreativeTab(AlfheimCore.alfheimTab)
-		setHardness(0.8F)
-		setStepSound(soundTypePiston)
-	}
 	
 	/**
 	 * Gets the block's texture. Args: side, meta

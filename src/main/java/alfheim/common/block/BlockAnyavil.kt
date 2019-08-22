@@ -3,27 +3,29 @@ package alfheim.common.block
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.*
+import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.MathHelper
 import net.minecraft.world.*
 import vazkii.botania.api.internal.IManaBurst
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaTrigger
 import vazkii.botania.api.wand.IWandHUD
 import kotlin.math.min
 
-class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexiconable {
+class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, ILexiconable {
+	
 	init {
 		setBlockName("Anyavil")
 		setBlockTextureName("botania:storage2")
@@ -34,17 +36,13 @@ class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexi
 		setStepSound(Block.soundTypeAnvil)
 	}
 	
-	override fun renderAsNormalBlock(): Boolean {
-		return false
+	override fun registerBlockIcons(reg: IIconRegister) {
+		blockIcon = reg.registerIcon(getTextureName());
 	}
 	
-	override fun isOpaqueCube(): Boolean {
-		return false
-	}
-	
-	override fun getRenderType(): Int {
-		return LibRenderIDs.idAnyavil
-	}
+	override fun renderAsNormalBlock() = false
+	override fun isOpaqueCube() = false
+	override fun getRenderType() = LibRenderIDs.idAnyavil
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase, stack: ItemStack?) {
 		val l = MathHelper.floor_double((entity.rotationYaw * 4.0f / 360.0f).toDouble() + 0.5) and 3
@@ -78,9 +76,9 @@ class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexi
 		val l = world.getBlockMetadata(x, y, z) and 3
 		
 		if (l != 3 && l != 1) {
-			this.setBlockBounds(0.125f, 0.0f, 0.0f, 0.875f, 1.0f, 1.0f)
+			setBlockBounds(0.125f, 0.0f, 0.0f, 0.875f, 1.0f, 1.0f)
 		} else {
-			this.setBlockBounds(0.0f, 0.0f, 0.125f, 1.0f, 1.0f, 0.875f)
+			setBlockBounds(0.0f, 0.0f, 0.125f, 1.0f, 1.0f, 0.875f)
 		}
 	}
 	
@@ -100,9 +98,7 @@ class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexi
 		super.breakBlock(world, x, y, z, block, meta)
 	}
 	
-	override fun hasComparatorInputOverride(): Boolean {
-		return true
-	}
+	override fun hasComparatorInputOverride() = true
 	
 	override fun getComparatorInputOverride(world: World, x: Int, y: Int, z: Int, side: Int): Int {
 		val te = world.getTileEntity(x, y, z) as TileItemContainer
@@ -116,9 +112,7 @@ class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexi
 		return 0
 	}
 	
-	override fun createNewTileEntity(world: World, meta: Int): TileEntity {
-		return TileAnyavil()
-	}
+	override fun createNewTileEntity(world: World, meta: Int) = TileAnyavil()
 	
 	override fun onBurstCollision(burst: IManaBurst, world: World, x: Int, y: Int, z: Int) {
 		val tile = world.getTileEntity(x, y, z)
@@ -132,7 +126,5 @@ class BlockAnyavil: BlockContainer(Material.iron), IManaTrigger, IWandHUD, ILexi
 		if (tile is TileAnyavil) tile.renderHUD(res)
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.anyavil
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.anyavil
 }

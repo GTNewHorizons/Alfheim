@@ -53,9 +53,9 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 		world.setBlockToAir(x, y, z)
 	}
 	
-	override fun registerBlockIcons(iconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		if (!isInterpolated())
-			icons = Array(2) { i -> IconHelper.forBlock(iconRegister, this, if (i == 0) "" else "_opaque") }
+			icons = Array(2) { i -> IconHelper.forBlock(reg, this, if (i == 0) "" else "_opaque") }
 	}
 	
 	open fun isInterpolated() = false

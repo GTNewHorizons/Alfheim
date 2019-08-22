@@ -5,7 +5,7 @@ import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.block.tile.SubTileEntity.EnumAnomalityRarity
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.structure.StructureSpawnpoint
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.world.World
@@ -15,7 +15,7 @@ import java.util.*
 class WorldGenAlfheim: IWorldGenerator {
 	
 	override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider, chunkProvider: IChunkProvider) {
-		if (world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim)
+		if (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim)
 			generateAlfheim(rand, chunkX, chunkZ, world)
 	}
 	
@@ -39,9 +39,9 @@ class WorldGenAlfheim: IWorldGenerator {
 				Thread(Runnable { StructureSpawnpoint.generate(world, rand) }, "Alf Spawn Gen").start()
 			}
 			
-			if (AlfheimConfig.anomaliesDispersion <= 0) return
+			if (AlfheimConfigHandler.anomaliesDispersion <= 0) return
 			
-			if (rand.nextInt(AlfheimConfig.anomaliesDispersion) == 0) {
+			if (rand.nextInt(AlfheimConfigHandler.anomaliesDispersion) == 0) {
 				val chance = rand.nextInt(32) + 1
 				when {
 					chance == 32 -> genRandomAnomalyOfRarity(rand, chunkX, chunkZ, world, EnumAnomalityRarity.EPIC)
@@ -74,7 +74,7 @@ class WorldGenAlfheim: IWorldGenerator {
 				
 				te.addSubTile(sub, type)
 				
-				for (i in 0 until AlfheimConfig.anomaliesUpdate) te.updateEntity()
+				for (i in 0 until AlfheimConfigHandler.anomaliesUpdate) te.updateEntity()
 				
 				sub.worldGen = false
 			}

@@ -8,13 +8,12 @@ import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.world.World
+import net.minecraft.client.renderer.texture.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 
-abstract class BlockContainerMod<T: TileEntity>(material: Material): BlockContainer(material) {
+@Suppress("LeakingThis")
+abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	
 	var originalLight: Int = 0
 	open val registerInCreative: Boolean = true
@@ -27,15 +26,15 @@ abstract class BlockContainerMod<T: TileEntity>(material: Material): BlockContai
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
-	override fun setBlockName(par1Str: String): Block {
+	override fun setBlockName(name: String): Block {
 		if (shouldRegisterInNameSet()) {
-			GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+			GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 		}
 		
-		return super.setBlockName(par1Str)
+		return super.setBlockName(name)
 	}
 	
-	protected fun shouldRegisterInNameSet() = true
+	open fun shouldRegisterInNameSet() = true
 	
 	override fun setLightLevel(light: Float): Block {
 		originalLight = (light * 15.0f).toInt()
@@ -43,19 +42,22 @@ abstract class BlockContainerMod<T: TileEntity>(material: Material): BlockContai
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		if (!isInterpolated())
-			blockIcon = IconHelper.forBlock(par1IconRegister, this)
+			blockIcon = IconHelper.forBlock(reg, this)
 	}
 	
 	open fun isInterpolated(): Boolean = false
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	open fun loadTextures(event: TextureStitchEvent.Pre) {
+	fun loadTextures(event: TextureStitchEvent.Pre) {
 		if (event.map.textureType == 0 && isInterpolated())
-			blockIcon = InterpolatedIconHelper.forBlock(event.map, this)
+			loadTextures(event.map)
 	}
 	
-	abstract override fun createNewTileEntity(var1: World, var2: Int): T
+	@SideOnly(Side.CLIENT)
+	open fun loadTextures(map: TextureMap) {
+		blockIcon = InterpolatedIconHelper.forBlock(map, this)
+	}
 }

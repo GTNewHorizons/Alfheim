@@ -2,7 +2,7 @@ package alfheim.common.block.tile
 
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import com.google.common.base.Function
 import net.minecraft.block.Block
 import net.minecraft.entity.item.EntityItem
@@ -34,7 +34,7 @@ class TileTradePortal: TileMod() {
 	
 	private val validMetadata: Int
 		get() {
-			if (this.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return 0
+			if (this.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return 0
 			if (checkConverter(null)) return 1
 			return if (checkConverter(CONVERTER_X_Z)) 2 else 0
 			
@@ -63,7 +63,7 @@ class TileTradePortal: TileMod() {
 				if (ConfigHandler.elfPortalParticlesEnabled)
 					blockParticle(meta)
 				
-				if (worldObj.rand.nextInt(AlfheimConfig.tradePortalRate) == 0 && !worldObj.isRemote) setRandomRecipe()
+				if (worldObj.rand.nextInt(AlfheimConfigHandler.tradePortalRate) == 0 && !worldObj.isRemote) setRandomRecipe()
 				
 				if (tradeRecipe != null) {
 					val items = worldObj.getEntitiesWithinAABB(EntityItem::class.java, aabb)
@@ -110,7 +110,7 @@ class TileTradePortal: TileMod() {
 	}
 	
 	fun onWanded(): Boolean {
-		if (getBlockMetadata() == 0 && worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) {
+		if (getBlockMetadata() == 0 && worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim) {
 			val newMeta = validMetadata
 			if (newMeta != 0) {
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 1 or 2)

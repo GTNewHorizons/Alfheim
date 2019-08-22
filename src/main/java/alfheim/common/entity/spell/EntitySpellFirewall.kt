@@ -3,6 +3,7 @@ package alfheim.common.entity.spell
 import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
@@ -62,7 +63,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 			for (e in list) {
 				if (e !== caster && obb!!.intersectsWith(e.boundingBox)) {
 					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, 1.0))
-					if (!PartySystem.mobsSameParty(caster, e) || AlfheimConfig.frienldyFire) e.setFire(3)
+					if (!PartySystem.mobsSameParty(caster, e) || AlfheimConfigHandler.frienldyFire) e.setFire(3)
 				}
 			}
 			

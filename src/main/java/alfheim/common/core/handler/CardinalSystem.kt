@@ -11,7 +11,6 @@ import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -435,7 +434,7 @@ object CardinalSystem {
 				get() = get(0) as EntityPlayer?
 			
 			constructor() {
-				members = arrayOfNulls(AlfheimConfig.maxPartyMembers)
+				members = arrayOfNulls(AlfheimConfigHandler.maxPartyMembers)
 			}
 			
 			private constructor(i: Int) {

@@ -13,7 +13,7 @@ import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -71,7 +71,7 @@ class EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	fun onClientTick(e: ClientTickEvent) {
 		val world = Minecraft.getMinecraft().theWorld
-		if (world != null && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && world.provider.skyRenderer == null)
+		if (world != null && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.provider.skyRenderer == null)
 			world.provider.skyRenderer = SkyblockSkyRenderer()
 		
 		if (CardinalSystemClient.segment != null && Minecraft.getMinecraft().thePlayer == null) CardinalSystemClient.segment!!.target = null

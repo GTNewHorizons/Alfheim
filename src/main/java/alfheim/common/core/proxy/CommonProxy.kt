@@ -6,7 +6,7 @@ import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.crafting.recipe.*
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
 import alfheim.common.integration.multipart.MultipartAlfheimConfig
@@ -28,7 +28,7 @@ open class CommonProxy {
 		ShadowFoxAPI.RUNEAXE.setRepairItem(ItemStack(ModItems.manaResource, 1, 7)) // Elementium
 		
 		AlfheimLexiconData.preInit()
-		AlfheimBlocks.init()
+		AlfheimBlocks
 		ShadowFoxBlocks
 		AlfheimItems.init()
 		ShadowFoxItems
@@ -51,7 +51,7 @@ open class CommonProxy {
 		AlfheimRecipes.init()
 		ShadowFoxRecipes
 		AlfheimRegistry.init()
-		ASJUtilities.registerDimension(AlfheimConfig.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
+		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
 		ShadowFoxBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("etfuturem")) EtFuturumAlfheimConfig.loadConfig()

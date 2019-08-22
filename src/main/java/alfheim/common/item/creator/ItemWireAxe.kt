@@ -6,7 +6,7 @@ import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.SpellEffectHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -155,7 +155,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (godslaying != null) {
 			for (attr in godslaying) {
 				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfig.grantWireUnlimitedPower))
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.grantWireUnlimitedPower))
 			}
 		}
 		

@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.living.LivingHealEvent
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed
 import net.minecraftforge.event.world.BlockEvent
 
-class PotionLeftFlame: PotionAlfheim(AlfheimConfig.potionIDLeftFlame, "leftFlame", false, 0x0) {
+class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "leftFlame", false, 0x0) {
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
 	}

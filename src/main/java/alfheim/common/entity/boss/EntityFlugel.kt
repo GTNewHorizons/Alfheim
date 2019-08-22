@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.ai.flugel.*
 import alfheim.common.item.AlfheimItems
@@ -302,7 +303,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersWhoAttacked.isEmpty()) playersWhoAttacked[summoner] = 1
 		val source = source
 		var players = playersAround
-		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfig.flugelBossBar) BossBarHandler.setCurrentBoss(this)
+		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {

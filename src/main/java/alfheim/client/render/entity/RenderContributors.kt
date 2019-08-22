@@ -4,7 +4,7 @@ import alexsocol.asjlib.render.*
 import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
 import alfheim.api.ModInfo
 import alfheim.api.lib.*
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
 import alfheim.common.item.relic.ItemTankMask
@@ -89,7 +89,7 @@ object RenderContributors {
 	
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		if (player.isInvisible || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return
-		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfig.fancies) return
+		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
 		
 		if (player.commandSenderName == "AlexSocol") {
 			run { // jojo's mask
@@ -112,7 +112,7 @@ object RenderContributors {
 			}
 			
 			run { // devil wings
-				if (AlfheimConfig.minimalGraphics) {
+				if (AlfheimConfigHandler.minimalGraphics) {
 					glDisable(GL_CULL_FACE)
 					(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
 				}
@@ -132,7 +132,7 @@ object RenderContributors {
 			}
 			
 			run { // wings
-				if (AlfheimConfig.minimalGraphics) {
+				if (AlfheimConfigHandler.minimalGraphics) {
 					val icon = ItemElvenResource.wing
 					Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 					

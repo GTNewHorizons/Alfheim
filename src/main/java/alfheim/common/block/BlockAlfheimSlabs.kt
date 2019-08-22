@@ -6,34 +6,34 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import vazkii.botania.common.block.decor.slabs.BlockLivingSlab
 
-class BlockRockShrineWhiteSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.shrineRock, 0) {
+class BlockRockShrineWhiteSlab(full: Boolean): BlockLivingSlab(full, AlfheimFluffBlocks.shrineRock, 0) {
 	
-	override fun getFullBlock() = AlfheimBlocks.shrineRockWhiteSlabFull as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.shrineRockWhiteSlabFull as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimBlocks.shrineRockWhiteSlab as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.shrineRockWhiteSlab as BlockSlab
 }
 
-class BlockElvenSandstoneSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.elvenSandstone, 0) {
+class BlockElvenSandstoneSlab(full: Boolean): BlockLivingSlab(full, AlfheimFluffBlocks.elvenSandstone, 0) {
 	
-	override fun getFullBlock() = AlfheimBlocks.elvenSandstoneSlabFull as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.elvenSandstoneSlabFull as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimBlocks.elvenSandstoneSlab as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.elvenSandstoneSlab as BlockSlab
 }
 
 class BlockLivingCobbleSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 0) {
 	
-	override fun getFullBlock() = AlfheimBlocks.livingcobbleSlabFull as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.livingcobbleSlabFull as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimBlocks.livingcobbleSlab as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingcobbleSlab as BlockSlab
 }
 
 class BlockLivingRockTileSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 2) {
 	
 	lateinit var sideIcon: IIcon
 	
-	override fun getFullBlock() = AlfheimBlocks.livingrockTileSlabFull as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.livingrockTileSlabFull as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimBlocks.livingrockTileSlab as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingrockTileSlab as BlockSlab
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		sideIcon = IconHelper.forName(reg, "LivingCobble2Slab")

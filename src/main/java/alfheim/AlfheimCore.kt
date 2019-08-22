@@ -4,9 +4,9 @@ import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.command.CommandAlfheim
-import alfheim.common.core.handler.CardinalSystem
+import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.util.*
+import alfheim.common.core.util.InfoLoader
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
@@ -15,6 +15,7 @@ import alfheim.common.item.ShadowFoxItems
 import alfheim.common.network.*
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.Mod.*
+import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.*
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
@@ -64,21 +65,21 @@ class AlfheimCore {
 	
 	@EventHandler
 	fun constructing(e: FMLConstructionEvent) {
-		Potion.potionTypes = Potion.potionTypes.copyOf(AlfheimConfig.potionSlots)
+		Potion.potionTypes = Potion.potionTypes.copyOf(AlfheimConfigHandler.potionSlots)
 	}
 	
 	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
-		AlfheimConfig.readModes()
+		AlfheimConfigHandler.readModes()
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear")
 		WAILALoaded = Loader.isModLoaded("Waila")
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
-		AlfheimConfig.loadConfig(File(e.modConfigurationDirectory.toString() + "/Alfheim", "${meta.name}.cfg"))
+		AlfheimConfigHandler.loadConfig(File(e.modConfigurationDirectory.toString() + "/Alfheim", "${meta.name}.cfg"))
 		
-		if (AlfheimConfig.info) InfoLoader.start()
+		if (AlfheimConfigHandler.info) InfoLoader.start()
 		
 		registerPackets()
 		
@@ -109,8 +110,8 @@ class AlfheimCore {
 	@EventHandler
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
-		if (enableElvenStory) AlfheimConfig.initWorldCoordsForElvenStory(save)
-		AlfheimConfig.syncConfig()
+		if (enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
+		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
 		CommandDimTP.register(e)

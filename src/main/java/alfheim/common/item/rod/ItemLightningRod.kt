@@ -3,7 +3,7 @@ package alfheim.common.item.rod
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -114,7 +114,7 @@ open class ItemLightningRod(name: String = "lightningRod"): ItemMod(name), IMana
 					}
 					
 					if (count % shockspeed == 0) {
-						if (AlfheimConfig.realLightning && thor) {
+						if (AlfheimConfigHandler.realLightning && thor) {
 							if (spawnLightning(player.worldObj, target.posX, target.posY, target.posZ)) {
 								if (ManaItemHandler.requestManaExactForTool(stack, player, getCost(thor, prowess, priest), true))
 									target.attackEntityFrom(DamageSource.causePlayerDamage(player), damage)

@@ -1,7 +1,7 @@
 package alfheim.common.integration.thaumcraft
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.ASJUtilities.Companion.register
+import alexsocol.asjlib.ASJUtilities.register
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict.ELEMENTIUM_ORE

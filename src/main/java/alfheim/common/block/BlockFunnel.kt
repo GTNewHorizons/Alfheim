@@ -26,7 +26,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandHUD
 import java.util.*
 
-class BlockFunnel: BlockContainerMod<TileLivingwoodFunnel>(Material.wood), IWandHUD, ILexiconable {
+class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 	
 	private val random = Random()
 	lateinit var top_icon: IIcon
@@ -212,10 +212,10 @@ class BlockFunnel: BlockContainerMod<TileLivingwoodFunnel>(Material.wood), IWand
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
-		top_icon = IconHelper.forName(par1IconRegister, "funnel_top")
-		inside_icon = IconHelper.forName(par1IconRegister, "funnel_inside")
-		outside_icon = IconHelper.forName(par1IconRegister, "funnel_outside")
+	override fun registerBlockIcons(reg: IIconRegister) {
+		top_icon = IconHelper.forName(reg, "funnel_top")
+		inside_icon = IconHelper.forName(reg, "funnel_inside")
+		outside_icon = IconHelper.forName(reg, "funnel_outside")
 	}
 	
 	fun getTile(world: IBlockAccess, x: Int, y: Int, z: Int): TileLivingwoodFunnel? =

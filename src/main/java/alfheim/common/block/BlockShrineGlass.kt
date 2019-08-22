@@ -8,16 +8,10 @@ import net.minecraft.block.material.Material
 import net.minecraft.util.Facing
 import net.minecraft.world.IBlockAccess
 
-class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "shrines") {
+class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "ShrineGlass", AlfheimCore.alfheimTab, resist = 600f, folder = "shrines/") {
 	
 	init {
-		setBlockName("ShrineGlass")
-		setCreativeTab(AlfheimCore.alfheimTab)
-		setHardness(1f)
-		setHarvestLevel("pickaxe", 1)
 		setLightOpacity(0)
-		setResistance(600f)
-		setStepSound(soundTypeGlass)
 	}
 	
 	override fun getRenderBlockPass() = 1

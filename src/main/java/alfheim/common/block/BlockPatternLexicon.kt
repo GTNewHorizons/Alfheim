@@ -1,6 +1,8 @@
 package alfheim.common.block
 
-import net.minecraft.block.BlockFalling
+import alfheim.common.item.block.ItemBlockMod
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.item.EntityFallingBlock
@@ -22,6 +24,11 @@ class BlockPatternLexicon(modid: String, material: Material, name: String, tab: 
 		setHarvestLevel(harvTool, harvLvl)
 		setResistance(resistance)
 		setStepSound(sound)
+	}
+	
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	override fun isOpaqueCube() = isOpaque

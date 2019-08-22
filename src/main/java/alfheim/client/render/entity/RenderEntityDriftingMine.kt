@@ -2,7 +2,7 @@ package alfheim.client.render.entity
 
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -26,7 +26,7 @@ class RenderEntityDriftingMine: Render() {
 		glPushMatrix()
 		glTranslated(x, y + 0.5, z)
 		glRotated((Minecraft.getMinecraft().theWorld.totalWorldTime + entity.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * 0.5, 1.0, 1.0, 1.0)
-		if (AlfheimConfig.minimalGraphics) {
+		if (AlfheimConfigHandler.minimalGraphics) {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			glTranslated(-0.5, -0.5, 0.03125)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine!!.maxU, ItemElvenResource.mine!!.minV, ItemElvenResource.mine!!.minU, ItemElvenResource.mine!!.maxV, ItemElvenResource.mine!!.iconWidth, ItemElvenResource.mine!!.iconHeight, 1f / 16f)

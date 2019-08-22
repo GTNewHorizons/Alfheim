@@ -2,9 +2,11 @@ package alexsocol.asjlib.extendables.block
 
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.world.World
 
-abstract class BlockModContainerMeta(mat: Material, subtypes: Int, modid: String): BlockModMeta(mat, subtypes, modid), ITileEntityProvider {
+abstract class	BlockModContainerMeta(mat: Material, subtypes: Int, modid: String, name: String, tab: CreativeTabs, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f):
+				BlockModMeta(mat, subtypes, modid, name, tab, hardness, harvTool, harvLvl, resist), ITileEntityProvider {
 	
 	init {
 		isBlockContainer = true

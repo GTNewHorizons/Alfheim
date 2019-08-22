@@ -5,7 +5,7 @@ import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSimpleAnyavil
 import alfheim.common.block.tile.TileAnyavil
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
@@ -24,7 +24,7 @@ class RenderTileAnyavil: TileEntitySpecialRenderer() {
 		glTranslated(x + 0.5, y, z + 0.5)
 		glRotated((90 * (tile.blockMetadata + 1)).toDouble(), 0.0, 1.0, 0.0)
 		
-		if (AlfheimConfig.minimalGraphics) {
+		if (AlfheimConfigHandler.minimalGraphics) {
 			glPushMatrix()
 			glTranslated(0.0, 1.5, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)

@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import com.google.common.base.Function
@@ -77,12 +77,12 @@ class TileAlfheimPortal: TileMod() {
 						player as EntityPlayer
 						if (player.isDead) continue
 						
-						if (player.dimension == AlfheimConfig.dimensionIDAlfheim) {
+						if (player.dimension == AlfheimConfigHandler.dimensionIDAlfheim) {
 							var coords: ChunkCoordinates? = player.getBedLocation(0)
 							if (coords == null) coords = MinecraftServer.getServer().worldServerForDimension(0).spawnPoint
 							if (coords == null) coords = ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0) + 3, 0)
 							
-							if (AlfheimConfig.destroyPortal && (xCoord != 0 || zCoord != 0)) {
+							if (AlfheimConfigHandler.destroyPortal && (xCoord != 0 || zCoord != 0)) {
 								worldObj.newExplosion(player, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), 5f, false, false)
 								val x = if (meta == 1) 2 else 0
 								val z = if (meta == 1) 0 else 2
@@ -97,12 +97,12 @@ class TileAlfheimPortal: TileMod() {
 							if (AlfheimCore.enableElvenStory) {
 								val race = player.raceID - 1 // for array length
 								if (race in 0..8)
-									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, AlfheimConfig.zones[race].x, AlfheimConfig.zones[race].y, AlfheimConfig.zones[race].z)
+									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, AlfheimConfigHandler.zones[race].x, AlfheimConfigHandler.zones[race].y, AlfheimConfigHandler.zones[race].z)
 								else {
-									if (AlfheimConfig.bothSpawnStructures)
+									if (AlfheimConfigHandler.bothSpawnStructures)
 										findAndTP(player)
 									else
-										ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 253.0, 0.5)
+										ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 253.0, 0.5)
 								}
 							} else
 								findAndTP(player)
@@ -132,11 +132,11 @@ class TileAlfheimPortal: TileMod() {
 	}
 	
 	private fun findAndTP(player: EntityPlayer) {
-		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, 75.0, -1.5)
-		val alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfig.dimensionIDAlfheim)
+		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 75.0, -1.5)
+		val alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfigHandler.dimensionIDAlfheim)
 		for (y in 50..149) {
 			if (alfheim.getBlock(0, y, 0) === AlfheimBlocks.alfheimPortal && alfheim.getBlockMetadata(0, y, 0) == 1) {
-				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, 0.5, (y + 1).toDouble(), -1.5)
+				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, (y + 1).toDouble(), -1.5)
 				break
 			}
 		}
@@ -192,9 +192,9 @@ class TileAlfheimPortal: TileMod() {
 			return false
 		if (wrong2DArray(GLIMMERING_DREAMWOOD_POSITIONS, ModBlocks.dreamwood, 5, converters))
 			return false
-		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(PYLON_POSITIONS, AlfheimBlocks.alfheimPylon, 0, converters) && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim)
 			return false
-		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim)
+		if (wrong2DArray(POOL_POSITIONS, ModBlocks.pool, -1, converters) && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim)
 			return false
 		
 		lightPylons(converters)

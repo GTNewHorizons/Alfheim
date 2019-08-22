@@ -7,7 +7,7 @@ object LibRenderIDs {
 	var idAniTorch = -1
 	var idAnomaly = -1
 	var idAnyavil = -1
-	var idItemHolder = -1
+	var idManaAccelerator = -1
 	var idPylon = -1
 	var idShrinePanel = -1
 	var idTransferer = -1
@@ -21,7 +21,7 @@ object LibRenderIDs {
 		idAniTorch = RenderingRegistry.getNextAvailableRenderId()
 		idAnomaly = RenderingRegistry.getNextAvailableRenderId()
 		idAnyavil = RenderingRegistry.getNextAvailableRenderId()
-		idItemHolder = RenderingRegistry.getNextAvailableRenderId()
+		idManaAccelerator = RenderingRegistry.getNextAvailableRenderId()
 		idPylon = RenderingRegistry.getNextAvailableRenderId()
 		idShrinePanel = RenderingRegistry.getNextAvailableRenderId()
 		idTransferer = RenderingRegistry.getNextAvailableRenderId()

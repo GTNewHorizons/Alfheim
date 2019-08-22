@@ -1,5 +1,6 @@
 package alexsocol.asjlib.extendables.block
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.ItemBlockMetaName
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -11,20 +12,27 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import kotlin.math.*
 
-open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val folder: String? = null): Block(mat) {
+open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val name: String, tab: CreativeTabs, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f, val folder: String = ""): Block(mat) {
 	
-	lateinit var name: String
 	lateinit var texture: Array<IIcon>
+	
+	init {
+		setBlockName(name)
+		setCreativeTab(tab)
+		setHardness(hardness)
+		setHarvestLevel(harvTool, harvLvl)
+		setResistance(max(resist, hardness * 5f))
+		setStepSound(ASJUtilities.soundFromMaterial(mat))
+	}
 	
 	override fun setBlockName(name: String): Block {
 		GameRegistry.registerBlock(this, ItemBlockMetaName::class.java, name)
-		this.name = name
 		return super.setBlockName(name)
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		texture = Array(subtypes) {
-			reg.registerIcon("$modid:${if (folder != null) "$folder/" else ""}$name$it")
+			reg.registerIcon("$modid:$folder$name$it")
 		}
 	}
 	

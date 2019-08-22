@@ -3,13 +3,13 @@
 
 package ru.vamig.worldengine;
 
-import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.handler.AlfheimConfigHandler;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
-	final int we_id = AlfheimConfig.INSTANCE.getBiomeIDAlfheim();
+	final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
 	final float rainfall = 0.1F;
 	
 	@Override

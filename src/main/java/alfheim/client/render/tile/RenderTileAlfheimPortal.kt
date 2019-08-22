@@ -35,9 +35,11 @@ class RenderTileAlfheimPortal: TileEntitySpecialRenderer() {
 		}
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
-		renderIcon(0, 0, BlockAlfheimPortal.textures[2]!!, 3, 3, 240)
+		val icon = BlockAlfheimPortal.textures[1]
+		
+		if (icon != null) renderIcon(0, 0, icon, 3, 3, 240)
 		glTranslated(0.0, 0.0, 0.5)
-		renderIcon(0, 0, BlockAlfheimPortal.textures[2]!!, 3, 3, 240)
+		if (icon != null) renderIcon(0, 0, icon, 3, 3, 240)
 		
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		glEnable(GL_CULL_FACE)
