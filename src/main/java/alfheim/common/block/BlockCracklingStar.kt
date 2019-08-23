@@ -20,8 +20,6 @@ import java.util.*
 
 class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 	
-	override val registerInCreative = false
-	
 	init {
 		setBlockName("cracklingStar")
 		val f = 0.25f

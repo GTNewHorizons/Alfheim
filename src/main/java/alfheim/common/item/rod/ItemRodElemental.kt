@@ -1,14 +1,13 @@
 package alfheim.common.item.rod
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.item.AlfheimItems
+import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
@@ -17,19 +16,16 @@ import vazkii.botania.common.Botania
 import java.awt.Color
 import kotlin.math.*
 
-class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaUsingItem {
+class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name), IManaUsingItem {
 	private var rubyIcon: IIcon? = null
 	private var sapphireIcon: IIcon? = null
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setFull3D()
 		maxDamage = 1200
 		setMaxStackSize(1)
-		setTextureName(ModInfo.MODID + ':'.toString() + name)
-		unlocalizedName = name
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
 		itemIcon = reg.registerIcon(ModInfo.MODID + ':'.toString() + this.unlocalizedName.substring(5))
@@ -38,7 +34,7 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 	}
 	
 	override fun getIconIndex(par1ItemStack: ItemStack): IIcon? {
-		val name = par1ItemStack.displayName.toLowerCase().trim({ it <= ' ' })
+		val name = par1ItemStack.displayName.toLowerCase().trim { it <= ' ' }
 		return if (name == "magical ruby" && this === AlfheimItems.rodFire) rubyIcon else if (name == "magical sapphire" && this === AlfheimItems.rodIce) sapphireIcon else super.getIconIndex(par1ItemStack)
 	}
 	
@@ -46,15 +42,15 @@ class ItemRodElemental(name: String, private val barrier: Block): Item(), IManaU
 		return getIconIndex(stack)
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (stack.itemDamage > 0) return stack
-		if (!world!!.isRemote) {
+		if (!world.isRemote) {
 			var cd = false
 			for (x in -6..6)
 				for (z in -6..6)
 					for (y in -2..2)
 						if (3 < sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) && sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) < 6) {
-							val X = MathHelper.floor_double(player!!.posX) + x
+							val X = MathHelper.floor_double(player.posX) + x
 							val Y = MathHelper.floor_double(player.posY) + y
 							val Z = MathHelper.floor_double(player.posZ) + z
 							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)

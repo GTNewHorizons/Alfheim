@@ -8,7 +8,7 @@ import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
+import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui

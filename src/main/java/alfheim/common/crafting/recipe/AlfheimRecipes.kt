@@ -54,7 +54,6 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -67,7 +66,6 @@ import alfheim.common.item.AlfheimItems.elementalBoots
 import alfheim.common.item.AlfheimItems.elementalChestplate
 import alfheim.common.item.AlfheimItems.elementalHelmet
 import alfheim.common.item.AlfheimItems.elementalHelmetRevealing
-import alfheim.common.item.AlfheimItems.elementalHelmetRevealingIsInitialized
 import alfheim.common.item.AlfheimItems.elementalLeggings
 import alfheim.common.item.AlfheimItems.elementiumHoe
 import alfheim.common.item.AlfheimItems.elfFirePendant
@@ -91,12 +89,12 @@ import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
 import alfheim.common.item.AlfheimItems.realitySword
-import alfheim.common.item.AlfheimItems.relicCleaner
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
+import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.init.Blocks.*
 import net.minecraft.init.Items.*
@@ -226,7 +224,7 @@ object AlfheimRecipes {
 							 "SPS", " C ", "CCC",
 							 'S', livingcobbleSlab,
 							 'P', PETAL[i],
-							 'C', ItemStack(livingcobble))
+							 'C', ItemStack(livingcobble, 1, 0))
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16)
 		
 		addOreDictRecipe(ItemStack(animatedTorch),
@@ -298,7 +296,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeElementalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (elementalHelmetRevealingIsInitialized())
+		if (elementalHelmetRevealing != null)
 			addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 							 "RTR", "DPD", " M ",
 							 'R', RUNE[0],
@@ -353,6 +351,13 @@ object AlfheimRecipes {
 						 'R', ARUNE[2],
 						 'P', icePendant)
 		recipeNiflheimPendant = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.DasRheingold),
+						 "SCS", "CGC", "SCS",
+						 'G', "ingotGold",
+						 'S', LIFE_ESSENCE,
+						 'C', spellCloth)
+		recipeRelicCleaner = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 						 "PGP", "GDG", "PGP",
@@ -415,7 +420,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(furnace),
 						 "SSS", "S S", "SSS",
-						 'S', livingcobble)
+						 'S', ItemStack(livingcobble, 1, 0))
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(invisibilityCloak),
@@ -441,7 +446,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingrockPickaxe),
 						 "LLL", " S ", " S ",
-						 'L', livingcobble,
+						 'L', ItemStack(livingcobble, 1, 0),
 						 'S', "stickWood")
 		recipeLivingrockPickaxe = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -458,7 +463,7 @@ object AlfheimRecipes {
 						 'D', DRAGONSTONE,
 						 'I', ELEMENTIUM,
 						 'R', rainbowRod,
-						 'S', LIVING_ROCK)
+						 'S', ItemStack(livingrock, 1, 4))
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(manaRingElven),
@@ -512,13 +517,6 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'S', ItemStack(manaResource, 1, 3))
 		recipeSword = BotaniaAPI.getLatestAddedRecipe()
-		
-		addOreDictRecipe(ItemStack(relicCleaner),
-						 "SCS", "CGC", "SCS",
-						 'G', "ingotGold",
-						 'S', LIFE_ESSENCE,
-						 'C', spellCloth)
-		recipeRelicCleaner = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(rodFire),
 						 " MR", " BM", "B  ",
@@ -578,7 +576,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
-		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 1))
+		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 0))
 		
 		addShapedRecipe(ItemStack(livingrockTileSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
 		
@@ -669,10 +667,6 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(livingcobble, 8, 2),
 						 "LLL", "L L", "LLL",
 						 'L', LIVING_ROCK)
-		
-		addOreDictRecipe(ItemStack(livingcobbleSlab, 6),
-						 "LLL",
-						 'L', ItemStack(livingcobble, 1, 2))
 		
 		val dyes = arrayOf(4, 1, 14, 11)
 		for (i in 0..3) {
@@ -812,10 +806,12 @@ object AlfheimRecipes {
 		
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-		if (Botania.thaumcraftLoaded) {
-			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
+
+		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
+			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
+
 		addRecipe(RecipeLootInterceptor())
 		addRecipe(RecipeLootInterceptorClear())
 		addRecipe(RecipeCleanRelic())

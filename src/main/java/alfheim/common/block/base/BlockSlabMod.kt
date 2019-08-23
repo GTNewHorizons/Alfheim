@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -19,7 +18,6 @@ abstract class BlockSlabMod(val full: Boolean, val meta: Int, val source: Block,
 		setStepSound(source.stepSound)
 		setBlockName(name)
 		if (!full) {
-			setCreativeTab(AlfheimCore.baTab)
 			useNeighborBrightness = true
 		}
 	}

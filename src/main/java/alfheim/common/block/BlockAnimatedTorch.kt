@@ -1,6 +1,5 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.lib.LibRenderIDs
@@ -24,7 +23,6 @@ import vazkii.botania.api.wand.*
 class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigger, IWandable, IManaTrigger, IWandHUD, ILexiconable {
 	
 	init {
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setBlockBounds(0f, 0f, 0f, 1f, 0.25f, 1f)
 		setBlockName("AnimatedTorch")
 		setBlockTextureName(ModInfo.MODID + ":AnimatedTorch")

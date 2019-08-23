@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -19,9 +18,6 @@ abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	open val registerInCreative: Boolean = true
 	
 	init {
-		if (registerInCreative) {
-			setCreativeTab(AlfheimCore.baTab)
-		}
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}

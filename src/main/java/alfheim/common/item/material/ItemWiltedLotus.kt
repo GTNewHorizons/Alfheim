@@ -1,6 +1,7 @@
-package alfheim.common.item
+package alfheim.common.item.material
 
 import alfheim.api.ModInfo
+import alfheim.common.item.ItemMod
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*

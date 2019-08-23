@@ -1,6 +1,6 @@
 package alfheim.common.block.alt
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -12,14 +12,14 @@ import net.minecraft.item.*
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockAltWoodSlab(full: Boolean, meta: Int, source: Block = ShadowFoxBlocks.altPlanks):
+class BlockAltWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBlocks.altPlanks):
 	BlockSlabMod(full, meta, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + meta), ILexiconable, IFuelHandler {
 	
 	init {
 		GameRegistry.registerFuelHandler(this)
 	}
 	
-	override fun getFullBlock() = ShadowFoxBlocks.altSlabsFull[meta] as BlockSlab
+	override fun getFullBlock() = AlfheimBlocks.altSlabsFull[meta] as BlockSlab
 	
 	override fun getIcon(par1: Int, par2: Int) = source.getIcon(par1, meta)!!
 	
@@ -27,7 +27,7 @@ class BlockAltWoodSlab(full: Boolean, meta: Int, source: Block = ShadowFoxBlocks
 		GameRegistry.registerBlock(this, ItemRegularSlabMod::class.java, name)
 	}
 	
-	override fun getSingleBlock() = ShadowFoxBlocks.altSlabs[meta] as BlockSlab
+	override fun getSingleBlock() = AlfheimBlocks.altSlabs[meta] as BlockSlab
 	
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 150 else 0
 	
@@ -38,7 +38,7 @@ class BlockAltWoodSlab(full: Boolean, meta: Int, source: Block = ShadowFoxBlocks
 	override fun getHarvestTool(metadata: Int) = "axe"
 }
 
-class BlockAltWoodStairs(meta: Int, source: Block = ShadowFoxBlocks.altPlanks):
+class BlockAltWoodStairs(meta: Int, source: Block = AlfheimBlocks.altPlanks):
 	BlockStairsMod(source, meta, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs" + meta) {
 	
 	override fun register() {

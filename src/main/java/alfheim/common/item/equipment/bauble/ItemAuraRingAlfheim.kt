@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import baubles.api.BaubleType
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -8,14 +7,7 @@ import net.minecraft.item.ItemStack
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
-open class ItemAuraRingAlfheim(name: String): ItemBauble(name), IManaGivingItem {
-	
-	open val delay: Int
-		get() = 5
-	
-	init {
-		creativeTab = AlfheimCore.alfheimTab
-	}
+open class ItemAuraRingAlfheim(name: String, val delay: Int = 5): ItemBauble(name), IManaGivingItem {
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		super.onWornTick(stack, player)

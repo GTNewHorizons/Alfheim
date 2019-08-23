@@ -1,6 +1,5 @@
 package alfheim.common.item
 
-import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.creativetab.CreativeTabs
@@ -15,10 +14,10 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.math.min
 
 class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaItem, IManaTooltipDisplay {
+	
 	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		maxDamage = 1000
 		setMaxStackSize(1)
 		setNoRepair()

@@ -3,15 +3,14 @@ package alfheim.common.core.proxy
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.block.*
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.crafting.recipe.*
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
 import alfheim.common.integration.multipart.MultipartAlfheimConfig
 import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
-import alfheim.common.item.*
+import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.common.*
@@ -29,16 +28,15 @@ open class CommonProxy {
 		
 		AlfheimLexiconData.preInit()
 		AlfheimBlocks
-		ShadowFoxBlocks
-		AlfheimItems.init()
-		ShadowFoxItems
+		AlfheimBlocks
+		AlfheimItems
 		AlfheimRegistry.preInit()
 		AlfheimAchievements.init()
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2()
 		ShadowFoxLexiconData
 		ShadowFoxThrowables
 		HilarityHandler.register()
-		BlockDispenser.dispenseBehaviorRegistry.putObject(ShadowFoxItems.resource, BifrostFlowerDispenserHandler())
+		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler())
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
 		AlfheimMultiblocks.init()
 	}
@@ -52,7 +50,7 @@ open class CommonProxy {
 		ShadowFoxRecipes
 		AlfheimRegistry.init()
 		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
-		ShadowFoxBlocks.registerBurnables()
+		AlfheimBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("etfuturem")) EtFuturumAlfheimConfig.loadConfig()
 	}

@@ -1,7 +1,6 @@
 package alfheim.common.block.mana
 
 import alexsocol.asjlib.extendables.TileItemContainer
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileTransferer
 import net.minecraft.block.*
@@ -27,10 +26,9 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 	internal val random: Random
 	
 	init {
-		this.setBlockName("Transferer")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
-		this.setHardness(2.0f)
-		this.setStepSound(Block.soundTypeWood)
+		setBlockName("Transferer")
+		setHardness(2.0f)
+		setStepSound(Block.soundTypeWood)
 		random = Random()
 	}
 	

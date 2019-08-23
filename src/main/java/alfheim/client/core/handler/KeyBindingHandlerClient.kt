@@ -8,9 +8,9 @@ import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d

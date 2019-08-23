@@ -138,7 +138,6 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 		MinecraftForge.EVENT_BUS.register(handler)
 		FMLCommonHandler.instance().bus().register(handler)
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {

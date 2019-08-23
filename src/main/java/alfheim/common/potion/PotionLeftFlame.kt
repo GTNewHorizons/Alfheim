@@ -3,8 +3,8 @@ package alfheim.common.potion
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.registry.AlfheimRegistry
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap

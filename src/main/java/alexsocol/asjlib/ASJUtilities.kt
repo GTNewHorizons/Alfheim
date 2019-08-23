@@ -64,6 +64,14 @@ object ASJUtilities {
 	fun register(item: Item) = GameRegistry.registerItem(item, getItemName(item))
 	
 	/**
+	 * Registers this block as burnable
+	 */
+	@JvmStatic
+	fun setBurnable(block: Block, encouragement: Int, flammablility: Int) {
+		Blocks.fire.setFireInfo(block, encouragement, flammablility)
+	}
+	
+	/**
 	 * Returns String ID of the mod this block/item is registered in
 	 * @param stack ItemStack with block/item for analysis
 	 */
@@ -649,11 +657,12 @@ object ASJUtilities {
 		array.indices.firstOrNull { array[it].compareTo(key) == 0 } ?: -1
 	
 	@JvmStatic
-	fun <T: Comparable<T>> indexOfComparableColl(coll: Collection<T>, key: T): Int {
+	fun <T: Comparable<T>> indexOfComparableColl(coll: Collection<T?>, key: T): Int {
 		var id = -1
 		for (t in coll) {
 			++id
-			if (t.compareTo(key) == 0)
+			
+			if (t?.let { key.compareTo(it) } ?: continue == 0)
 				return id
 		}
 		return id

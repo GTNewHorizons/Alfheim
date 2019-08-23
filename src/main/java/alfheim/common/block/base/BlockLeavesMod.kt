@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -24,7 +23,6 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	
 	init {
 		setHardness(0.2f)
-		setCreativeTab(AlfheimCore.baTab)
 		setLightOpacity(1)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient && isInterpolated())

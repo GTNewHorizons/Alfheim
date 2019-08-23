@@ -1,6 +1,5 @@
 package alfheim.common.item.creator
 
-import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.common.core.helper.*
 import com.google.common.collect.*
@@ -43,27 +42,26 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	init {
 		setMaxStackSize(1)
 		maxDamage = toolMaterial.maxUses
-		creativeTab = AlfheimCore.baTab
 		unlocalizedName = name
 		DaggerEventHandler.register()
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
-	override fun setUnlocalizedName(par1Str: String): Item {
-		GameRegistry.registerItem(this, par1Str)
-		return super.setUnlocalizedName(par1Str)
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	override fun getItemStackDisplayName(stack: ItemStack) =
 		super.getItemStackDisplayName(stack).replace("&".toRegex(), "\u00a7")
 	
-	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		super.getUnlocalizedNameInefficiently(stack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		dunIcon = IconHelper.forItem(par1IconRegister, this, "Dun")
+	override fun registerIcons(reg: IIconRegister) {
+		dunIcon = IconHelper.forItem(reg, this, "Dun")
 	}
 	
 	@SubscribeEvent

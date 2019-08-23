@@ -1,6 +1,5 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
@@ -37,9 +36,9 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 		@SideOnly(Side.CLIENT)
 		fun getHopperIcon(string: String): IIcon? {
 			return when (string) {
-				"funnel_top"    -> (ShadowFoxBlocks.livingwoodFunnel as BlockFunnel).top_icon
-				"funnel_inside" -> (ShadowFoxBlocks.livingwoodFunnel as BlockFunnel).inside_icon
-				else            -> (ShadowFoxBlocks.livingwoodFunnel as BlockFunnel).outside_icon
+				"funnel_top"    -> (AlfheimBlocks.livingwoodFunnel as BlockFunnel).top_icon
+				"funnel_inside" -> (AlfheimBlocks.livingwoodFunnel as BlockFunnel).inside_icon
+				else            -> (AlfheimBlocks.livingwoodFunnel as BlockFunnel).outside_icon
 			}
 		}
 		
@@ -50,8 +49,6 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 	init {
 		setBlockName("livingwoodFunnel")
 		blockHardness = 2f
-		
-		setCreativeTab(AlfheimCore.baTab)
 		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f)
 	}
 	

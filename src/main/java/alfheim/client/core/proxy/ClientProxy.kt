@@ -26,7 +26,7 @@ import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
-import alfheim.common.item.*
+import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
@@ -94,7 +94,7 @@ class ClientProxy: CommonProxy() {
 		
 		// Iridescence:
 		
-		MinecraftForgeClient.registerItemRenderer(ShadowFoxItems.invisibleFlameLens, RenderLens())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.invisibleFlameLens, RenderLens())
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderBow())
 		
 		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())

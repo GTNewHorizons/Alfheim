@@ -8,10 +8,10 @@ import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class RecipeHelmRevealingAlfheim: IRecipe {
-	
+
 	override fun matches(var1: InventoryCrafting, var2: World?): Boolean {
 		val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") ?: return false // NO TC loaded
-		
+
 		var foundGoggles = false
 		var foundHelm = false
 		for (i in 0 until var1.sizeInventory) {
@@ -26,56 +26,56 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		}
 		return foundGoggles && foundHelm
 	}
-	
+
 	override fun getCraftingResult(var1: InventoryCrafting): ItemStack? {
 		var helm: ItemStack? = null
-		
+
 		for (i in 0 until var1.sizeInventory) {
 			val stack = var1.getStackInSlot(i)
 			if (stack != null && checkHelm(stack))
 				helm = stack
 		}
-		
+
 		if (helm == null)
 			return null
-		
+
 		val helmCopy = helm.copy()
 		val newHelm: ItemStack
-		
+
 		newHelm = when {
-			helmCopy.item === AlfheimItems.elementalHelmet -> if (AlfheimItems.elementalHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elementalHelmetRevealing) else return null
-			helmCopy.item === AlfheimItems.elvoriumHelmet  -> if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) ItemStack(AlfheimItems.elvoriumHelmetRevealing) else return null
+			helmCopy.item === AlfheimItems.elementalHelmet -> AlfheimItems.elementalHelmetRevealing?.let { ItemStack(it) } ?: return null
+			helmCopy.item === AlfheimItems.elvoriumHelmet  -> AlfheimItems.elvoriumHelmetRevealing?.let { ItemStack(it) } ?: return null
 			else                                           -> return null
 		}
-		
+
 		// Copy Ancient Wills
 		for (i in 0..5)
 			if (ItemNBTHelper.getBoolean(helmCopy, "AncientWill$i", false))
 				ItemNBTHelper.setBoolean(newHelm, "AncientWill$i", true)
-		
+
 		// Copy Enchantments
 		val enchList = ItemNBTHelper.getList(helmCopy, "ench", 10, true)
 		if (enchList != null)
 			ItemNBTHelper.setList(newHelm, "ench", enchList)
-		
+
 		// Copy Runic Hardening
 		val runicHardening = ItemNBTHelper.getByte(helmCopy, "RS.HARDEN", 0.toByte())
 		ItemNBTHelper.setByte(newHelm, "RS.HARDEN", runicHardening)
-		
+
 		return newHelm
 	}
-	
+
 	override fun getRecipeSize(): Int {
 		return 10
 	}
-	
+
 	override fun getRecipeOutput(): ItemStack {
 		return ItemStack(AlfheimItems.elvoriumHelmetRevealing)
 	}
-	
+
 	private fun checkHelm(helmStack: ItemStack): Boolean {
 		val helmItem = helmStack.item
 		return helmItem === AlfheimItems.elementalHelmet || helmItem === AlfheimItems.elvoriumHelmet
 	}
-	
+
 }

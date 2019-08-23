@@ -5,7 +5,7 @@ object ShadowFoxThrowables {
 	init {
 //		ShadowFoxAPI.registerThrowable(ThrowableCollidingItem(
 //			"shadowfox_fire_grenade",
-//			ItemStack(ShadowFoxItems.fireGrenade)
+//			ItemStack(AlfheimItems.fireGrenade)
 //		) { throwable, _ ->
 //			if (!throwable.worldObj.isRemote) {
 //				val axisalignedbb = throwable.boundingBox.expand(8.0, 2.0, 8.0)

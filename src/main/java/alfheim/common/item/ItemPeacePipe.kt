@@ -2,21 +2,17 @@ package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
-import alfheim.common.core.handler.CardinalSystem
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 
-class ItemPeacePipe: Item() {
+class ItemPeacePipe: ItemMod("PeacePipe") {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setFull3D()
-		setTextureName(ModInfo.MODID + ":PeacePipe")
-		unlocalizedName = "PeacePipe"
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack? {

@@ -2,7 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.common.entity.EntityThrownPotion
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
@@ -28,7 +28,7 @@ class RenderThrownPotion: Render() {
             val tessellator = Tessellator.instance
 			func_77026_a(tessellator, iicon, -1)
 			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(e.color, 255))
-			func_77026_a(tessellator, ShadowFoxItems.splashPotion.getIcon(e.stack, 1), 240)
+			func_77026_a(tessellator, AlfheimItems.splashPotion.getIcon(e.stack, 1), 240)
 			glColor4f(1f, 1f, 1f, 1f)
 			
 			glDisable(GL_BLEND)

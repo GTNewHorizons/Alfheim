@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import baubles.api.BaubleType
 import net.minecraft.creativetab.CreativeTabs
@@ -21,7 +20,6 @@ class ItemManaStorageRing(name: String, maxManaCap: Double): ItemBauble(name), I
 	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		maxDamage = 1000
 		setMaxStackSize(1)
 		setNoRepair()

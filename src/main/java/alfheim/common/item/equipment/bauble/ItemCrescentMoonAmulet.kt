@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
@@ -15,7 +14,6 @@ import kotlin.math.max
 
 class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem {
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setMaxStackSize(1)
 		MinecraftForge.EVENT_BUS.register(this)
 	}

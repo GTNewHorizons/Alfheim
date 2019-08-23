@@ -1,7 +1,6 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.TileItemContainer
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
@@ -29,7 +28,6 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 	init {
 		setBlockName("Anyavil")
 		setBlockTextureName("botania:storage2")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setLightOpacity(0)
 		setHardness(5.0f)
 		setResistance(2000.0f)

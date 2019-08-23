@@ -3,8 +3,8 @@ package alfheim.client.gui
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.client.render.entity.RenderWings
-import alfheim.common.core.helper.*
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui

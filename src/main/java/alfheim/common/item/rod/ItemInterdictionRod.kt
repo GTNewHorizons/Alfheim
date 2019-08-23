@@ -26,7 +26,7 @@ import vazkii.botania.common.entity.EntityDoppleganger
 import java.awt.Color
 import kotlin.math.*
 
-open class ItemInterdictionRod(name: String = "interdictionRod"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
+open class ItemInterdictionRod(name: String = "rodInterdiction"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
 	
 	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarInterdiction.png")
 	

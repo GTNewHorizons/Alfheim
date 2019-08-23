@@ -1,8 +1,8 @@
 package alfheim.common.world.dim.alfheim.customgens
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.common.IWorldGenerator
-import net.minecraft.block.Block
+import net.minecraft.block.*
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
@@ -42,19 +42,19 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 							} else {
 								val rainbow = color == 16
 								
-								world.setBlock(x1, y, z1, if (rainbow) ShadowFoxBlocks.rainbowGrass else ModBlocks.flower, if (rainbow) 1 else color, 2)
+								world.setBlock(x1, y, z1, if (rainbow) AlfheimBlocks.rainbowGrass else ModBlocks.flower, if (rainbow) 1 else color, 2)
 								// `can place` condition start
 								if (rand.nextDouble() < ConfigHandler.flowerTallChance
 									&& (
 										if (rainbow)
-											ShadowFoxBlocks.rainbowGrass.func_149851_a(world, x1, y, z1, false)
+											(AlfheimBlocks.rainbowGrass as IGrowable).func_149851_a(world, x1, y, z1, false)
 										else
 											(ModBlocks.flower as BlockModFlower).func_149851_a(world, x1, y, z1, false)
 									   ))
 								// `can place` condition end
 									if (rainbow) {
-										world.setBlock(x1, y, z1, ShadowFoxBlocks.rainbowTallGrass, 1, 0)
-										world.setBlock(x1, y + 1, z1, ShadowFoxBlocks.rainbowTallGrass, 11, 0)
+										world.setBlock(x1, y, z1, AlfheimBlocks.rainbowTallGrass, 1, 0)
+										world.setBlock(x1, y + 1, z1, AlfheimBlocks.rainbowTallGrass, 11, 0)
 									} else
 										BlockModFlower.placeDoubleFlower(world, x1, y, z1, color, 0)
 							}
@@ -73,12 +73,12 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 			if (world.isAirBlock(x, y, z)
 				&& (
 					if (rainbow)
-						ShadowFoxBlocks.rainbowMushroom.canBlockStay(world, x, y, z)
+						AlfheimBlocks.rainbowMushroom.canBlockStay(world, x, y, z)
 					else
 						ModBlocks.mushroom.canBlockStay(world, x, y, z)
 				   )) {
 				// `can place` condition end
-				world.setBlock(x, y, z, if (rainbow) ShadowFoxBlocks.rainbowMushroom else ModBlocks.mushroom, if (rainbow) 3 else color, 2)
+				world.setBlock(x, y, z, if (rainbow) AlfheimBlocks.rainbowMushroom else ModBlocks.mushroom, if (rainbow) 3 else color, 2)
 			}
 		}
 		

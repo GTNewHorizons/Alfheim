@@ -2,8 +2,7 @@ package alfheim.common.potion
 
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.SpellEffectHandler
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 

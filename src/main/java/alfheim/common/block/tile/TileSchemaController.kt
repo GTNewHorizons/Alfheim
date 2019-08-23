@@ -2,7 +2,7 @@ package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import codechicken.core.CommonUtils
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
@@ -20,7 +20,7 @@ import java.io.*
 import java.util.*
 import kotlin.math.abs
 
-open class TileSchema: TileMod() {
+open class TileSchemaController: TileMod() {
 	
 	private var ticksAlive: Int = 0
 	private var lastDump: Int = 0
@@ -50,14 +50,14 @@ open class TileSchema: TileMod() {
 			
 			if (mark_x != null) {
 				val block = worldObj.getBlock(mark_x!!.x, mark_x!!.y, mark_x!!.z)
-				if (block !== ShadowFoxBlocks.markerBlock) {
+				if (block !== AlfheimBlocks.schemaMarker) {
 					mark_x = null
 				}
 			}
 			
 			if (mark_z != null) {
 				val block = worldObj.getBlock(mark_z!!.x, mark_z!!.y, mark_z!!.z)
-				if (block !== ShadowFoxBlocks.markerBlock) {
+				if (block !== AlfheimBlocks.schemaMarker) {
 					mark_z = null
 				}
 			}
@@ -79,7 +79,7 @@ open class TileSchema: TileMod() {
 								
 								Botania.proxy.wispFX(worldObj, x + 0.5, y + 0.5, zCoord + 0.5, 1f, 0f, 0f, 0.25f)
 								
-								if (block === ShadowFoxBlocks.markerBlock) {
+								if (block === AlfheimBlocks.schemaMarker) {
 									if (mark_z == null || y == mark_z!!.y) {
 										mark_x = Pos(x, y, zCoord, ForgeDirection.UNKNOWN)
 									}
@@ -94,7 +94,7 @@ open class TileSchema: TileMod() {
 								
 								Botania.proxy.wispFX(worldObj, xCoord + 0.5, y + 0.5, z + 0.5, 1f, 0f, 0f, 0.25f)
 								
-								if (block === ShadowFoxBlocks.markerBlock) {
+								if (block === AlfheimBlocks.schemaMarker) {
 									if (mark_x == null || y == mark_x!!.y) {
 										mark_z = Pos(xCoord, y, z, ForgeDirection.UNKNOWN)
 									}
@@ -158,7 +158,7 @@ open class TileSchema: TileMod() {
 							
 							val block = worldObj.getBlock(x, y, z)
 							
-							if (block === ShadowFoxBlocks.markerBlock) {
+							if (block === AlfheimBlocks.schemaMarker) {
 								setPos(getType(dir), Pos(x, y, z, dir))
 								validDir.remove(dir)
 								validDir.remove(dir.opposite)
@@ -190,7 +190,7 @@ open class TileSchema: TileMod() {
 		if (pos != null) {
 			val block = worldObj.getBlock(pos.x, pos.y, pos.z)
 			
-			if (block !== ShadowFoxBlocks.markerBlock) {
+			if (block !== AlfheimBlocks.schemaMarker) {
 				validDir.add(pos.dir)
 				validDir.add(pos.dir.opposite)
 				clearInferred()
@@ -373,7 +373,7 @@ open class TileSchema: TileMod() {
 		
 		w.print(JsonArray().apply {
 			for (k in map.keys) {
-				if (k != "${ModInfo.MODID}:fillerBlock") {
+				if (k != "${ModInfo.MODID}:schemaFiller") {
 					add(JsonObject().apply {
 						addProperty("block", k)
 						add("location", JsonArray().apply { for (v in map[k].orEmpty()) add(v.getJson()) })

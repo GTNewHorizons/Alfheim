@@ -1,6 +1,6 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemIridescentBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -45,15 +45,15 @@ class BlockRainbowDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 					j1 += (random.nextInt(3) - 1) * random.nextInt(3) / 2
 					k1 += random.nextInt(3) - 1
 					
-					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == ShadowFoxBlocks.coloredDirtBlock) && !world.getBlock(i1, j1, k1).isNormalCube) {
+					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.irisDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
 						++l1
 						continue
 					}
 				} else if (world.getBlock(i1, j1, k1).isAir(world, i1, j1, k1)) {
 					if (random.nextInt(8) != 0) {
-						if (ShadowFoxBlocks.rainbowGrass.canBlockStay(world, i1, j1, k1)) {
+						if (AlfheimBlocks.rainbowGrass.canBlockStay(world, i1, j1, k1)) {
 							val meta = world.getBlockMetadata(i1, j1 - 1, k1)
-							world.setBlock(i1, j1, k1, ShadowFoxBlocks.rainbowGrass, meta, 3)
+							world.setBlock(i1, j1, k1, AlfheimBlocks.rainbowGrass, meta, 3)
 						}
 					} else {
 						world.getBiomeGenForCoords(i1, k1).plantFlower(world, random, i1, j1, k1)
@@ -74,9 +74,9 @@ class BlockRainbowDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 	
 	override fun damageDropped(par1: Int) = par1
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
 	internal fun register(name: String) {

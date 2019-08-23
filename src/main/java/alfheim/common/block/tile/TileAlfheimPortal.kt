@@ -7,7 +7,7 @@ import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.base.Function
 import net.minecraft.block.Block
 import net.minecraft.entity.item.EntityItem

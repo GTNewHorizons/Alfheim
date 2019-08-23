@@ -1,8 +1,7 @@
 package alfheim.common.item
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -36,14 +35,14 @@ open class ItemIridescent(name: String) : Item() {
 
         fun dirtFromMeta(meta: Int): Block? {
             if (meta == TYPES)
-                return ShadowFoxBlocks.rainbowDirtBlock
-            return ShadowFoxBlocks.coloredDirtBlock
+                return AlfheimBlocks.rainbowDirt
+            return AlfheimBlocks.irisDirt
         }
 
         fun dirtStack(meta: Int): ItemStack? {
             if (meta == TYPES)
-                return ItemStack(ShadowFoxBlocks.rainbowDirtBlock)
-            return ItemStack(ShadowFoxBlocks.coloredDirtBlock, 1, meta)
+                return ItemStack(AlfheimBlocks.rainbowDirt)
+            return ItemStack(AlfheimBlocks.irisDirt, 1, meta)
         }
 
         fun isRainbow(meta: Int) = meta == TYPES
@@ -51,7 +50,6 @@ open class ItemIridescent(name: String) : Item() {
 
     init {
         setHasSubtypes(true)
-        creativeTab = AlfheimCore.baTab
         unlocalizedName = name
     }
 
@@ -59,9 +57,9 @@ open class ItemIridescent(name: String) : Item() {
 
     override fun requiresMultipleRenderPasses() = true
 
-    override fun setUnlocalizedName(par1Str: String): Item {
-        GameRegistry.registerItem(this, par1Str)
-        return super.setUnlocalizedName(par1Str)
+    override fun setUnlocalizedName(name: String): Item {
+        GameRegistry.registerItem(this, name)
+        return super.setUnlocalizedName(name)
     }
 
     override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =

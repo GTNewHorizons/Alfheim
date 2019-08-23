@@ -1,7 +1,6 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
@@ -10,7 +9,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 
-class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenSandstone", AlfheimCore.alfheimTab) {
+class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenSandstone") {
 	
 	lateinit var sides: Array<IIcon>
 	lateinit var top: IIcon

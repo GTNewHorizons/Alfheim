@@ -1,6 +1,5 @@
 package alfheim.common.block.colored
 
-import alfheim.AlfheimCore
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.block.ItemBlockMod
@@ -29,7 +28,6 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 		stepSound = Block.soundTypeGrass
         setBlockName(name)
 		
-		setCreativeTab(AlfheimCore.baTab)
 		
 		GameRegistry.registerFuelHandler(this)
 	}

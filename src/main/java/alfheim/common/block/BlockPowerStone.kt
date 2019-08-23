@@ -1,7 +1,6 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.registry.AlfheimRegistry
@@ -13,7 +12,7 @@ import net.minecraft.potion.PotionEffect
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone", AlfheimCore.alfheimTab, 2f, resist = 6000f), ILexiconable {
+class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone", hard = 2f, resist = 6000f), ILexiconable {
 	
 	override fun getIcon(side: Int, meta: Int) = if (side != 1) texture[0] else super.getIcon(side, meta)
 	

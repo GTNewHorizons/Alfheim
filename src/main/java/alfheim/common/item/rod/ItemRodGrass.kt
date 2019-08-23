@@ -1,7 +1,6 @@
 package alfheim.common.item.rod
 
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
+import alfheim.common.item.ItemMod
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -13,12 +12,10 @@ import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
 
-class ItemRodGrass: Item(), IManaUsingItem {
+class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setMaxStackSize(1)
-		setTextureName(ModInfo.MODID + ":grassRod")
-		unlocalizedName = "grassRod"
 	}
 	
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow

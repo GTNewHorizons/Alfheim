@@ -7,7 +7,7 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound

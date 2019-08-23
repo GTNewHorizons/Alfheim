@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.IconHelper
@@ -31,7 +30,6 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 	
 	init {
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {

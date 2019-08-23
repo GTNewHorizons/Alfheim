@@ -1,7 +1,6 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
@@ -9,7 +8,7 @@ import alfheim.common.block.tile.TileAlfheimPortal
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -26,7 +25,6 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 	init {
 		setBlockName("AlfheimPortal")
 		setBlockTextureName(ModInfo.MODID + ":AlfheimPortal")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(10.0f)
 		setResistance(600.0f)
 		setStepSound(Block.soundTypeWood)
@@ -57,7 +55,7 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 	}
 	
 	override fun isInterpolated() = true
-	override fun getIcon(side: Int, meta: Int) = if (meta == 1) textures[0] else blockIcon
+	override fun getIcon(side: Int, meta: Int) = if (meta == 0) blockIcon else textures[0]
 	override fun createNewTileEntity(world: World, meta: Int) = TileAlfheimPortal()
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 0) 0 else 15
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.portal

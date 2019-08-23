@@ -1,13 +1,14 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.render.*
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.*
@@ -26,8 +27,11 @@ class BlockDreamLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	init {
 		setBlockName("DreamLeaves")
 		setBlockTextureName(ModInfo.MODID + ":DreamLeaves")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setLightOpacity(0)
+	}
+	
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
 	// IDK whether this is good source of glowstone or not

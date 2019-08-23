@@ -1,6 +1,5 @@
 package alfheim.common.block.mana
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
@@ -21,9 +20,9 @@ import vazkii.botania.api.wand.*
 import vazkii.botania.common.block.*
 
 class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD, IWandable {
+	
 	init {
 		setBlockName("ManaInfuser")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(3f)
 		setHarvestLevel("pickaxe", 1)
 		setResistance(60f)

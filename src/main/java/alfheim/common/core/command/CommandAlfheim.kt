@@ -3,7 +3,6 @@ package alfheim.common.core.command
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.*
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.network.Message3d

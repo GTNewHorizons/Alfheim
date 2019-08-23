@@ -37,9 +37,9 @@ class BlockLightningPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexi
 	
 	override fun damageDropped(par1: Int) = par1
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
 	override fun quantityDropped(random: Random) = 1

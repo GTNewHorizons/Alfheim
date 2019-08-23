@@ -1,7 +1,6 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.DamageSourceSpell
@@ -33,7 +32,6 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	lateinit var jojocon: IIcon
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		MinecraftForge.EVENT_BUS.register(Companion)
 	}
 	

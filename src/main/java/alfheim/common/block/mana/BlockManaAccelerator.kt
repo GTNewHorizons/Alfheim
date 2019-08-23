@@ -1,7 +1,6 @@
 package alfheim.common.block.mana
 
 import alexsocol.asjlib.extendables.TileItemContainer
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaAccelerator
@@ -27,7 +26,6 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 		setBlockBounds(0f, -0.5f, 0f, 1f, -0.125f, 1f)
 		setBlockName("ManaAccelerator")
 		setBlockTextureName(LibResources.PREFIX_MOD + "livingrock0")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(1f)
 	}
 	

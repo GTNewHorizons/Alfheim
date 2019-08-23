@@ -30,6 +30,7 @@ import thaumcraft.api.wands.*
 import thaumcraft.common.blocks.BlockCustomOreItem
 import thaumcraft.common.config.*
 import thaumcraft.common.lib.utils.Utils.addSpecialMiningResult
+import vazkii.botania.common.Botania
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.lib.LibOreDict.*
 
@@ -138,7 +139,13 @@ object ThaumcraftAlfheimModule {
 		registerRecipes()
 		reigsterResearches()
 		registerOreDict()
-		
+
+		if (Botania.thaumcraftLoaded) {
+			ModItems.elementiumHelmRevealing.creativeTab = tcnTab
+			ModItems.manasteelHelmRevealing.creativeTab = tcnTab
+			ModItems.terrasteelHelmRevealing.creativeTab = tcnTab
+		}
+
 		addSpecialMiningResult(ItemStack(alfheimThaumOre, 1, 0), ItemStack(ConfigItems.itemNugget, 1, 21), 0.9f)
 		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()), 1.0f)
 	}

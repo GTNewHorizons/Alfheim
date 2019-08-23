@@ -1,10 +1,9 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
@@ -39,7 +38,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			val stack = baubles.getStackInSlot(0)
-			return if (stack != null && ((stack.item == ShadowFoxItems.emblem && stack.itemDamage == meta) || stack.item == ShadowFoxItems.aesirEmblem) && isActive(stack)) stack else null
+			return if (stack != null && ((stack.item == AlfheimItems.emblem && stack.itemDamage == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		
 		fun isActive(stack: ItemStack) = ItemNBTHelper.getByte(stack, "active", 0) == 1.toByte()
@@ -61,7 +60,6 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	
 	init {
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =

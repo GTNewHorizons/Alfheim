@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
 import alfheim.common.core.helper.IconHelper
@@ -23,7 +22,6 @@ class ItemColorOverride: ItemBauble("colorOverride"), ICosmeticBauble, IPriestCo
 	
 	init {
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {

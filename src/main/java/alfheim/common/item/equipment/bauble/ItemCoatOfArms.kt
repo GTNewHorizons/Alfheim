@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
 import alfheim.common.core.helper.IconHelper
@@ -37,7 +36,6 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	
 	init {
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.itemDamage == 6

@@ -1,6 +1,6 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
@@ -46,7 +46,7 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 		if (p2 != null) {
 			if (TileTreeCrafter.canEnchanterExist(p2, p3, p4, p5)) {
 				val meta = p2.getBlockMetadata(p3, p4, p5)
-				p2.setBlock(p3, p4, p5, ShadowFoxBlocks.treeCrafterBlock, meta, 3)
+				p2.setBlock(p3, p4, p5, AlfheimBlocks.treeCrafterBlock, meta, 3)
 				p2.playSoundEffect(p3.toDouble(), p4.toDouble(), p5.toDouble(), "botania:enchanterBlock", 0.5F, 0.6F)
 				
 				return true
@@ -78,9 +78,9 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun damageDropped(par1: Int) = par1
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
 	override fun quantityDropped(random: Random) = 1

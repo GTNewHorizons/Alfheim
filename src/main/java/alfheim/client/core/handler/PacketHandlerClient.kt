@@ -8,10 +8,10 @@ import alfheim.api.spell.SpellBase.SpellCastResult
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.flight
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d

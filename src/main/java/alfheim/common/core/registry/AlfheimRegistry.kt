@@ -175,10 +175,21 @@ object AlfheimRegistry {
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		
 		registerAnomalies()
+		
+		registerTile(TileCracklingStar::class.java, "StarPlacer2")
+		registerTile(TileEntityStar::class.java, "StarPlacer")
+		registerTile(TileInvisibleManaFlame::class.java, "ManaInvisibleFlame")
+		registerTile(TileItemDisplay::class.java, "ItemDisplay")
+		registerTile(TileLightningRod::class.java, "RodLightning")
+		registerTile(TileLivingwoodFunnel::class.java, "LivingwoodFunnel")
+		registerTile(TileRainbowManaFlame::class.java, "ManaRainbowFlame")
+		registerTile(TileSchemaController::class.java, "SchemaController")
+		registerTile(TileSchemaAnnihilator::class.java, "SchemaAnnihilator")
+		registerTile(TileTreeCrafter::class.java, "TreeCrafter")
 	}
 	
 	private fun registerTile(tileEntityClass: Class<out TileEntity>, id: String) {
-		registerTileEntity(tileEntityClass, ModInfo.MODID + ":" + id)
+		registerTileEntity(tileEntityClass, "${ModInfo.MODID}:$id")
 	}
 	
 	private fun registerAnomalies() {

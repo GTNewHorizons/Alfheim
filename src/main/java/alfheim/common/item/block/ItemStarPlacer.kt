@@ -1,7 +1,7 @@
 package alfheim.common.item.block
 
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileEntityStar
 import alfheim.common.item.*
 import net.minecraft.creativetab.CreativeTabs
@@ -49,7 +49,7 @@ class ItemStarPlacer: ItemMod("starPlacer") {
 		fun getSize(stack: ItemStack) = ItemNBTHelper.getFloat(stack, TAG_SIZE, 0.05f)
 		
 		fun colorStack(color: Int): ItemStack {
-			val stack = ItemStack(ShadowFoxItems.star)
+			val stack = ItemStack(AlfheimItems.starPlacer)
             setColor(stack, color)
 			return stack
 		}
@@ -81,7 +81,7 @@ class ItemStarPlacer: ItemMod("starPlacer") {
 	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
 		if (par3World.isRemote) return false
 		
-		val toPlace = ItemStack(ShadowFoxBlocks.star)
+		val toPlace = ItemStack(AlfheimBlocks.starBlock)
 		val dir = ForgeDirection.getOrientation(direction)
 		if (par3World.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(par3World, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
 			toPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, x, y, z, direction, par8, par9, par10)

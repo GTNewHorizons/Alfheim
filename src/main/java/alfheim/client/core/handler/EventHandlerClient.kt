@@ -12,8 +12,8 @@ import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.registry.AlfheimRegistry
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*

@@ -1,7 +1,6 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -24,7 +23,6 @@ import kotlin.math.sin
 class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setHasSubtypes(true)
 		setFull3D()
 	}

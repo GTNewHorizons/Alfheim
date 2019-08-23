@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -17,20 +16,15 @@ open class BlockMod(par2Material: Material): Block(par2Material) {
 	
 	var originalLight: Int = 0
 	
-	open val registerInCreative: Boolean = true
-	
 	init {
-		if (registerInCreative) {
-			setCreativeTab(AlfheimCore.baTab)
-		}
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
-	override fun setBlockName(par1Str: String): Block {
+	override fun setBlockName(name: String): Block {
 		if (shouldRegisterInNameSet())
-			GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
-		return super.setBlockName(par1Str)
+			GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	protected open fun shouldRegisterInNameSet() = true

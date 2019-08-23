@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.item.block.ItemIridescentBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -10,7 +9,6 @@ import vazkii.botania.api.lexicon.ILexiconable
 abstract class BlockStairsMod(val source: Block, val meta: Int, val name: String): BlockStairs(source, meta), ILexiconable {
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
 		useNeighborBrightness = true
 		setStepSound(source.stepSound)
 		setBlockName(name)

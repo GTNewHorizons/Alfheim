@@ -1,10 +1,9 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
-import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.collect.*
 import cpw.mods.fml.common.Optional
 import cpw.mods.fml.relauncher.*
@@ -24,15 +23,10 @@ import vazkii.botania.api.mana.IManaDiscountArmor
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
-
 import java.util.*
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
 open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, name, AlfheimAPI.ELVORIUM), IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
-	
-	init {
-		this.creativeTab = AlfheimCore.alfheimTab
-	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun provideArmorModelForSlot(stack: ItemStack?, slot: Int): ModelBiped {
@@ -66,7 +60,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 		val stack = player.inventory.armorInventory[3 - i] ?: return false
 		
 		when (i) {
-			0 -> return stack.item === AlfheimItems.elvoriumHelmet || (AlfheimItems.elvoriumHelmetRevealingIsInitialized() && stack.item === AlfheimItems.elvoriumHelmetRevealing)
+			0 -> return stack.item === AlfheimItems.elvoriumHelmet || AlfheimItems.elvoriumHelmetRevealing?.let {stack.item === it } ?: false
 			1 -> return stack.item === AlfheimItems.elvoriumChestplate
 			2 -> return stack.item === AlfheimItems.elvoriumLeggings
 			3 -> return stack.item === AlfheimItems.elvoriumBoots

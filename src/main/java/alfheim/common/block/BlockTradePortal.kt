@@ -1,6 +1,5 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileTradePortal
@@ -19,7 +18,6 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	init {
 		setBlockName("TradePortal")
 		setBlockTextureName(ModInfo.MODID + ":TradePortal")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHarvestLevel("pickaxe", 0)
 		setHardness(10.0f)
 		setResistance(600.0f)
@@ -37,7 +35,7 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
 		if (!world.isRemote) (world.getTileEntity(x, y, z) as TileTradePortal).onWanded() else false
 	override fun isInterpolated() = true
-	override fun getIcon(side: Int, meta: Int) = if (meta == 1) textures[0] else blockIcon
+	override fun getIcon(side: Int, meta: Int) = if (meta == 0) blockIcon else textures[0]
 	override fun createNewTileEntity(world: World, meta: Int) = TileTradePortal()
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == 0) 0 else 15
 	override fun hasComparatorInputOverride() = true

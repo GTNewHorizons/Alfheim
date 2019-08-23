@@ -2,7 +2,7 @@ package alfheim.common.potion
 
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.EntityLivingBase
 
 class PotionDeathMark: PotionAlfheim(AlfheimConfigHandler.potionIDDeathMark, "deathMark", true, 0x553355) {

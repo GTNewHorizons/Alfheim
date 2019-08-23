@@ -1,8 +1,7 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
@@ -37,7 +36,6 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	val AURORA = 1
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
@@ -158,7 +156,7 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 		//else {
 		player.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1)
 		val b0 = meta
-		this.dropBlockAsItem(world, x, y, z, ItemStack(ShadowFoxBlocks.irisGrass, 2, b0))
+		this.dropBlockAsItem(world, x, y, z, ItemStack(AlfheimBlocks.irisGrass, 2, b0))
 		return true
 		//}
 	}*/
@@ -170,10 +168,10 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 		val meta = world.getBlockMetadata(x, y, z)
 		if (func_149887_c(meta)) {
 			if (y > 0 && world.getBlock(x, y - 1, z) == this) {
-				ret.add(ItemStack(ShadowFoxBlocks.rainbowGrass, 2, world.getBlockMetadata(x, y - 1, z)))
+				ret.add(ItemStack(AlfheimBlocks.rainbowGrass, 2, world.getBlockMetadata(x, y - 1, z)))
 			}
 		} else {
-			ret.add(ItemStack(ShadowFoxBlocks.rainbowGrass, 2, meta))
+			ret.add(ItemStack(AlfheimBlocks.rainbowGrass, 2, meta))
 		}
 		return ret
 	}
@@ -190,13 +188,13 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	override fun getBottomIcon(lowerMeta: Int) =
 		when (lowerMeta) {
-			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getBottomIcon(0)
+			AURORA -> (AlfheimBlocks.irisTallGrass0 as IDoublePlant).getBottomIcon(0)
 			else   -> bottomIcon
 		}
 	
 	override fun getTopIcon(lowerMeta: Int) =
 		when (lowerMeta) {
-			AURORA -> (ShadowFoxBlocks.irisTallGrass0 as IDoublePlant).getTopIcon(0)
+			AURORA -> (AlfheimBlocks.irisTallGrass0 as IDoublePlant).getTopIcon(0)
 			else   -> topIcon
 		}
 }

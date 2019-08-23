@@ -1,7 +1,6 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.entity.*
@@ -39,7 +38,6 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	lateinit var moons: Array<IIcon>
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setFull3D()
 		maxDamage = 0
 		setMaxStackSize(1)
@@ -185,9 +183,9 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	
 	// ################################ ItemMod ################################
 	
-	override fun setUnlocalizedName(str: String): Item {
-		GameRegistry.registerItem(this, str)
-		return super.setUnlocalizedName(str)
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	// ################################ ItemRelic ################################

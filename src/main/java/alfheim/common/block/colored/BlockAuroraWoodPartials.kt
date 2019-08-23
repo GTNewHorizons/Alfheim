@@ -1,6 +1,6 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.IFuelHandler
@@ -12,7 +12,7 @@ import net.minecraft.item.*
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 
-open class BlockAuroraWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17"), IFuelHandler {
+open class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17"), IFuelHandler {
     
     init {
         setResistance(10.0f)
@@ -30,16 +30,16 @@ open class BlockAuroraWoodSlab(full: Boolean, source: Block = ShadowFoxBlocks.au
     
     override fun getHarvestTool(metadata: Int) = "axe"
     
-    override fun getFullBlock() = ShadowFoxBlocks.auroraSlabsFull as BlockSlab
+    override fun getFullBlock() = AlfheimBlocks.auroraSlabFull as BlockSlab
     
-    override fun getSingleBlock() = ShadowFoxBlocks.auroraSlabs as BlockSlab
+    override fun getSingleBlock() = AlfheimBlocks.auroraSlab as BlockSlab
     
     override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = (source as ILexiconable).getEntry(world, x, y, z, player, lexicon)!!
     
     override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 150 else 0
 }
 
-open class BlockAuroraWoodStairs(source: Block = ShadowFoxBlocks.auroraPlanks):
+open class BlockAuroraWoodStairs(source: Block = AlfheimBlocks.auroraPlanks):
     BlockStairsMod(source, 0, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs17"), ILexiconable {
 	
 	@SideOnly(Side.CLIENT)

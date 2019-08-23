@@ -1,6 +1,5 @@
 package alfheim.common.item.relic
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.*
@@ -31,7 +30,6 @@ import java.util.*
 class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect {
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setFull3D()
 	}
 	

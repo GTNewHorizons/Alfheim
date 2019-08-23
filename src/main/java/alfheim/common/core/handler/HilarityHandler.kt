@@ -3,7 +3,8 @@ package alfheim.common.core.handler
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.crafting.recipe.ShadowFoxRecipes
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -42,31 +43,31 @@ class HilarityHandler {
                                                                               resourceItem, outputItem))
     }
 
-    val itemsRequiredWire = arrayListOf(                               // + Elementium Axe (in hand)
-		ItemStack(ModItems.dice), //                                        Dice of Fate            Chaos
-		ItemStack(ModItems.manaResource, 1, 5), //                          Gaia Spirit             Divinity
-		ItemStack(ShadowFoxItems.resource, 1, 1), //                        Thunderous Splinters    Lightning
-		ShadowFoxRecipes.skullStack("Tristaric"), //                        Tris's head             Humanity
-		ItemStack(ModItems.rainbowRod, 1, OreDictionary.WILDCARD_VALUE), // The Rod of the Bifrost  Order
-		ItemStack(ModItems.manaResource, 1, 4) //                           Terrasteel              Earth
+    val itemsRequiredWire = arrayListOf(                                                    // + Elementium Axe (in hand)
+        ItemStack(ModItems.dice),                                                           //   Dice of Fate              Chaos
+        ItemStack(ModItems.manaResource, 1, 5),                                             //   Gaia Spirit               Divinity
+        ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ThunderwoodSplinters), //   Thunderous Splinters      Lightning
+        ShadowFoxRecipes.skullStack("Tristaric"),                                           //   Tris's head               Humanity
+        ItemStack(ModItems.rainbowRod, 1, OreDictionary.WILDCARD_VALUE),                    //   The Rod of the Bifrost    Order
+        ItemStack(ModItems.manaResource, 1, 4)                                              //   Terrasteel                Earth
     )
 
-    val itemsRequiredTris = arrayListOf(                                // + Elementium Sword (in hand)
-        ItemStack(ModItems.dice), //                                         Dice of Fate            Chaos
-        ItemStack(ModItems.manaResource, 1, 5), //                           Gaia Spirit             Divinity
-        ItemStack(ModItems.rune, 1, 13), //                                  Rune of Wrath           Lightning
-        ShadowFoxRecipes.skullStack("yrsegal"), //                           Wire's head             Humanity
-        ItemStack(ModItems.laputaShard, 1, OreDictionary.WILDCARD_VALUE), // The Shard of Laputa     Order
-        ItemStack(ModItems.dirtRod) //                                       The Rod of the Lands    Earth
+    val itemsRequiredTris = arrayListOf(                                                    // + Elementium Sword (in hand)
+        ItemStack(ModItems.dice),                                                           //   Dice of Fate              Chaos
+        ItemStack(ModItems.manaResource, 1, 5),                                             //   Gaia Spirit               Divinity
+        ItemStack(ModItems.rune, 1, 13),                                                    //   Rune of Wrath             Lightning
+        ShadowFoxRecipes.skullStack("yrsegal"),                                             //   Wire's head               Humanity
+        ItemStack(ModItems.laputaShard, 1, OreDictionary.WILDCARD_VALUE),                   //   The Shard of Laputa       Order
+        ItemStack(ModItems.dirtRod)                                                         //   The Rod of the Lands      Earth
     )
 
     init {
         registerHandler("yrsegal", "i claim the blade of chaos!", "Male", EnumChatFormatting.GOLD,
                 itemsRequiredWire, "i awaken the ancients within all of you! from my soul's fire the world burns anew!",
-                ItemStack(ModItems.elementiumAxe, 1, OreDictionary.WILDCARD_VALUE), ItemStack(ShadowFoxItems.wireAxe))
+                ItemStack(ModItems.elementiumAxe, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.wireAxe))
         registerHandler("Tristaric", "i claim the blade of order!", "Female", EnumChatFormatting.LIGHT_PURPLE,
                 itemsRequiredTris, "my inward eye sees the depths of my soul! i accept both sides, and reject my downfall!",
-                ItemStack(ModItems.elementiumSword, 1, OreDictionary.WILDCARD_VALUE), ItemStack(ShadowFoxItems.trisDagger))
+                ItemStack(ModItems.elementiumSword, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.trisDagger))
     }
 
 

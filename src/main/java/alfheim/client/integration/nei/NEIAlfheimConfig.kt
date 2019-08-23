@@ -19,8 +19,8 @@ class NEIAlfheimConfig: IConfigureNEI {
 		
 		API.hideItem(ItemStack(ModBlocks.gaiaHead))
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
-		API.hideItem(ItemStack(AlfheimBlocks.flugelHead))
-		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2))
+		API.hideItem(ItemStack(AlfheimBlocks.flugelHeadBlock))
+		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2Block))
 		API.hideItem(ItemStack(AlfheimBlocks.poisonIce))
 		API.hideItem(ItemStack(AlfheimBlocks.redFlame))
 	}

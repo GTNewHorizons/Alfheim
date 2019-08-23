@@ -10,7 +10,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.page.*
 import com.google.common.collect.Lists
 import net.minecraft.item.ItemStack
@@ -277,14 +277,14 @@ object AlfheimLexiconData {
 								 PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeElvoriumLeggings),
 								 PageCraftingRecipe("4", AlfheimRecipes.recipeElvoriumBoots)).icon = ItemStack(AlfheimItems.elvoriumHelmet)
-		if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) elvenSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvoriumHelmetRevealing))
+		AlfheimItems.elvoriumHelmetRevealing?.let { elvenSet.addExtraDisplayedRecipe(ItemStack(it)) }
 		
 		elemSet.setLexiconPages(PageText("0"),
 								PageCraftingRecipe("1", AlfheimRecipes.recipeElementalHelmet),
 								PageCraftingRecipe("2", AlfheimRecipes.recipeElementalChestplate),
 								PageCraftingRecipe("3", AlfheimRecipes.recipeElementalLeggings),
 								PageCraftingRecipe("4", AlfheimRecipes.recipeElementalBoots)).icon = ItemStack(AlfheimItems.elementalHelmet)
-		if (AlfheimItems.elementalHelmetRevealingIsInitialized()) elemSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elementalHelmetRevealing))
+		AlfheimItems.elementalHelmetRevealing?.let { elemSet.addExtraDisplayedRecipe(ItemStack(it)) }
 		
 		advMana.setLexiconPages(PageText("0"), PageText("1"),
 								PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),

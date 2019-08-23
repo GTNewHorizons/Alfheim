@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.lightning
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
@@ -25,7 +25,7 @@ class BlockLightningSapling: BlockColoredSapling(name = "lightningSapling") {
 			if (canGrowHere(plantedOn)) {
 				val l = world.getBlockMetadata(x, y, z)
 				
-				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.lightningWood, 0, ShadowFoxBlocks.lightningWood, 1, ShadowFoxBlocks.lightningLeaves, 0)
+				val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.lightningWood, 0, AlfheimBlocks.lightningWood, 1, AlfheimBlocks.lightningLeaves, 0)
 				
 				world.setBlock(x, y, z, Blocks.air, 0, 4)
 				

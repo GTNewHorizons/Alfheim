@@ -1,6 +1,6 @@
 package alfheim.common.item.rod
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.*
@@ -17,7 +17,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.properties.Delegates
 
-class ItemPrismaticRod: ItemMod("rainbowLightRod"), IManaUsingItem, IPhantomInkable {
+class ItemPrismaticRod: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInkable {
 	
 	val COST = 100
 	
@@ -44,12 +44,12 @@ class ItemPrismaticRod: ItemMod("rainbowLightRod"), IManaUsingItem, IPhantomInka
 	
 	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World,
 						   x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
-		if (par3World.getBlock(x, y, z) == ShadowFoxBlocks.rainbowFlame) {
+		if (par3World.getBlock(x, y, z) == AlfheimBlocks.rainbowFlame) {
 			par3World.setBlock(x, y, z, Blocks.air)
 			par3World.playSoundEffect(x.toDouble() + 0.5, y.toDouble() + 0.5, z.toDouble() + 0.5, "random.fizz", 0.3F, Math.random().toFloat() * 0.4F + 0.8F)
 			return true
 		}
-		val toPlace = ItemStack(ShadowFoxBlocks.rainbowFlame)
+		val toPlace = ItemStack(AlfheimBlocks.rainbowFlame)
 		if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, COST, false)) {
 			val dir = ForgeDirection.getOrientation(direction)
 			if (par3World.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(par3World, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {

@@ -1,6 +1,5 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -21,7 +20,6 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
 		setBlockName("DreamSapling")
 		setBlockTextureName(ModInfo.MODID + ":DreamSapling")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setLightLevel(9.0f / 15.0f)
 		setLightOpacity(0)
 		tickRandomly = true

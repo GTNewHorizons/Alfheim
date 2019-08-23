@@ -1,6 +1,6 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockSlabMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
@@ -14,7 +14,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 
-class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = ShadowFoxBlocks.coloredPlanks):
+class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBlocks.irisPlanks):
 	BlockSlabMod(full, meta, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + meta), ILexiconable, IFuelHandler {
 	
 	init {
@@ -38,9 +38,9 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = ShadowFoxBl
 	@SideOnly(Side.CLIENT)
 	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = getRenderColor(meta)
 	
-	override fun getFullBlock() = ShadowFoxBlocks.coloredSlabsFull[meta] as BlockSlab
+	override fun getFullBlock() = AlfheimBlocks.irisSlabsFull[meta] as BlockSlab
 	
-	override fun getSingleBlock() = ShadowFoxBlocks.coloredSlabs[meta] as BlockSlab
+	override fun getSingleBlock() = AlfheimBlocks.irisSlabs[meta] as BlockSlab
 	
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.irisSapling
 	

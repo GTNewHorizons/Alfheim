@@ -8,8 +8,8 @@ import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*

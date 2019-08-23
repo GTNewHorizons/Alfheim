@@ -1,7 +1,7 @@
 package alfheim.common.item.rod
 
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.ItemIridescent
 import alfheim.common.item.equipment.bauble.*
 import net.minecraft.block.Block
@@ -19,7 +19,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.Vector3
 import java.awt.Color
 
-class ItemIridescentRod(name: String = "colorfulSkyDirtRod"): ItemIridescent(name), IAvatarWieldable, IManaUsingItem, IBlockProvider {
+class ItemIridescentRod(name: String = "rodColorfulSkyDirt"): ItemIridescent(name), IAvatarWieldable, IManaUsingItem, IBlockProvider {
 	
 	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarDirtRainbow.png")
 	
@@ -150,9 +150,9 @@ class ItemIridescentRod(name: String = "colorfulSkyDirtRod"): ItemIridescent(nam
 				Botania.proxy.sparkleFX(world, x + xl + Math.random(), y + Math.random(), z + zl + Math.random(),
 										r, g, b, 1F, 5)
 			if (stack.itemDamage == TYPES)
-				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(ShadowFoxBlocks.rainbowDirtBlock))
+				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.rainbowDirt))
 			else
-				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(ShadowFoxBlocks.coloredDirtBlock) + (stack.itemDamage shl 12))
+				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.irisDirt) + (stack.itemDamage shl 12))
 			
 		}
 	}
@@ -164,13 +164,13 @@ class ItemIridescentRod(name: String = "colorfulSkyDirtRod"): ItemIridescent(nam
 	override fun usesMana(stack: ItemStack) = true
 	
 	override fun provideBlock(player: EntityPlayer, requestor: ItemStack, stack: ItemStack, block: Block, meta: Int, doit: Boolean): Boolean {
-		if (block == ShadowFoxBlocks.coloredDirtBlock || block == ShadowFoxBlocks.rainbowDirtBlock)
+		if (block == AlfheimBlocks.irisDirt || block == AlfheimBlocks.rainbowDirt)
 			return !doit || ManaItemHandler.requestManaExactForTool(requestor, player, COST, true)
 		return false
 	}
 	
 	override fun getBlockCount(player: EntityPlayer, requestor: ItemStack, stack: ItemStack, block: Block, meta: Int): Int {
-		if (block == ShadowFoxBlocks.coloredDirtBlock || block == ShadowFoxBlocks.rainbowDirtBlock)
+		if (block == AlfheimBlocks.irisDirt || block == AlfheimBlocks.rainbowDirt)
 			return -1
 		return 0
 	}

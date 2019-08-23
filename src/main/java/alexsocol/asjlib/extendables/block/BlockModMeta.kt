@@ -12,16 +12,16 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import kotlin.math.*
 
-open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val name: String, tab: CreativeTabs, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f, val folder: String = ""): Block(mat) {
+open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val name: String, tab: CreativeTabs? = null, hard: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f, val folder: String = ""): Block(mat) {
 	
 	lateinit var texture: Array<IIcon>
 	
 	init {
 		setBlockName(name)
 		setCreativeTab(tab)
-		setHardness(hardness)
+		setHardness(hard)
 		setHarvestLevel(harvTool, harvLvl)
-		setResistance(max(resist, hardness * 5f))
+		setResistance(max(resist, hard * 5f))
 		setStepSound(ASJUtilities.soundFromMaterial(mat))
 	}
 	
@@ -37,7 +37,7 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 	}
 	
 	override fun getSubBlocks(block: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
-		texture.indices.mapTo(list) { ItemStack(block, 1, it) }
+		for (i in 0 until subtypes) list.add(ItemStack(block, 1, i))
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = texture[max(0, min(meta, texture.size - 1))]

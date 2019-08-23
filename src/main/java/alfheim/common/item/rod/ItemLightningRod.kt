@@ -2,8 +2,8 @@ package alfheim.common.item.rod
 
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
-import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -29,7 +29,7 @@ import vazkii.botania.common.entity.EntityDoppleganger
 import java.awt.Color
 import java.util.*
 
-open class ItemLightningRod(name: String = "lightningRod"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
+open class ItemLightningRod(name: String = "rodLightning"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
 	
 	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarLightning.png")
 	private val COST_AVATAR = 150

@@ -15,7 +15,7 @@ import kotlin.math.*
 class EntityThrownPotion: EntityThrowable {
 	
 	constructor(world: World) : super(world) {
-		stack = ItemStack(ShadowFoxItems.splashPotion)
+		stack = ItemStack(AlfheimItems.splashPotion)
 		effects = emptyList()
 		
 		color = 0xFFFFFF
@@ -91,7 +91,7 @@ class EntityThrownPotion: EntityThrowable {
 				val d0 = posX
 				val d1 = posY
 				val d2 = posZ
-				val s = "iconcrack_${Item.getIdFromItem(ShadowFoxItems.splashPotion)}_0"
+				val s = "iconcrack_${Item.getIdFromItem(AlfheimItems.splashPotion)}_0"
 				
 				for (i in 0..8) {
 					worldObj.spawnParticle(s, d0, d1, d2, rand.nextGaussian() * 0.15, rand.nextDouble() * 0.2, rand.nextGaussian() * 0.15)

@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.calico
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
@@ -25,7 +25,7 @@ class BlockCalicoSapling: BlockColoredSapling(name = "calicoSapling"), IExplosio
 			if (canGrowHere(plantedOn)) {
 				val l = world.getBlockMetadata(x, y, z)
 				
-				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.calicoWood, 0, ShadowFoxBlocks.calicoWood, 0, ShadowFoxBlocks.calicoLeaves, 0)
+				val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.calicoWood, 0, AlfheimBlocks.calicoWood, 0, AlfheimBlocks.calicoLeaves, 0)
 				
 				world.setBlock(x, y, z, Blocks.air, 0, 4)
 				

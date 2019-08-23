@@ -1,7 +1,10 @@
+@file:Suppress("LocalVariableName")
+
 package alfheim.common.integration.thaumcraft
 
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -13,13 +16,12 @@ import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
-import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.livingcobble
+import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.manaInfuser
 import alfheim.common.block.AlfheimBlocks.poisonIce
 import alfheim.common.block.AlfheimBlocks.redFlame
 import alfheim.common.block.AlfheimBlocks.tradePortal
-import alfheim.common.block.ShadowFoxBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule.alfheimThaumOre
 import alfheim.common.item.*
@@ -34,7 +36,6 @@ import alfheim.common.item.AlfheimItems.elementalBoots
 import alfheim.common.item.AlfheimItems.elementalChestplate
 import alfheim.common.item.AlfheimItems.elementalHelmet
 import alfheim.common.item.AlfheimItems.elementalHelmetRevealing
-import alfheim.common.item.AlfheimItems.elementalHelmetRevealingIsInitialized
 import alfheim.common.item.AlfheimItems.elementalLeggings
 import alfheim.common.item.AlfheimItems.elementiumHoe
 import alfheim.common.item.AlfheimItems.elfFirePendant
@@ -44,7 +45,6 @@ import alfheim.common.item.AlfheimItems.elvoriumBoots
 import alfheim.common.item.AlfheimItems.elvoriumChestplate
 import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumHelmetRevealing
-import alfheim.common.item.AlfheimItems.elvoriumHelmetRevealingIsInitialized
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
 import alfheim.common.item.AlfheimItems.excaliber
 import alfheim.common.item.AlfheimItems.flugelDisc
@@ -65,6 +65,7 @@ import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.Loader
 import net.minecraft.block.Block
 import net.minecraft.init.*
@@ -92,7 +93,7 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 4), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("terra"), 3).add(Aspect.getAspect("vitreus"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 5), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("ordo"), 3).add(Aspect.getAspect("vitreus"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 6), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("perditio"), 3).add(Aspect.getAspect("vitreus"), 2))
-		
+
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 0), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("vitreus"), 3))    // dragonstone
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 1), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("metallum"), 3))                                                // elementium
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 2), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("vitreus"), 3))                                                // quartz
@@ -117,7 +118,7 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 0), AspectList().add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 1), AspectList().add(Aspect.getAspect("auram"), 2).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 2).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimPylon, 1, 2), AspectList().add(Aspect.getAspect("spiritus"), 2).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 6).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("vitreus"), 4).add(Aspect.getAspect("alienis"), 3))
-		
+
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 0), AspectList().add(Aspect.getAspect("alienis"), 8).add(Aspect.getAspect("iter"), 4).add(Aspect.getAspect("lux"), 8).add(Aspect.getAspect("ordo"), 8).add(Aspect.getAspect("praecantatio"), 8))                                                // Intercore
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 1), AspectList().add(Aspect.getAspect("lucrum"), 4).add(Aspect.getAspect("metallum"), 6).add(Aspect.getAspect("potentia"), 4).add(Aspect.getAspect("praecantatio"), 6))                                                                                            // Infuscore
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 2), AspectList().add(Aspect.getAspect("alienis"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("metallum"), 4).add(Aspect.getAspect("praecantatio"), 8))                                                                                            // Elvorium
@@ -134,14 +135,20 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 13), AspectList().add(Aspect.getAspect("auram"), 3).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("terra"), 2).add(Aspect.getAspect("gelum"), 12))                                                                                            // Ice rune
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, 14), AspectList().add(Aspect.getAspect("arbor"), 1).add(Aspect.getAspect("praecantatio"), 2))                                                                                            // Twig
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalHelmet), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8))
-		if (elementalHelmetRevealingIsInitialized())
-			ThaumcraftApi.registerObjectTag(ItemStack(elementalHelmetRevealing), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8).add(Aspect.getAspect("sensus"), 4))
+
+		elementalHelmetRevealing?.let {
+			ThaumcraftApi.registerObjectTag(ItemStack(it), AspectList().add(Aspect.getAspect("metallum"), 15).add(Aspect.getAspect("praecantatio"), 12).add(Aspect.getAspect("tutamen"), 5).add(Aspect.getAspect("aqua"), 8).add(Aspect.getAspect("sensus"), 4))
+		}
+
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalChestplate), AspectList().add(Aspect.getAspect("metallum"), 24).add(Aspect.getAspect("praecantatio"), 18).add(Aspect.getAspect("tutamen"), 8).add(Aspect.getAspect("terra"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalLeggings), AspectList().add(Aspect.getAspect("metallum"), 21).add(Aspect.getAspect("praecantatio"), 16).add(Aspect.getAspect("tutamen"), 7).add(Aspect.getAspect("ignis"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elementalBoots), AspectList().add(Aspect.getAspect("metallum"), 12).add(Aspect.getAspect("praecantatio"), 10).add(Aspect.getAspect("tutamen"), 4).add(Aspect.getAspect("aer"), 8))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumHelmet), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
-		if (elvoriumHelmetRevealingIsInitialized())
-			ThaumcraftApi.registerObjectTag(ItemStack(elvoriumHelmetRevealing), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
+
+		elvoriumHelmetRevealing?.let {
+			ThaumcraftApi.registerObjectTag(ItemStack(it), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 35).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 15).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
+		}
+
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumChestplate), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 56).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 24).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumLeggings), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 49).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 21).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvoriumBoots), AspectList().add(Aspect.getAspect("auram"), 12).add(Aspect.getAspect("metallum"), 28).add(Aspect.getAspect("praecantatio"), 64).add(Aspect.getAspect("tutamen"), 12).add(Aspect.getAspect("potentia"), 16).add(Aspect.getAspect("lucrum"), 30))
@@ -188,8 +195,8 @@ object TCHandlerAlfheimAspects {
  */
 object BotaniaTCAspects {
 	
-	fun WildStack(i: Block): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
-	fun WildStack(i: Item): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
+	fun wildStack(i: Block): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
+	fun wildStack(i: Item): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
 	
 	fun initAspects() {
 	
@@ -223,19 +230,19 @@ object BotaniaTCAspects {
 		val forbidden = Loader.isModLoaded("ForbiddenMagic")
 		
 		var list = AspectList().a(Aspect.PLANT, 2).a(Aspect.LIFE).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(flower), list)
+		ThaumcraftApi.registerObjectTag(wildStack(flower), list)
 		
 		list = AspectList().a(Aspect.EARTH, 8).a(Aspect.CRAFT, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(altar), list)
+		ThaumcraftApi.registerObjectTag(wildStack(altar), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2).a(Aspect.LIFE)
-		ThaumcraftApi.registerObjectTag(WildStack(livingrock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(livingrock), list)
 		
 		list = AspectList().a(Aspect.TREE, 4).a(Aspect.LIFE)
-		ThaumcraftApi.registerObjectTag(WildStack(livingwood), list)
+		ThaumcraftApi.registerObjectTag(wildStack(livingwood), list)
 		
 		list = AspectList().a(Aspect.PLANT, 2).a(Aspect.MAGIC, 2).a(Aspect.LIFE)
-		ThaumcraftApi.registerObjectTag(WildStack(specialFlower), list)
+		ThaumcraftApi.registerObjectTag(wildStack(specialFlower), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 2).a(Aspect.MOTION, 2)
 		ThaumcraftApi.registerObjectTag(ItemStack(spreader, 1, 0), list) // Spreader
@@ -250,13 +257,13 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(spreader, 1, 3), list) // Gaia
 		
 		list = AspectList().a(Aspect.EARTH, 8).a(Aspect.MAGIC, 2).a(Aspect.VOID, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(pool), list)
+		ThaumcraftApi.registerObjectTag(wildStack(pool), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 8).a(Aspect.CRAFT, 4).a(Aspect.EARTH, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(runeAltar), list)
+		ThaumcraftApi.registerObjectTag(wildStack(runeAltar), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 2).a(Aspect.ENTROPY, 2).add(COLOR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(unstableBlock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(unstableBlock), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 4).a(Aspect.GREED, 4).a(Aspect.METAL, 2).a(Aspect.CRYSTAL, 2)
 		ThaumcraftApi.registerObjectTag(ItemStack(pylon, 1, 0), list) // Mana Pylon
@@ -268,43 +275,43 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(pylon, 1, 2), list) // Gaia Pylon
 		
 		list = AspectList().a(Aspect.MOTION, 2).a(Aspect.MECHANISM, 4).a(Aspect.MAGIC)
-		ThaumcraftApi.registerObjectTag(WildStack(pistonRelay), list)
+		ThaumcraftApi.registerObjectTag(wildStack(pistonRelay), list)
 		
 		list = AspectList().a(Aspect.VOID, 2).a(Aspect.MOTION, 2).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(distributor), list)
+		ThaumcraftApi.registerObjectTag(wildStack(distributor), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 2).a(Aspect.ENTROPY, 2).a(COLOR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(manaBeacon), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaBeacon), list)
 		
 		list = AspectList().a(Aspect.VOID, 6).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(manaVoid), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaVoid), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 6).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(manaDetector), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaDetector), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 8).a(Aspect.CRAFT, 4).a(Aspect.SENSES, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(enchanter), list)
+		ThaumcraftApi.registerObjectTag(wildStack(enchanter), list)
 		
 		list = AspectList().a(Aspect.MOTION, 2).a(Aspect.MECHANISM, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(turntable), list)
+		ThaumcraftApi.registerObjectTag(wildStack(turntable), list)
 		
 		list = AspectList().a(Aspect.EARTH, 64).a(Aspect.HUNGER, 12).a(Aspect.MAGIC, 2) // It's REALLY heavy.
-		ThaumcraftApi.registerObjectTag(WildStack(ModBlocks.tinyPlanet), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ModBlocks.tinyPlanet), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 8).a(Aspect.EXCHANGE, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(alchemyCatalyst), list)
+		ThaumcraftApi.registerObjectTag(wildStack(alchemyCatalyst), list)
 		
 		list = AspectList().a(Aspect.TREE, 4).a(Aspect.VOID, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(openCrate), list)
+		ThaumcraftApi.registerObjectTag(wildStack(openCrate), list)
 		
 		list = AspectList().a(Aspect.SENSES, 4).a(Aspect.MECHANISM, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(forestEye), list)
+		ThaumcraftApi.registerObjectTag(wildStack(forestEye), list)
 		
 		list = AspectList().add(Aspect.HARVEST, 12)
-		ThaumcraftApi.registerObjectTag(WildStack(forestDrum), list)
+		ThaumcraftApi.registerObjectTag(wildStack(forestDrum), list)
 		
 		list = AspectList().a(Aspect.PLANT, 2).a(Aspect.LIFE).a(COLOR).a(Aspect.LIGHT)
-		ThaumcraftApi.registerObjectTag(WildStack(shinyFlower), list)
+		ThaumcraftApi.registerObjectTag(wildStack(shinyFlower), list)
 		
 		list = AspectList().a(Aspect.TREE, 2).a(Aspect.SOUL, 2).a(Aspect.ELDRITCH)
 		ThaumcraftApi.registerObjectTag(ItemStack(platform, 1, 0), list)
@@ -312,37 +319,37 @@ object BotaniaTCAspects {
 		// Nothing for the Infrangible Platform.
 		
 		list = AspectList().a(Aspect.ELDRITCH, 4).a(Aspect.MECHANISM, 4).a(Aspect.TRAVEL, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(alfPortal), list)
+		ThaumcraftApi.registerObjectTag(wildStack(alfPortal), list)
 		
 		list = AspectList().a(Aspect.TREE, 4).a(Aspect.ELDRITCH)
-		ThaumcraftApi.registerObjectTag(WildStack(dreamwood), list)
+		ThaumcraftApi.registerObjectTag(wildStack(dreamwood), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 8).a(Aspect.ORDER, 8).a(Aspect.ELDRITCH)
-		ThaumcraftApi.registerObjectTag(WildStack(conjurationCatalyst), list)
+		ThaumcraftApi.registerObjectTag(wildStack(conjurationCatalyst), list)
 		
 		list = AspectList().a(COLOR, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(bifrost), list)
+		ThaumcraftApi.registerObjectTag(wildStack(bifrost), list)
 		
 		list = AspectList().a(Aspect.PLANT, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(solidVines), list)
+		ThaumcraftApi.registerObjectTag(wildStack(solidVines), list)
 		
 		list = AspectList().a(Aspect.PLANT, 1).a(COLOR, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(buriedPetals), list)
+		ThaumcraftApi.registerObjectTag(wildStack(buriedPetals), list)
 		
 		list = AspectList().a(Aspect.WATER, 2).a(Aspect.CRYSTAL, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(prismarine), list)
+		ThaumcraftApi.registerObjectTag(wildStack(prismarine), list)
 		
 		list = AspectList().a(Aspect.WATER, 2).a(Aspect.CRYSTAL, 2).a(Aspect.LIGHT, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(seaLamp), list)
+		ThaumcraftApi.registerObjectTag(wildStack(seaLamp), list)
 		
 		list = AspectList().a(Aspect.PLANT, 2).a(Aspect.LIFE).a(Aspect.LIGHT).a(Aspect.AIR).a(Aspect.EARTH)
-		ThaumcraftApi.registerObjectTag(WildStack(floatingFlower), list)
+		ThaumcraftApi.registerObjectTag(wildStack(floatingFlower), list)
 		
 		list = AspectList().a(Aspect.LIFE, 2).a(Aspect.CROP, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(tinyPotato), list)
+		ThaumcraftApi.registerObjectTag(wildStack(tinyPotato), list)
 		
 		list = AspectList().a(Aspect.LIFE, 16).a(Aspect.MAGIC, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(spawnerClaw), list)
+		ThaumcraftApi.registerObjectTag(wildStack(spawnerClaw), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2).a(NETHER)
 		ThaumcraftApi.registerObjectTag(ItemStack(customBrick, 1, 0), list) // Hellish Brick
@@ -354,163 +361,163 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(customBrick, 1, 2), list) // Frosty Brick
 		
 		list = AspectList().a(Aspect.SENSES, 4).a(Aspect.MECHANISM, 2).a(ENVY, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(enderEye), list)
+		ThaumcraftApi.registerObjectTag(wildStack(enderEye), list)
 		
 		list = AspectList().a(Aspect.LIGHT, 8).a(Aspect.METAL, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(starfield), list)
+		ThaumcraftApi.registerObjectTag(wildStack(starfield), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 16).a(Aspect.ENERGY, 8).a(SLOTH, 8).a(GLUTTONY, 4) // If you can't tell, I don't like RF.
-		ThaumcraftApi.registerObjectTag(WildStack(rfGenerator), list)
+		ThaumcraftApi.registerObjectTag(wildStack(rfGenerator), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.ELDRITCH)
-		ThaumcraftApi.registerObjectTag(WildStack(elfGlass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(elfGlass), list)
 		
 		list = AspectList(ItemStack(Blocks.brewing_stand)).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(brewery), list)
+		ThaumcraftApi.registerObjectTag(wildStack(brewery), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.MAGIC)
-		ThaumcraftApi.registerObjectTag(WildStack(manaGlass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaGlass), list)
 		
 		list = AspectList().a(Aspect.CRAFT, 4).a(Aspect.FIRE, 2).a(Aspect.WATER, 2).a(Aspect.EARTH, 2).a(Aspect.AIR, 2).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(terraPlate), list)
+		ThaumcraftApi.registerObjectTag(wildStack(terraPlate), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 4).a(Aspect.ELDRITCH, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringContainer), list)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringDispenser), list)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringFertilizer), list)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringComparator), list)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringRelay), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringContainer), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringDispenser), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringFertilizer), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringComparator), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringRelay), list)
 		
 		list = AspectList().a(Aspect.PLANT, 2).a(Aspect.MAGIC, 2).a(Aspect.LIFE).a(COLOR).a(Aspect.LIGHT).a(Aspect.AIR).a(Aspect.EARTH) // So many aspects
-		ThaumcraftApi.registerObjectTag(WildStack(floatingSpecialFlower), list)
+		ThaumcraftApi.registerObjectTag(wildStack(floatingSpecialFlower), list)
 		
 		list = AspectList().a(Aspect.LIGHT, 2).a(COLOR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(manaFlame), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaFlame), list)
 		
 		list = AspectList().a(Aspect.SOUL, 2).a(Aspect.CRYSTAL, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(prism), list)
+		ThaumcraftApi.registerObjectTag(wildStack(prism), list)
 		
 		list = AspectList(ItemStack(Blocks.dirt))
-		ThaumcraftApi.registerObjectTag(WildStack(dirtPath), list)
+		ThaumcraftApi.registerObjectTag(wildStack(dirtPath), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2).a(Aspect.LIFE, 16).a(Aspect.MAGIC, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(enchantedSoil), list)
+		ThaumcraftApi.registerObjectTag(wildStack(enchantedSoil), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 4).a(Aspect.VOID, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(corporeaIndex), list)
-		ThaumcraftApi.registerObjectTag(WildStack(corporeaFunnel), list)
+		ThaumcraftApi.registerObjectTag(wildStack(corporeaIndex), list)
+		ThaumcraftApi.registerObjectTag(wildStack(corporeaFunnel), list)
 		
 		list = AspectList(ItemStack(Blocks.brown_mushroom)).a(COLOR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(mushroom), list)
+		ThaumcraftApi.registerObjectTag(wildStack(mushroom), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 4).a(Aspect.MOTION, 2).a(Aspect.MAGIC, 2).a(Aspect.WATER, 2).a(Aspect.VOID, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(pump), list)
+		ThaumcraftApi.registerObjectTag(wildStack(pump), list)
 		
 		list = AspectList().a(Aspect.PLANT, 2).a(Aspect.LIFE).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(doubleFlower1), list)
-		ThaumcraftApi.registerObjectTag(WildStack(doubleFlower2), list)
+		ThaumcraftApi.registerObjectTag(wildStack(doubleFlower1), list)
+		ThaumcraftApi.registerObjectTag(wildStack(doubleFlower2), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 4).a(Aspect.VOID, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(corporeaInterceptor), list)
+		ThaumcraftApi.registerObjectTag(wildStack(corporeaInterceptor), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 4).a(Aspect.VOID, 2).a(Aspect.SENSES)
-		ThaumcraftApi.registerObjectTag(WildStack(corporeaCrystalCube), list)
+		ThaumcraftApi.registerObjectTag(wildStack(corporeaCrystalCube), list)
 		
 		list = AspectList().a(Aspect.TREE, 4).a(Aspect.FIRE, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(incensePlate), list)
+		ThaumcraftApi.registerObjectTag(wildStack(incensePlate), list)
 		
 		list = AspectList(ItemStack(Items.clock)).a(Aspect.CRYSTAL).a(Aspect.MECHANISM)
-		ThaumcraftApi.registerObjectTag(WildStack(hourglass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(hourglass), list)
 		
 		list = AspectList(ItemStack(Blocks.rail)).a(Aspect.SOUL)
-		ThaumcraftApi.registerObjectTag(WildStack(ghostRail), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ghostRail), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 3).a(Aspect.MAGIC)
-		ThaumcraftApi.registerObjectTag(WildStack(sparkChanger), list)
+		ThaumcraftApi.registerObjectTag(wildStack(sparkChanger), list)
 		
 		list = AspectList().a(Aspect.TREE, 4).a(Aspect.LIFE)
-		ThaumcraftApi.registerObjectTag(WildStack(root), list)
+		ThaumcraftApi.registerObjectTag(wildStack(root), list)
 		
 		list = AspectList(ItemStack(Blocks.pumpkin)).a(Aspect.DARKNESS, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(felPumpkin), list)
+		ThaumcraftApi.registerObjectTag(wildStack(felPumpkin), list)
 		
 		list = AspectList().a(Aspect.LIFE, 4).a(Aspect.BEAST, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(cocoon), list)
+		ThaumcraftApi.registerObjectTag(wildStack(cocoon), list)
 		
 		list = AspectList().a(Aspect.TRAVEL, 3).a(Aspect.MOTION, 2).a(Aspect.LIGHT, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(lightRelay), list)
+		ThaumcraftApi.registerObjectTag(wildStack(lightRelay), list)
 		
 		list = AspectList().a(Aspect.TRAVEL, 3).a(Aspect.MECHANISM, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(lightLauncher), list)
+		ThaumcraftApi.registerObjectTag(wildStack(lightLauncher), list)
 		
 		list = AspectList().a(Aspect.ENTROPY, 16).a(WRATH, 8).a(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(manaBomb), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaBomb), list)
 		
 		list = AspectList(ItemStack(Blocks.noteblock)).a(Aspect.GREED, 2).a(Aspect.AIR, 3)
-		ThaumcraftApi.registerObjectTag(WildStack(ModBlocks.cacophonium), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ModBlocks.cacophonium), list)
 		
 		list = AspectList().a(Aspect.MOTION, 2).a(Aspect.AIR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(bellows), list)
+		ThaumcraftApi.registerObjectTag(wildStack(bellows), list)
 		
 		list = AspectList().a(COLOR, 8)
 		ThaumcraftApi.registerObjectTag(ItemStack(bifrostPerm), list)
 		
 		list = AspectList().a(Aspect.PLANT, 4).a(Aspect.LIFE, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(cellBlock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(cellBlock), list)
 		
 		list = AspectList().a(Aspect.MECHANISM, 4).a(Aspect.ELDRITCH, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(redStringInterceptor), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redStringInterceptor), list)
 		
 		list = AspectList(ItemStack(Items.skull, 1, 3)).a(Aspect.ELDRITCH, 4).a(Aspect.EARTH, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ModBlocks.gaiaHead), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ModBlocks.gaiaHead), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 4).a(Aspect.VOID, 2).a(Aspect.MIND, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(corporeaRetainer), list)
+		ThaumcraftApi.registerObjectTag(wildStack(corporeaRetainer), list)
 		
 		list = AspectList().a(Aspect.WEATHER, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(teruTeruBozu), list)
+		ThaumcraftApi.registerObjectTag(wildStack(teruTeruBozu), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(shimmerrock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(shimmerrock), list)
 		
 		list = AspectList().a(Aspect.TREE).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(shimmerwoodPlanks), list)
+		ThaumcraftApi.registerObjectTag(wildStack(shimmerwoodPlanks), list)
 		
 		list = AspectList().a(Aspect.MAN, 4).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(avatar), list)
+		ThaumcraftApi.registerObjectTag(wildStack(avatar), list)
 		
 		list = AspectList().a(Aspect.EARTH).a(Aspect.PLANT).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(altGrass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(altGrass), list)
 		
 		list = AspectList(ItemStack(Blocks.quartz_block))
 		if (darkQuartz != null)
-			ThaumcraftApi.registerObjectTag(WildStack(darkQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(manaQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(blazeQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(lavenderQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(redQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(elfQuartz), list)
-		ThaumcraftApi.registerObjectTag(WildStack(sunnyQuartz), list)
+			ThaumcraftApi.registerObjectTag(wildStack(darkQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(blazeQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(lavenderQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(redQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(elfQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(sunnyQuartz), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(biomeStoneA), list)
-		ThaumcraftApi.registerObjectTag(WildStack(biomeStoneB), list)
-		ThaumcraftApi.registerObjectTag(WildStack(stone), list)
+		ThaumcraftApi.registerObjectTag(wildStack(biomeStoneA), list)
+		ThaumcraftApi.registerObjectTag(wildStack(biomeStoneB), list)
+		ThaumcraftApi.registerObjectTag(wildStack(stone), list)
 		
 		list = AspectList().a(Aspect.EARTH, 2).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(pavement), list)
+		ThaumcraftApi.registerObjectTag(wildStack(pavement), list)
 		
 		/////// ITEMS!
 		
 		list = AspectList(ItemStack(Items.book)).a(Aspect.PLANT)
-		ThaumcraftApi.registerObjectTag(WildStack(lexicon), list)
+		ThaumcraftApi.registerObjectTag(wildStack(lexicon), list)
 		
 		list = AspectList().a(Aspect.PLANT).a(COLOR)
-		ThaumcraftApi.registerObjectTag(WildStack(petal), list)
-		ThaumcraftApi.registerObjectTag(WildStack(dye), list)
+		ThaumcraftApi.registerObjectTag(wildStack(petal), list)
+		ThaumcraftApi.registerObjectTag(wildStack(dye), list)
 		
 		list = AspectList(ItemStack(twigWand)).a(Aspect.TOOL, 3)
-		ThaumcraftApi.registerObjectTag(WildStack(twigWand), list)
+		ThaumcraftApi.registerObjectTag(wildStack(twigWand), list)
 		
 		list = AspectList().a(Aspect.METAL, 4).a(Aspect.MAGIC)
 		ThaumcraftApi.registerObjectTag(ItemStack(manaResource, 1, 0), list) // Manasteel
@@ -620,10 +627,10 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(rune, 1, 15), list) // Rune of Pride
 		
 		list = AspectList().a(Aspect.VOID, 2).a(Aspect.MAGIC, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(manaTablet), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaTablet), list)
 		
 		list = AspectList().a(Aspect.HUNGER, 64).a(Aspect.CROP, 64) // why did i do this
-		ThaumcraftApi.registerObjectTag(WildStack(manaCookie), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaCookie), list)
 		
 		list = AspectList().a(Aspect.PLANT).a(Aspect.EXCHANGE)
 		ThaumcraftApi.registerObjectTag(ItemStack(grassSeeds, 1, 0), list) // grass
@@ -643,56 +650,56 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(grassSeeds, 1, 8), list) // mutated
 		
 		list = AspectList().a(Aspect.VOID, 2).a(Aspect.MAGIC, 8).a(Aspect.ELDRITCH, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(manaMirror), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaMirror), list)
 		
 		list = AspectList(ItemStack(manasteelHelm)).a(Aspect.SENSES, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(manasteelHelmRevealing), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manasteelHelmRevealing), list)
 		
 		list = AspectList(ItemStack(terrasteelHelm)).a(Aspect.SENSES, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(terrasteelHelmRevealing), list)
+		ThaumcraftApi.registerObjectTag(wildStack(terrasteelHelmRevealing), list)
 		
 		list = AspectList().a(Aspect.EARTH, 12).a(Aspect.HUNGER, 12).a(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(ModItems.tinyPlanet), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ModItems.tinyPlanet), list)
 		
 		list = AspectList().a(Aspect.VOID, 2).a(Aspect.MAGIC, 8).a(Aspect.METAL, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(manaRing), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaRing), list)
 		
 		list = AspectList().a(Aspect.VOID, 2).a(Aspect.MAGIC, 8).a(Aspect.METAL, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(manaRingGreater), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaRingGreater), list)
 		
 		list = AspectList().a(Aspect.CLOTH, 4).a(Aspect.TRAVEL, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(travelBelt), list)
+		ThaumcraftApi.registerObjectTag(wildStack(travelBelt), list)
 		
 		list = AspectList(ItemStack(Items.quartz))
-		ThaumcraftApi.registerObjectTag(WildStack(quartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(quartz), list)
 		
 		list = AspectList(ItemStack(elementiumHelm)).a(Aspect.SENSES, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(elementiumHelmRevealing), list)
+		ThaumcraftApi.registerObjectTag(wildStack(elementiumHelmRevealing), list)
 		
 		list = AspectList().a(Aspect.METAL, 4).a(Aspect.VOID, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(openBucket), list)
+		ThaumcraftApi.registerObjectTag(wildStack(openBucket), list)
 		
 		list = AspectList().a(Aspect.LIFE, 16).a(Aspect.MAGIC, 8).a(Aspect.TRAVEL, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(spawnerMover), list)
+		ThaumcraftApi.registerObjectTag(wildStack(spawnerMover), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.ENTROPY, 8).a(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(manaBottle), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaBottle), list)
 		
 		list = AspectList().a(Aspect.METAL, 15).a(Aspect.GREED, 3).a(Aspect.SENSES, 3)
-		ThaumcraftApi.registerObjectTag(WildStack(itemFinder), list)
+		ThaumcraftApi.registerObjectTag(wildStack(itemFinder), list)
 		
 		list = AspectList().a(Aspect.FLIGHT).a(Aspect.MAGIC)
-		ThaumcraftApi.registerObjectTag(WildStack(manaInkwell), list)
+		ThaumcraftApi.registerObjectTag(wildStack(manaInkwell), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL)
-		ThaumcraftApi.registerObjectTag(WildStack(vial), list)
-		ThaumcraftApi.registerObjectTag(WildStack(brewVial), list)
+		ThaumcraftApi.registerObjectTag(wildStack(vial), list)
+		ThaumcraftApi.registerObjectTag(wildStack(brewVial), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.MAGIC, 8)
-		ThaumcraftApi.registerObjectTag(WildStack(brewFlask), list)
+		ThaumcraftApi.registerObjectTag(wildStack(brewFlask), list)
 		
 		list = AspectList().a(Aspect.CRAFT, 4).a(Aspect.ELDRITCH, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(craftingHalo), list)
+		ThaumcraftApi.registerObjectTag(wildStack(craftingHalo), list)
 		
 		list = AspectList().a(Aspect.MAGIC, 16).a(Aspect.ELDRITCH, 4).a(Aspect.ORDER, 2)
 		ThaumcraftApi.registerObjectTag(ItemStack(blackLotus, 1, 0), list)
@@ -701,10 +708,10 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(blackLotus, 1, 1), list)
 		
 		list = AspectList().a(Aspect.SENSES, 8).a(Aspect.CRYSTAL, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(monocle), list)
+		ThaumcraftApi.registerObjectTag(wildStack(monocle), list)
 		
 		list = AspectList().a(Aspect.TRAVEL, 16)
-		ThaumcraftApi.registerObjectTag(WildStack(worldSeed), list)
+		ThaumcraftApi.registerObjectTag(wildStack(worldSeed), list)
 		
 		list = AspectList().a(Aspect.PLANT, 8).a(Aspect.METAL, 4).a(Aspect.WEAPON, 4).a(WRATH, 4)
 		ThaumcraftApi.registerObjectTag(ItemStack(thornChakram, 1, 0), list)
@@ -713,40 +720,40 @@ object BotaniaTCAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(thornChakram, 1, 1), list)
 		
 		list = AspectList().a(Aspect.LIFE, 32).a(Aspect.MAGIC, 16)
-		ThaumcraftApi.registerObjectTag(WildStack(overgrowthSeed), list)
+		ThaumcraftApi.registerObjectTag(wildStack(overgrowthSeed), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 64).a(Aspect.MIND, 32).a(Aspect.SOUL, 32)
-		ThaumcraftApi.registerObjectTag(WildStack(ancientWill), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ancientWill), list)
 		
 		list = AspectList().a(Aspect.VOID)
-		ThaumcraftApi.registerObjectTag(WildStack(phantomInk), list)
+		ThaumcraftApi.registerObjectTag(wildStack(phantomInk), list)
 		
 		list = AspectList().a(COLOR, 32).a(Aspect.LIFE, 16).a(Aspect.HEAL, 16)
-		ThaumcraftApi.registerObjectTag(WildStack(pinkinator), list)
+		ThaumcraftApi.registerObjectTag(wildStack(pinkinator), list)
 		
 		list = AspectList().a(Aspect.VOID, 64)
-		ThaumcraftApi.registerObjectTag(WildStack(blackHoleTalisman), list)
+		ThaumcraftApi.registerObjectTag(wildStack(blackHoleTalisman), list)
 		
 		list = AspectList().a(Aspect.SENSES, 4).a(Aspect.AIR, 4).a(Aspect.GREED, 4).a(COLOR, 2).a(PRIDE, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(recordGaia1), list)
-		ThaumcraftApi.registerObjectTag(WildStack(recordGaia2), list)
+		ThaumcraftApi.registerObjectTag(wildStack(recordGaia1), list)
+		ThaumcraftApi.registerObjectTag(wildStack(recordGaia2), list)
 		
 		list = AspectList(ItemStack(terraAxe)).a(Aspect.TOOL, 3)
-		ThaumcraftApi.registerObjectTag(WildStack(terraAxe), list)
+		ThaumcraftApi.registerObjectTag(wildStack(terraAxe), list)
 		
 		list = AspectList().a(Aspect.TREE).a(Aspect.WATER)
-		ThaumcraftApi.registerObjectTag(WildStack(waterBowl), list)
+		ThaumcraftApi.registerObjectTag(wildStack(waterBowl), list)
 		
 		list = AspectList().a(Aspect.ELDRITCH, 16).a(Aspect.WEAPON, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(starSword), list)
+		ThaumcraftApi.registerObjectTag(wildStack(starSword), list)
 		
-		ThaumcraftApi.registerObjectTag(WildStack(exchangeRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(exchangeRod), list)
 		
 		list = AspectList().a(Aspect.WEATHER, 16).a(Aspect.WEAPON, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(thunderSword), list)
+		ThaumcraftApi.registerObjectTag(wildStack(thunderSword), list)
 		
 		list = AspectList(ItemStack(ModBlocks.gaiaHead))
-		ThaumcraftApi.registerObjectTag(WildStack(ModItems.gaiaHead), list)
+		ThaumcraftApi.registerObjectTag(wildStack(ModItems.gaiaHead), list)
 		
 		/// ENTITIES!
 		
@@ -815,8 +822,8 @@ object TCHandlerShadowFoxAspects {
 		override fun getColor(): Int = ItemIridescent.rainbowColor()
 	}
 	
-	fun WildStack(i: Block): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
-	fun WildStack(i: Item): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
+	fun wildStack(i: Block): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
+	fun wildStack(i: Item): ItemStack = ItemStack(i, 1, OreDictionary.WILDCARD_VALUE)
 	
 	fun forMeta(cap: Int, lambda: (Int) -> Unit) {
 		for (i in 0..cap) {
@@ -877,153 +884,153 @@ object TCHandlerShadowFoxAspects {
 		val splinterlist = AspectList().add(Aspect.TREE, 1).add(Aspect.ENTROPY, 1)
 		
 		var list = AspectList().add(Aspect.EARTH, 2).add(colorAspect, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.coloredDirtBlock), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.rainbowDirtBlock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.irisDirt), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.rainbowDirt), list)
 		
 		list = AspectList().add(Aspect.PLANT, 2).add(Aspect.TREE, 1).add(colorAspect, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisSapling), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisSapling), list)
 		
 		list = AspectList().add(Aspect.PLANT, 1).add(Aspect.AIR, 1).add(colorAspect, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.irisGrass), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.rainbowGrass), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.irisTallGrass0), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.irisTallGrass1), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.rainbowTallGrass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.irisGrass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.rainbowGrass), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.irisTallGrass0), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.irisTallGrass1), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.rainbowTallGrass), list)
 		
 		list = AspectList().add(Aspect.TREE, 4).add(colorAspect, 1)
-		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisWood0, 1, it), list) }
-		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisWood1, 1, it), list) }
-		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisWood2, 1, it), list) }
-		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisWood3, 1, it), list) }
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.rainbowWood), list)
-		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.altWood0, 1, it), list) }
-		forMeta(2) { ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.altWood1, 1, it), list) }
+		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisWood0, 1, it), list) }
+		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisWood1, 1, it), list) }
+		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisWood2, 1, it), list) }
+		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisWood3, 1, it), list) }
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.rainbowWood), list)
+		forMeta(4) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.altWood0, 1, it), list) }
+		forMeta(2) { ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.altWood1, 1, it), list) }
 		
 		list = AspectList().add(Aspect.TREE, 1).add(Aspect.METAL, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.itemDisplay), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.itemDisplay), list)
 		
 		list = AspectList().add(Aspect.TREE, 8).add(Aspect.MAGIC, 8).add(colorAspect, 2).add(Aspect.CRAFT, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.treeCrafterBlock), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.treeCrafterBlockRB), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.treeCrafterBlock), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.treeCrafterBlockRB), list)
 		
 		list = AspectList().add(Aspect.PLANT, 2).add(Aspect.TREE, 1).add(Aspect.WEATHER, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.lightningSapling), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.lightningSapling), list)
 		
 		list = AspectList().add(Aspect.TREE, 4).add(Aspect.WEATHER, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.lightningWood), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.lightningWood), list)
 		
 		list = AspectList().add(Aspect.TREE, 20).add(Aspect.MECHANISM, 1).add(Aspect.EXCHANGE, 1).add(Aspect.VOID, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.livingwoodFunnel), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.livingwoodFunnel), list)
 		
 		list = AspectList().add(Aspect.PLANT, 2).add(Aspect.TREE, 1).add(hellAspect, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.netherSapling), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.netherSapling), list)
 		list = AspectList().add(Aspect.TREE, 4).add(hellAspect, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.netherWood), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.netherWood), list)
 		
 		list = AspectList().add(Aspect.CLOTH, 4).add(Aspect.FIRE, 2).add(Aspect.MAGIC, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.kindling), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.kindling), list)
 		
 		list = AspectList().add(Aspect.PLANT, 1).add(Aspect.EXCHANGE, 1).add(colorAspect, 1)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.irisSeeds), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.irisSeeds), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.EARTH, 4).add(Aspect.AIR, 2).add(colorAspect, 2).add(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.colorfulSkyDirtRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodColorfulSkyDirt), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.LIGHT, 6).add(colorAspect, 2).add(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.prismaticRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodPrismatic), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.WEATHER, 8).add(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.lightningRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodLightning), list)
 		
 		list = if (forbidden) AspectList().add(Aspect.TOOL, 8).add(Aspect.AIR, 4).add(Aspect.WEATHER, 2).add(PRIDE, 2).add(Aspect.MAGIC, 4)
 		else AspectList().add(Aspect.TOOL, 8).add(Aspect.AIR, 6).add(Aspect.WEATHER, 2).add(Aspect.MAGIC, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.interdictionRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodInterdiction), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.WEATHER, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.emblem, 1, 0), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 0), list)
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.EARTH, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.emblem, 1, 1), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 1), list)
 		list = if (forbidden) AspectList().add(Aspect.ELDRITCH, 5).add(PRIDE, 16)
 		else AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.AIR, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.emblem, 1, 2), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 2), list)
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(hellAspect, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.emblem, 1, 3), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 3), list)
 		
 		list = AspectList().add(Aspect.CLOTH, 4).add(colorAspect, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.coatOfArms), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.coatOfArms), list)
 		
 		list = AspectList().add(colorAspect, 8).add(Aspect.METAL, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.colorOverride), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.colorOverride), list)
 		
 		list = AspectList().add(Aspect.CLOTH, 2).add(Aspect.GREED, 2).add(Aspect.ELDRITCH, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.attributionBauble, 1, 0), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.attributionBauble, 1, 0), list)
 		
 		list = AspectList().add(Aspect.CLOTH, 2).add(Aspect.GREED, 2).add(Aspect.ELDRITCH, 2).add(Aspect.CROP, 64).add(Aspect.BEAST, 64) // memes
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.attributionBauble, 1, 1), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.attributionBauble, 1, 1), list)
 		
 		list = AspectList().add(Aspect.MAGIC, 16).add(Aspect.TAINT, 4).add(Aspect.ENTROPY, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.wiltedLotus, 1, 0), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.wiltedLotus, 1, 0), list)
 		
 		list = AspectList().add(Aspect.MAGIC, 20).add(Aspect.DEATH, 4).add(Aspect.ELDRITCH, 4).add(Aspect.TAINT, 4).add(Aspect.ENTROPY, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.wiltedLotus, 1, 1), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.wiltedLotus, 1, 1), list)
 		
 		list = AspectList().add(Aspect.TOOL, 2).add(Aspect.TREE, 2).add(Aspect.WEATHER, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 0), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.ThunderwoodTwig), list)
 		
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 1), splinterlist)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.ThunderwoodSplinters), splinterlist)
 		
 		list = AspectList().add(Aspect.TOOL, 2).add(Aspect.TREE, 2).add(hellAspect, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 2), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodTwig), list)
 		
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 3), splinterlist)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodSplinters), splinterlist)
 		
 		list = AspectList().add(Aspect.FIRE, 4).add(Aspect.ENERGY, 2)
 		if (forbidden) list.add(NETHER, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 4), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), list)
 		
 		list = AspectList().add(Aspect.TOOL, 3).add(Aspect.VOID, 12).add(Aspect.CLOTH, 4).add(Aspect.GREED, 2)
 		if (forbidden) list.add(SLOTH, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.toolbelt), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.toolbelt), list)
 		
 		list = AspectList(ItemStack(manaFlame))
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.rainbowFlame), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.rainbowFlame), list)
 		
 		list = AspectList(ItemStack(manaFlame)).add(Aspect.VOID, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.invisibleFlame), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.invisibleFlame), list)
 		
 		list = AspectList(ItemStack(lens, 1, 17)).add(Aspect.VOID, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.invisibleFlameLens), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.invisibleFlameLens), list)
 		
 		list = AspectList().add(Aspect.LIGHT, 4).add(Aspect.MECHANISM, 2).add(colorAspect, 4)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.irisLamp), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.irisLamp), list)
 		
 		list = AspectList().add(Aspect.TREE, 4).add(Aspect.VOID, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.sealingWood), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.sealingWood), list)
 		
 		list = AspectList().add(Aspect.PLANT, 2).add(Aspect.TREE, 1).add(Aspect.VOID, 1)
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxBlocks.sealingSapling), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.sealingSapling), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.LIGHT, 2).add(COLOR, 2)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.star), list)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.star), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.starPlacer), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.starBlock), list)
 		
 		list = AspectList().add(Aspect.TOOL, 8).add(Aspect.FIRE, 4).add(hellAspect, 4)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.flameRod), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodFlameStar), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 3).add(Aspect.METAL, 9).add(Aspect.MAGIC, 4).add(Aspect.WEAPON, 10).add(Aspect.ENTROPY, 5)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.wireAxe), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.wireAxe), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 3).add(Aspect.METAL, 8).add(Aspect.MAGIC, 4).add(Aspect.ARMOR, 10).add(Aspect.WEAPON, 1).add(Aspect.ORDER, 5)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.trisDagger), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.trisDagger), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 3).add(Aspect.METAL, 8).add(Aspect.MAGIC, 4).add(Aspect.ARMOR, 10).add(Aspect.WEAPON, 1).add(Aspect.ORDER, 5)
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxItems.trisDagger), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.trisDagger), list)
 		
 		list = AspectList(ItemStack(Blocks.quartz_block))
-		ThaumcraftApi.registerObjectTag(WildStack(ShadowFoxBlocks.shimmerQuartz), list)
+		ThaumcraftApi.registerObjectTag(wildStack(AlfheimBlocks.shimmerQuartz), list)
 		
 		list = AspectList(ItemStack(Items.quartz))
-		ThaumcraftApi.registerObjectTag(ItemStack(ShadowFoxItems.resource, 1, 5), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowQuartz), list)
 		
 		list = AspectList().add(COLOR, 1)
 		ThaumcraftApi.registerObjectTag(LibOreDict.DYES[16], list)
@@ -1039,9 +1046,9 @@ object TCHandlerShadowFoxAspects {
 	
 	fun overrideVanillaAspects() {
 		if (COLOR != null) {
-			replaceAspect(WildStack(Blocks.stained_hardened_clay), Aspect.SENSES, COLOR!!)
-			replaceAspect(WildStack(Blocks.red_flower), Aspect.SENSES, COLOR!!)
-			replaceAspect(WildStack(Blocks.yellow_flower), Aspect.SENSES, COLOR!!)
+			replaceAspect(wildStack(Blocks.stained_hardened_clay), Aspect.SENSES, COLOR!!)
+			replaceAspect(wildStack(Blocks.red_flower), Aspect.SENSES, COLOR!!)
+			replaceAspect(wildStack(Blocks.yellow_flower), Aspect.SENSES, COLOR!!)
 			
 			for (i in LibOreDict.DYES)
 				replaceAspect(i, Aspect.SENSES, COLOR!!)

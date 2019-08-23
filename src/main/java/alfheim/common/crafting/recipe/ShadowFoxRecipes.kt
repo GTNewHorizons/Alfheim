@@ -19,86 +19,87 @@ import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.WOOD
 import alfheim.common.block.*
-import alfheim.common.block.ShadowFoxBlocks.altPlanks
-import alfheim.common.block.ShadowFoxBlocks.altSlabs
-import alfheim.common.block.ShadowFoxBlocks.altStairs
-import alfheim.common.block.ShadowFoxBlocks.altWood0
-import alfheim.common.block.ShadowFoxBlocks.altWood1
-import alfheim.common.block.ShadowFoxBlocks.amp
-import alfheim.common.block.ShadowFoxBlocks.auroraDirt
-import alfheim.common.block.ShadowFoxBlocks.auroraPlanks
-import alfheim.common.block.ShadowFoxBlocks.auroraSlabs
-import alfheim.common.block.ShadowFoxBlocks.auroraStairs
-import alfheim.common.block.ShadowFoxBlocks.auroraWood
-import alfheim.common.block.ShadowFoxBlocks.calicoPlanks
-import alfheim.common.block.ShadowFoxBlocks.calicoSapling
-import alfheim.common.block.ShadowFoxBlocks.calicoSlabs
-import alfheim.common.block.ShadowFoxBlocks.calicoStairs
-import alfheim.common.block.ShadowFoxBlocks.calicoWood
-import alfheim.common.block.ShadowFoxBlocks.circuitPlanks
-import alfheim.common.block.ShadowFoxBlocks.circuitSapling
-import alfheim.common.block.ShadowFoxBlocks.circuitSlabs
-import alfheim.common.block.ShadowFoxBlocks.circuitStairs
-import alfheim.common.block.ShadowFoxBlocks.circuitWood
-import alfheim.common.block.ShadowFoxBlocks.coloredDirtBlock
-import alfheim.common.block.ShadowFoxBlocks.coloredPlanks
-import alfheim.common.block.ShadowFoxBlocks.coloredSlabs
-import alfheim.common.block.ShadowFoxBlocks.coloredStairs
-import alfheim.common.block.ShadowFoxBlocks.irisGrass
-import alfheim.common.block.ShadowFoxBlocks.irisLamp
-import alfheim.common.block.ShadowFoxBlocks.irisSapling
-import alfheim.common.block.ShadowFoxBlocks.irisWood0
-import alfheim.common.block.ShadowFoxBlocks.irisWood1
-import alfheim.common.block.ShadowFoxBlocks.irisWood2
-import alfheim.common.block.ShadowFoxBlocks.irisWood3
-import alfheim.common.block.ShadowFoxBlocks.itemDisplay
-import alfheim.common.block.ShadowFoxBlocks.kindling
-import alfheim.common.block.ShadowFoxBlocks.lightningPlanks
-import alfheim.common.block.ShadowFoxBlocks.lightningSapling
-import alfheim.common.block.ShadowFoxBlocks.lightningSlabs
-import alfheim.common.block.ShadowFoxBlocks.lightningStairs
-import alfheim.common.block.ShadowFoxBlocks.lightningWood
-import alfheim.common.block.ShadowFoxBlocks.livingwoodFunnel
-import alfheim.common.block.ShadowFoxBlocks.netherPlanks
-import alfheim.common.block.ShadowFoxBlocks.netherSapling
-import alfheim.common.block.ShadowFoxBlocks.netherSlabs
-import alfheim.common.block.ShadowFoxBlocks.netherStairs
-import alfheim.common.block.ShadowFoxBlocks.netherWood
-import alfheim.common.block.ShadowFoxBlocks.rainbowDirtBlock
-import alfheim.common.block.ShadowFoxBlocks.rainbowGrass
-import alfheim.common.block.ShadowFoxBlocks.rainbowLeaves
-import alfheim.common.block.ShadowFoxBlocks.rainbowMushroom
-import alfheim.common.block.ShadowFoxBlocks.rainbowPetals
-import alfheim.common.block.ShadowFoxBlocks.rainbowPlanks
-import alfheim.common.block.ShadowFoxBlocks.rainbowSlabs
-import alfheim.common.block.ShadowFoxBlocks.rainbowStairs
-import alfheim.common.block.ShadowFoxBlocks.rainbowWood
-import alfheim.common.block.ShadowFoxBlocks.sealingPlanks
-import alfheim.common.block.ShadowFoxBlocks.sealingSapling
-import alfheim.common.block.ShadowFoxBlocks.sealingSlabs
-import alfheim.common.block.ShadowFoxBlocks.sealingStairs
-import alfheim.common.block.ShadowFoxBlocks.sealingWood
-import alfheim.common.block.ShadowFoxBlocks.shimmerQuartz
-import alfheim.common.block.ShadowFoxBlocks.shimmerQuartzSlab
-import alfheim.common.block.ShadowFoxBlocks.shimmerQuartzStairs
+import alfheim.common.block.AlfheimBlocks.altPlanks
+import alfheim.common.block.AlfheimBlocks.altSlabs
+import alfheim.common.block.AlfheimBlocks.altStairs
+import alfheim.common.block.AlfheimBlocks.altWood0
+import alfheim.common.block.AlfheimBlocks.altWood1
+import alfheim.common.block.AlfheimBlocks.amplifier
+import alfheim.common.block.AlfheimBlocks.auroraDirt
+import alfheim.common.block.AlfheimBlocks.auroraPlanks
+import alfheim.common.block.AlfheimBlocks.auroraSlab
+import alfheim.common.block.AlfheimBlocks.auroraStairs
+import alfheim.common.block.AlfheimBlocks.auroraWood
+import alfheim.common.block.AlfheimBlocks.calicoPlanks
+import alfheim.common.block.AlfheimBlocks.calicoSapling
+import alfheim.common.block.AlfheimBlocks.calicoSlabs
+import alfheim.common.block.AlfheimBlocks.calicoStairs
+import alfheim.common.block.AlfheimBlocks.calicoWood
+import alfheim.common.block.AlfheimBlocks.circuitPlanks
+import alfheim.common.block.AlfheimBlocks.circuitSapling
+import alfheim.common.block.AlfheimBlocks.circuitSlabs
+import alfheim.common.block.AlfheimBlocks.circuitStairs
+import alfheim.common.block.AlfheimBlocks.circuitWood
+import alfheim.common.block.AlfheimBlocks.irisDirt
+import alfheim.common.block.AlfheimBlocks.irisGrass
+import alfheim.common.block.AlfheimBlocks.irisLamp
+import alfheim.common.block.AlfheimBlocks.irisPlanks
+import alfheim.common.block.AlfheimBlocks.irisSapling
+import alfheim.common.block.AlfheimBlocks.irisSlabs
+import alfheim.common.block.AlfheimBlocks.irisStairs
+import alfheim.common.block.AlfheimBlocks.irisWood0
+import alfheim.common.block.AlfheimBlocks.irisWood1
+import alfheim.common.block.AlfheimBlocks.irisWood2
+import alfheim.common.block.AlfheimBlocks.irisWood3
+import alfheim.common.block.AlfheimBlocks.itemDisplay
+import alfheim.common.block.AlfheimBlocks.kindling
+import alfheim.common.block.AlfheimBlocks.lightningPlanks
+import alfheim.common.block.AlfheimBlocks.lightningSapling
+import alfheim.common.block.AlfheimBlocks.lightningSlabs
+import alfheim.common.block.AlfheimBlocks.lightningStairs
+import alfheim.common.block.AlfheimBlocks.lightningWood
+import alfheim.common.block.AlfheimBlocks.livingwoodFunnel
+import alfheim.common.block.AlfheimBlocks.netherPlanks
+import alfheim.common.block.AlfheimBlocks.netherSapling
+import alfheim.common.block.AlfheimBlocks.netherSlabs
+import alfheim.common.block.AlfheimBlocks.netherStairs
+import alfheim.common.block.AlfheimBlocks.netherWood
+import alfheim.common.block.AlfheimBlocks.rainbowDirt
+import alfheim.common.block.AlfheimBlocks.rainbowGrass
+import alfheim.common.block.AlfheimBlocks.rainbowLeaves
+import alfheim.common.block.AlfheimBlocks.rainbowMushroom
+import alfheim.common.block.AlfheimBlocks.rainbowPetalBlock
+import alfheim.common.block.AlfheimBlocks.rainbowPlanks
+import alfheim.common.block.AlfheimBlocks.rainbowSlab
+import alfheim.common.block.AlfheimBlocks.rainbowStairs
+import alfheim.common.block.AlfheimBlocks.rainbowWood
+import alfheim.common.block.AlfheimBlocks.sealingPlanks
+import alfheim.common.block.AlfheimBlocks.sealingSapling
+import alfheim.common.block.AlfheimBlocks.sealingSlabs
+import alfheim.common.block.AlfheimBlocks.sealingStairs
+import alfheim.common.block.AlfheimBlocks.sealingWood
+import alfheim.common.block.AlfheimBlocks.shimmerQuartz
+import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
+import alfheim.common.block.AlfheimBlocks.shimmerQuartzStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.integration.thaumcraft.ThaumcraftSuffusionRecipes
-import alfheim.common.item.ShadowFoxItems.attributionBauble
-import alfheim.common.item.ShadowFoxItems.coatOfArms
-import alfheim.common.item.ShadowFoxItems.colorOverride
-import alfheim.common.item.ShadowFoxItems.colorfulSkyDirtRod
-import alfheim.common.item.ShadowFoxItems.emblem
-import alfheim.common.item.ShadowFoxItems.fireGrenade
-import alfheim.common.item.ShadowFoxItems.flameRod
-import alfheim.common.item.ShadowFoxItems.interdictionRod
-import alfheim.common.item.ShadowFoxItems.invisibleFlameLens
-import alfheim.common.item.ShadowFoxItems.irisSeeds
-import alfheim.common.item.ShadowFoxItems.lightningRod
-import alfheim.common.item.ShadowFoxItems.prismaticRod
-import alfheim.common.item.ShadowFoxItems.resource
-import alfheim.common.item.ShadowFoxItems.splashPotion
-import alfheim.common.item.ShadowFoxItems.toolbelt
+import alfheim.common.item.AlfheimItems.attributionBauble
+import alfheim.common.item.AlfheimItems.coatOfArms
+import alfheim.common.item.AlfheimItems.colorOverride
+import alfheim.common.item.AlfheimItems.elvenResource
+import alfheim.common.item.AlfheimItems.emblem
+import alfheim.common.item.AlfheimItems.fireGrenade
+import alfheim.common.item.AlfheimItems.invisibleFlameLens
+import alfheim.common.item.AlfheimItems.irisSeeds
+import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
+import alfheim.common.item.AlfheimItems.rodFlameStar
+import alfheim.common.item.AlfheimItems.rodInterdiction
+import alfheim.common.item.AlfheimItems.rodLightning
+import alfheim.common.item.AlfheimItems.rodPrismatic
+import alfheim.common.item.AlfheimItems.splashPotion
+import alfheim.common.item.AlfheimItems.toolbelt
 import alfheim.common.item.block.*
+import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.init.*
@@ -110,8 +111,8 @@ import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import vazkii.botania.common.crafting.*
 import vazkii.botania.common.crafting.ModCraftingRecipes.*
+import vazkii.botania.common.crafting.ModManaInfusionRecipes
 import vazkii.botania.common.lib.LibItemNames.PESTLE_AND_MORTAR
 import vazkii.botania.common.lib.LibOreDict.*
 import java.util.*
@@ -210,11 +211,11 @@ object ShadowFoxRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:lensdye", RecipeRainbowLensDye::class.java, Category.SHAPELESS, "")
 		
 		for (i in 0..15)
-			addOreDictRecipe(ItemStack(coloredDirtBlock, 8, i),
+			addOreDictRecipe(ItemStack(irisDirt, 8, i),
 							 "DDD",
 							 "DPD",
 							 "DDD", 'P', DYES[i], 'D', ItemStack(Blocks.dirt, 1))
-		addOreDictRecipe(ItemStack(rainbowDirtBlock, 8),
+		addOreDictRecipe(ItemStack(rainbowDirt, 8),
 						 "DDD",
 						 "DPD",
 						 "DDD", 'P', DYES[16], 'D', ItemStack(Blocks.dirt, 1))
@@ -229,11 +230,11 @@ object ShadowFoxRecipes {
 		
 		for (i in 0..15)
 			addShapelessOreDictRecipe(ItemStack(BotaniaItems.dye, 1, i), LEAVES[i], PESTLE_AND_MORTAR)
-		addShapelessOreDictRecipe(ItemStack(resource, 1, 6), LEAVES[16], PESTLE_AND_MORTAR)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal), LEAVES[16], PESTLE_AND_MORTAR)
 		
 		recipesLeafDyes = BotaniaAPI.getLatestAddedRecipes(17)
 		for (i in 0..15)
-			addShapelessOreDictRecipe(ItemStack(coloredPlanks, 4, i), WOOD[i])
+			addShapelessOreDictRecipe(ItemStack(irisPlanks, 4, i), WOOD[i])
 		addShapelessOreDictRecipe(ItemStack(rainbowPlanks, 4), rainbowWood)
 		
 		recipesWoodPanel = BotaniaAPI.getLatestAddedRecipes(17)
@@ -243,25 +244,25 @@ object ShadowFoxRecipes {
 		recipeAuroraPlanks = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			GameRegistry.addRecipe(ItemStack(coloredSlabs[i], 6),
+			GameRegistry.addRecipe(ItemStack(irisSlabs[i], 6),
 								   "QQQ",
-								   'Q', ItemStack(coloredPlanks, 1, i))
-		GameRegistry.addRecipe(ItemStack(rainbowSlabs, 6),
+								   'Q', ItemStack(irisPlanks, 1, i))
+		GameRegistry.addRecipe(ItemStack(rainbowSlab, 6),
 							   "QQQ",
 							   'Q', ItemStack(rainbowPlanks))
 		
 		recipesSlabs = BotaniaAPI.getLatestAddedRecipes(17)
 		
-		GameRegistry.addRecipe(ItemStack(auroraSlabs, 6),
+		GameRegistry.addRecipe(ItemStack(auroraSlab, 6),
 							   "QQQ",
 							   'Q', ItemStack(auroraPlanks))
 		
 		recipeAuroraSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			addOreDictRecipe(ItemStack(coloredStairs[i], 4), true,
-								   "Q  ", "QQ ", "QQQ",
-								   'Q', ItemStack(coloredPlanks, 1, i))
+			addOreDictRecipe(ItemStack(irisStairs[i], 4), true,
+							 "Q  ", "QQ ", "QQQ",
+							 'Q', ItemStack(irisPlanks, 1, i))
 		
 		addOreDictRecipe(ItemStack(rainbowStairs, 4), true,
 							   "Q  ", "QQ ", "QQQ",
@@ -276,39 +277,39 @@ object ShadowFoxRecipes {
 		recipeAuroraStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			GameRegistry.addShapelessRecipe(ItemStack(coloredPlanks, 1, i),
-											ItemStack(coloredSlabs[i], 1), ItemStack(coloredSlabs[i], 1))
+			GameRegistry.addShapelessRecipe(ItemStack(irisPlanks, 1, i),
+											ItemStack(irisSlabs[i], 1), ItemStack(irisSlabs[i], 1))
 		GameRegistry.addShapelessRecipe(ItemStack(rainbowPlanks),
-										ItemStack(rainbowSlabs), ItemStack(rainbowSlabs))
+										ItemStack(rainbowSlab), ItemStack(rainbowSlab))
 		
 		recipesSlabsFull = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		GameRegistry.addShapelessRecipe(ItemStack(auroraPlanks),
-										ItemStack(auroraSlabs), ItemStack(auroraSlabs))
+										ItemStack(auroraSlab), ItemStack(auroraSlab))
 		
 		recipeAuroraSlabsToPlanks = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
-			addOreDictRecipe(ItemStack(colorfulSkyDirtRod, 1, i),
+			addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, i),
 							 " PD",
 							 " RP",
 							 "S  ",
-							 'D', ItemStack(coloredDirtBlock, 1, i),
+							 'D', ItemStack(irisDirt, 1, i),
 							 'R', ItemStack(BotaniaItems.skyDirtRod, 1),
 							 'P', PIXIE_DUST,
 							 'S', DRAGONSTONE)
-		addOreDictRecipe(ItemStack(colorfulSkyDirtRod, 1, 16),
+		addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, 16),
 						 " PD",
 						 " RP",
 						 "S  ",
-						 'D', ItemStack(rainbowDirtBlock),
+						 'D', ItemStack(rainbowDirt),
 						 'R', ItemStack(BotaniaItems.skyDirtRod, 1),
 						 'P', PIXIE_DUST,
 						 'S', DRAGONSTONE)
 		
 		recipesColoredSkyDirtRod = BotaniaAPI.getLatestAddedRecipes(16)
 		
-		addOreDictRecipe(ItemStack(lightningRod, 1),
+		addOreDictRecipe(ItemStack(rodLightning, 1),
 						 " EW",
 						 " SD",
 						 "S  ",
@@ -319,7 +320,7 @@ object ShadowFoxRecipes {
 		
 		recipesLightningRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(flameRod, 1),
+		addOreDictRecipe(ItemStack(rodFlameStar, 1),
 						 " EW",
 						 " SD",
 						 "S  ",
@@ -393,7 +394,7 @@ object ShadowFoxRecipes {
 		
 		recipesColorOverride = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(interdictionRod),
+		addOreDictRecipe(ItemStack(rodInterdiction),
 						 " AS",
 						 " DA",
 						 "P  ",
@@ -463,7 +464,7 @@ object ShadowFoxRecipes {
 		recipeIrisSapling = RecipePureDaisyExclusion("treeSapling", irisSapling, 0)
 		BotaniaAPI.pureDaisyRecipes.add(recipeIrisSapling as RecipePureDaisy)
 		
-		addOreDictRecipe(ItemStack(prismaticRod),
+		addOreDictRecipe(ItemStack(rodPrismatic),
 						 " GB",
 						 " DG",
 						 "D  ",
@@ -518,7 +519,7 @@ object ShadowFoxRecipes {
 		
 		recipesThunderousStairs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(resource, 1, 0), // Thunderous Twig
+		GameRegistry.addRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ThunderwoodTwig),
 							   "Q",
 							   "Q",
 							   'Q', ItemStack(lightningWood))
@@ -605,7 +606,7 @@ object ShadowFoxRecipes {
 		
 		recipesCircuitStairs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(resource, 1, 2), // Infernal Twig
+		GameRegistry.addRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodTwig),
 							   "Q",
 							   "Q",
 							   'Q', ItemStack(netherWood))
@@ -615,7 +616,7 @@ object ShadowFoxRecipes {
 		GameRegistry.addRecipe(ItemStack(Blocks.torch, 6),
 							   "C",
 							   "S",
-							   'C', ItemStack(resource, 1, 4), // Flame-Laced Coal
+							   'C', ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal),
 							   'S', ItemStack(Items.stick))
 		
 		recipesSixTorches = BotaniaAPI.getLatestAddedRecipe()
@@ -689,7 +690,7 @@ object ShadowFoxRecipes {
 		
 		recipesSealingStairs = BotaniaAPI.getLatestAddedRecipe()
 		
-		GameRegistry.addRecipe(ItemStack(amp),
+		GameRegistry.addRecipe(ItemStack(amplifier),
 							   " N ",
 							   "NRN",
 							   " N ",
@@ -730,7 +731,7 @@ object ShadowFoxRecipes {
 		CraftingManager.getInstance().recipeList.remove(recipeFertilizerPowder)
 		recipeFertilizerPowder = BotaniaAPI.getLatestAddedRecipe()
 		
-		ModManaInfusionRecipes.manaPowderRecipes.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(BotaniaItems.manaResource, 1, 23), ItemStack(resource, 1, 6), 400))
+		ModManaInfusionRecipes.manaPowderRecipes.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(BotaniaItems.manaResource, 1, 23), ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust), 400))
 		
 		addShapelessOreDictRecipe(ItemStack(BotaniaBlocks.shimmerrock), "livingrock", DYES[16])
 		CraftingManager.getInstance().recipeList.remove(recipeShimmerrock)
@@ -743,27 +744,27 @@ object ShadowFoxRecipes {
 		addShapelessOreDictRecipe(ItemStack(Items.mushroom_stew), MUSHROOM, MUSHROOM, ItemStack(Items.bowl))
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.altar), "SPS", " C ", "CCC", 'S', "slabCobblestone", 'P', RAINBOW_PETAL, 'C', "cobblestone")
-		ModCraftingRecipes.recipesApothecary.add(BotaniaAPI.getLatestAddedRecipe())
+		recipesApothecary.add(BotaniaAPI.getLatestAddedRecipe())
 		addOreDictRecipe(ItemStack(BotaniaBlocks.altar, 1, 9), "SPS", " C ", "CCC", 'S', AlfheimFluffBlocks.livingcobbleSlab, 'P', RAINBOW_PETAL, 'C', AlfheimBlocks.livingcobble)
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.spreader), "WWW", "GP ", "WWW", 'W', LIVING_WOOD, 'P', RAINBOW_PETAL, 'G', if (Botania.gardenOfGlassLoaded) LIVING_WOOD else "ingotGold")
-		ModCraftingRecipes.recipesSpreader.add(BotaniaAPI.getLatestAddedRecipe())
+		recipesSpreader.add(BotaniaAPI.getLatestAddedRecipe())
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.spreader, 1, 2), "WWW", "EP ", "WWW", 'W', DREAM_WOOD, 'P', RAINBOW_PETAL, 'E', ELEMENTIUM)
-		ModCraftingRecipes.recipesDreamwoodSpreader.add(BotaniaAPI.getLatestAddedRecipe())
+		recipesDreamwoodSpreader.add(BotaniaAPI.getLatestAddedRecipe())
 		
 		addOreDictRecipe(ItemStack(BotaniaItems.flowerBag), "WPW", "W W", " W ", 'P', PETAL, 'W', ItemStack(Blocks.wool, 1, 32767))
 		CraftingManager.getInstance().recipeList.remove(recipeFlowerBag)
 		recipeFlowerBag = BotaniaAPI.getLatestAddedRecipe()
 		
-		addShapelessOreDictRecipe(ItemStack(resource, 1, 6), RAINBOW_PETAL, PESTLE_AND_MORTAR)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust), RAINBOW_PETAL, PESTLE_AND_MORTAR)
 		recipeRainbowPetalGrinding = BotaniaAPI.getLatestAddedRecipe()
 		
-		addShapelessOreDictRecipe(ItemStack(resource, 2, 7), RAINBOW_FLOWER)
-		addShapelessOreDictRecipe(ItemStack(resource, 4, 7), RAINBOW_DOUBLE_FLOWER)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 2, ElvenResourcesMetas.RainbowPetal), RAINBOW_FLOWER)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 4, ElvenResourcesMetas.RainbowPetal), RAINBOW_DOUBLE_FLOWER)
 		recipesRainbowPetal = BotaniaAPI.getLatestAddedRecipes(2)
 		
-		addOreDictRecipe(ItemStack(rainbowPetals), "PPP", "PPP", "PPP", 'P', ItemStack(resource, 1, 7))
+		addOreDictRecipe(ItemStack(rainbowPetalBlock), "PPP", "PPP", "PPP", 'P', ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
 		recipeRainbowPetalBlock = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipeShimmerQuartz = addQuartzRecipes(shimmerQuartz, shimmerQuartzStairs, shimmerQuartzSlab)
@@ -771,7 +772,7 @@ object ShadowFoxRecipes {
 		recipesAttributionHeads = ArrayList()
 		recipesAttributionHeads.add(attributionSkull("yrsegal", irisSeeds, 16)) // Bifrost Seeds
 		// Wire - I just love rainbows, what can I say?
-		recipesAttributionHeads.add(attributionSkull("l0nekitsune", resource, 4)) // Flame-Laced coal
+		recipesAttributionHeads.add(attributionSkull("l0nekitsune", elvenResource, ElvenResourcesMetas.NetherwoodCoal))
 		// L0ne - "hot stuff" (because I'm classy like that)
 		recipesAttributionHeads.add(attributionSkull("Tristaric", coatOfArms, 6)) // Irish Shield
 		// Tris - The only item that remotely fits me.
@@ -792,9 +793,9 @@ object ShadowFoxRecipes {
 		GameRegistry.addSmelting(altWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(altWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(sealingWood, ItemStack(Items.coal, 1, 1), 0.15F)
-		GameRegistry.addSmelting(lightningPlanks, ItemStack(resource, 2, 1), 0.1F) // Thunderous Splinters
-		GameRegistry.addSmelting(netherPlanks, ItemStack(resource, 2, 3), 0.1F) // Infernal Splinters
-		GameRegistry.addSmelting(netherWood, ItemStack(resource, 1, 4), 0.15F) // Flame-Laced Coal
+		GameRegistry.addSmelting(lightningPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.ThunderwoodSplinters), 0.1F)
+		GameRegistry.addSmelting(netherPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.NetherwoodSplinters), 0.1F)
+		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
 		
 		recipesSplashPotions = ShapelessOreRecipe(ItemStack(splashPotion), BotaniaItems.brewVial, Items.gunpowder)
 		GameRegistry.addRecipe(RecipeThrowablePotion())
@@ -806,8 +807,8 @@ object ShadowFoxRecipes {
 		GameRegistry.addRecipe(ItemStack(block),
 							   "QQ",
 							   "QQ",
-							   'Q', ItemStack(resource, 1, 5))
-		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(resource, 4, 5), ItemStack(block, 1, 32767), 25)
+							   'Q', ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowQuartz))
+		BotaniaAPI.registerManaAlchemyRecipe(ItemStack(elvenResource, 4, ElvenResourcesMetas.RainbowQuartz), ItemStack(block, 1, 32767), 25)
 		GameRegistry.addRecipe(ItemStack(block, 2, 2),
 							   "Q",
 							   "Q",
@@ -818,7 +819,7 @@ object ShadowFoxRecipes {
 							   'Q', slab)
 		addStairsAndSlabs(block, 0, stairs, slab)
 		
-		GameRegistry.addRecipe(ShapedOreRecipe(ItemStack(resource, 8, 5),
+		GameRegistry.addRecipe(ShapedOreRecipe(ItemStack(elvenResource, 8, ElvenResourcesMetas.RainbowQuartz),
 											   "QQQ",
 											   "QCQ",
 											   "QQQ",
@@ -842,8 +843,8 @@ object ShadowFoxRecipes {
 		addShapelessOreDictRecipe(ItemStack(rainbowGrass, 1, 3), "dustGlowstone", "dustGlowstone", ItemStack(rainbowGrass, 1, 2))
 		recipesShinyFlowers.add(BotaniaAPI.getLatestAddedRecipe())
 		
-		GameRegistry.addShapelessRecipe(ItemStack(rainbowMushroom), ItemStack(Blocks.red_mushroom), ItemStack(resource, 1, 6))
-		GameRegistry.addShapelessRecipe(ItemStack(rainbowMushroom), ItemStack(Blocks.brown_mushroom), ItemStack(resource, 1, 6))
+		GameRegistry.addShapelessRecipe(ItemStack(rainbowMushroom), ItemStack(Blocks.red_mushroom), ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust))
+		GameRegistry.addShapelessRecipe(ItemStack(rainbowMushroom), ItemStack(Blocks.brown_mushroom), ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust))
 		
 		recipesMushrooms.addAll(BotaniaAPI.getLatestAddedRecipes(2))
 	}

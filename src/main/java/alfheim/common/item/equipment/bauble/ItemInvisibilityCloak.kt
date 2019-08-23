@@ -18,10 +18,6 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 @Optional.Interface(modid = "TravellersGear", iface = "travellersgear.api.ITravellersGear", striprefs = true)
 class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, ITravellersGear {
 	
-	init {
-		creativeTab = AlfheimCore.alfheimTab
-	}
-	
 	override fun getBaubleType(arg0: ItemStack) =
 		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
 	

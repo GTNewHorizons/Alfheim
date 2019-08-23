@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.registry.AlfheimRegistry
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer

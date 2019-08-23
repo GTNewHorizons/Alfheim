@@ -21,8 +21,8 @@ import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemDodgeRing: ItemBauble("DodgeRing") {
+	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	
