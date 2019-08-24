@@ -17,12 +17,12 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.properties.Delegates
 
-class ItemPrismaticRod: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInkable {
+class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInkable {
 	
 	val COST = 100
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 	
 	var overlayIcon: IIcon by Delegates.notNull()

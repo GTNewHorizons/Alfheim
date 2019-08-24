@@ -48,7 +48,7 @@ class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	override fun onUsedByWand(p0: EntityPlayer?, p1: ItemStack?, p2: World?, p3: Int, p4: Int, p5: Int, p6: Int): Boolean {
 		if (p2 != null) {
 			if (TileTreeCrafter.canEnchanterExist(p2, p3, p4, p5)) {
-				p2.setBlock(p3, p4, p5, AlfheimBlocks.treeCrafterBlockRB, p6, 3)
+				p2.setBlock(p3, p4, p5, AlfheimBlocks.treeCrafterBlockAU, p6, 3)
 				p2.playSoundEffect(p3.toDouble(), p4.toDouble(), p5.toDouble(), "botania:enchanterBlock", 0.5F, 0.6F)
 				
 				return true

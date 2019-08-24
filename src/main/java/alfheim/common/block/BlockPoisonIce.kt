@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
@@ -28,7 +29,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		val mod = 0.001f
 		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod)
 		setBlockName("NiflheimIce")
-		setBlockTextureName(ModInfo.MODID + ":NiflheimIce")
+		setCreativeTab(null)
 		setBlockUnbreakable()
 		setHarvestLevel("pick", 2)
 		setLightOpacity(0)

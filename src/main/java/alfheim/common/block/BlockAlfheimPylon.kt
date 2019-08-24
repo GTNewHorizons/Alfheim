@@ -4,6 +4,7 @@ import alexsocol.asjlib.extendables.block.BlockModContainerMeta
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileAlfheimPylon
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.material.Material
@@ -19,7 +20,7 @@ import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser", striprefs = true)
-class BlockAlfheimPylon: BlockModContainerMeta(Material.iron, 3, ModInfo.MODID, "AlfheimPylons", hard = 5.5f), ILexiconable, IInfusionStabiliser {
+class BlockAlfheimPylon: BlockModContainerMeta(Material.iron, 3, ModInfo.MODID, "AlfheimPylons", AlfheimTab, 5.5f), ILexiconable, IInfusionStabiliser {
 
 	init {
 		val f = 1f / 16f * 2f

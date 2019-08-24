@@ -1,5 +1,6 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.crafting.recipe.ShadowFoxRecipes
@@ -7,6 +8,7 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
@@ -62,14 +64,15 @@ class HilarityHandler {
     )
 
     init {
-        registerHandler("yrsegal", "i claim the blade of chaos!", "Male", EnumChatFormatting.GOLD,
-                itemsRequiredWire, "i awaken the ancients within all of you! from my soul's fire the world burns anew!",
+        registerHandler("yrsegal", "I claim the Blade of Chaos!", "Male", EnumChatFormatting.GOLD,
+                itemsRequiredWire, "I awaken the Ancients within all of you! From my soul's fire the world burns anew!",
                 ItemStack(ModItems.elementiumAxe, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.wireAxe))
-        registerHandler("Tristaric", "i claim the blade of order!", "Female", EnumChatFormatting.LIGHT_PURPLE,
-                itemsRequiredTris, "my inward eye sees the depths of my soul! i accept both sides, and reject my downfall!",
+        registerHandler("Tristaric", "I claim the Blade of Order!", "Female", EnumChatFormatting.LIGHT_PURPLE,
+                itemsRequiredTris, "My inward eye sees the depths of my soul! I accept both sides, and reject my downfall!",
                 ItemStack(ModItems.elementiumSword, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.trisDagger))
+        registerHandler("AlexSocol", "High Consul of Alfheim commands you: grant me unlimited power!", "Overlord", EnumChatFormatting.DARK_RED,
+                listOf(ItemStack(Blocks.piston_extension)), "\n", ItemStack(Items.stick), ItemStack(AlfheimItems.royalStaff))
     }
-
 
     private class CraftHandler(val playerName: String, val cheatyString: String,
                                val gender: String, val chatColor: EnumChatFormatting,
@@ -77,9 +80,9 @@ class HilarityHandler {
                                val resourceItem: ItemStack, val outputItem: ItemStack) {
         
         fun execute(e: ServerChatEvent): Boolean {
-            val msg = e.message.toLowerCase().trim()
+            val msg = e.message.trim()
             val player = e.player
-
+    
             if (player.commandSenderName == playerName && msg == cheatyString) {
                 if (replaceItemInHand(player, resourceItem, outputItem)) {
                     e.component.chatStyle.color = chatColor
@@ -116,9 +119,13 @@ class HilarityHandler {
                     }
                 }
             } else if (msg == cheatyString) {
-                val chat = ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.youAreNotTheChosenOne$gender"))
-                chat.chatStyle.color = chatColor
-                player.addChatMessage(chat)
+                if (gender == "Overlord") {
+                    player.setPositionAndUpdate(player.posX, -66666.6, player.posZ)
+                }else {
+                    val chat = ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.youAreNotTheChosenOne$gender"))
+                    chat.chatStyle.color = chatColor
+                    player.addChatMessage(chat)
+                }
                 e.isCanceled = true
                 return true
             }

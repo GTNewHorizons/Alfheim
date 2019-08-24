@@ -5,6 +5,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemRainbowDoubleGrassMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -36,10 +37,11 @@ class BlockRainbowDoubleGrass: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	val AURORA = 1
 	
 	init {
+		setBlockNameSafe(name)
+		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setBlockNameSafe(name)
 	}
 	
 	@SubscribeEvent

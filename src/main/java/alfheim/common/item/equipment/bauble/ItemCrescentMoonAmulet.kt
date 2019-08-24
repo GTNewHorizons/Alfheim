@@ -14,7 +14,7 @@ import kotlin.math.max
 
 class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem {
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 		MinecraftForge.EVENT_BUS.register(this)
 	}
 	

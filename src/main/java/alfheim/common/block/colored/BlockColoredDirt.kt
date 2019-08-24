@@ -2,6 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -27,10 +28,10 @@ class BlockColoredDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 	private val TYPES = 16
 	
 	init {
-		blockHardness = 0.5F
+		setHardness(0.5f)
 		setLightLevel(0f)
-		stepSound = soundTypeGravel
 		setBlockName(name)
+		stepSound = soundTypeGravel
 		BotaniaAPI.registerPaintableBlock(this)
 	}
 	

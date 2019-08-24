@@ -23,7 +23,7 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 	init {
 		setFull3D()
 		maxDamage = 1200
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 
 	@SideOnly(Side.CLIENT)

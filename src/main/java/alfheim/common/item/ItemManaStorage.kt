@@ -19,7 +19,7 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	
 	init {
 		maxDamage = 1000
-		setMaxStackSize(1)
+		maxStackSize = 1
 		setNoRepair()
 	}
 

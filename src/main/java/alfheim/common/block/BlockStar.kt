@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileEntityStar
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemStarPlacer
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
@@ -25,9 +26,9 @@ class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexicona
 	init {
 		setBlockName(name)
 		val f = 0.25f
-		setStepSound(soundTypeCloth)
 		setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
 		setLightLevel(1.0f)
+		setStepSound(soundTypeCloth)
 	}
 	
 	@Optional.Method(modid = "easycoloredlights")

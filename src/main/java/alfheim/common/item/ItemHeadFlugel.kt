@@ -1,6 +1,7 @@
 package alfheim.common.item
 
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -13,6 +14,10 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class ItemHeadFlugel: ItemMod("FlugelHead") {
 
+	init {
+		creativeTab = AlfheimTab
+	}
+	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
 		Blocks.pumpkin
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1))

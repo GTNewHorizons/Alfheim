@@ -17,7 +17,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper.*
 class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 		setTextureName(ModInfo.MODID + ":undefined")
 	}
 	

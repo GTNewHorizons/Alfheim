@@ -4,6 +4,7 @@ import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -32,8 +33,9 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 	lateinit var bottomIcon: IIcon
 	
 	init {
-		setStepSound(Block.soundTypeGrass)
 		setBlockNameSafe(name)
+		setCreativeTab(AlfheimTab)
+		setStepSound(Block.soundTypeGrass)
 	}
 	
 	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, isRemote: Boolean) = false

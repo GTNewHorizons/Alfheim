@@ -50,7 +50,7 @@ class AlfheimCore {
 		var WAILALoaded = false
 		
 		init {
-			AlfheimTab()
+			AlfheimTab
 		}
 	}
 	

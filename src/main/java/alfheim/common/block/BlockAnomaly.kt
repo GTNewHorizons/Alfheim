@@ -4,8 +4,10 @@ import alexsocol.asjlib.extendables.MaterialPublic
 import alfheim.api.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.item.block.ItemBlockAnomaly
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.*
 import alfheim.common.lexicon.AlfheimLexiconData
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.MapColor
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -23,12 +25,18 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 	init {
 		setBlockBounds(0.25f, 0.25f, 0.25f, 0.75f, 0.75f, 0.75f)
 		setBlockName("Anomaly")
-		setBlockTextureName(ModInfo.MODID + ":ManaInfuserTopDark") // why not :)
 		setBlockUnbreakable()
+		setCreativeTab(null)
 		setLightLevel(1f)
 		setLightOpacity(0)
 		setResistance(java.lang.Float.MAX_VALUE / 3.0f)
 		setStepSound(Block.soundTypeCloth)
+	}
+	
+	override fun shouldRegisterInNameSet() = false
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockAnomaly::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -49,6 +57,7 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		iconUndefined = reg.registerIcon(ModInfo.MODID + ":undefined")
+		blockIcon = iconUndefined
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileAnomaly()

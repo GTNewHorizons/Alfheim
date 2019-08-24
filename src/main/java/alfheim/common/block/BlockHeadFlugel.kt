@@ -1,6 +1,7 @@
 package alfheim.common.block
 
 import alfheim.common.block.tile.TileHeadFlugel
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
@@ -16,6 +17,7 @@ class BlockHeadFlugel: BlockSkull() {
 	
 	init {
 		setBlockName("FlugelHeadBlock")
+		setCreativeTab(AlfheimTab)
 		setHardness(1f)
 	}
 	

@@ -1,6 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -15,9 +16,9 @@ import net.minecraftforge.common.MinecraftForge
 abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	
 	var originalLight: Int = 0
-	open val registerInCreative: Boolean = true
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}
@@ -48,12 +49,13 @@ abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun loadTextures(event: TextureStitchEvent.Pre) {
-		if (event.map.textureType == 0 && isInterpolated())
+		if (event.map.textureType == 0)
 			loadTextures(event.map)
 	}
 	
 	@SideOnly(Side.CLIENT)
 	open fun loadTextures(map: TextureMap) {
-		blockIcon = InterpolatedIconHelper.forBlock(map, this)
+		if (isInterpolated())
+			blockIcon = InterpolatedIconHelper.forBlock(map, this)
 	}
 }

@@ -5,6 +5,7 @@ import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.common.block.tile.sub.anomaly.SubTileAntigrav
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
@@ -134,16 +135,23 @@ object AlfheimAPI {
 		try {
 			anomalyInstances[name] = behavior.newInstance()
 		} catch (e: Throwable) {
-			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, "Cannot instantiate anomaly subtile for " + behavior.canonicalName)
-			e.printStackTrace()
+			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, e, "Cannot instantiate anomaly subtile for ${behavior.canonicalName}")
 			throw IllegalArgumentException("Uninstantiatable anomaly subtile.")
 		}
 		
 	}
 	
 	fun getAnomaly(name: String): Class<out SubTileEntity> =
-		anomalies[name]!!
+		anomalies[name] ?: FallbackAnomaly::class.java
 	
 	fun getAnomalyInstance(name: String) =
-		anomalyInstances[name]!!
+		anomalyInstances[name] ?: FallbackAnomaly
+	
+	object FallbackAnomaly: SubTileEntity() {
+		override val targets: List<Any> = emptyList()
+		override val rarity = EnumAnomalityRarity.COMMON
+		override val strip = 31
+		override fun performEffect(target: Any) = Unit
+		override fun typeBits() = 0
+	}
 }

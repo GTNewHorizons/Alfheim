@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.AlfheimTab
 import baubles.api.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -14,6 +15,10 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
  * @author ExtraMeteorP, CKATEPTb
  */
 class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
+	
+	init {
+		creativeTab = AlfheimTab
+	}
 	
 	override fun onWornTick(stack: ItemStack?, player: EntityLivingBase?) {
 		super.onWornTick(stack, player)

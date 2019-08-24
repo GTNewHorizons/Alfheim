@@ -21,7 +21,7 @@ import kotlin.math.floor
 class ItemAstrolabe: ItemMod("Astrolabe") {
 
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {

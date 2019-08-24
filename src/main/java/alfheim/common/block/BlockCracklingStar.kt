@@ -23,9 +23,9 @@ class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 	init {
 		setBlockName("cracklingStar")
 		val f = 0.25f
+		setBlockBounds(f, f, f, 1f - f, 1f - f, 1f - f)
+		setLightLevel(1f)
 		setStepSound(soundTypeCloth)
-		setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
-		setLightLevel(1.0f)
 	}
 	
 	@Optional.Method(modid = "easycoloredlights")

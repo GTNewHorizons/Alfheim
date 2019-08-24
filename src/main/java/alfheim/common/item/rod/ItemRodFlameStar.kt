@@ -25,10 +25,10 @@ import java.awt.Color
  * @author WireSegal
  * Created at 9:32 PM on 1/27/16.
  */
-open class ItemFlameRod(name: String = "rodFlameStar"): ItemMod(name), IManaUsingItem {
+open class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsingItem {
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}

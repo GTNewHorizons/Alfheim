@@ -15,7 +15,7 @@ import vazkii.botania.common.Botania
 class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 	
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow

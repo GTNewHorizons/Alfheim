@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.armor.elvoruim
 
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.collect.*
@@ -27,6 +28,10 @@ import java.util.*
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
 open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, name, AlfheimAPI.ELVORIUM), IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
+	
+	init {
+		creativeTab = AlfheimTab
+	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun provideArmorModelForSlot(stack: ItemStack?, slot: Int): ModelBiped {

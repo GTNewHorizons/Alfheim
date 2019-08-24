@@ -3,6 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileInvisibleManaFlame
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -27,7 +28,8 @@ import java.awt.Color
 class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	
 	init {
-		setMaxStackSize(1)
+		creativeTab = AlfheimTab
+		maxStackSize = 1
 		GameRegistry.addRecipe(LensDyeingRecipe())
 		RecipeSorter.register("${ModInfo.MODID}:lensDying", LensDyeingRecipe::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}

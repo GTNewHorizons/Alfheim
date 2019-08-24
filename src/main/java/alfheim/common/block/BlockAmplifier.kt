@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.magtrees.sealing.ISoundSilencer
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer

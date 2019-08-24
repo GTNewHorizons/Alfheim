@@ -47,6 +47,7 @@ import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.render.tile.RenderTileAltar
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
+import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
@@ -326,6 +327,12 @@ object AlfheimHookHandler {
 		
 		ItemLens.setLens(MESSANGER, LensMessanger())
 		ItemLens.setLens(TRIPWIRE, LensTripwire())
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "<init>")
+	fun `BlockModWall$init`(block: BlockModWall) {
+		block.setCreativeTab(BotaniaCreativeTab.INSTANCE)
 	}
 	
 	@JvmStatic

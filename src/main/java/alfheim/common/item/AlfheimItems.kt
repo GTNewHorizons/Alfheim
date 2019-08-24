@@ -3,6 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.item.creator.*
 import alfheim.common.item.equipment.armor.elemental.*
@@ -131,8 +132,8 @@ object AlfheimItems {
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")
 		emblem = ItemPriestEmblem()
 		excaliber = ItemExcaliber()
-		flugelDisc = ItemModRecord("flugel", "FlugelDisc")
-		flugelDisc2 = ItemModRecord("miku", "MikuDisc")
+		flugelDisc = ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimTab)
+		flugelDisc2 = ItemModRecord("miku", "MikuDisc").setCreativeTab(null)
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
@@ -154,13 +155,13 @@ object AlfheimItems {
 		peacePipe = ItemPeacePipe()
 		pixieAttractor = ItemPendant("PixieAttractor")
 		realitySword = ItemRealitySword()
-		rodColorfulSkyDirt = ItemIridescentRod()
+		rodColorfulSkyDirt = ItemRodIridescent()
 		rodFire = ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame)
-		rodFlameStar = ItemFlameRod()
+		rodFlameStar = ItemRodFlameStar()
 		rodIce = ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce)
-		rodInterdiction = ItemInterdictionRod()
-		rodLightning = ItemLightningRod()
-		rodPrismatic = ItemPrismaticRod()
+		rodInterdiction = ItemRodInterdiction()
+		rodLightning = ItemRodLightning()
+		rodPrismatic = ItemRodPrismatic()
 		rodGrass = ItemRodGrass()
 		starPlacer = ItemStarPlacer()
 		starPlacer2 = ItemStarPlacer2()

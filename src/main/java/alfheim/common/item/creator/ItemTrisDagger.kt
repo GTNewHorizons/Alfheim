@@ -2,6 +2,7 @@ package alfheim.common.item.creator
 
 import alfheim.api.*
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -40,8 +41,9 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	}
 	
 	init {
-		setMaxStackSize(1)
+		creativeTab = AlfheimTab
 		maxDamage = toolMaterial.maxUses
+		maxStackSize = 1
 		unlocalizedName = name
 		DaggerEventHandler.register()
 		if (FMLLaunchHandler.side().isClient)

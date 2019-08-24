@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -17,6 +18,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 		setBlockBounds(0f, 0f, 3f / 16, 1f, 3f / 16, 13f / 16)
 		setBlockName("RaceSelector")
 		setBlockUnbreakable()
+		setCreativeTab(null)
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {

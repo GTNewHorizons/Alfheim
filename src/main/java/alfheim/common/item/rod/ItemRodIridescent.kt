@@ -19,7 +19,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.Vector3
 import java.awt.Color
 
-class ItemIridescentRod(name: String = "rodColorfulSkyDirt"): ItemIridescent(name), IAvatarWieldable, IManaUsingItem, IBlockProvider {
+class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(name), IAvatarWieldable, IManaUsingItem, IBlockProvider {
 	
 	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarDirtRainbow.png")
 	
@@ -54,7 +54,7 @@ class ItemIridescentRod(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 	}
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 	
 	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float) =

@@ -15,7 +15,7 @@ import kotlin.math.min
 class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDisplay {
 
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	

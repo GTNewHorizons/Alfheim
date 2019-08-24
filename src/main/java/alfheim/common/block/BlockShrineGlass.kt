@@ -2,12 +2,13 @@ package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.util.Facing
 import net.minecraft.world.IBlockAccess
 
-class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "ShrineGlass", resist = 600f, folder = "shrines/") {
+class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "ShrineGlass", AlfheimTab, resist = 600f, folder = "shrines/") {
 	
 	init {
 		setLightOpacity(0)

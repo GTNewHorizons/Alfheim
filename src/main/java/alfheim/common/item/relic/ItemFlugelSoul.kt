@@ -2,7 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -43,6 +43,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	internal lateinit var signs: Array<IIcon>
 	
 	init {
+		creativeTab = AlfheimTab
 		MinecraftForge.EVENT_BUS.register(this)
 	}
 	

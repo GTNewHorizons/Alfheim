@@ -6,6 +6,10 @@ import net.minecraft.block.*
 
 class BlockModFenceGate(val src: Block, val meta: Int): BlockFenceGate() {
 	
+	init {
+		setCreativeTab(null)
+	}
+	
 	override fun getIcon(side: Int, meta: Int) = src.getIcon(side, this.meta)!!
 
 	override fun setBlockName(name: String): Block {

@@ -4,11 +4,14 @@ import alfheim.api.lib.LibRenderIDs
 import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World
@@ -16,10 +19,9 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandHUD
 import java.util.*
 
-open class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(Material.wood), IWandHUD, ILexiconable, IMultipassRenderer {
+class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(Material.wood), IWandHUD, ILexiconable, IMultipassRenderer {
 	
 	internal var random: Random
-	override val registerInCreative: Boolean = false
 	
 	init {
 		setHardness(3.0f)
@@ -28,6 +30,11 @@ open class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(M
 		setStepSound(Block.soundTypeWood)
 		setBlockName(name)
 		random = Random()
+	}
+	
+	// this is not working
+	override fun registerBlockIcons(reg: IIconRegister) {
+		blockIcon = IconHelper.forName(reg, "treeCrafter")
 	}
 	
 	override fun isOpaqueCube() = false

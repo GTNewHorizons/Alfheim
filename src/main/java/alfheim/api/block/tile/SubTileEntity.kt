@@ -27,13 +27,12 @@ abstract class SubTileEntity {
 	
 	abstract val rarity: EnumAnomalityRarity
 	
-	val frames: Int
-		get() = 32
+	val frames = 32
 	
 	open val strip: Int
 		get() = 0
 	
-	val color: Int
+	open val color: Int
 		get() = 0xFFFFFF
 	
 	enum class EnumAnomalityRarity {

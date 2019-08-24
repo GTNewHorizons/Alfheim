@@ -3,6 +3,7 @@ package alfheim.common.item.equipment.bauble
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
@@ -59,6 +60,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	var baubleIcons: Array<IIcon?> = arrayOfNulls(TYPES)
 	
 	init {
+		creativeTab = AlfheimTab
 		setHasSubtypes(true)
 	}
 	

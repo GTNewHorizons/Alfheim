@@ -3,6 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -49,6 +50,7 @@ open class ItemIridescent(name: String) : Item() {
     }
 
     init {
+        creativeTab = AlfheimTab
         setHasSubtypes(true)
         unlocalizedName = name
     }

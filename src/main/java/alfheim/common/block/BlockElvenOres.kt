@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -14,7 +15,7 @@ import vazkii.botania.common.item.ModItems
 import java.util.*
 import kotlin.math.*
 
-class BlockElvenOres: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenOre", hard = 2f, harvLvl = 2), ILexiconable {
+class BlockElvenOres: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenOre", AlfheimTab, 2f, harvLvl = 2), ILexiconable {
 	
 	val metas = intArrayOf(9, 1, 5, 3, ElvenResourcesMetas.IffesalDust)
 	val rand = Random()

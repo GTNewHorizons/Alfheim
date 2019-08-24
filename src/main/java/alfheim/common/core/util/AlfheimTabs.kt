@@ -158,6 +158,7 @@ import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
 import alfheim.common.item.AlfheimItems.rodPrismatic
+import alfheim.common.item.AlfheimItems.royalStaff
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
@@ -167,10 +168,11 @@ import alfheim.common.item.AlfheimItems.trisDagger
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
+import net.minecraft.client.Minecraft
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 
-class AlfheimTab: CreativeTabs("Alfheim") {
+object AlfheimTab: CreativeTabs("Alfheim") {
 	
 	override fun getTabIconItem() = Item.getItemFromBlock(alfheimPortal)!!
 	
@@ -180,6 +182,8 @@ class AlfheimTab: CreativeTabs("Alfheim") {
 		backgroundImageName = "Alfheim.png"
 		setNoTitle()
 	}
+	
+	override fun hasSearchBar() = true
 	
 	override fun displayAllReleventItems(list: MutableList<Any?>) {
 		this.list = list
@@ -382,6 +386,11 @@ class AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaMarker)
 		addBlock(schemaGenerator)
 		addBlock(schemaAnnihilator)
+		
+		try {
+			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol")
+				addItem(royalStaff)
+		} catch (e: Throwable) {}
 	}
 	
 	private fun addBlock(block: Block) {

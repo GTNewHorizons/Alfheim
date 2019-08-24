@@ -3,6 +3,7 @@ package alfheim.common.item.equipment.bauble
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.ItemIridescent
 import baubles.api.BaubleType
 import net.minecraft.client.Minecraft
@@ -35,6 +36,7 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	)
 	
 	init {
+		creativeTab = AlfheimTab
 		setHasSubtypes(true)
 	}
 	

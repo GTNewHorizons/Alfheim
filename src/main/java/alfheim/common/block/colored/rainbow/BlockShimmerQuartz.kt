@@ -3,6 +3,7 @@ package alfheim.common.block.colored.rainbow
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -25,6 +26,7 @@ import vazkii.botania.common.block.decor.quartz.*
 class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
@@ -89,6 +91,10 @@ class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 
 class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): BlockSpecialQuartzSlab(block, full) {
  
+	init {
+		setCreativeTab(AlfheimTab)
+	}
+	
 	override fun getSingleBlock() = AlfheimBlocks.shimmerQuartzSlab as BlockSlab
 	
 	override fun getFullBlock() = AlfheimBlocks.shimmerQuartzSlabFull as BlockSlab
@@ -103,6 +109,10 @@ class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): 
 class BlockShimmerQuartzStairs(val block: BlockShimmerQuartz): BlockSpecialQuartzStairs(block) {
  
 	lateinit var unlocName: String
+	
+	init {
+		setCreativeTab(AlfheimTab)
+	}
 	
 	override fun setBlockName(par1Str: String): Block? {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)

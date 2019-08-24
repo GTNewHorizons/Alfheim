@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -35,7 +36,8 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	init {
 		setBlockName("MuspelheimFire")
 		setBlockUnbreakable()
-		setLightLevel(1.0f)
+		setCreativeTab(null)
+		setLightLevel(1f)
 		setLightOpacity(0)
 		setResistance(java.lang.Float.MAX_VALUE)
 	}

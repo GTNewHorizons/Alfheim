@@ -48,11 +48,11 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			}
 			
 			for (i in COLOREDWOOD_LOCATIONS) {
-				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks))
+				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks, AlfheimBlocks.auroraPlanks))
 			}
 			
-			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 0, 0), AlfheimBlocks.irisDirt, AlfheimBlocks.rainbowDirt))
-			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 4, 0), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks))
+			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 0, 0), AlfheimBlocks.irisDirt, AlfheimBlocks.rainbowDirt, AlfheimBlocks.auroraDirt))
+			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 4, 0), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks, AlfheimBlocks.auroraPlanks))
 			
 			return mb.makeSet()
 		}
@@ -62,26 +62,27 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val y0 = y - 4
 			
 			for (i in ITEMDISPLAY_LOCATIONS) {
-				if (!i.isBlock(world, ModBlocks.pylon, x0 = x, y0 = y0 + 2, z0 = z)) {
+				if (!i.isBlock(world, ModBlocks.pylon, x, y0 + 2, z)) {
 					// FMLLog.log(Level.INFO, "Pylon at $i")
 					return false
 				}
-				if (!i.isBlock(world, AlfheimBlocks.itemDisplay, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, AlfheimBlocks.itemDisplay, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Item Display at $i")
 					return false
 				}
 			}
 			
 			for (i in OBSIDIAN_LOCATIONS) {
-				if (!i.isBlock(world, Blocks.obsidian, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, Blocks.obsidian, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Obsidian at $i")
 					return false
 				}
 			}
 			
 			for (i in COLOREDWOOD_LOCATIONS) {
-				if (!i.isBlock(world, AlfheimBlocks.irisPlanks, x0 = x, y0 = y0, z0 = z) &&
-					!i.isBlock(world, AlfheimBlocks.rainbowPlanks, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, AlfheimBlocks.irisPlanks, x, y0, z) &&
+					!i.isBlock(world, AlfheimBlocks.rainbowPlanks, x, y0, z) &&
+					!i.isBlock(world, AlfheimBlocks.auroraPlanks, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Colored Wood at $i")
 					return false
 				}
@@ -89,14 +90,17 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			
 			if (world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlock &&
 				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlockRB &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlockAU &&
 				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.irisPlanks &&
-				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.rainbowPlanks) {
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.rainbowPlanks &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.auroraPlanks) {
 				// FMLLog.log(Level.INFO, "Core Block")
 				return false
 			}
 			
 			if (world.getBlock(x, y0, z) !== AlfheimBlocks.irisDirt &&
-				world.getBlock(x, y0, z) !== AlfheimBlocks.rainbowDirt) {
+				world.getBlock(x, y0, z) !== AlfheimBlocks.rainbowDirt &&
+				world.getBlock(x, y0, z) !== AlfheimBlocks.auroraDirt) {
 				// FMLLog.log(Level.INFO, "Dirt Block")
 				return false
 			}
@@ -125,9 +129,11 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val block = worldObj.getBlock(xCoord, yCoord, zCoord)
 			val meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord)
 			
-			if (block === AlfheimBlocks.treeCrafterBlock)
-				worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.irisPlanks, meta, 3)
-			else worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.rainbowPlanks, 0, 3)
+			when {
+				block === AlfheimBlocks.treeCrafterBlock   -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.irisPlanks, meta, 3)
+				block === AlfheimBlocks.treeCrafterBlockRB -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.rainbowPlanks, 0, 3)
+				block === AlfheimBlocks.treeCrafterBlockAU -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.auroraPlanks, 0, 3)
+			}
 			
 			for (var11 in 0..49) {
 				val var13 = Math.random().toFloat()

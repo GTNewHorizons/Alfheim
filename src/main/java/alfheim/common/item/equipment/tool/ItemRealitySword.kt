@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -26,6 +27,7 @@ import kotlin.math.max
 class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 
 	init {
+		creativeTab = AlfheimTab
 		setNoRepair()
 		unlocalizedName = "RealitySword"
 	}

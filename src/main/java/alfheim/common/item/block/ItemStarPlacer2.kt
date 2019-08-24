@@ -19,7 +19,7 @@ import java.util.*
  * @author WireSegal
  * Created at 9:55 PM on 2/6/16.
  */
-class ItemStarPlacer2: ItemMod("starBlock2") {
+class ItemStarPlacer2: ItemMod("starPlacer2") {
 	
 	companion object {
 		const val TAG_COLOR = "color"

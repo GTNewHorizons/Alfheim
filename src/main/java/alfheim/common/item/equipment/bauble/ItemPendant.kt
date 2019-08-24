@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
+import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -16,6 +17,10 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 open class ItemPendant(name: String): ItemBauble(name), IBaubleRender {
 	
 	private var icon: IIcon? = null
+	
+	init {
+		creativeTab = AlfheimTab
+	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(par1IconRegister: IIconRegister) {

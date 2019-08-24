@@ -29,7 +29,7 @@ import vazkii.botania.common.entity.EntityDoppleganger
 import java.awt.Color
 import java.util.*
 
-open class ItemLightningRod(name: String = "rodLightning"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
+open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
 	
 	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarLightning.png")
 	private val COST_AVATAR = 150
@@ -60,7 +60,7 @@ open class ItemLightningRod(name: String = "rodLightning"): ItemMod(name), IMana
 	val PROWESS_TARGETS = 1
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 		MinecraftForge.EVENT_BUS.register(this)
 	}
 	

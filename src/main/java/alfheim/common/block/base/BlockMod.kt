@@ -1,6 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -17,6 +18,7 @@ open class BlockMod(par2Material: Material): Block(par2Material) {
 	var originalLight: Int = 0
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}

@@ -14,7 +14,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	
 	init {
-		setMaxStackSize(1)
+		maxStackSize = 1
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {

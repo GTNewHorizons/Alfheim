@@ -6,6 +6,7 @@ tile.AnimatedTorch.name=Подвижный факел
 tile.AnimatedTorch.desc.random=Случайно
 tile.AnimatedTorch.desc.rotate=Поворот
 tile.AnimatedTorch.desc.toggle=Переключение
+tile.Anomaly..name=Fallback
 tile.Anomaly.ManaVoid.name=Манаворонка
 tile.Anomaly.SpeedUp.name=Ускорение
 tile.Anomaly.Warp.name=Варп

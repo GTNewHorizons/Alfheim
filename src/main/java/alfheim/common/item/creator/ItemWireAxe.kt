@@ -5,6 +5,7 @@ import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -48,8 +49,9 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	}
 	
 	init {
-		setMaxStackSize(1)
+		creativeTab = AlfheimTab
 		maxDamage = toolMaterial.maxUses
+		maxStackSize = 1
 		unlocalizedName = name
 	}
 	
@@ -129,7 +131,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline1")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline2")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline3")}", list)
-			addStringToTooltip("$grey\"I awaken the ancients within all of you!", list)
+			addStringToTooltip("$grey\"I awaken the Ancients within all of you!", list)
 			addStringToTooltip("${grey}From my soul's fire the world burns anew!\"", list)
 		} else addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
 	}

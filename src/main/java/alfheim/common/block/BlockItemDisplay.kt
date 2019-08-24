@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -29,11 +30,11 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	var sideIcons: Array<IIcon?> = arrayOfNulls(TYPES)
 	
 	init {
-		setBlockName("itemDisplay")
-		blockHardness = 2F
-		setStepSound(soundTypeWood)
 		isBlockContainer = true
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F)
+		setBlockName("itemDisplay")
+		setHardness(2f)
+		setStepSound(soundTypeWood)
+		setBlockBounds(0f, 0f, 0f, 1f, 0.5f, 1f)
 	}
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {

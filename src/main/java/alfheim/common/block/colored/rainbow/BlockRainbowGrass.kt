@@ -3,6 +3,7 @@ package alfheim.common.block.colored.rainbow
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.*
 import alfheim.common.item.block.ItemRainbowGrassMod
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -41,10 +42,11 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	}
 	
 	init {
+		setBlockName("rainbowGrass")
+		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setBlockName("rainbowGrass")
 	}
 	
 	override fun setBlockBoundsBasedOnState(world: IBlockAccess, x: Int, y: Int, z: Int) {

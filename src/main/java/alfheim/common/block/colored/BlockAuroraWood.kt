@@ -16,11 +16,10 @@ class BlockAuroraWood: BlockModRotatedPillar(Material.wood) {
 	private val name = "auroraWood"
 	
 	init {
-		blockHardness = 2F
+		setBlockName(name)
+		setHardness(2F)
 		setLightLevel(0f)
 		stepSound = soundTypeWood
-		
-		setBlockName(name)
 	}
 	
 	override fun register(par1Str: String) {

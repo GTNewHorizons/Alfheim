@@ -17,6 +17,7 @@ import alfheim.common.block.mana.*
 import alfheim.common.block.schema.*
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.flower.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -27,7 +28,6 @@ import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.common.block.ModBlocks
 
 object AlfheimBlocks {
-	
 	
 	val alfheimPortal: Block
 	val alfheimPylon: Block
@@ -161,7 +161,7 @@ object AlfheimBlocks {
 	init {
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
-		alfStorage = BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", hard = 5f, resist = 60f)
+		alfStorage = BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f)
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
 		anomaly = BlockAnomaly()
@@ -180,7 +180,7 @@ object AlfheimBlocks {
 		dreamLog = BlockDreamLog()
 		dreamSapling = BlockDreamSapling()
 		elvenOres = BlockElvenOres()
-		elvenSand = BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen)
+		elvenSand = BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen)
 		flugelHeadBlock = BlockHeadFlugel()
 		flugelHead2Block = BlockHeadMiku()
 		itemDisplay = BlockItemDisplay()
@@ -204,7 +204,7 @@ object AlfheimBlocks {
 		irisWood2 = BlockColoredWood(2)
 		irisWood3 = BlockColoredWood(3)
 		kindling = BlockKindling()
-		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID, "LivingCobble", hard = 2f, resist = 60f)
+		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID, "LivingCobble", AlfheimTab, 2f, resist = 60f)
 		livingwoodFunnel = BlockFunnel()
 		manaAccelerator = BlockManaAccelerator()
 		manaInfuser = BlockManaInfuser()
