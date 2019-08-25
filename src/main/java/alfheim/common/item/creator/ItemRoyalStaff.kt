@@ -1,14 +1,11 @@
 package alfheim.common.item.creator
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.helper.*
 import alfheim.common.item.ItemMod
-import com.mojang.authlib.GameProfile
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.command.*
-import net.minecraft.command.server.CommandOp
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*

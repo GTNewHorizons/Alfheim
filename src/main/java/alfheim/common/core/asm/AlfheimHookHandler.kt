@@ -3,7 +3,6 @@ package alfheim.common.core.asm
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
@@ -59,7 +58,7 @@ import vazkii.botania.common.item.ItemGaiaHead
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
-import vazkii.botania.common.lib.*
+import vazkii.botania.common.lib.LibBlockNames
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
@@ -393,10 +392,6 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(createMethod = true)
-	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
-	
-	@JvmStatic
-	@Hook(createMethod = true)
 	fun onItemRightClick(item: ItemGaiaHead, stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1))
 		return stack
@@ -471,6 +466,11 @@ object AlfheimHookHandler {
 		}
 		return false
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic

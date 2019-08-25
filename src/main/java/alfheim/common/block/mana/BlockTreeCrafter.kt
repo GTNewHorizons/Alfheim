@@ -6,12 +6,11 @@ import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.lexicon.ShadowFoxLexiconData
-import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.texture.*
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.world.World

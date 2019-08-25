@@ -2,4 +2,5 @@ Innovations:
  --
 
 Fixes:
- --
+ #82 ThermalExpansion incompatibility
+ Texture errors

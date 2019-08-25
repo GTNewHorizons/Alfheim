@@ -2,7 +2,6 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

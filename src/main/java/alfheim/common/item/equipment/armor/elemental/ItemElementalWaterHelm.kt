@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer

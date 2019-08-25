@@ -3,7 +3,6 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer

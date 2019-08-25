@@ -5,7 +5,6 @@ import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.common.block.tile.sub.anomaly.SubTileAntigrav
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog

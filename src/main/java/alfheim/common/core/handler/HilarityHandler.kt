@@ -1,6 +1,5 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.crafting.recipe.ShadowFoxRecipes

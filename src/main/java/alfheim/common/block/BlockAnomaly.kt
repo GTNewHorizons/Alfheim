@@ -4,8 +4,7 @@ import alexsocol.asjlib.extendables.MaterialPublic
 import alfheim.api.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.util.AlfheimTab
-import alfheim.common.item.block.*
+import alfheim.common.item.block.ItemBlockAnomaly
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block

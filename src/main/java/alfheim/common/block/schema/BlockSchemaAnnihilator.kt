@@ -1,6 +1,6 @@
 package alfheim.common.block.schema
 
-import alfheim.common.block.base.*
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileSchemaAnnihilator
 import alfheim.common.core.helper.IconHelper
 import net.minecraft.block.material.Material

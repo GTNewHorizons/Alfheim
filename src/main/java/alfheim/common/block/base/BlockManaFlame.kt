@@ -1,7 +1,6 @@
 package alfheim.common.block.base
 
 import alfheim.common.block.tile.TileManaFlame
-import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
 import net.minecraft.block.material.Material

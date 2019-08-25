@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.StatCollector
 
-open class ItemSubtypedBlockMod(par2Block: Block): ItemBlockWithMetadata(par2Block, par2Block) {
+open class ItemSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, block) {
 	
 	override fun getMetadata(meta: Int): Int {
 		if (field_150939_a is BlockLeavesMod) return meta or field_150939_a.decayBit()
@@ -27,7 +27,7 @@ open class ItemSubtypedBlockMod(par2Block: Block): ItemBlockWithMetadata(par2Blo
 	}
 }
 
-class ItemUniqueSubtypedBlockMod(par2Block: Block): ItemBlockWithMetadata(par2Block, par2Block) {
+class ItemUniqueSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, block) {
 	override fun getMetadata(meta: Int): Int {
 		if (field_150939_a is BlockLeavesMod) return meta or field_150939_a.decayBit()
 		return meta

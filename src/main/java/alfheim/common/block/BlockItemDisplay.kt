@@ -3,7 +3,6 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
