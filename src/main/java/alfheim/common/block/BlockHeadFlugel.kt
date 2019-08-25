@@ -1,11 +1,11 @@
 package alfheim.common.block
 
+import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileHeadFlugel
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
@@ -38,13 +38,12 @@ class BlockHeadFlugel: BlockSkull() {
 		return ret
 	}
 	
-	@SideOnly(Side.CLIENT)
 	override fun getItem(world: World, x: Int, y: Int, z: Int) = AlfheimItems.flugelHead
 	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = AlfheimItems.flugelHead
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = 0
 	override fun damageDropped(meta: Int) = 0
 	override fun createNewTileEntity(world: World, meta: Int) = TileHeadFlugel()
-	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int) = Blocks.coal_block.getBlockTextureFromSide(side)!!
+	override fun getItemIconName() = "${ModInfo.MODID}:FlugelHead"
 }

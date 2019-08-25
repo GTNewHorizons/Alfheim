@@ -3,6 +3,7 @@ package alfheim.common.core.asm
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.api.ModInfo
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
@@ -44,6 +45,7 @@ import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.proxy.ClientProxy
+import vazkii.botania.client.lib.LibResources
 import vazkii.botania.client.render.tile.RenderTileAltar
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
@@ -57,7 +59,7 @@ import vazkii.botania.common.item.ItemGaiaHead
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
-import vazkii.botania.common.lib.LibBlockNames
+import vazkii.botania.common.lib.*
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
@@ -388,6 +390,10 @@ object AlfheimHookHandler {
 				}
 		return false
 	}
+	
+	@JvmStatic
+	@Hook(createMethod = true)
+	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
 	@JvmStatic
 	@Hook(createMethod = true)
