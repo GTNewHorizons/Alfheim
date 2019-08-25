@@ -1,11 +1,5 @@
 Innovations:
- Navigation (search) box in Alfheim tab
- Alfheim and Iridescense tabs are merged
- [WARNING!] Changed Blocks and items names and metas
+ --
 
 Fixes:
- #82 ThermalExpansion incompatibility
- Texture errors
- 
-Technical info:
- Updated kotlin to 1.3.50
+ --
