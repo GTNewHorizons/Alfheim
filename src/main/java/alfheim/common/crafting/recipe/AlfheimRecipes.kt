@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.ASJUtilities.addOreDictRecipe
 import alexsocol.asjlib.ASJUtilities.addShapelessOreDictRecipe
 import alfheim.AlfheimCore
-import alfheim.api.AlfheimAPI
+import alfheim.api.*
 import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibOreDict.ARUNE
@@ -100,8 +100,8 @@ import net.minecraft.init.Blocks.*
 import net.minecraft.init.Items.*
 import net.minecraft.item.*
 import net.minecraft.item.crafting.*
+import net.minecraftforge.oredict.*
 import net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE
-import net.minecraftforge.oredict.ShapedOreRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
@@ -806,15 +806,19 @@ object AlfheimRecipes {
 		
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-
+		
 		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
 			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
-
+		RecipeSorter.register("${ModInfo.MODID}:elvhelm", RecipeHelmetElvorium::class.java, RecipeSorter.Category.SHAPED, "after:forge:shapedore")
+		
 		addRecipe(RecipeLootInterceptor())
+		RecipeSorter.register("${ModInfo.MODID}:looter", RecipeLootInterceptor::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeLootInterceptorClear())
+		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
+		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {

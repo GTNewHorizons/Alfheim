@@ -799,6 +799,7 @@ object ShadowFoxRecipes {
 		
 		recipesSplashPotions = ShapelessOreRecipe(ItemStack(splashPotion), BotaniaItems.brewVial, Items.gunpowder)
 		GameRegistry.addRecipe(RecipeThrowablePotion())
+		RecipeSorter.register("${ModInfo.MODID}:throwpotion", RecipeThrowablePotion::class.java, Category.SHAPELESS, "")
 		
 		addShapelessOreDictRecipe(ItemStack(fireGrenade), BotaniaItems.vial, Items.fire_charge, Items.gunpowder)
 	}
