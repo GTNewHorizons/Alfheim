@@ -2,7 +2,8 @@ package alfheim.api.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
-import alfheim.common.core.util.*
+import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.mfloor
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
@@ -98,9 +99,9 @@ enum class EnumRace {
 			player.capabilities.allowFlying = true
 			player.sendPlayerAbilities()
 			
-			val (x, y, z) = AlfheimConfig.zones[race.ordinal]
-			player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfig.dimensionIDAlfheim)
-			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfig.dimensionIDAlfheim, x, y, z)
+			val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal]
+			player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
+			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 		}
 		
 		operator fun set(player: EntityPlayer, race: EnumRace) {

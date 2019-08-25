@@ -1,14 +1,12 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
@@ -20,12 +18,10 @@ import vazkii.botania.common.item.rod.ItemExchangeRod
 import java.util.*
 import kotlin.math.floor
 
-class ItemAstrolabe: Item() {
+class ItemAstrolabe: ItemMod("Astrolabe") {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setMaxStackSize(1)
-		setTextureName(ModInfo.MODID + ":Astrolabe")
-		unlocalizedName = "Astrolabe"
+		maxStackSize = 1
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {

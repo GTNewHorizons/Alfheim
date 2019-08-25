@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.armor.elemental
 
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElementalArmor
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
@@ -14,6 +15,10 @@ import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 
 abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type, name, AlfheimAPI.ELEMENTAL), IPixieSpawner {
+	
+	init {
+		creativeTab = AlfheimTab
+	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun provideArmorModelForSlot(stack: ItemStack?, slot: Int): ModelBiped {
@@ -40,7 +45,7 @@ abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type,
 		val stack = player.inventory.armorInventory[3 - i] ?: return false
 		
 		when (i) {
-			0 -> return stack.item === AlfheimItems.elementalHelmet || (AlfheimItems.elementalHelmetRevealingIsInitialized() && stack.item === AlfheimItems.elementalHelmetRevealing)
+			0 -> return stack.item === AlfheimItems.elementalHelmet || AlfheimItems.elementalHelmetRevealing?.let { stack.item === it } ?: false
 			1 -> return stack.item === AlfheimItems.elementalChestplate
 			2 -> return stack.item === AlfheimItems.elementalLeggings
 			3 -> return stack.item === AlfheimItems.elementalBoots

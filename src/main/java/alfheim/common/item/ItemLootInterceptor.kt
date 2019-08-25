@@ -1,11 +1,9 @@
 package alfheim.common.item
 
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import org.apache.commons.lang3.ArrayUtils
@@ -14,12 +12,10 @@ import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import kotlin.math.min
 
-class ItemLootInterceptor: Item(), IManaItem, IManaTooltipDisplay {
+class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDisplay {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setMaxStackSize(1)
-		setTextureName(ModInfo.MODID + ":LootInterceptor")
-		unlocalizedName = "LootInterceptor"
+		maxStackSize = 1
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	

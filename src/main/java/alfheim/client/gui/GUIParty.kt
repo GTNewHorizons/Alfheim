@@ -6,8 +6,9 @@ import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderWings
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
+import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
@@ -44,7 +45,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		val G = -0xff2300
 		var data: String
 		zLevel = -90f
-		val s = AlfheimConfig.partyHUDScale
+		val s = AlfheimConfigHandler.partyHUDScale
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)
@@ -54,7 +55,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		
 		// ################################################################ SELF ################################################################
 		
-		if (AlfheimConfig.selfHealthUI) {
+		if (AlfheimConfigHandler.selfHealthUI) {
 			glPushMatrix()
 			/*glPushMatrix();
 			glTranslated(8, 8, 0);
@@ -385,7 +386,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		}
 		
 		// ################################################################ TARGET ################################################################
-		if (AlfheimConfig.targetUI && CardinalSystemClient.segment!!.target != null) {
+		if (AlfheimConfigHandler.targetUI && CardinalSystemClient.segment!!.target != null) {
 			glPushMatrix()
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 120, 0.0, 0.0)
@@ -525,7 +526,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			glTranslated(-1.0 / 24, -1.0 / 24, 0.0)
 			glMatrixMode(GL_MODELVIEW)
 			
-			if (AlfheimConfig.selfHealthUI) {
+			if (AlfheimConfigHandler.selfHealthUI) {
 				mc.textureManager.bindTexture(RenderWings.getPlayerIconTexture(player))
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER)
@@ -582,7 +583,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			run tg_icon@{
 				l = CardinalSystemClient.segment().target
 				if (l == null) return@tg_icon
-				if (!AlfheimConfig.targetUI) return@tg_icon
+				if (!AlfheimConfigHandler.targetUI) return@tg_icon
 				
 				glPushMatrix()
 				glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 116, 11.0, 0.0)

@@ -1,10 +1,10 @@
 package alfheim.common.block.colored
 
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -33,9 +33,9 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 	lateinit var bottomIcon: IIcon
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
-		setStepSound(Block.soundTypeGrass)
 		setBlockNameSafe(name)
+		setCreativeTab(AlfheimTab)
+		setStepSound(Block.soundTypeGrass)
 	}
 	
 	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, isRemote: Boolean) = false
@@ -158,7 +158,7 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 		else {
 			player.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1)
 			val b0 = TYPES * colorSet + meta
-			this.dropBlockAsItem(world, x, y, z, ItemStack(ShadowFoxBlocks.irisGrass, 2, b0))
+			this.dropBlockAsItem(world, x, y, z, ItemStack(AlfheimBlocks.irisGrass, 2, b0))
 			true
 		}
 	}*/
@@ -172,11 +172,11 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 			if (y > 0 && world.getBlock(x, y - 1, z) == this) {
 				val downMeta = world.getBlockMetadata(x, y - 1, z)
 				val b0 = TYPES * colorSet + downMeta
-				ret.add(ItemStack(ShadowFoxBlocks.irisGrass, 2, b0))
+				ret.add(ItemStack(AlfheimBlocks.irisGrass, 2, b0))
 			}
 		} else {
 			val b0 = TYPES * colorSet + meta
-			ret.add(ItemStack(ShadowFoxBlocks.irisGrass, 2, b0))
+			ret.add(ItemStack(AlfheimBlocks.irisGrass, 2, b0))
 		}
 		return ret
 	}

@@ -1,14 +1,13 @@
 package alfheim.common.block
 
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
+import alfheim.common.block.base.BlockMod
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.EntityMob
@@ -22,17 +21,18 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.ManaItemHandler
 import java.util.*
 
-class BlockPoisonIce: Block(Material.packedIce), ILexiconable {
+class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
+	
 	init {
 		val mod = 0.001f
 		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod)
 		setBlockName("NiflheimIce")
-		setBlockTextureName(ModInfo.MODID + ":NiflheimIce")
+		setCreativeTab(null)
 		setBlockUnbreakable()
 		setHarvestLevel("pick", 2)
 		setLightOpacity(0)
-		setResistance(java.lang.Float.MAX_VALUE)
-		setStepSound(Block.soundTypeGlass)
+		setResistance(Float.MAX_VALUE)
+		setStepSound(soundTypeGlass)
 		tickRandomly = true
 		slipperiness = 0.98f
 	}

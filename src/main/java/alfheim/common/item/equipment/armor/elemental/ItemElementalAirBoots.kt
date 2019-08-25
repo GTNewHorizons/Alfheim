@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.AlfheimCore
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -13,8 +12,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent
 import vazkii.botania.api.mana.ManaItemHandler
 
 class ItemElementalAirBoots: ElementalArmor(3, "ElementalAirBoots") {
+	
 	init {
-		this.creativeTab = AlfheimCore.alfheimTab
 		MinecraftForge.EVENT_BUS.register(this)
 	}
 	

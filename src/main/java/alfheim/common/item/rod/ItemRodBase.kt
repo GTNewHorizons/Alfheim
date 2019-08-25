@@ -1,6 +1,5 @@
 package alfheim.common.item.rod
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -10,7 +9,6 @@ import vazkii.botania.api.mana.IManaUsingItem
 abstract class ItemRodBase(name: String): Item(), IManaUsingItem {
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
 		setTextureName(ModInfo.MODID + ":" + name)
 		unlocalizedName = name
 	}

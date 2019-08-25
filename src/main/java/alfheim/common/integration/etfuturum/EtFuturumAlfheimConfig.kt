@@ -1,7 +1,7 @@
 package alfheim.common.integration.etfuturum
 
 import alfheim.api.ModInfo
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.AlfheimItems.coatOfArms
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 
@@ -21,7 +21,7 @@ object EFHandlerBanners {
 			val clazz = Class.forName("ganymedes01.etfuturum.tileentities.TileEntityBanner\$EnumBannerPattern") as Class<Enum<*>>
 			for (i in coatNames.indices) {
 				try {
-					addPattern(clazz, coatNames[i], "c${if (i < 10) "0$i" else "$i"}", ItemStack(ShadowFoxItems.coatOfArms, 1, i))
+					addPattern(clazz, coatNames[i], "c${if (i < 10) "0$i" else "$i"}", ItemStack(coatOfArms, 1, i))
 				} catch (e: Exception) {}
 			}
 		} catch (e: Exception) {}

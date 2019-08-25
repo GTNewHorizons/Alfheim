@@ -2,7 +2,7 @@ package alfheim.client.render.entity
 
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -27,7 +27,7 @@ class RenderEntityHarp: Render() {
 		glTranslated(x, y + 0.2 + Math.sin((Minecraft.getMinecraft().theWorld.totalWorldTime.toFloat() + entity.ticksExisted.toFloat() + Minecraft.getMinecraft().timer.renderPartialTicks) / 50.0) / 10.0, z)
 		glRotated((Minecraft.getMinecraft().theWorld.totalWorldTime + entity.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * 0.5, 0.0, 1.0, 0.0)
 		
-		if (AlfheimConfig.minimalGraphics) {
+		if (AlfheimConfigHandler.minimalGraphics) {
 			glTranslated(-0.5, 0.0, 0.0)
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.harp!!.maxU, ItemElvenResource.harp!!.minV, ItemElvenResource.harp!!.minU, ItemElvenResource.harp!!.maxV, ItemElvenResource.harp!!.iconWidth, ItemElvenResource.harp!!.iconHeight, 1f / 16f)

@@ -1,8 +1,8 @@
 package alfheim.common.block.colored
 
-import alfheim.AlfheimCore
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.SimpleTreeGen
@@ -25,11 +25,10 @@ import java.util.*
 open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling(), ILexiconable, IFuelHandler {
 	
 	init {
-		this.tickRandomly = true
+		setBlockName(name)
+		setCreativeTab(AlfheimTab)
 		stepSound = Block.soundTypeGrass
-        setBlockName(name)
-		
-		setCreativeTab(AlfheimCore.baTab)
+		tickRandomly = true
 		
 		GameRegistry.registerFuelHandler(this)
 	}

@@ -2,9 +2,10 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.player.*
@@ -58,7 +59,7 @@ class SubTileLightning: SubTileEntity() {
 			return
 		}
 		
-		if (AlfheimConfig.lightningsSpeed > 0 && ticks % AlfheimConfig.lightningsSpeed == 0) {
+		if (AlfheimConfigHandler.lightningsSpeed > 0 && ticks % AlfheimConfigHandler.lightningsSpeed == 0) {
 			ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
 			vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
 			ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5)

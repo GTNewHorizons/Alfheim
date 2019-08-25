@@ -1,8 +1,8 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -34,8 +34,8 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	var trisIcon: IIcon by Delegates.notNull()
 	
 	init {
+		creativeTab = AlfheimTab
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 		if (FMLLaunchHandler.side().isClient) {
 			MinecraftForge.EVENT_BUS.register(this)
 			potatoTexture = ResourceLocation(if (ClientProxy.dootDoot) LibResources.MODEL_TINY_POTATO_HALLOWEEN else LibResources.MODEL_TINY_POTATO)

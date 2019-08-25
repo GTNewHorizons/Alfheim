@@ -2,7 +2,7 @@ package alfheim.common.block.tile
 
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.itemEquals
 import alfheim.common.lexicon.MultiblockComponentRainbow
 import net.minecraft.block.Block
@@ -40,7 +40,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			
 			for (i in ITEMDISPLAY_LOCATIONS) {
 				mb.addComponent(i.x, i.y + 2, i.z, ModBlocks.pylon, 0)
-				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), ShadowFoxBlocks.itemDisplay))
+				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), AlfheimBlocks.itemDisplay))
 			}
 			
 			for (i in OBSIDIAN_LOCATIONS) {
@@ -48,11 +48,11 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			}
 			
 			for (i in COLOREDWOOD_LOCATIONS) {
-				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), ShadowFoxBlocks.coloredPlanks, ShadowFoxBlocks.rainbowPlanks))
+				mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(i.x, i.y, i.z), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks, AlfheimBlocks.auroraPlanks))
 			}
 			
-			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 0, 0), ShadowFoxBlocks.coloredDirtBlock, ShadowFoxBlocks.rainbowDirtBlock))
-			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 4, 0), ShadowFoxBlocks.coloredPlanks, ShadowFoxBlocks.rainbowPlanks))
+			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 0, 0), AlfheimBlocks.irisDirt, AlfheimBlocks.rainbowDirt, AlfheimBlocks.auroraDirt))
+			mb.addComponent(MultiblockComponentRainbow(ChunkCoordinates(0, 4, 0), AlfheimBlocks.irisPlanks, AlfheimBlocks.rainbowPlanks, AlfheimBlocks.auroraPlanks))
 			
 			return mb.makeSet()
 		}
@@ -62,41 +62,45 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val y0 = y - 4
 			
 			for (i in ITEMDISPLAY_LOCATIONS) {
-				if (!i.isBlock(world, ModBlocks.pylon, x0 = x, y0 = y0 + 2, z0 = z)) {
+				if (!i.isBlock(world, ModBlocks.pylon, x, y0 + 2, z)) {
 					// FMLLog.log(Level.INFO, "Pylon at $i")
 					return false
 				}
-				if (!i.isBlock(world, ShadowFoxBlocks.itemDisplay, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, AlfheimBlocks.itemDisplay, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Item Display at $i")
 					return false
 				}
 			}
 			
 			for (i in OBSIDIAN_LOCATIONS) {
-				if (!i.isBlock(world, Blocks.obsidian, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, Blocks.obsidian, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Obsidian at $i")
 					return false
 				}
 			}
 			
 			for (i in COLOREDWOOD_LOCATIONS) {
-				if (!i.isBlock(world, ShadowFoxBlocks.coloredPlanks, x0 = x, y0 = y0, z0 = z) &&
-					!i.isBlock(world, ShadowFoxBlocks.rainbowPlanks, x0 = x, y0 = y0, z0 = z)) {
+				if (!i.isBlock(world, AlfheimBlocks.irisPlanks, x, y0, z) &&
+					!i.isBlock(world, AlfheimBlocks.rainbowPlanks, x, y0, z) &&
+					!i.isBlock(world, AlfheimBlocks.auroraPlanks, x, y0, z)) {
 					// FMLLog.log(Level.INFO, "Colored Wood at $i")
 					return false
 				}
 			}
 			
-			if (world.getBlock(x, y0 + 4, z) !== ShadowFoxBlocks.treeCrafterBlock &&
-				world.getBlock(x, y0 + 4, z) !== ShadowFoxBlocks.treeCrafterBlockRB &&
-				world.getBlock(x, y0 + 4, z) !== ShadowFoxBlocks.coloredPlanks &&
-				world.getBlock(x, y0 + 4, z) !== ShadowFoxBlocks.rainbowPlanks) {
+			if (world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlock &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlockRB &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.treeCrafterBlockAU &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.irisPlanks &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.rainbowPlanks &&
+				world.getBlock(x, y0 + 4, z) !== AlfheimBlocks.auroraPlanks) {
 				// FMLLog.log(Level.INFO, "Core Block")
 				return false
 			}
 			
-			if (world.getBlock(x, y0, z) !== ShadowFoxBlocks.coloredDirtBlock &&
-				world.getBlock(x, y0, z) !== ShadowFoxBlocks.rainbowDirtBlock) {
+			if (world.getBlock(x, y0, z) !== AlfheimBlocks.irisDirt &&
+				world.getBlock(x, y0, z) !== AlfheimBlocks.rainbowDirt &&
+				world.getBlock(x, y0, z) !== AlfheimBlocks.auroraDirt) {
 				// FMLLog.log(Level.INFO, "Dirt Block")
 				return false
 			}
@@ -125,9 +129,11 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val block = worldObj.getBlock(xCoord, yCoord, zCoord)
 			val meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord)
 			
-			if (block === ShadowFoxBlocks.treeCrafterBlock)
-				worldObj.setBlock(xCoord, yCoord, zCoord, ShadowFoxBlocks.coloredPlanks, meta, 3)
-			else worldObj.setBlock(xCoord, yCoord, zCoord, ShadowFoxBlocks.rainbowPlanks, 0, 3)
+			when {
+				block === AlfheimBlocks.treeCrafterBlock   -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.irisPlanks, meta, 3)
+				block === AlfheimBlocks.treeCrafterBlockRB -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.rainbowPlanks, 0, 3)
+				block === AlfheimBlocks.treeCrafterBlockAU -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.auroraPlanks, 0, 3)
+			}
 			
 			for (var11 in 0..49) {
 				val var13 = Math.random().toFloat()
@@ -224,7 +230,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	}
 	
 	fun getValidRecipe(): RecipeTreeCrafting? {
-		if (worldObj.getBlock(xCoord, yCoord - 3, zCoord) === ShadowFoxBlocks.irisSapling) {
+		if (worldObj.getBlock(xCoord, yCoord - 3, zCoord) === AlfheimBlocks.irisSapling) {
 			return getRecipe()
 		}
 		return null
@@ -262,7 +268,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		val recipe = getRecipe()
 		val items = getRecipeInputs()
 		if (recipe != null && (mana == 0 || manaRequired > 0)) {
-			val sapling = worldObj.getBlock(xCoord, yCoord - 3, zCoord) == ShadowFoxBlocks.irisSapling
+			val sapling = worldObj.getBlock(xCoord, yCoord - 3, zCoord) == AlfheimBlocks.irisSapling
 			GL11.glEnable(GL11.GL_BLEND)
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL)
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -271,7 +277,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			GL11.glColor4f(1f, 1f, 1f, 1f)
 			RenderHelper.drawTexturedModalRect(xc + radius + 9, yc - 8, 0f, if (sapling) 0 else 22, 8, 22, 15)
 			net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting()
-			if (!sapling) RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, ItemStack(ShadowFoxBlocks.irisSapling), xc + radius + 16, yc + 8)
+			if (!sapling) RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, ItemStack(AlfheimBlocks.irisSapling), xc + radius + 16, yc + 8)
 			RenderHelper.renderProgressPie(xc + radius + 32, yc - 8, progress, recipe.output)
 			net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting()
 			if (!sapling) mc.fontRenderer.drawStringWithShadow("+", xc + radius + 14, yc + 12, 0xFFFFFF)

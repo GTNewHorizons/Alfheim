@@ -1,9 +1,9 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.*
 import alfheim.common.item.relic.ShootHelper.isLookingAtMoon
 import com.google.common.collect.Multimap
@@ -39,10 +39,10 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	lateinit var moons: Array<IIcon>
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setFull3D()
+		creativeTab = AlfheimTab
 		maxDamage = 0
-		setMaxStackSize(1)
+		maxStackSize = 1
+		setFull3D()
 		unlocalizedName = "MoonlightBow"
 	}
 	
@@ -185,9 +185,9 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	
 	// ################################ ItemMod ################################
 	
-	override fun setUnlocalizedName(str: String): Item {
-		GameRegistry.registerItem(this, str)
-		return super.setUnlocalizedName(str)
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	// ################################ ItemRelic ################################

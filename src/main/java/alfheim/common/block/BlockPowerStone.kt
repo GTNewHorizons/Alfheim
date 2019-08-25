@@ -1,57 +1,24 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
-import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
-import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockPowerStone: Block(Material.rock), ILexiconable {
-	init {
-		setBlockName("PowerStone")
-		setBlockTextureName(ModInfo.MODID + ":ManaInfuserBottomDark")
-		setHardness(2f)
-		setResistance(6000f)
-		setStepSound(soundTypeStone)
-	}
+class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone", AlfheimTab, 2f, resist = 6000f), ILexiconable {
 	
-	override fun damageDropped(meta: Int): Int {
-		return meta
-	}
+	override fun getIcon(side: Int, meta: Int) = if (side != 1) texture[0] else super.getIcon(side, meta)
 	
-	override fun getIcon(side: Int, meta: Int): IIcon {
-		var meta = meta
-		if (meta < 0 || icons.size <= meta) meta = 0
-		
-		return if (side == 1) icons[meta]!! else icons[0]!!
-	}
-	
-	override fun registerBlockIcons(reg: IIconRegister) {
-		super.registerBlockIcons(reg)
-		icons[0] = blockIcon
-		for (i in 1 until icons.size)
-			icons[i] = reg.registerIcon(ModInfo.MODID + ":PowerStone" + i)
-	}
-	
-	override fun getSubBlocks(item: Item, tab: CreativeTabs?, subs: MutableList<Any?>) {
-		subs.add(ItemStack(item, 1, 1)) // berserk
-		subs.add(ItemStack(item, 1, 2)) // overmage
-		subs.add(ItemStack(item, 1, 3)) // tank
-		subs.add(ItemStack(item, 1, 4)) // ninja
-	}
-	
-	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		return if (SpellBase.consumeMana(player, 10000, false) && press(world, x, y, z, player)) SpellBase.consumeMana(player, 10000, true) else false
-	}
+	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
+		if (SpellBase.consumeMana(player, 10000, false) && press(world, x, y, z, player)) SpellBase.consumeMana(player, 10000, true) else false
 	
 	fun press(world: World, x: Int, y: Int, z: Int, player: EntityPlayer): Boolean {
 		return when (world.getBlockMetadata(x, y, z)) {
@@ -99,12 +66,5 @@ class BlockPowerStone: Block(Material.rock), ILexiconable {
 		return false
 	}
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.shrines
-	}
-	
-	companion object {
-		
-		val icons = arrayOfNulls<IIcon>(5)
-	}
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.shrines
 }

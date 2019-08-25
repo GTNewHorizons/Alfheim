@@ -12,7 +12,7 @@ import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import kotlin.math.*
 
-open class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val texName: String, val folder: String? = null): BlockPane(texName, "${texName}Top", mat, true) {
+open class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val texName: String, val folder: String = ""): BlockPane(texName, "${texName}Top", mat, true) {
 	
 	lateinit var texture: Array<IIcon>
 	lateinit var textureTop: Array<IIcon>
@@ -24,11 +24,11 @@ open class BlockPaneMeta @JvmOverloads constructor(mat: Material, val subtypes: 
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		texture = Array(subtypes) {
-			reg.registerIcon("${ModInfo.MODID}:${if (folder != null) "$folder/" else ""}$texName$it")
+			reg.registerIcon("${ModInfo.MODID}:$folder$texName$it")
 		}
 		
 		textureTop = Array(subtypes) {
-			reg.registerIcon("${ModInfo.MODID}:${if (folder != null) "$folder/" else ""}$texName${it}Top")
+			reg.registerIcon("${ModInfo.MODID}:$folder$texName${it}Top")
 		}
 	}
 	

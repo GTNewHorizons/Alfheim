@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
@@ -45,7 +45,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 	
 	override fun dropFewItems(par1: Boolean, par2: Int) {
 		if (par1) {
-			if (Math.random() < AlfheimConfig.blackLotusDropRate) {
+			if (Math.random() < AlfheimConfigHandler.blackLotusDropRate) {
 				entityDropItem(ItemStack(ModItems.blackLotus), 1F)
 			}
 		}

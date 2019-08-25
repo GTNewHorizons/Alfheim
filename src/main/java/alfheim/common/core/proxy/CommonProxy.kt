@@ -3,15 +3,14 @@ package alfheim.common.core.proxy
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.block.*
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.crafting.recipe.*
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
 import alfheim.common.integration.multipart.MultipartAlfheimConfig
 import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
-import alfheim.common.item.*
+import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.common.*
@@ -28,17 +27,16 @@ open class CommonProxy {
 		ShadowFoxAPI.RUNEAXE.setRepairItem(ItemStack(ModItems.manaResource, 1, 7)) // Elementium
 		
 		AlfheimLexiconData.preInit()
-		AlfheimBlocks.init()
-		ShadowFoxBlocks
-		AlfheimItems.init()
-		ShadowFoxItems
+		AlfheimBlocks
+		AlfheimBlocks
+		AlfheimItems
 		AlfheimRegistry.preInit()
 		AlfheimAchievements.init()
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2()
 		ShadowFoxLexiconData
 		ShadowFoxThrowables
 		HilarityHandler.register()
-		BlockDispenser.dispenseBehaviorRegistry.putObject(ShadowFoxItems.resource, BifrostFlowerDispenserHandler())
+		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler())
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
 		AlfheimMultiblocks.init()
 	}
@@ -51,8 +49,8 @@ open class CommonProxy {
 		AlfheimRecipes.init()
 		ShadowFoxRecipes
 		AlfheimRegistry.init()
-		ASJUtilities.registerDimension(AlfheimConfig.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
-		ShadowFoxBlocks.registerBurnables()
+		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
+		AlfheimBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("etfuturem")) EtFuturumAlfheimConfig.loadConfig()
 	}

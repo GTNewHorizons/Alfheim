@@ -3,7 +3,7 @@ package alfheim.common.item
 // import vazkii.botania.common.block.decor.IFloatingFlower
 // import vazkii.botania.common.item.IFloatingFlowerVariant
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -48,10 +48,10 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		
 		fun dirtFromMeta(meta: Int): Block? {
 			if (meta == AURORA)
-				return ShadowFoxBlocks.auroraDirt
+				return AlfheimBlocks.auroraDirt
 			if (meta == TYPES)
-				return ShadowFoxBlocks.rainbowDirtBlock
-			return ShadowFoxBlocks.coloredDirtBlock
+				return AlfheimBlocks.rainbowDirt
+			return AlfheimBlocks.irisDirt
 		}
 		
 		class IridescentIslandType(name: String, rs: ResourceLocation, val colorIndex: Int): IFloatingFlower.IslandType(name, rs) {
@@ -102,20 +102,20 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 			world.setBlock(x, y, z, swapper.blockToSet, swapper.metaToSet, 3)
 			if (world.getBlock(x, y + 1, z) == Blocks.tallgrass && world.getBlockMetadata(x, y + 1, z) == 1) {
 				if (meta >= 16)
-					world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowGrass, meta - 16, 4)
+					world.setBlock(x, y + 1, z, AlfheimBlocks.rainbowGrass, meta - 16, 4)
 				else
-					world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisGrass, swapper.metaToSet, 4)
+					world.setBlock(x, y + 1, z, AlfheimBlocks.irisGrass, swapper.metaToSet, 4)
 			} else if (world.getBlock(x, y + 1, z) == Blocks.double_plant && world.getBlockMetadata(x, y + 1, z) == 2) {
 				if (meta >= 16) {
-					world.setBlock(x, y + 1, z, ShadowFoxBlocks.rainbowTallGrass, meta - 16, 2)
-					world.setBlock(x, y + 2, z, ShadowFoxBlocks.rainbowTallGrass, meta - 8, 2)
+					world.setBlock(x, y + 1, z, AlfheimBlocks.rainbowTallGrass, meta - 16, 2)
+					world.setBlock(x, y + 2, z, AlfheimBlocks.rainbowTallGrass, meta - 8, 2)
 				} else {
 					if (swapper.metaToSet < 8) {
-						world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass0, swapper.metaToSet, 2)
-						world.setBlock(x, y + 2, z, ShadowFoxBlocks.irisTallGrass0, 8, 2)
+						world.setBlock(x, y + 1, z, AlfheimBlocks.irisTallGrass0, swapper.metaToSet, 2)
+						world.setBlock(x, y + 2, z, AlfheimBlocks.irisTallGrass0, 8, 2)
 					} else {
-						world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass1, swapper.metaToSet - 8, 2)
-						world.setBlock(x, y + 2, z, ShadowFoxBlocks.irisTallGrass1, 8, 2)
+						world.setBlock(x, y + 1, z, AlfheimBlocks.irisTallGrass1, swapper.metaToSet - 8, 2)
+						world.setBlock(x, y + 2, z, AlfheimBlocks.irisTallGrass1, 8, 2)
 					}
 				}
 			}
@@ -185,9 +185,9 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 			rand = Random(seed.toLong())
 			startCoords = coords
 			
-			grassBlock = if (rainbow) ShadowFoxBlocks.rainbowGrass else ShadowFoxBlocks.irisGrass
+			grassBlock = if (rainbow) AlfheimBlocks.rainbowGrass else AlfheimBlocks.irisGrass
 			tallGrassMeta = metaToSet % 8
-			tallGrassBlock = if (rainbow) ShadowFoxBlocks.rainbowTallGrass else (if (meta > 8) ShadowFoxBlocks.irisTallGrass1 else ShadowFoxBlocks.irisTallGrass0)
+			tallGrassBlock = if (rainbow) AlfheimBlocks.rainbowTallGrass else (if (meta > 8) AlfheimBlocks.irisTallGrass1 else AlfheimBlocks.irisTallGrass0)
 		}
 		
 		fun tick(): Boolean {

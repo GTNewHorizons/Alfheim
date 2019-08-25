@@ -3,7 +3,7 @@ package alfheim.common.entity
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
@@ -128,7 +128,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 			if (Vector3.entityDistancePlane(this, master) > 32.0) setDead()
 			else {
 				++unmountCounter
-				if (unmountCounter >= AlfheimConfig.lolicornLife) setDead()
+				if (unmountCounter >= AlfheimConfigHandler.lolicornLife) setDead()
 			}
 	}
 	
@@ -223,7 +223,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		val timing = mutableMapOf<String, Int>()
 		
 		fun call(caller: EntityPlayer) {
-			if (caller.dimension != AlfheimConfig.dimensionIDAlfheim && AlfheimConfig.lolicornAlfheimOnly)
+			if (caller.dimension != AlfheimConfigHandler.dimensionIDAlfheim && AlfheimConfigHandler.lolicornAlfheimOnly)
 				ASJUtilities.say(caller, "alfheimmisc.mount.unavailable").also { return }
 			
 			if (caller.ridingEntity is EntityLolicorn) return
@@ -239,9 +239,9 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 				timing[cr] = timing[cr]!!-1
 				if (timing[cr]!! <= 0) {
 					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let {
-						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfig.lolicornCost, false)
+						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfigHandler.lolicornCost, false)
 						if (can) can = it.worldObj.spawnEntityInWorld(EntityLolicorn(it.worldObj).apply { owner = it.commandSenderName }.apply { setPosition(it.posX, it.posY, it.posZ) })
-						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfig.lolicornCost, true)
+						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfigHandler.lolicornCost, true)
 					}
 					
 					i.remove()

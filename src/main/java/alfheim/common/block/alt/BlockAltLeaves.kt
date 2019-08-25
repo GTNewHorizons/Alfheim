@@ -1,7 +1,7 @@
 package alfheim.common.block.alt
 
 import alfheim.api.lib.LibOreDict.ALT_TYPES
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
@@ -50,7 +50,7 @@ class BlockAltLeaves(): BlockLeavesMod() {
 	}
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) =
-		Item.getItemFromBlock(ShadowFoxBlocks.irisSapling)!!
+		Item.getItemFromBlock(AlfheimBlocks.irisSapling)!!
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	

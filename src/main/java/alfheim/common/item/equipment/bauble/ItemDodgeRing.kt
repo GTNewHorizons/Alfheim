@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
 import baubles.api.BaubleType
@@ -21,8 +22,9 @@ import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemDodgeRing: ItemBauble("DodgeRing") {
+	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	

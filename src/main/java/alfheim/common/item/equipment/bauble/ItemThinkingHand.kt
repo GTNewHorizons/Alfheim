@@ -14,6 +14,7 @@ import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
+	
 	init {
 		creativeTab = BotaniaCreativeTab.INSTANCE
 	}

@@ -1,6 +1,6 @@
 package alfheim.client.model.item
 
-import alfheim.common.item.material.ItemElvenResource
+import alfheim.common.item.creator.ItemRoyalStaff
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.*
@@ -107,7 +107,7 @@ class ModelCreatorStaff: ModelBase() {
 			glPushMatrix()
 			glRotatef(180.0f, 1.0f, 0.0f, 0.0f)
 			val tessellator = Tessellator.instance
-			val icon = ItemElvenResource.orn
+			val icon = ItemRoyalStaff.orn
 			val f1 = icon.maxU
 			val f2 = icon.minV
 			val f3 = icon.minU
@@ -133,7 +133,7 @@ class ModelCreatorStaff: ModelBase() {
 			
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			renderBlocks.setRenderBoundsFromBlock(Blocks.stone)
-			drawFaces(renderBlocks, ItemElvenResource.dep)
+			ItemRoyalStaff.dep?.let { drawFaces(renderBlocks, it) }
 			glPopMatrix()
 			
 			Minecraft.getMinecraft().renderEngine.bindTexture(wandT)

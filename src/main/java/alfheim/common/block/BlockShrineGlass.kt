@@ -1,23 +1,17 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.util.Facing
 import net.minecraft.world.IBlockAccess
 
-class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "shrines") {
+class BlockShrineGlass: BlockModMeta(Material.glass, 2, ModInfo.MODID, "ShrineGlass", AlfheimTab, resist = 600f, folder = "shrines/") {
 	
 	init {
-		setBlockName("ShrineGlass")
-		setCreativeTab(AlfheimCore.alfheimTab)
-		setHardness(1f)
-		setHarvestLevel("pickaxe", 1)
 		setLightOpacity(0)
-		setResistance(600f)
-		setStepSound(soundTypeGlass)
 	}
 	
 	override fun getRenderBlockPass() = 1

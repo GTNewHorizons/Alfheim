@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim
 
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.biome.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre
 import ru.vamig.worldengine.*
@@ -39,7 +39,7 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 	}
 	
 	override fun canRespawnHere(): Boolean {
-		return AlfheimCore.enableElvenStory || AlfheimConfig.enableAlfheimRespawn
+		return AlfheimCore.enableElvenStory || AlfheimConfigHandler.enableAlfheimRespawn
 	}
 	
 	override fun getDimensionName(): String {
@@ -76,7 +76,7 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 			cp.decorateChunkGen_List.add(WorldGenAlfheimThaumOre())
 		
 		val ores = WE_OreGen()
-		for (i in 0 until AlfheimConfig.oregenMultiplier) {
+		for (i in 0 until AlfheimConfigHandler.oregenMultiplier) {
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75, 1, 16)
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, 1, 8, 3, 6, 100, 1, 64)
 			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, 4, 8, 1, 1, 100, 1, 48)

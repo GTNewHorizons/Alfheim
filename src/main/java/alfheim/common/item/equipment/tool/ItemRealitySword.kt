@@ -1,11 +1,12 @@
 package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*
@@ -24,10 +25,16 @@ import kotlin.experimental.xor
 import kotlin.math.max
 
 class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 		setNoRepair()
 		unlocalizedName = "RealitySword"
+	}
+
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	override fun getUnlocalizedName(stack: ItemStack?): String {

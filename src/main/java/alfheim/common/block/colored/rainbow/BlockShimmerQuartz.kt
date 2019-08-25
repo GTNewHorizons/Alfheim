@@ -1,14 +1,15 @@
 package alfheim.common.block.colored.rainbow
 
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
+import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -25,6 +26,7 @@ import vazkii.botania.common.block.decor.quartz.*
 class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
@@ -89,9 +91,13 @@ class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 
 class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): BlockSpecialQuartzSlab(block, full) {
  
-	override fun getSingleBlock() = ShadowFoxBlocks.shimmerQuartzSlab
+	init {
+		setCreativeTab(AlfheimTab)
+	}
 	
-	override fun getFullBlock() = ShadowFoxBlocks.shimmerQuartzSlabFull
+	override fun getSingleBlock() = AlfheimBlocks.shimmerQuartzSlab as BlockSlab
+	
+	override fun getFullBlock() = AlfheimBlocks.shimmerQuartzSlabFull as BlockSlab
 	
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = block.getEntry(world, x, y, z, player, lexicon)
 	
@@ -103,6 +109,10 @@ class BlockShimmerQuartzSlab(val block: BlockShimmerQuartz, val full: Boolean): 
 class BlockShimmerQuartzStairs(val block: BlockShimmerQuartz): BlockSpecialQuartzStairs(block) {
  
 	lateinit var unlocName: String
+	
+	init {
+		setCreativeTab(AlfheimTab)
+	}
 	
 	override fun setBlockName(par1Str: String): Block? {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)

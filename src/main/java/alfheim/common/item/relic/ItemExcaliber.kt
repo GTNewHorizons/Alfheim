@@ -1,7 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
+import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
@@ -35,7 +35,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	internal lateinit var achievement: Achievement
 	
 	init {
-		this.creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 	}
 	
 	override fun onUpdate(stack: ItemStack?, world: World, entity: Entity?, slotID: Int, inHand: Boolean) {

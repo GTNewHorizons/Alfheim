@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.sealing
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
@@ -30,7 +30,7 @@ class BlockSealingSapling: BlockColoredSapling(name = "sealingSapling"), ISoundS
 			if (canGrowHere(plantedOn)) {
 				val l = world.getBlockMetadata(x, y, z)
 				
-				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.sealingWood, 0, ShadowFoxBlocks.sealingWood, 0, ShadowFoxBlocks.sealingLeaves, 0)
+				val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.sealingWood, 0, AlfheimBlocks.sealingWood, 0, AlfheimBlocks.sealingLeaves, 0)
 				
 				world.setBlock(x, y, z, Blocks.air, 0, 4)
 				

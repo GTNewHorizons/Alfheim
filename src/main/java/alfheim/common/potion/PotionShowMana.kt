@@ -3,10 +3,10 @@ package alfheim.common.potion
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.EntityLivingBase
 
-class PotionShowMana: PotionAlfheim(AlfheimConfig.potionIDShowMana, "showMana", false, 0x0000DD) {
+class PotionShowMana: PotionAlfheim(AlfheimConfigHandler.potionIDShowMana, "showMana", false, 0x0000DD) {
 	
 	override fun isReady(time: Int, ampl: Int): Boolean {
 		return true

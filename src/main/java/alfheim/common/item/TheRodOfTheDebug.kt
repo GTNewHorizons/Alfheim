@@ -1,25 +1,20 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
-class TheRodOfTheDebug: Item() {
+class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setMaxStackSize(1)
-		setTextureName(ModInfo.MODID + ":TheRodOfTheDebug")
-		unlocalizedName = "TheRodOfTheDebug"
+		maxStackSize = 1
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {

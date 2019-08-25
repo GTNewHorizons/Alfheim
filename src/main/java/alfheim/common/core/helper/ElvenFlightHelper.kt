@@ -1,15 +1,15 @@
 package alfheim.common.core.helper
 
 import alfheim.api.ModInfo
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.*
 
 object ElvenFlightHelper {
 	
-	private val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfig.flightTime.toDouble()) {
-		override fun clampValue(d: Double) = max(0.0, min(AlfheimConfig.flightTime.toDouble(), d))
+	private val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfigHandler.flightTime.toDouble()) {
+		override fun clampValue(d: Double) = max(0.0, min(AlfheimConfigHandler.flightTime.toDouble(), d))
 	}.setShouldWatch(true)
 	
 	fun register(player: EntityPlayer) {
@@ -21,7 +21,7 @@ object ElvenFlightHelper {
 	}
 	
 	val max: Double
-		get() = AlfheimConfig.flightTime.toDouble()
+		get() = AlfheimConfigHandler.flightTime.toDouble()
 	
 	operator fun get(player: EntityPlayer): Double {
 		ensureExistence(player)
@@ -34,7 +34,7 @@ object ElvenFlightHelper {
 	}
 	
 	fun add(player: EntityPlayer, value: Int) {
-		player.flight = max(0.0, min(player.flight + value, AlfheimConfig.flightTime.toDouble()))
+		player.flight = max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
 	}
 	
 	fun sub(player: EntityPlayer, value: Int) {

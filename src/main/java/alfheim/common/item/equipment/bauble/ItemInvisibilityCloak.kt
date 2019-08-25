@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional
@@ -19,7 +20,7 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, ITravellersGear {
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 	}
 	
 	override fun getBaubleType(arg0: ItemStack) =

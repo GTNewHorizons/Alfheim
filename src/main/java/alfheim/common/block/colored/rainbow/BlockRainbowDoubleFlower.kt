@@ -1,9 +1,9 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemRainbowDoubleGrassMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -32,11 +32,11 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	lateinit var bottomFlowerIcon: IIcon
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
+		setBlockNameSafe(name)
+		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setBlockNameSafe(name)
 	}
 	
 	@SubscribeEvent
@@ -146,7 +146,7 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 		//else {
 		player.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1)
 		val b0 = meta
-		this.dropBlockAsItem(world, x, y, z, ItemStack(ShadowFoxBlocks.irisGrass, 2, b0))
+		this.dropBlockAsItem(world, x, y, z, ItemStack(AlfheimBlocks.irisGrass, 2, b0))
 		return true
 		//}
 	}*/

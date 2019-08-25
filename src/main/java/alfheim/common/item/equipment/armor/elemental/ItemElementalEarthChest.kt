@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.AlfheimCore
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
@@ -11,9 +10,6 @@ import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
 
 class ItemElementalEarthChest: ElementalArmor(1, "ElementalEarthChest") {
-	init {
-		this.creativeTab = AlfheimCore.alfheimTab
-	}
 	
 	override fun getPixieChance(stack: ItemStack): Float {
 		return 0.17f

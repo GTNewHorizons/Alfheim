@@ -10,6 +10,7 @@ import java.awt.Color
 import vazkii.botania.common.item.ModItems as BotaniaItems
 
 class RecipeRingDyes : IRecipe {
+    
     /**
      * Used to check if a recipe matches current crafting inventory
      */

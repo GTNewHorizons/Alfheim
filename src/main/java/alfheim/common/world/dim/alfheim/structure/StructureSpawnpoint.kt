@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.schema.SchemaGenerator
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import vazkii.botania.common.block.*
@@ -15,8 +15,8 @@ object StructureSpawnpoint {
 	var spawn = false
 	
 	fun generate(world: World, rand: Random) {
-		if (!AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0) + 2, -41)
-		if (AlfheimCore.enableElvenStory || AlfheimConfig.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2)
+		if (!AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0) + 2, -41)
+		if (AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2)
 		ASJUtilities.log("Spawn created")
 	}
 	

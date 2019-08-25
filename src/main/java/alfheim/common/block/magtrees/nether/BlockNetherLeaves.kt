@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.nether
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -35,7 +35,7 @@ class BlockNetherLeaves: BlockLeavesMod() {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(ShadowFoxBlocks.netherSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.netherSapling)!!
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	

@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.circuit
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
@@ -25,7 +25,7 @@ class BlockCircuitSapling: BlockColoredSapling(name = "circuitSapling"), ICircui
 			if (canGrowHere(plantedOn)) {
 				val l = world.getBlockMetadata(x, y, z)
 				
-				val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.circuitWood, 0, ShadowFoxBlocks.circuitWood, 0, ShadowFoxBlocks.circuitLeaves, 0)
+				val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.circuitWood, 0, AlfheimBlocks.circuitWood, 0, AlfheimBlocks.circuitLeaves, 0)
 				
 				world.setBlock(x, y, z, Blocks.air, 0, 4)
 				

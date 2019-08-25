@@ -1,7 +1,8 @@
 package alfheim.common.core.registry
 
-import alexsocol.asjlib.ASJUtilities.Companion.registerEntity
-import alexsocol.asjlib.ASJUtilities.Companion.registerEntityEgg
+import alexsocol.asjlib.ASJUtilities.registerEntity
+import alexsocol.asjlib.ASJUtilities.registerEntityEgg
+
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI.addPink
 import alfheim.api.AlfheimAPI.registerAnomaly
@@ -12,7 +13,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.asm.AlfheimHookLoader
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
@@ -92,31 +93,31 @@ object AlfheimRegistry {
 	}
 	
 	fun postInit() {
-		if (AlfheimConfig.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
+		if (AlfheimConfigHandler.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
 	}
 	
 	fun registerPotions() {
 		berserk = PotionBerserk()
 		bleeding = PotionBleeding()
-		butterShield = PotionAlfheim(AlfheimConfig.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		butterShield = PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
 		deathMark = PotionDeathMark()
-		decay = PotionAlfheim(AlfheimConfig.potionIDDecay, "decay", true, 0x553355)
+		decay = PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
 		eternity = PotionEternity()
 		goldRush = PotionGoldRush()
-		icelens = PotionAlfheim(AlfheimConfig.potionIDIceLens, "icelens", false, 0xDDFFFF)
+		icelens = PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
 		leftFlame = PotionLeftFlame()
 		manaVoid = PotionManaVoid()
-		nineLifes = PotionAlfheim(AlfheimConfig.potionIDNineLifes, "nineLifes", false, 0xDD2222)
+		nineLifes = PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
 		ninja = PotionNinja()
 		noclip = PotionNoclip()
-		overmage = PotionAlfheim(AlfheimConfig.potionIDOvermage, "overmage", false, 0x88FFFF)
-		possession = PotionAlfheim(AlfheimConfig.potionIDPossession, "possession", true, 0xCC0000)
+		overmage = PotionAlfheim(AlfheimConfigHandler.potionIDOvermage, "overmage", false, 0x88FFFF)
+		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
 		quadDamage = PotionQuadDamage()
 		sacrifice = PotionSacrifice()
 		sharedHP = PotionSharedHP()
 		showMana = PotionShowMana()
 		soulburn = PotionSoulburn()
-		stoneSkin = PotionAlfheim(AlfheimConfig.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
+		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
 		tank = PotionTank()
 		tHrOw = PotionThrow()
 		wellOLife = PotionWellOLife()
@@ -135,7 +136,7 @@ object AlfheimRegistry {
 		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
 		
 		for (i in BiomeGenBase.getBiomeGenArray()) {
-			if (i != null && !AlfheimConfig.voidCreepersBiomeBL.contains(i.biomeID))
+			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
 				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
 		}
 		
@@ -167,17 +168,28 @@ object AlfheimRegistry {
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
-		registerTile(TileItemHolder::class.java, "ItemHolder")
+		registerTile(TileManaAccelerator::class.java, "ItemHolder")
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK
 		
 		registerAnomalies()
+		
+		registerTile(TileCracklingStar::class.java, "StarPlacer2")
+		registerTile(TileEntityStar::class.java, "StarPlacer")
+		registerTile(TileInvisibleManaFlame::class.java, "ManaInvisibleFlame")
+		registerTile(TileItemDisplay::class.java, "ItemDisplay")
+		registerTile(TileLightningRod::class.java, "RodLightning")
+		registerTile(TileLivingwoodFunnel::class.java, "LivingwoodFunnel")
+		registerTile(TileRainbowManaFlame::class.java, "ManaRainbowFlame")
+		registerTile(TileSchemaController::class.java, "SchemaController")
+		registerTile(TileSchemaAnnihilator::class.java, "SchemaAnnihilator")
+		registerTile(TileTreeCrafter::class.java, "TreeCrafter")
 	}
 	
 	private fun registerTile(tileEntityClass: Class<out TileEntity>, id: String) {
-		registerTileEntity(tileEntityClass, ModInfo.MODID + ":" + id)
+		registerTileEntity(tileEntityClass, "${ModInfo.MODID}:$id")
 	}
 	
 	private fun registerAnomalies() {

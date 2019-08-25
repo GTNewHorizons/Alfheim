@@ -1,12 +1,11 @@
 package alfheim.common.item.creator
 
-import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -50,26 +49,26 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	}
 	
 	init {
-		setMaxStackSize(1)
+		creativeTab = AlfheimTab
 		maxDamage = toolMaterial.maxUses
-		creativeTab = AlfheimCore.baTab
+		maxStackSize = 1
 		unlocalizedName = name
 	}
 	
-	override fun setUnlocalizedName(par1Str: String): Item {
-		GameRegistry.registerItem(this, par1Str)
-		return super.setUnlocalizedName(par1Str)
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
 	}
 	
 	override fun getItemStackDisplayName(stack: ItemStack) =
 		super.getItemStackDisplayName(stack).replace("&".toRegex(), "\u00a7")
 	
-	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		super.getUnlocalizedNameInefficiently(stack).replace("item\\.".toRegex(), "item.${ModInfo.MODID}:")
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = IconHelper.forItem(par1IconRegister, this)
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forItem(reg, this)
 	}
 	
 	override fun getRarity(stack: ItemStack): EnumRarity = BotaniaAPI.rarityRelic
@@ -132,7 +131,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline1")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline2")}", list)
 			addStringToTooltip("$greyitalics${StatCollector.translateToLocal("misc.${ModInfo.MODID}.wline3")}", list)
-			addStringToTooltip("$grey\"I awaken the ancients within all of you!", list)
+			addStringToTooltip("$grey\"I awaken the Ancients within all of you!", list)
 			addStringToTooltip("${grey}From my soul's fire the world burns anew!\"", list)
 		} else addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
 	}
@@ -155,7 +154,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (godslaying != null) {
 			for (attr in godslaying) {
 				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfig.grantWireUnlimitedPower))
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.grantWireUnlimitedPower))
 			}
 		}
 		

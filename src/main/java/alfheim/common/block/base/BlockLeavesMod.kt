@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -23,8 +23,8 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	protected var icons: Array<IIcon?> = emptyArray()
 	
 	init {
+		setCreativeTab(AlfheimTab)
 		setHardness(0.2f)
-		setCreativeTab(AlfheimCore.baTab)
 		setLightOpacity(1)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
@@ -53,9 +53,9 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 		world.setBlockToAir(x, y, z)
 	}
 	
-	override fun registerBlockIcons(iconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		if (!isInterpolated())
-			icons = Array(2) { i -> IconHelper.forBlock(iconRegister, this, if (i == 0) "" else "_opaque") }
+			icons = Array(2) { i -> IconHelper.forBlock(reg, this, if (i == 0) "" else "_opaque") }
 	}
 	
 	open fun isInterpolated() = false

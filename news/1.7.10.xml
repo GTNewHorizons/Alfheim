@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-19</val>
+		<val>BETA-20</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -51,5 +51,8 @@
 	</version>
 	<version id="BETA-18">
 		<val>Added really a lot of new stuff and major security fixes were made, go for update!</val>
+	</version>
+	<version id="BETA-19">
+		<val>Fixed crash on login with ThermalExpansion.</val>
 	</version>
 </news>

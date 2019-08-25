@@ -1,12 +1,12 @@
 package alfheim.common.potion
 
 import alfheim.AlfheimCore
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.*
 import java.util.*
 
-class PotionSharedHP: PotionAlfheim(AlfheimConfig.potionIDSharedHP, "sharedHP", false, 0xFF0000) {
+class PotionSharedHP: PotionAlfheim(AlfheimConfigHandler.potionIDSharedHP, "sharedHP", false, 0xFF0000) {
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.applyAttributesModifiersToEntity(target, attributes, ampl)

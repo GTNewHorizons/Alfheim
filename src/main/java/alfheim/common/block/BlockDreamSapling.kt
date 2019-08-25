@@ -1,9 +1,11 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -19,10 +21,15 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
 		setBlockName("DreamSapling")
 		setBlockTextureName(ModInfo.MODID + ":DreamSapling")
-		setCreativeTab(AlfheimCore.alfheimTab)
+		setCreativeTab(AlfheimTab)
 		setLightLevel(9.0f / 15.0f)
 		setLightOpacity(0)
 		tickRandomly = true
+	}
+	
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
@@ -30,22 +37,22 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 			super.updateTick(world, x, y, z, rand)
 			
 			if (world.getBlockLightValue(x, y + 1, z) >= 9 && rand!!.nextInt(7) == 0) {
-				func_149879_c(world, x, y, z, rand)
+				grow(world, x, y, z, rand)
 			}
 		}
 	}
 	
-	fun func_149879_c(world: World, x: Int, y: Int, z: Int, rand: Random) {
+	fun grow(world: World, x: Int, y: Int, z: Int, rand: Random) {
 		val l = world.getBlockMetadata(x, y, z)
 		
 		if (l and 8 == 0) {
 			world.setBlockMetadataWithNotify(x, y, z, l or 8, 4)
 		} else {
-			func_149878_d(world, x, y, z, rand)
+			growTree(world, x, y, z, rand)
 		}
 	}
 	
-	fun func_149878_d(world: World, x: Int, y: Int, z: Int, rand: Random) {
+	fun growTree(world: World, x: Int, y: Int, z: Int, rand: Random) {
 		if (!TerrainGen.saplingGrowTree(world, rand, x, y, z)) return
 		val l = world.getBlockMetadata(x, y, z) and 7
 		world.setBlock(x, y, z, Blocks.air, 0, 4)
@@ -64,7 +71,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 	
 	/** Grow block  */
 	override fun func_149853_b(world: World, rand: Random, x: Int, y: Int, z: Int) {
-		func_149879_c(world, x, y, z, rand)
+		grow(world, x, y, z, rand)
 	}
 	
 	override fun damageDropped(meta: Int) = 0

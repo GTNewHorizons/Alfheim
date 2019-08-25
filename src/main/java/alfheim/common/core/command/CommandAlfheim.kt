@@ -3,7 +3,6 @@ package alfheim.common.core.command
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.*
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.network.Message3d
@@ -47,7 +46,7 @@ class CommandAlfheim: CommandBase() {
 				}
 				else											-> throw WrongUsageException("alfheim.commands.alfheim.wrong")
 			}
-			AlfheimConfig.writeModes()
+			AlfheimConfigHandler.writeModes()
 			
 			ASJUtilities.sayToAllOnline(String.format(StatCollector.translateToLocal("alfheim.commands.alfheim.done"),
 													  sender.commandSenderName,
@@ -69,7 +68,7 @@ class CommandAlfheim: CommandBase() {
 		
 		fun toggleESM(on: Boolean) {
 			if (on) {
-				AlfheimConfig.initWorldCoordsForElvenStory(AlfheimCore.save)
+				AlfheimConfigHandler.initWorldCoordsForElvenStory(AlfheimCore.save)
 				EventHandler.checkAddAttrs()
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			} else {

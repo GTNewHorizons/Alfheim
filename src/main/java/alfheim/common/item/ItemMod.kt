@@ -1,8 +1,8 @@
 package alfheim.common.item
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -11,7 +11,7 @@ import net.minecraft.item.*
 open class ItemMod(name: String): Item() {
 	
 	init {
-		creativeTab = AlfheimCore.baTab
+		creativeTab = AlfheimTab
 		unlocalizedName = name
 	}
 	

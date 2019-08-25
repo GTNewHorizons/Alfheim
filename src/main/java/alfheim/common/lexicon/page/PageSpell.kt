@@ -4,7 +4,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.asm.AlfheimHookHandler
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.util.*
@@ -65,7 +65,7 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 			val y = yn + 115
 			if (mx > x + 1 && mx <= x + 101 && my > y - 52 && my <= y - 38) ratio = 1
 			
-			if (AlfheimConfig.numericalMana) {
+			if (AlfheimConfigHandler.numericalMana) {
 				font.drawString(StatCollector.translateToLocal("lexicon.mana"), xn + 16, y - 8, 0)
 				font.drawString("/" + TilePool.MAX_MANA / ratio, xn + gui.width / 2, y - 8, 0x0000FF)
 				text = spell.getManaCost().toString() + ""

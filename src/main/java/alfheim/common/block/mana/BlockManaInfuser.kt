@@ -1,11 +1,11 @@
 package alfheim.common.block.mana
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaInfuser
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.lexicon.AlfheimLexiconData
-import net.minecraft.block.BlockContainer
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -19,11 +19,10 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.*
 import vazkii.botania.common.block.*
 
-class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, IWandable {
+class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD, IWandable {
+	
 	init {
 		setBlockName("ManaInfuser")
-		setBlockTextureName(ModInfo.MODID + ":ManaInfuser")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(3f)
 		setHarvestLevel("pickaxe", 1)
 		setResistance(60f)
@@ -31,19 +30,19 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileManaInfuser()
-	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		textures[0] = reg.registerIcon(getTextureName() + "Bottom")
-		textures[1] = reg.registerIcon(getTextureName() + "Top")
-		textures[2] = reg.registerIcon(getTextureName() + "Top_Active")
-		textures[3] = reg.registerIcon(getTextureName() + "Side")
-		textures[4] = reg.registerIcon(getTextureName() + "BottomDark")
-		textures[5] = reg.registerIcon(getTextureName() + "TopDark")
-		textures[6] = reg.registerIcon(getTextureName() + "SideDark")
+		textures = arrayOf(IconHelper.forBlock(reg, this, "Bottom"),
+						   IconHelper.forBlock(reg, this, "Top"),
+						   IconHelper.forBlock(reg, this, "Top_Active"),
+						   IconHelper.forBlock(reg, this, "Side"),
+						   IconHelper.forName (reg, "PowerStone0"),
+						   IconHelper.forBlock(reg, this, "TopDark"),
+						   IconHelper.forBlock(reg, this, "SideDark")
+		)
 	}
 	
 	override fun getIcon(side: Int, meta: Int) =
-		(if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3])!!
+		if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3]
 	
 	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (ModInfo.DEV && !world!!.isRemote && player!!.isSneaking) {
@@ -81,6 +80,6 @@ class BlockManaInfuser: BlockContainer(Material.rock), ILexiconable, IWandHUD, I
 	}
 	
 	companion object {
-		val textures = arrayOfNulls<IIcon>(7)
+		lateinit var textures: Array<IIcon>
 	}
 }

@@ -30,7 +30,7 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	init {
         setBlockName("irisLamp")
         setStepSound(soundTypeGlass)
-		blockHardness = 0.3F
+		setHardness(0.3f)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 		

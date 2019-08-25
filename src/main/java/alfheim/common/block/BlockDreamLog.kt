@@ -1,43 +1,43 @@
 package alfheim.common.block
 
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
+import alfheim.common.block.base.BlockModRotatedPillar
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
-import cpw.mods.fml.relauncher.*
-import net.minecraft.block.BlockLog
-import net.minecraft.client.renderer.texture.IIconRegister
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.IIcon
-import net.minecraft.world.World
-import vazkii.botania.api.lexicon.*
+import net.minecraft.world.*
+import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockDreamLog: BlockLog(), ILexiconable {
-	
-	val textures = arrayOfNulls<IIcon>(2)
+class BlockDreamLog: BlockModRotatedPillar(Material.wood), ILexiconable {
 	
 	init {
-		this.setBlockName("DreamLog")
-		this.setCreativeTab(AlfheimCore.alfheimTab)
+		setBlockName("DreamLog")
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(reg: IIconRegister) {
-		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLogTop")
-		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLogSide")
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun getSideIcon(meta: Int): IIcon {
-		return textures[1]!!
+	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {
+		val b0: Byte = 4
+		val i1: Int = b0 + 1
+		
+		if (world.checkChunksExist(x - i1, y - i1, z - i1, x + i1, y + i1, z + i1)) {
+			for (j1 in -b0..b0) for (k1 in -b0..b0)
+				for (l1 in -b0..b0) {
+					val blockInWorld: Block = world.getBlock(x + j1, y + k1, z + l1)
+					if (blockInWorld.isLeaves(world, x + j1, y + k1, z + l1)) {
+						blockInWorld.beginLeavesDecay(world, x + j1, y + k1, z + l1)
+					}
+				}
+		}
+		super.breakBlock(world, x, y, z, block, fortune)
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun getTopIcon(meta: Int): IIcon {
-		return textures[0]!!
-	}
-	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.worldgen
-	}
+	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
+	override fun isWood(world: IBlockAccess?, x: Int, y: Int, z: Int) = true
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.worldgen
 }

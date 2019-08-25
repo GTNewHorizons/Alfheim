@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.AlfheimCore
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
@@ -12,13 +11,8 @@ import vazkii.botania.api.mana.*
 
 open class ItemElementalWaterHelm: ElementalArmor, IManaDiscountArmor {
 	
-	constructor(): super(0, "ElementalWaterHelm") {
-		this.creativeTab = AlfheimCore.alfheimTab
-	}
-	
-	constructor(name: String): super(0, name) {
-		this.creativeTab = AlfheimCore.alfheimTab
-	}
+	constructor(): super(0, "ElementalWaterHelm")
+	constructor(name: String): super(0, name)
 	
 	override fun getPixieChance(stack: ItemStack): Float {
 		return 0.11f

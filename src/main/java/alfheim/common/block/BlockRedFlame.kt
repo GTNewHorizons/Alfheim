@@ -5,12 +5,14 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.BlockFire
+import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -33,9 +35,15 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	init {
 		setBlockName("MuspelheimFire")
 		setBlockUnbreakable()
-		setLightLevel(1.0f)
+		setCreativeTab(null)
+		setLightLevel(1f)
 		setLightOpacity(0)
 		setResistance(java.lang.Float.MAX_VALUE)
+	}
+	
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
 	}
 	
 	override fun getPlayerRelativeBlockHardness(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Float {

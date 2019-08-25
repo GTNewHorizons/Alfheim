@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import vazkii.botania.common.block.ModBlocks
 
-class BlockMarker: BlockMod(Material.wood) {
+class BlockShemaMarker: BlockMod(Material.wood) {
 	
 	init {
 		val size = 0.1875f

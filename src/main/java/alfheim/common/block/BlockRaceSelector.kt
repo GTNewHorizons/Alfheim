@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.extendables.block.BlockModContainer
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
 import net.minecraft.block.material.Material
@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 
-class BlockRaceSelector: BlockModContainer(Material.glass) {
+class BlockRaceSelector: BlockContainerMod(Material.glass) {
 	
 	lateinit var icons: Array<IIcon>
 	
@@ -17,6 +17,7 @@ class BlockRaceSelector: BlockModContainer(Material.glass) {
 		setBlockBounds(0f, 0f, 3f / 16, 1f, 3f / 16, 13f / 16)
 		setBlockName("RaceSelector")
 		setBlockUnbreakable()
+		setCreativeTab(null)
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -82,8 +83,6 @@ class BlockRaceSelector: BlockModContainer(Material.glass) {
 		return false
 	}
 	
-	override fun createNewTileEntity(world: World?, meta: Int) = TileRaceSelector()
-	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		icons = Array(5) { IconHelper.forBlock(reg, this, it) }
 	}
@@ -97,9 +96,8 @@ class BlockRaceSelector: BlockModContainer(Material.glass) {
 		}
 	}
 	
+	override fun createNewTileEntity(world: World?, meta: Int) = TileRaceSelector()
 	override fun getRenderBlockPass() = 1
-	
 	override fun isOpaqueCube() = false
-	
 	override fun renderAsNormalBlock() = false
 }

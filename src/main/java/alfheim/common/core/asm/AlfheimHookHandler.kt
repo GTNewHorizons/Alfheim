@@ -8,8 +8,8 @@ import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
@@ -44,9 +44,11 @@ import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.proxy.ClientProxy
+import vazkii.botania.client.lib.LibResources
 import vazkii.botania.client.render.tile.RenderTileAltar
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
+import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
@@ -329,6 +331,12 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(targetMethod = "<init>")
+	fun `BlockModWall$init`(block: BlockModWall) {
+		block.setCreativeTab(BotaniaCreativeTab.INSTANCE)
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun displayAllReleventItems(tab: BotaniaCreativeTab, list: List<Any?>) {
 		AlfheimItems.thinkingHand.getSubItems(AlfheimItems.thinkingHand, tab, list)
@@ -361,7 +369,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
-		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim
+		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
 	}
 	
 	@JvmStatic
@@ -461,9 +469,14 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
-		if (mana < 0 || !AlfheimConfig.numericalMana || !numMana) return
+		if (mana < 0 || !AlfheimConfigHandler.numericalMana || !numMana) return
 		glPushMatrix()
 		val f = Minecraft.getMinecraft().currentScreen == null
 		var f1 = false

@@ -1,8 +1,9 @@
 package alfheim.common.item.equipment.tool.manasteel
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.Event.Result
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -23,11 +24,16 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 		get() = MANA_PER_DAMAGE
 	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 		setTextureName("${ModInfo.MODID}:$name")
 		unlocalizedName = name
 	}
-	
+
+	override fun setUnlocalizedName(name: String): Item {
+		GameRegistry.registerItem(this, name)
+		return super.setUnlocalizedName(name)
+	}
+
 	override fun hitEntity(par1ItemStack: ItemStack?, par2EntityLivingBase: EntityLivingBase?, par3EntityLivingBase: EntityLivingBase?): Boolean {
 		ToolCommons.damageItem(par1ItemStack, 1, par3EntityLivingBase, manaPerDamage)
 		return true

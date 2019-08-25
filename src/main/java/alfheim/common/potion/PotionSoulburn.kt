@@ -1,7 +1,8 @@
 package alfheim.common.potion
 
 import alfheim.common.block.*
-import alfheim.common.core.util.*
+import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.DamageSourceSpell
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -9,7 +10,7 @@ import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11.*
 
-class PotionSoulburn: PotionAlfheim(AlfheimConfig.potionIDSoulburn, "soulburn", true, 0xCC4400) {
+class PotionSoulburn: PotionAlfheim(AlfheimConfigHandler.potionIDSoulburn, "soulburn", true, 0xCC4400) {
 	
 	override fun isReady(time: Int, mod: Int): Boolean {
 		return time % 20 == 0

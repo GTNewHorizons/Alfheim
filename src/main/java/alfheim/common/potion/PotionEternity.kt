@@ -1,6 +1,6 @@
 package alfheim.common.potion
 
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.common.MinecraftForge
@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
-class PotionEternity: PotionAlfheim(AlfheimConfig.potionIDEternity, "eternity", false, 0xDAA520) {
+class PotionEternity: PotionAlfheim(AlfheimConfigHandler.potionIDEternity, "eternity", false, 0xDAA520) {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)

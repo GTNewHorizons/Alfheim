@@ -8,7 +8,7 @@ import vazkii.botania.api.subtile.SubTileEntity
 
 class RecipePureDaisyExclusion(input: Any, output: Block, outputMeta: Int) : RecipePureDaisy(input, output, outputMeta) {
 
-    override fun matches(world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
+    override fun matches(world: World?, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
         if (input is Block)
             return block == input
 

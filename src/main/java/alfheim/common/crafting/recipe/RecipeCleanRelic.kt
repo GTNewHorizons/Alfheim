@@ -1,6 +1,7 @@
 package alfheim.common.crafting.recipe
 
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
@@ -22,7 +23,7 @@ class RecipeCleanRelic: IRecipe {
 			if (stack.item is IRelic && !foundRelic)
 				foundRelic = true
 			else if (!foundItem) {
-				if (stack.item === AlfheimItems.relicCleaner)
+				if (stack.item === AlfheimItems.elvenResource && stack.itemDamage == ElvenResourcesMetas.DasRheingold)
 					foundItem = true
 				else
 					return false
@@ -40,7 +41,7 @@ class RecipeCleanRelic: IRecipe {
 			val stack = inv.getStackInSlot(i) ?: continue
 			if (stack.item is IRelic)
 				item = stack
-			else if (stack.item === AlfheimItems.relicCleaner)
+			else if (stack.item === AlfheimItems.elvenResource && stack.itemDamage == ElvenResourcesMetas.DasRheingold)
 				cloth = stack
 		}
 		

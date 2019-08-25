@@ -1,10 +1,10 @@
 package alfheim.common.crafting.recipe
 
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.ASJUtilities.Companion.addOreDictRecipe
-import alexsocol.asjlib.ASJUtilities.Companion.addShapelessOreDictRecipe
+import alexsocol.asjlib.ASJUtilities.addOreDictRecipe
+import alexsocol.asjlib.ASJUtilities.addShapelessOreDictRecipe
 import alfheim.AlfheimCore
-import alfheim.api.AlfheimAPI
+import alfheim.api.*
 import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibOreDict.ARUNE
@@ -19,43 +19,41 @@ import alfheim.api.lib.LibOreDict.MUSPELHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.MUSPELHEIM_POWER_INGOT
 import alfheim.api.lib.LibOreDict.NIFLHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.NIFLHEIM_POWER_INGOT
+import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
 import alfheim.common.block.AlfheimBlocks.dreamLog
-import alfheim.common.block.AlfheimBlocks.dreamwoodBarkFence
-import alfheim.common.block.AlfheimBlocks.dreamwoodBarkFenceGate
-import alfheim.common.block.AlfheimBlocks.dreamwoodFence
-import alfheim.common.block.AlfheimBlocks.dreamwoodFenceGate
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
-import alfheim.common.block.AlfheimBlocks.elvenSandstone
-import alfheim.common.block.AlfheimBlocks.elvenSandstoneSlab
-import alfheim.common.block.AlfheimBlocks.elvenSandstoneStairs
-import alfheim.common.block.AlfheimBlocks.elvoriumBlock
-import alfheim.common.block.AlfheimBlocks.itemHolder
 import alfheim.common.block.AlfheimBlocks.livingcobble
-import alfheim.common.block.AlfheimBlocks.livingcobbleSlab
-import alfheim.common.block.AlfheimBlocks.livingcobbleStairs
-import alfheim.common.block.AlfheimBlocks.livingcobbleWall
-import alfheim.common.block.AlfheimBlocks.livingrockBrickWall
-import alfheim.common.block.AlfheimBlocks.livingrockTileSlab
-import alfheim.common.block.AlfheimBlocks.livingwoodBarkFence
-import alfheim.common.block.AlfheimBlocks.livingwoodBarkFenceGate
-import alfheim.common.block.AlfheimBlocks.livingwoodFence
-import alfheim.common.block.AlfheimBlocks.livingwoodFenceGate
+import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.manaInfuser
-import alfheim.common.block.AlfheimBlocks.mauftriumBlock
-import alfheim.common.block.AlfheimBlocks.shrineGlass
-import alfheim.common.block.AlfheimBlocks.shrineLight
-import alfheim.common.block.AlfheimBlocks.shrinePanel
-import alfheim.common.block.AlfheimBlocks.shrinePillar
-import alfheim.common.block.AlfheimBlocks.shrineRock
-import alfheim.common.block.AlfheimBlocks.shrineRockWhiteSlab
-import alfheim.common.block.AlfheimBlocks.shrineRockWhiteStairs
 import alfheim.common.block.AlfheimBlocks.tradePortal
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
+import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
+import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
+import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
+import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
+import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
+import alfheim.common.block.AlfheimFluffBlocks.livingwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.shrineGlass
+import alfheim.common.block.AlfheimFluffBlocks.shrineLight
+import alfheim.common.block.AlfheimFluffBlocks.shrinePanel
+import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
+import alfheim.common.block.AlfheimFluffBlocks.shrineRock
+import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
+import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -68,7 +66,6 @@ import alfheim.common.item.AlfheimItems.elementalBoots
 import alfheim.common.item.AlfheimItems.elementalChestplate
 import alfheim.common.item.AlfheimItems.elementalHelmet
 import alfheim.common.item.AlfheimItems.elementalHelmetRevealing
-import alfheim.common.item.AlfheimItems.elementalHelmetRevealingIsInitialized
 import alfheim.common.item.AlfheimItems.elementalLeggings
 import alfheim.common.item.AlfheimItems.elementiumHoe
 import alfheim.common.item.AlfheimItems.elfFirePendant
@@ -92,19 +89,19 @@ import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
 import alfheim.common.item.AlfheimItems.realitySword
-import alfheim.common.item.AlfheimItems.relicCleaner
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
+import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.init.Blocks.*
 import net.minecraft.init.Items.*
 import net.minecraft.item.*
 import net.minecraft.item.crafting.*
+import net.minecraftforge.oredict.*
 import net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE
-import net.minecraftforge.oredict.ShapedOreRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
@@ -227,7 +224,7 @@ object AlfheimRecipes {
 							 "SPS", " C ", "CCC",
 							 'S', livingcobbleSlab,
 							 'P', PETAL[i],
-							 'C', ItemStack(livingcobble))
+							 'C', ItemStack(livingcobble, 1, 0))
 		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16)
 		
 		addOreDictRecipe(ItemStack(animatedTorch),
@@ -299,7 +296,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeElementalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (elementalHelmetRevealingIsInitialized())
+		if (elementalHelmetRevealing != null)
 			addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 							 "RTR", "DPD", " M ",
 							 'R', RUNE[0],
@@ -354,6 +351,13 @@ object AlfheimRecipes {
 						 'R', ARUNE[2],
 						 'P', icePendant)
 		recipeNiflheimPendant = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.DasRheingold),
+						 "SCS", "CGC", "SCS",
+						 'G', "ingotGold",
+						 'S', LIFE_ESSENCE,
+						 'C', spellCloth)
+		recipeRelicCleaner = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore),
 						 "PGP", "GDG", "PGP",
@@ -416,7 +420,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(furnace),
 						 "SSS", "S S", "SSS",
-						 'S', livingcobble)
+						 'S', ItemStack(livingcobble, 1, 0))
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(invisibilityCloak),
@@ -427,7 +431,7 @@ object AlfheimRecipes {
 						 'J', MANA_PEARL)
 		recipeInvisibilityCloak = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(itemHolder),
+		addOreDictRecipe(ItemStack(manaAccelerator),
 						 "MLM", "LDL",
 						 'D', MANA_DIAMOND,
 						 'L', LIVING_ROCK,
@@ -442,7 +446,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingrockPickaxe),
 						 "LLL", " S ", " S ",
-						 'L', livingcobble,
+						 'L', ItemStack(livingcobble, 1, 0),
 						 'S', "stickWood")
 		recipeLivingrockPickaxe = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -459,7 +463,7 @@ object AlfheimRecipes {
 						 'D', DRAGONSTONE,
 						 'I', ELEMENTIUM,
 						 'R', rainbowRod,
-						 'S', LIVING_ROCK)
+						 'S', ItemStack(livingrock, 1, 4))
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(manaRingElven),
@@ -513,13 +517,6 @@ object AlfheimRecipes {
 						 'R', ARUNE[0],
 						 'S', ItemStack(manaResource, 1, 3))
 		recipeSword = BotaniaAPI.getLatestAddedRecipe()
-		
-		addOreDictRecipe(ItemStack(relicCleaner),
-						 "SCS", "CGC", "SCS",
-						 'G', "ingotGold",
-						 'S', LIFE_ESSENCE,
-						 'C', spellCloth)
-		recipeRelicCleaner = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(rodFire),
 						 " MR", " BM", "B  ",
@@ -579,7 +576,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
-		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 1))
+		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 0))
 		
 		addShapedRecipe(ItemStack(livingrockTileSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
 		
@@ -671,10 +668,6 @@ object AlfheimRecipes {
 						 "LLL", "L L", "LLL",
 						 'L', LIVING_ROCK)
 		
-		addOreDictRecipe(ItemStack(livingcobbleSlab, 6),
-						 "LLL",
-						 'L', ItemStack(livingcobble, 1, 2))
-		
 		val dyes = arrayOf(4, 1, 14, 11)
 		for (i in 0..3) {
 			addOreDictRecipe(ItemStack(shrinePanel, 16, i),
@@ -699,13 +692,14 @@ object AlfheimRecipes {
 		
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumNugget), ELVORIUM_INGOT)
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumNugget), MAUFTRIUM_INGOT)
-		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), elvoriumBlock)
-		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumIngot), mauftriumBlock)
+		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), ItemStack(alfStorage, 1, 0))
+		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumIngot), ItemStack(alfStorage, 1, 1))
 		
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET, ELVORIUM_NUGGET)
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET, MAUFTRIUM_NUGGET)
-		addShapelessOreDictRecipe(ItemStack(elvoriumBlock), ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT, ELVORIUM_INGOT)
-		addShapelessOreDictRecipe(ItemStack(mauftriumBlock), MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT, MAUFTRIUM_INGOT)
+		// NNN-NNN-NNN-N!!!
+		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), "NNN", "NNN", "NNN", 'N', ELVORIUM_NUGGET)
+		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), "NNN", "NNN", "NNN", 'N', MAUFTRIUM_NUGGET)
+		addOreDictRecipe(ItemStack(alfStorage, 1, 0), "NNN", "NNN", "NNN", 'N', ELVORIUM_INGOT)
+		addOreDictRecipe(ItemStack(alfStorage, 1, 1), "NNN", "NNN", "NNN", 'N', MAUFTRIUM_INGOT)
 		
 		addShapelessOreDictRecipe(ItemStack(lens, 1, 23), ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM)
 		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe()
@@ -812,13 +806,19 @@ object AlfheimRecipes {
 		
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
-		if (Botania.thaumcraftLoaded) {
-			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
+		
+		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
+			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
+		RecipeSorter.register("${ModInfo.MODID}:elvhelm", RecipeHelmetElvorium::class.java, RecipeSorter.Category.SHAPED, "after:forge:shapedore")
+		
 		addRecipe(RecipeLootInterceptor())
+		RecipeSorter.register("${ModInfo.MODID}:looter", RecipeLootInterceptor::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeLootInterceptorClear())
+		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
+		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {

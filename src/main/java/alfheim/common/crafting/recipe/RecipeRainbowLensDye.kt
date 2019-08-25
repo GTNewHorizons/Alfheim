@@ -16,14 +16,14 @@ import java.util.*
  */
 class RecipeRainbowLensDye : IRecipe {
 
-    override fun matches(var1: InventoryCrafting, var2: World): Boolean {
+    override fun matches(inv: InventoryCrafting, world: World?): Boolean {
         ores = OreDictionary.getOres(LibOreDict.DYES[16])
 
         var foundLens = false
         var foundDye = false
 
-        for (i in 0 until var1.sizeInventory) {
-            val stack = var1.getStackInSlot(i)
+        for (i in 0 until inv.sizeInventory) {
+            val stack = inv.getStackInSlot(i)
             if (stack != null) {
                 if (stack.item is ILens && !foundLens) {
                     foundLens = true

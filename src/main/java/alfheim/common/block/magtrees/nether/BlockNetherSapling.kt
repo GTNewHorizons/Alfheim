@@ -1,6 +1,6 @@
 package alfheim.common.block.magtrees.nether
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
@@ -26,7 +26,7 @@ class BlockNetherSapling : BlockColoredSapling(name = "netherSapling") {
             if (canGrowHere(plantedOn)) {
                 val l = world.getBlockMetadata(x, y, z)
 
-                val obj: WorldGenerator = HeartWoodTreeGen(5, ShadowFoxBlocks.netherWood, 0, ShadowFoxBlocks.netherWood, 0, ShadowFoxBlocks.netherLeaves, 0)
+                val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.netherWood, 0, AlfheimBlocks.netherWood, 0, AlfheimBlocks.netherLeaves, 0)
 
                 world.setBlock(x, y, z, Blocks.air, 0, 4)
 

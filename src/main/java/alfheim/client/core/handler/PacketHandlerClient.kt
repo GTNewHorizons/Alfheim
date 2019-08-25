@@ -8,10 +8,10 @@ import alfheim.api.spell.SpellBase.SpellCastResult
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.flight
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.network.*
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
@@ -46,9 +46,9 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message1d) {
 		when (m1d.values()[packet.type]) {
-			m1d.CL_SLOWDOWN      -> AlfheimConfig.slowDownClients = packet.data1 != 0.0
-			m1d.DEATH_TIMER      -> AlfheimConfig.deathScreenAddTime = packet.data1.toInt()
-			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfig.flightTime = packet.data1.toInt()
+			m1d.CL_SLOWDOWN      -> AlfheimConfigHandler.slowDownClients = packet.data1 != 0.0
+			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
+			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> {
 				CardinalSystemClient.segment()
 				CardinalSystemClient.PlayerSegmentClient.knowledge[packet.data1.toInt()] = true

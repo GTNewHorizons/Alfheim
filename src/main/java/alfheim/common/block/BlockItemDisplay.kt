@@ -29,11 +29,11 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	var sideIcons: Array<IIcon?> = arrayOfNulls(TYPES)
 	
 	init {
-		setBlockName("itemDisplay")
-		blockHardness = 2F
-		setStepSound(soundTypeWood)
 		isBlockContainer = true
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F)
+		setBlockName("itemDisplay")
+		setHardness(2f)
+		setStepSound(soundTypeWood)
+		setBlockBounds(0f, 0f, 0f, 1f, 0.5f, 1f)
 	}
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
@@ -51,9 +51,9 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	
 	override fun shouldRegisterInNameSet() = false
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
 	internal fun register(name: String) {

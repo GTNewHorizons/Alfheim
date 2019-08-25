@@ -2,7 +2,7 @@ package alfheim.common.block.tile
 
 import net.minecraft.entity.player.EntityPlayer
 
-class TileSchematicAnnihilator : TileSchema() {
+class TileSchemaAnnihilator : TileSchemaController() {
     
     override fun blockActivated(p0: EntityPlayer?) {
         if (pos_x != null && pos_y != null && pos_z != null) {

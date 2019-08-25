@@ -1,6 +1,9 @@
 package alfheim.common.block
 
-import net.minecraft.block.BlockFalling
+import alexsocol.asjlib.ASJUtilities
+import alfheim.common.item.block.ItemBlockMod
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.item.EntityFallingBlock
@@ -10,7 +13,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.*
 import java.util.*
 
-class BlockPatternLexicon(modid: String, material: Material, name: String, tab: CreativeTabs, lightlvl: Float, lightOpacity: Int, hardness: Float, harvTool: String, harvLvl: Int, resistance: Float, sound: SoundType, private val isOpaque: Boolean, private val isBeacon: Boolean, private val isFalling: Boolean, private val entry: LexiconEntry): BlockFalling(material), ILexiconable {
+class BlockPatternLexicon(modid: String, material: Material, name: String, tab: CreativeTabs? = null, lightlvl: Float = 0f, lightOpacity: Int = 255, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resistance: Float = 5f, sound: SoundType? = ASJUtilities.soundFromMaterial(material), private val isOpaque: Boolean = false, private val isBeacon: Boolean = false, private val isFalling: Boolean = false, private val entry: LexiconEntry? = null): BlockFalling(material), ILexiconable {
 	
 	init {
 		setBlockName(name)
@@ -24,15 +27,20 @@ class BlockPatternLexicon(modid: String, material: Material, name: String, tab: 
 		setStepSound(sound)
 	}
 	
+	override fun setBlockName(name: String): Block {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		return super.setBlockName(name)
+	}
+	
 	override fun isOpaqueCube() = isOpaque
 	
 	override fun isBeaconBase(world: IBlockAccess?, x: Int, y: Int, z: Int, beaconX: Int, beaconY: Int, beaconZ: Int) = isBeacon
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
-		if (!world.isRemote && isFalling) func_149830_m(world, x, y, z)
+		if (!world.isRemote && isFalling) fall(world, x, y, z)
 	}
 	
-	private fun func_149830_m(world: World, x: Int, y: Int, z: Int) {
+	private fun fall(world: World, x: Int, y: Int, z: Int) {
 		var y = y
 		if (func_149831_e(world, x, y - 1, z) && y >= 0) {
 			val b0: Byte = 32

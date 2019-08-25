@@ -134,16 +134,23 @@ object AlfheimAPI {
 		try {
 			anomalyInstances[name] = behavior.newInstance()
 		} catch (e: Throwable) {
-			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, "Cannot instantiate anomaly subtile for " + behavior.canonicalName)
-			e.printStackTrace()
+			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, e, "Cannot instantiate anomaly subtile for ${behavior.canonicalName}")
 			throw IllegalArgumentException("Uninstantiatable anomaly subtile.")
 		}
 		
 	}
 	
 	fun getAnomaly(name: String): Class<out SubTileEntity> =
-		anomalies[name]!!
+		anomalies[name] ?: FallbackAnomaly::class.java
 	
 	fun getAnomalyInstance(name: String) =
-		anomalyInstances[name]!!
+		anomalyInstances[name] ?: FallbackAnomaly
+	
+	object FallbackAnomaly: SubTileEntity() {
+		override val targets: List<Any> = emptyList()
+		override val rarity = EnumAnomalityRarity.COMMON
+		override val strip = 31
+		override fun performEffect(target: Any) = Unit
+		override fun typeBits() = 0
+	}
 }

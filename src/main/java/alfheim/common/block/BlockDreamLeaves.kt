@@ -1,13 +1,15 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.render.*
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
+import alfheim.common.core.helper.IconHelper
+import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.BlockLeaves
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.*
 import net.minecraft.init.*
@@ -15,19 +17,21 @@ import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.*
 import vazkii.botania.common.item.ModItems
 import java.util.*
 
-class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
-
-	val textures = arrayOfNulls<IIcon>(3)
+class BlockDreamLeaves: BlockLeavesMod(), IGlowingLayerBlock {
+	
+	lateinit var textures: Array<IIcon>
 	
 	init {
 		setBlockName("DreamLeaves")
 		setBlockTextureName(ModInfo.MODID + ":DreamLeaves")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setLightOpacity(0)
+	}
+	
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
 	// IDK whether this is good source of glowstone or not
@@ -64,56 +68,25 @@ class BlockDreamLeaves: BlockLeaves(), IGlowingLayerBlock, ILexiconable {
 		return false
 	}
 	
-	override fun isLeaves(world: IBlockAccess, x: Int, y: Int, z: Int): Boolean {
-		return true
-	}
-	
-	override fun isOpaqueCube(): Boolean {
-		return Blocks.leaves.isOpaqueCube
-	}
-	
-	override fun getItemDropped(meta: Int, rand: Random, fortune: Int): Item {
-		return Item.getItemFromBlock(AlfheimBlocks.dreamSapling)
-	}
-
+	override fun func_150123_b(meta: Int) = 100
+	override fun quantityDropped(random: Random) = if (random.nextInt(func_150123_b(0)) == 0) 1 else 0
+	override fun decayBit() = 0x8
+	override fun isLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
+	override fun isOpaqueCube() = Blocks.leaves.isOpaqueCube
+	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.dreamSapling)!!
 	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int): Int {
-		return Integer.parseInt("E5FFF9", 16)
-	}
-	
+	override fun getRenderColor(meta: Int) = Integer.parseInt("E5FFF9", 16)
 	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int): Int {
-		return Integer.parseInt("E5FFF9", 16)
-	}
-	
-	override fun func_150123_b(meta: Int): Int {
-		return 100
-	}
-	
-	override fun getIcon(side: Int, meta: Int): IIcon {
-		return textures[if (Blocks.leaves.isOpaqueCube) 1 else 0]!!
-	}
-	
-	override fun getGlowIcon(side: Int, meta: Int): IIcon {
-		return textures[2]!!
-	}
+	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = Integer.parseInt("E5FFF9", 16)
+	override fun getIcon(side: Int, meta: Int) = textures[if (Blocks.leaves.isOpaqueCube) 1 else 0]
+	override fun getGlowIcon(side: Int, meta: Int) = textures[2]
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(reg: IIconRegister) {
-		textures[0] = reg.registerIcon(ModInfo.MODID + ":DreamLeaves")
-		textures[1] = reg.registerIcon(ModInfo.MODID + ":DreamLeavesOpaque")
-		textures[2] = reg.registerIcon(ModInfo.MODID + ":DreamSparks")
+		textures = Array(3) { IconHelper.forBlock(reg, this, it) }
 	}
 	
-	override fun getRenderType(): Int {
-		return RenderGlowingLayerBlock.glowBlockID
-	}
-
-	override fun func_150125_e(): Array<String> {
-		return arrayOf("dream")
-	}
-
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.worldgen
-	}
+	override fun getRenderType() = RenderGlowingLayerBlock.glowBlockID
+	override fun func_150125_e() = arrayOf("dream")
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.worldgen
 }

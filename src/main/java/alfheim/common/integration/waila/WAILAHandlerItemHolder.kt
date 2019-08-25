@@ -1,7 +1,7 @@
 package alfheim.common.integration.waila
 
-import alfheim.common.block.tile.TileItemHolder
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.block.tile.TileManaAccelerator
+import alfheim.common.core.handler.AlfheimConfigHandler
 import mcp.mobius.waila.api.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
@@ -14,7 +14,7 @@ import vazkii.botania.api.mana.IManaItem
 class WAILAHandlerItemHolder: IWailaDataProvider {
 	
 	override fun getNBTData(player: EntityPlayerMP, tile: TileEntity, result: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound {
-		if (tile is TileItemHolder) {
+		if (tile is TileManaAccelerator) {
 			val stack = tile.item
 			if (stack != null && stack.item is IManaItem) {
 				val mana = stack.item as IManaItem
@@ -38,7 +38,7 @@ class WAILAHandlerItemHolder: IWailaDataProvider {
 		val tag = accessor.nbtData
 		
 		if (tag.hasKey(TAG_MANA) && tag.hasKey(TAG_MAX_MANA))
-			currenttip.add(EnumChatFormatting.AQUA.toString() + StatCollector.translateToLocalFormatted("alfheimmisc.waila.holder.mana", if (AlfheimConfig.numericalMana) tag.getInteger(TAG_MANA).toString() + "/" + tag.getInteger(TAG_MAX_MANA) else (tag.getInteger(TAG_MANA) * 100 / tag.getInteger(TAG_MAX_MANA)).toString() + "%"))
+			currenttip.add(EnumChatFormatting.AQUA.toString() + StatCollector.translateToLocalFormatted("alfheimmisc.waila.holder.mana", if (AlfheimConfigHandler.numericalMana) tag.getInteger(TAG_MANA).toString() + "/" + tag.getInteger(TAG_MAX_MANA) else (tag.getInteger(TAG_MANA) * 100 / tag.getInteger(TAG_MAX_MANA)).toString() + "%"))
 		
 		return currenttip
 	}

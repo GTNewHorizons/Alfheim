@@ -3,8 +3,8 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
-import alfheim.common.core.util.AlfheimConfig
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -21,7 +21,7 @@ object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		if (!AlfheimConfig.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return
+		if (!AlfheimConfigHandler.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
 		if (player.race == EnumRace.HUMAN) return
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) return
 		if (player.commandSenderName == "AlexSocol") return

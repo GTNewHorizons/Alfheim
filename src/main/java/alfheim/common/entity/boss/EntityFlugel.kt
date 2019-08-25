@@ -4,10 +4,11 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.*
+import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.boss.ai.flugel.*
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.item.relic.ItemFlugelSoul
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
@@ -302,7 +303,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersWhoAttacked.isEmpty()) playersWhoAttacked[summoner] = 1
 		val source = source
 		var players = playersAround
-		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfig.flugelBossBar) BossBarHandler.setCurrentBoss(this)
+		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
@@ -319,8 +320,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					var yaw = 0
 					while (yaw < 360) {
 						// angle in rads
-						val radY = yaw * Math.PI.toFloat() / 180f
-						val radP = pitch * Math.PI.toFloat() / 180f
+						val radY = yaw * PI.toFloat() / 180f
+						val radP = pitch * PI.toFloat() / 180f
 						
 						// world coords
 						val wX = source.posX + 0.5
@@ -336,11 +337,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						val nrm = Vector3(x, y, z).normalize()
 						
 						// noraml to pos
-						val radp = (pitch + 90f) * Math.PI.toFloat() / 180f
+						val radp = (pitch + 90f) * PI.toFloat() / 180f
 						val kx = sin(radp.toDouble()) * cos(radY.toDouble())
 						val ky = cos(radp.toDouble())
 						val kz = sin(radp.toDouble()) * sin(radY.toDouble())
-						val kos = Vector3(kx, ky, kz).normalize().rotate(Math.toRadians(Math.PI * 2.0 * Math.random()), nrm).mul(0.1)
+						val kos = Vector3(kx, ky, kz).normalize().rotate(Math.toRadians(PI * 2.0 * Math.random()), nrm).mul(0.1)
 						
 						val motX = kos.x.toFloat()
 						val motY = kos.y.toFloat()
@@ -483,16 +484,16 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	private fun initAI() {
 		tasks.taskEntries.clear()
 		var i = 0
-		tasks.addTask(i++, EntityAIWatchClosest(this, EntityPlayer::class.java, java.lang.Float.MAX_VALUE))
-		tasks.addTask(i, AITeleport(this, AITask.TP))
-		tasks.addTask(i, AIChase(this, AITask.CHASE))
-		tasks.addTask(i, AIRegen(this, AITask.REGEN))
-		tasks.addTask(i, AILightning(this, AITask.LIGHTNING))
-		tasks.addTask(i, AIRays(this, AITask.RAYS))
-		tasks.addTask(i, AIEnergy(this, AITask.DARK))
-		tasks.addTask(i++, AIDeathray(this, AITask.DEATHRAY))
-		tasks.addTask(i++, AIInvul(this, AITask.INVUL))
-		tasks.addTask(i++, AIWait(this, AITask.NONE))
+/*0*/	tasks.addTask(i, EntityAIWatchClosest(this, EntityPlayer::class.java, java.lang.Float.MAX_VALUE))
+/*1*/	tasks.addTask(++i, AITeleport(this, AITask.TP))
+/*1*/	tasks.addTask(i, AIChase(this, AITask.CHASE))
+/*1*/	tasks.addTask(i, AIRegen(this, AITask.REGEN))
+/*1*/	tasks.addTask(i, AILightning(this, AITask.LIGHTNING))
+/*1*/	tasks.addTask(i, AIRays(this, AITask.RAYS))
+/*1*/	tasks.addTask(i, AIEnergy(this, AITask.DARK))
+/*1*/	tasks.addTask(i, AIDeathray(this, AITask.DEATHRAY))
+/*2*/	tasks.addTask(++i, AIInvul(this, AITask.INVUL))
+/*3*/	tasks.addTask(++i, AIWait(this, AITask.NONE))
 	}
 	
 	// --------------------------------------------------------

@@ -1,11 +1,12 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.AlfheimCore
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.*
 import alfheim.common.item.block.ItemRainbowGrassMod
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -41,11 +42,11 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	}
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
+		setBlockName("rainbowGrass")
+		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setBlockName("rainbowGrass")
 	}
 	
 	override fun setBlockBoundsBasedOnState(world: IBlockAccess, x: Int, y: Int, z: Int) {
@@ -98,10 +99,10 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun func_149853_b(world: World, random: Random, x: Int, y: Int, z: Int) {
 		var meta = world.getBlockMetadata(x, y, z)
 		if (meta == GRASS || meta == AURORA || meta == FLOWER || meta == BURIED) {
-			var block = ShadowFoxBlocks.rainbowTallGrass
+			var block = AlfheimBlocks.rainbowTallGrass
 			
 			if (meta == FLOWER || meta == BURIED) {
-				block = ShadowFoxBlocks.rainbowTallFlower
+				block = AlfheimBlocks.rainbowTallFlower
 				meta = FLOWER
 			}
 			
@@ -124,14 +125,14 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun getDrops(world: World?, x: Int, y: Int, z: Int, meta: Int, fortune: Int): ArrayList<ItemStack>? {
 		return when (meta) {
 			GRASS, AURORA -> super.getDrops(world, x, y, z, meta, fortune)
-			BURIED        -> arrayListOf(ItemStack(ShadowFoxItems.resource, 1, 7))
+			BURIED        -> arrayListOf(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
 			else          -> arrayListOf(ItemStack(this, 1, meta))
 		}
 	}
 	
 	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int) = when (meta) {
 		GRASS, AURORA -> null
-		BURIED        -> ShadowFoxItems.resource
+		BURIED        -> AlfheimItems.elvenResource
 		else          -> Item.getItemFromBlock(this)
 	}
 	
@@ -168,7 +169,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun getIcon(side: Int, meta: Int): IIcon? {
 		return when (meta) {
 			GRASS   -> blockIcon
-			AURORA  -> ShadowFoxBlocks.irisGrass.getIcon(side, 0)
+			AURORA  -> AlfheimBlocks.irisGrass.getIcon(side, 0)
 			FLOWER  -> flowerIcon
 			GLIMMER -> glowingIcon
 			BURIED  -> ModBlocks.buriedPetals.getIcon(side, 0)

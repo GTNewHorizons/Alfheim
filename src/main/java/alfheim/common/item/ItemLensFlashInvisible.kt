@@ -1,8 +1,9 @@
 package alfheim.common.item
 
 import alfheim.api.ModInfo
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileInvisibleManaFlame
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -27,7 +28,8 @@ import java.awt.Color
 class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	
 	init {
-		setMaxStackSize(1)
+		creativeTab = AlfheimTab
+		maxStackSize = 1
 		GameRegistry.addRecipe(LensDyeingRecipe())
 		RecipeSorter.register("${ModInfo.MODID}:lensDying", LensDyeingRecipe::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
@@ -100,10 +102,10 @@ class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 				val blockAt = entity.worldObj.getBlock(pos.blockX, pos.blockY, pos.blockZ)
 				val blockAt_ = entity.worldObj.getBlock(x, y, z)
 				
-				if (blockAt === ModBlocks.manaFlame || blockAt === ShadowFoxBlocks.invisibleFlame)
+				if (blockAt === ModBlocks.manaFlame || blockAt === AlfheimBlocks.invisibleFlame)
 					entity.worldObj.setBlock(pos.blockX, pos.blockY, pos.blockZ, Blocks.air)
 				else if (blockAt_.isAir(entity.worldObj, x, y, z) || blockAt_.isReplaceable(entity.worldObj, x, y, z)) {
-					entity.worldObj.setBlock(x, y, z, ShadowFoxBlocks.invisibleFlame, 0, 0)
+					entity.worldObj.setBlock(x, y, z, AlfheimBlocks.invisibleFlame, 0, 0)
 					
 					val tile = entity.worldObj.getTileEntity(x, y, z)
 					if (tile is TileInvisibleManaFlame) {

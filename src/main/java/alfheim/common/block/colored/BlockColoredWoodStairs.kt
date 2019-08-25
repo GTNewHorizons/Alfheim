@@ -1,6 +1,6 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockStairsMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.relauncher.*
@@ -12,7 +12,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 
-class BlockColoredWoodStairs(meta: Int, source: Block = ShadowFoxBlocks.coloredPlanks):
+class BlockColoredWoodStairs(meta: Int, source: Block = AlfheimBlocks.irisPlanks):
     BlockStairsMod(source, meta, source.unlocalizedName.replace("tile.".toRegex(), "") + "Stairs" + meta), ILexiconable {
 	
 	@SideOnly(Side.CLIENT)

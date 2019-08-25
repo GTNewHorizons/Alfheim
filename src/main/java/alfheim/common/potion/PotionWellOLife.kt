@@ -1,10 +1,10 @@
 package alfheim.common.potion
 
 import alfheim.AlfheimCore
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.EntityLivingBase
 
-class PotionWellOLife: PotionAlfheim(AlfheimConfig.potionIDWellOLife, "wellolife", false, 0x00FFFF) {
+class PotionWellOLife: PotionAlfheim(AlfheimConfigHandler.potionIDWellOLife, "wellolife", false, 0x00FFFF) {
 	
 	override fun isReady(time: Int, ampl: Int): Boolean {
 		return AlfheimCore.enableMMO && time % 10 == 0

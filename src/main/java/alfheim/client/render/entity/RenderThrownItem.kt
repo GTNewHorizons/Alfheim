@@ -1,6 +1,6 @@
 package alfheim.client.render.entity
 
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
@@ -15,7 +15,7 @@ class RenderThrownItem: Render() {
 	
 	override fun doRender(p_76986_1_: Entity, p_76986_2_: Double, p_76986_4_: Double, p_76986_6_: Double, p_76986_8_: Float, p_76986_9_: Float) {
         //val c = p_76986_1_ as EntityThrowableItem
-        val iicon = ShadowFoxItems.fireGrenade.getIconFromDamage(0) // c.event.itemStack.item.getIconFromDamage(c.event.itemStack.itemDamage)
+        val iicon = AlfheimItems.fireGrenade.getIconFromDamage(0) // c.event.itemStack.item.getIconFromDamage(c.event.itemStack.itemDamage)
         if (iicon != null) {
             GL11.glPushMatrix()
             GL11.glTranslatef(p_76986_2_.toFloat(), p_76986_4_.toFloat(), p_76986_6_.toFloat())

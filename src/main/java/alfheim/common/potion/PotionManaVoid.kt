@@ -1,7 +1,7 @@
 package alfheim.common.potion
 
-import alfheim.common.core.util.AlfheimConfig
-import alfheim.common.item.ShadowFoxItems
+import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
@@ -12,7 +12,7 @@ import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.common.item.ModItems
 
-class PotionManaVoid: PotionAlfheim(AlfheimConfig.potionIDManaVoid, "manaVoid", true, 192) {
+class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "manaVoid", true, 192) {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
@@ -59,7 +59,7 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfig.potionIDManaVoid, "manaVoid", 
 				for (slot in 0 until invSize) {
 					val stackInSlot = mainInv.getStackInSlot(slot)
 					if (stackInSlot != null && stackInSlot.item == ModItems.blackLotus) {
-						val wiltStack = ItemStack(ShadowFoxItems.wiltedLotus, stackInSlot.stackSize, stackInSlot.itemDamage)
+						val wiltStack = ItemStack(AlfheimItems.wiltedLotus, stackInSlot.stackSize, stackInSlot.itemDamage)
 						wiltStack.stackTagCompound = stackInSlot.tagCompound
 						mainInv.setInventorySlotContents(slot, wiltStack)
 					}

@@ -1,8 +1,8 @@
 // This is here since ItemHolyCloak#getRenderTexture is package-private
 package vazkii.botania.common.item.equipment.bauble
 
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
@@ -10,8 +10,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.common.Botania
 
 class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
+	
 	init {
-		creativeTab = AlfheimCore.alfheimTab
+		creativeTab = AlfheimTab
 	}
 	
 	override fun effectOnDamage(event: LivingHurtEvent, player: EntityPlayer, stack: ItemStack?): Boolean {

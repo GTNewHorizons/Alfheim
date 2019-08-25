@@ -1,6 +1,7 @@
 package alfheim.common.crafting.recipe
 
-import alfheim.common.item.*
+import alfheim.common.item.AlfheimItems.splashPotion
+import alfheim.common.item.ItemSplashPotion
 import net.minecraft.init.Items
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -46,10 +47,10 @@ class RecipeThrowablePotion: IRecipe {
 		
 		if (brew === BotaniaAPI.fallbackBrew) return null
 		
-		return (ShadowFoxItems.splashPotion as ItemSplashPotion).getItemForBrew(brew, vial)
+		return (splashPotion as ItemSplashPotion).getItemForBrew(brew, vial)
 	}
 	
-	override fun getRecipeOutput() = (ShadowFoxItems.splashPotion as ItemSplashPotion).getItemForBrew(ModBrews.absorption, null)
+	override fun getRecipeOutput() = (splashPotion as ItemSplashPotion).getItemForBrew(ModBrews.absorption, null)
 	
 	override fun getRecipeSize() = 2
 }

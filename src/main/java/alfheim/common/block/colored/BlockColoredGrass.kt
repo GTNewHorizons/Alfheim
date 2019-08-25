@@ -1,8 +1,8 @@
 package alfheim.common.block.colored
 
-import alfheim.AlfheimCore
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemIridescentGrassMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -23,9 +23,9 @@ class BlockColoredGrass: BlockTallGrass(), ILexiconable {
 	val TYPES: Int = 16
 	
 	init {
-		setCreativeTab(AlfheimCore.baTab)
-		setStepSound(Block.soundTypeGrass)
 		setBlockName("irisGrass")
+		setCreativeTab(AlfheimTab)
+		setStepSound(Block.soundTypeGrass)
 	}
 	
 	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, remote: Boolean) = true
@@ -34,13 +34,13 @@ class BlockColoredGrass: BlockTallGrass(), ILexiconable {
 		val l = world.getBlockMetadata(x, y, z)
 		val b0 = l % 8
 		
-		if (ShadowFoxBlocks.irisTallGrass0.canPlaceBlockAt(world, x, y, z)) {
+		if (AlfheimBlocks.irisTallGrass0.canPlaceBlockAt(world, x, y, z)) {
 			if (l < 8) {
-				world.setBlock(x, y, z, ShadowFoxBlocks.irisTallGrass0, b0, 2)
-				world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass0, 8, 2)
+				world.setBlock(x, y, z, AlfheimBlocks.irisTallGrass0, b0, 2)
+				world.setBlock(x, y + 1, z, AlfheimBlocks.irisTallGrass0, 8, 2)
 			} else {
-				world.setBlock(x, y, z, ShadowFoxBlocks.irisTallGrass1, b0, 2)
-				world.setBlock(x, y + 1, z, ShadowFoxBlocks.irisTallGrass1, 8, 2)
+				world.setBlock(x, y, z, AlfheimBlocks.irisTallGrass1, b0, 2)
+				world.setBlock(x, y + 1, z, AlfheimBlocks.irisTallGrass1, 8, 2)
 			}
 		}
 	}

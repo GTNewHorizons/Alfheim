@@ -2,14 +2,14 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.player.EntityPlayer
 
-class PotionNoclip: PotionAlfheim(AlfheimConfig.potionIDNoclip, "noclip", false, 0xAAAAAA) {
+class PotionNoclip: PotionAlfheim(AlfheimConfigHandler.potionIDNoclip, "noclip", false, 0xAAAAAA) {
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		if (!AlfheimCore.enableMMO) return

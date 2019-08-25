@@ -38,9 +38,10 @@ class RenderTileTradePortal: TileEntitySpecialRenderer() {
 		}
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
-		renderIcon(0.0, 0.0, BlockTradePortal.textures[2]!!, 3.0, 3.0, 240)
+		val icon = BlockTradePortal.textures[1]
+		if (icon != null) renderIcon(0.0, 0.0, icon, 3.0, 3.0, 240)
 		glTranslated(0.0, 0.0, 0.5)
-		renderIcon(0.0, 0.0, BlockTradePortal.textures[2]!!, 3.0, 3.0, 240)
+		if (icon != null) renderIcon(0.0, 0.0, icon, 3.0, 3.0, 240)
 		
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		if (portal.isTradeOn) {

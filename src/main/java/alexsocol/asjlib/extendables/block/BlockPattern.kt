@@ -8,7 +8,7 @@ import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.world.*
 import java.util.*
 
-class BlockPattern(modid: String, material: Material, name: String, tab: CreativeTabs, lightlvl: Float, lightOpacity: Int, hardness: Float, harvTool: String, harvLvl: Int, resistance: Float, sound: SoundType, private val isOpaque: Boolean, private val isBeacon: Boolean, private val isFalling: Boolean): BlockFalling(material) {
+class BlockPattern(modid: String, material: Material, name: String, tab: CreativeTabs?, lightlvl: Float = 0f, lightOpacity: Int = 255, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resistance: Float = 5f, sound: SoundType? = ASJUtilities.soundFromMaterial(material), private val isOpaque: Boolean = true, private val isBeacon: Boolean = false, private val isFalling: Boolean = false): BlockFalling(material) {
 	
 	init {
 		setBlockName(name)

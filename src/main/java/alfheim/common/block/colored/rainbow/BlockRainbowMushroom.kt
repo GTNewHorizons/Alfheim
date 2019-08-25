@@ -1,7 +1,7 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.AlfheimCore
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.Optional.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -34,6 +34,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	
 	init {
 		setBlockName("rainbowMushroom")
+		setCreativeTab(AlfheimTab)
 		setLightLevel(0.2f)
 		setHardness(0.0f)
 		setStepSound(Block.soundTypeGrass)
@@ -41,7 +42,6 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 		tickRandomly = false
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
-		setCreativeTab(AlfheimCore.baTab)
 	}
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random) = Unit

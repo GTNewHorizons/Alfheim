@@ -1,7 +1,7 @@
 package vazkii.botania.common.lexicon.page
 
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
@@ -17,7 +17,7 @@ class PageTreeCrafting: PagePetalRecipe<RecipeTreeCrafting> {
 	
 	constructor(unlocalizedName: String, recipes: RecipeTreeCrafting): super(unlocalizedName, recipes)
 	
-	override fun getMiddleStack() = ItemStack(ShadowFoxBlocks.treeCrafterBlockRB)
+	override fun getMiddleStack() = ItemStack(AlfheimBlocks.treeCrafterBlockRB)
 	
 	@SideOnly(Side.CLIENT)
 	override fun renderManaBar(gui: IGuiLexiconEntry, recipe: RecipeTreeCrafting, mx: Int, my: Int) {

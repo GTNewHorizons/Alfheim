@@ -20,13 +20,13 @@ abstract class BlockModRotatedPillar(mat: Material): BlockMod(mat), ILexiconable
 	protected var iconTop: IIcon? = null
 	protected var iconSide: IIcon? = null
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
-	open fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, par1Str)
+	open fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, name)
 	}
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
@@ -67,10 +67,10 @@ abstract class BlockModRotatedPillar(mat: Material): BlockMod(mat), ILexiconable
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		if (!isInterpolated()) {
-			iconTop = IconHelper.forBlock(par1IconRegister, this, "Top")
-			iconSide = IconHelper.forBlock(par1IconRegister, this, "Side")
+			iconTop = IconHelper.forBlock(reg, this, "Top")
+			iconSide = IconHelper.forBlock(reg, this, "Side")
 		}
 	}
 	

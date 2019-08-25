@@ -2,31 +2,25 @@ package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.common.core.handler.CardinalSystem.PartySystem
+import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.common.core.helper.ItemNBTHelper.getCompound
 
-class ItemPaperBreak: Item() {
-	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setTextureName(ModInfo.MODID + ":Paper")
-		unlocalizedName = "PaperBreak"
-	}
-	
+class ItemPaperBreak: ItemMod("PaperBreak") {
+
 	override fun getIconIndex(stack: ItemStack) = textures[if (stack.hasDisplayName()) 1 else 0]!!
 	
 	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
-		textures[0] = reg.registerIcon(ModInfo.MODID + ":Paper")
-		textures[1] = reg.registerIcon(ModInfo.MODID + ":PaperSigned")
+		textures = Array(2) { IconHelper.forItem(reg, this, it) }
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
@@ -58,6 +52,6 @@ class ItemPaperBreak: Item() {
 	
 	companion object {
 		
-		val textures = arrayOfNulls<IIcon>(2)
+		lateinit var textures: Array<IIcon>
 	}
 }

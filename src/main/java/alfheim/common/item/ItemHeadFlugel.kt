@@ -1,23 +1,21 @@
 package alfheim.common.item
 
-import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntitySkull
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
-class ItemHeadFlugel: Item() {
+class ItemHeadFlugel: ItemMod("FlugelHead") {
+
 	init {
-		creativeTab = AlfheimCore.alfheimTab
-		setTextureName(ModInfo.MODID + ":FlugelHead")
-		unlocalizedName = "FlugelHead"
+		creativeTab = AlfheimTab
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
@@ -71,11 +69,11 @@ class ItemHeadFlugel: Item() {
 			return true
 		
 		// If the skull says no, who are we to argue?
-		if (!AlfheimBlocks.flugelHead.canPlaceBlockOnSide(world, x, y, z, side))
+		if (!AlfheimBlocks.flugelHeadBlock.canPlaceBlockOnSide(world, x, y, z, side))
 			return false
 		
 		// Flugel head, instead of skull
-		world.setBlock(x, y, z, AlfheimBlocks.flugelHead, sideDir.ordinal, 2)
+		world.setBlock(x, y, z, AlfheimBlocks.flugelHeadBlock, sideDir.ordinal, 2)
 		var headAngle = 0
 		
 		// If we place the skull on top of a block, we should also make it

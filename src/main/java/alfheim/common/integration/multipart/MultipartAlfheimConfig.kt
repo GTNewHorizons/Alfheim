@@ -1,6 +1,6 @@
 package alfheim.common.integration.multipart
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import codechicken.microblock.*
 import net.minecraft.block.Block
 
@@ -13,43 +13,43 @@ object MultipartAlfheimConfig {
 object MPHandler {
 
     fun register() {
-        registerColoredMultiparts(ShadowFoxBlocks.coloredDirtBlock, 0..15)
-        registerMultiparts(ShadowFoxBlocks.rainbowDirtBlock)
+        registerColoredMultiparts(AlfheimBlocks.irisDirt, 0..15)
+        registerMultiparts(AlfheimBlocks.rainbowDirt)
     
-        registerColoredMultiparts(ShadowFoxBlocks.irisWood0, 0..3)
-        registerColoredMultiparts(ShadowFoxBlocks.irisWood1, 0..3)
-        registerColoredMultiparts(ShadowFoxBlocks.irisWood2, 0..3)
-        registerColoredMultiparts(ShadowFoxBlocks.irisWood3, 0..3)
-        registerMultiparts(ShadowFoxBlocks.rainbowWood)
-        registerMultiparts(ShadowFoxBlocks.altWood0, 0..3)
-        registerMultiparts(ShadowFoxBlocks.altWood1, 0..1)
+        registerColoredMultiparts(AlfheimBlocks.irisWood0, 0..3)
+        registerColoredMultiparts(AlfheimBlocks.irisWood1, 0..3)
+        registerColoredMultiparts(AlfheimBlocks.irisWood2, 0..3)
+        registerColoredMultiparts(AlfheimBlocks.irisWood3, 0..3)
+        registerMultiparts(AlfheimBlocks.rainbowWood)
+        registerMultiparts(AlfheimBlocks.altWood0, 0..3)
+        registerMultiparts(AlfheimBlocks.altWood1, 0..1)
     
-        registerColoredMultiparts(ShadowFoxBlocks.coloredPlanks, 0..15)
-        registerMultiparts(ShadowFoxBlocks.rainbowPlanks)
-        registerMultiparts(ShadowFoxBlocks.altPlanks, 0..5)
+        registerColoredMultiparts(AlfheimBlocks.irisPlanks, 0..15)
+        registerMultiparts(AlfheimBlocks.rainbowPlanks)
+        registerMultiparts(AlfheimBlocks.altPlanks, 0..5)
     
-        registerMultiparts(ShadowFoxBlocks.kindling)
+        registerMultiparts(AlfheimBlocks.kindling)
     
-        registerMultiparts(ShadowFoxBlocks.lightningWood)
-        registerMultiparts(ShadowFoxBlocks.lightningPlanks)
+        registerMultiparts(AlfheimBlocks.lightningWood)
+        registerMultiparts(AlfheimBlocks.lightningPlanks)
     
-        registerMultiparts(ShadowFoxBlocks.netherWood)
-        registerMultiparts(ShadowFoxBlocks.netherPlanks)
+        registerMultiparts(AlfheimBlocks.netherWood)
+        registerMultiparts(AlfheimBlocks.netherPlanks)
     
-        registerMultiparts(ShadowFoxBlocks.sealingWood)
-        registerMultiparts(ShadowFoxBlocks.sealingPlanks)
+        registerMultiparts(AlfheimBlocks.sealingWood)
+        registerMultiparts(AlfheimBlocks.sealingPlanks)
     
-        registerMultiparts(ShadowFoxBlocks.amp)
+        registerMultiparts(AlfheimBlocks.amplifier)
     
-        registerColoredMultiparts(ShadowFoxBlocks.irisLeaves0, 0..7)
-        registerColoredMultiparts(ShadowFoxBlocks.irisLeaves1, 0..7)
-        registerMultiparts(ShadowFoxBlocks.rainbowLeaves)
-        registerMultiparts(ShadowFoxBlocks.altLeaves, 0..5)
-        registerMultiparts(ShadowFoxBlocks.lightningLeaves)
-        registerMultiparts(ShadowFoxBlocks.netherLeaves)
-        registerMultiparts(ShadowFoxBlocks.sealingLeaves)
+        registerColoredMultiparts(AlfheimBlocks.irisLeaves0, 0..7)
+        registerColoredMultiparts(AlfheimBlocks.irisLeaves1, 0..7)
+        registerMultiparts(AlfheimBlocks.rainbowLeaves)
+        registerMultiparts(AlfheimBlocks.altLeaves, 0..5)
+        registerMultiparts(AlfheimBlocks.lightningLeaves)
+        registerMultiparts(AlfheimBlocks.netherLeaves)
+        registerMultiparts(AlfheimBlocks.sealingLeaves)
     
-        registerMultiparts(ShadowFoxBlocks.shimmerQuartz, 0..2)
+        registerMultiparts(AlfheimBlocks.shimmerQuartz, 0..2)
     }
 
     fun registerMultiparts(block: Block, meta: Int = 0) {

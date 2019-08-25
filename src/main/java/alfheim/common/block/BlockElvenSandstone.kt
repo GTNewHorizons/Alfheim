@@ -1,8 +1,8 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -10,18 +10,11 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 
-class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID) {
+class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenSandstone", AlfheimTab) {
 	
 	lateinit var sides: Array<IIcon>
 	lateinit var top: IIcon
 	lateinit var bottom: IIcon
-	
-	init {
-		setBlockName("ElvenSandstone")
-		setCreativeTab(AlfheimCore.alfheimTab)
-		setHardness(0.8F)
-		setStepSound(soundTypePiston)
-	}
 	
 	/**
 	 * Gets the block's texture. Args: side, meta

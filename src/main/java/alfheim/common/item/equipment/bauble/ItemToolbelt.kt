@@ -4,6 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.IToolbeltBlacklisted
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.network.MessagePlayerItem
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
@@ -135,10 +136,10 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 	val handler = ToolbeltEventHandler()
 	
 	init {
+		creativeTab = AlfheimTab
 		MinecraftForge.EVENT_BUS.register(handler)
 		FMLCommonHandler.instance().bus().register(handler)
 		setHasSubtypes(true)
-		creativeTab = AlfheimCore.baTab
 	}
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {

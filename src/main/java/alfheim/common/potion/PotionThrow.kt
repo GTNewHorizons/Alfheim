@@ -2,13 +2,13 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.util.AlfheimConfig
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.DamageSource
 
-class PotionThrow: PotionAlfheim(AlfheimConfig.potionIDThrow, "throw", false, 0xAAFFFF) {
+class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", false, 0xAAFFFF) {
 	
 	override fun isReady(time: Int, mod: Int): Boolean {
 		return AlfheimCore.enableMMO

@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities.Companion.getTrueDamage
-import alexsocol.asjlib.ASJUtilities.Companion.isItemStackTrueEqual
+import alexsocol.asjlib.ASJUtilities.getTrueDamage
+import alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks

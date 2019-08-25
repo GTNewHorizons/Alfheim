@@ -1,11 +1,11 @@
 package alfheim.common.potion
 
-import alfheim.common.core.util.AlfheimConfig
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.*
 import java.util.*
 
-class PotionNinja: PotionAlfheim(AlfheimConfig.potionIDNinja, "ninja", false, 0xCCCCCC) {
+class PotionNinja: PotionAlfheim(AlfheimConfigHandler.potionIDNinja, "ninja", false, 0xCCCCCC) {
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, map: BaseAttributeMap, mod: Int) {
 		super.applyAttributesModifiersToEntity(target, map, mod)

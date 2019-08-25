@@ -1,6 +1,6 @@
 package alfheim.common.block.colored.rainbow
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.item.block.ItemIridescentBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -23,7 +23,7 @@ class BlockRainbowLeaves: BlockLeavesMod() {
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(20) == 0) 1 else 0
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(ShadowFoxBlocks.irisSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.irisSapling)!!
 	
 	override fun func_150125_e() = arrayOf("rainbowLeaves")
 	

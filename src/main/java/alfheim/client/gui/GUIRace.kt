@@ -3,8 +3,8 @@ package alfheim.client.gui
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.client.render.entity.RenderWings
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.AlfheimConfig
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
@@ -18,7 +18,7 @@ class GUIRace(private val mc: Minecraft): Gui() {
 	
 	@SubscribeEvent(receiveCanceled = true)
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfig.selfHealthUI)) return
+		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfigHandler.selfHealthUI)) return
 		if (e.type != ElementType.EXPERIENCE || mc.thePlayer.race == EnumRace.HUMAN) return
 		
 		glPushMatrix()

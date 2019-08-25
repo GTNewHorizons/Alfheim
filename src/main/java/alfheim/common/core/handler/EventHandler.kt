@@ -67,18 +67,18 @@ class EventHandler {
 		if (e.player is EntityPlayerMP) {
 			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimCore.enableElvenStory) 1 else 0).toDouble(), (if (AlfheimCore.enableMMO) 1 else 0).toDouble()), e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.CL_SLOWDOWN, if (AlfheimConfig.slowDownClients) 1.0 else 0.0), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfig.flightTime.toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfig.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
-				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfig.dimensionIDAlfheim) {
-					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfig.dimensionIDAlfheim, 0.5, 250.0, 0.5)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.CL_SLOWDOWN, if (AlfheimConfigHandler.slowDownClients) 1.0 else 0.0), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
+				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfigHandler.dimensionIDAlfheim) {
+					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 250.0, 0.5)
 					e.player.rotationYaw = 180f
 					e.player.rotationPitch = 0f
 					e.player.triggerAchievement(AlfheimAchievements.alfheim)
 					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome0"))
 					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome1"))
 					e.player.inventory.addItemStackToInventory(ItemStack(ModItems.lexicon))
-					e.player.setSpawnChunk(ChunkCoordinates(0, 250, 0), true, AlfheimConfig.dimensionIDAlfheim)
+					e.player.setSpawnChunk(ChunkCoordinates(0, 250, 0), true, AlfheimConfigHandler.dimensionIDAlfheim)
 				}
 				if (AlfheimCore.enableMMO) transfer(e.player as EntityPlayerMP)
 			}
@@ -87,12 +87,12 @@ class EventHandler {
 	
 	@SubscribeEvent
 	fun onNetherPortalActivation(e: NetherPortalActivationEvent) {
-		if (e.worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim) e.isCanceled = true
+		if (e.worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim) e.isCanceled = true
 	}
 	
 	@SubscribeEvent
 	fun onAlfPortalUpdate(e: ElvenPortalUpdateEvent) {
-		if (e.portalTile.worldObj.provider.dimensionId == AlfheimConfig.dimensionIDAlfheim && (e.portalTile as TileAlfPortal).ticksOpen >= 0) (e.portalTile as TileAlfPortal).ticksOpen = 0
+		if (e.portalTile.worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && (e.portalTile as TileAlfPortal).ticksOpen >= 0) (e.portalTile as TileAlfPortal).ticksOpen = 0
 	}
 	
 	@SubscribeEvent
@@ -155,7 +155,7 @@ class EventHandler {
 	@SubscribeEvent
 	fun onPlayerRespawn(e: PlayerRespawnEvent) {
 		if (AlfheimCore.enableElvenStory) {
-			if (!AlfheimConfig.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfig.dimensionIDAlfheim) return
+			if (!AlfheimConfigHandler.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
 			e.player.capabilities.allowFlying = e.player.race != EnumRace.HUMAN
 		}
 	}
@@ -301,7 +301,7 @@ class EventHandler {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				e.entityLiving.clearActivePotions()
-				e.entityLiving.addPotionEffect(PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfig.deathScreenAddTime, 0, true))
+				e.entityLiving.addPotionEffect(PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfigHandler.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
 			}
 			
@@ -414,7 +414,7 @@ class EventHandler {
 	@SubscribeEvent
 	fun onEntityUpdate(e: EntityUpdateEvent) {
 		if (!e.entity.isEntityAlive) return
-		if ((ASJUtilities.isServer || AlfheimConfig.slowDownClients) && !e.entity.canEntityUpdate) {
+		if ((ASJUtilities.isServer || AlfheimConfigHandler.slowDownClients) && !e.entity.canEntityUpdate) {
 			e.isCanceled = true
 			e.entity.canEntityUpdate = true
 		}

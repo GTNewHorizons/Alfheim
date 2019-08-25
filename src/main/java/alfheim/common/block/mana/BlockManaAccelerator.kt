@@ -1,50 +1,39 @@
-package alfheim.common.block
+package alfheim.common.block.mana
 
 import alexsocol.asjlib.extendables.TileItemContainer
-import alfheim.AlfheimCore
 import alfheim.api.lib.LibRenderIDs
-import alfheim.common.block.tile.TileItemHolder
+import alfheim.common.block.base.BlockContainerMod
+import alfheim.common.block.tile.TileManaAccelerator
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.*
+import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.MathHelper
 import net.minecraft.world.*
-import vazkii.botania.api.lexicon.*
+import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.common.block.mana.BlockPool
 import kotlin.math.*
 
-class BlockItemHolder: BlockContainer(Material.rock), ILexiconable {
+class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 
 	init {
 		setBlockBounds(0f, -0.5f, 0f, 1f, -0.125f, 1f)
-		setBlockName("ItemHolder")
+		setBlockName("ManaAccelerator")
 		setBlockTextureName(LibResources.PREFIX_MOD + "livingrock0")
-		setCreativeTab(AlfheimCore.alfheimTab)
 		setHardness(1f)
 	}
 	
-	override fun renderAsNormalBlock(): Boolean {
-		return false
-	}
-	
-	override fun isOpaqueCube(): Boolean {
-		return false
-	}
-	
-	override fun getRenderType(): Int {
-		return LibRenderIDs.idItemHolder
-	}
-	
-	override fun canPlaceBlockAt(world: World, x: Int, y: Int, z: Int): Boolean {
-		return world.getBlock(x, y - 1, z) is BlockPool
-	}
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
+	override fun renderAsNormalBlock() = false
+	override fun isOpaqueCube() = false
+	override fun getRenderType() = LibRenderIDs.idManaAccelerator
+	override fun canPlaceBlockAt(world: World, x: Int, y: Int, z: Int) = world.getBlock(x, y - 1, z) is BlockPool
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val te = world.getTileEntity(x, y, z) as TileItemContainer
@@ -84,9 +73,7 @@ class BlockItemHolder: BlockContainer(Material.rock), ILexiconable {
 		super.breakBlock(world, x, y, z, block, meta)
 	}
 	
-	override fun hasComparatorInputOverride(): Boolean {
-		return true
-	}
+	override fun hasComparatorInputOverride() = true
 	
 	override fun getComparatorInputOverride(world: World, x: Int, y: Int, z: Int, side: Int): Int {
 		val te = world.getTileEntity(x, y, z) as TileItemContainer
@@ -99,15 +86,9 @@ class BlockItemHolder: BlockContainer(Material.rock), ILexiconable {
 			return if (mana.getMana(stack) == 0) 0 else MathHelper.floor_double(min(max(0.0, mana.getMana(stack) * 15.0 / mana.getMaxMana(stack)), 15.0))
 			
 		}
-		
 		return 0
 	}
 	
-	override fun createNewTileEntity(world: World, meta: Int): TileEntity {
-		return TileItemHolder()
-	}
-	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry {
-		return AlfheimLexiconData.itemHold
-	}
+	override fun createNewTileEntity(world: World, meta: Int) = TileManaAccelerator()
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.manaAcc
 }

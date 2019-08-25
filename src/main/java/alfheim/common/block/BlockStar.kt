@@ -20,16 +20,14 @@ import java.util.*
  * @author WireSegal
  * Created at 9:23 PM on 2/6/16.
  */
-class BlockStar(name: String = "star"): BlockMod(Material.cloth), ILexiconable {
-	
-	override val registerInCreative = false
+class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexiconable {
 	
 	init {
 		setBlockName(name)
 		val f = 0.25f
-		setStepSound(soundTypeCloth)
 		setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
 		setLightLevel(1.0f)
+		setStepSound(soundTypeCloth)
 	}
 	
 	@Optional.Method(modid = "easycoloredlights")

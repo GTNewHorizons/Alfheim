@@ -15,14 +15,12 @@ import java.util.*
 
 class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : BlockMod(Material.cloth), ILexiconable {
 
-    override val registerInCreative = false
-
     init {
         setBlockName(name)
         val f = 0.25f
-        setStepSound(soundTypeCloth)
         setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
         setLightLevel(1.0f)
+        setStepSound(soundTypeCloth)
     }
 
     @Optional.Method(modid = "easycoloredlights")

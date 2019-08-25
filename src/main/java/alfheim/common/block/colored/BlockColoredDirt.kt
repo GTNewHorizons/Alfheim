@@ -1,6 +1,6 @@
 package alfheim.common.block.colored
 
-import alfheim.common.block.ShadowFoxBlocks
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -16,6 +16,7 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
 import java.util.*
@@ -26,10 +27,11 @@ class BlockColoredDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 	private val TYPES = 16
 	
 	init {
-		blockHardness = 0.5F
+		setHardness(0.5f)
 		setLightLevel(0f)
-		stepSound = soundTypeGravel
 		setBlockName(name)
+		stepSound = soundTypeGravel
+		BotaniaAPI.registerPaintableBlock(this)
 	}
 	
 	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, remote: Boolean) = true
@@ -51,15 +53,15 @@ class BlockColoredDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 					j1 += (random.nextInt(3) - 1) * random.nextInt(3) / 2
 					k1 += random.nextInt(3) - 1
 					
-					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == ShadowFoxBlocks.rainbowDirtBlock) && !world.getBlock(i1, j1, k1).isNormalCube) {
+					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.rainbowDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
 						++l1
 						continue
 					}
 				} else if (world.getBlock(i1, j1, k1).isAir(world, i1, j1, k1)) {
 					if (random.nextInt(8) != 0) {
-						if (ShadowFoxBlocks.irisGrass.canBlockStay(world, i1, j1, k1)) {
+						if (AlfheimBlocks.irisGrass.canBlockStay(world, i1, j1, k1)) {
 							val meta = world.getBlockMetadata(i1, j1 - 1, k1)
-							world.setBlock(i1, j1, k1, ShadowFoxBlocks.irisGrass, meta, 3)
+							world.setBlock(i1, j1, k1, AlfheimBlocks.irisGrass, meta, 3)
 						}
 					} else {
 						world.getBiomeGenForCoords(i1, k1).plantFlower(world, random, i1, j1, k1)
@@ -100,9 +102,9 @@ class BlockColoredDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 	
 	override fun damageDropped(par1: Int) = par1
 	
-	override fun setBlockName(par1Str: String): Block {
-		register(par1Str)
-		return super.setBlockName(par1Str)
+	override fun setBlockName(name: String): Block {
+		register(name)
+		return super.setBlockName(name)
 	}
 	
 	internal fun register(name: String) {

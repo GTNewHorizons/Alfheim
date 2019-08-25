@@ -1,15 +1,16 @@
 package alfheim.common.lexicon
 
+import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.block.*
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.util.AlfheimConfig
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.AlfheimItems.ElvenResourcesMetas
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.page.*
 import com.google.common.collect.Lists
 import net.minecraft.item.ItemStack
@@ -56,7 +57,7 @@ object AlfheimLexiconData {
 	lateinit var flugel: LexiconEntry
 	lateinit var greenRod: LexiconEntry
 	lateinit var infuser: LexiconEntry
-	lateinit var itemHold: LexiconEntry
+	lateinit var manaAcc: LexiconEntry
 	lateinit var lootInt: LexiconEntry
 	lateinit var mask: LexiconEntry
 	//public static LexiconEntry mjolnir;
@@ -111,7 +112,7 @@ object AlfheimLexiconData {
 		flugel = BLexiconEntry("flugel", categoryAlfheim)
 		greenRod = BLexiconEntry("greenRod", categoryAlfheim)
 		infuser = BLexiconEntry("infuser", categoryAlfheim)
-		itemHold = BLexiconEntry("itemHold", categoryAlfheim)
+		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
 		moonbow = BLexiconEntry("moonbow", categoryAlfheim)
@@ -181,7 +182,7 @@ object AlfheimLexiconData {
 							 PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
 							 PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
 							 PageMultiblock("6", AlfheimMultiblocks.portal),
-							 PageText("7"), PageText(if (AlfheimConfig.destroyPortal) "8" else "8s"))
+							 PageText("7"), PageText(if (AlfheimConfigHandler.destroyPortal) "8" else "8s"))
 		
 		worldgen.setLexiconPages(PageTextLearnableKnowledge("0", Knowledge.GLOWSTONE),
 								 PagePureDaisyRecipe("1", AlfheimRecipes.recipeDreamwood),
@@ -200,7 +201,7 @@ object AlfheimLexiconData {
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
 		
-		itemHold.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeItemHolder))
+		manaAcc.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeItemHolder))
 		
 		greenRod.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeGreenRod))
 		
@@ -217,7 +218,9 @@ object AlfheimLexiconData {
 		lootInt.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeLootInterceptor))
 		
 		ores.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(AlfheimBlocks.elvenOres, 1, 4)
-		for (i in BlockElvenOres.names.indices) ores.addExtraDisplayedRecipe(ItemStack(AlfheimBlocks.elvenOres, 1, i))
+		for (i in 0 until (AlfheimBlocks.elvenOres as BlockModMeta).subtypes)
+			ores.addExtraDisplayedRecipe(ItemStack(AlfheimBlocks.elvenOres, 1, i))
+		
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ores, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 0), ores, 2)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 2), ores, 2)
@@ -239,6 +242,7 @@ object AlfheimLexiconData {
 		
 		elvorium.setLexiconPages(PageText("0"),
 								 PageManaInfusorRecipe("1", AlfheimRecipes.recipeElvorium)).icon = ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.alfStorage, 1, 0), elvorium, 0)
 		
 		trade.setLexiconPages(PageText("0"), PageText("1"),
 							  PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumPylon),
@@ -255,6 +259,7 @@ object AlfheimLexiconData {
 		essences.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot))
 		essences.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimEssence))
 		essences.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence))
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.alfStorage, 1, 0), essences, 7)
 		
 		val runeRecipes = ArrayList<RecipeRuneAltar>()
 		runeRecipes.add(AlfheimRecipes.recipeMuspelheimRune)
@@ -272,14 +277,14 @@ object AlfheimLexiconData {
 								 PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeElvoriumLeggings),
 								 PageCraftingRecipe("4", AlfheimRecipes.recipeElvoriumBoots)).icon = ItemStack(AlfheimItems.elvoriumHelmet)
-		if (AlfheimItems.elvoriumHelmetRevealingIsInitialized()) elvenSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvoriumHelmetRevealing))
+		AlfheimItems.elvoriumHelmetRevealing?.let { elvenSet.addExtraDisplayedRecipe(ItemStack(it)) }
 		
 		elemSet.setLexiconPages(PageText("0"),
 								PageCraftingRecipe("1", AlfheimRecipes.recipeElementalHelmet),
 								PageCraftingRecipe("2", AlfheimRecipes.recipeElementalChestplate),
 								PageCraftingRecipe("3", AlfheimRecipes.recipeElementalLeggings),
 								PageCraftingRecipe("4", AlfheimRecipes.recipeElementalBoots)).icon = ItemStack(AlfheimItems.elementalHelmet)
-		if (AlfheimItems.elementalHelmetRevealingIsInitialized()) elemSet.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elementalHelmetRevealing))
+		AlfheimItems.elementalHelmetRevealing?.let { elemSet.addExtraDisplayedRecipe(ItemStack(it)) }
 		
 		advMana.setLexiconPages(PageText("0"), PageText("1"),
 								PageManaInfusorRecipe("2", AlfheimRecipes.recipeManaStone),
@@ -420,7 +425,7 @@ object AlfheimLexiconData {
 		shrines.knowledgeType = kt
 		
 		aniTorch.knowledgeType = BotaniaAPI.basicKnowledge
-		itemHold.knowledgeType = BotaniaAPI.basicKnowledge
+		manaAcc.knowledgeType = BotaniaAPI.basicKnowledge
 		greenRod.knowledgeType = BotaniaAPI.basicKnowledge
 		dodgRing.knowledgeType = BotaniaAPI.basicKnowledge
 		cloakInv.knowledgeType = BotaniaAPI.basicKnowledge

@@ -9,8 +9,6 @@ import net.minecraft.world.World
 
 class BlockBarrier: BlockMod(Material.cake) {
 	
-	override val registerInCreative = false
-	
 	init {
 		setBlockUnbreakable()
 		setResistance(6000001.0F)

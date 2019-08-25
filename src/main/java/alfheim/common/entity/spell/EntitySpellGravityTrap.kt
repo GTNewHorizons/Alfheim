@@ -5,9 +5,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -34,7 +34,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 		
 		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4.0, 8.0, 4.0)) as List<Entity>
 		for (e in l) {
-			if (e === this || e === caster || e is EntityLivingBase && PartySystem.mobsSameParty(caster, e) && !AlfheimConfig.frienldyFire || e is EntityPlayer && e.capabilities.isCreativeMode) continue
+			if (e === this || e === caster || e is EntityLivingBase && PartySystem.mobsSameParty(caster, e) && !AlfheimConfigHandler.frienldyFire || e is EntityPlayer && e.capabilities.isCreativeMode) continue
 			val dist = Vector3.fromEntity(e).sub(Vector3.fromEntity(this))
 			if (Vector3.entityDistancePlane(e, this) <= 4.0) {
 				e.motionY -= 1.0

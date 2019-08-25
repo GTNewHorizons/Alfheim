@@ -10,7 +10,7 @@ import net.minecraft.world.World
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockAmp: BlockMod(Material.wood), ISoundSilencer, ILexiconable {
+class BlockAmplifier: BlockMod(Material.wood), ISoundSilencer, ILexiconable {
 	
 	init {
 		setBlockName("amplifier")
@@ -21,5 +21,5 @@ class BlockAmp: BlockMod(Material.wood), ISoundSilencer, ILexiconable {
 	
 	override fun getVolumeMultiplier(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17): Float = 5f
 	
-	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.amp
+	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.amplifier
 }

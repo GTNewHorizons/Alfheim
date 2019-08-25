@@ -14,7 +14,7 @@ import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.lib.LibMisc
 import kotlin.math.min
 
-class TileItemHolder: TileItemContainer() {
+class TileManaAccelerator: TileItemContainer() {
 	
 	// for some reason it updates as many times per tick as many times you right-click on it
 	private var lastTick: Long = 0
