@@ -5,6 +5,8 @@ import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks.setHarvestLevelI
 import alfheim.common.block.base.BlockStairsMod
 import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockMod
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.world.IBlockAccess
@@ -49,7 +51,11 @@ object AlfheimFluffBlocks {
 	init {
 		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "shrines/")
 		shrinePillar = BlockShrinePillar()
-		shrineRockWhiteStairs = BlockStairsMod(shrineRock, 0, "ShrineRockWhiteStairs")
+		shrineRockWhiteStairs = object: BlockStairsMod(shrineRock, 0, "ShrineRockWhiteStairs") {
+			override fun register() {
+				GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+			}
+		}
 		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false).setCreativeTab(AlfheimTab)
 		shrineRockWhiteSlabFull = BlockRockShrineWhiteSlab(true).setCreativeTab(null)
 		(shrineRockWhiteSlab as BlockModSlab).register()

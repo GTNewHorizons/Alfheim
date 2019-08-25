@@ -21,8 +21,11 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHeadBlock))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2Block))
-		API.hideItem(ItemStack(AlfheimBlocks.poisonIce))
-		API.hideItem(ItemStack(AlfheimBlocks.redFlame))
+		API.hideItem(ItemStack(AlfheimBlocks.invisibleFlame))
+		API.hideItem(ItemStack(AlfheimBlocks.rainbowFlame))
+		API.hideItem(ItemStack(AlfheimBlocks.starBlock))
+		API.hideItem(ItemStack(AlfheimBlocks.starBlock2))
+		
 	}
 	
 	override fun getName() = AlfheimCore.meta.name!!
