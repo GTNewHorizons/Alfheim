@@ -15,12 +15,12 @@ object RecipeAncientWillsFix {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun matches(rec: AncientWillRecipe, var1: InventoryCrafting, var2: World?): Boolean {
+	fun matches(rec: AncientWillRecipe, inv: InventoryCrafting, world: World?): Boolean {
 		foundWill.fill(false)
 		var foundItem = false
 		
-		for (i in 0 until var1.sizeInventory) {
-			val stack = var1.getStackInSlot(i)
+		for (i in 0 until inv.sizeInventory) {
+			val stack = inv.getStackInSlot(i)
 			if (stack != null) {
 				if (stack.item === ModItems.ancientWill) {
 					val meta = stack.itemDamage
@@ -42,19 +42,19 @@ object RecipeAncientWillsFix {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getCraftingResult(rec: AncientWillRecipe, var1: InventoryCrafting): ItemStack? {
+	fun getCraftingResult(rec: AncientWillRecipe, inv: InventoryCrafting): ItemStack? {
 		foundWill.fill(false)
 		var item: ItemStack? = null
 		
 		var stack: ItemStack?
-		for (i in 0 until var1.sizeInventory) {
-			stack = var1.getStackInSlot(i)
+		for (i in 0 until inv.sizeInventory) {
+			stack = inv.getStackInSlot(i)
 			if (stack != null) {
 				if (stack.item is IAncientWillContainer && item == null) {
 					item = stack
 				} else {
 					if (foundWill[stack.itemDamage]) return null
-					else foundWill[stack.itemDamage] = true
+					foundWill[stack.itemDamage] = true
 				}
 			}
 		}
@@ -63,11 +63,8 @@ object RecipeAncientWillsFix {
 		stack = item.copy()
 		for (i in 0..5) {
 			if (foundWill[i]) {
-				if (container.hasAncientWill(item, i)) {
-					return null
-				} else {
-					container.addAncientWill(stack, i)
-				}
+				if (container.hasAncientWill(item, i)) return null
+				container.addAncientWill(stack, i)
 			}
 		}
 		return stack

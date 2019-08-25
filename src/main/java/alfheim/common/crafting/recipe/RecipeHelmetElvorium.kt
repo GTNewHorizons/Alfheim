@@ -15,8 +15,8 @@ import vazkii.botania.common.item.ModItems
 
 class RecipeHelmetElvorium(out: Item, helm: Item): ShapedOreRecipe(out, "TRT", "EHE", "CMC", 'T', INFUSED_DREAM_TWIG, 'R', ARUNE[0], 'E', ELVORIUM_INGOT, 'H', helm, 'C', ItemStack(elvenResource, 1, ManaInfusionCore), 'M', MAUFTRIUM_INGOT) {
 	
-	override fun getCraftingResult(var1: InventoryCrafting): ItemStack? {
-		val helmCopy = var1.getStackInSlot(4)?.copy()
+	override fun getCraftingResult(inv: InventoryCrafting): ItemStack? {
+		val helmCopy = inv.getStackInSlot(4)?.copy()
 		
 		val newHelm = when (helmCopy?.item) {
 			ModItems.terrasteelHelm -> ItemStack(AlfheimItems.elvoriumHelmet)

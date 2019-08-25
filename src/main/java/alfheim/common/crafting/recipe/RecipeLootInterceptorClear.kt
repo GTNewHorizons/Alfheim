@@ -8,7 +8,7 @@ import net.minecraft.world.World
 
 class RecipeLootInterceptorClear: IRecipe {
 	
-	override fun matches(inv: InventoryCrafting, world: World): Boolean {
+	override fun matches(inv: InventoryCrafting, world: World?): Boolean {
 		var inter = false
 		
 		for (i in 0 until inv.sizeInventory) {

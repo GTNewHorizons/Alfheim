@@ -9,13 +9,13 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class RecipeHelmRevealingAlfheim: IRecipe {
 
-	override fun matches(var1: InventoryCrafting, var2: World?): Boolean {
+	override fun matches(inv: InventoryCrafting, world: World?): Boolean {
 		val goggles = Item.itemRegistry.getObject("Thaumcraft:ItemGoggles") ?: return false // NO TC loaded
 
 		var foundGoggles = false
 		var foundHelm = false
-		for (i in 0 until var1.sizeInventory) {
-			val stack = var1.getStackInSlot(i)
+		for (i in 0 until inv.sizeInventory) {
+			val stack = inv.getStackInSlot(i)
 			if (stack != null) {
 				when {
 					checkHelm(stack)       -> foundHelm = true
