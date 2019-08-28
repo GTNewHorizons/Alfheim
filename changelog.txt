@@ -1,5 +1,9 @@
 Innovations:
- --
+ Removed 2nd ASMData parameter for world hooks - now tiles are not affected by time manipulation; thermos compatibility fixed
+ Reworked cardinal system serialization, delete /saves/WORLDNAME/data/Cardinal.sys if you have some issues
 
 Fixes:
- --
+ Crash on showing overwolrd portal trade recipes
+ [MMO] Improved shared HP spell behavior
+ [MMO] Improved death (left flame effect)
+ [MMO] Spells cooldown now can be discarded by going to creative

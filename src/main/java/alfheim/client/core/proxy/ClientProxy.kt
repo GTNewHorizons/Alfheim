@@ -37,6 +37,7 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
+import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.client.render.item.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
@@ -52,11 +53,12 @@ class ClientProxy: CommonProxy() {
 		LibRenderIDs.init()
 		
 		if (ConfigHandler.useShaders) {
-			LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag")
 			LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag")
 			LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag")
 			LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag")
 		}
+		
+		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly())
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff())
@@ -121,8 +123,8 @@ class ClientProxy: CommonProxy() {
 	
 	override fun initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers()
-		MinecraftForge.EVENT_BUS.register(EventHandlerClient())
-		FMLCommonHandler.instance().bus().register(EventHandlerClient())
+		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
+		FMLCommonHandler.instance().bus().register(EventHandlerClient)
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer())
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()

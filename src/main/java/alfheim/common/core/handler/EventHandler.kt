@@ -301,12 +301,11 @@ class EventHandler {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				e.entityLiving.clearActivePotions()
-				e.entityLiving.addPotionEffect(PotionEffect(AlfheimRegistry.leftFlame.id, AlfheimConfigHandler.deathScreenAddTime, 0, true))
+				e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
 			}
 			
-			val pt = CardinalSystem.PartySystem.getMobParty(e.entityLiving)
-			pt?.setDead(e.entityLiving, true)
+			CardinalSystem.PartySystem.getMobParty(e.entityLiving)?.setDead(e.entityLiving, true)
 		}
 	}
 	
@@ -413,18 +412,11 @@ class EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityUpdate(e: EntityUpdateEvent) {
+		// slowdown anomaly
 		if (!e.entity.isEntityAlive) return
 		if ((ASJUtilities.isServer || AlfheimConfigHandler.slowDownClients) && !e.entity.canEntityUpdate) {
 			e.isCanceled = true
 			e.entity.canEntityUpdate = true
-		}
-	}
-	
-	@SubscribeEvent
-	fun onTileUpdate(e: TileUpdateEvent) {
-		if (!e.tile.canTileUpdate) {
-			e.isCanceled = true
-			e.tile.canTileUpdate = true
 		}
 	}
 	

@@ -57,7 +57,6 @@ object AlfheimRegistry {
 	lateinit var goldRush: Potion
 	lateinit var icelens: Potion
 	lateinit var leftFlame: Potion
-	fun leftFlameIsInitialized() = ::leftFlame.isInitialized
 	lateinit var manaVoid: Potion
 	lateinit var nineLifes: Potion
 	lateinit var ninja: Potion
@@ -67,7 +66,6 @@ object AlfheimRegistry {
 	lateinit var quadDamage: Potion
 	lateinit var sacrifice: Potion
 	lateinit var sharedHP: Potion
-	fun sharedHPIsInitialized() = ::sharedHP.isInitialized
 	lateinit var showMana: Potion
 	lateinit var soulburn: Potion
 	lateinit var stoneSkin: Potion

@@ -662,7 +662,7 @@ object ShadowFoxRecipes {
 		
 		recipesLamp = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (Botania.thaumcraftLoaded && (Botania.gardenOfGlassLoaded || ModInfo.DEV) && AlfheimConfigHandler.addThaumTreeSuffusion) {
+		if (Botania.thaumcraftLoaded && (Botania.gardenOfGlassLoaded || ModInfo.DEV) && AlfheimConfigHandler.thaumTreeSuffusion) {
 			ThaumcraftSuffusionRecipes.initRecipes()
 		}
 		

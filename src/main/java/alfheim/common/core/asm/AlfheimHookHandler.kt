@@ -147,7 +147,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun moveFlying(e: Entity, x: Float, y: Float, z: Float) {
-		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.motionZ = 0.0
 			e.motionY = e.motionZ
 			e.motionX = e.motionY

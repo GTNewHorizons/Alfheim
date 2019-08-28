@@ -1,7 +1,6 @@
 package alfheim.common.block.tile.sub.anomaly
 
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.common.block.tile.TileAnomaly
 import net.minecraft.entity.Entity
 import net.minecraft.tileentity.TileEntity
 import vazkii.botania.common.Botania
@@ -12,16 +11,8 @@ class SubTileSpeedDown: SubTileEntity() {
 	override val targets: List<Any>
 		get() {
 			if (inWG() || worldObj.totalWorldTime % 2 == 0L) return EMPTY_LIST
-			val l = allAroundRaw(Entity::class.java, 8.0)
-			for (x in -radius..radius)
-				for (z in -radius..radius)
-					for (y in -radius..radius) {
-						if (x == 0 && y == 0 && z == 0) continue
-						val t = worldObj.getTileEntity(x(x.toDouble()), y(y.toDouble()), z(z.toDouble()))
-						if (t != null && t.canUpdate() && !t.isInvalid && t !is TileAnomaly) l.add(t)
-					}
 			
-			return l
+			return allAroundRaw(Entity::class.java, 8.0)
 		}
 	
 	override val strip: Int
@@ -52,7 +43,6 @@ class SubTileSpeedDown: SubTileEntity() {
 	
 	override fun performEffect(target: Any) {
 		if (target is Entity) target.canEntityUpdate = false
-		if (target is TileEntity) target.canTileUpdate = false
 	}
 	
 	override fun typeBits() = TIME

@@ -5,6 +5,7 @@ import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.*
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
@@ -14,6 +15,7 @@ import net.minecraft.util.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
+import kotlin.math.min
 
 class GUISpells(private val mc: Minecraft): Gui() {
 	
@@ -37,14 +39,12 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		val rID = KeyBindingHandlerClient.raceID
 		var pos = KeyBindingHandlerClient.spellID
 		if (count >= 5) {
-			if (pos == 0)
-			else if (pos == 1)
-			else if (pos == count - 1)
-				pos = 4
-			else if (pos == count - 2)
-				pos = 3
-			else
-				pos = 2
+			pos = when (pos) {
+				0, 1      -> pos
+				count - 1 -> 4
+				count - 2 -> 3
+				else      -> 2
+			}
 		}
 		
 		glColor4d(1.0, 1.0, 1.0, 1.0)
@@ -55,12 +55,12 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		
 		// ################ cast time ################
-		if (CardinalSystemClient.segment().init > 0) {
+		if (PlayerSegmentClient.init > 0) {
 			glDisable(GL_TEXTURE_2D)
 			ASJRenderHelper.glColor1u(-0x779f8a80)
 			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 25, e.resolution.scaledHeight / 2 + 8, 0, 0, 52, 5)
 			ASJRenderHelper.glColor1u(-0x77ff5501)
-			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 24, e.resolution.scaledHeight / 2 + 9, 0, 0, 50 - (50.0 * (CardinalSystemClient.segment!!.init / CardinalSystemClient.segment!!.initM.toDouble())).toInt(), 3)
+			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 24, e.resolution.scaledHeight / 2 + 9, 0, 0, 50 - (50.0 * (PlayerSegmentClient.init / PlayerSegmentClient.initM.toDouble())).toInt(), 3)
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glEnable(GL_TEXTURE_2D)
 		}
@@ -74,45 +74,38 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		// ################ spells icons ################
 		glPushMatrix()
 		glTranslated(24.0, (height - 40).toDouble(), 0.0)
-		for (i in 0 until Math.min(count, 5)) {
+		for (i in 0 until min(count, 5)) {
 			if (i != pos) glColor4d(1.0, 1.0, 1.0, 0.5) else glColor4d(1.0, 1.0, 1.0, 1.0)
 			var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-			if (i == 0) {
-				if (pos == 0)
-				else if (pos == 1)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
-				else
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - pos)
-			} else if (i == 1) {
-				if (pos == 0)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
-				else if (pos == 1)
-				else
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - (pos - 1))
-			} else if (i == 2) {
-				if (pos == 0)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
-				else if (pos == 1)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
-				else if (pos == 3)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
-				else if (pos == 4) spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 2)
-			} else if (i == 3) {
-				if (pos == 0)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 3)
-				else if (pos == 1)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
-				else if (pos == 2)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
-				else if (pos == 4) spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
-			} else if (i == 4) {
-				if (pos == 0)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 4)
-				else if (pos == 1)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 3)
-				else if (pos == 2)
-					spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
-				else if (pos == 3) spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
+			when (i) {
+				0 -> when (pos) {
+					0    -> Unit
+					1    -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
+					else -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - pos)
+				}
+				1 -> when (pos) {
+					0    -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
+					1    -> Unit
+					else -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - (pos - 1))
+				}
+				2 -> when (pos) {
+					0 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
+					1 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
+					3 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
+					4 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 2)
+				}
+				3 -> when (pos) {
+					0 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 3)
+					1 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
+					2 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
+					4 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID - 1)
+				}
+				4 -> when (pos) {
+					0 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 4)
+					1 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 3)
+					2 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 2)
+					3 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
+				}
 			}
 			drawRect(LibResourceLocations.spell(spell!!.name), 16)
 			
@@ -184,9 +177,9 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		
 		glTranslated((width - 19).toDouble(), (height / 2 - 138).toDouble(), 0.0)
 		var txt: String
-		for (i in CardinalSystemClient.segment().hotSpells.indices) {
+		for (i in PlayerSegmentClient.hotSpells.indices) {
 			glTranslated(0.0, 20.0, 0.0)
-			spell = AlfheimAPI.getSpellByIDs(CardinalSystemClient.segment!!.hotSpells[i] shr 28 and 0xF, CardinalSystemClient.segment!!.hotSpells[i] and 0xFFFFFFF)
+			spell = AlfheimAPI.getSpellByIDs(PlayerSegmentClient.hotSpells[i] shr 28 and 0xF, PlayerSegmentClient.hotSpells[i] and 0xFFFFFFF)
 			if (spell == null) continue
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			drawRect(LibResourceLocations.spell(spell.name), 16)
@@ -199,7 +192,7 @@ class GUISpells(private val mc: Minecraft): Gui() {
 				font.drawString(txt, 2 + (12 - font.getStringWidth(txt)) / 2, 4, 0xFFFFFF)
 			}
 			//txt = StatCollector.translateToLocal("spell." + spell.name + ".name");
-			//font.drawString(txt, -font.getStringWidth(txt) - 4, 4, EnumRace.getRGBColor((CardinalSystemClient.segment.hotSpells[i] >> 28) & 0xF));
+			//font.drawString(txt, -font.getStringWidth(txt) - 4, 4, EnumRace.getRGBColor((PlayerSegmentClient.hotSpells[i] >> 28) & 0xF));
 		}
 		
 		glPopMatrix()

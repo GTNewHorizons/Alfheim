@@ -92,6 +92,7 @@ import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.storyToken
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -111,6 +112,7 @@ import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
+import net.minecraft.item.ItemStack
 
 object AlfheimRecipes {
 	
@@ -178,6 +180,7 @@ object AlfheimRecipes {
 	lateinit var recipeTradePortal: IRecipe
 	
 	lateinit var recipeInterdimensional: RecipeElvenTrade
+	lateinit var recipeStoryToken: RecipeElvenTrade
 	
 	lateinit var recipeDreamwood: RecipePureDaisy
 	
@@ -185,7 +188,7 @@ object AlfheimRecipes {
 	lateinit var recipeNiflheimRune: RecipeRuneAltar
 	lateinit var recipeRealityRune: RecipeRuneAltar
 	
-	fun init() {
+	init {
 		registerCraftingRecipes()
 		registerShapelessRecipes()
 		registerSmeltingRecipes()
@@ -773,6 +776,7 @@ object AlfheimRecipes {
 	
 	private fun banRetrades() {
 		AlfheimAPI.banRetrade(recipeInterdimensional.output)
+		AlfheimAPI.banRetrade(recipeStoryToken.output)
 		AlfheimAPI.banRetrade(ItemStack(iron_ingot))
 		AlfheimAPI.banRetrade(ItemStack(iron_block))
 		AlfheimAPI.banRetrade(ItemStack(ender_pearl))
@@ -799,6 +803,8 @@ object AlfheimRecipes {
 		ModRuneRecipes.recipesEarthRune.add(BotaniaAPI.registerRuneAltarRecipe(ItemStack(rune, 2, 2), costTier1, MANA_POWDER, MANA_STEEL, ItemStack(livingcobble), ItemStack(obsidian), ItemStack(red_mushroom)))
 		
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), ItemStack(nether_star))
+		recipeStoryToken = BotaniaAPI.registerElvenTradeRecipe(ItemStack(storyToken, 1, 1), ItemStack(storyToken, 1, 0))
+		
 		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0)
 		BotaniaAPI.registerPureDaisyRecipe("cobblestone", livingcobble, 0)
 		

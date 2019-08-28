@@ -5,10 +5,14 @@ import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase.SpellCastResult
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
+import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
+import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.*
+import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.flight
@@ -25,12 +29,12 @@ object PacketHandlerClient {
 	}
 	
 	fun handle(packet: MessageParty) {
-		CardinalSystemClient.segment().party = packet.party
-		CardinalSystemClient.PlayerSegmentClient.partyIndex = 0
+		PlayerSegmentClient.party = packet.party
+		PlayerSegmentClient.partyIndex = 0
 	}
 	
 	fun handle(packet: MessageHotSpellC) {
-		CardinalSystemClient.segment().hotSpells = packet.ids.clone()
+		PlayerSegmentClient.hotSpells = packet.ids.clone()
 	}
 	
 	fun handle(packet: MessageTileItem) {
@@ -41,7 +45,7 @@ object PacketHandlerClient {
 	
 	fun handle(packet: MessageTimeStop) {
 		if (packet.party == null) packet.party = Party()
-		CardinalSystemClient.TimeStopSystemClient.stop(packet.x, packet.y, packet.z, packet.party!!, packet.id)
+		TimeStopSystemClient.stop(packet.x, packet.y, packet.z, packet.party!!, packet.id)
 	}
 	
 	fun handle(packet: Message1d) {
@@ -49,11 +53,8 @@ object PacketHandlerClient {
 			m1d.CL_SLOWDOWN      -> AlfheimConfigHandler.slowDownClients = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
-			m1d.KNOWLEDGE        -> {
-				CardinalSystemClient.segment()
-				CardinalSystemClient.PlayerSegmentClient.knowledge[packet.data1.toInt()] = true
-			}
-			m1d.TIME_STOP_REMOVE -> CardinalSystemClient.TimeStopSystemClient.remove(packet.data1.toInt())
+			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add(Knowledge.values()[packet.data1.toInt()].toString())
+			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
 		}
 	}
 	
@@ -66,21 +67,22 @@ object PacketHandlerClient {
 				}
 			}
 			
-			m2d.COOLDOWN -> {
+			m2d.COOLDOWN  -> {
 				when (if (packet.data2 > 0) SpellCastResult.OK else SpellCastResult.values()[(-packet.data2).toInt()]) {
 					SpellCastResult.DESYNC    -> throw IllegalArgumentException("Client-server spells desynchronization. Not found spell for ${EnumRace[packet.data1.toInt() shr 28 and 0xF]} with id ${packet.data1.toInt() and 0xFFFFFFF}")
 					SpellCastResult.NOMANA    -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.momana")// TODO playSound "not enough mana"
 					SpellCastResult.NOTALLOW  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notallow")// TODO playSound "not allowed"
 					SpellCastResult.NOTARGET  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notarget")// TODO playSound "no target"
-					SpellCastResult.NOTREADY  -> { /*ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notready");*/}// TODO playSound "spell not ready"
+					SpellCastResult.NOTREADY  -> { /*ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notready");*/
+					}// TODO playSound "spell not ready"
 					SpellCastResult.NOTSEEING -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notseeing")// TODO playSound "not seeing"
 					SpellCastResult.OBSTRUCT  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.obstruct")// TODO playSound "target obstructed"
-					SpellCastResult.OK        -> CardinalSystemClient.SpellCastingSystemClient.setCoolDown(AlfheimAPI.getSpellByIDs(packet.data1.toInt() shr 28 and 0xF, packet.data1.toInt() and 0xFFFFFFF), packet.data2.toInt())
+					SpellCastResult.OK        -> SpellCastingSystemClient.setCoolDown(AlfheimAPI.getSpellByIDs(packet.data1.toInt() shr 28 and 0xF, packet.data1.toInt() and 0xFFFFFFF), packet.data2.toInt())
 					SpellCastResult.WRONGTGT  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.wrongtgt")// TODO playSound "wrong target"
 				}
 			}
 			
-			m2d.UUID      -> CardinalSystemClient.segment().party.setUUID(packet.data2.toInt(), packet.data1.toInt())
+			m2d.UUID      -> PlayerSegmentClient.party?.setUUID(packet.data2.toInt(), packet.data1.toInt())
 			
 			m2d.MODES     -> {
 				if (packet.data1 > 0) ClientProxy.enableESM() else ClientProxy.disableESM()
@@ -96,8 +98,8 @@ object PacketHandlerClient {
 			
 			m3d.PARTY_STATUS -> {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
-					PartyStatus.DEAD -> CardinalSystemClient.segment().party.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
-					PartyStatus.MANA -> CardinalSystemClient.segment().party.setMana(packet.data2.toInt(), packet.data3.toInt())
+					PartyStatus.DEAD -> PlayerSegmentClient.party?.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
+					PartyStatus.MANA -> PlayerSegmentClient.party?.setMana(packet.data2.toInt(), packet.data3.toInt())
 				}
 			}
 			

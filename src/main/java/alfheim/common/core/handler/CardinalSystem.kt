@@ -61,14 +61,6 @@ object CardinalSystem {
 			playerSegments = HashMap()
 			TimeStopSystem.tsAreas = HashMap()
 		}
-		
-		backport()
-	}
-	
-	private fun backport() {
-		for (segment in playerSegments.values)
-			for (spell in AlfheimAPI.spells)
-				if (!segment.coolDown.containsKey(spell)) segment.coolDown[spell] = 0
 	}
 	
 	fun transfer(player: EntityPlayerMP) {
@@ -114,11 +106,13 @@ object CardinalSystem {
 		
 		fun learn(player: EntityPlayerMP, kn: Knowledge) {
 			val seg = forPlayer(player)
-			if (!seg.knowledge[kn.ordinal]) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
-			seg.knowledge[kn.ordinal] = true
+			if (!know(player, kn)) {
+				seg.knowledge.add(kn.toString())
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
+			}
 		}
 		
-		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge[kn.ordinal]
+		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains(kn.toString())
 		
 		fun transfer(player: EntityPlayerMP) {
 			for (kn in Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
@@ -154,9 +148,10 @@ object CardinalSystem {
 		
 		fun tick() {
 			try {
-				for (segment in playerSegments.values) {
+				playerSegments.forEach { (name, segment) ->
 					for (spell in segment.coolDown.keys) {
-						val time = segment.coolDown[spell] ?: 0
+						var time = segment.coolDown[spell] ?: 0
+						if (time > 5 && MinecraftServer.getServer().configurationManager.func_152612_a(name)?.capabilities?.isCreativeMode == true) time = 5
 						if (time > 0) segment.coolDown[spell] = time - 1
 					}
 					
@@ -207,7 +202,7 @@ object CardinalSystem {
 					return
 				}
 				
-				if (e.caster.isPotionActive(AlfheimRegistry.leftFlame)) {
+				if (e.caster.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 					e.isCanceled = true
 					return
 				}
@@ -796,21 +791,6 @@ object CardinalSystem {
 			return false
 		}
 		
-		fun affected(te: TileEntity?): Boolean {
-			if (te == null) return false
-			val e = TimeStopTileCheckEvent(te)
-			if (MinecraftForge.EVENT_BUS.post(e)) return e.result
-			if (!te.hasWorldObj()) return false
-			if (te is ITimeStopSpecific && (te as ITimeStopSpecific).isImmune) return false
-			if (tsAreas[te.worldObj.provider.dimensionId] == null) return false
-			for (tsa in tsAreas[te.worldObj.provider.dimensionId]!!)
-				if (Vector3.vecTileDistance(tsa.pos, te) < 16) {
-					return if (te is ITimeStopSpecific) (te as ITimeStopSpecific).affectedBy(tsa.uuid)
-					else true
-				}
-			return false
-		}
-		
 		class TimeStopArea(caster: EntityLivingBase): Serializable {
 			val pos = Vector3.fromEntity(caster)
 			val uuid = caster.entityUniqueID!!
@@ -851,11 +831,6 @@ object CardinalSystem {
 			fun onLivingUpdate(e: LivingUpdateEvent) {
 				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
 			}
-			
-			@SubscribeEvent
-			fun onTileUpdate(e: TileUpdateEvent) {
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.tile)) e.isCanceled = true
-			}
 		}
 	}
 	
@@ -877,61 +852,12 @@ object CardinalSystem {
 		@Transient
 		var init: Int = 0
 		
-		var knowledge: BooleanArray = BooleanArray(Knowledge.values().size)
+		var knowledge: MutableSet<String> = HashSet()
 		
 		var userName: String = player.commandSenderName
 		
 		@Transient
 		var quadStage = 0
-		
-		private fun writeObject(out: ObjectOutputStream) {
-			try {
-				out.writeInt(coolDown.keys.size)
-				for (spell in coolDown.keys) {
-					out.writeUTF(spell.name)
-					out.writeInt(coolDown[spell]!!)
-				}
-				out.writeObject(hotSpells)
-				out.writeObject(party)
-				out.writeObject(knowledge)
-				out.writeObject(userName)
-				out.writeObject(quadStage)
-			} catch (e: IOException) {
-				ASJUtilities.error("Unable to save part of Cardinal System data. Discarding. Sorry :(")
-				e.printStackTrace()
-			}
-			
-		}
-		
-		private fun readObject(`in`: ObjectInputStream) {
-			try {
-				var size = `in`.readInt()
-				coolDown = HashMap(size)
-				while (size > 0) {
-					val spell = AlfheimAPI.getSpellInstance(`in`.readUTF())
-					val cd = `in`.readInt()
-					if (spell != null) coolDown[spell] = cd
-					--size
-				}
-				
-				hotSpells = `in`.readObject() as IntArray
-				party = `in`.readObject() as Party
-				knowledge = `in`.readObject() as BooleanArray
-				userName = `in`.readObject() as String
-				quadStage = `in`.readObject() as Int
-			} catch (e: IOException) {
-				ASJUtilities.error("Unable to read part of Cardinal System data. Skipping.")
-				e.printStackTrace()
-			} catch (e: ClassNotFoundException) {
-				ASJUtilities.error("Unable to find class for part of Cardinal System data. Skipping.")
-				e.printStackTrace()
-			}
-			
-		}
-		
-		private fun readObjectNoData() {
-			for (spell in AlfheimAPI.spells) coolDown[spell] = 0
-		}
 		
 		companion object {
 			

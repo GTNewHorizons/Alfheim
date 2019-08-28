@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
@@ -156,7 +157,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 				}
 			}
 			
-			if (AlfheimRegistry.leftFlameIsInitialized() && e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame))
+			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame))
 				return
 			
 			if (canBeSaved(player)) {

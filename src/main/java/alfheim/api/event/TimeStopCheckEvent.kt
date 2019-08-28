@@ -16,7 +16,4 @@ abstract class TimeStopCheckEvent: Event() {
 	
 	@Cancelable
 	class TimeStopEntityCheckEvent(val entity: Entity): TimeStopCheckEvent()
-	
-	@Cancelable
-	class TimeStopTileCheckEvent(val tile: TileEntity): TimeStopCheckEvent()
 }

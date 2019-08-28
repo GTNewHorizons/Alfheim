@@ -232,6 +232,7 @@ item.alfheim:RoyalStaff.name=Royal Staff
 item.botania:SpearSubspace.name=Spear of Subspace
 item.alfheim:splashPotion.name=Splash Vial
 item.alfheim:starPlacer2.name=Crackling Star
+item.alfheim:StoryToken.name=Token of Banter
 item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive

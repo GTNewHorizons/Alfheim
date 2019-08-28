@@ -92,6 +92,7 @@ object AlfheimItems {
 	val splashPotion: Item
 	val starPlacer: Item
 	val starPlacer2: Item
+	val storyToken: Item
 	val subspaceSpear: Item
 	val thinkingHand: Item
 	val trisDagger: Item
@@ -163,9 +164,10 @@ object AlfheimItems {
 		rodLightning = ItemRodLightning()
 		rodPrismatic = ItemRodPrismatic()
 		rodGrass = ItemRodGrass()
+		splashPotion = ItemSplashPotion()
 		starPlacer = ItemStarPlacer()
 		starPlacer2 = ItemStarPlacer2()
-		splashPotion = ItemSplashPotion()
+		storyToken = ItemStoryToken()
 		subspaceSpear = ItemSpearSubspace()
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()

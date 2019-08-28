@@ -17,14 +17,15 @@ import kotlin.math.*
 object AlfheimConfigHandler {
 	lateinit var config: Configuration
 	
-	const val CATEGORY_BA			= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Iridescence"
+	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Integration"
+	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
-	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION + CATEGORY_SPLITTER + "woldgen"
+	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "woldgen"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
 	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
-	const val CATEGORY_MMO			= CATEGORY_ESMODE + CATEGORY_SPLITTER + "mmo"
-	const val CATEGORY_MMOP			= CATEGORY_MMO + CATEGORY_SPLITTER + "potions"
-	const val CATEGORY_HUD			= CATEGORY_MMO + CATEGORY_SPLITTER + "hud"
+	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
+	const val CATEGORY_MMOP			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions"
+	const val CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud"
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
@@ -38,9 +39,11 @@ object AlfheimConfigHandler {
 	var oregenMultiplier		= 3
 	
 	// OHTER
+	var blackLotusDropRate		= 0.05
 	var destroyPortal			= true
 	var fancies					= true
 	var flugelBossBar			= true
+	var grantWireUnlimitedPower = true
 	var info					= true
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
@@ -49,18 +52,17 @@ object AlfheimConfigHandler {
 	var looniumOverseed			= false
 	var minimalGraphics			= false
 	var numericalMana			= true
-	var slowDownClients			= false
-	var tradePortalRate			= 1200
-	
-	// Iridescence
 	var realLightning			= false
-	var blackLotusDropRate		= 0.05
-	var addTincturemAspect		= true
-	var addAspectsToBotania		= true
-	var addThaumTreeSuffusion	= true
 	var schemaArray				= IntArray(17) { -1 + it }
+	var slowDownClients			= false
+	var storyLines				= 4
+	var tradePortalRate			= 1200
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
-	var grantWireUnlimitedPower = true
+	
+	// TC INTEGRATION
+	var addAspectsToBotania		= true
+	var addTincturemAspect		= true
+	var thaumTreeSuffusion		= true
 	
 	// POTIONS
 	var potionSlots				= 1024
@@ -136,9 +138,11 @@ object AlfheimConfigHandler {
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
 		
+		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		destroyPortal = loadProp(CATEGORY_GENERAL, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to disable fancies rendering on you ([CLIENTSIDE] for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
+		grantWireUnlimitedPower = loadProp(CATEGORY_GENERAL, "wire.overpowered", grantWireUnlimitedPower, true, "Allow WireSegal far more power than any one person should have")
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading info about addon")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -147,17 +151,16 @@ object AlfheimConfigHandler {
 		looniumOverseed = loadProp(CATEGORY_GENERAL, "looniumOverseed", looniumOverseed, true, "Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
+		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
+		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
 		slowDownClients = loadProp(CATEGORY_GENERAL, "slowDownClients", slowDownClients, false, "Set this to true to slowdown players on clients while in anomaly")
+		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
+		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
 		
-		realLightning = loadProp(CATEGORY_BA, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
-		addTincturemAspect = loadProp(CATEGORY_BA, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
-		addAspectsToBotania = loadProp(CATEGORY_BA, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
-		addThaumTreeSuffusion = loadProp(CATEGORY_BA, "TC.treeCrafting", addThaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
-		grantWireUnlimitedPower = loadProp(CATEGORY_BA, "wire.overpowered", grantWireUnlimitedPower, true, "Allow WireSegal far more power than any one person should have")
-		blackLotusDropRate = loadProp(CATEGORY_BA, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
-		schemaArray = loadProp(CATEGORY_BA, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
-		voidCreepersBiomeBL = loadProp(CATEGORY_BA, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
+		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
+		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
+		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		
 		potionSlots = loadProp(CATEGORY_POTIONS, "potionSlots", potionSlots, true, "Available potions ids in range [0-potionSlots)")
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")

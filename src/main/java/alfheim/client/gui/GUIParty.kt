@@ -4,9 +4,10 @@ import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.*
 import alfheim.api.entity.*
 import alfheim.api.lib.*
-import alfheim.client.core.handler.CardinalSystemClient
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.render.entity.RenderWings
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
+import alfheim.common.core.handler.*
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -30,6 +31,7 @@ import java.awt.Color
 import java.text.DecimalFormat
 import kotlin.math.*
 
+@Suppress("UNCHECKED_CAST")
 class GUIParty(private val mc: Minecraft): Gui() {
 	
 	@SubscribeEvent(receiveCanceled = true)
@@ -38,11 +40,16 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		GuiIngameForge.renderBossHealth = false
 		val player = mc.thePlayer
 		val font = mc.fontRenderer
-		val pt = CardinalSystemClient.segment().party
+		
+		val pt = PlayerSegmentClient.party ?: let{
+			PlayerSegmentClient.party = Party(mc.thePlayer)
+			PlayerSegmentClient.party!!
+		}
+		
 		var color: Int
-		val R = -0x230000
-		val Y = -0x222300
-		val G = -0xff2300
+		val red = -0x230000
+		val yellow = -0x222300
+		val green = -0xff2300
 		var data: String
 		zLevel = -90f
 		val s = AlfheimConfigHandler.partyHUDScale
@@ -76,7 +83,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			// ################ health: ################
 			run {
 				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).toInt() / 158.0
-				ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+				ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 				val length = (158 * mod).mfloor()
 				
 				if (length <= 10) {
@@ -192,7 +199,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				}
 				
 				glTranslated(0.0, 0.0, -89.0)
-				font.drawString(data, 88 - font.getStringWidth(data) / 2, 3, if (CardinalSystemClient.segment!!.target === mc.thePlayer) G else if (pt[0] === mc.thePlayer) R else -0x1, shadow)
+				font.drawString(data, 88 - font.getStringWidth(data) / 2, 3, if (PlayerSegmentClient.target === mc.thePlayer) green else if (pt[0] === mc.thePlayer) red else -0x1, shadow)
 				glTranslated(0.0, 0.0, 89.0)
 			}
 			glColor4d(1.0, 1.0, 1.0, 1.0)
@@ -220,9 +227,9 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				if (l === mc.thePlayer) continue
 				
 				color = when {
-					i == 0			-> R		// PL
+					i == 0			-> red		// PL
 					pt.isPlayer(i)	-> -0x1		// Player
-					else			-> Y		// Mob
+					else			-> yellow		// Mob
 				}
 				
 				if (l == null) {
@@ -236,7 +243,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 						color = -0xff5501
 						col = color
 					}                                        // NPC
-					if (CardinalSystemClient.segment!!.target === l) color = 0x00FF00        // selected target
+					if (PlayerSegmentClient.target === l) color = 0x00FF00        // selected target
 					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC        // out of reach
 					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888;		// other dim
 					hp = min(l!!.health, l!!.maxHealth)
@@ -265,7 +272,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					val mod: Double
 					if (hp != -1f && hpm != -1f) {
 						mod = (hp / max(hpm, 1f) * 100.0).toInt() / 100.0
-						ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+						ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 					} else {
 						mod = 1.0
 						ASJRenderHelper.glColor1u(-0xbbbbbc)
@@ -386,12 +393,12 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		}
 		
 		// ################################################################ TARGET ################################################################
-		if (AlfheimConfigHandler.targetUI && CardinalSystemClient.segment!!.target != null) {
+		if (AlfheimConfigHandler.targetUI && PlayerSegmentClient.target != null) {
 			glPushMatrix()
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 120, 0.0, 0.0)
 			zLevel = -80f
-			l = CardinalSystemClient.segment!!.target
+			l = PlayerSegmentClient.target
 			var hp = min(l!!.health, l!!.maxHealth)
 			var hpm = l!!.maxHealth
 			var col = -0x222223 // bg color
@@ -400,7 +407,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			
 			// ################ colors: ################
 			run {
-				color = Y
+				color = yellow
 				
 				if (l is EntityPlayer) {
 					color = 0xFFFFFF
@@ -411,11 +418,11 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					col = color
 					//shadow = false;
 				}
-				if (CardinalSystemClient.segment!!.target is IBossDisplayData) {
+				if (PlayerSegmentClient.target is IBossDisplayData) {
 					color = 0xA2018C
 					col = color
 				}
-				color = if (CardinalSystemClient.segment!!.isParty) 0x00FF00 else color
+				color = if (PlayerSegmentClient.isParty) 0x00FF00 else color
 				if (!l!!.isEntityAlive) {
 					color = 0x444444
 					hpm = 0f
@@ -436,7 +443,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				if (!l!!.isEntityAlive) return@health
 				
 				val mod = (hp / max(hpm, 1f) * 200.0).toInt() / 200.0
-				ASJRenderHelper.glColor1u(if (mod > 0.5) G else if (mod > 0.1) Y else R)
+				ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 				val length = (200 * mod).mfloor()
 				
 				when {
@@ -486,7 +493,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				glTranslated(0.0, 0.0, -79.0)
 				font.drawString(data, 36, 6, color, shadow)
-				font.drawString(String.format("(%.2fm)", Vector3.entityDistance(player, CardinalSystemClient.segment!!.target!!)), 128, 6, color, shadow)
+				font.drawString(String.format("(%.2fm)", Vector3.entityDistance(player, PlayerSegmentClient.target!!)), 128, 6, color, shadow)
 				glTranslated(0.0, 0.0, 79.0)
 			}
 			
@@ -505,9 +512,9 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				for (pe in pes) if (Potion.potionTypes[pe.potionID].isBadEffect) ++bads else ++goods
 				
 				glTranslated(274.0, 56.0, 0.0)
-				renderPotions(CardinalSystemClient.segment!!.target, bads, true, false)
+				renderPotions(PlayerSegmentClient.target, bads, true, false)
 				glTranslated(-198.0, 22.0, 0.0)
-				renderPotions(CardinalSystemClient.segment!!.target, goods, false, false)
+				renderPotions(PlayerSegmentClient.target, goods, false, false)
 				
 				glPopMatrix()
 			}
@@ -581,7 +588,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			}
 			
 			run tg_icon@{
-				l = CardinalSystemClient.segment().target
+				l = PlayerSegmentClient.target
 				if (l == null) return@tg_icon
 				if (!AlfheimConfigHandler.targetUI) return@tg_icon
 				

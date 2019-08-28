@@ -162,6 +162,7 @@ import alfheim.common.item.AlfheimItems.royalStaff
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
+import alfheim.common.item.AlfheimItems.storyToken
 import alfheim.common.item.AlfheimItems.subspaceSpear
 import alfheim.common.item.AlfheimItems.toolbelt
 import alfheim.common.item.AlfheimItems.trisDagger
@@ -260,6 +261,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (elvoriumBoots)
 		
 		addItem (realitySword)
+		
+		addItem (storyToken)
 		
 		addItem (excaliber)
 		addItem (subspaceSpear)

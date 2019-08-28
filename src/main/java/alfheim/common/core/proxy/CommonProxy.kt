@@ -31,14 +31,15 @@ open class CommonProxy {
 		AlfheimBlocks
 		AlfheimItems
 		AlfheimRegistry.preInit()
-		AlfheimAchievements.init()
+		AlfheimAchievements
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2()
 		ShadowFoxLexiconData
 		ShadowFoxThrowables
+		ChestGenHandler
 		HilarityHandler.register()
 		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler())
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
-		AlfheimMultiblocks.init()
+		AlfheimMultiblocks
 	}
 	
 	open fun registerRenderThings() {}
@@ -46,7 +47,7 @@ open class CommonProxy {
 	open fun registerKeyBinds() {}
 	
 	fun init() {
-		AlfheimRecipes.init()
+		AlfheimRecipes
 		ShadowFoxRecipes
 		AlfheimRegistry.init()
 		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)

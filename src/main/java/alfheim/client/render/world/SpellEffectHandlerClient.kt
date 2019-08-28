@@ -236,11 +236,20 @@ object SpellEffectHandlerClient {
 		if (AlfheimCore.enableMMO && Minecraft.getMinecraft().thePlayer === target) {
 			Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
 			Minecraft.getMinecraft().thePlayer.hurtTime = 0
+			Minecraft.getMinecraft().thePlayer.deathTime = 0
+			Minecraft.getMinecraft().thePlayer.attackTime = 0
+			Minecraft.getMinecraft().setIngameNotInFocus()
 		}
 	}
 	
 	fun onDeathTick(target: EntityLivingBase) {
 		if (AlfheimCore.enableMMO) {
+			if (Minecraft.getMinecraft().currentScreen !is GUIDeathTimer) Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
+			
+			Minecraft.getMinecraft().thePlayer.hurtTime = 0
+			Minecraft.getMinecraft().thePlayer.deathTime = 0
+			Minecraft.getMinecraft().thePlayer.attackTime = 0
+			
 			var c = 0xFFFFFF
 			if (target is EntityPlayer) c = target.race.rgbColor
 			Botania.proxy.wispFX(target.worldObj, target.posX, target.posY - if (Minecraft.getMinecraft().thePlayer === target) 1.5 else 0.0, target.posZ, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.5).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), (Math.random() * 0.025).toFloat(), (Math.random() * 0.015 - 0.0075).toFloat(), 2f)

@@ -35,8 +35,8 @@ class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = par1IconRegister.registerIcon("botania:lensLight")
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = reg.registerIcon("botania:lensLight")
 	}
 	
 	override fun doParticles(p0: IManaBurst?, p1: ItemStack?): Boolean = true

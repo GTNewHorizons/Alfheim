@@ -73,6 +73,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
+	lateinit var stories: LexiconEntry
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
@@ -125,6 +126,7 @@ object AlfheimLexiconData {
 		ruling = BLexiconEntry("ruling", categoryAlfheim)
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
+		stories = BLexiconEntry("stories", categoryAlfheim)
 		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
@@ -197,6 +199,8 @@ object AlfheimLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1)
 		
 		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
+		
+		stories.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.storyToken)
 		
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
@@ -599,13 +603,13 @@ object AlfheimLexiconData {
 
 object AlfheimMultiblocks {
 	
-	lateinit var infuser: MultiblockSet
-	lateinit var infuserU: MultiblockSet
-	lateinit var portal: MultiblockSet
-	lateinit var soul: MultiblockSet
-	lateinit var yordin: MultiblockSet
+	val infuser: MultiblockSet
+	val infuserU: MultiblockSet
+	val portal: MultiblockSet
+	val soul: MultiblockSet
+	val yordin: MultiblockSet
 	
-	fun init() {
+	init {
 		infuser = TileManaInfuser.makeMultiblockSet()
 		infuserU = TileManaInfuser.makeMultiblockSetUnknown()
 		portal = TileAlfheimPortal.makeMultiblockSet()
