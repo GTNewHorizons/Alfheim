@@ -7,7 +7,6 @@ import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*

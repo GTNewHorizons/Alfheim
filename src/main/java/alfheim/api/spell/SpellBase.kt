@@ -2,12 +2,12 @@ package alfheim.api.spell
 
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.mana.ManaItemHandler
@@ -46,20 +46,18 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	fun getCastTime() = cast
 	
 	@SideOnly(Side.CLIENT)
-	open fun render(caster: EntityLivingBase) {
-		// NO-OP
-	}
+	open fun render(caster: EntityLivingBase) = Unit
 	
 	fun checkCast(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_double_int(getManaCost() * if (caster is EntityPlayer && race == caster.race || hard) 1.0 else 1.5)
+		val cost = MathHelper.ceiling_double_int(getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else 2.0)
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}
 	
 	fun checkCastOver(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * if (caster is EntityPlayer && race == caster.race || hard) 1.0 else 1.5))
+		val cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else 2.0))
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}
@@ -80,15 +78,8 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	companion object {
 		
-		// Will be set during preInit
-		var overmag: Potion? = null
-		
 		fun over(caster: EntityLivingBase?, was: Double): Float {
-			return try {
-				(if (caster!!.isPotionActive(overmag!!)) was * 1.2 else was).toFloat()
-			} catch (e: Throwable) {
-				was.toFloat()
-			}
+			return (if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).toFloat()
 		}
 		
 		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean) =

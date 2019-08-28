@@ -3,7 +3,6 @@ package alfheim.common.core.asm
 import alfheim.api.ModInfo
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import java.io.*
-import java.util.*
 
 object AlfheimASMData {
 	

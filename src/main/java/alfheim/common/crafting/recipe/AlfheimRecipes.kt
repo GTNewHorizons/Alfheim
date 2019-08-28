@@ -112,7 +112,6 @@ import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
-import net.minecraft.item.ItemStack
 
 object AlfheimRecipes {
 	

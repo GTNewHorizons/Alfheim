@@ -2,13 +2,11 @@ package alfheim.common.core.registry
 
 import alexsocol.asjlib.ASJUtilities.registerEntity
 import alexsocol.asjlib.ASJUtilities.registerEntityEgg
-
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI.addPink
 import alfheim.api.AlfheimAPI.registerAnomaly
 import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
-import alfheim.api.spell.SpellBase
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.anomaly.*
@@ -81,7 +79,6 @@ object AlfheimRegistry {
 		registerTileEntities()
 		
 		worldGen = WorldGenAlfheim()
-		SpellBase.overmag = overmage
 	}
 	
 	fun init() {

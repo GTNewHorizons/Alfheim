@@ -3,7 +3,7 @@ package alfheim.common.core.handler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.item.ItemStack
 import net.minecraft.util.WeightedRandomChestContent
-import net.minecraftforge.common.*
+import net.minecraftforge.common.ChestGenHooks
 
 object ChestGenHandler {
 	

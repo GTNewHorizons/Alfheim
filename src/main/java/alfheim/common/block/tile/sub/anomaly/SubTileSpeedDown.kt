@@ -2,7 +2,6 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alfheim.api.block.tile.SubTileEntity
 import net.minecraft.entity.Entity
-import net.minecraft.tileentity.TileEntity
 import vazkii.botania.common.Botania
 import kotlin.math.*
 

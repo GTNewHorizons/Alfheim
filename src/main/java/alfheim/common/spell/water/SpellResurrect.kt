@@ -8,7 +8,6 @@ import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer

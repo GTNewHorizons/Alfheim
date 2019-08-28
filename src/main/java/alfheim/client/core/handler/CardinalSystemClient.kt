@@ -2,19 +2,15 @@ package alfheim.client.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellVisualizations
-import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
-
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashSet

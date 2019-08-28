@@ -1,9 +1,7 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
-import alexsocol.asjlib.render.ASJShaderHelper.ShaderCallback
-import alfheim.api.ModInfo
-import alfheim.api.lib.*
+import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
@@ -16,18 +14,12 @@ import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
-import net.minecraftforge.client.model.*
 import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL13.GL_TEXTURE0
-import org.lwjgl.opengl.GL20.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.client.core.helper.ShaderHelper
-import vazkii.botania.client.render.entity.RenderDoppleganger.callback
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import java.awt.Color

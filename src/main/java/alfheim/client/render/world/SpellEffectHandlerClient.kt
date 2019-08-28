@@ -233,22 +233,26 @@ object SpellEffectHandlerClient {
 	}
 	
 	fun onDeath(target: EntityLivingBase) {
-		if (AlfheimCore.enableMMO && Minecraft.getMinecraft().thePlayer === target) {
-			Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
-			Minecraft.getMinecraft().thePlayer.hurtTime = 0
-			Minecraft.getMinecraft().thePlayer.deathTime = 0
-			Minecraft.getMinecraft().thePlayer.attackTime = 0
-			Minecraft.getMinecraft().setIngameNotInFocus()
+		if (AlfheimCore.enableMMO) {
+			target.hurtTime = 0
+			target.deathTime = 0
+			target.attackTime = 0
+			
+			if (Minecraft.getMinecraft().thePlayer === target) {
+				Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
+				Minecraft.getMinecraft().setIngameNotInFocus()
+			}
 		}
 	}
 	
 	fun onDeathTick(target: EntityLivingBase) {
 		if (AlfheimCore.enableMMO) {
-			if (Minecraft.getMinecraft().currentScreen !is GUIDeathTimer) Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
+			if (target === Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().currentScreen !is GUIDeathTimer)
+				Minecraft.getMinecraft().displayGuiScreen(GUIDeathTimer())
 			
-			Minecraft.getMinecraft().thePlayer.hurtTime = 0
-			Minecraft.getMinecraft().thePlayer.deathTime = 0
-			Minecraft.getMinecraft().thePlayer.attackTime = 0
+			target.hurtTime = 0
+			target.deathTime = 0
+			target.attackTime = 0
 			
 			var c = 0xFFFFFF
 			if (target is EntityPlayer) c = target.race.rgbColor

@@ -6,9 +6,8 @@ import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
-import alfheim.api.event.TimeStopCheckEvent.*
+import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
-import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
@@ -24,7 +23,6 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.*
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent

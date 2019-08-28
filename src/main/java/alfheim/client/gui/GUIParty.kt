@@ -6,8 +6,8 @@ import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.render.entity.RenderWings
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.handler.*
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent

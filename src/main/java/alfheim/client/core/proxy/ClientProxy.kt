@@ -37,7 +37,6 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
-import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.client.render.item.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler

@@ -4,9 +4,9 @@ import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.handler.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
+import alfheim.client.core.handler.KeyBindingHandlerClient
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
