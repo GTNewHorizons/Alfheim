@@ -4,6 +4,7 @@ import alfheim.common.block.base.BlockMod
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import vazkii.botania.common.block.ModBlocks
+import java.util.*
 
 class BlockShemaMarker: BlockMod(Material.wood) {
 	
@@ -11,7 +12,10 @@ class BlockShemaMarker: BlockMod(Material.wood) {
 		val size = 0.1875f
 		setBlockBounds(size, size, size, 1.0f - size, 1.0f - size, 1.0f - size)
 		setBlockName("schemaMarker")
+		setBlockUnbreakable()
 	}
+	
+	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = null
 	
 	override fun renderAsNormalBlock() = false
 	

@@ -78,20 +78,22 @@ class ItemStarPlacer: ItemMod("starPlacer") {
 		return color
 	}
 	
-	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
-		if (par3World.isRemote) return false
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
+		if (world.isRemote) return false
 		
 		val toPlace = ItemStack(AlfheimBlocks.starBlock)
 		val dir = ForgeDirection.getOrientation(direction)
-		if (par3World.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(par3World, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
-			toPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, x, y, z, direction, par8, par9, par10)
+		if (world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
+			toPlace.tryPlaceItemIntoWorld(player, world, x, y, z, direction, par8, par9, par10)
 			if (toPlace.stackSize == 0) {
-				val tile = par3World.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)
+				val tile = world.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)
 				if (tile is TileEntityStar) {
-					tile.starColor = getColor(par1ItemStack)
-					tile.size = getSize(par1ItemStack)
+					tile.starColor = getColor(stack)
+					tile.size = getSize(stack)
 				}
-				if (!par2EntityPlayer.capabilities.isCreativeMode) par1ItemStack.stackSize--
+				if (!player.capabilities.isCreativeMode) stack.stackSize--
+				
+				player.swingItem()
 			}
 			return true
 		}

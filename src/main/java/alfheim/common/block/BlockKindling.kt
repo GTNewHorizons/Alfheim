@@ -4,6 +4,7 @@ import alfheim.common.block.base.BlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.block.BlockDaylightDetector
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -16,8 +17,8 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 	
 	init {
 		setBlockName("kindling")
+		setHardness(0.2f)
 		setStepSound(soundTypeCloth)
-		
 		GameRegistry.registerFuelHandler(this)
 	}
 	

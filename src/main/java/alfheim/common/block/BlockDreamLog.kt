@@ -4,7 +4,7 @@ import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.block.Block
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -15,6 +15,7 @@ class BlockDreamLog: BlockModRotatedPillar(Material.wood), ILexiconable {
 	
 	init {
 		setBlockName("DreamLog")
+		blockHardness = 2f
 	}
 	
 	override fun register(name: String) {

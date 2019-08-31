@@ -17,6 +17,7 @@ class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock, ILe
 	
 	init {
 		setBlockName("circuitWood")
+		blockHardness = 2f
 		tickRandomly = true
 	}
 	
