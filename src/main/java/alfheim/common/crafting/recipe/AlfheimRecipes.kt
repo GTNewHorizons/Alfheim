@@ -7,6 +7,7 @@ import alfheim.AlfheimCore
 import alfheim.api.*
 import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
+import alfheim.api.lib.LibOreDict
 import alfheim.api.lib.LibOreDict.ARUNE
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
@@ -227,7 +228,10 @@ object AlfheimRecipes {
 							 'S', livingcobbleSlab,
 							 'P', PETAL[i],
 							 'C', ItemStack(livingcobble, 1, 0))
-		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(16)
+		
+		addOreDictRecipe(ItemStack(altar, 1, 9), "SPS", " C ", "CCC", 'S', livingcobbleSlab, 'P', LibOreDict.RAINBOW_PETAL, 'C', ItemStack(livingcobble, 1, 0))
+		
+		recipesApothecary = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		addOreDictRecipe(ItemStack(animatedTorch),
 						 "P", "T",

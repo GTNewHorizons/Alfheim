@@ -8,6 +8,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
+import alfheim.common.core.asm.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
@@ -105,12 +106,12 @@ object CardinalSystem {
 		fun learn(player: EntityPlayerMP, kn: Knowledge) {
 			val seg = forPlayer(player)
 			if (!know(player, kn)) {
-				seg.knowledge.add(kn.toString())
+				seg.knowledge.add("$kn")
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
 			}
 		}
 		
-		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains(kn.toString())
+		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains("$kn")
 		
 		fun transfer(player: EntityPlayerMP) {
 			for (kn in Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
@@ -435,7 +436,7 @@ object CardinalSystem {
 			}
 			
 			constructor(pl: EntityPlayer): this() {
-				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive)
+				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive, pl.healthHook, pl.maxHealthHook)
 			}
 			
 			operator fun get(i: Int): EntityLivingBase? {
@@ -465,9 +466,33 @@ object CardinalSystem {
 			operator fun get(name: String) =
 				(0 until count).firstOrNull { members[it] != null && members[it]!!.name == name }?.let { get(it) }
 			
-			fun getName(i: Int) = if (members[i] != null) members[i]!!.name else ""
+			fun getHealth(i: Int) = if (members[i] != null) members[i]!!.health else 0f
+			
+			fun getMaxHealth(i: Int) = if (members[i] != null) members[i]!!.maxHealth else 0f
 			
 			fun getMana(i: Int) = if (members[i] != null) members[i]!!.mana else 0
+			
+			fun getName(i: Int) = if (members[i] != null) members[i]!!.name else ""
+			
+			fun setHealth(i: Int, health: Float) {
+				if (members[i] != null) {
+					val was = members[i]!!.health
+					if (was != health) {
+						members[i]!!.health = health
+						if (ASJUtilities.isServer) sendHealth(i, health)
+					}
+				}
+			}
+			
+			fun setMaxHealth(i: Int, maxHealth: Float) {
+				if (members[i] != null)  {
+					val was = members[i]!!.maxHealth
+					if (was != maxHealth) {
+						members[i]!!.maxHealth = maxHealth
+						if (ASJUtilities.isServer) sendMaxHealth(i, maxHealth)
+					}
+				}
+			}
 			
 			fun setMana(i: Int, mana: Int) {
 				if (members[i] != null) members[i]!!.mana = mana
@@ -475,7 +500,12 @@ object CardinalSystem {
 			
 			fun indexOf(mr: EntityLivingBase?): Int {
 				if (mr == null) return -1
-				return (0 until count).firstOrNull { mr.uniqueID == members[it]?.uuid } ?: -1
+				return (0 until count).firstOrNull {
+					if (ASJUtilities.isServer)
+						mr.uniqueID == members[it]?.uuid
+					else
+						mr.entityId.toLong() == members[it]?.uuid?.mostSignificantBits
+				} ?: -1
 			}
 			
 			fun indexOf(name: String?): Int {
@@ -543,7 +573,7 @@ object CardinalSystem {
 				if (mr == null) return false
 				if (indexOf(mr) != -1) return false
 				if (count >= members.size) return false
-				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive)
+				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.healthHook, mr.maxHealthHook)
 				sendChanges()
 				return true
 			}
@@ -622,26 +652,42 @@ object CardinalSystem {
 					}
 			}
 			
+			fun sendDead(id: Int, d: Boolean) {
+				for (i in 0 until count) {
+					val e = get(i)
+					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal.toDouble(), id.toDouble(), (if (d) -10 else -100).toDouble()), e)
+				}
+			}
+			
+			fun sendHealth(index: Int, health: Float) {
+				for (i in 0 until count) {
+					val e = get(i)
+					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.HEALTH.ordinal.toDouble(), index.toDouble(), health.toDouble()), e)
+				}
+			}
+			
+			fun sendMaxHealth(index: Int, maxHealth: Float) {
+				for (i in 0 until count) {
+					val e = get(i)
+					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MAXHEALTH.ordinal.toDouble(), index.toDouble(), maxHealth.toDouble()), e)
+				}
+			}
+			
 			fun sendMana(player: EntityPlayer, mana: Int) {
 				val index = indexOf(player)
 				
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal.toDouble(), index.toDouble(), mana.toDouble()), e as EntityPlayerMP?)
-				}
-			}
-			
-			fun sendDead(id: Int, d: Boolean) {
-				for (i in 0 until count) {
-					val e = get(i)
-					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal.toDouble(), id.toDouble(), (if (d) -10 else -100).toDouble()), e as EntityPlayerMP?)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal.toDouble(), index.toDouble(), mana.toDouble()), e)
 				}
 			}
 			
 			enum class PartyStatus {
-				DEAD, MANA
+				DEAD, HEALTH, MAXHEALTH, MANA
 			}
 			
 			fun write(buf: ByteBuf) {
@@ -660,6 +706,8 @@ object CardinalSystem {
 					buf.writeInt(members[i]?.mana ?: 0)
 					buf.writeBoolean(members[i]?.isPlayer ?: false)
 					buf.writeBoolean(members[i]?.isDead ?: false)
+					buf.writeFloat(members[i]?.health ?: 0f)
+					buf.writeFloat(members[i]?.maxHealth ?: 0f)
 				}
 			}
 			
@@ -670,9 +718,9 @@ object CardinalSystem {
 				return result
 			}
 			
-			private class Member(val name: String, var uuid: UUID, var mana: Int, val isPlayer: Boolean, var isDead: Boolean): Serializable, Cloneable {
+			private class Member(val name: String, var uuid: UUID, var mana: Int, val isPlayer: Boolean, var isDead: Boolean, var health: Float, var maxHealth: Float): Serializable, Cloneable {
 				
-				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead)
+				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead, health, maxHealth)
 				
 				companion object {
 					private const val serialVersionUID = 8416468367146381L
@@ -683,7 +731,7 @@ object CardinalSystem {
 				
 				private const val serialVersionUID = 84616843168484257L
 				
-				/** Flag for server's storing functions  */
+				/** Flag for server's storing functions, always false */
 				@Transient
 				var serverIO = false
 				
@@ -702,7 +750,7 @@ object CardinalSystem {
 							least = buf.readInt().toLong()
 							most = least
 						}
-						pt.members[i] = Member(ByteBufUtils.readUTF8String(buf), UUID(most, least), buf.readInt(), buf.readBoolean(), buf.readBoolean())
+						pt.members[i] = Member(ByteBufUtils.readUTF8String(buf), UUID(most, least), buf.readInt(), buf.readBoolean(), buf.readBoolean(), buf.readFloat(), buf.readFloat())
 					}
 					return pt
 				}

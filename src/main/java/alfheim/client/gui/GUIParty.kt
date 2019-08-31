@@ -6,6 +6,7 @@ import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.render.entity.RenderWings
+import alfheim.common.core.asm.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.*
@@ -82,7 +83,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			
 			// ################ health: ################
 			run {
-				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).toInt() / 158.0
+				val mod = (min(player.healthHook, player.maxHealthHook) / max(player.maxHealthHook, 1f) * 158.0).toInt() / 158.0
 				ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 				val length = (158 * mod).mfloor()
 				
@@ -173,7 +174,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			// ################ hp: ################
 			run {
 				glTranslated(0.0, -0.5, -89.0)
-				data = (format.format(player.health.toDouble()) + "/" + format.format(player.maxHealth.toDouble())).replace(',', '.')
+				data = (format.format(player.healthHook.toDouble()) + "/" + format.format(player.maxHealthHook.toDouble())).replace(',', '.')
 				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0)
 				glTranslated(0.0, 0.5, 89.0)
 			}
@@ -246,8 +247,8 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					if (PlayerSegmentClient.target === l) color = 0x00FF00        // selected target
 					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC        // out of reach
 					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888;		// other dim
-					hp = min(l!!.health, l!!.maxHealth)
-					hpm = l!!.maxHealth
+					hp = min(l!!.healthHook, l!!.maxHealthHook)
+					hpm = l!!.maxHealthHook
 				}
 				
 				if (pt.isDead(i)) {                        // dead
@@ -357,7 +358,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 						glTranslated(0.0, -0.5, -85.0)
 						val unicode = font.unicodeFlag
 						font.unicodeFlag = true
-						data = (format.format(l!!.health.toDouble()) + "/" + format.format(l!!.maxHealth.toDouble())).replace(',', '.')
+						data = (format.format(l!!.healthHook.toDouble()) + "/" + format.format(l!!.maxHealthHook.toDouble())).replace(',', '.')
 						font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0)
 						font.unicodeFlag = unicode
 						glTranslated(0.0, 0.5, 85.0)
@@ -399,8 +400,8 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 120, 0.0, 0.0)
 			zLevel = -80f
 			l = PlayerSegmentClient.target
-			var hp = min(l!!.health, l!!.maxHealth)
-			var hpm = l!!.maxHealth
+			var hp = min(l!!.healthHook, l!!.maxHealthHook)
+			var hpm = l!!.maxHealthHook
 			var col = -0x222223 // bg color
 			var st = false
 			var shadow = true

@@ -42,7 +42,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 							} else {
 								val rainbow = color == 16
 								
-								world.setBlock(x1, y, z1, if (rainbow) AlfheimBlocks.rainbowGrass else ModBlocks.flower, if (rainbow) 1 else color, 2)
+								world.setBlock(x1, y, z1, if (rainbow) AlfheimBlocks.rainbowGrass else ModBlocks.flower, if (rainbow) 2 else color, 2)
 								// `can place` condition start
 								if (rand.nextDouble() < ConfigHandler.flowerTallChance
 									&& (
@@ -53,8 +53,8 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 									   ))
 								// `can place` condition end
 									if (rainbow) {
-										world.setBlock(x1, y, z1, AlfheimBlocks.rainbowTallGrass, 1, 0)
-										world.setBlock(x1, y + 1, z1, AlfheimBlocks.rainbowTallGrass, 11, 0)
+										world.setBlock(x1, y, z1, AlfheimBlocks.rainbowTallFlower, 0, 0)
+										world.setBlock(x1, y + 1, z1, AlfheimBlocks.rainbowTallFlower, 8, 0)
 									} else
 										BlockModFlower.placeDoubleFlower(world, x1, y, z1, color, 0)
 							}

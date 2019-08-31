@@ -2,8 +2,11 @@ package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.*
+import alfheim.common.core.asm.maxHealthHook
+import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -22,8 +25,13 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 			if (true/*!world.isRemote*/) {
 				if (!player.isSneaking) {
 					if (!world.isRemote) {
-						/*PartySystem.setParty(player, Party(player))
-						PartySystem.getParty(player)!!.add(TargetingSystem.getTarget(player).target)*/
+						//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
+						CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
+						
+						val mob = ASJUtilities.getMouseOver(player, 16.0, true)?.entityHit as EntityLivingBase
+						
+						ASJUtilities.chatLog("Party: ${mob.health}/${mob.maxHealthHook}", world)
+						ASJUtilities.chatLog("Mine:   ${player.health}/${player.maxHealthHook}", world)
 					}
 					
 					/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)

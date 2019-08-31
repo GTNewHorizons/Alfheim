@@ -56,8 +56,8 @@ object AlfheimFluffBlocks {
 				GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 			}
 		}
-		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false).setCreativeTab(AlfheimTab)
-		shrineRockWhiteSlabFull = BlockRockShrineWhiteSlab(true).setCreativeTab(null)
+		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		shrineRockWhiteSlabFull = BlockRockShrineWhiteSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(shrineRockWhiteSlab as BlockModSlab).register()
 		(shrineRockWhiteSlabFull as BlockModSlab).register()
 		
@@ -81,19 +81,19 @@ object AlfheimFluffBlocks {
 		
 		elvenSandstone = BlockElvenSandstone()
 		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0, "ElvenSandstoneStairs").setCreativeTab(AlfheimTab)
-		elvenSandstoneSlab = BlockElvenSandstoneSlab(false).setCreativeTab(AlfheimTab)
-		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true).setCreativeTab(null)
+		elvenSandstoneSlab = BlockElvenSandstoneSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(elvenSandstoneSlab as BlockModSlab).register()
 		(elvenSandstoneSlabFull as BlockModSlab).register()
 		
 		livingcobbleStairs = BlockModStairs(AlfheimBlocks.livingcobble, 0, "LivingCobbleStairs").setCreativeTab(AlfheimTab)
-		livingcobbleSlab = BlockLivingCobbleSlab(false).setCreativeTab(AlfheimTab)
-		livingcobbleSlabFull = BlockLivingCobbleSlab(true).setCreativeTab(null)
+		livingcobbleSlab = BlockLivingCobbleSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		livingcobbleSlabFull = BlockLivingCobbleSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(livingcobbleSlab as BlockModSlab).register()
 		(livingcobbleSlabFull as BlockModSlab).register()
 		
-		livingrockTileSlab = BlockLivingRockTileSlab(false).setCreativeTab(AlfheimTab)
-		livingrockTileSlabFull = BlockLivingRockTileSlab(true).setCreativeTab(null)
+		livingrockTileSlab = BlockLivingRockTileSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		livingrockTileSlabFull = BlockLivingRockTileSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(livingrockTileSlab as BlockModSlab).register()
 		(livingrockTileSlabFull as BlockModSlab).register()
 		

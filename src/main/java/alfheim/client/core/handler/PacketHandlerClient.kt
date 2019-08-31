@@ -100,6 +100,8 @@ object PacketHandlerClient {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
 					PartyStatus.DEAD -> PlayerSegmentClient.party?.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
 					PartyStatus.MANA -> PlayerSegmentClient.party?.setMana(packet.data2.toInt(), packet.data3.toInt())
+					PartyStatus.HEALTH -> PlayerSegmentClient.party?.setHealth(packet.data2.toInt(), packet.data3.toFloat())
+					PartyStatus.MAXHEALTH -> PlayerSegmentClient.party?.setMaxHealth(packet.data2.toInt(), packet.data3.toFloat())
 				}
 			}
 			

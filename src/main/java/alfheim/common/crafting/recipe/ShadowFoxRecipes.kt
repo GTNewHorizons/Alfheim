@@ -230,7 +230,7 @@ object ShadowFoxRecipes {
 		
 		for (i in 0..15)
 			addShapelessOreDictRecipe(ItemStack(BotaniaItems.dye, 1, i), LEAVES[i], PESTLE_AND_MORTAR)
-		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal), LEAVES[16], PESTLE_AND_MORTAR)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust), LEAVES[16], PESTLE_AND_MORTAR)
 		
 		recipesLeafDyes = BotaniaAPI.getLatestAddedRecipes(17)
 		for (i in 0..15)
@@ -745,7 +745,6 @@ object ShadowFoxRecipes {
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.altar), "SPS", " C ", "CCC", 'S', "slabCobblestone", 'P', RAINBOW_PETAL, 'C', "cobblestone")
 		recipesApothecary.add(BotaniaAPI.getLatestAddedRecipe())
-		addOreDictRecipe(ItemStack(BotaniaBlocks.altar, 1, 9), "SPS", " C ", "CCC", 'S', AlfheimFluffBlocks.livingcobbleSlab, 'P', RAINBOW_PETAL, 'C', AlfheimBlocks.livingcobble)
 		
 		addOreDictRecipe(ItemStack(BotaniaBlocks.spreader), "WWW", "GP ", "WWW", 'W', LIVING_WOOD, 'P', RAINBOW_PETAL, 'G', if (Botania.gardenOfGlassLoaded) LIVING_WOOD else "ingotGold")
 		recipesSpreader.add(BotaniaAPI.getLatestAddedRecipe())

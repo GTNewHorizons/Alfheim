@@ -18,7 +18,7 @@ import vazkii.botania.common.block.tile.mana.TilePool
 import java.awt.Color
 import java.util.*
 
-class RenderTileItemHolder: TileEntitySpecialRenderer() {
+class RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 	
 	internal val rand = Random()
 	
