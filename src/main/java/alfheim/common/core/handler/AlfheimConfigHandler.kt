@@ -84,7 +84,6 @@ object AlfheimConfigHandler {
 	var potionIDPossession		= potionID___COUNTER++
 	var potionIDQuadDamage		= potionID___COUNTER++
 	var potionIDSacrifice		= potionID___COUNTER++
-	var potionIDSharedHP		= potionID___COUNTER++
 	var potionIDShowMana		= potionID___COUNTER++
 	var potionIDSoulburn		= potionID___COUNTER++
 	var potionIDStoneSkin		= potionID___COUNTER++
@@ -180,7 +179,6 @@ object AlfheimConfigHandler {
 		potionIDPossession = loadProp(CATEGORY_POTIONS, "potionIDPossession", potionIDPossession, true, "Potion id for Possession")
 		potionIDQuadDamage = loadProp(CATEGORY_MMOP, "potionIDQuadDamage", potionIDQuadDamage, true, "Potion id for Quad Damage")
 		potionIDSacrifice = loadProp(CATEGORY_MMOP, "potionIDSacrifice", potionIDSacrifice, true, "Potion id for Sacrifice")
-		potionIDSharedHP = loadProp(CATEGORY_MMOP, "potionIDSharedHP", potionIDSharedHP, true, "Potion id for Shared Health Pool")
 		potionIDShowMana = loadProp(CATEGORY_MMOP, "potionIDShowMana", potionIDShowMana, true, "Potion id for Mana Showing Effect")
 		potionIDSoulburn = loadProp(CATEGORY_POTIONS, "potionIDSoulburn", potionIDSoulburn, true, "Potion id for Soulburn")
 		potionIDStoneSkin = loadProp(CATEGORY_MMOP, "potionIDStoneSkin", potionIDStoneSkin, true, "Potion id for Stone Skin")

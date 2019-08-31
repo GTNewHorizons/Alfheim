@@ -10,7 +10,6 @@ import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.anomaly.*
-import alfheim.common.core.asm.AlfheimHookLoader
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
@@ -63,7 +62,6 @@ object AlfheimRegistry {
 	lateinit var possession: Potion
 	lateinit var quadDamage: Potion
 	lateinit var sacrifice: Potion
-	lateinit var sharedHP: Potion
 	lateinit var showMana: Potion
 	lateinit var soulburn: Potion
 	lateinit var stoneSkin: Potion
@@ -109,7 +107,6 @@ object AlfheimRegistry {
 		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
 		quadDamage = PotionQuadDamage()
 		sacrifice = PotionSacrifice()
-		sharedHP = PotionSharedHP()
 		showMana = PotionShowMana()
 		soulburn = PotionSoulburn()
 		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
@@ -237,7 +234,6 @@ object AlfheimRegistry {
 		registerSpell(SpellRain())
 		registerSpell(SpellResurrect())
 		registerSpell(SpellSacrifice())
-		if (AlfheimHookLoader.hpSpells) registerSpell(SpellSharedHealthPool())
 		registerSpell(SpellSmokeScreen())
 		registerSpell(SpellStoneSkin())
 		registerSpell(SpellSun())

@@ -8,7 +8,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.event.*
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
-import alfheim.common.core.asm.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
@@ -436,7 +435,7 @@ object CardinalSystem {
 			}
 			
 			constructor(pl: EntityPlayer): this() {
-				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive, pl.healthHook, pl.maxHealthHook)
+				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive, pl.health, pl.maxHealth)
 			}
 			
 			operator fun get(i: Int): EntityLivingBase? {
@@ -573,7 +572,7 @@ object CardinalSystem {
 				if (mr == null) return false
 				if (indexOf(mr) != -1) return false
 				if (count >= members.size) return false
-				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.healthHook, mr.maxHealthHook)
+				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.health, mr.maxHealth)
 				sendChanges()
 				return true
 			}

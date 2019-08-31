@@ -38,7 +38,7 @@ object AlfheimASMData {
 	private fun configure() {
 		if (DATA[0] == 0) {
 			AlfheimHookLoader.hpSpells = false
-			FMLRelaunchLog.warning("[${ModInfo.MODID.toUpperCase()}] Alfheim is configured to disable hooks into health system, thing may not go well: Shared HP spell is unavailable, \"leftover flame\" of other players can somehow be \"healed\" (seems to lead to nothing).")
+			FMLRelaunchLog.warning("[${ModInfo.MODID.toUpperCase()}] Alfheim is configured to disable hooks into health system, thing may not go well: \"leftover flame\" of other players can somehow be \"healed\" (seems to lead to nothing).")
 		}
 		
 		FMLRelaunchLog.info(String.format("[%s] In case Thaumcraft will be loaded, Alfheim is configured to set Elementium Cluster metadata value to 22", ModInfo.MODID.toUpperCase()))
@@ -57,7 +57,6 @@ object AlfheimASMData {
 		} catch (e: IOException) {
 			e.printStackTrace()
 		}
-		
 	}
 	
 	private fun create() {
