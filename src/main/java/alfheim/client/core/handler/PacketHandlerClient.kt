@@ -53,7 +53,7 @@ object PacketHandlerClient {
 			m1d.CL_SLOWDOWN      -> AlfheimConfigHandler.slowDownClients = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
-			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add(Knowledge.values()[packet.data1.toInt()].toString())
+			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
 		}
 	}
@@ -98,10 +98,11 @@ object PacketHandlerClient {
 			
 			m3d.PARTY_STATUS -> {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
-					PartyStatus.DEAD -> PlayerSegmentClient.party?.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
-					PartyStatus.MANA -> PlayerSegmentClient.party?.setMana(packet.data2.toInt(), packet.data3.toInt())
-					PartyStatus.HEALTH -> PlayerSegmentClient.party?.setHealth(packet.data2.toInt(), packet.data3.toFloat())
+					PartyStatus.DEAD      -> PlayerSegmentClient.party?.setDead(packet.data2.toInt(), packet.data3.toInt() == -10)
+					PartyStatus.MANA      -> PlayerSegmentClient.party?.setMana(packet.data2.toInt(), packet.data3.toInt())
+					PartyStatus.HEALTH    -> PlayerSegmentClient.party?.setHealth(packet.data2.toInt(), packet.data3.toFloat())
 					PartyStatus.MAXHEALTH -> PlayerSegmentClient.party?.setMaxHealth(packet.data2.toInt(), packet.data3.toFloat())
+					PartyStatus.TYPE      -> PlayerSegmentClient.party?.setType(packet.data2.toInt(), packet.data3.toInt())
 				}
 			}
 			

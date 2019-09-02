@@ -79,6 +79,10 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
 	)
 	
+	const val MOB = 11
+	const val NPC = 12
+	const val BOSS = 13
+	
 	val icons = arrayOf(
 		ResourceLocation(ModInfo.MODID, "textures/misc/icons/HUMAN.png"),
 		ResourceLocation(ModInfo.MODID, "textures/misc/icons/SALAMANDER.png"),
@@ -108,10 +112,6 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/UNDINE.png"),
 		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/IMP.png")
 	)
-	
-	const val MOB = 11
-	const val NPC = 12
-	const val BOSS = 13
 	
 	val male = arrayOf(
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Salamander.png"),

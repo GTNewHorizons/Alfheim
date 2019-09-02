@@ -41,7 +41,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 		val player = mc.thePlayer
 		val font = mc.fontRenderer
 		
-		val pt = PlayerSegmentClient.party ?: let{
+		val pt = PlayerSegmentClient.party ?: let {
 			PlayerSegmentClient.party = Party(mc.thePlayer)
 			PlayerSegmentClient.party!!
 		}
@@ -100,7 +100,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			}
 			
 			// ################ mana: ################
-			run mana@ {
+			run mana@{
 				var totalMana = 0
 				var totalMaxMana = 0
 				var anyRequest = false
@@ -220,30 +220,40 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				if (l === mc.thePlayer) continue
 				
 				color = when {
-					i == 0			-> red		// PL
-					pt.isPlayer(i)	-> -0x1		// Player
-					else			-> yellow		// Mob
+					i == 0         -> red        // PL
+					pt.isPlayer(i) -> -0x1        // Player
+					else           -> yellow    // Mob
 				}
 				
 				if (l == null) {
-					col = -0x777778
-					color = col                    // offline/unloaded
-					hpm = -1f
-					hp = hpm
+					color = 0xCCCCCC
+					col = when (val it = pt.getType(i)) {
+						in EnumRace.values().indices -> EnumRace.getRGBColor(it.toDouble())
+						LibResourceLocations.BOSS    -> 0xA2018C
+						LibResourceLocations.NPC     -> -0xFF5501
+						LibResourceLocations.MOB     -> col
+						else                         -> -0x777778
+					}
+					hpm = pt.getMaxHealth(i)
+					hp = min(pt.getHealth(i), hpm)
 				} else {
-					if (l is EntityPlayer) col = (l as EntityPlayer).race.rgbColor
-					if (l is INpc) {
+					if (l is EntityPlayer) col = (l as EntityPlayer).race.rgbColor		// Player
+					else if (l is INpc) {												// NPC
 						color = -0xff5501
 						col = color
-					}                                        // NPC
-					if (PlayerSegmentClient.target === l) color = 0x00FF00        // selected target
-					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC        // out of reach
-					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888;		// other dim
-					hp = min(l!!.health, l!!.maxHealth)
+					}
+					else if (l is IBossDisplayData) {									// Boss
+						color = 0xA2018C
+						col = color
+					}
+					if (PlayerSegmentClient.target === l) color = 0x00FF00				// selected target
+					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC		// out of reach
+					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888		// other dim
 					hpm = l!!.maxHealth
+					hp = min(l!!.health, hpm)
 				}
 				
-				if (pt.isDead(i)) {                        // dead
+				if (pt.isDead(i)) {														// dead
 					color = 0x444444
 					hpm = 0f
 					hp = hpm
@@ -259,7 +269,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				drawTexturedModalRect(0, y, 0, 120, 32, 40)
 				
 				// ################ health: ################
-				run health@ {
+				run health@{
 					if (pt.isDead(i)) return@health
 					
 					val mod: Double
@@ -275,10 +285,12 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					
 					when {
 						length < 2  -> drawTexturedModalRect(34, y + 17 + 2, 133, 137, 1, 4)
+						
 						length == 2 -> {
 							drawTexturedModalRect(34, y + 17, 34, 137, 1, 6)
 							drawTexturedModalRect(35, y + 17, 132 + (3 - length), 137, 2, 6)
 						}
+						
 						else        -> {
 							drawTexturedModalRect(34, y + 17, 34, 137, 1, 6)
 							drawTexturedModalRect(35 + length - 3, y + 17, 132, 137, 2, 6)
@@ -291,7 +303,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				}
 				
 				// ################ mana: ################
-				run mana@ {
+				run mana@{
 					if (l != null && !pt.isPlayer(i)) return@mana
 					val length = min(100, pt.getMana(i) / 10000)
 					
@@ -303,10 +315,12 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					
 					when {
 						length < 2  -> drawTexturedModalRect(34, y + 25, 133, 145, 1, 4)
+						
 						length == 2 -> {
 							drawTexturedModalRect(34, y + 25, 34, 145, 1, 6)
 							drawTexturedModalRect(35, y + 25, 132 + (3 - length), 145, 2, 6)
 						}
+						
 						else        -> {
 							drawTexturedModalRect(34, y + 25, 34, 145, 1, 6)
 							drawTexturedModalRect(35 + length - 3, y + 25, 132, 145, 2, 6)
@@ -325,12 +339,12 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				// ################ name: ################
 				run {
 					data = if (l != null) l!!.commandSenderName else pt.getName(i)
-					var flag = false
+					/*var flag = false
 					while (font.getStringWidth(data) > 82) {
 						data = data.substring(0, data.length - 1)
 						flag = true
 					}
-					if (flag) data = "$data..."
+					if (flag) data = "$data..."*/
 					
 					var j = 0
 					while (j < data.length && shadow) {
@@ -346,19 +360,28 @@ class GUIParty(private val mc: Minecraft): Gui() {
 					font.drawString(data, 36, y + 4, color, shadow)
 					glTranslated(0.0, 0.0, 85.0)
 					
+					/*val hpm: Float
+					val hp: Float
+					
 					if (l != null) {
-						glTranslated(0.0, -0.5, -85.0)
-						val unicode = font.unicodeFlag
-						font.unicodeFlag = true
-						data = (format.format(l!!.health.toDouble()) + "/" + format.format(l!!.maxHealth.toDouble())).replace(',', '.')
-						font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0)
-						font.unicodeFlag = unicode
-						glTranslated(0.0, 0.5, 85.0)
-					}
+						hpm = l!!.maxHealth
+						hp = l!!.health
+					} else {
+						hpm = pt.getMaxHealth(i)
+						hp = pt.getHealth(i)
+					}*/
+					
+					glTranslated(0.0, -0.5, -85.0)
+					val unicode = font.unicodeFlag
+					font.unicodeFlag = true
+					data = (format.format(hp.toDouble()) + "/" + format.format(hpm.toDouble())).replace(',', '.')
+					font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0)
+					font.unicodeFlag = unicode
+					glTranslated(0.0, 0.5, 85.0)
 				}
 				
 				// ################ debuffs: ################
-				run debuffs@ {
+				run debuffs@{
 					if (l == null) return@debuffs
 					val pes = l!!.activePotionEffects as Collection<PotionEffect>
 					if (pes.isEmpty()) return@debuffs
@@ -432,7 +455,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			drawTexturedModalRect(0, 2, 0, 210, 34, 48)
 			
 			// ################ health: ################
-			run health@ {
+			run health@{
 				if (!l!!.isEntityAlive) return@health
 				
 				val mod = (hp / max(hpm, 1f) * 200.0).toInt() / 200.0
@@ -444,16 +467,19 @@ class GUIParty(private val mc: Minecraft): Gui() {
 						drawTexturedModalRect(34, 2, 34, 210, 100, 48)
 						drawTexturedModalRect(134, 2, 134 + (100 - (length - 100)), 210, length - 100, 48)
 					}
+					
 					length >= 14  -> {
 						drawTexturedModalRect(35, 2, 35 + (100 - (length - 7)), 210, length - 7, 48)
 						drawTexturedModalRect(34 + length - 7, 2, 227, 210, 7, 48)
 						drawTexturedModalRect(34, 2, 34, 210, 1, 30)
 					}
+					
 					length >= 7   -> {
 						drawTexturedModalRect(35, 2, 35 + (100 - (length - 7)), 210, length - 7, 48)
 						drawTexturedModalRect(34 + length - 7, 2, 227, 210, 7, 48)
 						drawTexturedModalRect(34, 2, 34, 210, 1, 30 - (14 - length))
 					}
+					
 					else          -> {
 						drawTexturedModalRect(34, 2, 227 + (7 - length), 210, length, 48)
 						drawTexturedModalRect(34, 2, 34, 210, 1, 30 - (14 - length))
@@ -550,18 +576,17 @@ class GUIParty(private val mc: Minecraft): Gui() {
 			
 			y += 20
 			
-			glColor4d(1.0, 1.0, 1.0, 1.0)
 			for (i in 0 until pt.count) {
 				l = pt[i]
 				if (l === mc.thePlayer) continue
 				
 				run icon@{
 					y += 40
-					if (l == null) return@icon
+					glColor4f(1f, 1f, 1f, if (l == null) 0.9f else 1f)
 					
 					glPushMatrix()
 					glTranslated(4.0, y.toDouble(), 0.0)
-					mc.textureManager.bindTexture(if (pt.isPlayer(i)) RenderWings.getPlayerIconTexture((l as EntityPlayer?)!!) else if (l is IBossDisplayData) LibResourceLocations.icons[LibResourceLocations.BOSS] else if (l is INpc) LibResourceLocations.icons[LibResourceLocations.NPC] else LibResourceLocations.icons[LibResourceLocations.MOB])
+					mc.textureManager.bindTexture(LibResourceLocations.icons[pt.getType(i)])
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER)
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER)
 					Tessellator.instance.startDrawingQuads()
@@ -574,6 +599,8 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				}
 			}
 			
+			glColor4f(1f, 1f, 1f, 1f)
+			
 			run tg_icon@{
 				l = PlayerSegmentClient.target
 				if (l == null) return@tg_icon
@@ -581,7 +608,7 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				
 				glPushMatrix()
 				glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 116, 11.0, 0.0)
-				mc.textureManager.bindTexture(if (l is EntityPlayer) RenderWings.getPlayerIconTexture((l as EntityPlayer?)!!) else if (l is IBossDisplayData) LibResourceLocations.icons[LibResourceLocations.BOSS] else if (l is INpc) LibResourceLocations.icons[LibResourceLocations.NPC] else LibResourceLocations.icons[LibResourceLocations.MOB])
+				mc.textureManager.bindTexture(if (l is EntityPlayer) RenderWings.getPlayerIconTexture(l as EntityPlayer) else if (l is IBossDisplayData) LibResourceLocations.icons[LibResourceLocations.BOSS] else if (l is INpc) LibResourceLocations.icons[LibResourceLocations.NPC] else LibResourceLocations.icons[LibResourceLocations.MOB])
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER)
 				Tessellator.instance.startDrawingQuads()

@@ -18,7 +18,6 @@ import alfheim.api.lib.LibOreDict.SPLINTERS_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_NETHERWOOD
 import alfheim.api.lib.LibOreDict.TWIG_THUNDERWOOD
 import alfheim.api.lib.LibOreDict.WOOD
-import alfheim.common.block.*
 import alfheim.common.block.AlfheimBlocks.altPlanks
 import alfheim.common.block.AlfheimBlocks.altSlabs
 import alfheim.common.block.AlfheimBlocks.altStairs

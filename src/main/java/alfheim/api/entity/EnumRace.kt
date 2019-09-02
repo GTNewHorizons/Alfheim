@@ -2,11 +2,13 @@ package alfheim.api.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
+import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
+import net.minecraftforge.common.MinecraftForge
 
 enum class EnumRace {
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
@@ -76,7 +78,7 @@ enum class EnumRace {
 		}
 		
 		private fun getByID(id: Double) =
-			if (0 > id || id > EnumRace.values().size) HUMAN else values()[id.mfloor()]
+			if (0 > id || id > values().size) HUMAN else values()[id.mfloor()]
 		
 		fun ensureExistance(player: EntityPlayer) {
 			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
@@ -107,15 +109,17 @@ enum class EnumRace {
 		operator fun set(player: EntityPlayer, race: EnumRace) {
 			ensureExistance(player)
 			player.getEntityAttribute(RACE).baseValue = race.ordinal.toDouble()
+			
+			MinecraftForge.EVENT_BUS.post(PlayerChangedRaceEvent(player, player.race, race))
 		}
 		
-		fun setRaceID(player: EntityPlayer, raceID: Double) {
+		internal fun setRaceID(player: EntityPlayer, raceID: Double) {
 			player.getEntityAttribute(RACE).baseValue = raceID
 		}
 		
 		private fun registerRace(player: EntityPlayer) {
 			player.getAttributeMap().registerAttribute(RACE)
-			set(player, HUMAN)
+			setRaceID(player, 0.0)
 		}
 	}
 }
@@ -126,8 +130,13 @@ var EntityPlayer.race
 		EnumRace[this] = value
 	}
 
+/**
+ * Internal Alfheim value, please, don't set it unless you know what you are doing
+ * <br>
+ * and fire [alfheim.api.event.PlayerChangedRaceEvent] if needed
+ */
 var EntityPlayer.raceID
 	get() = EnumRace.getRaceID(this)
-	set(value) {
+	internal set(value) {
 		EnumRace.setRaceID(this, value.toDouble())
 	}

@@ -332,7 +332,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(targetMethod = "<init>")
-	fun `BlockModWall$init`(block: BlockModWall) {
+	fun `BlockModWall$init`(wall: BlockModWall, block: Block, meta: Int) {
 		block.setCreativeTab(BotaniaCreativeTab.INSTANCE)
 	}
 	

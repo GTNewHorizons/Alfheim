@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.*
-import alfheim.api.entity.EnumRace
+import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
@@ -84,7 +84,6 @@ object CardinalSystem {
 			ASJUtilities.error("Unable to save whole Cardinal System data. Discarding. Sorry :(")
 			e.printStackTrace()
 		}
-		
 	}
 	
 	fun ensureExistance(player: EntityPlayer): Boolean {
@@ -435,7 +434,7 @@ object CardinalSystem {
 			}
 			
 			constructor(pl: EntityPlayer): this() {
-				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive, pl.health, pl.maxHealth)
+				members[count++] = Member(pl.commandSenderName, pl.uniqueID, ManaSystem.getMana(pl), true, !pl.isEntityAlive, pl.health, pl.maxHealth, Member.MemberType.typeOf(pl).ordinal)
 			}
 			
 			operator fun get(i: Int): EntityLivingBase? {
@@ -465,36 +464,45 @@ object CardinalSystem {
 			operator fun get(name: String) =
 				(0 until count).firstOrNull { members[it] != null && members[it]!!.name == name }?.let { get(it) }
 			
-			fun getHealth(i: Int) = if (members[i] != null) members[i]!!.health else 0f
+			fun getHealth(i: Int) = members[i]?.health ?: 0f
 			
-			fun getMaxHealth(i: Int) = if (members[i] != null) members[i]!!.maxHealth else 0f
+			fun getMaxHealth(i: Int) = members[i]?.maxHealth ?: 0f
 			
-			fun getMana(i: Int) = if (members[i] != null) members[i]!!.mana else 0
+			fun getMana(i: Int) = members[i]?.mana ?: 0
 			
-			fun getName(i: Int) = if (members[i] != null) members[i]!!.name else ""
+			fun getName(i: Int) = members[i]?.name ?: ""
+			
+			fun getType(i: Int) = members[i]?.type ?: 0
+			
+			fun isPlayer(i: Int) = members[i]?.isPlayer ?: false
+			
+			fun isDead(i: Int) = members[i]?.isDead ?: false
 			
 			fun setHealth(i: Int, health: Float) {
-				if (members[i] != null) {
-					val was = members[i]!!.health
-					if (was != health) {
-						members[i]!!.health = health
-						if (ASJUtilities.isServer) sendHealth(i, health)
-					}
+				val mr = members[i] ?: return
+				val was = mr.health
+				if (was != health) {
+					mr.health = health
+					if (ASJUtilities.isServer) sendHealth(i, health)
 				}
 			}
 			
 			fun setMaxHealth(i: Int, maxHealth: Float) {
-				if (members[i] != null)  {
-					val was = members[i]!!.maxHealth
-					if (was != maxHealth) {
-						members[i]!!.maxHealth = maxHealth
-						if (ASJUtilities.isServer) sendMaxHealth(i, maxHealth)
-					}
+				val mr = members[i] ?: return
+				val was = mr.maxHealth
+				if (was != maxHealth) {
+					mr.maxHealth = maxHealth
+					if (ASJUtilities.isServer) sendMaxHealth(i, maxHealth)
 				}
 			}
 			
 			fun setMana(i: Int, mana: Int) {
-				if (members[i] != null) members[i]!!.mana = mana
+				members[i]?.mana = mana
+			}
+			
+			fun setType(i: Int, type: Int) {
+				members[i]?.type = type
+				if (ASJUtilities.isServer) sendType(i, type)
 			}
 			
 			fun indexOf(mr: EntityLivingBase?): Int {
@@ -538,10 +546,6 @@ object CardinalSystem {
 				return false
 			}
 			
-			fun isPlayer(i: Int) = members[i]?.isPlayer ?: false
-			
-			fun isDead(i: Int) = members[i]?.isDead ?: false
-			
 			fun setDead(i: Int, d: Boolean) {
 				if (!ASJUtilities.isServer) members[i]?.isDead = d
 			}
@@ -572,7 +576,7 @@ object CardinalSystem {
 				if (mr == null) return false
 				if (indexOf(mr) != -1) return false
 				if (count >= members.size) return false
-				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.health, mr.maxHealth)
+				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.health, mr.maxHealth, Member.MemberType.typeOf(mr).ordinal)
 				sendChanges()
 				return true
 			}
@@ -685,8 +689,16 @@ object CardinalSystem {
 				}
 			}
 			
+			fun sendType(index: Int, type: Int) {
+				for (i in 0 until count) {
+					val e = get(i)
+					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.TYPE.ordinal.toDouble(), index.toDouble(), type.toDouble()), e)
+				}
+			}
+			
 			enum class PartyStatus {
-				DEAD, HEALTH, MAXHEALTH, MANA
+				DEAD, HEALTH, MAXHEALTH, MANA, TYPE
 			}
 			
 			fun write(buf: ByteBuf) {
@@ -707,6 +719,7 @@ object CardinalSystem {
 					buf.writeBoolean(members[i]?.isDead ?: false)
 					buf.writeFloat(members[i]?.health ?: 0f)
 					buf.writeFloat(members[i]?.maxHealth ?: 0f)
+					buf.writeInt(members[i]?.type ?: Member.MemberType.MOB.ordinal)
 				}
 			}
 			
@@ -717,9 +730,22 @@ object CardinalSystem {
 				return result
 			}
 			
-			private class Member(val name: String, var uuid: UUID, var mana: Int, val isPlayer: Boolean, var isDead: Boolean, var health: Float, var maxHealth: Float): Serializable, Cloneable {
+			private class Member(val name: String, var uuid: UUID, var mana: Int, val isPlayer: Boolean, var isDead: Boolean, var health: Float, var maxHealth: Float, var type: Int): Serializable, Cloneable {
 				
-				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead, health, maxHealth)
+				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead, health, maxHealth, type)
+				
+				enum class MemberType {
+					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
+					
+					companion object {
+						fun typeOf(e: EntityLivingBase) = when (e) {
+							is EntityPlayer     -> values()[e.raceID]
+							is IBossDisplayData -> BOSS
+							is INpc             -> NPC
+							else                -> MOB
+						}
+					}
+				}
 				
 				companion object {
 					private const val serialVersionUID = 8416468367146381L
@@ -749,7 +775,7 @@ object CardinalSystem {
 							least = buf.readInt().toLong()
 							most = least
 						}
-						pt.members[i] = Member(ByteBufUtils.readUTF8String(buf), UUID(most, least), buf.readInt(), buf.readBoolean(), buf.readBoolean(), buf.readFloat(), buf.readFloat())
+						pt.members[i] = Member(ByteBufUtils.readUTF8String(buf), UUID(most, least), buf.readInt(), buf.readBoolean(), buf.readBoolean(), buf.readFloat(), buf.readFloat(), buf.readInt())
 					}
 					return pt
 				}

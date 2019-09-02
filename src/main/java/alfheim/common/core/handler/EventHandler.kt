@@ -170,6 +170,14 @@ class EventHandler {
 		}
 	}
 	
+	@SubscribeEvent
+	fun onPlayerChangedRace(e: PlayerChangedRaceEvent) {
+		if (ASJUtilities.isServer && AlfheimCore.enableMMO) {
+			val pt = CardinalSystem.forPlayer(e.entityPlayer).party
+			pt.setType(pt.indexOf(e.entityPlayer), e.raceTo.ordinal)
+		}
+	}
+	
 	// ################################### POTIONS & STUFF ####################################
 	// not decentralized because of importance of the order
 	

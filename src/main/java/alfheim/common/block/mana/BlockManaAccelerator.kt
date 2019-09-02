@@ -11,7 +11,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.MathHelper
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
