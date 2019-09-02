@@ -1,6 +1,6 @@
-# #########################################################___БЛОКИ___##########################################################
+###########################################################___БЛОКИ___##########################################################
 # tile..name=
-tile.alfheim:AlfheimPortal.name=Ядро портала в Альвхейм
+tile.alfheim:AlfheimPortal.name=Ядро портала в Альфхейм
 tile.alfStorage0.name=Блок эльвория
 tile.alfStorage1.name=§6Блок мауфтрия
 tile.botania:altar9.name=Живой лепестковый аптекарь
@@ -8,7 +8,7 @@ tile.alfheim:AnimatedTorch.name=Подвижный факел
 tile.AnimatedTorch.desc.random=Случайно
 tile.AnimatedTorch.desc.rotate=Поворот
 tile.AnimatedTorch.desc.toggle=Переключение
-tile.Anomaly..name=Fallback
+tile.Anomaly..name=Резерв
 tile.Anomaly.ManaVoid.name=Манаворонка
 tile.Anomaly.SpeedUp.name=Ускорение
 tile.Anomaly.Warp.name=Варп
@@ -86,7 +86,7 @@ tile.alfheim:ManaAccelerator.name=Ускоритель маны
 tile.alfheim:ManaInfuser.name=Мана-наполнитель
 tile.alfheim:MuspelheimFire.name=Вечный огонь Муспельхейма
 tile.alfheim:NiflheimIce.name=Вечный лёд Нифльхейма
-tile.PowerStone0.name=Камень Нуля
+tile.PowerStone0.name=Камень нуля
 tile.PowerStone1.name=Камень берсерка
 tile.PowerStone2.name=Камень овермага
 tile.PowerStone3.name=Камень танка
@@ -95,7 +95,7 @@ tile.alfheim:RaceSelector.name=Панель выбора расы
 tile.alfheim:schemaController.name=Контроллер схемы
 tile.alfheim:schemaFiller.name=Заполнитель схемы
 tile.alfheim:schemaMarker.name=Маркер схемы
-tile.alfheim:schematicAnnihilator.name=Уничтожитель схемы
+tile.alfheim:schematicAnnihilator.name=Аннигилятор схемы
 tile.alfheim:schematicOak.name=Саженец схемы
 tile.ShrineGlass0.name=Стекло храма
 tile.ShrineGlass1.name=Стекло храма
@@ -174,12 +174,12 @@ item.botania:FlugelSoul.name=Душа Флюгеля
 item.alfheim:grassRod.name=Жезл зелёных холмов
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
 item.alfheim:IffesalDust.name=Пыль иффесалия
-item.alfheim:InfusedDreamwoodTwig.name=Наполненная ветка древа мечтаний
+item.alfheim:InfusedDreamwoodTwig.name=Наполненная ветвь древа мечтаний
 item.alfheim:InterdimensionalGatewayCore.name=Межпространственное связующее ядро
 item.botania:InvisibilityCloak.name=Плащ невидимости
-item.botania:lensMessenger.name=Мана линза: Посыльный
+item.botania:lensMessenger.name=Линзы маны: Посыльный
 item.botania:lensMessenger.short=Посыльный
-item.botania:lensTripwire.name=Мана линза: Растяжка
+item.botania:lensTripwire.name=Линзы маны: Растяжка
 item.botania:lensTripwire.short=Растяжка
 item.LivingrockPickaxe.name=Кирка из жизнебулыжника
 item.alfheim:LootInterceptor.name=Перехватчик лута
@@ -211,8 +211,8 @@ item.alfheim:PaperBreak.name=Пергамент раздора
 item.alfheim:PeacePipe.name=Трубка мира
 item.botania:PixieAttractor.name=Магнит для пикси
 item.alfheim:PrimalRune.name=§5Руна первоэлементов
-item.alfheim:RainbowDust.name=Цветочный порошок Биврёста
-item.alfheim:RainbowPetal.name=Мистический лепесток Биврёста
+item.alfheim:RainbowDust.name=Цветочный порошок Бифроста
+item.alfheim:RainbowPetal.name=Мистический лепесток Бифроста
 item.alfheim:RainbowQuartz.name=Светящийся кварц
 item.RealitySword0.name=§6Меч мироздания§f (§7Инертный§f)
 item.RealitySword1.name=§6Меч мироздания§f (§eВоздух§f)
@@ -220,7 +220,7 @@ item.RealitySword2.name=§6Меч мироздания§f (§aЗемля§f)
 item.RealitySword3.name=§6Меч мироздания§f (§cОгонь§f)
 item.RealitySword4.name=§6Меч мироздания§f (§bВода§f)
 item.RealitySword5.name=§6Меч создателя
-item.RealitySword.desc0=Шифт+ПКМ для настройки на один из элементов
+item.RealitySword.desc0=Shift+ПКМ для настройки на один из элементов
 item.RealitySword.desc1=Отбрасывает цель.
 item.RealitySword.desc2=Замедляет цель.
 item.RealitySword.desc3=Поджигает цель.
@@ -232,7 +232,11 @@ item.alfheim:RoyalStaff.name=Королевский посох
 item.botania:SpearSubspace.name=Копьё подпространства
 item.alfheim:splashPotion.name=Взрывная колба зелья
 item.alfheim:starPlacer2.name=Потрескавшаяся звезда
-item.alfheim:StoryToken.name=Бантерская монета
+item.alfheim:StoryToken.name=Монета мудрости
+item.StoryToken.story.1=[Анти-пилон]
+item.StoryToken.story.2=[Святое лезвие Откровение]
+item.StoryToken.story.3=[Кинжал безупречной души]
+item.StoryToken.story.4=[Лунный выстрел]
 item.botania:TankMask.name=Загадочная маска
 item.TankMask.active=Активна
 item.TankMask.inactive=Неактивна
@@ -245,7 +249,7 @@ item.Transferer.name=Деструктуризатор
 #########################################################___ОСТАЛЬНОЕ___########################################################
 
 achievement.alfheim=Новые земли
-achievement.alfheim.desc=Попадите в Альвхейм
+achievement.alfheim.desc=Попадите в Альфхейм
 achievement.excaliber=Биение сердца
 achievement.excaliber.desc=Будьте вознаграждены святым мечом Экскалибером за героический подвиг
 achievement.flugelSoul=Ты моя душа
@@ -257,9 +261,9 @@ achievement.infuser.desc=Узнайте секрет эльфийского на
 achievement.mask=Неудержимый
 achievement.mask.desc=Будьте вознаграждены загадочной маской за героический подвиг
 achievement.moonlightBow=На Луну
-achievement.moonlightBow.desc=Будьте вознаграждены катастрофой Феба за героический подвиг
+achievement.moonlightBow.desc=Будьте вознаграждены Катастрофой Феба за героический подвиг
 achievement.subspace=Свечение ночи
-achievement.subspace.desc=Будьте вознаграждены комьём подпространства за героический подвиг
+achievement.subspace.desc=Будьте вознаграждены копьём подпространства за героический подвиг
 
 alfheim.armorset.elemental.name=Повелитель элементов
 alfheim.armorset.elvorium.name=Королевский эльфийский страж
@@ -268,14 +272,14 @@ alfheim.armorset.elvorium.desc1=Жезлы имеют более мощный э
 alfheim.armorset.elvorium.desc2=Уменьшение затрат Вис: 20%
 alfheim.armorset.elvorium.desc3=Рунный щит +8
 
-alfheim.commands.alfheim.done=%s изменил режим Альвхейма на [%sESM%s|%sMMO%s]
+alfheim.commands.alfheim.done=%s изменил режим Альфхейма на [%sESM%s|%sMMO%s]
 alfheim.commands.alfheim.usage=Используется для настройки режимов
 alfheim.commands.alfheim.wrong=/alfheim <команда>
 
 alfheim.commands.tpdim.usage=Используется для перемещения между измерениями
 alfheim.commands.tpdim.wrong=/tpdim <ID измерения>
-alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения
-alfheim.commands.tpdim.wrongid=Неверно указан ID измерения
+alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения!
+alfheim.commands.tpdim.wrongid=Неверно указан ID измерения!
 
 alfheim.configgui.biomeIDAlfheim=ID стандартного биома
 alfheim.configgui.biomeIDAlfheimBeach=ID биома пляжа
@@ -285,15 +289,16 @@ alfheim.configgui.deathTimerX=Дополнительная X-координат�
 alfheim.configgui.deathTimerY=Дополнительная Y-координата таймера возрождения (от низа) [Только в режиме ElvenStory]
 alfheim.configgui.deathTimerFontX=Дополнительная X-координата текста таймера возрождения (от центра) [Только в режиме ElvenStory]
 alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста таймера возрождения (от низа) [Только в режиме ElvenStory]
-alfheim.configgui.destroyPortal=Установите значение false, чтобы выключить разрушение порталов в Альвхейме на ненулевых координатах
-alfheim.configgui.dimensionIDAlfheim=ID измерения Альвхейм
-alfheim.configgui.enableAlfheimRespawn=Установите значение false, чтобы выключить возрождение в Альвхейме
+alfheim.configgui.destroyPortal=Установите значение false, чтобы выключить разрушение порталов в Альфхейме на ненулевых координатах
+alfheim.configgui.dimensionIDAlfheim=ID измерения Альфхейм
+alfheim.configgui.enableAlfheimRespawn=Установите значение false, чтобы выключить возрождение в Альфхейме
 alfheim.configgui.enableElvenStory=Установите значение true, чтобы включить режим ElvenStory без установленного мода
 alfheim.configgui.enableWingsNonAlfheim=Установите значение false, чтобы выключить крылья в других мирах [Только в режиме ElvenStory]
 alfheim.configgui.flightTime=Насколько долго Вы можете летать будучи эльфом [Только в режиме ElvenStory]
 alfheim.configgui.prolongDeathScreen=Установите значение false, чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
 alfheim.configgui.showNumbersInTooltip=Установите значение true, чтобы включить числовое отображение количества маны
 
+alfheim.nei.manainfusion=Мана-наполнение
 alfheim.nei.tradeportal=Обмен с Мидгардом
 
 alfheim.potion.berserk=Берсерк
@@ -326,8 +331,6 @@ alfheim.potion.quadDamage=Quad Damage
 alfheim.potion.quadDamage.postfix=Зелье священного буйства
 alfheim.potion.sacrifice=Саможертвоприношение
 alfheim.potion.sacrifice.postfix=Зелье отрешённости
-alfheim.potion.sharedHP=Общее здоровье
-alfheim.potion.sharedHP.postfix=Зелье щедрости
 alfheim.potion.showMana=Показ маны
 alfheim.potion.showMana.postfix=Зелье истинного зрения
 alfheim.potion.soulburn=Горящая душа
@@ -353,13 +356,13 @@ alfheimmisc.teamnotmob=Член группы не может быть выдел
 alfheimmisc.tgtooltip=Нажмите &b%key%&7, чтобы открыть меню Traveller's Gear
 alfheimmisc.update=О-оу, кажется, Вы играете на устаревшей версии (%s). Возможно, Вам стоит обновиться до %s?
 
-alfheimmisc.cast.notarget=Выберите цель
-alfheimmisc.cast.notready=Заклинание не готово
-alfheimmisc.cast.notseeing=Вы не видите цель
-alfheimmisc.cast.obstruct=Цель недоступна
-alfheimmisc.cast.wrongtgt=Неверная цель
-alfheimmisc.cast.momana=Недостаточно маны
-alfheimmisc.cast.notallow=Вы не можете колдовать здесь
+alfheimmisc.cast.notarget=Выберите цель!
+alfheimmisc.cast.notready=Заклинание не готово!
+alfheimmisc.cast.notseeing=Вы не видите цель!
+alfheimmisc.cast.obstruct=Цель недоступна!
+alfheimmisc.cast.wrongtgt=Неверная цель!
+alfheimmisc.cast.momana=Недостаточно маны!
+alfheimmisc.cast.notallow=Вы не можете колдовать здесь!
 
 alfheimmisc.party.already=Вы уже состоите в этой группе!
 alfheimmisc.party.full=В группе нет места!
@@ -386,12 +389,30 @@ death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
 death.attack.water=%s разрезан на части водным потоком %s
 
+entity.alfheim:Charge.name=Заряд
 entity.alfheim:Elf.name=Эльф
 entity.alfheim:Flugel.name=Флюгель
 entity.alfheim:Lolicorn.name=Лоликорн
 entity.alfheim:Lolicorn.desc=Лоликорн %s
+entity.alfheim:LightningMark.name=Метка молнии
+entity.alfheim:MagicArrow.name=Магическая стрела
 entity.alfheim:Pixie.name=Пикси
-entity.alfheim:Rook.name=Ладья Полубога
+entity.alfheim:Rook.name=Ладья полубога
+entity.alfheim:SpellAcidMyst.name=Кислотный туман
+entity.alfheim:SpellAquaStream.name=Поток воды
+entity.alfheim:SpellArfa.name=Арфа
+entity.alfheim:SpellDriftingMine.name=Дрейфующая мина
+entity.alfheim:SpellFenrirStorm.name=Шторм Фенрира
+entity.alfheim:SpellFireball.name=Огненный шар
+entity.alfheim:SpellFirewall.name=Стена огня
+entity.alfheim:SpellGravityTrap.name=Гравитационная ловушка
+entity.alfheim:SpellIsaacMissile.name=Магическая ракета Исаака
+entity.alfheim:SpellMortar.name=Мортира
+entity.alfheim:SpellWindBlade.name=Коса ветра
+entity.alfheim:Subspace.name=Разлом в подпространстве
+entity.alfheim:SubspaceSpear.name=Копьё подпространства
+entity.alfheim:ThrownItem.name=Брошенный предмет
+entity.alfheim:ThrownPotion.name=Брошенное зелье
 
 item.FlugelSoul.blockAway=На расстоянии блока
 item.FlugelSoul.blocksAway=На расстоянии %s блоков
@@ -457,7 +478,7 @@ item.kingKey.poem3=Получит право им владеть.
 
 item.lokiRing.poem0=Рук свободных тайное движение,
 item.lokiRing.poem1=Один раз в центре, затем вокруг,
-item.lokiRing.poem2=Потом к началу для завершения
+item.lokiRing.poem2=Потом к началу для завершения,
 item.lokiRing.poem3=И сила создания проявится вдруг.
 
 item.MoonlightBow.poem0=Стрелок умелый и отважный
@@ -472,7 +493,7 @@ item.odinRing.poem3=Святую Троицу они олицетворяют.
 
 item.SpearSubspace.poem0=Копьё героя легендарного
 item.SpearSubspace.poem1=Лучами света армии испепеляет,
-item.SpearSubspace.poem2=Энергию беря из подпространства
+item.SpearSubspace.poem2=Энергию беря из подпространства,
 item.SpearSubspace.poem3=Границы мироздания уничтожает.
 
 item.TankMask.poem0=Пеленой ужаса неподдельного
@@ -487,8 +508,8 @@ item.thorRing.poem3=Даст начало новой эры.
 
 ####################################################___ЭЛЬФИЙСКАЯ ИСТОРИЯ___####################################################
 
-elvenstory.welcome0=§n§aДобро пожаловать в Альвхейм - Режим [Эльфийская история]!
-elvenstory.welcome1=§6Пожалуйста, выберите пол и расу используя панель перед вами
+elvenstory.welcome0=§n§aДобро пожаловать в Альфхейм - Режим [Эльфийская история]!
+elvenstory.welcome1=§6Пожалуйста, выберите пол и расу, используя панель перед Вами.
 elvenstory.selectgender=Выберите пол
 elvenstory.selectrace=Выберите расу
 
@@ -498,7 +519,7 @@ key.uncast.desc=Отмена каста
 key.flight.desc=Эльфийский полёт
 key.selmob.desc=Выбор вражеской цели
 key.selteam.desc=Выбор участника группы
-mes.flight.unavailable=Полёт доступен только в Альвхейме
+mes.flight.unavailable=Полёт доступен только в Альфхейме
 
 race.SALAMANDER.name=САЛАМАНДР
 race.SYLPH.name=СИЛЬФ
@@ -552,7 +573,6 @@ spell.purifyingsurface.name=Очищающая поверхность
 spell.rain.name=Дождь
 spell.resurrect.name=Воскрешение
 spell.sacrifice.name=Саможертвоприношение
-spell.sharedhp.name=Общее здоровье
 spell.smokescreen.name=Дымовая завеса
 spell.stoneskin.name=Каменная кожа
 spell.sun.name=Солнце
@@ -622,10 +642,9 @@ spell.outdare.words=§eВызов
 spell.poisonroots.words=§5Ядовитые корни
 spell.purifyingsurface.words=§bЯ призываю чистый фонтан, оборви дыхание пламени и яда!
 spell.rain.words=§bЯ подчиняю силы природы, пролейтесь дождём!
-spell.resurrect.words=§bВоскрешение
-spell.sacrifice.words=§5Я призываю §lЧёрного Разрушителя§r§5! Обрушь Небо! §5Низвергни Богов! И открой врата §lАда§r§5!
 #
-spell.sharedhp.words=§6Общее здоровье
+spell.resurrect.words=§bВоскрешение
+spell.sacrifice.words=§5Я призываю §lЧёрного Разрушителя§r§5! Обрушь небо! §5Низвергни богов! И открой врата §lАда§r§5!
 spell.smokescreen.words=§8Скрой нас от врагов в своих объятиях, дымовая завеса!
 spell.stoneskin.words=§2Защити нас, великая земля, отныне наша кожа как камень §2тверда!
 spell.sun.words=§4Я подчиняю силы природы, воссияй, Солнце!
@@ -651,8 +670,6 @@ spell.windblades.words=§aКосы ветра
 ########################################################___IRIDESCENCE___#######################################################
 ################################################################################################################################
 
-itemGroup.Iridescence=Iridescence
-
 death.attack.alfheim.lackOfFaith=%1$s не пережил кризис веры
 misc.alfheim.lackOfFaith=&cСнятие этого ожерелья может навредить Вашему здоровью.&r
 misc.alfheim.crisisOfFaith=&4Снятие этого ожерелья может стать для Вас смертным приговором.&r
@@ -675,7 +692,7 @@ misc.alfheim.color.12=Коричневый
 misc.alfheim.color.13=Зелёный
 misc.alfheim.color.14=Красный
 misc.alfheim.color.15=Чёрный
-misc.alfheim.color.16=Биврёст
+misc.alfheim.color.16=Бифрост
 misc.alfheim.color.17=Аврора
 
 misc.alfheim.customSize=Радиус: %1$s блоков
@@ -687,9 +704,9 @@ misc.alfheim.creative=Только для творческого режима
 misc.alfheim.contains=Содержит:
 misc.alfheim.containsNothing=Пусто
 
-misc.alfheim.wayOfUndoing=&4Вы чувствуете, что Ваша душа покидает Ваше тело...
-misc.alfheim.youAreNotTheChosenOneMale=Ты не он.
-misc.alfheim.youAreNotTheChosenOneFemale=Ты не она.
+misc.alfheim.wayOfUndoing=&4Вы чувствуете, что Ваша душа покидает тело...
+misc.alfheim.youAreNotTheChosenOneMale=Ты не он!
+misc.alfheim.youAreNotTheChosenOneFemale=Ты не она!
 
 misc.alfheim.wline1=Узрев пустыни лик перед собой,
 misc.alfheim.wline2=На грани мира воспылав душой,
@@ -755,7 +772,7 @@ tile.alfheim:itemDisplay1.name=Предметная платформа из те
 tile.alfheim:itemDisplay2.name=Предметная платформа из элементия
 
 tile.alfheim:rainbowDirt.name=Цветная земля
-tile.alfheim:rainbowPetalBlock.name=Блок лепестков Биврёста
+tile.alfheim:rainbowPetalBlock.name=Блок лепестков Бифроста
 tile.alfheim:coloredDirt.name=Цветная земля
 tile.alfheim:rainbowLeaves.name=Цветная листва
 tile.alfheim:irisLeaves.name=Цветная листва
@@ -766,14 +783,22 @@ tile.alfheim:rainbowPlanks.name=Цветные доски
 tile.alfheim:irisPlanks.name=Цветные доски
 tile.alfheim:rainbowGrass0.name=Цветная трава
 tile.alfheim:rainbowGrass1.name=Цветная трава
-tile.alfheim:rainbowGrass2.name=Мистический цветок Биврёста
-tile.alfheim:rainbowGrass3.name=Светящийся цветок Биврёста
-tile.alfheim:rainbowGrass4.name=Закопанный лепесток Биврёста
-tile.alfheim:rainbowMushroom.name=Светящийся гриб Биврёста
+tile.alfheim:rainbowGrass2.name=Мистический цветок Бифроста
+tile.alfheim:rainbowGrass3.name=Светящийся цветок Бифроста
+tile.alfheim:rainbowGrass4.name=Закопанный лепесток Бифроста
+tile.alfheim:rainbowMushroom.name=Светящийся гриб Бифроста
 tile.alfheim:irisGrass.name=Цветная трава
-tile.alfheim:rainbowDoubleFlower0.name=Высокий мистический цветок Биврёста
+tile.alfheim:rainbowDoubleFlower0.name=Высокий мистический цветок Бифроста
+tile.alfheim:rainbowDoubleFlower8.name=Высокий мистический цветок Бифроста
+tile.alfheim:rainbowDoubleFlower9.name=Высокий мистический цветок Бифроста
+tile.alfheim:rainbowDoubleFlower10.name=Высокий мистический цветок Бифроста
+tile.alfheim:rainbowDoubleFlower11.name=Высокий мистический цветок Бифроста
 tile.alfheim:rainbowDoubleGrass0.name=Цветная высокая трава
 tile.alfheim:rainbowDoubleGrass1.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass8.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass9.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass10.name=Цветная высокая трава
+tile.alfheim:rainbowDoubleGrass11.name=Цветная высокая трава
 tile.alfheim:irisDoubleGrass.name=Цветная высокая трава
 
 alfheim.nei.treeCrafter=Древесный наполнитель
@@ -850,18 +875,18 @@ tile.alfheim:sealingWood.name=Уплотнённая древесина
 tile.alfheim:sealingLeaves.name=Листва уплотнённого дерева
 tile.alfheim:sealingPlanks.name=Доски из уплотнённой древесины
 
-tile.alfheim:altLeaves0.name=Сухие листья
-tile.alfheim:altLeaves1.name=Золотые листья
-tile.alfheim:altLeaves2.name=Яркие листья
-tile.alfheim:altLeaves3.name=Выжженные листья
-tile.alfheim:altLeaves4.name=Настоянные листья
-tile.alfheim:altLeaves5.name=Видоизменённые листья
-tile.alfheim:altLeaves8.name=Сухие листья
-tile.alfheim:altLeaves9.name=Золотые листья
-tile.alfheim:altLeaves10.name=Яркие листья
-tile.alfheim:altLeaves11.name=Выжженные листья
-tile.alfheim:altLeaves12.name=Настоянные листья
-tile.alfheim:altLeaves13.name=Видоизменённые листья
+tile.alfheim:altLeaves0.name=Сухая листва
+tile.alfheim:altLeaves1.name=Золотая листва
+tile.alfheim:altLeaves2.name=Яркая листва
+tile.alfheim:altLeaves3.name=Выжженная листва
+tile.alfheim:altLeaves4.name=Настоянная листва
+tile.alfheim:altLeaves5.name=Видоизменённая листва
+tile.alfheim:altLeaves8.name=Сухая листва
+tile.alfheim:altLeaves9.name=Золотая листва
+tile.alfheim:altLeaves10.name=Яркая листва
+tile.alfheim:altLeaves11.name=Выжженная листва
+tile.alfheim:altLeaves12.name=Настоянная листва
+tile.alfheim:altLeaves13.name=Видоизменённая листва
 
 tile.alfheim:altPlanks0.name=Сухие доски
 tile.alfheim:altPlanks1.name=Золотые доски

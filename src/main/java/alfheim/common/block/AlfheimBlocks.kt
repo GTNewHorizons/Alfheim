@@ -22,6 +22,7 @@ import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
+import net.minecraft.world.IBlockAccess
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.api.BotaniaAPI
@@ -161,7 +162,9 @@ object AlfheimBlocks {
 	init {
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
-		alfStorage = BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f)
+		alfStorage = object: BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
+			override fun isBeaconBase(worldObj: IBlockAccess?, x: Int, y: Int, z: Int, beaconX: Int, beaconY: Int, beaconZ: Int) = true
+		}
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
 		anomaly = BlockAnomaly()

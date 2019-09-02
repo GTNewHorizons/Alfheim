@@ -60,7 +60,7 @@ open class CommonProxy {
 		AlfheimRecipes.postInit()
 		ShadowFoxRecipes.postInit()
 		AlfheimLexiconData.init()
-		AlfheimLexiconData.postInit()
+		//AlfheimLexiconData.postInit()
 		AlfheimRegistry.postInit()
 	}
 	

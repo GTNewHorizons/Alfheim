@@ -10,7 +10,7 @@ import java.util.*
 /** Include this to your #getASMTransformerClass to make @HookField's work  */
 class ASJASM: IClassTransformer {
 	
-	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray {
+	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		if (!fieldsMap.containsKey(transformedName)) return basicClass
 		val cr = ClassReader(basicClass)

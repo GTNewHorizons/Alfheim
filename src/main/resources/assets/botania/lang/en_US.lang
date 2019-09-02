@@ -174,8 +174,7 @@ botania.page.advMana6=Creating &1Mauftrium ring&0
 
 botania.entry.auraAlf=Bands of Aura
 botania.tagline.auraAlf=Everything needs an upgrade
-# this is a joke don't remove this please :3
-botania.page.auraAlf0=&o//Gedeon, write something smart here cause I have no ideas//&r
+botania.page.auraAlf0=Of course, the usual and terra-reinforced &1Bands of Aura&0 should be enough for anyone versed in botanical magic. However, a fool is one who refuses even greater power, bestowed by the magical superiority of the elves and the incomparable power of the primal worlds. In addition, the new bands are incredibly comfortable and look amazing on your finger.
 botania.page.auraAlf1=Upgading to &1Elven Aura Ring&0
 botania.page.auraAlf2=Upgading to &1God's Aura Ring&0
 
@@ -221,6 +220,11 @@ botania.entry.excaliber=Holly Sword Excaliber
 botania.tagline.excaliber=Not fake! Promise!
 botania.page.excaliber0=Well, that's embarrassing...
 botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
+
+botania.entry.stories=Token of Banter
+botania.tagline.stories=Yet knowledge can be bought
+botania.page.stories0=С тех пор, как жители Альвхейма и Мидгарда установили тесные торговые отношения, прошли века. Авантюристы, исследователи и мудрецы мира людей, подобно Мастрею, стремились познать все тайны эльфов, дабы усовершенствовать собственные технологии, разбогатеть и прославиться. Самым рьяным из них был алхимик Тайвин, который изобрёл &1монету мудрости&0 - символ знаний, накопленных за тысячелетия его жизни. Он сумел договориться со старейшинами эльфов о взаимовыгодном обмене информацией; Тайвин предоставляет частицу своих алхимических изысканий, запечатанных в монете, а эльфы - секреты и наставления своего народа. Стало быть, для чего мудрейшим старейшинам могли бы понадобиться знания мидгардского алхимика? Всё проще, чем может показаться на первый взгляд. Эльфы всегда стремились возвыситься над другими разумными существами, а прямая дорога к этому - знания, да не только собственные, но и чуждые им прежде. Так, через века, шёл обмен накопленных знаний между мирами людей и эльфов. Пока, в один довольно обычный день, не произошло нечто невообразимое. Ученик Тайвина предал своего наставника, а &1монеты мудрости&0 со временем затерялись по всему Мидгарду.
+botania.page.stories1=
 
 ################################################################ BACKPORT ################################################################
 
@@ -356,7 +360,6 @@ botania.page.purifyingsurface=Removes poison effect from allies within 5 blocks,
 botania.page.rain=Causes rain/calms thunderstorm
 botania.page.resurrect=Allows for some time to resurrect an ally on the spot of his death, restoring 10 health points
 botania.page.sacrifice=You sacrifice yourself to Darkness, causing tremendous darkness damage to everyone within a radius of 32 blocks, including allies, and then you die too
-botania.page.sharedhp=You combine health points in a single pool, common to the whole party. If one dies, everybody dies
 botania.page.smokescreen=Creates a smoke cloud that imposes blindness on opponents within a radius of 16 blocks
 botania.page.stoneskin=Imposes an effect on the target, allowing you to completely absorb one hit, and then imposes an additional partial absorption effect
 botania.page.sun=Stops rain/thunder

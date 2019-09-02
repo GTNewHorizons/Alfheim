@@ -200,7 +200,7 @@ object AlfheimLexiconData {
 		
 		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
 		
-		stories.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.storyToken)
+		stories.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimItems.storyToken)
 		
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
@@ -407,9 +407,9 @@ object AlfheimLexiconData {
 				.setLexiconPages(PageText("0"), PageText("1"))
 	}
 	
-	fun postInit() {
+	/*fun postInit() {
 		if (AlfheimCore.enableMMO) postInitMMO()
-	}
+	}*/
 	
 	private fun postInitMMO() {
 		val l = Lists.newArrayList(AlfheimAPI.spells)

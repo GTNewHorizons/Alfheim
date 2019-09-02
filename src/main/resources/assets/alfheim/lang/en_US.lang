@@ -233,6 +233,10 @@ item.botania:SpearSubspace.name=Spear of Subspace
 item.alfheim:splashPotion.name=Splash Vial
 item.alfheim:starPlacer2.name=Crackling Star
 item.alfheim:StoryToken.name=Token of Banter
+item.StoryToken.story.1=[Anti-pylon]
+item.StoryToken.story.2=[Holy Blade Revelation]
+item.StoryToken.story.3=[Dagger of the Perfect Soul]
+item.StoryToken.story.4=[Moonshot]
 item.botania:TankMask.name=Mysterious Mask
 item.TankMask.active=Active
 item.TankMask.inactive=Inactive
@@ -294,6 +298,7 @@ alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
 alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
 alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
 
+alfheim.nei.manainfusion=Mana Infusion
 alfheim.nei.tradeportal=Midgard Trade
 
 alfheim.potion.berserk=Berserk
@@ -326,8 +331,6 @@ alfheim.potion.quadDamage=Quad Damage
 alfheim.potion.quadDamage.postfix=Potion of Holy Fury
 alfheim.potion.sacrifice=Self-Sacrifice
 alfheim.potion.sacrifice.postfix=Potion of Detachment
-alfheim.potion.sharedHP=Shared Health Pool
-alfheim.potion.sharedHP.postfix=Potion of Generosity
 alfheim.potion.showMana=Mana Shower
 alfheim.potion.showMana.postfix=Potion of True Sigh
 alfheim.potion.soulburn=Soulburn
@@ -386,12 +389,30 @@ death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
 death.attack.water=%s was cut into pieces by %s's water stream
 
+entity.alfheim:Charge.name=Charge
 entity.alfheim:Elf.name=Elf
 entity.alfheim:Flugel.name=Flügel
 entity.alfheim:Lolicorn.name=Lolicorn
 entity.alfheim:Lolicorn.desc=%s's Lolicorn
+entity.alfheim:LightningMark.name=Lightning Mark
+entity.alfheim:MagicArrow.name=Magic Arrow
 entity.alfheim:Pixie.name=Pixie
 entity.alfheim:Rook.name=Demigod's Rook
+entity.alfheim:SpellAcidMyst.name=Acid Myst
+entity.alfheim:SpellAquaStream.name=Aqua Stream
+entity.alfheim:SpellArfa.name=Arfa
+entity.alfheim:SpellDriftingMine.name=Drifting Mine
+entity.alfheim:SpellFenrirStorm.name=Fenrir Storm
+entity.alfheim:SpellFireball.name=Fireball
+entity.alfheim:SpellFirewall.name=Firewall
+entity.alfheim:SpellGravityTrap.name=Gravity Trap
+entity.alfheim:SpellIsaacMissile.name=Isaac Magic Missile
+entity.alfheim:SpellMortar.name=Mortar
+entity.alfheim:SpellWindBlade.name=Wind Blade
+entity.alfheim:Subspace.name=Subspace Rift
+entity.alfheim:SubspaceSpear.name=Subspace Spear
+entity.alfheim:ThrownItem.name=Thrown Item
+entity.alfheim:ThrownPotion.name=Thrown Potion
 
 item.FlugelSoul.blockAway=1 Block Away
 item.FlugelSoul.blocksAway=%s Blocks Away
@@ -552,7 +573,6 @@ spell.purifyingsurface.name=Purifying Surface
 spell.rain.name=Rain
 spell.resurrect.name=Revive
 spell.sacrifice.name=Sacrifice
-spell.sharedhp.name=Shared Health Pool
 spell.smokescreen.name=Smoke Screen
 spell.stoneskin.name=Stone Skin
 spell.sun.name=Sun
@@ -622,10 +642,9 @@ spell.outdare.words=§eOutdare
 spell.poisonroots.words=§5Poison Roots
 spell.purifyingsurface.words=§bI call out a clean fountain, cease the §bbreath of flame and poison!
 spell.rain.words=§bI submit to the forces of nature, shed §bin a rain!
+#
 spell.resurrect.words=§bRevive
 spell.sacrifice.words=§5I call the §lBlack Destroyer§r§5! Make the §5heavens fall! Cast away the gods! Open the gates of §lHell§r§5!
-#
-spell.sharedhp.words=§6Shared Health Pool
 spell.smokescreen.words=§8Hide us from the enemies in your arms, §8smoke screen!
 spell.stoneskin.words=§2Protect us, great land, from now on §2our skin is as hard as a rock!
 spell.sun.words=§4I submit to the forces of nature, §4shine, the Sun!
@@ -648,10 +667,8 @@ spell.wellolife.words=§bWell of Life
 spell.windblades.words=§aWind Blades
 
 ################################################################################################################################
-#########################################################___BOTADS___###########################################################
+########################################################___IRIDESCENCE___#######################################################
 ################################################################################################################################
-
-itemGroup.Iridescence=Iridescence
 
 death.attack.alfheim.lackOfFaith=%1$s has suffered a crisis of faith
 misc.alfheim.lackOfFaith=&cUnequipping this bauble can be bad for your health.&r
@@ -772,8 +789,16 @@ tile.alfheim:rainbowGrass4.name=Buried Bifrost Petal
 tile.alfheim:rainbowMushroom.name=Bifrost Shimmering Mushroom
 tile.alfheim:irisGrass.name=Iridescent Grass
 tile.alfheim:rainbowDoubleFlower0.name=Tall Mystical Bifrost Flower
+tile.alfheim:rainbowDoubleFlower8.name=Tall Mystical Bifrost Flower
+tile.alfheim:rainbowDoubleFlower9.name=Tall Mystical Bifrost Flower
+tile.alfheim:rainbowDoubleFlower10.name=Tall Mystical Bifrost Flower
+tile.alfheim:rainbowDoubleFlower11.name=Tall Mystical Bifrost Flower
 tile.alfheim:rainbowDoubleGrass0.name=Iridescent Double Grass
 tile.alfheim:rainbowDoubleGrass1.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass8.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass9.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass10.name=Iridescent Double Grass
+tile.alfheim:rainbowDoubleGrass11.name=Iridescent Double Grass
 tile.alfheim:irisDoubleGrass.name=Iridescent Double Grass
 
 alfheim.nei.treeCrafter=Dendric Suffuser
