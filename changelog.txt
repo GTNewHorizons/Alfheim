@@ -3,7 +3,10 @@ Innovations:
  Reworked cardinal system serialization, delete /saves/WORLDNAME/data/Cardinal.sys if you have some issues
 
 Fixes:
- Crash on showing overwolrd portal trade recipes
+ #84 Crash on load when transformed class is null
+ #85 Crash with Ars Magica 2
+ #86 Crash on showing overwolrd portal trade recipes
+ #87 Fixed manamirror client desync
  [MMO] Improved shared HP spell behavior
  [MMO] Improved death (left flame effect)
  [MMO] Spells cooldown now can be discarded by going to creative

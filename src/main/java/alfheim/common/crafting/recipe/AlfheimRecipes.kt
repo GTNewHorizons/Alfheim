@@ -175,6 +175,7 @@ object AlfheimRecipes {
 	lateinit var recipePixieAttractor: IRecipe
 	lateinit var recipeRelicCleaner: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
+	//lateinit var recipeSpatiotemporal: IRecipe // FIXME
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
 	lateinit var recipeTradePortal: IRecipe
@@ -553,6 +554,13 @@ object AlfheimRecipes {
 							 'N', "nuggetGold")
 		recipesSpark = BotaniaAPI.getLatestAddedRecipes(16)
 		recipesSpark.addAll(ModCraftingRecipes.recipesSpark)
+		
+		/*addOreDictRecipe(ItemStack(spatiotemporalRing),
+						 "GES", "E E", "SE ",
+						 'G', hourglass,
+						 'E', ELEMENTIUM,
+						 'S', LIFE_ESSENCE)
+		recipeSpatiotemporal = BotaniaAPI.getLatestAddedRecipe()*/ // FIXME
 		
 		addOreDictRecipe(ItemStack(thinkingHand),
 						 "PPP", "PSP", "PPP",

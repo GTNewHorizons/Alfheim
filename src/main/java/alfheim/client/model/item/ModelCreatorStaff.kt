@@ -15,11 +15,7 @@ import java.awt.Color
 /**
  * @author Azanor
  */
-class ModelCreatorStaff: ModelBase() {
-	
-	companion object {
-		val instance = ModelCreatorStaff()
-	}
+object ModelCreatorStaff: ModelBase() {
 	
 	var rodT = ResourceLocation("thaumcraft:textures/models/creator/wand_rod_primal.png")
 	var capT = ResourceLocation("thaumcraft:textures/models/wand_cap_alfheimMauftrium.png")

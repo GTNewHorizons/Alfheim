@@ -223,6 +223,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (dodgeRing)
 		addItem (colorOverride)
 		addItem (multibauble)
+		// addItem (spatiotemporalRing) // FIXME
 		addItem (attributionBauble)
 		addItem (emblem)
 		addItem (aesirEmblem)

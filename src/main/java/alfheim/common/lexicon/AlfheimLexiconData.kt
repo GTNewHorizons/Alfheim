@@ -12,7 +12,6 @@ import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.page.*
-import com.google.common.collect.Lists
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
@@ -42,6 +41,7 @@ object AlfheimLexiconData {
 	lateinit var amulNimb: LexiconEntry
 	lateinit var aniTorch: LexiconEntry
 	lateinit var anomaly: LexiconEntry
+	//lateinit var anomaRing: LexiconEntry // FIXME
 	lateinit var anyavil: LexiconEntry
 	lateinit var astrolab: LexiconEntry
 	lateinit var auraAlf: LexiconEntry
@@ -98,6 +98,7 @@ object AlfheimLexiconData {
 		amulNimb = BLexiconEntry("amulNimb", categoryAlfheim)
 		aniTorch = BLexiconEntry("aniTorch", categoryAlfheim)
 		anomaly = BLexiconEntry("anomaly", categoryAlfheim)
+		// anomaRing = BLexiconEntry("anomaRing", categoryAlfheim) // FIXME
 		anyavil = BLexiconEntry("anyavil", categoryAlfheim)
 		astrolab = BLexiconEntry("astrolab", categoryAlfheim)
 		auraAlf = BLexiconEntry("auraAlf", categoryAlfheim)
@@ -276,6 +277,8 @@ object AlfheimLexiconData {
 		
 		multbaub.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeMultibauble))
 		
+		// anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal)) // FIXME
+		
 		elvenSet.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", AlfheimRecipes.recipeElvoriumHelmet),
 								 PageCraftingRecipe("2", AlfheimRecipes.recipeElvoriumChestplate),
@@ -412,7 +415,7 @@ object AlfheimLexiconData {
 	}*/
 	
 	private fun postInitMMO() {
-		val l = Lists.newArrayList(AlfheimAPI.spells)
+		val l = ArrayList(AlfheimAPI.spells)
 		l.sortWith(Comparator { s1, s2 -> s1.name.compareTo(s2.name) })
 		for (spell in l) spells!!.addPage(PageSpell(spell))
 	}
@@ -447,6 +450,8 @@ object AlfheimLexiconData {
 		trade.knowledgeType = kt
 		essences.knowledgeType = kt
 		runes.knowledgeType = kt
+		multbaub.knowledgeType = kt
+		// anomaRing.knowledgeType = kt // FIXME
 		elvenSet.knowledgeType = kt
 		elemSet.knowledgeType = kt
 		advMana.knowledgeType = kt

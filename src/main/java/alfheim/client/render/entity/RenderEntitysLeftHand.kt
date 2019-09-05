@@ -64,7 +64,7 @@ object RenderEntitysLeftHand {
 			
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			ModelCreatorStaff.instance.render()
+			ModelCreatorStaff.render()
 			glDisable(GL_BLEND)
 		}
 	}
