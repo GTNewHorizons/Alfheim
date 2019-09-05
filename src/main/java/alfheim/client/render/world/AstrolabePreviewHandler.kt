@@ -45,7 +45,7 @@ object AstrolabePreviewHandler {
 			glColor4f(1f, 1f, 1f, 0.4f)
 			
 			for (coord in coords)
-				renderBlockAt(player, block, meta, coord)
+				renderBlockAt(block, meta, coord)
 			
 			glColor4f(1f, 1f, 1f, 1f)
 			glDisable(GL_BLEND)
@@ -54,23 +54,12 @@ object AstrolabePreviewHandler {
 		}
 	}
 	
-	// FIXME meta
-	private fun renderBlockAt(player: EntityPlayer, block: Block, meta: Int, pos: Vector3) {
+	private fun renderBlockAt(block: Block, meta: Int, pos: Vector3) {
 		glPushMatrix()
-		//ASJRenderHelper.interpolatedTranslationReverse(player)
 		glDisable(GL_DEPTH_TEST)
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
-		
-		/*Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.disableColor()
-		RenderBlocks.getInstance().blockAccess = player.worldObj
-		RenderBlocks.getInstance().renderAllFaces = true
-		RenderBlocks.getInstance().renderBlockByRenderType(block, pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
-		Tessellator.instance.draw()*/
-		
 		glTranslated(pos.x + 0.5 - RenderManager.renderPosX, pos.y + 0.5 - RenderManager.renderPosY, pos.z + 0.5 - RenderManager.renderPosZ)
-		
+		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
 		
 		blockRender.useInventoryTint = false
 		blockRender.renderBlockAsItem(block, meta, 1.0F)

@@ -325,7 +325,9 @@ object ASJUtilities {
 		CraftingManager.getInstance().recipeList.add(ShapelessOreRecipe(output, *recipe))
 	}
 	
-	// FIXME WTF???
+	/**
+	 * Checks whether `stack` is registered to oredict `name`
+	 */
 	fun isOre(stack: ItemStack?, name: String) = OreDictionary.getOreIDs(stack).any { it == OreDictionary.getOreID(name) }
 	
 	/**

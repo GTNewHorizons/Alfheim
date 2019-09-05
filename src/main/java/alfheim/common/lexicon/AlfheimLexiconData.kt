@@ -41,7 +41,7 @@ object AlfheimLexiconData {
 	lateinit var amulNimb: LexiconEntry
 	lateinit var aniTorch: LexiconEntry
 	lateinit var anomaly: LexiconEntry
-	//lateinit var anomaRing: LexiconEntry // FIXME
+	lateinit var anomaRing: LexiconEntry
 	lateinit var anyavil: LexiconEntry
 	lateinit var astrolab: LexiconEntry
 	lateinit var auraAlf: LexiconEntry
@@ -98,7 +98,7 @@ object AlfheimLexiconData {
 		amulNimb = BLexiconEntry("amulNimb", categoryAlfheim)
 		aniTorch = BLexiconEntry("aniTorch", categoryAlfheim)
 		anomaly = BLexiconEntry("anomaly", categoryAlfheim)
-		// anomaRing = BLexiconEntry("anomaRing", categoryAlfheim) // FIXME
+		anomaRing = BLexiconEntry("anomaRing", categoryAlfheim)
 		anyavil = BLexiconEntry("anyavil", categoryAlfheim)
 		astrolab = BLexiconEntry("astrolab", categoryAlfheim)
 		auraAlf = BLexiconEntry("auraAlf", categoryAlfheim)
@@ -277,7 +277,7 @@ object AlfheimLexiconData {
 		
 		multbaub.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeMultibauble))
 		
-		// anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal)) // FIXME
+		anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal))
 		
 		elvenSet.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", AlfheimRecipes.recipeElvoriumHelmet),
@@ -451,7 +451,7 @@ object AlfheimLexiconData {
 		essences.knowledgeType = kt
 		runes.knowledgeType = kt
 		multbaub.knowledgeType = kt
-		// anomaRing.knowledgeType = kt // FIXME
+		anomaRing.knowledgeType = kt
 		elvenSet.knowledgeType = kt
 		elemSet.knowledgeType = kt
 		advMana.knowledgeType = kt

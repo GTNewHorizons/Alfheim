@@ -93,6 +93,7 @@ import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.storyToken
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
@@ -175,7 +176,7 @@ object AlfheimRecipes {
 	lateinit var recipePixieAttractor: IRecipe
 	lateinit var recipeRelicCleaner: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
-	//lateinit var recipeSpatiotemporal: IRecipe // FIXME
+	lateinit var recipeSpatiotemporal: IRecipe
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
 	lateinit var recipeTradePortal: IRecipe
@@ -555,12 +556,12 @@ object AlfheimRecipes {
 		recipesSpark = BotaniaAPI.getLatestAddedRecipes(16)
 		recipesSpark.addAll(ModCraftingRecipes.recipesSpark)
 		
-		/*addOreDictRecipe(ItemStack(spatiotemporalRing),
+		addOreDictRecipe(ItemStack(spatiotemporalRing),
 						 "GES", "E E", "SE ",
 						 'G', hourglass,
 						 'E', ELEMENTIUM,
 						 'S', LIFE_ESSENCE)
-		recipeSpatiotemporal = BotaniaAPI.getLatestAddedRecipe()*/ // FIXME
+		recipeSpatiotemporal = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(thinkingHand),
 						 "PPP", "PSP", "PPP",
