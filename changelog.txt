@@ -7,6 +7,6 @@ Fixes:
  #85 Crash with Ars Magica 2
  #86 Crash on showing overwolrd portal trade recipes
  #87 Fixed manamirror client desync
- [MMO] Improved shared HP spell behavior
+ [MMO] Removed shared HP spell
  [MMO] Improved death (left flame effect)
  [MMO] Spells cooldown now can be discarded by going to creative
