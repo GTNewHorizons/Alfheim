@@ -31,16 +31,20 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "mana
 				if (baublesInv != null) {
 					size = invSize + baublesInv.sizeInventory
 				}
-				val mana = 1040 // Will drain about 1/4 of a tablet in 5 seconds
+				var mana = 1040 // Will drain about 1/4 of a tablet in 5 seconds
 				
 				for (i in 0..size) {
 					val useBaubles = i >= invSize
 					val inv = if (useBaubles) baublesInv else mainInv
+					
 					val slot = i - (if (useBaubles) invSize else 0)
 					val stackInSlot = (inv as IInventory).getStackInSlot(slot)
 					if (stackInSlot != null && stackInSlot.item is IManaItem) {
 						val manaItemSlot = stackInSlot.item as IManaItem
-						if (manaItemSlot.getMana(stackInSlot) > mana) {
+						
+						val hasMana = manaItemSlot.getMana(stackInSlot)
+						
+						if (hasMana > mana) {
 							manaItemSlot.addMana(stackInSlot, -mana)
 							
 							if (useBaubles) {
@@ -48,14 +52,24 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "mana
 							}
 							
 							break
+						} else if (hasMana == mana) {
+							manaItemSlot.addMana(stackInSlot, -manaItemSlot.getMana(stackInSlot))
+							
+							if (useBaubles) {
+								BotaniaAPI.internalHandler.sendBaubleUpdatePacket(e, slot)
+							}
+							
+							break
 						}
-						manaItemSlot.addMana(stackInSlot, -manaItemSlot.getMana(stackInSlot))
-						if (useBaubles) {
-							BotaniaAPI.internalHandler.sendBaubleUpdatePacket(e, slot)
-						}
-						break
+						
+						val rest = manaItemSlot.getMana(stackInSlot)
+						
+						manaItemSlot.addMana(stackInSlot, -rest)
+						
+						mana -= rest
 					}
 				}
+				
 				for (slot in 0 until invSize) {
 					val stackInSlot = mainInv.getStackInSlot(slot)
 					if (stackInSlot != null && stackInSlot.item == ModItems.blackLotus) {

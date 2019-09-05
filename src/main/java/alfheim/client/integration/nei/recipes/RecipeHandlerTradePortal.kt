@@ -78,7 +78,7 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 		GuiDraw.drawTexturedModalRect(30, 10, 17, 17, 100, 80)
 		glDisable(GL_BLEND)
 		GuiDraw.changeTexture(TextureMap.locationBlocksTexture)
-		RenderItem.getInstance().renderIcon(35, 29, BlockTradePortal.textures[2], 48, 48)
+		RenderItem.getInstance().renderIcon(35, 29, BlockTradePortal.textures[1], 48, 48)
 	}
 	
 	private fun hasElvenKnowledge(): Boolean {

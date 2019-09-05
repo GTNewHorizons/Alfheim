@@ -22,8 +22,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 			if (true/*!world.isRemote*/) {
 				if (!player.isSneaking) {
 					if (!world.isRemote) {
-						/*PartySystem.setParty(player, Party(player))
-						PartySystem.getParty(player)!!.add(TargetingSystem.getTarget(player).target)*/
+						//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
+						//CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
 					}
 					
 					/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)

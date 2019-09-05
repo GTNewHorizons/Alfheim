@@ -6,13 +6,17 @@ import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.raceID
-import alfheim.api.event.*
+import alfheim.api.event.EntityUpdateEvent
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
+import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
+import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.world.AstrolabePreviewHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -27,13 +31,14 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
 
 @Suppress("UNUSED_PARAMETER")
-class EventHandlerClient {
+object EventHandlerClient {
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
@@ -44,27 +49,28 @@ class EventHandlerClient {
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	fun onDisconnect(e: ClientDisconnectionFromServerEvent) {
-		CardinalSystemClient.TimeStopSystemClient.clear()
-		CardinalSystemClient.segment = null
+	fun onJoined(e: EntityJoinWorldEvent) {
+		if (e === Minecraft.getMinecraft().thePlayer)
+			PlayerSegmentClient.party = Party(Minecraft.getMinecraft().thePlayer)
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	fun onTileUpdate(e: TileUpdateEvent) {
-		if (!ASJUtilities.isServer && CardinalSystemClient.TimeStopSystemClient.affected(e.tile)) e.isCanceled = true
+	fun onDisconnect(e: ClientDisconnectionFromServerEvent) {
+		TimeStopSystemClient.clear()
+		PlayerSegmentClient.party = null
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onEntityUpdate(e: EntityUpdateEvent) {
-		if (!ASJUtilities.isServer && CardinalSystemClient.TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
+		if (!ASJUtilities.isServer && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onEntityUpdate(e: LivingUpdateEvent) {
-		if (!ASJUtilities.isServer && CardinalSystemClient.TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
+		if (!ASJUtilities.isServer && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
 	}
 	
 	@SubscribeEvent
@@ -74,7 +80,7 @@ class EventHandlerClient {
 		if (world != null && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.provider.skyRenderer == null)
 			world.provider.skyRenderer = SkyblockSkyRenderer()
 		
-		if (CardinalSystemClient.segment != null && Minecraft.getMinecraft().thePlayer == null) CardinalSystemClient.segment!!.target = null
+		if (Minecraft.getMinecraft().thePlayer == null) PlayerSegmentClient.target = null
 	}
 	
 	@SubscribeEvent
@@ -110,10 +116,10 @@ class EventHandlerClient {
 	fun onPlayerTick(e: PlayerTickEvent) {
 		if (e.phase == Phase.START && e.side == Side.CLIENT && !Minecraft.getMinecraft().isGamePaused) {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
-			CardinalSystemClient.SpellCastingSystemClient.tick()
+			SpellCastingSystemClient.tick()
 			
-			if (CardinalSystemClient.segment!!.target != null && Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null)
-				if (!CardinalSystemClient.segment!!.target!!.isEntityAlive || Vector3.entityDistance(Minecraft.getMinecraft().thePlayer, CardinalSystemClient.segment!!.target!!) > (if (CardinalSystemClient.segment!!.target is IBossDisplayData) 128 else 32)) CardinalSystemClient.segment!!.target = null
+			if (PlayerSegmentClient.target != null && Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null)
+				if (!PlayerSegmentClient.target!!.isEntityAlive || Vector3.entityDistance(Minecraft.getMinecraft().thePlayer, PlayerSegmentClient.target!!) > (if (PlayerSegmentClient.target is IBossDisplayData) 128 else 32)) PlayerSegmentClient.target = null
 		}
 		if (e.phase == Phase.END) {
 			ItemsRemainingRenderHandler.tick()
@@ -144,7 +150,7 @@ class EventHandlerClient {
 	private fun renderMMO() {
 		run {
 			val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-			if (CardinalSystemClient.SpellCastingSystemClient.getCoolDown(spell) > 0) return@run
+			if (SpellCastingSystemClient.getCoolDown(spell) > 0) return@run
 			
 			glPushMatrix()
 			ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
@@ -153,23 +159,24 @@ class EventHandlerClient {
 		}
 		
 		run {
-			if (CardinalSystemClient.segment().target != null) {
-				if (CardinalSystemClient.segment!!.target == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) return@run
+			val target = PlayerSegmentClient.target
+			if (target != null) {
+				if (target == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) return@run
 				glPushMatrix()
 				glDisable(GL_CULL_FACE)
 				//glDisable(GL_ALPHA_TEST);
 				glAlphaFunc(GL_GREATER, 0.003921569f)
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-				if (CardinalSystemClient.segment!!.target != Minecraft.getMinecraft().thePlayer) {
+				if (target != Minecraft.getMinecraft().thePlayer) {
 					ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-					ASJRenderHelper.interpolatedTranslation(CardinalSystemClient.segment!!.target!!)
+					ASJRenderHelper.interpolatedTranslation(target)
 				} else {
 					glTranslated(0.0, -(1.5 + Minecraft.getMinecraft().thePlayer.eyeHeight), 0.0)
 				}
 				glRotated((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble(), 0.0, 1.0, 0.0)
-				glScalef(CardinalSystemClient.segment!!.target!!.width, CardinalSystemClient.segment!!.target!!.width, CardinalSystemClient.segment!!.target!!.width)
-				ASJRenderHelper.glColor1u(if (CardinalSystemClient.segment!!.isParty) -0xff0100 else -0x10000)
+				glScalef(target.width, target.width, target.width)
+				ASJRenderHelper.glColor1u(if (PlayerSegmentClient.isParty) -0xff0100 else -0x10000)
 				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.cross)
 				Tessellator.instance.startDrawingQuads()
 				Tessellator.instance.addVertexWithUV(-1.0, 0.1, -1.0, 0.0, 0.0)
@@ -186,7 +193,7 @@ class EventHandlerClient {
 			}
 		}
 		
-		CardinalSystemClient.TimeStopSystemClient.render()
+		TimeStopSystemClient.render()
 	}
 	
 	@SubscribeEvent

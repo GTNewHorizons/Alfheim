@@ -41,6 +41,8 @@ class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(Materi
 	override fun hasComparatorInputOverride() = true
 	override fun getComparatorInputOverride(par1World: World?, par2: Int, par3: Int, par4: Int, par5: Int) = (par1World!!.getTileEntity(par2, par3, par4) as TileTreeCrafter).signal
 	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Item.getItemFromBlock(innerBlock(0))!!
+	override fun damageDropped(meta: Int) = meta
+	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) = (world.getTileEntity(x, y, z) as TileTreeCrafter).renderHUD(mc, res)
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.treeCrafting
 	override fun renderAsNormalBlock(): Boolean = false

@@ -16,8 +16,8 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 	
 	init {
 		setBlockName("kindling")
+		setHardness(0.2f)
 		setStepSound(soundTypeCloth)
-		
 		GameRegistry.registerFuelHandler(this)
 	}
 	

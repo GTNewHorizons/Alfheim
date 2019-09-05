@@ -230,41 +230,11 @@ class AlfheimClassTransformer: IClassTransformer {
 	internal class `World$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (!AlfheimHookLoader.isThermos) {
-				if (name == "updateEntities" || name == "h" && desc == "()V") {
-					println("Visiting World#updateEntities: $name$desc")
-					return `World$updateEntities$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
-				}
-			}
 			if (name == "updateEntityWithOptionalForce" || name == "a" && desc == "(Lsa;Z)V") {
 				println("Visiting World#updateEntityWithOptionalForce: $name$desc")
 				return `World$updateEntityWithOptionalForce$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
-		}
-		
-		internal class `World$updateEntities$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
-			
-			private var insert = true
-			
-			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String, itf: Boolean) {
-				if (insert && opcode == INVOKEVIRTUAL && owner == (if (OBF) "aor" else "net/minecraft/tileentity/TileEntity") && name == (if (OBF) "h" else "updateEntity") && desc == "()V" && !itf) {
-					insert = false
-					super.visitMethodInsn(INVOKESTATIC, "alfheim/api/event/TileUpdateEvent", "instantiate", if (OBF) "(Laor;)Lalfheim/api/event/TileUpdateEvent;" else "(Lnet/minecraft/tileentity/TileEntity;)Lalfheim/api/event/TileUpdateEvent;", false)
-					super.visitVarInsn(ASTORE, 9)
-					super.visitFieldInsn(GETSTATIC, "net/minecraftforge/common/MinecraftForge", "EVENT_BUS", "Lcpw/mods/fml/common/eventhandler/EventBus;")
-					super.visitVarInsn(ALOAD, 9)
-					super.visitMethodInsn(INVOKEVIRTUAL, "cpw/mods/fml/common/eventhandler/EventBus", "post", "(Lcpw/mods/fml/common/eventhandler/Event;)Z", false)
-					val l84 = Label()
-					super.visitJumpInsn(IFNE, l84)
-					super.visitVarInsn(ALOAD, 8)
-					super.visitMethodInsn(INVOKEVIRTUAL, if (OBF) "aor" else "net/minecraft/tileentity/TileEntity", if (OBF) "h" else "updateEntity", "()V", false)
-					super.visitLabel(l84)
-					super.visitFrame(F_APPEND, 2, arrayOf<Any>(if (OBF) "aor" else "net/minecraft/tileentity/TileEntity", "alfheim/api/event/TileUpdateEvent"), 0, null)
-					super.visitMethodInsn(INVOKESTATIC, "alfheim/api/event/TileUpdateEvent", "stub", "()V", false)
-				} else
-					super.visitMethodInsn(opcode, owner, name, desc, itf)
-			}
 		}
 		
 		internal class `World$updateEntityWithOptionalForce$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {

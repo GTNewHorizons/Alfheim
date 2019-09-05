@@ -14,6 +14,7 @@ class BlockAmplifier: BlockMod(Material.wood), ISoundSilencer, ILexiconable {
 	
 	init {
 		setBlockName("amplifier")
+		setHardness(0.8f)
 		setStepSound(soundTypeCloth)
 	}
 	

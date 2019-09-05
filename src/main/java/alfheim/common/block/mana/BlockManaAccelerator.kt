@@ -17,6 +17,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.client.lib.LibResources
+import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.mana.BlockPool
 import kotlin.math.*
 
@@ -29,6 +30,7 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 		setHardness(1f)
 	}
 	
+	override fun getIcon(side: Int, meta: Int) = ModBlocks.livingrock.getIcon(0, 0)!!
 	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	override fun renderAsNormalBlock() = false
 	override fun isOpaqueCube() = false

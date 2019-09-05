@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBase
@@ -33,5 +34,5 @@ class RenderEntityLolicorn(modelBase: ModelBase, shadowSize: Float): RenderLivin
 		}
 	}
 	
-	override fun getEntityTexture(entity: Entity) = LibResourceLocations.lolicorn
+	override fun getEntityTexture(entity: Entity) = if ((entity as? EntityLolicorn)?.owner == "KAIIIAK") LibResourceLocations.roricorn else LibResourceLocations.lolicorn
 }

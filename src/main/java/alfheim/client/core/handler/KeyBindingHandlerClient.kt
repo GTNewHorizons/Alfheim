@@ -6,6 +6,9 @@ import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
+import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient
+import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -48,7 +51,7 @@ object KeyBindingHandlerClient {
 	
 	fun parseKeybindings(player: EntityPlayer) {
 		if (Minecraft.getMinecraft().currentScreen != null) return
-		if (CardinalSystemClient.TimeStopSystemClient.affected(player)) return
+		if (TimeStopSystemClient.affected(player)) return
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true
@@ -94,7 +97,7 @@ object KeyBindingHandlerClient {
 		
 		if (AlfheimCore.enableMMO) {
 			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-				val flag = CardinalSystemClient.segment().hotSpells.indices.any { Keyboard.isKeyDown(it + 2) }
+				val flag = PlayerSegmentClient.hotSpells.indices.any { Keyboard.isKeyDown(it + 2) }
 				
 				if (flag) Minecraft.getMinecraft().thePlayer.inventory.currentItem = prevHotSlot
 			} else
@@ -102,15 +105,15 @@ object KeyBindingHandlerClient {
 			
 			run {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-					for (i in CardinalSystemClient.segment().hotSpells.indices) {
+					for (i in PlayerSegmentClient.hotSpells.indices) {
 						if (Keyboard.isKeyDown(i + 2)) {
 							if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-								CardinalSystemClient.segment!!.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
-								AlfheimCore.network.sendToServer(MessageHotSpellS(i, CardinalSystemClient.segment!!.hotSpells[i]))
+								PlayerSegmentClient.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
+								AlfheimCore.network.sendToServer(MessageHotSpellS(i, PlayerSegmentClient.hotSpells[i]))
 							} else {
-								if (CardinalSystemClient.segment!!.hotSpells[i] == 0) {
-									CardinalSystemClient.segment!!.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
-									AlfheimCore.network.sendToServer(MessageHotSpellS(i, CardinalSystemClient.segment!!.hotSpells[i]))
+								if (PlayerSegmentClient.hotSpells[i] == 0) {
+									PlayerSegmentClient.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
+									AlfheimCore.network.sendToServer(MessageHotSpellS(i, PlayerSegmentClient.hotSpells[i]))
 								}
 								
 								val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
@@ -122,8 +125,8 @@ object KeyBindingHandlerClient {
 								}
 								
 								AlfheimCore.network.sendToServer(MessageKeyBind(CAST.ordinal, true, i))
-								CardinalSystemClient.segment!!.initM = AlfheimAPI.getSpellByIDs(CardinalSystemClient.segment!!.hotSpells[i] shr 28 and 0xF, CardinalSystemClient.segment!!.hotSpells[i] and 0xFFFFFFF)!!.getCastTime()
-								CardinalSystemClient.segment!!.init = CardinalSystemClient.segment!!.initM
+								PlayerSegmentClient.initM = AlfheimAPI.getSpellByIDs(PlayerSegmentClient.hotSpells[i] shr 28 and 0xF, PlayerSegmentClient.hotSpells[i] and 0xFFFFFFF)!!.getCastTime()
+								PlayerSegmentClient.init = PlayerSegmentClient.initM
 							}
 						}
 					}
@@ -176,7 +179,7 @@ object KeyBindingHandlerClient {
 				if (Keyboard.isKeyDown(ClientProxy.keyCast.keyCode)) {
 					if (!toggleCast) {
 						toggleCast = true
-						if (CardinalSystemClient.segment().init <= 0) {
+						if (PlayerSegmentClient.init <= 0) {
 							
 							val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
 							if (spell == null)
@@ -188,8 +191,8 @@ object KeyBindingHandlerClient {
 							
 							val i = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
 							AlfheimCore.network.sendToServer(MessageKeyBind(CAST.ordinal, false, i))
-							CardinalSystemClient.segment!!.initM = AlfheimAPI.getSpellByIDs(raceID, spellID)!!.getCastTime()
-							CardinalSystemClient.segment!!.init = CardinalSystemClient.segment!!.initM
+							PlayerSegmentClient.initM = AlfheimAPI.getSpellByIDs(raceID, spellID)!!.getCastTime()
+							PlayerSegmentClient.init = PlayerSegmentClient.initM
 						}
 					}
 				} else if (toggleCast) {
@@ -201,8 +204,8 @@ object KeyBindingHandlerClient {
 				if (!toggleUnCast) {
 					toggleUnCast = true
 					AlfheimCore.network.sendToServer(MessageKeyBind(UNCAST.ordinal, false, 0))
-					CardinalSystemClient.segment!!.initM = 0
-					CardinalSystemClient.segment().init = CardinalSystemClient.segment!!.initM
+					PlayerSegmentClient.initM = 0
+					PlayerSegmentClient.init = PlayerSegmentClient.initM
 				}
 			} else if (toggleUnCast) {
 				toggleUnCast = false
@@ -211,7 +214,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keySelMob.keyCode)) {
 				if (!toggleSelMob) {
 					toggleSelMob = true
-					if (CardinalSystemClient.TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, CardinalSystemClient.segment().isParty, CardinalSystemClient.segment!!.target!!.entityId))
+					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId ?: 0))
 				}
 			} else if (toggleSelMob) {
 				toggleSelMob = false
@@ -220,7 +223,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keySelTeam.keyCode)) {
 				if (!toggleSelTeam) {
 					toggleSelTeam = true
-					if (CardinalSystemClient.TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, CardinalSystemClient.segment().isParty, CardinalSystemClient.segment!!.target!!.entityId))
+					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId ?: 0))
 				}
 			} else if (toggleSelTeam) {
 				toggleSelTeam = false

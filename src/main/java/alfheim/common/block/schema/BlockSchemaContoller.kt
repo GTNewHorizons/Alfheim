@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.api.wand.IWandable
+import java.util.*
 
 class BlockSchemaContoller: BlockContainerMod(Material.wood), IWandable {
 	
@@ -20,7 +21,10 @@ class BlockSchemaContoller: BlockContainerMod(Material.wood), IWandable {
 	
 	init {
 		setBlockName("schemaController")
+		setBlockUnbreakable()
 	}
+	
+	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = null
 	
 	override fun getIcon(side: Int, meta: Int) =
 		when (side) {

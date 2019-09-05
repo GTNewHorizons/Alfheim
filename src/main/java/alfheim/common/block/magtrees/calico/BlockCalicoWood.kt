@@ -17,6 +17,7 @@ class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener,
 	
 	init {
 		setBlockName("calicoWood")
+		blockHardness = 2f
 		EventHandlerCalico.register()
 	}
 	

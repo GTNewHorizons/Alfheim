@@ -1,4 +1,3 @@
-
 package alfheim.common.core.asm
 
 import alexsocol.asjlib.ASJUtilities
@@ -54,7 +53,7 @@ import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.EntityDoppleganger
-import vazkii.botania.common.item.ItemGaiaHead
+import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
@@ -102,7 +101,7 @@ object AlfheimHookHandler {
 		if (p === Potion.resistance) {
 			e.activePotionsMap.containsKey(Potion.resistance.id) || e.activePotionsMap.containsKey(AlfheimRegistry.tank.id)
 		} else e.activePotionsMap.containsKey(p.id)
-
+	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun getActivePotionEffect(e: EntityLivingBase, p: Potion): PotionEffect? {
@@ -120,21 +119,21 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
 	fun requestManaExact(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = player.capabilities.isCreativeMode
-
+	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, returnType = "int", returnAnotherMethod = "requestManaChecked")
 	fun requestMana(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = player.capabilities.isCreativeMode
-
+	
 	@JvmStatic
 	fun requestManaChecked(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = manaToGet
-
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @Hook.ReturnValue time: Int) =
 		if (stack != null && time == 0) {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 600 else 0
 		} else time
-
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getColor(tile: TileHourglass, @Hook.ReturnValue color: Int): Int {
@@ -143,11 +142,11 @@ object AlfheimHookHandler {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 0xf7f5d9 else 0
 		} else color
 	}
-
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun moveFlying(e: Entity, x: Float, y: Float, z: Float) {
-		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.motionZ = 0.0
 			e.motionY = e.motionZ
 			e.motionX = e.motionY
@@ -315,11 +314,11 @@ object AlfheimHookHandler {
 				list.add(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_NIGHTSHADE_PRIME))
 		}
 	}
-
+	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, createMethod = true)
 	fun isValidArmor(item: ItemGaiaHead, stack: ItemStack, armorType: Int, entity: Entity) = armorType == 0
-
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
 	fun `ItemLens$clinit`(lens: ItemLens?) {
@@ -332,7 +331,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(targetMethod = "<init>")
-	fun `BlockModWall$init`(block: BlockModWall) {
+	fun `BlockModWall$init`(wall: BlockModWall, block: Block, meta: Int) {
 		block.setCreativeTab(BotaniaCreativeTab.INSTANCE)
 	}
 	

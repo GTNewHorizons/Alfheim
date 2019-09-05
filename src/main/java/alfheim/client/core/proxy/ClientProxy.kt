@@ -52,11 +52,12 @@ class ClientProxy: CommonProxy() {
 		LibRenderIDs.init()
 		
 		if (ConfigHandler.useShaders) {
-			LibShaderIDs.idFire = ASJShaderHelper.createProgram(null, "shaders/fire.frag")
 			LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag")
 			LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag")
 			LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag")
 		}
+		
+		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly())
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff())
@@ -74,7 +75,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil::class.java, RenderTileAnyavil())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadFlugel::class.java, RenderTileHeadFlugel())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadMiku::class.java, RenderTileHeadMiku())
-		ClientRegistry.bindTileEntitySpecialRenderer(TileManaAccelerator::class.java, RenderTileItemHolder())
+		ClientRegistry.bindTileEntitySpecialRenderer(TileManaAccelerator::class.java, RenderTileManaAccelerator())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRaceSelector::class.java, RenderTileRaceSelector())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal::class.java, RenderTileTradePortal())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer())
@@ -121,8 +122,8 @@ class ClientProxy: CommonProxy() {
 	
 	override fun initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers()
-		MinecraftForge.EVENT_BUS.register(EventHandlerClient())
-		FMLCommonHandler.instance().bus().register(EventHandlerClient())
+		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
+		FMLCommonHandler.instance().bus().register(EventHandlerClient)
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer())
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()

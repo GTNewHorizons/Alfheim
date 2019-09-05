@@ -53,6 +53,7 @@ object LibResourceLocations {
 	val poolPink = ResourceLocation(ModInfo.MODID, "textures/blocks/PoolPink.png")
 	val potions = ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png")
 	val rook = ResourceLocation(ModInfo.MODID, "textures/model/entity/Rook.png")
+	val roricorn = ResourceLocation(ModInfo.MODID, "textures/model/entity/Roricorn.png")
 	val skin = ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png")
 	val spellFrame = ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png")
 	val spellFrameEpic = ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png")
@@ -77,6 +78,10 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/IMP_wing.png"),
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
 	)
+	
+	const val MOB = 11
+	const val NPC = 12
+	const val BOSS = 13
 	
 	val icons = arrayOf(
 		ResourceLocation(ModInfo.MODID, "textures/misc/icons/HUMAN.png"),
@@ -107,10 +112,6 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/UNDINE.png"),
 		ResourceLocation(ModInfo.MODID, "textures/gui/spells/affinities/IMP.png")
 	)
-	
-	const val MOB = 11
-	const val NPC = 12
-	const val BOSS = 13
 	
 	val male = arrayOf(
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/Salamander.png"),

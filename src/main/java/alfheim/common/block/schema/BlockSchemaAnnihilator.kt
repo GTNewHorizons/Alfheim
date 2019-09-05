@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.api.wand.IWandable
+import java.util.*
 
 /**
  * Created by l0nekitsune on 1/3/16.
@@ -23,8 +24,11 @@ class BlockSchemaAnnihilator: BlockContainerMod(Material.wood), IWandable {
 	
 	init {
 		setBlockName("schematicAnnihilator")
+		setBlockUnbreakable()
 		isBlockContainer = true
 	}
+	
+	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = null
 	
 	override fun getIcon(side: Int, meta: Int) =
 		when (side) {
@@ -49,4 +53,6 @@ class BlockSchemaAnnihilator: BlockContainerMod(Material.wood), IWandable {
 		}
 		return true
 	}
+	
+	
 }

@@ -12,7 +12,6 @@ import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.page.*
-import com.google.common.collect.Lists
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
@@ -42,6 +41,7 @@ object AlfheimLexiconData {
 	lateinit var amulNimb: LexiconEntry
 	lateinit var aniTorch: LexiconEntry
 	lateinit var anomaly: LexiconEntry
+	//lateinit var anomaRing: LexiconEntry // FIXME
 	lateinit var anyavil: LexiconEntry
 	lateinit var astrolab: LexiconEntry
 	lateinit var auraAlf: LexiconEntry
@@ -73,6 +73,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
+	lateinit var stories: LexiconEntry
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
@@ -97,6 +98,7 @@ object AlfheimLexiconData {
 		amulNimb = BLexiconEntry("amulNimb", categoryAlfheim)
 		aniTorch = BLexiconEntry("aniTorch", categoryAlfheim)
 		anomaly = BLexiconEntry("anomaly", categoryAlfheim)
+		// anomaRing = BLexiconEntry("anomaRing", categoryAlfheim) // FIXME
 		anyavil = BLexiconEntry("anyavil", categoryAlfheim)
 		astrolab = BLexiconEntry("astrolab", categoryAlfheim)
 		auraAlf = BLexiconEntry("auraAlf", categoryAlfheim)
@@ -125,6 +127,7 @@ object AlfheimLexiconData {
 		ruling = BLexiconEntry("ruling", categoryAlfheim)
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
+		stories = BLexiconEntry("stories", categoryAlfheim)
 		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
@@ -197,6 +200,8 @@ object AlfheimLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1)
 		
 		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
+		
+		stories.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimItems.storyToken)
 		
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
@@ -271,6 +276,8 @@ object AlfheimLexiconData {
 		dasGold.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeRelicCleaner))
 		
 		multbaub.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeMultibauble))
+		
+		// anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal)) // FIXME
 		
 		elvenSet.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", AlfheimRecipes.recipeElvoriumHelmet),
@@ -403,12 +410,12 @@ object AlfheimLexiconData {
 				.setLexiconPages(PageText("0"), PageText("1"))
 	}
 	
-	fun postInit() {
+	/*fun postInit() {
 		if (AlfheimCore.enableMMO) postInitMMO()
-	}
+	}*/
 	
 	private fun postInitMMO() {
-		val l = Lists.newArrayList(AlfheimAPI.spells)
+		val l = ArrayList(AlfheimAPI.spells)
 		l.sortWith(Comparator { s1, s2 -> s1.name.compareTo(s2.name) })
 		for (spell in l) spells!!.addPage(PageSpell(spell))
 	}
@@ -443,6 +450,8 @@ object AlfheimLexiconData {
 		trade.knowledgeType = kt
 		essences.knowledgeType = kt
 		runes.knowledgeType = kt
+		multbaub.knowledgeType = kt
+		// anomaRing.knowledgeType = kt // FIXME
 		elvenSet.knowledgeType = kt
 		elemSet.knowledgeType = kt
 		advMana.knowledgeType = kt
@@ -599,13 +608,13 @@ object AlfheimLexiconData {
 
 object AlfheimMultiblocks {
 	
-	lateinit var infuser: MultiblockSet
-	lateinit var infuserU: MultiblockSet
-	lateinit var portal: MultiblockSet
-	lateinit var soul: MultiblockSet
-	lateinit var yordin: MultiblockSet
+	val infuser: MultiblockSet
+	val infuserU: MultiblockSet
+	val portal: MultiblockSet
+	val soul: MultiblockSet
+	val yordin: MultiblockSet
 	
-	fun init() {
+	init {
 		infuser = TileManaInfuser.makeMultiblockSet()
 		infuserU = TileManaInfuser.makeMultiblockSetUnknown()
 		portal = TileAlfheimPortal.makeMultiblockSet()

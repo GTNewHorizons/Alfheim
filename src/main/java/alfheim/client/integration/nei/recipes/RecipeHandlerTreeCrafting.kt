@@ -19,7 +19,7 @@ import kotlin.math.*
 
 open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
 
-    override fun getRecipeName(): String = StatCollector.translateToLocal("${ModInfo.MODID}.nei.treeCrafter")
+    override fun getRecipeName(): String = StatCollector.translateToLocal("alfheim.nei.treeCrafter")
 
     override fun drawBackground(recipe: Int) {
         super.drawBackground(recipe)

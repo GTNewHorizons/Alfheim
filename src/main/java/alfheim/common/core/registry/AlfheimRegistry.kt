@@ -2,17 +2,14 @@ package alfheim.common.core.registry
 
 import alexsocol.asjlib.ASJUtilities.registerEntity
 import alexsocol.asjlib.ASJUtilities.registerEntityEgg
-
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI.addPink
 import alfheim.api.AlfheimAPI.registerAnomaly
 import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
-import alfheim.api.spell.SpellBase
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.anomaly.*
-import alfheim.common.core.asm.AlfheimHookLoader
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
@@ -57,7 +54,6 @@ object AlfheimRegistry {
 	lateinit var goldRush: Potion
 	lateinit var icelens: Potion
 	lateinit var leftFlame: Potion
-	fun leftFlameIsInitialized() = ::leftFlame.isInitialized
 	lateinit var manaVoid: Potion
 	lateinit var nineLifes: Potion
 	lateinit var ninja: Potion
@@ -66,8 +62,6 @@ object AlfheimRegistry {
 	lateinit var possession: Potion
 	lateinit var quadDamage: Potion
 	lateinit var sacrifice: Potion
-	lateinit var sharedHP: Potion
-	fun sharedHPIsInitialized() = ::sharedHP.isInitialized
 	lateinit var showMana: Potion
 	lateinit var soulburn: Potion
 	lateinit var stoneSkin: Potion
@@ -83,7 +77,6 @@ object AlfheimRegistry {
 		registerTileEntities()
 		
 		worldGen = WorldGenAlfheim()
-		SpellBase.overmag = overmage
 	}
 	
 	fun init() {
@@ -114,7 +107,6 @@ object AlfheimRegistry {
 		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
 		quadDamage = PotionQuadDamage()
 		sacrifice = PotionSacrifice()
-		sharedHP = PotionSharedHP()
 		showMana = PotionShowMana()
 		soulburn = PotionSoulburn()
 		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
@@ -157,7 +149,7 @@ object AlfheimRegistry {
 		registerEntity(EntitySpellGravityTrap::class.java, "SpellGravityTrap", AlfheimCore.instance)
 		registerEntity(EntitySpellIsaacMissile::class.java, "SpellIsaacMissile", AlfheimCore.instance)
 		registerEntity(EntitySpellMortar::class.java, "SpellMortar", AlfheimCore.instance)
-		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlades", AlfheimCore.instance)
+		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlade", AlfheimCore.instance)
 	}
 	
 	private fun registerTileEntities() {
@@ -242,7 +234,6 @@ object AlfheimRegistry {
 		registerSpell(SpellRain())
 		registerSpell(SpellResurrect())
 		registerSpell(SpellSacrifice())
-		if (AlfheimHookLoader.hpSpells) registerSpell(SpellSharedHealthPool())
 		registerSpell(SpellSmokeScreen())
 		registerSpell(SpellStoneSkin())
 		registerSpell(SpellSun())

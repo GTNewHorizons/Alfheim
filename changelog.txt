@@ -1,11 +1,12 @@
 Innovations:
- Navigation (search) box in Alfheim tab
- Alfheim and Iridescense tabs are merged
- [WARNING!] Changed Blocks and items names and metas
+ Removed 2nd ASMData parameter for world hooks - now tiles are not affected by time manipulation; thermos compatibility fixed
+ Reworked cardinal system serialization, delete /saves/WORLDNAME/data/Cardinal.sys if you have some issues
 
 Fixes:
- #82 ThermalExpansion incompatibility
- Texture errors
- 
-Technical info:
- Updated kotlin to 1.3.50
+ #84 Crash on load when transformed class is null
+ #85 Crash with Ars Magica 2
+ #86 Crash on showing overwolrd portal trade recipes
+ #87 Fixed manamirror client desync
+ [MMO] Improved shared HP spell behavior
+ [MMO] Improved death (left flame effect)
+ [MMO] Spells cooldown now can be discarded by going to creative

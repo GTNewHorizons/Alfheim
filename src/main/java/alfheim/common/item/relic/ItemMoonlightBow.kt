@@ -37,6 +37,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	lateinit var icons: Array<IIcon>
 	lateinit var moonD: IIcon
 	lateinit var moons: Array<IIcon>
+	lateinit var bownana: IIcon
 	
 	init {
 		creativeTab = AlfheimTab
@@ -71,9 +72,15 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			val p = Vector3(0.0, if (player === Minecraft.getMinecraft().thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
 			val ds = arrayOf(0.3, 0.8)
 			val moon = isLookingAtMoon(player.entityWorld, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)
-			val r = 0.1f * if (moon) 3 else 1
-			val g = 0.85f
-			val b = if (moon) g else 0.1f
+			var r = 0.1f * if (moon) 3 else 1
+			var g = 0.85f
+			var b = if (moon) g else 0.1f
+			
+			if (stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana") {
+				r = 0.95f
+				g = 0.95f
+				b = 0.1f
+			}
 			
 			for (d in ds) {
 				for (i in 1..36) {
@@ -144,6 +151,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	override fun registerIcons(reg: IIconRegister) {
 		itemIcon = reg.registerIcon("${ModInfo.MODID}:PhoebusBow")
 		moonD = reg.registerIcon("${ModInfo.MODID}:MoonBow")
+		bownana = reg.registerIcon("${ModInfo.MODID}:Bownana")
 		
 		icons = Array(4) {
 			reg.registerIcon("${ModInfo.MODID}:PhoebusBow_${it + 1}")
@@ -162,15 +170,19 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		
 		var iconD = itemIcon
 		var iconA = icons
+		var moon = false
 		
 		if (player != null) {
 			if (isLookingAtMoon(player.worldObj, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)) {
+				moon = true
 				iconD = moonD
 				iconA = moons
 			}
 		}
 		
-		return if (usingItem == null) {
+		return if (!moon && stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana")
+			bownana
+		else if (usingItem == null) {
 			iconD
 		} else if (j >= maxDmg) {
 			iconA[3]

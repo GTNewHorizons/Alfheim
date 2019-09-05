@@ -3,6 +3,7 @@ package alfheim.common.entity
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
+import alfheim.api.spell.ITimeStopSpecific
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -17,8 +18,13 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
+import java.util.*
 
-class EntityLolicorn(world: World) : EntityRidableFlying(world) {
+class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecific {
+	
+	override val isImmune = false
+	
+	override fun affectedBy(uuid: UUID) = ownerUUID != uuid
 	
 	var tailMovement = 0
 	var tugudukCounter = 0
@@ -27,6 +33,10 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	var owner: String
 		get() = dataWatcher.getWatchableObjectString(15)
 		set(owner) = dataWatcher.updateObject(15, owner)
+	
+	var ownerUUID: UUID
+		get() = UUID.fromString(dataWatcher.getWatchableObjectString(16))
+		set(uuid) = dataWatcher.updateObject(16, "$uuid")
 	
 	init {
 		stepHeight = 1.5f
@@ -44,6 +54,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	override fun entityInit() {
 		super.entityInit()
 		dataWatcher.addObject(15, "")
+		dataWatcher.addObject(16, "")
 	}
 	
 	override fun isAIEnabled() = true
@@ -196,6 +207,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		unmountCounter = 0
 		
 		owner = player.commandSenderName
+		ownerUUID = player.uniqueID
 		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim:Lolicorn.desc", owner)
 	}
 	
@@ -211,11 +223,13 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 	override fun writeEntityToNBT(nbt: NBTTagCompound) {
 		super.writeEntityToNBT(nbt)
 		nbt.setString("Owner", owner)
+		nbt.setString("OwnerUUID", "$ownerUUID")
 	}
 	
 	override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		super.readEntityFromNBT(nbt)
 		owner = nbt.getString("Owner")
+		ownerUUID = UUID.fromString(nbt.getString("OwnerUUID"))
 	}
 	
 	companion object {
@@ -233,7 +247,7 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world) {
 		}
 		
 		fun tick() {
-			val i = EntityLolicorn.requests.iterator()
+			val i = requests.iterator()
 			while(i.hasNext()) {
 				val cr = i.next()
 				timing[cr] = timing[cr]!!-1

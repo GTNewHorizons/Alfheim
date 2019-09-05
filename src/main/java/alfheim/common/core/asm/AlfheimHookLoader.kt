@@ -27,7 +27,6 @@ class AlfheimHookLoader: HookLoader() {
 	companion object {
 		
 		var hpSpells = true
-		var isThermos = false
 		
 		init {
 			AlfheimASMData.load()

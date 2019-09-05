@@ -2,7 +2,6 @@ package alfheim.api.event
 
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.Entity
-import net.minecraft.tileentity.TileEntity
 
 /**
  *
@@ -16,7 +15,4 @@ abstract class TimeStopCheckEvent: Event() {
 	
 	@Cancelable
 	class TimeStopEntityCheckEvent(val entity: Entity): TimeStopCheckEvent()
-	
-	@Cancelable
-	class TimeStopTileCheckEvent(val tile: TileEntity): TimeStopCheckEvent()
 }

@@ -15,6 +15,7 @@ class BlockDreamLog: BlockModRotatedPillar(Material.wood), ILexiconable {
 	
 	init {
 		setBlockName("DreamLog")
+		blockHardness = 2f
 	}
 	
 	override fun register(name: String) {

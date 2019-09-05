@@ -27,7 +27,7 @@ class RecipeHandlerManaInfuser: RecipeHandlerPetalApothecary() {
 		
 	}
 	
-	override fun getRecipeName() = StatCollector.translateToLocal("tile.ManaInfuser.name")!!
+	override fun getRecipeName() = StatCollector.translateToLocal("alfheim.nei.manainfusion")!!
 	
 	override fun getRecipeID() = "alfheim.manaInfuser"
 	
