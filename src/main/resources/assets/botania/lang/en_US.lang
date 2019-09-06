@@ -2,16 +2,16 @@ botania.category.Alfheim=Alfheim
 
 botania.entry.alfheim=Alfheim
 botania.tagline.alfheim=New Horizons!
-botania.page.alfheim0=Alfheim... A beautiful world where magic lives forever... These lands were given to the light alvs, also called elves. But who are they? Creatures similar to people living for so long that they deserve to be considered immortal, they were created by the first Aesir. The very same world is filled with special magic, which made the world so beautiful.
-botania.page.alfheim1=But he also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed... Those that the travelers knew happened to have been in Helheim or Walhall for a long time... Oh, let the heavenly light shines upon the souls of the dead!
+botania.page.alfheim0=&oAlfheim... A beautiful world where magic lives forever... These lands were given to the light alvs, also called elves. But who are they? Creatures similar to humans living for so long that they deserve to be considered immortal, they were created by the first Æsir. The very same world is filled with special magic, which made the world so beautiful.&0
+botania.page.alfheim1=&oBut it also has terrible characteristics: time. Even the time itself in this place is distorted. Many legends go about this place: those who once came to Alfheim, returned from it after decades, although for them the days passed... Those that the travelers knew happened to have been in Helheim or Walhall for a long time... Oh, let the heavenly light shines upon the souls of the dead!&0
 
 botania.entry.anomaly=Anomalies
 botania.tagline.anomaly=The dangers of this world
-botania.page.anomaly0=We all know that in the past, Alfheim, like the other worlds, suffered from The Shattering. And since this event was not only physical, but magical in nature, it is clear that anomalies were formed in the world.
+botania.page.anomaly0=&oWe all know that in the past, Alfheim, like the other worlds, suffered from The Shattering. And since this event was not only physical, but magical in nature, it is clear that anomalies were formed in the world.&0
 botania.page.anomalyManaVoid.t=&1Manavortex&0
-botania.page.anomalyManaVoid.d=Pulls &1Mana&0 from players nearby. One brave man decided to check how much it could hold. Gained a lot of mana and came closer to it. According to the observers, after about a minute the vortex &4exploded&0, killing the experimenter on the spot, and a huge sphere of mana flew in it's direction.
+botania.page.anomalyManaVoid.d=Pulls &4Mana&0 from players nearby. One brave man decided to check how much it could hold. Gained a lot of mana and came closer to it. According to the observers, after about a minute the vortex &4exploded&0, killing the experimenter on the spot, and a huge sphere of mana flew in it's direction.
 botania.page.anomalySpeedUp.t=&1Accelerator&0
-botania.page.anomalySpeedUp.d=A very rare anomaly, within its radius of action, is capable of twice accelerating all creatures and some mechanisms, like furnaces. Some lucky ones who have found such an anomaly build their houses right next to it, significantly speeding up their flower meadows.
+botania.page.anomalySpeedUp.d=A very rare anomaly, it is capable of twice accelerating all creatures and some mechanisms, like furnaces within its radius of action. Some lucky ones who have found such an anomaly build their houses right next to it, significantly speeding up their flower meadows.
 botania.page.anomalyWarp.t=&1Warp&0
 botania.page.anomalyWarp.d=Probably the most easily recognizable anomaly. If you see a bunch of randomly floating blocks - this is the &1Warp&0. It is very dangerous for singles, as it can easily imprint into the block, therefore, in order to successfully pass through it, it is worth walking in pairs, since then it simply swaps the travelers in places.
 botania.page.anomalyAntigrav.t=&1Antigravity&0
@@ -20,38 +20,38 @@ botania.page.anomalyLightning.t=&1Clot of Dark Energy&0
 botania.page.anomalyLightning.du=Attacks by electrical discharges all living things that are within reach, and the closer an object is found, the stronger the hit it receives. Strangely reacts on &1Gaia Spirits&0 nearby. Perhaps it can somehow be used.
 botania.page.anomalyLightning.d=Attacks by electrical discharges all living things that are within reach, and the closer an object is found, the stronger the hit it receives. In practice, used to create &4Anti-pylons&0
 botania.page.anomalyManaTornado.t=&1Mana Thunder&0
-botania.page.anomalyManaTornado.d=Every few seconds, randomly shoots in the randomly directed &1Mana burst&0 with a random effect. Sometimes this can even lead to an explosion at the point where the burst hits the surface.
+botania.page.anomalyManaTornado.d=Every few seconds, shoots randomly directed &1Mana burst&0 with a random effect. Sometimes this can even lead to an explosion at the point where the burst hits the surface.
 botania.page.anomalySpeedDown.t=&1Decelerator&0
-botania.page.anomalySpeedDown.d=An anomaly, as rare as &1Acceleration&0, and simply works opposite to it.
+botania.page.anomalySpeedDown.d=An anomaly, as rare as &1Accelerator&0, and simply works opposite to it.
 botania.page.anomalyGravity.t=&1Gravity Vortex&0
 botania.page.anomalyGravity.d=The field of alternating gravity, dragging all the objects to it. If you got into the zone of its action, then your only way to get out is to run in the opposite direction, otherwise you can stay there forever. Does not act on the blocks.
 
 botania.entry.elves=Elves
-botania.tagline.elves=Native people
-botania.page.elves0=As it was said before, elves are beautiful creatures, spellfully wielding magic, which the first Aesir settled in Alfheim. A great sorcerer and Alfheim-born Mastray was the only one who knew the temporary anomalies of his own world as his five fingers.
-botania.page.elves1=His greatest invention was the portal to Midgard, the middle world of the world tree Yggdrasil. This world was not like Alfheim. He studied this world for a week on the Midgard calendar, and during this time met people. Those only heard about the elven kingdom, but now they are eager to get there...
-botania.page.elves2=Mastray warned them about the time jump that they will have to endure, and almost everyone listened to his warnings... 30 years passed on Midgard, on Alfhem - only 7 hours. But they were warned, what is their punishment from themselves!
-botania.page.elves3=After this incident, the elves sought the most stable lands in their kingdom. In them, when one second passes in Alfhem, a little more than an hour passes on Midgard. So then the great cooperation of elves and people began.
-botania.page.elves4=Among the people there were mages who comprehended their craft through flowers. This magic was something similar to elven one. Having studied the precious component of Midgard ores (iron, diamonds and similar jewelry), the elves understood: bargaining with people is profitable. However, their world is not filled with mana like Alfheim. Therefore, they concluded a trade union, which is still valid today.
+botania.tagline.elves=Native inhabitants
+botania.page.elves0=As it was said before, elves are beautiful creatures, spellfully wielding magic, which the first &4Æsir&0 settled in &4Alfheim&0. A great sorcerer and Alfheim-born &6Mastray&0 was the only one who knew the temporary anomalies of his own world as his five fingers.
+botania.page.elves1=His greatest invention was the portal to &4Midgard&0, the middle world of the world tree &4Yggdrasil&0. This world was not like &4Alfheim&0. He studied this world for a week on the &4Midgard&0 calendar, and during this time met humans. Those only heard about the elven kingdom, but now they are eager to get there...
+botania.page.elves2=&6Mastray&0 warned them about the time jump that they will have to endure, and almost everyone listened to his warnings... 30 years passed on &4Midgard&0, on &4Alfhem&0 - only 7 hours. But they were warned, what is their punishment from themselves!
+botania.page.elves3=After this incident, the elves sought the most stable lands in their kingdom. In those, when one second passes in &4Alfhem&0, a little more than an hour passes in &4Midgard&0. So then the great cooperation of elves and humans began!
+botania.page.elves4=Among the humans there were mages who comprehended their craft through flowers. This magic was something similar to elven one. Having studied the precious component of &4Midgard&0 ores (iron, diamonds and similar jewelry) elves understood that bargaining with humans is profitable. However, their world is not filled with mana like &4Alfheim&0. Therefore, they concluded a trade union, which is still valid today.
 
 botania.entry.pylons=New pylons
 botania.tagline.pylons=I will command the parade
-botania.page.pylons0=There are some changes in pylons you need to get used to:<br>All human pylons has their counterparts in Alfheim: Elven pylon is same tier as Mana pylon; Terra - as Yordin;<br>Gaia pylon is still top-tier, but it's recipe has changed.
+botania.page.pylons0=There are some changes in pylons you need to get used to:<br>All &4Midgard&0 pylons has their counterparts in &4Alfheim&0: &1Elven pylon&0 is same tier as &1Mana pylon&0; &1Yordin pylon&0 - as &1Natura pylon&0;<br>&1Gaia pylon&0 is still top-tier, but it's recipe has changed.
 botania.page.pylons1=Creating &1Elven Pylon&0
 botania.page.pylons2=Creating &1Gaia Pylon&0
 
 botania.entry.portal=Portal to Alfheim
 botania.tagline.portal=We need to go even more deeper!
-botania.page.portal0=Mastray... He was a native of Alfheim and created the first portal to Midgard, which laid the foundation for a great alliance. However, the portal itself was given to him with great difficulty. To build a portal to Midgard, the resources of Midgard were needed... How ironic... It's good that Freyr himself lived in Alfheim, because he was a race of Vans, another kind of gods...
-botania.page.portal1=He understood Mastray, and brought him terrasteel - the great alloy of Midgard. Then he quickly finished the portal and activated it. Apparently, if you build it in Midgard, it will also work...
-botania.page.portal2=At the heart of the portal is Bifröst - the legendary rainbow bridge that connects Asgard to other worlds.
-botania.page.portal3=The next thing you need is a link that can set up the perfect connection between Alfheim and Midgard. Elves will never tell the secret of making this link to people, and for its manufacture will require the Netherstar - the artifact of Muspelheim. It remains only to build the portal correctly and it's ready!
-botania.page.portal4=Creating &1Alfheim Portal Core&0
+botania.page.portal0=&6Mastray&0... He was a native of &4Alfheim&0 and created the first portal to &4Midgard&0, which laid the foundation for a great alliance. However, the portal itself was given to him with great difficulty. To build a portal there, some resources of &4Midgard&0 were needed... How ironic... It's good that &6Freyr&0 himself lived in &4Alfheim&0, because he was a race of &4Vans&0, another kind of gods...
+botania.page.portal1=He understood &6Mastray&0, and brought him &1Terrasteel&0 - the great alloy of &4Midgard&0. After that he quickly finished the portal and activated it. Apparently, if you build it in &4Midgard&0, it will also work...
+botania.page.portal2=At the heart of the portal is &4Bifröst&0 - the legendary rainbow bridge that connects &4Asgard&0 to other worlds.
+botania.page.portal3=Creating &1Alfheim Portal Core&0
+botania.page.portal4=The next thing you need is a link that can set up the perfect connection between &4Alfheim&0 and &4Midgard&0. Elves will never tell the secret of making this link to humans, and for its manufacture will require the &1Netherstar&0 - the artifact of &4Muspelheim&0. It remains only to build the portal correctly and it's ready!
 botania.page.portal5=Creating &1Interdimensional Gateway Core&0
 botania.page.portal6=Portal to Alfheim
-botania.page.portal7=To activate the portal, you only need to use the Core on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in Alfheim it doesn't require mana sources, since it takes energy from the world itself.
-botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim at the price of its integrity if it is not in the center of the world.
-botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for Mastray. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of Alfheim.
+botania.page.portal7=To activate the portal, you only need to use the &1Core&0 on the portal, and operating principle is identical to the portal of livingwood. The only difference is that in &4Alfheim&0 it doesn't require &4Mana&0 sources, since it takes energy from the world itself.
+botania.page.portal8=Unfortunately, it was impossible to create a stable and fully functioning portal even for &6Mastray&0. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of &4Alfheim&0 at the price of its integrity if it is not in the center of the world.
+botania.page.portal8s=Unfortunately, it was impossible to create a stable and fully functioning portal even for &6Mastray&0. This version can no longer pass the inanimate objects, only beings mentally connected with higher creatures - players. But it successfully compensates temporal anomalies of &4Alfheim&0.
 
 botania.entry.worldgen=Worldgen
 botania.tagline.worldgen=More strange stuff!
@@ -87,7 +87,7 @@ botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
 botania.page.ores1=Dragonstone ore - precious pink elven jewel. It is a pity that you can not make the tools out of it.<br>Gold ore - looks like the elves had the metal of the gods too...<br>Elven quartz ore - it's like the quartz from the nether, a beautiful green color, like Alfheim itself!
-botania.page.ores2=Iffesal ore - only a few people have heard about it. It is believed that its dust has a great power, and greatest elven inventions are based on it. The elves themselves are aware of the greed and profit thirst for people, so they don't want to bargain with it.
+botania.page.ores2=Iffesal ore - only a few people have heard about it. It is believed that its dust has a great power, and greatest elven inventions are based on it. Elves themselves are aware of human's greed and profit thirst, so they don't want to bargain with it.
 
 botania.entry.mobs=Mobs
 botania.tagline.mobs=Finally, life!
@@ -223,8 +223,10 @@ botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
 
 botania.entry.stories=Token of Banter
 botania.tagline.stories=Yet knowledge can be bought
-botania.page.stories0=С тех пор, как жители Альвхейма и Мидгарда установили тесные торговые отношения, прошли века. Авантюристы, исследователи и мудрецы мира людей, подобно Мастрею, стремились познать все тайны эльфов, дабы усовершенствовать собственные технологии, разбогатеть и прославиться. Самым рьяным из них был алхимик Тайвин, который изобрёл &1монету мудрости&0 - символ знаний, накопленных за тысячелетия его жизни. Он сумел договориться со старейшинами эльфов о взаимовыгодном обмене информацией; Тайвин предоставляет частицу своих алхимических изысканий, запечатанных в монете, а эльфы - секреты и наставления своего народа. Стало быть, для чего мудрейшим старейшинам могли бы понадобиться знания мидгардского алхимика? Всё проще, чем может показаться на первый взгляд. Эльфы всегда стремились возвыситься над другими разумными существами, а прямая дорога к этому - знания, да не только собственные, но и чуждые им прежде. Так, через века, шёл обмен накопленных знаний между мирами людей и эльфов. Пока, в один довольно обычный день, не произошло нечто невообразимое. Ученик Тайвина предал своего наставника, а &1монеты мудрости&0 со временем затерялись по всему Мидгарду.
-botania.page.stories1=
+botania.page.stories0=Centuries have passed since the inhabitants of &4Alfheim&0 and &4Midgard&0 established close trade relations. Adventurers, researchers and sages of the human world, like &6Mastrei&0, sought to learn all the secrets of the elves in order to improve their own technologies, to become rich and famous. The most zealous of them was the alchemist &6Tywin&0, who invented &1Token of Banter&0 - a symbol of knowledge accumulated over decades of his life.
+botania.page.stories1=He managed to negotiate with the elven elders on mutually beneficial exchange of information: &6Tywin&0 provides a piece of his alchemical research, sealed in a coin, and the elves - the secrets and teachings of his people. So, why would the wisest elders need the knowledge of the Midgard alchemist?
+botania.page.stories2=Everything is simpler than it might seem at first glance. Elves have always sought to rise above other sentient beings, and the straight road to this is knowledge, not only their own, but also foreign to them before. So, through the centuries, there was an exchange of accumulated knowledge between the worlds of humans and elves.
+botania.page.stories3=Until something unimaginable happened on one rather ordinary day: a student of &6Tywin&0 betrayed his mentor, distributing &1Tokens of banter&0 over &4Midgard&0. As a result of this foolish act they were all lost over time.
 
 ################################################################ BACKPORT ################################################################
 
@@ -297,31 +299,31 @@ botania.page.multbaub1=You don't fool me
 
 botania.entry.es= Elven Story
 botania.tagline.es=New Challenge!
-botania.page.es0=Well, you chose the Elven Story mode. So, you are an elf, belonging to one of the races you choose. What is your goal? The first is to survive, the second is to build a portal to Midgard - the birthplace of people-minecrafters, or just Overworld. All information is in your Lexica Botania. May the gods lead you along the way of success!
+botania.page.es0=Congrats, you chose the &4Elven Story mode&0! Now you can become an elf, belonging to one of the races you may have choosen. What is your goal? The first is to survive, the second is to build a portal to &4Midgard&0 - the birthplace of people-minecrafters, or just &4Overworld&0. All required information is in your &1Lexica Botania&0. May the gods lead you along the way of success!
 
 botania.entry.races= Races
 botania.tagline.races=It's actually not races
-botania.page.races0=Even Hel herself didn't destroy the intelligent life in Alfheim and it's still boiling there. This world serves as the homeland for the elven races who live at an equal distance from the center of the world. In total, there are nine races: Salamanders, Sylphes, Cait Sith, Pookas, Gnomes, Leprechauns, Spriggans, Undines and Imps.
+botania.page.races0=Even &4Hel&0 herself hadn't destroyed the intelligent life in &4Alfheim&0 and it's still boiling there. This world serves as the homeland for the elven clans who live at the equal distance from the center of the world. In total, there are nine races: &2Salamanders&0, &2Sylphes&0, &2Cait Sith&0, &2Pookas&0, &2Gnomes&0, &2Leprechauns&0, &2Spriggans&0, &2Undines&0 and &2Imps&0.
 botania.page.races1=Each of them has a unique color, a shape of the wings and an icon, and they all can fly. 
-botania.page.races2=By default, the flight is activated by the [F] key, and if you want to fly even faster, then press the acceleration button - increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the "ALT" pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
+botania.page.races2=By default, the flight is activated by the [F] key, and if you want to fly even faster, then press the acceleration button to increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the [ALT] pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
 
 ################################################################ MMO ################################################################
 
 botania.entry.parties= Parties
 botania.tagline.parties=It's a partytime!
-botania.page.parties0=The ability to create groups has been added to the game. By default, it can hold up to five participants. The main feature is disabled by default damage from allies. It will also allow you to monitor the health and mana of your friends when they are in sight, and to report on the negative effects on them in time.
-botania.page.parties1=To add a player to the party, you need to create a Pipe of Peace, which will allow you to enter into a contract with the spirits, so that they provide you with protection against attacks from each other. First, it must be smoked by the one who will be the leader, then by new member. After that, the pipe shatters.
+botania.page.parties0=The ability to create &4Groups&0 has been added to the game. By default, it can hold up to five participants. The main feature is disabled by default damage from allies. It will also allow you to monitor the &4Health&0 and &4Mana&0 of your friends when they are in sight, and to report on the negative effects on them in time.
+botania.page.parties1=To add a player to the party, you need to create a &1Pipe of Peace&0, which will allow you to enter into a contract with the &4Spirits&0, so that they provide you with protection against attacks from each other. First, it must be smoked by the one who will be the &4Leader&0, then by new &4Member&0. After that, the pipe shatters.
 botania.page.parties2=Creating &1Pipe of Peace&0
-botania.page.parties3=If for some reason you need to leave the party or exclude someone - just write the name of this member on the Parchment of Discord and burn it (RMB). The only condition is that you must be the leader of this group (your name is red), and the member must be in sight.
+botania.page.parties3=If for some reason you need to leave the party or exclude someone - just write his name on the &1Parchment of Discord&0 and burn it (right-click). The only condition is that you must be the &4Leader&0 of this group (your name is red), and the &4Member&0 must be in sight.
 botania.page.parties4=Creating &1Parchment of Discord&0
 
 botania.entry.spells= Spells
 botania.tagline.spells=No magic outside Hogwarts!
-botania.page.spells0=Each elven race has its own set of spells, with a certain affinity. So, Salamanders are skillful fire mages, Sylphs - wind, Kait Sith can subdue the nature, Pookas are excellent musicians, Gnomes specialize in earth magic, Leprechauns on various technologies, Spriggans are masters of illusions, Undines - water mages, and Imps are servants of Darkness.
-botania.page.spells1=Before using the spell, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
-botania.page.spells2=The spell is selected using the arrows, cast happens when you press [C]. Also, while holding [Ctrl]+[Shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [Ctrl]. You can also cancel the current spell by pressing the [X] button.
-botania.page.spells3=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change.
-botania.page.spells3u=Spells for your race will cost exactly as much mana as indicated in their description, the rest - 25% more expensive. Also, some races have top-level magic, the price of which does not change, but it cannot be used without certain knowledge.
+botania.page.spells0=Each elven race has its own set of &1Spells&0, with a certain affinities: &2Salamanders&0 are skillful &4Fire&0 mages, &2Sylphs&0 - &4Wind&0, &2Kait Sith&0 can subdue the &4Nature&0, &2Pookas&0 are excellent &4Musicians&0, &2Gnomes&0 specialize in &4Earth&0 magic, &2Leprechauns&0 on various &4Technologies&0, &2Spriggans&0 are masters of &4Illusions&0, &2Undines&0 - &4Water&0 mages, and &2Imps&0 are servants of &4Darkness&0.
+botania.page.spells1=Before using the &1Spell&0, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
+botania.page.spells2=The &1Spell&0 is selected using the arrows, cast happens when you press [C]. Also, while holding [Ctrl]+[Shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [Ctrl]. You can also cancel the current spell by pressing the [X] button.
+botania.page.spells3=&1Spells&0 for your race will cost exactly as much &4Mana&0 as indicated in their description, the rest - twice expensive. Also, some races have &4Top-level Magic&0, the price of which does not change.
+botania.page.spells3u=&1Spells&0 for your race will cost exactly as much &4Mana&0 as indicated in their description, the rest - twice expensive. Also, some races have &4Top-level Magic&0, the price of which does not change, but it cannot be used without certain knowledge.
 botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures in 9 blocks diametered area
 botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness
 botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interrupts if you move
@@ -377,8 +379,8 @@ botania.page.windblades=Launches air discs, causing average air damage to enemie
 
 botania.entry.targets= Targeting
 botania.tagline.targets=You can't hide from me
-botania.page.targets0=For more convenient use of spells in the game there is also a system of targeting. To select an enemy, hover the cursor on it and hold down selection button ([R] by default). Now you can use spells on it that require a target.
-botania.page.targets1=To select a party member, simply press [T]. The selection will cycle through and the name of the selected member will be highlighted in green. Clicking on [R] won't allow you to select a member so not to accidentally attack him. Tracking range - 128 blocks for bosses and 32 for the rest.
+botania.page.targets0=For more convenient use of &1Spells&0 there is also a system of &1Targeting&0. To select an enemy, hover the cursor on it and hold down selection button ([R] by default). Now you can use spells on it that require a target.
+botania.page.targets1=To select a party member, simply press [T]. The selection will cycle through and the name of the selected member will be highlighted in green. Clicking on [R] won't allow you to select a member so not to accidentally attack him. Tracking range is 128 blocks for bosses and 32 for everyone else.
 
 lexicon.time=Cast: %.2f
 lexicon.cd=Cooldown: %.2f
@@ -393,14 +395,16 @@ alfheim.entry.coloredDirt=Iridescent Dirt [IRI]
 alfheim.tagline.coloredDirt=Rainbow dirt for your decoration needs
 alfheim.entry.aurora=Aurora Dirt
 alfheim.tagline.aurora=One dirt, lots of colors
-alfheim.entry.technicolorRod=Rod of the Vibrant Plains [IRI]
-alfheim.tagline.technicolorRod=Rainbow dirt made from thin air
-alfheim.entry.lightningRod=Rod of the Thundering Peaks [IRI]
-alfheim.tagline.lightningRod=Stike fear and thunder into your foes
-alfheim.entry.flameRod=Rod of the Tricky Flame [IRI]
-alfheim.tagline.flameRod=Pinpoint flamethrower
-alfheim.entry.interdictionRod=Rod of the Stormy Sea [IRI]
-alfheim.tagline.interdictionRod=Push enemies out of your personal space
+alfheim.entry.rodTechnicolor=Rod of the Vibrant Plains [IRI]
+alfheim.tagline.rodTechnicolor=Rainbow dirt made from thin air
+alfheim.entry.rodLightning=Rod of the Thundering Peaks [IRI]
+alfheim.tagline.rodLightning=Stike fear and thunder into your foes
+alfheim.entry.rodFlameStar=Rod of the Tricky Flame [IRI]
+alfheim.tagline.rodFlameStar=Pinpoint flamethrower
+alfheim.entry.rodInterdiction=Rod of the Stormy Sea [IRI]
+alfheim.tagline.rodInterdiction=Push enemies out of your personal space
+alfheim.entry.rodPrismatic=Rod of the Prismatic Lake [IRI]
+alfheim.tagline.rodPrismatic=Rainbow lights
 alfheim.entry.irisSapling=Iridescent Trees
 alfheim.tagline.irisSapling=Grow trees with all the colors of the wind
 alfheim.entry.treeCrafting=Tree Suffusion
@@ -417,8 +421,6 @@ alfheim.entry.sealCreepers=Manaseal Creepers [IRI]
 alfheim.tagline.sealCreepers=A storm in the Manatide
 alfheim.entry.kindling=Blaze Kindling [IRI]
 alfheim.tagline.kindling=Quickened firespread
-alfheim.entry.waveRod=Rod of the Prismatic Lake [IRI]
-alfheim.tagline.waveRod=Rainbow lights
 alfheim.entry.itemDisplay=Item Platforms [IRI]
 alfheim.tagline.itemDisplay=Display items without letting them despawn
 alfheim.entry.lightningSapling=Thunderous Oak
@@ -439,14 +441,14 @@ alfheim.entry.tctrees=Thaumic Suffusion
 alfheim.tagline.tctrees=Life from the void
 alfheim.entry.silencer=Sealing Oak
 alfheim.tagline.silencer=Softer sounds
-alfheim.entry.amp=Sonic Amplifier [IRI]
-alfheim.tagline.amp=Louder sounds
+alfheim.entry.amplifier=Sonic Amplifier [IRI]
+alfheim.tagline.amplifier=Louder sounds
 alfheim.entry.crysanthermum=Crysanthermum [IRI]
 alfheim.tagline.crysanthermum=Mana from temperature
 alfheim.entry.andmyaxe=Holy Blade Revelation [IRI]
 alfheim.tagline.andmyaxe=The weapon of the First Godslayer
-alfheim.entry.star=Frozen Stars [IRI]
-alfheim.tagline.star=An ender light source
+alfheim.entry.starBlock=Frozen Stars [IRI]
+alfheim.tagline.starBlock=An ender light source
 alfheim.entry.dagger=Dagger of the Perfect Soul [IRI]
 alfheim.tagline.dagger=The weapon of the Gaterender
 alfheim.entry.shimmer=Shimmerquartz [IRI]
@@ -471,25 +473,28 @@ alfheim.page.aurora3=Stairs
 alfheim.page.aurora4=Slabs
 alfheim.page.aurora5=And back again
 
-alfheim.page.technicolorRod0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
-alfheim.page.technicolorRod1=Simply drowning in colors
-alfheim.page.technicolorRod2=It appears that connecting your soul to the ancient god of earth, &4Sif&0, can increase your ability to use the &1Rod of the Vibrant Plains&0. By donning the &1Priestly Emblem: Sif&0, your range extends beyond this rod's normal limits. Wearing the &1Ring of Far Reach&0 will increase your range further with the Emblem's power.
-alfheim.page.technicolorRod3=Welcome now, and take the crystal cup
+alfheim.page.rodTechnicolor0=The &1Rod of the Vibrant Plains&0, like the &1Rod of the Highlands&0, can place &1Iridescent Dirt&0 in the air at the cost of mana. Unlike its less colorful counterpart, sneaking and clicking in the air will shift the rod between the various colors of &4Iridescense&0.<br>This rod can be given to a &1Livingwood Avatar&0.
+alfheim.page.rodTechnicolor1=Simply drowning in colors
+alfheim.page.rodTechnicolor2=It appears that connecting your soul to the ancient god of earth, &4Sif&0, can increase your ability to use the &1Rod of the Vibrant Plains&0. By donning the &1Priestly Emblem: Sif&0, your range extends beyond this rod's normal limits. Wearing the &1Ring of Far Reach&0 will increase your range further with the Emblem's power.
+alfheim.page.rodTechnicolor3=Welcome now, and take the crystal cup
 
-alfheim.page.lightningRod0=The &1Rod of the Thundering Peaks&0, much like its sword cousin, the &1Thundercaller&0, can summon lightning to strike your enemies. It will leap from enemy to enemy, killing them all in turn.<br>A &1Livingwood Avatar&0 can also wield this rod.
-alfheim.page.lightningRod1=The experimental results are shocking
-alfheim.page.lightningRod2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. By donning the &1Priestly Emblem: Thor&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
-alfheim.page.lightningRod3=In anger smite the earth
+alfheim.page.rodLightning0=The &1Rod of the Thundering Peaks&0, much like its sword cousin, the &1Thundercaller&0, can summon lightning to strike your enemies. It will leap from enemy to enemy, killing them all in turn.<br>A &1Livingwood Avatar&0 can also wield this rod.
+alfheim.page.rodLightning1=The experimental results are shocking
+alfheim.page.rodLightning2=It appears that connecting your soul to the ancient god of lightning, &4Thor&0, can increase your proficiency with the power of thunder. By donning the &1Priestly Emblem: Thor&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.<br>There appear to be even further power trapped within the rod, but it would take a god to get it out.
+alfheim.page.rodLightning3=In anger smite the earth
 
-alfheim.page.flameRod0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
-alfheim.page.flameRod1=Hot Shots
-alfheim.page.flameRod2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. By donning the &1Priestly Emblem: Loki&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
-alfheim.page.flameRod3=Sneaking past your defenses
+alfheim.page.rodFlameStar0=The ability of the &1Rod of the Tricky Flame&0 is to set fire to anyone it is pointed at. Also it will deal a small amount of fire damage to anyone in the area of effect, centered in the fire star.
+alfheim.page.rodFlameStar1=Hot Shots
+alfheim.page.rodFlameStar2=It appears that connecting your soul to the ancient god of fire, &4Loki&0, can increase your proficiency with the power of flames. By donning the &1Priestly Emblem: Loki&0, this can be achieved. It seems that &4Manatide Prowess&0 has a similar effect upon the rod.
+alfheim.page.rodFlameStar3=Sneaking past your defenses
 
-alfheim.page.interdictionRod0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
-alfheim.page.interdictionRod1=Really not feelin up to it right now
-alfheim.page.interdictionRod2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air. By donning the &1Priestly Emblem: Njord&0, the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
-alfheim.page.interdictionRod3=At the doom of men he will come back
+alfheim.page.rodInterdiction0=The &1Rod of the Stormy Sea&0 is one for those who don't like people in their personal space. Using it will seal the area around you, creating a sphere of force where other living beings cannot tread, and projectiles cannot pass. Whenever something tries to break this seal, &4Mana&0 is consumed to repel it.
+alfheim.page.rodInterdiction1=Really not feelin up to it right now
+alfheim.page.rodInterdiction2=It appears that connecting your soul to the ancient god of wind, &4Njord&0, can increase your proficiency with the power of air. By donning the &1Priestly Emblem: Njord&0, the force you exert with this rod will become much greater. It seems that &4Manatide Prowess&0 has a similar, but weaker effect upon the rod.
+alfheim.page.rodInterdiction3=At the doom of men he will come back
+
+alfheim.page.rodPrismatic0=One particularly frustrating property of the &1Mana Lens: Flash&0 is its tendency to lock the color of a &1Mana Flash&0 immidiately upon making it. Even if you want to make a rainbow &1Flash&0, you'll get one color. By using the power of the &1Rod of the Prismatic Lake&0, you can make the rainbow you've been searching for.<br>It can be tinged with &1Phantom Ink&0.
+alfheim.page.rodPrismatic1=All the colors of the wind
 
 alfheim.page.irisSapling0=Blessed by the goddess of rainbows, these saplings are made from their earthly counterparts by the purifying magic of a &1Pure Daisy&0. These saplings will only grow on &1Iridescent Dirt&0 and take on the hue of the dirt they lay their roots in.<br><br>They're just &oreally&0 big carnations
 alfheim.page.irisSapling1=Planks
@@ -525,9 +530,6 @@ alfheim.page.kindling1=Stop drop and roll
 alfheim.page.livingwoodFunnel0=For some people, the &1Hopper&0 is too lax. It allows items through when it shouldn't, and sometimes moves them too fast. The &1Livingwood Funnel&0 is far, far stricter. It only allows one item through at a time, and can be filtered by placing an &1Item Frame&0 on one of its sides.
 alfheim.page.livingwoodFunnel1=One at a time, please
 
-alfheim.page.waveRod0=One particularly frustrating property of the &1Mana Lens: Flash&0 is its tendency to lock the color of a &1Mana Flash&0 immidiately upon making it. Even if you want to make a rainbow &1Flash&0, you'll get one color. By using the power of the &1Rod of the Prismatic Lake&0, you can make the rainbow you've been searching for.<br>It can be tinged with &1Phantom Ink&0.
-alfheim.page.waveRod1=All the colors of the wind
-
 alfheim.page.itemDisplay0=The &1Item Platform&0 is a neat way to display an item without having it despawn. Giving it an item via right click or hopper will show it floating above the platform. It's a neat way to show off your piles of resources.
 alfheim.page.itemDisplay1=Terrasteel makes you look rich
 
@@ -554,11 +556,11 @@ alfheim.page.circuitSapling2=The planks work too
 alfheim.page.circuitSapling3=And Stairs
 alfheim.page.circuitSapling4=And even Slabs
 
-naturalpledge.page.calico0=The &1Calico Tree&0 is so cat-like, it scares more than just creepers away, it actually scares off any explosion at all. Any block from the tree can be used for this, including the sapling.
-naturalpledge.page.calico1=Not a scratching post
-naturalpledge.page.calico2=The planks work too
-naturalpledge.page.calico3=And Stairs
-naturalpledge.page.calico4=And even Slabs
+alfheim.page.calicoSapling0=The &1Calico Tree&0 is so cat-like, it scares more than just creepers away, it actually scares off any explosion at all. Any block from the tree can be used for this, including the sapling.
+alfheim.page.calicoSapling1=Not a scratching post
+alfheim.page.calicoSapling2=The planks work too
+alfheim.page.calicoSapling3=And Stairs
+alfheim.page.calicoSapling4=And even Slabs
 
 alfheim.page.toolbelt0=The &1Botanist's Toolbelt&0 is an easy-access extra inventory. By sneaking, you gain access to 12 extra stacks of storage, which can be used by interacting with the air around where they appear. Any items or blocks in it will provide for the &1Rod of the Shifting Crust&0.
 alfheim.page.toolbelt1=Not quite hammerspace
@@ -580,8 +582,8 @@ alfheim.page.silencer2=Planks
 alfheim.page.silencer3=Slabs
 alfheim.page.silencer4=Stairs
 
-alfheim.page.amp0=By dampening the air within &1Note Blocks&0, the &1Sonic Amplifier&0 reverberates sound, making sounds within a block or two sound far louder. The more you have, the louder the sound.
-alfheim.page.amp1=Soaryn + Amp + Cacophonium = Dire rage
+alfheim.page.amplifier0=By dampening the air within &1Note Blocks&0, the &1Sonic Amplifier&0 reverberates sound, making sounds within a block or two sound far louder. The more you have, the louder the sound.
+alfheim.page.amplifier1=Soaryn + Amp + Cacophonium = Dire rage
 
 alfheim.page.crysanthermum0=The &1Crysanthermum&0 is a hardy flower that can survive in any climate. However, its mana generation isn't indifferent to the climate. By feeding it &1Metamorphic Stone&0, you change its temperature. The farther its temperature is to the biome you're in, the more mana it will generate. The hotter or colder the biome the stone comes from, the hotter or colder the flower will be after eating that stone.
 alfheim.page.crysanthermum1=There are, however, a few caveats. Feeding the flower &1Fungal&0 stone can do anything, from cool the flower rapidly to heat it up immensely. If a flower becomes too cold or too hot, it'll stop working until it gets back to normal temperature. Using a stone that was used within the last eight will give you diminishing returns for the next 8 stones, meaning that you'll occasionally have to course-correct.
@@ -590,10 +592,10 @@ alfheim.page.crysanthermum2=Left by a Fortanono
 alfheim.page.andmyaxe0=&1Elementium&0 is a highly enchantable substance. So enchantable, in fact, it seems one can enchant it with spells and power outside the normal cycles. By flooding an axe of the stuff with six powers, you have recreated a legendary weapon: the &1Holy Blade Revelation&0. It attacks not the body, but the mind. This has interesting effects when used to attack an immortal.
 alfheim.page.andmyaxe1=&1Revelation&0 has two main abilities. It can attack like a sword, and mine like an axe. It cannot, however, recieve any axe enchantments. The other ability is its soul-draining power. Drawing it back, like a bow, will drain a little mana from anyone foolish enough to be within the blade's range. The range increases with time held back.
 
-alfheim.page.star0=The &1Frozen Star&0 is the light of the stars, trapped upon earth. They are relatively cheap light sources, and give off light with the same strength as &1Glowstone&0. Due to their instability, they can only be harvested by players.
-alfheim.page.star1=Find Polaris to find your way
-alfheim.page.star2=The &1Crackling Star&0 is the form of the stars, trapped upon earth, and brought forth through &4Iridescence&0. They appear as a ball of light, but will distribute their mass to a &1Crackling Star&0 it's bound to with a &1Wand of the Forest&0. They give off light with the same strength as &1Glowstone&0, and can be made in any of the colors of &4Iridescence&0.
-alfheim.page.star3=Wire's frames
+alfheim.page.starBlock0=The &1Frozen Star&0 is the light of the stars, trapped upon earth. They are relatively cheap light sources, and give off light with the same strength as &1Glowstone&0. Due to their instability, they can only be harvested by players.
+alfheim.page.starBlock1=Find Polaris to find your way
+alfheim.page.starBlock2=The &1Crackling Star&0 is the form of the stars, trapped upon earth, and brought forth through &4Iridescence&0. They appear as a ball of light, but will distribute their mass to a &1Crackling Star&0 it's bound to with a &1Wand of the Forest&0. They give off light with the same strength as &1Glowstone&0, and can be made in any of the colors of &4Iridescence&0.
+alfheim.page.starBlock3=Wire's frames
 
 alfheim.page.dagger0=&1The Dagger of the Perfect Soul&0 is the manifestation of rebellion. It, paradoxically, is stronger when on the defense than on the attack. As a weapon, it's weaker than a sword of wood. When you parry with it, however, if you can block before the blade becomes dun, it will reflect the strength of the attack upon the attacker. It has been said that this blade has freed many from oppression's clutches.
 

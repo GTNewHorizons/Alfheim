@@ -181,9 +181,9 @@ object AlfheimLexiconData {
 			.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeElvenPylon), PageCraftingRecipe("2", AlfheimRecipes.recipeGaiaPylon)).icon = ItemStack(AlfheimBlocks.alfheimPylon, 1, 0)
 		
 		portal.setPriority()
-			.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"),
-							 PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
-							 PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
+			.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+							 PageCraftingRecipe("3", AlfheimRecipes.recipeAlfheimPortal),
+							 PageText("4"), PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
 							 PageMultiblock("6", AlfheimMultiblocks.portal),
 							 PageText("7"), PageText(if (AlfheimConfigHandler.destroyPortal) "8" else "8s"))
 		
