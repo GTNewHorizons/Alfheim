@@ -37,7 +37,7 @@ class TileAlfheimPortal: TileMod() {
 	var posY = -1
 	var posZ = 0
 	
-	internal val portalAABB: AxisAlignedBB
+	val portalAABB: AxisAlignedBB
 		get() {
 			var aabb = AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), (yCoord + 1).toDouble(), zCoord + 0.25, (xCoord + 2).toDouble(), (yCoord + 4).toDouble(), zCoord + 0.75)
 			if (getBlockMetadata() == 2)
@@ -115,13 +115,13 @@ class TileAlfheimPortal: TileMod() {
 		
 		if (closeNow) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-			if (!worldObj.isRemote && posX == xCoord && posY == yCoord  && posZ == zCoord) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+			if (!worldObj.isRemote && posX == xCoord && posY == yCoord && posZ == zCoord && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 			for (i in 0..35)
 				blockParticle(meta)
 			closeNow = false
 		} else if (newMeta != meta) {
 			if (newMeta == 0) {
-				if (!worldObj.isRemote && posX == xCoord && posY == yCoord  && posZ == zCoord) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+				if (!worldObj.isRemote && posX == xCoord && posY == yCoord && posZ == zCoord && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 				for (i in 0..35)
 					blockParticle(meta)
 			}
@@ -207,8 +207,8 @@ class TileAlfheimPortal: TileMod() {
 		
 		val cost = if (ticksOpen == 50) activation else idle
 		
-		for (pos in PYLON_POSITIONS) {
-			var pos = pos
+		for (pp in PYLON_POSITIONS) {
+			var pos = pp
 			converters?.forEach { pos = it?.apply(pos) ?: pos }
 
 			var tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
@@ -250,8 +250,8 @@ class TileAlfheimPortal: TileMod() {
 	}
 	
 	private fun wrong2DArray(positions: Array<IntArray>, block: Block, meta: Int, converters: Array<Function<IntArray, IntArray>?>?): Boolean {
-		for (pos in positions) {
-			var pos = pos
+		for (pp in positions) {
+			var pos = pp
 
 			converters?.forEach { pos = it?.apply(pos) ?: pos }
 
