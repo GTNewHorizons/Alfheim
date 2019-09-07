@@ -1,5 +1,6 @@
 Innovations:
- Ring vs anomalies
+ Ring to protect vs anomalies
+ Again changed data serialization, delete Cardinal.sys if having some issues
 
 Fixes:
- --
+ Fixed dupe of Interdimensional Gateway core when breaking active portal in Alfheim
