@@ -265,7 +265,7 @@ object ElvenFlightHandler {
 					if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 						if (player.capabilities.isFlying) {
 							ElvenFlightHelper.sub(player, if (player.isSprinting) 3 else if (abs(player.motionX) > 1e-4f || player.motionY > 1e-4f || abs(player.motionZ) > 1e-4f) 2 else 1)
-							if (player.isSprinting) player.moveFlying(0f, 1f, 0.25f)
+							if (player.isSprinting) player.moveFlying(0f, 1f, 0.1f)
 						} else {
 							ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
 						}
