@@ -14,20 +14,18 @@ import net.minecraft.potion.*
 
 class SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		if (caster !is EntityPlayer) return SpellBase.SpellCastResult.NOTARGET // TODO add targets for mobs
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg == null || tg.target == null)
-			return SpellBase.SpellCastResult.NOTARGET
+		if (tg.target == null) return SpellCastResult.NOTARGET
 		
-		if (!tg.isParty)
-			return SpellBase.SpellCastResult.WRONGTGT
+		if (!tg.isParty) return SpellCastResult.WRONGTGT
 		
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellBase.SpellCastResult.NOTSEEING
+		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
 		
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) {
+		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(Potion.jump.id, 3600, 1, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.jump.id, 3600, 1))
 			SpellEffectHandler.sendPacket(Spells.HEAL, tg.target)

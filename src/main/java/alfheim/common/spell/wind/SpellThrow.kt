@@ -13,9 +13,9 @@ import net.minecraft.potion.PotionEffect
 
 class SpellThrow: SpellBase("throw", EnumRace.SYLPH, 8000, 600, 10) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) {
+		if (result == SpellCastResult.OK) {
 			caster.addPotionEffect(PotionEffect(AlfheimRegistry.tHrOw.id, 10, 0, true))
 			AlfheimCore.network.sendToAll(MessageEffect(caster.entityId, AlfheimRegistry.tHrOw.id, 10, 0))
 			val v = Vector3(caster.lookVec).negate().mul(0.5)

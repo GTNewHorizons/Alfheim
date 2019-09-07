@@ -13,15 +13,15 @@ import org.lwjgl.opengl.GL11.*
 
 class SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600, 20) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
 			val result = checkCastOver(caster)
-			if (result == SpellBase.SpellCastResult.OK)
+			if (result == SpellCastResult.OK)
 				caster.worldObj.spawnEntityInWorld(EntitySpellGravityTrap(caster.worldObj, caster, mop.hitVec.xCoord, mop.hitVec.yCoord + 0.1, mop.hitVec.zCoord))
 			return result
 		}
-		return SpellBase.SpellCastResult.WRONGTGT
+		return SpellCastResult.WRONGTGT
 	}
 	
 	override fun render(caster: EntityLivingBase) {

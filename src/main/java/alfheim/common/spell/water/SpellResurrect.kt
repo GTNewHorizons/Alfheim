@@ -19,8 +19,7 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg.target == null)
-			return SpellCastResult.NOTARGET
+		if (tg.target == null) return SpellCastResult.NOTARGET
 		
 		if (!tg.isParty || !tg.target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame))
 			return SpellCastResult.WRONGTGT

@@ -12,14 +12,12 @@ import vazkii.botania.common.Botania
 
 class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		val result: SpellBase.SpellCastResult
-		val hit: Vector3
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 8.0, true)
-		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
-			hit = Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
+		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
+			Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
 		else
-			hit = Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
+			Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
 		
 		var x = MathHelper.floor_double(hit.x)
 		var y = MathHelper.floor_double(hit.y)
@@ -38,8 +36,8 @@ class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 		
 		if (caster.worldObj.isAirBlock(x, y, z)) {
 			if (caster.worldObj.isAirBlock(x, y + 1, z)) {
-				result = checkCast(caster)
-				if (result != SpellBase.SpellCastResult.OK) return result
+				val result = checkCast(caster)
+				if (result != SpellCastResult.OK) return result
 				
 				caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1.0f)
 				caster.posX = x + 0.5
@@ -54,8 +52,8 @@ class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 					caster.setPosition(x + 0.5, (y + caster.yOffset).toDouble(), z + 0.5)
 				return result
 			} else if (caster.worldObj.isAirBlock(x, y - 1, z)) {
-				result = checkCast(caster)
-				if (result != SpellBase.SpellCastResult.OK) return result
+				val result = checkCast(caster)
+				if (result != SpellCastResult.OK) return result
 				
 				caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1.0f)
 				caster.posX = x + 0.5
@@ -72,16 +70,15 @@ class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 			}
 		}
 		
-		return SpellBase.SpellCastResult.OBSTRUCT
+		return SpellCastResult.OBSTRUCT
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val hit: Vector3
 		val mop = ASJUtilities.getSelectedBlock(caster, 8.0, true)
-		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
-			hit = Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY, caster.posZ)
+		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
+			Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY, caster.posZ)
 		else
-			hit = Vector3(mop.hitVec)
+			Vector3(mop.hitVec)
 		
 		val x = hit.x
 		val y = hit.y

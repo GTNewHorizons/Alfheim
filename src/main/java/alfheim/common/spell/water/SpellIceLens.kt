@@ -12,9 +12,9 @@ import net.minecraft.potion.PotionEffect
 
 class SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) {
+		if (result == SpellCastResult.OK) {
 			caster.addPotionEffect(PotionEffect(AlfheimRegistry.icelens.id, 200, 0, true))
 			
 			if (caster is EntityPlayerMP) AlfheimCore.network.sendTo(MessageParticles(Spells.ICELENS.ordinal, 0.0, 0.0, 0.0), caster)

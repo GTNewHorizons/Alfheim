@@ -13,19 +13,18 @@ import net.minecraft.entity.player.*
 
 class SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		if (caster !is EntityPlayerMP) return SpellBase.SpellCastResult.NOTARGET // TODO add targets for mobs
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (caster !is EntityPlayerMP) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster as EntityPlayer)
-		if (tg == null || tg.target == null)
-			return SpellBase.SpellCastResult.NOTARGET
+		if (tg.target == null) return SpellCastResult.NOTARGET
 		
-		if (tg.isParty || tg.target !is EntityPlayer) return SpellBase.SpellCastResult.WRONGTGT
+		if (tg.isParty || tg.target !is EntityPlayer) return SpellCastResult.WRONGTGT
 		
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellBase.SpellCastResult.NOTSEEING
+		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
 		
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) {
+		if (result == SpellCastResult.OK) {
 			val mana = CardinalSystem.ManaSystem.getMana(tg.target)
 			AlfheimCore.network.sendTo(MessageParticles(Spells.MANA.ordinal, tg.target.entityId.toDouble(), mana.toDouble(), 0.0), caster)
 		}

@@ -8,7 +8,7 @@ import net.minecraftforge.common.ChestGenHooks
 object ChestGenHandler {
 	
 	init {
-		var c: String
+		/*var c: String
 		
 		c = ChestGenHooks.DUNGEON_CHEST
 		ChestGenHooks.addItem(c, WeightedRandomChestContent(ItemStack(AlfheimItems.storyToken), 1, 2, 10))
@@ -23,6 +23,6 @@ object ChestGenHandler {
 		ChestGenHooks.addItem(c, WeightedRandomChestContent(ItemStack(AlfheimItems.storyToken), 1, 2, 5))
 		
 		c = ChestGenHooks.STRONGHOLD_LIBRARY
-		ChestGenHooks.addItem(c, WeightedRandomChestContent(ItemStack(AlfheimItems.storyToken), 1, 2, 2))
+		ChestGenHooks.addItem(c, WeightedRandomChestContent(ItemStack(AlfheimItems.storyToken), 1, 2, 2))*/
 	}
 }

@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.*
-import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 import vazkii.botania.api.recipe.RecipeRuneAltar
 import vazkii.botania.common.block.ModMultiblocks
 import vazkii.botania.common.item.ModItems
@@ -73,7 +72,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
-	lateinit var stories: LexiconEntry
+	//lateinit var stories: LexiconEntry
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
@@ -127,7 +126,7 @@ object AlfheimLexiconData {
 		ruling = BLexiconEntry("ruling", categoryAlfheim)
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
-		stories = BLexiconEntry("stories", categoryAlfheim)
+		//stories = BLexiconEntry("stories", categoryAlfheim)
 		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
@@ -201,7 +200,7 @@ object AlfheimLexiconData {
 		
 		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
 		
-		stories.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimItems.storyToken)
+		//stories.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3")).icon = ItemStack(AlfheimItems.storyToken)
 		
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
@@ -607,18 +606,9 @@ object AlfheimLexiconData {
 }
 
 object AlfheimMultiblocks {
-	
-	val infuser: MultiblockSet
-	val infuserU: MultiblockSet
-	val portal: MultiblockSet
-	val soul: MultiblockSet
-	val yordin: MultiblockSet
-	
-	init {
-		infuser = TileManaInfuser.makeMultiblockSet()
-		infuserU = TileManaInfuser.makeMultiblockSetUnknown()
-		portal = TileAlfheimPortal.makeMultiblockSet()
-		soul = TileManaInfuser.makeMultiblockSetSoul()
-		yordin = TileTradePortal.makeMultiblockSet()
-	}
+	val infuser = TileManaInfuser.makeMultiblockSet()
+	val infuserU = TileManaInfuser.makeMultiblockSetUnknown()
+	val portal = TileAlfheimPortal.makeMultiblockSet()
+	val soul = TileManaInfuser.makeMultiblockSetSoul()
+	val yordin = TileTradePortal.makeMultiblockSet()
 }

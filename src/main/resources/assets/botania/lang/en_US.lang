@@ -68,21 +68,6 @@ botania.entry.shrines=Shrines of Power
 botania.tagline.shrines=Praise the Sun!
 botania.page.shrines0=Traveling around the Alfheim, one can notice different small-scaled ruins, looking like specific churches. Those are called Shrines of Power. In every shrine there is a place to pray to ancient gods - &1Stones of Power&0. Using such stones, one can gain some temporal paired-effect buffs at a cost of some &4Mana&0, to increase one skill by decreasing another. Those are not combinable. 
 
-botania.entry.itemHold=Mana Accelerator
-botania.tagline.itemHold=Not just a shelf
-botania.page.itemHold0=Tired of waiting for your &1Terra Shatterer&0 to be charged? Are you afraid that someone will carry off the &1Mana Tablet&0 or will it just disappear for some reason? Then the &1Mana Accelerator&0 is for you. A simple and elegant solution that allows you to securely place an item over a mana pool, not only protecting it, but also speeding up the transfer of mana about two times! And it also changes color.
-botania.page.itemHold1=Creating &1Mana Accelerator&0
-
-botania.entry.greenRod=Rod of the Green Hills
-botania.tagline.greenRod=Greening!
-botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
-botania.page.greenRod1=Green green green green green
-
-botania.entry.lootInt=Loot Interceptor
-botania.tagline.lootInt=No more littered inventories!
-botania.page.lootInt0=By upgrading &1Black Hole Talisman&0 with some &1Iffesal Dust&0 one can create a sort of handy trashcan, which can consume not only block, but items from your inventory and shatter them into some amount of &4Mana&0. Put unwanted items in crafting grid alongside with &1Interceptor&0 to setup destroy filter (only &4ID&0 and &4Metadata&0 sensitive). Put it to empty grid to clear filter.  
-botania.page.lootInt1=Creating &1Interceptor&0
-
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
 botania.page.ores0=Everyone knows that the midges of Midgard are filled with ores and minerals. This is clearly seen when miners extract new pieces of iron, gold or diamonds. However, what about Alfheim? They have their own ores that they traded with the people of Midgard.<br>Elementium ore is a magical metal ore that is pure and beautiful... Stunning metal!
@@ -103,6 +88,26 @@ botania.entry.anyavil=Anyavil
 botania.tagline.anyavil=Essence of pinkness
 botania.page.anyavil0=Use any pink item from either vanilla, botania or alfheim to repair your equipment. Just put it on anyavil, toss some pink stuff on the ground nearby and shoot pink mana beam directly on anyavil.
 botania.page.anyavil1=&dNya! Kawaii!&0
+
+botania.entry.itemHold=Mana Accelerator
+botania.tagline.itemHold=Not just a shelf
+botania.page.itemHold0=Tired of waiting for your &1Terra Shatterer&0 to be charged? Are you afraid that someone will carry off the &1Mana Tablet&0 or will it just disappear for some reason? Then the &1Mana Accelerator&0 is for you. A simple and elegant solution that allows you to securely place an item over a mana pool, not only protecting it, but also speeding up the transfer of mana about two times! And it also changes color.
+botania.page.itemHold1=Creating &1Mana Accelerator&0
+
+botania.entry.greenRod=Rod of the Green Hills
+botania.tagline.greenRod=Greening!
+botania.page.greenRod0=Sometimes waiting for natural greening may seem painfully long. But not more! &1Rod of the Green Hills&0 will replace all &1earth&0, &1mycelium&0 and &1podzol&0 on the air with &1grass&0 in exchange for some &4Mana&0. If those blocks are underground, process will cost a little bit more.
+botania.page.greenRod1=Green green green green green
+
+botania.entry.lootInt=Loot Interceptor
+botania.tagline.lootInt=No more littered inventories!
+botania.page.lootInt0=By upgrading &1Black Hole Talisman&0 with some &1Iffesal Dust&0 one can create a sort of handy trashcan, which can consume not only block, but items from your inventory and shatter them into some amount of &4Mana&0. Put unwanted items in crafting grid alongside with &1Interceptor&0 to setup destroy filter (only &4ID&0 and &4Metadata&0 sensitive). Put it to empty grid to clear filter.
+botania.page.lootInt1=Creating &1Interceptor&0
+
+botania.entry.anomaRing=Ring of Spatiotemporal Stabilization
+botania.tagline.anomaRing=Protect yourself from anomalies
+botania.page.anomaRing0=As the result of hard work of two worlds it became finally possible to invent something to protect both nations from deadly anomalies of the world of &4Alfheim&0. The solution came in form of the &1Ring of Spatiotemporal Stabilization&0 passively protecting the wearer from any influence in exchange for some &4Mana&0. You can also right click with it to switch to active mode to disable protection while sneaking.
+botania.page.anomaRing1=&oI hate portals...&0
 
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
@@ -223,7 +228,7 @@ botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
 
 botania.entry.stories=Token of Banter
 botania.tagline.stories=Yet knowledge can be bought
-botania.page.stories0=Centuries have passed since the inhabitants of &4Alfheim&0 and &4Midgard&0 established close trade relations. Adventurers, researchers and sages of the human world, like &6Mastrei&0, sought to learn all the secrets of the elves in order to improve their own technologies, to become rich and famous. The most zealous of them was the alchemist &6Tywin&0, who invented &1Token of Banter&0 - a symbol of knowledge accumulated over decades of his life.
+botania.page.stories0=Centuries have passed since the inhabitants of &4Alfheim&0 and &4Midgard&0 established close trade relations. Midgard adventurers, researchers and sages, like &6Mastrei&0, sought to learn all elven secrets in order to improve their own technologies, to become rich and famous. The most zealous of them was alchemist &6Tywin&0, who invented &1Token of Banter&0 - a symbol of knowledge accumulated over decades of his life.
 botania.page.stories1=He managed to negotiate with the elven elders on mutually beneficial exchange of information: &6Tywin&0 provides a piece of his alchemical research, sealed in a coin, and the elves - the secrets and teachings of his people. So, why would the wisest elders need the knowledge of the Midgard alchemist?
 botania.page.stories2=Everything is simpler than it might seem at first glance. Elves have always sought to rise above other sentient beings, and the straight road to this is knowledge, not only their own, but also foreign to them before. So, through the centuries, there was an exchange of accumulated knowledge between the worlds of humans and elves.
 botania.page.stories3=Until something unimaginable happened on one rather ordinary day: a student of &6Tywin&0 betrayed his mentor, distributing &1Tokens of banter&0 over &4Midgard&0. As a result of this foolish act they were all lost over time.

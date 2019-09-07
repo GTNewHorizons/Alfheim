@@ -10,9 +10,9 @@ import net.minecraft.server.MinecraftServer
 
 class SpellRain: SpellBase("rain", EnumRace.UNDINE, 30000, 6000, 50) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		for (world in MinecraftServer.getServer().worldServers) {
 			val r = caster.worldObj.rand.nextInt(12000) + 3600
