@@ -149,12 +149,12 @@ object EventHandlerClient {
 	
 	private fun renderMMO() {
 		run {
-			val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
+			val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID) ?: return@run
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) return@run
 			
 			glPushMatrix()
 			ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-			spell!!.render(Minecraft.getMinecraft().thePlayer)
+			spell.render(Minecraft.getMinecraft().thePlayer)
 			glPopMatrix()
 		}
 		

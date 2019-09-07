@@ -734,6 +734,7 @@ object CardinalSystem {
 				
 				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead, health, maxHealth, type)
 				
+				@Suppress("unused")
 				enum class MemberType {
 					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
 					

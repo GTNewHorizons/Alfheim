@@ -139,7 +139,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
-		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.LEPRECHAUN) dis + 0.2f
+		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP) dis + 0.2f
 		else dis
 	}
 	

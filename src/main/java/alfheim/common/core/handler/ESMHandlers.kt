@@ -98,7 +98,7 @@ object ESMHandler {
 	fun onEntityHurt(e: LivingHurtEvent) {
 		val player = e.source.entity as? EntityPlayer ?: return
 		
-		if (AlfheimCore.enableElvenStory && player.race === IMP && e.source.damageType == "player") {
+		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player") {
 			e.entityLiving.hurtResistantTime -= max(0f, e.entityLiving.maxHurtResistantTime * 0.2f).toInt()
 		}
 	}
@@ -110,10 +110,10 @@ object ESMHandler {
 			CAITSITH   -> Unit // above
 			POOKA      -> Unit // hook: scaring away creepers
 			GNOME      -> doGnome(player)
-			LEPRECHAUN -> Unit // hook: +20% mana discount for tools
+			LEPRECHAUN -> Unit // above
 			SPRIGGAN   -> doSpriggan(player)
 			UNDINE     -> doUndine(player)
-			IMP        -> Unit // above
+			IMP        -> Unit // hook: +20% mana discount for tools
 			else       -> Unit // NO-OP
 		}
 	}
@@ -129,7 +129,7 @@ object ESMHandler {
 		var dur = effect.duration
 		var amp = effect.amplifier
 		
-		if (player.rng.nextInt(dur/20*(amp+1)) == 0) {
+		if (player.rng.nextInt(max(1, dur*(amp+1))) == 0) {
 			--amp
 			if (amp < 0) {
 				amp = 0
