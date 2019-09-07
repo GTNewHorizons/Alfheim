@@ -64,6 +64,7 @@ open class CommonProxy {
 	
 	open fun initializeAndRegisterHandlers() {
 		EventHandler
+		ESMHandler
 		ChestGenHandler
 		HilarityHandler
 	}

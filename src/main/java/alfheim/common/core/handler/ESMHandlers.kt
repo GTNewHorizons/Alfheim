@@ -38,6 +38,7 @@ object ESMHandler {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
+		FMLCommonHandler.instance().bus().register(this)
 		
 		ElvenFlightHandler
 		ElvenRaceHandler
