@@ -42,6 +42,8 @@ object ElvenFlightHelper {
 	}
 }
 
+
+
 var EntityPlayer.flight
 	set(value) {
 		ElvenFlightHelper[this] = value

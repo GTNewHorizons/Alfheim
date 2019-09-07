@@ -16,7 +16,6 @@ import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.common.*
 import net.minecraft.block.BlockDispenser
 import net.minecraft.item.ItemStack
-import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.ModItems
@@ -32,12 +31,10 @@ open class CommonProxy {
 		AlfheimItems
 		AlfheimRegistry.preInit()
 		AlfheimAchievements
-		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInit2()
+		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInitRelics()
 		ShadowFoxLexiconData
 		ShadowFoxThrowables
-		ChestGenHandler
-		HilarityHandler.register()
-		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler())
+		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler)
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
 		AlfheimMultiblocks
 	}
@@ -60,12 +57,14 @@ open class CommonProxy {
 		AlfheimRecipes.postInit()
 		ShadowFoxRecipes.postInit()
 		AlfheimLexiconData.init()
+		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.initRelics()
 		//AlfheimLexiconData.postInit()
 		AlfheimRegistry.postInit()
 	}
 	
 	open fun initializeAndRegisterHandlers() {
-		MinecraftForge.EVENT_BUS.register(EventHandler())
-		FMLCommonHandler.instance().bus().register(EventHandler())
+		EventHandler
+		ChestGenHandler
+		HilarityHandler
 	}
 }

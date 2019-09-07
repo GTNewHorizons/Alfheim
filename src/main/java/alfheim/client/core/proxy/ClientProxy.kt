@@ -16,7 +16,7 @@ import alfheim.client.render.item.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
-import alfheim.common.core.handler.EventHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
@@ -170,7 +170,7 @@ class ClientProxy: CommonProxy() {
 			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			enableESMGUIs()
 			addESMKeyBinds()
-			EventHandler.checkAddAttrs()
+			ESMHandler.checkAddAttrs()
 		}
 		
 		fun disableESM() {

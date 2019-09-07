@@ -203,7 +203,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				var droppedRecord = false
 				
 				if (hard) {
-					if (name == summoner && !(worldObj.getPlayerEntityByName(name) as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.mask)) {
+					if (name == summoner && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.mask) == false) {
 						val relic = ItemStack(AlfheimItems.mask)
 						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)

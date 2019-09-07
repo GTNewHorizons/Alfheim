@@ -12,7 +12,7 @@ import vazkii.botania.common.block.ModBlocks
  * @author WireSegal
  * Created at 9:28 PM on 2/15/16.
  */
-class BifrostFlowerDispenserHandler: IBehaviorDispenseItem {
+object BifrostFlowerDispenserHandler: IBehaviorDispenseItem {
 
     private val defaultBehavior = BehaviorDefaultDispenseItem()
 

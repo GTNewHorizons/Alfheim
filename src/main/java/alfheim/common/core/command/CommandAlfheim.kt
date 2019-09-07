@@ -69,7 +69,7 @@ class CommandAlfheim: CommandBase() {
 		fun toggleESM(on: Boolean) {
 			if (on) {
 				AlfheimConfigHandler.initWorldCoordsForElvenStory(AlfheimCore.save)
-				EventHandler.checkAddAttrs()
+				ESMHandler.checkAddAttrs()
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			} else {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()

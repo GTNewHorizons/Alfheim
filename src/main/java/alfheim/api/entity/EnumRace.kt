@@ -11,6 +11,7 @@ import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 
 enum class EnumRace {
+	
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
 	
 	val rgbColor: Int

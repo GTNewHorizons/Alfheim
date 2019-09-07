@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
+import net.minecraft.stats.Achievement
 import net.minecraft.util.*
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
@@ -78,6 +79,10 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	override fun getMaxItemUseDuration(stack: ItemStack?) = 200
 	
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
+	
+	override fun getBindAchievement(): Achievement {
+		return super.getBindAchievement()
+	}
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
 		if (isRightPlayer(player, stack) && icd(stack)) {
@@ -244,7 +249,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					if (!burst.isFake && !entity.worldObj.isRemote) {
 						val player = living.worldObj.getPlayerEntityByName(attacker)
 						if (player != null) {
-							EntitySubspaceSpear.dealTrueDamage(player, living, 3f)
+							EntitySubspaceSpear.dealTrueDamage(player, living, damage)
 						}
 						entity.setDead()
 						break

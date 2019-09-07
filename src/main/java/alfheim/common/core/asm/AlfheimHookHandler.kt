@@ -3,12 +3,14 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
+import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
@@ -26,6 +28,7 @@ import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
+import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -53,7 +56,7 @@ import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.EntityDoppleganger
-import vazkii.botania.common.item.*
+import vazkii.botania.common.item.ItemGaiaHead
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
@@ -62,7 +65,7 @@ import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
 
-@Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused")
+@Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object AlfheimHookHandler {
 	
 	private var updatingTile = false
@@ -76,6 +79,12 @@ object AlfheimHookHandler {
 	
 	private const val MESSANGER = 22
 	private const val TRIPWIRE = 23
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "<init>")
+	fun `EntityCreeper$init`(e: EntityCreeper, world: World) {
+		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
+	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
@@ -126,6 +135,13 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	fun requestManaChecked(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = manaToGet
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
+		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.LEPRECHAUN) dis + 0.2f
+		else dis
+	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
@@ -429,7 +445,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
-		if (player.getActivePotionEffect(Potion.nightVision)?.getDuration() ?: 0 > 0) 1f else 0f
+		if (player.getActivePotionEffect(Potion.nightVision)?.duration ?: 0 > 0) 1f else 0f
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -484,9 +500,9 @@ object AlfheimHookHandler {
 			f1 = !f && Minecraft.getMinecraft().currentScreen is GuiRecipe
 		
 		val text = "$mana/$maxMana"
-		val X = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
-		val Y = if (f1) y - 9 else y - 19
-		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, f)
+		val x = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
+		val y = if (f1) y - 9 else y - 19
+		Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color, f)
 		glPopMatrix()
 	}
 	
