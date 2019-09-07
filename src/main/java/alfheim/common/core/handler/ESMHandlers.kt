@@ -186,7 +186,7 @@ object ESMHandler {
 	}
 	
 	fun doGnome(player: EntityPlayer) {
-		if (ASJUtilities.isServer || !player.isSneaking || player.ticksExisted % 20 != 0) return
+		if (ASJUtilities.isServer || !player.isSneaking) return
 		
 		val x = player.posX.mfloor() - 8
 		val y = player.posY.mfloor() - 8
@@ -194,18 +194,17 @@ object ESMHandler {
 		
 		Botania.proxy.setWispFXDepthTest(false)
 		
-		for (i in x until x+8) {
-			for (j in y until y+8) {
-				for (k in z until z+8) {
-					val block = player.worldObj.getBlock(i, j, k)
-					if (block === Blocks.air) continue
-					
-					val meta = player.worldObj.getBlockMetadata(i, j, k)
-					
-					for (id in OreDictionary.getOreIDs(ItemStack(block, 1, meta))) {
-						if (OreDictionary.getOreName(id).startsWith("ore"))
-							Botania.proxy.wispFX(player.worldObj, x + 0.5, y + 0.5, z + 0.5, 0f, 1f, 0f, 0.25f)
-					}
+		for (i in x until (x+16)) {
+			val j = y + player.ticksExisted % 17
+			for (k in z until (z+16)) {
+				val block = player.worldObj.getBlock(i, j, k)
+				if (block === Blocks.air) continue
+				
+				val meta = player.worldObj.getBlockMetadata(i, j, k)
+				
+				for (id in OreDictionary.getOreIDs(ItemStack(block, 1, meta))) {
+					if (OreDictionary.getOreName(id).startsWith("ore"))
+						Botania.proxy.wispFX(player.worldObj, i + 0.5, j + 0.5, k + 0.5, 0f, 1f, 0f, 0.25f)
 				}
 			}
 		}
