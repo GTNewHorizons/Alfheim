@@ -4,3 +4,4 @@ Innovations:
 
 Fixes:
  Fixed dupe of Interdimensional Gateway core when breaking active portal in Alfheim
+ Fixed block meta for Astrolabe preview
