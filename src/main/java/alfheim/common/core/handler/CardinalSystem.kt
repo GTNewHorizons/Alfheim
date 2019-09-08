@@ -129,13 +129,13 @@ object CardinalSystem {
 		}
 		
 		fun setCoolDown(caster: EntityPlayer, spell: SpellBase, cd: Int): Int {
-			forPlayer(caster).coolDown[spell] = cd
+			forPlayer(caster).coolDown[spell.name] = cd
 			return cd
 		}
 		
 		fun getCoolDown(caster: EntityPlayer, spell: SpellBase): Int {
 			return try {
-				forPlayer(caster).coolDown[spell] ?: 0
+				forPlayer(caster).coolDown[spell.name] ?: 0
 			} catch (e: Throwable) {
 				ASJUtilities.error(String.format("Something went wrong getting cooldown for %s. Returning 0.", spell))
 				e.printStackTrace()
@@ -907,7 +907,7 @@ object CardinalSystem {
 	
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
-		var coolDown = HashMap<SpellBase, Int>()
+		var coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
 		
 		var party: Party = Party(player)

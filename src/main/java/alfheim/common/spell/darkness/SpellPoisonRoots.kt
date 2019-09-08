@@ -19,7 +19,7 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 		var member: EntityLivingBase?
 		
 		scanpt@ for (i in 0 until pt.count) {
-			member = pt.get(i)
+			member = pt[i]
 			if (member == null || Vector3.entityDistance(caster, member) > 32) continue
 			for (o in member.activePotionEffects) {
 				if (Potion.potionTypes[(o as PotionEffect).getPotionID()].isBadEffect) {
@@ -50,7 +50,7 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 		var pe: PotionEffect
 		
 		for (i in 0 until pt.count) {
-			member = pt.get(i)
+			member = pt[i]
 			for (o in member!!.activePotionEffects) {
 				pe = o as PotionEffect
 				

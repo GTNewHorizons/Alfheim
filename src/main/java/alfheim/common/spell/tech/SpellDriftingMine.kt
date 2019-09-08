@@ -7,9 +7,9 @@ import net.minecraft.entity.EntityLivingBase
 
 class SpellDriftingMine: SpellBase("driftingmine", EnumRace.LEPRECHAUN, 6000, 1200, 15) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
-		if (result == SpellBase.SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellDriftingMine(caster.worldObj, caster))
+		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellDriftingMine(caster.worldObj, caster))
 		return result
 	}
 }

@@ -14,19 +14,19 @@ import net.minecraft.potion.*
 
 class SpellWaterBreathing: SpellBase("waterbreathing", EnumRace.SYLPH, 2000, 600, 30) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
-				 ?: return SpellBase.SpellCastResult.NOTARGET
+				 ?: return SpellCastResult.NOTARGET
 		
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		for (i in 0 until pt.count) {
-			val living = pt.get(i)
-			if (living != null && Vector3.entityDistance(living!!, caster) < 32) {
-				living!!.addPotionEffect(PotionEffect(Potion.waterBreathing.id, 2400, -1, true))
-				AlfheimCore.network.sendToAll(MessageEffect(living!!.getEntityId(), Potion.waterBreathing.id, 2400, -1))
-				SpellEffectHandler.sendPacket(Spells.HEAL, living!!)
+			val living = pt[i] ?: continue
+			if (Vector3.entityDistance(living, caster) < 32) {
+				living.addPotionEffect(PotionEffect(Potion.waterBreathing.id, 2400, -1, true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.waterBreathing.id, 2400, -1))
+				SpellEffectHandler.sendPacket(Spells.HEAL, living)
 			}
 		}
 		

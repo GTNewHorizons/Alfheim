@@ -80,7 +80,7 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 	override fun onImpact(pos: MovingObjectPosition) {
 		val thrower = thrower
 		if (pos.entityHit == null || pos.entityHit !== thrower) {
-			// TODO
+			// TODO ???
 		}
 	}
 	

@@ -7,9 +7,9 @@ import net.minecraft.entity.EntityLivingBase
 
 class SpellFenrirStorm: SpellBase("fenrirstorm", EnumRace.SYLPH, 1000, 100, 5) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
-		if (result == SpellBase.SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(caster.worldObj, caster))
+		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(caster.worldObj, caster))
 		return result
 	}
 }

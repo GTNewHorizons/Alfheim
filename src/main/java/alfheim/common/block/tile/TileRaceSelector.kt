@@ -44,7 +44,7 @@ class TileRaceSelector: ASJTile() {
 	override fun updateEntity() {
 		if (activeRotation != 0) if (activeRotation > 0) --activeRotation else ++activeRotation
 		
-		// TODO remove when there will be races
+		// TODO remove when there will be genders
 		if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
 	}
 	

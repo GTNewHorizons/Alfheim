@@ -11,12 +11,12 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType
 class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 	
 	override// This spell is slightly changed version of item from thKaguya's mod
-	fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		val result: SpellBase.SpellCastResult
+	fun performCast(caster: EntityLivingBase): SpellCastResult {
+		val result: SpellCastResult
 		
 		val dist = (caster as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 5.0
 		val mop = ASJUtilities.getSelectedBlock(caster, dist, false)
-		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellBase.SpellCastResult.WRONGTGT
+		if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1) return SpellCastResult.WRONGTGT
 		
 		var px = 0
 		var py = 0
@@ -34,7 +34,7 @@ class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 			if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY, mop.blockZ)) {
 				if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY + 1, mop.blockZ)) {
 					result = checkCast(caster)
-					if (result != SpellBase.SpellCastResult.OK) return result
+					if (result != SpellCastResult.OK) return result
 					
 					caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1.0f)
 					caster.posX = mop.blockX + 0.5
@@ -50,7 +50,7 @@ class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 					return result
 				} else if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY - 1, mop.blockZ)) {
 					result = checkCast(caster)
-					if (result != SpellBase.SpellCastResult.OK) return result
+					if (result != SpellCastResult.OK) return result
 					
 					caster.worldObj.playSoundAtEntity(caster, "random.fizz", 0.5f, 1.0f)
 					caster.posX = mop.blockX + 0.5
@@ -68,13 +68,13 @@ class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 			}
 			
 			if (caster.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ) === Blocks.bedrock) {
-				return SpellBase.SpellCastResult.OBSTRUCT
+				return SpellCastResult.OBSTRUCT
 			}
 			mop.blockX += px
 			mop.blockY += py
 			mop.blockZ += pz
 		}
 		
-		return SpellBase.SpellCastResult.OBSTRUCT
+		return SpellCastResult.OBSTRUCT
 	}
 }

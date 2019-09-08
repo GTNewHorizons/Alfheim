@@ -27,6 +27,7 @@ object ShadowFoxLexiconData {
 	val technicolor: LexiconEntry
 	val lightningRod: LexiconEntry
 	val flameRod: LexiconEntry
+	val prismaticRod: LexiconEntry
 	val interdictionRod: LexiconEntry
 	val pastoralSeeds: LexiconEntry
 	val coatOfArms: LexiconEntry
@@ -36,7 +37,6 @@ object ShadowFoxLexiconData {
 	val attribution: LexiconEntry
 	val sealCreepers: LexiconEntry
 	val kindling: LexiconEntry
-	val waveRod: LexiconEntry
 	val itemDisplay: LexiconEntry
 	val lightningSapling: LexiconEntry
 	val livingwoodFunnel: LexiconEntry
@@ -79,7 +79,7 @@ object ShadowFoxLexiconData {
 							   PageCraftingRecipe("4", ShadowFoxRecipes.recipeAuroraSlabs),
 							   PageCraftingRecipe("5", ShadowFoxRecipes.recipeAuroraSlabsToPlanks))
 		
-		technicolor = ShadowfoxLexiconEntry("technicolorRod", BotaniaAPI.categoryTools, ItemStack(AlfheimItems.rodColorfulSkyDirt, 1, 16))
+		technicolor = ShadowfoxLexiconEntry("rodTechnicolor", BotaniaAPI.categoryTools, ItemStack(AlfheimItems.rodColorfulSkyDirt, 1, 16))
 		technicolor.setLexiconPages(PageText("0"),
 									PageCraftingRecipe("1", ShadowFoxRecipes.recipesColoredSkyDirtRod),
 									PageText("2"),
@@ -96,6 +96,10 @@ object ShadowFoxLexiconData {
 								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesFlameRod),
 								 PageText("2"),
 								 PageCraftingRecipe("3", ShadowFoxRecipes.recipesPriestOfLoki))
+		
+		prismaticRod = ShadowfoxLexiconEntry("rodPrismatic", BotaniaAPI.categoryTools, AlfheimItems.rodPrismatic)
+		prismaticRod.setLexiconPages(PageText("0"),
+									 PageCraftingRecipe("1", ShadowFoxRecipes.recipesRainbowRod))
 		
 		irisSapling = ShadowfoxLexiconEntry("irisSapling", dendrology, AlfheimBlocks.irisSapling)
 		irisSapling.setPriority().setLexiconPages(PageText("0"),
@@ -144,10 +148,6 @@ object ShadowFoxLexiconData {
 		kindling = ShadowfoxLexiconEntry("kindling", BotaniaAPI.categoryMisc, AlfheimBlocks.kindling)
 		kindling.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesKindling))
-		
-		waveRod = ShadowfoxLexiconEntry("waveRod", BotaniaAPI.categoryTools, AlfheimItems.rodPrismatic)
-		waveRod.setLexiconPages(PageText("0"),
-								PageCraftingRecipe("1", ShadowFoxRecipes.recipesRainbowRod))
 		
 		itemDisplay = ShadowfoxLexiconEntry("itemDisplay", BotaniaAPI.categoryMisc, ItemStack(AlfheimBlocks.itemDisplay, 1, 1))
 		itemDisplay.setLexiconPages(PageText("0"),
@@ -262,7 +262,7 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisSapling), irisSapling, 0)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodLightning), lightningRod, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodInterdiction), interdictionRod, 1)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodPrismatic), waveRod, 1)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.rodPrismatic), prismaticRod, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.emblem, 1, 0), lightningRod, 3)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.emblem, 1, 1), technicolor, 3)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.emblem, 1, 2), interdictionRod, 3)
@@ -382,7 +382,7 @@ object ShadowFoxLexiconData {
 		flameRod.knowledgeType = kt
 		interdictionRod.knowledgeType = kt
 		colorOverride.knowledgeType = kt
-		waveRod.knowledgeType = kt
+		prismaticRod.knowledgeType = kt
 		toolbelt.knowledgeType = kt
 		lamp.knowledgeType = kt
 		silencer.knowledgeType = kt

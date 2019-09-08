@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11.*
 
 class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellAcidMyst(caster.worldObj, caster))
 		return result

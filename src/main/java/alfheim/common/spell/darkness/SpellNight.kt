@@ -7,9 +7,9 @@ import net.minecraft.server.MinecraftServer
 
 class SpellNight: SpellBase("night", EnumRace.IMP, 30000, 6000, 50) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result != SpellBase.SpellCastResult.OK) return result
+		if (result != SpellCastResult.OK) return result
 		
 		for (world in MinecraftServer.getServer().worldServers) {
 			val time = world.worldTime % 24000

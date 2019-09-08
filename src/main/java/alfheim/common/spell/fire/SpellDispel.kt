@@ -15,17 +15,16 @@ import java.util.*
 
 class SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
-		if (caster !is EntityPlayer) return SpellBase.SpellCastResult.NOTARGET // TODO add targets for mobs
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg == null || tg.target == null)
-			return SpellBase.SpellCastResult.NOTARGET
+		if (tg.target == null) return SpellCastResult.NOTARGET
 		
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellBase.SpellCastResult.NOTSEEING
+		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
 		
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) {
+		if (result == SpellCastResult.OK) {
 			val l = ArrayList<PotionEffect>()
 			for (o in tg.target.activePotionEffects) if (Potion.potionTypes[(o as PotionEffect).getPotionID()].isBadEffect == tg.isParty) l.add(o)
 			

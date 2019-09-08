@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.*
-import vazkii.botania.api.lexicon.multiblock.MultiblockSet
 import vazkii.botania.api.recipe.RecipeRuneAltar
 import vazkii.botania.common.block.ModMultiblocks
 import vazkii.botania.common.item.ModItems
@@ -41,7 +40,7 @@ object AlfheimLexiconData {
 	lateinit var amulNimb: LexiconEntry
 	lateinit var aniTorch: LexiconEntry
 	lateinit var anomaly: LexiconEntry
-	//lateinit var anomaRing: LexiconEntry // FIXME
+	lateinit var anomaRing: LexiconEntry
 	lateinit var anyavil: LexiconEntry
 	lateinit var astrolab: LexiconEntry
 	lateinit var auraAlf: LexiconEntry
@@ -73,7 +72,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
-	lateinit var stories: LexiconEntry
+	//lateinit var stories: LexiconEntry
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
@@ -98,7 +97,7 @@ object AlfheimLexiconData {
 		amulNimb = BLexiconEntry("amulNimb", categoryAlfheim)
 		aniTorch = BLexiconEntry("aniTorch", categoryAlfheim)
 		anomaly = BLexiconEntry("anomaly", categoryAlfheim)
-		// anomaRing = BLexiconEntry("anomaRing", categoryAlfheim) // FIXME
+		anomaRing = BLexiconEntry("anomaRing", categoryAlfheim)
 		anyavil = BLexiconEntry("anyavil", categoryAlfheim)
 		astrolab = BLexiconEntry("astrolab", categoryAlfheim)
 		auraAlf = BLexiconEntry("auraAlf", categoryAlfheim)
@@ -127,7 +126,7 @@ object AlfheimLexiconData {
 		ruling = BLexiconEntry("ruling", categoryAlfheim)
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
-		stories = BLexiconEntry("stories", categoryAlfheim)
+		//stories = BLexiconEntry("stories", categoryAlfheim)
 		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
@@ -181,9 +180,9 @@ object AlfheimLexiconData {
 			.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeElvenPylon), PageCraftingRecipe("2", AlfheimRecipes.recipeGaiaPylon)).icon = ItemStack(AlfheimBlocks.alfheimPylon, 1, 0)
 		
 		portal.setPriority()
-			.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"),
-							 PageCraftingRecipe("4", AlfheimRecipes.recipeAlfheimPortal),
-							 PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
+			.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+							 PageCraftingRecipe("3", AlfheimRecipes.recipeAlfheimPortal),
+							 PageText("4"), PageElvenRecipe("5", AlfheimRecipes.recipeInterdimensional),
 							 PageMultiblock("6", AlfheimMultiblocks.portal),
 							 PageText("7"), PageText(if (AlfheimConfigHandler.destroyPortal) "8" else "8s"))
 		
@@ -201,7 +200,7 @@ object AlfheimLexiconData {
 		
 		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
 		
-		stories.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimItems.storyToken)
+		//stories.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3")).icon = ItemStack(AlfheimItems.storyToken)
 		
 		aniTorch.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								 PageCraftingRecipe("3", AlfheimRecipes.recipeAnimatedTorch))
@@ -277,7 +276,7 @@ object AlfheimLexiconData {
 		
 		multbaub.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeMultibauble))
 		
-		// anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal)) // FIXME
+		anomaRing.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeSpatiotemporal))
 		
 		elvenSet.setLexiconPages(PageText("0"),
 								 PageCraftingRecipe("1", AlfheimRecipes.recipeElvoriumHelmet),
@@ -451,7 +450,7 @@ object AlfheimLexiconData {
 		essences.knowledgeType = kt
 		runes.knowledgeType = kt
 		multbaub.knowledgeType = kt
-		// anomaRing.knowledgeType = kt // FIXME
+		anomaRing.knowledgeType = kt
 		elvenSet.knowledgeType = kt
 		elemSet.knowledgeType = kt
 		advMana.knowledgeType = kt
@@ -607,18 +606,9 @@ object AlfheimLexiconData {
 }
 
 object AlfheimMultiblocks {
-	
-	val infuser: MultiblockSet
-	val infuserU: MultiblockSet
-	val portal: MultiblockSet
-	val soul: MultiblockSet
-	val yordin: MultiblockSet
-	
-	init {
-		infuser = TileManaInfuser.makeMultiblockSet()
-		infuserU = TileManaInfuser.makeMultiblockSetUnknown()
-		portal = TileAlfheimPortal.makeMultiblockSet()
-		soul = TileManaInfuser.makeMultiblockSetSoul()
-		yordin = TileTradePortal.makeMultiblockSet()
-	}
+	val infuser = TileManaInfuser.makeMultiblockSet()
+	val infuserU = TileManaInfuser.makeMultiblockSetUnknown()
+	val portal = TileAlfheimPortal.makeMultiblockSet()
+	val soul = TileManaInfuser.makeMultiblockSetSoul()
+	val yordin = TileTradePortal.makeMultiblockSet()
 }

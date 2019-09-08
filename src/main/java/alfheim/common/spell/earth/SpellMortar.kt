@@ -7,9 +7,9 @@ import net.minecraft.entity.EntityLivingBase
 
 class SpellMortar: SpellBase("mortar", EnumRace.GNOME, 7500, 200, 5) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
-		if (result == SpellBase.SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellMortar(caster.worldObj, caster))
+		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellMortar(caster.worldObj, caster))
 		return result
 	}
 }

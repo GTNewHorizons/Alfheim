@@ -8,9 +8,9 @@ import net.minecraft.entity.EntityLivingBase
 
 class SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {
 	
-	override fun performCast(caster: EntityLivingBase): SpellBase.SpellCastResult {
+	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
-		if (result == SpellBase.SpellCastResult.OK) TimeStopSystem.stop(caster)
+		if (result == SpellCastResult.OK) TimeStopSystem.stop(caster)
 		return result
 	}
 	
