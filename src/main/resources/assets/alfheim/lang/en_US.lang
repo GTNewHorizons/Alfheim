@@ -283,23 +283,6 @@ alfheim.commands.tpdim.wrong=tpdim <ID>
 alfheim.commands.tpdim.worlderr=Dimension Initialization Exception
 alfheim.commands.tpdim.wrongid=Wrong dim ID
 
-alfheim.configgui.biomeIDAlfheim=Biome ID for standart biome
-alfheim.configgui.biomeIDAlfheimBeach=Biome ID for beach biome
-alfheim.configgui.deathScreenAdditionalTime=How longer (in ticks) "Respawn" button will be unavailable [ElvenStory Only]
-alfheim.configgui.deathTimerScale=Death Timer Scale (1 < bigger; 1 > smaller) [ElvenStory Only]
-alfheim.configgui.deathTimerX=Death Timer additional X from center [ElvenStory Only]
-alfheim.configgui.deathTimerY=Death Timer additional Y from bottom [ElvenStory Only]
-alfheim.configgui.deathTimerFontX=Death Timer text additional X from center [ElvenStory Only]
-alfheim.configgui.deathTimerFontY=Death Timer text additional Y from bottom [ElvenStory Only]
-alfheim.configgui.destroyPortal=Set this to false to disable destroying portals in non-zero coords in Alfheim
-alfheim.configgui.dimensionIDAlfheim=Dimension ID for Alfheim
-alfheim.configgui.enableAlfheimRespawn=Set this to false to disable respawning in Alfheim
-alfheim.configgui.enableElvenStory=Set this to true to enable Elven Story mode without mod
-alfheim.configgui.enableWingsNonAlfheim=Set this to false to disable wings in other worlds [ElvenStory Only]
-alfheim.configgui.flightTime=How long can you fly as elf [ElvenStory Only]
-alfheim.configgui.prolongDeathScreen=Set this to false to disable death screen prolongation [ElvenStory Only]
-alfheim.configgui.showNumbersInTooltip=Set this to true to enable numerical mana representation
-
 alfheim.nei.manainfusion=Mana Infusion
 alfheim.nei.tradeportal=Midgard Trade
 
@@ -366,6 +349,8 @@ alfheimmisc.cast.wrongtgt=Wrong target
 alfheimmisc.cast.momana=Not enough mana
 alfheimmisc.cast.notallow=You cannot cast here
 
+alfheimmisc.mount.unavailable=Mount is unavailable here
+
 alfheimmisc.party.already=You are aleady in this party
 alfheimmisc.party.full=Party is full
 alfheimmisc.party.leave=You must leave current party to join new one
@@ -391,7 +376,7 @@ death.attack.sacrifice=%s sacrificed himself to Darkness
 death.attack.soulburn=%s's soul burned away
 death.attack.water=%s was cut into pieces by %s's water stream
 
-entity.alfheim:Charge.name=Charge
+entity.alfheim:Charge.name=Dark Charge
 entity.alfheim:Elf.name=Elf
 entity.alfheim:Flugel.name=Flügel
 entity.alfheim:Lolicorn.name=Lolicorn
@@ -402,12 +387,12 @@ entity.alfheim:Pixie.name=Pixie
 entity.alfheim:Rook.name=Demigod's Rook
 entity.alfheim:SpellAcidMyst.name=Acid Myst
 entity.alfheim:SpellAquaStream.name=Aqua Stream
-entity.alfheim:SpellArfa.name=Arfa
 entity.alfheim:SpellDriftingMine.name=Drifting Mine
 entity.alfheim:SpellFenrirStorm.name=Fenrir Storm
 entity.alfheim:SpellFireball.name=Fireball
 entity.alfheim:SpellFirewall.name=Firewall
 entity.alfheim:SpellGravityTrap.name=Gravity Trap
+entity.alfheim:SpellHarp.name=Harp
 entity.alfheim:SpellIsaacMissile.name=Isaac Magic Missile
 entity.alfheim:SpellMortar.name=Mortar
 entity.alfheim:SpellWindBlade.name=Wind Blade
@@ -778,8 +763,8 @@ tile.alfheim:rainbowPetalBlock.name=Bifrost Petal Block
 tile.alfheim:coloredDirt.name=Iridescent Dirt
 tile.alfheim:rainbowLeaves.name=Iridescent Leaves
 tile.alfheim:irisLeaves.name=Iridescent Leaves
-tile.alfheim:rainbowWood.name=Iridescent Log
-tile.alfheim:irisWood.name=Iridescent Log
+tile.alfheim:rainbowWood.name=Iridescent Wood
+tile.alfheim:irisWood.name=Iridescent Wood
 tile.alfheim:irisSapling.name=Iridescent Sapling
 tile.alfheim:rainbowPlanks.name=Iridescent Planks
 tile.alfheim:irisPlanks.name=Iridescent Planks
@@ -863,17 +848,17 @@ tile.alfheim:netherPlanksStairs.name=Infernal Stairs
 tile.alfheim:sealingPlanksStairs.name=Sealing Stairs
 
 tile.alfheim:lightningSapling.name=Thunderous Oak Sapling
-tile.alfheim:lightningWood.name=Thunderous Log
+tile.alfheim:lightningWood.name=Thunderous Wood
 tile.alfheim:lightningLeaves.name=Thunderous Leaves
 tile.alfheim:lightningPlanks.name=Thunderous Planks
 
 tile.alfheim:netherSapling.name=Infernal Oak Sapling
-tile.alfheim:netherWood.name=Infernal Log
+tile.alfheim:netherWood.name=Infernal Wood
 tile.alfheim:netherLeaves.name=Infernal Leaves
 tile.alfheim:netherPlanks.name=Infernal Planks
 
 tile.alfheim:sealingSapling.name=Sealing Oak Sapling
-tile.alfheim:sealingWood.name=Sealing Log
+tile.alfheim:sealingWood.name=Sealing Wood
 tile.alfheim:sealingLeaves.name=Sealing Leaves
 tile.alfheim:sealingPlanks.name=Sealing Planks
 

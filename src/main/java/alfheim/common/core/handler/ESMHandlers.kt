@@ -21,10 +21,10 @@ import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraft.server.MinecraftServer
-import net.minecraft.util.*
+import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
-import net.minecraftforge.event.entity.living.*
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -129,7 +129,7 @@ object ESMHandler {
 		var dur = effect.duration
 		var amp = effect.amplifier
 		
-		if (player.rng.nextInt(max(1, dur*(amp+1))) == 0) {
+		if (player.rng.nextInt(max(1, dur*(amp+1)*5)) == 0) {
 			--amp
 			if (amp < 0) {
 				amp = 0

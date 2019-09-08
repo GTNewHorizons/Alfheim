@@ -39,6 +39,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
+import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.irisDirt
 import alfheim.common.block.AlfheimBlocks.irisGrass
 import alfheim.common.block.AlfheimBlocks.irisLamp
@@ -782,18 +783,22 @@ object ShadowFoxRecipes {
 															 RUNE[7], // Winter
 															 RUNE[5]) // Summer
 		
+		GameRegistry.addSmelting(dreamLog, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood2, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood3, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(rainbowWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(auroraWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(lightningWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(altWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(altWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(sealingWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
+		GameRegistry.addSmelting(calicoWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(circuitWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(lightningPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.ThunderwoodSplinters), 0.1F)
 		GameRegistry.addSmelting(netherPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.NetherwoodSplinters), 0.1F)
-		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
 		
 		recipesSplashPotions = ShapelessOreRecipe(ItemStack(splashPotion), BotaniaItems.brewVial, Items.gunpowder)
 		GameRegistry.addRecipe(RecipeThrowablePotion())

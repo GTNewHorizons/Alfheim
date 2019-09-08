@@ -283,23 +283,6 @@ alfheim.commands.tpdim.wrong=/tpdim <ID измерения>
 alfheim.commands.tpdim.worlderr=Ошибка инициализации измерения!
 alfheim.commands.tpdim.wrongid=Неверно указан ID измерения!
 
-alfheim.configgui.biomeIDAlfheim=ID стандартного биома
-alfheim.configgui.biomeIDAlfheimBeach=ID биома пляжа
-alfheim.configgui.deathScreenAdditionalTime=Как долго (в тиках) кнопка "Возродиться" будет недоступна [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerScale=Масштаб таймера возрождения (1 < больше; 1 > меньше) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerX=Дополнительная X-координата таймера возрождения (от центра) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerY=Дополнительная Y-координата таймера возрождения (от низа) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerFontX=Дополнительная X-координата текста таймера возрождения (от центра) [Только в режиме ElvenStory]
-alfheim.configgui.deathTimerFontY=Дополнительная Y-координата текста таймера возрождения (от низа) [Только в режиме ElvenStory]
-alfheim.configgui.destroyPortal=Установите значение false, чтобы выключить разрушение порталов в Альфхейме на ненулевых координатах
-alfheim.configgui.dimensionIDAlfheim=ID измерения Альфхейм
-alfheim.configgui.enableAlfheimRespawn=Установите значение false, чтобы выключить возрождение в Альфхейме
-alfheim.configgui.enableElvenStory=Установите значение true, чтобы включить режим ElvenStory без установленного мода
-alfheim.configgui.enableWingsNonAlfheim=Установите значение false, чтобы выключить крылья в других мирах [Только в режиме ElvenStory]
-alfheim.configgui.flightTime=Насколько долго Вы можете летать будучи эльфом [Только в режиме ElvenStory]
-alfheim.configgui.prolongDeathScreen=Установите значение false, чтобы выключить увеличение задержки до возрождения [Только в режиме ElvenStory]
-alfheim.configgui.showNumbersInTooltip=Установите значение true, чтобы включить числовое отображение количества маны
-
 alfheim.nei.manainfusion=Мана-наполнение
 alfheim.nei.tradeportal=Обмен с Мидгардом
 
@@ -366,6 +349,8 @@ alfheimmisc.cast.wrongtgt=Неверная цель!
 alfheimmisc.cast.momana=Недостаточно маны!
 alfheimmisc.cast.notallow=Вы не можете колдовать здесь!
 
+alfheimmisc.mount.unavailable=Призыв здесь недоступен
+
 alfheimmisc.party.already=Вы уже состоите в этой группе!
 alfheimmisc.party.full=В группе нет места!
 alfheimmisc.party.leave=Вы должны покинуть текущую группу, чтобы присоединиться к новой!
@@ -391,7 +376,7 @@ death.attack.sacrifice=%s принёс себя в жертву Тьме
 death.attack.soulburn=Душа %s сгорела
 death.attack.water=%s разрезан на части водным потоком %s
 
-entity.alfheim:Charge.name=Заряд
+entity.alfheim:Charge.name=Тёмный заряд
 entity.alfheim:Elf.name=Эльф
 entity.alfheim:Flugel.name=Флюгель
 entity.alfheim:Lolicorn.name=Лоликорн
@@ -402,12 +387,12 @@ entity.alfheim:Pixie.name=Пикси
 entity.alfheim:Rook.name=Ладья полубога
 entity.alfheim:SpellAcidMyst.name=Кислотный туман
 entity.alfheim:SpellAquaStream.name=Поток воды
-entity.alfheim:SpellArfa.name=Арфа
 entity.alfheim:SpellDriftingMine.name=Дрейфующая мина
 entity.alfheim:SpellFenrirStorm.name=Шторм Фенрира
 entity.alfheim:SpellFireball.name=Огненный шар
 entity.alfheim:SpellFirewall.name=Стена огня
 entity.alfheim:SpellGravityTrap.name=Гравитационная ловушка
+entity.alfheim:SpellHarp.name=Арфа
 entity.alfheim:SpellIsaacMissile.name=Магическая ракета Исаака
 entity.alfheim:SpellMortar.name=Мортира
 entity.alfheim:SpellWindBlade.name=Коса ветра

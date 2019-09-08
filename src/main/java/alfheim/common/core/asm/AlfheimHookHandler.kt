@@ -137,7 +137,7 @@ object AlfheimHookHandler {
 	fun requestManaChecked(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = manaToGet
 	
 	@JvmStatic
-	@Hook(injectOnExit = true)
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
 		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP) dis + 0.2f
 		else dis

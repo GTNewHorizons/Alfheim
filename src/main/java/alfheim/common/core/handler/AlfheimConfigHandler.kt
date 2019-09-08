@@ -17,7 +17,7 @@ import kotlin.math.*
 object AlfheimConfigHandler {
 	lateinit var config: Configuration
 	
-	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Integration"
+	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "woldgen"
@@ -111,12 +111,12 @@ object AlfheimConfigHandler {
 		config = Configuration(suggestedConfigurationFile)
 		
 		config.load()
-		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings")
+		/*config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings")
 		config.addCustomCategoryComment(CATEGORY_WORLDGEN, "Alfheim worldgen settings")
 		config.addCustomCategoryComment(CATEGORY_POTIONS, "Potion IDs")
 		config.addCustomCategoryComment(CATEGORY_ESMODE, "Elven Story optional features")
-		config.addCustomCategoryComment(CATEGORY_MMO, "Elven Story optional features")
-		config.addCustomCategoryComment(CATEGORY_HUD, "HUD elements customizations")
+		config.addCustomCategoryComment(CATEGORY_MMO, "MMO optional features")
+		config.addCustomCategoryComment(CATEGORY_HUD, "HUD elements customizations")*/
 		
 		syncConfig()
 		FMLCommonHandler.instance().bus().register(object {
