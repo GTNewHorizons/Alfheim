@@ -15,7 +15,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
-import net.minecraft.entity.passive.EntityTameable
+import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
@@ -156,9 +156,12 @@ object ESMHandler {
 	}
 	
 	fun doCaitSith(player: EntityPlayer, tg: Entity) {
-		if (tg is EntityTameable) {
+		if (tg is EntityTameable && !tg.isTamed) {
 			tg.isTamed = true
 			tg.func_152115_b(player.uniqueID.toString())
+		} else if (tg is EntityHorse) {
+			tg.setTamedBy(tg.riddenByEntity as EntityPlayer)
+			tg.worldObj.setEntityState(tg, 7.toByte())
 		}
 	}
 	
