@@ -29,6 +29,7 @@ import org.lwjgl.input.*
 object KeyBindingHandlerClient {
 	
 	/** Toggle Keys  */
+	var toggleESMAbility: Boolean = false
 	var toggleCorn: Boolean = false
 	var toggleFlight: Boolean = false
 	var toggleJump: Boolean = false
@@ -78,6 +79,16 @@ object KeyBindingHandlerClient {
 				}
 			} else if (toggleFlight) {
 				toggleFlight = false
+			}
+			
+			if (Keyboard.isKeyDown(ClientProxy.keyESMAbility.keyCode)) {
+				if (!toggleESMAbility) {
+					toggleESMAbility = true
+					PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
+					AlfheimCore.network.sendToServer(MessageKeyBind(ESMABIL.ordinal, false, 0))
+				}
+			} else if (toggleESMAbility) {
+				toggleESMAbility = false
 			}
 			
 			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed && !toggleJump && Keyboard.isKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
@@ -239,6 +250,6 @@ object KeyBindingHandlerClient {
 	}
 	
 	enum class KeyBindingIDs {
-		CORN, ATTACK, CAST, UNCAST, FLIGHT, SEL
+		CORN, FLIGHT, ESMABIL, ATTACK, CAST, UNCAST, SEL
 	}
 }

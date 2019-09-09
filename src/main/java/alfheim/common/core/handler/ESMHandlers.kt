@@ -5,6 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
+import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.mfloor
 import alfheim.common.network.*
@@ -56,7 +57,7 @@ object ESMHandler {
 	// EVENTS
 	
 	@SubscribeEvent
-	fun onPlayerInteract(event: PlayerInteractEvent) {
+	fun onInteractWithBlock(event: PlayerInteractEvent) {
 		if (AlfheimCore.enableElvenStory && !Botania.gardenOfGlassLoaded) {
 			val equipped = event.entityPlayer.currentEquippedItem
 			if (equipped != null && equipped.item === Items.bowl && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
@@ -89,16 +90,16 @@ object ESMHandler {
 		if (!ASJUtilities.isServer) fixSpriggan()
 	}
 	
-	@SubscribeEvent
-	fun onInteract(e: EntityInteractEvent) {
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	fun onInteractWithEntity(e: EntityInteractEvent) {
 		if (AlfheimCore.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith(e.entityPlayer, e.target)
 	}
 	
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onEntityHurt(e: LivingHurtEvent) {
 		val player = e.source.entity as? EntityPlayer ?: return
 		
-		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player") {
+		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player) ) {
 			e.entityLiving.hurtResistantTime -= max(0f, e.entityLiving.maxHurtResistantTime * 0.2f).toInt()
 		}
 	}
@@ -119,6 +120,8 @@ object ESMHandler {
 	}
 	
 	fun doSalamander(player: EntityPlayer) {
+		if (isAbilityDisabled(player)) return
+		
 		if (checkRemove(player, Potion.blindness)
 		||  checkRemove(player, Potion.poison)
 		||  checkRemove(player, Potion.confusion)) return
@@ -146,16 +149,20 @@ object ESMHandler {
 	}
 	
 	fun doSylph(player: EntityPlayer) {
+		if (isAbilityDisabled(player)) return
+		
 		if (player.capabilities.isFlying) {
 			if (player.moveForward > 1e-4f)
-				player.moveFlying(0f, 1f, 0.01f)
+				player.moveFlying(0f, 1f, 0.005f)
 		} else {
-			if (player.ticksExisted % 10 == 0)
+			if (player.ticksExisted % 5 == 0)
 				ElvenFlightHelper.add(player, 1)
 		}
 	}
 	
 	fun doCaitSith(player: EntityPlayer, tg: Entity) {
+		if (isAbilityDisabled(player)) return
+		
 		if (tg is EntityTameable && !tg.isTamed) {
 			tg.isTamed = true
 			tg.func_152115_b(player.uniqueID.toString())
@@ -165,11 +172,35 @@ object ESMHandler {
 		}
 	}
 	
-	fun doUndine(player: EntityPlayer) {
-		player.air = 300
+	fun doGnome(player: EntityPlayer) {
+		if (ASJUtilities.isServer || !player.isSneaking) return
+		if (isAbilityDisabled(player)) return
+		
+		val x = player.posX.mfloor() - 8
+		val y = player.posY.mfloor() - 8
+		val z = player.posZ.mfloor() - 8
+		
+		Botania.proxy.setWispFXDepthTest(false)
+		
+		for (i in x until (x+16)) {
+			val j = y + player.ticksExisted % 17
+			for (k in z until (z+16)) {
+				val block = player.worldObj.getBlock(i, j, k)
+				if (block === Blocks.air) continue
+				
+				val meta = player.worldObj.getBlockMetadata(i, j, k)
+				
+				if (OreDictionary.getOreIDs(ItemStack(block, 1, meta)).any { OreDictionary.getOreName(it).startsWith("ore") })
+					Botania.proxy.wispFX(player.worldObj, i + 0.5, j + 0.5, k + 0.5, 0f, 1f, 0f, 0.25f)
+			}
+		}
+		
+		Botania.proxy.setWispFXDepthTest(true)
 	}
 	
 	fun doSpriggan(player: EntityPlayer) {
+		if (isAbilityDisabled(player)) return
+		
 		if (ASJUtilities.isServer)
 			player.removePotionEffect(Potion.nightVision.id)
 		else {
@@ -188,32 +219,16 @@ object ESMHandler {
 		}
 	}
 	
-	fun doGnome(player: EntityPlayer) {
-		if (ASJUtilities.isServer || !player.isSneaking) return
-		
-		val x = player.posX.mfloor() - 8
-		val y = player.posY.mfloor() - 8
-		val z = player.posZ.mfloor() - 8
-		
-		Botania.proxy.setWispFXDepthTest(false)
-		
-		for (i in x until (x+16)) {
-			val j = y + player.ticksExisted % 17
-			for (k in z until (z+16)) {
-				val block = player.worldObj.getBlock(i, j, k)
-				if (block === Blocks.air) continue
-				
-				val meta = player.worldObj.getBlockMetadata(i, j, k)
-				
-				for (id in OreDictionary.getOreIDs(ItemStack(block, 1, meta))) {
-					if (OreDictionary.getOreName(id).startsWith("ore"))
-						Botania.proxy.wispFX(player.worldObj, i + 0.5, j + 0.5, k + 0.5, 0f, 1f, 0f, 0.25f)
-				}
-			}
-		}
-		
-		Botania.proxy.setWispFXDepthTest(true)
+	fun doUndine(player: EntityPlayer) {
+		if (!isAbilityDisabled(player))
+			player.air = 300
 	}
+	
+	fun isAbilityDisabled(player: EntityPlayer) =
+		if (ASJUtilities.isServer)
+			!CardinalSystem.forPlayer(player).esmAbility
+		else
+			!PlayerSegmentClient.esmAbility
 }
 
 object ElvenFlightHandler {
@@ -262,22 +277,18 @@ object ElvenFlightHandler {
 		val player = e.player
 		
 		if (AlfheimCore.enableElvenStory) {
-			if (!player.capabilities.isCreativeMode) {
-				if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
-					if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
-						if (player.capabilities.isFlying) {
-							ElvenFlightHelper.sub(player, if (player.isSprinting) 3 else if (abs(player.motionX) > 1e-4f || player.motionY > 1e-4f || abs(player.motionZ) > 1e-4f) 2 else 1)
-							if (player.isSprinting) player.moveFlying(0f, 1f, 0.1f)
-						} else {
-							ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
-						}
+			if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
+				if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
+					if (player.capabilities.isFlying) {
+						if (player.isSprinting) player.moveFlying(0f, 1f, 0.00625f)
+						ElvenFlightHelper.sub(player, if (player.isSprinting) 3 else if (abs(player.motionX) > 1e-4f || player.motionY > 1e-4f || abs(player.motionZ) > 1e-4f) 2 else 1)
+					} else {
+						ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
 					}
-					
-					if (player.flight <= 0) player.capabilities.isFlying = false
-				} else ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
-			} else {
-				player.flight = ElvenFlightHelper.max
-			}
+				}
+				
+				if (player.flight <= 0) player.capabilities.isFlying = false
+			} else ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
 		}
 	}
 	

@@ -64,11 +64,15 @@ object CardinalSystem {
 	fun transfer(player: EntityPlayerMP) {
 		KnowledgeSystem.transfer(player)
 		
-		if (AlfheimCore.enableMMO) {
-			SpellCastingSystem.transfer(player)
-			HotSpellsSystem.transfer(player)
-			PartySystem.transfer(player)
-			TimeStopSystem.transfer(player, 0)
+		if (AlfheimCore.enableElvenStory) {
+			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ESMABIL, if (forPlayer(player).esmAbility) 1.0 else 0.0), player)
+			
+			if (AlfheimCore.enableMMO) {
+				SpellCastingSystem.transfer(player)
+				HotSpellsSystem.transfer(player)
+				PartySystem.transfer(player)
+				TimeStopSystem.transfer(player, 0)
+			}
 		}
 	}
 	
@@ -736,6 +740,7 @@ object CardinalSystem {
 				
 				@Suppress("unused")
 				enum class MemberType {
+					
 					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
 					
 					companion object {
@@ -928,11 +933,16 @@ object CardinalSystem {
 		
 		var userName: String = player.commandSenderName
 		
+		var esmAbility = true
+		
+		fun toggleESMAbility() {
+			esmAbility = !esmAbility
+		}
+		
 		@Transient
 		var quadStage = 0
 		
 		companion object {
-			
 			private const val serialVersionUID = 6871678638741684L
 		}
 	}

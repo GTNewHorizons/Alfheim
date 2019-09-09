@@ -514,8 +514,8 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun getLookVec(e: Entity): Vec3 {
-		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.toFloat())
+		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.toFloat())
 		val f3 = -MathHelper.cos(-e.rotationPitch * 0.017453292f)
 		val f4 = MathHelper.sin(-e.rotationPitch * 0.017453292f)
 		return Vec3.createVectorHelper((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
@@ -676,7 +676,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun registerDimension(id: Int, w: Class<out WorldProvider>, keepLoaded: Boolean) {
-		if (!DimensionManager.registerProviderType(id, w, keepLoaded)) throw IllegalArgumentException(String.format("Failed to register provider for id %d, One is already registered", id))
+		require(DimensionManager.registerProviderType(id, w, keepLoaded)) { String.format("Failed to register provider for id %d, One is already registered", id) }
 		DimensionManager.registerDimension(id, id)
 	}
 	
@@ -749,14 +749,14 @@ object ASJUtilities {
 	private val format = DecimalFormat("000")
 	private fun time(world: World?) = "[${format.format(world?.let { it.totalWorldTime % 1000 } ?: 0)}]"
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
+	@SideOnly(Side.CLIENT)
 	fun chatLog(message: String) {
 		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(Minecraft.getMinecraft()?.theWorld)} $message"))
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
+	@SideOnly(Side.CLIENT)
 	fun chatLog(message: String, world: World?) {
 		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"))
 	}

@@ -50,6 +50,7 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message1d) {
 		when (m1d.values()[packet.type]) {
+			m1d.ESMABIL          -> PlayerSegmentClient.esmAbility = packet.data1 != 0.0
 			m1d.CL_SLOWDOWN      -> AlfheimConfigHandler.slowDownClients = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()

@@ -9,8 +9,6 @@ import alfheim.client.render.world.SpellEffectHandlerClient
 import alfheim.client.render.world.SpellEffectHandlerClient.Spells
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
-import alfheim.common.core.handler.CardinalSystem.transfer
-import alfheim.common.core.helper.*
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
@@ -23,13 +21,11 @@ import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
-import net.minecraft.block.material.Material
 import net.minecraft.enchantment.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
-import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
@@ -37,16 +33,11 @@ import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
-import net.minecraftforge.event.entity.player.*
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action
 import net.minecraftforge.event.world.BlockEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
-import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.TileAlfPortal
 import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
-import vazkii.botania.common.item.equipment.tool.ToolCommons
 import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
 import kotlin.math.max
 
@@ -72,6 +63,7 @@ object EventHandler {
 		
 		if (e.player is EntityPlayerMP) {
 			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimCore.enableElvenStory) 1 else 0).toDouble(), (if (AlfheimCore.enableMMO) 1 else 0).toDouble()), e.player as EntityPlayerMP)
+			CardinalSystem.transfer(e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.CL_SLOWDOWN, if (AlfheimConfigHandler.slowDownClients) 1.0 else 0.0), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
@@ -86,7 +78,6 @@ object EventHandler {
 					e.player.inventory.addItemStackToInventory(ItemStack(ModItems.lexicon))
 					e.player.setSpawnChunk(ChunkCoordinates(0, 250, 0), true, AlfheimConfigHandler.dimensionIDAlfheim)
 				}
-				if (AlfheimCore.enableMMO) transfer(e.player as EntityPlayerMP)
 			}
 		}
 	}
@@ -306,7 +297,7 @@ object EventHandler {
 	@SubscribeEvent
 	fun onPlayerUpdate(e: PlayerTickEvent) {
 		if (e.phase == Phase.START) return
-		val player = e.player
+//		val player = e.player
 
 //		player.rotationYaw = 0f
 //		player.rotationPitch = 0f

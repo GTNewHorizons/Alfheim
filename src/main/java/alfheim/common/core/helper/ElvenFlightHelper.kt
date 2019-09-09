@@ -34,7 +34,11 @@ object ElvenFlightHelper {
 	}
 	
 	fun add(player: EntityPlayer, value: Int) {
-		player.flight = max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
+		player.flight =
+			if (!player.capabilities.isCreativeMode)
+				max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
+			else
+				max
 	}
 	
 	fun sub(player: EntityPlayer, value: Int) {

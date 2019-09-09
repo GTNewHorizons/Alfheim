@@ -109,11 +109,15 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 		val player = message.serverHandler.playerEntity
 		
 		when (values()[packet.action]) {
-			CORN   -> EntityLolicorn.call(player)
+			ATTACK  -> KeyBindingHandler.atack(player)
 			
-			ATTACK -> KeyBindingHandler.atack(player)
+			CORN    -> EntityLolicorn.call(player)
 			
-			CAST   -> {
+			FLIGHT  -> KeyBindingHandler.enableFlight(player, packet.state)
+			
+			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
+			
+			CAST    -> {
 				val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
@@ -126,7 +130,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 				}
 			}
 			
-			UNCAST -> {
+			UNCAST  -> {
 				run {
 					val seg = CardinalSystem.forPlayer(player)
 					seg.ids = 0
@@ -136,9 +140,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 				KeyBindingHandler.enableFlight(player, packet.state)
 			}
 			
-			FLIGHT -> KeyBindingHandler.enableFlight(player, packet.state)
-			
-			SEL    -> {
+			SEL     -> {
 				val e = player.worldObj.getEntityByID(packet.ticks)
 				if (e is EntityLivingBase) CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
 			}

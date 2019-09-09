@@ -8,7 +8,7 @@ import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
@@ -139,7 +139,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
-		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP) dis + 0.2f
+		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
 	}
 	

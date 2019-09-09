@@ -143,6 +143,8 @@ object CardinalSystemClient {
 		
 		var knowledge: MutableSet<String> = HashSet()
 		
+		var esmAbility = true
+		
 		private const val serialVersionUID = 6871678638741684L
 	}
 }

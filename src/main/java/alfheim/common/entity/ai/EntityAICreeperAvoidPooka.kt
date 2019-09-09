@@ -2,13 +2,13 @@ package alfheim.common.entity.ai
 
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
+import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.util.playSoundAtEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.pathfinding.PathEntity
-import net.minecraft.pathfinding.PathNavigate
+import net.minecraft.pathfinding.*
 import net.minecraft.util.Vec3
 
 class EntityAICreeperAvoidPooka(val creeper: EntityCreeper): EntityAIBase() {
@@ -38,6 +38,8 @@ class EntityAICreeperAvoidPooka(val creeper: EntityCreeper): EntityAIBase() {
 		val player = closestLivingEntity as EntityPlayer
 		
 		if (player.race !== EnumRace.POOKA) return false
+		
+		if (ESMHandler.isAbilityDisabled(player)) return false
 		
 		val vec3 = RandomPositionGenerator.findRandomTargetBlockAwayFrom(creeper, 16, 7, Vec3.createVectorHelper(player.posX, player.posY, player.posZ))
 		

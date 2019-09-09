@@ -1,5 +1,5 @@
 Innovations:
- Pasive race abilities
+ Pasive race abilities (toggleable on [M] by default)
 
 Fixes:
- --
+ Exceptions spam to console
