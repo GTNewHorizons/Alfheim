@@ -11,3 +11,4 @@ Fixes:
  Elven flight toggling on X
  Fixed aurora dirt not growing grass
  Fixed dupe with Botanists toolbelt
+ Fixed Rheingold with player interaction
