@@ -190,7 +190,6 @@ object AlfheimRegistry {
 		registerAnomaly("Lightning", SubTileLightning::class.java)
 		registerAnomaly("ManaTornado", SubTileManaTornado::class.java)
 		registerAnomaly("ManaVoid", SubTileManaVoid::class.java)
-		registerAnomaly("SpeedDown", SubTileSpeedDown::class.java)
 		registerAnomaly("SpeedUp", SubTileSpeedUp::class.java)
 		registerAnomaly("Warp", SubTileWarp::class.java)
 	}

@@ -21,8 +21,6 @@ botania.page.anomalyLightning.du=Attacks by electrical discharges all living thi
 botania.page.anomalyLightning.d=Attacks by electrical discharges all living things that are within reach, and the closer an object is found, the stronger the hit it receives. In practice, used to create &4Anti-pylons&0
 botania.page.anomalyManaTornado.t=&1Mana Thunder&0
 botania.page.anomalyManaTornado.d=Every few seconds, shoots randomly directed &1Mana burst&0 with a random effect. Sometimes this can even lead to an explosion at the point where the burst hits the surface.
-botania.page.anomalySpeedDown.t=&1Decelerator&0
-botania.page.anomalySpeedDown.d=An anomaly, as rare as &1Accelerator&0, and simply works opposite to it.
 botania.page.anomalyGravity.t=&1Gravity Vortex&0
 botania.page.anomalyGravity.d=The field of alternating gravity, dragging all the objects to it. If you got into the zone of its action, then your only way to get out is to run in the opposite direction, otherwise you can stay there forever. Does not act on the blocks.
 
