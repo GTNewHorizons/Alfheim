@@ -4,8 +4,10 @@ Innovations:
  Redused Elven King ring mana consumption
 
 Fixes:
+ #94 Dreamwood Sappling not growing on custom grass/dirt
  Exceptions spam to console
  Elven flight toggling on X
+ Fixed aurora dirt not growing grass
 
 
 

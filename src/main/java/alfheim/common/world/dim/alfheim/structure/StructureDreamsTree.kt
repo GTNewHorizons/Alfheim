@@ -516,8 +516,8 @@ class StructureDreamsTree
 		
 		val forLog = arrayOf(Material.wood)
 		
-		protected val validSpawnBlocks: Array<Block>
-			get() = arrayOf(Blocks.grass, Blocks.dirt)
+		val validSpawnMaterial: Array<Material>
+			get() = arrayOf(Material.grass, Material.ground)
 		
 		fun LocationIsValidSpawn(world: World, x: Int, y: Int, z: Int): Boolean {
 			var y = y
@@ -538,14 +538,15 @@ class StructureDreamsTree
 			val block = world.getBlock(x, y, z)
 			val blockAbove = world.getBlock(x, y + 1, z)
 			val blockBelow = world.getBlock(x, y - 1, z)
-			for (i in validSpawnBlocks) {
+			
+			for (i in validSpawnMaterial) {
 				if (blockAbove !== Blocks.air)
 					return false
-				if (block === i)
+				if (block.material === i)
 					return true
-				else if (block === Blocks.snow_layer && blockBelow === i)
+				else if (block.material === Material.snow && blockBelow.material === i)
 					return true
-				else if (block.material === Material.plants && blockBelow === i)
+				else if (block.material === Material.plants && blockBelow.material === i)
 					return true
 			}
 			return false

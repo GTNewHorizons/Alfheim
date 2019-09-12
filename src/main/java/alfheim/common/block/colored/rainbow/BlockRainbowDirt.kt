@@ -45,15 +45,14 @@ class BlockRainbowDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 					j1 += (random.nextInt(3) - 1) * random.nextInt(3) / 2
 					k1 += random.nextInt(3) - 1
 					
-					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.irisDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
+					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.irisDirt || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.auroraDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
 						++l1
 						continue
 					}
 				} else if (world.getBlock(i1, j1, k1).isAir(world, i1, j1, k1)) {
 					if (random.nextInt(8) != 0) {
 						if (AlfheimBlocks.rainbowGrass.canBlockStay(world, i1, j1, k1)) {
-							val meta = world.getBlockMetadata(i1, j1 - 1, k1)
-							world.setBlock(i1, j1, k1, AlfheimBlocks.rainbowGrass, meta, 3)
+							world.setBlock(i1, j1, k1, AlfheimBlocks.rainbowGrass, 0, 3)
 						}
 					} else {
 						world.getBiomeGenForCoords(i1, k1).plantFlower(world, random, i1, j1, k1)
