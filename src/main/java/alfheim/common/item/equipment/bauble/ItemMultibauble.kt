@@ -34,7 +34,7 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 			if (i < 6 && bauble != null) {
 				val item = bauble.item
 				if (item is IBauble && item !is ItemMultibauble && item !is IRelic) {
-					if (ManaItemHandler.requestManaExact(stack, player, 10, !player.worldObj.isRemote))
+					if (ManaItemHandler.requestManaExact(stack, player, 2, !player.worldObj.isRemote))
 						item.onWornTick(bauble, player)
 				}
 			}

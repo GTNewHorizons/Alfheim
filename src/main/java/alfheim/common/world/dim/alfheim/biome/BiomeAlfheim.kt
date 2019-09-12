@@ -12,9 +12,9 @@ open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: 
 		
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
-		this.clearSpawn()
-		this.setBiomeName("Alfheim")
-		this.setColor(0xA67C00)
+		clearSpawn()
+		setBiomeName("Alfheim")
+		setColor(0xA67C00)
 		waterColorMultiplier = 0x1D1D4E
 		
 		createChunkGen_InXZ_List.clear()

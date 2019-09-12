@@ -102,7 +102,7 @@ enum class EnumRace {
 			player.capabilities.allowFlying = true
 			player.sendPlayerAbilities()
 			
-			val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal]
+			val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal-1]
 			player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
 			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 		}

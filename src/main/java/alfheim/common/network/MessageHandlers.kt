@@ -131,13 +131,10 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			}
 			
 			UNCAST  -> {
-				run {
-					val seg = CardinalSystem.forPlayer(player)
-					seg.ids = 0
-					seg.init = seg.ids
-					seg.castableSpell = null
-				}
-				KeyBindingHandler.enableFlight(player, packet.state)
+				val seg = CardinalSystem.forPlayer(player)
+				seg.ids = 0
+				seg.init = seg.ids
+				seg.castableSpell = null
 			}
 			
 			SEL     -> {

@@ -37,6 +37,7 @@ object AlfheimConfigHandler {
 	var anomaliesUpdate			= 6000
 	var citiesDistance			= 1000
 	var oregenMultiplier		= 3
+	var pixieSpawns				= intArrayOf(10, 1, 2)
 	
 	// OHTER
 	var blackLotusDropRate		= 0.05
@@ -136,6 +137,7 @@ object AlfheimConfigHandler {
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
+		pixieSpawns = loadProp(CATEGORY_WORLDGEN, "pixieSpawns", pixieSpawns, false, "Pixie spawn weight (chance), min and max group count")
 		
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		destroyPortal = loadProp(CATEGORY_GENERAL, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
