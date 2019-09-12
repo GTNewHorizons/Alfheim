@@ -38,7 +38,7 @@ repositories {
 	mavenCentral()
 }
 
-version = "BETA-pre23.4"
+version = "BETA-pre23.5"
 group= "main"
 archivesBaseName = "Alfheim"
 

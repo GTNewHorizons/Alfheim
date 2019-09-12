@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.item.ItemStack
 
 class MessagePlayerItem(var item: ItemStack? = null): IMessage {
+	
 	override fun fromBytes(buf: ByteBuf?) {
 		buf?.let {
 			item = ByteBufUtils.readItemStack(buf)

@@ -2,16 +2,12 @@ Innovations:
  Pasive race abilities (toggleable on [M] by default)
  Config for pixie spawn rate
  Redused Elven King ring mana consumption
+ Deleted decelerator anomaly
 
 Fixes:
+ #92 Soul restoration exploit
  #94 Dreamwood Sappling not growing on custom grass/dirt
  Exceptions spam to console
  Elven flight toggling on X
  Fixed aurora dirt not growing grass
-
-
-
-TODO:
-	Dodge Ring with Multibaulbe
-	Save Cardinal System on major changes
-	Dupe with toolbelt
+ Fixed dupe with Botanists toolbelt

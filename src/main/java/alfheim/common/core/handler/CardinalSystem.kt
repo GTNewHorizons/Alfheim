@@ -111,6 +111,8 @@ object CardinalSystem {
 				seg.knowledge.add("$kn")
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
 			}
+			
+			save(AlfheimCore.save)
 		}
 		
 		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains("$kn")
@@ -134,6 +136,9 @@ object CardinalSystem {
 		
 		fun setCoolDown(caster: EntityPlayer, spell: SpellBase, cd: Int): Int {
 			forPlayer(caster).coolDown[spell.name] = cd
+			
+			if (cd > 6000) save(AlfheimCore.save)
+			
 			return cd
 		}
 		
@@ -370,6 +375,8 @@ object CardinalSystem {
 		fun setParty(player: EntityPlayer, party: Party) {
 			forPlayer(player).party = party
 			party.sendChanges()
+			
+			save(AlfheimCore.save)
 		}
 		
 		fun getParty(player: EntityPlayer) = forPlayer(player).party
@@ -582,6 +589,9 @@ object CardinalSystem {
 				if (count >= members.size) return false
 				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.health, mr.maxHealth, Member.MemberType.typeOf(mr).ordinal)
 				sendChanges()
+				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -612,6 +622,8 @@ object CardinalSystem {
 					i++
 				}
 				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -628,6 +640,9 @@ object CardinalSystem {
 					members[count] = null
 					
 					sendChanges()
+					
+					save(AlfheimCore.save)
+					
 					return true
 				}
 				return removeSafe(mr)
@@ -647,6 +662,9 @@ object CardinalSystem {
 				members[count] = null
 				
 				sendChanges()
+				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -814,6 +832,8 @@ object CardinalSystem {
 		
 		fun setHotSpellID(player: EntityPlayer, slot: Int, id: Int) {
 			forPlayer(player).hotSpells[slot] = id
+			
+			save(AlfheimCore.save)
 		}
 	}
 	

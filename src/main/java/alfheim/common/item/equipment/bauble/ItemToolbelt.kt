@@ -111,6 +111,7 @@ class ItemToolbelt: ItemBauble("toolbelt"), IBaubleRender, IBlockProvider, ITool
 		
 		fun setItem(player: EntityPlayer?, beltStack: ItemStack, stack: ItemStack?, pos: Int) {
 			if (stack == null) ItemNBTHelper.setCompound(beltStack, TAG_ITEM_PREFIX + pos, NBTTagCompound())
+			
 			else {
 				val tag = NBTTagCompound()
 				stack.writeToNBT(tag)
@@ -277,11 +278,11 @@ class ToolbeltEventHandler {
 						if (!event.world.isRemote) {
 							val item = heldItem.copy()
 							
-							ItemToolbelt.setItem(player, beltStack, item, segment)
-							
 							player.inventory.decrStackSize(player.inventory.currentItem, 64)
 							player.inventory.markDirty()
 							event.isCanceled = true
+							
+							ItemToolbelt.setItem(player, beltStack, item, segment)
 						}
 					}
 				} else if (toolStack != null) {

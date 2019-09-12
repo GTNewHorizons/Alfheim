@@ -5,12 +5,9 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.network.Message0d
 import alfheim.common.network.Message0d.m0d
 import baubles.api.BaubleType
-import baubles.common.lib.PlayerHandler
-import cpw.mods.fml.common.FMLCommonHandler
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
+import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.gui.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -25,54 +22,46 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 	
 	init {
 		creativeTab = AlfheimTab
-		FMLCommonHandler.instance().bus().register(this)
-	}
-	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	fun onKeyDown(event: KeyInputEvent) {
-		val mc = Minecraft.getMinecraft()
-		
-		val baublesInv = PlayerHandler.getPlayerBaubles(mc.thePlayer)
-		var ringStack: ItemStack? = baublesInv.getStackInSlot(1)
-		if (ringStack == null || ringStack.item !is ItemDodgeRing) {
-			ringStack = baublesInv.getStackInSlot(2)
-			if (ringStack == null || ringStack.item !is ItemDodgeRing)
-				return
-		}
-		
-		if (ItemNBTHelper.getInt(ringStack, TAG_DODGE_COOLDOWN, 0) > 0) return
-		
-		val threshold = 4
-		if (mc.gameSettings.keyBindLeft.isKeyPressed && !oldLeftDown) {
-			val oldLeft = leftDown
-			leftDown = ClientTickHandler.ticksInGame
-			
-			if (leftDown - oldLeft < threshold) dodge(mc.thePlayer, ringStack, true)
-		} else if (mc.gameSettings.keyBindRight.isKeyPressed && !oldRightDown) {
-			val oldRight = rightDown
-			rightDown = ClientTickHandler.ticksInGame
-			
-			if (rightDown - oldRight < threshold) dodge(mc.thePlayer, ringStack, false)
-		}
-		
-		oldLeftDown = mc.gameSettings.keyBindLeft.isKeyPressed
-		oldRightDown = mc.gameSettings.keyBindRight.isKeyPressed
 	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
 		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1)
+		
+		if (player.worldObj.isRemote) clientWornTick(stack, player)
 	}
 	
-	override fun getBaubleType(arg0: ItemStack): BaubleType {
-		return BaubleType.RING
+	@SideOnly(Side.CLIENT)
+	fun clientWornTick(stack: ItemStack, player: EntityLivingBase) {
+		val mc = Minecraft.getMinecraft()
+		
+		if (player is EntityPlayerSP && player === mc.thePlayer) {
+			if (ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0) > 0) return
+			
+			val threshold = 4
+			if (mc.gameSettings.keyBindLeft.isKeyPressed && !oldLeftDown) {
+				val oldLeft = leftDown
+				leftDown = ClientTickHandler.ticksInGame
+				
+				if (leftDown - oldLeft < threshold) dodge(player, stack, true)
+			} else if (mc.gameSettings.keyBindRight.isKeyPressed && !oldRightDown) {
+				val oldRight = rightDown
+				rightDown = ClientTickHandler.ticksInGame
+				
+				if (rightDown - oldRight < threshold) dodge(player, stack, false)
+			}
+			
+			oldLeftDown = mc.gameSettings.keyBindLeft.isKeyPressed
+			oldRightDown = mc.gameSettings.keyBindRight.isKeyPressed
+		}
 	}
+	
+	override fun getBaubleType(arg0: ItemStack) = BaubleType.RING
 	
 	companion object {
 		
-		val TAG_DODGE_COOLDOWN = "dodgeCooldown"
-		val MAX_CD = 20
+		const val TAG_DODGE_COOLDOWN = "dodgeCooldown"
+		const val MAX_CD = 20
 		
 		private var oldLeftDown: Boolean = false
 		private var oldRightDown: Boolean = false
@@ -104,7 +93,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			
 			if (!player.capabilities.isFlying) {
 				val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
-				val width = Math.min(((cd - pticks) * 2).toInt(), 40)
+				val width = ((cd - pticks) * 2).toInt().coerceAtMost(40)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				if (width > 0) {
 					Gui.drawRect(xo, y - 2, xo + 40, y - 1, -0x78000000)
