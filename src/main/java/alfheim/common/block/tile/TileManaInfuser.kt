@@ -28,8 +28,10 @@ import vazkii.botania.common.block.*
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.entity.EntityDoppleganger
+import java.util.*
 import kotlin.math.*
 
+@Suppress("ConstantConditionIf")
 class TileManaInfuser: TileMod(), ISparkAttachable {
 	
 	internal var mana: Int = 0
@@ -45,116 +47,141 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	internal val isReadyToKillGaia: Boolean
 		get() = checkPlatform(0, -2, 0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylon, 2)
 	
+	internal var targetUUID: UUID? = null
+	internal var targetID = -1
+	
 	override fun updateEntity() {
 		var removeMana = true
 		var boom = 3
 		
-		run gaia@ {
+		run gaia@{
 			if (isReadyToKillGaia) {
-				val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 3).toDouble(), (zCoord + 1).toDouble()))
-				run boom@ {
-					
+				
+				run boom@{
+					val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), yCoord + 1.0, zCoord.toDouble(), xCoord + 1.0, yCoord + 3.0, zCoord + 1.0))
 					
 					if (l.isNotEmpty()) {
 						if (l.size > 1)
 							return@boom
-						else {
-							if (blockMetadata != 2) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3)
-							val dop = l[0] as EntityDoppleganger
-							val hard = dop.isHardMode
+						
+						if (blockMetadata != 2) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3)
+						
+						val dop = l[0] as EntityDoppleganger
+						val hard = dop.isHardMode
+						
+						if (targetUUID?.equals(dop.entityUniqueID) == false)
+							return@boom
+						
+						targetUUID = dop.entityUniqueID
+						targetID = dop.entityId
+						
+						if (dop.invulTime <= 0) {
+							soulParticles()
+							boom = 7
+							dop.health = dop.health - 10
 							
-							if (dop.invulTime <= 0) {
-								soulParticles()
-								boom = 7
-								dop.health = dop.health - 10
-								
-								if (dop.health <= 0) {
-									dop.setDead()
-									if (dop.isEntityAlive) return@boom
-								} else
-									return
-								
-								val te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord)
-								
-								if (te is TileBrewery) {
-									
-									if (te.getStackInSlot(0) != null && te.getStackInSlot(0).item === AlfheimItems.flugelSoul) {
-										if (ItemFlugelSoul.getBlocked(te.getStackInSlot(0)) > 0) {
-											boom = 10
-											if (hard || Math.random() > 0.5)
-												ItemFlugelSoul.setDisabled(te.getStackInSlot(0), ItemFlugelSoul.getBlocked(te.getStackInSlot(0)), false)
-											else
-												return@boom
-											doneParticles()
-											return@gaia
-										}
-									}
-								} else
-									return@boom
-							} else {
-								if (worldObj.totalWorldTime % 5 == 0L) prepareParticles()
+							if (dop.health <= 0) {
+								dop.setDead()
+								if (dop.isEntityAlive) return@boom
+							} else
 								return
-							}
+							
+							val te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord)
+							
+							if (te is TileBrewery) {
+								
+								if (te.getStackInSlot(0) != null && te.getStackInSlot(0).item === AlfheimItems.flugelSoul) {
+									if (ItemFlugelSoul.getBlocked(te.getStackInSlot(0)) > 0) {
+										boom = 10
+										if (hard || Math.random() > 0.5) {
+											ItemFlugelSoul.setDisabled(te.getStackInSlot(0), ItemFlugelSoul.getBlocked(te.getStackInSlot(0)), false)
+											targetUUID = null
+										}
+										else
+											return@boom
+										doneParticles()
+										return@gaia
+									}
+								}
+							} else
+								return@boom
+						} else {
+							if (worldObj.totalWorldTime % 5 == 0L) prepareParticles()
+							return
 						}
 					} else {
+						if (targetUUID != null) {
+							boom = 10
+							return@boom
+						}
+						
 						if (blockMetadata != 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 						return@gaia
 					}
-					
-					worldObj.newExplosion(null, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), boom.toFloat(), true, false)
-					worldObj.setBlockToAir(xCoord, yCoord, zCoord)
-					return
 				}
+				
+				// boom
+				worldObj.newExplosion(null, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), boom.toFloat(), true, false)
+				worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+				
+				if (targetID != -1) {
+					val dop = worldObj.getEntityByID(targetID) as? EntityDoppleganger ?: return
+					
+					dop.health = dop.maxHealth
+				}
+				
+				targetUUID = null
+				return
 			}
-			
-			if (mana <= 0 && blockMetadata != 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-			
-			if (hasValidPlatform()) {
-				val items = items
-				if (areItemsValid(items)) {
-					if (DEBUG) println("Mana: " + mana + "\tMana requested: " + manaRequest + "\tResult: " + result!!.toString())
-					
-					removeMana = false
-					val spark = attachedSpark
-					if (spark != null) {
-						val sparkEntities = SparkHelper.getSparksAround(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5)
-						for (otherSpark in sparkEntities) {
-							if (spark === otherSpark)
-								continue
-							
-							if (otherSpark.attachedTile != null && otherSpark.attachedTile is IManaPool)
-								otherSpark.registerTransfer(spark)
-						}
+		}
+		
+		if (mana <= 0 && blockMetadata != 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
+		
+		if (hasValidPlatform()) {
+			val items = items
+			if (areItemsValid(items)) {
+				if (DEBUG) println("Mana: " + mana + "\tMana requested: " + manaRequest + "\tResult: " + result!!.toString())
+				
+				removeMana = false
+				val spark = attachedSpark
+				if (spark != null) {
+					val sparkEntities = SparkHelper.getSparksAround(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5)
+					for (otherSpark in sparkEntities) {
+						if (spark === otherSpark)
+							continue
+						
+						if (otherSpark.attachedTile != null && otherSpark.attachedTile is IManaPool)
+							otherSpark.registerTransfer(spark)
 					}
-					
-					if (mana > 0) {
-						doParticles()
-						if (blockMetadata != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
-					}
-					
-					if (mana >= manaRequest && !worldObj.isRemote) {
-						val item = items[0]
-						for (otherItem in items)
-							if (otherItem !== item)
-								otherItem.setDead()
-							else
-								item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.itemDamage))
-						item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
-						mana -= manaRequest
-						worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-						worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
-						VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
-						result = null
-						manaRequest = 0
-					}
-				} else {
+				}
+				
+				if (mana > 0) {
+					doParticles()
+					if (blockMetadata != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
+				}
+				
+				if (mana >= manaRequest && !worldObj.isRemote) {
+					val item = items[0]
+					for (otherItem in items)
+						if (otherItem !== item)
+							otherItem.setDead()
+						else
+							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.itemDamage))
+					item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
+					mana -= manaRequest
+					worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
+					worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
+					VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
 					result = null
 					manaRequest = 0
 				}
+			} else {
+				result = null
+				manaRequest = 0
 			}
-			
-			if (removeMana) recieveMana(-1000)
 		}
+		
+		if (removeMana) recieveMana(-1000)
 	}
 	
 	internal fun doParticles() {
@@ -233,7 +260,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		//boolean DBG = !worldObj.isRemote;
 		if (items.isEmpty()) return false
 		for (recipe in AlfheimAPI.manaInfuserRecipes) {
-			if (DEBUG) println(recipe.toString())
+			if (DEBUG) println("$recipe")
 			if (items.size != recipe.inputs.size) {
 				if (DEBUG) println("Incorrect items amount (" + items.size + "). Skipping this recipe.")
 				continue // Odd items will mess up the infusion, less means not enough materials
@@ -310,54 +337,54 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		return checkAll(QUARTZ_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2)
 	}
 	
-	internal fun checkAll(positions: Array<IntArray>, block: Block, meta: Int): Boolean {
-		for (position in positions) {
-			if (!checkPlatform(position[0], position[1], position[2], block, meta))
-				return false
-		}
-		
-		return true
-	}
+	internal fun checkAll(positions: Array<IntArray>, block: Block, meta: Int) = positions.all { checkPlatform(it[0], it[1], it[2], block, meta) }
 	
 	internal fun checkPlatform(xOff: Int, yOff: Int, zOff: Int, block: Block, meta: Int): Boolean {
 		return worldObj.getBlock(xCoord + xOff, yOff + yCoord, zOff + zCoord) === block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zOff + zCoord) == meta
 	}
 	
+	override fun writeToNBT(nbt: NBTTagCompound) {
+		super.writeToNBT(nbt)
+		targetUUID?.let {
+			nbt.setLong(TAG_UUID_MOST, it.mostSignificantBits)
+			nbt.setLong(TAG_UUID_LEAST, it.leastSignificantBits)
+		}
+	}
+	
+	override fun readFromNBT(nbt: NBTTagCompound) {
+		super.readFromNBT(nbt)
+		if (nbt.hasKey(TAG_UUID_MOST) && nbt.hasKey(TAG_UUID_LEAST)) {
+			targetUUID = UUID(nbt.getLong(TAG_UUID_MOST), nbt.getLong(TAG_UUID_LEAST))
+		}
+	}
+	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
+		super.writeCustomNBT(nbt)
 		nbt.setInteger(TAG_MANA, mana)
 		nbt.setInteger(TAG_MANA_REQUIRED, manaRequest)
 		nbt.setInteger(TAG_KNOWN_MANA, knownMana)
 	}
 	
 	override fun readCustomNBT(nbt: NBTTagCompound) {
+		super.readCustomNBT(nbt)
 		mana = nbt.getInteger(TAG_MANA)
 		knownMana = nbt.getInteger(TAG_KNOWN_MANA)
 	}
 	
-	override fun getCurrentMana(): Int {
-		return mana
-	}
+	override fun getCurrentMana() = mana
 	
-	override fun isFull(): Boolean {
-		return mana >= MAX_MANA
-	}
+	override fun isFull() = mana >= MAX_MANA
 	
 	override fun recieveMana(mana: Int) {
 		this.mana = max(0, min(MAX_MANA, this.mana + mana))
 		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
 	}
 	
-	override fun canRecieveManaFromBursts(): Boolean {
-		return hasValidPlatform() && areItemsValid(items)
-	}
+	override fun canRecieveManaFromBursts() = hasValidPlatform() && areItemsValid(items)
 	
-	override fun canAttachSpark(stack: ItemStack): Boolean {
-		return true
-	}
+	override fun canAttachSpark(stack: ItemStack) = true
 	
-	override fun attachSpark(entity: ISparkEntity) {
-		// NO-OP
-	}
+	override fun attachSpark(entity: ISparkEntity) = Unit
 	
 	override fun getAttachedSpark(): ISparkEntity? {
 		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 2).toDouble(), (zCoord + 1).toDouble()))
@@ -369,13 +396,9 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		return null
 	}
 	
-	override fun areIncomingTranfersDone(): Boolean {
-		return !hasValidPlatform() || !areItemsValid(items)
-	}
+	override fun areIncomingTranfersDone() = !hasValidPlatform() || !areItemsValid(items)
 	
-	override fun getAvailableSpaceForMana(): Int {
-		return max(0, MAX_MANA - currentMana)
-	}
+	override fun getAvailableSpaceForMana() = max(0, MAX_MANA - currentMana)
 	
 	fun onWanded(player: EntityPlayer?) {
 		if (player == null)
@@ -411,9 +434,12 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		private val PYLONS = arrayOf(intArrayOf(6, -1, 0), intArrayOf(0, -1, 6), intArrayOf(-6, -1, 0), intArrayOf(0, -1, -6))
 		private val QUARTZ_BLOCK = arrayOf(intArrayOf(1, 0, 0), intArrayOf(-1, 0, 0), intArrayOf(0, 0, 1), intArrayOf(0, 0, -1))
 		private val ELEMENTIUM_BLOCKS = arrayOf(intArrayOf(1, 0, 1), intArrayOf(1, 0, -1), intArrayOf(-1, 0, 1), intArrayOf(-1, 0, -1))
+		
 		private const val TAG_MANA = "mana"
 		private const val TAG_MANA_REQUIRED = "manaRequired"
 		private const val TAG_KNOWN_MANA = "knownMana"
+		private const val TAG_UUID_MOST = "uuidleast"
+		private const val TAG_UUID_LEAST = "uuidleast"
 		
 		fun makeMultiblockSetSoul(): MultiblockSet {
 			val mb = Multiblock()
