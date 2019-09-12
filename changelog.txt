@@ -1,5 +1,15 @@
 Innovations:
  Pasive race abilities (toggleable on [M] by default)
+ Config for pixie spawn rate
+ Redused Elven King ring mana consumption
 
 Fixes:
  Exceptions spam to console
+ Elven flight toggling on X
+
+
+
+TODO:
+	Dodge Ring with Multibaulbe
+	Save Cardinal System on major changes
+	Dupe with toolbelt
