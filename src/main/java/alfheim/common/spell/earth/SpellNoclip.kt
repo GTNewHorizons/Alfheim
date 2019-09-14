@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
@@ -27,7 +27,7 @@ class SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
 		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(AlfheimRegistry.noclip.id, 200, 0, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimRegistry.noclip.id, 200, 0))
-			SpellEffectHandler.sendPacket(Spells.UPHEAL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 		}
 		
 		return result

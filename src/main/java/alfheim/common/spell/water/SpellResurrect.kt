@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
@@ -30,7 +30,7 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, 0, 10, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 10))
-			SpellEffectHandler.sendPacket(Spells.UPHEAL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 			PartySystem.getMobParty(caster)?.setDead(tg.target, false)
 		}
 		

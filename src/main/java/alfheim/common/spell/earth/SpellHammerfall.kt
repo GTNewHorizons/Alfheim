@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
@@ -22,7 +22,7 @@ class SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) {
 		val result = checkCastOver(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		SpellEffectHandler.sendPacket(Spells.TREMORS, caster)
+		VisualEffectHandler.sendPacket(VisualEffects.TREMORS, caster)
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(10.0, 2.0, 10.0)) as MutableList<EntityLivingBase>
 		list.remove(caster)

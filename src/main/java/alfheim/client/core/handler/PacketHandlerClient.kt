@@ -9,8 +9,8 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
@@ -24,8 +24,8 @@ import net.minecraft.client.Minecraft
 
 object PacketHandlerClient {
 	
-	fun handle(packet: MessageParticles) {
-		SpellEffectHandlerClient.select(Spells.values()[packet.i], packet.x, packet.y, packet.z, packet.x2, packet.y2, packet.z2)
+	fun handle(packet: MessageVisualEffect) {
+		VisualEffectHandlerClient.select(VisualEffects.values()[packet.i], packet.x, packet.y, packet.z, packet.x2, packet.y2, packet.z2)
 	}
 	
 	fun handle(packet: MessageParty) {

@@ -2,7 +2,7 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.client.render.world.SpellEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.EntityLivingBase
 
@@ -28,7 +28,7 @@ class PotionShowMana: PotionAlfheim(AlfheimConfigHandler.potionIDShowMana, "show
 			var i = 0
 			while (i < Math.sqrt(Math.sqrt(Math.sqrt(pe.duration.toDouble())))) {
 				// looks like this "i < VALUE" is fine
-				SpellEffectHandlerClient.spawnMana(living, i.toDouble())
+				VisualEffectHandlerClient.spawnMana(living, i.toDouble())
 				i++
 			}
 		}

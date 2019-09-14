@@ -2,7 +2,7 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.client.render.world.SpellEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.EntityLivingBase
@@ -31,7 +31,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			player.capabilities.isFlying = true
 			player.sendPlayerAbilities()
 			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 0.1
-			if (!ASJUtilities.isServer) SpellEffectHandlerClient.onDeath(target)
+			if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeath(target)
 		}
 	}
 	

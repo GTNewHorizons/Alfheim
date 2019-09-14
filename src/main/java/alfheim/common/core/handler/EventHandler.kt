@@ -5,8 +5,8 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.event.*
-import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
 import alfheim.common.core.registry.AlfheimRegistry
@@ -169,7 +169,7 @@ object EventHandler {
 		if (AlfheimCore.enableMMO) {
 			if (e.source.entity != null && e.source.entity is EntityLivingBase && (e.source.entity as EntityLivingBase).isPotionActive(AlfheimRegistry.quadDamage)) {
 				e.ammount *= 4.0f
-				SpellEffectHandler.sendPacket(Spells.QUADH, e.source.entity)
+				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
 			}
 			
 			var pe: PotionEffect? = e.entityLiving.getActivePotionEffect(AlfheimRegistry.nineLifes)
@@ -280,7 +280,7 @@ object EventHandler {
 			if (e.entityLiving.isPotionActive(AlfheimRegistry.leftFlame)) {
 				val pe = e.entityLiving.getActivePotionEffect(AlfheimRegistry.leftFlame)
 				pe.duration--
-				if (!ASJUtilities.isServer) SpellEffectHandlerClient.onDeathTick(e.entityLiving)
+				if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
 				if (pe.duration <= 0)
 					e.entityLiving.removePotionEffect(pe.potionID)
 				else

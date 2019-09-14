@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -47,7 +47,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, 6.0))
 			}
 			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
-			SpellEffectHandler.sendPacket(Spells.EXPL, this)
+			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
 			setDead()
 		}
 	}

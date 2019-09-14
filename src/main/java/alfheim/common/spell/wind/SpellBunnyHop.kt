@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -28,7 +28,7 @@ class SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
 		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(Potion.jump.id, 3600, 1, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.jump.id, 3600, 1))
-			SpellEffectHandler.sendPacket(Spells.HEAL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.HEAL, tg.target)
 		}
 		
 		return result

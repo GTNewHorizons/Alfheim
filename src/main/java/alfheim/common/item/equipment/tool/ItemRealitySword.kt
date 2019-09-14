@@ -2,8 +2,8 @@ package alfheim.common.item.equipment.tool
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.registry.GameRegistry
@@ -160,7 +160,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 			
 			4 -> {
 				target!!.motionY += 0.825
-				SpellEffectHandler.sendPacket(Spells.SPLASH, target!!)
+				VisualEffectHandler.sendPacket(VisualEffects.SPLASH, target!!)
 			}
 			
 			5 -> {

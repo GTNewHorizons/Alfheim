@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.ITimeStopSpecific
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -58,7 +58,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 					}
 				}
 				
-				SpellEffectHandler.sendPacket(Spells.NOTE, this)
+				VisualEffectHandler.sendPacket(VisualEffects.NOTE, this)
 			}
 		}
 	}

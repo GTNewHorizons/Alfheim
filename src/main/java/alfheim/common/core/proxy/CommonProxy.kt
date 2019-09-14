@@ -13,7 +13,7 @@ import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
-import cpw.mods.fml.common.*
+import cpw.mods.fml.common.Loader
 import net.minecraft.block.BlockDispenser
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
@@ -67,5 +67,6 @@ open class CommonProxy {
 		ESMHandler
 		ChestGenHandler
 		HilarityHandler
+		SoulRestructurizationHandler
 	}
 }

@@ -146,9 +146,9 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 	}
 }
 
-class MessageParticlesHandler: IMessageHandler<MessageParticles, IMessage> {
+class MessageVisualEffectHandler: IMessageHandler<MessageVisualEffect, IMessage> {
 
-	override fun onMessage(packet: MessageParticles, message: MessageContext): IMessage? {
+	override fun onMessage(packet: MessageVisualEffect, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
 		return null
 	}

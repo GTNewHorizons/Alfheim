@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -37,7 +37,7 @@ class SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 					AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, pe.getPotionID(), 0, 0))
 				}
 			}
-			SpellEffectHandler.sendPacket(Spells.DISPEL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
 		}
 		
 		return result

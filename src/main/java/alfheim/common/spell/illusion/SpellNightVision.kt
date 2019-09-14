@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -26,7 +26,7 @@ class SpellNightVision: SpellBase("nightvision", EnumRace.SPRIGGAN, 6000, 1200, 
 			if (Vector3.entityDistance(living, caster) < 32) {
 				living.addPotionEffect(PotionEffect(Potion.nightVision.id, 36000, -1, true))
 				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.nightVision.id, 36000, -1))
-				SpellEffectHandler.sendPacket(Spells.NVISION, living)
+				VisualEffectHandler.sendPacket(VisualEffects.NVISION, living)
 			}
 		}
 		

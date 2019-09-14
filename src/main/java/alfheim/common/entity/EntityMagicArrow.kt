@@ -1,8 +1,8 @@
 package alfheim.common.entity
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemMoonlightBow
 import net.minecraft.entity.*
@@ -169,7 +169,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 			attackedFrom(it, thrower as EntityPlayer?, max(20.0, 20 / Vector3.entityDistance(this, it)).toFloat())
 		}
 		
-		SpellEffectHandler.sendPacket(Spells.MOON, this)
+		VisualEffectHandler.sendPacket(VisualEffects.MOON, this)
 	}
 	
 	fun attackedFrom(target: EntityLivingBase, player: EntityPlayer?, dmg: Float) {

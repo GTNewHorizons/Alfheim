@@ -4,8 +4,8 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -52,8 +52,8 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 		}
 		
 		val d = 0.75
-		SpellEffectHandler.sendPacket(Spells.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.toDouble(), look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d)
-		SpellEffectHandler.sendPacket(Spells.AQUASTREAM_HIT, dimension, hp.x, hp.y, hp.z)
+		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.toDouble(), look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d)
+		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM_HIT, dimension, hp.x, hp.y, hp.z)
 	}
 	
 	override fun affectedBy(uuid: UUID): Boolean {

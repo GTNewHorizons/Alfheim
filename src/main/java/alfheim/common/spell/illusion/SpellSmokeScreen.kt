@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
@@ -23,7 +23,7 @@ class SpellSmokeScreen: SpellBase("smokescreen", EnumRace.SPRIGGAN, 5000, 600, 2
 			living.addPotionEffect(PotionEffect(Potion.blindness.id, 200, -1, true))
 			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.blindness.id, 200, -1))
 		}
-		SpellEffectHandler.sendPacket(Spells.SMOKE, caster)
+		VisualEffectHandler.sendPacket(VisualEffects.SMOKE, caster)
 		return result
 	}
 }

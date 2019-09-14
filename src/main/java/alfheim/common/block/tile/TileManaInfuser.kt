@@ -5,8 +5,6 @@ import alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.item.AlfheimItems
-import alfheim.common.item.relic.ItemFlugelSoul
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.Entity
@@ -25,17 +23,15 @@ import vazkii.botania.api.mana.spark.*
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
-import vazkii.botania.common.block.tile.*
+import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.block.tile.mana.TilePool
-import vazkii.botania.common.entity.EntityDoppleganger
-import java.util.*
 import kotlin.math.*
 
 @Suppress("ConstantConditionIf")
 class TileManaInfuser: TileMod(), ISparkAttachable {
 	
-	internal var mana: Int = 0
-	internal var manaRequest: Int = 0
+	internal var mana = 0
+	internal var manaRequest = 0
 	internal var knownMana = -1
 	internal var result: ItemStack? = null
 	
@@ -47,14 +43,16 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	internal val isReadyToKillGaia: Boolean
 		get() = checkPlatform(0, -2, 0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylon, 2)
 	
-	internal var targetUUID: UUID? = null
-	internal var targetID = -1
+	internal var deGaiaingTime = 0
+	internal var soulParticlesTime = 0
 	
 	override fun updateEntity() {
-		var removeMana = true
-		var boom = 3
+		if (isReadyToKillGaia) {
+			if (--soulParticlesTime > 0) soulParticles()
+			if(--deGaiaingTime > 0) return
+		}
 		
-		run gaia@{
+		/*run gaia@{
 			if (isReadyToKillGaia) {
 				
 				run boom@{
@@ -133,7 +131,9 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				targetUUID = null
 				return
 			}
-		}
+		}*/
+		
+		var removeMana = true
 		
 		if (mana <= 0 && blockMetadata != 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 		
@@ -226,20 +226,23 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	}
 	
 	internal fun soulParticles() {
-		for (c in PYLONS) {
-			v.set((-c[0]).toDouble(), (-c[1]).toDouble(), (-c[2]).toDouble()).normalize().mul(0.4)
-			Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
-		}
-		for (c in GAIAS) {
-			v.set(c[0].toDouble(), 0.0, c[2].toDouble()).normalize().mul(0.3)
-			val r = Math.random().toFloat() * 0.3f
-			val g = 0.7f + Math.random().toFloat() * 0.3f
-			val b = 0.7f + Math.random().toFloat() * 0.3f
-			v.rotate(107.5, Vector3.oY)
-			Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
-			v.rotate(-215.0, Vector3.oY)
-			Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
-		}
+		if (soulParticlesTime < 10)
+			for (c in PYLONS) {
+				v.set((-c[0]).toDouble(), (-c[1]).toDouble(), (-c[2]).toDouble()).normalize().mul(0.4)
+				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+			}
+		
+		else
+			for (c in GAIAS) {
+				v.set(c[0].toDouble(), 0.0, c[2].toDouble()).normalize().mul(0.3)
+				val r = Math.random().toFloat() * 0.3f
+				val g = 0.7f + Math.random().toFloat() * 0.3f
+				val b = 0.7f + Math.random().toFloat() * 0.3f
+				v.rotate(107.5, Vector3.oY)
+				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+				v.rotate(-215.0, Vector3.oY)
+				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+			}
 	}
 	
 	internal fun doneParticles() {
@@ -343,32 +346,21 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		return worldObj.getBlock(xCoord + xOff, yOff + yCoord, zOff + zCoord) === block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zOff + zCoord) == meta
 	}
 	
-	override fun writeToNBT(nbt: NBTTagCompound) {
-		super.writeToNBT(nbt)
-		targetUUID?.let {
-			nbt.setLong(TAG_UUID_MOST, it.mostSignificantBits)
-			nbt.setLong(TAG_UUID_LEAST, it.leastSignificantBits)
-		}
-	}
-	
-	override fun readFromNBT(nbt: NBTTagCompound) {
-		super.readFromNBT(nbt)
-		if (nbt.hasKey(TAG_UUID_MOST) && nbt.hasKey(TAG_UUID_LEAST)) {
-			targetUUID = UUID(nbt.getLong(TAG_UUID_MOST), nbt.getLong(TAG_UUID_LEAST))
-		}
-	}
-	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		super.writeCustomNBT(nbt)
 		nbt.setInteger(TAG_MANA, mana)
 		nbt.setInteger(TAG_MANA_REQUIRED, manaRequest)
 		nbt.setInteger(TAG_KNOWN_MANA, knownMana)
+		nbt.setInteger(TAG_DEGAIAING, deGaiaingTime)
+		nbt.setInteger(TAG_SOUL_EFFECT, soulParticlesTime)
 	}
 	
 	override fun readCustomNBT(nbt: NBTTagCompound) {
 		super.readCustomNBT(nbt)
 		mana = nbt.getInteger(TAG_MANA)
 		knownMana = nbt.getInteger(TAG_KNOWN_MANA)
+		deGaiaingTime = nbt.getInteger(TAG_DEGAIAING)
+		soulParticlesTime = nbt.getInteger(TAG_SOUL_EFFECT)
 	}
 	
 	override fun getCurrentMana() = mana
@@ -438,8 +430,8 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		private const val TAG_MANA = "mana"
 		private const val TAG_MANA_REQUIRED = "manaRequired"
 		private const val TAG_KNOWN_MANA = "knownMana"
-		private const val TAG_UUID_MOST = "uuidleast"
-		private const val TAG_UUID_LEAST = "uuidleast"
+		private const val TAG_DEGAIAING = "degaiatimer"
+		private const val TAG_SOUL_EFFECT = "soulEffect"
 		
 		fun makeMultiblockSetSoul(): MultiblockSet {
 			val mb = Multiblock()

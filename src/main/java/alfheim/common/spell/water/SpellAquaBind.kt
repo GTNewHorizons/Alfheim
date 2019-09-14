@@ -6,9 +6,9 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
@@ -43,7 +43,7 @@ class SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 			}
 		}
 		
-		SpellEffectHandler.sendPacket(Spells.AQUABIND, caster.dimension, hit.x, hit.y, hit.z)
+		VisualEffectHandler.sendPacket(VisualEffects.AQUABIND, caster.dimension, hit.x, hit.y, hit.z)
 		return result
 	}
 	
