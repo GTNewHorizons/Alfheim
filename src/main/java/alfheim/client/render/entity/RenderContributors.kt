@@ -2,6 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
@@ -56,6 +57,8 @@ object RenderContributors {
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		if (player.isInvisible || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return
 		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
+		
+		glColor4f(1f, 1f, 1f, 1f)
 		
 		if (player.commandSenderName == "AlexSocol") {
 			run {
@@ -192,6 +195,24 @@ object RenderContributors {
 			glEnable(GL_LIGHTING)
 			glEnable(GL_CULL_FACE)
 			glDisable(GL_BLEND)
+			glPopMatrix()
+		}
+		
+		if (player.commandSenderName == "Hyper_Miko") {
+			glPushMatrix()
+			glRotated(180.0, 1.0, 0.0, 0.0)
+			glTranslated(0.0, -1.5, 0.0)
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko1)
+			ModelEntityFlugel.model1.renderAll()
+			glPopMatrix()
+			
+			glPushMatrix()
+			glRotated(ASJRenderHelper.interpolate(player.prevRenderYawOffset.toDouble(), player.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
+			glRotated(ASJRenderHelper.interpolate(player.prevRotationYawHead.toDouble(), player.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
+			glRotated(ASJRenderHelper.interpolate(player.prevRotationPitch.toDouble(), player.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+			glRotated(-90.0, 0.0, 1.0, 0.0)
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko2)
+			ModelEntityFlugel.model2.renderAll()
 			glPopMatrix()
 		}
 	}
