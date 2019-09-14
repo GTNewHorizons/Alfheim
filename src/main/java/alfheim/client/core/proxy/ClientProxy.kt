@@ -37,7 +37,7 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
-import vazkii.botania.client.render.item.*
+import vazkii.botania.client.render.item.RenderLens
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 
@@ -93,10 +93,8 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade())
 		
-		// Iridescence:
-		
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.invisibleFlameLens, RenderLens())
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderBow())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderMoonBow())
 		
 		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
 		RenderingRegistry.registerBlockHandler(MultipassRenderer())

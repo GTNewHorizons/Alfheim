@@ -1,6 +1,5 @@
 package alfheim.common.item
 
-import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
@@ -97,7 +96,7 @@ object AlfheimItems {
 	val subspaceSpear: Item
 	val thinkingHand: Item
 	val trisDagger: Item
-	val toolbelt: Item
+	//val toolbelt: Item
 	val wiltedLotus: Item
 	val wireAxe: Item
 	
@@ -173,7 +172,7 @@ object AlfheimItems {
 		subspaceSpear = ItemSpearSubspace()
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()
-		toolbelt = ItemToolbelt()
+		//toolbelt = ItemToolbelt()
 		wireAxe = ItemWireAxe()
 		wiltedLotus = ItemWiltedLotus()
 		

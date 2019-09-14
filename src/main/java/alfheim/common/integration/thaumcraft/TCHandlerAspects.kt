@@ -990,7 +990,7 @@ object TCHandlerShadowFoxAspects {
 		
 		list = AspectList().add(Aspect.TOOL, 3).add(Aspect.VOID, 12).add(Aspect.CLOTH, 4).add(Aspect.GREED, 2)
 		if (forbidden) list.add(SLOTH, 2)
-		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.toolbelt), list)
+		//ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.toolbelt), list)
 		
 		list = AspectList(ItemStack(manaFlame))
 		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimBlocks.rainbowFlame), list)

@@ -41,6 +41,8 @@ object LibResourceLocations {
 	val lolicorn = ResourceLocation(ModInfo.MODID, "textures/model/entity/Lolicorn.png")
 	var manaInfuserOverlay = ResourceLocation("botania:textures/gui/manaInfusionOverlay.png")
 	val mark = ResourceLocation(ModInfo.MODID, "textures/model/entity/Mark.png")
+	val miko1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miko1.png")
+	val miko2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miko2.png")
 	val miku0 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku0.png")
 	val miku1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku1.png")
 	val miku2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/Miku2.png")

@@ -41,6 +41,7 @@ object VisualEffectHandlerClient {
 				GAIA_SOUL      -> spawnGaiaSoul(x, y, z)
 				GRAVITY        -> spawnGravity(x, y, z, x2, y2, z2)
 				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
+				HORN           -> horn(x, y, z)
 				ICELENS        -> addIceLens()
 				MANA           -> addMana(x, y)
 				MOON           -> moonBoom(x, y, z)
@@ -91,6 +92,10 @@ object VisualEffectHandlerClient {
 			} else
 				e.addPotionEffect(PotionEffect(AlfheimRegistry.showMana.id, mana.toInt(), 100, true))
 		}
+	}
+	
+	fun horn(x: Double, y: Double, z: Double) {
+		Minecraft.getMinecraft().theWorld.playSound(x, y, z, ModInfo.MODID + ":horn.bhorn", 100.0f, 0.8f + Minecraft.getMinecraft().theWorld.rand.nextFloat() * 0.2f, false)
 	}
 	
 	fun moonBoom(x: Double, y: Double, z: Double) {
@@ -235,7 +240,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, ICELENS, MANA, MOON, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MOON, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

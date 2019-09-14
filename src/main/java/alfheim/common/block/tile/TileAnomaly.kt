@@ -3,7 +3,6 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
-import baubles.common.lib.PlayerHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -22,14 +21,7 @@ class TileAnomaly: TileMod() {
 		
 		val l = subTiles[mainSubTile!!]!!.targets as MutableList<Any?>
 		
-		l.removeIf {
-			fun check(it: EntityPlayer, i: Int): Boolean {
-				val stack = PlayerHandler.getPlayerBaubles(it)?.getStackInSlot(i) ?: return false
-				return (stack.item as? ItemSpatiotemporalRing)?.isActive(stack, it) == true
-			}
-			
-			it is EntityPlayer && (check(it, 1) || check(it, 2))
-		}
+		l.removeIf { it is EntityPlayer && ItemSpatiotemporalRing.hasProtection(it) }
 		for (subTile in subTiles.values) subTile.updateEntity(l)
 	}
 	

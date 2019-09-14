@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.player.*
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.event.ServerChatEvent
+import net.minecraftforge.event.*
 import net.minecraftforge.event.entity.item.ItemTossEvent
 import net.minecraftforge.event.entity.living.LivingHealEvent
 import net.minecraftforge.event.entity.player.PlayerEvent.*
@@ -90,6 +90,16 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onHeal(e: LivingHealEvent) {
 		if (check(e.entityLiving)) e.isCanceled = true
+	}
+	
+	@SubscribeEvent
+	fun onChatEvent(e: ServerChatEvent) {
+		if (check(e.player)) e.isCanceled = true
+	}
+	
+	@SubscribeEvent
+	fun onCommandEvent(e: CommandEvent) {
+		if (check(e.sender as? EntityLivingBase)) e.isCanceled = true
 	}
 	
 	fun check(e: EntityLivingBase?) = AlfheimCore.enableMMO && e?.isPotionActive(this) == true

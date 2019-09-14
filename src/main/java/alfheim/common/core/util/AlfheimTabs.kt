@@ -164,7 +164,6 @@ import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
-import alfheim.common.item.AlfheimItems.toolbelt
 import alfheim.common.item.AlfheimItems.trisDagger
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
@@ -213,7 +212,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addItem (balanceCloak)
 		addItem (invisibilityCloak)
-		addItem (toolbelt)
+		//addItem (toolbelt)
 		addItem (manaStone)
 		addItem (manaStoneGreater)
 		addItem (manaRingElven)

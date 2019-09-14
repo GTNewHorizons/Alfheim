@@ -55,4 +55,8 @@ class EntityThrowableItem: EntityThrowable {
 		worldObj.playAuxSFX(2002, posX.roundToLong().toInt(), posY.roundToLong().toInt(), posZ.roundToLong().toInt(), 16451) // fire resistance meta
 		setDead()
 	}
+	
+	public override fun func_70183_g() = -10.0f
+	
+	public override fun func_70182_d() = 1.0f
 }

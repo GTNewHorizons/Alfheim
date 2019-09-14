@@ -21,6 +21,7 @@ object AlfheimConfigHandler {
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "woldgen"
+	const val CATEGORY_SPAWNRATE	= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "spawnrate"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
 	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
 	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
@@ -37,7 +38,14 @@ object AlfheimConfigHandler {
 	var anomaliesUpdate			= 6000
 	var citiesDistance			= 1000
 	var oregenMultiplier		= 3
-	var pixieSpawns				= intArrayOf(10, 1, 2)
+	
+	// SPAWNRATE
+	var chickSpawn				= intArrayOf(10, 4, 4)
+	var cowSpawn				= intArrayOf( 8, 4, 4)
+	var elvesSpawn				= intArrayOf(10, 2, 4)
+	var sheepSpawn				= intArrayOf(12, 4, 4)
+	var pigSpawn				= intArrayOf(10, 4, 4)
+	var pixieSpawn				= intArrayOf(10, 1, 2)
 	
 	// OHTER
 	var blackLotusDropRate		= 0.05
@@ -137,7 +145,13 @@ object AlfheimConfigHandler {
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
-		pixieSpawns = loadProp(CATEGORY_WORLDGEN, "pixieSpawns", pixieSpawns, false, "Pixie spawn weight (chance), min and max group count")
+		
+		cowSpawn = loadProp(CATEGORY_SPAWNRATE, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
+		chickSpawn = loadProp(CATEGORY_SPAWNRATE, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
+		elvesSpawn = loadProp(CATEGORY_SPAWNRATE, "elvesSpawn", elvesSpawn, false, "Elves spawn weight (chance), min and max group count")
+		pigSpawn = loadProp(CATEGORY_SPAWNRATE, "pigSpawn", pigSpawn, false, "Pig spawn weight (chance), min and max group count")
+		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
+		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		destroyPortal = loadProp(CATEGORY_GENERAL, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")

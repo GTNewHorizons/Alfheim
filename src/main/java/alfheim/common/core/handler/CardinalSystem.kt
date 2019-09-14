@@ -13,6 +13,7 @@ import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
+import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.network.ByteBufUtils
@@ -25,6 +26,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.*
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.PlayerEvent
@@ -909,10 +911,12 @@ object CardinalSystem {
 		}
 		
 		init {
-			MinecraftForge.EVENT_BUS.register(TimeStopThingsListener())
+			MinecraftForge.EVENT_BUS.register(TimeStopThingsListener)
+			FMLCommonHandler.instance().bus().register(TimeStopThingsListener)
 		}
 		
-		class TimeStopThingsListener {
+		object TimeStopThingsListener {
+			
 			@SubscribeEvent
 			fun onPlayerChangedDimension(e: PlayerChangedDimensionEvent) {
 				if (AlfheimCore.enableMMO && e.player is EntityPlayerMP) transfer(e.player as EntityPlayerMP, e.fromDim)
@@ -927,6 +931,16 @@ object CardinalSystem {
 			@SubscribeEvent
 			fun onLivingUpdate(e: LivingUpdateEvent) {
 				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
+			}
+			
+			@SubscribeEvent
+			fun onChatEvent(e: ServerChatEvent) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.player)) e.isCanceled = true
+			}
+			
+			@SubscribeEvent
+			fun onCommandEvent(e: CommandEvent) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer && e.sender is EntityPlayer && affected(e.sender as EntityPlayer)) e.isCanceled = true
 			}
 		}
 	}

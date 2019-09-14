@@ -21,6 +21,13 @@ class EntityThrownPotion: EntityThrowable {
 		color = 0xFFFFFF
 	}
 	
+	constructor(world: World, st: ItemStack) : super(world) {
+		stack = st
+		val brew = stack.item as ItemSplashPotion
+		effects = brew.getBrew(stack).getPotionEffects(stack)
+		color = brew.getColor(stack)
+	}
+	
 	constructor(player: EntityPlayer, st: ItemStack) : super(player.worldObj, player) {
 		stack = st
 		val brew = stack.item as ItemSplashPotion
@@ -127,4 +134,8 @@ class EntityThrownPotion: EntityThrowable {
 	}
 	
 	override fun getGravityVelocity() = dataWatcher.getWatchableObjectFloat(30)
+	
+	public override fun func_70183_g() = -10.0f
+	
+	public override fun func_70182_d() = 1.0f
 }

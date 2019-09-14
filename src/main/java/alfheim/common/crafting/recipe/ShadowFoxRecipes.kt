@@ -97,7 +97,6 @@ import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.splashPotion
-import alfheim.common.item.AlfheimItems.toolbelt
 import alfheim.common.item.block.*
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry
@@ -172,7 +171,7 @@ object ShadowFoxRecipes {
 	val recipesAltPlanks: List<IRecipe>
 	val recipesAltSlabs: List<IRecipe>
 	val recipesAltStairs: List<IRecipe>
-	val recipesToolbelt: IRecipe
+	//val recipesToolbelt: IRecipe
 	val recipesLamp: IRecipe
 	val recipesSealingPlanks: IRecipe
 	val recipesSealingStairs: IRecipe
@@ -642,7 +641,7 @@ object ShadowFoxRecipes {
 		
 		recipesAltStairs = BotaniaAPI.getLatestAddedRecipes(6)
 		
-		addOreDictRecipe(ItemStack(toolbelt),
+		/*addOreDictRecipe(ItemStack(toolbelt),
 						 "CL ",
 						 "L L",
 						 "PLS",
@@ -651,7 +650,7 @@ object ShadowFoxRecipes {
 						 'C', ItemStack(Blocks.chest),
 						 'S', RUNE[12]) // Sloth
 		
-		recipesToolbelt = BotaniaAPI.getLatestAddedRecipe()
+		recipesToolbelt = BotaniaAPI.getLatestAddedRecipe()*/
 		
 		addOreDictRecipe(ItemStack(irisLamp),
 						 " B ",

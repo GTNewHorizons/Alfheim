@@ -14,7 +14,6 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.common.Loader
-import net.minecraft.block.BlockDispenser
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
@@ -34,7 +33,9 @@ open class CommonProxy {
 		if (ConfigHandler.relicsEnabled) AlfheimLexiconData.preInitRelics()
 		ShadowFoxLexiconData
 		ShadowFoxThrowables
-		BlockDispenser.dispenseBehaviorRegistry.putObject(AlfheimItems.elvenResource, BifrostFlowerDispenserHandler)
+		BifrostFlowerDispenserHandler
+		ThrownPotionDispenserHandler
+		ThrownItemDispenserHandler
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
 		AlfheimMultiblocks
 	}

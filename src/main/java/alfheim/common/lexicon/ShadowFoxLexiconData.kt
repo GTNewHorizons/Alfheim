@@ -43,7 +43,7 @@ object ShadowFoxLexiconData {
 	val netherSapling: LexiconEntry
 	val circuitSapling: LexiconEntry
 	val calicoSapling: LexiconEntry
-	val toolbelt: LexiconEntry
+	//val toolbelt: LexiconEntry
 	val lamp: LexiconEntry
 	val silencer: LexiconEntry
 	val amplifier: LexiconEntry
@@ -190,9 +190,9 @@ object ShadowFoxLexiconData {
 									  PageCraftingRecipe("3", ShadowFoxRecipes.recipesCalicoStairs),
 									  PageCraftingRecipe("4", ShadowFoxRecipes.recipesCalicoSlabs))
 		
-		toolbelt = ShadowfoxLexiconEntry("toolbelt", BotaniaAPI.categoryBaubles, AlfheimItems.toolbelt)
+		/*toolbelt = ShadowfoxLexiconEntry("toolbelt", BotaniaAPI.categoryBaubles, AlfheimItems.toolbelt)
 		toolbelt.setLexiconPages(PageText("0"),
-								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesToolbelt))
+								 PageCraftingRecipe("1", ShadowFoxRecipes.recipesToolbelt))*/
 		
 		lamp = ShadowfoxLexiconEntry("lamp", BotaniaAPI.categoryMisc, AlfheimBlocks.irisLamp)
 		lamp.setLexiconPages(PageText("0"),
@@ -319,7 +319,7 @@ object ShadowFoxLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.sealingSlabs), silencer, 4)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.amplifier), amplifier, 1)
 		
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.toolbelt), toolbelt, 1)
+		//LexiconRecipeMappings.map(ItemStack(AlfheimItems.toolbelt), toolbelt, 1)
 		
 		for (i in 0..2)
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.itemDisplay, 1, i), itemDisplay, 1)
@@ -383,7 +383,7 @@ object ShadowFoxLexiconData {
 		interdictionRod.knowledgeType = kt
 		colorOverride.knowledgeType = kt
 		prismaticRod.knowledgeType = kt
-		toolbelt.knowledgeType = kt
+		//toolbelt.knowledgeType = kt
 		lamp.knowledgeType = kt
 		silencer.knowledgeType = kt
 		amplifier.knowledgeType = kt

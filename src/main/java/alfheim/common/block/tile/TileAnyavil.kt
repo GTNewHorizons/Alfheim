@@ -27,15 +27,6 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	
 	var pinkCharge = 0
 	
-	override var item: ItemStack?
-		get() = super.item
-		set(stack) {
-			super.item = stack
-			if (ASJUtilities.isServer && worldObj != null) {
-				AlfheimCore.network.sendToDimension(MessageTileItem(xCoord, yCoord, zCoord, item), worldObj.provider.dimensionId)
-			}
-		}
-	
 	fun onBurstCollision(burst: IManaBurst, world: World) {
 		if (burst.isFake) return
 		if (item == null) return
