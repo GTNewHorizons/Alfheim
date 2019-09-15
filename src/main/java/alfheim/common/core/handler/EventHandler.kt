@@ -254,15 +254,19 @@ object EventHandler {
 			}
 			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
+				
 				if (player == null) {
 					val s = playerSegments[name]
 					s?.target = null
 					s?.isParty = false
 				} else {
-					val tg = CardinalSystem.TargetingSystem.getTarget(player)
+					val tg = CardinalSystem.TargetingSystem.getTarget(player).target ?: continue
 					
-					if (tg.target?.isEntityAlive == false || tg.target?.let { Vector3.entityDistance(player, it) } ?: 0.0 > if (tg.target?.let { it is IBossDisplayData } == true) 128.0 else 32.0)
+					if (!tg.isEntityAlive || Vector3.entityDistance(player, tg) > if (tg is IBossDisplayData) 128.0 else 32.0) {
+						ASJUtilities.chatLog("Dead: ${tg.isDead} | Health: ${tg.health} | >0f: ${tg.health > 0f} | Distance: ${Vector3.entityDistance(player, tg)}", player)
+						
 						CardinalSystem.TargetingSystem.setTarget(player, null, false)
+					}
 				}
 			}
 		}

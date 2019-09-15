@@ -39,6 +39,7 @@ class ItemSpatiotemporalRing: ItemBauble("spatiotemporalRing") {
 		
 		fun hasProtection(player: EntityLivingBase): Boolean {
 			if (player !is EntityPlayer) return false
+			if (player.capabilities.isCreativeMode) return false
 			
 			for (i in 1..2) {
 				val stack = PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(i) ?: continue

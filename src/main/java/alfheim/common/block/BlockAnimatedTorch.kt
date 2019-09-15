@@ -52,7 +52,14 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 	}
 	
 	override fun onUsedByWand(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		(world.getTileEntity(x, y, z) as TileAnimatedTorch).onWanded()
+		val tile = world.getTileEntity(x, y, z) as? TileAnimatedTorch ?: return false
+		
+		tile.onWanded()
+		
+		world.setTileEntity(x, y, z, tile)
+		world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
+		world.markTileEntityChunkModified(x, y, z, tile)
+		
 		return true
 	}
 	

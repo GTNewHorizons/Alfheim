@@ -1,5 +1,6 @@
 package alfheim.common.network
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
@@ -139,7 +140,9 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			
 			SEL     -> {
 				val e = player.worldObj.getEntityByID(packet.ticks)
-				if (e is EntityLivingBase) CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				if (e is EntityLivingBase) {
+					CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				}
 			}
 		}
 		return null

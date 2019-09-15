@@ -83,10 +83,8 @@ object RenderContributors {
 			
 			run {
 				// devil wings
-				if (AlfheimConfigHandler.minimalGraphics) {
-					glDisable(GL_CULL_FACE)
-					(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
-				}
+				glDisable(GL_CULL_FACE)
+				(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
 			}
 			
 			run {
@@ -200,20 +198,29 @@ object RenderContributors {
 		
 		if (player.commandSenderName == "Hyper_Miko") {
 			glPushMatrix()
-			glRotated(180.0, 1.0, 0.0, 0.0)
-			glTranslated(0.0, -1.5, 0.0)
+			glRotatef(180f, 1f, 0f, 0f)
+			glTranslatef(0f, -1.5f, 0f)
+			if (player.isSneaking) glTranslatef(0f, 0f, -0.25f)
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko1)
 			ModelEntityFlugel.model1.renderAll()
 			glPopMatrix()
 			
 			glPushMatrix()
-			glRotated(ASJRenderHelper.interpolate(player.prevRenderYawOffset.toDouble(), player.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
-			glRotated(ASJRenderHelper.interpolate(player.prevRotationYawHead.toDouble(), player.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
-			glRotated(ASJRenderHelper.interpolate(player.prevRotationPitch.toDouble(), player.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+			
+			val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+			val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+			val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+			
+			glRotatef(yawOffset, 0f, -1f, 0f)
+			glRotatef(yaw - 270, 0f, 1f, 0f)
+			glRotatef(pitch, 0f, 0f, 1f)
+			
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko2)
 			ModelEntityFlugel.model2.renderAll()
 			glPopMatrix()
 		}
+		
+		glColor4f(1f, 1f, 1f, 1f)
 	}
 }

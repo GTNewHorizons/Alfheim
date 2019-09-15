@@ -6,7 +6,6 @@ import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.MathHelper
 import vazkii.botania.api.internal.VanillaPacketDispatcher
@@ -148,6 +147,7 @@ class SubTileWarp: SubTileEntity() {
 		if (!inWG()) {
 			if (target is LivingPair) {
 				if (ItemSpatiotemporalRing.hasProtection(target.e1) || ItemSpatiotemporalRing.hasProtection(target.e2)) return
+				
 				val x = target.e1.posX
 				val y = target.e1.posY
 				val z = target.e1.posZ
@@ -156,7 +156,8 @@ class SubTileWarp: SubTileEntity() {
 				target.e2.setPositionAndUpdate(x, y, z)
 				return
 			} else if (target is LivingCoords) {
-				if (target.e is EntityPlayer && target.e.capabilities.isCreativeMode) return
+				if (ItemSpatiotemporalRing.hasProtection(target.e)) return
+				
 				target.e.setPositionAndUpdate(target.x, target.y, target.z)
 				return
 			}

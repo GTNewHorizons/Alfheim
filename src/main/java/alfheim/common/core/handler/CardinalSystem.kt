@@ -165,19 +165,18 @@ object CardinalSystem {
 					
 					val player = MinecraftServer.getServer().configurationManager.func_152612_a(segment.userName)
 					if (player != null) {
-						if (segment.init > 0)
-							--segment.init
+						if (segment.init > 0) --segment.init
 						else {
 							if (segment.ids != 0 && segment.castableSpell != null) {
 								AlfheimCore.network.sendTo(Message2d(COOLDOWN, segment.ids.toDouble(), KeyBindingHandler.cast(player, segment.ids shr 28 and 0xF, segment.ids and 0xFFFFFFF).toDouble()), player)
 								segment.ids = 0
-								segment.init = segment.ids
+								segment.init = 0
 								segment.castableSpell = null
 							}
 						}
 					} else {
 						segment.ids = 0
-						segment.init = segment.ids
+						segment.init = 0
 						segment.castableSpell = null
 					}
 				}
@@ -185,7 +184,6 @@ object CardinalSystem {
 				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick.")
 				e.printStackTrace()
 			}
-			
 		}
 		
 		fun reset() {
@@ -947,15 +945,14 @@ object CardinalSystem {
 	
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
-		var coolDown = HashMap<String, Int>()
-		var hotSpells = IntArray(12)
-		
 		var party: Party = Party(player)
 		@Transient
-		var target: EntityLivingBase? = null
-		@Transient
 		var isParty = false
+		@Transient
+		var target: EntityLivingBase? = null
 		
+		var coolDown = HashMap<String, Int>()
+		var hotSpells = IntArray(12)
 		@Transient
 		var castableSpell: SpellBase? = null
 		@Transient

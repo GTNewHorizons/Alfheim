@@ -114,6 +114,8 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerTick(e: PlayerTickEvent) {
+		if (e.player !== Minecraft.getMinecraft().thePlayer) return
+		
 		if (e.phase == Phase.START && e.side == Side.CLIENT && !Minecraft.getMinecraft().isGamePaused) {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
 			SpellCastingSystemClient.tick()

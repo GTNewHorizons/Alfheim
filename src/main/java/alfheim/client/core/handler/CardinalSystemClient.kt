@@ -47,7 +47,6 @@ object CardinalSystemClient {
 				System.err.println("Something went wrong ticking spells. Skipping this tick.")
 				e.printStackTrace()
 			}
-			
 		}
 	}
 	
@@ -136,7 +135,6 @@ object CardinalSystemClient {
 		var initM: Int = 0
 		
 		var party: Party? = null
-		
 		var target: EntityLivingBase? = null
 		var isParty: Boolean = false
 		var partyIndex: Int = 0
