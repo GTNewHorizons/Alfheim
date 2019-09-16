@@ -108,7 +108,7 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun isPotionActive(e: EntityLivingBase, p: Potion) =
 		if (p === Potion.resistance) {
-			e.activePotionsMap.containsKey(Potion.resistance.id) || e.activePotionsMap.containsKey(AlfheimRegistry.tank.id)
+			e.activePotionsMap.containsKey(Potion.resistance.id) || e.activePotionsMap.containsKey(AlfheimConfigHandler.potionIDTank)
 		} else e.activePotionsMap.containsKey(p.id)
 	
 	@JvmStatic
@@ -116,8 +116,8 @@ object AlfheimHookHandler {
 	fun getActivePotionEffect(e: EntityLivingBase, p: Potion): PotionEffect? {
 		var pe = e.activePotionsMap[p.id] as PotionEffect?
 		if (p === Potion.resistance)
-			if (e.isPotionActive(AlfheimRegistry.tank)) {
-				val tank = e.activePotionsMap[AlfheimRegistry.tank.id] as PotionEffect
+			if (e.isPotionActive(AlfheimConfigHandler.potionIDTank)) {
+				val tank = e.activePotionsMap[AlfheimConfigHandler.potionIDTank] as PotionEffect
 				if (pe == null) pe = PotionEffect(Potion.resistance.id, tank.duration, 0)
 				pe.amplifier += tank.amplifier
 			}

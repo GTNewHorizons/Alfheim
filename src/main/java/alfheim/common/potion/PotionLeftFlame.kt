@@ -45,7 +45,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			player.capabilities.isFlying = false
 			player.sendPlayerAbilities()
 			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 5.0
-			player.dataWatcher.updateObject(6, ampl.toFloat())
+			player.dataWatcher.updateObject(6, 10f)
 		}
 	}
 	

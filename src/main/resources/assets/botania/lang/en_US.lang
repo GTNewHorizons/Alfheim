@@ -64,7 +64,8 @@ botania.page.worldgen6=Creating &1Furnace&0
 
 botania.entry.shrines=Shrines of Power
 botania.tagline.shrines=Praise the Sun!
-botania.page.shrines0=Traveling around the Alfheim, one can notice different small-scaled ruins, looking like specific churches. Those are called Shrines of Power. In every shrine there is a place to pray to ancient gods - &1Stones of Power&0. Using such stones, one can gain some temporal paired-effect buffs at a cost of some &4Mana&0, to increase one skill by decreasing another. Those are not combinable. 
+botania.page.shrines0=Traveling around the Alfheim, one can notice different small-scaled ruins, looking like specific temples. Those are called Shrines of Power. In every shrine there is a place to pray to ancient gods - &1Stones of Power&0. Using such stones, one can gain some temporal paired-effect buffs at a cost of some &4Mana&0, to increase one skill by decreasing another. Those are not combinable.
+botania.page.shrines1=&4Berserk&0 - gain attack damage, lose health points.<br>&4Overmage&0 - gain magic attack damage, lose mana.<br>&4Ninja&0 - gain speed, lose attack damage.<br>&4Tank&0 - gain protection, lose speed
 
 botania.entry.ores=Ores
 botania.tagline.ores=Make even more filters...
@@ -307,8 +308,11 @@ botania.page.es0=Congrats, you chose the &4Elven Story mode&0! Now you can becom
 botania.entry.races= Races
 botania.tagline.races=It's actually not races
 botania.page.races0=Even &4Hel&0 herself hadn't destroyed the intelligent life in &4Alfheim&0 and it's still boiling there. This world serves as the homeland for the elven clans who live at the equal distance from the center of the world. In total, there are nine races: &2Salamanders&0, &2Sylphes&0, &2Cait Sith&0, &2Pookas&0, &2Gnomes&0, &2Leprechauns&0, &2Spriggans&0, &2Undines&0 and &2Imps&0.
-botania.page.races1=Each of them has a unique color, a shape of the wings and an icon, and they all can fly. 
+botania.page.races1=Each of them has a unique color, a shape of the wings and an icon; also some passive abilities, which, if desired, can be turned off by pressing the [M] button. And all of them can fly.
 botania.page.races2=By default, the flight is activated by the [F] key, and if you want to fly even faster, then press the acceleration button to increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the [ALT] pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
+botania.page.races3=Abilities<br>Salamander: With a chance they can weaken some debuffs (poison, nausea, blindness).<br>Sylphs: 20% faster flight and its restoration.<br>Cait Sith: Know how to tame any animals with their bare hands.
+botania.page.races4=Pookas: Can imitate the meowing of cats, scaring away creepers.<br>Gnomes: Can sense ores within a radius of eight blocks (only active while sneaking).<br>Leprechauns: The speed of dealing any direct damage is increased by 20%.
+botania.page.races5=Spriggans: Perfect night vision and immunity to blindness.<br>Undines: Endless breathing underwater.<br>Imps: Mana cost reduced by 20% for repairing armor and tools, as well as for using wands.
 
 ################################################################ MMO ################################################################
 

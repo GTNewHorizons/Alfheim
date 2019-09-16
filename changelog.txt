@@ -9,7 +9,7 @@ Fixes:
  #94 Dreamwood Sappling not growing on custom grass/dirt
  Exceptions spam to console
  Elven flight toggling on X
- Fixed aurora dirt not growing grass
- Fixed dupe with Botanists toolbelt
- Fixed Rheingold with player interaction
- [MMO] Fixed client <-> server precast time desync
+ Aurora dirt not growing grass
+ Dupe with Botanists toolbelt
+ Rheingold with player interaction
+ [MMO] Client <-> server precast time desync

@@ -804,14 +804,15 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun sayToAllOnline(message: String) {
+		if (!isServer) return
+		
 		val list = MinecraftServer.getServer().configurationManager.playerEntityList
 		for (online in list) say(online as EntityPlayer, message)
 		log(message)
 	}
 	
-	/** Untested!  */
-	@Deprecated("")
 	@JvmStatic
+	@Deprecated("Untested")
 	fun sayToAllOPs(message: String) {
 		MinecraftServer.getServer().configurationManager.func_152606_n()
 			.mapNotNull { MinecraftServer.getServer().configurationManager.func_152612_a(it) }

@@ -3,6 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.api.ModInfo
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -32,8 +33,8 @@ class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone
 	
 	// +20% DMG, -20% HP
 	private fun makePlayerBerserk(player: EntityPlayer): Boolean {
-		if (!player.isPotionActive(AlfheimRegistry.overmage) && !player.isPotionActive(AlfheimRegistry.tank) && !player.isPotionActive(AlfheimRegistry.ninja)) {
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.berserk.id, 72000, 0))
+		if (!player.isPotionActive(AlfheimConfigHandler.potionIDOvermage) && !player.isPotionActive(AlfheimConfigHandler.potionIDTank) && !player.isPotionActive(AlfheimConfigHandler.potionIDNinja)) {
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBerserk, 72000, 0))
 			return true
 		}
 		return false
@@ -41,8 +42,8 @@ class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone
 	
 	// +20% Spell DMG, +20% Spell Cost
 	private fun makePlayerOvermage(player: EntityPlayer): Boolean {
-		if (!player.isPotionActive(AlfheimRegistry.berserk) && !player.isPotionActive(AlfheimRegistry.tank) && !player.isPotionActive(AlfheimRegistry.ninja)) {
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.overmage.id, 72000, 0))
+		if (!player.isPotionActive(AlfheimConfigHandler.potionIDBerserk) && !player.isPotionActive(AlfheimConfigHandler.potionIDTank) && !player.isPotionActive(AlfheimConfigHandler.potionIDNinja)) {
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDOvermage, 72000, 0))
 			return true
 		}
 		return false
@@ -50,8 +51,8 @@ class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone
 	
 	// +20% Resistance, -20% Speed
 	private fun makePlayerTank(player: EntityPlayer): Boolean {
-		if (!player.isPotionActive(AlfheimRegistry.overmage) && !player.isPotionActive(AlfheimRegistry.berserk) && !player.isPotionActive(AlfheimRegistry.ninja)) {
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.tank.id, 72000, 0))
+		if (!player.isPotionActive(AlfheimConfigHandler.potionIDOvermage) && !player.isPotionActive(AlfheimConfigHandler.potionIDBerserk) && !player.isPotionActive(AlfheimConfigHandler.potionIDNinja)) {
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDTank, 72000, 0))
 			return true
 		}
 		return false
@@ -59,8 +60,8 @@ class BlockPowerStone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "PowerStone
 	
 	// +20% Speed, -20% DMG
 	private fun makePlayerNinja(player: EntityPlayer): Boolean {
-		if (!player.isPotionActive(AlfheimRegistry.overmage) && !player.isPotionActive(AlfheimRegistry.tank) && !player.isPotionActive(AlfheimRegistry.berserk)) {
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.ninja.id, 72000, 0))
+		if (!player.isPotionActive(AlfheimConfigHandler.potionIDOvermage) && !player.isPotionActive(AlfheimConfigHandler.potionIDTank) && !player.isPotionActive(AlfheimConfigHandler.potionIDBerserk)) {
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDNinja, 72000, 0))
 			return true
 		}
 		return false

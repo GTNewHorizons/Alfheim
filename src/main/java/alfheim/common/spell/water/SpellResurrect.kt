@@ -23,9 +23,6 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		
 		if (tg.target == null) return SpellCastResult.NOTARGET
 		
-		ASJUtilities.chatLog("Target is${if (tg.isParty) " " else " NOT"} in party", caster)
-		ASJUtilities.chatLog("Target has${if (tg.target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) " " else " no"} left flame effect (id ${AlfheimConfigHandler.potionIDLeftFlame})", caster)
-		
 		if (!tg.isParty || !tg.target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame))
 			return SpellCastResult.WRONGTGT
 		
@@ -33,14 +30,13 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, 0, 10, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 10))
+			tg.target.removePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 0, false, -1))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 			PartySystem.getMobParty(caster)?.setDead(tg.target, false)
-			
-			ASJUtilities.chatLog("Success!", caster)
+			tg.target.dataWatcher.updateObject(6, 10f)
 		}
 		
-		return result.also { ASJUtilities.chatLog("Returning $it", caster) }
+		return result
 	}
 }

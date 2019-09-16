@@ -59,16 +59,16 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 		
 		if (!worldObj.isRemote) {
 			val axis = AxisAlignedBB.getBoundingBox(posX - 1f, posY - 0.45f, posZ - 1f, lastTickPosX + 1f, lastTickPosY + 0.45f, lastTickPosZ + 1f)
+			
 			@Suppress("UNCHECKED_CAST")
 			val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 			for (living in entities) {
 				if (living === thrower)
 					continue
 				
-				if (living.hurtTime == 0) {
-					dealTrueDamage(this.thrower, living, damage * 0.4f)
-					attackedFrom(living, thrower, (damage * 1.5f).toInt())
-				}
+				// FIXME WTF DAMAGE
+				dealTrueDamage(thrower, living, damage * 0.4f)
+				attackedFrom(living, thrower, damage * 1.5f)
 			}
 		}
 		super.onUpdate()
@@ -127,14 +127,17 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 			
 			target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), amount)
 			
+			/*target.hurtTime = 0
+			target.hurtResistantTime = 0*/
+			
 			return result
 		}
 		
-		fun attackedFrom(target: EntityLivingBase, player: EntityLivingBase, i: Int) {
+		fun attackedFrom(target: EntityLivingBase, player: EntityLivingBase, i: Float) {
 			if (player is EntityPlayer)
-				target.attackEntityFrom(DamageSource.causePlayerDamage(player), i.toFloat())
+				target.attackEntityFrom(DamageSource.causePlayerDamage(player), i)
 			else
-				target.attackEntityFrom(DamageSource.causeMobDamage(player), i.toFloat())
+				target.attackEntityFrom(DamageSource.causeMobDamage(player), i)
 		}
 	}
 }

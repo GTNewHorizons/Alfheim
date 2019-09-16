@@ -198,7 +198,7 @@ object AlfheimLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamLeaves), worldgen, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1)
 		
-		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
+		shrines.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimBlocks.powerStone)
 		
 		//stories.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3")).icon = ItemStack(AlfheimItems.storyToken)
 		
@@ -393,7 +393,7 @@ object AlfheimLexiconData {
 		
 		if (races!!.pages.isEmpty())
 			races!!.setPriority()
-				.setLexiconPages(PageText("0"), PageText("1"), PageText("2"))
+				.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"), PageText("4"), PageText("5"))
 		
 		if (AlfheimCore.enableMMO) initMMO()
 	}
@@ -410,7 +410,6 @@ object AlfheimLexiconData {
 			
 			postInitMMO()
 		}
-		
 		
 		if (targets!!.pages.isEmpty())
 			targets!!.setPriority()

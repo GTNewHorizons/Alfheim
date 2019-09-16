@@ -167,7 +167,7 @@ object ESMHandler {
 			tg.isTamed = true
 			tg.func_152115_b(player.uniqueID.toString())
 		} else if (tg is EntityHorse) {
-			tg.setTamedBy(tg.riddenByEntity as EntityPlayer)
+			tg.setTamedBy(player)
 			tg.worldObj.setEntityState(tg, 7.toByte())
 		}
 	}

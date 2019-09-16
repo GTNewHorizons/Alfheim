@@ -108,10 +108,6 @@ class EntitySubspace: EntityThrowableCopy {
 					thrower.worldObj.spawnEntityInWorld(spear)
 					count++
 				}
-			} else if (type == 2) {
-				if (ticksExisted % interval == 0 && count < 6 && ticksExisted > delay + 5 && ticksExisted < liveTicks - delay - 10) {
-					setDead()
-				}
 			}
 	}
 	
@@ -159,6 +155,5 @@ class EntitySubspace: EntityThrowableCopy {
 		const val TAG_SIZE = "size"
 		const val TAG_COUNT = "count"
 		const val TAG_TYPE = "type"
-		const val TAG_EVIL = "isevil"
 	}
 }

@@ -35,6 +35,7 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 			
 			tile.handRotate()
 			
+			tile.markDirty()
 			world.setTileEntity(x, y, z, tile)
 			world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
 			world.markTileEntityChunkModified(x, y, z, tile)
@@ -56,6 +57,7 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 		
 		tile.onWanded()
 		
+		tile.markDirty()
 		world.setTileEntity(x, y, z, tile)
 		world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
 		world.markTileEntityChunkModified(x, y, z, tile)
