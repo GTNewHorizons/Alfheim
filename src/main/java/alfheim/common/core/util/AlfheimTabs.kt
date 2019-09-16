@@ -138,6 +138,7 @@ import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
+import alfheim.common.item.AlfheimItems.manaMirrorImba
 import alfheim.common.item.AlfheimItems.manaRingElven
 import alfheim.common.item.AlfheimItems.manaRingGod
 import alfheim.common.item.AlfheimItems.manaStone
@@ -236,6 +237,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addItem (astrolabe)
 		addItem (lootInterceptor)
+		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
 		
 		addItem (rodFire)

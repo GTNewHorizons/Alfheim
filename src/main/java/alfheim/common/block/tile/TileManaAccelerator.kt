@@ -4,8 +4,11 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.common.network.MessageTileItem
+import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.World
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.client.core.handler.LightningHandler
 import vazkii.botania.common.block.tile.mana.*
@@ -19,7 +22,11 @@ class TileManaAccelerator: TileItemContainer() {
 	// for some reason it updates as many times per tick as many times you right-click on it
 	private var lastTick: Long = 0
 	
+	//private var dummy: DummyUpdater? = null
+	
 	override fun updateEntity() {
+		//if (dummy == null) dummy = DummyUpdater(worldObj)
+		
 		val tick = worldObj.totalWorldTime
 		if (lastTick == tick) return
 		
@@ -33,13 +40,12 @@ class TileManaAccelerator: TileItemContainer() {
 			return
 		}
 		
-		val stack = item
-		if (item == null) return
+		val stack = item ?: return
 		
-		if (item!!.item is IManaItem) {
-			val mana = item!!.item as IManaItem
+		if (stack.item is IManaItem) {
+			val manaItem = stack.item as IManaItem
 			
-			if (te.isOutputtingPower && mana.canReceiveManaFromPool(stack, te) || !te.isOutputtingPower && mana.canExportManaToPool(stack, te)) {
+			if (te.isOutputtingPower && manaItem.canReceiveManaFromPool(stack, te) || !te.isOutputtingPower && manaItem.canExportManaToPool(stack, te)) {
 				var didSomething = false
 				
 				var bellowCount = 0
@@ -53,22 +59,22 @@ class TileManaAccelerator: TileItemContainer() {
 				
 				if (te.isOutputtingPower) {
 					if (te.canSpare) {
-						if (te.currentMana > 0 && mana.getMana(stack) < mana.getMaxMana(stack))
+						if (te.currentMana > 0 && manaItem.getMana(stack) < manaItem.getMaxMana(stack))
 							didSomething = true
 						
-						val manaVal = min(transfRate, min(te.currentMana, mana.getMaxMana(stack) - mana.getMana(stack)))
+						val manaVal = min(transfRate, min(te.currentMana, manaItem.getMaxMana(stack) - manaItem.getMana(stack)))
 						if (!worldObj.isRemote)
-							mana.addMana(stack, manaVal)
+							manaItem.addMana(stack, manaVal)
 						te.recieveMana(-manaVal)
 					}
 				} else {
 					if (te.canAccept) {
-						if (mana.getMana(stack) > 0 && !te.isFull)
+						if (manaItem.getMana(stack) > 0 && !te.isFull)
 							didSomething = true
 						
-						val manaVal = min(transfRate, min(te.manaCap - te.currentMana, mana.getMana(stack)))
+						val manaVal = min(transfRate, min(te.manaCap - te.currentMana, manaItem.getMana(stack)))
 						if (!worldObj.isRemote)
-							mana.addMana(stack, -manaVal)
+							manaItem.addMana(stack, -manaVal)
 						te.recieveMana(manaVal)
 					}
 				}
@@ -82,8 +88,10 @@ class TileManaAccelerator: TileItemContainer() {
 					te.isDoingTransfer = te.isOutputtingPower
 					if (worldObj.totalWorldTime % 20 == 0L) {
 						worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType())
-						if (ASJUtilities.isServer) AlfheimCore.network.sendToDimension(MessageTileItem(xCoord, yCoord, zCoord, item), worldObj.provider.dimensionId)
+						if (ASJUtilities.isServer) AlfheimCore.network.sendToDimension(MessageTileItem(xCoord, yCoord, zCoord, stack), worldObj.provider.dimensionId)
 					}
+					
+					//stack.item.onUpdate(stack, worldObj, dummy, -1, false)
 				}
 			}
 		}
@@ -91,3 +99,9 @@ class TileManaAccelerator: TileItemContainer() {
 		lastTick = worldObj.totalWorldTime
 	}
 }
+
+/*private class DummyUpdater(world: World): Entity(world) {
+	override fun writeEntityToNBT(nbt: NBTTagCompound?)  = Unit
+	override fun readEntityFromNBT(nbt: NBTTagCompound?) = Unit
+	override fun entityInit() = Unit
+}*/

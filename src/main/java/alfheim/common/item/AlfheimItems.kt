@@ -67,6 +67,7 @@ object AlfheimItems {
 	val irisSeeds: Item
 	val livingrockPickaxe: Item
 	val lootInterceptor: Item
+	val manaMirrorImba: Item
 	val manaRingElven: Item
 	val manaRingGod: Item
 	val manasteelHoe: Item
@@ -143,6 +144,7 @@ object AlfheimItems {
 		irisSeeds = ItemColorSeeds()
 		livingrockPickaxe = ItemLivingrockPickaxe()
 		lootInterceptor = ItemLootInterceptor()
+		manaMirrorImba = ItemManaMirrorImba()
 		manasteelHoe = ItemManasteelHoe()
 		manaRingElven = ItemManaStorageRing("ManaRingElven", 5.0)
 		manaRingGod = ItemManaStorageRing("ManaRingGod", 10.0)
