@@ -112,9 +112,9 @@ object EventHandlerClient {
 			if (data.second) {
 				player.func_152121_a(Type.SKIN,
 									 if (data.first)
-										 LibResourceLocations.female[player.raceID-1]
+										 LibResourceLocations.oldFemale[player.raceID-1]
 									 else
-										 LibResourceLocations.male[player.raceID-1]
+										 LibResourceLocations.oldMale[player.raceID-1]
 									)
 			}
 		}
