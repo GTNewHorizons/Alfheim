@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.AlfheimTab
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -36,16 +37,14 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		return 1000 - (mana / TilePool.MAX_MANA * 1000).toInt()
 	}
 	
-	override fun getDisplayDamage(stack: ItemStack): Int {
-		return getDamage(stack)
-	}
+	override fun getDisplayDamage(stack: ItemStack) = getDamage(stack)
 	
 	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slot: Int, inHand: Boolean) {
 		if (world.isRemote)
 			return
 		
 		val pool = getManaPool(stack)
-		if (pool !is DummyPool) {
+		if (pool !== DummyPool) {
 			if (pool == null)
 				setMana(stack, 0)
 			else {
@@ -69,26 +68,18 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		return false
 	}
 	
-	override fun getMana(stack: ItemStack): Int {
-		return ItemNBTHelper.getInt(stack, TAG_MANA, 0)
-	}
-	
-	fun setMana(stack: ItemStack, mana: Int) {
-		ItemNBTHelper.setInt(stack, TAG_MANA, max(0, mana))
-	}
-	
-	fun getManaBacklog(stack: ItemStack): Int {
-		return ItemNBTHelper.getInt(stack, TAG_MANA_BACKLOG, 0)
-	}
-	
-	fun setManaBacklog(stack: ItemStack, backlog: Int) {
-		ItemNBTHelper.setInt(stack, TAG_MANA_BACKLOG, backlog)
-	}
+	override
+	fun getMana(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_MANA, 0)
+	fun setMana(stack: ItemStack, mana: Int) = ItemNBTHelper.setInt(stack, TAG_MANA, max(0, mana))
+	fun getManaBacklog(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_MANA_BACKLOG, 0)
+	fun setManaBacklog(stack: ItemStack, backlog: Int) = ItemNBTHelper.setInt(stack, TAG_MANA_BACKLOG, backlog)
 	
 	override fun getMaxMana(stack: ItemStack): Int {
+		if (!ASJUtilities.isServer) return TilePool.MAX_MANA
+		
 		val pool = getManaPool(stack) ?: return 0
 		
-		return if (pool !is DummyPool) TilePool.MAX_MANA else 0
+		return if (pool !== DummyPool) TilePool.MAX_MANA else 0
 	}
 	
 	override fun addMana(stack: ItemStack, mana: Int) {
@@ -99,7 +90,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		
 		val pool = getManaPool(stack)
 		
-		if (pool !is DummyPool) {
+		if (pool !== DummyPool) {
 			if (pool == null)
 				setMana(stack, 0)
 			else {
@@ -124,9 +115,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		return ChunkCoordinates(x, y, z)
 	}
 	
-	fun getDimension(stack: ItemStack): Int {
-		return ItemNBTHelper.getInt(stack, TAG_DIM, 0)
-	}
+	fun getDimension(stack: ItemStack): Int = ItemNBTHelper.getInt(stack, TAG_DIM, 0)
 	
 	fun getManaPool(stack: ItemStack): IManaPool? {
 		val server = MinecraftServer.getServer() ?: return DummyPool
@@ -136,18 +125,11 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 			return null
 		
 		val dim = getDimension(stack)
-		var world: World? = null
-		for (w in server.worldServers)
-			if (w.provider.dimensionId == dim) {
-				world = w
-				break
-			}
+		val world = server.worldServers.firstOrNull { it.provider.dimensionId == dim } ?: return null
 		
-		if (world != null) {
-			val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
-			if (tile != null && tile is IManaPool)
-				return tile
-		}
+		val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
+		if (tile != null && tile is IManaPool)
+			return tile
 		
 		return null
 	}
@@ -155,49 +137,32 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 	override fun canReceiveManaFromPool(stack: ItemStack, from: TileEntity): Boolean {
 		val pool = getManaPool(stack) ?: return false
 		
-		return if (pool !is DummyPool) !pool.isOutputtingPower && !pool.isFull else false
+		return if (pool !== DummyPool) !pool.isOutputtingPower && !pool.isFull else false
 	}
 	
 	override fun canExportManaToPool(stack: ItemStack, to: TileEntity): Boolean {
 		val pool = getManaPool(stack) ?: return false
 		
-		return if (pool !is DummyPool) pool.isOutputtingPower else false
+		return if (pool !== DummyPool) pool.isOutputtingPower else false
 	}
 	
 	override fun canReceiveManaFromItem(stack: ItemStack, otherStack: ItemStack) = false
-	
 	override fun canExportManaToItem(stack: ItemStack, otherStack: ItemStack) = false
-	
 	override fun isNoExport(stack: ItemStack) = false
 	
 	override fun getBinding(stack: ItemStack): ChunkCoordinates? {
 		val pool = getManaPool(stack)
 		
-		return if (pool == null || pool is DummyPool) null else getPoolCoords(stack)
+		return if (pool == null || pool === DummyPool) null else getPoolCoords(stack)
 	}
 	
-	override fun getManaFractionForDisplay(stack: ItemStack): Float {
-		return getMana(stack).toFloat() / getMaxMana(stack).toFloat()
-	}
+	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()
 }
 
 private object DummyPool: IManaPool {
-	
-	override fun isFull(): Boolean {
-		return false
-	}
-	
-	override fun recieveMana(mana: Int) {}
-	
-	override fun canRecieveManaFromBursts(): Boolean {
-		return false
-	}
-	
-	override fun getCurrentMana(): Int {
-		return 0
-	}
-	
-	override fun isOutputtingPower(): Boolean {
-		return false
-	}
+	override fun isFull() = false
+	override fun recieveMana(mana: Int) = Unit
+	override fun canRecieveManaFromBursts() = false
+	override fun getCurrentMana() = 0
+	override fun isOutputtingPower() = false
 }

@@ -236,9 +236,8 @@ object CardinalSystem {
 					0    -> {
 						if (e.spell.name == "stoneskin") {
 							++seg.quadStage
-						}
-						if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
-							++seg.quadStage
+						} else if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
+							seg.quadStage += 2
 						} else {
 							seg.quadStage = 0
 						}
@@ -267,7 +266,10 @@ object CardinalSystem {
 					} else {
 						seg.quadStage = 0
 					}
-					else -> seg.quadStage = 0
+					
+					else -> {
+						seg.quadStage = 0
+					}
 				}
 			}
 			

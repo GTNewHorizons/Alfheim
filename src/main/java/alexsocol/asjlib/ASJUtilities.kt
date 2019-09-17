@@ -750,15 +750,21 @@ object ASJUtilities {
 	private fun time(world: World?) = "[${format.format(world?.let { it.totalWorldTime % 1000 } ?: 0)}]"
 	
 	@JvmStatic
-	@SideOnly(Side.CLIENT)
 	fun chatLog(message: String) {
-		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(Minecraft.getMinecraft()?.theWorld)} $message"))
+		val msg = "${time(Minecraft.getMinecraft()?.theWorld)} $message"
+		if (!isServer)
+			sayToAllOnline(msg)
+		else
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
 	@JvmStatic
-	@SideOnly(Side.CLIENT)
 	fun chatLog(message: String, world: World?) {
-		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"))
+		val msg = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"
+		if (isServer)
+			sayToAllOnline(msg)
+		else
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
 	@JvmStatic

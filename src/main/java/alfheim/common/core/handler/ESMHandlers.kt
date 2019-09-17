@@ -100,7 +100,8 @@ object ESMHandler {
 		val player = e.source.entity as? EntityPlayer ?: return
 		
 		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player) ) {
-			e.entityLiving.hurtResistantTime -= max(0f, e.entityLiving.maxHurtResistantTime * 0.2f).toInt()
+			e.entityLiving.hurtResistantTime = 16
+			e.entityLiving.hurtTime = 8
 		}
 	}
 	
