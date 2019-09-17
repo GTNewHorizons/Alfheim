@@ -1,6 +1,5 @@
 package alfheim.common.network
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
@@ -181,20 +180,29 @@ class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
 	}
 }
 
-class MessagePlayerItemHandler : IMessageHandler<MessagePlayerItem, IMessage> {
+class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItem, IMessage> {
 	
-	override fun onMessage(message: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
-		if (ctx != null && message != null && message.item != null && ctx.side.isServer) {
+	override fun onMessage(packet: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
+		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
 			val player = ctx.serverHandler.playerEntity
 			
 			val heldItem = player.currentEquippedItem
 			
 			if (heldItem == null) {
-				player.setCurrentItemOrArmor(0, message.item!!.copy())
-			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
-				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
+				player.setCurrentItemOrArmor(0, packet.item!!.copy())
+			} else if (!player.inventory.addItemStackToInventory(packet.item!!.copy())) {
+				player.dropPlayerItemWithRandomChoice(packet.item!!.copy(), false)
 			}
 		}
+		
+		return null
+	}
+}
+
+class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage> {
+	
+	override fun onMessage(packet: MessageSkinInfo, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
 		
 		return null
 	}

@@ -68,6 +68,7 @@ object CardinalSystem {
 		
 		if (AlfheimCore.enableElvenStory) {
 			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ESMABIL, if (forPlayer(player).esmAbility) 1.0 else 0.0), player)
+			ElvenSkinSystem.transfer(player)
 			
 			if (AlfheimCore.enableMMO) {
 				SpellCastingSystem.transfer(player)
@@ -945,6 +946,28 @@ object CardinalSystem {
 		}
 	}
 	
+	object ElvenSkinSystem {
+		
+		fun getGender(player: EntityPlayer) = forPlayer(player).gender
+		
+		fun setGender(player: EntityPlayer, isFemale: Boolean) {
+			forPlayer(player).gender = isFemale
+		}
+		
+		fun hasCustomSkin(player: EntityPlayer) = forPlayer(player).customSkin
+		
+		fun setCustomSkin(player: EntityPlayer, skinOn: Boolean) {
+			forPlayer(player).customSkin = skinOn
+		}
+		
+		fun transfer(player: EntityPlayerMP) {
+			playerSegments.forEach {
+				(name, seg) ->
+				AlfheimCore.network.sendTo(MessageSkinInfo(name, seg.gender, seg.customSkin), player)
+			}
+		}
+	}
+	
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
 		var party: Party = Party(player)
@@ -967,6 +990,10 @@ object CardinalSystem {
 		var userName: String = player.commandSenderName
 		
 		var esmAbility = true
+		
+		/** isFemale otherwise */
+		var gender = false
+		var customSkin = false
 		
 		fun toggleESMAbility() {
 			esmAbility = !esmAbility

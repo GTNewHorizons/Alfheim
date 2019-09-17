@@ -1,5 +1,6 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
@@ -40,27 +41,31 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 		fun within(hZ: Float) = hZ in 0.25f..0.75f
 		fun isLeft(hX: Float, hZ: Float) = hX in 0.0625f..0.5f && within(hZ)
 		fun isRight(hX: Float, hZ: Float) = hX in 0.5f..0.9375f && within(hZ)
+		fun isMid(hX: Float, hZ: Float): Boolean {
+			val leftest = hX in (5f / 16)..(6f / 16)
+			val rightest = hX in (10f / 16)..(11f / 16)
+			val height = hZ in (6f / 16)..(10f / 16)
+			
+			// left/right button side
+			if ((leftest || rightest) && height) return true
+			
+			// button middle
+			return hX in (6f / 16)..(10f / 16) && hZ in (5f / 16)..(11f / 16)
+		}
 		
 		if (meta == 0) {
+			if (isMid(hitX, hitZ)) {
+				tile.custom = !tile.custom
+				ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(tile.custom) "1" else "0" }")
+				return true
+			}
+			
 			tile.female = if (isLeft(hitX, hitZ)) false else if (isRight(hitX, hitZ)) true else return false
 			
 			world.setBlockMetadataWithNotify(x, y, z, 1, 3)
 			
 			return true
 		} else if (meta == 1) {
-			
-			fun isMid(hX: Float, hZ: Float): Boolean {
-				val leftest = hX in (5f / 16)..(6f / 16)
-				val rightest = hX in (10f / 16)..(11f / 16)
-				val height = hZ in (6f / 16)..(10f / 16)
-				
-				// left/right button side
-				if ((leftest || rightest) && height) return true
-				
-				// button middle
-				return hX in (6f / 16)..(10f / 16) && hZ in (5f / 16)..(11f / 16)
-			}
-			
 			if (isMid(hitX, hitZ)) {
 				return tile.giveRaceAndReset(player)
 			}

@@ -13,11 +13,14 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 object CardinalSystemClient {
 	
 	val mc get() = Minecraft.getMinecraft()!!
+	
+	val playerSkinsData = HashMap<String, Pair<Boolean, Boolean>>()
 	
 	object SpellCastingSystemClient {
 		

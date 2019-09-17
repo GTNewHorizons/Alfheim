@@ -118,4 +118,8 @@ object PacketHandlerClient {
 			m3d.TOGGLER      -> ClientProxy.toggelModes(packet.data1 > 0, packet.data2.toInt() and 1 > 0, packet.data3.toInt() and 1 > 0, packet.data2.toInt() shr 1 and 1 > 0, packet.data3.toInt() shr 1 and 1 > 0)
 		}
 	}
+	
+	fun handle(packet: MessageSkinInfo) {
+		CardinalSystemClient.playerSkinsData[packet.name] = packet.isFemale to packet.isSkinOn
+	}
 }

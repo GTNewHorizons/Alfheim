@@ -4,6 +4,7 @@ Innovations:
  Config for mobs spawn rate
  Redused Elven King ring mana consumption
  Deleted decelerator anomaly
+ Elven skin toggling
 
 Fixes:
  #92 Soul restoration exploit
@@ -15,3 +16,7 @@ Fixes:
  Rheingold with player interaction
  [MMO] Client <-> server precast time desync
  [MMO] Fixed quad
+ 
+Known Issues:
+ [Thermos] Revive just removes "death" effect
+ [Thermos] Leprechauns attack speed bonus don't work

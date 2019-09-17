@@ -1,8 +1,11 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.ASJTile
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
+import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
+import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.AxisAlignedBB
@@ -16,18 +19,26 @@ class TileRaceSelector: ASJTile() {
 		val race = EnumRace[rotation+1]
 		EnumRace.selectRace(player, race)
 		
+		if (ASJUtilities.isServer) {
+			ElvenSkinSystem.setGender(player, female)
+			ElvenSkinSystem.setCustomSkin(player, custom)
+			
+			AlfheimCore.network.sendToAll(MessageSkinInfo(player.commandSenderName, female, custom))
+		}
 		
 		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 		
-		rotation = 0
-		activeRotation = 0
 		female = false
+		custom = false
+		activeRotation = 0
+		rotation = 0
 		
 		return true
 	}
 	
-	var activeRotation = 0
 	var female = false
+	var custom = false
+	var activeRotation = 0
 	var rotation = 0
 		set(value) {
 			//val lower = value > field
@@ -44,8 +55,8 @@ class TileRaceSelector: ASJTile() {
 	override fun updateEntity() {
 		if (activeRotation != 0) if (activeRotation > 0) --activeRotation else ++activeRotation
 		
-		// TODO remove when there will be genders
-		if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
+		// remove when there will be genders
+		// if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
 	}
 	
 	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.toDouble(), zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
