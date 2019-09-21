@@ -53,7 +53,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 		if (meta == 0) {
 			if (isMid(hitX, hitZ)) {
 				tile.custom = !tile.custom
-				ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(tile.custom) "1" else "0" }")
+				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(tile.custom) "1" else "0" }")
 				return true
 			}
 			

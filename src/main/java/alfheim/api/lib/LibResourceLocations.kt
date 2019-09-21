@@ -139,6 +139,30 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/Imp.png")
 	)
 	
+	val oldMale = arrayOf(
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldSalamander.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldSylph.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldCaitSith.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldPooka.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldGnome.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldLeprechaun.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldSpriggan.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldUndine.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/male/OldImp.png")
+	)
+	
+	val oldFemale = arrayOf(
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldSalamander.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldSylph.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldCaitSith.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldPooka.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldGnome.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldLeprechaun.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldSpriggan.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldUndine.png"),
+		ResourceLocation(ModInfo.MODID, "textures/model/entity/female/OldImp.png")
+	)
+	
 	private val spells = HashMap<String, ResourceLocation>()
 	
 	val inventory = ResourceLocation("textures/gui/container/inventory.png")
