@@ -18,6 +18,7 @@ import alfheim.common.potion.PotionSoulburn
 import codechicken.nei.recipe.GuiRecipe
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
+import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -282,6 +283,16 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
+	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
+		if (result) {
+			ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
+		}
+		
+		return result
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun `TileHourglass$updateEntity`(hourglass: TileHourglass) {
 		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
 			var block: Block
@@ -313,9 +324,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
-	fun sparkleFX(proxy: ClientProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, m: Int, fake: Boolean): Boolean {
-		return updatingTile
-	}
+	fun sparkleFX(proxy: ClientProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, m: Int, fake: Boolean) = updatingTile
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
@@ -371,27 +380,23 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
-	fun getIcon(pylon: BlockPylon, side: Int, meta: Int): IIcon {
-		return if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0)
-	}
+	fun getIcon(pylon: BlockPylon, side: Int, meta: Int) =
+		(if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0))!!
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
-	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int): Boolean {
-		return MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
-	}
+	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
+		MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
-	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
-		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
-	}
+	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int) =
+		recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
-	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		return if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
-	}
+	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
+		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)

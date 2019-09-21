@@ -76,7 +76,7 @@ gradlew setupDecompWorkspace --refresh-dependencies idea
 :clean
 @echo on
 @ECHO ##########################################################################
-gradlew clean
+gradlew clean cleanCache
 
 @ECHO ##########################################################################
 @ECHO.

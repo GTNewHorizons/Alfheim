@@ -8,7 +8,6 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.MathHelper
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.Botania
 import java.util.*
 import kotlin.math.*
@@ -74,7 +73,7 @@ class SubTileWarp: SubTileEntity() {
 		
 		if (ASJUtilities.isServer && ticks % 600 == 0) {
 			radius = worldObj.rand.nextInt(8) + 16
-			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile!!)
+			ASJUtilities.dispatchTEToNearbyPlayers(superTile!!)
 		}
 		
 		rand.setSeed((x() xor y() xor z()).toLong())

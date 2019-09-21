@@ -1,8 +1,6 @@
 package alexsocol.asjlib.extendables
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
-import alfheim.common.network.MessageTileItem
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
@@ -21,7 +19,7 @@ open class TileItemContainer: ASJTile() {
 		set(stack) {
 			field = stack
 			if (ASJUtilities.isServer && worldObj != null) {
-				AlfheimCore.network.sendToDimension(MessageTileItem(xCoord, yCoord, zCoord, item), worldObj.provider.dimensionId)
+				ASJUtilities.dispatchTEToNearbyPlayers(this)
 			}
 		}
 	

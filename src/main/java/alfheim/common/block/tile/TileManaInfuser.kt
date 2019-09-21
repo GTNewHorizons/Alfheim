@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.ASJUtilities.getTrueDamage
 import alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
@@ -16,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.mana.IManaPool
 import vazkii.botania.api.mana.spark.*
@@ -171,7 +171,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 					mana -= manaRequest
 					worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 					worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
-					VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
+					ASJUtilities.dispatchTEToNearbyPlayers(this)
 					result = null
 					manaRequest = 0
 				}

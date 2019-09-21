@@ -343,5 +343,7 @@ class Vector3: Serializable {
 		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2.0) + (e1.posY - e2.posY).pow(2.0) + (e1.posZ - e2.posZ).pow(2.0))
 		
 		fun entityDistancePlane(e1: Entity, e2: Entity) = hypot(e1.posX - e2.posX, e1.posZ - e2.posZ)
+		
+		fun pointDistancePlane(x1: Double, y1: Double, x2: Double, y2: Double) = hypot(x1 - x2, y1 - y2)
 	}
 }

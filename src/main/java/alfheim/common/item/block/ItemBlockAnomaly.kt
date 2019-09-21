@@ -1,5 +1,6 @@
 package alfheim.common.item.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.block.*
 import alfheim.common.block.tile.TileAnomaly
@@ -11,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 
 class ItemBlockAnomaly(block: Block): ItemBlock(block) {
@@ -42,7 +42,7 @@ class ItemBlockAnomaly(block: Block): ItemBlock(block) {
 				
 				if (!world.isRemote) {
 					world.markBlockForUpdate(x, y, z)
-					VanillaPacketDispatcher.dispatchTEToNearbyPlayers(te)
+					ASJUtilities.dispatchTEToNearbyPlayers(te)
 				}
 			}
 		}

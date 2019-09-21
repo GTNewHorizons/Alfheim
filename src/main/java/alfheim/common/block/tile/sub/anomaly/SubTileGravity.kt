@@ -7,11 +7,11 @@ import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.Botania
 import kotlin.math.*
 
 class SubTileGravity: SubTileEntity() {
+	
 	var power = 0.65
 	internal val vt = Vector3()
 	internal val ve = Vector3()
@@ -34,7 +34,7 @@ class SubTileGravity: SubTileEntity() {
 		
 		if (ASJUtilities.isServer && ticks % 100 == 0) {
 			power = Math.random() * 0.65 + 0.35
-			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile!!)
+			ASJUtilities.dispatchTEToNearbyPlayers(superTile!!)
 		}
 		
 		val radius = power * 10

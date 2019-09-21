@@ -1,5 +1,6 @@
 package alexsocol.asjlib
 
+import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.*
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.*
 import net.minecraft.nbt.*
 import net.minecraft.potion.Potion
 import net.minecraft.server.MinecraftServer
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.BiomeGenBase
@@ -100,6 +102,30 @@ object ASJUtilities {
 			val worldTo = entity.mcServer.worldServerForDimension(dimTo)
 			entity.mcServer.configurationManager.transferPlayerToDimension(entity, dimTo, FreeTeleporter(worldTo, x, y, z))
 		}
+	}
+	
+	/**
+	 * Sends data about [tile] to client
+	 * @author Vazkii
+	 */
+	fun dispatchTEToNearbyPlayers(tile: TileEntity) {
+		val world = tile.worldObj
+		val players = world.playerEntities
+		for (player in players)
+			if (player is EntityPlayerMP) {
+				if (Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
+					player.playerNetServerHandler.sendPacket(tile.descriptionPacket)
+			}
+	}
+	
+	/**
+	 * Sends data about tile at [x] [y] [z] to client
+	 * @author Vazkii
+	 */
+	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
+		val tile = world.getTileEntity(x, y, z)
+		if (tile != null)
+			dispatchTEToNearbyPlayers(tile)
 	}
 	
 	@JvmStatic

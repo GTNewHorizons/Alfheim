@@ -63,7 +63,6 @@ object AlfheimConfigHandler {
 	var numericalMana			= true
 	var realLightning			= false
 	var schemaArray				= IntArray(17) { -1 + it }
-	var slowDownClients			= false
 	var storyLines				= 4
 	var tradePortalRate			= 1200
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
@@ -168,7 +167,6 @@ object AlfheimConfigHandler {
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
-		slowDownClients = loadProp(CATEGORY_GENERAL, "slowDownClients", slowDownClients, false, "Set this to true to slowdown players on clients while in anomaly")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
@@ -316,7 +314,7 @@ object AlfheimConfigHandler {
 	
 	private fun makeVectorFromString(s: String): Vector3 {
 		val ss = s.split(" : ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-		if (ss.size != 3) throw IllegalArgumentException(String.format("Wrong coords count. Expected 3 got %d", ss.size))
+		require(ss.size == 3) { String.format("Wrong coords count. Expected 3 got %d", ss.size) }
 		return Vector3(ss[0].toDouble(), ss[1].toDouble(), ss[2].toDouble())
 	}
 	
@@ -338,7 +336,7 @@ object AlfheimConfigHandler {
 			br.close()
 			fr.close()
 			
-			if (flags.size != 2) throw IllegalArgumentException(String.format("Wrong flags count. Expected 2 got %d", flags.size))
+			require(flags.size == 2) { String.format("Wrong flags count. Expected 2 got %d", flags.size) }
 			
 			if (flags[0] == "false") {
 				if (flags[1] == "false") {
@@ -362,7 +360,7 @@ object AlfheimConfigHandler {
 	}
 	
 	fun writeModes() {
-		if (!AlfheimCore.enableElvenStory && AlfheimCore.enableMMO) throw IllegalArgumentException("Unable to write modes state when ESM is disabled and MMO is enabled")
+		require(!(!AlfheimCore.enableElvenStory && AlfheimCore.enableMMO)) { "Unable to write modes state when ESM is disabled and MMO is enabled" }
 		val f = File("config/Alfheim/ElvenStoryMode.cfg")
 		try {
 			val fw = FileWriter(f)

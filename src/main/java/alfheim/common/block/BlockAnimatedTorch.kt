@@ -31,14 +31,10 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.isSneaking && player.heldItem == null) {
-			val tile = world.getTileEntity(x, y, z) as? TileAnimatedTorch ?: return false
+			val te = world.getTileEntity(x, y, z) as? TileAnimatedTorch ?: return false
 			
-			tile.handRotate()
-			
-			tile.markDirty()
-			world.setTileEntity(x, y, z, tile)
+			te.handRotate()
 			world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
-			world.markTileEntityChunkModified(x, y, z, tile)
 			
 			return true
 		}
@@ -56,11 +52,7 @@ class BlockAnimatedTorch: BlockContainerMod(Material.circuits), IHourglassTrigge
 		val tile = world.getTileEntity(x, y, z) as? TileAnimatedTorch ?: return false
 		
 		tile.onWanded()
-		
-		tile.markDirty()
-		world.setTileEntity(x, y, z, tile)
 		world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
-		world.markTileEntityChunkModified(x, y, z, tile)
 		
 		return true
 	}

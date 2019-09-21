@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -13,7 +14,6 @@ import net.minecraft.util.*
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.glEnable
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.block.tile.TileMod
 import kotlin.math.*
 
@@ -50,14 +50,14 @@ class TileAnimatedTorch: TileMod() {
 		if (!worldObj.isRemote) {
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, torchMode.rotate(this, side))
 			nextRandomRotation = worldObj.rand.nextInt(4)
-			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this)
+			ASJUtilities.dispatchTEToNearbyPlayers(this)
 		}
 	}
 	
 	fun onWanded() {
 		val modes = TorchMode.values()
 		torchMode = modes[(torchMode.ordinal + 1) % modes.size]
-		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this)
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun receiveClientEvent(id: Int, param: Int): Boolean {

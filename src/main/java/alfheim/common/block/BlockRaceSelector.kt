@@ -23,10 +23,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val ret = onBlockActivated2(world, x, y, z, player, side, hitX, hitZ)
-		if (ret) {
-			world.getTileEntity(x, y, z).markDirty()
-			world.markBlockForUpdate(x,  y, z)
-		}
+		if (ret) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
 		return ret
 	}
 	
