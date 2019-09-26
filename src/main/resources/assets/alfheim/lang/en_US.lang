@@ -183,6 +183,7 @@ item.botania:lensTripwire.short=Tripwire
 item.LivingrockPickaxe.name=Livingrock Pickaxe
 item.alfheim:LootInterceptor.name=Loot Interceptor
 item.alfheim:ManaInfusionCore.name=Mana Infusion Core
+item.alfheim:manaMirrorImba.name=Hyperpositioning Mana Transmitter
 item.botania:ManaRingElven.name=Elven Band of Mana
 item.botania:ManaRingGod.name=God's Band of Mana
 item.ManasteelHoe.name=Manasteel Hoe
@@ -578,83 +579,83 @@ spell.waterbreathing.name=Water Breathing
 spell.wellolife.name=Well of Life
 spell.windblades.name=Wind Blades
 
-#
-spell.acidmyst.words=§bAcid Myst
-spell.aquabind.words=§bBind my enemies, water fetters!
-spell.aquastream.words=§bI direct the flow of water into the §bchannel of the enemy death!
-spell.battlehorn.words=§eFill them with shining courage to defeat §ethe many evils!
-#
-spell.blink.words=§7Blink
-spell.bunnyhop.words=§aGive him the power of a bunny to jump §ahigh!
-spell.butterflyshield.words=§6Wrap him in a shield of goddesses, and §6keep away flames and irons!
-spell.confusion.words=§8I'm inspiring false illusion, let them §8serve as death in confusion!
-spell.day.words=§6I replace the night with day, replace §6darkness with light!
-#
-spell.deathmark.words=§5Deathmark
-#
-spell.decay.words=§5Decay
-#
-spell.dispel.words=§4Dispel
-#
-spell.dragongrowl.words=§eDragon Growl
-#
-spell.driftingmine.words=§7Drifting Mine
-#
-spell.echo.words=§eEcholocation
-spell.fenrirstorm.words=§aI turn the wrath of Fenrir, directing §aon our enemies!
-spell.fireball.words=§4I throw the flame of a demon, call the §4exploding death, to throw down the army of the forest!
-spell.firewall.words=§4I command fire, rise above the enemies §4with a flaming wall!
-spell.gravitytrap.words=§7I obey the laws of the universe, I §7command gravity: increase your power!
-#
-spell.goldrush.words=§2Gold Rush
-#
-spell.hammerfall.words=§2Hammerfall
-#
-spell.harp.words=§eHarp
-spell.healing.words=§bHeal thou, healing water!
-spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
-#
-spell.icelens.words=§bIce Lens
-spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
-#
-spell.isaacstorm.words=§eIsaac's Epic Missile Storm
-#
-spell.mortar.words=§2Mortar
-spell.night.words=§5I replace the day with night, replace §5the light with darkness!
-spell.nightvision.words=§8Give us eyes that illuminate the night!
-#
-spell.ninelifes.words=§6Nine Lifes
-#
-spell.noclip.words=§2Noclip
-#
-spell.outdare.words=§eOutdare
-#
-spell.poisonroots.words=§5Poison Roots
-spell.purifyingsurface.words=§bI call out a clean fountain, cease the §bbreath of flame and poison!
-spell.rain.words=§bI submit to the forces of nature, shed §bin a rain!
-#
-spell.resurrect.words=§bRevive
-spell.sacrifice.words=§5I call the §lBlack Destroyer§r§5! Make the §5heavens fall! Cast away the gods! Open the gates of §lHell§r§5!
-spell.smokescreen.words=§8Hide us from the enemies in your arms, §8smoke screen!
-spell.stoneskin.words=§2Protect us, great land, from now on §2our skin is as hard as a rock!
-spell.sun.words=§4I submit to the forces of nature, §4shine, the Sun!
-spell.thor.words=§aI invoke the power of the god Thor: §aput your hammer on my enemies!
-#
-spell.throw.words=§aWind Flows
-spell.thunder.words=§aI submit to the forces of nature, pour §arain and outline the sky with sparkling lightning!
-#
-spell.truesigh.words=§8True Sigh
-#
-spell.titanhit.words=§2Titan Hit
-#
-spell.timestop.words=§7Time Stop
-spell.uphealth.words=§6Give him the life of gods, to overthrow §6the wicked giants!
-spell.wallwarp.words=§2I warp the walls, making a passage §2where was none!
-spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendure the cold water!
-#
-spell.wellolife.words=§bWell of Life
-#
-spell.windblades.words=§aWind Blades
+##
+#spell.acidmyst.words=§bAcid Myst
+#spell.aquabind.words=§bBind my enemies, water fetters!
+#spell.aquastream.words=§bI direct the flow of water into the §bchannel of the enemy death!
+#spell.battlehorn.words=§eFill them with shining courage to defeat §ethe many evils!
+##
+#spell.blink.words=§7Blink
+#spell.bunnyhop.words=§aGive him the power of a bunny to jump §ahigh!
+#spell.butterflyshield.words=§6Wrap him in a shield of goddesses, and §6keep away flames and irons!
+#spell.confusion.words=§8I'm inspiring false illusion, let them §8serve as death in confusion!
+#spell.day.words=§6I replace the night with day, replace §6darkness with light!
+##
+#spell.deathmark.words=§5Deathmark
+##
+#spell.decay.words=§5Decay
+##
+#spell.dispel.words=§4Dispel
+##
+#spell.dragongrowl.words=§eDragon Growl
+##
+#spell.driftingmine.words=§7Drifting Mine
+##
+#spell.echo.words=§eEcholocation
+#spell.fenrirstorm.words=§aI turn the wrath of Fenrir, directing §aon our enemies!
+#spell.fireball.words=§4I throw the flame of a demon, call the §4exploding death, to throw down the army of the forest!
+#spell.firewall.words=§4I command fire, rise above the enemies §4with a flaming wall!
+#spell.gravitytrap.words=§7I obey the laws of the universe, I §7command gravity: increase your power!
+##
+#spell.goldrush.words=§2Gold Rush
+##
+#spell.hammerfall.words=§2Hammerfall
+##
+#spell.harp.words=§eHarp
+#spell.healing.words=§bHeal thou, healing water!
+#spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
+##
+#spell.icelens.words=§bIce Lens
+#spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
+##
+#spell.isaacstorm.words=§eIsaac's Epic Missile Storm
+##
+#spell.mortar.words=§2Mortar
+#spell.night.words=§5I replace the day with night, replace §5the light with darkness!
+#spell.nightvision.words=§8Give us eyes that illuminate the night!
+##
+#spell.ninelifes.words=§6Nine Lifes
+##
+#spell.noclip.words=§2Noclip
+##
+#spell.outdare.words=§eOutdare
+##
+#spell.poisonroots.words=§5Poison Roots
+#spell.purifyingsurface.words=§bI call out a clean fountain, cease the §bbreath of flame and poison!
+#spell.rain.words=§bI submit to the forces of nature, shed §bin a rain!
+##
+#spell.resurrect.words=§bRevive
+#spell.sacrifice.words=§5I call the §lBlack Destroyer§r§5! Make the §5heavens fall! Cast away the gods! Open the gates of §lHell§r§5!
+#spell.smokescreen.words=§8Hide us from the enemies in your arms, §8smoke screen!
+#spell.stoneskin.words=§2Protect us, great land, from now on §2our skin is as hard as a rock!
+#spell.sun.words=§4I submit to the forces of nature, §4shine, the Sun!
+#spell.thor.words=§aI invoke the power of the god Thor: §aput your hammer on my enemies!
+##
+#spell.throw.words=§aWind Flows
+#spell.thunder.words=§aI submit to the forces of nature, pour §arain and outline the sky with sparkling lightning!
+##
+#spell.truesigh.words=§8True Sigh
+##
+#spell.titanhit.words=§2Titan Hit
+##
+#spell.timestop.words=§7Time Stop
+#spell.uphealth.words=§6Give him the life of gods, to overthrow §6the wicked giants!
+#spell.wallwarp.words=§2I warp the walls, making a passage §2where was none!
+#spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendure the cold water!
+##
+#spell.wellolife.words=§bWell of Life
+##
+#spell.windblades.words=§aWind Blades
 
 ################################################################################################################################
 ########################################################___IRIDESCENCE___#######################################################
@@ -927,3 +928,35 @@ tile.botania:flower.crysanthermum.name=Crysanthermum
 tile.alfheim:crysanthermum.lore=Crank up the thermostat
 
 alfheim.potion.manaVoid=Manatide Storm
+
+#######################################################___Configuration___######################################################
+
+general.alfheim=Alfheim
+general.alfheim.tooltip=Alfheim dimension settings
+
+general.Alfheim.woldgen=Worldgen
+general.Alfheim.woldgen.tooltip=Alfheim worldgen settings
+
+general.Alfheim.woldgen.spawnrate=Spawnrates
+general.Alfheim.woldgen.spawnrate.tooltip=Alfheim mobs spawnrate settings
+
+general.integration=Integration
+general.integration.tooltip=Cross-mods integration
+
+general.integration.thaumcraft=Thaumcraft
+general.integration.thaumcraft.tooltip=Thaumcraft integration
+
+general.potions=Potions
+general.potions.tooltip=Potion IDs
+
+general.elvenstory.mmo.potions=Potions
+general.elvenstory.mmo.potions.tooltip=Potion IDs
+
+general.elvenstory=Elvenstory
+general.elvenstory.tooltip=Elvenstory Mode optional features
+
+general.elvenstory.mmo=MMO
+general.elvenstory.mmo.tooltip=MMO Mode optional features
+
+general.elvenstory.mmo.hud=HUD
+general.elvenstory.mmo.hud.tooltip=HUD elements customizations

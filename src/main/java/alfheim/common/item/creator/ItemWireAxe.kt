@@ -154,7 +154,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (godslaying != null) {
 			for (attr in godslaying) {
 				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.grantWireUnlimitedPower))
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
 			}
 		}
 		
