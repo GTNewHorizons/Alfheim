@@ -4,11 +4,13 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.ASJTile
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
+import alfheim.common.core.util.mfloor
 import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.*
 
 class TileRaceSelector: ASJTile() {
 	
@@ -17,7 +19,7 @@ class TileRaceSelector: ASJTile() {
 		if (player.race != EnumRace.HUMAN) return false
 		
 		val race = EnumRace[rotation+1]
-		EnumRace.selectRace(player, race)
+		selectRace(player, race)
 		
 		if (ASJUtilities.isServer) {
 			ElvenSkinSystem.setGender(player, female)
@@ -34,6 +36,16 @@ class TileRaceSelector: ASJTile() {
 		rotation = 0
 		
 		return true
+	}
+	
+	fun selectRace(player: EntityPlayer, race: EnumRace) {
+		EnumRace[player] = race
+		player.capabilities.allowFlying = true
+		player.sendPlayerAbilities()
+		
+		val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal - 1]
+		player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
+		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 	}
 	
 	var female = false

@@ -30,7 +30,7 @@ object ElvenFlightHelper {
 	
 	operator fun set(player: EntityPlayer, value: Double) {
 		ensureExistence(player)
-		player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue = value
+		player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue = FLIGHT.clampValue(value)
 	}
 	
 	fun add(player: EntityPlayer, value: Int) {

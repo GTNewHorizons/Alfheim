@@ -3,9 +3,12 @@ package alfheim.common.entity.boss
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
+import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.block.AlfheimBlocks
+import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.entity.boss.ai.flugel.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -179,11 +182,28 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			ASJUtilities.printStackTrace()
 			return
 		}
+		
 		super.onDeath(source)
-		if (isHardMode) for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelKill)
 		
 		worldObj.playSoundAtEntity(this, "random.explode", 20f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1.0, 0.0, 0.0)
+		
+		if (isHardMode) {
+			for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelKill)
+			
+			if (worldObj.rand.nextInt(5) != 0) return
+			
+			val x = posX.mfloor()
+			val y = posY.mfloor()
+			val z = posZ.mfloor()
+			
+			while (worldObj.setBlock(x, y, z, AlfheimBlocks.anomaly)) {
+				(worldObj.getTileEntity(x, y, z) as? TileAnomaly ?: break).addSubTile(SubTileEntity.forName("Lightning") ?: break, "Lightning")
+				return
+			}
+			
+			worldObj.setBlockToAir(x, y, z)
+		}
 	}
 	
 	public override fun dropFewItems(byPlayer: Boolean, looting: Int) {

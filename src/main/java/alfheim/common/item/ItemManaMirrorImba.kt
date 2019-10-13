@@ -1,7 +1,11 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.relauncher.*
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -9,6 +13,8 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.World
+import net.minecraftforge.client.event.TextureStitchEvent
+import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.wand.ICoordBoundItem
 import vazkii.botania.common.block.tile.mana.TilePool
@@ -30,6 +36,18 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		setMaxStackSize(1)
 		maxDamage = 1000
 		setNoRepair()
+		
+		if (FMLLaunchHandler.side().isClient)
+			MinecraftForge.EVENT_BUS.register(this)
+	}
+	
+	override fun registerIcons(reg: IIconRegister) = Unit
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun loadTextures(event: TextureStitchEvent.Pre) {
+		if (event.map.textureType == 1)
+			itemIcon = InterpolatedIconHelper.forName(event.map, "manaMirrorImba")
 	}
 	
 	override fun getDamage(stack: ItemStack): Int {
