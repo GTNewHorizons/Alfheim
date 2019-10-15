@@ -56,8 +56,9 @@ object AlfheimLexiconData {
 	lateinit var flugel: LexiconEntry
 	lateinit var greenRod: LexiconEntry
 	lateinit var infuser: LexiconEntry
-	lateinit var manaAcc: LexiconEntry
 	lateinit var lootInt: LexiconEntry
+	lateinit var manaAcc: LexiconEntry
+	lateinit var manaImba: LexiconEntry
 	lateinit var mask: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
@@ -113,8 +114,9 @@ object AlfheimLexiconData {
 		flugel = BLexiconEntry("flugel", categoryAlfheim)
 		greenRod = BLexiconEntry("greenRod", categoryAlfheim)
 		infuser = BLexiconEntry("infuser", categoryAlfheim)
-		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
+		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
+		manaImba = BLexiconEntry("manaImba", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
 		multbaub = BLexiconEntry("multbaub", categoryAlfheim)
 		ores = BLexiconEntry("ores", categoryAlfheim)
@@ -314,7 +316,10 @@ object AlfheimLexiconData {
 		crescent.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeCrescentAmulet))
 		
 		reality.setLexiconPages(PageText("0"), PageText("1"),
-								PageCraftingRecipe("2", AlfheimRecipes.recipeSword)).icon = ItemStack(AlfheimItems.realitySword)
+								PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
+		
+		manaImba.setLexiconPages(PageText("0"), PageText("1"),
+								PageCraftingRecipe("2", AlfheimRecipes.recipeManaMirrorImba))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

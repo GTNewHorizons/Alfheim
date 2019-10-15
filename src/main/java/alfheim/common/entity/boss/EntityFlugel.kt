@@ -54,6 +54,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	val playersWhoAttacked: HashMap<String, Int> = HashMap()
 	
+	val instaKill: Boolean
+		get() = false
+	
 	private var maxHit = 1f
 	private var hurtTimeActual: Int = 0
 	
@@ -119,12 +122,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	}
 	
 	override fun attackEntityFrom(source: DamageSource, damage: Float): Boolean {
-		val e = source.entity
+		val e = source.entity ?: return false
 		if ((source.damageType == "player" || source is DamageSourceSpell) && isTruePlayer(e) && !isEntityInvulnerable) {
 			val player = e as EntityPlayer
 			
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
-			maxHit = if (crit) 60f else 40f
+			maxHit = if (instaKill) Float.MAX_VALUE else if (crit) 60f else 40f
 			var dmg = min(maxHit, damage) * if (isHardMode) 0.6f else 1f
 			
 			if (!playersWhoAttacked.containsKey(player.commandSenderName))
@@ -190,6 +193,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		if (isHardMode) {
 			for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelKill)
+			
+			if (worldObj.isRemote) return
 			
 			if (worldObj.rand.nextInt(5) != 0) return
 			

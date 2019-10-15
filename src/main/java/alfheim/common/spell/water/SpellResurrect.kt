@@ -11,7 +11,7 @@ import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.*
+import net.minecraft.potion.Potion
 
 class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true) {
 	
@@ -19,7 +19,6 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		ASJUtilities.chatLog("${tg.target?.commandSenderName}", caster)
 		
 		if (tg.target == null) return SpellCastResult.NOTARGET
 		

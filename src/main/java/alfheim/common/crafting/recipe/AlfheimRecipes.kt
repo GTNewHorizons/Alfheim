@@ -476,10 +476,8 @@ object AlfheimRecipes {
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(manaMirrorImba),
-						 "mem", "EWE", "IMI",
-						 'm', MAUFTRIUM_NUGGET,
+						 "IMI", "EWE", "IMI",
 						 'M', MAUFTRIUM_INGOT,
-						 'e', ELVORIUM_NUGGET,
 						 'E', ELVORIUM_INGOT,
 						 'I', IFFESAL_DUST,
 						 'W', ItemStack(lens, 1, 18))
