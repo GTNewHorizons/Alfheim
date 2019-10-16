@@ -54,9 +54,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	val playersWhoAttacked: HashMap<String, Int> = HashMap()
 	
-	val instaKill: Boolean
-		get() = false
-	
 	private var maxHit = 1f
 	private var hurtTimeActual: Int = 0
 	
@@ -127,7 +124,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val player = e as EntityPlayer
 			
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
-			maxHit = if (instaKill) Float.MAX_VALUE else if (crit) 60f else 40f
+			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
 			var dmg = min(maxHit, damage) * if (isHardMode) 0.6f else 1f
 			
 			if (!playersWhoAttacked.containsKey(player.commandSenderName))
