@@ -13,7 +13,7 @@ import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 
 @Suppress("LeakingThis")
-open class BlockMod(par2Material: Material): Block(par2Material) {
+open class BlockMod(material: Material): Block(material) {
 	
 	var originalLight: Int = 0
 	
@@ -39,9 +39,9 @@ open class BlockMod(par2Material: Material): Block(par2Material) {
 	open fun isInterpolated() = false
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		if (!isInterpolated())
-			blockIcon = IconHelper.forBlock(par1IconRegister, this)
+			blockIcon = IconHelper.forBlock(reg, this)
 	}
 	
 	@SubscribeEvent
