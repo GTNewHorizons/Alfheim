@@ -9,8 +9,8 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 	
 	companion object {
 		
+		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
-		val corruption = DamageSource("corruption").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor().setDifficultyScaled()!!
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!

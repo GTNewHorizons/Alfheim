@@ -25,8 +25,8 @@ object AlfheimFluffBlocks {
 	val dreamwoodFenceGate: Block
 	val dreamwoodBarkFence: Block
 	val dreamwoodBarkFenceGate: Block
-	val dvarfPlanks: Block
-	val dvarfLantern: Block
+	val dwarfPlanks: Block
+	val dwarfLantern: Block
 	val elvenSandstone: Block
 	val elvenSandstoneStairs: Block
 	val elvenSandstoneSlab: Block
@@ -64,7 +64,7 @@ object AlfheimFluffBlocks {
 		(shrineRockWhiteSlab as BlockModSlab).register()
 		(shrineRockWhiteSlabFull as BlockModSlab).register()
 		
-		dvarfLantern = BlockDvarfLantern()
+		dwarfLantern = BlockDwarfLantern()
 		
 		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "shrines/").setLightLevel(1f).setLightOpacity(0)
 		shrineGlass = BlockShrineGlass()
@@ -86,7 +86,7 @@ object AlfheimFluffBlocks {
 		
 		Blocks.planks
 		
-		dvarfPlanks = BlockPattern(ModInfo.MODID, Material.wood, "DvarfPlanks", AlfheimTab, hardness = 3f, harvTool = "axe", resistance = 100f)
+		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "shrines/")
 		
 		elvenSandstone = BlockElvenSandstone()
 		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0, "ElvenSandstoneStairs").setCreativeTab(AlfheimTab)

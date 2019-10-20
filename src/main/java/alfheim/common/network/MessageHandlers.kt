@@ -6,6 +6,9 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.common.core.handler.*
+import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
+import alfheim.common.core.handler.CardinalSystem.PartySystem
+import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
@@ -98,7 +101,7 @@ class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage> {
 class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage> {
 
 	override fun onMessage(packet: MessageHotSpellS, message: MessageContext): IMessage? {
-		CardinalSystem.HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
+		HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
 		return null
 	}
 }
@@ -118,7 +121,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
 			
 			CAST    -> {
-				val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
+				val ids = if (packet.state) HotSpellsSystem.getHotSpellID(player, packet.data) else packet.data
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
 				if (spell == null)
@@ -138,9 +141,16 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			}
 			
 			SEL     -> {
-				val e = player.worldObj.getEntityByID(packet.ticks)
-				if (e is EntityLivingBase) {
-					CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				if (packet.state) {
+					val mr = PartySystem.getParty(player)[packet.data]
+					if (mr is EntityLivingBase) {
+						TargetingSystem.setTarget(player, mr, packet.state, packet.data)
+					}
+				} else {
+					val e = player.worldObj.getEntityByID(packet.data)
+					if (e is EntityLivingBase) {
+						TargetingSystem.setTarget(player, e, packet.state)
+					}
 				}
 			}
 		}

@@ -263,7 +263,9 @@ class GUIParty(private val mc: Minecraft): Gui() {
 				// ################ hp bg: ################
 				mc.renderEngine.bindTexture(LibResourceLocations.health)
 				y += 40
+				if (PlayerSegmentClient.partyIndex == i) glColor4f(0.75f, 1f, 0.75f, 1f)
 				drawTexturedModalRect(0, y, 0, 80, 136, 40)
+				if (PlayerSegmentClient.partyIndex == i) glColor4f(1f, 1f, 1f, 1f)
 				// ################ ava bg: ################
 				ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(col, 255))
 				drawTexturedModalRect(0, y, 0, 120, 32, 40)

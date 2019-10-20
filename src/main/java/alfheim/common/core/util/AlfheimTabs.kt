@@ -82,6 +82,8 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
+import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
@@ -307,6 +309,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(powerStone)
 		list.removeAt(list.size-5)
 		
+		addBlock(dwarfLantern)
+		
 		addBlock(shrinePillar)
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
@@ -341,6 +345,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dreamwoodFence)
 		addBlock(dreamwoodBarkFenceGate)
 		addBlock(dreamwoodFenceGate)
+		
+		addBlock(dwarfPlanks)
 		
 		addBlock(irisDirt)
 		addBlock(irisWood0)

@@ -36,6 +36,8 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
+import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
@@ -584,7 +586,9 @@ object AlfheimRecipes {
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
 		
-		// ################ DECO BLOCKS ################
+		// #############################################################################################################
+		// ################################################ DECO BLOCKS ################################################
+		// #############################################################################################################
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 1, 0), "SS", "SS", 'S', elvenSand)
 		
@@ -623,6 +627,14 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(dreamwoodBarkFence, 6), "LLL", "LLL", 'L', DREAMWOOD_TWIG)
 		
 		addOreDictRecipe(ItemStack(dreamwoodBarkFenceGate, 1), "LPL", "LPL", 'L', DREAMWOOD_TWIG, 'P', ItemStack(dreamwood, 1, 0))
+		
+		addOreDictRecipe(ItemStack(dwarfPlanks, 4), " P ", "PMP", " P ", 'P', ItemStack(planks, 1, 5), 'M', MANA_POWDER)
+		
+		addOreDictRecipe(ItemStack(dwarfLantern, 8),
+						 "LCL", "CSC", "LCL",
+						 'L', ItemStack(livingrock, 1, 1),
+						 'C', ItemStack(livingrock, 1, 4),
+						 'S', ItemStack(shrineLight, 1, 1))
 		
 		val out = arrayOf(5, 9, 10, 11, 13)
 		for (i in 0..15) {

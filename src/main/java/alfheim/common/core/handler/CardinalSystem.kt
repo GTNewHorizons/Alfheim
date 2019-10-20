@@ -354,19 +354,26 @@ object CardinalSystem {
 	
 	object TargetingSystem {
 		
-		fun setTarget(player: EntityPlayer, target: EntityLivingBase?, isParty: Boolean) {
+		/**
+		 * @param partyIndex 0 - self; -1 - enemy; -2 - ignore changes
+		 */
+		fun setTarget(player: EntityPlayer, target: EntityLivingBase?, isParty: Boolean, partyIndex: Int = -1) {
 			val c = forPlayer(player)
 			c.target = target
-			c.isParty = isParty
+			
+			if (partyIndex != -2) {
+				c.isParty = isParty
+				c.partyIndex = partyIndex
+			}
 		}
 		
 		fun getTarget(player: EntityPlayer): Target {
 			val c = forPlayer(player)
 			// stupid kotlin -_-
-			return Target(c.target, c.isParty)
+			return Target(c.target, c.isParty, c.partyIndex)
 		}
 		
-		data class Target(val target: EntityLivingBase?, val isParty: Boolean)
+		data class Target(val target: EntityLivingBase?, val isParty: Boolean, val partyIndex: Int)
 	}
 	
 	object PartySystem {
@@ -972,9 +979,11 @@ object CardinalSystem {
 		
 		var party: Party = Party(player)
 		@Transient
+		var target: EntityLivingBase? = null
+		@Transient
 		var isParty = false
 		@Transient
-		var target: EntityLivingBase? = null
+		var partyIndex = -1
 		
 		var coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)

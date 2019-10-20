@@ -270,7 +270,7 @@ object EventHandler {
 					val tg = CardinalSystem.TargetingSystem.getTarget(player).target ?: continue
 					
 					if (tg.isDead || Vector3.entityDistance(player, tg) > if (tg is IBossDisplayData) 128.0 else 32.0) {
-						CardinalSystem.TargetingSystem.setTarget(player, null, false)
+						CardinalSystem.TargetingSystem.setTarget(player, null, false, -2)
 					}
 				}
 			}

@@ -85,22 +85,19 @@ object ASJUtilities {
 	
 	/**
 	 * Sends entity to dimension without portal frames
-	 * @param entity The entity to send
+	 * @param player The player to send
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 */
 	@JvmStatic
-	fun sendToDimensionWithoutPortal(entity: Entity, dimTo: Int, x: Double, y: Double, z: Double) {
-		entity.ridingEntity?.riddenByEntity = null
-		entity.ridingEntity = null
+	fun sendToDimensionWithoutPortal(player: EntityPlayer, dimTo: Int, x: Double, y: Double, z: Double) {
+		player.ridingEntity?.riddenByEntity = null
+		player.ridingEntity = null
 		
-		if (dimTo == entity.dimension) {
-			if (entity is EntityLivingBase)
-				entity.setPositionAndUpdate(x, y, z)
-			else
-				entity.setPosition(x, y, z)
-		} else if (entity is EntityPlayerMP) {
-			val worldTo = entity.mcServer.worldServerForDimension(dimTo)
-			entity.mcServer.configurationManager.transferPlayerToDimension(entity, dimTo, FreeTeleporter(worldTo, x, y, z))
+		if (dimTo == player.dimension) {
+			player.setPositionAndUpdate(x, y, z)
+		} else if (player is EntityPlayerMP) {
+			val worldTo = player.mcServer.worldServerForDimension(dimTo)
+			player.mcServer.configurationManager.transferPlayerToDimension(player, dimTo, FreeTeleporter(worldTo, x, y, z))
 		}
 	}
 	

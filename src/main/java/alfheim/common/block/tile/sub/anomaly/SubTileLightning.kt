@@ -110,7 +110,7 @@ class SubTileLightning: SubTileEntity() {
 		if (target !is EntityLivingBase) return
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
 		
-		target.attackEntityFrom(DamageSourceSpell.corruption, min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).toFloat() * 4f)
+		target.attackEntityFrom(DamageSourceSpell.anomaly, min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).toFloat() * 4f)
 		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
 		ve.set(target.posX, target.posY, target.posZ).normalize()
