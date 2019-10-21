@@ -318,8 +318,8 @@ object AlfheimLexiconData {
 		reality.setLexiconPages(PageText("0"), PageText("1"),
 								PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
 		
-		manaImba.setLexiconPages(PageText("0"), PageText("1"),
-								PageCraftingRecipe("2", AlfheimRecipes.recipeManaMirrorImba))
+		manaImba.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+								PageCraftingRecipe("3", AlfheimRecipes.recipeManaMirrorImba))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

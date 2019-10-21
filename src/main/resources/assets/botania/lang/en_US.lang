@@ -202,6 +202,13 @@ botania.page.reality0=Elemental elven armor is certainly a good idea... But for 
 botania.page.reality1=But we must take into account that when you set the sword to one of these elements, mana is wasted, so take care of it! But it's not important, because you have a lot of it, considering that you created so much Mauftrium for this sword, right?
 botania.page.reality2=Creating &6Sword of Reality&0
 
+botania.entry.manaImba=Hyperpositioning Mana Transmitter
+botania.tagline.manaImba=Mana mirror on ultras
+botania.page.manaImba0=As you know, &4Mana&0 allows a lot of things, including bending the space at the request of a magician, and portals are good example. But what about the practical part? For example, if someone need to automate the direct transfer of mana from one storage to another at such distances that no spreader could reach it?
+botania.page.manaImba1=And there is no reason to talk about interdimensional mana transfer - every human sorcerer will look at you as insane for mentioning this one thought. But not the elves, for their ancestral home stores valuable &1Iffesal dust&0 under the ground. This blue treasure is the key to solving the eternal problem of mana mechanics. Able to bend space like nothing else, this dust will take you out of every branch of Yggdrasil, even outside it.
+botania.page.manaImba2=To select any &1Mana pool&0 as transfer target simply sneak-rightclick it with &1Transmitter&0. Then set the pool to mana accepting mode. Now place transmitter on &1Mana accelerator&0 above any filled mana pool - it will be the source pool. Now if it set to mana sending mode and both pools are loaded - mana transfer will occur at no cost. Changing modes on both pools to their opposites will revert the flow.
+botania.page.manaImba3=Creating &1Transmitter&0
+
 botania.entry.flugel=Flügel
 botania.tagline.flugel=Weapon of Gods
 botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
