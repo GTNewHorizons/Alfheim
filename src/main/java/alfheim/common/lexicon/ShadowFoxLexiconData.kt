@@ -210,9 +210,8 @@ object ShadowFoxLexiconData {
 								  PageCraftingRecipe("1", ShadowFoxRecipes.recipesAmplifier))
 		
 		crysanthermum = ShadowfoxLexiconEntry("crysanthermum", BotaniaAPI.categoryGenerationFlowers, BotaniaAPI.internalHandler.getSubTileAsStack("crysanthermum"))
-		crysanthermum.setLexiconPages(PageText("0"),
-									  PageText("1"),
-									  PagePetalRecipe("2", ShadowFoxRecipes.recipeCrysanthermum))
+		crysanthermum.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+									  PagePetalRecipe("3", ShadowFoxRecipes.recipeCrysanthermum))
 		
 		specialAxe = ShadowFoxRelicEntry("andmyaxe", BotaniaAPI.categoryAlfhomancy, AlfheimItems.wireAxe).setKnowledgeType(BotaniaAPI.relicKnowledge)
 		specialAxe.setLexiconPages(PageText("0"),
