@@ -538,7 +538,7 @@ alfheim.page.sealCreepers0=The &4Manatide&0 flows throughout the world, but as w
 alfheim.page.sealCreepers1Drop=However, they do have one interesting property. They crystallize their mana inside, occasionally resulting in a &1Black Lotus&0 found on their corpse. Their storming energy, combined with this crystallized mana, can react with fully-formed &1Loti&0. When a &4Manatide Storm&0 comes into contact with a &1Black Lotus&0, it will break their harmony and result in a &1Wilted Lotus&0, a powerful magical resource.
 alfheim.page.sealCreepers1NoDrop=However, they do have one interesting property. Their storming energy can react with fully-formed &1Black Loti&0. When a &4Manatide Storm&0 comes into contact with one of these flowers, it will break their harmony and result in a &1Wilted Lotus&0, a powerful magical resource.
 
-alfheim.page.kindling0=&1Blaze Kindling&0 is like &1Netherrack&0 on steroids. Not only will it sustain flames, but it will take them in from nearby blocks, very quickly, It can also be extinguished and lit simply by using it with an open hand.
+alfheim.page.kindling0=&1Blaze Kindling&0 is like &1Netherrack&0 on steroids. Not only will it sustain flames, but it can also be extinguished and lit simply by using it with an open hand. It also can be operated with redstone, but this is pretty tricky.
 alfheim.page.kindling1=Stop drop and roll
 
 alfheim.page.livingwoodFunnel0=For some people, the &1Hopper&0 is too lax. It allows items through when it shouldn't, and sometimes moves them too fast. The &1Livingwood Funnel&0 is far, far stricter. It only allows one item through at a time, and can be filtered by placing an &1Item Frame&0 on one of its sides.

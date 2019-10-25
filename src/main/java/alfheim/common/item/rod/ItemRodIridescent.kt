@@ -70,9 +70,9 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 		if (player.isSneaking) {
 			var damage = stack.itemDamage
 			if (!world.isRemote) {
-				if (stack.itemDamage >= 16) stack.itemDamage = 0 else stack.itemDamage++
+				if (stack.itemDamage >= 17) stack.itemDamage = 0 else stack.itemDamage++
 				damage = stack.itemDamage
-			} else if (damage >= 16) damage = 0 else damage++
+			} else if (damage >= 17) damage = 0 else damage++
 			world.playSoundAtEntity(player, "botania:ding", 0.1F, 1F)
 			blockstack = dirtStack(damage)
 			blockstack!!.setStackDisplayName(StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.$damage"))

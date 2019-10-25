@@ -5,6 +5,7 @@ import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -169,9 +170,17 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 	override fun isNoExport(stack: ItemStack) = false
 	
 	override fun getBinding(stack: ItemStack): ChunkCoordinates? {
-		val pool = getManaPool(stack)
+		val world = Minecraft.getMinecraft().theWorld ?: return null
 		
-		return if (pool == null || pool === DummyPool) null else getPoolCoords(stack)
+		if (world.provider.dimensionId != ItemNBTHelper.getInt(stack, "dim", Int.MAX_VALUE)) return null
+		
+		val coords = getPoolCoords(stack)
+		if (coords.posY == -1)
+			return null
+		
+		val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
+		
+		return if (tile is IManaPool) coords else null
 	}
 	
 	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()

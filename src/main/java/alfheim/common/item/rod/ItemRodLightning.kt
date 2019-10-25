@@ -65,8 +65,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-	}
+	override fun registerIcons(reg: IIconRegister) = Unit
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)

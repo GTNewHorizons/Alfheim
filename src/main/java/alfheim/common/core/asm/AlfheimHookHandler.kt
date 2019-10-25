@@ -42,7 +42,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.HUDHandler
@@ -55,9 +55,10 @@ import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.EntityDoppleganger
-import vazkii.botania.common.item.ItemGaiaHead
+import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
@@ -83,7 +84,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
-	fun `EntityCreeper$init`(e: EntityCreeper, world: World) {
+	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
 		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
 	}
 	
@@ -491,6 +492,23 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getBinding(mirror: ItemManaMirror, stack: ItemStack): ChunkCoordinates? {
+		val world = Minecraft.getMinecraft().theWorld ?: return null
+		
+		if (world.provider.dimensionId != ItemNBTHelper.getInt(stack, "dim", Int.MAX_VALUE)) return null
+		
+		val coords = mirror.getPoolCoords(stack)
+		if (coords.posY == -1)
+			return null
+		
+		val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
+		
+		return if (tile is IManaPool) coords else null
+	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
