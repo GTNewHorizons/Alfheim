@@ -13,24 +13,27 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 object CardinalSystemClient {
 	
 	val mc get() = Minecraft.getMinecraft()!!
 	
+	val playerSkinsData = HashMap<String, Pair<Boolean, Boolean>>()
+	
 	object SpellCastingSystemClient {
 		
 		fun setCoolDown(spell: SpellBase?, cd: Int) {
 			if (spell == null) return
-			PlayerSegmentClient.coolDown[spell] = cd
+			PlayerSegmentClient.coolDown[spell.name] = cd
 		}
 		
-		fun getCoolDown(spell: SpellBase?): Int {
+		fun getCoolDown(spell: SpellBase): Int {
 			return try {
-				if (spell == null) 0 else PlayerSegmentClient.coolDown[spell]!!
+				PlayerSegmentClient.coolDown[spell.name] ?: 0
 			} catch (e: Throwable) {
-				System.err.println(String.format("Something went wrong getting cooldown for %s. Returning 0.", spell))
+				ASJUtilities.error("Something went wrong getting cooldown for $spell. Returning 0.")
 				e.printStackTrace()
 				0
 			}
@@ -47,7 +50,6 @@ object CardinalSystemClient {
 				System.err.println("Something went wrong ticking spells. Skipping this tick.")
 				e.printStackTrace()
 			}
-			
 		}
 	}
 	
@@ -129,21 +131,20 @@ object CardinalSystemClient {
 	
 	object PlayerSegmentClient: Serializable {
 		
-		val coolDown = HashMap<SpellBase, Int>()
+		val coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
 		// current and max spell init time (for blue bar)
 		var init: Int = 0
 		var initM: Int = 0
 		
-		private val fallbackParty = Party()
-		
 		var party: Party? = null
-		
 		var target: EntityLivingBase? = null
 		var isParty: Boolean = false
 		var partyIndex: Int = 0
 		
 		var knowledge: MutableSet<String> = HashSet()
+		
+		var esmAbility = true
 		
 		private const val serialVersionUID = 6871678638741684L
 	}

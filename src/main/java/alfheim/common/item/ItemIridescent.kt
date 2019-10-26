@@ -10,6 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.util.*
 import vazkii.botania.common.Botania
@@ -34,16 +35,24 @@ open class ItemIridescent(name: String) : Item() {
             return Color(color[0], color[1], color[2]).rgb
         }
 
-        fun dirtFromMeta(meta: Int): Block? {
-            if (meta == TYPES)
-                return AlfheimBlocks.rainbowDirt
-            return AlfheimBlocks.irisDirt
+        fun dirtFromMeta(meta: Int): Block {
+            return when (meta) {
+                in 0..15 -> AlfheimBlocks.irisDirt
+                16 -> AlfheimBlocks.rainbowDirt
+                17 -> AlfheimBlocks.auroraDirt
+                else -> Blocks.air
+            }
         }
 
         fun dirtStack(meta: Int): ItemStack? {
-            if (meta == TYPES)
-                return ItemStack(AlfheimBlocks.rainbowDirt)
-            return ItemStack(AlfheimBlocks.irisDirt, 1, meta)
+            val block = when (meta) {
+                in 0..15 -> AlfheimBlocks.irisDirt
+                16 -> AlfheimBlocks.rainbowDirt
+                17 -> AlfheimBlocks.auroraDirt
+                else -> Blocks.air
+            }
+            
+            return ItemStack(block, 1, if (meta > 15) 0 else meta)
         }
 
         fun isRainbow(meta: Int) = meta == TYPES

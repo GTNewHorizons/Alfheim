@@ -1,16 +1,14 @@
 package alfheim.api.entity
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.api.event.PlayerChangedRaceEvent
-import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.mfloor
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
 
 enum class EnumRace {
+	
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
 	
 	val rgbColor: Int
@@ -78,7 +76,7 @@ enum class EnumRace {
 		}
 		
 		private fun getByID(id: Double) =
-			if (0 > id || id > values().size) HUMAN else values()[id.mfloor()]
+			if (0 > id || id > values().size) HUMAN else values()[MathHelper.floor_double(id)]
 		
 		fun ensureExistance(player: EntityPlayer) {
 			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
@@ -94,16 +92,6 @@ enum class EnumRace {
 		fun getRaceID(player: EntityPlayer): Int {
 			ensureExistance(player)
 			return MathHelper.floor_double(player.getEntityAttribute(RACE).attributeValue)
-		}
-		
-		fun selectRace(player: EntityPlayer, race: EnumRace) {
-			set(player, race)
-			player.capabilities.allowFlying = true
-			player.sendPlayerAbilities()
-			
-			val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal]
-			player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
-			ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 		}
 		
 		operator fun set(player: EntityPlayer, race: EnumRace) {

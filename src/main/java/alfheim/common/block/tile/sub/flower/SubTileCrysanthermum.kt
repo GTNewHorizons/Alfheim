@@ -51,6 +51,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	var temp = 0
 		set(temp) {
 			field = max(min(temp, 8), -8)
+			supertile.markDirty()
 		}
 	
 	var deminishing = 0
@@ -113,7 +114,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		temp = biomeTemp
 	}
 	
-	override fun getComparatorInputOverride(side: Int): Int = map(temp, -8, 8, 0, 15)
+	override fun getComparatorInputOverride(side: Int): Int = if (temp == -8 || temp == 8) 0 else temp + 8
 	override fun getRadius(): RadiusDescriptor = RadiusDescriptor.Square(toChunkCoordinates(), RANGE)
 	override fun getMaxMana() = 800
 	override fun getValueForPassiveGeneration() = max(0, abs(biomeTemp - temp) / if (deminishing > 0) 2 else 1)

@@ -2,6 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
@@ -57,6 +58,8 @@ object RenderContributors {
 		if (player.isInvisible || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return
 		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
 		
+		glColor4f(1f, 1f, 1f, 1f)
+		
 		if (player.commandSenderName == "AlexSocol") {
 			run {
 				// jojo's mask
@@ -80,10 +83,8 @@ object RenderContributors {
 			
 			run {
 				// devil wings
-				if (AlfheimConfigHandler.minimalGraphics) {
-					glDisable(GL_CULL_FACE)
-					(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
-				}
+				glDisable(GL_CULL_FACE)
+				(ModItems.flightTiara as ItemFlightTiara).onPlayerBaubleRender(ItemStack(ModItems.flightTiara, 1, 6), e, IBaubleRender.RenderType.BODY)
 			}
 			
 			run {
@@ -194,5 +195,32 @@ object RenderContributors {
 			glDisable(GL_BLEND)
 			glPopMatrix()
 		}
+		
+		if (player.commandSenderName == "Hyper_Miko") {
+			glPushMatrix()
+			glRotatef(180f, 1f, 0f, 0f)
+			glTranslatef(0f, -1.5f, 0f)
+			if (player.isSneaking) glTranslatef(0f, 0f, -0.25f)
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko1)
+			ModelEntityFlugel.model1.renderAll()
+			glPopMatrix()
+			
+			glPushMatrix()
+			
+			val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+			val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+			val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+			
+			glRotatef(yawOffset, 0f, -1f, 0f)
+			glRotatef(yaw - 270, 0f, 1f, 0f)
+			glRotatef(pitch, 0f, 0f, 1f)
+			
+			glRotated(-90.0, 0.0, 1.0, 0.0)
+			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko2)
+			ModelEntityFlugel.model2.renderAll()
+			glPopMatrix()
+		}
+		
+		glColor4f(1f, 1f, 1f, 1f)
 	}
 }

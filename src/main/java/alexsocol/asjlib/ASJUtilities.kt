@@ -1,5 +1,6 @@
 package alexsocol.asjlib
 
+import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.*
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.*
 import net.minecraft.nbt.*
 import net.minecraft.potion.Potion
 import net.minecraft.server.MinecraftServer
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.BiomeGenBase
@@ -100,6 +102,30 @@ object ASJUtilities {
 			val worldTo = entity.mcServer.worldServerForDimension(dimTo)
 			entity.mcServer.configurationManager.transferPlayerToDimension(entity, dimTo, FreeTeleporter(worldTo, x, y, z))
 		}
+	}
+	
+	/**
+	 * Sends data about [tile] to client
+	 * @author Vazkii
+	 */
+	fun dispatchTEToNearbyPlayers(tile: TileEntity) {
+		val world = tile.worldObj
+		val players = world.playerEntities
+		for (player in players)
+			if (player is EntityPlayerMP) {
+				if (Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
+					player.playerNetServerHandler.sendPacket(tile.descriptionPacket)
+			}
+	}
+	
+	/**
+	 * Sends data about tile at [x] [y] [z] to client
+	 * @author Vazkii
+	 */
+	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
+		val tile = world.getTileEntity(x, y, z)
+		if (tile != null)
+			dispatchTEToNearbyPlayers(tile)
 	}
 	
 	@JvmStatic
@@ -514,8 +540,8 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun getLookVec(e: Entity): Vec3 {
-		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.toFloat())
+		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.toFloat())
 		val f3 = -MathHelper.cos(-e.rotationPitch * 0.017453292f)
 		val f4 = MathHelper.sin(-e.rotationPitch * 0.017453292f)
 		return Vec3.createVectorHelper((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
@@ -676,7 +702,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun registerDimension(id: Int, w: Class<out WorldProvider>, keepLoaded: Boolean) {
-		if (!DimensionManager.registerProviderType(id, w, keepLoaded)) throw IllegalArgumentException(String.format("Failed to register provider for id %d, One is already registered", id))
+		require(DimensionManager.registerProviderType(id, w, keepLoaded)) { String.format("Failed to register provider for id %d, One is already registered", id) }
 		DimensionManager.registerDimension(id, id)
 	}
 	
@@ -749,16 +775,22 @@ object ASJUtilities {
 	private val format = DecimalFormat("000")
 	private fun time(world: World?) = "[${format.format(world?.let { it.totalWorldTime % 1000 } ?: 0)}]"
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	fun chatLog(message: String) {
-		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(Minecraft.getMinecraft()?.theWorld)} $message"))
+		val msg = "${time(Minecraft.getMinecraft()?.theWorld)} $message"
+		if (!isServer)
+			sayToAllOnline(msg)
+		else
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	fun chatLog(message: String, world: World?) {
-		Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText("${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"))
+		val msg = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"
+		if (isServer)
+			sayToAllOnline(msg)
+		else
+			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))
 	}
 	
 	@JvmStatic
@@ -804,14 +836,15 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun sayToAllOnline(message: String) {
+		if (!isServer) return
+		
 		val list = MinecraftServer.getServer().configurationManager.playerEntityList
 		for (online in list) say(online as EntityPlayer, message)
 		log(message)
 	}
 	
-	/** Untested!  */
-	@Deprecated("")
 	@JvmStatic
+	@Deprecated("Untested")
 	fun sayToAllOPs(message: String) {
 		MinecraftServer.getServer().configurationManager.func_152606_n()
 			.mapNotNull { MinecraftServer.getServer().configurationManager.func_152612_a(it) }

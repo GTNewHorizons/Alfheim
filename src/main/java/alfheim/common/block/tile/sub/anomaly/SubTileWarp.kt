@@ -3,14 +3,12 @@ package alfheim.common.block.tile.sub.anomaly
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.MathHelper
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.Botania
-
 import java.util.*
 import kotlin.math.*
 
@@ -75,7 +73,7 @@ class SubTileWarp: SubTileEntity() {
 		
 		if (ASJUtilities.isServer && ticks % 600 == 0) {
 			radius = worldObj.rand.nextInt(8) + 16
-			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(superTile!!)
+			ASJUtilities.dispatchTEToNearbyPlayers(superTile!!)
 		}
 		
 		rand.setSeed((x() xor y() xor z()).toLong())
@@ -147,7 +145,8 @@ class SubTileWarp: SubTileEntity() {
 		
 		if (!inWG()) {
 			if (target is LivingPair) {
-				if (target.e1 is EntityPlayer && target.e1.capabilities.isCreativeMode || target.e2 is EntityPlayer && target.e2.capabilities.isCreativeMode) return
+				if (ItemSpatiotemporalRing.hasProtection(target.e1) || ItemSpatiotemporalRing.hasProtection(target.e2)) return
+				
 				val x = target.e1.posX
 				val y = target.e1.posY
 				val z = target.e1.posZ
@@ -156,7 +155,8 @@ class SubTileWarp: SubTileEntity() {
 				target.e2.setPositionAndUpdate(x, y, z)
 				return
 			} else if (target is LivingCoords) {
-				if (target.e is EntityPlayer && target.e.capabilities.isCreativeMode) return
+				if (ItemSpatiotemporalRing.hasProtection(target.e)) return
+				
 				target.e.setPositionAndUpdate(target.x, target.y, target.z)
 				return
 			}

@@ -1,7 +1,7 @@
 package alfheim.common.item.creator
 
 import alfheim.api.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
@@ -118,7 +118,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
-			if (!world.isRemote) SpellEffectHandler.sendPacket(Spells.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.toDouble(), 0.0, 0.0)
+			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.toDouble(), 0.0, 0.0)
 			player.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 2 * count, 0, true))
 		}
 	}
@@ -154,7 +154,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 		if (godslaying != null) {
 			for (attr in godslaying) {
 				if (attr is AttributeModifier)
-					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.grantWireUnlimitedPower))
+					attackEntity(player, entity, attr.amount, DamageSourceGodslayer(player, AlfheimConfigHandler.wireoverpowered))
 			}
 		}
 		

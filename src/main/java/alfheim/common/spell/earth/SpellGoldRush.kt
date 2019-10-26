@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
@@ -27,7 +27,7 @@ class SpellGoldRush: SpellBase("goldrush", EnumRace.GNOME, 7000, 3000, 30) {
 			if (Vector3.entityDistance(living, caster) < 32) {
 				living.addPotionEffect(PotionEffect(AlfheimRegistry.goldRush.id, 1200, 0, true))
 				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, AlfheimRegistry.goldRush.id, 1200, 0))
-				SpellEffectHandler.sendPacket(Spells.UPHEAL, living)
+				VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, living)
 			}
 		}
 		

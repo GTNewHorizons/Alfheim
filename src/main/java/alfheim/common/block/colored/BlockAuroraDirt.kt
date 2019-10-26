@@ -1,10 +1,11 @@
 package alfheim.common.block.colored
 
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.block.Block
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
@@ -14,9 +15,10 @@ import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
+import java.util.*
 import kotlin.math.roundToInt
 
-class BlockAuroraDirt : BlockMod(Material.ground), ILexiconable {
+class BlockAuroraDirt : BlockMod(Material.ground), IGrowable, ILexiconable {
 	
 	companion object {
 		private data class Vec3i(var x: Int, var y: Int, var z: Int)
@@ -132,4 +134,43 @@ class BlockAuroraDirt : BlockMod(Material.ground), ILexiconable {
 	override fun getHarvestTool(metadata: Int) = "shovel"
 	
 	override fun canSustainPlant(world: IBlockAccess?, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable?) = true
+	
+	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, remote: Boolean) = true
+	
+	override fun func_149852_a(world: World, random: Random, x: Int, y: Int, z: Int) = true
+	
+	override fun func_149853_b(world: World, random: Random, x: Int, y: Int, z: Int) {
+		var l = 0
+		
+		while (l < 128) {
+			var i1 = x
+			var j1 = y + 1
+			var k1 = z
+			var l1 = 0
+			
+			while (true) {
+				if (l1 < l / 16) {
+					i1 += random.nextInt(3) - 1
+					j1 += (random.nextInt(3) - 1) * random.nextInt(3) / 2
+					k1 += random.nextInt(3) - 1
+					
+					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.irisDirt || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.rainbowDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
+						++l1
+						continue
+					}
+				} else if (world.getBlock(i1, j1, k1).isAir(world, i1, j1, k1)) {
+					if (random.nextInt(8) != 0) {
+						if (AlfheimBlocks.rainbowGrass.canBlockStay(world, i1, j1, k1)) {
+							world.setBlock(i1, j1, k1, AlfheimBlocks.rainbowGrass, 1, 3)
+						}
+					} else {
+						world.getBiomeGenForCoords(i1, k1).plantFlower(world, random, i1, j1, k1)
+					}
+				}
+				
+				++l
+				break
+			}
+		}
+	}
 }

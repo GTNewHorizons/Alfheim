@@ -59,20 +59,19 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 		oldLeftDown = mc.gameSettings.keyBindLeft.isKeyPressed
 		oldRightDown = mc.gameSettings.keyBindRight.isKeyPressed
 	}
+
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
 		if (cd > 0) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, cd - 1)
 	}
 	
-	override fun getBaubleType(arg0: ItemStack): BaubleType {
-		return BaubleType.RING
-	}
+	override fun getBaubleType(arg0: ItemStack) = BaubleType.RING
 	
 	companion object {
 		
-		val TAG_DODGE_COOLDOWN = "dodgeCooldown"
-		val MAX_CD = 20
+		const val TAG_DODGE_COOLDOWN = "dodgeCooldown"
+		const val MAX_CD = 20
 		
 		private var oldLeftDown: Boolean = false
 		private var oldRightDown: Boolean = false
@@ -104,7 +103,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			
 			if (!player.capabilities.isFlying) {
 				val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
-				val width = Math.min(((cd - pticks) * 2).toInt(), 40)
+				val width = ((cd - pticks) * 2).toInt().coerceAtMost(40)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				if (width > 0) {
 					Gui.drawRect(xo, y - 2, xo + 40, y - 1, -0x78000000)

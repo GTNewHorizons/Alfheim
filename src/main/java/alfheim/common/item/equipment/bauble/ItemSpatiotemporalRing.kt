@@ -2,10 +2,13 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
+import baubles.common.lib.PlayerHandler
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
+import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
@@ -33,5 +36,19 @@ class ItemSpatiotemporalRing: ItemBauble("spatiotemporalRing") {
 	
 	companion object {
 		const val TAG_ALWAYS_ON = "alwaysOn"
+		
+		fun hasProtection(player: EntityLivingBase): Boolean {
+			if (player !is EntityPlayer) return false
+			// if (player.capabilities.isCreativeMode) return false
+			
+			for (i in 1..2) {
+				val stack = PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(i) ?: continue
+				val item = stack.item as? ItemSpatiotemporalRing ?: continue
+				
+				return item.isActive(stack, player) && ManaItemHandler.requestManaExact(stack, player, 10, true)
+			}
+			
+			return false
+		}
 	}
 }

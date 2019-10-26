@@ -1,5 +1,6 @@
 package alfheim.api.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.api.lib.LibResourceLocations
@@ -170,6 +171,7 @@ abstract class SubTileEntity {
 			return try {
 				AlfheimAPI.getAnomaly(name).newInstance()
 			} catch (e: Exception) {
+				ASJUtilities.error("Error while getting '$name' anomaly subtile: ${e.message}")
 				e.printStackTrace()
 				null
 			}

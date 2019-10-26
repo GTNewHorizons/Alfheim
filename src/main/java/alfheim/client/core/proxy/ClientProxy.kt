@@ -16,7 +16,7 @@ import alfheim.client.render.item.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
-import alfheim.common.core.handler.EventHandler
+import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
@@ -37,7 +37,7 @@ import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
 import org.lwjgl.input.Keyboard
-import vazkii.botania.client.render.item.*
+import vazkii.botania.client.render.item.RenderLens
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 
@@ -93,10 +93,8 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar())
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade())
 		
-		// Iridescence:
-		
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.invisibleFlameLens, RenderLens())
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderBow())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderMoonBow())
 		
 		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
 		RenderingRegistry.registerBlockHandler(MultipassRenderer())
@@ -137,16 +135,18 @@ class ClientProxy: CommonProxy() {
 	companion object {
 		
 		val keyLolicorn = KeyBinding("key.lolicorn.desc", Keyboard.KEY_L, "key.categories.misc")
+		val keyESMAbility = KeyBinding("key.esmability.desc", Keyboard.KEY_M, "key.categories.gameplay")
+		val keyFlight = KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement")
 		val keyCast = KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.gameplay")
 		val keyUnCast = KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.gameplay")
-		val keyFlight = KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement")
 		val keySelMob = KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.gameplay")
 		val keySelTeam = KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay")
 		
 		init {
+			removeKeyBinding(keyFlight)
+			removeKeyBinding(keyESMAbility)
 			removeKeyBinding(keyCast)
 			removeKeyBinding(keyUnCast)
-			removeKeyBinding(keyFlight)
 			removeKeyBinding(keySelMob)
 			removeKeyBinding(keySelTeam)
 		}
@@ -170,7 +170,7 @@ class ClientProxy: CommonProxy() {
 			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			enableESMGUIs()
 			addESMKeyBinds()
-			EventHandler.checkAddAttrs()
+			ESMHandler.checkAddAttrs()
 		}
 		
 		fun disableESM() {
@@ -264,12 +264,14 @@ class ClientProxy: CommonProxy() {
 		
 		private fun addESMKeyBinds() {
 			addKeyBinding(keyFlight)
+			addKeyBinding(keyESMAbility)
 			
 			KeyBinding.resetKeyBindingArrayAndHash()
 		}
 		
 		private fun removeESMKeyBinds() {
 			unregisterKeyBinding(keyFlight)
+			unregisterKeyBinding(keyESMAbility)
 			
 			KeyBinding.resetKeyBindingArrayAndHash()
 		}

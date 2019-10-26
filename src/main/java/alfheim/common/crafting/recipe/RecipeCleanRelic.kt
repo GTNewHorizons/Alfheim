@@ -48,10 +48,9 @@ class RecipeCleanRelic: IRecipe {
 		if (item == null) return null
 		
 		val copy = item.copy()
-		if (ItemNBTHelper.getString(cloth, "uuid", "").isNotEmpty())
-			ItemNBTHelper.setString(copy, "soulbind", ItemNBTHelper.getString(cloth, "uuid", ""))
-		else
-			ItemNBTHelper.setString(copy, "soulbind", "")
+		val nick = ItemNBTHelper.getString(cloth, "nick", "")
+		
+		ItemNBTHelper.setString(copy, "soulbind", if (nick.isNotEmpty()) nick else "")
 		
 		return copy
 	}

@@ -30,17 +30,23 @@ object ElvenFlightHelper {
 	
 	operator fun set(player: EntityPlayer, value: Double) {
 		ensureExistence(player)
-		player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue = value
+		player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue = FLIGHT.clampValue(value)
 	}
 	
 	fun add(player: EntityPlayer, value: Int) {
-		player.flight = max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
+		player.flight =
+			if (!player.capabilities.isCreativeMode)
+				max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
+			else
+				max
 	}
 	
 	fun sub(player: EntityPlayer, value: Int) {
 		add(player, -value)
 	}
 }
+
+
 
 var EntityPlayer.flight
 	set(value) {

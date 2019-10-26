@@ -53,7 +53,7 @@ class BlockColoredDirt: BlockMod(Material.ground), IGrowable, ILexiconable {
 					j1 += (random.nextInt(3) - 1) * random.nextInt(3) / 2
 					k1 += random.nextInt(3) - 1
 					
-					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.rainbowDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
+					if ((world.getBlock(i1, j1 - 1, k1) == this || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.rainbowDirt || world.getBlock(i1, j1 - 1, k1) == AlfheimBlocks.auroraDirt) && !world.getBlock(i1, j1, k1).isNormalCube) {
 						++l1
 						continue
 					}

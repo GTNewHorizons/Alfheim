@@ -9,8 +9,8 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.client.render.world.SpellEffectHandlerClient
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
@@ -24,8 +24,8 @@ import net.minecraft.client.Minecraft
 
 object PacketHandlerClient {
 	
-	fun handle(packet: MessageParticles) {
-		SpellEffectHandlerClient.select(Spells.values()[packet.i], packet.x, packet.y, packet.z, packet.x2, packet.y2, packet.z2)
+	fun handle(packet: MessageVisualEffect) {
+		VisualEffectHandlerClient.select(VisualEffects.values()[packet.i], packet.x, packet.y, packet.z, packet.x2, packet.y2, packet.z2)
 	}
 	
 	fun handle(packet: MessageParty) {
@@ -50,11 +50,12 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message1d) {
 		when (m1d.values()[packet.type]) {
-			m1d.CL_SLOWDOWN      -> AlfheimConfigHandler.slowDownClients = packet.data1 != 0.0
+			m1d.ESMABIL          -> PlayerSegmentClient.esmAbility = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
+			m1d.WINGS_NOT_IN_ALF -> AlfheimConfigHandler.enableWingsNonAlfheim = packet.data1 != 0.0
 		}
 	}
 	
@@ -116,5 +117,9 @@ object PacketHandlerClient {
 			
 			m3d.TOGGLER      -> ClientProxy.toggelModes(packet.data1 > 0, packet.data2.toInt() and 1 > 0, packet.data3.toInt() and 1 > 0, packet.data2.toInt() shr 1 and 1 > 0, packet.data3.toInt() shr 1 and 1 > 0)
 		}
+	}
+	
+	fun handle(packet: MessageSkinInfo) {
+		CardinalSystemClient.playerSkinsData[packet.name] = packet.isFemale to packet.isSkinOn
 	}
 }

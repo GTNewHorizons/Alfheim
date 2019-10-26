@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import gloomyfolken.hooklib.asm.Hook
+import gloomyfolken.hooklib.asm.*
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MathHelper
@@ -12,17 +12,18 @@ import net.minecraft.util.MathHelper
 object AlfheimHPHooks {
 	
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun getHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
-		return if (AlfheimCore.enableMMO && e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.01f else hp
+		return if (AlfheimCore.enableMMO && e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.123f else hp
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun getMaxHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
 		return if (AlfheimCore.enableMMO && ASJUtilities.isServer) {
+			val ret = if (e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.123f else hp
+			
 			val pt = PartySystem.getMobParty(e)
-			val ret = if (e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0f else hp
 			
 			if (pt != null) {
 				val i = pt.indexOf(e)
@@ -34,7 +35,7 @@ object AlfheimHPHooks {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun setHealth(e: EntityLivingBase, hp: Float) {
 		if (!AlfheimCore.enableMMO) return
 		

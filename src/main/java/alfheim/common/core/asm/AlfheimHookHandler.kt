@@ -3,12 +3,14 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
+import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
@@ -16,6 +18,7 @@ import alfheim.common.potion.PotionSoulburn
 import codechicken.nei.recipe.GuiRecipe
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
+import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -26,6 +29,7 @@ import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
+import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -38,7 +42,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.HUDHandler
@@ -51,6 +55,7 @@ import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.EntityDoppleganger
 import vazkii.botania.common.item.*
@@ -62,7 +67,7 @@ import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
 
-@Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused")
+@Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object AlfheimHookHandler {
 	
 	private var updatingTile = false
@@ -76,6 +81,12 @@ object AlfheimHookHandler {
 	
 	private const val MESSANGER = 22
 	private const val TRIPWIRE = 23
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "<init>")
+	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
+		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
+	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
@@ -99,7 +110,7 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun isPotionActive(e: EntityLivingBase, p: Potion) =
 		if (p === Potion.resistance) {
-			e.activePotionsMap.containsKey(Potion.resistance.id) || e.activePotionsMap.containsKey(AlfheimRegistry.tank.id)
+			e.activePotionsMap.containsKey(Potion.resistance.id) || e.activePotionsMap.containsKey(AlfheimConfigHandler.potionIDTank)
 		} else e.activePotionsMap.containsKey(p.id)
 	
 	@JvmStatic
@@ -107,8 +118,8 @@ object AlfheimHookHandler {
 	fun getActivePotionEffect(e: EntityLivingBase, p: Potion): PotionEffect? {
 		var pe = e.activePotionsMap[p.id] as PotionEffect?
 		if (p === Potion.resistance)
-			if (e.isPotionActive(AlfheimRegistry.tank)) {
-				val tank = e.activePotionsMap[AlfheimRegistry.tank.id] as PotionEffect
+			if (e.isPotionActive(AlfheimConfigHandler.potionIDTank)) {
+				val tank = e.activePotionsMap[AlfheimConfigHandler.potionIDTank] as PotionEffect
 				if (pe == null) pe = PotionEffect(Potion.resistance.id, tank.duration, 0)
 				pe.amplifier += tank.amplifier
 			}
@@ -126,6 +137,13 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	fun requestManaChecked(handler: ManaItemHandler?, stack: ItemStack, player: EntityPlayer, manaToGet: Int, remove: Boolean) = manaToGet
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
+		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
+		else dis
+	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
@@ -266,6 +284,16 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
+	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
+		if (result) {
+			ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
+		}
+		
+		return result
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun `TileHourglass$updateEntity`(hourglass: TileHourglass) {
 		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
 			var block: Block
@@ -297,9 +325,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
-	fun sparkleFX(proxy: ClientProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, m: Int, fake: Boolean): Boolean {
-		return updatingTile
-	}
+	fun sparkleFX(proxy: ClientProxy, world: World, x: Double, y: Double, z: Double, r: Float, g: Float, b: Float, size: Float, m: Int, fake: Boolean) = updatingTile
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
@@ -355,27 +381,23 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
-	fun getIcon(pylon: BlockPylon, side: Int, meta: Int): IIcon {
-		return if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0)
-	}
+	fun getIcon(pylon: BlockPylon, side: Int, meta: Int) =
+		(if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0))!!
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
-	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int): Boolean {
-		return MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
-	}
+	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
+		MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
-	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int): Boolean {
-		return recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
-	}
+	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int) =
+		recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
-	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		return if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
-	}
+	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
+		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
@@ -429,7 +451,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
-		if (player.getActivePotionEffect(Potion.nightVision)?.getDuration() ?: 0 > 0) 1f else 0f
+		if (player.getActivePotionEffect(Potion.nightVision)?.duration ?: 0 > 0) 1f else 0f
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -473,6 +495,23 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getBinding(mirror: ItemManaMirror, stack: ItemStack): ChunkCoordinates? {
+		val world = Minecraft.getMinecraft().theWorld ?: return null
+		
+		if (world.provider.dimensionId != ItemNBTHelper.getInt(stack, "dim", Int.MAX_VALUE)) return null
+		
+		val coords = mirror.getPoolCoords(stack)
+		if (coords.posY == -1)
+			return null
+		
+		val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
+		
+		return if (tile is IManaPool) coords else null
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
 		if (mana < 0 || !AlfheimConfigHandler.numericalMana || !numMana) return
@@ -484,9 +523,9 @@ object AlfheimHookHandler {
 			f1 = !f && Minecraft.getMinecraft().currentScreen is GuiRecipe
 		
 		val text = "$mana/$maxMana"
-		val X = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
-		val Y = if (f1) y - 9 else y - 19
-		Minecraft.getMinecraft().fontRenderer.drawString(text, X, Y, color, f)
+		val x = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
+		val y = if (f1) y - 9 else y - 19
+		Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color, f)
 		glPopMatrix()
 	}
 	

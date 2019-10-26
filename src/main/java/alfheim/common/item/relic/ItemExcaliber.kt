@@ -45,7 +45,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 			if (ItemRelic.isRightPlayer(player!!, stack)) {
 				val haste = player.getActivePotionEffect(Potion.digSpeed)
 				val check = if (haste == null) 1.0f / 6.0f else if (haste.getAmplifier() == 0) 0.4f else if (haste.getAmplifier() == 2) 1.0f / 3.0f else 0.5f
-				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 100, true)) {
+				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 1, true)) {
 					val burst = getBurst(player, stack!!)
 					world.spawnEntityInWorld(burst)
 					world.playSoundAtEntity(player, "botania:terraBlade", 0.4f, 1.4f)

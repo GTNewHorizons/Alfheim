@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
@@ -31,7 +31,7 @@ class SpellDeathMark: SpellBase("deathmark", EnumRace.IMP, 24000, 3000, 10) {
 		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(AlfheimRegistry.deathMark.id, 600, 0, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimRegistry.deathMark.id, 600, 0))
-			SpellEffectHandler.sendPacket(Spells.DISPEL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
 		}
 		
 		return result

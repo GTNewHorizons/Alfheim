@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
@@ -30,7 +30,7 @@ class SpellWellOLife: SpellBase("wellolife", EnumRace.UNDINE, 7000, 600, 30) {
 			}
 		}
 		
-		SpellEffectHandler.sendPacket(Spells.PURE, caster)
+		VisualEffectHandler.sendPacket(VisualEffects.PURE, caster)
 		return result
 	}
 }

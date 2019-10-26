@@ -1,5 +1,6 @@
 package alfheim.common.world.dim.alfheim.biome
 
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.EntityAlfheimPixie
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
 import alfheim.common.world.dim.alfheim.structure.*
@@ -37,6 +38,7 @@ class BiomeField: BiomeAlfheim(0) {
 		val g = WorldGenGrass(true, true, true, true, 1.0)
 		decorateChunkGen_List.add(g)
 		
-		spawnableCreatureList.add(SpawnListEntry(EntityAlfheimPixie::class.java, 1, 1, 2))
+		val (w, i, x) = AlfheimConfigHandler.pixieSpawn
+		spawnableCreatureList.add(SpawnListEntry(EntityAlfheimPixie::class.java, w, i, x))
 	}
 }

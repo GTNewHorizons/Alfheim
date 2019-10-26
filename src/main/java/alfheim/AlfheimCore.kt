@@ -124,9 +124,10 @@ class AlfheimCore {
 		network.registerMessage(Message3dHandler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageEffectHandler::class.java, MessageEffect::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageHotSpellCHandler::class.java, MessageHotSpellC::class.java, nextPacketID++, Side.CLIENT)
-		network.registerMessage(MessageParticlesHandler::class.java, MessageParticles::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageVisualEffectHandler::class.java, MessageVisualEffect::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessagePartyHandler::class.java, MessageParty::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageTileItemHandler::class.java, MessageTileItem::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageTimeStopHandler::class.java, MessageTimeStop::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageSkinInfoHandler::class.java, MessageSkinInfo::class.java, nextPacketID++, Side.CLIENT)
 	}
 }

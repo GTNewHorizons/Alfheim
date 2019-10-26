@@ -1,7 +1,27 @@
 Innovations:
- Ring to protect vs anomalies
- Again changed data serialization, delete Cardinal.sys if having some issues
+ Pasive race abilities (toggleable on [M] by default)
+ Added thing for transporting mana through dimensions
+ Config for mobs spawn rate
+ Redused Elven King ring mana consumption
+ Deleted decelerator anomaly
+ Elven skin toggling
+ ...and more!
 
 Fixes:
- Fixed dupe of Interdimensional Gateway core when breaking active portal in Alfheim
- Fixed block meta for Astrolabe preview
+ #92 Soul restoration exploit
+ #94 Dreamwood Sappling not growing on custom grass/dirt
+ #96 Imp selection crash
+ #99 Lowered excaliber mana consumption
+ Exceptions spam to console
+ Elven flight toggling on X
+ Elven flight disabling C-S conflict
+ Aurora dirt not growing grass
+ Dupe with Botanists toolbelt
+ Rheingold with player interaction
+ [MMO] Client <-> server precast time desync
+ [MMO] Fixed quad
+ ...and more!
+ 
+Known Issues:
+ [Thermos] Revive just removes "death" effect
+ [Thermos] Leprechauns attack speed bonus don't work

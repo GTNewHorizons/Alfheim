@@ -97,8 +97,28 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerSpecialPreRender(e: RenderPlayerEvent.Specials.Pre) {
-		if (e.entityPlayer.commandSenderName == "AlexSocol")
-			(e.entityPlayer as AbstractClientPlayer).func_152121_a(Type.SKIN, LibResourceLocations.skin)
+		val player = e.entityPlayer as AbstractClientPlayer
+		
+		val name = player.commandSenderName
+		
+		if (name == "AlexSocol")
+			player.func_152121_a(Type.SKIN, LibResourceLocations.skin)
+			
+		run skin@ {
+			val data = CardinalSystemClient.playerSkinsData[name] ?: return@skin
+			
+			if (player.raceID == 0 || player.raceID > 9) return@skin
+			
+			if (data.second) {
+				player.func_152121_a(Type.SKIN,
+									 if (data.first)
+										 LibResourceLocations.oldFemale[player.raceID-1]
+									 else
+										 LibResourceLocations.oldMale[player.raceID-1]
+									)
+			}
+		}
+		
 		
 		RenderEntitysLeftHand.render(e)
 	}
@@ -114,6 +134,8 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerTick(e: PlayerTickEvent) {
+		if (e.player !== Minecraft.getMinecraft().thePlayer) return
+		
 		if (e.phase == Phase.START && e.side == Side.CLIENT && !Minecraft.getMinecraft().isGamePaused) {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
 			SpellCastingSystemClient.tick()
@@ -150,11 +172,12 @@ object EventHandlerClient {
 	private fun renderMMO() {
 		run {
 			val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
+						?: return@run
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) return@run
 			
 			glPushMatrix()
 			ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-			spell!!.render(Minecraft.getMinecraft().thePlayer)
+			spell.render(Minecraft.getMinecraft().thePlayer)
 			glPopMatrix()
 		}
 		

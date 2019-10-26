@@ -3,7 +3,7 @@ package alfheim.common.block.schema
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
 import alfheim.common.core.handler.AlfheimConfigHandler
-import codechicken.core.CommonUtils
+import cpw.mods.fml.relauncher.FMLInjectionData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.world.World
@@ -33,7 +33,7 @@ class BlockSchemaGenerator: BlockColoredSapling(name = "schematicOak") {
 	override fun canGrowHere(block: Block) = block.material == Material.ground || block.material == Material.grass
 	
 	fun getSchema(meta: Int = -1): String? {
-		val e = File(CommonUtils.getMinecraftDir(), "config/Alfheim/schemas/schema${if (meta < 0) "" else "_$meta"}.txt")
+		val e = File(FMLInjectionData.data()[6] as File, "config/Alfheim/schemas/schema${if (meta < 0) "" else "_$meta"}.txt")
 		if (!e.parentFile.exists()) e.parentFile.mkdirs()
 		
 		return if (e.exists()) e.readText() else null

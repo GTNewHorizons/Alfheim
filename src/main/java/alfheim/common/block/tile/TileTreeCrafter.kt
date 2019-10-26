@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
@@ -16,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
 import org.lwjgl.opengl.*
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.mana.IManaPool
 import vazkii.botania.api.mana.spark.*
@@ -333,7 +333,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	}
 	
 	fun sync() {
-		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
+		ASJUtilities.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
 	}
 	
 	fun craftingFanciness(recipe: RecipeTreeCrafting) {

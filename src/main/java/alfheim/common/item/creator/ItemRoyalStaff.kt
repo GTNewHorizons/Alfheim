@@ -6,7 +6,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.command.*
-import net.minecraft.entity.Entity
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.server.MinecraftServer
@@ -23,7 +23,7 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 		setFull3D()
 		maxStackSize = 1
 		maxDamage = 0
-
+		
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
@@ -35,7 +35,7 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 			else stack.stackSize = 0
 		}
 	}
-
+	
 	override fun getRarity(itemstack: ItemStack) = BotaniaAPI.rarityRelic!!
 	override fun getItemUseAction(par1ItemStack: ItemStack) = EnumAction.bow
 	override fun getMaxItemUseDuration(itemstack: ItemStack) = 2147483647
@@ -64,16 +64,23 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 	override fun registerIcons(reg: IIconRegister) {
 		orn = IconHelper.forName(reg, "misc/focus_whatever_orn")
 	}
-
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun loadTextures(event: TextureStitchEvent.Pre) {
 		if (event.map.textureType == 1)
 			dep = InterpolatedIconHelper.forName(event.map, "misc/focus_warding_depth")
 	}
-
+	
+	override fun hitEntity(stack: ItemStack?, target: EntityLivingBase?, attacker: EntityLivingBase?): Boolean {
+		target?.hurtResistantTime = 0
+		target?.hurtTime = 0
+		
+		return super.hitEntity(stack, target, attacker)
+	}
+	
 	companion object {
 		lateinit var orn: IIcon
-				 var dep: IIcon? = null
+		var dep: IIcon? = null
 	}
 }

@@ -80,6 +80,7 @@ import alfheim.common.item.AlfheimItems.elvoriumLeggings
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
+import alfheim.common.item.AlfheimItems.manaMirrorImba
 import alfheim.common.item.AlfheimItems.manaRingElven
 import alfheim.common.item.AlfheimItems.manaRingGod
 import alfheim.common.item.AlfheimItems.manaStone
@@ -110,9 +111,9 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.crafting.*
-import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
+import vazkii.botania.common.item.ModItems.quartz as manaquartz
 
 object AlfheimRecipes {
 	
@@ -160,6 +161,7 @@ object AlfheimRecipes {
 	lateinit var recipeLootInterceptor: IRecipe
 	lateinit var recipeManaInfusionCore: IRecipe
 	lateinit var recipeManaInfuser: IRecipe
+	lateinit var recipeManaMirrorImba: IRecipe
 	lateinit var recipeManaRingElven: IRecipe
 	lateinit var recipeManaRingGod: IRecipe
 	lateinit var recipeManasteelHoe: IRecipe
@@ -473,6 +475,14 @@ object AlfheimRecipes {
 						 'S', ItemStack(livingrock, 1, 4))
 		recipeManaInfuser = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(manaMirrorImba),
+						 "IMI", "EWE", "IMI",
+						 'M', MAUFTRIUM_INGOT,
+						 'E', ELVORIUM_INGOT,
+						 'I', IFFESAL_DUST,
+						 'W', ItemStack(lens, 1, 18))
+		recipeManaMirrorImba = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(manaRingElven),
 						 "IS ", "S S", " S ",
 						 'S', ELVORIUM_INGOT,
@@ -489,16 +499,16 @@ object AlfheimRecipes {
 						 "QT ", "T E", " E ",
 						 'E', ELEMENTIUM,
 						 'T', TERRA_STEEL,
-						 'Q', ItemStack(ModItems.quartz, 1, 5))
+						 'Q', ItemStack(manaquartz, 1, 5))
 		recipeMultibauble = BotaniaAPI.getLatestAddedRecipe()
 		
-		recipePaperBreak = ShapedOreRecipe(ItemStack(paperBreak),
-										   "  P", " P ", "P  ",
-										   'P', paper)
+		recipePaperBreak = ShapelessOreRecipe(ItemStack(paperBreak, 4), leather, ItemStack(wooden_sword, 1, WILDCARD_VALUE))
 		
 		recipePeacePipe = ShapedOreRecipe(ItemStack(peacePipe),
-										  "S  ", " S ", "  S",
-										  'S', stick)
+										  "  P", " SD", "S  ",
+										  'S', stick,
+										  'D', DYES[1],
+										  'P', ItemStack(planks, 1, 5))
 		
 		if (AlfheimCore.enableMMO) addMMORecipes()
 		

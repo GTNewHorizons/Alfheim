@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -29,7 +29,7 @@ class SpellHollowBody: SpellBase("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 2
 		if (result == SpellCastResult.OK) {
 			tg.target.addPotionEffect(PotionEffect(Potion.invisibility.id, 3600, 0, true))
 			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.invisibility.id, 3600, 0))
-			SpellEffectHandler.sendPacket(Spells.PURE, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.PURE, tg.target)
 		}
 		
 		return result

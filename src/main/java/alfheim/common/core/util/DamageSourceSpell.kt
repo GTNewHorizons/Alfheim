@@ -64,13 +64,13 @@ open class EntityDamageSourceSpell(source: String, protected val attacker: Entit
 		attacker != null && attacker is EntityLivingBase && attacker !is EntityPlayer
 }
 
-class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val indirectEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
+class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val directEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
 	
-	override fun getSourceOfDamage() = indirectEntity
+	override fun getSourceOfDamage() = directEntity
 	
 	override fun func_151519_b(target: EntityLivingBase): IChatComponent {
-		val ichatcomponent = if (indirectEntity == null) attacker!!.func_145748_c_() else indirectEntity.func_145748_c_()
-		val itemstack = if (indirectEntity is EntityLivingBase) indirectEntity.heldItem else null
+		val ichatcomponent = if (directEntity == null) attacker!!.func_145748_c_() else directEntity.func_145748_c_()
+		val itemstack = if (directEntity is EntityLivingBase) directEntity.heldItem else null
 		val s = "death.attack.$damageType"
 		val s1 = "$s.item"
 		return if (itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1)) ChatComponentTranslation(s1, target.func_145748_c_(), ichatcomponent, itemstack.func_151000_E()) else ChatComponentTranslation(s, target.func_145748_c_(), ichatcomponent)

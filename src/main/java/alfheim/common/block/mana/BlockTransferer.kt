@@ -95,9 +95,7 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 			stack.stackSize = 0
 		}
 		
-		world.setTileEntity(x, y, z, te)
 		world.updateLightByType(EnumSkyBlock.Sky, x, y, z)
-		world.markTileEntityChunkModified(x, y, z, te)
 		
 		return true
 	}

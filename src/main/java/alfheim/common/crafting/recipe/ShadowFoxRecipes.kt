@@ -39,6 +39,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
+import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.irisDirt
 import alfheim.common.block.AlfheimBlocks.irisGrass
 import alfheim.common.block.AlfheimBlocks.irisLamp
@@ -96,7 +97,6 @@ import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.splashPotion
-import alfheim.common.item.AlfheimItems.toolbelt
 import alfheim.common.item.block.*
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry
@@ -171,7 +171,7 @@ object ShadowFoxRecipes {
 	val recipesAltPlanks: List<IRecipe>
 	val recipesAltSlabs: List<IRecipe>
 	val recipesAltStairs: List<IRecipe>
-	val recipesToolbelt: IRecipe
+	//val recipesToolbelt: IRecipe
 	val recipesLamp: IRecipe
 	val recipesSealingPlanks: IRecipe
 	val recipesSealingStairs: IRecipe
@@ -641,7 +641,7 @@ object ShadowFoxRecipes {
 		
 		recipesAltStairs = BotaniaAPI.getLatestAddedRecipes(6)
 		
-		addOreDictRecipe(ItemStack(toolbelt),
+		/*addOreDictRecipe(ItemStack(toolbelt),
 						 "CL ",
 						 "L L",
 						 "PLS",
@@ -650,7 +650,7 @@ object ShadowFoxRecipes {
 						 'C', ItemStack(Blocks.chest),
 						 'S', RUNE[12]) // Sloth
 		
-		recipesToolbelt = BotaniaAPI.getLatestAddedRecipe()
+		recipesToolbelt = BotaniaAPI.getLatestAddedRecipe()*/
 		
 		addOreDictRecipe(ItemStack(irisLamp),
 						 " B ",
@@ -782,18 +782,22 @@ object ShadowFoxRecipes {
 															 RUNE[7], // Winter
 															 RUNE[5]) // Summer
 		
+		GameRegistry.addSmelting(dreamLog, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood2, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood3, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(rainbowWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(auroraWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(lightningWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(altWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(altWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(sealingWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
+		GameRegistry.addSmelting(calicoWood, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(circuitWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(lightningPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.ThunderwoodSplinters), 0.1F)
 		GameRegistry.addSmelting(netherPlanks, ItemStack(elvenResource, 2, ElvenResourcesMetas.NetherwoodSplinters), 0.1F)
-		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
 		
 		recipesSplashPotions = ShapelessOreRecipe(ItemStack(splashPotion), BotaniaItems.brewVial, Items.gunpowder)
 		GameRegistry.addRecipe(RecipeThrowablePotion())

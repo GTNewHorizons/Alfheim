@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -13,8 +14,8 @@ import net.minecraft.util.*
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.glEnable
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.common.block.tile.TileMod
+import kotlin.math.*
 
 class TileAnimatedTorch: TileMod() {
 	
@@ -49,21 +50,22 @@ class TileAnimatedTorch: TileMod() {
 		if (!worldObj.isRemote) {
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, AlfheimBlocks.animatedTorch, 0, torchMode.rotate(this, side))
 			nextRandomRotation = worldObj.rand.nextInt(4)
-			VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this)
+			ASJUtilities.dispatchTEToNearbyPlayers(this)
 		}
 	}
 	
 	fun onWanded() {
 		val modes = TorchMode.values()
 		torchMode = modes[(torchMode.ordinal + 1) % modes.size]
+		ASJUtilities.dispatchTEToNearbyPlayers(this)
 	}
 	
 	override fun receiveClientEvent(id: Int, param: Int): Boolean {
-		if (id == 0) {
+		return if (id == 0) {
 			rotateTo(param)
-			return true
+			true
 		} else {
-			return super.receiveClientEvent(id, param)
+			super.receiveClientEvent(id, param)
 		}
 	}
 	
@@ -75,7 +77,7 @@ class TileAnimatedTorch: TileMod() {
 		
 		var diff = (finalRotation - rotation % 360) % 360
 		if (diff < 0)
-			diff = 360 + diff
+			diff += 360
 		
 		rotationTicks = 5
 		anglePerTick = diff / rotationTicks
@@ -115,9 +117,9 @@ class TileAnimatedTorch: TileMod() {
 		
 		if (worldObj.isRemote) {
 			val amt = if (rotating) 3 else if (Math.random() < 0.1) 1 else 0
-			val x = xCoord.toDouble() + 0.5 + Math.cos((rotation + 90) / 180.0 * Math.PI) * 0.35
+			val x = xCoord.toDouble() + 0.5 + cos((rotation + 90) / 180.0 * Math.PI) * 0.35
 			val y = yCoord + 0.2
-			val z = zCoord.toDouble() + 0.5 + Math.sin((rotation + 90) / 180.0 * Math.PI) * 0.35
+			val z = zCoord.toDouble() + 0.5 + sin((rotation + 90) / 180.0 * Math.PI) * 0.35
 			
 			for (i in 0 until amt)
 				worldObj.spawnParticle("reddust", x, y, z, 0.0, 0.0, 0.0)
@@ -150,23 +152,22 @@ class TileAnimatedTorch: TileMod() {
 		TOGGLE, ROTATE, RANDOM;
 		
 		fun rotate(tile: TileAnimatedTorch, curr: Int): Int {
-			when (this) {
-				TOGGLE -> return (curr + 2) % 4
-				ROTATE -> return (curr + 1) % 4
-				RANDOM -> return tile.currentRandomRotation
+			return when (this) {
+				TOGGLE -> (curr + 2) % 4
+				ROTATE -> (curr + 1) % 4
+				RANDOM -> tile.currentRandomRotation
 			}
-			return 0
 		}
 	}
 	
 	companion object {
 		
-		val TAG_SIDE = "side"
-		val TAG_ROTATING = "rotating"
-		val TAG_ROTATION_TICKS = "rotationTicks"
-		val TAG_ANGLE_PER_TICK = "anglePerTick"
-		val TAG_TORCH_MODE = "torchMode"
-		val TAG_NEXT_RANDOM_ROTATION = "nextRandomRotation"
+		const val TAG_SIDE = "side"
+		const val TAG_ROTATING = "rotating"
+		const val TAG_ROTATION_TICKS = "rotationTicks"
+		const val TAG_ANGLE_PER_TICK = "anglePerTick"
+		const val TAG_TORCH_MODE = "torchMode"
+		const val TAG_NEXT_RANDOM_ROTATION = "nextRandomRotation"
 		
 		val SIDES = arrayOf(ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST)
 	}

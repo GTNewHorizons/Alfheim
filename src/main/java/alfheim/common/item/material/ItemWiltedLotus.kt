@@ -23,6 +23,6 @@ class ItemWiltedLotus : ItemMod("wiltedLotus") {
         list.add(StatCollector.translateToLocal("misc.${ModInfo.MODID}:lotusDesc"))
     }
 
-    override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-        super.getUnlocalizedNameInefficiently(par1ItemStack) + par1ItemStack.itemDamage
+    override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+        super.getUnlocalizedNameInefficiently(stack) + stack.itemDamage
 }

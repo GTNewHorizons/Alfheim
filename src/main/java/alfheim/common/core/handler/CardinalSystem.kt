@@ -13,6 +13,7 @@ import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
+import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.network.ByteBufUtils
@@ -25,6 +26,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.*
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.PlayerEvent
@@ -64,11 +66,16 @@ object CardinalSystem {
 	fun transfer(player: EntityPlayerMP) {
 		KnowledgeSystem.transfer(player)
 		
-		if (AlfheimCore.enableMMO) {
-			SpellCastingSystem.transfer(player)
-			HotSpellsSystem.transfer(player)
-			PartySystem.transfer(player)
-			TimeStopSystem.transfer(player, 0)
+		if (AlfheimCore.enableElvenStory) {
+			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ESMABIL, if (forPlayer(player).esmAbility) 1.0 else 0.0), player)
+			ElvenSkinSystem.transfer(player)
+			
+			if (AlfheimCore.enableMMO) {
+				SpellCastingSystem.transfer(player)
+				HotSpellsSystem.transfer(player)
+				PartySystem.transfer(player)
+				TimeStopSystem.transfer(player, 0)
+			}
 		}
 	}
 	
@@ -107,6 +114,8 @@ object CardinalSystem {
 				seg.knowledge.add("$kn")
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
 			}
+			
+			save(AlfheimCore.save)
 		}
 		
 		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains("$kn")
@@ -130,6 +139,9 @@ object CardinalSystem {
 		
 		fun setCoolDown(caster: EntityPlayer, spell: SpellBase, cd: Int): Int {
 			forPlayer(caster).coolDown[spell.name] = cd
+			
+			if (cd > 6000) save(AlfheimCore.save)
+			
 			return cd
 		}
 		
@@ -154,19 +166,18 @@ object CardinalSystem {
 					
 					val player = MinecraftServer.getServer().configurationManager.func_152612_a(segment.userName)
 					if (player != null) {
-						if (segment.init > 0)
-							--segment.init
+						if (segment.init > 0) --segment.init
 						else {
 							if (segment.ids != 0 && segment.castableSpell != null) {
 								AlfheimCore.network.sendTo(Message2d(COOLDOWN, segment.ids.toDouble(), KeyBindingHandler.cast(player, segment.ids shr 28 and 0xF, segment.ids and 0xFFFFFFF).toDouble()), player)
 								segment.ids = 0
-								segment.init = segment.ids
+								segment.init = 0
 								segment.castableSpell = null
 							}
 						}
 					} else {
 						segment.ids = 0
-						segment.init = segment.ids
+						segment.init = 0
 						segment.castableSpell = null
 					}
 				}
@@ -174,7 +185,6 @@ object CardinalSystem {
 				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick.")
 				e.printStackTrace()
 			}
-			
 		}
 		
 		fun reset() {
@@ -227,9 +237,8 @@ object CardinalSystem {
 					0    -> {
 						if (e.spell.name == "stoneskin") {
 							++seg.quadStage
-						}
-						if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
-							++seg.quadStage
+						} else if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
+							seg.quadStage += 2
 						} else {
 							seg.quadStage = 0
 						}
@@ -258,7 +267,10 @@ object CardinalSystem {
 					} else {
 						seg.quadStage = 0
 					}
-					else -> seg.quadStage = 0
+					
+					else -> {
+						seg.quadStage = 0
+					}
 				}
 			}
 			
@@ -366,6 +378,8 @@ object CardinalSystem {
 		fun setParty(player: EntityPlayer, party: Party) {
 			forPlayer(player).party = party
 			party.sendChanges()
+			
+			save(AlfheimCore.save)
 		}
 		
 		fun getParty(player: EntityPlayer) = forPlayer(player).party
@@ -578,6 +592,9 @@ object CardinalSystem {
 				if (count >= members.size) return false
 				members[count++] = Member(mr.commandSenderName, mr.uniqueID, ManaSystem.getMana(mr), mr is EntityPlayer, !mr.isEntityAlive, mr.health, mr.maxHealth, Member.MemberType.typeOf(mr).ordinal)
 				sendChanges()
+				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -608,6 +625,8 @@ object CardinalSystem {
 					i++
 				}
 				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -624,6 +643,9 @@ object CardinalSystem {
 					members[count] = null
 					
 					sendChanges()
+					
+					save(AlfheimCore.save)
+					
 					return true
 				}
 				return removeSafe(mr)
@@ -643,6 +665,9 @@ object CardinalSystem {
 				members[count] = null
 				
 				sendChanges()
+				
+				save(AlfheimCore.save)
+				
 				return true
 			}
 			
@@ -734,7 +759,9 @@ object CardinalSystem {
 				
 				public override fun clone() = Member(name, uuid, mana, isPlayer, isDead, health, maxHealth, type)
 				
+				@Suppress("unused")
 				enum class MemberType {
+					
 					HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV, MOB, NPC, BOSS;
 					
 					companion object {
@@ -808,6 +835,8 @@ object CardinalSystem {
 		
 		fun setHotSpellID(player: EntityPlayer, slot: Int, id: Int) {
 			forPlayer(player).hotSpells[slot] = id
+			
+			save(AlfheimCore.save)
 		}
 	}
 	
@@ -883,10 +912,12 @@ object CardinalSystem {
 		}
 		
 		init {
-			MinecraftForge.EVENT_BUS.register(TimeStopThingsListener())
+			MinecraftForge.EVENT_BUS.register(TimeStopThingsListener)
+			FMLCommonHandler.instance().bus().register(TimeStopThingsListener)
 		}
 		
-		class TimeStopThingsListener {
+		object TimeStopThingsListener {
+			
 			@SubscribeEvent
 			fun onPlayerChangedDimension(e: PlayerChangedDimensionEvent) {
 				if (AlfheimCore.enableMMO && e.player is EntityPlayerMP) transfer(e.player as EntityPlayerMP, e.fromDim)
@@ -902,20 +933,51 @@ object CardinalSystem {
 			fun onLivingUpdate(e: LivingUpdateEvent) {
 				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
 			}
+			
+			@SubscribeEvent
+			fun onChatEvent(e: ServerChatEvent) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.player)) e.isCanceled = true
+			}
+			
+			@SubscribeEvent
+			fun onCommandEvent(e: CommandEvent) {
+				if (AlfheimCore.enableMMO && ASJUtilities.isServer && e.sender is EntityPlayer && affected(e.sender as EntityPlayer)) e.isCanceled = true
+			}
+		}
+	}
+	
+	object ElvenSkinSystem {
+		
+		fun getGender(player: EntityPlayer) = forPlayer(player).gender
+		
+		fun setGender(player: EntityPlayer, isFemale: Boolean) {
+			forPlayer(player).gender = isFemale
+		}
+		
+		fun hasCustomSkin(player: EntityPlayer) = forPlayer(player).customSkin
+		
+		fun setCustomSkin(player: EntityPlayer, skinOn: Boolean) {
+			forPlayer(player).customSkin = skinOn
+		}
+		
+		fun transfer(player: EntityPlayerMP) {
+			playerSegments.forEach {
+				(name, seg) ->
+				AlfheimCore.network.sendTo(MessageSkinInfo(name, seg.gender, seg.customSkin), player)
+			}
 		}
 	}
 	
 	class PlayerSegment(player: EntityPlayer): Serializable {
 		
-		var coolDown = HashMap<String, Int>()
-		var hotSpells = IntArray(12)
-		
 		var party: Party = Party(player)
 		@Transient
-		var target: EntityLivingBase? = null
-		@Transient
 		var isParty = false
+		@Transient
+		var target: EntityLivingBase? = null
 		
+		var coolDown = HashMap<String, Int>()
+		var hotSpells = IntArray(12)
 		@Transient
 		var castableSpell: SpellBase? = null
 		@Transient
@@ -927,11 +989,20 @@ object CardinalSystem {
 		
 		var userName: String = player.commandSenderName
 		
+		var esmAbility = true
+		
+		/** isFemale otherwise */
+		var gender = false
+		var customSkin = false
+		
+		fun toggleESMAbility() {
+			esmAbility = !esmAbility
+		}
+		
 		@Transient
 		var quadStage = 0
 		
 		companion object {
-			
 			private const val serialVersionUID = 6871678638741684L
 		}
 	}

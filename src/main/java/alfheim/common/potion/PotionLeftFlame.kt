@@ -2,14 +2,14 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.client.render.world.SpellEffectHandlerClient
+import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.player.*
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.event.ServerChatEvent
+import net.minecraftforge.event.*
 import net.minecraftforge.event.entity.item.ItemTossEvent
 import net.minecraftforge.event.entity.living.LivingHealEvent
 import net.minecraftforge.event.entity.player.PlayerEvent.*
@@ -31,7 +31,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			player.capabilities.isFlying = true
 			player.sendPlayerAbilities()
 			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 0.1
-			if (!ASJUtilities.isServer) SpellEffectHandlerClient.onDeath(target)
+			if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeath(target)
 		}
 	}
 	
@@ -45,7 +45,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			player.capabilities.isFlying = false
 			player.sendPlayerAbilities()
 			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 5.0
-			player.dataWatcher.updateObject(6, ampl.toFloat())
+			player.dataWatcher.updateObject(6, 10f)
 		}
 	}
 	
@@ -90,6 +90,16 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onHeal(e: LivingHealEvent) {
 		if (check(e.entityLiving)) e.isCanceled = true
+	}
+	
+	@SubscribeEvent
+	fun onChatEvent(e: ServerChatEvent) {
+		if (check(e.player)) e.isCanceled = true
+	}
+	
+	@SubscribeEvent
+	fun onCommandEvent(e: CommandEvent) {
+		if (check(e.sender as? EntityLivingBase)) e.isCanceled = true
 	}
 	
 	fun check(e: EntityLivingBase?) = AlfheimCore.enableMMO && e?.isPotionActive(this) == true

@@ -76,7 +76,9 @@ class GUISpells(private val mc: Minecraft): Gui() {
 		glTranslated(24.0, (height - 40).toDouble(), 0.0)
 		for (i in 0 until min(count, 5)) {
 			if (i != pos) glColor4d(1.0, 1.0, 1.0, 0.5) else glColor4d(1.0, 1.0, 1.0, 1.0)
+			
 			var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
+			
 			when (i) {
 				0 -> when (pos) {
 					0    -> Unit
@@ -107,7 +109,10 @@ class GUISpells(private val mc: Minecraft): Gui() {
 					3 -> spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID + 1)
 				}
 			}
-			drawRect(LibResourceLocations.spell(spell!!.name), 16)
+			
+			if (spell == null) continue
+			
+			drawRect(LibResourceLocations.spell(spell.name), 16)
 			
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) {
 				glDisable(GL_TEXTURE_2D)

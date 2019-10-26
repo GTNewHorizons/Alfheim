@@ -60,8 +60,8 @@ class BlockLightningWood: BlockModRotatedPillar(Material.wood), ITileEntityProvi
 	
 	override fun hasTileEntity(metadata: Int) = isHeartWood(metadata)
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =

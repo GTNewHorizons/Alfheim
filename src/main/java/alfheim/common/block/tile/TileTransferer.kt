@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.item.AlfheimItems
@@ -13,7 +14,6 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.wand.IWandBindable
 import vazkii.botania.common.core.handler.ConfigHandler
@@ -51,9 +51,9 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			
 			burst.setLocationAndAngles(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, -(rotationX + 90), rotationY)
 			val f = 0.4f
-			val mx = MathHelper.sin(burst.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * Math.PI.toFloat()) * f / 2.0
-			val mz = -(MathHelper.cos(burst.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * Math.PI.toFloat()) * f) / 2.0
-			val my = MathHelper.sin(burst.rotationPitch / 180.0f * Math.PI.toFloat()) * f / 2.0
+			val mx = MathHelper.sin(burst.rotationYaw / 180.0f * PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * PI.toFloat()) * f / 2.0
+			val mz = -(MathHelper.cos(burst.rotationYaw / 180.0f * PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * PI.toFloat()) * f) / 2.0
+			val my = MathHelper.sin(burst.rotationPitch / 180.0f * PI.toFloat()) * f / 2.0
 			burst.setMotion(mx, my, mz)
 			
 			return burst
@@ -73,13 +73,13 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		
 		if (redstone && !redstoneLastTick) tryShootBurst()
 		
-		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
+		ASJUtilities.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
 		
 		redstoneLastTick = redstone
 	}
 	
 	fun tryShootBurst() {
-		if (isBound && this.item != null && mana == MAX_MANA) {
+		if (isBound && item != null && mana == MAX_MANA) {
 			val burst = burst
 			if (!worldObj.isRemote) worldObj.spawnEntityInWorld(burst)
 			if (!ConfigHandler.silentSpreaders) worldObj.playSoundEffect(xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), "botania:spreaderFire", 0.05f, 0.7f + 0.3f * Math.random().toFloat())
@@ -107,7 +107,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 				if (pos.sideHit != 0 && pos.sideHit != 1) {
 					val clickVector = Vector3(x, 0.0, z)
 					val relative = Vector3(-0.5, 0.0, 0.0)
-					val angle = acos(clickVector.dotProduct(relative) / (relative.length() * clickVector.length())) * 180.0 / Math.PI
+					val angle = acos(clickVector.dotProduct(relative) / (relative.length() * clickVector.length())) * 180.0 / PI
 					
 					rotX = angle.toFloat() + 180f
 					if (clickVector.z < 0)
@@ -117,7 +117,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 				val angle = y * 180
 				rotY = -angle.toFloat()
 				
-				VanillaPacketDispatcher.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
+				ASJUtilities.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
 			}
 		}
 	}
@@ -161,34 +161,24 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		rotY = nbt.getFloat(TAG_ROTATION_Y)
 	}
 	
-	override fun getCurrentMana(): Int {
-		return mana
-	}
+	override fun getCurrentMana() = mana
 	
-	override fun isFull(): Boolean {
-		return mana >= MAX_MANA
-	}
+	override fun isFull() = mana >= MAX_MANA
 	
 	override fun recieveMana(mana: Int) {
 		this.mana = min(this.mana + mana, MAX_MANA)
 	}
 	
-	override fun canRecieveManaFromBursts(): Boolean {
-		return true
-	}
+	override fun canRecieveManaFromBursts() = true
 	
-	override fun getBinding(): ChunkCoordinates? {
-		return if (!isBound) null else ChunkCoordinates(toX, toY, toZ)
-	}
+	override fun getBinding() = if (!isBound) null else ChunkCoordinates(toX, toY, toZ)
 	
-	override fun canSelect(player: EntityPlayer, wand: ItemStack, x: Int, y: Int, z: Int, side: Int): Boolean {
-		return true
-	}
+	override fun canSelect(player: EntityPlayer, wand: ItemStack, x: Int, y: Int, z: Int, side: Int) = true
 	
 	override fun bindTo(player: EntityPlayer, wand: ItemStack, x: Int, y: Int, z: Int, side: Int): Boolean {
-		this.toX = x
-		this.toY = y
-		this.toZ = z
+		toX = x
+		toY = y
+		toZ = z
 		val thisVec = Vector3.fromTileEntityCenter(this)
 		val blockVec = Vector3(x + 0.5, y + 0.5, z + 0.5)
 		
@@ -201,7 +191,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		
 		val diffVec = blockVec.copy().sub(thisVec)
 		val rotVec = Vector3(0.0, 1.0, 0.0)
-		var angle = rotVec.angle(Vector3(diffVec.x, diffVec.z, 0.0)) / Math.PI * 180.0
+		var angle = rotVec.angle(Vector3(diffVec.x, diffVec.z, 0.0)) / PI * 180.0
 		
 		if (blockVec.x < thisVec.x)
 			angle = -angle
@@ -209,7 +199,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		rotX = angle.toFloat() + 90
 		
 		rotVec.set(diffVec.x, 0.0, diffVec.z)
-		angle = diffVec.angle(rotVec) * 180f / Math.PI
+		angle = diffVec.angle(rotVec) * 180f / PI
 		if (blockVec.y < thisVec.y)
 			angle = -angle
 		rotY = angle.toFloat()
@@ -238,9 +228,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			burst.sourceLens = lens
 		}
 		
-		fun getStack(burst: EntityManaBurst): ItemStack {
-			return ItemStack.loadItemStackFromNBT(ItemNBTHelper.getNBT(burst.sourceLens).getCompoundTag(TAG_STACK))
-		}
+		fun getStack(burst: EntityManaBurst) = ItemStack.loadItemStackFromNBT(ItemNBTHelper.getNBT(burst.sourceLens).getCompoundTag(TAG_STACK))
 		
 		fun raytraceFromEntity(world: World, player: Entity, par3: Boolean, range: Double): MovingObjectPosition? {
 			val f = 1.0f
@@ -251,8 +239,8 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			if (!world.isRemote && player is EntityPlayer) d1 += 1.62
 			val d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * f
 			val vec3 = Vec3.createVectorHelper(d0, d1, d2)
-			val f3 = MathHelper.cos(-f2 * 0.017453292f - Math.PI.toFloat())
-			val f4 = MathHelper.sin(-f2 * 0.017453292f - Math.PI.toFloat())
+			val f3 = MathHelper.cos(-f2 * 0.017453292f - PI.toFloat())
+			val f4 = MathHelper.sin(-f2 * 0.017453292f - PI.toFloat())
 			val f5 = -MathHelper.cos(-f1 * 0.017453292f)
 			val f6 = MathHelper.sin(-f1 * 0.017453292f)
 			val f7 = f4 * f5

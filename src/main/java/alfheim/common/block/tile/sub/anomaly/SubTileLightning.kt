@@ -1,11 +1,13 @@
 package alfheim.common.block.tile.sub.anomaly
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.util.DamageSourceSpell
+import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.player.*
@@ -18,6 +20,7 @@ import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.item.ModItems
 import java.util.*
 import kotlin.math.min
+import alexsocol.asjlib.math.Vector3 as ASJVec3
 
 class SubTileLightning: SubTileEntity() {
 	internal val vt = Vector3()
@@ -59,11 +62,15 @@ class SubTileLightning: SubTileEntity() {
 			return
 		}
 		
-		if (AlfheimConfigHandler.lightningsSpeed > 0 && ticks % AlfheimConfigHandler.lightningsSpeed == 0) {
-			ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
-			vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
-			ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5)
-			Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
+		if (!ASJUtilities.isServer) {
+			if (superTile != null && ASJVec3.entityTileDistance(Minecraft.getMinecraft().thePlayer, superTile!!) > 32) return
+			
+			if (AlfheimConfigHandler.lightningsSpeed > 0 && ticks % AlfheimConfigHandler.lightningsSpeed == 0) {
+				ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
+				vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
+				ve.multiply(1.5).add(x() + 0.5, y() + 0.5, z() + 0.5)
+				Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
+			}
 		}
 	}
 	

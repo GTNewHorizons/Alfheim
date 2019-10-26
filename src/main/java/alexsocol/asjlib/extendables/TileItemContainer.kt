@@ -1,5 +1,6 @@
 package alexsocol.asjlib.extendables
 
+import alexsocol.asjlib.ASJUtilities
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
@@ -15,6 +16,12 @@ import org.lwjgl.opengl.GL11.*
 open class TileItemContainer: ASJTile() {
 	
 	open var item: ItemStack? = null
+		set(stack) {
+			field = stack
+			if (ASJUtilities.isServer && worldObj != null) {
+				ASJUtilities.dispatchTEToNearbyPlayers(this)
+			}
+		}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		val compound = NBTTagCompound()

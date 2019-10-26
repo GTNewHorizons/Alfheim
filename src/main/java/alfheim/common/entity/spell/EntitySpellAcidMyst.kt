@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -30,7 +30,7 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 	constructor(world: World, caster: EntityLivingBase): this(world) {
 		this.caster = caster
 		setPosition(caster.posX, caster.posY, caster.posZ)
-		SpellEffectHandler.sendPacket(Spells.ACID, this)
+		VisualEffectHandler.sendPacket(VisualEffects.ACID, this)
 	}
 	
 	override fun onEntityUpdate() {

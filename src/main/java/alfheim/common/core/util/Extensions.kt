@@ -22,10 +22,6 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
     worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
 
-fun Entity.centerVector() = Vector3.fromEntityCenter(this)!!
-
-fun TileEntity.centerVector() = Vector3.fromTileEntityCenter(this)!!
-
 fun ItemStack.itemEquals(rItem: Any): Boolean {
     if (rItem is String) {
 
@@ -40,5 +36,4 @@ fun ItemStack.itemEquals(rItem: Any): Boolean {
     return false
 }
 
-internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) =
-    stack.item === stack2.item && stack.itemDamage == stack2.itemDamage
+internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.itemDamage == stack2.itemDamage

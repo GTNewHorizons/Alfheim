@@ -4,14 +4,14 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.*
+import net.minecraft.potion.Potion
 
 class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true) {
 	
@@ -19,6 +19,7 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
+		
 		if (tg.target == null) return SpellCastResult.NOTARGET
 		
 		if (!tg.isParty || !tg.target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame))
@@ -28,10 +29,11 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, 0, 10, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 10))
-			SpellEffectHandler.sendPacket(Spells.UPHEAL, tg.target)
+			tg.target.removePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 0, false, -1))
+			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 			PartySystem.getMobParty(caster)?.setDead(tg.target, false)
+			tg.target.dataWatcher.updateObject(6, 10f)
 		}
 		
 		return result

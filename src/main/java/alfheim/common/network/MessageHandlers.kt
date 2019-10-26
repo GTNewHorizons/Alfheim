@@ -109,11 +109,15 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 		val player = message.serverHandler.playerEntity
 		
 		when (values()[packet.action]) {
-			CORN   -> EntityLolicorn.call(player)
+			ATTACK  -> KeyBindingHandler.atack(player)
 			
-			ATTACK -> KeyBindingHandler.atack(player)
+			CORN    -> EntityLolicorn.call(player)
 			
-			CAST   -> {
+			FLIGHT  -> KeyBindingHandler.enableFlight(player, packet.state)
+			
+			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
+			
+			CAST    -> {
 				val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
@@ -126,30 +130,27 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 				}
 			}
 			
-			UNCAST -> {
-				run {
-					val seg = CardinalSystem.forPlayer(player)
-					seg.ids = 0
-					seg.init = seg.ids
-					seg.castableSpell = null
-				}
-				KeyBindingHandler.enableFlight(player, packet.state)
+			UNCAST  -> {
+				val seg = CardinalSystem.forPlayer(player)
+				seg.ids = 0
+				seg.init = seg.ids
+				seg.castableSpell = null
 			}
 			
-			FLIGHT -> KeyBindingHandler.enableFlight(player, packet.state)
-			
-			SEL    -> {
+			SEL     -> {
 				val e = player.worldObj.getEntityByID(packet.ticks)
-				if (e is EntityLivingBase) CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				if (e is EntityLivingBase) {
+					CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				}
 			}
 		}
 		return null
 	}
 }
 
-class MessageParticlesHandler: IMessageHandler<MessageParticles, IMessage> {
+class MessageVisualEffectHandler: IMessageHandler<MessageVisualEffect, IMessage> {
 
-	override fun onMessage(packet: MessageParticles, message: MessageContext): IMessage? {
+	override fun onMessage(packet: MessageVisualEffect, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
 		return null
 	}
@@ -179,20 +180,29 @@ class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
 	}
 }
 
-class MessagePlayerItemHandler : IMessageHandler<MessagePlayerItem, IMessage> {
+class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItem, IMessage> {
 	
-	override fun onMessage(message: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
-		if (ctx != null && message != null && message.item != null && ctx.side.isServer) {
+	override fun onMessage(packet: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
+		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
 			val player = ctx.serverHandler.playerEntity
 			
 			val heldItem = player.currentEquippedItem
 			
 			if (heldItem == null) {
-				player.setCurrentItemOrArmor(0, message.item!!.copy())
-			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
-				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
+				player.setCurrentItemOrArmor(0, packet.item!!.copy())
+			} else if (!player.inventory.addItemStackToInventory(packet.item!!.copy())) {
+				player.dropPlayerItemWithRandomChoice(packet.item!!.copy(), false)
 			}
 		}
+		
+		return null
+	}
+}
+
+class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage> {
+	
+	override fun onMessage(packet: MessageSkinInfo, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
 		
 		return null
 	}

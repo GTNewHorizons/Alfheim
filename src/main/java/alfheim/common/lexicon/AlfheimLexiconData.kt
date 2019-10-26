@@ -56,8 +56,9 @@ object AlfheimLexiconData {
 	lateinit var flugel: LexiconEntry
 	lateinit var greenRod: LexiconEntry
 	lateinit var infuser: LexiconEntry
-	lateinit var manaAcc: LexiconEntry
 	lateinit var lootInt: LexiconEntry
+	lateinit var manaAcc: LexiconEntry
+	lateinit var manaImba: LexiconEntry
 	lateinit var mask: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
@@ -113,10 +114,10 @@ object AlfheimLexiconData {
 		flugel = BLexiconEntry("flugel", categoryAlfheim)
 		greenRod = BLexiconEntry("greenRod", categoryAlfheim)
 		infuser = BLexiconEntry("infuser", categoryAlfheim)
-		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
+		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
+		manaImba = BLexiconEntry("manaImba", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
-		moonbow = BLexiconEntry("moonbow", categoryAlfheim)
 		multbaub = BLexiconEntry("multbaub", categoryAlfheim)
 		ores = BLexiconEntry("ores", categoryAlfheim)
 		pixie = BLexiconEntry("pixie", categoryAlfheim)
@@ -127,7 +128,6 @@ object AlfheimLexiconData {
 		runes = BLexiconEntry("runes", categoryAlfheim)
 		shrines = BLexiconEntry("shrines", categoryAlfheim)
 		//stories = BLexiconEntry("stories", categoryAlfheim)
-		subspear = BLexiconEntry("subspear", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
@@ -148,11 +148,13 @@ object AlfheimLexiconData {
 		if (targets == null) targets = BLexiconEntry("targets", categoryAlfheim)
 	}
 	
-	fun preInit2() {
+	fun preInitRelics() {
 		excalibr = RLexiconEntry("excaliber", categoryAlfheim, AlfheimAchievements.excaliber)
 		mask = RLexiconEntry("mask", categoryAlfheim, AlfheimAchievements.mask)
 		//mjolnir	= new RLexiconEntry("mjolnir",	categoryAlfheim	, AlfheimAchievements.mjolnir);
+		moonbow = RLexiconEntry("moonbow", categoryAlfheim, AlfheimAchievements.moonlightBow)
 		soul = RLexiconEntry("soul", categoryAlfheim, AlfheimAchievements.flugelSoul)
+		subspear = RLexiconEntry("subspear", categoryAlfheim, AlfheimAchievements.subspace)
 	}
 	
 	// In progress order
@@ -198,7 +200,7 @@ object AlfheimLexiconData {
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamLeaves), worldgen, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1)
 		
-		shrines.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimBlocks.powerStone)
+		shrines.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimBlocks.powerStone)
 		
 		//stories.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3")).icon = ItemStack(AlfheimItems.storyToken)
 		
@@ -314,29 +316,12 @@ object AlfheimLexiconData {
 		crescent.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeCrescentAmulet))
 		
 		reality.setLexiconPages(PageText("0"), PageText("1"),
-								PageCraftingRecipe("2", AlfheimRecipes.recipeSword)).icon = ItemStack(AlfheimItems.realitySword)
+								PageCraftingRecipe("2", AlfheimRecipes.recipeSword))
+		
+		manaImba.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+								PageCraftingRecipe("3", AlfheimRecipes.recipeManaMirrorImba))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
-		
-		soul.setLexiconPages(PageText("0"), PageText("1"), PageText("3"),
-							 PageMultiblock("4", AlfheimMultiblocks.soul),
-							 PageText("5")).icon = ItemStack(AlfheimItems.flugelSoul)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.flugelSoul), soul, 1)
-		
-		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.mask), mask, 1)
-		
-		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber)).icon = ItemStack(AlfheimItems.excaliber)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
-		
-		moonbow.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.moonlightBow)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.moonlightBow), moonbow, 1)
-		
-		subspear.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.subspaceSpear)
-		LexiconRecipeMappings.map(ItemStack(AlfheimItems.subspaceSpear), subspear, 1)
-		
-		/*mjolnir.setLexiconPages(new PageText("0"))
-				.setIcon(new ItemStack(AlfheimItems.mjolnir));*/
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory()
 		
@@ -378,6 +363,34 @@ object AlfheimLexiconData {
 		setKnowledgeTypes()
 	}
 	
+	fun initRelics() {
+		soul.setLexiconPages(PageText("0"), PageText("1"), PageText("3"),
+							 PageMultiblock("4", AlfheimMultiblocks.soul),
+							 PageText("5")).icon = ItemStack(AlfheimItems.flugelSoul)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.flugelSoul), soul, 1)
+		
+		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.mask), mask, 1)
+		
+		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber!!)).icon = ItemStack(AlfheimItems.excaliber)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
+		
+		/*mjolnir.setLexiconPages(new PageText("0")).setIcon(new ItemStack(AlfheimItems.mjolnir))*/
+		
+		moonbow.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.moonlightBow)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.moonlightBow), moonbow, 1)
+		
+		subspear.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.subspaceSpear)
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.subspaceSpear), subspear, 1)
+		
+		soul.knowledgeType = BotaniaAPI.relicKnowledge
+		mask.knowledgeType = BotaniaAPI.relicKnowledge
+		excalibr.knowledgeType = BotaniaAPI.relicKnowledge
+		//mjolnir.setKnowledgeType(BotaniaAPI.relicKnowledge)
+		moonbow.knowledgeType = BotaniaAPI.relicKnowledge
+		subspear.knowledgeType = BotaniaAPI.relicKnowledge
+	}
+	
 	private fun initElvenStory() {
 		if (es!!.pages.isEmpty())
 			es!!.setPriority()
@@ -385,7 +398,7 @@ object AlfheimLexiconData {
 		
 		if (races!!.pages.isEmpty())
 			races!!.setPriority()
-				.setLexiconPages(PageText("0"), PageText("1"), PageText("2"))
+				.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"), PageText("4"), PageText("5"))
 		
 		if (AlfheimCore.enableMMO) initMMO()
 	}
@@ -402,7 +415,6 @@ object AlfheimLexiconData {
 			
 			postInitMMO()
 		}
-		
 		
 		if (targets!!.pages.isEmpty())
 			targets!!.setPriority()
@@ -459,10 +471,6 @@ object AlfheimLexiconData {
 		crescent.knowledgeType = kt
 		reality.knowledgeType = kt
 		flugel.knowledgeType = kt
-		soul.knowledgeType = BotaniaAPI.relicKnowledge
-		mask.knowledgeType = BotaniaAPI.relicKnowledge
-		excalibr.knowledgeType = BotaniaAPI.relicKnowledge
-		//mjolnir	.setKnowledgeType(BotaniaAPI.relicKnowledge);
 		
 		if (AlfheimCore.enableElvenStory) {
 			es!!.knowledgeType = BotaniaAPI.basicKnowledge

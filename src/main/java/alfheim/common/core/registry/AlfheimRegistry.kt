@@ -140,13 +140,13 @@ object AlfheimRegistry {
 		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance)
 		
 		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance)
-		registerEntity(EntitySpellHarp::class.java, "SpellArfa", AlfheimCore.instance)
 		registerEntity(EntitySpellAquaStream::class.java, "SpellAquaStream", AlfheimCore.instance)
 		registerEntity(EntitySpellDriftingMine::class.java, "SpellDriftingMine", AlfheimCore.instance)
 		registerEntity(EntitySpellFenrirStorm::class.java, "SpellFenrirStorm", AlfheimCore.instance)
 		registerEntity(EntitySpellFireball::class.java, "SpellFireball", AlfheimCore.instance)
 		registerEntity(EntitySpellFirewall::class.java, "SpellFirewall", AlfheimCore.instance)
 		registerEntity(EntitySpellGravityTrap::class.java, "SpellGravityTrap", AlfheimCore.instance)
+		registerEntity(EntitySpellHarp::class.java, "SpellHarp", AlfheimCore.instance)
 		registerEntity(EntitySpellIsaacMissile::class.java, "SpellIsaacMissile", AlfheimCore.instance)
 		registerEntity(EntitySpellMortar::class.java, "SpellMortar", AlfheimCore.instance)
 		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlade", AlfheimCore.instance)
@@ -190,7 +190,6 @@ object AlfheimRegistry {
 		registerAnomaly("Lightning", SubTileLightning::class.java)
 		registerAnomaly("ManaTornado", SubTileManaTornado::class.java)
 		registerAnomaly("ManaVoid", SubTileManaVoid::class.java)
-		registerAnomaly("SpeedDown", SubTileSpeedDown::class.java)
 		registerAnomaly("SpeedUp", SubTileSpeedUp::class.java)
 		registerAnomaly("Warp", SubTileWarp::class.java)
 	}

@@ -4,9 +4,9 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.SpellEffectHandler
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -26,7 +26,7 @@ class SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			val l = ArrayList<PotionEffect>()
-			for (o in tg.target.activePotionEffects) if (Potion.potionTypes[(o as PotionEffect).getPotionID()].isBadEffect == tg.isParty) l.add(o)
+			for (o in tg.target.activePotionEffects) if (Potion.potionTypes[(o as PotionEffect).potionID].isBadEffect == tg.isParty) if (o.potionID != AlfheimConfigHandler.potionIDLeftFlame) l.add(o)
 			
 			if (l.isEmpty()) {
 				tg.target.addPotionEffect(PotionEffect(Potion.confusion.id, 300, 0, true))
@@ -37,7 +37,7 @@ class SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 					AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, pe.getPotionID(), 0, 0))
 				}
 			}
-			SpellEffectHandler.sendPacket(Spells.DISPEL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
 		}
 		
 		return result

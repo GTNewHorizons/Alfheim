@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
@@ -47,7 +47,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 		if (worldObj.rand.nextBoolean()) {
 			val p = Vector3(posX, posY, posZ).add(Math.random() * 8.0 - 4.0, Math.random() * 3.5, Math.random() * 8.0 - 4.0)
 			val m = Vector3.fromEntity(this).sub(p).mul(0.05)
-			SpellEffectHandler.sendPacket(Spells.GRAVITY, dimension, p.x, p.y, p.z, m.x, m.y, m.z)
+			VisualEffectHandler.sendPacket(VisualEffects.GRAVITY, dimension, p.x, p.y, p.z, m.x, m.y, m.z)
 		}
 	}
 	

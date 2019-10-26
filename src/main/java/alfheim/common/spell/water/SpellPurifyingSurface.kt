@@ -4,9 +4,9 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.render.world.SpellEffectHandlerClient.Spells
+import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.SpellEffectHandler
+import alfheim.common.core.handler.VisualEffectHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
@@ -19,7 +19,7 @@ class SpellPurifyingSurface: SpellBase("purifyingsurface", EnumRace.UNDINE, 5000
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		SpellEffectHandler.sendPacket(Spells.PURE_AREA, caster)
+		VisualEffectHandler.sendPacket(VisualEffects.PURE_AREA, caster)
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(5.0, 0.5, 5.0)) as List<EntityLivingBase>
 		for (living in list) {
@@ -29,7 +29,7 @@ class SpellPurifyingSurface: SpellBase("purifyingsurface", EnumRace.UNDINE, 5000
 			living.removePotionEffect(Potion.poison.id)
 			living.addPotionEffect(PotionEffect(Potion.fireResistance.id, 3600, 0, true))
 			
-			SpellEffectHandler.sendPacket(Spells.PURE, living)
+			VisualEffectHandler.sendPacket(VisualEffects.PURE, living)
 		}
 		return result
 	}
