@@ -5,6 +5,7 @@ Innovations:
  Redused Elven King ring mana consumption
  Deleted decelerator anomaly
  Elven skin toggling
+ Removed Botanists toolbelt
  ...and more!
 
 Fixes:
@@ -16,7 +17,6 @@ Fixes:
  Elven flight toggling on X
  Elven flight disabling C-S conflict
  Aurora dirt not growing grass
- Dupe with Botanists toolbelt
  Rheingold with player interaction
  [MMO] Client <-> server precast time desync
  [MMO] Fixed quad
