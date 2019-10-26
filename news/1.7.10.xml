@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-22</val>
+		<val>BETA-23</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -60,5 +60,8 @@
 	</version>
 	<version id="BETA-21">
 		<val>Fixed gateway star dupe, you should update asap</val>
+	</version>
+	<version id="BETA-22">
+		<val>Fixed some exploits and added some nice things</val>
 	</version>
 </news>
