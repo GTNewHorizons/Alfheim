@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.AlfheimTab
@@ -179,7 +180,7 @@ object AlfheimItems {
 		wiltedLotus = ItemWiltedLotus()
 		
 		royalStaff = ItemRoyalStaff()
-		`DEV-NULL` = TheRodOfTheDebug() // if (ModInfo.DEV) TheRodOfTheDebug() else null
+		`DEV-NULL` = if (ModInfo.DEV) TheRodOfTheDebug() else null
 		
 		regOreDict()
 	}

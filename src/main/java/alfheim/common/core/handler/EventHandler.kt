@@ -65,8 +65,9 @@ object EventHandler {
 			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimCore.enableElvenStory) 1 else 0).toDouble(), (if (AlfheimCore.enableMMO) 1 else 0).toDouble()), e.player as EntityPlayerMP)
 			CardinalSystem.transfer(e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.WINGS_NOT_IN_ALF, if (AlfheimConfigHandler.enableWingsNonAlfheim) 1.0 else 0.0), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfigHandler.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 250.0, 0.5)
 					e.player.rotationYaw = 180f

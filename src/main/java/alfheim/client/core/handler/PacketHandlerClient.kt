@@ -55,6 +55,7 @@ object PacketHandlerClient {
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
+			m1d.WINGS_NOT_IN_ALF -> AlfheimConfigHandler.enableWingsNonAlfheim = packet.data1 != 0.0
 		}
 	}
 	

@@ -96,7 +96,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, target: Entity): Boolean {
 		return if (stack.itemDamage == ElvenResourcesMetas.DasRheingold && target is EntityPlayer)
-			ItemNBTHelper.setString(stack, "uuid", target.commandSenderName).let { true }
+			ItemNBTHelper.setString(stack, "nick", target.commandSenderName).let { true }
 		else
 			super.onLeftClickEntity(stack, player, target)
 	}
