@@ -1,6 +1,5 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -11,7 +10,6 @@ import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
@@ -75,7 +73,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keyFlight.keyCode)) {
 				if (!toggleFlight) {
 					toggleFlight = true
-					toggleFlight(player, false)
+					toggleFlight(false)
 				}
 			} else if (toggleFlight) {
 				toggleFlight = false
@@ -96,7 +94,7 @@ object KeyBindingHandlerClient {
 				toggleAlt = true
 				toggleJump = toggleAlt
 				val boost = player.flight >= 300
-				toggleFlight(player, boost)
+				toggleFlight(boost)
 				if (boost && Minecraft.getMinecraft().thePlayer.race != EnumRace.HUMAN) {
 					player.motionY += 3.0
 				}
@@ -242,11 +240,8 @@ object KeyBindingHandlerClient {
 		}
 	}
 	
-	fun toggleFlight(player: EntityPlayer, boost: Boolean) {
-		if (!AlfheimConfigHandler.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) {
-			ASJUtilities.say(player, "mes.flight.unavailable")
-		} else
-			AlfheimCore.network.sendToServer(MessageKeyBind(FLIGHT.ordinal, boost, 0))
+	fun toggleFlight(boost: Boolean) {
+		AlfheimCore.network.sendToServer(MessageKeyBind(FLIGHT.ordinal, boost, 0))
 	}
 	
 	enum class KeyBindingIDs {
