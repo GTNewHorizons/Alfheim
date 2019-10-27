@@ -1,10 +1,8 @@
 package alexsocol.asjlib.math
 
-import com.google.common.collect.Lists
 import cpw.mods.fml.relauncher.*
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
-import java.util.*
 import kotlin.math.*
 
 /**
@@ -69,10 +67,10 @@ open class OrientedBB() {
 	
 	/** Converts this OBB to AABB using min and max positions  */
 	fun toAABB(): AxisAlignedBB {
-		val xs = Lists.newArrayList(a.x, b.x, c.x, d.x, e.x, f.x, g.x, h.x)
-		val ys = Lists.newArrayList(a.y, b.y, c.y, d.y, e.y, f.y, g.y, h.y)
-		val zs = Lists.newArrayList(a.z, b.z, c.z, d.z, e.z, f.z, g.z, h.z)
-		return AxisAlignedBB.getBoundingBox(Collections.min(xs), Collections.min(ys), Collections.min(zs), Collections.max(xs), Collections.max(ys), Collections.max(zs))
+		val xs = listOf(a.x, b.x, c.x, d.x, e.x, f.x, g.x, h.x)
+		val ys = listOf(a.y, b.y, c.y, d.y, e.y, f.y, g.y, h.y)
+		val zs = listOf(a.z, b.z, c.z, d.z, e.z, f.z, g.z, h.z)
+		return AxisAlignedBB.getBoundingBox(xs.min()!!, ys.min()!!, zs.min()!!, xs.max()!!, ys.max()!!, zs.max()!!)
 	}
 	
 	/** Sets BB's center to this coords  */

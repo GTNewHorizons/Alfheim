@@ -5,11 +5,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
-import vazkii.botania.common.core.helper.Vector3
 
 fun Double.mfloor() = MathHelper.floor_double(this)
 
-fun Entity.boundingBox(range: Int = 1) =
+fun Entity.boundingBox(range: Double = 1.0) =
     AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)!!
 
 fun TileEntity.boundingBox(range: Int = 1): AxisAlignedBB {

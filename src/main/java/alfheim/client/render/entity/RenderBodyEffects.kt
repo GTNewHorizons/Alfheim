@@ -1,17 +1,17 @@
 package alfheim.client.render.entity
 
-import alexsocol.asjlib.math.*
+import alexsocol.asjlib.math.OrientedBB
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.spell.tech.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.*
 import org.lwjgl.opengl.GL11.*
-import java.lang.Math.toRadians
 import java.util.*
-import kotlin.math.*
+import kotlin.math.sqrt
 
 object RenderButterflies {
 	
@@ -45,87 +45,23 @@ object RenderButterflies {
 	}
 }
 
-object RenderShield {
+object RenderForceShield {
 	
-	private object Hexagon {
-		var yaw = 0.0
-		var magic: (obb: OrientedBB) -> Unit = {}
-		
-		val body = arrayOf(OrientedBB(0.3, 0.3*sqrt(3.0), 0.1), OrientedBB(0.3, 0.3*sqrt(3.0), 0.1), OrientedBB(0.3, 0.3*sqrt(3.0), 0.1))
-		
-		fun translate(x: Double, y: Double, z: Double) {
-			body.forEach { it.translate(x, y, z) }
-		}
-		
-		fun rotateOX(angle: Double) {
-			body.forEach { it.rotateOX(angle) }
-		}
-		
-		fun rotateOY(angle: Double) {
-			body.forEach { it.rotateOY(angle) }
-		}
-		
-		fun rotateOZ(angle: Double) {
-			body.forEach { it.rotateOZ(angle) }
-		}
-		
-		fun draw() {
-			body.forEach { it.drawFaces() }
-		}
-		
-		fun makeMagic(x: Double, y: Double, z: Double, oX: Double, oY: Double) {
-			val (a, _, c) = Vector3(x, 0.0, z).rotate(yaw, Vector3.oY)
-			
-			body.forEachIndexed { id, it ->
-				it.translate(a, y, c)
-				it.rotateOZ(120.0 * id)
-				it.rotateOX(oX)
-				it.rotateOY(oY)
-				it.rotateOY(yaw)
-				magic.invoke(it)
-				it.rotateOY(-yaw)
-				it.rotateOY(-oY)
-				it.rotateOX(-oX)
-				it.rotateOZ(-120.0 * id)
-				it.translate(-a, -y, -c)
-			}
-		}
-	}
+	val drawer = { it: OrientedBB -> it.drawFaces() }
 	
 	@SideOnly(Side.CLIENT)
 	fun render(render: Render, entity: Entity, x: Double, y: Double, z: Double, partialTicks: Float) {
 		setupGlowingRender()
 		
-		val yOff = y + entity.height / 2 - (if (entity === Minecraft.getMinecraft().thePlayer) 1.62 else 0.0)
-		
 		glColor3f(0.4f, 0.7f, 1f)
 		
-		Hexagon.body[0] = OrientedBB(0.3, 0.3*sqrt(3.0), 0.1)
-		Hexagon.body[1] = OrientedBB(0.3, 0.3*sqrt(3.0), 0.1)
-		Hexagon.body[2] = OrientedBB(0.3, 0.3*sqrt(3.0), 0.1)
+		Hexagon.body[0] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
+		Hexagon.body[1] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
+		Hexagon.body[2] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
 		
-		Hexagon.translate(x, yOff, z)
+		val yOff = y + entity.height / 2 - (if (entity === Minecraft.getMinecraft().thePlayer) 1.62 else 0.0)
 		
-		val sin60 = sin(toRadians(60.0)) * 0.8
-		
-		Hexagon.magic = { it.drawFaces() }
-		
-		for (i in 0..2) {
-			Hexagon.yaw = (120.0 * i) + entity.ticksExisted * 2 % 360 + partialTicks
-			
-			Hexagon.makeMagic(0.0, 0.0, 1.5, 0.0, 0.0)			 // front
-			
-			Hexagon.makeMagic(0.0, -0.8, 1.3, 30.0, 0.0)		 // bottom
-			Hexagon.makeMagic(0.0, 0.8, 1.3, -30.0, 0.0)		 // top
-			
-			Hexagon.makeMagic(sin60, 0.4, 1.2, -15.0, 30.0)	 	// top left
-			Hexagon.makeMagic(-sin60, 0.4, 1.2, -15.0, -30.0)	 // top right
-			
-			Hexagon.makeMagic(sin60, -0.4, 1.2, 15.0, 30.0)	 	// bottom left
-			Hexagon.makeMagic(-sin60, -0.4, 1.2, 15.0, -30.0)	 // bottom right
-		}
-
-		Hexagon.translate(-x, -yOff, -z)
+		SpellForceShield.formShield(entity, x, yOff, z, partialTicks, drawer)
 		
 		glColor3f(1f, 1f, 1f)
 		

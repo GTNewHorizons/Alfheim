@@ -534,7 +534,7 @@ object AlfheimHookHandler {
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
 		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
 			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
-			if (entity.isPotionActive(AlfheimConfigHandler.potionIDShield)) RenderShield.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+			if (entity.isPotionActive(AlfheimConfigHandler.potionIDShield)) RenderForceShield.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
 		}
 	}
 	
