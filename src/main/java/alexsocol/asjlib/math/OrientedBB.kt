@@ -8,11 +8,10 @@ import java.util.*
 import kotlin.math.*
 
 /**
- * Oriented Bound Box: scalable, translatable, rotatable!<br></br>
- * Collision calculations by [@gszauer](https://github.com/gszauer/GamePhysicsCookbook)<br></br>
- * <br></br>
+ * Oriented Bound Box: scalable, translatable, rotatable!<br>
+ * Collision calculations by [@gszauer](https://github.com/gszauer/GamePhysicsCookbook)
  * Useful scheme:
- * <pre>
+ *
  * h----g
  * /|   /|
  * e----f |
@@ -24,7 +23,6 @@ import kotlin.math.*
  * |  Z
  * | /
  * |/_____X
-</pre> *
  *
  * @author AlexSocol
  */
@@ -48,10 +46,10 @@ open class OrientedBB() {
 		fromAABB(aabb)
 	}
 	
+	constructor(length: Double, width: Double, height: Double): this(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
+	
 	/** Returns array of vertices for this BB  */
-	fun vertices(): Array<Vector3> {
-		return arrayOf(a, b, c, d, e, f, g, h)
-	}
+	fun vertices() = arrayOf(a, b, c, d, e, f, g, h)
 	
 	fun fromAABB(aabb: AxisAlignedBB): OrientedBB {
 		pos.set(getAABBPosition(aabb))
@@ -192,24 +190,16 @@ open class OrientedBB() {
 	}
 	
 	/** Checks if this OBB intersects with given Vec3  */
-	fun intersectsWith(vec3: Vec3): Boolean {
-		return intersectsWith(this, Vector3(vec3))
-	}
+	fun intersectsWith(vec3: Vec3) = intersectsWith(this, Vector3(vec3))
 	
 	/** Checks if this OBB intersects with given Vec3  */
-	fun intersectsWith(vec3: Vector3): Boolean {
-		return intersectsWith(this, vec3)
-	}
+	fun intersectsWith(vec3: Vector3) = intersectsWith(this, vec3)
 	
 	/** Checks if this OBB intersects with given AABB  */
-	fun intersectsWith(aabb: AxisAlignedBB): Boolean {
-		return intersectsWith(this, aabb)
-	}
+	fun intersectsWith(aabb: AxisAlignedBB) = intersectsWith(this, aabb)
 	
 	/** Checks if this OBB intersects with given OBB  */
-	fun intersectsWith(obb: OrientedBB): Boolean {
-		return intersectsWith(this, obb)
-	}
+	fun intersectsWith(obb: OrientedBB) = intersectsWith(this, obb)
 	
 	class Interval {
 		var min: Double = 0.toDouble()
@@ -357,13 +347,8 @@ open class OrientedBB() {
 				test[6 + i * 3 + 2] = test[i]!!.copy().crossProduct(test[2]!!)
 			}
 			
-			for (i in 0..14) {
-				if (!overlapOnAxis(aabb, obb, test[i]!!)) {
-					return false // Seperating axis found
-				}
-			}
-			
-			return true // Seperating axis not found
+			// Seperating axis not found if all overlap
+			return (0..14).all { overlapOnAxis(aabb, obb, test[it]!!) }
 		}
 		
 		/** Checks if one OBB intersects with other  */
@@ -383,13 +368,8 @@ open class OrientedBB() {
 				test[6 + i * 3 + 2] = test[i]!!.copy().crossProduct(test[2]!!)
 			}
 			
-			for (i in 0..14) {
-				if (!overlapOnAxis(obb1, obb2, test[i]!!)) {
-					return false // Seperating axis found
-				}
-			}
-			
-			return true // Seperating axis not found
+			// Seperating axis not found if all overlap
+			return (0..14).all { overlapOnAxis(obb1, obb2, test[it]!!) }
 		}
 		
 		protected fun overlapOnAxis(aabb: AxisAlignedBB, obb: OrientedBB, axis: Vector3): Boolean {
@@ -470,12 +450,10 @@ open class OrientedBB() {
 			return Vector3(max(p1.x, p2.x), max(p1.y, p2.y), max(p1.z, p2.z))
 		}
 		
-		fun getAABBPosition(aabb: AxisAlignedBB): Vector3 {
-			return Vector3((aabb.minX + aabb.maxX) / 2.0, (aabb.minY + aabb.maxY) / 2.0, (aabb.minZ + aabb.maxZ) / 2.0)
-		}
+		fun getAABBPosition(aabb: AxisAlignedBB) =
+			Vector3((aabb.minX + aabb.maxX) / 2.0, (aabb.minY + aabb.maxY) / 2.0, (aabb.minZ + aabb.maxZ) / 2.0)
 		
-		fun getAABBSize(aabb: AxisAlignedBB): Vector3 {
-			return Vector3(sqrt((aabb.minX - aabb.maxX).pow(2.0)) / 2.0, sqrt((aabb.minY - aabb.maxY).pow(2.0)) / 2.0, sqrt((aabb.minZ - aabb.maxZ).pow(2.0)) / 2.0)
-		}
+		fun getAABBSize(aabb: AxisAlignedBB) =
+			Vector3(sqrt((aabb.minX - aabb.maxX).pow(2.0)) / 2.0, sqrt((aabb.minY - aabb.maxY).pow(2.0)) / 2.0, sqrt((aabb.minZ - aabb.maxZ).pow(2.0)) / 2.0)
 	}
 }

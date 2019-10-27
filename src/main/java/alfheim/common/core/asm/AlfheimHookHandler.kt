@@ -6,10 +6,9 @@ import alfheim.api.block.IHourglassTrigger
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.render.entity.RenderButterflies
+import alfheim.client.render.entity.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -421,7 +420,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase) =
-		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimRegistry.goldRush)) 2 else 0
+		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
@@ -533,14 +532,17 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
-		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) if (entity.isPotionActive(AlfheimRegistry.butterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
+			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+			if (entity.isPotionActive(AlfheimConfigHandler.potionIDShield)) RenderShield.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
-		if (Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimRegistry.soulburn)) {
+		if (Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
 			glDisable(GL_ALPHA_TEST)
 			PotionSoulburn.renderFireInFirstPerson(partialTicks)
 			glEnable(GL_ALPHA_TEST)
@@ -614,14 +616,14 @@ object AlfheimHookHandler {
 			} else if (block.material === Material.water) {
 				glFogi(GL_FOG_MODE, GL_EXP)
 				
-				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimRegistry.noclip))) {
+				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
 					glFogf(GL_FOG_DENSITY, 0.05f)
 				} else {
 					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).toFloat() * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimRegistry.noclip)) 0.05f else 2.0f)
+				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2.0f)
 			} else {
 				f1 = renderer.farPlaneDistance
 				

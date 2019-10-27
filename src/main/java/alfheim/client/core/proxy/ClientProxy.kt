@@ -103,14 +103,14 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderThrownPotion())
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderThrownItem())
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderEntityThrownPotion())
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderEntityThrownItem())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderSubspace())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderSubspaceSpear())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderEntitySubspace())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderEntitySubspaceSpear())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderGrieferCreeper())
-		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderEntityGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderEntityGrieferCreeper())
 	}
 	
 	override fun registerKeyBinds() {

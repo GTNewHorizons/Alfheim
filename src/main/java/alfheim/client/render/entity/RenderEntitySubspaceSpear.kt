@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.*
 
-class RenderSubspaceSpear: Render() {
+class RenderEntitySubspaceSpear: Render() {
 	
 	override fun doRender(weapon: Entity, d0: Double, d1: Double, d2: Double, par8: Float, par9: Float) {
 		weapon as EntitySubspaceSpear

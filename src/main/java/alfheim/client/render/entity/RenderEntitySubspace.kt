@@ -15,7 +15,7 @@ import kotlin.math.*
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
-class RenderSubspace: Render() {
+class RenderEntitySubspace: Render() {
 	
 	val textures = Array(6) { ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/subspace_$it.png") }
 	

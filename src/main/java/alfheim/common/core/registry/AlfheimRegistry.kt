@@ -62,6 +62,7 @@ object AlfheimRegistry {
 	lateinit var possession: Potion
 	lateinit var quadDamage: Potion
 	lateinit var sacrifice: Potion
+	lateinit var shield: Potion
 	lateinit var showMana: Potion
 	lateinit var soulburn: Potion
 	lateinit var stoneSkin: Potion
@@ -107,6 +108,7 @@ object AlfheimRegistry {
 		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
 		quadDamage = PotionQuadDamage()
 		sacrifice = PotionSacrifice()
+		shield = PotionShield()
 		showMana = PotionShowMana()
 		soulburn = PotionSoulburn()
 		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
@@ -214,6 +216,7 @@ object AlfheimRegistry {
 		registerSpell(SpellFenrirStorm())
 		registerSpell(SpellFireball())
 		registerSpell(SpellFirewall())
+		registerSpell(SpellForceShield())
 		registerSpell(SpellGravityTrap())
 		registerSpell(SpellGoldRush())
 		registerSpell(SpellHammerfall())

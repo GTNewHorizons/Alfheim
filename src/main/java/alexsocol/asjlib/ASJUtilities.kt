@@ -442,7 +442,7 @@ object ASJUtilities {
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
-		val vec3 = Vec3.createVectorHelper(entity.posX, if (FMLCommonHandler.instance().effectiveSide == Side.CLIENT) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
+		val vec3 = Vec3.createVectorHelper(entity.posX, if (!isServer) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		var vec33: Vec3? = null
