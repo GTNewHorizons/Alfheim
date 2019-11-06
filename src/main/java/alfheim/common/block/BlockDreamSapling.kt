@@ -24,6 +24,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setCreativeTab(AlfheimTab)
 		setLightLevel(9.0f / 15.0f)
 		setLightOpacity(0)
+		stepSound = soundTypeGrass
 		tickRandomly = true
 	}
 	

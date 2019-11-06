@@ -22,12 +22,13 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
+@Suppress("LeakingThis")
 open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling(), ILexiconable, IFuelHandler {
 	
 	init {
 		setBlockName(name)
 		setCreativeTab(AlfheimTab)
-		stepSound = Block.soundTypeGrass
+		stepSound = soundTypeGrass
 		tickRandomly = true
 		
 		GameRegistry.registerFuelHandler(this)
