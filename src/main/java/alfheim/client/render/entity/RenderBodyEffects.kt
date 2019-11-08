@@ -1,9 +1,7 @@
 package alfheim.client.render.entity
 
-import alexsocol.asjlib.math.OrientedBB
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.spell.tech.SpellForceShield
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -39,26 +37,6 @@ object RenderButterflies {
 			glPopMatrix()
 			--flies
 		}
-		
-		unsetGlowingRender()
-	}
-}
-
-object RenderForceShield {
-	
-	val drawer = { it: OrientedBB -> it.drawFaces() }
-	
-	@SideOnly(Side.CLIENT)
-	fun render(render: Render, entity: Entity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		setupGlowingRender()
-		
-		glColor3f(0.4f, 0.7f, 1f)
-		
-		val yOff = y + entity.height / 2 - (if (entity === Minecraft.getMinecraft().thePlayer) 1.62 else 0.0)
-		
-		SpellForceShield.formShield(entity, x, yOff, z, partialTicks, drawer)
-		
-		glColor3f(1f, 1f, 1f)
 		
 		unsetGlowingRender()
 	}

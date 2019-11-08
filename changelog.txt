@@ -1,6 +1,5 @@
 Innovations:
  Teleport spells
- Force Shield spell
 
 Fixes:
  --
