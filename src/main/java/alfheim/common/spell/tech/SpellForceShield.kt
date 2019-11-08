@@ -26,21 +26,25 @@ class SpellForceShield: SpellBase("shield", EnumRace.LEPRECHAUN, 8000, 1200, 30)
 		fun formShield(entity: Entity, x: Double, y: Double, z: Double, ticks: Float, magic: (obb: OrientedBB) -> Unit) {
 			val xSide = sin(Math.toRadians(60.0)) * 0.8
 			
+			Hexagon.body[0].fromParams(0.3, 0.3 * sqrt(3.0), 0.1)
+			Hexagon.body[1].fromParams(0.3, 0.3 * sqrt(3.0), 0.1)
+			Hexagon.body[2].fromParams(0.3, 0.3 * sqrt(3.0), 0.1)
+			
 			Hexagon.translate(x, y, z)
 			
 			for (i in 0..2) {
-				Hexagon.yaw = (120.0 * i) + entity.ticksExisted * 2 % 360 + ticks
+				val yaw = (120.0 * i) + entity.ticksExisted * 2 % 360 + ticks
 				
-				Hexagon.reposition(0.0, 0.0, 1.5, 0.0, 0.0, magic)			// front
+				Hexagon.reposition(0.0, 0.0, 1.5, 0.0, 0.0, yaw, magic)			// front
 				
-				Hexagon.reposition(0.0, -0.8, 1.3, 30.0, 0.0, magic)		// bottom
-				Hexagon.reposition(0.0, 0.8, 1.3, -30.0, 0.0, magic)		// top
+				Hexagon.reposition(0.0, -0.8, 1.3, 30.0, 0.0, yaw, magic)		// bottom
+				Hexagon.reposition(0.0, 0.8, 1.3, -30.0, 0.0, yaw, magic)		// top
 				
-				Hexagon.reposition(xSide, 0.4, 1.2, -15.0, 30.0, magic)		// top left
-				Hexagon.reposition(-xSide, 0.4, 1.2, -15.0, -30.0, magic)	// top right
+				Hexagon.reposition(xSide, 0.4, 1.2, -15.0, 30.0, yaw, magic)		// top left
+				Hexagon.reposition(-xSide, 0.4, 1.2, -15.0, -30.0, yaw, magic)	// top right
 				
-				Hexagon.reposition(xSide, -0.4, 1.2, 15.0, 30.0, magic)		// bottom left
-				Hexagon.reposition(-xSide, -0.4, 1.2, 15.0, -30.0, magic)	// bottom right
+				Hexagon.reposition(xSide, -0.4, 1.2, 15.0, 30.0, yaw, magic)		// bottom left
+				Hexagon.reposition(-xSide, -0.4, 1.2, 15.0, -30.0, yaw, magic)	// bottom right
 			}
 			
 			Hexagon.translate(-x, -y, -z)
@@ -49,8 +53,6 @@ class SpellForceShield: SpellBase("shield", EnumRace.LEPRECHAUN, 8000, 1200, 30)
 }
 
 object Hexagon {
-	
-	var yaw = 0.0
 	
 	val body = arrayOf(OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1), OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1), OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1))
 	
@@ -74,7 +76,7 @@ object Hexagon {
 		body.forEach { it.drawFaces() }
 	}
 	
-	fun reposition(x: Double, y: Double, z: Double, oX: Double, oY: Double, magic: (obb: OrientedBB) -> Unit) {
+	fun reposition(x: Double, y: Double, z: Double, oX: Double, oY: Double, yaw: Double, magic: (obb: OrientedBB) -> Unit) {
 		val (a, _, c) = Vector3(x, 0.0, z).rotate(yaw, Vector3.oY)
 		
 		body.forEachIndexed { id, it ->

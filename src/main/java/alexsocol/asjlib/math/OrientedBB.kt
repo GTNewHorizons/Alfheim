@@ -27,9 +27,9 @@ import kotlin.math.*
 @Suppress("unused")
 open class OrientedBB() {
 	
-	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)            // center
-	val size: Vector3 = Vector3(0.5, 0.5, 0.5)        // half size
-	val orient: Matrix4 = Matrix4()        // rotation (orientation) matrix
+	val pos: Vector3 = Vector3(0.5, 0.5, 0.5)	// center
+	val size: Vector3 = Vector3(0.5, 0.5, 0.5)	// half size
+	val orient: Matrix4 = Matrix4()				// rotation (orientation) matrix
 	
 	val a: Vector3 = Vector3(0.0, 0.0, 0.0)
 	val b: Vector3 = Vector3(1.0, 0.0, 0.0)
@@ -48,6 +48,8 @@ open class OrientedBB() {
 	
 	/** Returns array of vertices for this BB  */
 	fun vertices() = arrayOf(a, b, c, d, e, f, g, h)
+	
+	fun fromParams(length: Double, width: Double, height: Double) = fromAABB(AxisAlignedBB.getBoundingBox(length/-2, width/-2, height/-2, length/2, width/2, height/2))
 	
 	fun fromAABB(aabb: AxisAlignedBB): OrientedBB {
 		pos.set(getAABBPosition(aabb))

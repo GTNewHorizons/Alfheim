@@ -3,7 +3,7 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.math.OrientedBB
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.spell.tech.*
+import alfheim.common.spell.tech.SpellForceShield
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.*
 import org.lwjgl.opengl.GL11.*
 import java.util.*
-import kotlin.math.sqrt
 
 object RenderButterflies {
 	
@@ -54,10 +53,6 @@ object RenderForceShield {
 		setupGlowingRender()
 		
 		glColor3f(0.4f, 0.7f, 1f)
-		
-		Hexagon.body[0] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
-		Hexagon.body[1] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
-		Hexagon.body[2] = OrientedBB(0.3, 0.3 * sqrt(3.0), 0.1)
 		
 		val yOff = y + entity.height / 2 - (if (entity === Minecraft.getMinecraft().thePlayer) 1.62 else 0.0)
 		
