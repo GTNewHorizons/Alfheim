@@ -16,10 +16,10 @@ import kotlin.math.sin
 
 class GUIRace(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent(receiveCanceled = true)
+	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
 		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfigHandler.selfHealthUI)) return
-		if (e.type != ElementType.EXPERIENCE || mc.thePlayer.race == EnumRace.HUMAN) return
+		if (e.type != ElementType.ALL || mc.thePlayer.race == EnumRace.HUMAN) return
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)

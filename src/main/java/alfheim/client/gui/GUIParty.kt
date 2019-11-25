@@ -34,9 +34,9 @@ import kotlin.math.*
 @Suppress("UNCHECKED_CAST")
 class GUIParty(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent(receiveCanceled = true)
+	@SubscribeEvent
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
-		if (event.type != ElementType.HOTBAR) return
+		if (event.type != ElementType.ALL) return
 		GuiIngameForge.renderBossHealth = false
 		val player = mc.thePlayer
 		val font = mc.fontRenderer
