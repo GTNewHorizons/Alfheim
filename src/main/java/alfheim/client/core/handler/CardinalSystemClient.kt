@@ -85,8 +85,6 @@ object CardinalSystemClient {
 				// if (team != null && Vector3.entityDistancePlane(mc.thePlayer, PlayerSegmentClient.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
 			//}
 			
-			ASJUtilities.chatLog("${PlayerSegmentClient.partyIndex}")
-			
 			return PlayerSegmentClient.isParty
 		}
 	}

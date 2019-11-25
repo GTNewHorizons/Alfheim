@@ -1,6 +1,5 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
@@ -16,8 +15,6 @@ import vazkii.botania.common.item.equipment.bauble.ItemTravelBelt
 object PacketHandler {
 	
 	fun handle(packet: Message0dS, ctx: MessageContext) {
-		ASJUtilities.chatLog("PACKET")
-		
 		when (m0ds.values()[packet.type]) {
 			m0ds.DODGE -> DOGIE(ctx.serverHandler)
 			m0ds.JUMP  -> jump(ctx.serverHandler.playerEntity)
