@@ -108,8 +108,7 @@ object AlfheimAPI {
 		return l
 	}
 	
-	fun getSpellInstance(name: String) =
-		spells.firstOrNull { it.name == name }
+	fun getSpellInstance(name: String) = spells.firstOrNull { it.name == name }
 	
 	fun getSpellByIDs(raceID: Int, spellID: Int): SpellBase? {
 		var i = 0

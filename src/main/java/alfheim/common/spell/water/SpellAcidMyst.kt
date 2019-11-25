@@ -9,7 +9,10 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11.*
 
-class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
+object SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
+	
+	override var duration = 50
+	override var radius = 4.5
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
@@ -18,7 +21,6 @@ class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val s = 4.5
 		glDisable(GL_CULL_FACE)
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glEnable(GL_BLEND)
@@ -26,10 +28,10 @@ class SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 		glTranslated(0.0, -1.61, 0.0)
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.target)
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV(caster.posX - s, caster.posY, caster.posZ - s, 0.0, 0.0)
-		Tessellator.instance.addVertexWithUV(caster.posX - s, caster.posY, caster.posZ + s, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(caster.posX + s, caster.posY, caster.posZ + s, 1.0, 1.0)
-		Tessellator.instance.addVertexWithUV(caster.posX + s, caster.posY, caster.posZ - s, 1.0, 0.0)
+		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ - radius, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ + radius, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(caster.posX + radius, caster.posY, caster.posZ + radius, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(caster.posX + radius, caster.posY, caster.posZ - radius, 1.0, 0.0)
 		Tessellator.instance.draw()
 		glDisable(GL_BLEND)
 		glAlphaFunc(GL_GREATER, 0.1f)

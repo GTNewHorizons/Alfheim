@@ -7,6 +7,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.fire.SpellFireball
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -35,9 +36,9 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	constructor(world: World, x: Double, y: Double, z: Double, accX: Double, accY: Double, accZ: Double): this(world) {
 		setLocationAndAngles(x, y, z, rotationYaw, rotationPitch)
 		val d = MathHelper.sqrt_double(accX * accX + accY * accY + accZ * accZ).toDouble()
-		accelerationX = accX / d * 0.1
-		accelerationY = accY / d * 0.1
-		accelerationZ = accZ / d * 0.1
+		accelerationX = accX / d * SpellFireball.efficiency
+		accelerationY = accY / d * SpellFireball.efficiency
+		accelerationZ = accZ / d * SpellFireball.efficiency
 	}
 	
 	constructor(world: World, shooter: EntityLivingBase): this(world, shooter.posX, shooter.posY + shooter.eyeHeight, shooter.posZ, shooter.lookVec.xCoord, shooter.lookVec.yCoord, shooter.lookVec.zCoord) {
@@ -49,10 +50,10 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, 6.0))
-			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(2.0, 2.0, 2.0))) {
+			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
+			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellFireball.radius, SpellFireball.radius, SpellFireball.radius))) {
 				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, 6.0))
+				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
 			}
 			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
@@ -67,7 +68,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 			//if (!ASJUtilities.isServer()) return;
 			super.onUpdate()
 			
-			if (ticksExisted == 600) onImpact(null)
+			if (ticksExisted == SpellFireball.duration) onImpact(null)
 			
 			val vec3 = Vec3.createVectorHelper(posX, posY, posZ)
 			val vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)

@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellNightVision: SpellBase("nightvision", EnumRace.SPRIGGAN, 6000, 1200, 30) {
+object SpellNightVision: SpellBase("nightvision", EnumRace.SPRIGGAN, 6000, 1200, 30) {
+	
+	override var duration = 36000
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
@@ -24,8 +26,8 @@ class SpellNightVision: SpellBase("nightvision", EnumRace.SPRIGGAN, 6000, 1200, 
 		for (i in 0 until pt.count) {
 			val living = pt[i] ?: continue
 			if (Vector3.entityDistance(living, caster) < 32) {
-				living.addPotionEffect(PotionEffect(Potion.nightVision.id, 36000, -1, true))
-				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.nightVision.id, 36000, -1))
+				living.addPotionEffect(PotionEffect(Potion.nightVision.id, duration, -1, true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.nightVision.id, duration, -1))
 				VisualEffectHandler.sendPacket(VisualEffects.NVISION, living)
 			}
 		}

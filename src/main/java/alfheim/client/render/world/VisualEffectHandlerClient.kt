@@ -7,8 +7,10 @@ import alfheim.api.entity.race
 import alfheim.client.gui.GUIDeathTimer
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects.*
 import alfheim.common.block.tile.TileManaInfuser
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
+import alfheim.common.spell.illusion.SpellSmokeScreen
+import alfheim.common.spell.water.*
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
@@ -77,7 +79,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun addIceLens() {
-		Minecraft.getMinecraft().thePlayer.addPotionEffect(PotionEffect(AlfheimRegistry.icelens.id, 200, 0, true))
+		Minecraft.getMinecraft().thePlayer.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDIceLens, SpellIceLens.duration, -1, true))
 	}
 	
 	fun addMana(enID: Double, mana: Double) {
@@ -90,7 +92,7 @@ object VisualEffectHandlerClient {
 					d += .2
 				}
 			} else
-				e.addPotionEffect(PotionEffect(AlfheimRegistry.showMana.id, mana.toInt(), 100, true))
+				e.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDShowMana, mana.toInt(), 100, true))
 		}
 	}
 	
@@ -206,7 +208,7 @@ object VisualEffectHandlerClient {
 	
 	fun spawnPure(x: Double, y: Double, z: Double) {
 		for (i in 0..63) {
-			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(0.2)
+			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(SpellPurifyingSurface.radius / 25)
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x, y + 0.2, z, 0f, 0.75f, 1f, 1f, m.x.toFloat(), 0f, m.z.toFloat())
 		}
 	}
@@ -214,7 +216,7 @@ object VisualEffectHandlerClient {
 	// TODO change to OSM particles
 	fun spawnSmoke(x: Double, y: Double, z: Double) {
 		for (i in 0..255) {
-			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Minecraft.getMinecraft().theWorld.rand.nextInt(15) + Math.random())
+			m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(Math.random() * SpellSmokeScreen.radius)
 			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + m.x, y + m.y, z + m.z, 0.1f, 0.1f, 0.1f, (Math.random() * 4 + 4).toFloat(), (Math.random() * -0.075).toFloat())
 		}
 	}

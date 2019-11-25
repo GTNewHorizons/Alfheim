@@ -10,12 +10,14 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import vazkii.botania.common.Botania
 
-class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
+object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
+	
+	override var radius = 8.0
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val mop = ASJUtilities.getSelectedBlock(caster, 8.0, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
-			Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
+			Vector3(caster.lookVec).normalize().mul(radius).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
 		else
 			Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
 		
@@ -74,9 +76,9 @@ class SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val mop = ASJUtilities.getSelectedBlock(caster, 8.0, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
-			Vector3(caster.lookVec).normalize().mul(8.0).add(caster.posX, caster.posY, caster.posZ)
+			Vector3(caster.lookVec).normalize().mul(radius).add(caster.posX, caster.posY, caster.posZ)
 		else
 			Vector3(mop.hitVec)
 		

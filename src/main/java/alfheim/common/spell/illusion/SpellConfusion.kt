@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellConfusion: SpellBase("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15) {
+object SpellConfusion: SpellBase("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15) {
+	
+	override var duration = 600
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -26,8 +28,8 @@ class SpellConfusion: SpellBase("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15) 
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.confusion.id, 600, 1, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.confusion.id, 600, 1))
+			tg.target.addPotionEffect(PotionEffect(Potion.confusion.id, duration, -1, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.confusion.id, duration, -1))
 			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
 		}
 		

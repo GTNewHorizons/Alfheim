@@ -9,13 +9,15 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
-class SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {
+object SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {
+	
+	override var radius = 32.0
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result: SpellCastResult
-		val mop = ASJUtilities.getSelectedBlock(caster, 32.0, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
-			Vector3(caster.lookVec).normalize().mul(32.0).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
+			Vector3(caster.lookVec).normalize().mul(radius).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
 		else
 			Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
 		

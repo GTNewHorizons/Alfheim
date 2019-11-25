@@ -13,6 +13,7 @@ import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
+import alfheim.common.spell.tech.SpellTimeStop
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
@@ -886,7 +887,7 @@ object CardinalSystem {
 			if (e is ITimeStopSpecific && (e as ITimeStopSpecific).isImmune) return false
 			if (tsAreas[e.dimension] == null) return false
 			for (tsa in tsAreas[e.dimension]!!) {
-				if (Vector3.vecEntityDistance(tsa.pos, e) < 16) {
+				if (Vector3.vecEntityDistance(tsa.pos, e) < SpellTimeStop.radius) {
 					if (e is ITimeStopSpecific && (e as ITimeStopSpecific).affectedBy(tsa.uuid)) return true
 					if (e is EntityLivingBase) {
 						if (!PartySystem.sameParty(tsa.uuid, e)) return true
@@ -903,7 +904,7 @@ object CardinalSystem {
 			val uuid = caster.entityUniqueID!!
 			@Transient
 			val id: Int
-			var life = 1200
+			var life = SpellTimeStop.duration
 			
 			init {
 				id = ++nextID

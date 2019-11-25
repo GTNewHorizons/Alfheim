@@ -55,7 +55,7 @@ object KeyBindingHandlerClient {
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true
 			if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).item is ItemCreativeReachPendant)
-				AlfheimCore.network.sendToServer(MessageKeyBind(ATTACK.ordinal, false, 0))
+				AlfheimCore.network.sendToServer(MessageKeyBindS(ATTACK.ordinal, false, 0))
 		} else if (toggleLMB) {
 			toggleLMB = false
 		}
@@ -63,7 +63,7 @@ object KeyBindingHandlerClient {
 		if (Keyboard.isKeyDown(ClientProxy.keyLolicorn.keyCode)) {
 			if (!toggleCorn) {
 				toggleCorn = true
-				AlfheimCore.network.sendToServer(MessageKeyBind(CORN.ordinal, false, 0))
+				AlfheimCore.network.sendToServer(MessageKeyBindS(CORN.ordinal, false, 0))
 			}
 		} else if (toggleCorn) {
 			toggleCorn = false
@@ -83,7 +83,7 @@ object KeyBindingHandlerClient {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
 					PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
-					AlfheimCore.network.sendToServer(MessageKeyBind(ESMABIL.ordinal, false, 0))
+					AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
 				}
 			} else if (toggleESMAbility) {
 				toggleESMAbility = false
@@ -133,7 +133,7 @@ object KeyBindingHandlerClient {
 									return@run
 								}
 								
-								AlfheimCore.network.sendToServer(MessageKeyBind(CAST.ordinal, true, i))
+								AlfheimCore.network.sendToServer(MessageKeyBindS(CAST.ordinal, true, i))
 								PlayerSegmentClient.initM = AlfheimAPI.getSpellByIDs(PlayerSegmentClient.hotSpells[i] shr 28 and 0xF, PlayerSegmentClient.hotSpells[i] and 0xFFFFFFF)!!.getCastTime()
 								PlayerSegmentClient.init = PlayerSegmentClient.initM
 							}
@@ -199,7 +199,7 @@ object KeyBindingHandlerClient {
 							}
 							
 							val i = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
-							AlfheimCore.network.sendToServer(MessageKeyBind(CAST.ordinal, false, i))
+							AlfheimCore.network.sendToServer(MessageKeyBindS(CAST.ordinal, false, i))
 							PlayerSegmentClient.initM = AlfheimAPI.getSpellByIDs(raceID, spellID)!!.getCastTime()
 							PlayerSegmentClient.init = PlayerSegmentClient.initM
 						}
@@ -212,7 +212,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keyUnCast.keyCode)) {
 				if (!toggleUnCast) {
 					toggleUnCast = true
-					AlfheimCore.network.sendToServer(MessageKeyBind(UNCAST.ordinal, false, 0))
+					AlfheimCore.network.sendToServer(MessageKeyBindS(UNCAST.ordinal, false, 0))
 					PlayerSegmentClient.initM = 0
 					PlayerSegmentClient.init = PlayerSegmentClient.initM
 				}
@@ -223,7 +223,8 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keySelMob.keyCode)) {
 				if (!toggleSelMob) {
 					toggleSelMob = true
-					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId ?: 0))
+					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId
+																																																?: 0))
 				}
 			} else if (toggleSelMob) {
 				toggleSelMob = false
@@ -232,7 +233,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keySelTeam.keyCode)) {
 				if (!toggleSelTeam) {
 					toggleSelTeam = true
-					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(MessageKeyBind(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.partyIndex))
+					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.partyIndex))
 				}
 			} else if (toggleSelTeam) {
 				toggleSelTeam = false
@@ -241,7 +242,7 @@ object KeyBindingHandlerClient {
 	}
 	
 	fun toggleFlight(boost: Boolean) {
-		AlfheimCore.network.sendToServer(MessageKeyBind(FLIGHT.ordinal, boost, 0))
+		AlfheimCore.network.sendToServer(MessageKeyBindS(FLIGHT.ordinal, boost, 0))
 	}
 	
 	enum class KeyBindingIDs {

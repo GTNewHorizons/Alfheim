@@ -7,7 +7,8 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
+import alfheim.common.spell.water.SpellAcidMyst
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -34,15 +35,15 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || caster == null || caster!!.isDead || ticksExisted > 50) {
+		if (!AlfheimCore.enableMMO || caster == null || caster!!.isDead || ticksExisted > SpellAcidMyst.duration) {
 			setDead()
 			return
 		}
-		if (this.isDead || !ASJUtilities.isServer) return
+		if (isDead || !ASJUtilities.isServer) return
 		
-		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(4.5, 4.5, 4.5)) as MutableList<EntityLivingBase>
+		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellAcidMyst.radius)) as MutableList<EntityLivingBase>
 		l.remove(caster!!)
-		for (e in l) if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) < 9) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, 1.0))
+		for (e in l) if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) <= SpellAcidMyst.radius) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, SpellAcidMyst.damage.toDouble()))
 	}
 	
 	fun getTopBlock(world: World, x: Int, z: Int): Int {

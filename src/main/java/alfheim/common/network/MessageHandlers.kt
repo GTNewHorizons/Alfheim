@@ -14,10 +14,18 @@ import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 
-class Message0dHandler: IMessageHandler<Message0d, IMessage> {
+class Message0dSHandler: IMessageHandler<Message0dS, IMessage> {
 		
-	override fun onMessage(packet: Message0d, message: MessageContext): IMessage? {
+	override fun onMessage(packet: Message0dS, message: MessageContext): IMessage? {
 		PacketHandler.handle(packet, message)
+		return null
+	}
+}
+
+class Message0dCHandler: IMessageHandler<Message0dC, IMessage> {
+	
+	override fun onMessage(packet: Message0dC, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
 		return null
 	}
 }
@@ -114,9 +122,9 @@ class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage> {
 	}
 }
 
-class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
+class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage> {
 
-	override fun onMessage(packet: MessageKeyBind, message: MessageContext): IMessage? {
+	override fun onMessage(packet: MessageKeyBindS, message: MessageContext): IMessage? {
 		val player = message.serverHandler.playerEntity
 		
 		when (values()[packet.action]) {
@@ -198,9 +206,9 @@ class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
 	}
 }
 
-class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItem, IMessage> {
+class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage> {
 	
-	override fun onMessage(packet: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
+	override fun onMessage(packet: MessagePlayerItemS?, ctx: MessageContext?): IMessage? {
 		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
 			val player = ctx.serverHandler.playerEntity
 			

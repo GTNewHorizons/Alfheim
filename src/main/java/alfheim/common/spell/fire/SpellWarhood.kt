@@ -7,7 +7,7 @@ import alfheim.common.core.handler.CardinalSystem
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
-class SpellWarhood: SpellBase("warhood", EnumRace.SALAMANDER, 256000, 72000, 100, true) {
+object SpellWarhood: SpellBase("warhood", EnumRace.SALAMANDER, 256000, 72000, 100, true) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET

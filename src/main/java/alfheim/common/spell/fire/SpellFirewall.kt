@@ -10,7 +10,9 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11.*
 
-class SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) {
+object SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) {
+	
+	override var duration = 600
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)

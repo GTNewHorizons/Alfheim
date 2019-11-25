@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.earth.SpellMortar
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.*
@@ -30,9 +31,9 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	constructor(world: World, shooter: EntityLivingBase): this(world) {
-		this.caster = shooter
+		caster = shooter
 		setPositionAndRotation(caster!!.posX, caster!!.posY + caster!!.height * 0.75, caster!!.posZ, caster!!.rotationYaw, caster!!.rotationPitch)
-		val m = Vector3(caster!!.lookVec).mul(2.0)
+		val m = Vector3(caster!!.lookVec).mul(SpellMortar.efficiency)
 		motionX = m.x
 		motionY = m.y
 		motionZ = m.z
@@ -41,11 +42,11 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
 			if (mop != null && mop.entityHit is EntityLivingBase && !PartySystem.mobsSameParty(mop.entityHit as EntityLivingBase, caster)) {
-				mop.entityHit.attackEntityFrom(DamageSource.fallingBlock, 8f)
-				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, 20.0)).toFloat())
+				mop.entityHit.attackEntityFrom(DamageSource.fallingBlock, SpellMortar.damage)
+				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).toFloat())
 			}
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(2.0, 2.0, 2.0)) as List<EntityLivingBase>
-			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, 5.0))
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellMortar.radius, SpellMortar.radius, SpellMortar.radius)) as List<EntityLivingBase>
+			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
 			
 			setDead()
 		}
@@ -61,7 +62,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			}
 			super.onUpdate()
 			
-			if (ticksExisted == 100) onImpact(null)
+			if (ticksExisted == SpellMortar.duration) onImpact(null)
 			
 			val vec3 = Vec3.createVectorHelper(posX, posY, posZ)
 			val vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)

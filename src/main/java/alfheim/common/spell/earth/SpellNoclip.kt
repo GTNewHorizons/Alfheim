@@ -5,15 +5,16 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
 
-class SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
+object SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
+	
+	override var duration = 200
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -25,8 +26,8 @@ class SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(AlfheimRegistry.noclip.id, 200, 0, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimRegistry.noclip.id, 200, 0))
+			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDNoclip, duration, -1, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDNoclip, duration, -1))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 		}
 		

@@ -9,21 +9,25 @@ import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 
-class SpellDragonGrowl: SpellBase("dragongrowl", EnumRace.POOKA, 12000, 2400, 20) {
+object SpellDragonGrowl: SpellBase("dragongrowl", EnumRace.POOKA, 12000, 2400, 20) {
+	
+	override var duration = 100
+	override var efficiency = 2.0
+	override var radius = 8.0
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(8.0, 8.0, 8.0)) as List<EntityLivingBase>
+		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, radius, radius)) as List<EntityLivingBase>
 		for (living in list) {
 			if (PartySystem.mobsSameParty(caster, living) || Vector3.entityDistance(living, caster) > 16) continue
-			living.addPotionEffect(PotionEffect(Potion.blindness.id, 100, 0, true))
-			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.blindness.id, 100, 0))
-			living.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 100, 5, true))
-			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSlowdown.id, 100, 5))
-			living.addPotionEffect(PotionEffect(Potion.weakness.id, 100, 2, true))
-			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSlowdown.id, 100, 2))
+			living.addPotionEffect(PotionEffect(Potion.blindness.id, duration, 0, true))
+			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.blindness.id, duration, 0))
+			living.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, (efficiency * 2.5).toInt(), true))
+			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSlowdown.id, duration, (efficiency * 2.5).toInt()))
+			living.addPotionEffect(PotionEffect(Potion.weakness.id, duration, efficiency.toInt(), true))
+			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSlowdown.id, duration, efficiency.toInt()))
 		}
 		caster.worldObj.playSoundEffect(caster.posX, caster.posY, caster.posZ, "mob.enderdragon.growl", 100.0f, 0.8f + caster.worldObj.rand.nextFloat() * 0.2f)
 		return result

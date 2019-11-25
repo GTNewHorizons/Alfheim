@@ -31,7 +31,7 @@ object RenderButterflies {
 			glPushMatrix()
 			glColor4d(rand.nextDouble() * 0.4 + 0.6, rand.nextDouble() * 0.4 + 0.6, rand.nextDouble() * 0.4 + 0.6, 1.0)
 			glTranslated(0.0, if (entity === Minecraft.getMinecraft().thePlayer) -(Minecraft.getMinecraft().thePlayer.defaultEyeHeight * s) else entity.height / s / 2, 0.0)
-			glRotated(rand.nextDouble() * 360 + entity.ticksExisted, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1)
+			glRotated(rand.nextDouble() * 360 + entity.ticksExisted + partialTicks, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1)
 			glTranslated(0.0, 0.0, -1.0)
 			drawRect()
 			glPopMatrix()

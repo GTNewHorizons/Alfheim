@@ -5,6 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.darkness.SpellSacrifice
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.boss.IBossDisplayData
@@ -36,7 +37,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 		for (e in l) {
 			if (e is IBossDisplayData) continue
 			dmg = if (e === target) DamageSourceSpell.sacrifice else DamageSourceSpell.darkness(target)
-			e.attackEntityFrom(dmg, Integer.MAX_VALUE.toFloat())
+			e.attackEntityFrom(dmg, SpellSacrifice.damage)
 		}
 	}
 	

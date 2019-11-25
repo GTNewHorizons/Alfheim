@@ -9,7 +9,9 @@ import alfheim.common.core.handler.VisualEffectHandler
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
-class SpellHealing: SpellBase("healing", EnumRace.UNDINE, 2000, 200, 10) {
+object SpellHealing: SpellBase("healing", EnumRace.UNDINE, 2000, 200, 10) {
+	
+	override var damage = 5f
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
@@ -21,8 +23,8 @@ class SpellHealing: SpellBase("healing", EnumRace.UNDINE, 2000, 200, 10) {
 		for (i in 0 until pt.count) {
 			val living = pt[i]
 			if (living != null && Vector3.entityDistance(living, caster) < 32) {
-				living.heal(5.0f)
-				if (living is EntityPlayer) living.foodStats.addStats(living.foodStats.foodLevel + 1, 1f)
+				living.heal(damage)
+				if (living is EntityPlayer) living.foodStats.addStats(2, 1f)
 				VisualEffectHandler.sendPacket(VisualEffects.HEAL, living)
 			}
 		}

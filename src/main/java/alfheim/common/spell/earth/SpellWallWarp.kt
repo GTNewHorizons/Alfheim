@@ -8,7 +8,9 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
-class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
+object SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
+	
+	override var radius = 2.0
 	
 	override// This spell is slightly changed version of item from thKaguya's mod
 	fun performCast(caster: EntityLivingBase): SpellCastResult {
@@ -30,7 +32,7 @@ class SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 			else -> px = -1
 		}
 		
-		for (i in 0..2) {
+		for (i in 0..radius.toInt()) {
 			if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY, mop.blockZ)) {
 				if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY + 1, mop.blockZ)) {
 					result = checkCast(caster)

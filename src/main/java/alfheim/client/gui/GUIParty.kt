@@ -10,7 +10,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.mfloor
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -34,9 +34,9 @@ import kotlin.math.*
 @Suppress("UNCHECKED_CAST")
 class GUIParty(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent
-	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
-		if (event.type != ElementType.ALL) return
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	fun onOverlayRendering(event: RenderGameOverlayEvent.Pre) {
+		if (event.type != ElementType.HOTBAR) return
 		GuiIngameForge.renderBossHealth = false
 		val player = mc.thePlayer
 		val font = mc.fontRenderer

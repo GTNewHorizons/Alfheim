@@ -7,6 +7,7 @@ import alfheim.api.spell.ITimeStopSpecific
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.spell.sound.SpellHarp
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -37,7 +38,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 			if (!ASJUtilities.isServer) return
 			super.onUpdate()
 			
-			if (ticksExisted >= 600) setDead()
+			if (ticksExisted >= SpellHarp.duration) setDead()
 			
 			val pt = PartySystem.getMobParty(caster)
 			if (pt == null || pt.count == 0) {
@@ -45,10 +46,10 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 				return
 			}
 			
-			if (worldObj.rand.nextInt() % (20 / pt.count) == 0) {
+			if (worldObj.rand.nextInt() % (SpellHarp.efficiency.toInt() / pt.count) == 0) {
 				var mr = pt[worldObj.rand.nextInt(pt.count)] ?: return
-				if (Vector3.entityDistance(this, mr) > 16) return
-				mr.heal(0.5f)
+				if (Vector3.entityDistance(this, mr) > SpellHarp.radius) return
+				mr.heal(SpellHarp.damage)
 				
 				mr = pt[worldObj.rand.nextInt(pt.count)] ?: return
 				for (o in mr.activePotionEffects) {

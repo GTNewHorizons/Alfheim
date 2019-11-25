@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellBattleHorn: SpellBase("battlehorn", EnumRace.POOKA, 5000, 600, 15) {
+object SpellBattleHorn: SpellBase("battlehorn", EnumRace.POOKA, 5000, 600, 15) {
+	
+	override var duration = 36000
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster)) ?: return SpellCastResult.NOTARGET
@@ -23,12 +25,12 @@ class SpellBattleHorn: SpellBase("battlehorn", EnumRace.POOKA, 5000, 600, 15) {
 		for (i in 0 until pt.count) {
 			val living = pt[i] ?: continue
 			if (Vector3.entityDistance(living, caster) < 32) {
-				living.addPotionEffect(PotionEffect(Potion.damageBoost.id, 36000, 0, true))
-				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.damageBoost.id, 36000, 0))
-				living.addPotionEffect(PotionEffect(Potion.moveSpeed.id, 36000, 0, true))
-				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSpeed.id, 36000, 0))
-				living.addPotionEffect(PotionEffect(Potion.resistance.id, 36000, 0, true))
-				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.resistance.id, 36000, 0))
+				living.addPotionEffect(PotionEffect(Potion.damageBoost.id, duration, efficiency.toInt(), true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.damageBoost.id, duration, efficiency.toInt()))
+				living.addPotionEffect(PotionEffect(Potion.moveSpeed.id, duration, efficiency.toInt(), true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.moveSpeed.id, duration, efficiency.toInt()))
+				living.addPotionEffect(PotionEffect(Potion.resistance.id, duration, efficiency.toInt(), true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.resistance.id, duration, efficiency.toInt()))
 			}
 		}
 		

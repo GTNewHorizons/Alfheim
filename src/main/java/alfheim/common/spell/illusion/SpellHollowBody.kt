@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellHollowBody: SpellBase("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 20) {
+object SpellHollowBody: SpellBase("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 20) {
+	
+	override var duration = 3600
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -27,8 +29,8 @@ class SpellHollowBody: SpellBase("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 2
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.invisibility.id, 3600, 0, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.invisibility.id, 3600, 0))
+			tg.target.addPotionEffect(PotionEffect(Potion.invisibility.id, duration, -1, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.invisibility.id, duration, -1))
 			VisualEffectHandler.sendPacket(VisualEffects.PURE, tg.target)
 		}
 		

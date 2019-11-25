@@ -5,19 +5,21 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
-import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.handler.*
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.PotionEffect
 
-class SpellThrow: SpellBase("throw", EnumRace.SYLPH, 8000, 600, 10) {
+object SpellThrow: SpellBase("throw", EnumRace.SYLPH, 8000, 600, 10) {
+	
+	override var damage = 5f
+	override var duration = 10
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			caster.addPotionEffect(PotionEffect(AlfheimRegistry.tHrOw.id, 10, 0, true))
-			AlfheimCore.network.sendToAll(MessageEffect(caster.entityId, AlfheimRegistry.tHrOw.id, 10, 0))
+			caster.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDThrow, duration, efficiency.toInt(), true))
+			AlfheimCore.network.sendToAll(MessageEffect(caster.entityId, AlfheimConfigHandler.potionIDThrow, duration, efficiency.toInt()))
 			val v = Vector3(caster.lookVec).negate().mul(0.5)
 			VisualEffectHandler.sendPacket(VisualEffects.THROW, caster.dimension, caster.posX, caster.posY, caster.posZ, v.x, v.y, v.z)
 		}

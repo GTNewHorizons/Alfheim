@@ -5,13 +5,13 @@ import alexsocol.asjlib.network.ASJPacket;
 import io.netty.buffer.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
-public class MessageKeyBind extends ASJPacket {
+public class MessageKeyBindS extends ASJPacket {
 	
 	public int action;
 	public int data;
 	public boolean state;
 	
-	public MessageKeyBind(int action, boolean state, int data) {
+	public MessageKeyBindS(int action, boolean state, int data) {
 		this.action = action;
 		this.state = state;
 		this.data = data;

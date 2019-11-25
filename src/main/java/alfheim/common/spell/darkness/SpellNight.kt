@@ -5,7 +5,7 @@ import alfheim.api.spell.SpellBase
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.server.MinecraftServer
 
-class SpellNight: SpellBase("night", EnumRace.IMP, 30000, 6000, 50) {
+object SpellNight: SpellBase("night", EnumRace.IMP, 30000, 6000, 50) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)

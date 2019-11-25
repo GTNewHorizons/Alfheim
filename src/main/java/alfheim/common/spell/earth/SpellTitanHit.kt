@@ -14,7 +14,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 
-class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
+object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	
 	/** temp value for counting total on block breaking  */
 	var tcd = 0
@@ -131,8 +131,5 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 		removeBlocksInIteration(caster.worldObj, caster as EntityPlayer, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, true)
 	}
 	
-	companion object {
-		
-		val MATERIALS = arrayOf(Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay)
-	}
+	val MATERIALS = arrayOf(Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay)
 }

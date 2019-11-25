@@ -10,7 +10,9 @@ import alfheim.common.core.util.EntityDamageSourceSpell
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
-class SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
+object SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
+	
+	override var damage = 10f
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -49,7 +51,7 @@ class SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
 				tgt.setLocationAndAngles(cx, cy, cz, cry, crp)
 			}
 			
-			val hp = tgt.maxHealth / 10f
+			val hp = tgt.maxHealth / damage
 			if (tg.isParty)
 				tgt.heal(hp)
 			else

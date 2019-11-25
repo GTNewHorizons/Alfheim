@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.potion.PotionEffect
 
-class SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
+object SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)

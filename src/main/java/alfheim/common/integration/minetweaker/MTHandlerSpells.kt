@@ -25,93 +25,105 @@ object MTHandlerSpells {
 		MineTweakerAPI.apply(CastTime(name, time))
 	}
 	
+	@ZenMethod
+	@JvmStatic
+	fun setParams(name: String, damage: Float, duration: Int, efficiency: Double, radius: Double) {
+		MineTweakerAPI.apply(Params(name, damage, duration, efficiency, radius))
+	}
+	
 	private class ManaCost(name: String, private val newVal: Int): IUndoableAction {
 		
-		private var spell = AlfheimAPI.getSpellInstance(name)
+		private var spell = AlfheimAPI.getSpellInstance(name)!!
 		internal var oldVal = 0
 		
 		override fun apply() {
-			oldVal = spell!!.setManaCost(newVal)
+			oldVal = spell.setManaCost(newVal)
 		}
 		
-		override fun canUndo(): Boolean {
-			return true
-		}
+		override fun canUndo() = true
 		
 		override fun undo() {
-			spell!!.setManaCost(oldVal)
+			spell.setManaCost(oldVal)
 		}
 		
-		override fun describe(): String {
-			return String.format("Setting manacost to %d for %s", newVal, spell!!.name)
-		}
+		override fun describe() = "Setting manacost to $newVal for ${spell.name}"
 		
-		override fun describeUndo(): String {
-			return String.format("Resetting manacost for %s to old value (%d)", spell!!.name, oldVal)
-		}
+		override fun describeUndo() = "Resetting manacost for ${spell.name} to old value ($oldVal)"
 		
-		override fun getOverrideKey(): Any? {
-			return null
-		}
+		override fun getOverrideKey() = null
 	}
 	
 	private class Cooldown(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell = AlfheimAPI.getSpellInstance(name)
+		private val spell = AlfheimAPI.getSpellInstance(name)!!
 		internal var oldVal = 0
 		
 		override fun apply() {
-			oldVal = spell!!.setCooldown(newVal)
+			oldVal = spell.setCooldown(newVal)
 		}
 		
-		override fun canUndo(): Boolean {
-			return true
-		}
+		override fun canUndo() = true
 		
 		override fun undo() {
-			spell!!.setCooldown(oldVal)
+			spell.setCooldown(oldVal)
 		}
 		
-		override fun describe(): String {
-			return String.format("Setting cooldown to %d for %s", newVal, spell!!.name)
-		}
+		override fun describe() = "Setting cooldown to $newVal for ${spell.name}"
 		
-		override fun describeUndo(): String {
-			return String.format("Resetting cooldown for %s to old value (%d)", spell!!.name, oldVal)
-		}
+		override fun describeUndo() = "Resetting cooldown for ${spell.name} to old value (oldVal)"
 		
-		override fun getOverrideKey(): Any? {
-			return null
-		}
+		override fun getOverrideKey() = null
 	}
 	
 	private class CastTime(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell = AlfheimAPI.getSpellInstance(name)
+		private val spell = AlfheimAPI.getSpellInstance(name)!!
 		internal var oldVal = 0
 		
 		override fun apply() {
-			oldVal = spell!!.setCastTime(newVal)
+			oldVal = spell.setCastTime(newVal)
 		}
 		
-		override fun canUndo(): Boolean {
-			return true
-		}
+		override fun canUndo() = true
 		
 		override fun undo() {
-			spell!!.setCastTime(oldVal)
+			spell.setCastTime(oldVal)
 		}
 		
-		override fun describe(): String {
-			return String.format("Setting cast time to %d for %s", newVal, spell!!.name)
+		override fun describe() = "Setting cast time to $newVal for ${spell.name}"
+		
+		override fun describeUndo() = "Resetting cast time for ${spell.name} to old value ($oldVal)"
+		
+		override fun getOverrideKey() = null
+	}
+	
+	private class Params(name: String, private val damage: Float, private val duration: Int, private val efficiency: Double, private val radius: Double): IUndoableAction {
+		
+		private val spell = AlfheimAPI.getSpellInstance(name)!!
+		internal var oldVals = arrayOf(0f, 0, 0.0, 0.0)
+		
+		override fun apply() {
+			oldVals = arrayOf(spell.damage, spell.duration, spell.efficiency, spell.radius)
+			
+			spell.damage = damage
+			spell.duration = duration
+			spell.efficiency = efficiency
+			spell.radius = radius
 		}
 		
-		override fun describeUndo(): String {
-			return String.format("Resetting cast time for %s to old value (%d)", spell!!.name, oldVal)
+		override fun canUndo() = true
+		
+		override fun undo() {
+			spell.damage = oldVals[0] as Float
+			spell.duration = oldVals[1] as Int
+			spell.efficiency = oldVals[2] as Double
+			spell.radius = oldVals[3] as Double
 		}
 		
-		override fun getOverrideKey(): Any? {
-			return null
-		}
+		override fun describe() = "Setting damage [$damage], duration [$duration], efficiency [$efficiency], radius [$radius] for ${spell.name}"
+		
+		override fun describeUndo() = "Resetting damage, duration, efficiency, radius for ${spell.name} to old values (${oldVals.contentToString()})"
+		
+		override fun getOverrideKey() = null
 	}
 }

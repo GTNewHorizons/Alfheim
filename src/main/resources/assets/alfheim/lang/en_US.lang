@@ -280,6 +280,9 @@ alfheim.commands.alfheim.done=%s changed Alfheim mode to [%sESM%s|%sMMO%s]
 alfheim.commands.alfheim.usage=Used for modes configuration
 alfheim.commands.alfheim.wrong=/alfheim <command>
 
+alfheim.commands.mtspell.usage=Info about selected spell
+alfheim.commands.mtspell.wrong=MMO mode is off
+
 alfheim.commands.tpdim.usage=Used for cross-world teleport
 alfheim.commands.tpdim.wrong=tpdim <ID>
 alfheim.commands.tpdim.worlderr=Dimension Initialization Exception

@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -21,9 +22,9 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		get() = false
 	
 	init {
-		setSize(16f, 16f)
-		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8.0, 0.5, 0.5, 8.0))
-		renderDistanceWeight = 4.0
+		setSize((SpellFenrirStorm.radius * 2).toFloat(), (SpellFenrirStorm.radius * 2).toFloat())
+		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
+		renderDistanceWeight = SpellFenrirStorm.radius / 2
 	}
 	
 	constructor(world: World, caster: EntityLivingBase): this(world) {
@@ -35,7 +36,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		area.rotateOX(-caster.rotationPitch.toDouble())
 		area.rotateOY((caster.rotationYaw).toDouble())
 		
-		val v = Vector3(caster.lookVec).mul(8.5)
+		val v = Vector3(caster.lookVec).mul(SpellFenrirStorm.radius + 0.5)
 		area.translate(v.x, v.y, v.z)
 	}
 	
@@ -48,13 +49,13 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		
 		if (ticksExisted == 4) {
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
-			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, 10.0))
+			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.toDouble()))
 		}
 	}
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
-	public override fun entityInit() {}
+	public override fun entityInit() = Unit
 	
 	public override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")) else setDead()

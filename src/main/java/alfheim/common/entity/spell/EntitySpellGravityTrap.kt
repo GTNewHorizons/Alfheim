@@ -8,6 +8,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.tech.SpellGravityTrap
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -26,21 +27,21 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || ticksExisted > 200) {
+		if (!AlfheimCore.enableMMO || ticksExisted > SpellGravityTrap.duration) {
 			setDead()
 			return
 		}
-		if (this.isDead || ticksExisted < 20 || !ASJUtilities.isServer) return
+		if (isDead || ticksExisted < 20 || !ASJUtilities.isServer) return
 		
-		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(4.0, 8.0, 4.0)) as List<Entity>
+		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(SpellGravityTrap.radius / 4, SpellGravityTrap.radius / 2, SpellGravityTrap.radius / 4)) as List<Entity>
 		for (e in l) {
 			if (e === this || e === caster || e is EntityLivingBase && PartySystem.mobsSameParty(caster, e) && !AlfheimConfigHandler.frienldyFire || e is EntityPlayer && e.capabilities.isCreativeMode) continue
 			val dist = Vector3.fromEntity(e).sub(Vector3.fromEntity(this))
-			if (Vector3.entityDistancePlane(e, this) <= 4.0) {
+			if (Vector3.entityDistancePlane(e, this) <= SpellGravityTrap.radius/4) {
 				e.motionY -= 1.0
 				e.motionX -= dist.x / 5
 				e.motionZ -= dist.z / 5
-				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, 0.5))
+				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, SpellGravityTrap.damage.toDouble()))
 			}
 		}
 		
@@ -51,11 +52,9 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 		}
 	}
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
-	public override fun entityInit() {}
+	public override fun entityInit() = Unit
 	
 	public override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")) else setDead()

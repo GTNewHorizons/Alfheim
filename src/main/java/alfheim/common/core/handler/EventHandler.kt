@@ -17,6 +17,7 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
+import alfheim.common.spell.darkness.SpellDecay
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
@@ -159,7 +160,7 @@ object EventHandler {
 		// ################################################################ NOT CANCELING ################################################################
 		
 		if (AlfheimCore.enableMMO && target.isPotionActive(AlfheimConfigHandler.potionIDDecay) && !e.source.isFireDamage && !e.source.isMagical && e.source.damageType != DamageSourceSpell.bleeding.damageType)
-			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBleeding, 120, 0, true))
+			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBleeding, SpellDecay.duration / 5, SpellDecay.efficiency.toInt(), true))
 	}
 	
 	@SubscribeEvent

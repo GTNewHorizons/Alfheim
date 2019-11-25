@@ -11,10 +11,13 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import org.lwjgl.opengl.GL11.*
 
-class SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600, 20) {
+object SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600, 20) {
+	
+	override var damage = 0.5f
+	override var duration = 200
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
 			val result = checkCastOver(caster)
 			if (result == SpellCastResult.OK)
@@ -25,9 +28,9 @@ class SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 600
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-			val s = 4
+			val s = radius / 4
 			//glDisable(GL_ALPHA_TEST);
 			glAlphaFunc(GL_GREATER, 0.003921569f)
 			glEnable(GL_BLEND)

@@ -5,7 +5,7 @@ import alfheim.api.entity.*
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -16,10 +16,10 @@ import kotlin.math.sin
 
 class GUIRace(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent
-	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	fun onOverlayRendering(e: RenderGameOverlayEvent.Pre) {
 		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfigHandler.selfHealthUI)) return
-		if (e.type != ElementType.ALL || mc.thePlayer.race == EnumRace.HUMAN) return
+		if (e.type != ElementType.HOTBAR || mc.thePlayer.race == EnumRace.HUMAN) return
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)

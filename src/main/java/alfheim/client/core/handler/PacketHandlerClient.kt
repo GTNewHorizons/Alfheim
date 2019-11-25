@@ -17,6 +17,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.flight
 import alfheim.common.network.*
+import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
@@ -126,5 +127,15 @@ object PacketHandlerClient {
 	
 	fun handle(packet: MessageSkinInfo) {
 		CardinalSystemClient.playerSkinsData[packet.name] = packet.isFemale to packet.isSkinOn
+	}
+	
+	fun handle(packet: Message0dC) {
+		when (m0dc.values()[packet.type]) {
+			m0dc.MTSPELL -> {
+				val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
+				val (d, D, e, r) = spell ?: return
+				ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "$spell: $d, $D, $e, $r")
+			}
+		}
 	}
 }

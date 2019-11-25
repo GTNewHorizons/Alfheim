@@ -8,7 +8,7 @@ import alfheim.common.core.handler.CardinalSystem
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
-class SpellJoin: SpellBase("join", EnumRace.IMP, 10000, 1800, 30) {
+object SpellJoin: SpellBase("join", EnumRace.IMP, 10000, 1800, 30) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs

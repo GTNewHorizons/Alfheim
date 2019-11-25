@@ -18,7 +18,11 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import org.lwjgl.opengl.GL11.*
 
-class SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
+object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
+	
+	override var duration = 100
+	override var efficiency = 1.0
+	override var radius = 3.5
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, false)
@@ -32,14 +36,14 @@ class SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(hit.x, hit.y, hit.z, hit.x, hit.y, hit.z).expand(3.5, 0.5, 3.5)) as List<EntityLivingBase>
+		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(hit.x, hit.y, hit.z, hit.x, hit.y, hit.z).expand(radius, 0.5, radius)) as List<EntityLivingBase>
 		for (e in l) {
 			if (PartySystem.mobsSameParty(caster, e)) continue
 			val mob = Vector3.fromEntityCenter(e)
 			mob.y = hit.y
-			if (hit.copy().sub(mob).length() <= 3.5) {
-				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 100, 1, true))
-				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, 100, 4))
+			if (hit.copy().sub(mob).length() <= radius) {
+				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.toInt(), true))
+				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, duration, efficiency.toInt()))
 			}
 		}
 		
@@ -51,7 +55,6 @@ class SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, false)
 		if (mop == null || mop.typeOfHit == MovingObjectType.MISS) return
 		val y = if (mop.typeOfHit == MovingObjectType.BLOCK) 0.1 * (if (mop.sideHit == 0) -1.0 else 1.0) else 0.0
-		val s = 3.5
 		glDisable(GL_CULL_FACE)
 		//glDisable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0.003921569f)
@@ -59,10 +62,10 @@ class SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.target)
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - s, mop.hitVec.yCoord + y, mop.hitVec.zCoord - s, 0.0, 0.0)
-		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - s, mop.hitVec.yCoord + y, mop.hitVec.zCoord + s, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord + s, mop.hitVec.yCoord + y, mop.hitVec.zCoord + s, 1.0, 1.0)
-		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord + s, mop.hitVec.yCoord + y, mop.hitVec.zCoord - s, 1.0, 0.0)
+		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord - radius, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord + radius, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord + radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord + radius, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord + radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord - radius, 1.0, 0.0)
 		Tessellator.instance.draw()
 		glDisable(GL_BLEND)
 		glAlphaFunc(GL_GREATER, 0.1f)

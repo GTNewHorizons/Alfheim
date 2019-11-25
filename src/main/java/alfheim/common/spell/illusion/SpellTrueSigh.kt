@@ -11,7 +11,7 @@ import alfheim.common.network.MessageVisualEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
 
-class SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
+object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayerMP) return SpellCastResult.NOTARGET // TODO add targets for mobs

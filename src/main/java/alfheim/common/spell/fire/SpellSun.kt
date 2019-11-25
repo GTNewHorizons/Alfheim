@@ -8,7 +8,7 @@ import alfheim.common.network.Message3d.m3d
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.server.MinecraftServer
 
-class SpellSun: SpellBase("sun", EnumRace.SALAMANDER, 30000, 6000, 50) {
+object SpellSun: SpellBase("sun", EnumRace.SALAMANDER, 30000, 6000, 50) {
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)

@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.wind.SpellWindBlades
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -32,7 +33,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster == null || caster!!.isDead || ticksExisted > 20)) {
+		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster == null || caster!!.isDead || ticksExisted > SpellWindBlades.duration)) {
 			setDead()
 			return
 		}
@@ -44,21 +45,19 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		
 		if (isCollidedHorizontally) setDead()
 		
-		if (this.isDead) return
+		if (isDead) return
 		
 		val m = Vector3(ASJUtilities.getLookVec(this))
 		moveEntity(m.x, 0.0, m.z)
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		l.remove(caster)
-		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), SpellBase.over(caster, 6.0))
+		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), SpellBase.over(caster, SpellWindBlades.damage.toDouble()))
 	}
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
-	public override fun entityInit() {}
+	public override fun entityInit() = Unit
 	
 	public override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")) else setDead()
