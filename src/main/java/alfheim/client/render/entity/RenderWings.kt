@@ -21,7 +21,7 @@ object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		if (!AlfheimConfigHandler.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
+		if (AlfheimConfigHandler.wingsBlackList.contains(Minecraft.getMinecraft().theWorld.provider.dimensionId)) return
 		if (player.race == EnumRace.HUMAN) return
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) return
 		if (player.commandSenderName == "AlexSocol") return

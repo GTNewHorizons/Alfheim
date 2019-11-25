@@ -512,7 +512,7 @@ key.uncast.desc=Отмена каста
 key.flight.desc=Эльфийский полёт
 key.selmob.desc=Выбор вражеской цели
 key.selteam.desc=Выбор участника группы
-mes.flight.unavailable=Полёт доступен только в Альфхейме
+mes.flight.unavailable=Полёт не доступен в этом измерении
 
 race.SALAMANDER.name=САЛАМАНДР
 race.SYLPH.name=СИЛЬФ

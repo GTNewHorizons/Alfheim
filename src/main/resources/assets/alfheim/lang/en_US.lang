@@ -512,7 +512,7 @@ key.uncast.desc=Cancel Cast
 key.flight.desc=Elven Flight
 key.selmob.desc=Select Mob
 key.selteam.desc=Select Party Member
-mes.flight.unavailable=Flight is available only in Alfheim
+mes.flight.unavailable=Flight is not available in this dimension
 
 race.SALAMANDER.name=SALAMANDER
 race.SYLPH.name=SYLPH

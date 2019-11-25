@@ -64,9 +64,7 @@ class Quaternion {
 		z = d3
 	}
 	
-	fun mag(): Double {
-		return sqrt(x * x + y * y + z * z + s * s)
-	}
+	fun mag() = sqrt(x * x + y * y + z * z + s * s)
 	
 	fun normalize() {
 		var d = mag()
@@ -95,20 +93,18 @@ class Quaternion {
 		formatter.format("Quaternion:\n")
 		formatter.format("  < %f %f %f %f >\n", s, x, y, z)
 		formatter.close()
-		return stringbuilder.toString()
+		return "$stringbuilder"
 	}
 	
 	companion object {
 		
 		fun aroundAxis(ax: Double, ay: Double, az: Double, angle: Double): Quaternion {
-			var angle = angle
-			angle *= 0.5
-			val d4 = sin(angle)
-			return Quaternion(cos(angle), ax * d4, ay * d4, az * d4)
+			var ang = angle
+			ang *= 0.5
+			val d4 = sin(ang)
+			return Quaternion(cos(ang), ax * d4, ay * d4, az * d4)
 		}
 		
-		fun aroundAxis(axis: Vector3, angle: Double): Quaternion {
-			return aroundAxis(axis.x, axis.y, axis.z, angle)
-		}
+		fun aroundAxis(axis: Vector3, angle: Double) = aroundAxis(axis.x, axis.y, axis.z, angle)
 	}
 }

@@ -157,7 +157,7 @@ object ESMHandler {
 				player.moveFlying(0f, 1f, 0.005f)
 		} else {
 			if (player.ticksExisted % 5 == 0)
-				ElvenFlightHelper.add(player, 1)
+				ElvenFlightHelper.regen(player, 1)
 		}
 	}
 	
@@ -258,7 +258,7 @@ object ElvenFlightHandler {
 	@SubscribeEvent
 	fun onPlayerRespawn(e: PlayerRespawnEvent) {
 		if (AlfheimCore.enableElvenStory) {
-			if (!AlfheimConfigHandler.enableWingsNonAlfheim && e.player.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
+			if (AlfheimConfigHandler.wingsBlackList.contains(e.player.worldObj.provider.dimensionId)) return
 			e.player.capabilities.allowFlying = e.player.race != HUMAN
 		}
 	}
@@ -284,12 +284,12 @@ object ElvenFlightHandler {
 						if (player.isSprinting) player.moveFlying(0f, 1f, 0.00625f)
 						ElvenFlightHelper.sub(player, if (player.isSprinting) 3 else if (abs(player.motionX) > 1e-4f || player.motionY > 1e-4f || abs(player.motionZ) > 1e-4f) 2 else 1)
 					} else {
-						ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
+						ElvenFlightHelper.regen(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
 					}
 				}
 				
 				if (player.flight <= 0) player.capabilities.isFlying = false
-			} else ElvenFlightHelper.add(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
+			} else ElvenFlightHelper.regen(player, if (player.moveForward == 0f && player.moveStrafing == 0f && player.onGround && player.isSneaking) 2 else 1)
 		}
 	}
 	

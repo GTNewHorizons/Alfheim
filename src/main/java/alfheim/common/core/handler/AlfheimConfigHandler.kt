@@ -101,8 +101,10 @@ object AlfheimConfigHandler {
 	
 	// Elven Story
 	var bothSpawnStructures		= false
-	var enableWingsNonAlfheim	= true
+	var enableWingsNonAlfheim	= false
 	var flightTime				= 12000
+	var flightRecover			= 1.0
+	var wingsBlackList			= IntArray(0)
 	val zones					= Array(9) { Vector3(0.0) }
 	
 	// MMO
@@ -205,8 +207,9 @@ object AlfheimConfigHandler {
 		potionIDWellOLife = loadProp(CATEGORY_MMOP, "potionIDWellOLife", potionIDWellOLife, true, "Potion id for Well'o'Life")
 		
 		bothSpawnStructures = loadProp(CATEGORY_ESMODE, "bothSpawnStructures", bothSpawnStructures, false, "Set this to true to generate both room in the skies and castle below (!contains portal!) on zero coords of Alfheim")
-		enableWingsNonAlfheim = loadProp(CATEGORY_ESMODE, "enableWingsNonAlfheim", enableWingsNonAlfheim, false, "Set this to false to disable wings in other worlds")
 		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, true, "How long can you fly as elf")
+		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, true, "Flight recover efficiency")
+		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)")
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")

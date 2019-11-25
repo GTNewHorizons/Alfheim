@@ -16,7 +16,7 @@ import net.minecraftforge.common.MinecraftForge
 object KeyBindingHandler {
 	
 	fun enableFlight(player: EntityPlayerMP, boost: Boolean) {
-		if (!AlfheimConfigHandler.enableWingsNonAlfheim && player.worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) {
+		if (AlfheimConfigHandler.wingsBlackList.contains(player.worldObj.provider.dimensionId)) {
 			ASJUtilities.say(player, "mes.flight.unavailable")
 		} else {
 			if (!AlfheimCore.enableElvenStory || player.race == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return

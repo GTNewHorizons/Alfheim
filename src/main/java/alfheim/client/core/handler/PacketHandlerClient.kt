@@ -20,6 +20,7 @@ import alfheim.common.network.*
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
+import alfheim.common.network.MessageNI.mni
 import net.minecraft.client.Minecraft
 
 object PacketHandlerClient {
@@ -55,7 +56,6 @@ object PacketHandlerClient {
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
-			m1d.WINGS_NOT_IN_ALF -> AlfheimConfigHandler.enableWingsNonAlfheim = packet.data1 != 0.0
 		}
 	}
 	
@@ -94,8 +94,7 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message3d) {
 		when (m3d.values()[packet.type]) {
-			m3d.KEY_BIND     -> {
-			}
+			m3d.KEY_BIND     -> Unit
 			
 			m3d.PARTY_STATUS -> {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
@@ -116,6 +115,12 @@ object PacketHandlerClient {
 			}
 			
 			m3d.TOGGLER      -> ClientProxy.toggelModes(packet.data1 > 0, packet.data2.toInt() and 1 > 0, packet.data3.toInt() and 1 > 0, packet.data2.toInt() shr 1 and 1 > 0, packet.data3.toInt() shr 1 and 1 > 0)
+		}
+	}
+	
+	fun handle(packet: MessageNI) {
+		when (mni.values()[packet.type]) {
+			mni.WINGS_BL -> AlfheimConfigHandler.wingsBlackList = packet.intArray
 		}
 	}
 	

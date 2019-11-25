@@ -46,6 +46,14 @@ class Message3dHandler: IMessageHandler<Message3d, IMessage> {
 	}
 }
 
+class MessageNIHandler:  IMessageHandler<MessageNI, IMessage> {
+	
+	override fun onMessage(packet: MessageNI, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
+		return null
+	}
+}
+
 class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage> {
 	override fun onMessage(packet: MessageEffect, message: MessageContext): IMessage? {
 		val e = message.clientHandler.clientWorldController.getEntityByID(packet.entity)
