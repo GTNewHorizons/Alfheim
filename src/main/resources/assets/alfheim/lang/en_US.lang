@@ -510,6 +510,7 @@ elvenstory.selectgender=Select Gender
 elvenstory.selectrace=Select Race
 
 key.lolicorn.desc=Call Lolicorn
+key.esmability.desc=Toggle Elven Ability
 key.cast.desc=Spell Cast
 key.uncast.desc=Cancel Cast
 key.flight.desc=Elven Flight

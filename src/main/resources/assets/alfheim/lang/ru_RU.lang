@@ -510,6 +510,7 @@ elvenstory.selectgender=Выберите пол
 elvenstory.selectrace=Выберите расу
 
 key.lolicorn.desc=Призвать Лоликорна
+key.esmability.desc=Переключение эльфийской способности
 key.cast.desc=Каст заклинания
 key.uncast.desc=Отмена каста
 key.flight.desc=Эльфийский полёт

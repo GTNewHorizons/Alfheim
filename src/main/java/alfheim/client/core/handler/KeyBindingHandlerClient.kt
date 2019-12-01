@@ -223,8 +223,7 @@ object KeyBindingHandlerClient {
 			if (Keyboard.isKeyDown(ClientProxy.keySelMob.keyCode)) {
 				if (!toggleSelMob) {
 					toggleSelMob = true
-					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId
-																																																?: 0))
+					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId ?: 0))
 				}
 			} else if (toggleSelMob) {
 				toggleSelMob = false
