@@ -141,6 +141,14 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
+			"com.emoniph.witchery.client.ClientEvents\$GUIOverlay"           -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `ClientEvents$GUIOverlay$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
 			else                                                            -> basicClass
 		}
 	}
@@ -775,6 +783,33 @@ class AlfheimClassTransformer: IClassTransformer {
 						mv.visitInsn(AASTORE)
 					}
 				}
+			}
+		}
+	}
+
+	internal class `ClientEvents$GUIOverlay$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "renderHotbar") {
+				println("Visiting witchery's ClientEvents\$GUIOverlay#renderHotbar: $name$desc")
+				return `ClientEvents$GUIOverlay$renderHotbar$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `ClientEvents$GUIOverlay$renderHotbar$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			var aload1 = false
+			
+			override fun visitVarInsn(opcode: Int, operand: Int) {
+				if (opcode == ALOAD) {
+					aload1 = operand == 1
+				}
+				
+				super.visitVarInsn(opcode, operand)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				super.visitInsn(if (opcode == ICONST_1) ICONST_0 else opcode)
 			}
 		}
 	}

@@ -60,7 +60,7 @@ object KeyBindingHandlerClient {
 			toggleLMB = false
 		}
 		
-		if (Keyboard.isKeyDown(ClientProxy.keyLolicorn.keyCode)) {
+		if (safeKeyDown(ClientProxy.keyLolicorn.keyCode)) {
 			if (!toggleCorn) {
 				toggleCorn = true
 				AlfheimCore.network.sendToServer(MessageKeyBindS(CORN.ordinal, false, 0))
@@ -70,7 +70,7 @@ object KeyBindingHandlerClient {
 		}
 		
 		if (AlfheimCore.enableElvenStory) {
-			if (Keyboard.isKeyDown(ClientProxy.keyFlight.keyCode)) {
+			if (safeKeyDown(ClientProxy.keyFlight.keyCode)) {
 				if (!toggleFlight) {
 					toggleFlight = true
 					toggleFlight(false)
@@ -79,7 +79,7 @@ object KeyBindingHandlerClient {
 				toggleFlight = false
 			}
 			
-			if (Keyboard.isKeyDown(ClientProxy.keyESMAbility.keyCode)) {
+			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode)) {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
 					PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
@@ -89,7 +89,7 @@ object KeyBindingHandlerClient {
 				toggleESMAbility = false
 			}
 			
-			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed && !toggleJump && Keyboard.isKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
+			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed && !toggleJump && safeKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
 				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.keyCode, false)
 				toggleAlt = true
 				toggleJump = toggleAlt
@@ -105,18 +105,18 @@ object KeyBindingHandlerClient {
 		}
 		
 		if (AlfheimCore.enableMMO) {
-			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-				val flag = PlayerSegmentClient.hotSpells.indices.any { Keyboard.isKeyDown(it + 2) }
+			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && safeKeyDown(Keyboard.KEY_LCONTROL)) {
+				val flag = PlayerSegmentClient.hotSpells.indices.any { safeKeyDown(it + 2) }
 				
 				if (flag) Minecraft.getMinecraft().thePlayer.inventory.currentItem = prevHotSlot
 			} else
 				prevHotSlot = Minecraft.getMinecraft().thePlayer.inventory.currentItem
 			
 			run {
-				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+				if (safeKeyDown(Keyboard.KEY_LCONTROL)) {
 					for (i in PlayerSegmentClient.hotSpells.indices) {
-						if (Keyboard.isKeyDown(i + 2)) {
-							if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+						if (safeKeyDown(i + 2)) {
+							if (safeKeyDown(Keyboard.KEY_LSHIFT)) {
 								PlayerSegmentClient.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
 								AlfheimCore.network.sendToServer(MessageHotSpellS(i, PlayerSegmentClient.hotSpells[i]))
 							} else {
@@ -142,7 +142,7 @@ object KeyBindingHandlerClient {
 				}
 			}
 			
-			if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+			if (safeKeyDown(Keyboard.KEY_UP)) {
 				if (!toggleUp) {
 					toggleUp = true
 					raceID = if (++raceID > 9) 1 else raceID
@@ -153,7 +153,7 @@ object KeyBindingHandlerClient {
 				toggleUp = false
 			}
 			
-			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+			if (safeKeyDown(Keyboard.KEY_DOWN)) {
 				if (!toggleDown) {
 					toggleDown = true
 					raceID = if (--raceID < 1) 9 else raceID
@@ -164,7 +164,7 @@ object KeyBindingHandlerClient {
 				toggleDown = false
 			}
 			
-			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+			if (safeKeyDown(Keyboard.KEY_RIGHT)) {
 				if (!toggleRight) {
 					toggleRight = true
 					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
@@ -174,7 +174,7 @@ object KeyBindingHandlerClient {
 				toggleRight = false
 			}
 			
-			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+			if (safeKeyDown(Keyboard.KEY_LEFT)) {
 				if (!toggleLeft) {
 					toggleLeft = true
 					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
@@ -185,7 +185,7 @@ object KeyBindingHandlerClient {
 			}
 			
 			run {
-				if (Keyboard.isKeyDown(ClientProxy.keyCast.keyCode)) {
+				if (safeKeyDown(ClientProxy.keyCast.keyCode)) {
 					if (!toggleCast) {
 						toggleCast = true
 						if (PlayerSegmentClient.init <= 0) {
@@ -209,7 +209,7 @@ object KeyBindingHandlerClient {
 				}
 			}
 			
-			if (Keyboard.isKeyDown(ClientProxy.keyUnCast.keyCode)) {
+			if (safeKeyDown(ClientProxy.keyUnCast.keyCode)) {
 				if (!toggleUnCast) {
 					toggleUnCast = true
 					AlfheimCore.network.sendToServer(MessageKeyBindS(UNCAST.ordinal, false, 0))
@@ -220,7 +220,7 @@ object KeyBindingHandlerClient {
 				toggleUnCast = false
 			}
 			
-			if (Keyboard.isKeyDown(ClientProxy.keySelMob.keyCode)) {
+			if (safeKeyDown(ClientProxy.keySelMob.keyCode)) {
 				if (!toggleSelMob) {
 					toggleSelMob = true
 					if (TargetingSystemClient.selectMob()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.target?.entityId ?: 0))
@@ -229,7 +229,7 @@ object KeyBindingHandlerClient {
 				toggleSelMob = false
 			}
 			
-			if (Keyboard.isKeyDown(ClientProxy.keySelTeam.keyCode)) {
+			if (safeKeyDown(ClientProxy.keySelTeam.keyCode)) {
 				if (!toggleSelTeam) {
 					toggleSelTeam = true
 					if (TargetingSystemClient.selectTeam()) AlfheimCore.network.sendToServer(MessageKeyBindS(SEL.ordinal, PlayerSegmentClient.isParty, PlayerSegmentClient.partyIndex))
@@ -239,6 +239,8 @@ object KeyBindingHandlerClient {
 			}
 		}
 	}
+	
+	fun safeKeyDown(id: Int) = try { Keyboard.isKeyDown(id) } catch (e: IndexOutOfBoundsException) { false }
 	
 	fun toggleFlight(boost: Boolean) {
 		AlfheimCore.network.sendToServer(MessageKeyBindS(FLIGHT.ordinal, boost, 0))
