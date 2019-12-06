@@ -11,7 +11,7 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
-		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor().setDifficultyScaled()!!
+		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor()!!
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!
 		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
@@ -26,13 +26,16 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceSpell("darkness_FF", attacker).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		
 		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setDifficultyScaled().setExplosion()!!
+			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setExplosion()!!
 		
 		fun fireball(fb: EntitySpellFireball, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("fireball", caster, fb).setFireDamage().setExplosion().setProjectile()!!
 		
 		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()!!
+		
+		fun hammerfall(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("inWall", caster).setDamageBypassesArmor().setProjectile()!!
 		
 		/** Fenrir Storm type of damage  */
 		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase?) =
@@ -42,7 +45,7 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceIndirectSpell("missile", caster, im).setMagicDamage()!!
 		
 		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("fallingBlock", caster, mt).setDifficultyScaled().setProjectile()!!
+			EntityDamageSourceIndirectSpell("fallingBlock", caster, mt).setProjectile()!!
 		
 		/** Some water blades (?) type of damage  */
 		fun water(caster: EntityLivingBase?) = EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()!!

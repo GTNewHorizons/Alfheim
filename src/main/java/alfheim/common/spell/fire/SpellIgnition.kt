@@ -29,9 +29,9 @@ object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 		}
 		
 		if (!Blocks.fire.canPlaceBlockAt(caster.worldObj, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.WRONGTGT
+		
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
 		val mana = caster.capabilities.isCreativeMode || consumeMana(caster, (getManaCost() * if (race == caster.race) 1 else 2), false)
-		
 		if (!mana) return SpellCastResult.NOMANA
 		
 		val stackToPlace = ItemStack(Blocks.fire)

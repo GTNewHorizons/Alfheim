@@ -6,7 +6,7 @@ import alfheim.api.block.IHourglassTrigger
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.render.entity.*
+import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
@@ -51,6 +51,7 @@ import vazkii.botania.client.render.tile.RenderTileAltar
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.*
 import vazkii.botania.common.block.decor.walls.BlockModWall
+import vazkii.botania.common.block.mana.BlockSpreader
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.core.BotaniaCreativeTab
@@ -289,6 +290,14 @@ object AlfheimHookHandler {
 		}
 		
 		return result
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun onBlockActivated(block: BlockSpreader, par1World: World, par2: Int, par3: Int, par4: Int, par5EntityPlayer: EntityPlayer, par6: Int, par7: Float, par8: Float, par9: Float, @ReturnValue res: Boolean): Boolean {
+		if (!res) return res
+		par1World.getTileEntity(par2, par3, par4)?.markDirty()
+		return res
 	}
 	
 	@JvmStatic

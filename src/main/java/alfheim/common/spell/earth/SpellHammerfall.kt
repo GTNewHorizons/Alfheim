@@ -7,10 +7,11 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.*
+import net.minecraft.util.MathHelper
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 
@@ -37,7 +38,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 				block.getBlockHardness(living.worldObj, MathHelper.floor_double(living.posX), MathHelper.floor_double(living.posY - 1), MathHelper.floor_double(living.posZ)) < 2 &&
 				!PartySystem.mobsSameParty(caster, living) &&
 				Vector3.entityDistancePlane(living, caster) < radius)
-				living.attackEntityFrom(DamageSource.inWall, over(caster, damage.toDouble()))
+				living.attackEntityFrom(DamageSourceSpell.hammerfall(caster), over(caster, damage.toDouble()))
 		}
 		return result
 	}

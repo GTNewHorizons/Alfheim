@@ -9,12 +9,15 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects.*
 import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
+import alfheim.common.item.AlfheimItems
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.RenderGlobal
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.Item
 import net.minecraft.potion.PotionEffect
 import vazkii.botania.common.Botania
 import kotlin.math.*
@@ -49,6 +52,7 @@ object VisualEffectHandlerClient {
 				MOON           -> moonBoom(x, y, z)
 				NOTE           -> spawnNote(x, y, z)
 				NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
+				POTION         -> spawnPotion(x, y, z, x2.toInt(), y2 == 1.0)
 				PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
 				PURE_AREA      -> spawnPure(x, y, z)
 				QUAD           -> quadDamage()
@@ -206,6 +210,46 @@ object VisualEffectHandlerClient {
 		Minecraft.getMinecraft().theWorld.spawnParticle("note", x, y, z, Minecraft.getMinecraft().theWorld.rand.nextInt(25) / 24.0, 0.0, 0.0)
 	}
 	
+	fun spawnPotion(x: Double, y: Double, z: Double, color: Int, insta: Boolean) {
+		val worldObj = Minecraft.getMinecraft().theWorld
+		val rand = worldObj.rand
+		
+		if (worldObj.isRemote) {
+			for (acc in worldObj.worldAccesses) {
+				if (acc !is RenderGlobal) continue
+				
+				val s = "iconcrack_${Item.getIdFromItem(AlfheimItems.splashPotion)}_0"
+				
+				for (i in 0..8) {
+					worldObj.spawnParticle(s, x, y, z, rand.nextGaussian() * 0.15, rand.nextDouble() * 0.2, rand.nextGaussian() * 0.15)
+				}
+				
+				val f = (color shr 16 and 255).toFloat() / 255.0f
+				val f1 = (color shr 8 and 255).toFloat() / 255.0f
+				val f2 = (color shr 0 and 255).toFloat() / 255.0f
+				val s1 = if (insta) "instantSpell" else "spell"
+				
+				for (l2 in 1..100) {
+					val d4 = rand.nextDouble() * 4.0
+					val d13 = rand.nextDouble() * Math.PI * 2.0
+					val d5 = cos(d13) * d4
+					val d6 = 0.01 + rand.nextDouble() * 0.5
+					val d7 = sin(d13) * d4
+					
+					val entityfx = acc.doSpawnParticle(s1, x + d5 * 0.1, y + 0.3, z + d7 * 0.1, d5, d6, d7)
+					
+					if (entityfx != null) {
+						val f4 = 0.75f + rand.nextFloat() * 0.25f
+						entityfx.setRBGColorF(f * f4, f1 * f4, f2 * f4)
+						entityfx.multiplyVelocity(d4.toFloat())
+					}
+				}
+				
+				worldObj.playSound(x + 0.5, y + 0.5, z + 0.5, "game.potion.smash", 1.0f, worldObj.rand.nextFloat() * 0.1f + 0.9f, false)
+			}
+		}
+	}
+	
 	fun spawnPure(x: Double, y: Double, z: Double) {
 		for (i in 0..63) {
 			m.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(SpellPurifyingSurface.radius / 25)
@@ -242,7 +286,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MOON, NOTE, NVISION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {
