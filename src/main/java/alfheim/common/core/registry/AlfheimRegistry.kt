@@ -235,7 +235,7 @@ object AlfheimRegistry {
 		registerSpell(SpellRain)
 		registerSpell(SpellResurrect)
 		registerSpell(SpellSacrifice)
-		registerSpell(SpellShadowBlade)
+		registerSpell(SpellShadowVortex)
 		registerSpell(SpellSmokeScreen)
 		registerSpell(SpellStoneSkin)
 		registerSpell(SpellSun)
