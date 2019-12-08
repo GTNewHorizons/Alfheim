@@ -4,7 +4,6 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
@@ -65,16 +64,6 @@ class ItemManaStorageRing(name: String, maxManaCap: Double): ItemBauble(name), I
 	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.RING
-	
-	override fun onWornTick(stack: ItemStack, entity: EntityLivingBase) = Unit
-	
-	override fun onEquipped(stack: ItemStack, entity: EntityLivingBase) = Unit
-	
-	override fun onUnequipped(stack: ItemStack, entity: EntityLivingBase) = Unit
-	
-	override fun canEquip(stack: ItemStack, entity: EntityLivingBase) = true
-	
-	override fun canUnequip(stack: ItemStack, entity: EntityLivingBase) = true
 	
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA))

@@ -21,6 +21,12 @@ object TGHandlerBotaniaAdapter {
 	
 	@JvmStatic
 	@Hook(createMethod = true)
+	fun onTravelGearEquip(item: ItemHolyCloak, player: EntityPlayer, stack: ItemStack) {
+		item.onEquipped(stack, player)
+	}
+	
+	@JvmStatic
+	@Hook(createMethod = true)
 	fun onTravelGearTick(item: ItemHolyCloak, player: EntityPlayer, stack: ItemStack) {
 		if (AlfheimCore.TravellersGearLoaded) item.onWornTick(stack, player)
 	}

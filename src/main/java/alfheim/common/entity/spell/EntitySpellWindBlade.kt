@@ -52,7 +52,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		l.remove(caster)
-		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.blades(this, caster), SpellBase.over(caster, SpellWindBlades.damage.toDouble()))
+		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.windblade(this, caster), SpellBase.over(caster, SpellWindBlades.damage.toDouble()))
 	}
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid

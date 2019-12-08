@@ -18,9 +18,6 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
-		fun blades(wb: EntitySpellWindBlade, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("windblade", caster, wb).setDamageBypassesArmor()!!
-		
 		/** Sacrifice type of damage to attack other mobs  */
 		fun darkness(attacker: EntityLivingBase?) =
 			EntityDamageSourceSpell("darkness_FF", attacker).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
@@ -35,7 +32,7 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()!!
 		
 		fun hammerfall(caster: EntityLivingBase?) =
-			EntityDamageSourceSpell("inWall", caster).setDamageBypassesArmor().setProjectile()!!
+			EntityDamageSourceSpell("hammerfall", caster).setDamageBypassesArmor().setProjectile()!!
 		
 		/** Fenrir Storm type of damage  */
 		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase?) =
@@ -45,10 +42,17 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceIndirectSpell("missile", caster, im).setMagicDamage()!!
 		
 		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("fallingBlock", caster, mt).setProjectile()!!
+			EntityDamageSourceIndirectSpell("mortar", caster, mt).setProjectile()!!
+		
+		fun shadow(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("shadow", caster).setDamageBypassesArmor().setMagicDamage()!!
 		
 		/** Some water blades (?) type of damage  */
-		fun water(caster: EntityLivingBase?) = EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()!!
+		fun water(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()!!
+		
+		fun windblade(wb: EntitySpellWindBlade, caster: EntityLivingBase?) =
+			EntityDamageSourceIndirectSpell("windblade", caster, wb).setDamageBypassesArmor()!!
 	}
 }
 
@@ -72,8 +76,8 @@ class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private v
 	override fun getSourceOfDamage() = directEntity
 	
 	override fun func_151519_b(target: EntityLivingBase): IChatComponent {
-		val ichatcomponent = if (directEntity == null) attacker!!.func_145748_c_() else directEntity.func_145748_c_()
-		val itemstack = if (directEntity is EntityLivingBase) directEntity.heldItem else null
+		val ichatcomponent = if (attacker == null) attacker!!.func_145748_c_() else attacker.func_145748_c_()
+		val itemstack = if (attacker is EntityLivingBase) attacker.heldItem else null
 		val s = "death.attack.$damageType"
 		val s1 = "$s.item"
 		return if (itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1)) ChatComponentTranslation(s1, target.func_145748_c_(), ichatcomponent, itemstack.func_151000_E()) else ChatComponentTranslation(s, target.func_145748_c_(), ichatcomponent)

@@ -57,6 +57,7 @@ object VisualEffectHandlerClient {
 				PURE_AREA      -> spawnPure(x, y, z)
 				QUAD           -> quadDamage()
 				QUADH          -> quadHurt()
+				SHADOW         -> spawnBurst(x, y, z, 0.75f, 0.75f, 0.75f)
 				SMOKE          -> spawnSmoke(x, y, z)
 				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
 				TREMORS        -> spawnTremors(x, y, z)
@@ -286,7 +287,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {
