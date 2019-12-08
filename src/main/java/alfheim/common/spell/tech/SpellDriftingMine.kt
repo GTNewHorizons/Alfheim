@@ -12,6 +12,9 @@ object SpellDriftingMine: SpellBase("driftingmine", EnumRace.LEPRECHAUN, 6000, 1
 	override var efficiency = 0.05
 	override var radius = 5.0
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellDriftingMine(caster.worldObj, caster))

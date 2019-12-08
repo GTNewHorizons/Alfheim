@@ -15,6 +15,9 @@ import net.minecraft.potion.Potion
 
 object SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true) {
 	
+	override val usableParams
+		get() = emptyArray<Any>()
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

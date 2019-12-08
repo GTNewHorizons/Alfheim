@@ -17,6 +17,9 @@ object SpellDeathMark: SpellBase("deathmark", EnumRace.IMP, 24000, 3000, 10) {
 	override var damage = Float.MAX_VALUE
 	override var duration = 600
 	
+	override val usableParams
+		get() = arrayOf(damage, duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

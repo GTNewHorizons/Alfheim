@@ -17,6 +17,9 @@ object SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 	
 	override var duration = 300
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

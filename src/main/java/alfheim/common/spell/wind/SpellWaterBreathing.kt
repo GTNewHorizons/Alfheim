@@ -16,6 +16,9 @@ object SpellWaterBreathing: SpellBase("waterbreathing", EnumRace.SYLPH, 2000, 60
 	
 	override var duration = 2400
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
 				 ?: return SpellCastResult.NOTARGET

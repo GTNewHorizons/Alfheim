@@ -15,6 +15,9 @@ object SpellHarp: SpellBase("harp", EnumRace.POOKA, 15000, 3600, 30) {
 	override var duration = 600
 	override var efficiency = 20.0
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 32.0, true)
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)

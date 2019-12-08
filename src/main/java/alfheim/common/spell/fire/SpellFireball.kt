@@ -12,6 +12,9 @@ object SpellFireball: SpellBase("fireball", EnumRace.SALAMANDER, 1000, 50, 5) {
 	override var efficiency = 0.1 // speed
 	override var radius = 2.0 // AoE
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellFireball(caster.worldObj, caster))

@@ -15,6 +15,9 @@ object SpellDragonGrowl: SpellBase("dragongrowl", EnumRace.POOKA, 12000, 2400, 2
 	override var efficiency = 2.0
 	override var radius = 8.0
 	
+	override val usableParams
+		get() = arrayOf(duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result

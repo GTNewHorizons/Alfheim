@@ -16,6 +16,9 @@ object SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
 	
 	override var duration = 200
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

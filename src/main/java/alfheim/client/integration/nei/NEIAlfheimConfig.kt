@@ -5,6 +5,7 @@ import alfheim.client.integration.nei.recipes.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.AlfheimItems
 import codechicken.nei.api.*
+import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.block.ModBlocks
 
@@ -29,7 +30,8 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.starBlock2))
 		API.hideItem(ItemStack(AlfheimItems.flugelDisc2))
 		API.hideItem(ItemStack(AlfheimItems.flugelHead2))
-		
+		if (Minecraft.getMinecraft().session.username != "AlexSocol")
+			API.hideItem(ItemStack(AlfheimItems.royalStaff))
 	}
 	
 	override fun getName() = AlfheimCore.meta.name!!

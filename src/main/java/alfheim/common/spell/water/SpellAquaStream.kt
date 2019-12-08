@@ -9,6 +9,9 @@ object SpellAquaStream: SpellBase("aquastream", EnumRace.UNDINE, 2000, 100, 5) {
 	
 	override var duration = 50
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(damage, duration, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellAquaStream(caster.worldObj, caster))

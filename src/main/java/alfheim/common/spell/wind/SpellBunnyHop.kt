@@ -17,6 +17,9 @@ object SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
 	override var duration = 3600
 	override var efficiency = 1.0
 	
+	override val usableParams
+		get() = arrayOf(duration, efficiency)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

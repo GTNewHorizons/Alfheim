@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.earth.SpellMortar
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -45,7 +45,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 				mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.toDouble()))
 				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).toFloat())
 			}
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellMortar.radius, SpellMortar.radius, SpellMortar.radius)) as List<EntityLivingBase>
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellMortar.radius)) as List<EntityLivingBase>
 			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
 			
 			setDead()

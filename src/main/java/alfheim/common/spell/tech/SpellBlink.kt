@@ -14,6 +14,9 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 	
 	override var radius = 8.0
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)

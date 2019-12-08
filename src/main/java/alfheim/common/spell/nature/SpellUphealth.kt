@@ -17,6 +17,9 @@ object SpellUphealth: SpellBase("uphealth", EnumRace.CAITSITH, 10000, 1200, 30) 
 	override var duration = 36000
 	override var efficiency = 1.0
 	
+	override val usableParams
+		get() = arrayOf(duration, efficiency)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

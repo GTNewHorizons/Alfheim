@@ -20,6 +20,9 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 	override var damage = 10f
 	override var radius = 10.0
 	
+	override val usableParams
+		get() = arrayOf(damage, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (!caster.onGround || caster.worldObj.isAirBlock(MathHelper.floor_double(caster.posX), MathHelper.floor_double(caster.posY) - 1, MathHelper.floor_double(caster.posZ))) return SpellCastResult.WRONGTGT
 		

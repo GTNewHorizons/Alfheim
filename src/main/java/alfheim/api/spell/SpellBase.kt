@@ -77,10 +77,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	override fun toString() = name
 	
-	operator fun component1() = damage
-	operator fun component2() = duration
-	operator fun component3() = efficiency
-	operator fun component4() = radius
+	abstract val usableParams: Array<Any>
 	
 	enum class SpellCastResult {
 		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING

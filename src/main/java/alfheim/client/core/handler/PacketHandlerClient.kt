@@ -23,6 +23,7 @@ import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
 import alfheim.common.network.MessageNI.mni
 import net.minecraft.client.Minecraft
+import net.minecraft.util.*
 
 object PacketHandlerClient {
 	
@@ -132,9 +133,8 @@ object PacketHandlerClient {
 	fun handle(packet: Message0dC) {
 		when (m0dc.values()[packet.type]) {
 			m0dc.MTSPELL -> {
-				val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-				val (d, D, e, r) = spell ?: return
-				ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "$spell: $d, $D, $e, $r")
+				val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID) ?: return
+				Minecraft.getMinecraft().thePlayer?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("spell.$spell.mtinfo", *spell.usableParams)))
 			}
 		}
 	}

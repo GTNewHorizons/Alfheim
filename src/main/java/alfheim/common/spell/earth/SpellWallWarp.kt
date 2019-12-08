@@ -12,6 +12,9 @@ object SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 	
 	override var radius = 2.0
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(radius)
+	
 	override// This spell is slightly changed version of item from thKaguya's mod
 	fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result: SpellCastResult

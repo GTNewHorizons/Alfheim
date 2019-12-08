@@ -10,6 +10,9 @@ import net.minecraft.util.AxisAlignedBB
 
 object SpellOutdare: SpellBase("outdare", EnumRace.POOKA, 6000, 2400, 20) {
 	
+	override val usableParams
+		get() = emptyArray<Any>()
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val l = caster.worldObj.getEntitiesWithinAABB(EntityLiving::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY, caster.posZ, caster.posX, caster.posY, caster.posZ).expand(32.0, 32.0, 32.0)) as MutableList<EntityLiving>
 		l.remove(caster)

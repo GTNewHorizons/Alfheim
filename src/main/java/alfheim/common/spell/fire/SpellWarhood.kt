@@ -9,6 +9,9 @@ import net.minecraft.entity.player.EntityPlayer
 
 object SpellWarhood: SpellBase("warhood", EnumRace.SALAMANDER, 256000, 72000, 100, true) {
 	
+	override val usableParams
+		get() = emptyArray<Any>()
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
 		

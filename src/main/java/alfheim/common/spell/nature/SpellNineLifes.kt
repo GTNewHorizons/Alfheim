@@ -16,6 +16,9 @@ object SpellNineLifes: SpellBase("ninelifes", EnumRace.CAITSITH, 16000, 3000, 30
 	
 	override var duration = 36000
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

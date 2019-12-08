@@ -10,6 +10,9 @@ object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 
 	
 	override var duration = 1200
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) TimeStopSystem.stop(caster)

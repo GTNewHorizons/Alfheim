@@ -12,6 +12,9 @@ object SpellMortar: SpellBase("mortar", EnumRace.GNOME, 7500, 200, 5) {
 	override var efficiency = 2.0 // speed
 	override var radius = 2.0 // AoE
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellMortar(caster.worldObj, caster))

@@ -13,6 +13,8 @@ import net.minecraftforge.common.MinecraftForge
 
 object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTALLOW

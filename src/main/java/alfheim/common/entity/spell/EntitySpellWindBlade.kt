@@ -47,7 +47,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		
 		if (isDead) return
 		
-		val m = Vector3(ASJUtilities.getLookVec(this))
+		val m = Vector3(ASJUtilities.getLookVec(this)).mul(SpellWindBlades.efficiency)
 		moveEntity(m.x, 0.0, m.z)
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>

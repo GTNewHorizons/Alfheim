@@ -60,7 +60,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 			val list = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, obb!!.toAABB()) as List<EntityLivingBase>
 			for (e in list) {
 				if (e !== caster && obb!!.intersectsWith(e.boundingBox)) {
-					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, 1.0))
+					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, SpellFirewall.damage.toDouble()))
 					if (!PartySystem.mobsSameParty(caster, e) || AlfheimConfigHandler.frienldyFire) e.setFire(3)
 				}
 			}

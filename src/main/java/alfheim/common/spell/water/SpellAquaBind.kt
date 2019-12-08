@@ -24,6 +24,9 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 	override var efficiency = 1.0
 	override var radius = 3.5
 	
+	override val usableParams
+		get() = arrayOf(duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 15.0, false)
 		if (mop == null || mop.typeOfHit == MovingObjectType.MISS) return SpellCastResult.WRONGTGT

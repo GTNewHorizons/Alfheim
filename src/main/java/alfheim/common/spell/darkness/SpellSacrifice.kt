@@ -11,6 +11,9 @@ object SpellSacrifice: SpellBase("sacrifice", EnumRace.IMP, 256000, 75000, 100, 
 	
 	override var damage = Float.MAX_VALUE
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(damage)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

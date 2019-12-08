@@ -298,6 +298,9 @@ object CardinalSystem {
 	
 	object ManaSystem {
 		
+		/**
+		 * Sends [player]'s mana to everyone in his party
+		 */
 		fun handleManaChange(player: EntityPlayer) {
 			PartySystem.getParty(player).sendMana(player, getMana(player))
 		}

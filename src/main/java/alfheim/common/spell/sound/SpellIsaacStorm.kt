@@ -13,6 +13,9 @@ object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 1
 	override var duration = 60
 	override var efficiency = 300.0
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster.worldObj.getEntitiesWithinAABB(IMob::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(15.0, 15.0, 15.0)).isEmpty()) return SpellCastResult.WRONGTGT
 		

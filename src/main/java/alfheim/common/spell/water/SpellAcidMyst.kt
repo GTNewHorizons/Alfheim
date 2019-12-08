@@ -14,6 +14,9 @@ object SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 	override var duration = 50
 	override var radius = 4.5
 	
+	override val usableParams
+		get() = arrayOf(damage, duration, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellAcidMyst(caster.worldObj, caster))

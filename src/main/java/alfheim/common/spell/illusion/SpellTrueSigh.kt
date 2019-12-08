@@ -13,6 +13,9 @@ import net.minecraft.entity.player.*
 
 object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 	
+	override val usableParams
+		get() = emptyArray<Any>()
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayerMP) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

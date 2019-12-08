@@ -16,6 +16,9 @@ object SpellButterflyShield: SpellBase("butterflyshield", EnumRace.CAITSITH, 800
 	override var duration = 6000
 	override var efficiency = 3.0
 	
+	override val usableParams
+		get() = arrayOf(duration, efficiency)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

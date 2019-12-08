@@ -6,7 +6,7 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.fire.SpellFireball
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -51,7 +51,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
 			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
-			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellFireball.radius, SpellFireball.radius, SpellFireball.radius))) {
+			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellFireball.radius))) {
 				val e = o as EntityLivingBase
 				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
 			}

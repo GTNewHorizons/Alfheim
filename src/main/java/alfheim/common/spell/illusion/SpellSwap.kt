@@ -14,6 +14,9 @@ object SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
 	
 	override var damage = 10f
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(damage)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

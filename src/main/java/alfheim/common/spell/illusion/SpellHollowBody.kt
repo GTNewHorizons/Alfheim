@@ -16,6 +16,9 @@ object SpellHollowBody: SpellBase("hollowbody", EnumRace.SPRIGGAN, 10000, 1200, 
 	
 	override var duration = 3600
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

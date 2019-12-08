@@ -15,9 +15,14 @@ object SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 60
 	
 	override var damage = 0.5f
 	override var duration = 200
+	override var efficiency = 16.0 // distance
+	override var radius = 4.0
+	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, efficiency, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
 			val result = checkCastOver(caster)
 			if (result == SpellCastResult.OK)
@@ -28,9 +33,9 @@ object SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 60
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
+		val mop = ASJUtilities.getSelectedBlock(caster, efficiency, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-			val s = radius / 4
+			val s = radius
 			//glDisable(GL_ALPHA_TEST);
 			glAlphaFunc(GL_GREATER, 0.003921569f)
 			glEnable(GL_BLEND)

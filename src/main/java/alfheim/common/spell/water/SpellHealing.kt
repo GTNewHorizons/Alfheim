@@ -13,9 +13,11 @@ object SpellHealing: SpellBase("healing", EnumRace.UNDINE, 2000, 200, 10) {
 	
 	override var damage = 5f
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(damage)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
-				 ?: return SpellCastResult.NOTARGET
+		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster)) ?: return SpellCastResult.NOTARGET
 		
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result

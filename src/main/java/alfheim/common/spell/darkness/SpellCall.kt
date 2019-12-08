@@ -10,6 +10,9 @@ import net.minecraft.entity.player.EntityPlayer
 
 object SpellCall: SpellBase("call", EnumRace.IMP, 10000, 1800, 30) {
 	
+	override val usableParams
+		get() = emptyArray<Any>()
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

@@ -10,6 +10,9 @@ object SpellFenrirStorm: SpellBase("fenrirstorm", EnumRace.SYLPH, 1000, 100, 5) 
 	override var damage = 10f
 	override var radius = 8.0
 	
+	override val usableParams
+		get() = arrayOf(damage, radius)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(caster.worldObj, caster))

@@ -16,6 +16,9 @@ object SpellConfusion: SpellBase("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15)
 	
 	override var duration = 600
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		

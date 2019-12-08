@@ -16,6 +16,9 @@ object SpellBattleHorn: SpellBase("battlehorn", EnumRace.POOKA, 5000, 600, 15) {
 	
 	override var duration = 36000
 	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration, efficiency)
+	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster)) ?: return SpellCastResult.NOTARGET
 		
