@@ -100,9 +100,9 @@ object ESMHandler {
 		if (e.entityLiving.worldObj.isRemote) return
 		val player = e.source.entity as? EntityPlayer ?: return
 		
-		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player) ) {
-			e.entityLiving.hurtResistantTime = max(e.entityLiving.hurtResistantTime - (e.entityLiving.maxHurtResistantTime * 0.2), 0.0).toInt()
-		}
+		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
+			if (e.entityLiving.hurtResistantTime <= e.entityLiving.maxHurtResistantTime / 2f)
+				e.entityLiving.hurtResistantTime = max(e.entityLiving.hurtResistantTime - (e.entityLiving.maxHurtResistantTime * 0.2), 0.0).toInt()
 	}
 	
 	fun doRaceAbility(player: EntityPlayer) {
