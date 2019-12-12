@@ -1,7 +1,8 @@
 package alfheim.common.core.util
 
-import net.minecraft.entity.Entity
+import net.minecraft.entity.*
 import net.minecraft.item.ItemStack
+import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
@@ -22,6 +23,8 @@ fun AxisAlignedBB.expand(d: Double) = this.expand(d, d, d)!!
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
     worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
+
+fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
 fun ItemStack.itemEquals(rItem: Any): Boolean {
     if (rItem is String) {

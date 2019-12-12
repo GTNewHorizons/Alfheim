@@ -9,6 +9,7 @@ public class MessageEffect extends ASJPacket {
 	public int amp;
 	public int dur;
 	public boolean readd;
+	// 1 - add, 0 - update, -1 - remove
 	public int state;
 	
 	public MessageEffect(int e, int i, int d, int a) {

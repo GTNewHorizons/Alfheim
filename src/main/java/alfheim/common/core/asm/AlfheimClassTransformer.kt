@@ -11,6 +11,14 @@ class AlfheimClassTransformer: IClassTransformer {
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		return when (transformedName) {
+			/*"net.minecraft.entity.EntityLivingBase"                         -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `EntityLivingBase$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}*/
+			
 			"net.minecraft.entity.EntityTrackerEntry"                       -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -152,6 +160,29 @@ class AlfheimClassTransformer: IClassTransformer {
 			else                                                            -> basicClass
 		}
 	}
+	
+	/*internal class `EntityLivingBase$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "attackEntityFrom" || name == "a" && desc == "(Lro;F)Z") {
+				println("Visiting EntityLivingBase#attackEntityFrom: $name$desc")
+				return `EntityLivingBase$attackEntityFrom$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `EntityLivingBase$attackEntityFrom$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String?, itf: Boolean) {
+				super.visitMethodInsn(opcode, owner, name, desc, itf)
+				if (opcode == INVOKEVIRTUAL && owner == (if (OBF) "sv" else "net/minecraft/entity/EntityLivingBase") && name == (if (OBF) "a" else "onDeath") && desc == (if (OBF) "(Lro;)V" else "(Lnet/minecraft/util/DamageSource;)V") && !itf) {
+					super.visitVarInsn(ALOAD, 0)
+					super.visitVarInsn(ALOAD, 1)
+					super.visitMethodInsn(INVOKEVIRTUAL, if (OBF) "sv" else "net/minecraft/entity/EntityLivingBase", "onDeathPost", if (OBF) "(Lro;)V" else "(Lnet/minecraft/util/DamageSource;)V", false)
+				}
+			}
+		}
+	}*/
 	
 	internal class `EntityTrackerEntry$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		

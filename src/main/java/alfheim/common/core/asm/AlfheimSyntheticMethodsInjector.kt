@@ -65,6 +65,9 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 			} else if (name == "onChangedPotionEffect") {
 				println("Generating synthetic onChangedPotionEffect")
 				return `AlfheimSyntheticMethods$onChangedPotionEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			} else if (name == "onDeathPost") {
+				println("Generating synthetic onDeathPost")
+				return `AlfheimSyntheticMethods$onDeathPost$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
@@ -99,6 +102,22 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 			
 			override fun visitMaxs(maxStack: Int, maxLocals: Int) {
 				super.visitMaxs(3, 3)
+			}
+		}
+		
+		internal class `AlfheimSyntheticMethods$onDeathPost$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode == RETURN) {
+					visitVarInsn(ALOAD, 0)
+					visitVarInsn(ALOAD, 1)
+					visitMethodInsn(INVOKEVIRTUAL, if (OBF) "sv" else "net/minecraft/entity/EntityLivingBase", "onDeathPost", if (OBF) "(Lro;)V" else "(Lnet/minecraft/util/DamageSource;)V", false)
+				}
+				super.visitInsn(opcode)
+			}
+			
+			override fun visitMaxs(maxStack: Int, maxLocals: Int) {
+				super.visitMaxs(2, 2)
 			}
 		}
 	}

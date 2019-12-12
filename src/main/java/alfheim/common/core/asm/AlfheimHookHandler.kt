@@ -172,6 +172,12 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(createMethod = true, isMandatory = true)
+	fun onDeathPost(e: EntityLivingBase, source: DamageSource) {
+		ASJUtilities.sayToAllOnline("${e.commandSenderName}'s onDeathPost by ${source.damageType}")
+	}
+	
+	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
 	fun updatePotionEffects(e: EntityLivingBase) {
 		try {

@@ -318,7 +318,7 @@ botania.page.races0=Even &4Hel&0 herself hadn't destroyed the intelligent life i
 botania.page.races1=Each of them has a unique color, a shape of the wings and an icon; also some passive abilities, which, if desired, can be turned off by pressing the [M] button. And all of them can fly.
 botania.page.races2=By default, the flight is activated by the [F] key, and if you want to fly even faster, then press the acceleration button to increase the speed by 25%! If suddenly you are surrounded by enemies, press the jump button with the [ALT] pressed to fly straight up. But keep in mind: the flight time is limited and the faster you move, the less time you have.
 botania.page.races3=Abilities<br>Salamander: With a chance they can weaken some debuffs (poison, nausea, blindness).<br>Sylphs: 20% faster flight and its restoration.<br>Cait Sith: Know how to tame any animals with their bare hands.
-botania.page.races4=Pookas: Can imitate the meowing of cats, scaring away creepers.<br>Gnomes: Can sense ores within a radius of eight blocks (only active while sneaking).<br>Leprechauns: The speed of dealing any direct damage is increased by 20%.
+botania.page.races4=Pookas: Can imitate the meowing of cats, scaring away creepers.<br>Gnomes: Can sense ores within a radius of eight blocks (only active while sneaking).<br>Leprechauns: Deal 10% more damage im melee combat.
 botania.page.races5=Spriggans: Perfect night vision and immunity to blindness.<br>Undines: Endless breathing underwater.<br>Imps: Mana cost reduced by 20% for repairing armor and tools, as well as for using wands.
 
 ################################################################ MMO ################################################################

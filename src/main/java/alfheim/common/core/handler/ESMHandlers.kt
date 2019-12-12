@@ -25,7 +25,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
-import net.minecraftforge.event.entity.living.LivingAttackEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -95,14 +95,13 @@ object ESMHandler {
 		if (AlfheimCore.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith(e.entityPlayer, e.target)
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	fun onEntityHurt(e: LivingAttackEvent) {
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	fun onEntityHurt(e: LivingHurtEvent) {
 		if (e.entityLiving.worldObj.isRemote) return
 		val player = e.source.entity as? EntityPlayer ?: return
 		
 		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
-			if (e.entityLiving.hurtResistantTime <= e.entityLiving.maxHurtResistantTime / 2f)
-				e.entityLiving.hurtResistantTime = max(e.entityLiving.hurtResistantTime - (e.entityLiving.maxHurtResistantTime * 0.2), 0.0).toInt()
+			e.ammount *= 1.1f
 	}
 	
 	fun doRaceAbility(player: EntityPlayer) {
