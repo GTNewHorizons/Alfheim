@@ -95,7 +95,7 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityDrops(event: LivingDropsEvent) {
-		if (event.recentlyHit && event.source.entity != null && event.source.entity is EntityPlayer) {
+		if (event.recentlyHit && event.source.entity is EntityPlayer) {
 			val weapon = (event.source.entity as EntityPlayer).currentEquippedItem
 			val target = event.entityLiving
 			if (weapon != null && weapon.item is ItemElementiumAxe && target is EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
@@ -180,7 +180,7 @@ object EventHandler {
 			e.ammount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
-			if (e.source.entity != null && e.source.entity is EntityLivingBase && (e.source.entity as EntityLivingBase).isPotionActive(AlfheimConfigHandler.potionIDQuadDamage)) {
+			if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
 				e.ammount *= 4.0f
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
 			}
@@ -206,7 +206,7 @@ object EventHandler {
 						e.isCanceled = true
 						return
 					}
-				} else if (e.source.entity != null && e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
+				} else if (e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
 					e.source.entity.attackEntityFrom(e.source, e.ammount / 2)
 				}
 			}
@@ -246,6 +246,7 @@ object EventHandler {
 				e.entityLiving.clearActivePotions()
 				e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
+				e.isCanceled = true
 			}
 			
 			CardinalSystem.PartySystem.getMobParty(e.entityLiving)?.setDead(e.entityLiving, true)

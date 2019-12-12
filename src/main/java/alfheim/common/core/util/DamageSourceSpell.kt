@@ -19,8 +19,8 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
 		/** Sacrifice type of damage to attack other mobs  */
-		fun darkness(attacker: EntityLivingBase?) =
-			EntityDamageSourceSpell("darkness_FF", attacker).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		fun darkness(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("darkness_FF", caster).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		
 		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setExplosion()!!
@@ -71,12 +71,12 @@ open class EntityDamageSourceSpell(source: String, protected val attacker: Entit
 		attacker != null && attacker is EntityLivingBase && attacker !is EntityPlayer
 }
 
-class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val directEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
+class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val projectile: Entity?): EntityDamageSourceSpell(type, attacker) {
 	
-	override fun getSourceOfDamage() = directEntity
+	override fun getSourceOfDamage() = projectile
 	
 	override fun func_151519_b(target: EntityLivingBase): IChatComponent {
-		val ichatcomponent = if (attacker == null) attacker!!.func_145748_c_() else attacker.func_145748_c_()
+		val ichatcomponent = if (attacker == null) projectile!!.func_145748_c_() else attacker.func_145748_c_()
 		val itemstack = if (attacker is EntityLivingBase) attacker.heldItem else null
 		val s = "death.attack.$damageType"
 		val s1 = "$s.item"

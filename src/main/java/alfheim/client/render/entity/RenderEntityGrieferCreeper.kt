@@ -3,6 +3,7 @@ package alfheim.client.render.entity
 import alfheim.api.ModInfo
 import net.minecraft.client.model.ModelCreeper
 import net.minecraft.client.renderer.entity.RenderCreeper
+import net.minecraft.entity.Entity
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
@@ -50,6 +51,7 @@ class RenderEntityGrieferCreeper : RenderCreeper() {
 
         return -1
     }
-
+    
+    override fun getEntityTexture(entity: Entity) = creeperTextures
     override fun getEntityTexture(entity: EntityCreeper) = creeperTextures
 }

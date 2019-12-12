@@ -30,6 +30,7 @@ import vazkii.botania.common.block.ModBlocks
 
 object AlfheimBlocks {
 	
+	val airyVirus: Block
 	val alfheimPortal: Block
 	val alfheimPylon: Block
 	val alfStorage: Block
@@ -160,6 +161,7 @@ object AlfheimBlocks {
 	val sealingWood: Block
 	
 	init {
+		airyVirus = BlockAiryVirus()
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
 		alfStorage = object: BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {

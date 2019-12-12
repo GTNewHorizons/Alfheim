@@ -42,4 +42,8 @@ object LibOreDict {
 	const val RAINBOW_DOUBLE_FLOWER = "${RAINBOW_FLOWER}Double"
 	
 	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated")
+	
+	val EMERALD = "gemEmerald"
+	val GLOWSTONE_DUST = "dustGlowstone"
+	val REDSTONE_DUST = "dustRedstone"
 }

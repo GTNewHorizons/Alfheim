@@ -25,7 +25,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
-import net.minecraftforge.event.entity.living.LivingHurtEvent
+import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -96,12 +96,12 @@ object ESMHandler {
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	fun onEntityHurt(e: LivingHurtEvent) {
+	fun onEntityHurt(e: LivingAttackEvent) {
+		if (e.entityLiving.worldObj.isRemote) return
 		val player = e.source.entity as? EntityPlayer ?: return
 		
 		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player) ) {
-			e.entityLiving.hurtResistantTime = 16
-			e.entityLiving.hurtTime = 8
+			e.entityLiving.hurtResistantTime = max(e.entityLiving.hurtResistantTime - (e.entityLiving.maxHurtResistantTime * 0.2), 0.0).toInt()
 		}
 	}
 	

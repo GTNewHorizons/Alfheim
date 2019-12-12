@@ -1,6 +1,7 @@
 package alfheim.common.core.util
 
 import alfheim.AlfheimCore
+import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -204,9 +205,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(livingwoodFunnel)
 		addBlock(amplifier)
 		addBlock(irisLamp)
-		addBlock(rainbowPetalBlock)
 		addBlock(kindling)
 		addBlock(alfStorage)
+		addBlock(rainbowPetalBlock)
+		addBlock(airyVirus)
 		
 		addItem (elvenResource)
 		addItem (wiltedLotus)
