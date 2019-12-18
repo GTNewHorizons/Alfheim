@@ -28,6 +28,7 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.oredict.OreDictionary
+import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
@@ -219,8 +220,11 @@ object ESMHandler {
 	}
 	
 	fun doUndine(player: EntityPlayer) {
-		if (!isAbilityDisabled(player))
+		if (!isAbilityDisabled(player)) {
 			player.air = 300
+			
+			if (player.ticksExisted % 20 == 0 && player.isInWater) ManaItemHandler.dispatchManaExact(ItemStack(Blocks.stone), player, 1, true)
+		}
 	}
 	
 	fun isAbilityDisabled(player: EntityPlayer) =

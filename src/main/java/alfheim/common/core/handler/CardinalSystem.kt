@@ -183,7 +183,7 @@ object CardinalSystem {
 					}
 				}
 			} catch (e: Throwable) {
-				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick.")
+				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick. Caused by: ${e.message}")
 				e.printStackTrace()
 			}
 		}
