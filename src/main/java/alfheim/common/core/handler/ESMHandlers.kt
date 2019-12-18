@@ -20,7 +20,7 @@ import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
+import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
@@ -109,7 +109,7 @@ object ESMHandler {
 			SALAMANDER -> doSalamander(player)
 			SYLPH      -> doSylph(player)
 			CAITSITH   -> Unit // above
-			POOKA      -> Unit // hook: scaring away creepers
+			POOKA      -> doPooka(player) // also hook  scaring away creepers
 			GNOME      -> doGnome(player)
 			LEPRECHAUN -> Unit // above
 			SPRIGGAN   -> doSpriggan(player)
@@ -163,12 +163,31 @@ object ESMHandler {
 	fun doCaitSith(player: EntityPlayer, tg: Entity) {
 		if (isAbilityDisabled(player)) return
 		
+		var done = false
+		
 		if (tg is EntityTameable && !tg.isTamed) {
 			tg.isTamed = true
 			tg.func_152115_b(player.uniqueID.toString())
+			done = true
 		} else if (tg is EntityHorse) {
 			tg.setTamedBy(player)
 			tg.worldObj.setEntityState(tg, 7.toByte())
+			done = true
+		}
+		
+		if (done) {
+			player.addPotionEffect(PotionEffect(Potion.regeneration.id, 600, 0, false))
+			player.addPotionEffect(PotionEffect(Potion.field_76444_x.id, 1800, 0, false))
+		}
+	}
+	
+	fun doPooka(player: EntityPlayer) {
+		if (player.worldObj.isRemote || isAbilityDisabled(player)) return
+		
+		val seg = CardinalSystem.forPlayer(player)
+		if (seg.standingStill > 200) {
+			if (player.ticksExisted % 50 == 0) player.heal(0.5f)
+			if (player.ticksExisted % 100 == 0) player.foodStats.addStats(1, 0.05f)
 		}
 	}
 	

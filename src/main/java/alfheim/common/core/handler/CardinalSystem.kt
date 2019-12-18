@@ -1014,6 +1014,10 @@ object CardinalSystem {
 		
 		@Transient
 		var quadStage = 0
+		@Transient
+		var standingStill = 0 // POOKA ability
+		@Transient
+		var lastPos = Vector3.fromEntity(player)
 		
 		companion object {
 			private const val serialVersionUID = 6871678638741684L
