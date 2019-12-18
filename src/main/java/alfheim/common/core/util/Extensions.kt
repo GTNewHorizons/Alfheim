@@ -8,6 +8,8 @@ import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
 
 fun Double.mfloor() = MathHelper.floor_double(this)
+// double value
+val Int.D get() = this.toDouble()
 
 fun Entity.boundingBox(range: Double = 1.0) =
     AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)!!

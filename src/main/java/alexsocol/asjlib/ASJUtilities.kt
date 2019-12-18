@@ -754,6 +754,13 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
+	fun getTopLevel(worldObj: World, x: Int, z: Int): Int {
+		var y = 1
+		while (!worldObj.isAirBlock(x, y, z)) ++y
+		return y
+	}
+	
+	@JvmStatic
 	fun soundFromMaterial(mat: Material) =
 		when (mat) {
 			anvil                                      -> Block.soundTypeAnvil
