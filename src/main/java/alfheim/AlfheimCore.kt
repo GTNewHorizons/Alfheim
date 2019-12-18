@@ -21,12 +21,15 @@ import cpw.mods.fml.relauncher.Side
 import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
 import java.io.File
+import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
 @Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
 	
 	companion object {
+		
+		var jingleTheBells = false
 		
 		@Instance(MODID)
 		lateinit var instance: AlfheimCore
@@ -51,6 +54,11 @@ class AlfheimCore {
 		
 		init {
 			AlfheimTab
+			
+			val calendar = Calendar.getInstance()
+			if (calendar[2] == 11 && calendar[5] >= 16 || calendar[2] == 0 && calendar[5] <= 8) {
+				jingleTheBells = true
+			}
 		}
 	}
 	
