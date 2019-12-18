@@ -128,6 +128,7 @@ tile.ShrineRock15.name=Блок храма
 tile.alfheim:ShrineRockWhiteStairs.name=Ступеньки из блока храма
 tile.botania:ShrineRock0Slab.name=Плита из блока храма
 tile.botania:ShrineRock0SlabFull.name=Плита из блока храма
+tile.alfheim:SnowGrass.name=Заснеженная трава
 tile.alfheim:TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 

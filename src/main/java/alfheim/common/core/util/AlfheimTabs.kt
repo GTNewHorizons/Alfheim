@@ -78,6 +78,7 @@ import alfheim.common.block.AlfheimBlocks.sealingWood
 import alfheim.common.block.AlfheimBlocks.shimmerQuartz
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzStairs
+import alfheim.common.block.AlfheimBlocks.snowGrass
 import alfheim.common.block.AlfheimBlocks.tradePortal
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
@@ -209,6 +210,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(alfStorage)
 		addBlock(rainbowPetalBlock)
 		addBlock(airyVirus)
+		addBlock(snowGrass)
 		
 		addItem (elvenResource)
 		addItem (wiltedLotus)

@@ -130,6 +130,7 @@ tile.ShrineRock15.name=Shrine Rock
 tile.alfheim:ShrineRockWhiteStairs.name=Shrine Rock Stairs
 tile.botania:ShrineRock0Slab.name=Shrine Rock Slab
 tile.botania:ShrineRock0SlabFull.name=Shrine Rock Slab
+tile.alfheim:SnowGrass.name=Snowy Grass
 tile.alfheim:TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
 
@@ -600,9 +601,9 @@ spell.waterbreathing.name=Water Breathing
 spell.wellolife.name=Well of Life
 spell.windblades.name=Wind Blades
 
-spell.acidmyst.mtinfo=Name: acidmyst | damage s% duration %s radius %s
-spell.aquabind.mtinfo=Name: aquabind | duration %s efficiency s% radius %s
-spell.aquastream.mtinfo=Name: aquastream | damage s% duration %s radius %s
+spell.acidmyst.mtinfo=Name: acidmyst | damage %s duration %s radius %s
+spell.aquabind.mtinfo=Name: aquabind | duration %s efficiency %s radius %s
+spell.aquastream.mtinfo=Name: aquastream | damage %s duration %s radius %s
 spell.battlehorn.mtinfo=Name: battlehorn | duration %s efficiency %s
 spell.blink.mtinfo=Name: blink | radius %s
 spell.bunnyhop.mtinfo=Name: bunnyhop | duration %s efficiency %s
@@ -614,11 +615,11 @@ spell.deathmark.mtinfo=Name: deathmark | damage %s duration %s
 spell.decay.mtinfo=Name: decay | duration (bleeding = n/5) %s efficiency (bleeding) %s
 spell.dispel.mtinfo=Name: dispel | duration (of penalty) %s
 spell.dragongrowl.mtinfo=Name: dragongrowl | duration %s efficiency %s radius %s
-spell.driftingmine.mtinfo=Name: driftingmine | damage s% duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
+spell.driftingmine.mtinfo=Name: driftingmine | damage %s duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
 spell.echo.mtinfo=Name: echo | radius %s
-spell.fenrirstorm.mtinfo=Name: fenrirstorm | damage s% radius s%
-spell.fireball.mtinfo=Name: fireball | damage s% duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
-spell.firewall.mtinfo=Name: firewall | damage s% duration (lifetime) %s
+spell.fenrirstorm.mtinfo=Name: fenrirstorm | damage %s radius %s
+spell.fireball.mtinfo=Name: fireball | damage %s duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
+spell.firewall.mtinfo=Name: firewall | damage %s duration (lifetime) %s
 spell.gravitytrap.mtinfo=Name: gravitytrap | damage %s duration %s efficiency (spawn distance) %s radius %s
 spell.goldrush.mtinfo=Name: goldrush | duration %s efficiency %s
 spell.hammerfall.mtinfo=Name: hammerfall | damage %s radius %s
@@ -629,7 +630,7 @@ spell.icelens.mtinfo=Name: icelens | duration %s
 spell.ignition.mtinfo=Name: ignition | radius %s
 spell.isaacstorm.mtinfo=Name: isaacstorm | damage %s duration (lifetime) %s efficiency (rockets count) %s radius %s
 spell.join.mtinfo=Name: join
-spell.mortar.mtinfo=Name: mortar | damage s% duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
+spell.mortar.mtinfo=Name: mortar | damage %s duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
 spell.night.mtinfo=Name: night
 spell.nightvision.mtinfo=Name: nightvision | duration %s
 spell.ninelifes.mtinfo=Name: ninelifes | duration %s
@@ -656,7 +657,7 @@ spell.wallwarp.mtinfo=Name: wallwarp | radius %s
 spell.warhood.mtinfo=Name: warhood
 spell.waterbreathing.mtinfo=Name: waterbreathing | duration %s
 spell.wellolife.mtinfo=Name: wellolife | damage (healing) %s duration %s efficiency %s
-spell.windblades.mtinfo=Name: windblades | damage s% duration (lifetime) %s efficiency (speed) %s
+spell.windblades.mtinfo=Name: windblades | damage %s duration (lifetime) %s efficiency (speed) %s
 
 ##
 #spell.acidmyst.words=§bAcid Myst
