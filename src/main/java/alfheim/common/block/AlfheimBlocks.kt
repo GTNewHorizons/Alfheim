@@ -102,7 +102,6 @@ object AlfheimBlocks {
 	val shimmerQuartzSlab: Block
 	val shimmerQuartzSlabFull: Block
 	val shimmerQuartzStairs: Block
-	val snowGrass: Block
 	val starBlock: Block
 	val starBlock2: Block
 	val tradePortal: Block
@@ -244,7 +243,6 @@ object AlfheimBlocks {
 		shimmerQuartzSlab.register()
 		shimmerQuartzSlabFull.register()
 		shimmerQuartzStairs = BlockShimmerQuartzStairs(shimmerQuartz)
-		snowGrass = BlockSnowGrass()
 		starBlock = BlockStar()
 		starBlock2 = BlockCracklingStar()
 		tradePortal = BlockTradePortal()

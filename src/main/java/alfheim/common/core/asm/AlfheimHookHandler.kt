@@ -283,14 +283,6 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true)
-	fun updateTick(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
-		if (AlfheimCore.jingleTheBells && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
-			world.setBlock(x, y, z, AlfheimBlocks.snowGrass)
-		}
-	}
-	
-	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
 		if (result) {
