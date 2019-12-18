@@ -76,6 +76,7 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
 		glAlphaFunc(GL_GREATER, 0.1f)
 		glDepthMask(true)
 		glEnable(GL_LIGHTING)

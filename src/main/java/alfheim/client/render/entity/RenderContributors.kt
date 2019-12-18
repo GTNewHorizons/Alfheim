@@ -118,6 +118,7 @@ object RenderContributors {
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
+				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 				
 				val f = icon.minU
 				val f1 = icon.maxU
@@ -145,6 +146,8 @@ object RenderContributors {
 				glRotatef(-rx, 1f, 0f, 0f)
 				glRotatef(-rz, 0f, 0f, 1f)
 				
+				glDisable(GL_BLEND)
+				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				glPopMatrix()
 			}
