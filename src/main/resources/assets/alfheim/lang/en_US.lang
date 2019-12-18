@@ -518,6 +518,7 @@ elvenstory.welcome1=§6Please, select gender and race using panel in front of yo
 elvenstory.selectgender=Select Gender
 elvenstory.selectrace=Select Race
 
+key.categories.alfheim=Alfheim
 key.lolicorn.desc=Call Lolicorn
 key.esmability.desc=Toggle Elven Ability
 key.cast.desc=Spell Cast

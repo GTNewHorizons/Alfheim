@@ -509,6 +509,7 @@ elvenstory.welcome1=§6Пожалуйста, выберите пол и расу
 elvenstory.selectgender=Выберите пол
 elvenstory.selectrace=Выберите расу
 
+key.categories.alfheim=Альфхейм
 key.lolicorn.desc=Призвать Лоликорна
 key.esmability.desc=Переключение эльфийской способности
 key.cast.desc=Каст заклинания
