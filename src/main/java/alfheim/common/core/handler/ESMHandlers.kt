@@ -97,7 +97,6 @@ object ESMHandler {
 	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onEntityHurt(e: LivingHurtEvent) {
-		if (e.entityLiving.worldObj.isRemote) return
 		val player = e.source.entity as? EntityPlayer ?: return
 		
 		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))

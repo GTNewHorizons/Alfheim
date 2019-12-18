@@ -33,9 +33,9 @@ object SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 10
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			val pe = tg.target.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
-			pe.duration = 1
-			pe.amplifier = 1
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDLeftFlame, 1, 1))
+			pe.duration = 0
+			pe.amplifier = 0
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDLeftFlame, 0, 0))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 			PartySystem.getMobParty(caster)?.setDead(tg.target, false)
 			tg.target.dataWatcher.updateObject(6, 10f)

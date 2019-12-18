@@ -4,7 +4,6 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.DamageSourceSpell
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -44,11 +43,6 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			target.capabilities.isFlying = false
 			target.sendPlayerAbilities()
 			if (target is EntityPlayerMP) target.theItemInWorldManager.blockReachDistance = 5.0
-			
-			if (ampl != 1) {
-				target.onDeath(DamageSourceSpell.leftover)
-				//AlfheimSyntheticMethods.onDeathPost(target, DamageSourceSpell.leftover)
-			}
 		}
 	}
 	

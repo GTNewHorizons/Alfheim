@@ -241,8 +241,8 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityDeath(e: LivingDeathEvent) {
-		if (AlfheimCore.enableMMO && e.source.damageType != DamageSourceSpell.leftover.damageType) {
-			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
+		if (AlfheimCore.enableMMO) {
+			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				e.entityLiving.clearActivePotions()
 				e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)

@@ -12,7 +12,6 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
 		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor()!!
-		val leftover = DamageSourceSpell("#TECHNICAL.LEFTOVERFLAME#")
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!
 		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
