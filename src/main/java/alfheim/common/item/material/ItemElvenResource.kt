@@ -1,5 +1,6 @@
 package alfheim.common.item.material
 
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
@@ -71,6 +72,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 			if (!isInterpolated(i))
 				texture[i] = IconHelper.forName(reg, subItems[i], "materials")
 		
+		candy = IconHelper.forName(reg, "CandyCane", "materials")
 		harp = reg.registerIcon(ModInfo.MODID + ":misc/harp")
 		mine = reg.registerIcon(ModInfo.MODID + ":misc/mine")
 		wind = reg.registerIcon(ModInfo.MODID + ":misc/wind")
@@ -86,9 +88,17 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 					texture[i] = InterpolatedIconHelper.forName(event.map, subItems[i], "materials")
 	}
 	
-	override fun getIconFromDamage(meta: Int) = texture[max(0, min(meta, texture.size - 1))]!!
+	override fun getIconFromDamage(meta: Int) =
+		if (AlfheimCore.jingleTheBells && meta == ElvenResourcesMetas.InfusedDreamwoodTwig)
+			candy
+		else
+			texture[max(0, min(meta, texture.size - 1))]!!
 	
-	override fun getUnlocalizedName(stack: ItemStack) = "item.${subItems[max(0, min(stack.itemDamage, subItems.size - 1))]}"
+	override fun getUnlocalizedName(stack: ItemStack) =
+		if (AlfheimCore.jingleTheBells && stack.itemDamage == ElvenResourcesMetas.InfusedDreamwoodTwig)
+			"item.InfusedCandy"
+		else
+			"item.${subItems[max(0, min(stack.itemDamage, subItems.size - 1))]}"
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) list.add(ItemStack(item, 1, i))
@@ -146,6 +156,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 		
 		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal"/*, "Transferer" BACK*/)
 		
+		lateinit var candy: IIcon
 		lateinit var harp: IIcon
 		lateinit var mine: IIcon
 		lateinit var wind: IIcon
