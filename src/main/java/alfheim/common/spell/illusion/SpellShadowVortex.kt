@@ -3,7 +3,7 @@ package alfheim.common.spell.illusion
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
-import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.util.*
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
@@ -11,7 +11,7 @@ import net.minecraft.entity.EntityLivingBase
 object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80, 10) {
 	
 	override var damage = 6f
-	override var radius = 6.0
+	override var radius = 3.0
 	
 	override val usableParams = arrayOf(damage, radius)
 	
@@ -22,7 +22,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, 0.0, radius)) as MutableList<EntityLivingBase>
 		list.forEach {
-			if (it != caster)
+			if (it != caster && !CardinalSystem.PartySystem.mobsSameParty(caster, it))
 				for (i in 1..50)
 					if (teleportRandomly(it)) {
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)

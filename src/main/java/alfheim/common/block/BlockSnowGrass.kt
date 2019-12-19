@@ -42,19 +42,16 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 		
 		if (AlfheimCore.jingleTheBells) {
 			if (above === Blocks.air) {
-				world.setBlock(x, y + 1, z, Blocks.snow_layer)
-			} else if (above === Blocks.snow_layer) {
+				world.setBlock(x, y + 1, z, AlfheimBlocks.snowLayer)
+			} else if (above === AlfheimBlocks.snowLayer) {
 				val meta = world.getBlockMetadata(x, y + 1, z)
 				val upMeta = ((x xor y xor z) and 7) / 2
 				
-				if (meta < upMeta) {
+				if (meta < upMeta)
 					world.setBlockMetadataWithNotify(x, y + 1, z, meta + 1, 1 or 2)
-				} else if (meta > upMeta) {
-					world.setBlockMetadataWithNotify(x, y + 1, z, meta - 1, 1 or 2)
-				}
 			}
 		} else {
-			if (above === Blocks.snow_layer) world.setBlockToAir(x, y + 1, z)
+			if (above === AlfheimBlocks.snowLayer) world.setBlockToAir(x, y + 1, z)
 			world.setBlock(x, y, z, Blocks.grass)
 		}
 	}

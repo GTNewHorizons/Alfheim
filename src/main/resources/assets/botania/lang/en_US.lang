@@ -219,6 +219,12 @@ botania.entry.soul=Flügel's Soul
 botania.tagline.soul=God Slayers
 botania.page.soul0=The one who win the Flügel will receive the highest reward - Flügel's soul, allowing to set up to twelve warp points, like an eye in the old days. But that's not all. If you want to test your forces on the limit - the soul will allow you to call another Flügel, even stronger - the one from Gods Slayers, twelve more times (in exchange for warp points). This will give you some useful and rare resources.
 botania.page.soul1=<br><br><br><br><br><br><br>&oit seems page is torn out&r
+# this
+# is
+# for
+# line
+# numbers
+# equality
 botania.page.soul3=Pave &4Anti-pylons&0 around ritual of Gaia to form a ring with Gaia pylons, then place the Mana infuser and the botanical brewery over the beacon. Thus, the energy from the pylons will be concentrated in the infuser and will restore a part of the Flügel's soul with final hit.
 botania.page.soul4=Soul restructurizer
 botania.page.soul5=In order to restore the soul, it is enough to place it in the upper part of the brewery and summon the Gaia Guardian. Anti-pylons will do the rest for you. For sure success, call the hardcore form of the Guardian. But if you are lucky, then the usual form will help, it is like a coin toss. But be careful. If you make a mistake, the accumulated energy will be released into space in the form of an explosion.
@@ -378,6 +384,7 @@ botania.page.purifyingsurface=Removes poison effect from allies within 5 blocks,
 botania.page.rain=Causes rain/calms thunderstorm.
 botania.page.resurrect=Allows for some time to resurrect an ally on the spot of his death, restoring 10 health points.
 botania.page.sacrifice=You sacrifice yourself to Darkness, causing tremendous darkness damage to everyone within a radius of 32 blocks, including allies, and then you die too<br>                             "EXPLOSION".
+botania.page.shadowvortex=Teleports every living being in close range around you to random position, dealing average damage with dark energy.
 botania.page.smokescreen=Creates a smoke cloud that imposes blindness on opponents within a radius of 16 blocks.
 botania.page.stoneskin=Imposes an effect on the target, allowing you to completely absorb one hit, and then imposes an additional partial absorption effect.
 botania.page.sun=Stops rain/thunder.
