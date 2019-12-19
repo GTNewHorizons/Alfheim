@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -19,9 +19,6 @@ import net.minecraft.world.World
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import java.nio.charset.Charset
-import java.security.*
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter
-import kotlin.experimental.xor
 import kotlin.math.max
 
 class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
@@ -52,7 +49,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 		if (player.isSneaking) {
 			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack
 
-			if (merge(player.commandSenderName, stack.displayName) == "35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0") {
+			if (Converter.bytesToHexString(Sha256.hash(HashUtils.salt(HashUtils.merge(player.commandSenderName, stack.displayName)).toByteArray(Charset.forName("UTF-8")))).also { println(it) } == "35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0") {
 				setInt(stack, TAG_ELEMENT, 5)
 				stack.tagCompound.removeTag("display")
 				return stack
@@ -65,44 +62,6 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 		return stack
 	}
 
-	internal fun merge(s1: String, s2: String): String? {
-		val s = StringBuilder()
-		for (c1 in s1) for (c2 in s2) s.append(((c1.toShort() * c2.toShort()) % 256).toChar())
-		return hash("$s")
-	}
-	
-	internal fun hash(str: String?): String? {
-		if (str != null)
-			try {
-				val md = MessageDigest.getInstance("SHA-256")
-				return HexBinaryAdapter().marshal(md.digest(salt(str).toByteArray(Charset.forName("UTF-8"))))
-			} catch (e: NoSuchAlgorithmException) {
-				e.printStackTrace()
-			}
-		
-		return ""
-	}
-	
-	// Might as well be called sugar given it's not secure at all :D
-	internal fun salt(str: String): String {
-		val salt = str + "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot"
-		val rand = SecureRandom(salt.toByteArray(Charset.forName("UTF-8")))
-		val l = salt.length
-		val steps = rand.nextInt(l)
-		val chrs = salt.toCharArray()
-		for (i in 0 until steps) {
-			val indA = rand.nextInt(l)
-			var indB: Int
-			do {
-				indB = rand.nextInt(l)
-			} while (indB == indA)
-			val c = (chrs[indA].toShort() xor chrs[indB].toShort()).toChar()
-			chrs[indA] = c
-		}
-		
-		return String(chrs)
-	}
-	
 	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, slotID: Int, inHand: Boolean) {
 		if (world.isRemote) return
 		
