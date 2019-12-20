@@ -505,6 +505,7 @@ class StructureDreamsTree
 	}
 	
 	fun canBePlaced(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
+		if (world.getTileEntity(x, y, z) != null) return false
 		val at = world.getBlock(x, y, z)
 		if (at.getBlockHardness(world, x, y, z) == -1f) return false
 		if (block === leaves) {

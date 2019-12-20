@@ -308,7 +308,7 @@ object ShadowFoxRecipes {
 						 'P', PIXIE_DUST,
 						 'S', DRAGONSTONE)
 		
-		addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, 16),
+		addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, 17),
 						 " PD",
 						 " RP",
 						 "S  ",

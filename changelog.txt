@@ -1,5 +1,7 @@
 Innovations:
  Teleport spells
+ Shadow vortex spell
+ Holliday special event
  
 Integration:
  Minetweaker:
@@ -7,8 +9,4 @@ Integration:
   Ability to change spell parameters (damage, duration, efficiency and radius)
 
 Fixes:
- --
- 
-Known Issues:
- [Thermos] Revive just removes "death" effect
- [Thermos] Leprechauns attack speed bonus don't work
+ Fixes and improvements (a lot) :3
