@@ -1,12 +1,5 @@
 Innovations:
- Teleport spells
- Shadow vortex spell
- Holliday special event
- 
-Integration:
- Minetweaker:
-  Command to show current spell data in game /mtspell
-  Ability to change spell parameters (damage, duration, efficiency and radius)
+ --
 
 Fixes:
- Fixes and improvements (a lot) :3
+ --
