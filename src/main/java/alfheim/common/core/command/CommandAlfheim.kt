@@ -15,21 +15,13 @@ import vazkii.botania.common.Botania
 
 class CommandAlfheim: CommandBase() {
 	
-	override fun getRequiredPermissionLevel(): Int {
-		return 2
-	}
+	override fun getRequiredPermissionLevel() = 2
 	
-	override fun getCommandAliases(): List<*> {
-		return listOf("alf")
-	}
+	override fun getCommandAliases() = listOf("alf")
 	
-	override fun getCommandName(): String {
-		return "alfheim"
-	}
+	override fun getCommandName() = "alfheim"
 	
-	override fun getCommandUsage(sender: ICommandSender): String {
-		return "alfheim.commands.alfheim.usage"
-	}
+	override fun getCommandUsage(sender: ICommandSender) = "alfheim.commands.alfheim.usage"
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		if (args.size == 1) {
@@ -60,9 +52,7 @@ class CommandAlfheim: CommandBase() {
 			throw WrongUsageException("alfheim.commands.alfheim.wrong")
 	}
 	
-	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>?): List<*> {
-		return getListOfStringsMatchingLastWord(args, "ESM", "MMO")
-	}
+	override fun addTabCompletionOptions(sender: ICommandSender?, args: Array<String>?) = getListOfStringsMatchingLastWord(args, "ESM", "MMO")
 	
 	companion object {
 		

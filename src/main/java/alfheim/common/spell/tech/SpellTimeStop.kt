@@ -6,7 +6,12 @@ import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.TimeStopSystem
 import net.minecraft.entity.EntityLivingBase
 
-class SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {
+object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {
+	
+	override var duration = 1200
+	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
@@ -15,6 +20,6 @@ class SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 1
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		SpellVisualizations.negateSphere(0.5)
+		SpellVisualizations.negateSphere(radius / 32)
 	}
 }

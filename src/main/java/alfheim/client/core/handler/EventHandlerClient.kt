@@ -134,14 +134,23 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerTick(e: PlayerTickEvent) {
-		if (e.player !== Minecraft.getMinecraft().thePlayer) return
+		val player = Minecraft.getMinecraft().thePlayer
+		if (e.player !== player) return
 		
 		if (e.phase == Phase.START && e.side == Side.CLIENT && !Minecraft.getMinecraft().isGamePaused) {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
 			SpellCastingSystemClient.tick()
 			
-			if (PlayerSegmentClient.target != null && Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null)
-				if (!PlayerSegmentClient.target!!.isEntityAlive || Vector3.entityDistance(Minecraft.getMinecraft().thePlayer, PlayerSegmentClient.target!!) > (if (PlayerSegmentClient.target is IBossDisplayData) 128 else 32)) PlayerSegmentClient.target = null
+			if (Minecraft.getMinecraft() != null && player != null) {
+				val tg = PlayerSegmentClient.target
+				if (tg != null) {
+					if (!tg.isEntityAlive || Vector3.entityDistance(player, tg) > (if (tg is IBossDisplayData) 128 else 32)) PlayerSegmentClient.target = null
+				} else if (PlayerSegmentClient.partyIndex > 0) run {
+					val mr = PlayerSegmentClient.party?.get(PlayerSegmentClient.partyIndex) ?: return@run
+					if (!mr.isEntityAlive || Vector3.entityDistance(player, mr) > (if (tg is IBossDisplayData) 128 else 32)) return@run
+					PlayerSegmentClient.target = mr
+				}
+			}
 		}
 		if (e.phase == Phase.END) {
 			ItemsRemainingRenderHandler.tick()

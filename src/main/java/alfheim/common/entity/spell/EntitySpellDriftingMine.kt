@@ -7,7 +7,8 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
+import alfheim.common.spell.tech.SpellDriftingMine
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -30,10 +31,10 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	constructor(world: World, shooter: EntityLivingBase): this(world) {
-		this.caster = shooter
+		caster = shooter
 		setPositionAndRotation(caster!!.posX, caster!!.posY + caster!!.height * 0.75, caster!!.posZ, caster!!.rotationYaw, caster!!.rotationPitch)
 		if (caster!!.isSneaking) return
-		val m = Vector3(caster!!.lookVec).mul(0.05)
+		val m = Vector3(caster!!.lookVec).mul(SpellDriftingMine.efficiency)
 		motionX = m.x
 		motionY = m.y
 		motionZ = m.z
@@ -41,10 +42,10 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, 6.0))
-			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(5.0, 5.0, 5.0))) {
+			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.toDouble()))
+			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellDriftingMine.radius))) {
 				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, 6.0))
+				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.toDouble()))
 			}
 			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
@@ -61,7 +62,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			if (!ASJUtilities.isServer) return
 			super.onUpdate()
 			
-			if (ticksExisted == 2400) onImpact(null)
+			if (ticksExisted == SpellDriftingMine.duration) onImpact(null)
 			
 			val vec3 = Vec3.createVectorHelper(posX, posY, posZ)
 			val vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)
@@ -95,22 +96,14 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 		}
 	}
 	
-	override fun canBeCollidedWith(): Boolean {
-		return true
-	}
+	override fun canBeCollidedWith() = true
 	
-	override fun getCollisionBorderSize(): Float {
-		return 0.5f
-	}
+	override fun getCollisionBorderSize() = 0.5f
 	
 	@SideOnly(Side.CLIENT)
-	override fun getShadowSize(): Float {
-		return 0.0f
-	}
+	override fun getShadowSize() = 0.0f
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
 	public override fun entityInit() {}
 	

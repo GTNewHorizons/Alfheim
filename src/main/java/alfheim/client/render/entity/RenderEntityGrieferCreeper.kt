@@ -3,11 +3,12 @@ package alfheim.client.render.entity
 import alfheim.api.ModInfo
 import net.minecraft.client.model.ModelCreeper
 import net.minecraft.client.renderer.entity.RenderCreeper
+import net.minecraft.entity.Entity
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
-class RenderGrieferCreeper : RenderCreeper() {
+class RenderEntityGrieferCreeper : RenderCreeper() {
     private val armoredCreeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/creeper_armor.png")
     private val creeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/griefer_creeper.png")
     /** The creeper model.  */
@@ -50,6 +51,7 @@ class RenderGrieferCreeper : RenderCreeper() {
 
         return -1
     }
-
+    
+    override fun getEntityTexture(entity: Entity) = creeperTextures
     override fun getEntityTexture(entity: EntityCreeper) = creeperTextures
 }

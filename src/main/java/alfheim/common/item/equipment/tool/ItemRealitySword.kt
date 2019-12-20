@@ -20,6 +20,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import java.nio.charset.Charset
 import java.security.*
+import java.util.*
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter
 import kotlin.experimental.xor
 import kotlin.math.max
@@ -37,48 +38,41 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 		return super.setUnlocalizedName(name)
 	}
 	
-	override fun getUnlocalizedName(stack: ItemStack?): String {
-		return "item.RealitySword" + getInt(stack, TAG_ELEMENT, 0)
-	}
+	override fun getUnlocalizedName(stack: ItemStack?) = "item.RealitySword${getInt(stack, TAG_ELEMENT, 0)}"
 	
 	override fun registerIcons(reg: IIconRegister) {
-		for (i in textures.indices)
-			textures[i] = reg.registerIcon(ModInfo.MODID + ":RealitySword" + i)
+		textures = Array(6) { reg.registerIcon(ModInfo.MODID + ":RealitySword$it") }
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIconIndex(stack: ItemStack): IIcon {
-		return textures[getInt(stack, TAG_ELEMENT, 0)]!!
-	}
+	override fun getIconIndex(stack: ItemStack) = textures[getInt(stack, TAG_ELEMENT, 0)]
 	
-	override fun getIcon(stack: ItemStack, pass: Int): IIcon {
-		return getIconIndex(stack)
-	}
+	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (player.isSneaking) {
 			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack
 
-			if (merge(player.commandSenderName, stack.displayName) == "35E07445CBB8B10F7173F6AD6C1E29E9A66565F86AFF61ACADA750D443BFF7B0") {
+			if (merge(player.commandSenderName, stack.displayName) == "756179BA5B0697ED01B6CD292A3A726BACD5B99E0E624B37A11E18CE0B40B83E") {
 				setInt(stack, TAG_ELEMENT, 5)
 				stack.tagCompound.removeTag("display")
 				return stack
 			}
 			
-			if (!ManaItemHandler.requestManaExact(stack, player, 1, !world!!.isRemote)) return stack
+			if (!ManaItemHandler.requestManaExact(stack, player, 1, !world.isRemote)) return stack
 			setInt(stack, TAG_ELEMENT, max(0, getInt(stack, TAG_ELEMENT, 0) + 1) % 5)
 		} else
-			player.setItemInUse(stack, this.getMaxItemUseDuration(stack))
+			player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
-
-	internal fun merge(s1: String, s2: String): String? {
+	
+	fun merge(s1: String, s2: String): String {
 		val s = StringBuilder()
-		for (i in 0 until s1.length) for (j in 0 until s2.length) s.append(((s1[i].toShort() * s2[j].toShort()) % 256).toChar())
-		return hash(s.toString())
+		for (c1 in s1) for (c2 in s2) s.append(((c1.toShort() * c2.toShort()) % 256).toChar())
+		return hash("$s")!!
 	}
 	
-	internal fun hash(str: String?): String? {
+	fun hash(str: String?): String? {
 		if (str != null)
 			try {
 				val md = MessageDigest.getInstance("SHA-256")
@@ -91,13 +85,12 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	}
 	
 	// Might as well be called sugar given it's not secure at all :D
-	internal fun salt(str: String): String {
-		var str = str
-		str += "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot"
-		val rand = SecureRandom(str.toByteArray(Charset.forName("UTF-8")))
-		val l = str.length
+	fun salt(str: String): String {
+		val salt = str + "wellithoughtthatthisiscoolideaandicanmakesomethinglikethis#whynot"
+		val rand = Random(salt.length.toLong())
+		val l = salt.length
 		val steps = rand.nextInt(l)
-		val chrs = str.toCharArray()
+		val chrs = salt.toCharArray()
 		for (i in 0 until steps) {
 			val indA = rand.nextInt(l)
 			var indB: Int
@@ -190,6 +183,6 @@ class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
 	companion object {
 		
 		const val TAG_ELEMENT = "element"
-		val textures = arrayOfNulls<IIcon>(6)
+		lateinit var textures: Array<IIcon>
 	}
 }

@@ -21,6 +21,11 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	 */
 	abstract fun performCast(caster: EntityLivingBase): SpellCastResult
 	
+	open var damage = 1f
+	open var duration = 1
+	open var efficiency = 0.0
+	open var radius = 16.0
+	
 	fun setManaCost(newVal: Int): Int {
 		val temp = mana
 		mana = newVal
@@ -72,15 +77,16 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	override fun toString() = name
 	
+	abstract val usableParams: Array<Any>
+	
 	enum class SpellCastResult {
 		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING
 	}
 	
 	companion object {
 		
-		fun over(caster: EntityLivingBase?, was: Double): Float {
-			return (if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).toFloat()
-		}
+		fun over(caster: EntityLivingBase?, was: Double) =
+			(if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).toFloat()
 		
 		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean) =
 			ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, mana, req)

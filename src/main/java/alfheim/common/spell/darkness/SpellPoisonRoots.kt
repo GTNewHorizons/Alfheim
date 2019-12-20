@@ -4,18 +4,24 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
+import alfheim.common.core.util.expand
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 import java.util.*
 
-class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) {
+object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) {
+	
+	override var duration = 300
+	override var efficiency = 4.0
+	
+	override val usableParams
+		get() = arrayOf(duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
 				 ?: return SpellCastResult.NOTARGET
 		var flagBadEffs = false
-		var flagNotParty = false
 		var member: EntityLivingBase?
 		
 		scanpt@ for (i in 0 until pt.count) {
@@ -31,13 +37,8 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 		
 		if (!flagBadEffs) return SpellCastResult.WRONGTGT
 		
-		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(16.0, 16.0, 16.0)) as List<EntityLivingBase>
-		for (e in l) {
-			if (pt.isMember(e)) {
-				flagNotParty = true
-				break
-			}
-		}
+		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius)) as List<EntityLivingBase>
+		val flagNotParty = l.any { pt.isMember(it) }
 		
 		if (!flagNotParty) return SpellCastResult.NOTARGET
 		
@@ -71,7 +72,7 @@ class SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30) 
 			remove.clear()
 		}
 		
-		for (e in l) if (!pt.isMember(e)) e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 300, 4, true))
+		for (e in l) if (!pt.isMember(e)) e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.toInt(), true))
 		
 		return result
 	}

@@ -9,7 +9,14 @@ import codechicken.lib.math.MathHelper
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
-class SpellHarp: SpellBase("harp", EnumRace.POOKA, 15000, 3600, 30) {
+object SpellHarp: SpellBase("harp", EnumRace.POOKA, 15000, 3600, 30) {
+	
+	override var damage = 0.5f
+	override var duration = 600
+	override var efficiency = 20.0
+	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, 32.0, true)

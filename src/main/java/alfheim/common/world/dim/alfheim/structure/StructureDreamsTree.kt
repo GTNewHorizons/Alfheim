@@ -505,16 +505,21 @@ class StructureDreamsTree
 	}
 	
 	fun canBePlaced(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
+		if (world.getTileEntity(x, y, z) != null) return false
 		val at = world.getBlock(x, y, z)
 		if (at.getBlockHardness(world, x, y, z) == -1f) return false
-		if (block === leaves) return ASJUtilities.isBlockReplaceable(at)
-		if (block === log) return ASJUtilities.isBlockReplaceable(at) || log.material in forLog
+		if (block === leaves) {
+			return ASJUtilities.isBlockReplaceable(at)
+		}
+		if (block === log) {
+			return (ASJUtilities.isBlockReplaceable(at) || at.material in forLog)
+		}
 		return false
 	}
 	
 	companion object {
 		
-		val forLog = arrayOf(Material.wood)
+		val forLog = arrayOf(Material.wood, Material.ground, Material.grass)
 		
 		val validSpawnMaterial: Array<Material>
 			get() = arrayOf(Material.grass, Material.ground)

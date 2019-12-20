@@ -8,12 +8,15 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.potion.Potion
 
-class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true) {
+object SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100, true) {
+	
+	override val usableParams
+		get() = emptyArray<Any>()
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -29,8 +32,10 @@ class SpellResurrect: SpellBase("resurrect", EnumRace.UNDINE, 256000, 72000, 100
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.removePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 0, 0, false, -1))
+			val pe = tg.target.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
+			pe.duration = 0
+			pe.amplifier = 0
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDLeftFlame, 0, 0))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 			PartySystem.getMobParty(caster)?.setDead(tg.target, false)
 			tg.target.dataWatcher.updateObject(6, 10f)

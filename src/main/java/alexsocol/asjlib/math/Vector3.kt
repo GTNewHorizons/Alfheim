@@ -291,11 +291,9 @@ class Vector3: Serializable {
 	}
 	
 	override fun equals(other: Any?): Boolean {
-		if (other !is Vector3)
-			return false
+		if (other !is Vector3) return false
 		
-		val v = other as Vector3?
-		return x == v!!.x && y == v.y && z == v.z
+		return x == other.x && y == other.y && z == other.z
 	}
 	
 	override fun hashCode(): Int {

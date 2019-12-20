@@ -2,7 +2,7 @@ package alfheim
 
 import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
-import alfheim.common.core.command.CommandAlfheim
+import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
@@ -21,12 +21,15 @@ import cpw.mods.fml.relauncher.Side
 import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
 import java.io.File
+import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
 @Mod(modid = MODID, version = "BETA", useMetadata = true, guiFactory = "$MODID.client.gui.GUIFactory")
 class AlfheimCore {
 	
 	companion object {
+		
+		var jingleTheBells = false
 		
 		@Instance(MODID)
 		lateinit var instance: AlfheimCore
@@ -51,6 +54,11 @@ class AlfheimCore {
 		
 		init {
 			AlfheimTab
+			
+			val calendar = Calendar.getInstance()
+			if (calendar[2] == 11 && calendar[5] >= 16 || calendar[2] == 0 && calendar[5] <= 8) {
+				jingleTheBells = true
+			}
 		}
 	}
 	
@@ -105,6 +113,7 @@ class AlfheimCore {
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
+		if (MineTweakerLoaded) e.registerServerCommand(CommandMTSpellInfo())
 		CommandDimTP.register(e)
 	}
 	
@@ -114,11 +123,12 @@ class AlfheimCore {
 	}
 	
 	fun registerPackets() {
-		network.registerMessage(Message0dHandler::class.java, Message0d::class.java, nextPacketID++, Side.SERVER)
+		network.registerMessage(Message0dSHandler::class.java, Message0dS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageHotSpellSHandler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
-		network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBind::class.java, nextPacketID++, Side.SERVER)
-		network.registerMessage(MessagePlayerItemHandler::class.java, MessagePlayerItem::class.java, nextPacketID++, Side.SERVER)
+		network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBindS::class.java, nextPacketID++, Side.SERVER)
+		network.registerMessage(MessagePlayerItemHandler::class.java, MessagePlayerItemS::class.java, nextPacketID++, Side.SERVER)
 		
+		network.registerMessage(Message0dCHandler::class.java, Message0dC::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message1dHandler::class.java, Message1d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message2dHandler::class.java, Message2d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message3dHandler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)

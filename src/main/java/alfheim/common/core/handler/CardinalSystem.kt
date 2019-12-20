@@ -13,6 +13,7 @@ import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
+import alfheim.common.spell.tech.SpellTimeStop
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
@@ -182,7 +183,7 @@ object CardinalSystem {
 					}
 				}
 			} catch (e: Throwable) {
-				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick.")
+				ASJUtilities.error("Something went wrong ticking spells. Skipping this tick. Caused by: ${e.message}")
 				e.printStackTrace()
 			}
 		}
@@ -297,6 +298,9 @@ object CardinalSystem {
 	
 	object ManaSystem {
 		
+		/**
+		 * Sends [player]'s mana to everyone in his party
+		 */
 		fun handleManaChange(player: EntityPlayer) {
 			PartySystem.getParty(player).sendMana(player, getMana(player))
 		}
@@ -354,19 +358,26 @@ object CardinalSystem {
 	
 	object TargetingSystem {
 		
-		fun setTarget(player: EntityPlayer, target: EntityLivingBase?, isParty: Boolean) {
+		/**
+		 * @param partyIndex 0 - self; -1 - enemy; -2 - ignore changes
+		 */
+		fun setTarget(player: EntityPlayer, target: EntityLivingBase?, isParty: Boolean, partyIndex: Int = -1) {
 			val c = forPlayer(player)
 			c.target = target
-			c.isParty = isParty
+			
+			if (partyIndex != -2) {
+				c.isParty = isParty
+				c.partyIndex = partyIndex
+			}
 		}
 		
 		fun getTarget(player: EntityPlayer): Target {
 			val c = forPlayer(player)
 			// stupid kotlin -_-
-			return Target(c.target, c.isParty)
+			return Target(c.target, c.isParty, c.partyIndex)
 		}
 		
-		data class Target(val target: EntityLivingBase?, val isParty: Boolean)
+		data class Target(val target: EntityLivingBase?, val isParty: Boolean, val partyIndex: Int)
 	}
 	
 	object PartySystem {
@@ -879,7 +890,7 @@ object CardinalSystem {
 			if (e is ITimeStopSpecific && (e as ITimeStopSpecific).isImmune) return false
 			if (tsAreas[e.dimension] == null) return false
 			for (tsa in tsAreas[e.dimension]!!) {
-				if (Vector3.vecEntityDistance(tsa.pos, e) < 16) {
+				if (Vector3.vecEntityDistance(tsa.pos, e) < SpellTimeStop.radius) {
 					if (e is ITimeStopSpecific && (e as ITimeStopSpecific).affectedBy(tsa.uuid)) return true
 					if (e is EntityLivingBase) {
 						if (!PartySystem.sameParty(tsa.uuid, e)) return true
@@ -896,7 +907,7 @@ object CardinalSystem {
 			val uuid = caster.entityUniqueID!!
 			@Transient
 			val id: Int
-			var life = 1200
+			var life = SpellTimeStop.duration
 			
 			init {
 				id = ++nextID
@@ -972,9 +983,11 @@ object CardinalSystem {
 		
 		var party: Party = Party(player)
 		@Transient
+		var target: EntityLivingBase? = null
+		@Transient
 		var isParty = false
 		@Transient
-		var target: EntityLivingBase? = null
+		var partyIndex = -1
 		
 		var coolDown = HashMap<String, Int>()
 		var hotSpells = IntArray(12)
@@ -1001,6 +1014,10 @@ object CardinalSystem {
 		
 		@Transient
 		var quadStage = 0
+		@Transient
+		var standingStill = 0 // POOKA ability
+		@Transient
+		var lastPos = Vector3.fromEntity(player)
 		
 		companion object {
 			private const val serialVersionUID = 6871678638741684L

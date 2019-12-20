@@ -30,6 +30,7 @@ import vazkii.botania.common.block.ModBlocks
 
 object AlfheimBlocks {
 	
+	val airyVirus: Block
 	val alfheimPortal: Block
 	val alfheimPylon: Block
 	val alfStorage: Block
@@ -101,6 +102,8 @@ object AlfheimBlocks {
 	val shimmerQuartzSlab: Block
 	val shimmerQuartzSlabFull: Block
 	val shimmerQuartzStairs: Block
+	val snowGrass: Block
+	val snowLayer: Block
 	val starBlock: Block
 	val starBlock2: Block
 	val tradePortal: Block
@@ -160,6 +163,7 @@ object AlfheimBlocks {
 	val sealingWood: Block
 	
 	init {
+		airyVirus = BlockAiryVirus()
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
 		alfStorage = object: BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
@@ -241,6 +245,8 @@ object AlfheimBlocks {
 		shimmerQuartzSlab.register()
 		shimmerQuartzSlabFull.register()
 		shimmerQuartzStairs = BlockShimmerQuartzStairs(shimmerQuartz)
+		snowGrass = BlockSnowGrass()
+		snowLayer = BlockSnowLayer()
 		starBlock = BlockStar()
 		starBlock2 = BlockCracklingStar()
 		tradePortal = BlockTradePortal()
@@ -339,9 +345,13 @@ object AlfheimBlocks {
 		
 		t = ItemStack(rainbowWood)
 		registerOre(LibOreDict.WOOD[16], t)
+		t = ItemStack(auroraWood)
+		registerOre(LibOreDict.WOOD[17], t)
 		
-		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
 		registerOre(LibOreDict.DIRT[16], ItemStack(rainbowDirt))
+		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
+		registerOre(LibOreDict.DIRT[17], ItemStack(auroraDirt))
+		registerOre(LibOreDict.IRIS_DIRT, ItemStack(auroraDirt))
 		
 		registerOre("treeLeaves", ItemStack(lightningLeaves))
 		registerOre("plankWood", ItemStack(lightningPlanks))
@@ -478,6 +488,11 @@ object AlfheimBlocks {
 		registerOre("treeLeaves", t)
 		registerOre(LibOreDict.IRIS_LEAVES, t)
 		registerOre(LibOreDict.LEAVES[16], t)
+		
+		t = ItemStack(auroraLeaves)
+		registerOre("treeLeaves", t)
+		registerOre(LibOreDict.IRIS_LEAVES, t)
+		registerOre(LibOreDict.LEAVES[17], t)
 		
 		t = ItemStack(rainbowPlanks)
 		registerOre("plankWood", t)

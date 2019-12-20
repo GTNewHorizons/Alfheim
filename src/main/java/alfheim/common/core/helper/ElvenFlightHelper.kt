@@ -33,7 +33,7 @@ object ElvenFlightHelper {
 		player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue = FLIGHT.clampValue(value)
 	}
 	
-	fun add(player: EntityPlayer, value: Int) {
+	fun add(player: EntityPlayer, value: Double) {
 		player.flight =
 			if (!player.capabilities.isCreativeMode)
 				max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
@@ -42,7 +42,11 @@ object ElvenFlightHelper {
 	}
 	
 	fun sub(player: EntityPlayer, value: Int) {
-		add(player, -value)
+		add(player, -value.toDouble())
+	}
+	
+	fun regen(player: EntityPlayer, value: Int) {
+		add(player, value * AlfheimConfigHandler.flightRecover)
 	}
 }
 

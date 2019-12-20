@@ -5,7 +5,12 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.entity.spell.EntitySpellAquaStream
 import net.minecraft.entity.EntityLivingBase
 
-class SpellAquaStream: SpellBase("aquastream", EnumRace.UNDINE, 2000, 100, 5) {
+object SpellAquaStream: SpellBase("aquastream", EnumRace.UNDINE, 2000, 100, 5) {
+	
+	override var duration = 50
+	
+	override val usableParams: Array<Any>
+		get() = arrayOf(damage, duration, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)

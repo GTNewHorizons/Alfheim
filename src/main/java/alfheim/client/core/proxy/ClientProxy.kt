@@ -103,14 +103,14 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay())
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderThrownPotion())
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderThrownItem())
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderEntityThrownPotion())
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderEntityThrownItem())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderSubspace())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderSubspaceSpear())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderEntitySubspace())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderEntitySubspaceSpear())
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderGrieferCreeper())
-		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderEntityGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderEntityGrieferCreeper())
 	}
 	
 	override fun registerKeyBinds() {
@@ -134,13 +134,13 @@ class ClientProxy: CommonProxy() {
 	
 	companion object {
 		
-		val keyLolicorn = KeyBinding("key.lolicorn.desc", Keyboard.KEY_L, "key.categories.misc")
-		val keyESMAbility = KeyBinding("key.esmability.desc", Keyboard.KEY_M, "key.categories.gameplay")
-		val keyFlight = KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.movement")
-		val keyCast = KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.gameplay")
-		val keyUnCast = KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.gameplay")
-		val keySelMob = KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.gameplay")
-		val keySelTeam = KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.gameplay")
+		val keyLolicorn = KeyBinding("key.lolicorn.desc", Keyboard.KEY_L, "key.categories.alfheim")
+		val keyESMAbility = KeyBinding("key.esmability.desc", Keyboard.KEY_M, "key.categories.alfheim")
+		val keyFlight = KeyBinding("key.flight.desc", Keyboard.KEY_F, "key.categories.alfheim")
+		val keyCast = KeyBinding("key.cast.desc", Keyboard.KEY_C, "key.categories.alfheim")
+		val keyUnCast = KeyBinding("key.uncast.desc", Keyboard.KEY_X, "key.categories.alfheim")
+		val keySelMob = KeyBinding("key.selmob.desc", Keyboard.KEY_R, "key.categories.alfheim")
+		val keySelTeam = KeyBinding("key.selteam.desc", Keyboard.KEY_T, "key.categories.alfheim")
 		
 		init {
 			removeKeyBinding(keyFlight)

@@ -12,7 +12,13 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
+object SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
+	
+	override var duration = 3600
+	override var efficiency = 1.0
+	
+	override val usableParams
+		get() = arrayOf(duration, efficiency)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -26,8 +32,8 @@ class SpellBunnyHop: SpellBase("bunnyhop", EnumRace.SYLPH, 6000, 2400, 30) {
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.jump.id, 3600, 1, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.jump.id, 3600, 1))
+			tg.target.addPotionEffect(PotionEffect(Potion.jump.id, duration, efficiency.toInt(), true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.jump.id, duration, efficiency.toInt()))
 			VisualEffectHandler.sendPacket(VisualEffects.HEAL, tg.target)
 		}
 		

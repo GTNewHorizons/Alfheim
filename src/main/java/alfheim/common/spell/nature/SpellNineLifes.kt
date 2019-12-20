@@ -5,15 +5,19 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
 
-class SpellNineLifes: SpellBase("ninelifes", EnumRace.CAITSITH, 16000, 3000, 30) {
+object SpellNineLifes: SpellBase("ninelifes", EnumRace.CAITSITH, 16000, 3000, 30) {
+	
+	override var duration = 36000
+	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -27,8 +31,8 @@ class SpellNineLifes: SpellBase("ninelifes", EnumRace.CAITSITH, 16000, 3000, 30)
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(AlfheimRegistry.nineLifes.id, 36000, 4, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimRegistry.nineLifes.id, 36000, 4))
+			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDNineLifes, duration, 4, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDNineLifes, duration, 4))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 		}
 		

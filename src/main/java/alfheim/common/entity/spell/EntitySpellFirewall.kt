@@ -6,6 +6,7 @@ import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.fire.SpellFirewall
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -24,7 +25,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 		get() = false
 	
 	init {
-		this.setSize(0f, 0f)
+		setSize(0f, 0f)
 	}
 	
 	constructor(world: World, caster: EntityLivingBase): this(world) {
@@ -38,9 +39,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 		setLocationAndAngles(x, y, z, rotationYaw, rotationPitch)
 	}
 	
-	override fun attackEntityFrom(source: DamageSource?, damage: Float): Boolean {
-		return false
-	}
+	override fun attackEntityFrom(source: DamageSource?, damage: Float) = false
 	
 	override fun onUpdate() {
 		if (!AlfheimCore.enableMMO || !worldObj.isRemote && caster != null && caster!!.isDead) {
@@ -49,8 +48,8 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 			//if (!ASJUtilities.isServer()) return;
 			super.onUpdate()
 			
-			if (ticksExisted >= 600) {
-				this.setDead()
+			if (ticksExisted >= SpellFirewall.duration) {
+				setDead()
 				return
 			}
 			
@@ -61,7 +60,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 			val list = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, obb!!.toAABB()) as List<EntityLivingBase>
 			for (e in list) {
 				if (e !== caster && obb!!.intersectsWith(e.boundingBox)) {
-					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, 1.0))
+					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, SpellFirewall.damage.toDouble()))
 					if (!PartySystem.mobsSameParty(caster, e) || AlfheimConfigHandler.frienldyFire) e.setFire(3)
 				}
 			}
@@ -81,13 +80,9 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getShadowSize(): Float {
-		return 0.0f
-	}
+	override fun getShadowSize() = 0.0f
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
 	public override fun entityInit() {}
 	

@@ -15,7 +15,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityTrackerEntry$ClassVisitor`(cw)
-				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
@@ -23,7 +23,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `Potion$ClassVisitor`(cw)
-				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
@@ -31,7 +31,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
-				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
@@ -137,6 +137,14 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `LibItemNames$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"com.emoniph.witchery.client.ClientEvents\$GUIOverlay"           -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `ClientEvents$GUIOverlay$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
@@ -624,13 +632,17 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			val mv = super.visitMethod(access, name, desc, signature, exceptions)
+			
 			println("Visiting ItemLens#$name: $name$desc")
-			return `ItemLens$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			return `ItemLens$MethodVisitor`(mv)
 		}
 		
 		internal class `ItemLens$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			var left = 2
+			companion object {
+				var left = 2
+			}
 			
 			override fun visitIntInsn(opcode: Int, operand: Int) {
 				var operand = operand
@@ -638,7 +650,7 @@ class AlfheimClassTransformer: IClassTransformer {
 					if (operand == 22) {        // 4 injections for #SUBTYPES
 						operand = 24
 					} else if (operand == 21) { // 2 injections for #SUBTYPES-1
-						if (left-- > 0) {        // 4 injections total
+						if (left-- > 0) {       // 4 injections total
 							operand = 23
 						}
 					}
@@ -775,6 +787,33 @@ class AlfheimClassTransformer: IClassTransformer {
 						mv.visitInsn(AASTORE)
 					}
 				}
+			}
+		}
+	}
+
+	internal class `ClientEvents$GUIOverlay$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "renderHotbar") {
+				println("Visiting witchery's ClientEvents\$GUIOverlay#renderHotbar: $name$desc")
+				return `ClientEvents$GUIOverlay$renderHotbar$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `ClientEvents$GUIOverlay$renderHotbar$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			var aload1 = false
+			
+			override fun visitVarInsn(opcode: Int, operand: Int) {
+				if (opcode == ALOAD) {
+					aload1 = operand == 1
+				}
+				
+				super.visitVarInsn(opcode, operand)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				super.visitInsn(if (opcode == ICONST_1) ICONST_0 else opcode)
 			}
 		}
 	}

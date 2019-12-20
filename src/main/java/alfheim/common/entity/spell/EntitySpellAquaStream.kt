@@ -7,6 +7,7 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.water.SpellAquaStream
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -31,24 +32,24 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || caster == null || caster!!.isDead || caster!!.posX != posX || caster!!.posY != posY || caster!!.posZ != posZ || ticksExisted > 50) {
+		if (!AlfheimCore.enableMMO || caster == null || caster!!.isDead || caster!!.posX != posX || caster!!.posY != posY || caster!!.posZ != posZ || ticksExisted > SpellAquaStream.duration) {
 			setDead()
 			return
 		}
-		if (this.isDead || !ASJUtilities.isServer) return
+		if (isDead || !ASJUtilities.isServer) return
 		
-		var mop = ASJUtilities.getMouseOver(caster, 16.0, true)
-		if (mop == null) mop = ASJUtilities.getSelectedBlock(caster!!, 16.0, true)
+		var mop = ASJUtilities.getMouseOver(caster, SpellAquaStream.radius, true)
+		if (mop == null) mop = ASJUtilities.getSelectedBlock(caster!!, SpellAquaStream.radius, true)
 		
 		val hp: Vector3
 		val look = Vector3(caster!!.lookVec)
 		if (mop?.hitVec != null) {
 			hp = Vector3(mop.hitVec)
 			if (mop.typeOfHit == MovingObjectType.ENTITY) {
-				mop.entityHit.attackEntityFrom(DamageSourceSpell.water(caster!!), SpellBase.over(caster, 1.0))
+				mop.entityHit.attackEntityFrom(DamageSourceSpell.water(caster!!), SpellBase.over(caster, SpellAquaStream.damage.toDouble()))
 			}
 		} else {
-			hp = look.copy().extend(15.0).add(Vector3.fromEntity(caster!!)).add(0.0, caster!!.eyeHeight.toDouble(), 0.0)
+			hp = look.copy().extend(SpellAquaStream.radius).add(Vector3.fromEntity(caster!!)).add(0.0, caster!!.eyeHeight.toDouble(), 0.0)
 		}
 		
 		val d = 0.75
@@ -56,11 +57,9 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM_HIT, dimension, hp.x, hp.y, hp.z)
 	}
 	
-	override fun affectedBy(uuid: UUID): Boolean {
-		return caster!!.uniqueID != uuid
-	}
+	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	
-	public override fun entityInit() {}
+	public override fun entityInit() = Unit
 	
 	public override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")) else setDead()

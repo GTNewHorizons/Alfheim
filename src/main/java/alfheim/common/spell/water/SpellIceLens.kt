@@ -10,12 +10,17 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.potion.PotionEffect
 
-class SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
+object SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
+	
+	override var duration = 200
+	
+	override val usableParams: Array<Any>
+		get() = arrayOf(duration)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			caster.addPotionEffect(PotionEffect(AlfheimRegistry.icelens.id, 200, 0, true))
+			caster.addPotionEffect(PotionEffect(AlfheimRegistry.icelens.id, duration, 0, true))
 			
 			if (caster is EntityPlayerMP) AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.ICELENS.ordinal, 0.0, 0.0, 0.0), caster)
 		}

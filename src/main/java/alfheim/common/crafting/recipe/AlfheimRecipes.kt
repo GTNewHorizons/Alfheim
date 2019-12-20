@@ -12,6 +12,8 @@ import alfheim.api.lib.LibOreDict.ARUNE
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
+import alfheim.api.lib.LibOreDict.EMERALD
+import alfheim.api.lib.LibOreDict.GLOWSTONE_DUST
 import alfheim.api.lib.LibOreDict.IFFESAL_DUST
 import alfheim.api.lib.LibOreDict.INFUSED_DREAM_TWIG
 import alfheim.api.lib.LibOreDict.MAUFTRIUM_INGOT
@@ -20,6 +22,8 @@ import alfheim.api.lib.LibOreDict.MUSPELHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.MUSPELHEIM_POWER_INGOT
 import alfheim.api.lib.LibOreDict.NIFLHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.NIFLHEIM_POWER_INGOT
+import alfheim.api.lib.LibOreDict.REDSTONE_DUST
+import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -36,6 +40,8 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
+import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
@@ -125,6 +131,8 @@ object AlfheimRecipes {
 	lateinit var recipeManaStone: RecipeManaInfuser
 	lateinit var recipeManaStoneGreater: RecipeManaInfuser
 	
+	lateinit var recipeAiryVirus: IRecipe
+	lateinit var recipeAiryAntivirus: IRecipe
 	lateinit var recipeAlfheimPortal: IRecipe
 	lateinit var recipeAnimatedTorch: IRecipe
 	lateinit var recipeAnyavil: IRecipe
@@ -202,6 +210,24 @@ object AlfheimRecipes {
 	}
 	
 	private fun registerCraftingRecipes() {
+		addOreDictRecipe(ItemStack(airyVirus, 3),
+						 "RGR", "EVE", "AAA",
+						 'R', REDSTONE_DUST,
+						 'G', GLOWSTONE_DUST,
+						 'E', MUSPELHEIM_ESSENCE,
+						 'V', virus,
+						 'A', ItemStack(altGrass, 1, 3))
+		recipeAiryVirus = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(airyVirus, 3, 1),
+						 "IMI", "EVE", "AAA",
+						 'I', IFFESAL_DUST,
+						 'M', MANA_POWDER,
+						 'E', NIFLHEIM_ESSENCE,
+						 'V', virus,
+						 'A', ItemStack(altGrass, 1, 4))
+		recipeAiryAntivirus = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(alfheimPortal, 1),
 						 "DPD", "GSG", "DTD",
 						 'D', DREAM_WOOD,
@@ -261,7 +287,7 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(balanceCloak),
 						 "WWW", "EWE", "ESE",
 						 'W', ItemStack(wool, 1, 8),
-						 'E', "gemEmerald",
+						 'E', EMERALD,
 						 'S', LIFE_ESSENCE)
 		recipeBalanceCloak = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -291,7 +317,7 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(dodgeRing),
 						 "EM ", "M M", " MR",
-						 'E', "gemEmerald",
+						 'E', EMERALD,
 						 'M', MANA_STEEL,
 						 'R', RUNE[3])
 		recipeDodgeRing = BotaniaAPI.getLatestAddedRecipe()
@@ -584,7 +610,9 @@ object AlfheimRecipes {
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
 		
-		// ################ DECO BLOCKS ################
+		// #############################################################################################################
+		// ################################################ DECO BLOCKS ################################################
+		// #############################################################################################################
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 1, 0), "SS", "SS", 'S', elvenSand)
 		
@@ -623,6 +651,14 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(dreamwoodBarkFence, 6), "LLL", "LLL", 'L', DREAMWOOD_TWIG)
 		
 		addOreDictRecipe(ItemStack(dreamwoodBarkFenceGate, 1), "LPL", "LPL", 'L', DREAMWOOD_TWIG, 'P', ItemStack(dreamwood, 1, 0))
+		
+		addOreDictRecipe(ItemStack(dwarfPlanks, 4), " P ", "PMP", " P ", 'P', ItemStack(planks, 1, 5), 'M', MANA_POWDER)
+		
+		addOreDictRecipe(ItemStack(dwarfLantern, 8),
+						 "LCL", "CSC", "LCL",
+						 'L', ItemStack(livingrock, 1, 1),
+						 'C', ItemStack(livingrock, 1, 4),
+						 'S', ItemStack(shrineLight, 1, 1))
 		
 		val out = arrayOf(5, 9, 10, 11, 13)
 		for (i in 0..15) {

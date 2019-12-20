@@ -38,7 +38,7 @@ repositories {
 	mavenCentral()
 }
 
-version = "BETA-23"
+version = "BETA-24"
 group= "main"
 archivesBaseName = "Alfheim"
 
@@ -54,10 +54,10 @@ configurations {
 
 dependencies {
 	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
-	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+	//compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
 	compile "codechicken:ForgeMultipart:1.7.10-1.2.0.345:dev"
-	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
-	compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
+	//compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
+	//compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
 	
 	compile name: "MineTweaker3", group: "minetweaker", version: "1.7.10-3.0.10B", classifier: "Dev-Full"
 	

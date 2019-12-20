@@ -7,7 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient
-import cpw.mods.fml.common.eventhandler.*
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -19,7 +19,7 @@ import kotlin.math.min
 
 class GUISpells(private val mc: Minecraft): Gui() {
 	
-	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
 		if (e.type != ElementType.HOTBAR) return
 		glPushMatrix()

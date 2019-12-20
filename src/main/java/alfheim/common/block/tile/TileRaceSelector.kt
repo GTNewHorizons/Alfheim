@@ -3,6 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.ASJTile
 import alfheim.AlfheimCore
+import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
@@ -16,7 +17,7 @@ class TileRaceSelector: ASJTile() {
 	
 	fun giveRaceAndReset(player: EntityPlayer): Boolean {
 		if (!AlfheimCore.enableElvenStory) return false
-		if (player.race != EnumRace.HUMAN) return false
+		if (!ModInfo.DEV && player.race != EnumRace.HUMAN) return false
 		
 		val race = EnumRace[rotation+1]
 		selectRace(player, race)

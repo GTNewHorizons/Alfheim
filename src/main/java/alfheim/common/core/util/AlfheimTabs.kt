@@ -1,6 +1,7 @@
 package alfheim.common.core.util
 
 import alfheim.AlfheimCore
+import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -77,11 +78,15 @@ import alfheim.common.block.AlfheimBlocks.sealingWood
 import alfheim.common.block.AlfheimBlocks.shimmerQuartz
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzStairs
+import alfheim.common.block.AlfheimBlocks.snowGrass
+import alfheim.common.block.AlfheimBlocks.snowLayer
 import alfheim.common.block.AlfheimBlocks.tradePortal
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
+import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
@@ -202,9 +207,15 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(livingwoodFunnel)
 		addBlock(amplifier)
 		addBlock(irisLamp)
-		addBlock(rainbowPetalBlock)
 		addBlock(kindling)
 		addBlock(alfStorage)
+		addBlock(rainbowPetalBlock)
+		addBlock(airyVirus)
+		
+		if (AlfheimCore.jingleTheBells) {
+			addBlock(snowGrass)
+			addBlock(snowLayer)
+		}
 		
 		addItem (elvenResource)
 		addItem (wiltedLotus)
@@ -307,6 +318,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(powerStone)
 		list.removeAt(list.size-5)
 		
+		addBlock(dwarfLantern)
+		
 		addBlock(shrinePillar)
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
@@ -341,6 +354,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dreamwoodFence)
 		addBlock(dreamwoodBarkFenceGate)
 		addBlock(dreamwoodFenceGate)
+		
+		addBlock(dwarfPlanks)
 		
 		addBlock(irisDirt)
 		addBlock(irisWood0)

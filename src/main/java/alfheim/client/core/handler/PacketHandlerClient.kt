@@ -17,10 +17,13 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.flight
 import alfheim.common.network.*
+import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
+import alfheim.common.network.MessageNI.mni
 import net.minecraft.client.Minecraft
+import net.minecraft.util.*
 
 object PacketHandlerClient {
 	
@@ -55,7 +58,6 @@ object PacketHandlerClient {
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
-			m1d.WINGS_NOT_IN_ALF -> AlfheimConfigHandler.enableWingsNonAlfheim = packet.data1 != 0.0
 		}
 	}
 	
@@ -94,8 +96,7 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message3d) {
 		when (m3d.values()[packet.type]) {
-			m3d.KEY_BIND     -> {
-			}
+			m3d.KEY_BIND     -> Unit
 			
 			m3d.PARTY_STATUS -> {
 				when (PartyStatus.values()[packet.data1.toInt()]) {
@@ -119,7 +120,22 @@ object PacketHandlerClient {
 		}
 	}
 	
+	fun handle(packet: MessageNI) {
+		when (mni.values()[packet.type]) {
+			mni.WINGS_BL -> AlfheimConfigHandler.wingsBlackList = packet.intArray
+		}
+	}
+	
 	fun handle(packet: MessageSkinInfo) {
 		CardinalSystemClient.playerSkinsData[packet.name] = packet.isFemale to packet.isSkinOn
+	}
+	
+	fun handle(packet: Message0dC) {
+		when (m0dc.values()[packet.type]) {
+			m0dc.MTSPELL -> {
+				val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID) ?: return
+				Minecraft.getMinecraft().thePlayer?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("spell.$spell.mtinfo", *spell.usableParams)))
+			}
+		}
 	}
 }

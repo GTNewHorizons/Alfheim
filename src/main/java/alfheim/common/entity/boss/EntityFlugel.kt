@@ -300,13 +300,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL) setDead()
 		
 		if (!worldObj.isRemote) {
-			val radius = 1
 			val posXInt = MathHelper.floor_double(posX)
 			val posYInt = MathHelper.floor_double(posY)
 			val posZInt = MathHelper.floor_double(posZ)
-			for (i in -radius until radius + 1)
-				for (j in -radius until radius + 1)
-					for (k in -radius until radius + 1) {
+			for (i in -RANGE..RANGE)
+				for (j in -RANGE..RANGE)
+					for (k in -RANGE..RANGE) {
 						val xp = posXInt + i
 						val yp = posYInt + j
 						val zp = posZInt + k
@@ -390,10 +389,27 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.itemDamage == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else {
-				if (!worldObj.isRemote) ASJUtilities.say(player, "alfheimmisc.notallowed")
-				val bed = player.worldObj.spawnPoint
-				player.setPositionAndUpdate(bed.posX.toDouble(), bed.posY.toDouble(), bed.posZ.toDouble())
-				continue
+				if (!worldObj.isRemote) {
+					ASJUtilities.say(player, "alfheimmisc.notallowed")
+					
+					fun isTooNear(bed: ChunkCoordinates) =
+						pointDistanceSpace(bed.posX.D, bed.posY.D, bed.posZ.D, source.posX.D, source.posY.D, source.posZ.D) <= RANGE + 3
+					
+					if (isTooNear(player.getBedLocation(player.dimension))) {
+						if (isTooNear(player.worldObj.spawnPoint)) {
+							val v = Vector3(Math.random() * 100 + RANGE, 0.0, 0.0).rotate(Math.random() * 360, Vector3.oY)
+							val newPosY = ASJUtilities.getTopLevel(worldObj, v.x.mfloor(), v.z.mfloor())
+							player.setPositionAndUpdate(v.x, newPosY.D, v.z)
+						} else {
+							val bed = player.worldObj.spawnPoint
+							player.setPositionAndUpdate(bed.posX.D, bed.posY.D, bed.posZ.D)
+						}
+					} else {
+						val bed = player.getBedLocation(player.dimension)
+						player.setPositionAndUpdate(bed.posX.D, bed.posY.D, bed.posZ.D)
+					}
+					continue
+				}
 			}
 			
 			// Get player back!

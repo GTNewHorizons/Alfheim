@@ -9,6 +9,7 @@ import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.init.Blocks
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.client.lib.LibResources
@@ -24,6 +25,8 @@ object AlfheimFluffBlocks {
 	val dreamwoodFenceGate: Block
 	val dreamwoodBarkFence: Block
 	val dreamwoodBarkFenceGate: Block
+	val dwarfPlanks: Block
+	val dwarfLantern: Block
 	val elvenSandstone: Block
 	val elvenSandstoneStairs: Block
 	val elvenSandstoneSlab: Block
@@ -61,6 +64,8 @@ object AlfheimFluffBlocks {
 		(shrineRockWhiteSlab as BlockModSlab).register()
 		(shrineRockWhiteSlabFull as BlockModSlab).register()
 		
+		dwarfLantern = BlockDwarfLantern()
+		
 		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "shrines/").setLightLevel(1f).setLightOpacity(0)
 		shrineGlass = BlockShrineGlass()
 		shrinePanel = object: BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines/") {
@@ -78,6 +83,10 @@ object AlfheimFluffBlocks {
 			.setHarvestLevelI("pickaxe", 1)
 			.setResistance(600f)
 			.setStepSound(Block.soundTypeGlass)
+		
+		Blocks.planks
+		
+		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "shrines/")
 		
 		elvenSandstone = BlockElvenSandstone()
 		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0, "ElvenSandstoneStairs").setCreativeTab(AlfheimTab)

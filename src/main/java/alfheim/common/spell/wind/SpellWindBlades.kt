@@ -5,7 +5,14 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.entity.spell.EntitySpellWindBlade
 import net.minecraft.entity.EntityLivingBase
 
-class SpellWindBlades: SpellBase("windblades", EnumRace.SYLPH, 8000, 120, 10) {
+object SpellWindBlades: SpellBase("windblades", EnumRace.SYLPH, 8000, 120, 10) {
+	
+	override var damage = 6f
+	override var duration = 20
+	override var efficiency = 1.0
+	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCastOver(caster)

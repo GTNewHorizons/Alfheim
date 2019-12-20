@@ -1,27 +1,12 @@
 Innovations:
- Pasive race abilities (toggleable on [M] by default)
- Added thing for transporting mana through dimensions
- Config for mobs spawn rate
- Redused Elven King ring mana consumption
- Deleted decelerator anomaly
- Elven skin toggling
- ...and more!
+ Teleport spells
+ Shadow vortex spell
+ Holliday special event
+ 
+Integration:
+ Minetweaker:
+  Command to show current spell data in game /mtspell
+  Ability to change spell parameters (damage, duration, efficiency and radius)
 
 Fixes:
- #92 Soul restoration exploit
- #94 Dreamwood Sappling not growing on custom grass/dirt
- #96 Imp selection crash
- #99 Lowered excaliber mana consumption
- Exceptions spam to console
- Elven flight toggling on X
- Elven flight disabling C-S conflict
- Aurora dirt not growing grass
- Dupe with Botanists toolbelt
- Rheingold with player interaction
- [MMO] Client <-> server precast time desync
- [MMO] Fixed quad
- ...and more!
- 
-Known Issues:
- [Thermos] Revive just removes "death" effect
- [Thermos] Leprechauns attack speed bonus don't work
+ Fixes and improvements (a lot) :3

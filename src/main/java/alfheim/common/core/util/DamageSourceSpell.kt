@@ -9,30 +9,30 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 	
 	companion object {
 		
+		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
-		val corruption = DamageSource("corruption").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
-		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor().setDifficultyScaled()!!
+		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor()!!
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!
 		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
-		fun blades(wb: EntitySpellWindBlade, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("windblade", caster, wb).setDamageBypassesArmor()!!
-		
 		/** Sacrifice type of damage to attack other mobs  */
-		fun darkness(attacker: EntityLivingBase?) =
-			EntityDamageSourceSpell("darkness_FF", attacker).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		fun darkness(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("darkness_FF", caster).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		
 		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setDifficultyScaled().setExplosion()!!
+			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setExplosion()!!
 		
 		fun fireball(fb: EntitySpellFireball, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("fireball", caster, fb).setFireDamage().setExplosion().setProjectile()!!
 		
 		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()!!
+		
+		fun hammerfall(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("hammerfall", caster).setDamageBypassesArmor().setProjectile()!!
 		
 		/** Fenrir Storm type of damage  */
 		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase?) =
@@ -42,10 +42,17 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceIndirectSpell("missile", caster, im).setMagicDamage()!!
 		
 		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("fallingBlock", caster, mt).setDifficultyScaled().setProjectile()!!
+			EntityDamageSourceIndirectSpell("mortar", caster, mt).setProjectile()!!
+		
+		fun shadow(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("shadow", caster).setDamageBypassesArmor().setMagicDamage()!!
 		
 		/** Some water blades (?) type of damage  */
-		fun water(caster: EntityLivingBase?) = EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()!!
+		fun water(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("water", caster).setDamageBypassesArmor()!!
+		
+		fun windblade(wb: EntitySpellWindBlade, caster: EntityLivingBase?) =
+			EntityDamageSourceIndirectSpell("windblade", caster, wb).setDamageBypassesArmor()!!
 	}
 }
 
@@ -64,13 +71,13 @@ open class EntityDamageSourceSpell(source: String, protected val attacker: Entit
 		attacker != null && attacker is EntityLivingBase && attacker !is EntityPlayer
 }
 
-class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val directEntity: Entity?): EntityDamageSourceSpell(type, attacker) {
+class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val projectile: Entity?): EntityDamageSourceSpell(type, attacker) {
 	
-	override fun getSourceOfDamage() = directEntity
+	override fun getSourceOfDamage() = projectile
 	
 	override fun func_151519_b(target: EntityLivingBase): IChatComponent {
-		val ichatcomponent = if (directEntity == null) attacker!!.func_145748_c_() else directEntity.func_145748_c_()
-		val itemstack = if (directEntity is EntityLivingBase) directEntity.heldItem else null
+		val ichatcomponent = if (attacker == null) projectile!!.func_145748_c_() else attacker.func_145748_c_()
+		val itemstack = if (attacker is EntityLivingBase) attacker.heldItem else null
 		val s = "death.attack.$damageType"
 		val s1 = "$s.item"
 		return if (itemstack != null && itemstack.hasDisplayName() && StatCollector.canTranslate(s1)) ChatComponentTranslation(s1, target.func_145748_c_(), ichatcomponent, itemstack.func_151000_E()) else ChatComponentTranslation(s, target.func_145748_c_(), ichatcomponent)

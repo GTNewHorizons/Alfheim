@@ -124,9 +124,8 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 	public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ) {
 		BlockFalling.fallInstantly =  true;
 		//-//
-		boolean flag = false;
 		rand.setSeed(worldObj.getSeed() * chunkX +(long)Math.pow(chunkZ, 2) * 107L + 2394720L);
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre (chunkProvider, worldObj, rand, chunkX, chunkZ, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre (chunkProvider, worldObj, rand, chunkX, chunkZ, false));
 		
 		/////
 		//=//
@@ -142,7 +141,7 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 		//=//
 		/////
 		
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, false));
 		//-//
 		BlockFalling.fallInstantly = false;
 	}

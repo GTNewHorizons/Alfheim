@@ -21,7 +21,7 @@ object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		if (!AlfheimConfigHandler.enableWingsNonAlfheim && Minecraft.getMinecraft().theWorld.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
+		if (AlfheimConfigHandler.wingsBlackList.contains(Minecraft.getMinecraft().theWorld.provider.dimensionId)) return
 		if (player.race == EnumRace.HUMAN) return
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) return
 		if (player.commandSenderName == "AlexSocol") return
@@ -76,6 +76,7 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
 		glAlphaFunc(GL_GREATER, 0.1f)
 		glDepthMask(true)
 		glEnable(GL_LIGHTING)

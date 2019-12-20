@@ -6,6 +6,7 @@ import alfheim.common.core.registry.AlfheimRegistry
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import org.lwjgl.opengl.GL11.*
+import kotlin.math.max
 
 class GUIDeathTimer: GuiScreen() {
 	
@@ -17,7 +18,7 @@ class GUIDeathTimer: GuiScreen() {
 	}
 	
 	override fun drawScreen(p_73863_1_: Int, p_73863_2_: Int, p_73863_3_: Float) {
-		this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792)
+		drawGradientRect(0, 0, width, height, 1615855616, -1602211792)
 		
 		val font = mc.fontRenderer
 		val resolution = ScaledResolution(mc, mc.displayWidth, mc.displayHeight)
@@ -52,7 +53,7 @@ class GUIDeathTimer: GuiScreen() {
 			glPushMatrix()
 			val sc = 1.5
 			glScaled(sc, sc, 1.0)
-			val s = "" + Math.max(timer / 20, 0)
+			val s = "${max(timer / 20, 0)}"
 			font.drawString(s, (resolution.scaledWidth / (4 * sc) - font.getStringWidth(s) / 2).toInt(), (resolution.scaledHeight / (4 * sc) - 4).toInt(), 0xFFFFFF, true)
 			glPopMatrix()
 		}
@@ -70,7 +71,7 @@ class GUIDeathTimer: GuiScreen() {
 		super.updateScreen()
 		--timer
 		
-		if (!mc.thePlayer.isPotionActive(AlfheimRegistry.leftFlame)) {
+		if (!mc.thePlayer.isPotionActive(AlfheimRegistry.leftFlame) || timer < 0) {
 			mc.displayGuiScreen(null)
 			mc.setIngameFocus()
 		}

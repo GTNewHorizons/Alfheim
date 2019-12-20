@@ -14,11 +14,16 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 
-class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
+object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	
 	/** temp value for counting total on block breaking  */
 	var tcd = 0
 	var tmana = 0
+	
+	override var radius = 1.0
+	
+	override val usableParams: Array<Any>
+		get() = arrayOf(radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.WRONGTGT
@@ -40,12 +45,12 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 	
 	fun removeBlocksInIteration(world: World, player: EntityPlayer, x: Int, y: Int, z: Int, side: Int, remove: Boolean, draw: Boolean): Int {
 		val direction = ForgeDirection.getOrientation(side)
-		val xs = if (direction.offsetX == 0) -1 else 0
-		val ys = if (direction.offsetY == 0) -1 else 0
-		val zs = if (direction.offsetZ == 0) -1 else 0
-		val xe = if (direction.offsetX == 0) 2 else 1
-		val ye = if (direction.offsetY == 0) 2 else 1
-		val ze = if (direction.offsetZ == 0) 2 else 1
+		val xs = if (direction.offsetX == 0) -radius.toInt() else 0
+		val ys = if (direction.offsetY == 0) -radius.toInt() else 0
+		val zs = if (direction.offsetZ == 0) -radius.toInt() else 0
+		val xe = if (direction.offsetX == 0) radius.toInt() + 1 else 1
+		val ye = if (direction.offsetY == 0) radius.toInt() + 1 else 1
+		val ze = if (direction.offsetZ == 0) radius.toInt() + 1 else 1
 		var mana = 0
 		if (player.isSneaking)
 			mana = removeBlockWithDrops(world, player, x, y, z, remove, draw, MATERIALS)
@@ -131,8 +136,5 @@ class SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 		removeBlocksInIteration(caster.worldObj, caster as EntityPlayer, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, false, true)
 	}
 	
-	companion object {
-		
-		val MATERIALS = arrayOf(Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay)
-	}
+	val MATERIALS = arrayOf(Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay)
 }

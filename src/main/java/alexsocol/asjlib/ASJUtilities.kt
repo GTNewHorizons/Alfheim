@@ -85,22 +85,19 @@ object ASJUtilities {
 	
 	/**
 	 * Sends entity to dimension without portal frames
-	 * @param entity The entity to send
+	 * @param player The player to send
 	 * @param dimTo ID of the dimension the entity should be sent to
 	 */
 	@JvmStatic
-	fun sendToDimensionWithoutPortal(entity: Entity, dimTo: Int, x: Double, y: Double, z: Double) {
-		entity.ridingEntity?.riddenByEntity = null
-		entity.ridingEntity = null
+	fun sendToDimensionWithoutPortal(player: EntityPlayer, dimTo: Int, x: Double, y: Double, z: Double) {
+		player.ridingEntity?.riddenByEntity = null
+		player.ridingEntity = null
 		
-		if (dimTo == entity.dimension) {
-			if (entity is EntityLivingBase)
-				entity.setPositionAndUpdate(x, y, z)
-			else
-				entity.setPosition(x, y, z)
-		} else if (entity is EntityPlayerMP) {
-			val worldTo = entity.mcServer.worldServerForDimension(dimTo)
-			entity.mcServer.configurationManager.transferPlayerToDimension(entity, dimTo, FreeTeleporter(worldTo, x, y, z))
+		if (dimTo == player.dimension) {
+			player.setPositionAndUpdate(x, y, z)
+		} else if (player is EntityPlayerMP) {
+			val worldTo = player.mcServer.worldServerForDimension(dimTo)
+			player.mcServer.configurationManager.transferPlayerToDimension(player, dimTo, FreeTeleporter(worldTo, x, y, z))
 		}
 	}
 	
@@ -445,7 +442,7 @@ object ASJUtilities {
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
-		val vec3 = Vec3.createVectorHelper(entity.posX, if (FMLCommonHandler.instance().effectiveSide == Side.CLIENT) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
+		val vec3 = Vec3.createVectorHelper(entity.posX, if (!isServer) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		var vec33: Vec3? = null
@@ -754,6 +751,13 @@ object ASJUtilities {
 		return block === Blocks.air ||
 			   block === Blocks.snow_layer ||
 			   block.material in replaceableMaterials
+	}
+	
+	@JvmStatic
+	fun getTopLevel(worldObj: World, x: Int, z: Int): Int {
+		var y = 1
+		while (!worldObj.isAirBlock(x, y, z)) ++y
+		return y
 	}
 	
 	@JvmStatic

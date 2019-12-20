@@ -64,6 +64,7 @@ object CardinalSystemClient {
 					if (Vector3.entityDistance(mop.entityHit, mc.thePlayer) < (if (mop.entityHit is IBossDisplayData) 128 else 32) && !invis) {
 						PlayerSegmentClient.target = mop.entityHit as EntityLivingBase
 						PlayerSegmentClient.isParty = false
+						PlayerSegmentClient.partyIndex = -1
 					}
 				} else
 					ASJUtilities.say(mc.thePlayer, "alfheimmisc.teamnotmob")
@@ -77,12 +78,13 @@ object CardinalSystemClient {
 			
 			if (PlayerSegmentClient.party == null) PlayerSegmentClient.party = Party(mc.thePlayer)
 			
-			while (true) {
+			//while (true) {
 				PlayerSegmentClient.partyIndex = ++PlayerSegmentClient.partyIndex % PlayerSegmentClient.party!!.count
 				val team = PlayerSegmentClient.party!![PlayerSegmentClient.partyIndex]
 				PlayerSegmentClient.target = team
-				if (team != null && Vector3.entityDistancePlane(mc.thePlayer, PlayerSegmentClient.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
-			}
+				// if (team != null && Vector3.entityDistancePlane(mc.thePlayer, PlayerSegmentClient.target!!) < (if (team is IBossDisplayData) 128 else 32)) break
+			//}
+			
 			return PlayerSegmentClient.isParty
 		}
 	}

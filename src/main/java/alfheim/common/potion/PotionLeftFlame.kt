@@ -24,13 +24,12 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.applyAttributesModifiersToEntity(target, attributes, ampl)
 		if (AlfheimCore.enableMMO && target is EntityPlayer) {
-			val player = target as EntityPlayer?
-			player!!.capabilities.allowEdit = false
-			player.capabilities.allowFlying = true
-			player.capabilities.disableDamage = true
-			player.capabilities.isFlying = true
-			player.sendPlayerAbilities()
-			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 0.1
+			target.capabilities.allowEdit = false
+			target.capabilities.allowFlying = true
+			target.capabilities.disableDamage = true
+			target.capabilities.isFlying = true
+			target.sendPlayerAbilities()
+			if (target is EntityPlayerMP) target.theItemInWorldManager.blockReachDistance = 0.1
 			if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeath(target)
 		}
 	}
@@ -38,14 +37,12 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl)
 		if (AlfheimCore.enableMMO && target is EntityPlayer) {
-			val player = target as EntityPlayer?
-			player!!.capabilities.allowEdit = true
-			player.capabilities.allowFlying = false
-			player.capabilities.disableDamage = false
-			player.capabilities.isFlying = false
-			player.sendPlayerAbilities()
-			if (player is EntityPlayerMP) player.theItemInWorldManager.blockReachDistance = 5.0
-			player.dataWatcher.updateObject(6, 10f)
+			target.capabilities.allowEdit = true
+			target.capabilities.allowFlying = false
+			target.capabilities.disableDamage = false
+			target.capabilities.isFlying = false
+			target.sendPlayerAbilities()
+			if (target is EntityPlayerMP) target.theItemInWorldManager.blockReachDistance = 5.0
 		}
 	}
 	

@@ -12,7 +12,13 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 
-class SpellUphealth: SpellBase("uphealth", EnumRace.CAITSITH, 10000, 1200, 30) {
+object SpellUphealth: SpellBase("uphealth", EnumRace.CAITSITH, 10000, 1200, 30) {
+	
+	override var duration = 36000
+	override var efficiency = 1.0
+	
+	override val usableParams
+		get() = arrayOf(duration, efficiency)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
@@ -26,8 +32,8 @@ class SpellUphealth: SpellBase("uphealth", EnumRace.CAITSITH, 10000, 1200, 30) {
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.field_76434_w.id, 36000, 1, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, 36000, 1))
+			tg.target.addPotionEffect(PotionEffect(Potion.field_76434_w.id, duration, efficiency.toInt(), true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, duration, efficiency.toInt()))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 		}
 		

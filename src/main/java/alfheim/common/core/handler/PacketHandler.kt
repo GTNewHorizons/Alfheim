@@ -1,8 +1,8 @@
 package alfheim.common.core.handler
 
 import alfheim.common.item.equipment.bauble.*
-import alfheim.common.network.Message0d
-import alfheim.common.network.Message0d.m0d
+import alfheim.common.network.Message0dS
+import alfheim.common.network.Message0dS.m0ds
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.network.simpleimpl.MessageContext
 import net.minecraft.entity.player.EntityPlayerMP
@@ -14,10 +14,10 @@ import vazkii.botania.common.item.equipment.bauble.ItemTravelBelt
 
 object PacketHandler {
 	
-	fun handle(packet: Message0d, ctx: MessageContext) {
-		when (m0d.values()[packet.type]) {
-			m0d.DODGE -> DOGIE(ctx.serverHandler)
-			m0d.JUMP  -> jump(ctx.serverHandler.playerEntity)
+	fun handle(packet: Message0dS, ctx: MessageContext) {
+		when (m0ds.values()[packet.type]) {
+			m0ds.DODGE -> DOGIE(ctx.serverHandler)
+			m0ds.JUMP  -> jump(ctx.serverHandler.playerEntity)
 		}
 	}
 	

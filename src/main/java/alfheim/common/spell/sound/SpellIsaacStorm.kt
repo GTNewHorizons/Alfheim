@@ -7,7 +7,14 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.IMob
 import net.minecraft.util.AxisAlignedBB
 
-class SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 100, true) {
+object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 100, true) {
+	
+	override var damage = 10f
+	override var duration = 60
+	override var efficiency = 300.0
+	
+	override val usableParams
+		get() = arrayOf(damage, duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster.worldObj.getEntitiesWithinAABB(IMob::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(15.0, 15.0, 15.0)).isEmpty()) return SpellCastResult.WRONGTGT
@@ -15,7 +22,7 @@ class SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 10
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			var missile: EntitySpellIsaacMissile
-			for (i in 0..399) {
+			for (i in 0..efficiency.toInt()) {
 				missile = EntitySpellIsaacMissile(caster, false)
 				missile.setPosition(caster.posX + (Math.random() - 0.5) * 0.1, caster.posY + 2.4 + (Math.random() - 0.5) * 0.1, caster.posZ + (Math.random() - 0.5) * 0.1)
 				caster.worldObj.spawnEntityInWorld(missile)

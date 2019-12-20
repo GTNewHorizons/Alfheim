@@ -17,8 +17,10 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
+import alfheim.common.spell.darkness.SpellDecay
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import net.minecraft.enchantment.*
@@ -67,7 +69,7 @@ object EventHandler {
 			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.WINGS_NOT_IN_ALF, if (AlfheimConfigHandler.enableWingsNonAlfheim) 1.0 else 0.0), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(MessageNI(MessageNI.mni.WINGS_BL, AlfheimConfigHandler.wingsBlackList), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfigHandler.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 250.0, 0.5)
 					e.player.rotationYaw = 180f
@@ -94,7 +96,7 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityDrops(event: LivingDropsEvent) {
-		if (event.recentlyHit && event.source.entity != null && event.source.entity is EntityPlayer) {
+		if (event.recentlyHit && event.source.entity is EntityPlayer) {
 			val weapon = (event.source.entity as EntityPlayer).currentEquippedItem
 			val target = event.entityLiving
 			if (weapon != null && weapon.item is ItemElementiumAxe && target is EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
@@ -120,7 +122,7 @@ object EventHandler {
 		
 		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			amount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (e.source.entity as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount*100).toInt(), true) } == true)))
+		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (e.source.entity as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount * 100).toInt(), true) } == true)))
 			amount *= 1.2f
 		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			amount *= 0.8f
@@ -143,7 +145,7 @@ object EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (AlfheimCore.enableElvenStory &&e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer &&  target.race != EnumRace.HUMAN) {
+		if (AlfheimCore.enableElvenStory && e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer && target.race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
@@ -159,7 +161,7 @@ object EventHandler {
 		// ################################################################ NOT CANCELING ################################################################
 		
 		if (AlfheimCore.enableMMO && target.isPotionActive(AlfheimConfigHandler.potionIDDecay) && !e.source.isFireDamage && !e.source.isMagical && e.source.damageType != DamageSourceSpell.bleeding.damageType)
-			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBleeding, 120, 0, true))
+			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBleeding, SpellDecay.duration / 5, SpellDecay.efficiency.toInt(), true))
 	}
 	
 	@SubscribeEvent
@@ -179,7 +181,7 @@ object EventHandler {
 			e.ammount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
-			if (e.source.entity != null && e.source.entity is EntityLivingBase && (e.source.entity as EntityLivingBase).isPotionActive(AlfheimConfigHandler.potionIDQuadDamage)) {
+			if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
 				e.ammount *= 4.0f
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
 			}
@@ -205,7 +207,7 @@ object EventHandler {
 						e.isCanceled = true
 						return
 					}
-				} else if (e.source.entity != null && e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
+				} else if (e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
 					e.source.entity.attackEntityFrom(e.source, e.ammount / 2)
 				}
 			}
@@ -241,10 +243,12 @@ object EventHandler {
 	@SubscribeEvent
 	fun onEntityDeath(e: LivingDeathEvent) {
 		if (AlfheimCore.enableMMO) {
-			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
+			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				e.entityLiving.clearActivePotions()
 				e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
+				
+				e.isCanceled = true
 			}
 			
 			CardinalSystem.PartySystem.getMobParty(e.entityLiving)?.setDead(e.entityLiving, true)
@@ -271,7 +275,7 @@ object EventHandler {
 					val tg = CardinalSystem.TargetingSystem.getTarget(player).target ?: continue
 					
 					if (tg.isDead || Vector3.entityDistance(player, tg) > if (tg is IBossDisplayData) 128.0 else 32.0) {
-						CardinalSystem.TargetingSystem.setTarget(player, null, false)
+						CardinalSystem.TargetingSystem.setTarget(player, null, false, -2)
 					}
 				}
 			}
@@ -311,6 +315,18 @@ object EventHandler {
 
 //		player.rotationYaw = 0f
 //		player.rotationPitch = 0f
+		
+		if (e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
+			val seg = CardinalSystem.forPlayer(e.player)
+			val pos = Vector3.fromEntity(e.player)
+			
+			if (seg.lastPos == pos && e.player.fallDistance == 0f && !e.player.capabilities.isFlying)
+				seg.standingStill++
+			else
+				seg.standingStill = 0
+			
+			seg.lastPos = pos
+		}
 	}
 	
 	@SubscribeEvent
@@ -331,5 +347,14 @@ object EventHandler {
 	@SubscribeEvent
 	fun onEntityUpdate(e: EntityUpdateEvent) {
 		if (!e.entity.isEntityAlive) return
+	}
+	
+	@SubscribeEvent
+	fun onPlayerChangeDimension(e: PlayerEvent.PlayerChangedDimensionEvent) {
+		if (AlfheimCore.enableElvenStory && !e.player.capabilities.isCreativeMode) {
+			e.player.capabilities.allowFlying = false
+			e.player.capabilities.isFlying = false
+			e.player.sendPlayerAbilities()
+		}
 	}
 }

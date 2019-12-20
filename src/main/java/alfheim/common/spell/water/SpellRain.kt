@@ -8,7 +8,10 @@ import alfheim.common.network.Message3d.m3d
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.server.MinecraftServer
 
-class SpellRain: SpellBase("rain", EnumRace.UNDINE, 30000, 6000, 50) {
+object SpellRain: SpellBase("rain", EnumRace.UNDINE, 30000, 6000, 50) {
+	
+	override val usableParams
+		get() = emptyArray<Any>()
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)

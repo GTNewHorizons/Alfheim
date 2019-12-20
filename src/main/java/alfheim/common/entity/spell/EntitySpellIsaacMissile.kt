@@ -2,6 +2,7 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.spell.sound.SpellIsaacStorm
 import net.minecraft.block.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.IMob
@@ -37,7 +38,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 			if (target != null)
 				setTarget(null)
 			
-			val range = 16.0
+			val range = SpellIsaacStorm.radius
 			val entities = worldObj.getEntitiesWithinAABB(if (isEvil) EntityPlayer::class.java else IMob::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range))
 			while (entities.size > 0) {
 				val e = entities[worldObj.rand.nextInt(entities.size)] as Entity
@@ -79,7 +80,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 		
 		super.onUpdate()
 		
-		if (!worldObj.isRemote && (!target || time > 60)) {
+		if (!worldObj.isRemote && (!target || time > SpellIsaacStorm.duration)) {
 			setDead()
 			return
 		}
@@ -114,9 +115,9 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 			if (targetList.contains(target)) {
 				val thrower = thrower
 				if (thrower != null)
-					target.attackEntityFrom(DamageSourceSpell.missile(this, thrower), 12f)
+					target.attackEntityFrom(DamageSourceSpell.missile(this, thrower), SpellIsaacStorm.damage)
 				else
-					target.attackEntityFrom(DamageSource.magic, 12f)
+					target.attackEntityFrom(DamageSource.magic, SpellIsaacStorm.damage)
 				
 				target.hurtResistantTime = 0
 				

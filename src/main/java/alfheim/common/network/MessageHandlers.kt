@@ -6,15 +6,26 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.common.core.handler.*
+import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
+import alfheim.common.core.handler.CardinalSystem.PartySystem
+import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 
-class Message0dHandler: IMessageHandler<Message0d, IMessage> {
+class Message0dSHandler: IMessageHandler<Message0dS, IMessage> {
 		
-	override fun onMessage(packet: Message0d, message: MessageContext): IMessage? {
+	override fun onMessage(packet: Message0dS, message: MessageContext): IMessage? {
 		PacketHandler.handle(packet, message)
+		return null
+	}
+}
+
+class Message0dCHandler: IMessageHandler<Message0dC, IMessage> {
+	
+	override fun onMessage(packet: Message0dC, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
 		return null
 	}
 }
@@ -38,6 +49,14 @@ class Message2dHandler: IMessageHandler<Message2d, IMessage> {
 class Message3dHandler: IMessageHandler<Message3d, IMessage> {
 
 	override fun onMessage(packet: Message3d, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
+		return null
+	}
+}
+
+class MessageNIHandler:  IMessageHandler<MessageNI, IMessage> {
+	
+	override fun onMessage(packet: MessageNI, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
 		return null
 	}
@@ -98,14 +117,14 @@ class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage> {
 class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage> {
 
 	override fun onMessage(packet: MessageHotSpellS, message: MessageContext): IMessage? {
-		CardinalSystem.HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
+		HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
 		return null
 	}
 }
 
-class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
+class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage> {
 
-	override fun onMessage(packet: MessageKeyBind, message: MessageContext): IMessage? {
+	override fun onMessage(packet: MessageKeyBindS, message: MessageContext): IMessage? {
 		val player = message.serverHandler.playerEntity
 		
 		when (values()[packet.action]) {
@@ -118,7 +137,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
 			
 			CAST    -> {
-				val ids = if (packet.state) CardinalSystem.HotSpellsSystem.getHotSpellID(player, packet.ticks) else packet.ticks
+				val ids = if (packet.state) HotSpellsSystem.getHotSpellID(player, packet.data) else packet.data
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
 				if (spell == null)
@@ -138,9 +157,16 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBind, IMessage> {
 			}
 			
 			SEL     -> {
-				val e = player.worldObj.getEntityByID(packet.ticks)
-				if (e is EntityLivingBase) {
-					CardinalSystem.TargetingSystem.setTarget(player, e, packet.state)
+				if (packet.state) {
+					val mr = PartySystem.getParty(player)[packet.data]
+					if (mr is EntityLivingBase) {
+						TargetingSystem.setTarget(player, mr, packet.state, packet.data)
+					}
+				} else {
+					val e = player.worldObj.getEntityByID(packet.data)
+					if (e is EntityLivingBase) {
+						TargetingSystem.setTarget(player, e, packet.state)
+					}
 				}
 			}
 		}
@@ -180,9 +206,9 @@ class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
 	}
 }
 
-class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItem, IMessage> {
+class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage> {
 	
-	override fun onMessage(packet: MessagePlayerItem?, ctx: MessageContext?): IMessage? {
+	override fun onMessage(packet: MessagePlayerItemS?, ctx: MessageContext?): IMessage? {
 		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
 			val player = ctx.serverHandler.playerEntity
 			

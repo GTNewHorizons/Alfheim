@@ -214,6 +214,7 @@ object ShadowFoxRecipes {
 							 "DDD",
 							 "DPD",
 							 "DDD", 'P', DYES[i], 'D', ItemStack(Blocks.dirt, 1))
+		
 		addOreDictRecipe(ItemStack(rainbowDirt, 8),
 						 "DDD",
 						 "DPD",
@@ -297,6 +298,7 @@ object ShadowFoxRecipes {
 							 'R', ItemStack(BotaniaItems.skyDirtRod, 1),
 							 'P', PIXIE_DUST,
 							 'S', DRAGONSTONE)
+		
 		addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, 16),
 						 " PD",
 						 " RP",
@@ -306,7 +308,16 @@ object ShadowFoxRecipes {
 						 'P', PIXIE_DUST,
 						 'S', DRAGONSTONE)
 		
-		recipesColoredSkyDirtRod = BotaniaAPI.getLatestAddedRecipes(16)
+		addOreDictRecipe(ItemStack(rodColorfulSkyDirt, 1, 17),
+						 " PD",
+						 " RP",
+						 "S  ",
+						 'D', ItemStack(auroraDirt),
+						 'R', ItemStack(BotaniaItems.skyDirtRod, 1),
+						 'P', PIXIE_DUST,
+						 'S', DRAGONSTONE)
+		
+		recipesColoredSkyDirtRod = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		addOreDictRecipe(ItemStack(rodLightning, 1),
 						 " EW",
