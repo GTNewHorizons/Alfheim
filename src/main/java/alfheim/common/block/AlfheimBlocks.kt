@@ -345,9 +345,13 @@ object AlfheimBlocks {
 		
 		t = ItemStack(rainbowWood)
 		registerOre(LibOreDict.WOOD[16], t)
+		t = ItemStack(auroraWood)
+		registerOre(LibOreDict.WOOD[17], t)
 		
-		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
 		registerOre(LibOreDict.DIRT[16], ItemStack(rainbowDirt))
+		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
+		registerOre(LibOreDict.DIRT[17], ItemStack(auroraDirt))
+		registerOre(LibOreDict.IRIS_DIRT, ItemStack(auroraDirt))
 		
 		registerOre("treeLeaves", ItemStack(lightningLeaves))
 		registerOre("plankWood", ItemStack(lightningPlanks))
@@ -484,6 +488,11 @@ object AlfheimBlocks {
 		registerOre("treeLeaves", t)
 		registerOre(LibOreDict.IRIS_LEAVES, t)
 		registerOre(LibOreDict.LEAVES[16], t)
+		
+		t = ItemStack(auroraLeaves)
+		registerOre("treeLeaves", t)
+		registerOre(LibOreDict.IRIS_LEAVES, t)
+		registerOre(LibOreDict.LEAVES[17], t)
 		
 		t = ItemStack(rainbowPlanks)
 		registerOre("plankWood", t)

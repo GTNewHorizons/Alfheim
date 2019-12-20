@@ -20,6 +20,7 @@ import alfheim.common.network.Message2d.m2d
 import alfheim.common.spell.darkness.SpellDecay
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import net.minecraft.enchantment.*
@@ -121,7 +122,7 @@ object EventHandler {
 		
 		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			amount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (e.source.entity as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount*100).toInt(), true) } == true)))
+		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (e.source.entity as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount * 100).toInt(), true) } == true)))
 			amount *= 1.2f
 		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			amount *= 0.8f
@@ -144,7 +145,7 @@ object EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (AlfheimCore.enableElvenStory &&e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer &&  target.race != EnumRace.HUMAN) {
+		if (AlfheimCore.enableElvenStory && e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer && target.race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
@@ -346,5 +347,14 @@ object EventHandler {
 	@SubscribeEvent
 	fun onEntityUpdate(e: EntityUpdateEvent) {
 		if (!e.entity.isEntityAlive) return
+	}
+	
+	@SubscribeEvent
+	fun onPlayerChangeDimension(e: PlayerEvent.PlayerChangedDimensionEvent) {
+		if (AlfheimCore.enableElvenStory && !e.player.capabilities.isCreativeMode) {
+			e.player.capabilities.allowFlying = false
+			e.player.capabilities.isFlying = false
+			e.player.sendPlayerAbilities()
+		}
 	}
 }

@@ -22,6 +22,7 @@ import java.util.*
 
 class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecific {
 	
+	val fallbackUUID = UUID(0, 0)
 	override val isImmune = false
 	
 	override fun affectedBy(uuid: UUID) = ownerUUID != uuid
@@ -35,7 +36,10 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecif
 		set(owner) = dataWatcher.updateObject(15, owner)
 	
 	var ownerUUID: UUID
-		get() = UUID.fromString(dataWatcher.getWatchableObjectString(16))
+		get() {
+			val name = dataWatcher.getWatchableObjectString(16)
+			return if (name.isNotBlank()) UUID.fromString(name) else fallbackUUID
+		}
 		set(uuid) = dataWatcher.updateObject(16, "$uuid")
 	
 	init {
