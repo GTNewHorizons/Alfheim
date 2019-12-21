@@ -3,6 +3,7 @@ package alfheim.client.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import net.minecraft.client.Minecraft
@@ -17,8 +18,6 @@ import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 object CardinalSystemClient {
-	
-	val mc get() = Minecraft.getMinecraft()!!
 	
 	val playerSkinsData = HashMap<String, Pair<Boolean, Boolean>>()
 	

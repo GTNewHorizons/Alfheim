@@ -6,7 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.EventHandlerClient
-import alfheim.client.core.util.AlfheimBotaniaModifiersClient
+import alfheim.client.core.util.*
 import alfheim.client.gui.*
 import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.model.entity.*
@@ -19,7 +19,6 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.util.mc
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -188,10 +187,10 @@ class ClientProxy: CommonProxy() {
 			removeKeyBinding(keySelTeam)
 		}
 		
-		private val guiIceLens = GUIIceLens(Minecraft.getMinecraft())
-		private val guiParty = GUIParty(Minecraft.getMinecraft())
-		private val guiRace = GUIRace(Minecraft.getMinecraft())
-		private val guiSpells = GUISpells(Minecraft.getMinecraft())
+		private val guiIceLens = GUIIceLens()
+		private val guiParty = GUIParty()
+		private val guiRace = GUIRace()
+		private val guiSpells = GUISpells()
 		
 		fun toggelModes(b: Boolean, esm: Boolean, mmo: Boolean, esmOld: Boolean, mmoOld: Boolean) {
 			if (b)

@@ -1,9 +1,9 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.core.registry.AlfheimRegistry
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.*
@@ -25,12 +25,12 @@ object RenderButterflies {
 		glScaled(s, s, s)
 		
 		rand.setSeed(entity.getEntityId().toLong())
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.butterfly)
+		mc.renderEngine.bindTexture(LibResourceLocations.butterfly)
 		
 		while (flies > 0) {
 			glPushMatrix()
 			glColor4d(rand.nextDouble() * 0.4 + 0.6, rand.nextDouble() * 0.4 + 0.6, rand.nextDouble() * 0.4 + 0.6, 1.0)
-			glTranslated(0.0, if (entity === Minecraft.getMinecraft().thePlayer) -(Minecraft.getMinecraft().thePlayer.defaultEyeHeight * s) else entity.height / s / 2, 0.0)
+			glTranslated(0.0, if (entity === mc.thePlayer) -(mc.thePlayer.defaultEyeHeight * s) else entity.height / s / 2, 0.0)
 			glRotated(rand.nextDouble() * 360 + entity.ticksExisted + partialTicks, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1)
 			glTranslated(0.0, 0.0, -1.0)
 			drawRect()

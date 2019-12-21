@@ -1,6 +1,5 @@
 package alfheim.common.core.util
 
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
@@ -43,7 +42,5 @@ fun ItemStack.itemEquals(rItem: Any): Boolean {
     } else return rItem is ItemStack && simpleAreStacksEqual(rItem, this)
     return false
 }
-
-val mc: Minecraft = Minecraft.getMinecraft()
 
 internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.itemDamage == stack2.itemDamage

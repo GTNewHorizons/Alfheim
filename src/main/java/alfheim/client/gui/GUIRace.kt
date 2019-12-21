@@ -2,11 +2,11 @@ package alfheim.client.gui
 
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
+import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
 import net.minecraftforge.client.event.RenderGameOverlayEvent
@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.sin
 
-class GUIRace(private val mc: Minecraft): Gui() {
+class GUIRace(): Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
