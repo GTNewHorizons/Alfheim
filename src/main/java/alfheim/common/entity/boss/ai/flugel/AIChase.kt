@@ -21,7 +21,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			
 			for (a in 0..9)
 				for (slot1 in player.inventory.mainInventory.indices) {
-					val slot2 = flugel.worldObj.rand.nextInt(player.inventory.sizeInventory)
+					val slot2 = flugel.worldObj.rand.nextInt(player.inventory.mainInventory.size)
 					
 					val stack1 = player.inventory.mainInventory[slot1]
 					val stack2 = player.inventory.mainInventory[slot2]
