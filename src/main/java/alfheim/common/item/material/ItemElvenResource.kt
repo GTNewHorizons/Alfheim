@@ -73,6 +73,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 				texture[i] = IconHelper.forName(reg, subItems[i], "materials")
 		
 		candy = IconHelper.forName(reg, "CandyCane", "materials")
+		flugel = reg.registerIcon(ModInfo.MODID + ":misc/flugelBack")
 		harp = reg.registerIcon(ModInfo.MODID + ":misc/harp")
 		mine = reg.registerIcon(ModInfo.MODID + ":misc/mine")
 		wind = reg.registerIcon(ModInfo.MODID + ":misc/wind")
@@ -157,6 +158,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal"/*, "Transferer" BACK*/)
 		
 		lateinit var candy: IIcon
+		lateinit var flugel: IIcon
 		lateinit var harp: IIcon
 		lateinit var mine: IIcon
 		lateinit var wind: IIcon

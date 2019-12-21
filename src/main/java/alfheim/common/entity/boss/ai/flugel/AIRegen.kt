@@ -5,7 +5,7 @@ import alfheim.common.entity.boss.EntityFlugel
 class AIRegen(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	
 	override fun startExecuting() {
-		val div = if (flugel.isHardMode) 8 else 10
+		val div = if (flugel.isUltraMode) 6 else if (flugel.isHardMode) 8 else 10
 		flugel.aiTaskTimer = (flugel.worldObj.rand.nextInt(EntityFlugel.SPAWN_TICKS / div) + EntityFlugel.SPAWN_TICKS / div) * 2
 		AITeleport.tryToTP(flugel)
 	}

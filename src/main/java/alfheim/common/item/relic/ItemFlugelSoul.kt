@@ -63,7 +63,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		val block = world.getBlock(x, y, z)
 		if (block === Blocks.beacon) {
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
-				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true)
+				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
 				if (success) setDisabled(stack, getBlocked(stack), true)
 				return success
 			}
@@ -415,7 +415,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	override fun apply(stack: ItemStack?, props: BurstProperties?) = Unit
 	
-	override fun updateBurst(burst: IManaBurst?, stack: ItemStack?) {
+	override fun updateBurst(burst: IManaBurst?, stack: ItemStack) {
 		val entity = burst as EntityThrowable
 		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
@@ -426,7 +426,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			
 			if (living.hurtTime == 0) {
 				if (!burst.isFake && !entity.worldObj.isRemote) {
-					living.attackEntityFrom(DamageSource.magic, 8f)
+					living.attackEntityFrom(DamageSource.magic, if (stack.itemDamage > 0) 10f else 8f)
 					entity.setDead()
 					break
 				}

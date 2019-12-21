@@ -15,6 +15,7 @@ import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.common.Loader
 import net.minecraft.item.ItemStack
+import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.ModItems
@@ -70,4 +71,10 @@ open class CommonProxy {
 		HilarityHandler
 		SoulRestructurizationHandler
 	}
+	
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int) = featherFX(world, x, y, z, color, 1f)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float) = featherFX(world, x, y, z, color, scale, 1f)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float) = featherFX(world, x, y, z, color, scale, lifetime, 16f)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float) = featherFX(world, x, y, z, color, scale, lifetime, distance, false)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float, must: Boolean) = Unit
 }

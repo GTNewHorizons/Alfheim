@@ -27,7 +27,7 @@ class AIEnergy(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			val pos = Vector3.fromEntityCenter(flugel).add(look)
 			val motion = Vector3.fromEntityCenter(target).sub(pos).normalize()
 			
-			val charge = EntityCharge(flugel.worldObj, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z)
+			val charge = EntityCharge(flugel, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z)
 			flugel.worldObj.spawnEntityInWorld(charge)
 		}
 		return canContinue()

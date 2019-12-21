@@ -106,6 +106,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -189,7 +190,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		setNoTitle()
 	}
 	
-	override fun hasSearchBar() = true
+	override fun hasSearchBar() = AlfheimConfigHandler.searchTabAlfheim
 	
 	override fun displayAllReleventItems(list: MutableList<Any?>) {
 		this.list = list

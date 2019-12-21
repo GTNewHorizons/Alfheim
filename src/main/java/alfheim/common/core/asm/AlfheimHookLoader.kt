@@ -32,7 +32,7 @@ class AlfheimHookLoader: HookLoader() {
 			AlfheimASMData.load()
 			
 			ModInfo.OBF = !(ASJReflectionHelper.getStaticValue<CoreModManager, Any>(CoreModManager::class.java, "deobfuscatedEnvironment") as Boolean)
-			//ASJReflectionHelper.setStaticFinalValue(ModInfo::class.java, !ModInfo.OBF, "DEV")
+			ModInfo.DEV = !ModInfo.OBF
 		}
 	}
 }

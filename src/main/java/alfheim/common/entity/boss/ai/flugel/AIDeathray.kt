@@ -33,9 +33,9 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		if (deathray == 1) {
 			val stars = ArrayList<EntityFallingStar>(16)
 			val rang = ceil(range.toDouble()).toInt()
-			for (l in 0..3) {
+			for (l in 0..(if (flugel.isUltraMode) 6 else 3)) {
 				var i = 0
-				while (i < 16) {
+				while (i < (if (flugel.isUltraMode) 32 else 16)) {
 					val x = flugel.worldObj.rand.nextInt(rang * 2 + 1) - rang
 					val z = flugel.worldObj.rand.nextInt(rang * 2 + 1) - rang
 					if (vazkii.botania.common.core.helper.MathHelper.pointDistancePlane(x.toDouble(), z.toDouble(), 0.0, 0.0) <= range) {

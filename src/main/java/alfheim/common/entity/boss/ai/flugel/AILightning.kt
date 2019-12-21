@@ -30,7 +30,9 @@ class AILightning(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		for (player in randomPlayers) player.worldObj.spawnEntityInWorld(EntityLightningMark(player.worldObj, player.posX, player.posY, player.posZ))
 		if (flugel.isHardMode) {
 			val src = flugel.source
-			for (i in 0 until ASJUtilities.randInBounds(flugel.worldObj.rand, 5, 10)) {
+			var count = ASJUtilities.randInBounds(flugel.worldObj.rand, 5, 10)
+			if (flugel.isUltraMode) count *= 4
+			for (i in 0 until count) {
 				val vec3 = Vector3(ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble()).normalize().mul(EntityFlugel.RANGE.toDouble())
 				flugel.worldObj.spawnEntityInWorld(EntityLightningMark(flugel.worldObj, src.posX + vec3.x, src.posY + vec3.y, src.posZ + vec3.z))
 			}

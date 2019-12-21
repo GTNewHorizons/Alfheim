@@ -74,7 +74,7 @@ open class ModelBipedNew: ModelBase() {
 		leftleg.addChild(leftboot)
 	}
 	
-	override fun render(entity: Entity?, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
+	override fun render(entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
 		setRotationAngles(time, amplitude, ticksExisted, yawHead, pitchHead, size, entity)
 		
 		if (isChild) {

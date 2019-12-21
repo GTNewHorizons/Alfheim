@@ -13,11 +13,13 @@ import alfheim.client.model.entity.*
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.*
+import alfheim.client.render.particle.EntityFeatherFx
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
+import alfheim.common.core.util.mc
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -33,6 +35,7 @@ import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
+import net.minecraft.world.World
 import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
@@ -130,6 +133,40 @@ class ClientProxy: CommonProxy() {
 	override fun postInit() {
 		super.postInit()
 		AlfheimBotaniaModifiersClient.postInit()
+	}
+	
+	override fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float, must: Boolean) {
+		if (mc.renderViewEntity != null && mc.effectRenderer != null) {
+			val particle = EntityFeatherFx(world, x, y, z, color, scale, lifetime)
+			
+			if (!must) {
+				if (!doParticle(world)) return
+				val distanceX: Double = mc.renderViewEntity.posX - particle.posX
+				val distanceY: Double = mc.renderViewEntity.posY - particle.posY
+				val distanceZ: Double = mc.renderViewEntity.posZ - particle.posZ
+				if (distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ > distance * distance) {
+					return
+				}
+			}
+			
+			mc.effectRenderer.addEffect(particle)
+		}
+	}
+	
+	fun doParticle(world: World): Boolean {
+		return if (!world.isRemote) {
+			false
+		} else if (!ConfigHandler.useVanillaParticleLimiter) {
+			true
+		} else {
+			var chance = 1.0f
+			if (Minecraft.getMinecraft().gameSettings.particleSetting == 1) {
+				chance = 0.6f
+			} else if (Minecraft.getMinecraft().gameSettings.particleSetting == 2) {
+				chance = 0.2f
+			}
+			chance == 1.0f || Math.random() < chance.toDouble()
+		}
 	}
 	
 	companion object {

@@ -52,6 +52,7 @@ object AlfheimConfigHandler {
 	var destroyPortal			= true
 	var fancies					= true
 	var flugelBossBar			= true
+	var flugelSwapBL			= IntArray(0)
 	var info					= true
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
@@ -61,6 +62,8 @@ object AlfheimConfigHandler {
 	var minimalGraphics			= false
 	var numericalMana			= true
 	var realLightning			= false
+	var searchTabAlfheim		= true
+	var searchTabBotania		= true
 	var schemaArray				= IntArray(17) { -1 + it }
 	var storyLines				= 4
 	var tradePortalRate			= 1200
@@ -162,6 +165,7 @@ object AlfheimConfigHandler {
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
+		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap")
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -171,6 +175,8 @@ object AlfheimConfigHandler {
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
+		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
+		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
