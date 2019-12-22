@@ -18,7 +18,6 @@ class RenderEntitySubspaceSpear: Render() {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL)
 		GL11.glColor4f(1f, 1f, 1f, 1f)
 		GL11.glTranslated(d0, d1, d2)
-		GL11.glTranslatef(0.5f, 1.5f, 0.5f)
 		GL11.glTranslatef(0f, -1f, 0f)
 		GL11.glTranslatef(0f, 1f, 0f)
 		GL11.glRotatef(weapon.rotation, 0f, 1f, 0f)

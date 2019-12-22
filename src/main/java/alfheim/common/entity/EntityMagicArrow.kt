@@ -18,6 +18,7 @@ import kotlin.math.*
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
+@Suppress("UNCHECKED_CAST")
 class EntityMagicArrow: EntityThrowableCopy {
 	
 	var damage: Float
