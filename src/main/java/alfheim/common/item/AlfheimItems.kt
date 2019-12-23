@@ -90,6 +90,7 @@ object AlfheimItems {
 	val rodInterdiction: Item
 	val rodLightning: Item
 	val rodPrismatic: Item
+	val soulHorn: Item
 	val spatiotemporalRing: Item
 	val splashPotion: Item
 	val starPlacer: Item
@@ -167,6 +168,7 @@ object AlfheimItems {
 		rodLightning = ItemRodLightning()
 		rodPrismatic = ItemRodPrismatic()
 		rodGrass = ItemRodGrass()
+		soulHorn = ItemSoulHorn()
 		spatiotemporalRing = ItemSpatiotemporalRing()
 		splashPotion = ItemSplashPotion()
 		starPlacer = ItemStarPlacer()

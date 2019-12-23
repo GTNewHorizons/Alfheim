@@ -43,4 +43,10 @@ fun ItemStack.itemEquals(rItem: Any): Boolean {
     return false
 }
 
+var ItemStack.meta
+    get() = itemDamage
+    set(meta) {
+        itemDamage = meta
+    }
+
 internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.itemDamage == stack2.itemDamage

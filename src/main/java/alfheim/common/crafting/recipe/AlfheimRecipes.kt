@@ -100,6 +100,7 @@ import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
@@ -184,6 +185,7 @@ object AlfheimRecipes {
 	lateinit var recipePeacePipe: IRecipe
 	lateinit var recipePixieAttractor: IRecipe
 	lateinit var recipeRelicCleaner: IRecipe
+	lateinit var recipeSoulHorn: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
 	lateinit var recipeSpatiotemporal: IRecipe
 	lateinit var recipeSword: IRecipe
@@ -582,6 +584,13 @@ object AlfheimRecipes {
 						 'B', blaze_rod)
 		recipeNiflheimRod = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(soulHorn, 1, 1),
+						 "E E", "EIE", " M ",
+						 'M', MAUFTRIUM_INGOT,
+						 'E', ELVORIUM_INGOT,
+						 'I', IFFESAL_DUST)
+		recipeSoulHorn = BotaniaAPI.getLatestAddedRecipe()
+		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(spark),
 							 " P ", "BNB", " P ",
@@ -871,7 +880,7 @@ object AlfheimRecipes {
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
 		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
-			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
+			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
 		RecipeSorter.register("${ModInfo.MODID}:elvhelm", RecipeHelmetElvorium::class.java, RecipeSorter.Category.SHAPED, "after:forge:shapedore")
@@ -882,6 +891,8 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeRechargeSoulHorn())
+		RecipeSorter.register("${ModInfo.MODID}:rechargehorn", RecipeRechargeSoulHorn::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {

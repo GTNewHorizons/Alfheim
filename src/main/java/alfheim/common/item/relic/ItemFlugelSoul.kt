@@ -288,26 +288,26 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	companion object {
 		
-		private const val SEGMENTS = 12
-		private val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
+		const val SEGMENTS = 12
+		val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
 		
 		const val TAG_ATTACKER_ID = "attackerId"
-		private const val TAG_EQUIPPED = "equipped"
-		private const val TAG_ROTATION_BASE = "rotationBase"
-		private const val TAG_WARP_PREFIX = "warp"
-		private const val TAG_POS_X = "posX"
-		private const val TAG_POS_Y = "posY"
-		private const val TAG_POS_Z = "posZ"
-		private const val TAG_DIMENSION = "dim"
-		private const val TAG_FIRST_TICK = "firstTick"
-		private const val TAG_DISABLED = "disabled"
-		private const val TAG_BLOCKED = "blocked"
+		const val TAG_EQUIPPED = "equipped"
+		const val TAG_ROTATION_BASE = "rotationBase"
+		const val TAG_WARP_PREFIX = "warp"
+		const val TAG_POS_X = "posX"
+		const val TAG_POS_Y = "posY"
+		const val TAG_POS_Z = "posZ"
+		const val TAG_DIMENSION = "dim"
+		const val TAG_FIRST_TICK = "firstTick"
+		const val TAG_DISABLED = "disabled"
+		const val TAG_BLOCKED = "blocked"
 		
 		// ItemFlightTiara
-		private const val TAG_TIME_LEFT = "timeLeft"
-		private const val MAX_FLY_TIME = 1200
+		const val TAG_TIME_LEFT = "timeLeft"
+		const val MAX_FLY_TIME = 1200
 		
-		private fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
+		fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
 			val yaw = getCheckingAngle(player, getRotationBase(stack))
 			
 			val angles = 360
@@ -325,7 +325,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		// Screw the way minecraft handles rotation
 		// Really...
-		private fun getCheckingAngle(player: EntityLivingBase, base: Float): Float {
+		fun getCheckingAngle(player: EntityLivingBase, base: Float): Float {
 			var yaw = MathHelper.wrapAngleTo180_float(player.rotationYaw) + 90f
 			val angles = 360
 			val segAngles = angles / SEGMENTS
@@ -433,4 +433,11 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			}
 		}
 	}
+	
+	override fun getContainerItem(soul: ItemStack): ItemStack {
+		for (i in 0 until SEGMENTS) setDisabled(soul, i, true)
+		return soul
+	}
+	
+	override fun hasContainerItem(stack: ItemStack) = true
 }

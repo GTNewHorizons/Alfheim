@@ -10,6 +10,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	var lowest = false
 	
 	override fun startExecuting() {
+		flugel.noClip = true
 		val s = flugel.stage
 		val i = if (s == 1) 200 else if (s == 2) 100 else 50
 		flugel.aiTaskTimer = flugel.worldObj.rand.nextInt(i) + i

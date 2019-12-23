@@ -25,7 +25,7 @@ import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry
 import net.minecraft.entity.ai.EntityAIWatchClosest
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
-import net.minecraft.init.*
+import net.minecraft.init.Items
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.*
@@ -83,7 +83,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	var isUltraMode: Boolean
 		get() = dataWatcher.getWatchableObjectByte(22) > 1
-		set(ultra) = dataWatcher.updateObject(22, if (ultra) 2.toByte() else 1.toByte())
+		set(ultra) = dataWatcher.updateObject(22, if (ultra) 2.toByte() else 0.toByte())
 	
 	val source: ChunkCoordinates
 		get() = dataWatcher.getWatchedObject(23).getObject() as ChunkCoordinates
@@ -245,15 +245,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				
 				if (hard) {
 					if (ConfigHandler.relicsEnabled && name == summoner) {
-						var relic = ItemStack(Blocks.stone)
+						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(rand, 4, 6) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
+						
 						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.mask) == false) {
 							relic = ItemStack(AlfheimItems.mask)
 						} else if (ultra) {
+							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
+							val stat = player?.func_147099_x()
 							relic = when {
-								(worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.excaliber) == false    -> ItemStack(AlfheimItems.excaliber)
-								(worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.subspace) == false     -> ItemStack(AlfheimItems.subspaceSpear)
-								(worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.moonlightBow) == false -> ItemStack(AlfheimItems.moonlightBow)
-								else                                                                                                                                          -> relic
+								stat?.hasAchievementUnlocked(AlfheimAchievements.excaliber) == false    -> ItemStack(AlfheimItems.excaliber)		.also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+								stat?.hasAchievementUnlocked(AlfheimAchievements.subspace) == false     -> ItemStack(AlfheimItems.subspaceSpear)	.also { player.triggerAchievement(AlfheimAchievements.subspace) }
+								stat?.hasAchievementUnlocked(AlfheimAchievements.moonlightBow) == false -> ItemStack(AlfheimItems.moonlightBow)		.also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+								else                                                                    -> relic
 							}
 						}
 						
@@ -644,8 +647,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (nbt.hasKey(TAG_PLAYER_COUNT)) dataWatcher.updateObject(10, nbt.getString(TAG_NAME))
 		
 		stage = nbt.getInteger(TAG_STAGE)
-		isHardMode = nbt.getBoolean(TAG_HARDMODE)
-		isUltraMode = nbt.getBoolean(TAG_ULTRAMODE)
+		var f = nbt.getBoolean(TAG_HARDMODE)
+		if (f) isHardMode = f
+		f = nbt.getBoolean(TAG_ULTRAMODE)
+		if (f) isUltraMode = f
 		
 		val x = nbt.getInteger(TAG_SOURCE_X)
 		val y = nbt.getInteger(TAG_SOURCE_Y)
@@ -779,11 +784,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	fun onImpact(mop: MovingObjectPosition) {
 		when (mop.typeOfHit) {
-			MovingObjectPosition.MovingObjectType.BLOCK  -> {
-				if (!SAFE_BLOCKS.contains(intArrayOf(mop.blockX, mop.blockY, mop.blockZ)))
-					if (worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ).getBlockHardness(worldObj, mop.blockX, mop.blockY, mop.blockZ) != -1f)
-						worldObj.setBlockToAir(mop.blockX, mop.blockY, mop.blockZ)
-			}
+			MovingObjectPosition.MovingObjectType.BLOCK  -> Unit
 			
 			MovingObjectPosition.MovingObjectType.ENTITY -> {
 				if (worldObj.rand.nextInt(5) == 0)
@@ -920,8 +921,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						e.health = 1f
 					} while (e.health > 1f)
 					e.setSource(x, y, z)
-					e.isHardMode = hard
-					e.isUltraMode = ultra
+					
+					if (hard) e.isHardMode = hard
+					if (ultra) e.isUltraMode = ultra
+					
 					e.summoner = player.commandSenderName
 					e.playersWhoAttacked[player.commandSenderName] = 1
 					
@@ -935,6 +938,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					
 					e.playerCount = playerCount
 					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).toDouble()
+					e.noClip = true
 					
 					world.playSoundAtEntity(e, "mob.enderdragon.growl", 10f, 0.1f)
 					world.spawnEntityInWorld(e)
@@ -950,9 +954,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		/*	================================	UTILITY STUFF	================================	*/
 		
-		val BEACON_LOC = arrayOf(intArrayOf(0, 0, 0), intArrayOf(0, -1, 0), intArrayOf(0, -1, 1), intArrayOf(0, -1, -1), intArrayOf(1, -1, 0), intArrayOf(-1, -1, 0), intArrayOf(1, -1, 1), intArrayOf(1, -1, -1), intArrayOf(-1, -1, -1), intArrayOf(-1, -1, 1))
 		val PYLON_LOCATIONS = arrayOf(intArrayOf(4, 1, 4), intArrayOf(4, 1, -4), intArrayOf(-4, 1, 4), intArrayOf(-4, 1, -4))
-		val SAFE_BLOCKS = BEACON_LOC + PYLON_LOCATIONS
 		
 		val CHEATY_BLOCKS = listOf("OpenBlocks:beartrap", "ThaumicTinkerer:magnet")
 		

@@ -166,6 +166,7 @@ import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
+import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
@@ -251,6 +252,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (lootInterceptor)
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
+		addItem (soulHorn)
 		
 		addItem (rodFire)
 		addItem (rodIce)
@@ -378,8 +380,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(auroraStairs)
 		addBlock(auroraSlab)
 		addBlock(auroraLeaves)
-		addStack(rainbowGrass, 1)
-		addStack(rainbowTallGrass, 1)
+		addBlock(rainbowGrass, 1)
+		addBlock(rainbowTallGrass, 1)
 		
 		addBlock(rainbowDirt)
 		addBlock(rainbowWood)
@@ -387,12 +389,12 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(rainbowStairs)
 		addBlock(rainbowSlab)
 		addBlock(rainbowLeaves)
-		addStack(rainbowGrass)
-		addStack(rainbowTallGrass)
+		addBlock(rainbowGrass)
+		addBlock(rainbowTallGrass)
 		
 		addBlock(rainbowTallFlower)
-		addStack(rainbowGrass, 2)
-		addStack(rainbowGrass, 3)
+		addBlock(rainbowGrass, 2)
+		addBlock(rainbowGrass, 3)
 		addBlock(rainbowMushroom)
 		
 		addBlock(irisSapling)
@@ -423,8 +425,12 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		item.getSubItems(item, this, list)
 	}
 	
-	private fun addStack(block: Block, meta: Int = 0) {
+	private fun addBlock(block: Block, meta: Int = 0) {
 		addStack(ItemStack(block, 1, meta))
+	}
+	
+	private fun addItem(item: Item, meta: Int = 0) {
+		addStack(ItemStack(item, 1, meta))
 	}
 	
 	private fun addStack(stack: ItemStack) {
