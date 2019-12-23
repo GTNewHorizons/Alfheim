@@ -99,12 +99,12 @@ class EntitySubspace: EntityThrowableCopy {
 					val spear = EntitySubspaceSpear(worldObj, thrower!!)
 					
 					spear.damage = 8f
-					spear.life = 10000
+					spear.life = 100
 					spear.rotationYaw = thrower.rotationYaw
 					spear.pitch = -thrower.rotationPitch
 					spear.rotation = MathHelper.wrapAngleTo180_float(-thrower.rotationYaw + 180)
 					spear.shoot(thrower, thrower.rotationPitch, thrower.rotationYaw, 0.0f, 1.45f, 1.0f)
-					spear.setPosition(posX, posY - 0.75f, posZ)
+					spear.setPosition(posX, posY, posZ)
 					
 					thrower.worldObj.spawnEntityInWorld(spear)
 					count++

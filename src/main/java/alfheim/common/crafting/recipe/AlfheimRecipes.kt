@@ -333,7 +333,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeElementalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (elementalHelmetRevealing != null)
+		if (Botania.thaumcraftLoaded)
 			addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 							 "RTR", "DPD", " M ",
 							 'R', RUNE[0],
@@ -879,7 +879,7 @@ object AlfheimRecipes {
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
+		if (Botania.thaumcraftLoaded) {
 			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
