@@ -2,13 +2,8 @@ package alfheim.common.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.RenderPostShaders
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.common.core.util.mfloor
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
-import cpw.mods.fml.common.FMLCommonHandler
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -17,6 +12,7 @@ import kotlin.math.*
 object AlfheimConfigHandler {
 	lateinit var config: Configuration
 	
+	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
@@ -27,6 +23,11 @@ object AlfheimConfigHandler {
 	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
 	const val CATEGORY_MMOP			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions"
 	const val CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud"
+	
+	// PRELOAD
+	var elementiumClusterMeta	= 22
+	var hpHooks					= true
+	var modularThread			= false
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
@@ -124,6 +125,7 @@ object AlfheimConfigHandler {
 		config = Configuration(suggestedConfigurationFile)
 		
 		config.load()
+		config.addCustomCategoryComment(CATEGORY_PRELOAD, "${CATEGORY_PRELOAD}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "${CATEGORY_INTEGRATION}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_INT_TC, "${CATEGORY_INT_TC}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_DIMENSION, "${CATEGORY_DIMENSION}.tooltip")
@@ -136,15 +138,13 @@ object AlfheimConfigHandler {
 		config.addCustomCategoryComment(CATEGORY_HUD, "${CATEGORY_HUD}.tooltip")
 		
 		syncConfig()
-		FMLCommonHandler.instance().bus().register(object {
-			@SubscribeEvent
-			fun onConfigChanged(e: OnConfigChangedEvent) {
-				if (e.modID == ModInfo.MODID) syncConfig()
-			}
-		})
 	}
 	
 	fun syncConfig() {
+		elementiumClusterMeta = loadProp(CATEGORY_PRELOAD, "elementiumClusterMeta", elementiumClusterMeta, true, "Effective only if Thaumcraft is installed. Change this if some other mod adds own clusters (max value is 63); also please, edit and spread modified .lang files")
+		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
+		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
+		
 		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
@@ -228,8 +228,6 @@ object AlfheimConfigHandler {
 		if (config.hasChanged()) {
 			config.save()
 		}
-		
-		RenderPostShaders.allowShaders = !minimalGraphics
 	}
 	
 	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String): Int {

@@ -10,6 +10,9 @@
 	<version id="UNIVERSAL">
 		<val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val>
 	</version>
+	<version id="MODULAR">
+		<val></val>
+	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
 	</version>

@@ -1,6 +1,7 @@
 package alfheim.common.core.asm
 
 import alfheim.api.ModInfo.OBF
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
@@ -306,7 +307,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				if (opcode == RETURN) {
 					visitVarInsn(ALOAD, 0)
 					visitFieldInsn(GETFIELD, "thaumcraft/common/items/ItemNugget", "icon", if (OBF) "[Lrf;" else "[Lnet/minecraft/util/IIcon;")
-					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
+					visitIntInsn(BIPUSH, AlfheimConfigHandler.elementiumClusterMeta)
 					visitVarInsn(ALOAD, 1)
 					visitLdcInsn("thaumcraft:clusterelementium")
 					visitMethodInsn(INVOKEINTERFACE, if (OBF) "rg" else "net/minecraft/client/renderer/texture/IIconRegister", if (OBF) "a" else "registerIcon", if (OBF) "(Ljava/lang/String;)Lrf;" else "(Ljava/lang/String;)Lnet/minecraft/util/IIcon;", true)
@@ -328,7 +329,7 @@ class AlfheimClassTransformer: IClassTransformer {
 					visitInsn(DUP)
 					visitVarInsn(ALOAD, 0)
 					visitInsn(ICONST_1)
-					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
+					visitIntInsn(BIPUSH, AlfheimConfigHandler.elementiumClusterMeta)
 					visitMethodInsn(INVOKESPECIAL, if (OBF) "add" else "net/minecraft/item/ItemStack", "<init>", if (OBF) "(Ladb;II)V" else "(Lnet/minecraft/item/Item;II)V", false)
 					visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true)
 					visitInsn(POP)

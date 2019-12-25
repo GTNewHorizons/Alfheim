@@ -18,6 +18,7 @@ import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
 import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
+import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak
@@ -43,7 +44,7 @@ object AlfheimItems {
 	val elementalBoots: Item
 	val elementalChestplate: Item
 	val elementalHelmet: Item
-	val elementalHelmetRevealing: Item
+	val elementalHelmetRevealing: Item?
 	val elementalLeggings: Item
 	val elementiumHoe: Item
 	val elfFirePendant: Item
@@ -52,7 +53,7 @@ object AlfheimItems {
 	val elvoriumBoots: Item
 	val elvoriumChestplate: Item
 	val elvoriumHelmet: Item
-	val elvoriumHelmetRevealing: Item
+	val elvoriumHelmetRevealing: Item?
 	val elvoriumLeggings: Item
 	val emblem: Item
 	val excaliber: Item
@@ -120,7 +121,7 @@ object AlfheimItems {
 		dodgeRing = ItemDodgeRing()
 		fireGrenade = ItemFireGrenade()
 		elementalHelmet = ItemElementalWaterHelm()
-		elementalHelmetRevealing = ItemElementalWaterHelmRevealing()
+		elementalHelmetRevealing = if (Botania.thaumcraftLoaded) ItemElementalWaterHelmRevealing() else null
 		elementalChestplate = ItemElementalEarthChest()
 		elementalLeggings = ItemElementalFireLeggings()
 		elementalBoots = ItemElementalAirBoots()
@@ -129,7 +130,7 @@ object AlfheimItems {
 		elfIcePendant = ItemPendant("IcePendant")
 		elvenResource = ItemElvenResource()
 		elvoriumHelmet = ItemElvoriumHelmet()
-		elvoriumHelmetRevealing = ItemElvoriumHelmetRevealing()
+		elvoriumHelmetRevealing = if (Botania.thaumcraftLoaded) ItemElvoriumHelmetRevealing() else null
 		elvoriumChestplate = ItemElvoriumArmor(1, "ElvoriumChestplate")
 		elvoriumLeggings = ItemElvoriumArmor(2, "ElvoriumLeggings")
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")

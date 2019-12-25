@@ -880,7 +880,7 @@ object AlfheimRecipes {
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
 		if (Botania.thaumcraftLoaded) {
-			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing, terrasteelHelmRevealing))
+			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
 		RecipeSorter.register("${ModInfo.MODID}:elvhelm", RecipeHelmetElvorium::class.java, RecipeSorter.Category.SHAPED, "after:forge:shapedore")

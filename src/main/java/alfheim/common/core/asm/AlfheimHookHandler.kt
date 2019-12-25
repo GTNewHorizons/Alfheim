@@ -290,8 +290,8 @@ object AlfheimHookHandler {
 		}
 	}
 	
-	@JvmStatic
-	@Hook(injectOnExit = true, targetMethod = "updateEntity")
+	@JvmStatic // FIXME this hook is incorrect
+	//@Hook(injectOnExit = true, targetMethod = "updateEntity")
 	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
 		if (result) {
 			ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)

@@ -20,7 +20,6 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import cpw.mods.fml.relauncher.Side
 import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
-import java.io.File
 import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
@@ -76,7 +75,6 @@ class AlfheimCore {
 		WAILALoaded = Loader.isModLoaded("Waila")
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
-		AlfheimConfigHandler.loadConfig(File(e.modConfigurationDirectory.toString() + "/Alfheim", "${meta.name}.cfg"))
 		
 		if (AlfheimConfigHandler.info) InfoLoader.start()
 		

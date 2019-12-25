@@ -1,7 +1,7 @@
 package alfheim.common.core.proxy
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.api.ShadowFoxAPI
+import alfheim.api.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
@@ -13,7 +13,9 @@ import alfheim.common.integration.thaumcraft.TCHandlerShadowFoxAspects
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
-import cpw.mods.fml.common.Loader
+import cpw.mods.fml.client.event.ConfigChangedEvent
+import cpw.mods.fml.common.*
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
@@ -70,6 +72,13 @@ open class CommonProxy {
 		ChestGenHandler
 		HilarityHandler
 		SoulRestructurizationHandler
+		
+		FMLCommonHandler.instance().bus().register(object {
+			@SubscribeEvent
+			fun onConfigChanged(e: ConfigChangedEvent.OnConfigChangedEvent) {
+				if (e.modID == ModInfo.MODID) AlfheimConfigHandler.syncConfig()
+			}
+		})
 	}
 	
 	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int) = featherFX(world, x, y, z, color, 1f)
