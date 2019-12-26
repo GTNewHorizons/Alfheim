@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import codechicken.lib.math.MathHelper
+import alfheim.common.core.util.mfloor
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
@@ -24,9 +24,9 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 		else
 			Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
 		
-		var x = MathHelper.floor_double(hit.x)
-		var y = MathHelper.floor_double(hit.y)
-		var z = MathHelper.floor_double(hit.z)
+		var x = hit.x.mfloor()
+		var y = hit.y.mfloor()
+		var z = hit.z.mfloor()
 		
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK && mop.sideHit != -1) {
 			when (mop.sideHit) {

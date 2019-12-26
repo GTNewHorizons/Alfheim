@@ -414,26 +414,30 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol")
 				addItem(royalStaff)
 		} catch (e: Throwable) {}
+		
+		additionalDisplays.forEach { it.invoke() }
 	}
 	
-	private fun addBlock(block: Block) {
+	fun addBlock(block: Block) {
 		val stack = ItemStack(block)
 		block.getSubBlocks(stack.item, this, list)
 	}
 	
-	private fun addItem(item: Item) {
+	fun addItem(item: Item) {
 		item.getSubItems(item, this, list)
 	}
 	
-	private fun addBlock(block: Block, meta: Int = 0) {
+	fun addBlock(block: Block, meta: Int = 0) {
 		addStack(ItemStack(block, 1, meta))
 	}
 	
-	private fun addItem(item: Item, meta: Int = 0) {
+	fun addItem(item: Item, meta: Int = 0) {
 		addStack(ItemStack(item, 1, meta))
 	}
 	
-	private fun addStack(stack: ItemStack) {
+	fun addStack(stack: ItemStack) {
 		list.add(stack)
 	}
+	
+	val additionalDisplays = ArrayList<() -> Unit>()
 }

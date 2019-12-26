@@ -4,8 +4,8 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.util.mfloor
 import alfheim.common.entity.spell.EntitySpellHarp
-import codechicken.lib.math.MathHelper
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
@@ -25,9 +25,9 @@ object SpellHarp: SpellBase("harp", EnumRace.POOKA, 15000, 3600, 30) {
 		else
 			Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
 		
-		var x = MathHelper.floor_double(hit.x) + 0.5
-		var y = MathHelper.floor_double(hit.y) + 0.5
-		var z = MathHelper.floor_double(hit.z) + 0.5
+		var x = hit.x.mfloor() + 0.5
+		var y = hit.y.mfloor() + 0.5
+		var z = hit.z.mfloor() + 0.5
 		
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK && mop.sideHit != -1) {
 			when (mop.sideHit) {
