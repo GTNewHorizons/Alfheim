@@ -1,30 +1,29 @@
 package alfheim.common.entity.boss.ai.flugel
 
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.entity.ai.EntityAIBase
 
-abstract class AIBase(internal val flugel: EntityFlugel, internal val task: AITask): EntityAIBase() {
+abstract class AIBase(val flugel: EntityFlugel, val task: AITask) {
 	
-	init {
-		mutexBits = 5
+	open fun shouldExecute(): Boolean {
+		return flugel.health > 0
 	}
 	
-	override fun shouldExecute(): Boolean {
-		return flugel.health > 0 && flugel.aiTask == task && flugel.aiTaskTimer == 0
-	}
+	abstract fun startExecuting()
 	
-	abstract override fun startExecuting()
-	
-	fun canContinue(): Boolean {
+	open fun shouldContinue(): Boolean {
 		if (flugel.health <= 0 || flugel.aiTask != task) return false
-		flugel.aiTaskTimer = flugel.aiTaskTimer - 1
-		return flugel.aiTaskTimer > 0
+		return --flugel.aiTaskTimer > 0
 	}
 	
-	abstract override fun continueExecuting(): Boolean
+	abstract fun continueExecuting(): Boolean
 	
-	override fun resetTask() {
+	open fun isInterruptible() = true
+	
+	open fun endTask() {
 		flugel.aiTaskTimer = 0
-		flugel.aiTask = flugel.nextTask()
 	}
+}
+
+abstract class AIConstantExecutable(val flugel: EntityFlugel) {
+	abstract fun execute()
 }

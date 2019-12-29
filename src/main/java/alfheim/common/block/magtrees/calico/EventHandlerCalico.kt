@@ -1,11 +1,11 @@
 package alfheim.common.block.magtrees.calico
 
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.util.MathHelper
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.world.ExplosionEvent
-import vazkii.botania.common.core.helper.MathHelper as VMathHelper
 
 class EventHandlerCalico {
 	
@@ -23,16 +23,16 @@ class EventHandlerCalico {
 	fun catchExplosionPre(e: ExplosionEvent.Start) {
 		val explosiondampeners = mutableListOf<Vector3>()
 		
-		val eX = MathHelper.floor_double(e.explosion.explosionX)
-		val eY = MathHelper.floor_double(e.explosion.explosionY)
-		val eZ = MathHelper.floor_double(e.explosion.explosionZ)
+		val eX = e.explosion.explosionX.mfloor()
+		val eY = e.explosion.explosionY.mfloor()
+		val eZ = e.explosion.explosionZ.mfloor()
 		
 		if (e.world.getBlock(eX, eY, eZ) is IExplosionDampener) return
 		
 		for (x in (eX-MAXRANGE)..(eX+MAXRANGE)) {
 			for (y in (eY - MAXRANGE)..(eY + MAXRANGE)) {
 				for (z in (eZ - MAXRANGE)..(eZ + MAXRANGE)) {
-					if (VMathHelper.pointDistanceSpace(x.toDouble(), y.toDouble(), z.toDouble(), eX.toDouble(), eY.toDouble(), eZ.toDouble()) <= 8) {
+					if (Vector3.pointDistanceSpace(x, y, z, eX, eY, eZ) <= 8) {
 						val block = e.world.getBlock(x, y, z)
 						if (block is IExplosionDampener)
 							explosiondampeners.add(Vector3(x.toDouble(), y.toDouble(), z.toDouble()))

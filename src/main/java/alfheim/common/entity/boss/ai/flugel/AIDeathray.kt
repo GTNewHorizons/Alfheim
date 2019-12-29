@@ -11,9 +11,11 @@ import kotlin.math.*
 
 class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	
-	override fun isInterruptible(): Boolean {
-		return false
+	override fun shouldExecute(): Boolean {
+		return flugel.isDying && flugel.stage < EntityFlugel.STAGE_DEATHRAY
 	}
+	
+	override fun isInterruptible() = false
 	
 	override fun startExecuting() {
 		flugel.aiTaskTimer = EntityFlugel.DEATHRAY_TICKS
@@ -28,7 +30,7 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0
-		if (deathray > 10) flugel.spawnPatyklz(true)
+		if (deathray > 10) flugel.pylonPartickles(true)
 		
 		if (deathray == 1) {
 			val stars = ArrayList<EntityFallingStar>(16)
@@ -38,7 +40,7 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 				while (i < (if (flugel.isUltraMode) 32 else 16)) {
 					val x = flugel.worldObj.rand.nextInt(rang * 2 + 1) - rang
 					val z = flugel.worldObj.rand.nextInt(rang * 2 + 1) - rang
-					if (vazkii.botania.common.core.helper.MathHelper.pointDistancePlane(x.toDouble(), z.toDouble(), 0.0, 0.0) <= range) {
+					if (Vector3.pointDistancePlane(x, z, 0, 0) <= range) {
 						val posVec = Vector3((source.posX + x).toDouble(), (source.posY + l * 20 + 10).toDouble(), (source.posZ + z).toDouble())
 						val motVec = Vector3((Math.random() - 0.5) * 18, 24.0, (Math.random() - 0.5) * 18)
 						posVec.add(motVec)
@@ -84,10 +86,10 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			}
 		}
 		
-		return canContinue()
+		return shouldContinue()
 	}
 	
-	override fun resetTask() {
+	override fun endTask() {
 		flugel.stage = EntityFlugel.STAGE_DEATHRAY
 		flugel.aiTaskTimer = 0
 		flugel.aiTask = AITask.REGEN

@@ -53,6 +53,6 @@ class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	}
 	
 	override fun continueExecuting(): Boolean {
-		return canContinue()
+		return shouldContinue()
 	}
 }

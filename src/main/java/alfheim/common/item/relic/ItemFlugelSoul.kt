@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -249,7 +250,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		when {
 			pos.isValid             -> {
-				val dist = MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).toDouble())
+				val dist = Vector3.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).mfloor()
 				
 				if (pos.dim != player.dimension) {
 					s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
@@ -282,7 +283,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		internal fun mana(player: EntityPlayer): Int {
 			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0
-			return MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod) * 10
+			return (Vector3.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod).mfloor() * 10
 		}
 	}
 	
