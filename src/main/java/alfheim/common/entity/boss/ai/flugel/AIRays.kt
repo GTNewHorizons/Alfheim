@@ -10,9 +10,9 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import java.awt.Color
 
-class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
+object AIRays: AIBase() {
 	
-	override fun startExecuting() {
+	override fun startExecuting(flugel: EntityFlugel) {
 		flugel.aiTaskTimer = 20
 		var player = ASJUtilities.getClosestVulnerablePlayerToEntity(flugel, EntityFlugel.RANGE * 2.0)
 		if (player != null) player = flugel.worldObj.getClosestPlayerToEntity(flugel, EntityFlugel.RANGE * 2.0)
@@ -52,7 +52,6 @@ class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		return burst
 	}
 	
-	override fun continueExecuting(): Boolean {
-		return shouldContinue()
-	}
+	override fun shouldContinue(flugel: EntityFlugel) = false
+	override fun continueExecuting(flugel: EntityFlugel) = Unit
 }

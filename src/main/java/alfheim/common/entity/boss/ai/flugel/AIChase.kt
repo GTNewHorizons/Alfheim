@@ -8,11 +8,11 @@ import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.util.*
 
-class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
+object AIChase: AIBase() {
 	
 	var lowest = false
 	
-	override fun startExecuting() {
+	override fun startExecuting(flugel: EntityFlugel) {
 		flugel.noClip = true
 		val s = flugel.stage
 		val i = if (s == 1) 200 else if (s == 2) 100 else 50
@@ -38,8 +38,8 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		}
 	}
 	
-	override fun continueExecuting(): Boolean {
-		checkCollision()
+	override fun continueExecuting(flugel: EntityFlugel) {
+		checkCollision(flugel)
 		if (flugel.aiTaskTimer % 10 == 0) {
 			val name = if (lowest)
 				flugel.playerDamage.minBy { it.value }?.key ?: "Notch"
@@ -58,12 +58,11 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 				flugel.playerDamage.remove(name)
 			}
 		}
-		return shouldContinue()
 	}
 	
 	// EntityFireball code below ============================================================================
 	
-	fun checkCollision() {
+	fun checkCollision(flugel: EntityFlugel) {
 		var vec3 = Vec3.createVectorHelper(flugel.posX, flugel.posY, flugel.posZ)
 		var vec31 = Vec3.createVectorHelper(flugel.posX + flugel.motionX, flugel.posY + flugel.motionY, flugel.posZ + flugel.motionZ)
 		var mop: MovingObjectPosition? = flugel.worldObj.rayTraceBlocks(vec3, vec31)
@@ -102,11 +101,11 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		}
 		
 		if (mop != null) {
-			onImpact(mop)
+			onImpact(mop, flugel)
 		}
 	}
 	
-	fun onImpact(mop: MovingObjectPosition) {
+	fun onImpact(mop: MovingObjectPosition, flugel: EntityFlugel) {
 		when (mop.typeOfHit) {
 			MovingObjectPosition.MovingObjectType.BLOCK  -> Unit
 			
