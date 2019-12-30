@@ -8,12 +8,15 @@ import kotlin.math.*
 
 object AIInit: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage == EntityFlugel.STAGE_INIT
+	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage == EntityFlugel.Companion.STAGE.INIT
+	
 	override fun isInterruptible(flugel: EntityFlugel) = false
 	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.aiTaskTimer = EntityFlugel.SPAWN_TICKS
+		flugel.AI.timer = EntityFlugel.SPAWN_TICKS
 	}
+	
+	override fun shouldContinue(flugel: EntityFlugel) = --flugel.AI.timer > 0
 	
 	override fun continueExecuting(flugel: EntityFlugel) {
 		flugel.health = flugel.health + (flugel.maxHealth - 1f) / EntityFlugel.SPAWN_TICKS
@@ -25,7 +28,7 @@ object AIInit: AIBase() {
 	}
 	
 	override fun endTask(flugel: EntityFlugel) {
-		flugel.AI.dropState()
+		flugel.AI.stage = EntityFlugel.Companion.STAGE.WAIT
 	}
 	
 	fun pylonPartickles(deathRay: Boolean, flugel: EntityFlugel) {

@@ -3,23 +3,17 @@ package alfheim.common.entity.boss.ai.flugel
 import alfheim.common.entity.boss.EntityFlugel
 
 abstract class AIBase {
-	
-	open fun shouldStart(flugel: EntityFlugel) = flugel.health > 0
+	abstract fun shouldStart(flugel: EntityFlugel): Boolean
 	
 	abstract fun startExecuting(flugel: EntityFlugel)
 	
-	open fun shouldContinue(flugel: EntityFlugel): Boolean {
-		if (flugel.health <= 0 || flugel.aiTask != task) return false
-		return --flugel.aiTaskTimer > 0
-	}
+	abstract fun shouldContinue(flugel: EntityFlugel): Boolean
 	
 	abstract fun continueExecuting(flugel: EntityFlugel)
 	
 	open fun isInterruptible(flugel: EntityFlugel) = true
 	
-	open fun endTask(flugel: EntityFlugel) {
-		flugel.aiTaskTimer = 0
-	}
+	open fun endTask(flugel: EntityFlugel) = Unit
 }
 
 abstract class AIConstantExecutable(val flugel: EntityFlugel) {

@@ -11,16 +11,13 @@ fun Double.mfloor() = MathHelper.floor_double(this)
 // double value
 val Number.D get() = this.toDouble()
 
-fun Entity.boundingBox(range: Double = 1.0) =
-    AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)!!
+fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
 
-fun TileEntity.boundingBox(range: Int = 1): AxisAlignedBB {
-    return AxisAlignedBB.getBoundingBox((xCoord - range).D,
-                                        (yCoord - range).D, (zCoord - range).D,
-                                        (xCoord + range).D, (yCoord + range).D, (zCoord + range).D)
-}
+fun TileEntity.boundingBox(range: Number = 1) = getBoundingBox(xCoord.D, yCoord.D, zCoord).expand(range)
 
-fun AxisAlignedBB.expand(d: Double) = this.expand(d, d, d)!!
+fun getBoundingBox(x: Number, y: Number, z: Number) = AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, x.D, y.D, z.D)!!
+
+fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
     worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
