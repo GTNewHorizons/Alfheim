@@ -12,7 +12,7 @@ object AIChase: AIBase() {
 	
 	private var lowest = HashMap<Pair<Long, Long>, Boolean>()
 	
-	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage >= EntityFlugel.Companion.STAGE.AGGRO && flugel.AI.stage != EntityFlugel.Companion.STAGE.DEATHRAY
+	override fun shouldStart(flugel: EntityFlugel) = true
 	
 	override fun startExecuting(flugel: EntityFlugel) {
 		flugel.noClip = true
@@ -127,6 +127,4 @@ object AIChase: AIBase() {
 			else                                         -> Unit
 		}
 	}
-	
-	private fun bits(flugel: EntityFlugel) = flugel.uniqueID.leastSignificantBits to flugel.uniqueID.mostSignificantBits
 }

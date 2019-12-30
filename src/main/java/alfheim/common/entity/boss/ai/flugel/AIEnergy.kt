@@ -6,18 +6,23 @@ import vazkii.botania.common.core.helper.Vector3
 
 object AIEnergy: AIBase() {
 	
-	internal var left = 0
-	internal var max = 0
-	internal val oY = Vector3(0.0, 1.0, 0.0)
+	// TODO replace to hashmaps
+	var left = 0
+	var max = 0
+	val oY = Vector3(0.0, 1.0, 0.0)
+	
+	override fun shouldStart(flugel: EntityFlugel) = true
 	
 	override fun startExecuting(flugel: EntityFlugel) {
 		max = if (flugel.isHardMode) 10 else 5
 		left = max
-		flugel.aiTaskTimer = max * 20
+		flugel.AI.timer = max * 20
 	}
 	
+	override fun shouldContinue(flugel: EntityFlugel) = --flugel.AI.timer > 0
+	
 	override fun continueExecuting(flugel: EntityFlugel) {
-		if (flugel.aiTaskTimer % 20 == 0) {
+		if (flugel.AI.timer % 20 == 0) {
 			--left
 			val look = Vector3(flugel.lookVec).multiply(1.5).rotate(Math.toRadians((-45f + left * (90f / max)).toDouble()), oY)
 			val list = flugel.playersAround
