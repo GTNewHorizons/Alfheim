@@ -9,23 +9,9 @@ import java.util.*
 
 object AILightning: AIBase() {
 	
-	fun randomPlayers(flugel: EntityFlugel): Set<EntityPlayer> {
-		val players = flugel.playersAround
-		if (players.isEmpty()) return HashSet(0)
-		var count = flugel.worldObj.rand.nextInt(players.size) + 1
-		val set = HashSet<EntityPlayer>(count)
-		while (count > 0) {
-			val player = flugel.worldObj.rand.nextInt(players.size)
-			if (!set.contains(players[player])) {
-				set.add(players[player])
-				--count
-			}
-		}
-		return set
-	}
+	override fun shouldStart(flugel: EntityFlugel) = true
 	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.aiTaskTimer = 20
 		for (player in randomPlayers(flugel)) player.worldObj.spawnEntityInWorld(EntityLightningMark(player.worldObj, player.posX, player.posY, player.posZ))
 		if (flugel.isHardMode) {
 			val src = flugel.source
@@ -40,4 +26,19 @@ object AILightning: AIBase() {
 	
 	override fun shouldContinue(flugel: EntityFlugel) = false
 	override fun continueExecuting(flugel: EntityFlugel) = Unit
+	
+	fun randomPlayers(flugel: EntityFlugel): Set<EntityPlayer> {
+		val players = flugel.playersAround
+		if (players.isEmpty()) return HashSet(0)
+		var count = flugel.worldObj.rand.nextInt(players.size) + 1
+		val set = HashSet<EntityPlayer>(count)
+		while (count > 0) {
+			val player = flugel.worldObj.rand.nextInt(players.size)
+			if (!set.contains(players[player])) {
+				set.add(players[player])
+				--count
+			}
+		}
+		return set
+	}
 }

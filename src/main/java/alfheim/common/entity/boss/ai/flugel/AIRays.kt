@@ -12,8 +12,9 @@ import java.awt.Color
 
 object AIRays: AIBase() {
 	
+	override fun shouldStart(flugel: EntityFlugel) = true
+	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.aiTaskTimer = 20
 		var player = ASJUtilities.getClosestVulnerablePlayerToEntity(flugel, EntityFlugel.RANGE * 2.0)
 		if (player != null) player = flugel.worldObj.getClosestPlayerToEntity(flugel, EntityFlugel.RANGE * 2.0)
 		if (player != null) flugel.setPosition(flugel.posX, player.posY, flugel.posZ)
