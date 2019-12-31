@@ -8,10 +8,14 @@ import net.minecraft.util.DamageSource
 @Suppress("UNCHECKED_CAST")
 object AIWait: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage >= EntityFlugel.Companion.STAGE.WAIT && flugel.playersAround.isEmpty()
+	const val FORCE = "AIWait-force"
+	
+	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage >= EntityFlugel.Companion.STAGE.WAIT && (flugel.AI.extraData[FORCE] as? Boolean ?: true || flugel.playersAround.isEmpty())
 	
 	override fun startExecuting(flugel: EntityFlugel) {
 		flugel.AI.dropState()
+		
+		flugel.AI.extraData[FORCE] = false
 	}
 	
 	override fun shouldContinue(flugel: EntityFlugel) = !agroToClosest(flugel) && flugel.AI.stage == EntityFlugel.Companion.STAGE.WAIT

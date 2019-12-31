@@ -11,28 +11,32 @@ import kotlin.math.*
 
 object AIDeathray: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel): Boolean {
-		return flugel.isDying && flugel.stage < EntityFlugel.STAGE_DEATHRAY
-	}
+	override fun shouldStart(flugel: EntityFlugel) = flugel.isDying && flugel.AI.stage < EntityFlugel.Companion.STAGE.DEATHRAY
 	
 	override fun isInterruptible(flugel: EntityFlugel) = false
 	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.aiTaskTimer = EntityFlugel.DEATHRAY_TICKS
+		flugel.AI.stage = EntityFlugel.Companion.STAGE.DEATHRAY
+		flugel.AI.timer = EntityFlugel.DEATHRAY_TICKS
 	}
 	
+	override fun shouldContinue(flugel: EntityFlugel) = --flugel.AI.timer > 0
+	
 	override fun continueExecuting(flugel: EntityFlugel) {
-		val deathray = flugel.aiTaskTimer
+		val deathray = flugel.AI.timer
 		val source = flugel.source
-		val range = EntityFlugel.RANGE.toFloat()
+		
 		if (ModInfo.DEV) if (!flugel.worldObj.isRemote) for (player in flugel.playersAround) ASJUtilities.chatLog("Deathray in $deathray", player)
+		
 		flugel.setPosition(source.posX + 0.5, (source.posY + 3).toDouble(), source.posZ + 0.5)
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0
+		
 		if (deathray > 10) AIInit.pylonPartickles(true, flugel)
 		
 		if (deathray == 1) {
+			val range = EntityFlugel.RANGE.toFloat()
 			val stars = ArrayList<EntityFallingStar>(16)
 			val rang = ceil(range.toDouble()).toInt()
 			for (l in 0..(if (flugel.isUltraMode) 6 else 3)) {
@@ -88,8 +92,6 @@ object AIDeathray: AIBase() {
 	}
 	
 	override fun endTask(flugel: EntityFlugel) {
-		flugel.stage = EntityFlugel.STAGE_DEATHRAY
-		flugel.aiTaskTimer = 0
-		flugel.aiTask = AITask.REGEN
+		flugel.AI.stage = EntityFlugel.Companion.STAGE.POSTDEATHRAY
 	}
 }
