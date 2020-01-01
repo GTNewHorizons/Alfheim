@@ -59,11 +59,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	val playersAround: List<EntityPlayer>
 		get() {
 			val source = source
-			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).expand(RANGE)).also {
-				list -> list.removeAll {
-					Vector3.vecEntityDistance(Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5), it as Entity) <= RANGE
-				}
-			} as List<EntityPlayer>
+			val range = RANGE + 3
+			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX.D + 0.5 + range.D, source.posY.D + 0.5 + range.D, source.posZ.D + 0.5 + range.D)) as List<EntityPlayer>
 		}
 	
 	var isHardMode: Boolean
@@ -162,7 +159,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			
 			playerDamage[player.commandSenderName] = playerDamage[player.commandSenderName]?.plus(damage) ?: damage
 			
-			AI.stage = STAGE_AGGRO
+			AI.reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}
 		return false
@@ -551,9 +548,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		const val TAG_SUMMONER = "summoner"
 		const val TAG_ATTACKED = "attacked"
 		
-		enum class STAGE {
-			INIT, WAIT, AGGRO, MAGIC, DEATHRAY, POSTDEATHRAY;
-		}
+		var st_count = -1
+		val STAGE_INIT		= st_count++
+		val STAGE_INITED	= st_count++
+		val STAGE_AGGRO		= st_count++    // 100%  hp
+		val STAGE_MAGIC		= st_count++    // 60%   hp
+		val STAGE_DEATHRAY	= st_count++    // 12.5% hp
 		
 		var isPlayingMusic = false
 		
@@ -698,7 +698,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		lateinit var task: AITask
 		var timer = 0
-		var stage = STAGE.INIT
+		var stage = 0
 		
 		init {
 			constantTasks.add(AIClearPotions(flugel))
@@ -717,8 +717,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			if (worldObj.isRemote) return
 			val source = source
 			AITeleport.teleportTo(flugel, source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+			stage = 0
 			health = maxHealth
-			flugel.AI.stage = STAGE.WAIT
+			task = AITask.WAIT
+			timer = 0
 			playerDamage.clear()
 			playerDamage[summoner] = 0.1f
 		}
@@ -748,15 +750,27 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					if (checkPrev) if (task.instant && this.task.instant) continue
 					
 					if (task.ai.shouldStart(flugel)) {
-						this.task = task
 						task.ai.startExecuting(flugel)
-						
-						if (ModInfo.DEV) for (player in playersAround) ASJUtilities.chatLog("Set AI command to $task", player)
 					}
 				}
 			}
+			
+			/*while (true) {
+				priorities.forEach { priority ->
+					val task = temporalTasks[priority]!!.random()
+					
+					if (Math.random() < task.task.chance && !(task.task.instant && ai.task.instant) && stage >= task.task.stage) {
+						
+						if (task.shouldExecute()) {
+							ai = task
+							aiTask = ai.task
+							ai.startExecuting()
+							if (ModInfo.DEV) for (player in playersAround) ASJUtilities.chatLog("Set AI command to ${ai.task}", player)
+							return
+						}
+					}
+				}
+			}*/
 		}
-		
-		
 	}
 }

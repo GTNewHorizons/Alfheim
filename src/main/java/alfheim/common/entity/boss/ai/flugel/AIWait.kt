@@ -3,18 +3,16 @@ package alfheim.common.entity.boss.ai.flugel
 import alfheim.common.core.util.boundingBox
 import alfheim.common.entity.boss.EntityFlugel
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.DamageSource
+import net.minecraft.util.*
 
 @Suppress("UNCHECKED_CAST")
 object AIWait: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage >= EntityFlugel.Companion.STAGE.WAIT && flugel.playersAround.isEmpty()
-	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.AI.dropState()
+		flugel.aiTaskTimer = Integer.MAX_VALUE
 	}
 	
-	override fun shouldContinue(flugel: EntityFlugel) = !agroToClosest(flugel) && flugel.AI.stage == EntityFlugel.Companion.STAGE.WAIT
+	override fun shouldContinue(flugel: EntityFlugel) = agroToClosest(flugel)
 	
 	override fun continueExecuting(flugel: EntityFlugel) = Unit
 	

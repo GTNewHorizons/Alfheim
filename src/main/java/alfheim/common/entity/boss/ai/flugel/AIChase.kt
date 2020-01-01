@@ -10,22 +10,15 @@ import net.minecraft.util.*
 
 object AIChase: AIBase() {
 	
-	private var lowest = HashMap<Pair<Long, Long>, Boolean>()
-	
-	override fun shouldStart(flugel: EntityFlugel) = flugel.AI.stage >= EntityFlugel.Companion.STAGE.AGGRO && flugel.AI.stage != EntityFlugel.Companion.STAGE.DEATHRAY
+	var lowest = false
 	
 	override fun startExecuting(flugel: EntityFlugel) {
 		flugel.noClip = true
+		val s = flugel.stage
+		val i = if (s == 1) 200 else if (s == 2) 100 else 50
+		flugel.aiTaskTimer = flugel.worldObj.rand.nextInt(i) + i
 		
-		val i = when (flugel.AI.stage) {
-			EntityFlugel.Companion.STAGE.AGGRO -> 200
-			EntityFlugel.Companion.STAGE.MAGIC -> 100
-			else -> 50
-		}
-		
-		flugel.AI.timer = flugel.worldObj.rand.nextInt(i) + i
-		
-		lowest[bits(flugel)] = flugel.worldObj.rand.nextInt(10) == 0
+		lowest = flugel.worldObj.rand.nextInt(10) == 0
 		
 		if (flugel.worldObj.rand.nextInt(4) == 0) {
 			val player = flugel.worldObj.getPlayerEntityByName(flugel.playerDamage.keys.random()) ?: return
@@ -45,12 +38,10 @@ object AIChase: AIBase() {
 		}
 	}
 	
-	override fun shouldContinue(flugel: EntityFlugel) = --flugel.AI.timer > 0
-	
 	override fun continueExecuting(flugel: EntityFlugel) {
 		checkCollision(flugel)
-		if (flugel.AI.timer % 10 == 0) {
-			val name = if (lowest[bits(flugel)] == true)
+		if (flugel.aiTaskTimer % 10 == 0) {
+			val name = if (lowest)
 				flugel.playerDamage.minBy { it.value }?.key ?: "Notch"
 			else
 				flugel.playerDamage.maxBy { it.value }?.key ?: "Notch"
@@ -62,6 +53,7 @@ object AIChase: AIBase() {
 				flugel.motionX = mot.x
 				flugel.motionY = mot.y
 				flugel.motionZ = mot.z
+			
 			} else {
 				flugel.playerDamage.remove(name)
 			}
@@ -127,6 +119,4 @@ object AIChase: AIBase() {
 			else                                         -> Unit
 		}
 	}
-	
-	private fun bits(flugel: EntityFlugel) = flugel.uniqueID.leastSignificantBits to flugel.uniqueID.mostSignificantBits
 }
