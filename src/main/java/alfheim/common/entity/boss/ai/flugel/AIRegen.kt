@@ -9,7 +9,7 @@ object AIRegen: AIBase() {
 	
 	override fun shouldStart(flugel: EntityFlugel): Boolean {
 		initRegens(flugel)
-		var regens = flugel.AI.extraData[REGENS] as? Int ?: return false
+		var regens = flugel.AI.extraData[REGENS] as Int
 		flugel.AI.extraData[REGENS] = --regens
 		return regens > 0
 	}
@@ -17,8 +17,6 @@ object AIRegen: AIBase() {
 	override fun startExecuting(flugel: EntityFlugel) {
 		val src = flugel.source
 		AITeleport.teleportTo(flugel, src.posX.D, src.posY.D, src.posZ.D)
-		
-		// TODO spawn regen pylons
 	}
 	
 	override fun shouldContinue(flugel: EntityFlugel): Boolean {
@@ -28,9 +26,7 @@ object AIRegen: AIBase() {
 	}
 	
 	override fun continueExecuting(flugel: EntityFlugel) {
-		// TODO move regen to pylons
 		if (flugel.health < flugel.maxHealth) flugel.health += 2
-		
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0

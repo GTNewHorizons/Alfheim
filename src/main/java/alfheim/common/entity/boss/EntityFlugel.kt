@@ -21,10 +21,11 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.*
+import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry
 import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.*
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.nbt.*
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntityBeacon
 import net.minecraft.util.*
@@ -46,7 +47,7 @@ import kotlin.collections.HashMap
 import kotlin.math.*
 
 @Suppress("UNCHECKED_CAST")
-class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
+class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
 	
 	val rnd = Random()
 	
@@ -60,7 +61,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			val source = source
 			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).expand(RANGE)).also {
 				list -> list.removeAll {
-					Vector3.vecEntityDistance(Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5), it as Entity) > RANGE
+					Vector3.vecEntityDistance(Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5), it as Entity) <= RANGE
 				}
 			} as List<EntityPlayer>
 		}
@@ -99,7 +100,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 	val isCasting: Boolean
 		get() = AI.task.instant
 	
-	val AI: AIController
+	val AI = AIController(this)
 	
 	init {
 		setSize(0.6f, 1.8f)
@@ -108,9 +109,6 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		isImmuneToFire = true
 		experienceValue = 1325
 		hurtTimeActual = 0
-		
-		AI = AIController(this)
-		AI.newTask(false)
 	}
 	
 	override fun onLivingUpdate() {
@@ -183,10 +181,6 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 	}
 	
 	override fun setHealth(set: Float) {
-		@Suppress("SENSELESS_COMPARISON")
-		// because setHealth gots called before AI initialization in EntityLivingBase constructor
-		if (AI == null) return super.setHealth(set)
-		
 		var hp = set
 		prevHealth = health
 		hp = max(prevHealth - maxHit * if (isUltraMode) MAX_DMG_UL else if (isHardMode) MAX_DMG_HD else MAX_DMG_EZ, hp)
@@ -692,10 +686,10 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		val constantTasks = ArrayList<AIConstantExecutable>()
 		
 		lateinit var task: AITask
-		var timer: Int
-		var stage: STAGE
+		var timer = 0
+		var stage = STAGE.INIT
 		
-		var extraData: HashMap<String, Any>
+		var extraData = HashMap<String, Any>()
 		
 		init {
 			constantTasks.add(AIClearPotions(flugel))
@@ -703,9 +697,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			constantTasks.add(AIGetBack(flugel))
 			constantTasks.add(AIRequireWings(flugel))
 			
-			timer = 0
-			stage = STAGE.INIT
-			extraData = HashMap()
+			newTask(false)
 		}
 		
 		fun dropState() {
@@ -757,8 +749,6 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			nbt.setInteger(TAG_AI_TIMER, timer)
 			nbt.setInteger(TAG_STAGE, stage.ordinal)
 			
-			// TODO write throuhg nbt.set%DATATYPE% !!!
-			
 			val data = NBTTagCompound()
 			extraData.forEach { data.tagMap[it.key] = it.value }
 			nbt.setTag(TAG_DATA_MAP, data)
@@ -768,8 +758,6 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			stage = STAGE.values()[nbt.getInteger(TAG_STAGE)]
 			timer = nbt.getInteger(TAG_AI_TIMER)
 			task = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
-			
-			// TODO read throuhg nbt.get%DATATYPE% !!!
 			
 			val data = nbt.getTag(TAG_DATA_MAP) as NBTTagCompound
 			data.tagMap.forEach { extraData[it.key as String] = it.value as Any }

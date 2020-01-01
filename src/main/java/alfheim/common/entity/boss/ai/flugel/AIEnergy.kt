@@ -6,15 +6,16 @@ import alfheim.common.entity.boss.EntityFlugel
 
 object AIEnergy: AIBase() {
 	
-	const val MAX_CHARGES = "AIEnergy_max"
-	const val LEFT_CHARGES = "AIEnergy_left"
+	// TODO replace to AI.extraData
+	var left = HashMap<Pair<Long, Long>, Int>()
+	var max = HashMap<Pair<Long, Long>, Int>()
 	
 	override fun shouldStart(flugel: EntityFlugel) = true
 	
 	override fun startExecuting(flugel: EntityFlugel) {
 		val count = if (flugel.isHardMode) 10 else 5
-		flugel.AI.extraData[MAX_CHARGES] = count
-		flugel.AI.extraData[LEFT_CHARGES] = count
+		max[bits(flugel)] = count
+		left[bits(flugel)] = count
 		flugel.AI.timer = count * 10
 	}
 	
@@ -22,9 +23,9 @@ object AIEnergy: AIBase() {
 	
 	override fun continueExecuting(flugel: EntityFlugel) {
 		if (flugel.AI.timer % 10 == 0) {
-			var left = flugel.AI.extraData[LEFT_CHARGES] as? Int ?: return
-			flugel.AI.extraData[LEFT_CHARGES] = --left
-			val max = flugel.AI.extraData[MAX_CHARGES] as? Int ?: return
+			var left = left[bits(flugel)] ?: return
+			this.left[bits(flugel)] = --left
+			val max = max[bits(flugel)] ?: return
 			
 			val look = Vector3(flugel.lookVec).mul(1.5).rotate(Math.toRadians((-45f + left * (90f / max)).toDouble()), Vector3.oY)
 			val list = flugel.playersAround
