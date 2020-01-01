@@ -283,9 +283,9 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true)
-	fun updateTick(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
-		if (AlfheimCore.winter && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
+	@Hook(injectOnExit = true, targetMethod = "updateTick")
+	fun updateTickGrass(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
+		if (AlfheimCore.jingleTheBells && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
 			world.setBlock(x, y, z, AlfheimBlocks.snowGrass)
 		}
 	}

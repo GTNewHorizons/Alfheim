@@ -40,6 +40,6 @@ class AILightning(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	}
 	
 	override fun continueExecuting(): Boolean {
-		return shouldContinue()
+		return canContinue()
 	}
 }

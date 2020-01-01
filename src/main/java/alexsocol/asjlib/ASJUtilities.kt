@@ -628,7 +628,7 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * @return random value in range [[min], [max]] (inclusive)
+	 * @return random value in range [min, max] (inclusive)
 	 */
 	@JvmStatic
 	fun randInBounds(min: Int, max: Int) = randInBounds(Random(), min, max)

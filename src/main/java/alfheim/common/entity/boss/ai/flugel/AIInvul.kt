@@ -17,10 +17,10 @@ class AIInvul(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		flugel.motionZ = 0.0
 		flugel.motionY = flugel.motionZ
 		flugel.motionX = flugel.motionY
-		return shouldContinue()
+		return canContinue()
 	}
 	
-	override fun endTask() {
-		flugel.AI.dropState()
+	override fun resetTask() {
+		flugel.dropState()
 	}
 }

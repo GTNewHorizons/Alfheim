@@ -16,12 +16,12 @@ class AIRegen(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	}
 	
 	override fun continueExecuting(): Boolean {
-		if (--charge > 0) return shouldContinue()
+		if (--charge > 0) return canContinue()
 		
 		if (flugel.health < flugel.maxHealth) flugel.health += 2
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0
-		return shouldContinue()
+		return canContinue()
 	}
 }

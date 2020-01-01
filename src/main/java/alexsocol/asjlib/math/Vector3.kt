@@ -1,6 +1,5 @@
 package alexsocol.asjlib.math
 
-import alfheim.common.core.util.D
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.Entity
 import net.minecraft.tileentity.TileEntity
@@ -31,10 +30,10 @@ class Vector3: Serializable {
 	val isAxial: Boolean
 		get() = if (x == 0.0) y == 0.0 || z == 0.0 else y == 0.0 && z == 0.0
 	
-	constructor(d: Number = 0.0, d1: Number = d, d2: Number = d) {
-		x = d.D
-		y = d1.D
-		z = d2.D
+	constructor(d: Double = 0.0, d1: Double = d, d2: Double = d) {
+		x = d
+		y = d1
+		z = d2
 	}
 	
 	constructor(vec: Vector3) {
@@ -53,10 +52,10 @@ class Vector3: Serializable {
 	
 	fun discard() = set(0.0, 0.0, 0.0)
 	
-	fun set(d: Number, d1: Number = d, d2: Number = d): Vector3 {
-		x = d.D
-		y = d1.D
-		z = d2.D
+	fun set(d: Double, d1: Double = d, d2: Double = d): Vector3 {
+		x = d
+		y = d1
+		z = d2
 		return this
 	}
 	
@@ -82,9 +81,9 @@ class Vector3: Serializable {
 	}
 	
 	fun set(te: TileEntity): Vector3 {
-		x = te.xCoord.D
-		y = te.yCoord.D
-		z = te.zCoord.D
+		x = te.xCoord.toDouble()
+		y = te.yCoord.toDouble()
+		z = te.zCoord.toDouble()
 		return this
 	}
 	
@@ -105,7 +104,7 @@ class Vector3: Serializable {
 		return d
 	}
 	
-	fun dotProduct(d: Number, d1: Number, d2: Number) = d.D * x + d1.D * y + d2.D * z
+	fun dotProduct(d: Double, d1: Double, d2: Double) = d * x + d1 * y + d2 * z
 	
 	fun crossProduct(vec: Vector3): Vector3 {
 		val d = y * vec.z - z * vec.y
@@ -117,10 +116,10 @@ class Vector3: Serializable {
 		return this
 	}
 	
-	fun add(d: Number, d1: Number = d, d2: Number = d): Vector3 {
-		x += d.D
-		y += d1.D
-		z += d2.D
+	fun add(d: Double, d1: Double = d, d2: Double = d): Vector3 {
+		x += d
+		y += d1
+		z += d2
 		return this
 	}
 	
@@ -139,17 +138,17 @@ class Vector3: Serializable {
 	}
 	
 	fun add(te: TileEntity): Vector3 {
-		x += te.xCoord.D
-		y += te.yCoord.D
-		z += te.zCoord.D
+		x += te.xCoord.toDouble()
+		y += te.yCoord.toDouble()
+		z += te.zCoord.toDouble()
 		return this
 	}
 	
 	@JvmOverloads
-	fun sub(d: Number, d1: Number = d, d2: Number = d): Vector3 {
-		x -= d.D
-		y -= d1.D
-		z -= d2.D
+	fun sub(d: Double, d1: Double = d, d2: Double = d): Vector3 {
+		x -= d
+		y -= d1
+		z -= d2
 		return this
 	}
 	
@@ -168,9 +167,16 @@ class Vector3: Serializable {
 	}
 	
 	fun sub(te: TileEntity): Vector3 {
-		x -= te.xCoord.D
-		y -= te.yCoord.D
-		z -= te.zCoord.D
+		x -= te.xCoord.toDouble()
+		y -= te.yCoord.toDouble()
+		z -= te.zCoord.toDouble()
+		return this
+	}
+	
+	fun mul(d: Double): Vector3 {
+		x *= d
+		y *= d
+		z *= d
 		return this
 	}
 	
@@ -181,16 +187,16 @@ class Vector3: Serializable {
 		return this
 	}
 	
-	fun mul(d: Number, d1: Number = d, d2: Number = d): Vector3 {
-		x *= d.D
-		y *= d1.D
-		z *= d2.D
+	fun mul(fx: Double, fy: Double, fz: Double): Vector3 {
+		x *= fx
+		y *= fy
+		z *= fz
 		return this
 	}
 	
-	fun extend(d: Number) = set(copy().normalize().mul(max(length() + d.D, 0.0)))
+	fun extend(d: Double) = set(copy().normalize().mul(max(length() + d, 0.0)))
 	
-	fun shrink(d: Number) = set(copy().normalize().mul(min(length() - d.D, 0.0)))
+	fun shrink(d: Double) = set(copy().normalize().mul(min(length() - d, 0.0)))
 	
 	fun length() = sqrt(x * x + y * y + z * z)
 	
@@ -320,7 +326,7 @@ class Vector3: Serializable {
 		
 		fun fromEntityCenter(e: Entity) = Vector3(e.posX, e.posY - e.yOffset + e.height / 2, e.posZ)
 		
-		fun fromTileEntity(e: TileEntity) = Vector3(e.xCoord.D, e.yCoord.D, e.zCoord.D)
+		fun fromTileEntity(e: TileEntity) = Vector3(e.xCoord.toDouble(), e.yCoord.toDouble(), e.zCoord.toDouble())
 		
 		fun fromTileEntityCenter(e: TileEntity) = Vector3(e.xCoord + 0.5, e.yCoord + 0.5, e.zCoord + 0.5)
 		
@@ -336,8 +342,6 @@ class Vector3: Serializable {
 		
 		fun entityDistancePlane(e1: Entity, e2: Entity) = hypot(e1.posX - e2.posX, e1.posZ - e2.posZ)
 		
-		fun pointDistancePlane(x1: Number, y1: Number, x2: Number, y2: Number) = hypot(x1.D - x2.D, y1.D - y2.D)
-		
-		fun pointDistanceSpace(x1: Number, y1: Number, z1: Number, x2: Number, y2: Number, z2: Number) = sqrt((x1.D - x2.D).pow(2) + (y1.D - y2.D).pow(2) + (z1.D - z2.D).pow(2))
+		fun pointDistancePlane(x1: Double, y1: Double, x2: Double, y2: Double) = hypot(x1 - x2, y1 - y2)
 	}
 }

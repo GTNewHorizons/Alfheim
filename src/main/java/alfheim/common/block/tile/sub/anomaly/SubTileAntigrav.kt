@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.AxisAlignedBB
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.MathHelper
 
 class SubTileAntigrav: SubTileEntity() {
 	internal val v = Vector3()
@@ -32,7 +33,7 @@ class SubTileAntigrav: SubTileEntity() {
 		if (target !is Entity) return
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
 		
-		if (Vector3.pointDistancePlane(x() + 0.5, z() + 0.5, target.posX, target.posZ) > radius) return
+		if (MathHelper.pointDistancePlane(x() + 0.5, z() + 0.5, target.posX, target.posZ) > radius) return
 		
 		target.motionY += power * 0.125
 	}
