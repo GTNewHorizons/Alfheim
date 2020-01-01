@@ -24,7 +24,7 @@ import net.minecraft.entity.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.*
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.nbt.*
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntityBeacon
 import net.minecraft.util.*
@@ -82,13 +82,10 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		set(count) = dataWatcher.updateObject(24, count)
 	
 	var summoner: String
-		get() = dataWatcher.getWatchableObjectString(26)
-		set(summoner) = dataWatcher.updateObject(26, summoner)
+		get() = dataWatcher.getWatchableObjectString(25)
+		set(summoner) = dataWatcher.updateObject(25, summoner)
 	
 	// --------------------------------------------------------
-	
-	val isAggroed: Boolean
-		get() = dataWatcher.getWatchableObjectByte(21) > 0
 	
 	val isAlive: Boolean
 		get() = health > 0 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL && !worldObj.isRemote && ASJUtilities.isServer
@@ -147,7 +144,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		
 		hurtTimeActual = max(0, --hurtTimeActual)
 		
-		if (!worldObj.isRemote) AI.updateAI()
+		AI.updateAI()
 	}
 	
 	/*	================================	HEALTH DEATH STUFF	================================	*/
@@ -407,14 +404,11 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 	
 	public override fun entityInit() {
 		super.entityInit()
-		dataWatcher.addObject(21, 0.toByte())						// Stage
+		dataWatcher.addObject(21, 0)								// AI Task
 		dataWatcher.addObject(22, 0.toByte())						// Hard mode
 		dataWatcher.addObject(23, ChunkCoordinates(0, 0, 0))		// Source position
 		dataWatcher.addObject(24, 0)								// Player count
-		dataWatcher.addObject(25, 0)								// AI task timer
-		dataWatcher.addObject(26, "")								// Summoner
-		dataWatcher.addObject(27, 0)								// Current AI task
-		dataWatcher.addObject(28, 0)								// Regens count
+		dataWatcher.addObject(25, "")								// Summoner
 	}
 	
 	override fun isEntityInvulnerable(): Boolean {
@@ -691,23 +685,24 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		
 		val constantTasks = ArrayList<AIConstantExecutable>()
 		
-		lateinit var task: AITask
-		var timer: Int
-		var stage: STAGE
+		var task = AITask.INIT
+			set(value) {
+				dataWatcher.updateObject(21, value.ordinal)
+				field = value
+			}
 		
-		var extraData: HashMap<String, Any>
+		var timer = 0
+		var stage = STAGE.INIT
+		
+		var extraData = HashMap<String, Any>()
 		
 		init {
-			constantTasks.add(AIClearPotions(flugel))		// FIXME not working
+			constantTasks.add(AIClearPotions(flugel))
 			constantTasks.add(AIDestroyCheatBlocks(flugel))
-			constantTasks.add(AIGetBack(flugel))			// FIXME not working
+			constantTasks.add(AIGetBack(flugel))
 			constantTasks.add(AIRequireWings(flugel))
 			constantTasks.add(AIWatchAgroHolder(flugel))
 			constantTasks.add(AIChangeStage(flugel))
-			
-			timer = 0
-			stage = STAGE.INIT
-			extraData = HashMap()
 		}
 		
 		fun dropState() {
@@ -746,9 +741,9 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 					
 					if (task.ai.shouldStart(flugel)) {
 						this.task = task
-						task.ai.startExecuting(flugel)
+						this.task.ai.startExecuting(flugel)
 						
-						if (ModInfo.DEV) for (player in playersAround) ASJUtilities.chatLog("Set AI command to $task", player)
+						if (ModInfo.DEV && !worldObj.isRemote) for (player in playersAround) ASJUtilities.chatLog("Set AI command to $task", player)
 					}
 				}
 			}
@@ -784,15 +779,15 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			val data = nbt.getTag(TAG_DATA_MAP) as NBTTagCompound
 			data.tagMap.forEach { (k, v) ->
 				when (data.getTag(k as String).id.toInt()) {
-					1 -> extraData[k] = v as Byte
-					2 -> extraData[k] = v as Short
-					3 -> extraData[k] = v as Int
-					4 -> extraData[k] = v as Long
-					5 -> extraData[k] = v as Float
-					6 -> extraData[k] = v as Double
-					7 -> extraData[k] = v as ByteArray
-					8 -> extraData[k] = v as String
-					11-> extraData[k] = v as IntArray
+					1 -> extraData[k] = (v as NBTTagByte)		.func_150290_f()
+					2 -> extraData[k] = (v as NBTTagShort)		.func_150289_e()
+					3 -> extraData[k] = (v as NBTTagInt)		.func_150287_d()
+					4 -> extraData[k] = (v as NBTTagLong)		.func_150291_c()
+					5 -> extraData[k] = (v as NBTTagFloat)		.func_150288_h()
+					6 -> extraData[k] = (v as NBTTagDouble)		.func_150286_g()
+					7 -> extraData[k] = (v as NBTTagByteArray)	.func_150292_c()
+					8 -> extraData[k] = (v as NBTTagString)		.func_150285_a_()
+					11-> extraData[k] = (v as NBTTagIntArray)	.func_150302_c()
 				}
 			}
 		}

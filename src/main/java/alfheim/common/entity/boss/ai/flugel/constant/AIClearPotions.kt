@@ -9,8 +9,8 @@ class AIClearPotions(flugel: EntityFlugel): AIConstantExecutable(flugel) {
 	
 	override fun execute() {
 		flugel.playersAround.forEach { player ->
-			(player.activePotionEffects as MutableCollection<PotionEffect>).removeIf {
-				it.getDuration() < 200 && it.getIsAmbient() && !Potion.potionTypes[it.getPotionID()].isBadEffect
+			(player.activePotionEffects as MutableCollection<PotionEffect>).removeIf { potion ->
+				(potion.getDuration() < 200 && potion.getIsAmbient() && !Potion.potionTypes[potion.getPotionID()].isBadEffect)
 			}
 		}
 	}
