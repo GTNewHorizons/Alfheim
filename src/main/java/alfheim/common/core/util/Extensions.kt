@@ -15,9 +15,9 @@ fun Entity.boundingBox(range: Double = 1.0) =
     AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)!!
 
 fun TileEntity.boundingBox(range: Int = 1): AxisAlignedBB {
-    return AxisAlignedBB.getBoundingBox((xCoord - range).D,
-                                        (yCoord - range).D, (zCoord - range).D,
-                                        (xCoord + range).D, (yCoord + range).D, (zCoord + range).D)
+    return AxisAlignedBB.getBoundingBox((xCoord - range).toDouble(),
+                                        (yCoord - range).toDouble(), (zCoord - range).toDouble(),
+                                        (xCoord + range).toDouble(), (yCoord + range).toDouble(), (zCoord + range).toDouble())
 }
 
 fun AxisAlignedBB.expand(d: Double) = this.expand(d, d, d)!!

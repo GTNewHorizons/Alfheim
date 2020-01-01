@@ -9,19 +9,19 @@ import vazkii.botania.common.entity.EntityFallingStar
 import java.util.*
 import kotlin.math.*
 
-object AIDeathray: AIBase() {
+class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	
-	override fun shouldStart(flugel: EntityFlugel): Boolean {
+	override fun shouldExecute(): Boolean {
 		return flugel.isDying && flugel.stage < EntityFlugel.STAGE_DEATHRAY
 	}
 	
-	override fun isInterruptible(flugel: EntityFlugel) = false
+	override fun isInterruptible() = false
 	
-	override fun startExecuting(flugel: EntityFlugel) {
+	override fun startExecuting() {
 		flugel.aiTaskTimer = EntityFlugel.DEATHRAY_TICKS
 	}
 	
-	override fun continueExecuting(flugel: EntityFlugel) {
+	override fun continueExecuting(): Boolean {
 		val deathray = flugel.aiTaskTimer
 		val source = flugel.source
 		val range = EntityFlugel.RANGE.toFloat()
@@ -30,7 +30,7 @@ object AIDeathray: AIBase() {
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0
-		if (deathray > 10) AIInit.pylonPartickles(true, flugel)
+		if (deathray > 10) flugel.pylonPartickles(true)
 		
 		if (deathray == 1) {
 			val stars = ArrayList<EntityFallingStar>(16)
@@ -85,9 +85,11 @@ object AIDeathray: AIBase() {
 				}
 			}
 		}
+		
+		return shouldContinue()
 	}
 	
-	override fun endTask(flugel: EntityFlugel) {
+	override fun endTask() {
 		flugel.stage = EntityFlugel.STAGE_DEATHRAY
 		flugel.aiTaskTimer = 0
 		flugel.aiTask = AITask.REGEN
