@@ -147,7 +147,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		
 		hurtTimeActual = max(0, --hurtTimeActual)
 		
-		AI.updateAI()
+		if (!worldObj.isRemote) AI.updateAI()
 	}
 	
 	/*	================================	HEALTH DEATH STUFF	================================	*/
@@ -277,7 +277,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 							}
 						}
 						
-						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1)
+						worldObj.getPlayerEntityByName(name)?.addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)
 						entityDropItem(relic, 1f)
 						lot = false
@@ -320,7 +320,7 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			
 			if (ConfigHandler.relicsEnabled && !hard) {
 				val relic = ItemStack(AlfheimItems.flugelSoul)
-				if (worldObj.getPlayerEntityByName(summoner) != null) worldObj.getPlayerEntityByName(summoner).addStat(AlfheimAchievements.flugelSoul, 1)
+				worldObj.getPlayerEntityByName(summoner)?.addStat(AlfheimAchievements.flugelSoul, 1)
 				ItemRelic.bindToUsernameS(summoner, relic)
 				entityDropItem(relic, 1f)
 			}
@@ -698,10 +698,12 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 		var extraData: HashMap<String, Any>
 		
 		init {
-			constantTasks.add(AIClearPotions(flugel))
+			constantTasks.add(AIClearPotions(flugel))		// FIXME not working
 			constantTasks.add(AIDestroyCheatBlocks(flugel))
-			constantTasks.add(AIGetBack(flugel))
+			constantTasks.add(AIGetBack(flugel))			// FIXME not working
 			constantTasks.add(AIRequireWings(flugel))
+			constantTasks.add(AIWatchAgroHolder(flugel))
+			constantTasks.add(AIChangeStage(flugel))
 			
 			timer = 0
 			stage = STAGE.INIT
@@ -757,10 +759,20 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			nbt.setInteger(TAG_AI_TIMER, timer)
 			nbt.setInteger(TAG_STAGE, stage.ordinal)
 			
-			// TODO write throuhg nbt.set%DATATYPE% !!!
-			
 			val data = NBTTagCompound()
-			extraData.forEach { data.tagMap[it.key] = it.value }
+			extraData.forEach { (k, v) ->
+				when (v) {
+					is Byte -> data.setByte(k, v)
+					is Short -> data.setShort(k, v)
+					is Int -> data.setInteger(k, v)
+					is Long -> data.setLong(k, v)
+					is Float -> data.setFloat(k, v)
+					is Double -> data.setDouble(k, v)
+					is ByteArray -> data.setByteArray(k, v)
+					is String -> data.setString(k, v)
+					is IntArray -> data.setIntArray(k, v)
+				}
+			}
 			nbt.setTag(TAG_DATA_MAP, data)
 		}
 		
@@ -769,10 +781,20 @@ class EntityFlugel (world: World): EntityCreature(world), IBotaniaBoss { // Enti
 			timer = nbt.getInteger(TAG_AI_TIMER)
 			task = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
 			
-			// TODO read throuhg nbt.get%DATATYPE% !!!
-			
 			val data = nbt.getTag(TAG_DATA_MAP) as NBTTagCompound
-			data.tagMap.forEach { extraData[it.key as String] = it.value as Any }
+			data.tagMap.forEach { (k, v) ->
+				when (data.getTag(k as String).id.toInt()) {
+					1 -> extraData[k] = v as Byte
+					2 -> extraData[k] = v as Short
+					3 -> extraData[k] = v as Int
+					4 -> extraData[k] = v as Long
+					5 -> extraData[k] = v as Float
+					6 -> extraData[k] = v as Double
+					7 -> extraData[k] = v as ByteArray
+					8 -> extraData[k] = v as String
+					11-> extraData[k] = v as IntArray
+				}
+			}
 		}
 	}
 }

@@ -790,7 +790,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun chatLog(message: String, world: World?) {
-		val msg = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"
+		val msg = "${worldInfoForLog(world)} $message"
 		if (isServer)
 			sayToAllOnline(msg)
 		else
@@ -799,8 +799,11 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun chatLog(message: String, player: EntityPlayer) {
-		player.addChatMessage(ChatComponentText("${time(player.worldObj)} ${if (player.worldObj.isRemote) "[C]" else "[S]"} $message"))
+		player.addChatMessage(ChatComponentText("${worldInfoForLog(player.worldObj)} $message"))
 	}
+	
+	@JvmStatic
+	fun worldInfoForLog(world: World?) = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"}"
 	
 	@JvmStatic
 	fun log(message: String) {
