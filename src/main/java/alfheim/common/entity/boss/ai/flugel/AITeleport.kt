@@ -6,17 +6,14 @@ import alfheim.common.entity.boss.EntityFlugel
 
 object AITeleport: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel) = true
-	
 	override fun startExecuting(flugel: EntityFlugel) {
-		flugel.AI.timer = flugel.worldObj.rand.nextInt(100) + 100
+		flugel.aiTaskTimer = flugel.worldObj.rand.nextInt(100) + 100
 	}
 	
-	override fun shouldContinue(flugel: EntityFlugel) = --flugel.AI.timer > 0
-	
 	override fun continueExecuting(flugel: EntityFlugel) {
-		if (flugel.AI.timer % (if (flugel.isHardMode) if (flugel.isDying) 60 else 100 else if (flugel.isDying) 80 else 120) == 0)
+		if (flugel.aiTaskTimer % (if (flugel.isHardMode) if (flugel.isDying) 60 else 100 else if (flugel.isDying) 80 else 120) == 0)
 			tryToTP(flugel)
+
 	}
 
 	fun tryToTP(flugel: EntityFlugel) {
@@ -28,7 +25,7 @@ object AITeleport: AIBase() {
 			teleportTo(flugel, src.posX + 0.5, src.posY + 1.6, src.posZ + 0.5)
 		}
 	}
-	
+		
 	// EntityEnderman code below ============================================================================
 		
 	fun teleportRandomly(flugel: EntityFlugel): Boolean {

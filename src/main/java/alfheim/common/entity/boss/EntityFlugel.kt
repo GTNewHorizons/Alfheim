@@ -744,7 +744,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			for (priority in AITask.priorityList) {
 				val task = AITask.prioritySorted[priority]!!.random()
 				
-				if (Math.random() < task.chance && stage >= task.stage && stage != STAGE.DEATHRAY) {
+				if (Math.random() < task.chance && stage >= task.stage) {
 					if (checkPrev) if (task.instant && this.task.instant) continue
 					
 					if (task.ai.shouldStart(flugel)) {
