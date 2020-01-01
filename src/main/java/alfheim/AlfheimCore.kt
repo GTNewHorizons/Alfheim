@@ -28,8 +28,6 @@ class AlfheimCore {
 	
 	companion object {
 		
-		var jingleTheBells = false
-		
 		@Instance(MODID)
 		lateinit var instance: AlfheimCore
 		
@@ -51,13 +49,23 @@ class AlfheimCore {
 		var TravellersGearLoaded = false
 		var WAILALoaded = false
 		
+		val jingleTheBells: Boolean
+		val winter: Boolean
+		
+		/** Today's month */
+		val month: Int
+		/** Today's day of month */
+		val date: Int
+		
 		init {
 			AlfheimTab
 			
 			val calendar = Calendar.getInstance()
-			if (calendar[2] == 11 && calendar[5] >= 16 || calendar[2] == 0 && calendar[5] <= 8) {
-				jingleTheBells = true
-			}
+			month = calendar[2] + 1
+			date = calendar[5]
+			
+			jingleTheBells = (month == 12 && date >= 16 || month == 1 && date <= 8)
+			winter = month in arrayOf(1, 2, 12)
 		}
 	}
 	

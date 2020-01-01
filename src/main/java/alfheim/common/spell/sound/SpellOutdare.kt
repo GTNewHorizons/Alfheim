@@ -25,7 +25,7 @@ object SpellOutdare: SpellBase("outdare", EnumRace.POOKA, 6000, 2400, 20) {
 			if (Vector3.entityDistance(caster, e) < 32) {
 				if (e is EntityFlugel) {
 					if (caster is EntityPlayer)
-						e.playersWhoAttacked[caster.commandSenderName] = e.playersWhoAttacked.getOrDefault(caster.commandSenderName, 0) + 400
+						e.playersDamage[caster.commandSenderName] = e.playersDamage.getOrDefault(caster.commandSenderName, 0f) + 400f
 					else
 						continue
 				}

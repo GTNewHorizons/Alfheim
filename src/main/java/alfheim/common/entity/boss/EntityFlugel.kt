@@ -52,7 +52,7 @@ import kotlin.math.*
 @Suppress("UNCHECKED_CAST")
 class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
 	
-	val playersWhoAttacked: HashMap<String, Int> = HashMap()
+	val playersDamage: HashMap<String, Float> = HashMap()
 	
 	var maxHit = 1f
 	var hurtTimeActual: Int = 0
@@ -144,10 +144,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
 			var dmg = min(maxHit, damage) * if (isUltraMode) 0.3f else if (isHardMode) 0.6f else 1f
 			
-			if (!playersWhoAttacked.containsKey(player.commandSenderName))
-				playersWhoAttacked[player.commandSenderName] = 1
-			else
-				playersWhoAttacked[player.commandSenderName] = playersWhoAttacked[player.commandSenderName]!! + 1
+			playersDamage[player.commandSenderName] = playersDamage.getOrDefault(player.commandSenderName, 0f) + dmg
 			
 			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
 				dmg /= 2f
@@ -239,7 +236,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val ultra = isUltraMode
 			var lot = true
 			// For everyone
-			for (name in playersWhoAttacked.keys) {
+			for (name in playersDamage.keys) {
 				if (worldObj.getPlayerEntityByName(name) == null) continue
 				var droppedRecord = false
 				
@@ -359,7 +356,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					}
 		}
 		
-		if (playersWhoAttacked.isEmpty()) playersWhoAttacked[summoner] = 1
+		if (playersDamage.isEmpty()) playersDamage[summoner] = 0.1f
 		val source = source
 		var players = playersAround
 		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
@@ -472,8 +469,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (invul <= 0) {
 			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
-				ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersWhoAttacked.maxBy { it.value }?.key
-																			 ?: "Notch"), 360f, 360f)
+				ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch"), 360f, 360f)
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
@@ -589,8 +585,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		health = maxHealth
 		aiTask = AITask.NONE
 		aiTaskTimer = 0
-		playersWhoAttacked.clear()
-		playersWhoAttacked[summoner] = 1
+		playersDamage.clear()
+		playersDamage[summoner] = 0.1f
 	}
 	
 	fun reUpdate() {
@@ -638,7 +634,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		nbt.setString(TAG_SUMMONER, summoner)
 		
 		val map = NBTTagCompound()
-		for ((key, value) in playersWhoAttacked) map.setInteger(key, value)
+		for ((key, value) in playersDamage) map.setFloat(key, value)
 		nbt.setTag(TAG_ATTACKED, map)
 	}
 	
@@ -677,7 +673,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		summoner = nbt.getString(TAG_SUMMONER)
 		
 		val map = nbt.getCompoundTag(TAG_ATTACKED)
-		for (o in map.func_150296_c()) playersWhoAttacked[o as String] = map.getInteger(o)
+		for (o in map.func_150296_c()) playersDamage[o as String] = map.getFloat(o)
 	}
 	
 	// EntityEnderman code below ============================================================================
@@ -926,7 +922,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 					if (ultra) e.isUltraMode = ultra
 					
 					e.summoner = player.commandSenderName
-					e.playersWhoAttacked[player.commandSenderName] = 1
+					e.playersDamage[player.commandSenderName] = 0.1f
 					
 					if (miku) {
 						e.alwaysRenderNameTag = true

@@ -21,7 +21,8 @@ class AlfheimHookLoader: HookLoader() {
 	}
 	
 	override fun getASMTransformerClass(): Array<String>? {
-		return arrayOf(PrimaryClassTransformer::class.java.name, AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, AlfheimSyntheticMethodsInjector::class.java.name, ASJASM::class.java.name)
+		return (arrayOf(AlfheimClassTransformer::class.java.name, ASJPacketCompleter::class.java.name, AlfheimSyntheticMethodsInjector::class.java.name, ASJASM::class.java.name)
+				+ if (AlfheimConfigHandler.primaryClassTransformer) arrayOf(PrimaryClassTransformer::class.java.name) else emptyArray())
 	}
 	
 	override fun registerHooks() {
