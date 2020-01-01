@@ -25,7 +25,7 @@ import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry
 import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.*
-import net.minecraft.nbt.*
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntityBeacon
 import net.minecraft.util.*
@@ -95,10 +95,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		get() = health > 0 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL && !worldObj.isRemote && ASJUtilities.isServer
 	
 	val isDying: Boolean
-		get() = AI.stage > STAGE.INIT && health / maxHealth <= 0.125
+		get() = aiTask != AITask.INIT && health / maxHealth <= 0.125
 	
 	val isCasting: Boolean
-		get() = AI.task.instant
+		get() = aiTask.instant
 	
 	val AI = AIController(this)
 	
@@ -126,7 +126,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playerDamage.isEmpty()) playerDamage[summoner] = 0.1f
 		
 		val source = source
-		val players = playersAround
+		var players = playersAround
 		
 		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
 		
@@ -158,11 +158,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
 			
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
-			val dmg = min(maxHit, damage) * if (isUltraMode) MAX_DMG_UL else if (isHardMode) MAX_DMG_HD else MAX_DMG_EZ
+			var dmg = min(maxHit, damage) * if (isUltraMode) MAX_DMG_UL else if (isHardMode) MAX_DMG_HD else MAX_DMG_EZ
 			
 			playerDamage[player.commandSenderName] = playerDamage[player.commandSenderName]?.plus(damage) ?: damage
 			
-			AI.stage = STAGE.AGGRO
+			AI.stage = STAGE_AGGRO
 			return super.attackEntityFrom(source, dmg)
 		}
 		return false
@@ -185,21 +185,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		prevHealth = health
 		hp = max(prevHealth - maxHit * if (isUltraMode) MAX_DMG_UL else if (isHardMode) MAX_DMG_HD else MAX_DMG_EZ, hp)
 		
-		if (AI.stage > STAGE.INIT && hp < prevHealth) if (hurtTimeActual > 0) return
+		if (aiTask != AITask.INIT && hp < prevHealth) if (hurtTimeActual > 0) return
 		
 		hurtTimeActual = 20
 		super.setHealth(hp)
 		
-		if (AI.stage == STAGE.INIT) return
+		if (aiTask == AITask.INIT) return
 		
 		// every -10% hp forcely change AI task
 		if (health < prevHealth && (health / (maxHealth / 10)).toInt() < (prevHealth / (maxHealth / 10)).toInt()) {
-			if (!AI.task.instant && AI.stage != STAGE.DEATHRAY) {
-				if (AI.endTask()) {
-					AI.newTask()
-					
-					if (ModInfo.DEV) for (player in playersAround) ASJUtilities.say(player, "x10% AI change")
-				}
+			if (!aiTask.instant && aiTask != AITask.DEATHRAY) {
+				if (ModInfo.DEV) for (player in playersAround) ASJUtilities.say(player, "x10% AI change")
+				aiTaskTimer = 0
 			}
 		}
 	}
@@ -411,10 +408,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		dataWatcher.addObject(28, 0)								// Regens count
 	}
 	
-	override fun isEntityInvulnerable(): Boolean {
-		val players = playersAround
-		return players.isEmpty() || players.isNotEmpty() && AI.stage == STAGE.INIT
-	}
+	override fun isEntityInvulnerable() = playersAround.isNotEmpty() && aiTask == AITask.INIT && aiTaskTimer > 0
 	
 	// --------------------------------------------------------
 	
@@ -426,8 +420,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		super.writeEntityToNBT(nbt)
 		if (hasCustomNameTag()) nbt.setString(TAG_NAME, customNameTag)
 		
-		AI.save(nbt)
-		
+		nbt.setInteger(TAG_STAGE, stage)
 		nbt.setBoolean(TAG_HARDMODE, isHardMode)
 		nbt.setBoolean(TAG_ULTRAMODE, isUltraMode)
 		
@@ -437,6 +430,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		nbt.setInteger(TAG_SOURCE_Z, source.posZ)
 		
 		nbt.setInteger(TAG_PLAYER_COUNT, playerCount)
+		nbt.setInteger(TAG_AI_TASK, aiTask.ordinal)
+		nbt.setInteger(TAG_AI_TIMER, aiTaskTimer)
+		
+		for (ai in tasks.executingTaskEntries)
+			if ((ai as EntityAITaskEntry).action is AIBase) {
+				val path = ai.action.javaClass.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+				nbt.setString(TAG_AI, path[path.size - 1])
+			}
 		
 		nbt.setString(TAG_SUMMONER, summoner)
 		
@@ -449,13 +450,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		super.readEntityFromNBT(nbt)
 		if (nbt.hasKey(TAG_PLAYER_COUNT)) dataWatcher.updateObject(10, nbt.getString(TAG_NAME))
 		
-		AI.load(nbt)
-		
-		var
-			flag = nbt.getBoolean(TAG_HARDMODE)
-		if (flag) isHardMode = flag
-			flag = nbt.getBoolean(TAG_ULTRAMODE)
-		if (flag) isUltraMode = flag
+		stage = nbt.getInteger(TAG_STAGE)
+		var f = nbt.getBoolean(TAG_HARDMODE)
+		if (f) isHardMode = f
+		f = nbt.getBoolean(TAG_ULTRAMODE)
+		if (f) isUltraMode = f
 		
 		val x = nbt.getInteger(TAG_SOURCE_X)
 		val y = nbt.getInteger(TAG_SOURCE_Y)
@@ -467,6 +466,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		else
 			1
 		
+		aiTask = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
+		
+		//if (ModInfo.DEV) ASJUtilities.log("Scrolling AIs for " + nbt.getString(TAG_AI));
+		for (e in tasks.taskEntries) {
+			//if (ModInfo.DEV) ASJUtilities.log("At " + ((EntityAITaskEntry) e).action.getClass().getName());
+			val path = (e as EntityAITaskEntry).action.javaClass.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+			if (e.action is AIBase && path[path.size - 1] == nbt.getString(TAG_AI)) {
+				tasks.executingTaskEntries.add(e)
+			}
+		}
+		
+		aiTaskTimer = nbt.getInteger(TAG_AI_TIMER)
 		summoner = nbt.getString(TAG_SUMMONER)
 		
 		val map = nbt.getCompoundTag(TAG_ATTACKED)
@@ -528,7 +539,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		
 		const val TAG_NAME = "name"
 		const val TAG_STAGE = "stage"
-		const val TAG_DATA_MAP = "dataMap"
 		const val TAG_HARDMODE = "hardmode"
 		const val TAG_ULTRAMODE = "ultramode"
 		const val TAG_SOURCE_X = "sourceX"
@@ -536,6 +546,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		const val TAG_SOURCE_Z = "sourceZ"
 		const val TAG_PLAYER_COUNT = "playerCount"
 		const val TAG_AI_TASK = "task"
+		const val TAG_AI = "ai"
 		const val TAG_AI_TIMER = "aiTime"
 		const val TAG_SUMMONER = "summoner"
 		const val TAG_ATTACKED = "attacked"
@@ -689,8 +700,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		var timer = 0
 		var stage = STAGE.INIT
 		
-		var extraData = HashMap<String, Any>()
-		
 		init {
 			constantTasks.add(AIClearPotions(flugel))
 			constantTasks.add(AIDestroyCheatBlocks(flugel))
@@ -698,6 +707,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			constantTasks.add(AIRequireWings(flugel))
 			
 			newTask(false)
+		}
+		
+		fun HashMap<Int, ArrayList<AIBase>>.addTask(i: Int, ai: AIBase) {
+			(this[i] ?: ArrayList<AIBase>().also { this[i] = it } ).add(ai)
 		}
 		
 		fun dropState() {
@@ -744,23 +757,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			}
 		}
 		
-		fun save(nbt: NBTTagCompound) {
-			nbt.setInteger(TAG_AI_TASK, task.ordinal)
-			nbt.setInteger(TAG_AI_TIMER, timer)
-			nbt.setInteger(TAG_STAGE, stage.ordinal)
-			
-			val data = NBTTagCompound()
-			extraData.forEach { data.tagMap[it.key] = it.value }
-			nbt.setTag(TAG_DATA_MAP, data)
-		}
 		
-		fun load(nbt: NBTTagCompound) {
-			stage = STAGE.values()[nbt.getInteger(TAG_STAGE)]
-			timer = nbt.getInteger(TAG_AI_TIMER)
-			task = AITask.values()[nbt.getInteger(TAG_AI_TASK)]
-			
-			val data = nbt.getTag(TAG_DATA_MAP) as NBTTagCompound
-			data.tagMap.forEach { extraData[it.key as String] = it.value as Any }
-		}
 	}
 }

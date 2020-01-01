@@ -9,24 +9,6 @@ import java.util.*
 
 object AILightning: AIBase() {
 	
-	override fun shouldStart(flugel: EntityFlugel) = true
-	
-	override fun startExecuting(flugel: EntityFlugel) {
-		for (player in randomPlayers(flugel)) player.worldObj.spawnEntityInWorld(EntityLightningMark(player.worldObj, player.posX, player.posY, player.posZ))
-		if (flugel.isHardMode) {
-			val src = flugel.source
-			var count = ASJUtilities.randInBounds(flugel.worldObj.rand, 5, 10)
-			if (flugel.isUltraMode) count *= 4
-			for (i in 0 until count) {
-				val vec3 = Vector3(ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble()).normalize().mul(EntityFlugel.RANGE.toDouble())
-				flugel.worldObj.spawnEntityInWorld(EntityLightningMark(flugel.worldObj, src.posX + vec3.x, src.posY + vec3.y, src.posZ + vec3.z))
-			}
-		}
-	}
-	
-	override fun shouldContinue(flugel: EntityFlugel) = false
-	override fun continueExecuting(flugel: EntityFlugel) = Unit
-	
 	fun randomPlayers(flugel: EntityFlugel): Set<EntityPlayer> {
 		val players = flugel.playersAround
 		if (players.isEmpty()) return HashSet(0)
@@ -41,4 +23,21 @@ object AILightning: AIBase() {
 		}
 		return set
 	}
+	
+	override fun startExecuting(flugel: EntityFlugel) {
+		flugel.aiTaskTimer = 20
+		for (player in randomPlayers(flugel)) player.worldObj.spawnEntityInWorld(EntityLightningMark(player.worldObj, player.posX, player.posY, player.posZ))
+		if (flugel.isHardMode) {
+			val src = flugel.source
+			var count = ASJUtilities.randInBounds(flugel.worldObj.rand, 5, 10)
+			if (flugel.isUltraMode) count *= 4
+			for (i in 0 until count) {
+				val vec3 = Vector3(ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble(), ASJUtilities.randInBounds(flugel.worldObj.rand, -EntityFlugel.RANGE, EntityFlugel.RANGE).toDouble()).normalize().mul(EntityFlugel.RANGE.toDouble())
+				flugel.worldObj.spawnEntityInWorld(EntityLightningMark(flugel.worldObj, src.posX + vec3.x, src.posY + vec3.y, src.posZ + vec3.z))
+			}
+		}
+	}
+	
+	override fun shouldContinue(flugel: EntityFlugel) = false
+	override fun continueExecuting(flugel: EntityFlugel) = Unit
 }

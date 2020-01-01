@@ -4,7 +4,6 @@ import alfheim.common.entity.boss.EntityFlugel
 
 private var pr_count = 0
 
-@Suppress("unused")
 enum class AITask constructor(
 	/** Chance to activate (random value MUST be lower than that value) */
 	val chance: Double,
