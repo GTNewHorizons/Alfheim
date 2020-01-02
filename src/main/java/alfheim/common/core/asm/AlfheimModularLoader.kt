@@ -9,8 +9,10 @@ import net.minecraftforge.common.MinecraftForge
 import org.apache.logging.log4j.Level
 import java.io.*
 import java.net.URL
+import java.nio.file.*
 import java.util.zip.*
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlin.system.exitProcess
 
 object AlfheimModularLoader {
 	
@@ -24,6 +26,8 @@ object AlfheimModularLoader {
 	}
 	
 	fun download() {
+		var crash = false
+		
 		try {
 			val root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(URL("https://bitbucket.org/AlexSocol/alfheim/raw/" + (if (ModInfo.DEV) "development" else "master") + "/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).documentElement
 			val url = InfoLoader.getNodeValue(root, "MODULAR")
@@ -50,21 +54,26 @@ object AlfheimModularLoader {
 			val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
 			
 			if (possibleMatch) {
-				subModsDir.listFiles()?.forEach { mod  ->
+				subModsDir.listFiles()?.forEach { mod ->
 					ZipFile(mod).use { zip ->
-						val modInfo: ZipEntry? = zip.getEntry("mcmod.info")
+						val modInfo = zip.getEntry("mcmod.info") ?: return@use
 						
-						var versionLocal = ""
-						
-						if (modInfo != null) {
-							val info = loadJSon(zip.getInputStream(modInfo))
-							if (!info.first) return@use
-							versionLocal = info.second
-						}
+						val info = loadJSon(zip.getInputStream(modInfo))
+						if (!info.first) return@use
+						val versionLocal = info.second
 						
 						if (versionRemote != versionLocal) {
-							mod.delete()
+							try {
+								if (!mod.delete()) Files.delete(mod.toPath())
+							} catch (e: Throwable) {
+								FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Unable to delete previous Alfheim Modular version. JVM now will try to delete it on exit. If it fails, please, delete it manually")
+								mod.deleteOnExit()
+								
+								crash = true
+							}
 							download = true
+							
+							return@forEach
 						}
 					}
 				}
@@ -97,7 +106,12 @@ object AlfheimModularLoader {
 		} catch (e: Throwable) {
 			FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Unable to perform Alfheim Modular update. Running with no/possibly outdated one")
 		}
-	}
+		
+		if (crash) {
+			FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Exiting JVM due to mod duplication")
+			exitProcess(1)
+		}
+ 	}
 	
 	fun loadJSon(input: InputStream): Pair<Boolean, String> {
 		InputStreamReader(input).use { reader ->
@@ -117,6 +131,7 @@ object AlfheimModularLoader {
 	
 	fun loadJson(node: JsonObject): Pair<Boolean, String> {
 		val modid = node.get("modid") ?: return false to ""
+		
 		if (modid.asString == "alfmod")
 			return true to node.get("version").asString
 		

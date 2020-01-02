@@ -9,16 +9,17 @@ import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
 import gloomyfolken.hooklib.minecraft.*
 import java.io.File
+import kotlin.system.exitProcess
 
 @MCVersion(value = "1.7.10")
 class AlfheimHookLoader: HookLoader() {
 	
 	init {
-		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
-		AlfheimModularLoader
-		
 		ModInfo.OBF = !(ASJReflectionHelper.getStaticValue<CoreModManager, Any>(CoreModManager::class.java, "deobfuscatedEnvironment") as Boolean)
-		ModInfo.DEV = !ModInfo.OBF
+		ModInfo.DEV = true //!ModInfo.OBF
+		
+		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
+		if (ModInfo.OBF) AlfheimModularLoader
 	}
 	
 	override fun getASMTransformerClass(): Array<String>? {
