@@ -11,7 +11,7 @@
 		<val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val>
 	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/f8aed5fa49330ac17a09d139bc7710eb7051996e/modular/Alfheim-Modular-1.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/ec608af66ec1611bcffbcbe70e44e7bf5ec7ec7d/modular/Alfheim-Modular-2.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
