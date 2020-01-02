@@ -60,6 +60,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 			tile.female = if (isLeft(hitX, hitZ)) false else if (isRight(hitX, hitZ)) true else return false
 			
 			world.setBlockMetadataWithNotify(x, y, z, 1, 3)
+			tile.timer = 600
 			
 			return true
 		} else if (meta == 1) {

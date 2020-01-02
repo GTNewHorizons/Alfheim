@@ -38,20 +38,18 @@ object AlfheimModularLoader {
 			}
 			
 			var possibleMatch = false
-			var download = false
+			var download = true
 			
 			val mcVer = FMLInjectionData.data()[4] as String
 			val mcDir = FMLInjectionData.data()[6] as File
 			val subModsDir = File(mcDir, "mods/$mcVer")
 			if (!subModsDir.exists()) {
 				subModsDir.mkdirs()
-				download = true
 			} else {
 				possibleMatch = true
 			}
 			
 			val fullname = url.substring(url.lastIndexOf('/') + 1)
-			val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
 			
 			if (possibleMatch) {
 				subModsDir.listFiles()?.forEach { mod ->
@@ -62,6 +60,8 @@ object AlfheimModularLoader {
 						if (!info.first) return@use
 						val versionLocal = info.second
 						
+						val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
+						
 						if (versionRemote != versionLocal) {
 							try {
 								if (!mod.delete()) Files.delete(mod.toPath())
@@ -71,8 +71,10 @@ object AlfheimModularLoader {
 								
 								crash = true
 							}
-							download = true
 							
+							return@forEach
+						} else {
+							download = false
 							return@forEach
 						}
 					}

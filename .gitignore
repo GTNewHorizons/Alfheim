@@ -4,6 +4,7 @@
 /*/
 !/gradle/
 !/libs/
+!/modular
 !/src/
 !/.gitattributes
 !/.gitignore

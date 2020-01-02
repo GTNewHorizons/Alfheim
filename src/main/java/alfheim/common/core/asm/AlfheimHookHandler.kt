@@ -140,21 +140,21 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
+	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
 		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
 	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @Hook.ReturnValue time: Int) =
+	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 600 else 0
 		} else time
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getColor(tile: TileHourglass, @Hook.ReturnValue color: Int): Int {
+	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
 		val stack = tile.getStackInSlot(0)
 		return if (stack != null && color == 0) {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 0xf7f5d9 else 0
@@ -290,13 +290,10 @@ object AlfheimHookHandler {
 		}
 	}
 	
-	@JvmStatic // FIXME this hook is incorrect
-	//@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
-		if (result) {
-			ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
-		}
-		
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun onBlockActivated(block: BlockAvatar, world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
+		if (result) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
 		return result
 	}
 	

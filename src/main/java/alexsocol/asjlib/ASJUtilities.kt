@@ -120,9 +120,7 @@ object ASJUtilities {
 	 * @author Vazkii
 	 */
 	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
-		val tile = world.getTileEntity(x, y, z)
-		if (tile != null)
-			dispatchTEToNearbyPlayers(tile)
+		world.getTileEntity(x, y, z)?.let{ dispatchTEToNearbyPlayers(it) }
 	}
 	
 	@JvmStatic
