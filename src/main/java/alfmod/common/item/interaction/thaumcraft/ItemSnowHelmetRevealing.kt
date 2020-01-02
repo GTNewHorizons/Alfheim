@@ -18,7 +18,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 class ItemSnowHelmetRevealing: ItemSnowArmor(0, "SnowHelmetRevealing"), IGoggles, IRevealer {
 	
 	init {
-		ThaumcraftAlfheimModule.tcnTab
+		creativeTab = ThaumcraftAlfheimModule.tcnTab
 	}
 	
 	@Optional.Method(modid = "Thaumcraft")

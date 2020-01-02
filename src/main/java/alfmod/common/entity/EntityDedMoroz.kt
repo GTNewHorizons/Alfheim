@@ -32,7 +32,8 @@ class EntityDedMoroz(world: World): EntityMob(world), IRangedAttackMob {
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
-		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.25
+		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.15
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 400.0
 	}
 	
 	override fun isAIEnabled() = true
