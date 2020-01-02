@@ -4,7 +4,8 @@ import alexsocol.asjlib.ASJReflectionHelper
 import alexsocol.asjlib.asm.*
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import cpw.mods.fml.relauncher.CoreModManager
+import alfmod.AlfheimModularCore
+import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
 import gloomyfolken.hooklib.minecraft.*
 import java.io.File
@@ -26,6 +27,8 @@ class AlfheimHookLoader: HookLoader() {
 	}
 	
 	override fun registerHooks() {
+		FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Loaded coremod. Registering hooks...")
+		
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
 		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
 		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
