@@ -22,11 +22,11 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	companion object {
 		val snow = EnumHelper.addArmorMaterial("snow", 25, intArrayOf(2, 6, 5, 2), 16)!!
 		
-		var model1 = ModelSnowArmor(1f)
-		var model2 = ModelSnowArmor(0.5f)
-		var model3 = ModelBiped()
+		var model1: ModelBiped? = null
+		var model2: ModelBiped? = null
+		var model3: ModelBiped? = null
 		
-		var model: ModelBiped = model1
+		var model: ModelBiped? = null
 	}
 	
 	init {
@@ -64,6 +64,10 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	
 	@SideOnly(Side.CLIENT)
 	override fun getArmorModel(entityLiving: EntityLivingBase, itemStack: ItemStack, armorSlot: Int): ModelBiped? {
+		if (model1 == null) model1 = ModelSnowArmor(1f)
+		if (model2 == null) model2 = ModelSnowArmor(0.5f)
+		if (model3 == null) model3 = ModelBiped()
+		
 		model = when (armorSlot) {
 			0 -> model2
 			1 -> model1
@@ -72,25 +76,25 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 			else -> model
 		}
 		
-		model.bipedHead.showModel = armorSlot == 0
-		model.bipedHeadwear.showModel = armorSlot == 0
-		model.bipedBody.showModel = armorSlot == 1 || armorSlot == 2
-		model.bipedRightArm.showModel = armorSlot == 1
-		model.bipedLeftArm.showModel = armorSlot == 1
-		model.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3
-		model.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3
-		model.isSneak = entityLiving.isSneaking
-		model.isRiding = entityLiving.isRiding
-		model.isChild = entityLiving.isChild
-		model.aimedBow = false
-		model.heldItemRight = if (entityLiving.heldItem != null) 1 else 0
+		model!!.bipedHead.showModel = armorSlot == 0
+		model!!.bipedHeadwear.showModel = armorSlot == 0
+		model!!.bipedBody.showModel = armorSlot == 1 || armorSlot == 2
+		model!!.bipedRightArm.showModel = armorSlot == 1
+		model!!.bipedLeftArm.showModel = armorSlot == 1
+		model!!.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3
+		model!!.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3
+		model!!.isSneak = entityLiving.isSneaking
+		model!!.isRiding = entityLiving.isRiding
+		model!!.isChild = entityLiving.isChild
+		model!!.aimedBow = false
+		model!!.heldItemRight = if (entityLiving.heldItem != null) 1 else 0
 		
 		if (entityLiving is EntityPlayer && entityLiving.itemInUseDuration > 0) {
 			val enumaction = entityLiving.getItemInUse().itemUseAction
 			if (enumaction == EnumAction.block) {
-				model.heldItemRight = 3
+				model!!.heldItemRight = 3
 			} else if (enumaction == EnumAction.bow) {
-				model.aimedBow = true
+				model!!.aimedBow = true
 			}
 		}
 		

@@ -40,7 +40,7 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre25.7" : "3"
+version = mainMod ? "BETA-pre25.7" : "4"
 group= "main"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
 
@@ -65,7 +65,10 @@ dependencies {
 	compile name: "MineTweaker3", group: "minetweaker", version: "1.7.10-3.0.10B", classifier: "Dev-Full"
 	
 	compile fileTree(dir: 'lib', include: ['*.jar'])
-	if (mainMod) embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+	if (mainMod)
+		embed "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+	else
+		compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }
 
 compileJava {
