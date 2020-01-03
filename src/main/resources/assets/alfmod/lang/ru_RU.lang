@@ -1,6 +1,8 @@
-item.botania:SnowSword.name=Меч снежной бури
+item.botania:SnowSword.name=Катана снежной бури
 item.botania:SnowHelmet.name=Шлем снежной бури
 item.botania:SnowHelmetRevealing.name=Шлем откровения снежной бури
 item.botania:SnowChest.name=Нагрудник снежной бури
 item.botania:SnowLeggings.name=Поножи снежной бури
 item.botania:SnowBoots.name=Ботинки снежной бури
+
+entity.alfmod:DedMoroz.name=Зимний Сёгун

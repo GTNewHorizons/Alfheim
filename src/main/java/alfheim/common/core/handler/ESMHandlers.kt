@@ -91,27 +91,14 @@ object ESMHandler {
 		if (!ASJUtilities.isServer) fixSpriggan()
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	fun onInteractWithEntity(e: EntityInteractEvent) {
-		if (AlfheimCore.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith(e.entityPlayer, e.target)
-	}
-	
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	fun onEntityHurt(e: LivingHurtEvent) {
-		val player = e.source.entity as? EntityPlayer ?: return
-		
-		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
-			e.ammount *= 1.1f
-	}
-	
 	fun doRaceAbility(player: EntityPlayer) {
 		when (player.race) {
 			SALAMANDER -> doSalamander(player)
 			SYLPH      -> doSylph(player)
-			CAITSITH   -> Unit // above
+			CAITSITH   -> Unit // below
 			POOKA      -> doPooka(player) // also hook  scaring away creepers
 			GNOME      -> doGnome(player)
-			LEPRECHAUN -> Unit // above
+			LEPRECHAUN -> Unit // below
 			SPRIGGAN   -> doSpriggan(player)
 			UNDINE     -> doUndine(player)
 			IMP        -> Unit // hook: +20% mana discount for tools
@@ -160,7 +147,12 @@ object ESMHandler {
 		}
 	}
 	
-	fun doCaitSith(player: EntityPlayer, tg: Entity) {
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	fun doCaitSith1(e: EntityInteractEvent) {
+		if (AlfheimCore.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith2(e.entityPlayer, e.target)
+	}
+	
+	fun doCaitSith2(player: EntityPlayer, tg: Entity) {
 		if (isAbilityDisabled(player)) return
 		
 		var done = false
@@ -186,8 +178,8 @@ object ESMHandler {
 		
 		val seg = CardinalSystem.forPlayer(player)
 		if (seg.standingStill > 200) {
-			if (player.ticksExisted % 50 == 0) player.heal(0.5f)
-			if (player.ticksExisted % 100 == 0) player.foodStats.addStats(1, 0.05f)
+			if (player.ticksExisted % 50 == 0) if (player.health < player.maxHealth * 0.75 + 0.5) player.heal(0.5f)
+			if (player.ticksExisted % 100 == 0) if (player.foodStats.foodLevel < 16) player.foodStats.addStats(1, 0.05f)
 		}
 	}
 	
@@ -217,13 +209,23 @@ object ESMHandler {
 		Botania.proxy.setWispFXDepthTest(true)
 	}
 	
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	fun doLeprechaun(e: LivingHurtEvent) {
+		val player = e.source.entity as? EntityPlayer ?: return
+		
+		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
+			e.ammount *= 1.1f
+	}
+	
 	fun doSpriggan(player: EntityPlayer) {
 		if (isAbilityDisabled(player)) return
 		
-		if (ASJUtilities.isServer)
+		if (ASJUtilities.isServer) {
 			player.removePotionEffect(Potion.nightVision.id)
-		else {
+			player.removePotionEffect(Potion.blindness.id)
+		} else {
 			player.removePotionEffectClient(Potion.nightVision.id)
+			player.removePotionEffectClient(Potion.blindness.id)
 			Minecraft.getMinecraft().gameSettings.gammaSetting = 10f
 		}
 	}
