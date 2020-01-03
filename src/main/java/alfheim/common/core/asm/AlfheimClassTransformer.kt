@@ -11,7 +11,16 @@ class AlfheimClassTransformer: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
+		
 		return when (transformedName) {
+			"net.minecraft.client.particle.EffectRenderer"                  -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `EffectRenderer$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.entity.EntityTrackerEntry"                       -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -151,6 +160,31 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			else                                                            -> basicClass
+		}
+	}
+	
+	internal class `EffectRenderer$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "addEffect" || name == "a" && desc == "(Lbkm;)V") {
+				println("Visiting EffectRenderer#addEffect: $name$desc")
+				return `EffectRenderer$addEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `EffectRenderer$addEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitIntInsn(opcode: Int, operand: Int) {
+				if (opcode == SIPUSH && operand == 4000) {
+					when (AlfheimConfigHandler.maxParticles) {
+						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(BIPUSH, AlfheimConfigHandler.maxParticles)
+						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(SIPUSH, AlfheimConfigHandler.maxParticles)
+						else                                -> super.visitLdcInsn(Integer(AlfheimConfigHandler.maxParticles))
+					}
+				} else
+					super.visitIntInsn(opcode, operand)
+			}
 		}
 	}
 	

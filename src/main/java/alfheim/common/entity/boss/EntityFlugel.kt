@@ -154,6 +154,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				}
 			}
 			
+			
+			dmg = (maxHealth * 0.91).toFloat()
+			
 			reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}

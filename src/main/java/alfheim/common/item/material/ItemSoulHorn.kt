@@ -10,6 +10,10 @@ import net.minecraft.world.World
 
 class ItemSoulHorn: ItemMod("SoulHorn") {
 	
+	init {
+		maxStackSize = 1
+	}
+	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		if (block === Blocks.beacon) {

@@ -19,6 +19,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		
 		if (flugel.worldObj.rand.nextInt(4) == 0) {
 			val player = flugel.worldObj.getPlayerEntityByName(flugel.playersDamage.keys.random()) ?: return
+			if (player.capabilities.isCreativeMode) return
 			
 			for (a in 0..9)
 				for (slot1 in player.inventory.mainInventory.indices) {

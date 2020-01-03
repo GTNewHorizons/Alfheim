@@ -82,7 +82,9 @@ class ModelEntityFlugel: ModelBipedNew() {
 		if ((entity as? EntityFlugel)?.isUltraMode == true) {
 			val color = ASJRenderHelper.addAlpha(0x240935, 180)
 			renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks, color)
-			spawnParticales(entity, time)
+			
+			if (!Minecraft.getMinecraft().isGamePaused)
+				spawnParticales(entity, time)
 		}
 		
 		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks)
