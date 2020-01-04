@@ -3,7 +3,6 @@ package alfheim.common.item
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.*
 import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
@@ -63,8 +62,6 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		try {
 			// if (world!!.isRemote) return false
-			
-			EntityFlugel.spawn(player, stack, world, x, y, z, true, true)
 			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {

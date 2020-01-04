@@ -7,10 +7,13 @@ import com.google.gson.*
 import cpw.mods.fml.relauncher.*
 import net.minecraftforge.common.MinecraftForge
 import org.apache.logging.log4j.Level
+import sun.misc.URLClassPath
+import sun.net.util.URLUtil
+import thaumcraft.codechicken.core.launch.DepLoader
 import java.io.*
-import java.net.URL
-import java.nio.file.*
-import java.util.zip.*
+import java.net.*
+import java.nio.file.Files
+import java.util.zip.ZipFile
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.system.exitProcess
 
@@ -63,20 +66,13 @@ object AlfheimModularLoader {
 						val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
 						
 						if (versionRemote != versionLocal) {
-							try {
-								if (!mod.delete()) Files.delete(mod.toPath())
-							} catch (e: Throwable) {
-								FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Unable to delete previous Alfheim Modular version. JVM now will try to delete it on exit. If it fails, please, delete it manually")
-								mod.deleteOnExit()
-								
-								crash = true
-							}
+							crash = deleteMod(mod)
 							
 							return@forEach
-						} else {
-							download = false
-							return@forEach
 						}
+						
+						download = false
+						return@forEach
 					}
 				}
 			}
@@ -138,5 +134,45 @@ object AlfheimModularLoader {
 			return true to node.get("version").asString
 		
 		return false to ""
+	}
+	
+	fun deleteMod(mod: File): Boolean {
+		val act = "delete previous Alfheim Modular version"
+		if (!mod.delete()) {
+			FMLRelaunchLog.log(Level.WARN, "[${ModInfo.MODID.toUpperCase()}] Could not $act, trying to free resources...")
+			
+			try {
+				val classLoader = DepLoader::class.java.classLoader
+				val url = mod.toURI().toURL()
+				val f_ucp = URLClassLoader::class.java.getDeclaredField("ucp")
+				val f_loaders = URLClassPath::class.java.getDeclaredField("loaders")
+				val f_lmap = URLClassPath::class.java.getDeclaredField("lmap")
+				f_ucp.isAccessible = true
+				f_loaders.isAccessible = true
+				f_lmap.isAccessible = true
+				val ucp = f_ucp[classLoader] as URLClassPath
+				val loader = (f_lmap[ucp] as MutableMap<*, *>).remove(URLUtil.urlNoFragString(url)) as Closeable?
+				if (loader != null) {
+					loader.close()
+					(f_loaders[ucp] as MutableList<*>).remove(loader)
+				}
+			} catch (e: Throwable) {
+				FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Error occured while trying to $act")
+			}
+			
+			return try {
+				if (!mod.delete())
+					Files.delete(mod.toPath())
+				
+				false
+			} catch (e: Throwable) {
+				FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Unable to $act. JVM now will try to delete it on exit. If it fails, please, delete it manually")
+				mod.deleteOnExit()
+				
+				true
+			}
+		}
+		
+		return false
 	}
 }

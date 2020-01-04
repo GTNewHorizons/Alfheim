@@ -63,12 +63,14 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		"${StatCollector.translateToLocal("botaniamisc.armorset")} $armorSetName (${getSetPiecesEquipped(player)}/${armorSetStacks.size})"
 	
 	@SideOnly(Side.CLIENT)
-	override fun getArmorModel(entityLiving: EntityLivingBase, itemStack: ItemStack, armorSlot: Int): ModelBiped? {
+	override fun getArmorModel(living: EntityLivingBase, stack: ItemStack, slot: Int): ModelBiped? {
+		if (!ConfigHandler.enableArmorModels) return super.getArmorModel(living, stack, slot)
+		
 		if (model1 == null) model1 = ModelSnowArmor(1f)
 		if (model2 == null) model2 = ModelSnowArmor(0.5f)
 		if (model3 == null) model3 = ModelBiped()
 		
-		model = when (armorSlot) {
+		model = when (slot) {
 			0 -> model2
 			1 -> model1
 			2 -> model2
@@ -76,21 +78,21 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 			else -> model
 		}
 		
-		model!!.bipedHead.showModel = armorSlot == 0
-		model!!.bipedHeadwear.showModel = armorSlot == 0
-		model!!.bipedBody.showModel = armorSlot == 1 || armorSlot == 2
-		model!!.bipedRightArm.showModel = armorSlot == 1
-		model!!.bipedLeftArm.showModel = armorSlot == 1
-		model!!.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3
-		model!!.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3
-		model!!.isSneak = entityLiving.isSneaking
-		model!!.isRiding = entityLiving.isRiding
-		model!!.isChild = entityLiving.isChild
+		model!!.bipedHead.showModel = slot == 0
+		model!!.bipedHeadwear.showModel = slot == 0
+		model!!.bipedBody.showModel = slot == 1 || slot == 2
+		model!!.bipedRightArm.showModel = slot == 1
+		model!!.bipedLeftArm.showModel = slot == 1
+		model!!.bipedRightLeg.showModel = slot == 2 || slot == 3
+		model!!.bipedLeftLeg.showModel = slot == 2 || slot == 3
+		model!!.isSneak = living.isSneaking
+		model!!.isRiding = living.isRiding
+		model!!.isChild = living.isChild
 		model!!.aimedBow = false
-		model!!.heldItemRight = if (entityLiving.heldItem != null) 1 else 0
+		model!!.heldItemRight = if (living.heldItem != null) 1 else 0
 		
-		if (entityLiving is EntityPlayer && entityLiving.itemInUseDuration > 0) {
-			val enumaction = entityLiving.getItemInUse().itemUseAction
+		if (living is EntityPlayer && living.itemInUseDuration > 0) {
+			val enumaction = living.getItemInUse().itemUseAction
 			if (enumaction == EnumAction.block) {
 				model!!.heldItemRight = 3
 			} else if (enumaction == EnumAction.bow) {
