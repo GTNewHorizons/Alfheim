@@ -4,14 +4,14 @@
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
-		<val>GL HF!</val>
+		<val>GL HF! :3</val>
 	</version>
 	<!-- New tag for ALL versions, now supports json - start with "$json" -->
 	<version id="UNIVERSAL">
 	<!-- 
 		<val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val>
 	-->
-	    <val>Happy New Year! :3</val>
+	    <val>GL HF! :3</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
