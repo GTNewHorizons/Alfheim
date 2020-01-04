@@ -33,6 +33,8 @@ object AlfheimAchievementHandler {
 			}
 		}
 		
+		// FIXME add wings check!!! 
+		
 		val horse = player.ridingEntity
 		val horseFlag = horse is EntityHorse &&
 						horse.horseType == 0 &&
