@@ -4,19 +4,17 @@ import alexsocol.asjlib.ASJReflectionHelper
 import alexsocol.asjlib.asm.*
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfmod.AlfheimModularCore
 import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
 import gloomyfolken.hooklib.minecraft.*
 import java.io.File
-import kotlin.system.exitProcess
 
 @MCVersion(value = "1.7.10")
 class AlfheimHookLoader: HookLoader() {
 	
 	init {
 		ModInfo.OBF = !(ASJReflectionHelper.getStaticValue<CoreModManager, Any>(CoreModManager::class.java, "deobfuscatedEnvironment") as Boolean)
-		ModInfo.DEV = true //!ModInfo.OBF
+		ModInfo.DEV = !ModInfo.OBF
 		
 		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
 		if (ModInfo.OBF) AlfheimModularLoader

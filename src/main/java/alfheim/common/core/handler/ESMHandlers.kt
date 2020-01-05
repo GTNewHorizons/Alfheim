@@ -300,7 +300,7 @@ object ElvenFlightHandler {
 		if (e.phase == TickPhase.START) return
 		val player = e.player
 		
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimCore.enableElvenStory && player.race != HUMAN) {
 			if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
 				if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 					if (player.capabilities.isFlying) {
