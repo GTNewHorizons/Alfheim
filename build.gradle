@@ -40,7 +40,7 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-25" : "5"
+version = mainMod ? "BETA-pre26.1" : "5"
 group= "main"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
 
