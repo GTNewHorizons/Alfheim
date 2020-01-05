@@ -1,7 +1,7 @@
 Innovations:
  Teleport spells
  Shadow vortex spell
- Holliday special event
+ Holiday special event
  
 Integration:
  Minetweaker:
