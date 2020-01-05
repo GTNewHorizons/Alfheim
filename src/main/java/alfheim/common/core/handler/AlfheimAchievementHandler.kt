@@ -2,6 +2,7 @@ package alfheim.common.core.handler
 
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.item.AlfheimItems
+import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.passive.EntityHorse
@@ -10,6 +11,7 @@ import net.minecraft.init.*
 import net.minecraft.item.Item
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
+import vazkii.botania.common.item.ModItems
 
 object AlfheimAchievementHandler {
 	
@@ -33,7 +35,8 @@ object AlfheimAchievementHandler {
 			}
 		}
 		
-		// FIXME add wings check!!! 
+		val tiaraStack = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0)
+		val baublesFlag = tiaraStack?.item == ModItems.flightTiara && tiaraStack?.itemDamage == 4
 		
 		val horse = player.ridingEntity
 		val horseFlag = horse is EntityHorse &&
@@ -42,6 +45,6 @@ object AlfheimAchievementHandler {
 						horse.horseChest.getStackInSlot(0)?.item == Items.saddle &&
 						horse.horseChest.getStackInSlot(1)?.item == Items.golden_horse_armor
 		
-		if (armorFlag && horseFlag) player.triggerAchievement(AlfheimAchievements.wingedHussaurs)
+		if (armorFlag && baublesFlag && horseFlag) player.triggerAchievement(AlfheimAchievements.wingedHussaurs)
 	}
 }
