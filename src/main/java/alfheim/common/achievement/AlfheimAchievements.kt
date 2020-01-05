@@ -1,6 +1,7 @@
 package alfheim.common.achievement
 
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.AlfheimAchievementHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
 import net.minecraft.item.*
@@ -14,28 +15,38 @@ import java.util.*
 object AlfheimAchievements {
 	
 	val achievements: MutableList<Achievement> = ArrayList()
-	val alfheim: Achievement
+	
+	val alfheim: Achievement // go to alfheim
+	val flugelKill: Achievement // kill hardmode flugel
+	val infuser: Achievement // build up infuser
+	
+	val wingedHussar: Achievement // become winged hussar
+	
+	// relics
 	val excaliber: Achievement?
 	val flugelSoul: Achievement?
-	val infuser: Achievement
 	val mask: Achievement?
-	val moonlightBow: Achievement?
+	//val mjolnir: Achievement?
 	val subspace: Achievement?
-	//val mjolnir: Achievement
-	val flugelKill: Achievement
+	val moonlightBow: Achievement?
+	
+	// +--------->
+	// |           X
+	// |
+	// |
+	// |
+	// V
+	//   Y
 	
 	init {
-		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
-		flugelKill = AlfheimAchievement("flugelKill", 0, 4, ModItems.flightTiara, null)
-		infuser = AlfheimAchievement("infuser", 0, -4, AlfheimBlocks.manaInfuser, null)
-		
 		if(ConfigHandler.relicsEnabled) {
-			excaliber = AlfheimAchievement("excaliber", 2, 0, AlfheimItems.excaliber, null)
-			flugelSoul = AlfheimAchievement("flugelSoul", -2, 0, AlfheimItems.flugelSoul, null)
-			mask = AlfheimAchievement("mask", 0, 2, AlfheimItems.mask, null)
+			flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
+			mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
+			
+			excaliber = AlfheimAchievement("excaliber", 6, 0, AlfheimItems.excaliber, mask)
 			//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null)
-			moonlightBow = AlfheimAchievement("moonlightBow", 3, -1, AlfheimItems.moonlightBow, null)
-			subspace = AlfheimAchievement("subspace", 3, 1, AlfheimItems.subspaceSpear, null)
+			moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
+			subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		} else {
 			excaliber = null
 			flugelSoul = null
@@ -44,7 +55,15 @@ object AlfheimAchievements {
 			subspace = null
 		}
 		
+		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
+		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
+		infuser = AlfheimAchievement("infuser", 2, -2, AlfheimBlocks.manaInfuser, null)
+		
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
+		
 		AchievementPage.registerAchievementPage(AchievementPage("Alfheim", *achievements.toTypedArray()))
+		
+		AlfheimAchievementHandler
 	}
 }
 

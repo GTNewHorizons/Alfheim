@@ -110,7 +110,7 @@ object EventHandler {
 	// ################################### POTIONS & STUFF ####################################
 	// not decentralized because of importance of the order
 	
-	val nineLifesBlockable = arrayOf(DamageSource.fall.damageType, DamageSource.drown.damageType, DamageSource.inFire.damageType, DamageSource.onFire.damageType, DamageSourceSpell.poison.damageType, DamageSource.wither.damageType)
+	val nineLifesBlockable = arrayOf(DamageSource.fall.damageType, DamageSource.drown.damageType, DamageSource.inFire.damageType, DamageSource.onFire.damageType, DamageSourceSpell.poison.damageType, DamageSourceSpell.poisonMagic.damageType, DamageSource.wither.damageType)
 	
 	val DamageSource.isMagical: Boolean
 		get() = isMagicDamage || this is DamageSourceSpell

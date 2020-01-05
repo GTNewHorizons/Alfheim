@@ -1,6 +1,7 @@
 package alfheim.common.core.asm
 
 import alfheim.api.ModInfo.OBF
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
@@ -10,7 +11,16 @@ class AlfheimClassTransformer: IClassTransformer {
 	
 	override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
+		
 		return when (transformedName) {
+			"net.minecraft.client.particle.EffectRenderer"                  -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `EffectRenderer$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.entity.EntityTrackerEntry"                       -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -150,6 +160,31 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			else                                                            -> basicClass
+		}
+	}
+	
+	internal class `EffectRenderer$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "addEffect" || name == "a" && desc == "(Lbkm;)V") {
+				println("Visiting EffectRenderer#addEffect: $name$desc")
+				return `EffectRenderer$addEffect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `EffectRenderer$addEffect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitIntInsn(opcode: Int, operand: Int) {
+				if (opcode == SIPUSH && operand == 4000) {
+					when (AlfheimConfigHandler.maxParticles) {
+						in Byte.MIN_VALUE..Byte.MAX_VALUE   -> super.visitIntInsn(BIPUSH, AlfheimConfigHandler.maxParticles)
+						in Short.MIN_VALUE..Short.MAX_VALUE -> super.visitIntInsn(SIPUSH, AlfheimConfigHandler.maxParticles)
+						else                                -> super.visitLdcInsn(Integer(AlfheimConfigHandler.maxParticles))
+					}
+				} else
+					super.visitIntInsn(opcode, operand)
+			}
 		}
 	}
 	
@@ -306,7 +341,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				if (opcode == RETURN) {
 					visitVarInsn(ALOAD, 0)
 					visitFieldInsn(GETFIELD, "thaumcraft/common/items/ItemNugget", "icon", if (OBF) "[Lrf;" else "[Lnet/minecraft/util/IIcon;")
-					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
+					visitIntInsn(BIPUSH, AlfheimConfigHandler.elementiumClusterMeta)
 					visitVarInsn(ALOAD, 1)
 					visitLdcInsn("thaumcraft:clusterelementium")
 					visitMethodInsn(INVOKEINTERFACE, if (OBF) "rg" else "net/minecraft/client/renderer/texture/IIconRegister", if (OBF) "a" else "registerIcon", if (OBF) "(Ljava/lang/String;)Lrf;" else "(Ljava/lang/String;)Lnet/minecraft/util/IIcon;", true)
@@ -328,7 +363,7 @@ class AlfheimClassTransformer: IClassTransformer {
 					visitInsn(DUP)
 					visitVarInsn(ALOAD, 0)
 					visitInsn(ICONST_1)
-					visitIntInsn(BIPUSH, AlfheimASMData.elementiumClusterMeta())
+					visitIntInsn(BIPUSH, AlfheimConfigHandler.elementiumClusterMeta)
 					visitMethodInsn(INVOKESPECIAL, if (OBF) "add" else "net/minecraft/item/ItemStack", "<init>", if (OBF) "(Ladb;II)V" else "(Lnet/minecraft/item/Item;II)V", false)
 					visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true)
 					visitInsn(POP)

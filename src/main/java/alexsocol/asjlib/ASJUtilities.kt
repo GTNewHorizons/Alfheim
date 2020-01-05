@@ -120,9 +120,7 @@ object ASJUtilities {
 	 * @author Vazkii
 	 */
 	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
-		val tile = world.getTileEntity(x, y, z)
-		if (tile != null)
-			dispatchTEToNearbyPlayers(tile)
+		world.getTileEntity(x, y, z)?.let{ dispatchTEToNearbyPlayers(it) }
 	}
 	
 	@JvmStatic
@@ -628,13 +626,13 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * @return random value in range [min, max] (inclusive)
+	 * @return random value in range [[min], [max]] (inclusive)
 	 */
 	@JvmStatic
 	fun randInBounds(min: Int, max: Int) = randInBounds(Random(), min, max)
 	
 	/**
-	 * @return random value in range [min, max] (inclusive)
+	 * @return random value in range [[min], [max]] (inclusive)
 	 */
 	@JvmStatic
 	fun randInBounds(rand: Random, min: Int, max: Int) = rand.nextInt(max - min + 1) + min
@@ -790,7 +788,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun chatLog(message: String, world: World?) {
-		val msg = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"} $message"
+		val msg = "${worldInfoForLog(world)} $message"
 		if (isServer)
 			sayToAllOnline(msg)
 		else
@@ -799,8 +797,11 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun chatLog(message: String, player: EntityPlayer) {
-		player.addChatMessage(ChatComponentText("${time(player.worldObj)} ${if (player.worldObj.isRemote) "[C]" else "[S]"} $message"))
+		player.addChatMessage(ChatComponentText("${worldInfoForLog(player.worldObj)} $message"))
 	}
+	
+	@JvmStatic
+	fun worldInfoForLog(world: World?) = "${time(world)} ${if (world?.isRemote == true) "[C]" else "[S]"}"
 	
 	@JvmStatic
 	fun log(message: String) {

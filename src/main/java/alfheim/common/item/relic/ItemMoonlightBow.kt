@@ -123,7 +123,8 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			
 			if (dmg != -1f) {
 				val j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)
-				if (j > 0) arrow.damage = arrow.damage + j * 2
+				if (j > 0) arrow.damage *= j * 0.1f + 1f
+				arrow.damage += player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue.toFloat()
 			}
 			
 			arrow.life = life

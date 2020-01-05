@@ -5,13 +5,13 @@ import alexsocol.asjlib.render.*
 import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
+import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.*
@@ -32,7 +32,7 @@ import java.text.DecimalFormat
 import kotlin.math.*
 
 @Suppress("UNCHECKED_CAST")
-class GUIParty(private val mc: Minecraft): Gui() {
+class GUIParty: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {

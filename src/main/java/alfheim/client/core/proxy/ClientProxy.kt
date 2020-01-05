@@ -6,13 +6,14 @@ import alfheim.AlfheimCore
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.EventHandlerClient
-import alfheim.client.core.util.AlfheimBotaniaModifiersClient
+import alfheim.client.core.util.*
 import alfheim.client.gui.*
 import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.model.entity.*
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.*
+import alfheim.client.render.particle.EntityFeatherFx
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
@@ -33,6 +34,7 @@ import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
+import net.minecraft.world.World
 import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
 import org.apache.commons.lang3.ArrayUtils
@@ -132,6 +134,40 @@ class ClientProxy: CommonProxy() {
 		AlfheimBotaniaModifiersClient.postInit()
 	}
 	
+	override fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float, must: Boolean) {
+		if (mc.renderViewEntity != null && mc.effectRenderer != null) {
+			val particle = EntityFeatherFx(world, x, y, z, color, scale, lifetime)
+			
+			if (!must) {
+				if (!doParticle(world)) return
+				val distanceX: Double = mc.renderViewEntity.posX - particle.posX
+				val distanceY: Double = mc.renderViewEntity.posY - particle.posY
+				val distanceZ: Double = mc.renderViewEntity.posZ - particle.posZ
+				if (distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ > distance * distance) {
+					return
+				}
+			}
+			
+			mc.effectRenderer.addEffect(particle)
+		}
+	}
+	
+	fun doParticle(world: World): Boolean {
+		return if (!world.isRemote) {
+			false
+		} else if (!ConfigHandler.useVanillaParticleLimiter) {
+			true
+		} else {
+			var chance = 1.0f
+			if (Minecraft.getMinecraft().gameSettings.particleSetting == 1) {
+				chance = 0.6f
+			} else if (Minecraft.getMinecraft().gameSettings.particleSetting == 2) {
+				chance = 0.2f
+			}
+			chance == 1.0f || Math.random() < chance.toDouble()
+		}
+	}
+	
 	companion object {
 		
 		val keyLolicorn = KeyBinding("key.lolicorn.desc", Keyboard.KEY_L, "key.categories.alfheim")
@@ -151,10 +187,10 @@ class ClientProxy: CommonProxy() {
 			removeKeyBinding(keySelTeam)
 		}
 		
-		private val guiIceLens = GUIIceLens(Minecraft.getMinecraft())
-		private val guiParty = GUIParty(Minecraft.getMinecraft())
-		private val guiRace = GUIRace(Minecraft.getMinecraft())
-		private val guiSpells = GUISpells(Minecraft.getMinecraft())
+		private val guiIceLens = GUIIceLens()
+		private val guiParty = GUIParty()
+		private val guiRace = GUIRace()
+		private val guiSpells = GUISpells()
 		
 		fun toggelModes(b: Boolean, esm: Boolean, mmo: Boolean, esmOld: Boolean, mmoOld: Boolean) {
 			if (b)

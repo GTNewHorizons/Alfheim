@@ -9,14 +9,24 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 	
 	companion object {
 		
+		/** Any anomaly */
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
-		val bleeding = DamageSource("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
+		/** Decay Spell */
+		val bleeding = DamageSourceSpell("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
+		/** Gravity Trap Spell */
 		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor()!!
+		/** Death Mark Spell */
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
-		val poison = DamageSourceSpell("poison").setDamageBypassesArmor()!!
-		val possession = DamageSourceSpell("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		/** Regular poison */
+		val poison = DamageSource("poison").setDamageBypassesArmor()!!
+		/** Magical poison */
+		val poisonMagic = DamageSourceSpell("poison").setDamageBypassesArmor()!!
+		/** Tank Mask */
+		val possession = DamageSource("possession").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
+		/** Sacrifice Spell */
 		val sacrifice = DamageSourceSpell("sacrifice").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
-		val soulburn = DamageSourceSpell("soulburn").setDamageBypassesArmor().setMagicDamage()!!
+		/** Red Flame */
+		val soulburn = DamageSource("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
 		/** Sacrifice type of damage to attack other mobs  */
 		fun darkness(caster: EntityLivingBase?) =
@@ -45,6 +55,10 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 			EntityDamageSourceIndirectSpell("mortar", caster, mt).setProjectile()!!
 		
 		fun shadow(caster: EntityLivingBase?) =
+			EntityDamageSource("shadow", caster).setDamageBypassesArmor().setMagicDamage()!!
+		
+		/** Shadow vortex type of damage */
+		fun shadowSpell(caster: EntityLivingBase?) =
 			EntityDamageSourceSpell("shadow", caster).setDamageBypassesArmor().setMagicDamage()!!
 		
 		/** Some water blades (?) type of damage  */

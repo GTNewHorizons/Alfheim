@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -63,7 +64,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		val block = world.getBlock(x, y, z)
 		if (block === Blocks.beacon) {
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
-				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true)
+				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
 				if (success) setDisabled(stack, getBlocked(stack), true)
 				return success
 			}
@@ -249,7 +250,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		when {
 			pos.isValid             -> {
-				val dist = MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).toDouble())
+				val dist = Vector3.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).mfloor()
 				
 				if (pos.dim != player.dimension) {
 					s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
@@ -282,32 +283,32 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		internal fun mana(player: EntityPlayer): Int {
 			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0
-			return MathHelper.floor_double(vazkii.botania.common.core.helper.MathHelper.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod) * 10
+			return (Vector3.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod).mfloor() * 10
 		}
 	}
 	
 	companion object {
 		
-		private const val SEGMENTS = 12
-		private val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
+		const val SEGMENTS = 12
+		val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
 		
 		const val TAG_ATTACKER_ID = "attackerId"
-		private const val TAG_EQUIPPED = "equipped"
-		private const val TAG_ROTATION_BASE = "rotationBase"
-		private const val TAG_WARP_PREFIX = "warp"
-		private const val TAG_POS_X = "posX"
-		private const val TAG_POS_Y = "posY"
-		private const val TAG_POS_Z = "posZ"
-		private const val TAG_DIMENSION = "dim"
-		private const val TAG_FIRST_TICK = "firstTick"
-		private const val TAG_DISABLED = "disabled"
-		private const val TAG_BLOCKED = "blocked"
+		const val TAG_EQUIPPED = "equipped"
+		const val TAG_ROTATION_BASE = "rotationBase"
+		const val TAG_WARP_PREFIX = "warp"
+		const val TAG_POS_X = "posX"
+		const val TAG_POS_Y = "posY"
+		const val TAG_POS_Z = "posZ"
+		const val TAG_DIMENSION = "dim"
+		const val TAG_FIRST_TICK = "firstTick"
+		const val TAG_DISABLED = "disabled"
+		const val TAG_BLOCKED = "blocked"
 		
 		// ItemFlightTiara
-		private const val TAG_TIME_LEFT = "timeLeft"
-		private const val MAX_FLY_TIME = 1200
+		const val TAG_TIME_LEFT = "timeLeft"
+		const val MAX_FLY_TIME = 1200
 		
-		private fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
+		fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
 			val yaw = getCheckingAngle(player, getRotationBase(stack))
 			
 			val angles = 360
@@ -325,7 +326,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		// Screw the way minecraft handles rotation
 		// Really...
-		private fun getCheckingAngle(player: EntityLivingBase, base: Float): Float {
+		fun getCheckingAngle(player: EntityLivingBase, base: Float): Float {
 			var yaw = MathHelper.wrapAngleTo180_float(player.rotationYaw) + 90f
 			val angles = 360
 			val segAngles = angles / SEGMENTS
@@ -415,7 +416,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	override fun apply(stack: ItemStack?, props: BurstProperties?) = Unit
 	
-	override fun updateBurst(burst: IManaBurst?, stack: ItemStack?) {
+	override fun updateBurst(burst: IManaBurst?, stack: ItemStack) {
 		val entity = burst as EntityThrowable
 		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
@@ -426,11 +427,18 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			
 			if (living.hurtTime == 0) {
 				if (!burst.isFake && !entity.worldObj.isRemote) {
-					living.attackEntityFrom(DamageSource.magic, 8f)
+					living.attackEntityFrom(DamageSource.magic, if (stack.itemDamage > 0) 10f else 8f)
 					entity.setDead()
 					break
 				}
 			}
 		}
 	}
+	
+	override fun getContainerItem(soul: ItemStack): ItemStack {
+		for (i in 0 until SEGMENTS) setDisabled(soul, i, true)
+		return soul
+	}
+	
+	override fun hasContainerItem(stack: ItemStack) = true
 }

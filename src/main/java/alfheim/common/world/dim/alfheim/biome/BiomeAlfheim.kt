@@ -1,5 +1,6 @@
 package alfheim.common.world.dim.alfheim.biome
 
+import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.EntityElf
 import net.minecraft.entity.passive.*
@@ -32,5 +33,9 @@ open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: 
 	fun addEntry(clazz: Class<*>, rate: IntArray) {
 		val (w, i, x) = rate
 		spawnableCreatureList.add(SpawnListEntry(clazz, w, i, x))
+	}
+	
+	override fun getFloatTemperature(x: Int, y: Int, z: Int): Float {
+		return if (AlfheimCore.winter) 0f else 0.5f
 	}
 }

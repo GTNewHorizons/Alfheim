@@ -5,7 +5,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemMoonlightBow
-import net.minecraft.entity.*
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
@@ -18,6 +18,7 @@ import kotlin.math.*
 /**
  * @author ExtraMeteorP, CKATEPTb
  */
+@Suppress("UNCHECKED_CAST")
 class EntityMagicArrow: EntityThrowableCopy {
 	
 	var damage: Float
@@ -153,8 +154,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 					living.hurtTime = 0
 				}
 				
-				val attribute = player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue
-				attackedFrom(living, player, abs(damage) + attribute.toFloat())
+				attackedFrom(living, player, abs(damage))
 			}
 		}
 	}

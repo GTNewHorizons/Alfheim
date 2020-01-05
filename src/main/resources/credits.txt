@@ -8,6 +8,7 @@ anonymous..es           -	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
 lie_mander's friend     -	gnome(m,f) base skins
 Inga Akuma              -	spriggan(m), salamander(f) base skins
 noppes                  -	lolicorn base code
+riskyken                -   feather particle
 Xinzhou Hong            -	chinese translation
 vidar90                 -	black dots shader on gravity spell
 Azanor                  -	textures of anomalies

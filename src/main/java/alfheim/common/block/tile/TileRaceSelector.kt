@@ -49,6 +49,8 @@ class TileRaceSelector: ASJTile() {
 		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 	}
 	
+	var timer = 0
+	
 	var female = false
 	var custom = false
 	var activeRotation = 0
@@ -67,6 +69,13 @@ class TileRaceSelector: ASJTile() {
 	
 	override fun updateEntity() {
 		if (activeRotation != 0) if (activeRotation > 0) --activeRotation else ++activeRotation
+		if (--timer == 0) {
+			female = false
+			custom = false
+			activeRotation = 0
+			rotation = 0
+		}
+		
 		
 		// remove when there will be genders
 		// if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
@@ -74,17 +83,20 @@ class TileRaceSelector: ASJTile() {
 	
 	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.toDouble(), zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
 	
+	val TAG_TIMER = "timer"
 	val TAG_GENDER = "gender"
 	val TAG_ROTATION = "rotation"
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		super.writeCustomNBT(nbt)
+		nbt.setInteger(TAG_TIMER, timer)
 		nbt.setBoolean(TAG_GENDER, female)
 		nbt.setInteger(TAG_ROTATION, rotation)
 	}
 	
 	override fun readCustomNBT(nbt: NBTTagCompound) {
 		super.readCustomNBT(nbt)
+		timer = nbt.getInteger(TAG_TIMER)
 		female = nbt.getBoolean(TAG_GENDER)
 		rotation = nbt.getInteger(TAG_ROTATION)
 	}

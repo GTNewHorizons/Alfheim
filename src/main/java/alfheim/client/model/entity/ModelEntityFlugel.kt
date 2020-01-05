@@ -1,10 +1,13 @@
 package alfheim.client.model.entity
 
+import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderEntityFlugel
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.item.material.ItemElvenResource
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
@@ -18,8 +21,8 @@ import kotlin.math.sin
 
 class ModelEntityFlugel: ModelBipedNew() {
 	
-	override fun render(e: Entity?, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
-		if (e?.dataWatcher?.getWatchableObjectString(10) == "Hatsune Miku") {
+	override fun render(entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
+		if (entity.dataWatcher?.getWatchableObjectString(10) == "Hatsune Miku") {
 			val font = Minecraft.getMinecraft().fontRenderer
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -30,11 +33,11 @@ class ModelEntityFlugel: ModelBipedNew() {
 			model1.renderAll()
 			glPopMatrix()
 			
-			if (e is EntityLivingBase) {
+			if (entity is EntityLivingBase) {
 				glPushMatrix()
-				glRotated(ASJRenderHelper.interpolate(e.prevRenderYawOffset.toDouble(), e.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
-				glRotated(ASJRenderHelper.interpolate(e.prevRotationYawHead.toDouble(), e.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
-				glRotated(ASJRenderHelper.interpolate(e.prevRotationPitch.toDouble(), e.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
+				glRotated(ASJRenderHelper.interpolate(entity.prevRenderYawOffset.toDouble(), entity.renderYawOffset.toDouble()), 0.0, -1.0, 0.0)
+				glRotated(ASJRenderHelper.interpolate(entity.prevRotationYawHead.toDouble(), entity.rotationYawHead.toDouble()) - 270, 0.0, 1.0, 0.0)
+				glRotated(ASJRenderHelper.interpolate(entity.prevRotationPitch.toDouble(), entity.rotationPitch.toDouble()), 0.0, 0.0, 1.0)
 				glRotated(-90.0, 0.0, 1.0, 0.0)
 				Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku2)
 				model2.renderAll()
@@ -42,7 +45,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 			}
 			
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku0)
-			super.render(e, time, amplitude, ticksExisted, yawHead, pitchHead, size)
+			super.render(entity, time, amplitude, ticksExisted, yawHead, pitchHead, size)
 			glDisable(GL_BLEND)
 			
 			glPushMatrix()
@@ -74,11 +77,17 @@ class ModelEntityFlugel: ModelBipedNew() {
 			return
 		}
 		
-		super.render(e, time, amplitude, ticksExisted, yawHead, pitchHead, size) // ItemFlightTiara
-		if (e != null) {
-			renderWings(e, Minecraft.getMinecraft().timer.renderPartialTicks)
-			renderHalo(e, Minecraft.getMinecraft().timer.renderPartialTicks)
+		super.render(entity, time, amplitude, ticksExisted, yawHead, pitchHead, size) // ItemFlightTiara
+		renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks, -0x1)
+		if ((entity as? EntityFlugel)?.isUltraMode == true) {
+			val color = ASJRenderHelper.addAlpha(0x240935, 180)
+			renderWings(entity, Minecraft.getMinecraft().timer.renderPartialTicks, color)
+			
+			if (!Minecraft.getMinecraft().isGamePaused)
+				spawnParticales(entity, time)
 		}
+		
+		renderHalo(entity, Minecraft.getMinecraft().timer.renderPartialTicks)
 	}
 	
 	override fun setRotationAngles(limbSwing: Float, limbAmpl: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
@@ -103,18 +112,19 @@ class ModelEntityFlugel: ModelBipedNew() {
 		}
 	}
 	
-	fun renderWings(entity: Entity, partialTicks: Float) {
-		val icon = ItemFlightTiara.wingIcons[0]
+	fun renderWings(entity: Entity, partialTicks: Float, color: Int) {
+		val icon = if (color == -0x1) ItemFlightTiara.wingIcons[0] else ItemElvenResource.flugel
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 		
 		val flying = !entity.onGround
 		
-		val rz = 120f
-		val rx = 20f + ((sin((entity.ticksExisted + partialTicks).toDouble() * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).toFloat()
+		val rz = if (color == -0x1) 120f else 160f
+		var rx = 20f + ((sin((entity.ticksExisted + partialTicks).toDouble() * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).toFloat()
+		if (color != -0x1) rx = 20f + ((sin((entity.ticksExisted + partialTicks).toDouble() * 0.05f) + 0.5f) * 5f).toFloat()
 		val ry = 0f
 		val h = 0.4f
-		val i = 0.15f
-		val s = 1f
+		val i = if (color == -0x1) 0.15f else 0.75f
+		val s = if (color == -0x1) 1f else 5f
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)
@@ -129,13 +139,17 @@ class ModelEntityFlugel: ModelBipedNew() {
 		
 		if (entity.isSneaking) glRotatef(28.64789f, 1.0f, 0.0f, 0.0f)
 		
+		ASJRenderHelper.glColor1u(color)
+		
 		glTranslatef(0f, h, i)
 		
 		glRotatef(rz, 0f, 0f, 1f)
 		glRotatef(rx, 1f, 0f, 0f)
 		glRotatef(ry, 0f, 1f, 0f)
 		glScalef(s, s, s)
+		if (color != -0x1) glScaled(1.0, 1.0, 0.5)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 32f)
+		if (color != -0x1) glScaled(1.0, 1.0, 2.0)
 		glScalef(sr, sr, sr)
 		glRotatef(-ry, 0f, 1f, 0f)
 		glRotatef(-rx, 1f, 0f, 0f)
@@ -146,7 +160,9 @@ class ModelEntityFlugel: ModelBipedNew() {
 		glRotatef(rx, 1f, 0f, 0f)
 		glRotatef(ry, 0f, 1f, 0f)
 		glScalef(s, s, s)
+		if (color != -0x1) glScaled(1.0, 1.0, 0.5)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 32f)
+		if (color != -0x1) glScaled(1.0, 1.0, 2.0)
 		glScalef(sr, sr, sr)
 		glRotatef(-ry, 1f, 0f, 0f)
 		glRotatef(-rx, 1f, 0f, 0f)
@@ -173,6 +189,17 @@ class ModelEntityFlugel: ModelBipedNew() {
 		RenderEntityFlugel.so.addTranslation()
 		
 		glPopMatrix()
+	}
+	
+	fun spawnParticales(flugel: EntityFlugel, partialTicks: Float) {
+		val angle = 5 + ((sin((flugel.ticksExisted + partialTicks) * 0.05) + 0.5) * 5)
+		
+		if (flugel.worldObj.rand.nextInt(40) == 0) {
+			val mod = if (flugel.worldObj.rand.nextBoolean()) -1 else 1
+			val v = Vector3((Math.random() * 5 + 1) * mod, 0.5, -0.75).rotate(angle * mod - flugel.renderYawOffset, Vector3.oY).add(flugel)
+			
+			AlfheimCore.proxy.featherFX(flugel.worldObj, v.x, v.y, v.z, 0x240935, 5f, (Math.random() * 0.5 + 1).toFloat(), 64f)
+		}
 	}
 	
 	companion object {

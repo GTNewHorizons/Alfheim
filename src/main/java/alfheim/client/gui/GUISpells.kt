@@ -7,6 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient
+import alfheim.client.core.util.mc
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
@@ -17,7 +18,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.min
 
-class GUISpells(private val mc: Minecraft): Gui() {
+class GUISpells(): Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {

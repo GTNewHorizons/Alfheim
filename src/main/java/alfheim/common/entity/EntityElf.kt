@@ -34,9 +34,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.5
 	}
 	
-	public override fun isAIEnabled(): Boolean {
-		return true
-	}
+	public override fun isAIEnabled() = true
 	
 	public override fun collideWithEntity(entity: Entity) {
 		if (entity is IMob && rng.nextInt(20) == 0) {
@@ -52,27 +50,10 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (3 + rand.nextInt(5)).toFloat())
 	}
 	
-	override fun setCustomer(p_70932_1_: EntityPlayer) {
-	
-	}
-	
-	override fun getCustomer(): EntityPlayer? {
-		return null
-	}
-	
-	override fun getRecipes(p_70934_1_: EntityPlayer): MerchantRecipeList? {
-		return null
-	}
-	
-	override fun setRecipes(p_70930_1_: MerchantRecipeList) {
-	
-	}
-	
-	override fun useRecipe(p_70933_1_: MerchantRecipe) {
-	
-	}
-	
-	override fun func_110297_a_(p_110297_1_: ItemStack) {
-		
-	}
+	override fun setCustomer(p_70932_1_: EntityPlayer)  = Unit
+	override fun getCustomer() = null
+	override fun getRecipes(p_70934_1_: EntityPlayer) = null
+	override fun setRecipes(p_70930_1_: MerchantRecipeList) = Unit
+	override fun useRecipe(p_70933_1_: MerchantRecipe) = Unit
+	override fun func_110297_a_(p_110297_1_: ItemStack) = Unit
 }

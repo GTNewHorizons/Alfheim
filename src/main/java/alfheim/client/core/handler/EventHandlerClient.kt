@@ -14,10 +14,12 @@ import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
+import alfheim.client.render.particle.EntityFeatherFx
 import alfheim.client.render.world.AstrolabePreviewHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.client.core.util.mc
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -26,7 +28,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
@@ -250,5 +252,23 @@ object EventHandlerClient {
 	@SideOnly(Side.CLIENT)
 	fun onFOV(e: FOVUpdateEvent) {
 		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimRegistry.icelens) != null) e.newfov = 0.1f
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun onRenderWorldLastEvent(event: RenderWorldLastEvent) {
+		mc.entityRenderer.enableLightmap(event.partialTicks.toDouble())
+		RenderHelper.disableStandardItemLighting()
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+		glDepthMask(false)
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		glAlphaFunc(GL_GREATER, 0.003921569f)
+		mc.mcProfiler.startSection("wingParticles")
+		EntityFeatherFx.renderQueue()
+		mc.mcProfiler.endSection()
+		glDisable(GL_BLEND)
+		glDepthMask(true)
+		mc.entityRenderer.disableLightmap(event.partialTicks.toDouble())
 	}
 }

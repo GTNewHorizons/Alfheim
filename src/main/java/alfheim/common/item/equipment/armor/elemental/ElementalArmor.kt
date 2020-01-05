@@ -26,13 +26,11 @@ abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type,
 		return models[slot]
 	}
 	
-	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int): String {
-		return ModInfo.MODID + ":textures/model/armor/ElementalArmor_" + (if (ConfigHandler.enableArmorModels) "new" else if (armorType == 2) "1" else "0") + ".png"
-	}
+	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =
+		"${ModInfo.MODID}:textures/model/armor/ElementalArmor_${(if (ConfigHandler.enableArmorModels) "new" else if (armorType == 2) "1" else "0")}.png"
 	
-	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack): Boolean {
-		return par2ItemStack.item === ModItems.manaResource && par2ItemStack.itemDamage == 7 || super.getIsRepairable(par1ItemStack, par2ItemStack)
-	}
+	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack) =
+		par2ItemStack.item === ModItems.manaResource && par2ItemStack.itemDamage == 7 || super.getIsRepairable(par1ItemStack, par2ItemStack)
 	
 	override fun getArmorSetStacks(): Array<ItemStack> {
 		if (armorset == null)

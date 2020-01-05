@@ -2,13 +2,8 @@ package alfheim.common.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.RenderPostShaders
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.common.core.util.mfloor
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent
-import cpw.mods.fml.common.FMLCommonHandler
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -17,6 +12,7 @@ import kotlin.math.*
 object AlfheimConfigHandler {
 	lateinit var config: Configuration
 	
+	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
@@ -27,6 +23,13 @@ object AlfheimConfigHandler {
 	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
 	const val CATEGORY_MMOP			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "potions"
 	const val CATEGORY_HUD			= CATEGORY_MMO			+ CATEGORY_SPLITTER + "hud"
+	
+	// PRELOAD
+	var elementiumClusterMeta	= 22
+	var hpHooks					= true
+	var maxParticles			= 4000
+	var modularThread			= false
+	var primaryClassTransformer	= true
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
@@ -52,6 +55,7 @@ object AlfheimConfigHandler {
 	var destroyPortal			= true
 	var fancies					= true
 	var flugelBossBar			= true
+	var flugelSwapBL			= emptyArray<String>()
 	var info					= true
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
@@ -61,6 +65,8 @@ object AlfheimConfigHandler {
 	var minimalGraphics			= false
 	var numericalMana			= true
 	var realLightning			= false
+	var searchTabAlfheim		= true
+	var searchTabBotania		= true
 	var schemaArray				= IntArray(17) { -1 + it }
 	var storyLines				= 4
 	var tradePortalRate			= 1200
@@ -101,7 +107,6 @@ object AlfheimConfigHandler {
 	
 	// Elven Story
 	var bothSpawnStructures		= false
-	var enableWingsNonAlfheim	= false
 	var flightTime				= 12000
 	var flightRecover			= 1.0
 	var wingsBlackList			= IntArray(0)
@@ -121,6 +126,7 @@ object AlfheimConfigHandler {
 		config = Configuration(suggestedConfigurationFile)
 		
 		config.load()
+		config.addCustomCategoryComment(CATEGORY_PRELOAD, "${CATEGORY_PRELOAD}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "${CATEGORY_INTEGRATION}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_INT_TC, "${CATEGORY_INT_TC}.tooltip")
 		config.addCustomCategoryComment(CATEGORY_DIMENSION, "${CATEGORY_DIMENSION}.tooltip")
@@ -133,15 +139,15 @@ object AlfheimConfigHandler {
 		config.addCustomCategoryComment(CATEGORY_HUD, "${CATEGORY_HUD}.tooltip")
 		
 		syncConfig()
-		FMLCommonHandler.instance().bus().register(object {
-			@SubscribeEvent
-			fun onConfigChanged(e: OnConfigChangedEvent) {
-				if (e.modID == ModInfo.MODID) syncConfig()
-			}
-		})
 	}
 	
 	fun syncConfig() {
+		elementiumClusterMeta = loadProp(CATEGORY_PRELOAD, "elementiumClusterMeta", elementiumClusterMeta, true, "Effective only if Thaumcraft is installed. Change this if some other mod adds own clusters (max value is 63); also please, edit and spread modified .lang files")
+		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
+		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
+		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
+		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
+		
 		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
@@ -162,6 +168,7 @@ object AlfheimConfigHandler {
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
+		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap")
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -171,6 +178,8 @@ object AlfheimConfigHandler {
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
+		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
+		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
@@ -222,8 +231,6 @@ object AlfheimConfigHandler {
 		if (config.hasChanged()) {
 			config.save()
 		}
-		
-		RenderPostShaders.allowShaders = !minimalGraphics
 	}
 	
 	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String): Int {
@@ -248,6 +255,12 @@ object AlfheimConfigHandler {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
 		return prop.intList
+	}
+	
+	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String): Array<String> {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.stringList
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

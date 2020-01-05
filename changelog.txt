@@ -1,12 +1,7 @@
 Innovations:
- Teleport spells
- Shadow vortex spell
- Holiday special event
- 
-Integration:
- Minetweaker:
-  Command to show current spell data in game /mtspell
-  Ability to change spell parameters (damage, duration, efficiency and radius)
+ Moved ASMdata to configs (preload category)
+ Alfheim Modular for custom events
+ Ultramode for Flugel using soulhorn
 
 Fixes:
- Fixes and improvements (a lot) :3
+ Some bugs (nobody cares anyways)

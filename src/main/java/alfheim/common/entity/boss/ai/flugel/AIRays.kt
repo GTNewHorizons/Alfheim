@@ -35,7 +35,7 @@ class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		burst.minManaLoss = 600
 		burst.manaLossPerTick = 4f
 		burst.gravity = 0f
-		val lens = ItemStack(AlfheimItems.flugelSoul, 1, 0)
+		val lens = ItemStack(AlfheimItems.flugelSoul, 1, if (flugel.isUltraMode) 1 else 0)
 		ItemNBTHelper.setInt(lens, TAG_ATTACKER_ID, flugel.entityId)
 		burst.sourceLens = lens
 		burst.setBurstSourceCoords(0, -1, 0)

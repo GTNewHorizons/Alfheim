@@ -100,6 +100,7 @@ import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
+import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
@@ -184,6 +185,7 @@ object AlfheimRecipes {
 	lateinit var recipePeacePipe: IRecipe
 	lateinit var recipePixieAttractor: IRecipe
 	lateinit var recipeRelicCleaner: IRecipe
+	lateinit var recipeSoulHorn: IRecipe
 	lateinit var recipesSpark: MutableList<IRecipe>
 	lateinit var recipeSpatiotemporal: IRecipe
 	lateinit var recipeSword: IRecipe
@@ -331,7 +333,7 @@ object AlfheimRecipes {
 						 'M', RUNE[8])
 		recipeElementalHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (elementalHelmetRevealing != null)
+		if (Botania.thaumcraftLoaded)
 			addOreDictRecipe(ItemStack(elementalHelmetRevealing),
 							 "RTR", "DPD", " M ",
 							 'R', RUNE[0],
@@ -581,6 +583,13 @@ object AlfheimRecipes {
 						 'R', ARUNE[2],
 						 'B', blaze_rod)
 		recipeNiflheimRod = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(soulHorn),
+						 "MIM", "EIE", " E ",
+						 'M', MAUFTRIUM_INGOT,
+						 'E', ELVORIUM_INGOT,
+						 'I', IFFESAL_DUST)
+		recipeSoulHorn = BotaniaAPI.getLatestAddedRecipe()
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(spark),
@@ -870,7 +879,7 @@ object AlfheimRecipes {
 		addRecipe(RecipeHelmetElvorium(elvoriumHelmet, terrasteelHelm))
 		recipeElvoriumHelmet = BotaniaAPI.getLatestAddedRecipe()
 		
-		if (Botania.thaumcraftLoaded && elvoriumHelmetRevealing != null) {
+		if (Botania.thaumcraftLoaded) {
 			addRecipe(RecipeHelmetElvorium(elvoriumHelmetRevealing!!, terrasteelHelmRevealing))
 			addRecipe(RecipeHelmRevealingAlfheim())
 		}
@@ -882,6 +891,8 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeRechargeSoulHorn())
+		RecipeSorter.register("${ModInfo.MODID}:rechargehorn", RecipeRechargeSoulHorn::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {

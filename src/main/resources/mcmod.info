@@ -13,4 +13,20 @@
   "requiredMods": ["Botania"],
   "dependencies": ["Botania", "MineTweaker3", "Thaumcraft"],
   "dependants": ["elvenstory"]
+},
+{
+  "modid": "alfmod",
+  "name": "Alfheim-Modular",
+  "description": "Alfheim time-limited events",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/alfheim",
+  "updateUrl": "https://www.curseforge.com/minecraft/mc-mods/alfheim/download",
+  "authorList": ["AlexSocol"],
+  "credits": "",
+  "logoFile": "",
+  "useDependencyInformation": true,
+  "requiredMods": ["Botania", "alfheim"],
+  "dependencies": ["Botania", "alfheim", "Thaumcraft"],
+  "dependants": []
 }]

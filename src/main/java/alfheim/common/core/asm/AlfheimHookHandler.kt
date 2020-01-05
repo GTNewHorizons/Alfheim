@@ -140,21 +140,21 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @Hook.ReturnValue dis: Float): Float {
+	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
 		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
 	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @Hook.ReturnValue time: Int) =
+	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 600 else 0
 		} else time
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getColor(tile: TileHourglass, @Hook.ReturnValue color: Int): Int {
+	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
 		val stack = tile.getStackInSlot(0)
 		return if (stack != null && color == 0) {
 			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 0xf7f5d9 else 0
@@ -283,20 +283,17 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true, targetMethod = "updateTick")
-	fun updateTickGrass(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
-		if (AlfheimCore.jingleTheBells && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
+	@Hook(injectOnExit = true)
+	fun updateTick(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
+		if (AlfheimCore.winter && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
 			world.setBlock(x, y, z, AlfheimBlocks.snowGrass)
 		}
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
-		if (result) {
-			ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
-		}
-		
+	@Hook(injectOnExit = true)
+	fun onBlockActivated(block: BlockAvatar, world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
+		if (result) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
 		return result
 	}
 	
@@ -413,7 +410,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
-		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false) else false
+		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
@@ -503,6 +500,10 @@ object AlfheimHookHandler {
 		}
 		return false
 	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun hasSearchBar(tab: BotaniaCreativeTab) = AlfheimConfigHandler.searchTabBotania
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic

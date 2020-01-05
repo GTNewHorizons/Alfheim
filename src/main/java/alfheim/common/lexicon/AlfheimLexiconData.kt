@@ -73,6 +73,7 @@ object AlfheimLexiconData {
 	lateinit var runes: LexiconEntry
 	lateinit var shrines: LexiconEntry
 	lateinit var soul: LexiconEntry
+	lateinit var soulHorn: LexiconEntry
 	//lateinit var stories: LexiconEntry
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
@@ -155,6 +156,8 @@ object AlfheimLexiconData {
 		moonbow = RLexiconEntry("moonbow", categoryAlfheim, AlfheimAchievements.moonlightBow)
 		soul = RLexiconEntry("soul", categoryAlfheim, AlfheimAchievements.flugelSoul)
 		subspear = RLexiconEntry("subspear", categoryAlfheim, AlfheimAchievements.subspace)
+		
+		soulHorn = RLexiconEntry("soulHorn", categoryAlfheim, AlfheimAchievements.flugelKill)
 	}
 	
 	// In progress order
@@ -322,6 +325,8 @@ object AlfheimLexiconData {
 								PageCraftingRecipe("3", AlfheimRecipes.recipeManaMirrorImba))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
+		
+		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn)).icon = ItemStack(AlfheimItems.soulHorn)
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory()
 		

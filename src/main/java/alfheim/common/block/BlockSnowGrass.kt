@@ -40,15 +40,17 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, random: Random) {
 		val above = world.getBlock(x, y + 1, z)
 		
-		if (AlfheimCore.jingleTheBells) {
-			if (above === Blocks.air) {
-				world.setBlock(x, y + 1, z, AlfheimBlocks.snowLayer)
-			} else if (above === AlfheimBlocks.snowLayer) {
-				val meta = world.getBlockMetadata(x, y + 1, z)
-				val upMeta = ((x xor y xor z) and 7) / 2
-				
-				if (meta < upMeta)
-					world.setBlockMetadataWithNotify(x, y + 1, z, meta + 1, 1 or 2)
+		if (AlfheimCore.winter) {
+			if (world.isRaining) {
+				if (above === Blocks.air) {
+					world.setBlock(x, y + 1, z, AlfheimBlocks.snowLayer)
+				} else if (above === AlfheimBlocks.snowLayer) {
+					val meta = world.getBlockMetadata(x, y + 1, z)
+					val upMeta = ((x xor y xor z) and 7) / 2
+					
+					if (meta < upMeta)
+						world.setBlockMetadataWithNotify(x, y + 1, z, meta + 1, 1 or 2)
+				}
 			}
 		} else {
 			if (above === AlfheimBlocks.snowLayer) world.setBlockToAir(x, y + 1, z)

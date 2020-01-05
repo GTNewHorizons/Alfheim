@@ -17,15 +17,12 @@ class ItemElvoriumHelmetRevealing: ItemElvoriumHelmet("ElvoriumHelmetRevealing")
 		creativeTab = ThaumcraftAlfheimModule.tcnTab
 	}
 	
-	override fun showNodes(itemstack: ItemStack, player: EntityLivingBase): Boolean {
-		return true
-	}
+	@Optional.Method(modid = "Thaumcraft")
+	override fun showNodes(itemstack: ItemStack, player: EntityLivingBase) = true
 	
-	override fun showIngamePopups(itemstack: ItemStack, player: EntityLivingBase): Boolean {
-		return true
-	}
+	@Optional.Method(modid = "Thaumcraft")
+	override fun showIngamePopups(itemstack: ItemStack, player: EntityLivingBase) = true
 	
-	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int): String {
-		return ModInfo.MODID + ":textures/model/armor/ElvoriumArmor" + (if (ConfigHandler.enableArmorModels) "" else "2") + ".png"
-	}
+	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =
+		"${ModInfo.MODID}:textures/model/armor/ElvoriumArmor${if (ConfigHandler.enableArmorModels) "" else "2"}.png"
 }

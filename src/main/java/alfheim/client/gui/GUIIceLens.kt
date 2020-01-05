@@ -2,20 +2,20 @@ package alfheim.client.gui
 
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.core.registry.AlfheimRegistry
 import cpw.mods.fml.common.eventhandler.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
 
-class GUIIceLens(private val mc: Minecraft): Gui() {
+class GUIIceLens: Gui() {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || Minecraft.getMinecraft().thePlayer.getActivePotionEffect(AlfheimRegistry.icelens) == null) return
+		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || mc.thePlayer.getActivePotionEffect(AlfheimRegistry.icelens) == null) return
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)
@@ -25,7 +25,7 @@ class GUIIceLens(private val mc: Minecraft): Gui() {
 		//glDisable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.iceLens)
+		mc.renderEngine.bindTexture(LibResourceLocations.iceLens)
 		val res = ScaledResolution(mc, mc.displayWidth, mc.displayHeight)
 		val u = res.scaledWidth
 		val v = res.scaledHeight

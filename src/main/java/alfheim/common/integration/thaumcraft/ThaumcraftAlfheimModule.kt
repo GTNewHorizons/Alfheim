@@ -12,7 +12,7 @@ import alfheim.api.lib.LibOreDict.MAUFTRIUM_NUGGET
 import alfheim.client.render.block.RenderBlockAlfheimThaumOre
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre
-import alfheim.common.core.asm.AlfheimASMData
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.compat.thaumcraft.*
 import cpw.mods.fml.client.registry.RenderingRegistry.*
 import cpw.mods.fml.common.registry.GameRegistry.*
@@ -147,7 +147,7 @@ object ThaumcraftAlfheimModule {
 		}
 
 		addSpecialMiningResult(ItemStack(alfheimThaumOre, 1, 0), ItemStack(ConfigItems.itemNugget, 1, 21), 0.9f)
-		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()), 1.0f)
+		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1.0f)
 	}
 	
 	fun registerRecipes() {
@@ -240,7 +240,7 @@ object ThaumcraftAlfheimModule {
 		)
 		
 		ConfigResearch.recipes[pureElementiumRecipe] = addCrucibleRecipe(pureElementiumResearch,
-																		 ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+																		 ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta),
 																		 ELEMENTIUM_ORE,
 																		 AspectList()
 																			 .merge(Aspect.METAL, 1)
@@ -272,7 +272,7 @@ object ThaumcraftAlfheimModule {
 					1.0f
 		)
 		
-		addSmelting(ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+		addSmelting(ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta),
 					ItemStack(ModItems.manaResource, 2, 7), // Elementium
 					1.0f
 		)
@@ -281,7 +281,7 @@ object ThaumcraftAlfheimModule {
 						 ItemStack(ModItems.manaResource, 0, 19)        // from ore
 		)
 		
-		addSmeltingBonus(ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()),
+		addSmeltingBonus(ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta),
 						 ItemStack(ModItems.manaResource, 0, 19)        // from cluster
 		)
 	}
@@ -407,7 +407,7 @@ object ThaumcraftAlfheimModule {
 		
 		ResearchItem(pureElementiumResearch, "ALCHEMY",
 					 AspectList().add(Aspect.METAL, 3).add(Aspect.ORDER, 2).add(Aspect.MAGIC, 1),
-					 -3, 2, 1, ItemStack(ConfigItems.itemNugget, 1, AlfheimASMData.elementiumClusterMeta()))
+					 -3, 2, 1, ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta))
 			
 			.setPages(ResearchPage("tc.research_page.$pureElementiumResearch.1"),
 					  ResearchPage(ConfigResearch.recipes[pureElementiumRecipe] as CrucibleRecipe))

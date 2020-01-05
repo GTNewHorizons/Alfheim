@@ -26,7 +26,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 				for (i in 1..50)
 					if (teleportRandomly(it)) {
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
-						it.attackEntityFrom(DamageSourceSpell.shadow(caster), damage)
+						it.attackEntityFrom(DamageSourceSpell.shadowSpell(caster), damage)
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
 						break
 					}
