@@ -584,8 +584,8 @@ object AlfheimRecipes {
 						 'B', blaze_rod)
 		recipeNiflheimRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(soulHorn, 1, 1),
-						 "E E", "EIE", " M ",
+		addOreDictRecipe(ItemStack(soulHorn),
+						 "MIM", "EIE", " E ",
 						 'M', MAUFTRIUM_INGOT,
 						 'E', ELVORIUM_INGOT,
 						 'I', IFFESAL_DUST)

@@ -1,6 +1,7 @@
 Innovations:
  Moved ASMdata to configs (preload category)
  Alfheim Modular for custom events
+ Ultramode for Flugel using soulhorn
 
 Fixes:
- --
+ Some bugs (nobody cares anyways)

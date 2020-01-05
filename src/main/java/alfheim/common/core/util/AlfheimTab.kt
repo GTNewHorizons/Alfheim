@@ -253,6 +253,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
 		addItem (soulHorn)
+		addItem (soulHorn, 1)
 		
 		addItem (rodFire)
 		addItem (rodIce)
@@ -427,11 +428,11 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		item.getSubItems(item, this, list)
 	}
 	
-	fun addBlock(block: Block, meta: Int = 0) {
+	fun addBlock(block: Block, meta: Int) {
 		addStack(ItemStack(block, 1, meta))
 	}
 	
-	fun addItem(item: Item, meta: Int = 0) {
+	fun addItem(item: Item, meta: Int) {
 		addStack(ItemStack(item, 1, meta))
 	}
 	

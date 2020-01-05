@@ -16,11 +16,11 @@ object AlfheimAchievements {
 	
 	val achievements: MutableList<Achievement> = ArrayList()
 	
-	val alfheim: Achievement
-	val flugelKill: Achievement
-	val infuser: Achievement
+	val alfheim: Achievement // go to alfheim
+	val flugelKill: Achievement // kill hardmode flugel
+	val infuser: Achievement // build up infuser
 	
-	val wingedHussaurs: Achievement
+	val wingedHussar: Achievement // become winged hussar
 	
 	// relics
 	val excaliber: Achievement?
@@ -59,7 +59,7 @@ object AlfheimAchievements {
 		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
 		infuser = AlfheimAchievement("infuser", 2, -2, AlfheimBlocks.manaInfuser, null)
 		
-		wingedHussaurs = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
 		
 		AchievementPage.registerAchievementPage(AchievementPage("Alfheim", *achievements.toTypedArray()))
 		

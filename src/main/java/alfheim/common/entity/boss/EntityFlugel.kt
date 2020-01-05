@@ -154,9 +154,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 				}
 			}
 			
-			
-			dmg = (maxHealth * 0.91).toFloat()
-			
 			reUpdate()
 			return super.attackEntityFrom(source, dmg)
 		}
@@ -259,7 +256,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 							}
 						}
 						
-						worldObj.getPlayerEntityByName(name).addStat(AlfheimAchievements.mask, 1)
+						worldObj.getPlayerEntityByName(name)?.addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)
 						entityDropItem(relic, 1f)
 						lot = false
@@ -302,7 +299,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			
 			if (ConfigHandler.relicsEnabled && !hard) {
 				val relic = ItemStack(AlfheimItems.flugelSoul)
-				if (worldObj.getPlayerEntityByName(summoner) != null) worldObj.getPlayerEntityByName(summoner).addStat(AlfheimAchievements.flugelSoul, 1)
+				if (worldObj.getPlayerEntityByName(summoner) != null) worldObj.getPlayerEntityByName(summoner)?.addStat(AlfheimAchievements.flugelSoul, 1)
 				ItemRelic.bindToUsernameS(summoner, relic)
 				entityDropItem(relic, 1f)
 			}
@@ -471,7 +468,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (invul <= 0) {
 			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
-				ASJUtilities.faceEntity(this, worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch"), 360f, 360f)
+				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC

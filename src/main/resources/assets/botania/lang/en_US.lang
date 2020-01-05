@@ -229,6 +229,12 @@ botania.page.soul3=Pave &4Anti-pylons&0 around ritual of Gaia to form a ring wit
 botania.page.soul4=Soul restructurizer
 botania.page.soul5=In order to restore the soul, it is enough to place it in the upper part of the brewery and summon the Gaia Guardian. Anti-pylons will do the rest for you. For sure success, call the hardcore form of the Guardian. But if you are lucky, then the usual form will help, it is like a coin toss. But be careful. If you make a mistake, the accumulated energy will be released into space in the form of an explosion.
 
+botania.entry.soulHorn=Horn of Souls
+botania.tagline.soulHorn=Flügel: Ultramode activated
+botania.page.soulHorn0=Watching how much stronger Flügel is invoked due to only one spent fragment of the soul, you were struck by a thought as if a lightning strike. What happens if you try to bring more fragments to the ritual of summoning? Or the whole soul at once? Of course, it is impossible to put such an idea into practice unless you create some kind of artifact.
+botania.page.soulHorn1=Remembering the intoxicating power of &1Mauftrium&0 and the ability of &1Elvorium&0 to contain a huge amount of energy, the image of &1Horn of Souls&0 was opened to your eyes. It works on the principle of a funnel: all soul fragments placed in it merge into a single vessel of energy and are used to invoke an incomprehensibly powerful creature. After direct use, the horn loses all the stored energy, but not utility.
+botania.page.soulHorn2=Creating &1Horn of Souls&0
+
 botania.entry.mask=Mysterious Mask
 botania.tagline.mask=I've already seen this somewhere...
 botania.page.mask0=Fury and danger emanates from this mask. When you try to put it on you, nothing comes out, and it just falls from your face. However, if you are on the verge of death, it materializes on you from your in your inventory, giving you unparalleled strength and endurance. But do not abuse it, otherwise the dark spirit will consume you...

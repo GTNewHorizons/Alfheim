@@ -45,6 +45,6 @@ object AlfheimAchievementHandler {
 						horse.horseChest.getStackInSlot(0)?.item == Items.saddle &&
 						horse.horseChest.getStackInSlot(1)?.item == Items.golden_horse_armor
 		
-		if (armorFlag && baublesFlag && horseFlag) player.triggerAchievement(AlfheimAchievements.wingedHussaurs)
+		if (armorFlag && baublesFlag && horseFlag) player.triggerAchievement(AlfheimAchievements.wingedHussar)
 	}
 }

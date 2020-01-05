@@ -55,7 +55,7 @@ object AlfheimConfigHandler {
 	var destroyPortal			= true
 	var fancies					= true
 	var flugelBossBar			= true
-	var flugelSwapBL			= IntArray(0)
+	var flugelSwapBL			= emptyArray<String>()
 	var info					= true
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
@@ -255,6 +255,12 @@ object AlfheimConfigHandler {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
 		return prop.intList
+	}
+	
+	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String): Array<String> {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.stringList
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

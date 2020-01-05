@@ -3,7 +3,7 @@ package alfheim.common.entity.boss.ai.flugel
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.boss.EntityFlugel
-import net.minecraft.item.Item
+import cpw.mods.fml.common.registry.GameRegistry
 
 class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	
@@ -28,7 +28,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 					val stack1 = player.inventory.mainInventory[slot1]
 					val stack2 = player.inventory.mainInventory[slot2]
 					
-					if ((stack1 != null && AlfheimConfigHandler.flugelSwapBL.contains(Item.getIdFromItem(stack1.item))) || (stack2 != null && AlfheimConfigHandler.flugelSwapBL.contains(Item.getIdFromItem(stack2.item)))) continue
+					if ((stack1 != null && AlfheimConfigHandler.flugelSwapBL.contains(GameRegistry.findUniqueIdentifierFor(stack1.item).toString())) || (stack2 != null && AlfheimConfigHandler.flugelSwapBL.contains(GameRegistry.findUniqueIdentifierFor(stack2.item).toString()))) continue
 					
 					player.inventory.mainInventory[slot1] = stack2
 					player.inventory.mainInventory[slot2] = stack1
