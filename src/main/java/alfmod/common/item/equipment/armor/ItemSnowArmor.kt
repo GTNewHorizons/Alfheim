@@ -43,8 +43,11 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	
 	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack?) = false
 	
-	val armorSet = arrayOf(ItemStack(AlfheimModularItems.snowHelmet), ItemStack(AlfheimModularItems.snowChest), ItemStack(AlfheimModularItems.snowLeggings), ItemStack(AlfheimModularItems.snowBoots))
-	override fun getArmorSetStacks() = armorSet
+	lateinit var armorSet: Array<ItemStack>
+	override fun getArmorSetStacks(): Array<ItemStack> {
+		if (!::armorSet.isInitialized) armorSet = arrayOf(ItemStack(AlfheimModularItems.snowHelmet), ItemStack(AlfheimModularItems.snowChest), ItemStack(AlfheimModularItems.snowLeggings), ItemStack(AlfheimModularItems.snowBoots))
+		return armorSet
+	}
 	
 	override fun hasArmorSetItem(player: EntityPlayer, i: Int): Boolean {
 		val stack = player.inventory.armorInventory[3 - i] ?: return false

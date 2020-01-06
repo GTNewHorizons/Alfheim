@@ -13,6 +13,14 @@ class AlfheimClassTransformer: IClassTransformer {
 		if (basicClass == null || basicClass.isEmpty()) return basicClass
 		
 		return when (transformedName) {
+			"alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig" -> {
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `BloodMagicAlfheimConfig$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.EXPAND_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.client.particle.EffectRenderer"                  -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
@@ -160,6 +168,57 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			else                                                            -> basicClass
+		}
+	}
+	
+	internal class `BloodMagicAlfheimConfig$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "<init>") {
+				val vis = super.visitMethod(ACC_PUBLIC + ACC_FINAL, "onTeleposing", "(LWayofTime/alchemicalWizardry/api/event/TeleposeEvent;)V", null, null)
+				
+				vis.visitAnnotation("Lcpw/mods/fml/common/eventhandler/SubscribeEvent;", true).visitEnd()
+				vis.visitParameterAnnotation(0, "Lorg/jetbrains/annotations/NotNull;", false).visitEnd()
+				
+				vis.visitCode()
+				val l0 = Label()
+				vis.visitLabel(l0)
+				vis.visitVarInsn(ALOAD, 1)
+				vis.visitLdcInsn("e")
+				vis.visitMethodInsn(INVOKESTATIC, "kotlin/jvm/internal/Intrinsics", "checkParameterIsNotNull", "(Ljava/lang/Object;Ljava/lang/String;)V", false)
+				val l1 = Label()
+				vis.visitLabel(l1)
+				vis.visitLineNumber(18, l1)
+				vis.visitFieldInsn(GETSTATIC, "alfheim/common/integration/bloodmagic/BloodMagicAlfheimConfig", "blacklist", if (OBF) "[Laji;" else "[Lnet/minecraft/block/Block;")
+				vis.visitVarInsn(ALOAD, 1)
+				vis.visitFieldInsn(GETFIELD, "WayofTime/alchemicalWizardry/api/event/TeleposeEvent", "finalBlock", if (OBF) "[Laji;" else "net/minecraft/block/Block;")
+				vis.visitMethodInsn(INVOKESTATIC, "kotlin/collections/ArraysKt", "contains", "([Ljava/lang/Object;Ljava/lang/Object;)Z", false)
+				val l2 = Label()
+				vis.visitJumpInsn(IFNE, l2)
+				vis.visitFieldInsn(GETSTATIC, "alfheim/common/integration/bloodmagic/BloodMagicAlfheimConfig", "blacklist", if (OBF) "[Laji;" else "[Lnet/minecraft/block/Block;")
+				vis.visitVarInsn(ALOAD, 1)
+				vis.visitFieldInsn(GETFIELD, "WayofTime/alchemicalWizardry/api/event/TeleposeEvent", "initialBlock", if (OBF) "Laji;" else "Lnet/minecraft/block/Block;")
+				vis.visitMethodInsn(INVOKESTATIC, "kotlin/collections/ArraysKt", "contains", "([Ljava/lang/Object;Ljava/lang/Object;)Z", false)
+				val l3 = Label()
+				vis.visitJumpInsn(IFEQ, l3)
+				vis.visitLabel(l2)
+				vis.visitFrame(F_SAME, 0, null, 0, null)
+				vis.visitVarInsn(ALOAD, 1)
+				vis.visitInsn(ICONST_1)
+				vis.visitMethodInsn(INVOKEVIRTUAL, "WayofTime/alchemicalWizardry/api/event/TeleposeEvent", "setCanceled", "(Z)V", false)
+				vis.visitLabel(l3)
+				vis.visitLineNumber(19, l3)
+				vis.visitFrame(F_SAME, 0, null, 0, null)
+				vis.visitInsn(RETURN)
+				val l4 = Label()
+				vis.visitLabel(l4)
+				vis.visitLocalVariable("this", "Lalfheim/common/integration/bloodmagic/BloodMagicAlfheimConfig;", null, l0, l4, 0)
+				vis.visitLocalVariable("e", "LWayofTime/alchemicalWizardry/api/event/TeleposeEvent;", null, l0, l4, 1)
+				vis.visitMaxs(2, 2)
+				vis.visitEnd()
+			}
+			
+			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 	}
 	

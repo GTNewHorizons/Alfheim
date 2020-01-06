@@ -58,7 +58,7 @@ object ESMHandler {
 	// EVENTS
 	
 	@SubscribeEvent
-	fun onInteractWithBlock(event: PlayerInteractEvent) {
+	fun getWaterBowl(event: PlayerInteractEvent) {
 		if (AlfheimCore.enableElvenStory && !Botania.gardenOfGlassLoaded) {
 			val equipped = event.entityPlayer.currentEquippedItem
 			if (equipped != null && equipped.item === Items.bowl && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
@@ -129,7 +129,7 @@ object ESMHandler {
 			effect.amplifier = amp
 			effect.duration = dur
 			
-			AlfheimCore.network.sendToAll(MessageEffect(player.entityId, potion.id, dur, amp))
+			if (!player.worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(player.entityId, potion.id, dur, amp))
 		}
 		
 		return false

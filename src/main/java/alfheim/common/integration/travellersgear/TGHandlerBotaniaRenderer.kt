@@ -8,7 +8,7 @@ import travellersgear.api.TravellersGearAPI
 import vazkii.botania.api.item.*
 import vazkii.botania.api.item.IBaubleRender.RenderType
 
-class TGHandlerBotaniaRenderer {
+object TGHandlerBotaniaRenderer {
 	
 	@SubscribeEvent
 	fun onPlayerRenderPost(event: RenderPlayerEvent.Specials.Post) {

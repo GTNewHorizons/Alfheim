@@ -61,7 +61,9 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.portal
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block?, meta: Int) {
-		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && meta != 0) world.spawnEntityInWorld(EntityItem(world, x + 0.5, y + 0.5, z + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && meta != 0)
+			world.spawnEntityInWorld(EntityItem(world, x + 0.5, y + 0.5, z + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+		
 		super.breakBlock(world, x, y, z, block, meta)
 	}
 	

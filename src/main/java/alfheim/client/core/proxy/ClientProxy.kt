@@ -124,7 +124,7 @@ class ClientProxy: CommonProxy() {
 		super.initializeAndRegisterHandlers()
 		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
 		FMLCommonHandler.instance().bus().register(EventHandlerClient)
-		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer())
+		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()
 	}

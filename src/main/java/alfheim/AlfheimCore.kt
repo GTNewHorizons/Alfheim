@@ -6,8 +6,10 @@ import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
+import alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
+import alfheim.common.integration.thaumcraft.thaumictinkerer.ThaumicTinkererAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
 import alfheim.common.network.*
@@ -47,7 +49,6 @@ class AlfheimCore {
 		var MineTweakerLoaded = false
 		var NEILoaded = false
 		var TravellersGearLoaded = false
-		var WAILALoaded = false
 		
 		val jingleTheBells: Boolean
 		val winter: Boolean
@@ -80,7 +81,6 @@ class AlfheimCore {
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear")
-		WAILALoaded = Loader.isModLoaded("Waila")
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
 		
@@ -108,8 +108,10 @@ class AlfheimCore {
 			ThaumcraftAlfheimConfig.loadConfig()
 			ThaumcraftAlfheimModule.postInit()
 		}
+		if (Loader.isModLoaded("AWWayofTime")) BloodMagicAlfheimConfig
+		if (Loader.isModLoaded("ThaumicTinkerer")) ThaumicTinkererAlfheimConfig
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig()
-		if (WAILALoaded) WAILAAlfheimConfig.loadConfig()
+		if (Loader.isModLoaded("Waila")) WAILAAlfheimConfig.loadConfig()
 	}
 	
 	@EventHandler
