@@ -5,6 +5,7 @@ import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
+import alfheim.client.core.util.mc
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
@@ -13,6 +14,8 @@ import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
+import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.Vector3
 
 class Message0dSHandler: IMessageHandler<Message0dS, IMessage> {
 		
@@ -102,6 +105,14 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage> {
 				}
 			}
 		}
+		return null
+	}
+}
+
+class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage> {
+	
+	override fun onMessage(packet: MessageEffectLightning, message: MessageContext): IMessage? {
+		Botania.proxy.lightningFX(mc.theWorld, Vector3(packet.x1, packet.y1, packet.z1), Vector3(packet.x2, packet.y2, packet.z2), packet.ticksPerMeter, packet.colorOuter, packet.colorInner)
 		return null
 	}
 }

@@ -70,10 +70,6 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			e is EntityLivingBase && e !is EntityPlayer && e !is EntityDoppleganger
 	}
 	
-	fun particleRing(world: World, x: Int, y: Int, z: Int, range: Int, r: Float, g: Float, b: Float) {
-		particleRing(world, x.toDouble(), y.toDouble(), z.toDouble(), range, r, g, b)
-	}
-	
 	fun particleRing(world: World, x: Double, y: Double, z: Double, range: Int, r: Float, g: Float, b: Float) {
 		val m = 0.15F
 		val mv = 0.35F
@@ -110,34 +106,32 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		return flag
 	}
 	
-	override fun onUsingTick(stack: ItemStack?, player: EntityPlayer?, count: Int) {
-		if (player != null) {
-			val world = player.worldObj
-			val x = player.posX
-			val y = player.posY
-			val z = player.posZ
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
+		val world = player.worldObj
+		val x = player.posX
+		val y = player.posY
+		val z = player.posZ
+		
+		val priest = (ItemPriestEmblem.getEmblem(2, player) != null)
+		val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
+		
+		val cost = getCost(prowess, priest)
+		val range = getRange(prowess, priest)
+		val velocity = getVelocity(prowess, priest)
+		
+		if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
+			val color = Color(ColorOverrideHelper.getColor(player, 0x0000FF))
+			val r = color.red.toFloat() / 255f
+			val g = color.green.toFloat() / 255f
+			val b = color.blue.toFloat() / 255f
+			if (count % 5 == 0) particleRing(world, x, y, z, range, r, g, b)
 			
-			val priest = (ItemPriestEmblem.getEmblem(2, player) != null)
-			val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
+			val exclude: EntityLivingBase = player
+			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR)
 			
-			val cost = getCost(prowess, priest)
-			val range = getRange(prowess, priest)
-			val velocity = getVelocity(prowess, priest)
-			
-			if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
-				val color = Color(ColorOverrideHelper.getColor(player, 0x0000FF))
-				val r = color.red.toFloat() / 255f
-				val g = color.green.toFloat() / 255f
-				val b = color.blue.toFloat() / 255f
-				if (count % 5 == 0) particleRing(world, x, y, z, range, r, g, b)
-				
-				val exclude: EntityLivingBase = player
-				val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR)
-				
-				if (pushEntities(x, y, z, range, velocity, player, entities)) {
-					if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
-					ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
-				}
+			if (pushEntities(x, y, z, range, velocity, player, entities)) {
+				if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
+				ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 			}
 		}
 	}

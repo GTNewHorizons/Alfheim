@@ -1,5 +1,6 @@
 package alfheim.client.core.handler
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -10,6 +11,7 @@ import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
@@ -83,6 +85,7 @@ object KeyBindingHandlerClient {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
 					PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
+					ASJUtilities.say(mc.thePlayer, "alfheimmisc.elvenAbility.${PlayerSegmentClient.esmAbility}")
 					AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
 				}
 			} else if (toggleESMAbility) {

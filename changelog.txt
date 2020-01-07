@@ -1,5 +1,9 @@
 Innovations:
- --
+ Anyavil items blacklist
+ Elven passive ability toggle notification
 
 Fixes:
- --
+ Crash on moving anyavil/mana accelerator with focus of dislocation (blacklisted)
+ In	GateCore dupe on moving portal core with teleposers/FoD (blacklisted)
+ Rod of tricky flame makes parkicle w/o mana
+ Rod of thundering peaks - no particles

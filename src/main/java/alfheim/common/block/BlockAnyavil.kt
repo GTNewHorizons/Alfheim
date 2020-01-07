@@ -4,7 +4,9 @@ import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.lexicon.AlfheimLexiconData
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -58,7 +60,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 			}
 			te.item = null
 		}
-		if (stack != null && stack.stackSize == 1 && stack.item.isDamageable) {
+		if (stack != null && stack.stackSize == 1 && stack.item.isDamageable && GameRegistry.findUniqueIdentifierFor(stack.item).toString() !in AlfheimConfigHandler.anyavilBL) {
 			te.item = stack.copy()
 			te.item!!.stackSize = stack.stackSize
 			stack.stackSize = 0

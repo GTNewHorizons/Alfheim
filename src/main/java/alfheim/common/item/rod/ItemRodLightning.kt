@@ -1,11 +1,14 @@
 package alfheim.common.item.rod
 
+import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.network.MessageEffectLightning
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -17,17 +20,18 @@ import net.minecraft.entity.player.*
 import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.item.*
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.*
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityDoppleganger
+import vazkii.botania.common.item.relic.ItemThorRing
 import java.awt.Color
 import java.util.*
+import vazkii.botania.common.core.helper.Vector3 as Bector3
 
 open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
 	
@@ -84,10 +88,10 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 		ItemNBTHelper.setInt(stack, "target", -1)
 	}
 	
-	override fun onUsingTick(stack: ItemStack?, player: EntityPlayer?, count: Int) {
-		if (count != getMaxItemUseDuration(stack) && !player!!.worldObj.isRemote) {
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
+		if (count != getMaxItemUseDuration(stack) && !player.worldObj.isRemote) {
 			
-			val thor = (vazkii.botania.common.item.relic.ItemThorRing.getThorRing(player) != null)
+			val thor = (ItemThorRing.getThorRing(player) != null)
 			val priest = (ItemPriestEmblem.getEmblem(0, player) != null)
 			val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
 			
@@ -102,14 +106,15 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					val shockspeed = getSpeed(thor, prowess, priest)
 					val damage = getDamage(thor, prowess, priest)
 					
-					val targetCenter = Vector3.fromEntityCenter(target).add(0.0, 0.75, 0.0).add(Vector3(target.lookVec).multiply(-0.25))
+					val targetCenter = Vector3.fromEntityCenter(target).add(0.0, 0.75, 0.0).add(Vector3(target.lookVec).mul(-0.25))
 					val targetShift = targetCenter.copy().add(getHeadOrientation(target))
 					
-					val playerCenter = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0).add(Vector3(player.lookVec).multiply(-0.25))
+					val playerCenter = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0).add(Vector3(player.lookVec).mul(-0.25))
 					val playerShift = playerCenter.copy().add(getHeadOrientation(player))
+					
 					if (count % (shockspeed / 10) == 0) {
-						Botania.proxy.lightningFX(player.worldObj, targetCenter, targetShift, 2.0f, color, innerColor)
-						Botania.proxy.lightningFX(player.worldObj, playerCenter, playerShift, 2.0f, color, innerColor)
+						AlfheimCore.network.sendToDimension(MessageEffectLightning(targetCenter, targetShift, 2.0f, color, innerColor), player.dimension)
+						AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, playerShift, 2.0f, color, innerColor), player.dimension)
 					}
 					
 					if (count % shockspeed == 0) {
@@ -121,10 +126,10 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 						} else {
 							if (ManaItemHandler.requestManaExactForTool(stack, player, getCost(thor, prowess, priest), true)) {
 								target.attackEntityFrom(DamageSource.causePlayerDamage(player), damage)
-								Botania.proxy.lightningFX(player.worldObj, playerCenter, Vector3.fromEntityCenter(target), 1.0f, color, innerColor)
+								AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, Vector3.fromEntityCenter(target), 1.0f, color, innerColor), player.dimension)
 								player.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100.0f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
 							}
-							chainLightning(stack!!, target, player, thor, prowess, priest, color, innerColor)
+							chainLightning(stack, target, player, thor, prowess, priest, color, innerColor)
 						}
 					}
 					
@@ -180,8 +185,8 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 		return null
 	}
 	
-	fun chainLightning(stack: ItemStack, entity: EntityLivingBase?, attacker: EntityLivingBase?, thor: Boolean, prowess: Boolean, priest: Boolean, color: Int, innerColor: Int): Boolean {
-		if (entity !is EntityPlayer && entity != null) {
+	fun chainLightning(stack: ItemStack, entity: EntityLivingBase, attacker: EntityLivingBase?, thor: Boolean, prowess: Boolean, priest: Boolean, color: Int, innerColor: Int): Boolean {
+		if (entity !is EntityPlayer) {
 			val range = getRange(thor, prowess, priest)
 			val targets = getTargetCap(thor, prowess, priest)
 			var dmg = getDamage(thor, prowess, priest)
@@ -205,7 +210,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)
 				}
 				
-				Botania.proxy.lightningFX(entity.worldObj, Vector3.fromEntityCenter(lightningSource), Vector3.fromEntityCenter(target), 1.0f, color, innerColor)
+				AlfheimCore.network.sendToDimension(MessageEffectLightning(Vector3.fromEntityCenter(lightningSource), Vector3.fromEntityCenter(target), 1.0f, color, innerColor), entity.dimension)
 				alreadyTargetedEntities.add(target)
 				lightningSource = target
 				--dmg
@@ -281,10 +286,11 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 			if (target != null) {
 				ItemNBTHelper.setInt(stack, "target", target.entityId)
 				
-				val targetCenter = Vector3.fromEntityCenter(target).add(0.0, 0.75, 0.0).add(Vector3(target.lookVec).multiply(-0.25))
-				val targetShift = targetCenter.copy().add(getHeadOrientation(target))
+				val targetCenter = Bector3.fromEntityCenter(target).add(0.0, 0.75, 0.0).add(Bector3(target.lookVec).multiply(-0.25))
+				val head = getHeadOrientation(target)
+				val targetShift = targetCenter.copy().add(Bector3(head.x, head.y, head.z))
 				
-				val thisCenter = Vector3.fromTileEntityCenter(te).add(0.0, 0.5, 0.0)
+				val thisCenter = Bector3.fromTileEntityCenter(te).add(0.0, 0.5, 0.0)
 				val thisShift = thisCenter.copy().add(0.0, 1.0, 0.0)
 				
 				if (tile.elapsedFunctionalTicks % 10 == 0) {
@@ -298,9 +304,9 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					
 					if (!world.isRemote) tile.recieveMana(-COST_AVATAR)
 					
-					val vect = Vector3.fromTileEntityCenter(te).add(0.0, 0.5, 0.0)
+					val vect = Bector3.fromTileEntityCenter(te).add(0.0, 0.5, 0.0)
 					
-					Botania.proxy.lightningFX(world, vect, Vector3.fromEntityCenter(target), 1.0f, color, innerColor)
+					Botania.proxy.lightningFX(world, vect, Bector3.fromEntityCenter(target), 1.0f, color, innerColor)
 					
 					world.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100.0f, 0.8f + world.rand.nextFloat() * 0.2f)
 					

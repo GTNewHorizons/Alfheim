@@ -519,6 +519,9 @@ item.thorRing.poem3=It'll begin anew a new era.
 
 #######################################################___ELVEN STORY___########################################################
 
+alfheimmisc.elvenAbility.true=Elven passive ability enabled
+alfheimmisc.elvenAbility.false=Elven passive ability disabled
+
 elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
 elvenstory.welcome1=§6Please, select gender and race using panel in front of you
 elvenstory.selectgender=Select Gender

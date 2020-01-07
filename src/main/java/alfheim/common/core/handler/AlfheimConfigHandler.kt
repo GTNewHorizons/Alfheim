@@ -51,6 +51,7 @@ object AlfheimConfigHandler {
 	var pixieSpawn				= intArrayOf(10, 1, 2)
 	
 	// OHTER
+	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
 	var destroyPortal			= true
 	var fancies					= true
@@ -165,6 +166,7 @@ object AlfheimConfigHandler {
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		
+		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept")
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
