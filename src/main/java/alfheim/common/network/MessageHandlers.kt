@@ -1,5 +1,6 @@
 package alfheim.common.network
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.spell.SpellBase
@@ -262,6 +263,8 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 		tile.timer = packet.timer
 		
 		if (packet.give) tile.giveRaceAndReset(message.serverHandler.playerEntity)
+		
+		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
 		return null
 	}
