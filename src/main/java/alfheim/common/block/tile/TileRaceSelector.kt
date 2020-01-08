@@ -5,13 +5,11 @@ import alexsocol.asjlib.extendables.ASJTile
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
-import alfheim.common.core.util.mfloor
 import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.*
+import net.minecraft.util.AxisAlignedBB
 
 class TileRaceSelector: ASJTile() {
 	
@@ -44,9 +42,9 @@ class TileRaceSelector: ASJTile() {
 		player.capabilities.allowFlying = true
 		player.sendPlayerAbilities()
 		
-		val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal - 1]
+		/*val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal - 1]
 		player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
-		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
+		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)*/
 	}
 	
 	var timer = 0
@@ -74,6 +72,8 @@ class TileRaceSelector: ASJTile() {
 			custom = false
 			activeRotation = 0
 			rotation = 0
+			
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 		}
 		
 		

@@ -6,6 +6,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.client.core.util.mc
+import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
@@ -14,6 +15,7 @@ import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
+import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.Vector3
 
@@ -240,6 +242,26 @@ class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage> {
 	
 	override fun onMessage(packet: MessageSkinInfo, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
+		
+		return null
+	}
+}
+
+class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage> {
+	
+	override fun onMessage(packet: MessageRaceSelection, message: MessageContext): IMessage? {
+		val world = MinecraftServer.getServer().worldServerForDimension(packet.dim) ?: return null
+		val tile = world.getTileEntity(packet.x, packet.y, packet.z) as? TileRaceSelector ?: return null
+		
+		if (packet.doMeta) world.setBlockMetadataWithNotify(packet.x, packet.y, packet.z, packet.meta, 3)
+		
+		tile.activeRotation = packet.arot
+		tile.rotation = packet.rot
+		tile.custom = packet.custom
+		tile.female = packet.female
+		tile.timer = packet.timer
+		
+		if (packet.give) tile.giveRaceAndReset(message.serverHandler.playerEntity)
 		
 		return null
 	}

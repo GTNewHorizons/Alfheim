@@ -7,3 +7,4 @@ Fixes:
  In	GateCore dupe on moving portal core with teleposers/FoD (blacklisted)
  Rod of tricky flame makes parkicle w/o mana
  Rod of thundering peaks - no particles
+ Race selection panel desync
