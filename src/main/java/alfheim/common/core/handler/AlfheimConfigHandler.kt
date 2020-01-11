@@ -116,8 +116,9 @@ object AlfheimConfigHandler {
 	// MMO
 	var deathScreenAddTime		= 1200
 	var frienldyFire			= false
+	var raceManaMult			= 2.0
 	var maxPartyMembers			= 5
-	
+
 	// HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
@@ -224,8 +225,9 @@ object AlfheimConfigHandler {
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
+		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult, false, "Mana cost multiplier for spells with not your affinity")
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
-		
+
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")
 		targetUI = loadProp(CATEGORY_HUD, "targethUI", targetUI, false, "Set this to false to hide target's healthbar")
