@@ -42,9 +42,9 @@ class TileRaceSelector: ASJTile() {
 		player.capabilities.allowFlying = true
 		player.sendPlayerAbilities()
 		
-		/*val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal - 1]
+		val (x, y, z) = AlfheimConfigHandler.zones[race.ordinal - 1]
 		player.setSpawnChunk(ChunkCoordinates(x.mfloor(), y.mfloor(), z.mfloor()), true, AlfheimConfigHandler.dimensionIDAlfheim)
-		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)*/
+		ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, x, y, z)
 	}
 	
 	var timer = 0
