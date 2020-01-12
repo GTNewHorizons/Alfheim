@@ -5,11 +5,14 @@ import alexsocol.asjlib.extendables.ASJTile
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
+import alfheim.common.core.util.mfloor
 import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.ChunkCoordinates
 
 class TileRaceSelector: ASJTile() {
 	
