@@ -4,13 +4,16 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import net.minecraft.init.Blocks
+import net.minecraft.world.biome.BiomeGenMesa
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeMount1: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("Low plateau")
 		
 		BiomeDictionary.registerBiomeType(this, Type.HILLS, Type.FOREST, Type.PLAINS)
 		

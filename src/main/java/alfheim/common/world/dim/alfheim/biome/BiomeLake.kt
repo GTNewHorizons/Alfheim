@@ -7,7 +7,9 @@ import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeLake: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("Lake")
 		
 		BiomeDictionary.registerBiomeType(this, Type.RIVER, Type.WET)
 		

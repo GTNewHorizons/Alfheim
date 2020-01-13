@@ -5,12 +5,14 @@ package ru.vamig.worldengine;
 
 import alfheim.common.core.handler.AlfheimConfigHandler;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.WorldChunkManagerHell;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
-	final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
-	final float rainfall = 0.1F;
+	
+	public final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
+	public final float rainfall = 0.1F;
+	public WE_ChunkProvider cp = null;
 	
 	@Override
 	public void registerWorldChunkManager() {
@@ -19,8 +21,16 @@ public abstract class WE_WorldProvider extends WorldProvider {
 	
 	@Override
 	public IChunkProvider createChunkGenerator() {
-		return new WE_ChunkProvider(this);
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		return cp;
 	}
 	
 	public abstract void genSettings(WE_ChunkProvider cp);
+	
+	@Override
+	public BiomeGenBase getBiomeGenForCoords(int x, int z) {
+		//worldObj.getChunkProvider()
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		return WE_Biome.getBiomeAt(cp, x, z);
+	}
 }

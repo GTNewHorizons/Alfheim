@@ -11,7 +11,9 @@ import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeField: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("Field")
 		
 		BiomeDictionary.registerBiomeType(this, Type.PLAINS, Type.DENSE)
 		

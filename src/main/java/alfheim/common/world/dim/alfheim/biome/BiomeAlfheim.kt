@@ -11,11 +11,11 @@ import ru.vamig.worldengine.WE_Biome
 open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: Boolean = false): WE_Biome(ID_FOR_ALL_WE_BIOMES, r) {
 	
 	init {
+		setBiomeName("Alfheim")
 		
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
 		clearSpawn()
-		setBiomeName("Alfheim")
 		setColor(0xA67C00)
 		waterColorMultiplier = 0x1D1D4E
 		

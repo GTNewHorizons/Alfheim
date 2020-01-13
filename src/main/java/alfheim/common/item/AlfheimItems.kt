@@ -100,6 +100,7 @@ object AlfheimItems {
 	val thinkingHand: Item
 	val trisDagger: Item
 	//val toolbelt: Item
+	val waterCleaner: Item
 	val wiltedLotus: Item
 	val wireAxe: Item
 	
@@ -178,6 +179,7 @@ object AlfheimItems {
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()
 		//toolbelt = ItemToolbelt()
+		waterCleaner = ItemWaterCleaner()
 		wireAxe = ItemWireAxe()
 		wiltedLotus = ItemWiltedLotus()
 		

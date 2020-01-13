@@ -173,6 +173,7 @@ import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
 import alfheim.common.item.AlfheimItems.trisDagger
+import alfheim.common.item.AlfheimItems.waterCleaner
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
@@ -250,6 +251,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addItem (astrolabe)
 		addItem (lootInterceptor)
+		addItem (waterCleaner)
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
 		addItem (soulHorn)

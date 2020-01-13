@@ -10,7 +10,9 @@ import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeMount3Trees: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("High plateau forest")
 		
 		BiomeDictionary.registerBiomeType(this, Type.FOREST, Type.MOUNTAIN, Type.DENSE, Type.LUSH)
 		

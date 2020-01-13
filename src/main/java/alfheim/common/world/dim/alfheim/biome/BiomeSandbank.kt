@@ -8,7 +8,9 @@ import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeSandbank: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("Sandbank")
 		
 		BiomeDictionary.registerBiomeType(this, Type.SANDY, Type.SPARSE, Type.DRY)
 		

@@ -10,7 +10,9 @@ import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
 class BiomeForest2: BiomeAlfheim(0) {
+	
 	init {
+		setBiomeName("Forest")
 		
 		BiomeDictionary.registerBiomeType(this, Type.FOREST, Type.HILLS, Type.DENSE, Type.LUSH)
 		
