@@ -4,7 +4,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.darkness.SpellSacrifice
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -24,7 +24,8 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
 		if (!AlfheimCore.enableMMO) return
 		if (timeQueued == 32)
-			for (i in 0..7) target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000.0f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
+			for (i in 0..7)
+				target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000.0f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
 		else
 			particles(target, 32 - timeQueued)
 	}
@@ -32,7 +33,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl)
 		if (!AlfheimCore.enableMMO) return
-		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(32.0, 32.0, 32.0)) as List<EntityLivingBase>
+		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(SpellSacrifice.radius)) as List<EntityLivingBase>
 		var dmg: DamageSource
 		for (e in l) {
 			if (e is IBossDisplayData) continue
@@ -43,8 +44,8 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	
 	fun particles(target: EntityLivingBase, time: Int) {
 		val v = Vector3()
-		for (i in 0..127) {
-			v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(time.toDouble())
+		for (i in 1..(SpellSacrifice.radius.toInt() * 4)) {
+			v.rand().sub(0.5).normalize().mul(time / 32.0 * SpellSacrifice.radius)
 			Botania.proxy.wispFX(target.worldObj, target.posX + v.x, target.posY + v.y, target.posZ + v.z, 1f, Math.random().toFloat() * 0.5f, Math.random().toFloat() * 0.075f, (Math.random() * time + 1).toFloat(), 0f, (Math.random() * 3.0 + 2).toFloat())
 		}
 	}

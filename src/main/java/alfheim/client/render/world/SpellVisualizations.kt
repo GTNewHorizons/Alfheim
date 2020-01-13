@@ -3,6 +3,7 @@ package alfheim.client.render.world
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
+import alfheim.common.spell.tech.SpellTimeStop
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 
@@ -29,7 +30,8 @@ object SpellVisualizations {
 			}
 			
 			override fun drawMesh() {
-				renderSphere(Tessellator.instance, 240.0.toFloat() / 3.6f)
+				val size = (240 / 3.6 / 16 * SpellTimeStop.radius).toFloat()
+				renderSphere(Tessellator.instance, size)
 			}
 			
 			override fun postRender() {
@@ -57,17 +59,17 @@ object SpellVisualizations {
 			glColor4d(0.0, 0.0, 0.0, 1.0)
 		else
 			glColor4d(0.25, 0.0, 0.0, 1.0)
-		val size = 240.0
+		val size = (240 / 3.6 / 16 * SpellTimeStop.radius).toFloat()
 		
 		glScaled(0.5, 0.5, 0.5)
 		if (RenderPostShaders.allowShaders)
 			so.addTranslation()
 		else
-			renderSphere(Tessellator.instance, 240.0.toFloat() / 3.6f)
+			renderSphere(Tessellator.instance, size)
 		glColorMask(false, true, true, false)
 		glCullFace(GL_FRONT)
 		if (inside) glDisable(GL_DEPTH_TEST)
-		renderSphere(Tessellator.instance, size.toFloat() / 3.6f)
+		renderSphere(Tessellator.instance, size)
 		if (inside) glEnable(GL_DEPTH_TEST)
 		glColorMask(true, true, true, true)
 		glCullFace(GL_BACK)
@@ -94,7 +96,7 @@ object SpellVisualizations {
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
 		glColor4d(1.0, 1.0, 1.0, 1.0)
-		val size = 240.0
+		val size = 240 / 3.6f
 		
 		glPushMatrix()
 		glLoadIdentity()
@@ -108,7 +110,7 @@ object SpellVisualizations {
 		glPopMatrix()
 		
 		glScaled(s, s, s)
-		renderSphere(tes, size.toFloat() / 3.6f)
+		renderSphere(tes, size)
 		glScaled(1 / s, 1 / s, 1 / s)
 		
 		glEnable(GL_LIGHTING)
@@ -129,9 +131,9 @@ object SpellVisualizations {
 		val maxWidth = width / 2.0f
 		val zAngleDivNum = 18
 		var angleZ: Double
-		val angleSpanZ = Math.PI * 2.0 / zAngleDivNum.toDouble()
+		val angleSpanZ = PI * 2.0 / zAngleDivNum.toDouble()
 		val zDivNum = 9
-		var zPos = sin(-Math.PI / 2.0) * maxWidth
+		var zPos = sin(-PI / 2.0) * maxWidth
 		var zPosOld = zPos
 		var xPos: Float
 		var yPos: Float
@@ -141,8 +143,8 @@ object SpellVisualizations {
 		var yPosOld: Float
 		var xPos2Old: Float
 		var yPos2Old: Float
-		var angle = -Math.PI.toFloat() / 2.0f
-		val angleSpan = Math.PI.toFloat() / zDivNum.toFloat()
+		var angle = -PI.toFloat() / 2.0f
+		val angleSpan = PI.toFloat() / zDivNum.toFloat()
 		angle += angleSpan
 		var widthOld = 0.0f
 		for (j in 0 until zDivNum) {

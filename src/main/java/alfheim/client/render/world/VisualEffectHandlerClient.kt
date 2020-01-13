@@ -128,12 +128,12 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun spawnAquaBind(x: Double, y: Double, z: Double) {
-		var i = 0
-		while (i < 360) {
-			val X = cos(i.toDouble()) * 3.5
-			val Z = sin(i.toDouble()) * 3.5
-			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + X, y, z + Z, 0f, 0.5f, 1f, 0.5f)
-			i += 5
+		var j = 0
+		while (j < 360) {
+			val i = cos(j.toDouble()) * SpellAquaBind.radius
+			val k = sin(j.toDouble()) * SpellAquaBind.radius
+			Botania.proxy.wispFX(Minecraft.getMinecraft().theWorld, x + i, y, z + k, 0f, 0.5f, 1f, 0.5f)
+			j += 5
 		}
 	}
 	

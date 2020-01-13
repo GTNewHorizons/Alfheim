@@ -8,3 +8,5 @@ Fixes:
  Rod of tricky flame makes parkicle w/o mana
  Rod of thundering peaks - no particles
  Race selection panel desync
+ Overmage-effected spells ignoring affinity multiplier
+ Custom spell radius render

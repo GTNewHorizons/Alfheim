@@ -6,6 +6,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.core.util.mc
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
+import alfheim.common.spell.tech.SpellTimeStop
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.IBossDisplayData
@@ -101,7 +102,7 @@ object CardinalSystemClient {
 		fun affected(e: Entity?): Boolean {
 			if (e == null || e is IBossDisplayData) return false
 			tsAreas
-				.filter { Vector3.vecEntityDistance(it.pos, e) < 16 }
+				.filter { Vector3.vecEntityDistance(it.pos, e) < SpellTimeStop.radius }
 				.forEach {
 					if (e is EntityLivingBase) {
 						if (!it.cPt?.isMember(e as EntityLivingBase?)!!) return true
@@ -112,7 +113,7 @@ object CardinalSystemClient {
 			return false
 		}
 		
-		fun inside(pl: EntityPlayer) = tsAreas.any { Vector3.vecEntityDistance(it.pos, pl) < 16.5 }
+		fun inside(pl: EntityPlayer) = tsAreas.any { Vector3.vecEntityDistance(it.pos, pl) < SpellTimeStop.radius + 0.5 }
 		
 		fun render() {
 			for (tsa in tsAreas) SpellVisualizations.redSphere(tsa.pos.x, tsa.pos.y, tsa.pos.z)

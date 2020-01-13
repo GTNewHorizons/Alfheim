@@ -10,9 +10,10 @@ import net.minecraft.potion.PotionEffect
 object SpellSacrifice: SpellBase("sacrifice", EnumRace.IMP, 256000, 75000, 100, true) {
 	
 	override var damage = Float.MAX_VALUE
+	override var radius = 32.0
 	
 	override val usableParams: Array<Any>
-		get() = arrayOf(damage)
+		get() = arrayOf(damage, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result = checkCast(caster)
@@ -22,10 +23,11 @@ object SpellSacrifice: SpellBase("sacrifice", EnumRace.IMP, 256000, 75000, 100, 
 			caster.addPotionEffect(pe)
 			// AlfheimCore.network.sendToAll(MessageEffect(caster.entityId, AlfheimRegistry.sacrifice.id, 32, 0))
 		}
+		
 		return result
 	}
 	
 	override fun render(caster: EntityLivingBase) {
-		SpellVisualizations.negateSphere(1.0)
+		SpellVisualizations.negateSphere(radius / 32)
 	}
 }

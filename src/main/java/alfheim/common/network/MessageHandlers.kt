@@ -20,7 +20,7 @@ import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.Vector3
 
-class Message0dSHandler: IMessageHandler<Message0dS, IMessage> {
+class Message0dSHandler: IMessageHandler<Message0dS, IMessage?> {
 		
 	override fun onMessage(packet: Message0dS, message: MessageContext): IMessage? {
 		PacketHandler.handle(packet, message)
@@ -28,7 +28,7 @@ class Message0dSHandler: IMessageHandler<Message0dS, IMessage> {
 	}
 }
 
-class Message0dCHandler: IMessageHandler<Message0dC, IMessage> {
+class Message0dCHandler: IMessageHandler<Message0dC, IMessage?> {
 	
 	override fun onMessage(packet: Message0dC, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -36,7 +36,7 @@ class Message0dCHandler: IMessageHandler<Message0dC, IMessage> {
 	}
 }
 
-class Message1dHandler: IMessageHandler<Message1d, IMessage> {
+class Message1dHandler: IMessageHandler<Message1d, IMessage?> {
 
 	override fun onMessage(packet: Message1d, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -44,7 +44,7 @@ class Message1dHandler: IMessageHandler<Message1d, IMessage> {
 	}
 }
 
-class Message2dHandler: IMessageHandler<Message2d, IMessage> {
+class Message2dHandler: IMessageHandler<Message2d, IMessage?> {
 
 	override fun onMessage(packet: Message2d, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -52,7 +52,7 @@ class Message2dHandler: IMessageHandler<Message2d, IMessage> {
 	}
 }
 
-class Message3dHandler: IMessageHandler<Message3d, IMessage> {
+class Message3dHandler: IMessageHandler<Message3d, IMessage?> {
 
 	override fun onMessage(packet: Message3d, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -60,7 +60,7 @@ class Message3dHandler: IMessageHandler<Message3d, IMessage> {
 	}
 }
 
-class MessageNIHandler:  IMessageHandler<MessageNI, IMessage> {
+class MessageNIHandler:  IMessageHandler<MessageNI, IMessage?> {
 	
 	override fun onMessage(packet: MessageNI, ctx: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -68,7 +68,9 @@ class MessageNIHandler:  IMessageHandler<MessageNI, IMessage> {
 	}
 }
 
-class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage> {
+// ----
+
+class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 	override fun onMessage(packet: MessageEffect, message: MessageContext): IMessage? {
 		val e = message.clientHandler.clientWorldController.getEntityByID(packet.entity)
 		if (e is EntityLivingBase) {
@@ -112,7 +114,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage> {
 	}
 }
 
-class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage> {
+class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage?> {
 	
 	override fun onMessage(packet: MessageEffectLightning, message: MessageContext): IMessage? {
 		Botania.proxy.lightningFX(mc.theWorld, Vector3(packet.x1, packet.y1, packet.z1), Vector3(packet.x2, packet.y2, packet.z2), packet.ticksPerMeter, packet.colorOuter, packet.colorInner)
@@ -120,7 +122,7 @@ class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMe
 	}
 }
 
-class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage> {
+class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage?> {
 
 	override fun onMessage(packet: MessageHotSpellC, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -128,7 +130,7 @@ class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage> {
 	}
 }
 
-class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage> {
+class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage?> {
 
 	override fun onMessage(packet: MessageHotSpellS, message: MessageContext): IMessage? {
 		HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
@@ -136,7 +138,7 @@ class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage> {
 	}
 }
 
-class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage> {
+class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 
 	override fun onMessage(packet: MessageKeyBindS, message: MessageContext): IMessage? {
 		val player = message.serverHandler.playerEntity
@@ -188,39 +190,15 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage> {
 	}
 }
 
-class MessageVisualEffectHandler: IMessageHandler<MessageVisualEffect, IMessage> {
-
-	override fun onMessage(packet: MessageVisualEffect, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
-		return null
-	}
-}
-
-class MessagePartyHandler: IMessageHandler<MessageParty, IMessage> {
-
+class MessagePartyHandler: IMessageHandler<MessageParty, IMessage?> {
+	
 	override fun onMessage(packet: MessageParty, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
 		return null
 	}
 }
 
-class MessageTileItemHandler: IMessageHandler<MessageTileItem, IMessage> {
-
-	override fun onMessage(packet: MessageTileItem, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
-		return null
-	}
-}
-
-class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage> {
-
-	override fun onMessage(packet: MessageTimeStop, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
-		return null
-	}
-}
-
-class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage> {
+class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage?> {
 	
 	override fun onMessage(packet: MessagePlayerItemS?, ctx: MessageContext?): IMessage? {
 		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
@@ -239,7 +217,7 @@ class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage> {
 	}
 }
 
-class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage> {
+class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage?> {
 	
 	override fun onMessage(packet: MessageSkinInfo, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
@@ -248,7 +226,20 @@ class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage> {
 	}
 }
 
-class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage> {
+class MessageSpellParamsHandler: IMessageHandler<MessageSpellParams, IMessage?> {
+	
+	override fun onMessage(packet: MessageSpellParams, message: MessageContext): IMessage? {
+		val spell = AlfheimAPI.getSpellInstance(packet.name) ?: return null
+		spell.damage = packet.damage
+		spell.duration = packet.duration
+		spell.efficiency = packet.efficiency
+		spell.radius = packet.radius
+		
+		return null
+	}
+}
+
+class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage?> {
 	
 	override fun onMessage(packet: MessageRaceSelection, message: MessageContext): IMessage? {
 		val world = MinecraftServer.getServer().worldServerForDimension(packet.dim) ?: return null
@@ -266,6 +257,30 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
+		return null
+	}
+}
+
+class MessageTileItemHandler: IMessageHandler<MessageTileItem, IMessage?> {
+
+	override fun onMessage(packet: MessageTileItem, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
+		return null
+	}
+}
+
+class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage?> {
+
+	override fun onMessage(packet: MessageTimeStop, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
+		return null
+	}
+}
+
+class MessageVisualEffectHandler: IMessageHandler<MessageVisualEffect, IMessage?> {
+	
+	override fun onMessage(packet: MessageVisualEffect, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
 		return null
 	}
 }

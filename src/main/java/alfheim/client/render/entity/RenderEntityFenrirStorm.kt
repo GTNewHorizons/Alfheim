@@ -2,7 +2,9 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.core.util.mfloor
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
+import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
@@ -35,7 +37,7 @@ class RenderEntityFenrirStorm: Render() {
 			area.draw(0)
 		} catch (ignore: Throwable) {}*/
 		
-		val parts = max(1, min(e.ticksExisted * 2, 16))
+		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.toInt() * 2))
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)

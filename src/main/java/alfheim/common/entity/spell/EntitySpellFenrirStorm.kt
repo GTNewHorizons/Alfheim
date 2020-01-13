@@ -22,7 +22,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		get() = false
 	
 	init {
-		setSize((SpellFenrirStorm.radius * 2).toFloat(), (SpellFenrirStorm.radius * 2).toFloat())
+		setSize((SpellFenrirStorm.radius * 4).toFloat(), (SpellFenrirStorm.radius * 4).toFloat())
 		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
 		renderDistanceWeight = SpellFenrirStorm.radius / 2
 	}
