@@ -1,6 +1,12 @@
 Innovations:
  Anyavil items blacklist
  Elven passive ability toggle notification
+ 
+Integration:
+ Chat plugins:
+  Leading and ending parts customization for special chat lines
+ Servers/modpacks: 
+  Custom Fabulous manapool capacity if you have world overloaded with sparks
 
 Fixes:
  Crash on moving anyavil/mana accelerator with focus of dislocation (blacklisted)
