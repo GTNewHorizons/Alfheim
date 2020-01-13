@@ -54,6 +54,8 @@ import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.mana.BlockSpreader
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
+import vazkii.botania.common.block.tile.mana.TilePool
+import vazkii.botania.common.block.tile.mana.TilePool.MAX_MANA_DILLUTED
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
@@ -307,31 +309,37 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun `TileHourglass$updateEntity`(hourglass: TileHourglass) {
-		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
+	fun `TileHourglass$updateEntity`(tile: TileHourglass) {
+		if (tile.blockMetadata == 1 && tile.flipTicks == 3) {
 			var block: Block
 			for (dir in ForgeDirection.VALID_DIRECTIONS) {
-				block = hourglass.worldObj.getBlock(hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ)
+				block = tile.worldObj.getBlock(tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ)
 				if (block is IHourglassTrigger)
-					(block as IHourglassTrigger).onTriggeredByHourglass(hourglass.worldObj, hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ, hourglass)
+					(block as IHourglassTrigger).onTriggeredByHourglass(tile.worldObj, tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ, tile)
 			}
 		}
 	}
 	
 	@JvmStatic
 	@Hook(targetMethod = "updateEntity")
-	fun `TilePylon$updateEntity`(entity: TilePylon) {
-		updatingTile = entity.worldObj.isRemote
+	fun `TilePool$updateEntity`(tile: TilePool) {
+		if (tile.manaCap == -1 && tile.getBlockMetadata() == 3) tile.manaCap = AlfheimConfigHandler.poolRainbowCapacity
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "updateEntity")
+	fun `TilePylon$updateEntity`(tile: TilePylon) {
+		updatingTile = tile.worldObj.isRemote
 	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun `TilePylon$updateEntityPost`(entity: TilePylon) {
-		if (entity.worldObj.isRemote) {
+	fun `TilePylon$updateEntityPost`(tile: TilePylon) {
+		if (tile.worldObj.isRemote) {
 			updatingTile = false
-			if (entity.worldObj.rand.nextBoolean()) {
-				val meta = entity.getBlockMetadata()
-				Botania.proxy.sparkleFX(entity.worldObj, entity.xCoord + Math.random(), entity.yCoord + Math.random() * 1.5, entity.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().toFloat(), 2)
+			if (tile.worldObj.rand.nextBoolean()) {
+				val meta = tile.getBlockMetadata()
+				Botania.proxy.sparkleFX(tile.worldObj, tile.xCoord + Math.random(), tile.yCoord + Math.random() * 1.5, tile.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().toFloat(), 2)
 			}
 		}
 	}

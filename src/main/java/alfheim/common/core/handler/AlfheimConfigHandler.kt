@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.common.core.util.mfloor
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
+import vazkii.botania.common.block.tile.mana.TilePool
 import java.io.*
 import kotlin.math.*
 
@@ -54,7 +55,6 @@ object AlfheimConfigHandler {
 	// OHTER
 	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
-	var chatLimiters			= "%s"
 	var fancies					= true
 	var flugelBossBar			= true
 	var flugelSwapBL			= emptyArray<String>()
@@ -74,6 +74,10 @@ object AlfheimConfigHandler {
 	var tradePortalRate			= 1200
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
 	var wireoverpowered			= true
+	
+	// INTEGRATION
+	var chatLimiters			= "%s"
+	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION
 	var addAspectsToBotania		= true
@@ -170,7 +174,6 @@ object AlfheimConfigHandler {
 		
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept")
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
-		chatLimiters = loadProp(CATEGORY_GENERAL, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
 		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap")
@@ -190,6 +193,9 @@ object AlfheimConfigHandler {
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, true, "Allow WireSegal far more power than any one person should have")
+		
+		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
+		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
