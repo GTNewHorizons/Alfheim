@@ -34,6 +34,7 @@ object HilarityHandler {
 								gender: String, chatColor: EnumChatFormatting,
 								neededItems: List<ItemStack>, normalString: String,
 								resourceItem: ItemStack, outputItem: ItemStack) {
+		
 		handlers.add(CraftHandler(playerName, cheatyString,
 								  gender, chatColor,
 								  neededItems, normalString,
@@ -78,13 +79,13 @@ object HilarityHandler {
 			val msg = e.message.trim()
 			val player = e.player
 			
-			if (player.commandSenderName == playerName && msg == cheatyString) {
+			if (player.commandSenderName == playerName && msg == AlfheimConfigHandler.chatLimiters.format(cheatyString)) {
 				if (replaceItemInHand(player, resourceItem, outputItem)) {
 					e.component.chatStyle.color = chatColor
 					player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 100.0f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
 					return true
 				}
-			} else if (msg == normalString) {
+			} else if (msg == AlfheimConfigHandler.chatLimiters.format(normalString)) {
 				val items = getInfusionPlatforms(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ))
 				
 				val itemsMissing = ArrayList(neededItems)
@@ -113,7 +114,7 @@ object HilarityHandler {
 						return true
 					}
 				}
-			} else if (msg == cheatyString) {
+			} else if (msg == AlfheimConfigHandler.chatLimiters.format(cheatyString)) {
 				if (gender == "Overlord") {
 					player.setPositionAndUpdate(player.posX, -66666.6, player.posZ)
 				} else {

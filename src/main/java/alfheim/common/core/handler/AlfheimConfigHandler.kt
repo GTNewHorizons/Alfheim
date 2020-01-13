@@ -33,6 +33,7 @@ object AlfheimConfigHandler {
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
+	var destroyPortal			= true
 	var dimensionIDAlfheim		= -105
 	var enableAlfheimRespawn	= true
 	
@@ -53,7 +54,7 @@ object AlfheimConfigHandler {
 	// OHTER
 	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
-	var destroyPortal			= true
+	var chatLimiters			= "%s"
 	var fancies					= true
 	var flugelBossBar			= true
 	var flugelSwapBL			= emptyArray<String>()
@@ -169,6 +170,7 @@ object AlfheimConfigHandler {
 		
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept")
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
+		chatLimiters = loadProp(CATEGORY_GENERAL, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
 		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap")
@@ -237,10 +239,22 @@ object AlfheimConfigHandler {
 		}
 	}
 	
+	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.getBoolean(default)
+	}
+	
 	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String): Int {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
 		return prop.getInt(default)
+	}
+	
+	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.intList
 	}
 	
 	fun loadProp(category: String, propName: String, default: Double, restart: Boolean, desc: String): Double {
@@ -249,16 +263,10 @@ object AlfheimConfigHandler {
 		return prop.getDouble(default)
 	}
 	
-	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
+	fun loadProp(category: String, propName: String, default: String, restart: Boolean, desc: String): String {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.getBoolean(default)
-	}
-	
-	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
-		val prop = config.get(category, propName, default, desc)
-		prop.setRequiresMcRestart(restart)
-		return prop.intList
+		return prop.string
 	}
 	
 	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String): Array<String> {
