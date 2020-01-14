@@ -1019,32 +1019,14 @@ alfheim.potion.manaVoid=Manatide Storm
 
 #######################################################___Configuration___######################################################
 
+general.preload=Preload
 general.alfheim=Alfheim
-general.alfheim.tooltip=Alfheim dimension settings
-
-general.Alfheim.woldgen=Worldgen
-general.Alfheim.woldgen.tooltip=Alfheim worldgen settings
-
-general.Alfheim.woldgen.spawnrate=Spawnrates
-general.Alfheim.woldgen.spawnrate.tooltip=Alfheim mobs spawnrate settings
-
+general.alfheim.worldgen=Worldgen
+general.alfheim.worldgen.spawnrate=Spawnrates
 general.integration=Integration
-general.integration.tooltip=Cross-mods integration
-
 general.integration.thaumcraft=Thaumcraft
-general.integration.thaumcraft.tooltip=Thaumcraft integration
-
 general.potions=Potions
-general.potions.tooltip=Potion IDs
-
-general.elvenstory.mmo.potions=Potions
-general.elvenstory.mmo.potions.tooltip=Potion IDs
-
 general.elvenstory=Elvenstory
-general.elvenstory.tooltip=Elvenstory Mode optional features
-
 general.elvenstory.mmo=MMO
-general.elvenstory.mmo.tooltip=MMO Mode optional features
-
 general.elvenstory.mmo.hud=HUD
-general.elvenstory.mmo.hud.tooltip=HUD elements customizations
+general.elvenstory.mmo.potions=Potions

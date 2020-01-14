@@ -1,5 +1,7 @@
 package alfmod.common.entity
 
+import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.mfloor
 import alfmod.common.item.AlfheimModularItems
 import net.minecraft.entity.*
@@ -12,27 +14,27 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
-import kotlin.math.atan2
+import kotlin.math.*
 
-class EntityDedMoroz(world: World): EntityMob(world), IRangedAttackMob {
+class EntityDedMoroz(world: World): EntityMob(world) {
 
 	init {
-		setSize(0.6F, 1.8F)
+		setSize(1.8F, 5.4F)
+		
+		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityLiving::class.java, 1.2, false))
+		tasks.addTask(5, EntityAIWander(this, 1.0))
+		tasks.addTask(6, EntityAIWatchClosest(this, EntityLiving::class.java, 8.0f))
+		tasks.addTask(6, EntityAILookIdle(this))
 		
 		targetTasks.addTask(1, EntityAIHurtByTarget(this, false))
-		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, true))
-		tasks.addTask(4, EntityAIArrowAttack(this, 1.0, 20, 60, 15f))
-		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityPlayer::class.java, 1.2, false))
-		tasks.addTask(5, EntityAIWander(this, 1.0))
-		tasks.addTask(6, EntityAIWatchClosest(this, EntityPlayer::class.java, 8.0f))
-		tasks.addTask(6, EntityAILookIdle(this))
+		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, true))
 		
 		addRandomArmor()
 	}
 	
 	override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
-		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.15
+		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.35
 		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 400.0
 	}
 	
@@ -55,7 +57,14 @@ class EntityDedMoroz(world: World): EntityMob(world), IRangedAttackMob {
 			else -> Items.snowball
 		}!!
 	
+	override fun dropFewItems(gotHit: Boolean, looting: Int) {
+		val item = dropItem
+		entityDropItem(ItemStack(item, 1 + if (item === Items.snowball) looting else 0, 1 + if (item.isDamageable) min(0f, item.maxDamage / (looting + 1f)).toInt() else 0), 0f)
+	}
+	
 	override fun addRandomArmor() {
+		equipmentDropChances.fill(0f)
+		
 		setCurrentItemOrArmor(0, ItemStack(AlfheimModularItems.snowSword))
 		setCurrentItemOrArmor(1, ItemStack(AlfheimModularItems.snowBoots))
 		setCurrentItemOrArmor(2, ItemStack(AlfheimModularItems.snowLeggings))
@@ -63,11 +72,21 @@ class EntityDedMoroz(world: World): EntityMob(world), IRangedAttackMob {
 		setCurrentItemOrArmor(4, ItemStack(AlfheimModularItems.snowHelmet))
 	}
 	
-	override fun attackEntityWithRangedAttack(target: EntityLivingBase, p_82196_2_: Float) {
+	override fun onLivingUpdate() {
+		super.onLivingUpdate()
+		
+		if (attackTarget != null && ticksExisted % ASJUtilities.randInBounds(rand, 40, 50) == 0 && Vector3.entityDistance(this, attackTarget).toInt() in 8..16) {
+			lookHelper.setLookPositionWithEntity(attackTarget, 30f, 30f)
+			
+			attackEntityWithRangedAttack(attackTarget)
+		}
+	}
+	
+	fun attackEntityWithRangedAttack(target: EntityLivingBase) {
 		val snowball = EntitySnowball(worldObj, this)
 		
 		snowball.renderDistanceWeight = 10.0
-		snowball.posY = posY + eyeHeight - 0.10000000149011612
+		snowball.posY = posY + eyeHeight - 0.1
 		val d0: Double = target.posX - posX
 		val d1: Double = target.boundingBox.minY + (target.height / 3.0f) - snowball.posY
 		val d2: Double = target.posZ - posZ

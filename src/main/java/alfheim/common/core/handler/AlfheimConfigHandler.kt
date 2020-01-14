@@ -6,7 +6,6 @@ import alfheim.AlfheimCore
 import alfheim.common.core.util.mfloor
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
-import vazkii.botania.common.block.tile.mana.TilePool
 import java.io.*
 import kotlin.math.*
 
@@ -16,8 +15,8 @@ object AlfheimConfigHandler {
 	
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
-	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
-	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
+	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
+	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
 	const val CATEGORY_SPAWNRATE	= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "spawnrate"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
@@ -134,17 +133,29 @@ object AlfheimConfigHandler {
 		config = Configuration(suggestedConfigurationFile)
 		
 		config.load()
-		config.addCustomCategoryComment(CATEGORY_PRELOAD, "${CATEGORY_PRELOAD}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "${CATEGORY_INTEGRATION}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_INT_TC, "${CATEGORY_INT_TC}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_DIMENSION, "${CATEGORY_DIMENSION}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_WORLDGEN, "${CATEGORY_WORLDGEN}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_SPAWNRATE, "${CATEGORY_SPAWNRATE}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_POTIONS, "${CATEGORY_POTIONS}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_ESMODE, "${CATEGORY_ESMODE}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_MMO, "${CATEGORY_MMO}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_MMOP, "${CATEGORY_MMOP}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_HUD, "${CATEGORY_HUD}.tooltip")
+		config.addCustomCategoryComment(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")
+		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings")
+		config.addCustomCategoryComment(CATEGORY_WORLDGEN, "Alfheim worldgen settings")
+		config.addCustomCategoryComment(CATEGORY_SPAWNRATE, "Alfheim mobs spawnrate settings")
+		config.addCustomCategoryComment(CATEGORY_POTIONS, "Potion IDs")
+		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
+		config.addCustomCategoryComment(CATEGORY_INT_TC, "Thaumcraft integration")
+		config.addCustomCategoryComment(CATEGORY_ESMODE, "Elvenstory Mode optional features")
+		config.addCustomCategoryComment(CATEGORY_MMO, "MMO Mode optional features")
+		config.addCustomCategoryComment(CATEGORY_HUD, "HUD elements customizations")
+		config.addCustomCategoryComment(CATEGORY_MMOP, "Potion IDs")
+		
+		config.getCategory(CATEGORY_PRELOAD).setLanguageKey(CATEGORY_PRELOAD)
+		config.getCategory(CATEGORY_DIMENSION).setLanguageKey(CATEGORY_DIMENSION)
+		config.getCategory(CATEGORY_WORLDGEN).setLanguageKey(CATEGORY_WORLDGEN)
+		config.getCategory(CATEGORY_SPAWNRATE).setLanguageKey(CATEGORY_SPAWNRATE)
+		config.getCategory(CATEGORY_POTIONS).setLanguageKey(CATEGORY_POTIONS)
+		config.getCategory(CATEGORY_INTEGRATION).setLanguageKey(CATEGORY_INTEGRATION)
+		config.getCategory(CATEGORY_INT_TC).setLanguageKey(CATEGORY_INT_TC)
+		config.getCategory(CATEGORY_ESMODE).setLanguageKey(CATEGORY_ESMODE)
+		config.getCategory(CATEGORY_MMO).setLanguageKey(CATEGORY_MMO)
+		config.getCategory(CATEGORY_HUD).setLanguageKey(CATEGORY_HUD)
+		config.getCategory(CATEGORY_MMOP).setLanguageKey(CATEGORY_MMOP)
 		
 		syncConfig()
 	}
@@ -173,7 +184,7 @@ object AlfheimConfigHandler {
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		
-		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept")
+		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]")
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
@@ -236,7 +247,7 @@ object AlfheimConfigHandler {
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult, false, "Mana cost multiplier for spells with not your affinity")
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
-
+		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")
 		targetUI = loadProp(CATEGORY_HUD, "targethUI", targetUI, false, "Set this to false to hide target's healthbar")

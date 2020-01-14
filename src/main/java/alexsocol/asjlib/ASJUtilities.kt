@@ -434,9 +434,8 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getMouseOver(entity: EntityLivingBase?, dist: Double, interact: Boolean): MovingObjectPosition? {
-		if (entity?.worldObj == null) {
+		if (entity?.worldObj == null)
 			return null
-		}
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
