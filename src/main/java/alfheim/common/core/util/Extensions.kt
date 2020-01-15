@@ -1,8 +1,10 @@
 package alfheim.common.core.util
 
 import net.minecraft.entity.*
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
+import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
@@ -24,6 +26,8 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 }
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
+
+fun EntityPlayerMP.hasAchievement(a: Achievement?) = if(a == null) false else this.func_147099_x().hasAchievementUnlocked(a)
 
 fun ItemStack.itemEquals(rItem: Any): Boolean {
     if (rItem is String) {

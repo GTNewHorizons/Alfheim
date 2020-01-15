@@ -2,7 +2,10 @@ package alfmod.common.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
+import alfheim.common.network.MessageEffect
 import alfmod.common.item.AlfheimModularItems
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
@@ -78,33 +81,19 @@ class EntityDedMoroz(world: World): EntityMob(world) {
 		if (attackTarget != null && ticksExisted % ASJUtilities.randInBounds(rand, 40, 50) == 0 && Vector3.entityDistance(this, attackTarget).toInt() in 8..16) {
 			lookHelper.setLookPositionWithEntity(attackTarget, 30f, 30f)
 			
-			attackEntityWithRangedAttack(attackTarget)
+			// TODO throw snowball
 		}
 	}
 	
-	fun attackEntityWithRangedAttack(target: EntityLivingBase) {
-		val snowball = EntitySnowball(worldObj, this)
-		
-		snowball.renderDistanceWeight = 10.0
-		snowball.posY = posY + eyeHeight - 0.1
-		val d0: Double = target.posX - posX
-		val d1: Double = target.boundingBox.minY + (target.height / 3.0f) - snowball.posY
-		val d2: Double = target.posZ - posZ
-		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).toDouble()
-		
-		if (d3 >= 1.0E-7) {
-			val f2 = (atan2(d2, d0) * 180.0 / Math.PI).toFloat() - 90.0f
-			val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).toFloat()
-			val d4 = d0 / d3
-			val d5 = d2 / d3
-			snowball.setLocationAndAngles(posX + d4, snowball.posY, posZ + d5, f2, f3)
-			snowball.yOffset = 0.0f
-			val f4 = d3.toFloat() * 0.2f
-			snowball.setThrowableHeading(d0, d1 + f4.toDouble(), d2, 1.6f, 14 - worldObj.difficultySetting.difficultyId * 4f)
+	override fun setAttackTarget(target: EntityLivingBase?) {
+		if (target != null && target != attackTarget) {
+			ASJUtilities.faceEntity(target, this, 360f, 360f)
+			
+			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 100, 1))
+			if (!worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(target.entityId, AlfheimConfigHandler.potionIDEternity, 100, 1))
 		}
 		
-		playSound("snowballpoof", 1f, 1f / (rng.nextFloat() * 0.4f + 0.8f))
-		worldObj.spawnEntityInWorld(snowball)
+		super.setAttackTarget(target)
 	}
 	
 	override fun getYOffset() = super.getYOffset() - 0.5

@@ -9,7 +9,6 @@ import net.minecraftforge.common.MinecraftForge
 import org.apache.logging.log4j.Level
 import sun.misc.URLClassPath
 import sun.net.util.URLUtil
-import thaumcraft.codechicken.core.launch.DepLoader
 import java.io.*
 import java.net.*
 import java.nio.file.Files
@@ -142,7 +141,7 @@ object AlfheimModularLoader {
 			FMLRelaunchLog.log(Level.WARN, "[${ModInfo.MODID.toUpperCase()}] Could not $act, trying to free resources...")
 			
 			try {
-				val classLoader = DepLoader::class.java.classLoader
+				val classLoader = this::class.java.classLoader
 				val url = mod.toURI().toURL()
 				val f_ucp = URLClassLoader::class.java.getDeclaredField("ucp")
 				val f_loaders = URLClassPath::class.java.getDeclaredField("loaders")

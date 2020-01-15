@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
@@ -13,14 +14,14 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.*
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.living.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.*
@@ -34,7 +35,6 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	
 	init {
 		creativeTab = AlfheimTab
-		MinecraftForge.EVENT_BUS.register(Companion)
 	}
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
@@ -51,18 +51,35 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		if (entity is EntityPlayer && getInt(stack, TAG_COOLDOWN, 0) > 0) setInt(stack, TAG_COOLDOWN, getInt(stack, TAG_COOLDOWN, 0) - ManaItemHandler.requestMana(stack, entity as EntityPlayer?, 1, world!!.isRemote))
 	}
 	
-	override fun onWornTick(stack: ItemStack, entity: EntityLivingBase) {
-		if (entity.worldObj.isRemote) return
+	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
+		if (player.worldObj.isRemote || player !is EntityPlayer) return
+		
+		val baubles = PlayerHandler.getPlayerBaubles(player)
+		val inSlot: ItemStack? = baubles.getStackInSlot(0)
+		
 		// Multibauble exploit fix
-		if (entity is EntityPlayer && PlayerHandler.getPlayerBaubles(entity)?.getStackInSlot(0)?.item !is ItemTankMask) return
+		if (inSlot?.item !is ItemTankMask) return
+		
 		setInt(stack, TAG_POSSESSION, getInt(stack, TAG_POSSESSION, 0) + 1)
-		entity.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 4))
-		entity.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 4))
+		player.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 4))
+		player.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 4))
 		val time = getInt(stack, TAG_POSSESSION, 1)
 		val possessed = PotionEffect(AlfheimRegistry.possession.id, time)
 		possessed.curativeItems.clear()
-		entity.addPotionEffect(possessed)
-		if (time >= 1200 && time % 20 == 0) entity.attackEntityFrom(DamageSourceSpell.possession, (entity.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - 1200) / 400.0f)
+		player.addPotionEffect(possessed)
+		if (time >= 1200 && time % 20 == 0) player.attackEntityFrom(DamageSourceSpell.possession, (player.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - 1200) / 400.0f)
+		
+		if (time >= 3600) {
+			(inSlot.item as IBauble).onUnequipped(inSlot, player)
+			val copy = inSlot.copy()
+			baubles.setInventorySlotContents(0, null)
+			
+			setInt(copy, TAG_COOLDOWN, MAX_COOLDOWN * 3)
+			player.triggerAchievement(AlfheimAchievements.outstander)
+			
+			if (!player.inventory.addItemStackToInventory(copy))
+				player.dropPlayerItemWithRandomChoice(copy, true)
+		}
 	}
 	
 	override fun onEquipped(stack: ItemStack, entity: EntityLivingBase) {
@@ -74,16 +91,15 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		entity.addPotionEffect(possessed)
 	}
 	
-	override fun onUnequipped(stack: ItemStack?, entity: EntityLivingBase) {
+	override fun onUnequipped(stack: ItemStack, entity: EntityLivingBase) {
 		//if (entity.worldObj.isRemote) return;
-		setInt(stack!!, TAG_POSSESSION, 0)
+		setInt(stack, TAG_POSSESSION, 0)
 		if (entity.isPotionActive(AlfheimRegistry.possession)) entity.removePotionEffect(AlfheimRegistry.possession.id)
 	}
 	
 	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) = false
 	
-	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?) =
-		getInt(stack, TAG_POSSESSION, 0) < 1800
+	override fun canUnequip(stack: ItemStack?, player: EntityLivingBase?) = getInt(stack, TAG_POSSESSION, 0) < 1800
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
 		if (stack.displayName.toLowerCase().trim() == "kono dio da") list.also {
@@ -138,6 +154,10 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		const val TAG_COOLDOWN = "cooldown"
 		const val MAX_COOLDOWN = 12000
 		
+		init {
+			MinecraftForge.EVENT_BUS.register(this)
+		}
+		
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		fun onEntityDeath(e: LivingDeathEvent) {
 			val player: EntityPlayer
@@ -171,6 +191,16 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 				e.isCanceled = true
 				val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
 				e.entityLiving.health = h
+			}
+		}
+		
+		@SubscribeEvent
+		fun onEntityUpdate(e: LivingEvent.LivingUpdateEvent) {
+			val player = e.entityLiving as? EntityPlayerMP ?: return
+			
+			if (player.hasAchievement(AlfheimAchievements.outstander)) {
+				player.getActivePotionEffect(Potion.damageBoost)?.let	{ it.amplifier = max(it.amplifier, 1); it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 1))
+				player.getActivePotionEffect(Potion.resistance)?.let	{ it.amplifier = max(it.amplifier, 1); it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 1))
 			}
 		}
 		

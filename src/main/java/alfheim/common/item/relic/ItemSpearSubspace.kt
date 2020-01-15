@@ -1,7 +1,7 @@
 package alfheim.common.item.relic
 
 import alfheim.api.ModInfo
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
@@ -117,7 +117,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					
 					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1.0f, 1.0f + player.worldObj.rand.nextFloat() * 3.0f)
 				}
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.eternity.id, 120, 0))
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 120, 0))
 			
 			scd(stack, 200)
 		}

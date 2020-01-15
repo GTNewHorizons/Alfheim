@@ -377,7 +377,7 @@ object AlfheimLexiconData {
 		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.mask), mask, 1)
 		
-		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber!!)).icon = ItemStack(AlfheimItems.excaliber)
+		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber)).icon = ItemStack(AlfheimItems.excaliber)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
 		
 		/*mjolnir.setLexiconPages(new PageText("0")).setIcon(new ItemStack(AlfheimItems.mjolnir))*/

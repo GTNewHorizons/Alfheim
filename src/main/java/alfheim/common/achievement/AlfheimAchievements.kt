@@ -4,8 +4,9 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
+import net.minecraft.init.Items
 import net.minecraft.item.*
-import net.minecraft.stats.Achievement
+import net.minecraft.stats.*
 import net.minecraftforge.common.AchievementPage
 import vazkii.botania.api.item.IRelic
 import vazkii.botania.common.core.handler.ConfigHandler
@@ -16,48 +17,45 @@ object AlfheimAchievements {
 	
 	val achievements: MutableList<Achievement> = ArrayList()
 	
-	val alfheim: Achievement // go to alfheim
-	val flugelKill: Achievement // kill hardmode flugel
-	val infuser: Achievement // build up infuser
-	
-	val wingedHussar: Achievement // become winged hussar
+	val alfheim: Achievement // go to alfheim					A
+	val infuser: Achievement // build up infuser				I
+	val wingedHussar: Achievement // become winged hussar		W
 	
 	// relics
-	val excaliber: Achievement?
-	val flugelSoul: Achievement?
-	val mask: Achievement?
-	//val mjolnir: Achievement?
-	val subspace: Achievement?
-	val moonlightBow: Achievement?
+	val excaliber: Achievement //								E
 	
-	// +--------->
-	// |           X
-	// |
-	// |
-	// |
-	// V
-	//   Y
+	val flugelSoul: Achievement //								S
+	val mask: Achievement //									M
+	//val mjolnir: Achievement
+	val subspace: Achievement //								U
+	val moonlightBow: Achievement //							B
+	
+	val flugelKill: Achievement // kill hardmode flugel			F
+	val outstander: Achievement // live 3 minutes in mask		O
+	
+	//
+	//    W  I
+	//
+	//     A
+	//
+	//
+	//
 	
 	init {
-		if(ConfigHandler.relicsEnabled) {
-			flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
-			mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
-			
-			excaliber = AlfheimAchievement("excaliber", 6, 0, AlfheimItems.excaliber, mask)
-			//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, null)
-			moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
-			subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
-		} else {
-			excaliber = null
-			flugelSoul = null
-			mask = null
-			moonlightBow = null
-			subspace = null
-		}
-		
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
-		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
 		infuser = AlfheimAchievement("infuser", 2, -2, AlfheimBlocks.manaInfuser, null)
+		
+		flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
+		
+		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
+		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
+		
+		excaliber = AlfheimAchievement("excaliber", 6, 0, AlfheimItems.excaliber, mask)
+		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)
+		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
+		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
+		
+		outstander = AlfheimAchievement("outstander", 4, 2, Items.diamond_chestplate, mask).setSpecial()
 		
 		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
 		
