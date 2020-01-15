@@ -3,6 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
@@ -78,7 +79,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		if (entity is EntityPlayer && BaublesApi.getBaubles(entity).getStackInSlot(0)?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity).getStackInSlot(0), entity, 50, true)) return
 		
 		if (entity is EntityLivingBase) {
-			val soulburn = PotionEffect(AlfheimRegistry.soulburn.id, 200)
+			val soulburn = PotionEffect(AlfheimConfigHandler.potionIDSoulburn, 200)
 			soulburn.curativeItems.clear()
 			entity.addPotionEffect(soulburn)
 			if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(entity.entityId, soulburn.potionID, soulburn.duration, soulburn.amplifier))

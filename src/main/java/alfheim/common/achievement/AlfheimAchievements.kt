@@ -33,13 +33,13 @@ object AlfheimAchievements {
 	val flugelKill: Achievement // kill hardmode flugel			F
 	val outstander: Achievement // live 3 minutes in mask		O
 	
-	//
-	//    W  I
-	//
-	//     A
-	//
-	//
-	//
+	//                 |
+	//    W  I          |
+	//          B       |
+	//     A S M E      |
+	//        F U       |
+	//                  |
+	//         O        |
 	
 	init {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
@@ -55,7 +55,7 @@ object AlfheimAchievements {
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
-		outstander = AlfheimAchievement("outstander", 4, 2, Items.diamond_chestplate, mask).setSpecial()
+		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
 		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
 		

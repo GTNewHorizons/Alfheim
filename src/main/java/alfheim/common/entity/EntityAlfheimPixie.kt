@@ -104,7 +104,7 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun getCanSpawnHere(): Boolean {
-		return posY > 64 && 0 < worldObj.worldTime % 24000 && worldObj.worldTime % 24000 < 13333 || 22666 < worldObj.worldTime % 24000 && worldObj.getClosestPlayerToEntity(this, 64.0) != null && super.getCanSpawnHere()
+		return posY > 64 && (worldObj.worldTime % 24000L).toInt() in ((0..13333) + (22666..23999)) && /*worldObj.getClosestPlayerToEntity(this, 64.0) != null && */ super.getCanSpawnHere()
 	}
 	
 	@SideOnly(Side.CLIENT)

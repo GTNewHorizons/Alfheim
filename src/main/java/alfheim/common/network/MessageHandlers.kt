@@ -12,6 +12,7 @@ import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
@@ -74,7 +75,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 	override fun onMessage(packet: MessageEffect, message: MessageContext): IMessage? {
 		val e = message.clientHandler.clientWorldController.getEntityByID(packet.entity)
 		if (e is EntityLivingBase) {
-			val pe = e.getActivePotionEffect(Potion.potionTypes[packet.id])
+			val pe = e.getActivePotionEffect(packet.id)
 			when (packet.state) {
 				1	/* add	*/	-> {
 					if (pe == null) {

@@ -96,7 +96,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 			
 			for (p in potential) {
 				if (p is EntityPlayer) {
-					p.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, if (powered) 1200 else 120, 0))
+					p.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, if (powered) 1200 else 120, 0))
 				}
 			}
 			

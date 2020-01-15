@@ -25,6 +25,6 @@ class PotionNoclip: PotionAlfheim(AlfheimConfigHandler.potionIDNoclip, "noclip",
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		if (!AlfheimCore.enableMMO) return
 		target!!.noClip = false
-		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(target.entityId, AlfheimRegistry.noclip.id, 0, 0))
+		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(target.entityId, this.id, 0, 0))
 	}
 }

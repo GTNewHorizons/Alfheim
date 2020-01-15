@@ -1,12 +1,14 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.AlfheimCore
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
+import alfheim.common.network.MessageEffect
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.*
@@ -64,10 +66,10 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		player.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 4))
 		player.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 4))
 		val time = getInt(stack, TAG_POSSESSION, 1)
-		val possessed = PotionEffect(AlfheimRegistry.possession.id, time)
+		val possessed = PotionEffect(AlfheimConfigHandler.potionIDPossession, time)
 		possessed.curativeItems.clear()
 		player.addPotionEffect(possessed)
-		if (time >= 1200 && time % 20 == 0) player.attackEntityFrom(DamageSourceSpell.possession, (player.getActivePotionEffect(AlfheimRegistry.possession).getDuration() - 1200) / 400.0f)
+		if (time >= 1200 && time % 20 == 0) player.attackEntityFrom(DamageSourceSpell.possession, (player.getActivePotionEffect(AlfheimConfigHandler.potionIDPossession)!!.getDuration() - 1200) / 400f)
 		
 		if (time >= 3600) {
 			(inSlot.item as IBauble).onUnequipped(inSlot, player)
@@ -76,6 +78,9 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 			
 			setInt(copy, TAG_COOLDOWN, MAX_COOLDOWN * 3)
 			player.triggerAchievement(AlfheimAchievements.outstander)
+			
+			player.removePotionEffect(Potion.damageBoost.id)
+			player.removePotionEffect(Potion.resistance.id)
 			
 			if (!player.inventory.addItemStackToInventory(copy))
 				player.dropPlayerItemWithRandomChoice(copy, true)
@@ -86,7 +91,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		if (entity.worldObj.isRemote) return
 		setInt(stack, TAG_POSSESSION, 0)
 		setInt(stack, TAG_COOLDOWN, MAX_COOLDOWN)
-		val possessed = PotionEffect(AlfheimRegistry.possession.id, 2)
+		val possessed = PotionEffect(AlfheimConfigHandler.potionIDPossession, 2)
 		possessed.curativeItems.clear()
 		entity.addPotionEffect(possessed)
 	}
@@ -94,7 +99,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	override fun onUnequipped(stack: ItemStack, entity: EntityLivingBase) {
 		//if (entity.worldObj.isRemote) return;
 		setInt(stack, TAG_POSSESSION, 0)
-		if (entity.isPotionActive(AlfheimRegistry.possession)) entity.removePotionEffect(AlfheimRegistry.possession.id)
+		if (entity.isPotionActive(AlfheimConfigHandler.potionIDPossession)) entity.removePotionEffect(AlfheimConfigHandler.potionIDPossession)
 	}
 	
 	override fun canEquip(stack: ItemStack?, player: EntityLivingBase?) = false
@@ -199,8 +204,12 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 			val player = e.entityLiving as? EntityPlayerMP ?: return
 			
 			if (player.hasAchievement(AlfheimAchievements.outstander)) {
-				player.getActivePotionEffect(Potion.damageBoost)?.let	{ it.amplifier = max(it.amplifier, 1); it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 1))
-				player.getActivePotionEffect(Potion.resistance)?.let	{ it.amplifier = max(it.amplifier, 1); it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 1))
+				player.getActivePotionEffect(Potion.damageBoost.id)?.let { if (it.amplifier == 0) it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.damageBoost.id, 20, 0))
+				
+				player.getActivePotionEffect(Potion.resistance.id)?.let { if (it.amplifier == 0) it.duration = max(it.duration, 20) } ?: player.addPotionEffect(PotionEffect(Potion.resistance.id, 20, 0))
+				
+				AlfheimCore.network.sendToAll(MessageEffect(player, player.getActivePotionEffect(Potion.damageBoost.id)))
+				AlfheimCore.network.sendToAll(MessageEffect(player, player.getActivePotionEffect(Potion.resistance.id)))
 			}
 		}
 		

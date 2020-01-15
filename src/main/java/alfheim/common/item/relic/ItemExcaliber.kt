@@ -1,7 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import com.google.common.collect.*
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
@@ -43,7 +43,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 			val player = entity as EntityPlayer?
 			ItemRelic.updateRelic(stack, player)
 			if (ItemRelic.isRightPlayer(player!!, stack)) {
-				val haste = player.getActivePotionEffect(Potion.digSpeed)
+				val haste = player.getActivePotionEffect(Potion.digSpeed.id)
 				val check = if (haste == null) 1.0f / 6.0f else if (haste.getAmplifier() == 0) 0.4f else if (haste.getAmplifier() == 2) 1.0f / 3.0f else 0.5f
 				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 1, true)) {
 					val burst = getBurst(player, stack!!)

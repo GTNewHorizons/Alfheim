@@ -71,7 +71,7 @@ class GUIDeathTimer: GuiScreen() {
 		super.updateScreen()
 		--timer
 		
-		if (!mc.thePlayer.isPotionActive(AlfheimRegistry.leftFlame) || timer < 0) {
+		if (!mc.thePlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame) || timer < 0) {
 			mc.displayGuiScreen(null)
 			mc.setIngameFocus()
 		}

@@ -45,31 +45,7 @@ import vazkii.botania.common.lib.LibBlockNames
 // FIXME decentralize
 object AlfheimRegistry {
 	
-	lateinit var berserk: Potion
-	lateinit var bleeding: Potion
-	lateinit var butterShield: Potion
-	lateinit var deathMark: Potion
-	lateinit var decay: Potion
-	lateinit var eternity: Potion
-	lateinit var goldRush: Potion
-	lateinit var icelens: Potion
-	lateinit var leftFlame: Potion
-	lateinit var manaVoid: Potion
-	lateinit var nineLifes: Potion
-	lateinit var ninja: Potion
-	lateinit var noclip: Potion
-	lateinit var overmage: Potion
-	lateinit var possession: Potion
-	lateinit var quadDamage: Potion
-	lateinit var sacrifice: Potion
-	lateinit var showMana: Potion
-	lateinit var soulburn: Potion
-	lateinit var stoneSkin: Potion
-	lateinit var tank: Potion
-	lateinit var tHrOw: Potion
-	lateinit var wellOLife: Potion
-	
-	lateinit var worldGen: IWorldGenerator
+	private lateinit var worldGen: IWorldGenerator
 	
 	fun preInit() {
 		registerPotions()
@@ -90,29 +66,29 @@ object AlfheimRegistry {
 	}
 	
 	fun registerPotions() {
-		berserk = PotionBerserk()
-		bleeding = PotionBleeding()
-		butterShield = PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
-		deathMark = PotionDeathMark()
-		decay = PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
-		eternity = PotionEternity()
-		goldRush = PotionGoldRush()
-		icelens = PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
-		leftFlame = PotionLeftFlame()
-		manaVoid = PotionManaVoid()
-		nineLifes = PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
-		ninja = PotionNinja()
-		noclip = PotionNoclip()
-		overmage = PotionAlfheim(AlfheimConfigHandler.potionIDOvermage, "overmage", false, 0x88FFFF)
-		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
-		quadDamage = PotionQuadDamage()
-		sacrifice = PotionSacrifice()
-		showMana = PotionShowMana()
-		soulburn = PotionSoulburn()
-		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
-		tank = PotionTank()
-		tHrOw = PotionThrow()
-		wellOLife = PotionWellOLife()
+		PotionBerserk()
+		PotionBleeding()
+		PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		PotionDeathMark()
+		PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
+		PotionEternity()
+		PotionGoldRush()
+		PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
+		PotionLeftFlame()
+		PotionManaVoid()
+		PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
+		PotionNinja()
+		PotionNoclip()
+		PotionAlfheim(AlfheimConfigHandler.potionIDOvermage, "overmage", false, 0x88FFFF)
+		PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
+		PotionQuadDamage()
+		PotionSacrifice()
+		PotionShowMana()
+		PotionSoulburn()
+		PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
+		PotionTank()
+		PotionThrow()
+		PotionWellOLife()
 	}
 	
 	private fun registerEntities() {

@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional
@@ -27,7 +27,7 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
 	
 	override fun onUnequipped(stack: ItemStack?, player: EntityLivingBase) {
-		val effect = player.getActivePotionEffect(Potion.invisibility)
+		val effect = player.getActivePotionEffect(Potion.invisibility.id)
 		if (effect != null && player is EntityPlayer && effect.amplifier == -42)
 			player.removePotionEffect(Potion.invisibility.id)
 	}
@@ -39,7 +39,7 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 			if (!hasMana)
 				onUnequipped(stack, player)
 			else {
-				if (player.getActivePotionEffect(Potion.invisibility) != null)
+				if (player.getActivePotionEffect(Potion.invisibility.id) != null)
 					player.removePotionEffect(Potion.invisibility.id)
 				ManaItemHandler.requestManaExact(stack, player, manaCost, true)
 				player.addPotionEffect(PotionEffect(Potion.invisibility.id, 10, -42, true))

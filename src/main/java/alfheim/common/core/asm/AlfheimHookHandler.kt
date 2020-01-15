@@ -9,6 +9,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -472,7 +473,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
-		if (player.getActivePotionEffect(Potion.nightVision)?.duration ?: 0 > 0) 1f else 0f
+		if (player.getActivePotionEffect(Potion.nightVision.id)?.duration ?: 0 > 0) 1f else 0f
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -616,7 +617,7 @@ object AlfheimHookHandler {
 				glFogf(GL_FOG_DENSITY, event.density)
 			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
 				f1 = 5.0f
-				val j = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration()
+				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
 				
 				if (j < 20) {
 					f1 = 5.0f + (renderer.farPlaneDistance - 5.0f) * (1.0f - j.toFloat() / 20.0f)

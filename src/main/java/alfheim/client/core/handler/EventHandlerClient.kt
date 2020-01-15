@@ -20,6 +20,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.client.core.util.mc
+import alfheim.common.core.util.getActivePotionEffect
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -90,7 +91,7 @@ object EventHandlerClient {
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
 		RenderItemFlugelHead.render(e, e.entityPlayer)
 		
-		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
+		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.isCanceled = true
 			return
 		}
@@ -162,7 +163,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onBlockOverlay(e: RenderBlockOverlayEvent) {
-		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimRegistry.noclip)
+		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimConfigHandler.potionIDNoclip)
 	}
 	
 	@SubscribeEvent
@@ -251,7 +252,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onFOV(e: FOVUpdateEvent) {
-		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimRegistry.icelens) != null) e.newfov = 0.1f
+		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) != null) e.newfov = 0.1f
 	}
 	
 	@SubscribeEvent

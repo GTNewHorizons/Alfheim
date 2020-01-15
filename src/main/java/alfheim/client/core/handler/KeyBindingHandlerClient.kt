@@ -12,6 +12,7 @@ import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.core.util.mc
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
@@ -131,7 +132,7 @@ object KeyBindingHandlerClient {
 								val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
 								if (spell == null)
 									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).toDouble()))
-								else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
+								else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).toDouble()))
 									return@run
 								}
@@ -196,7 +197,7 @@ object KeyBindingHandlerClient {
 							val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
 							if (spell == null)
 								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).toDouble()))
-							else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimRegistry.leftFlame)) {
+							else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).toDouble()))
 								return@run
 							}

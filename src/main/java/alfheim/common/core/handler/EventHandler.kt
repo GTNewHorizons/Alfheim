@@ -186,7 +186,7 @@ object EventHandler {
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
 			}
 			
-			var pe: PotionEffect? = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDNineLifes])
+			var pe: PotionEffect? = target.getActivePotionEffect(AlfheimConfigHandler.potionIDNineLifes)
 			run nl@{
 				@Suppress("NAME_SHADOWING")
 				val pe = pe ?: return@nl
@@ -212,7 +212,7 @@ object EventHandler {
 				}
 			}
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDStoneSkin])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDStoneSkin)
 			if (pe != null && !e.source.isMagical && !e.source.isDamageAbsolute) {
 				e.isCanceled = true
 				target.removePotionEffect(AlfheimConfigHandler.potionIDStoneSkin)
@@ -220,7 +220,7 @@ object EventHandler {
 				return
 			}
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDButterShield])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDButterShield)
 			if (pe != null && pe.duration > 0 && e.source.isMagical && !e.source.isDamageAbsolute) {
 				e.isCanceled = true
 				if (--pe.amplifier <= 0) pe.duration = 0 // target.removePotionEffect(AlfheimRegistry.butterShield.id) <- ConcurrentModificationException :(
@@ -230,7 +230,7 @@ object EventHandler {
 			
 			// ################################################################ NOT CANCELING ################################################################
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDButterShield])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDButterShield)
 			if (!e.source.isMagical && !e.source.isDamageAbsolute && pe != null && pe.duration > 0) {
 				e.ammount /= 2f
 				pe.duration -= (e.ammount * 20).toInt()
@@ -292,7 +292,7 @@ object EventHandler {
 	fun onLivingUpdate(e: LivingUpdateEvent) {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
-				val pe = e.entityLiving.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDLeftFlame])
+				val pe = e.entityLiving.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
 				pe.duration--
 				if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
 				if (pe.duration <= 0)

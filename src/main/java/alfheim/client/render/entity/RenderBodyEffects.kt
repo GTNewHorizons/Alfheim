@@ -2,7 +2,9 @@ package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
@@ -16,7 +18,7 @@ object RenderButterflies {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(render: Render, entity: Entity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		var flies = (entity as EntityLivingBase).getActivePotionEffect(AlfheimRegistry.butterShield).getAmplifier() * 32
+		var flies = (entity as EntityLivingBase).getActivePotionEffect(AlfheimConfigHandler.potionIDButterShield)!!.getAmplifier() * 32
 		
 		setupGlowingRender()
 		

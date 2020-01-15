@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -92,7 +93,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerRender(event: RenderPlayerEvent.Specials.Post) {
-		if (event.entityLiving.getActivePotionEffect(Potion.invisibility) != null)
+		if (event.entityLiving.getActivePotionEffect(Potion.invisibility.id) != null)
 			return
 		
 		val player = event.entityPlayer

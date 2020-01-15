@@ -10,14 +10,11 @@ import alfmod.common.item.AlfheimModularItems
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.EntityMob
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.projectile.EntitySnowball
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
-import kotlin.math.*
+import kotlin.math.min
 
 class EntityDedMoroz(world: World): EntityMob(world) {
 
@@ -33,6 +30,10 @@ class EntityDedMoroz(world: World): EntityMob(world) {
 		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, true))
 		
 		addRandomArmor()
+	}
+	
+	constructor(world: World, x: Double, y: Double, z: Double): this(world) {
+		setPosition(x, y, z)
 	}
 	
 	override fun applyEntityAttributes() {
@@ -90,7 +91,8 @@ class EntityDedMoroz(world: World): EntityMob(world) {
 			ASJUtilities.faceEntity(target, this, 360f, 360f)
 			
 			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 100, 1))
-			if (!worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(target.entityId, AlfheimConfigHandler.potionIDEternity, 100, 1))
+			if (!worldObj.isRemote)
+				AlfheimCore.network.sendToAll(MessageEffect(target.entityId, AlfheimConfigHandler.potionIDEternity, 100, 1))
 		}
 		
 		super.setAttackTarget(target)

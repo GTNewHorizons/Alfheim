@@ -1,5 +1,6 @@
 package alfheim.common.integration.travellersgear
 
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent
@@ -12,7 +13,7 @@ object TGHandlerBotaniaRenderer {
 	
 	@SubscribeEvent
 	fun onPlayerRenderPost(event: RenderPlayerEvent.Specials.Post) {
-		if (event.entityLiving.getActivePotionEffect(Potion.invisibility) != null) return
+		if (event.entityLiving.getActivePotionEffect(Potion.invisibility.id) != null) return
 		
 		val player = event.entityPlayer
 		val tgInv = TravellersGearAPI.getExtendedInventory(player)

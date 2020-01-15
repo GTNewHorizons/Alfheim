@@ -398,7 +398,7 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * Makes `e1` to face `e2`
+	 * Makes [e1] to face [e2]
 	 */
 	@JvmStatic
 	fun faceEntity(e1: EntityLivingBase, e2: Entity, yaw: Float, pitch: Float) {

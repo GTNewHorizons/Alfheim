@@ -7,7 +7,7 @@ import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.network.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
@@ -21,6 +21,7 @@ import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
+import net.minecraft.stats.AchievementList.potion
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
@@ -141,13 +142,13 @@ object ESMHandler {
 	fun doSalamander(player: EntityPlayer) {
 		if (isAbilityDisabled(player)) return
 		
-		if (checkRemove(player, Potion.blindness)
-		||  checkRemove(player, Potion.poison)
-		||  checkRemove(player, Potion.confusion)) return
+		if (checkRemove(player, Potion.blindness.id)
+		||  checkRemove(player, Potion.poison.id)
+		||  checkRemove(player, Potion.confusion.id)) return
 	}
 	
-	fun checkRemove(player: EntityPlayer, potion: Potion): Boolean {
-		val effect = player.getActivePotionEffect(potion) ?: return false
+	fun checkRemove(player: EntityPlayer, id: Int): Boolean {
+		val effect = player.getActivePotionEffect(id) ?: return false
 		var dur = effect.duration
 		var amp = effect.amplifier
 		
@@ -161,7 +162,7 @@ object ESMHandler {
 			effect.amplifier = amp
 			effect.duration = dur
 			
-			if (!player.worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(player.entityId, potion.id, dur, amp))
+			if (!player.worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(player.entityId, id, dur, amp))
 		}
 		
 		return false
