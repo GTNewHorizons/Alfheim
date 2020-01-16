@@ -10,7 +10,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeMount1: BiomeAlfheim(0) {
+class BiomeMount1: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("Low plateau")

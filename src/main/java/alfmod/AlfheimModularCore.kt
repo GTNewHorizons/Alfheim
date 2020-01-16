@@ -29,6 +29,7 @@ class AlfheimModularCore {
 	@EventHandler
 	fun init(e: FMLInitializationEvent) {
 		proxy.init()
+		proxy.registerHandlers()
 	}
 	
 	@EventHandler

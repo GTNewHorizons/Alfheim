@@ -37,10 +37,13 @@ import net.minecraft.potion.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
+import net.minecraft.world.biome.*
+import net.minecraft.world.chunk.Chunk
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
+import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
@@ -56,7 +59,6 @@ import vazkii.botania.common.block.mana.BlockSpreader
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
 import vazkii.botania.common.block.tile.mana.TilePool
-import vazkii.botania.common.block.tile.mana.TilePool.MAX_MANA_DILLUTED
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
@@ -513,6 +515,26 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun hasSearchBar(tab: BotaniaCreativeTab) = AlfheimConfigHandler.searchTabBotania
+	
+	var chunkCoors = Int.MAX_VALUE to Int.MAX_VALUE
+	
+	@JvmStatic
+	@Hook(targetMethod = "getChunkFromBlockCoords")
+	fun getChunkFromBlockCoords(world: World, x: Int, z: Int) {
+		chunkCoors = x to z
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getBiomeGenForWorldCoords(c: Chunk, x: Int, z: Int, cm: WorldChunkManager, @ReturnValue oldBiome: BiomeGenBase): BiomeGenBase? {
+		if (chunkCoors.first != Int.MAX_VALUE || chunkCoors.second != Int.MAX_VALUE) {
+			val biome = WE_Biome.getBiomeAt((cm as? WE_WorldChunkManager ?: return oldBiome).cp, chunkCoors.first.toLong(), chunkCoors.second.toLong())
+			chunkCoors = Int.MAX_VALUE to Int.MAX_VALUE
+			return biome
+		}
+		else
+			return oldBiome
+	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic

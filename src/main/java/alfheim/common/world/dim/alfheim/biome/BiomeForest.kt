@@ -9,7 +9,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeForest: BiomeAlfheim(0) {
+class BiomeForest: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("Forest")

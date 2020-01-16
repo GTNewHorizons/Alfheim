@@ -14,7 +14,11 @@ open class CommonProxy {
 	
 	open fun init() {
 		ASJUtilities.registerEntity(EntityDedMoroz::class.java, "DedMoroz", AlfheimModularCore.instance)
-		ASJUtilities.registerEntity(EntitySnowSprite::class.java, "SnowSprite", AlfheimModularCore.instance)
+		ASJUtilities.registerEntityEgg(EntitySnowSprite::class.java, "SnowSprite", 0xFFFFFF, 0x44FFFF, AlfheimModularCore.instance)
+	}
+	
+	open fun registerHandlers() {
+		SpriteKillhandler
 	}
 	
 	open fun postInit() {

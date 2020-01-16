@@ -3,7 +3,7 @@
 
 package ru.vamig.worldengine;
 
-import alfheim.AlfheimCore;
+import alexsocol.asjlib.ASJUtilities;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.relauncher.*;
 import net.minecraft.init.Blocks;

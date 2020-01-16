@@ -1,6 +1,6 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -9,6 +9,7 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.proxy.ClientProxy
+import alfheim.client.core.util.mc
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -19,6 +20,7 @@ import alfheim.common.core.helper.flight
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
+import alfheim.common.network.Message1l.m1l
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
 import alfheim.common.network.MessageNI.mni
@@ -58,6 +60,12 @@ object PacketHandlerClient {
 			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
+		}
+	}
+	
+	fun handle(packet: Message1l) {
+		when(m1l.values()[packet.type]) {
+			m1l.SEED             -> ASJReflectionHelper.setValue(mc.theWorld.worldInfo, packet.data1, "randomSeed") // mc.theWorld.worldInfo.randomSeed = seed
 		}
 	}
 	

@@ -10,13 +10,14 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
 	
-	public final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
+	public static final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
 	public final float rainfall = 0.1F;
 	public WE_ChunkProvider cp = null;
 	
 	@Override
 	public void registerWorldChunkManager() {
-		worldChunkMgr = new WorldChunkManagerHell(new WE_Biome(we_id, true), rainfall);
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		worldChunkMgr = new WE_WorldChunkManager(new WE_Biome(we_id, true), cp, rainfall);
     }
 	
 	@Override

@@ -835,7 +835,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun say(player: EntityPlayer?, message: String) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message)))
+		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message).replace('&', '\u00a7')))
 	}
 	
 	@JvmStatic

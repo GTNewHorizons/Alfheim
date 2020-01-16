@@ -9,6 +9,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class WE_ChunkSmartLight extends Chunk {
+	
 	public WE_ChunkSmartLight(World p1, Block[] p2, byte[] p3, int p4, int p5) {
 		super(p1, p2, p3, p4, p5);
 	}

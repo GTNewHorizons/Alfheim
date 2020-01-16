@@ -10,7 +10,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeField: BiomeAlfheim(0) {
+class BiomeField: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("Field")

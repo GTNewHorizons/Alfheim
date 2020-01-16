@@ -139,6 +139,7 @@ class AlfheimCore {
 		
 		network.registerMessage(Message0dCHandler::class.java, Message0dC::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message1dHandler::class.java, Message1d::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(Message1lHandler::class.java, Message1l::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message2dHandler::class.java, Message2d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message3dHandler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageNIHandler::class.java, MessageNI::class.java, nextPacketID++, Side.CLIENT)

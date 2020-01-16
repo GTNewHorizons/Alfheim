@@ -6,7 +6,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeLake: BiomeAlfheim(0) {
+class BiomeLake: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("Lake")

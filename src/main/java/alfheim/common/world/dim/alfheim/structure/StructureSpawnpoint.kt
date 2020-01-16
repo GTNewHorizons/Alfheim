@@ -15,12 +15,12 @@ object StructureSpawnpoint {
 	var spawn = false
 	
 	fun generate(world: World, rand: Random) {
-		if (!AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generate01(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0) + 2, -41)
+		if (!AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generate15(world, rand, -11, world.getTopSolidOrLiquidBlock(0, 0) + 2, -41)
 		if (AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateStartBox(world, rand, -2, 251, -2)
 		ASJUtilities.log("Spawn created")
 	}
 	
-	fun generate01(world: World, rand: Random, x: Int, y: Int, z: Int) {
+	/*fun generate01(world: World, rand: Random, x: Int, y: Int, z: Int) {
 		world.setBlock(x, y, z, Blocks.air, 0, 3)
 		world.setBlock(x + 1, y, z, Blocks.air, 0, 3)
 		world.setBlock(x + 2, y, z, Blocks.air, 0, 3)
@@ -19881,7 +19881,7 @@ object StructureSpawnpoint {
 		world.setBlock(x + 22, y + 19, z + 42, ModFluffBlocks.elfQuartzStairs, 1, 3)
 		
 		generate15(world, rand, x, y, z)
-	}
+	}*/
 	
 	fun generate15(world: World, rand: Random, x: Int, y: Int, z: Int) {
 		world.setSpawnLocation(x + 11, y + 8, z + 39)

@@ -1,5 +1,6 @@
 package alfmod.common.entity
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.mfloor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -17,7 +18,6 @@ import kotlin.math.*
 
 class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 
-	/** Coordinates of where the pixie spawned.  */
 	private var spawnPosition: ChunkCoordinates? = null
 	
 	init {
@@ -50,11 +50,11 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun onEntityUpdate() {
-		if (worldObj.isRemote && ticksExisted % 5 == 0)
-			Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5 + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, (Math.random() * 0.25 + 0.65).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
+		if (worldObj.isRemote)
+			Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
 		
-		motionY *= 0.6
-		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
+		// motionY *= 0.6
+		// if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
 		
 		super.onEntityUpdate()
 	}
@@ -72,12 +72,12 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		val d0 = spawnPosition!!.posX.toDouble() + 0.5 - posX
 		val d1 = spawnPosition!!.posY.toDouble() + 0.1 - posY
 		val d2 = spawnPosition!!.posZ.toDouble() + 0.5 - posZ
-		motionX += (sign(d0) * 0.5 - motionX) * 0.1
-		motionY += (sign(d1) * 0.7 - motionY) * 0.1
-		motionZ += (sign(d2) * 0.5 - motionZ) * 0.1
+		motionX += (sign(d0) * 0.5 - motionX) * 0.01
+		motionY += (sign(d1) * 0.7 - motionY) * 0.01
+		motionZ += (sign(d2) * 0.5 - motionZ) * 0.01
 		val f = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() - 90.0f
 		val f1 = MathHelper.wrapAngleTo180_float(f - rotationYaw)
-		moveForward = 0.5f
+		moveForward = 0.05f
 		rotationYaw += f1
 	}
 	
@@ -86,7 +86,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		isDead = dead
 		if (worldObj.isRemote)
 			for (i in 0..11)
-				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.25, posY + 0.5 + (Math.random() - 0.5) * 0.25, posZ + (Math.random() - 0.5) * 0.25, 1f, 0.25f, 0.9f, 1f + Math.random().toFloat() * 0.25f, 5)
+				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
 	}
 	
 	override fun getCanSpawnHere(): Boolean {
@@ -101,7 +101,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 
 object SpriteKillhandler {
 	
-	val regions = HashMap<Pair<Int, Int>, Int>()
+	private val regions = HashMap<Pair<Int, Int>, Int>()
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
@@ -112,7 +112,7 @@ object SpriteKillhandler {
 		val sprite = e.entityLiving as? EntitySnowSprite ?: return
 		val killer = e.source.entity as? EntityPlayer ?: return
 		
-		val pointer = (sprite.posX.mfloor() % 64) to (sprite.posZ.mfloor() % 64)
+		val pointer = (sprite.posX / 64).mfloor() to (sprite.posZ / 64).mfloor()
 		val kills = regions.getOrDefault(pointer, 0) + 1
 		
 		if (kills >= 16) {
@@ -120,6 +120,9 @@ object SpriteKillhandler {
 			sprite.worldObj.spawnEntityInWorld(ded)
 			
 			ded.attackTarget = killer
+			
+			ASJUtilities.say(killer, "alfmodmisc.ded.awakening")
+			
 			regions[pointer] = 0
 		} else {
 			regions[pointer] = kills

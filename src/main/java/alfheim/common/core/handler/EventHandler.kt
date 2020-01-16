@@ -33,6 +33,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.world.BlockEvent
@@ -82,6 +83,13 @@ object EventHandler {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		val player = e.entity as? EntityPlayerMP ?: return
+		val seed = player.worldObj.seed
+		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)
 	}
 	
 	@SubscribeEvent

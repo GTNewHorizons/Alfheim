@@ -6,9 +6,9 @@ import alfheim.common.entity.EntityElf
 import net.minecraft.entity.passive.*
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
-import ru.vamig.worldengine.WE_Biome
+import ru.vamig.worldengine.*
 
-open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: Boolean = false): WE_Biome(ID_FOR_ALL_WE_BIOMES, r) {
+open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(WE_WorldProvider.we_id, r) {
 	
 	init {
 		setBiomeName("Alfheim")

@@ -38,8 +38,16 @@ class Message0dCHandler: IMessageHandler<Message0dC, IMessage?> {
 }
 
 class Message1dHandler: IMessageHandler<Message1d, IMessage?> {
-
+	
 	override fun onMessage(packet: Message1d, message: MessageContext): IMessage? {
+		PacketHandlerClient.handle(packet)
+		return null
+	}
+}
+
+class Message1lHandler: IMessageHandler<Message1l, IMessage?> {
+	
+	override fun onMessage(packet: Message1l, message: MessageContext): IMessage? {
 		PacketHandlerClient.handle(packet)
 		return null
 	}

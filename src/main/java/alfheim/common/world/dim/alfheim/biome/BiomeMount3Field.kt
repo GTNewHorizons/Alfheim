@@ -7,7 +7,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeMount3Field: BiomeAlfheim(0) {
+class BiomeMount3Field: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("High plateau field")

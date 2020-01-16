@@ -10,7 +10,7 @@ import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
 
 fun Double.mfloor() = MathHelper.floor_double(this)
-// double value
+
 val Number.D get() = this.toDouble()
 
 fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)

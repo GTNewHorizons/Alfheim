@@ -10,24 +10,25 @@ import alfmod.common.item.AlfheimModularItems
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.EntityMob
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.world.World
-import kotlin.math.min
+import kotlin.math.*
 
 class EntityDedMoroz(world: World): EntityMob(world) {
 
 	init {
 		setSize(1.8F, 5.4F)
 		
-		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityLiving::class.java, 1.2, false))
+		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityPlayer::class.java, 1.2, false))
 		tasks.addTask(5, EntityAIWander(this, 1.0))
-		tasks.addTask(6, EntityAIWatchClosest(this, EntityLiving::class.java, 8.0f))
+		tasks.addTask(6, EntityAIWatchClosest(this, EntityPlayer::class.java, 8.0f))
 		tasks.addTask(6, EntityAILookIdle(this))
 		
 		targetTasks.addTask(1, EntityAIHurtByTarget(this, false))
-		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, true))
+		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, true))
 		
 		addRandomArmor()
 	}
@@ -63,7 +64,7 @@ class EntityDedMoroz(world: World): EntityMob(world) {
 	
 	override fun dropFewItems(gotHit: Boolean, looting: Int) {
 		val item = dropItem
-		entityDropItem(ItemStack(item, 1 + if (item === Items.snowball) looting else 0, 1 + if (item.isDamageable) min(0f, item.maxDamage / (looting + 1f)).toInt() else 0), 0f)
+		entityDropItem(ItemStack(item, 1 + if (item === Items.snowball) looting else 0, if (item.isDamageable) item.maxDamage / (looting + 1) else 0), 0f)
 	}
 	
 	override fun addRandomArmor() {

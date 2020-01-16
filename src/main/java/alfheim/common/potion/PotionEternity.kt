@@ -1,6 +1,7 @@
 package alfheim.common.potion
 
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
@@ -36,6 +37,7 @@ class PotionEternity: PotionAlfheim(AlfheimConfigHandler.potionIDEternity, "eter
 	@SubscribeEvent
 	fun onDamageTaken(event: LivingHurtEvent) {
 		val player = event.entityLiving as? EntityPlayer ?: return
-		if (player.isPotionActive(this)) event.ammount = 0f
+		val eff = player.getActivePotionEffect(this.id) ?: return
+		if (eff.amplifier == 0) event.ammount = 0f
 	}
 }
