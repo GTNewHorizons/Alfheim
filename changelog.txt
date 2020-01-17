@@ -2,6 +2,8 @@ Innovations:
  Anyavil items blacklist
  Elven passive ability toggle notification
  Hyperpolated bucket for drying lakes and seas
+ Schema generator now supports nbt
+ [MMO] Disabled default & Botania boss bars when MMO is enabled
  
 Integration:
  Chat plugins:
@@ -19,3 +21,5 @@ Fixes:
  Custom spell radius render
  Rain instead of snow (during winter)
  Config files category tooltips
+ Biome display on F3
+ Snow grass spreading and layering

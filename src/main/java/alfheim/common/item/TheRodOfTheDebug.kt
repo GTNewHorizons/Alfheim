@@ -63,8 +63,6 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		try {
 			// if (!world.isRemote) return false
 			
-			ASJUtilities.chatLog(world.getBiomeGenForCoordsBody(x, z).biomeName, player)
-			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {
 				val nbt = NBTTagCompound()

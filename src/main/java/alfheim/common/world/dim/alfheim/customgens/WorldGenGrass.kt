@@ -1,6 +1,8 @@
 package alfheim.common.world.dim.alfheim.customgens
 
+import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.inn
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.*
 import net.minecraft.init.Blocks
@@ -15,6 +17,8 @@ import java.util.*
 import kotlin.math.*
 
 class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers: Boolean, val botanicalFlowers: Boolean, val mod: Double): IWorldGenerator {
+	
+	val G = if (AlfheimCore.winter) arrayOf(AlfheimBlocks.snowGrass, Blocks.grass) else arrayOf(Blocks.grass)
 	
 	override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider, chunkProvider: IChunkProvider) {
 		
@@ -32,7 +36,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 					for (j in 0 until ConfigHandler.flowerDensity * ConfigHandler.flowerPatchChance) {
 						val x1 = x + rand.nextInt(dist * 2) - dist
 						val z1 = z + rand.nextInt(dist * 2) - dist
-						if (world.isAirBlock(x1, y, z1) && world.getBlock(x1, y - 1, z1) === Blocks.grass)
+						if (world.isAirBlock(x1, y, z1) && world.getBlock(x1, y - 1, z1) inn G)
 							if (primus) {
 								world.setBlock(x1, y, z1, ModBlocks.specialFlower, 0, 2)
 								val flower = world.getTileEntity(x1, y, z1) as TileSpecialFlower
@@ -98,7 +102,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 			val x = cx + rand.nextInt(16)
 			val z = cz + rand.nextInt(16)
 			val y = world.getTopSolidOrLiquidBlock(x, z)
-			if (!world.isAirBlock(x, y, z) || world.getBlock(x, y - 1, z) !== Blocks.grass) continue
+			if (!world.isAirBlock(x, y, z) || !(world.getBlock(x, y - 1, z) inn G)) continue
 			
 			val type = rand.nextInt(20)
 			

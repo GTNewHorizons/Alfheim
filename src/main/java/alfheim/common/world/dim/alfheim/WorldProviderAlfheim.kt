@@ -12,13 +12,8 @@ import vazkii.botania.common.block.ModBlocks
 
 class WorldProviderAlfheim: WE_WorldProvider() {
 	
-	override fun getCloudHeight(): Float {
-		return 128.0f
-	}
-	
-	override fun isSurfaceWorld(): Boolean {
-		return true
-	}
+	override fun getCloudHeight() = 180f
+	override fun isSurfaceWorld() = true
 	
 	override fun calculateCelestialAngle(var1: Long, var3: Float): Float {
 		val j = (var1 % 24000L).toInt()
@@ -38,13 +33,9 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		return f1
 	}
 	
-	override fun canRespawnHere(): Boolean {
-		return AlfheimCore.enableElvenStory || AlfheimConfigHandler.enableAlfheimRespawn
-	}
+	override fun canRespawnHere() = AlfheimCore.enableElvenStory xor AlfheimConfigHandler.enableAlfheimRespawn
 	
-	override fun getDimensionName(): String {
-		return "Alfheim"
-	}
+	override fun getDimensionName() = "Alfheim"
 	
 	override fun genSettings(cp: WE_ChunkProvider) {
 		cp.createChunkGen_List.clear()
@@ -91,16 +82,16 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		waterLakes.fY = 192
 		cp.decorateChunkGen_List.add(waterLakes)
 		
-		WE_Biome.addBiomeToGeneration(cp, BiomeField())
-		WE_Biome.addBiomeToGeneration(cp, BiomeBeach())
-		WE_Biome.addBiomeToGeneration(cp, BiomeSandbank())
-		WE_Biome.addBiomeToGeneration(cp, BiomeLake())
-		WE_Biome.addBiomeToGeneration(cp, BiomeMount1())
-		WE_Biome.addBiomeToGeneration(cp, BiomeMount2())
-		WE_Biome.addBiomeToGeneration(cp, BiomeMount3())
-		WE_Biome.addBiomeToGeneration(cp, BiomeMount3Trees())
-		WE_Biome.addBiomeToGeneration(cp, BiomeMount3Field())
-		WE_Biome.addBiomeToGeneration(cp, BiomeForest())
-		WE_Biome.addBiomeToGeneration(cp, BiomeForest2())
+		WE_Biome.addBiomeToGeneration(cp, BiomeField)
+		WE_Biome.addBiomeToGeneration(cp, BiomeBeach)
+		WE_Biome.addBiomeToGeneration(cp, BiomeSandbank)
+		WE_Biome.addBiomeToGeneration(cp, BiomeLake)
+		WE_Biome.addBiomeToGeneration(cp, BiomeMount1)
+		WE_Biome.addBiomeToGeneration(cp, BiomeMount2)
+		WE_Biome.addBiomeToGeneration(cp, BiomeMount3)
+		WE_Biome.addBiomeToGeneration(cp, BiomeMount3Trees)
+		WE_Biome.addBiomeToGeneration(cp, BiomeMount3Field)
+		WE_Biome.addBiomeToGeneration(cp, BiomeForest)
+		WE_Biome.addBiomeToGeneration(cp, BiomeForest2)
 	}
 }

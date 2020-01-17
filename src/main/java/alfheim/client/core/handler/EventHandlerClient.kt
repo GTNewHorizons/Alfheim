@@ -11,6 +11,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
+import alfheim.client.core.util.mc
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
@@ -18,8 +19,6 @@ import alfheim.client.render.particle.EntityFeatherFx
 import alfheim.client.render.world.AstrolabePreviewHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.client.core.util.mc
 import alfheim.common.core.util.getActivePotionEffect
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -38,15 +37,23 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
 
-@Suppress("UNUSED_PARAMETER")
 object EventHandlerClient {
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun onDrawScreenPre(event: RenderGameOverlayEvent.Pre) {
+		if (event.type != ElementType.BOSSHEALTH || !AlfheimCore.enableMMO) return
+			BossBarHandler.setCurrentBoss(null)
+	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPost(event: RenderGameOverlayEvent.Post) {
 		if (event.type != ElementType.HOTBAR) return
+		
 		ItemsRemainingRenderHandler.render(event.resolution, event.partialTicks)
 	}
 	
@@ -82,6 +89,8 @@ object EventHandlerClient {
 		val world = Minecraft.getMinecraft().theWorld
 		if (world != null && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.provider.skyRenderer == null)
 			world.provider.skyRenderer = SkyblockSkyRenderer()
+		
+		if (AlfheimCore.enableMMO) BossBarHandler.setCurrentBoss(null)
 		
 		if (Minecraft.getMinecraft().thePlayer == null) PlayerSegmentClient.target = null
 	}

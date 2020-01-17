@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 
 object SchemaGenerator {
@@ -17,6 +18,7 @@ object SchemaGenerator {
 		for (ele in arr) {
 			for (loc in ele.location) {
 				world.setBlock(x + loc.x, y + loc.y, z + loc.z, Block.getBlockFromName(ele.block), loc.meta, 3)
+				if (loc.nbt != null) world.getTileEntity(x + loc.x, y + loc.y, z + loc.z)?.readFromNBT(loc.nbt)
 			}
 		}
 	}
@@ -24,4 +26,4 @@ object SchemaGenerator {
 
 class BlockElement(val block: String, val location: List<LocationElement>)
 
-class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int)
+class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int, val nbt: NBTTagCompound?)

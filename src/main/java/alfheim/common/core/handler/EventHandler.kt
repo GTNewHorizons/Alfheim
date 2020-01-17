@@ -272,6 +272,7 @@ object EventHandler {
 				CardinalSystem.SpellCastingSystem.tick()
 				CardinalSystem.TimeStopSystem.tick()
 			}
+			
 			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
 				

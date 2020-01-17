@@ -1,8 +1,6 @@
 package alfheim.common.world.dim.alfheim.structure
 
 import alexsocol.asjlib.ASJUtilities
-import net.minecraft.block.Block
-import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import vazkii.botania.common.block.*
@@ -10,28 +8,11 @@ import java.util.*
 
 class StructureArena: StructureBaseClass() {
 	
-	protected fun GetValidSpawnBlocks(): Array<Block> {
-		return arrayOf(Blocks.grass)
-	}
-	
-	fun LocationIsValidSpawn(world: World, x: Int, y: Int, z: Int): Boolean {
-		val checkBlock = world.getBlock(x, y - 1, z)
-		val blockAbove = world.getBlock(x, y, z)
-		val blockBelow = world.getBlock(x, y - 2, z)
-		for (i in GetValidSpawnBlocks()) {
-			if (blockAbove !== Blocks.air)
-				return false
-			if (checkBlock === i)
-				return true
-			else if (checkBlock === Blocks.snow_layer && blockBelow === i)
-				return true
-			else if (checkBlock.material === Material.plants && blockBelow === i)
-				return true
-		}
-		return false
-	}
-	
 	override fun generate(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
+		return generate01(world, rand, x, y + 1, z)
+	}
+	
+	fun generate01(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
 		world.setBlock(x + 13, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 14, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 15, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)

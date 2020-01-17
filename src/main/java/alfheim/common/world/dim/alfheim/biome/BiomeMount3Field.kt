@@ -1,5 +1,7 @@
 package alfheim.common.world.dim.alfheim.biome
 
+import alfheim.AlfheimCore
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
@@ -7,7 +9,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeMount3Field: BiomeAlfheim() {
+object BiomeMount3Field: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("High plateau field")
@@ -25,7 +27,7 @@ class BiomeMount3Field: BiomeAlfheim() {
 		
 		var standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.dirt, 0.toByte(), ModBlocks.livingrock, 0.toByte(), -256, 0, -256, -2, true)
-		standardBiomeLayers.add(Blocks.grass, 0.toByte(), Blocks.dirt, 0.toByte(), -256, 0, -256, 0, false)
+		standardBiomeLayers.add(if (AlfheimCore.winter) AlfheimBlocks.snowGrass else Blocks.grass, 0.toByte(), Blocks.dirt, 0.toByte(), -256, 0, -256, 0, false)
 		createChunkGen_InXZ_List.add(standardBiomeLayers)
 		standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.bedrock, 0.toByte(), 0, 0, 0, 0, true)

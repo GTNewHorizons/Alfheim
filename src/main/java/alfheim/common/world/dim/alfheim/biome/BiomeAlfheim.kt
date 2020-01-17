@@ -23,7 +23,7 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 		createChunkGen_InXYZ_List.clear()
 		decorateChunkGen_List.clear()
 		
-		addEntry(EntityElf::class.java, AlfheimConfigHandler.pixieSpawn)
+		addEntry(EntityElf::class.java, AlfheimConfigHandler.elvesSpawn)
 		addEntry(EntitySheep::class.java, AlfheimConfigHandler.sheepSpawn)
 		addEntry(EntityPig::class.java, AlfheimConfigHandler.pigSpawn)
 		addEntry(EntityChicken::class.java, AlfheimConfigHandler.chickSpawn)

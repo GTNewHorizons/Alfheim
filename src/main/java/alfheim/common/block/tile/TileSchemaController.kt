@@ -346,12 +346,14 @@ open class TileSchemaController: TileMod() {
 	
 	@Throws(IOException::class)
 	fun dumpTo(file: File) {
-		class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int) {
+		class LocationElement(val x: Int, val y: Int, val z: Int, val meta: Int, val nbt: NBTTagCompound?) {
 			fun getJson(): JsonObject = JsonObject().apply {
 				addProperty("x", x)
 				addProperty("y", y)
 				addProperty("z", z)
 				addProperty("meta", meta)
+				if (nbt != null)
+					addProperty("tile", nbt.toString())
 			}
 		}
 		
@@ -363,10 +365,12 @@ open class TileSchemaController: TileMod() {
 				for (z in zCoord re pos_z!!.z) {
 					val meta = worldObj.getBlockMetadata(x, y, z)
 					val key = getUniqueName(worldObj.getBlock(x, y, z))
+					var nbt: NBTTagCompound? = null
+					worldObj.getTileEntity(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z))?.let { nbt = NBTTagCompound(); it.writeToNBT(nbt) }
 					
 					if (map.containsKey(key))
-						map[key]?.add(LocationElement(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z), meta))
-					else map[key] = arrayListOf(LocationElement(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z), meta))
+						map[key]?.add(LocationElement(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z), meta, nbt))
+					else map[key] = arrayListOf(LocationElement(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z), meta, nbt))
 				}
 			}
 		}

@@ -13,7 +13,37 @@ fun Double.mfloor() = MathHelper.floor_double(this)
 
 val Number.D get() = this.toDouble()
 
+// ################ MINECRAFT ####################
+
 fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
+
+fun Entity.setSize(wid: Double, hei: Double) {
+    var f2: Float
+    val w = wid.toFloat()
+    val h = hei.toFloat()
+    
+    if (w != width || h != height) {
+        f2 = width
+        width = w
+        height = h
+        boundingBox.maxX = boundingBox.minX + width
+        boundingBox.maxZ = boundingBox.minZ + width
+        boundingBox.maxY = boundingBox.minY + height
+        if (width > f2 && !worldObj.isRemote)
+            moveEntity((f2 - width).toDouble(), 0.0, (f2 - width).toDouble())
+    }
+    
+    f2 = w % 2.0f
+    
+    myEntitySize = when {
+        f2 < 0.375 -> Entity.EnumEntitySize.SIZE_1
+        f2 < 0.75  -> Entity.EnumEntitySize.SIZE_2
+        f2 < 1.0   -> Entity.EnumEntitySize.SIZE_3
+        f2 < 1.375 -> Entity.EnumEntitySize.SIZE_4
+        f2 < 1.75  -> Entity.EnumEntitySize.SIZE_5
+        else       -> Entity.EnumEntitySize.SIZE_6
+    }
+}
 
 fun TileEntity.boundingBox(range: Number = 1) = getBoundingBox(xCoord.D, yCoord.D, zCoord).expand(range)
 

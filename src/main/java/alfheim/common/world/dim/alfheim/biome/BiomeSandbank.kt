@@ -7,7 +7,7 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeSandbank: BiomeAlfheim() {
+object BiomeSandbank: BiomeAlfheim() {
 	
 	init {
 		setBiomeName("Sandbank")

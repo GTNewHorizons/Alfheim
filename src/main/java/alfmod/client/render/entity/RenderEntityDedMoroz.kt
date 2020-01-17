@@ -1,5 +1,6 @@
 package alfmod.client.render.entity
 
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelBipedEyes
 import cpw.mods.fml.relauncher.*
@@ -19,7 +20,7 @@ class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 	
 	override fun getEntityTexture(entity: Entity?) = texture
 	override fun getEntityTexture(entity: EntityLiving?) = texture
-	override fun preRenderCallback(entity: EntityLivingBase?, ticks: Float) = glScaled(3.0, 3.0, 3.0)
+	override fun preRenderCallback(entity: EntityLivingBase?, ticks: Float) = glScaled(2.5, 2.5, 2.5)
 	
 	override fun renderEquippedItems(entity: EntityLiving, ticks: Float) {
 		glColor3f(1f, 1f, 1f)
@@ -102,9 +103,9 @@ class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 				f5 = (i shr 8 and 255).toFloat() / 255f
 				f2 = (i and 255).toFloat() / 255f
 				glColor4f(f4, f5, f2, 1f)
-				glScaled(1.5, 1.5, 1.5)
+				glScaled(1.25, 1.25, 1.25)
+				glTranslated(0.0, 0.2, 0.0)
 				renderManager.itemRenderer.renderItem(entity, itemstack, 0)
-				glScaled(0.8, 0.8, 0.8)
 			}
 			
 			glPopMatrix()
