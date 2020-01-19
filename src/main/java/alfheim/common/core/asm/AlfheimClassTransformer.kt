@@ -159,7 +159,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"com.emoniph.witchery.client.ClientEvents\$GUIOverlay"           -> {
+			"com.emoniph.witchery.client.ClientEvents\$GUIOverlay"          -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ClientEvents$GUIOverlay$ClassVisitor`(cw)
@@ -511,6 +511,10 @@ class AlfheimClassTransformer: IClassTransformer {
 	
 	internal class `EntityDoppleganger$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
+		override fun visit(version: Int, access: Int, name: String?, signature: String?, superName: String?, interfaces: Array<out String>?) {
+			super.visit(version, access, name, signature, superName, arrayOf("vazkii/botania/api/boss/IBotaniaBossWithShaderAndName"))
+		}
+		
 		override// Just because!
 		fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "attackEntityFrom" || name == "a" && desc == "(Lro;F)Z") {
@@ -689,8 +693,23 @@ class AlfheimClassTransformer: IClassTransformer {
 				mv.visitMaxs(4, 8)
 				mv.visitEnd()
 				return mv
+			} else if (name == "getBossBarTextureRect") {
+				println("Visiting EntityDoppleganger#getBossBarTextureRect: $name$desc")
+				return `EntityDoppleganger$getBossBarTextureRect$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `EntityDoppleganger$getBossBarTextureRect$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			var inject = 2
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode == ICONST_0 && --inject == 0)
+					super.visitIntInsn(BIPUSH, AlfheimConfigHandler.gaiaBarOffset * 22)
+				else
+					super.visitInsn(opcode)
+			}
 		}
 	}
 	
@@ -884,7 +903,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 		}
 	}
-
+	
 	internal class `ClientEvents$GUIOverlay$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {

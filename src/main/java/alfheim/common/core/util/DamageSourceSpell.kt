@@ -85,12 +85,12 @@ open class EntityDamageSourceSpell(source: String, protected val attacker: Entit
 		attacker != null && attacker is EntityLivingBase && attacker !is EntityPlayer
 }
 
-class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val projectile: Entity?): EntityDamageSourceSpell(type, attacker) {
+class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val dealer: Entity?): EntityDamageSourceSpell(type, attacker) {
 	
-	override fun getSourceOfDamage() = projectile
+	override fun getSourceOfDamage() = dealer
 	
 	override fun func_151519_b(target: EntityLivingBase): IChatComponent {
-		val ichatcomponent = if (attacker == null) projectile!!.func_145748_c_() else attacker.func_145748_c_()
+		val ichatcomponent = if (attacker == null) dealer!!.func_145748_c_() else attacker.func_145748_c_()
 		val itemstack = if (attacker is EntityLivingBase) attacker.heldItem else null
 		val s = "death.attack.$damageType"
 		val s1 = "$s.item"

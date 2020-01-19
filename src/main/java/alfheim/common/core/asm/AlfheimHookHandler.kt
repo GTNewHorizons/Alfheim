@@ -3,7 +3,6 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
-import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
@@ -32,6 +31,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.EntityCreeper
+import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -47,7 +47,7 @@ import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.boss.IBotaniaBoss
+import vazkii.botania.api.boss.*
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -527,6 +527,25 @@ object AlfheimHookHandler {
 		chunkCoors = x to z
 	}
 	
+	var replace = false
+	
+	@JvmStatic
+	@Hook
+	fun getCanSpawnHere(entity: EntityAnimal): Boolean {
+		replace = entity.worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
+		return replace
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getBlock(world: World, x: Int, y: Int, z: Int, @ReturnValue block: Block): Block {
+		if (replace && (block === AlfheimBlocks.snowGrass || block === AlfheimBlocks.snowLayer || block === Blocks.snow_layer)) {
+			replace = false
+			return Blocks.grass
+		}
+		return block
+	}
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getBiomeGenForWorldCoords(c: Chunk, x: Int, z: Int, cm: WorldChunkManager, @ReturnValue oldBiome: BiomeGenBase): BiomeGenBase? {
@@ -729,7 +748,7 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook
+	@Hook(returnCondition = ALWAYS)
 	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
 		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
 	}
@@ -746,9 +765,23 @@ object AlfheimHookHandler {
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
-	fun drawStringWithShadow(font: FontRenderer, string: String?, x: Int, y: Int, color: Int) =
-		if (renderingBoss && BossBarHandler.currentBoss is IBotaniaBossWithName)
-			font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
-		else
-			font.drawString(string, x, y, color, true)
+	fun drawStringWithShadow(font: FontRenderer, string: String?, x: Int, y: Int, color: Int): Int {
+		val result =
+			if (renderingBoss && color == 0xA2018C && (BossBarHandler.currentBoss is IBotaniaBossWithName || BossBarHandler.currentBoss is IBotaniaBossWithShaderAndName))
+				if (BossBarHandler.currentBoss is IBotaniaBossWithName)
+					font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
+				else
+					font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithShaderAndName).getNameColor(), true).also { renderingBoss = false }
+			else
+				font.drawString(string, x, y, color, true)
+		
+		glColor4f(1f, 1f, 1f, 1f)
+		
+		return result
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 }

@@ -35,7 +35,7 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 						   IconHelper.forBlock(reg, this, "Top"),
 						   IconHelper.forBlock(reg, this, "Top_Active"),
 						   IconHelper.forBlock(reg, this, "Side"),
-						   IconHelper.forName (reg, "PowerStone0"),
+						   IconHelper.forBlock(reg, this, "BottomDark"),
 						   IconHelper.forBlock(reg, this, "TopDark"),
 						   IconHelper.forBlock(reg, this, "SideDark")
 		)

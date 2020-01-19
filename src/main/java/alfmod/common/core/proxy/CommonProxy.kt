@@ -2,7 +2,7 @@ package alfmod.common.core.proxy
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.world.dim.alfheim.biome.BiomeField
 import alfmod.AlfheimModularCore
 import alfmod.common.core.handler.*
@@ -44,6 +44,6 @@ open class CommonProxy {
 		}
 		
 		if (WRATH_OF_THE_WINTER)
-			BiomeField.addEntry(EntitySnowSprite::class.java, AlfheimConfigHandler.pixieSpawn.mapInPlace { it * 4 })
+			BiomeField.addEntry(EntitySnowSprite::class.java, AlfheimConfigHandler.pixieSpawn.map { it * 2 }.toIntArray())
 	}
 }

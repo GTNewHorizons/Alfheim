@@ -1,7 +1,7 @@
 package alfmod.common.entity
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.*
+import alfheim.common.core.util.EntityDamageSourceIndirectSpell
 import alfmod.AlfheimModularCore
 import alfmod.common.entity.boss.EntityDedMoroz
 import net.minecraft.entity.EntityLivingBase
@@ -44,10 +44,15 @@ class EntitySniceBall: EntityThrowableCopy {
 			if (target is EntityDedMoroz) {
 				target.heal(3f)
 			} else {
+				fun frost(): DamageSource {
+					val src: DamageSource = EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, this)
+					return src.setDamageBypassesArmor().setProjectile()
+				}
+				
 				val was = target.health
 				target.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), if (target is EntityBlaze) 15f else 5f)
 				target.lastDamage = was - target.health
-				target.attackEntityFrom(EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, this).setDamageBypassesArmor().setProjectile(), if (target is EntityBlaze) 6f else 2f)
+				target.attackEntityFrom(frost(), if (target is EntityBlaze) 6f else 2f)
 			}
 		
 		for (i in 0..7)

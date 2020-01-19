@@ -4,7 +4,6 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
@@ -36,6 +35,7 @@ import net.minecraft.world.*
 import net.minecraftforge.common.util.FakePlayer
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
+import vazkii.botania.api.boss.IBotaniaBossWithName
 import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
@@ -794,7 +794,13 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	/*	================================	HEALTHBAR STUFF	================================	*/
 	
 	@SideOnly(Side.CLIENT)
-	override fun getNameColor() = 0xFF80FF
+	var barRect: Rectangle? = null
+	
+	@SideOnly(Side.CLIENT)
+	var hpBarRect: Rectangle? = null
+	
+	@SideOnly(Side.CLIENT)
+	override fun getNameColor() = if (isUltraMode) 0xAA0000 else 0xFF80FF
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
@@ -809,7 +815,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
-			hpBarRect = Rectangle(0, 15, 181, 7)
+			hpBarRect = Rectangle(0, if (isUltraMode) 59 else 15, 181, 7)
 		return hpBarRect!!
 	}
 	
@@ -991,10 +997,5 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val name = e.commandSenderName
 			return !(e is FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches())
 		}
-		
-		@SideOnly(Side.CLIENT)
-		var barRect: Rectangle? = null
-		@SideOnly(Side.CLIENT)
-		var hpBarRect: Rectangle? = null
 	}
 }

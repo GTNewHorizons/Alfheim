@@ -27,6 +27,8 @@ object AlfheimConfigHandler {
 	
 	// PRELOAD
 	var elementiumClusterMeta	= 22
+	var gaiaBarOffset			= 1
+	var gaiaNameColor			= 0x00D5FF
 	var hpHooks					= true
 	var maxParticles			= 4000
 	var modularThread			= false
@@ -124,7 +126,7 @@ object AlfheimConfigHandler {
 	var raceManaMult			= 2.0
 	var maxPartyMembers			= 5
 
-	// HUD
+	// MMO HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
 	var targetUI				= true
@@ -162,6 +164,8 @@ object AlfheimConfigHandler {
 	
 	fun syncConfig() {
 		elementiumClusterMeta = loadProp(CATEGORY_PRELOAD, "elementiumClusterMeta", elementiumClusterMeta, true, "Effective only if Thaumcraft is installed. Change this if some other mod adds own clusters (max value is 63); also please, edit and spread modified .lang files")
+		gaiaBarOffset = loadProp(CATEGORY_PRELOAD, "gaiaBarOffset", gaiaBarOffset, true, "Gaia name hp and bg boss bar variant (from default texture pairs)")
+		gaiaNameColor = loadProp(CATEGORY_PRELOAD, "gaiaNameColor", gaiaNameColor, false, "Gaia name color on boss bar")
 		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
 		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")

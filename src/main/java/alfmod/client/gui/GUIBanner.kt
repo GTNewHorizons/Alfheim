@@ -28,9 +28,11 @@ object GUIBanner: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
-		if (e.type != RenderGameOverlayEvent.ElementType.HOTBAR || !WRATH_OF_THE_WINTER) return
+		if (!WRATH_OF_THE_WINTER) return
+		if (e.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
 		
 		glPushMatrix()
+		glColor4f(1f, 1f, 1f, 1f)
 		
 		val width = e.resolution.scaledWidth_double / 2
 		val height = width / 8

@@ -21,7 +21,6 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 	val G = if (AlfheimCore.winter) arrayOf(AlfheimBlocks.snowGrass, Blocks.grass) else arrayOf(Blocks.grass)
 	
 	override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider, chunkProvider: IChunkProvider) {
-		
 		val cx = chunkX * 16
 		val cz = chunkZ * 16
 		if (botanicalFlowers) {

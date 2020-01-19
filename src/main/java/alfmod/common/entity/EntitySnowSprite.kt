@@ -2,6 +2,9 @@ package alfmod.common.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.mfloor
+import alfheim.common.entity.EntityAlfheimPixie
+import alfheim.common.world.dim.alfheim.biome.BiomeField
+import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import alfmod.common.entity.boss.EntityDedMoroz
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -13,6 +16,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingDeathEvent
+import ru.vamig.worldengine.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFlyingCreature
 import kotlin.math.*
@@ -53,8 +57,13 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun onEntityUpdate() {
 		Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
 		
-		// motionY *= 0.6
-		// if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
+		motionY *= 0.6
+		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
+		
+		if ((worldObj.worldTime % 24000L).toInt() !in 13333..22666) {
+			setDead()
+			worldObj.spawnEntityInWorld(EntityAlfheimPixie(worldObj).also { it.setPosition(posX, posY, posZ) })
+		}
 		
 		super.onEntityUpdate()
 	}
@@ -90,7 +99,15 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun getCanSpawnHere(): Boolean {
-		return posY > 64 && worldObj.worldTime % 24000 in 13333..22666 && /*worldObj.getClosestPlayerToEntity(this, 64.0) != null && */ super.getCanSpawnHere()
+		setPosition(posX, posY + 5, posZ)
+		val flagTime = (worldObj.worldTime % 24000L).toInt() in 13333..22666 && worldObj.isRaining && WRATH_OF_THE_WINTER
+		var flagBiome = false
+		
+		val chunk = (worldObj.provider as? WE_WorldProvider)?.cp
+		if (chunk != null)
+			flagBiome = WE_Biome.getBiomeAt(chunk, posX.mfloor().toLong(), posZ.mfloor().toLong()).isEqualTo(BiomeField)
+		
+		return flagTime && flagBiome && posY > 64 && super.getCanSpawnHere()
 	}
 	
 	@SideOnly(Side.CLIENT)
