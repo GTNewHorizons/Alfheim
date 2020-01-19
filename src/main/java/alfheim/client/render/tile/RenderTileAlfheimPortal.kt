@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import kotlin.math.*
 
-class RenderTileAlfheimPortal: TileEntitySpecialRenderer() {
+object RenderTileAlfheimPortal: TileEntitySpecialRenderer() {
 	
 	override fun renderTileEntityAt(tileentity: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
 		val portal = tileentity as TileAlfheimPortal

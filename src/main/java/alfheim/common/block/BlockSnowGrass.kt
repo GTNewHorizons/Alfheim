@@ -3,8 +3,9 @@ package alfheim.common.block
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.util.AlfheimTab
-import net.minecraft.block.*
+import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.world.*
@@ -31,6 +32,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 		else    -> blockIcon
 	}!!
 	
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, hz: Boolean) = true
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int) = true
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) = Unit

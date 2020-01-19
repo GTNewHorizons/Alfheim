@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.sin
 
-class GUIRace(): Gui() {
+class GUIRace: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
@@ -28,7 +28,7 @@ class GUIRace(): Gui() {
 		glDepthMask(false)
 		glDisable(GL_ALPHA_TEST)
 		
-		glTranslated(e.resolution.scaledWidth_double / 2 + 91, (e.resolution.scaledHeight - 32).toDouble(), 0.0)
+		glTranslated(e.resolution.scaledWidth_double / 2 + 91, e.resolution.scaledHeight_double - 32, 0.0)
 		
 		mc.textureManager.bindTexture(RenderWings.getPlayerIconTexture(mc.thePlayer))
 		//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);

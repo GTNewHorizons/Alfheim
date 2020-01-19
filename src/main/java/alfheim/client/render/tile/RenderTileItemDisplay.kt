@@ -1,5 +1,6 @@
 package alfheim.client.render.tile
 
+import alfheim.client.core.util.renderBlocks
 import alfheim.common.block.tile.TileItemDisplay
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -18,19 +19,20 @@ import java.awt.Color
 import kotlin.math.sin
 
 @SideOnly(Side.CLIENT)
-class RenderTileItemDisplay : TileEntitySpecialRenderer() {
-    internal var renderBlocks = RenderBlocks()
-
-    fun renderEntity(display: TileItemDisplay?, x: Double, y: Double, z: Double, partticks: Float) {
+object RenderTileItemDisplay : TileEntitySpecialRenderer() {
+    
+    override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
+        if (tile !is TileItemDisplay) return
+        
         val seed = Minecraft.getMinecraft()
 
-        if (display != null && display.worldObj != null && seed != null) {
+        if (tile.worldObj != null && seed != null) {
 
             glPushMatrix()
             glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
             glTranslated(x, y, z)
 
-            val var27 = (ClientTickHandler.ticksInGame.toFloat() + partticks).toDouble()
+            val var27 = (ClientTickHandler.ticksInGame.toFloat() + ticks).toDouble()
 
             glPushMatrix()
             glScalef(0.5f, 0.5f, 0.5f)
@@ -39,13 +41,13 @@ class RenderTileItemDisplay : TileEntitySpecialRenderer() {
             glTranslatef(0.0f, 0.0f, 0.5f)
             glRotatef(90.0f, 0.0f, 1.0f, 0.0f)
             glTranslated(0.0, 0.15 * sin(var27 / 7.5), 0.0)
-            val scale = display.getStackInSlot(0)
+            val scale = tile.getStackInSlot(0)
 
             if (scale != null) {
                 seed.renderEngine.bindTexture(if (scale.item is ItemBlock) TextureMap.locationBlocksTexture else TextureMap.locationItemsTexture)
                 glScalef(2.0f, 2.0f, 2.0f)
                 glTranslatef(0.25f, 0f, 0f)
-                if (!ForgeHooksClient.renderEntityItem(EntityItem(display.worldObj, display.xCoord.toDouble(), display.yCoord.toDouble(), display.zCoord.toDouble(), scale), scale, 0.0f, 0.0f, display.worldObj.rand, seed.renderEngine, renderBlocks, 1)) {
+                if (!ForgeHooksClient.renderEntityItem(EntityItem(tile.worldObj, tile.xCoord.toDouble(), tile.yCoord.toDouble(), tile.zCoord.toDouble(), scale), scale, 0.0f, 0.0f, tile.worldObj.rand, seed.renderEngine, renderBlocks, 1)) {
                     glTranslatef(-0.25f, 0f, 0f)
                     glScalef(0.5f, 0.5f, 0.5f)
                     if (scale.item is ItemBlock && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(scale.item).renderType)) {
@@ -64,7 +66,7 @@ class RenderTileItemDisplay : TileEntitySpecialRenderer() {
 
                         val `is` = scale.copy()
                         `is`.stackSize = 1
-                        entityitem = EntityItem(display.worldObj, 0.0, 0.0, 0.0, `is`)
+                        entityitem = EntityItem(tile.worldObj, 0.0, 0.0, 0.0, `is`)
                         entityitem.hoverStart = 0.0f
                         RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0.0f, 0.0f)
 
@@ -105,9 +107,5 @@ class RenderTileItemDisplay : TileEntitySpecialRenderer() {
             glEnable(3008)
             glPopMatrix()
         }
-    }
-
-    override fun renderTileEntityAt(par1TileEntity: TileEntity?, par2: Double, par4: Double, par6: Double, par8: Float) {
-        renderEntity(par1TileEntity as TileItemDisplay, par2, par4, par6, par8)
     }
 }

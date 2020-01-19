@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
@@ -35,7 +36,6 @@ import net.minecraft.world.*
 import net.minecraftforge.common.util.FakePlayer
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
-import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
@@ -50,7 +50,7 @@ import java.util.regex.Pattern
 import kotlin.math.*
 
 @Suppress("UNCHECKED_CAST")
-class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
+class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { // EntityDoppleganger
 	
 	val playersDamage: HashMap<String, Float> = HashMap()
 	
@@ -317,7 +317,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		}
 		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null)
 		isPlayingMusic = false
-		if (worldObj.isRemote) BossBarHandler.setCurrentBoss(null)
 		
 		super.setDead()
 	}
@@ -358,7 +357,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersDamage.isEmpty()) playersDamage[summoner] = 0.1f
 		val source = source
 		var players = playersAround
-		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
+		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar)
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
@@ -795,19 +794,22 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	/*	================================	HEALTHBAR STUFF	================================	*/
 	
 	@SideOnly(Side.CLIENT)
+	override fun getNameColor() = 0xFF80FF
+	
+	@SideOnly(Side.CLIENT)
 	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTextureRect(): Rectangle {
 		if (barRect == null)
-			barRect = Rectangle(0, 0, 185, 15)
+			barRect = Rectangle(0, 44, 185, 15)
 		return barRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
-			hpBarRect = Rectangle(0, barRect!!.y + barRect!!.height, 181, 7)
+			hpBarRect = Rectangle(0, 15, 181, 7)
 		return hpBarRect!!
 	}
 	

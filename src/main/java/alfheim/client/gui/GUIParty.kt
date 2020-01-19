@@ -19,7 +19,6 @@ import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
 import net.minecraft.util.EnumChatFormatting
-import net.minecraftforge.client.GuiIngameForge
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
@@ -37,7 +36,7 @@ class GUIParty: Gui() {
 	@SubscribeEvent
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
 		if (event.type != ElementType.HOTBAR) return
-		GuiIngameForge.renderBossHealth = false
+		
 		val player = mc.thePlayer
 		val font = mc.fontRenderer
 		

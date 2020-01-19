@@ -1,17 +1,18 @@
 package alfmod.client.render.entity
 
-import alexsocol.asjlib.render.ASJRenderHelper
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelBipedEyes
+import alfmod.common.entity.boss.EntityDedMoroz
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
-import net.minecraft.client.renderer.*
+import net.minecraft.client.renderer.RenderBlocks
 import net.minecraft.client.renderer.entity.RenderBiped
 import net.minecraft.entity.*
 import net.minecraft.init.Items
 import net.minecraft.item.*
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.client.core.handler.BossBarHandler
 
 @SideOnly(Side.CLIENT)
 class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
@@ -20,7 +21,10 @@ class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 	
 	override fun getEntityTexture(entity: Entity?) = texture
 	override fun getEntityTexture(entity: EntityLiving?) = texture
-	override fun preRenderCallback(entity: EntityLivingBase?, ticks: Float) = glScaled(2.5, 2.5, 2.5)
+	override fun preRenderCallback(entity: EntityLivingBase?, ticks: Float) {
+		if (entity is EntityDedMoroz) BossBarHandler.setCurrentBoss(entity)
+		glScaled(2.5, 2.5, 2.5)
+	}
 	
 	override fun renderEquippedItems(entity: EntityLiving, ticks: Float) {
 		glColor3f(1f, 1f, 1f)

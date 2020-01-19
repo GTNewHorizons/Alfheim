@@ -32,7 +32,6 @@ import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.biome.BiomeGenBase
 import vazkii.botania.api.BotaniaAPI
@@ -138,6 +137,7 @@ object AlfheimRegistry {
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileManaAccelerator::class.java, "ItemHolder")
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
+		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK

@@ -3,9 +3,11 @@ package alfmod.common.entity.boss
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageEffect
+import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import alfmod.common.entity.EntitySniceBall
 import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.relauncher.*
@@ -19,14 +21,13 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
 import net.minecraft.world.World
-import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
 
-class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
+private const val FOLLOW = 20.0
 
-	val FOLLOW = 20.0
-	
+class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
+
 	init {
 		setSize(1.5f, 4.5f)
 		
@@ -64,6 +65,9 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
 	}
 	
 	override fun damageEntity(src: DamageSource, amount: Float) {
+		if (attackTarget == null && src.entity is EntityLivingBase)
+			attackTarget = src.entity as EntityLivingBase
+		
 		super.damageEntity(src, amount * if (src.isMagicDamage || src is DamageSourceSpell) 0.1f else 0.75f)
 	}
 	
@@ -92,18 +96,10 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
 		setCurrentItemOrArmor(4, ItemStack(AlfheimModularItems.snowHelmet))
 	}
 	
-	override fun setDead() {
-		super.setDead()
-		
-		if (!AlfheimCore.enableMMO && !ASJUtilities.isServer)
-			BossBarHandler.setCurrentBoss(null)
-	}
-	
 	override fun onLivingUpdate() {
-		super.onLivingUpdate()
+		if (!WRATH_OF_THE_WINTER) setDead().also { return }
 		
-		if (!AlfheimCore.enableMMO && !ASJUtilities.isServer)
-			BossBarHandler.setCurrentBoss(this)
+		super.onLivingUpdate()
 		
 		if (worldObj.isRaining && AlfheimCore.winter)
 			heal(if (attackTarget == null) 0.1f else 0.02f)
@@ -117,12 +113,14 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
 				}
 			}
 			
-			if (ticksExisted % 40 == 0 && Vector3.entityDistance(this, attackTarget).toInt() in 4..FOLLOW.toInt()) {
+			val dist = Vector3.entityDistance(this, attackTarget)
+			
+			if (ticksExisted % 40 == 0 && 4 <= dist && dist <= FOLLOW) {
 				if (!worldObj.isRemote)
 					worldObj.spawnEntityInWorld(EntitySniceBall(worldObj, this))
 			}
 			
-			if (ticksExisted % 100 == 0 && ASJUtilities.getClosestVulnerablePlayerToEntity(this, FOLLOW) != null) {
+			if (ticksExisted % 600 == 0 && dist <= FOLLOW) {
 				val v = Vector3()
 				
 				val pe = PotionEffect(Potion.moveSlowdown.id, 20, 4)
@@ -149,7 +147,11 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
 	}
 	
 	override fun setAttackTarget(target: EntityLivingBase?) {
+		if (target is EntityPlayer && target.capabilities.disableDamage) return
+		
 		if (target != null && target != attackTarget) {
+			if (target.isEntityInvulnerable) return
+			
 			ASJUtilities.faceEntity(target, this, 360f, 360f)
 			
 			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 100, 1))
@@ -165,19 +167,22 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBoss {
 	override fun canDespawn() = false
 	
 	@SideOnly(Side.CLIENT)
+	override fun getNameColor() = 0x0095FF
+	
+	@SideOnly(Side.CLIENT)
 	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTextureRect(): Rectangle {
 		if (barRect == null)
-			barRect = Rectangle(0, 0, 185, 15)
+			barRect = Rectangle(0, 88, 185, 15)
 		return barRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
-			hpBarRect = Rectangle(0, barRect!!.y + barRect!!.height, 181, 7)
+			hpBarRect = Rectangle(0, 37, 181, 7)
 		return hpBarRect!!
 	}
 	

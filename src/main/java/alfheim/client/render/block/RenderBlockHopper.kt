@@ -7,14 +7,8 @@ import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
 import net.minecraft.world.IBlockAccess
 
-class RenderBlockHopper : ISimpleBlockRenderingHandler {
+class RenderBlockHopper: ISimpleBlockRenderingHandler {
 	
-	override fun getRenderId() = LibRenderIDs.idHopper
-
-	override fun shouldRender3DInInventory(modelId: Int) = false
-
-	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) = Unit
-
 	override fun renderWorldBlock(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, modelId: Int, renderer: RenderBlocks): Boolean {
 		val tessellator = Tessellator.instance
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z))
@@ -22,7 +16,7 @@ class RenderBlockHopper : ISimpleBlockRenderingHandler {
 		var f = (l shr 16 and 255).toFloat() / 255.0f
 		var f1 = (l shr 8 and 255).toFloat() / 255.0f
 		var f2 = (l and 255).toFloat() / 255.0f
-
+		
 		if (EntityRenderer.anaglyphEnable) {
 			val f3 = (f * 30.0f + f1 * 59.0f + f2 * 11.0f) / 100.0f
 			val f4 = (f * 30.0f + f1 * 70.0f) / 100.0f
@@ -31,14 +25,14 @@ class RenderBlockHopper : ISimpleBlockRenderingHandler {
 			f1 = f4
 			f2 = f5
 		}
-
+		
 		tessellator.setColorOpaque_F(f, f1, f2)
 		val meta = world.getBlockMetadata(x, y, z)
-
+		
 		val i1 = BlockFunnel.getDirectionFromMetadata(meta)
 		val d0 = 0.625
 		renderer.setRenderBounds(0.0, d0, 0.0, 1.0, 1.0, 1.0)
-
+		
 		renderer.renderStandardBlock(block, x, y, z)
 		
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z))
@@ -105,8 +99,11 @@ class RenderBlockHopper : ISimpleBlockRenderingHandler {
 		}
 		
 		renderer.clearOverrideBlockTexture()
-
+		
 		return true
 	}
-
+	
+	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) = Unit
+	override fun shouldRender3DInInventory(modelId: Int) = false
+	override fun getRenderId() = LibRenderIDs.idHopper
 }

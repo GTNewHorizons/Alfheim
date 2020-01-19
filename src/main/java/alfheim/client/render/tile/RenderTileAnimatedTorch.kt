@@ -14,23 +14,21 @@ import vazkii.botania.client.core.handler.ClientTickHandler
 import java.util.*
 import kotlin.math.*
 
-class RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
+object RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 	
-	internal val rand = Random()
+	val rand = Random()
 	
-	override fun renderTileEntityAt(te: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		render(te as TileAnimatedTorch, x, y, z, partialTicks)
-	}
-	
-	fun render(tile: TileAnimatedTorch?, x: Double, y: Double, z: Double, partialTicks: Float) {
+	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
+		if (tile !is TileAnimatedTorch) return
+		
 		glPushMatrix()
 		glTranslated(x, y, z)
 		
-		val hasWorld = tile != null && tile.worldObj != null
+		val hasWorld = tile.worldObj != null
 		var wtime = if (!hasWorld) 0 else ClientTickHandler.ticksInGame
 		
 		if (wtime != 0) {
-			rand.setSeed((tile!!.xCoord xor tile.yCoord xor tile.zCoord).toLong())
+			rand.setSeed((tile.xCoord xor tile.yCoord xor tile.zCoord).toLong())
 			wtime += rand.nextInt(360)
 		}
 		
@@ -43,22 +41,19 @@ class RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 		glScaled(2.0, 2.0, 2.0)
 		glRotated(90.0, 1.0, 0.0, 0.0)
 		
-		var rotation = 0f
-		if (tile != null) {
-			rotation = tile.rotation.toFloat()
-			if (tile.rotating)
-				rotation += (tile.anglePerTick * partialTicks).toFloat()
-		}
+		var rotation = tile.rotation.toFloat()
+		if (tile.rotating)
+			rotation += (tile.anglePerTick * partialTicks).toFloat()
 		
 		glRotated(rotation.toDouble(), 0.0, 0.0, 1.0)
 		glTranslated(0.0, 0.15, 0.0)
 		
 		run {
 			glDisable(GL_CULL_FACE)
-			val entityitem = EntityItem(if (hasWorld) tile!!.worldObj else Minecraft.getMinecraft().theWorld, 0.0, 0.0, 0.0, ItemStack(Blocks.redstone_torch))
+			val entityitem = EntityItem(if (hasWorld) tile.worldObj else Minecraft.getMinecraft().theWorld, 0.0, 0.0, 0.0, ItemStack(Blocks.redstone_torch))
 			entityitem.hoverStart = 0.0f
 			glPushMatrix()
-			if (tile != null) Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))
+			Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))
 			RenderItem.renderInFrame = true
 			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0f, 0.0f)
 			RenderItem.renderInFrame = false

@@ -37,7 +37,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
-import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.client.render.world.SkyblockSkyRenderer
 
 object EventHandlerClient {
@@ -45,8 +44,8 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPre(event: RenderGameOverlayEvent.Pre) {
-		if (event.type != ElementType.BOSSHEALTH || !AlfheimCore.enableMMO) return
-			BossBarHandler.setCurrentBoss(null)
+		if (event.type === ElementType.BOSSHEALTH && AlfheimCore.enableMMO)
+			event.isCanceled = true
 	}
 	
 	@SubscribeEvent
@@ -89,8 +88,6 @@ object EventHandlerClient {
 		val world = Minecraft.getMinecraft().theWorld
 		if (world != null && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.provider.skyRenderer == null)
 			world.provider.skyRenderer = SkyblockSkyRenderer()
-		
-		if (AlfheimCore.enableMMO) BossBarHandler.setCurrentBoss(null)
 		
 		if (Minecraft.getMinecraft().thePlayer == null) PlayerSegmentClient.target = null
 	}

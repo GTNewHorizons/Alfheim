@@ -18,7 +18,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.min
 
-class GUISpells(): Gui() {
+class GUISpells: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {

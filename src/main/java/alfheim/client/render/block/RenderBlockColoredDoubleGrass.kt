@@ -9,12 +9,6 @@ import net.minecraft.world.IBlockAccess
 
 class RenderBlockColoredDoubleGrass: ISimpleBlockRenderingHandler {
 	
-	override fun getRenderId() = LibRenderIDs.idDoubleFlower
-	
-	override fun shouldRender3DInInventory(modelId: Int) = false
-	
-	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) = Unit
-	
 	override fun renderWorldBlock(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, modelId: Int, renderer: RenderBlocks): Boolean {
 		val tessellator = Tessellator.instance
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z))
@@ -54,4 +48,8 @@ class RenderBlockColoredDoubleGrass: ISimpleBlockRenderingHandler {
 		}
 		return true
 	}
+	
+	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) = Unit
+	override fun shouldRender3DInInventory(modelId: Int) = false
+	override fun getRenderId() = LibRenderIDs.idDoubleFlower
 }

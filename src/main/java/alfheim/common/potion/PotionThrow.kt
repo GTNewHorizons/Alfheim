@@ -16,6 +16,7 @@ class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", fa
 	
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
 		if (!AlfheimCore.enableMMO) return
+		
 		val v = Vector3(target.lookVec).mul((mod + 1).toDouble())
 		target.motionX = v.x
 		target.motionY = v.y

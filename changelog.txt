@@ -3,6 +3,7 @@ Innovations:
  Elven passive ability toggle notification
  Hyperpolated bucket for drying lakes and seas
  Schema generator now supports nbt
+ New models for stones of power
  [MMO] Disabled default & Botania boss bars when MMO is enabled
  
 Integration:
@@ -23,3 +24,4 @@ Fixes:
  Config files category tooltips
  Biome display on F3
  Snow grass spreading and layering
+ [witchery] vampire in mask exploit

@@ -29,7 +29,6 @@ open class CommonProxy {
 		
 		AlfheimLexiconData.preInit()
 		AlfheimBlocks
-		AlfheimBlocks
 		AlfheimItems
 		AlfheimRegistry.preInit()
 		AlfheimAchievements

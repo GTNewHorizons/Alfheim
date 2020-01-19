@@ -3,6 +3,7 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
+import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
@@ -23,6 +24,7 @@ import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureManager
@@ -45,10 +47,11 @@ import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
-import vazkii.botania.client.core.handler.HUDHandler
+import vazkii.botania.client.core.handler.*
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.client.render.tile.RenderTileAltar
@@ -721,4 +724,31 @@ object AlfheimHookHandler {
 			glColorMaterial(GL_FRONT, GL_AMBIENT)
 		}
 	}
+	
+	var renderingBoss = false
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook
+	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
+		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook
+	fun render(handler: BossBarHandler?, res: ScaledResolution) {
+		if (BossBarHandler.currentBoss == null) return
+		
+		renderingBoss = true
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun drawStringWithShadow(font: FontRenderer, string: String?, x: Int, y: Int, color: Int) =
+		if (renderingBoss && BossBarHandler.currentBoss is IBotaniaBossWithName)
+			font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
+		else
+			font.drawString(string, x, y, color, true)
 }

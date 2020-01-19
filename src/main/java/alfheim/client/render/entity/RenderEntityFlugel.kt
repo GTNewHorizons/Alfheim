@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.RenderLiving
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.client.core.helper.ShaderHelper
 
 class RenderEntityFlugel(model: ModelBase, shadowSize: Float): RenderLiving(model, shadowSize) {
@@ -17,11 +18,13 @@ class RenderEntityFlugel(model: ModelBase, shadowSize: Float): RenderLiving(mode
 		RenderPostShaders.registerShadedObject(so)
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
-		return getEntityTexture(entity as? EntityFlugel ?: return LibResourceLocations.jibril)
-	}
+	override fun getEntityTexture(entity: Entity) =
+		if (entity is EntityFlugel) getEntityTexture(entity) else LibResourceLocations.jibril
 	
-	fun getEntityTexture(flugel: EntityFlugel) = if (flugel.isUltraMode) LibResourceLocations.jibrilDark else LibResourceLocations.jibril
+	fun getEntityTexture(flugel: EntityFlugel): ResourceLocation {
+		BossBarHandler.setCurrentBoss(flugel)
+		return if (flugel.isUltraMode) LibResourceLocations.jibrilDark else LibResourceLocations.jibril
+	}
 	
 	companion object {
 		

@@ -12,10 +12,13 @@ import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.model.ModelSpreader
 import kotlin.math.sin
 
-class RenderTileTransferer: TileEntitySpecialRenderer() {
+object RenderTileTransferer: TileEntitySpecialRenderer() {
 	
-	override fun renderTileEntityAt(tileentity: TileEntity, d0: Double, d1: Double, d2: Double, ticks: Float) {
-		val spreader = tileentity as TileTransferer
+	val model = ModelSpreader()
+	
+	override fun renderTileEntityAt(tile: TileEntity, d0: Double, d1: Double, d2: Double, ticks: Float) {
+		if (tile !is TileTransferer) return
+		
 		glPushMatrix()
 		glEnable(GL_RESCALE_NORMAL)
 		glColor4f(1f, 1f, 1f, 1f)
@@ -23,33 +26,28 @@ class RenderTileTransferer: TileEntitySpecialRenderer() {
 		
 		glTranslatef(0.5f, 1.5f, 0.5f)
 		
-		TileItemContainer.renderItem(spreader)
-		glRotatef(spreader.rotationX + 90f, 0f, 1f, 0f)
+		TileItemContainer.renderItem(tile)
+		glRotatef(tile.rotationX + 90f, 0f, 1f, 0f)
 		glTranslatef(0f, -1f, 0f)
-		glRotatef(spreader.rotationY, 1f, 0f, 0f)
+		glRotatef(tile.rotationY, 1f, 0f, 0f)
 		glTranslatef(0f, 1f, 0f)
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.spreader)
 		glScalef(1f, -1f, -1f)
 		
-		val time = (ClientTickHandler.ticksInGame + ticks).toDouble()
+		val time = ClientTickHandler.ticksInGame + ticks
 		
 		model.render()
 		glColor3f(1f, 1f, 1f)
 		
 		glPushMatrix()
-		val worldTicks = if (tileentity.getWorldObj() == null) 0.0 else time
-		glRotatef(worldTicks.toFloat() % 360, 0f, 1f, 0f)
-		glTranslatef(0f, sin(worldTicks / 20.0).toFloat() * 0.05f, 0f)
+		val worldTicks = if (tile.getWorldObj() == null) time else tile.getWorldObj().totalWorldTime.toFloat()
+		glRotatef(worldTicks % 360, 0f, 1f, 0f)
+		glTranslatef(0f, sin(worldTicks / 20f) * 0.05f, 0f)
 		model.renderCube()
 		glPopMatrix()
 		
 		glEnable(GL_RESCALE_NORMAL)
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		private val model = ModelSpreader()
 	}
 }
