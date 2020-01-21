@@ -11,6 +11,8 @@ entity.alfmod:SniceBall.name=Snice Ball
 
 death.attack.alfmod:frost=%s was chilled to bones by %s
 
+itemGroup.AlfheimModular=Alfheim Modular
+
 alfmod.armorset.snow.name=Snow Shogun Panzer
 
 alfmodmisc.ded.awakening=&bYou've awakened the vengeful Spirit of Winter!

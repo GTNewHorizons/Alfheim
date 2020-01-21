@@ -1,6 +1,5 @@
 package alfmod.common.core.asm
 
-import alfheim.api.ModInfo
 import alfmod.AlfheimModularCore
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion

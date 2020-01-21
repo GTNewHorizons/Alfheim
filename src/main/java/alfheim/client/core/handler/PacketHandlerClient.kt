@@ -1,6 +1,6 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.*
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -24,7 +24,6 @@ import alfheim.common.network.Message1l.m1l
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
 import alfheim.common.network.MessageNI.mni
-import net.minecraft.client.Minecraft
 import net.minecraft.util.*
 
 object PacketHandlerClient {
@@ -43,7 +42,7 @@ object PacketHandlerClient {
 	}
 	
 	fun handle(packet: MessageTileItem) {
-		val world = Minecraft.getMinecraft().theWorld
+		val world = mc.theWorld
 		val te = world.getTileEntity(packet.x, packet.y, packet.z)
 		if (te is TileItemContainer) te.item = packet.s
 	}
@@ -65,7 +64,7 @@ object PacketHandlerClient {
 	
 	fun handle(packet: Message1l) {
 		when(m1l.values()[packet.type]) {
-			m1l.SEED             -> ASJReflectionHelper.setValue(mc.theWorld.worldInfo, packet.data1, "randomSeed") // mc.theWorld.worldInfo.randomSeed = seed
+			m1l.SEED             -> mc.theWorld.worldInfo.randomSeed = packet.data1
 		}
 	}
 	
@@ -73,23 +72,23 @@ object PacketHandlerClient {
 		when (m2d.values()[packet.type]) {
 			m2d.ATTRIBUTE -> {
 				when (packet.data1.toInt()) {
-					0 -> Minecraft.getMinecraft().thePlayer.raceID = packet.data2.toInt()
-					1 -> Minecraft.getMinecraft().thePlayer.flight = packet.data2
+					0 -> mc.thePlayer.raceID = packet.data2.toInt()
+					1 -> mc.thePlayer.flight = packet.data2
 				}
 			}
 			
 			m2d.COOLDOWN  -> {
 				when (if (packet.data2 > 0) SpellCastResult.OK else SpellCastResult.values()[(-packet.data2).toInt()]) {
 					SpellCastResult.DESYNC    -> throw IllegalArgumentException("Client-server spells desynchronization. Not found spell for ${EnumRace[packet.data1.toInt() shr 28 and 0xF]} with id ${packet.data1.toInt() and 0xFFFFFFF}")
-					SpellCastResult.NOMANA    -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.momana")// TODO playSound "not enough mana"
-					SpellCastResult.NOTALLOW  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notallow")// TODO playSound "not allowed"
-					SpellCastResult.NOTARGET  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notarget")// TODO playSound "no target"
-					SpellCastResult.NOTREADY  -> { /*ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notready");*/
+					SpellCastResult.NOMANA    -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.momana")// TODO playSound "not enough mana"
+					SpellCastResult.NOTALLOW  -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.notallow")// TODO playSound "not allowed"
+					SpellCastResult.NOTARGET  -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.notarget")// TODO playSound "no target"
+					SpellCastResult.NOTREADY  -> { /*ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.notready");*/
 					}// TODO playSound "spell not ready"
-					SpellCastResult.NOTSEEING -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.notseeing")// TODO playSound "not seeing"
-					SpellCastResult.OBSTRUCT  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.obstruct")// TODO playSound "target obstructed"
+					SpellCastResult.NOTSEEING -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.notseeing")// TODO playSound "not seeing"
+					SpellCastResult.OBSTRUCT  -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.obstruct")// TODO playSound "target obstructed"
 					SpellCastResult.OK        -> SpellCastingSystemClient.setCoolDown(AlfheimAPI.getSpellByIDs(packet.data1.toInt() shr 28 and 0xF, packet.data1.toInt() and 0xFFFFFFF), packet.data2.toInt())
-					SpellCastResult.WRONGTGT  -> ASJUtilities.say(Minecraft.getMinecraft().thePlayer, "alfheimmisc.cast.wrongtgt")// TODO playSound "wrong target"
+					SpellCastResult.WRONGTGT  -> ASJUtilities.say(mc.thePlayer, "alfheimmisc.cast.wrongtgt")// TODO playSound "wrong target"
 				}
 			}
 			
@@ -117,7 +116,7 @@ object PacketHandlerClient {
 			}
 			
 			m3d.WAETHER      -> {
-				val info = Minecraft.getMinecraft().theWorld.worldInfo
+				val info = mc.theWorld.worldInfo
 				info.isRaining = packet.data1.toInt() > 0
 				info.rainTime = packet.data2.toInt()
 				info.isThundering = packet.data1.toInt() > 1
@@ -142,7 +141,7 @@ object PacketHandlerClient {
 		when (m0dc.values()[packet.type]) {
 			m0dc.MTSPELL -> {
 				val spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID) ?: return
-				Minecraft.getMinecraft().thePlayer?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("spell.$spell.mtinfo", *spell.usableParams)))
+				mc.thePlayer?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted("spell.$spell.mtinfo", *spell.usableParams)))
 			}
 		}
 	}

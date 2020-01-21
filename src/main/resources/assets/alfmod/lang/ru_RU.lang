@@ -11,6 +11,8 @@ entity.alfmod:SniceBall.name=Снежулька
 
 death.attack.alfmod:frost=%s был заморожен до костей %s
 
+itemGroup.AlfheimModular=Альфхейм модуляр
+
 alfmod.armorset.snow.name=Панцирь зимнего Сёгуна
 
 alfmodmisc.ded.awakening=&bВы пробудили мстительный дух Зимы!

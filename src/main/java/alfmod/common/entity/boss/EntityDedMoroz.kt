@@ -3,6 +3,7 @@ package alfmod.common.entity.boss
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageEffect
@@ -20,7 +21,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
 import net.minecraft.world.World
-import vazkii.botania.api.boss.IBotaniaBossWithName
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
 

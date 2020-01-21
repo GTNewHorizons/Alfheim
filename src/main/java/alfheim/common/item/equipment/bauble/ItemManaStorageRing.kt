@@ -1,6 +1,5 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import net.minecraft.creativetab.CreativeTabs
@@ -67,7 +66,6 @@ class ItemManaStorageRing(name: String, maxManaCap: Double): ItemBauble(name), I
 	
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
 		list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA))
-		if (AlfheimConfigHandler.numericalMana) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)))
 		list.add("")
 		
 		super.addHiddenTooltip(stack, player, list, adv)

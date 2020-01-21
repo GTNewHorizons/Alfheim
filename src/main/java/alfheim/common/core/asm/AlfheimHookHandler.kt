@@ -3,6 +3,7 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
+import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations

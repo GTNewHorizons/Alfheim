@@ -1,7 +1,7 @@
 package alfmod.common.item.equipment.tool
 
-import alfheim.common.core.util.AlfheimTab
 import alfmod.common.core.helper.IconHelper
+import alfmod.common.core.util.AlfheimModularTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
@@ -17,7 +17,7 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	}
 	
 	init {
-		creativeTab = AlfheimTab
+		creativeTab = AlfheimModularTab
 	}
 	
 	override fun hitEntity(stack: ItemStack, target: EntityLivingBase, attacker: EntityLivingBase): Boolean {

@@ -512,7 +512,7 @@ class AlfheimClassTransformer: IClassTransformer {
 	internal class `EntityDoppleganger$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visit(version: Int, access: Int, name: String?, signature: String?, superName: String?, interfaces: Array<out String>?) {
-			super.visit(version, access, name, signature, superName, arrayOf("vazkii/botania/api/boss/IBotaniaBossWithShaderAndName"))
+			super.visit(version, access, name, signature, superName, arrayOf("alfheim/api/boss/IBotaniaBossWithShaderAndName"))
 		}
 		
 		override// Just because!

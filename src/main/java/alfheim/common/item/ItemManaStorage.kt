@@ -1,6 +1,5 @@
 package alfheim.common.item
 
-import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -63,7 +62,6 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
 		if (GuiScreen.isShiftKeyDown()) {
 			list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc0", MAX_MANA / TilePool.MAX_MANA))
-			if (AlfheimConfigHandler.numericalMana) list.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", getMana(stack), getMaxMana(stack)))
 		} else
 			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.shiftinfo"), list)
 	}

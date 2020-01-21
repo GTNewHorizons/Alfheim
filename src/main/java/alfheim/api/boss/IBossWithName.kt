@@ -1,6 +1,7 @@
-package vazkii.botania.api.boss
+package alfheim.api.boss
 
 import cpw.mods.fml.relauncher.*
+import vazkii.botania.api.boss.*
 
 interface IBotaniaBossWithName: IBotaniaBoss {
 	

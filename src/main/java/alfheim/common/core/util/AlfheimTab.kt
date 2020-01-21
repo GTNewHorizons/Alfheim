@@ -1,7 +1,6 @@
 package alfheim.common.core.util
 
 import alfheim.AlfheimCore
-import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -213,7 +212,6 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(kindling)
 		addBlock(alfStorage)
 		addBlock(rainbowPetalBlock)
-		addBlock(airyVirus)
 		
 		if (AlfheimCore.jingleTheBells) {
 			addBlock(snowGrass)
@@ -414,9 +412,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaAnnihilator)
 		
 		try {
-			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol")
-				addItem(royalStaff)
-		} catch (e: Throwable) {}
+			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
+		} catch (ignore: Throwable) {}
 		
 		additionalDisplays.forEach { it.invoke() }
 	}

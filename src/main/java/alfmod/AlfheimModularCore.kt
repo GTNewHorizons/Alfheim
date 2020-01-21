@@ -1,6 +1,7 @@
 package alfmod
 
 import alfmod.common.core.proxy.CommonProxy
+import alfmod.common.core.util.AlfheimModularTab
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.Mod.*
 import cpw.mods.fml.common.event.*
@@ -19,6 +20,10 @@ class AlfheimModularCore {
 		
 		@Metadata(MODID)
 		lateinit var meta: ModMetadata
+		
+		init {
+			AlfheimModularTab
+		}
 	}
 	
 	@EventHandler

@@ -1,6 +1,7 @@
 package alfheim.common.entity.boss
 
 import alexsocol.asjlib.math.Vector3
+import alfheim.api.boss.IBotaniaBossWithName
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -11,7 +12,6 @@ import net.minecraft.entity.ai.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
 import net.minecraft.world.World
-import vazkii.botania.api.boss.IBotaniaBossWithName
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
 

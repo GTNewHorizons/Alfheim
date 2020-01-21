@@ -44,15 +44,10 @@ class EntitySniceBall: EntityThrowableCopy {
 			if (target is EntityDedMoroz) {
 				target.heal(3f)
 			} else {
-				fun frost(): DamageSource {
-					val src: DamageSource = EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, this)
-					return src.setDamageBypassesArmor().setProjectile()
-				}
-				
 				val was = target.health
 				target.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), if (target is EntityBlaze) 15f else 5f)
 				target.lastDamage = was - target.health
-				target.attackEntityFrom(frost(), if (target is EntityBlaze) 6f else 2f)
+				target.attackEntityFrom(frost(this, thrower), if (target is EntityBlaze) 6f else 2f)
 			}
 		
 		for (i in 0..7)
@@ -60,5 +55,11 @@ class EntitySniceBall: EntityThrowableCopy {
 		
 		if (!worldObj.isRemote)
 			setDead()
+	}
+	
+	companion object {
+		
+		fun frost(ball: EntitySniceBall, thrower: EntityLivingBase?) =
+			EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, ball).setDamageBypassesArmor().setProjectile()!!
 	}
 }

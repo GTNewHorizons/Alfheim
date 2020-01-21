@@ -4,6 +4,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
+import alfmod.common.core.util.AlfheimModularTab
 import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
@@ -30,7 +31,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	}
 	
 	init {
-		creativeTab = AlfheimTab
+		creativeTab = AlfheimModularTab
 	}
 	
 	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =

@@ -98,4 +98,4 @@ gradlew build
 @pause
 
 :exit
-exit
+@ECHO exiting

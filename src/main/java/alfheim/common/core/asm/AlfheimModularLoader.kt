@@ -53,16 +53,25 @@ object AlfheimModularLoader {
 			
 			val fullname = url.substring(url.lastIndexOf('/') + 1)
 			
+			//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] 1 pm: $possibleMatch dl: $download") // TODO
+			
 			if (possibleMatch) {
 				subModsDir.listFiles()?.forEach { mod ->
 					ZipFile(mod).use { zip ->
 						val modInfo = zip.getEntry("mcmod.info") ?: return@use
 						
 						val info = loadJSon(zip.getInputStream(modInfo))
+						
+						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] info: $info") // TODO
+						
 						if (!info.first) return@use
 						val versionLocal = info.second
 						
 						val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
+						
+						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] New Alfheim Modular version found: $versionRemote (was $versionLocal)") // TODO
+						
+						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] ${versionRemote == versionLocal}") // TODO
 						
 						if (versionRemote != versionLocal) {
 							crash = deleteMod(mod)
@@ -71,10 +80,15 @@ object AlfheimModularLoader {
 						}
 						
 						download = false
+						
+						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] dl: $download") // TODO
+						
 						return@forEach
 					}
 				}
 			}
+			
+			//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] 2 pm: $possibleMatch dl: $download") // TODO
 			
 			if (download) {
 				var err = "Unable to download Alfheim Modular from official repo. Check your internet connection"
