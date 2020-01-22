@@ -54,6 +54,14 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		entityDropItem(ItemStack(dropItem, looting + 1), 0.0f)
 	}
 	
+	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)
+	
+	override fun attackEntityFrom(src: DamageSource, amount: Float): Boolean {
+		if (src.damageType in immuneTo) return false
+		
+		return super.attackEntityFrom(src, amount)
+	}
+	
 	override fun onEntityUpdate() {
 		Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
 		

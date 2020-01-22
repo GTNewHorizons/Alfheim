@@ -44,6 +44,14 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		entityDropItem(ItemStack(ModItems.manaResource, 1, 8), 0.0f)
 	}
 	
+	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)
+	
+	override fun attackEntityFrom(src: DamageSource, amount: Float): Boolean {
+		if (src.damageType in immuneTo) return false
+		
+		return super.attackEntityFrom(src, amount)
+	}
+	
 	override fun updateEntityActionState() {
 		rotationYaw = -atan2(motionX, motionZ).toFloat() * 180.0f / Math.PI.toFloat()
 		renderYawOffset = rotationYaw

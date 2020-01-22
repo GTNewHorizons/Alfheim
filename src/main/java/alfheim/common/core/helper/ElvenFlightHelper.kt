@@ -2,14 +2,14 @@ package alfheim.common.core.helper
 
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import net.minecraft.entity.ai.attributes.*
+import net.minecraft.entity.ai.attributes.BaseAttribute
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.*
 
 object ElvenFlightHelper {
 	
-	private val FLIGHT: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", AlfheimConfigHandler.flightTime.toDouble()) {
-		override fun clampValue(d: Double) = max(0.0, min(AlfheimConfigHandler.flightTime.toDouble(), d))
+	private val FLIGHT = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", max) {
+		override fun clampValue(d: Double) = max(0.0, min(max, d))
 	}.setShouldWatch(true)
 	
 	fun register(player: EntityPlayer) {
@@ -20,12 +20,16 @@ object ElvenFlightHelper {
 		if (player.getAttributeMap().getAttributeInstance(FLIGHT) == null) register(player)
 	}
 	
-	val max: Double
+	var max
 		get() = AlfheimConfigHandler.flightTime.toDouble()
+		internal set(value) {
+			AlfheimConfigHandler.flightTime = value.toInt()
+			FLIGHT.defaultValue = value
+		}
 	
 	operator fun get(player: EntityPlayer): Double {
 		ensureExistence(player)
-		return player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue
+		return FLIGHT.clampValue(player.getAttributeMap().getAttributeInstance(FLIGHT).baseValue)
 	}
 	
 	operator fun set(player: EntityPlayer, value: Double) {
@@ -36,7 +40,7 @@ object ElvenFlightHelper {
 	fun add(player: EntityPlayer, value: Double) {
 		player.flight =
 			if (!player.capabilities.isCreativeMode)
-				max(0.0, min(player.flight + value, AlfheimConfigHandler.flightTime.toDouble()))
+				FLIGHT.clampValue(player.flight + value)
 			else
 				max
 	}
@@ -53,7 +57,7 @@ object ElvenFlightHelper {
 
 
 var EntityPlayer.flight
+	get() = ElvenFlightHelper[this]
 	set(value) {
 		ElvenFlightHelper[this] = value
 	}
-	get() = ElvenFlightHelper[this]

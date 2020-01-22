@@ -62,6 +62,11 @@ object AlfheimRegistry {
 	
 	fun postInit() {
 		if (AlfheimConfigHandler.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
+		
+		for (i in BiomeGenBase.getBiomeGenArray()) {
+			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
+				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
+		}
 	}
 	
 	fun registerPotions() {
@@ -101,11 +106,6 @@ object AlfheimRegistry {
 		
 		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
 		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
-		
-		for (i in BiomeGenBase.getBiomeGenArray()) {
-			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
-				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
-		}
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)

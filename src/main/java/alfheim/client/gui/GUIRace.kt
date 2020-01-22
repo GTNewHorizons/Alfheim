@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
-import kotlin.math.sin
+import kotlin.math.*
 
 class GUIRace: Gui() {
 	
@@ -45,7 +45,7 @@ class GUIRace: Gui() {
 		
 		//		ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 		
-		val mod = mc.thePlayer.flight / ElvenFlightHelper.max
+		val mod = min(1.0, mc.thePlayer.flight / ElvenFlightHelper.max)
 		val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
 		mc.thePlayer.race.glColorA(if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 		

@@ -10,6 +10,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -69,7 +70,7 @@ object EventHandler {
 			CardinalSystem.transfer(e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, ElvenFlightHelper.max), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(MessageNI(MessageNI.mni.WINGS_BL, AlfheimConfigHandler.wingsBlackList), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfigHandler.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 250.0, 0.5)
@@ -149,11 +150,7 @@ object EventHandler {
 			}
 		}
 		
-		if (target is EntityAlfheimPixie && e.source.getDamageType() == DamageSource.inWall.getDamageType()) {
-			e.isCanceled = true
-			return
-		}
-		if (AlfheimCore.enableElvenStory && e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer && target.race != EnumRace.HUMAN) {
+		if (AlfheimCore.enableElvenStory && e.source.damageType == DamageSource.fall.damageType && target is EntityPlayer && target.race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
