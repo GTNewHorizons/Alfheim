@@ -49,7 +49,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun canTriggerWalking() = false
 	override fun doesEntityNotTriggerPressurePlate() = true
 	override fun getDropItem() = Items.snowball!!
-	
+	override fun canDespawn() = WRATH_OF_THE_WINTER
 	override fun dropFewItems(hit: Boolean, looting: Int) {
 		entityDropItem(ItemStack(dropItem, looting + 1), 0.0f)
 	}

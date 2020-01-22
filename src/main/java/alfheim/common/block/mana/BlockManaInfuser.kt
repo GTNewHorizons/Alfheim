@@ -1,6 +1,5 @@
 package alfheim.common.block.mana
 
-import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaInfuser
@@ -13,7 +12,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.*
@@ -43,14 +42,6 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 	
 	override fun getIcon(side: Int, meta: Int) =
 		if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3]
-	
-	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (ModInfo.DEV && !world!!.isRemote && player!!.isSneaking) {
-			player.addChatComponentMessage(ChatComponentText(EnumChatFormatting.AQUA.toString() + "Mana: " + (world.getTileEntity(x, y, z) as TileManaInfuser).currentMana))
-			return true
-		}
-		return false
-	}
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, placer: EntityLivingBase?, stack: ItemStack?) {
 		super.onBlockPlacedBy(world, x, y, z, placer, stack)

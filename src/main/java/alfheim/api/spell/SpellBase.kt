@@ -27,25 +27,25 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	open var radius = 16.0
 	
 	fun setManaCost(newVal: Int): Int {
-		val temp = mana
+		val was = mana
 		mana = newVal
-		return temp
+		return was
 	}
 	
 	open fun getManaCost() = mana
 	
 	fun setCooldown(newVal: Int): Int {
-		val temp = cldn
+		val was = cldn
 		cldn = newVal
-		return temp
+		return was
 	}
 	
 	open fun getCooldown() = cldn
 	
 	fun setCastTime(newVal: Int): Int {
-		val temp = cast
+		val was = cast
 		cast = newVal
-		return temp
+		return was
 	}
 	
 	fun getCastTime() = cast

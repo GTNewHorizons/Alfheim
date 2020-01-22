@@ -13,8 +13,8 @@ import java.io.File
 class AlfheimHookLoader: HookLoader() {
 	
 	init {
-		ModInfo.OBF = !(ASJReflectionHelper.getStaticValue<CoreModManager, Any>(CoreModManager::class.java, "deobfuscatedEnvironment") as Boolean)
-		ModInfo.DEV = true // !ModInfo.OBF
+		ModInfo.OBF = !ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment")
+		ModInfo.DEV = !ModInfo.OBF
 		
 		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
 		if (ModInfo.OBF) AlfheimModularLoader
