@@ -25,7 +25,8 @@ Fixes:
  Rain instead of snow (during winter)
  Config files category tooltips
  Biome display on F3
- Snow grass spreading and layering
+ Snow grass ready generation, spreading and layering
  Sun and moon visibility during rain
  Numeric mana not displaying for botania mana providers
+ [ESM] Alfheim allows respawn ignoring configs when with ESM
  [witchery] vampire in mask exploit

@@ -1,5 +1,6 @@
 package alfmod.common.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.EntityDamageSourceIndirectSpell
 import alfmod.AlfheimModularCore
@@ -30,6 +31,12 @@ class EntitySniceBall: EntityThrowableCopy {
 		if (!worldObj.isRemote)
 			return
 		
+		if (thrower == null) {
+			motionX = 0.0
+			motionY = 0.0
+			motionZ = 0.1
+		}
+		
 		val v = Vector3()
 		for (i in 0..1) {
 			v.rand().sub(0.5).normalize().mul(Math.random() * 0.3 + 0.3)
@@ -59,7 +66,10 @@ class EntitySniceBall: EntityThrowableCopy {
 	
 	companion object {
 		
-		fun frost(ball: EntitySniceBall, thrower: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, ball).setDamageBypassesArmor().setProjectile()!!
+		fun frost(ball: EntitySniceBall, thrower: EntityLivingBase?): DamageSource {
+			val src: DamageSource = EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, ball)
+			src.setDamageBypassesArmor().setProjectile()
+			return src
+		}
 	}
 }

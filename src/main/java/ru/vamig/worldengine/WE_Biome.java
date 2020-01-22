@@ -164,4 +164,9 @@ public class WE_Biome extends BiomeGenBase {
 	public int getBiomeGrassColor(int R, int G, int B) {
 		return 0x08F500;
 	}
+	
+	@Override
+	public boolean isEqualTo(BiomeGenBase biome) {
+		return super.isEqualTo(biome);
+	}
 }
