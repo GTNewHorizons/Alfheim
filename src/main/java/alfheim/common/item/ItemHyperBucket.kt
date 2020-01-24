@@ -1,13 +1,15 @@
 package alfheim.common.item
 
-import alfheim.common.core.util.AlfheimTab
+import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 
-class ItemWaterCleaner: ItemMod("HyperpolatedBucket") {
+class ItemHyperBucket: ItemMod("HyperpolatedBucket") {
 	
 	init {
 		creativeTab = AlfheimTab
@@ -15,6 +17,7 @@ class ItemWaterCleaner: ItemMod("HyperpolatedBucket") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (world.isRemote) return stack
 		val mop = getMovingObjectPositionFromPlayer(world, player, true) ?: return stack
 		
 		if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
@@ -23,10 +26,11 @@ class ItemWaterCleaner: ItemMod("HyperpolatedBucket") {
 			val z = mop.blockZ
 			
 			val block = world.getBlock(x, y, z)
+			val range = stack.meta + 1
 			
-			for (i in (x - 2)..(x + 2))
-				for (j in (y - 2)..(y + 2))
-					for (k in (z - 2)..(z + 2)) {
+			for (j in ((y - range)..(y + range)).reversed())
+				for (i in (x - range)..(x + range))
+					for (k in (z - range)..(z + range)) {
 						if (!world.canMineBlock(player, i, j, k))
 							continue
 						
@@ -34,7 +38,13 @@ class ItemWaterCleaner: ItemMod("HyperpolatedBucket") {
 							continue
 						
 						val at = world.getBlock(i, j, k)
-						if (at != block) continue
+						
+						if (block === Blocks.lava && at === Blocks.flowing_lava); else
+						if (block === Blocks.flowing_lava && at === Blocks.lava); else
+						if (block === Blocks.water && at === Blocks.flowing_water); else
+						if (block === Blocks.flowing_water && at === Blocks.water); else
+						if (at !== block) continue
+						
 						
 						val material = at.material
 						val l = world.getBlockMetadata(i, j, k)

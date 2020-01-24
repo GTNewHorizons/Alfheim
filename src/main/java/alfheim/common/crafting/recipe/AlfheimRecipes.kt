@@ -58,6 +58,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -80,6 +81,7 @@ import alfheim.common.item.AlfheimItems.elvoriumChestplate
 import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumHelmetRevealing
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
+import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
@@ -156,6 +158,7 @@ object AlfheimRecipes {
 	lateinit var recipeFurnace: IRecipe
 	lateinit var recipeGaiaPylon: IRecipe
 	lateinit var recipeGreenRod: IRecipe
+	lateinit var recipeHyperBucket: IRecipe
 	lateinit var recipeInvisibilityCloak: IRecipe
 	lateinit var recipeItemHolder: IRecipe
 	lateinit var recipeLensMessenger: IRecipe
@@ -437,6 +440,13 @@ object AlfheimRecipes {
 						 'S', ItemStack(livingcobble, 1, 0))
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(hyperBucket),
+						 "III", " B ", "MMM",
+						 'B', openBucket,
+						 'I', IFFESAL_DUST,
+						 'M', MAUFTRIUM_NUGGET)
+		recipeHyperBucket = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(invisibilityCloak),
 						 "PWP", "GWG", "GJG",
 						 'P', PRISMARINE_SHARD,
@@ -444,13 +454,6 @@ object AlfheimRecipes {
 						 'G', manaGlass,
 						 'J', MANA_PEARL)
 		recipeInvisibilityCloak = BotaniaAPI.getLatestAddedRecipe()
-		
-		addOreDictRecipe(ItemStack(manaAccelerator),
-						 "MLM", "LDL",
-						 'D', MANA_DIAMOND,
-						 'L', LIVING_ROCK,
-						 'M', MANA_PEARL)
-		recipeItemHolder = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(lens, 1, 22),
 						 " P ", "PLP", " P ",
@@ -470,6 +473,13 @@ object AlfheimRecipes {
 						 'H', blackHoleTalisman,
 						 'D', DREAM_WOOD)
 		recipeLootInterceptor = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(manaAccelerator),
+						 "MLM", "LDL",
+						 'D', MANA_DIAMOND,
+						 'L', LIVING_ROCK,
+						 'M', MANA_PEARL)
+		recipeItemHolder = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(manaInfuser),
 						 "DCD", "IRI", "SSS",
@@ -870,6 +880,8 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeRechargeSoulHorn())
 		RecipeSorter.register("${ModInfo.MODID}:rechargehorn", RecipeRechargeSoulHorn::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeEnhanceBucket())
+		RecipeSorter.register("${ModInfo.MODID}:enhanceBucket", RecipeEnhanceBucket::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {

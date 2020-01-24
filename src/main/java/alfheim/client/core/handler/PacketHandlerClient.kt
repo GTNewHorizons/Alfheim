@@ -56,7 +56,10 @@ object PacketHandlerClient {
 		when (m1d.values()[packet.type]) {
 			m1d.ESMABIL          -> PlayerSegmentClient.esmAbility = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
-			m1d.ELVEN_FLIGHT_MAX -> ElvenFlightHelper.max = packet.data1
+			m1d.ELVEN_FLIGHT_MAX -> {
+				AlfheimConfigHandler.flightTime = packet.data1.toInt()
+				ElvenFlightHelper.max = packet.data1
+			}
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
 		}

@@ -40,7 +40,7 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre26.8" : "8"
+version = mainMod ? "BETA-pre26.8" : "9"
 group= "main"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
 
@@ -93,11 +93,11 @@ jar {
 		attributes 'FMLCorePluginContainsFMLMod': 'true'
 	}
 	
-	if (mainMod) {
+	/*if (mainMod) {
 		exclude ("alfmod/**")
 		exclude ("assets/alfmod/**")
 		
-		exclude ("assets/minecraft/textures/gui/container/creative_inventory/tab_AlfheimModular.png")
+		// exclude ("assets/minecraft/textures/gui/container/creative_inventory/tab_AlfheimModular.png")
 	} else {
 		exclude ("alexsocol/**")
 		exclude ("alfheim/**")
@@ -110,14 +110,14 @@ jar {
 		exclude ("assets/minecraft/**")
 		exclude ("assets/thaumcraft/**")
 		
-		//	include ("assets/minecraft/textures/gui/container/creative_inventory/tab_AlfheimModular.png")
+		// include ("assets/minecraft/textures/gui/container/creative_inventory/tab_AlfheimModular.png")
 		
 		exclude ("META-INF/alfheim_at.cfg")
 		
 		exclude ("alfheim_logo.png")
 		exclude ("credits.txt")
 		exclude ("methods.bin")
-	}
+	}*/
 }
 
 processResources {

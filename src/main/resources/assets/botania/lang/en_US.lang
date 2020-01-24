@@ -209,6 +209,11 @@ botania.page.manaImba1=And there is no reason to talk about interdimensional man
 botania.page.manaImba2=To select any &1Mana pool&0 as transfer target simply sneak-rightclick it with &1Transmitter&0. Then set the pool to mana accepting mode. Now place transmitter on &1Mana accelerator&0 above any filled mana pool - it will be the source pool. Now if it set to mana sending mode and both pools are loaded - mana transfer will occur at no cost. Changing modes on both pools to their opposites will revert the flow.
 botania.page.manaImba3=Creating &1Transmitter&0
 
+botania.entry.hyperBuk=Hyperpolated Bucket
+botania.tagline.hyperBuk=Dryouter
+botania.page.hyperBuk0=&1Extrapolatedpolated Bucket&0 is to weak for you? You want to clear oceans in single click? Then &1Hyperpolated Bucket&0 is for you. It is 27x times more powerful and will clear out more fluid blocks at once. Just enhance your pink bucket with mauftriom and iffesal dust to get devastating drying effect. You can further extend it's AoE by adding &1Mauftrium&0 to it.
+botania.page.hyperBuk1=Hyper-uber-mega-extrapolation
+
 botania.entry.flugel=Flügel
 botania.tagline.flugel=Weapon of Gods
 botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.

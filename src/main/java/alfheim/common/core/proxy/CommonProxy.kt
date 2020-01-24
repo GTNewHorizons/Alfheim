@@ -15,7 +15,7 @@ import alfheim.common.lexicon.*
 import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.*
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
@@ -73,7 +73,7 @@ open class CommonProxy {
 		SoulRestructurizationHandler
 		
 		FMLCommonHandler.instance().bus().register(object {
-			@SubscribeEvent
+			@SubscribeEvent(priority = EventPriority.HIGHEST)
 			fun onConfigChanged(e: ConfigChangedEvent.OnConfigChangedEvent) {
 				if (e.modID == ModInfo.MODID) AlfheimConfigHandler.syncConfig()
 			}

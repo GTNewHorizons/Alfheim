@@ -55,6 +55,7 @@ object AlfheimLexiconData {
 	lateinit var excalibr: LexiconEntry
 	lateinit var flugel: LexiconEntry
 	lateinit var greenRod: LexiconEntry
+	lateinit var hyperBuk: LexiconEntry
 	lateinit var infuser: LexiconEntry
 	lateinit var lootInt: LexiconEntry
 	lateinit var manaAcc: LexiconEntry
@@ -114,6 +115,7 @@ object AlfheimLexiconData {
 		essences = BLexiconEntry("essences", categoryAlfheim)
 		flugel = BLexiconEntry("flugel", categoryAlfheim)
 		greenRod = BLexiconEntry("greenRod", categoryAlfheim)
+		hyperBuk = BLexiconEntry("hyperBuk", categoryAlfheim)
 		infuser = BLexiconEntry("infuser", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
@@ -323,6 +325,8 @@ object AlfheimLexiconData {
 		
 		manaImba.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								PageCraftingRecipe("3", AlfheimRecipes.recipeManaMirrorImba))
+		
+		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

@@ -25,16 +25,16 @@ object AlfheimModularRecipes {
 									  'R', LibOreDict.REDSTONE_DUST,
 									  'G', LibOreDict.GLOWSTONE_DUST,
 									  'E', LibOreDict.MUSPELHEIM_ESSENCE,
-									  'C', ModBlocks.cellBlock,
+									  'V', ModItems.virus,
 									  'A', ItemStack(ModBlocks.altGrass, 1, 3))
 		recipeAiryVirus = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(airyVirus, 3, 1),
-									  "IMI", "EVE", "AAA",
+									  "IMI", "ECE", "AAA",
 									  'I', LibOreDict.IFFESAL_DUST,
 									  'M', vazkii.botania.common.lib.LibOreDict.MANA_POWDER,
 									  'E', LibOreDict.NIFLHEIM_ESSENCE,
-									  'V', ModItems.virus,
+									  'C', ModBlocks.cellBlock,
 									  'A', ItemStack(ModBlocks.altGrass, 1, 4))
 		recipeAiryAntivirus = BotaniaAPI.getLatestAddedRecipe()
 	}
