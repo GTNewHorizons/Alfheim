@@ -7,6 +7,7 @@ import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
@@ -48,7 +49,7 @@ import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.api.boss.*
+import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -72,6 +73,7 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.lib.LibBlockNames
+import java.awt.Color
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
@@ -785,4 +787,17 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook
+	fun drawManaBar(handler: TooltipAdditionDisplayHandler?, stack: ItemStack, display: IManaTooltipDisplay, mouseX: Int, mouseY: Int, offx: Int, offy: Int, width: Int, height: Int) {
+		val item = stack.item
+		
+		if (item is IManaItem && AlfheimConfigHandler.numericalMana) {
+			glDisable(GL_DEPTH_TEST)
+			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.toFloat() + ClientTickHandler.partialTicks).toDouble() * 0.2).toFloat() + 1.0f) * 0.3f + 0.4f, 1.0f))
+			glEnable(GL_DEPTH_TEST)
+		}
+	}
 }
