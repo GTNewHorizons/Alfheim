@@ -5,7 +5,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
-import net.minecraft.entity.ai.attributes.BaseAttribute
+import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.*
 
@@ -15,9 +15,7 @@ object ElvenFlightHelper {
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	
-	private val FLIGHT = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", max) {
-		override fun clampValue(d: Double) = max(0.0, min(max, d))
-	}.setShouldWatch(true)
+	private val FLIGHT = RangedAttribute(ModInfo.MODID.toUpperCase() + ":FLIGHT", max, 0.0, max).setShouldWatch(true)
 	
 	fun register(player: EntityPlayer) {
 		player.getAttributeMap().registerAttribute(FLIGHT)

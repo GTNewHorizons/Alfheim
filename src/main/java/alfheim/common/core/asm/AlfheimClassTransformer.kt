@@ -21,18 +21,18 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.client.particle.EffectRenderer"                  -> {
+			"net.minecraft.client.network.NetHandlerPlayClient"             -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-				val ct = `EffectRenderer$ClassVisitor`(cw)
+				val ct = `NetHandlerPlayClient$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
 			
-			"net.minecraft.entity.ai.attributes.RangedAttribute"                       -> {
+			"net.minecraft.client.particle.EffectRenderer"                  -> {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-				val ct = `RangedAttribute$ClassVisitor`(cw)
+				val ct = `EffectRenderer$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.EXPAND_FRAMES)
 				cw.toByteArray()
 			}
@@ -230,41 +230,23 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 	}
 	
-	internal class `RangedAttribute$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+	internal class `NetHandlerPlayClient$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (name == "<init>") {
-				println("Visiting RangedAttribute#<init>: $name$desc")
-				return `RangedAttribute$init$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			if (name == "handleEntityProperties" || (name == "a" && desc == "(Lil;)V")) {
+				println("Visiting NetHandlerPlayClient#handleEntityProperties: $name$desc")
+				return `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `RangedAttribute$init$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+		internal class `NetHandlerPlayClient$handleEntityProperties$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
-			override fun visitLdcInsn(cst: Any) {
-				mv.visitTypeInsn(NEW, "java/lang/StringBuilder")
-				mv.visitInsn(DUP)
-				mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false)
-				super.visitLdcInsn(cst)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitLdcInsn(" name: ")
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitVarInsn(ALOAD, 1)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitLdcInsn(" min: ")
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitVarInsn(DLOAD, 4)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(D)Ljava/lang/StringBuilder;", false)
-				mv.visitLdcInsn(" max: ")
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitVarInsn(DLOAD, 6)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(D)Ljava/lang/StringBuilder;", false)
-				mv.visitLdcInsn(" def: ")
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false)
-				mv.visitVarInsn(DLOAD, 2)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(D)Ljava/lang/StringBuilder;", false)
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false)
+			override fun visitLdcInsn(cst: Any?) {
+				if (cst == java.lang.Double.MIN_NORMAL)
+					super.visitLdcInsn(-java.lang.Double.MAX_VALUE)
+				else
+					super.visitLdcInsn(cst)
 			}
 		}
 	}
