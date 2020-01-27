@@ -322,7 +322,7 @@ object EventHandler {
 //		player.rotationYaw = 0f
 //		player.rotationPitch = 0f
 		
-		if (e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
+		if (AlfheimCore.enableElvenStory && e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
 			val seg = CardinalSystem.forPlayer(e.player)
 			val pos = Vector3.fromEntity(e.player)
 			

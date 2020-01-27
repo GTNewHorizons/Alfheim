@@ -77,7 +77,12 @@ enum class EnumRace {
 			if (0 > id || id > values().size) HUMAN else values()[MathHelper.floor_double(id)]
 		
 		fun ensureExistance(player: EntityPlayer) {
-			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
+			if (player.getAttributeMap().getAttributeInstanceByName(RACE.attributeUnlocalizedName) == null) registerRace(player)
+		}
+		
+		private fun registerRace(player: EntityPlayer) {
+			player.getAttributeMap().registerAttribute(RACE)
+			setRaceID(player, 0.0)
 		}
 		
 		operator fun get(id: Int) = getByID(id.toDouble())
@@ -101,11 +106,6 @@ enum class EnumRace {
 		
 		internal fun setRaceID(player: EntityPlayer, raceID: Double) {
 			player.getEntityAttribute(RACE).baseValue = raceID
-		}
-		
-		private fun registerRace(player: EntityPlayer) {
-			player.getAttributeMap().registerAttribute(RACE)
-			setRaceID(player, 0.0)
 		}
 	}
 }
