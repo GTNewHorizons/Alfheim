@@ -106,6 +106,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.astrolabe

@@ -6,6 +6,7 @@ Innovations:
  New models for stones of power
  Temporarily removed [anti]virus blocks
  New boss bars
+ Numerical mana tooltip on items above blue mana line
  [MMO] Disabled default & Botania boss bars when MMO is enabled
  
 Integration:
@@ -25,8 +26,8 @@ Fixes:
  Rain instead of snow (during winter)
  Config files category tooltips
  Biome display on F3
- Snow grass ready generation, spreading and layering
+ Snow grass ready generation (config), spreading and layering
  Sun and moon visibility during rain
- Numeric mana not displaying for botania mana providers
+ Flugel Soul dupe when clearing with Rheingold
  [ESM] Alfheim allows respawn ignoring configs when with ESM
- [witchery] vampire in mask exploit
+ [witchery] vampire in mask exploit (sort of)

@@ -349,7 +349,14 @@ object ASJUtilities {
 	/**
 	 * Checks whether `stack` is registered to oredict `name`
 	 */
+	@JvmStatic
 	fun isOre(stack: ItemStack?, name: String) = OreDictionary.getOreIDs(stack).any { it == OreDictionary.getOreID(name) }
+	
+	@JvmStatic
+	fun removeRecipe(block: Block) = removeRecipe(ItemStack(block))
+	
+	@JvmStatic
+	fun removeRecipe(item: Item) = removeRecipe(ItemStack(item))
 	
 	/**
 	 * Removes recipe of `resultItem`
@@ -361,10 +368,8 @@ object ASJUtilities {
 		val i = CraftingManager.getInstance().recipeList.iterator()
 		while (i.hasNext()) {
 			val r = i.next() as IRecipe
-			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput)) {
-				FMLRelaunchLog.log("ASJLib", Level.INFO, "Removed Recipe: " + r + " -> " + r.recipeOutput)
+			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput))
 				i.remove()
-			}
 		}
 	}
 	

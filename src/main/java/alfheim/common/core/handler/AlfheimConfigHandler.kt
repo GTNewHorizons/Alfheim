@@ -46,6 +46,7 @@ object AlfheimConfigHandler {
 	var anomaliesUpdate			= 6000
 	var citiesDistance			= 1000
 	var oregenMultiplier		= 3
+	var winterGrassReadyGen		= true
 	
 	// SPAWNRATE
 	var chickSpawn				= intArrayOf(10, 4, 4)
@@ -181,6 +182,7 @@ object AlfheimConfigHandler {
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
+		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
 		cowSpawn = loadProp(CATEGORY_SPAWNRATE, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_SPAWNRATE, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")

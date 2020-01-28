@@ -17,14 +17,12 @@ import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
 import alfheim.common.potion.PotionSoulburn
-import codechicken.nei.recipe.GuiRecipe
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
@@ -84,7 +82,6 @@ object AlfheimHookHandler {
 	private var updatingTile = false
 	private var updatingEntity = false
 	private const val TAG_TRANSFER_STACK = "transferStack"
-	var numMana = true
 	
 	var rt = 0f
 	var gt = 0f
@@ -566,11 +563,10 @@ object AlfheimHookHandler {
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getBinding(mirror: ItemManaMirror, stack: ItemStack): ChunkCoordinates? {
-		val world = Minecraft.getMinecraft().theWorld ?: return null
+		val world = mc.theWorld ?: return null
 		
 		if (world.provider.dimensionId != ItemNBTHelper.getInt(stack, "dim", Int.MAX_VALUE)) return null
 		
@@ -583,22 +579,26 @@ object AlfheimHookHandler {
 		return if (tile is IManaPool) coords else null
 	}
 	
-	@SideOnly(Side.CLIENT)
+	var moveText = false
+	
+	@JvmStatic
+	@Hook(isMandatory = true)
+	fun drawSimpleManaHUD(hh: HUDHandler?, color: Int, mana: Int, maxMana: Int, name: String?, res: ScaledResolution) {
+		moveText = mana >= 0
+	}
+	
+	var numMana = true
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
 		if (mana < 0 || !AlfheimConfigHandler.numericalMana || !numMana) return
 		glPushMatrix()
-		val f = Minecraft.getMinecraft().currentScreen == null
-		var f1 = false
-		
-		if (AlfheimCore.NEILoaded)
-			f1 = !f && Minecraft.getMinecraft().currentScreen is GuiRecipe
 		
 		val text = "$mana/$maxMana"
-		val x = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
-		val y = if (f1) y - 9 else y - 19
-		Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color, f)
+		val x = x + 51 - mc.fontRenderer.getStringWidth(text) / 2
+		val y = y - mc.fontRenderer.FONT_HEIGHT
+		mc.fontRenderer.drawString(text, x, y, color, mc.currentScreen == null)
 		glPopMatrix()
 	}
 	
@@ -607,7 +607,7 @@ object AlfheimHookHandler {
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
 		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
-			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, mc.timer.renderPartialTicks)
 		}
 	}
 	
@@ -615,7 +615,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
-		if (Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
+		if (mc.thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
 			glDisable(GL_ALPHA_TEST)
 			PotionSoulburn.renderFireInFirstPerson(partialTicks)
 			glEnable(GL_ALPHA_TEST)
@@ -749,34 +749,50 @@ object AlfheimHookHandler {
 	
 	var renderingBoss = false
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
 		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook
 	fun render(handler: BossBarHandler?, res: ScaledResolution) {
 		if (BossBarHandler.currentBoss == null) return
-		
 		renderingBoss = true
+	}
+	
+	@JvmStatic
+	@Hook
+	fun translateToLocal(sc: StatCollector?, text: String?): String? {
+		if (text == "botaniamisc.manaUsage")
+			moveText = true
+			
+		return text
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun drawString(font: FontRenderer, string: String?, x: Int, y: Int, color: Int): Int {
+		return font.drawString(string, x, y - if (moveText) font.FONT_HEIGHT + 1 else 0, color, false).also { moveText = false }
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun drawStringWithShadow(font: FontRenderer, string: String?, x: Int, y: Int, color: Int): Int {
+		val ny = y - if (moveText) font.FONT_HEIGHT + 1 else 0
+		moveText = false
+		
 		val result =
 			if (renderingBoss && color == 0xA2018C && (BossBarHandler.currentBoss is IBotaniaBossWithName || BossBarHandler.currentBoss is IBotaniaBossWithShaderAndName))
 				if (BossBarHandler.currentBoss is IBotaniaBossWithName)
-					font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
+					font.drawString(string, x, ny, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
 				else
-					font.drawString(string, x, y, (BossBarHandler.currentBoss as IBotaniaBossWithShaderAndName).getNameColor(), true).also { renderingBoss = false }
+					font.drawString(string, x, ny, (BossBarHandler.currentBoss as IBotaniaBossWithShaderAndName).getNameColor(), true).also { renderingBoss = false }
 			else
-				font.drawString(string, x, y, color, true)
+				font.drawString(string, x, ny, color, true)
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
@@ -788,9 +804,8 @@ object AlfheimHookHandler {
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook
+	@Hook // for blue line above item tooltip
 	fun drawManaBar(handler: TooltipAdditionDisplayHandler?, stack: ItemStack, display: IManaTooltipDisplay, mouseX: Int, mouseY: Int, offx: Int, offy: Int, width: Int, height: Int) {
 		val item = stack.item
 		

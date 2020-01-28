@@ -3,7 +3,6 @@
 
 package ru.vamig.worldengine;
 
-import alexsocol.asjlib.ASJUtilities;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.relauncher.*;
 import net.minecraft.init.Blocks;
@@ -33,9 +32,9 @@ public class WE_Biome extends BiomeGenBase {
 	//////////////////
 	//- Generators -//
 	//////////////////
-	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
-	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
-	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
+	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList<>();
+	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList<>();
+	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList<>();
 	
 	/////
 	//=//
@@ -123,6 +122,11 @@ public class WE_Biome extends BiomeGenBase {
 			cp.standardBiomeOnMap = biome;
 		//-//
 		return biome.id;
+	}
+	
+	@SuppressWarnings("RedundantCast")
+	public static WE_Biome getBiomeAt(WE_ChunkProvider cp, int x, int z) {
+		return getBiomeAt(cp, (long) x, (long) z);
 	}
 	
 	public static WE_Biome getBiomeAt(WE_ChunkProvider cp, long x, long z) {

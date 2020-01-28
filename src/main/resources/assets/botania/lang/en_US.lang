@@ -239,6 +239,7 @@ botania.tagline.soulHorn=Flügel: Ultramode activated
 botania.page.soulHorn0=Watching how much stronger Flügel is invoked due to only one spent fragment of the soul, you were struck by a thought as if a lightning strike. What happens if you try to bring more fragments to the ritual of summoning? Or the whole soul at once? Of course, it is impossible to put such an idea into practice unless you create some kind of artifact.
 botania.page.soulHorn1=Remembering the intoxicating power of &1Mauftrium&0 and the ability of &1Elvorium&0 to contain a huge amount of energy, the image of &1Horn of Souls&0 was opened to your eyes. It works on the principle of a funnel: all soul fragments placed in it merge into a single vessel of energy and are used to invoke an incomprehensibly powerful creature. After direct use, the horn loses all the stored energy, but not utility.
 botania.page.soulHorn2=Creating &1Horn of Souls&0
+botania.page.soulHorn3=To fill horn with soul fragments just drop both items on ground. particles will tell you if everything was fine.
 
 botania.entry.mask=Mysterious Mask
 botania.tagline.mask=I've already seen this somewhere...

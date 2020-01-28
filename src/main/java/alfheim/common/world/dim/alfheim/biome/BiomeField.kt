@@ -30,7 +30,7 @@ object BiomeField: BiomeAlfheim() {
 		
 		var standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.dirt, 0.toByte(), ModBlocks.livingrock, 0.toByte(), -256, 0, -4, -2, true)
-		standardBiomeLayers.add(if (AlfheimCore.winter) AlfheimBlocks.snowGrass else Blocks.grass, 0.toByte(), Blocks.dirt, 0.toByte(), -256, 0, -256, 0, false)
+		standardBiomeLayers.add(if (AlfheimCore.winter && AlfheimConfigHandler.winterGrassReadyGen) AlfheimBlocks.snowGrass else Blocks.grass, 0.toByte(), Blocks.dirt, 0.toByte(), -256, 0, -256, 0, false)
 		createChunkGen_InXZ_List.add(standardBiomeLayers)
 		standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.bedrock, 0.toByte(), 0, 0, 0, 0, true)

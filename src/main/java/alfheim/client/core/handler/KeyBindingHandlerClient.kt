@@ -85,9 +85,11 @@ object KeyBindingHandlerClient {
 			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode)) {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
-					PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
-					ASJUtilities.say(mc.thePlayer, "alfheimmisc.elvenAbility.${PlayerSegmentClient.esmAbility}")
-					AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
+					if (AlfheimCore.enableElvenStory) {
+						PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
+						ASJUtilities.say(mc.thePlayer, "alfheimmisc.elvenAbility.${PlayerSegmentClient.esmAbility}")
+						AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
+					}
 				}
 			} else if (toggleESMAbility) {
 				toggleESMAbility = false

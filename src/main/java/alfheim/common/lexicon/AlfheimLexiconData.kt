@@ -330,7 +330,7 @@ object AlfheimLexiconData {
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		
-		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn)).icon = ItemStack(AlfheimItems.soulHorn)
+		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn), PageText("3")).icon = ItemStack(AlfheimItems.soulHorn)
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory()
 		
@@ -578,7 +578,6 @@ object AlfheimLexiconData {
 		if (AlfheimCore.enableMMO) {
 			preInitMMO()
 			initMMO()
-			postInitMMO()
 		}
 		
 		if (!categoryAlfheim.entries.contains(es)) BotaniaAPI.addEntry(es, categoryAlfheim)

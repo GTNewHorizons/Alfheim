@@ -12,6 +12,7 @@ import net.minecraftforge.oredict.OreDictionary
 fun Double.mfloor() = MathHelper.floor_double(this)
 
 val Number.D get() = this.toDouble()
+val Number.F get() = this.toFloat()
 
 // ################ MINECRAFT ####################
 

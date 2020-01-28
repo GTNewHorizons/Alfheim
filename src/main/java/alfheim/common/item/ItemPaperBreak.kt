@@ -25,6 +25,7 @@ class ItemPaperBreak: ItemMod("PaperBreak") {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (!AlfheimCore.enableMMO) return stack
+		
 		if (!world.isRemote) {
 			val name = getCompound(stack, "display", false).getString("Name")
 			val pt = PartySystem.getParty(player)
