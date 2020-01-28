@@ -15,11 +15,12 @@ import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import kotlin.math.*
 
-class RenderTileTradePortal: TileEntitySpecialRenderer() {
+object RenderTileTradePortal: TileEntitySpecialRenderer() {
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
-		val portal = tile as TileTradePortal
-		val meta = portal.getBlockMetadata()
+		if (tile !is TileTradePortal) return
+		
+		val meta = tile.getBlockMetadata()
 		if (meta == 0)
 			return
 		
@@ -29,7 +30,7 @@ class RenderTileTradePortal: TileEntitySpecialRenderer() {
 		glDisable(GL_ALPHA_TEST)
 		glDisable(GL_LIGHTING)
 		glDisable(GL_CULL_FACE)
-		glColor4d(1.0, 1.0, 1.0, min(1.0, (sin(((ClientTickHandler.ticksInGame + ticks) / 8).toDouble()) + 1) / 7 + 0.6) * (min(60, portal.ticksOpen) / 60.0) * 0.85)
+		glColor4d(1.0, 1.0, 1.0, min(1.0, (sin(((ClientTickHandler.ticksInGame + ticks) / 8).toDouble()) + 1) / 7 + 0.6) * (min(60, tile.ticksOpen) / 60.0) * 0.85)
 		
 		glTranslated(x - 1, y + 1, z + 0.25)
 		if (meta == 2) {
@@ -44,11 +45,11 @@ class RenderTileTradePortal: TileEntitySpecialRenderer() {
 		if (icon != null) renderIcon(0.0, 0.0, icon, 3.0, 3.0, 240)
 		
 		glColor4d(1.0, 1.0, 1.0, 1.0)
-		if (portal.isTradeOn) {
+		if (tile.isTradeOn) {
 			if (meta == 2) glTranslated(0.05, 0.0, 0.0)
 			if (meta == 1) glTranslated(0.046875, 0.0, 0.0)
 			glTranslated(1.453125, -0.6640625, 0.251)
-			val out = portal.output
+			val out = tile.output
 			if (out.item is ItemBlock)
 				glTranslated(0.0, 0.0, -0.140625)
 			else

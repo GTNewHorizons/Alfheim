@@ -30,7 +30,6 @@ import vazkii.botania.common.block.ModBlocks
 
 object AlfheimBlocks {
 	
-	val airyVirus: Block
 	val alfheimPortal: Block
 	val alfheimPylon: Block
 	val alfStorage: Block
@@ -163,7 +162,6 @@ object AlfheimBlocks {
 	val sealingWood: Block
 	
 	init {
-		airyVirus = BlockAiryVirus()
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
 		alfStorage = object: BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
@@ -576,6 +574,7 @@ object AlfheimBlocks {
 	fun registerFlora() {
 		BotaniaAPI.registerSubTile("crysanthermum", SubTileCrysanthermum::class.java)
 		BotaniaAPI.registerSubTileSignature(SubTileCrysanthermum::class.java, ShadowFoxSignature("crysanthermum"))
+		
 		BotaniaAPI.subTileMods["crysanthermum"] = "Iridescense"
 		BotaniaAPI.addSubTileToCreativeMenu("crysanthermum")
 		

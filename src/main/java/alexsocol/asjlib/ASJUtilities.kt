@@ -349,7 +349,14 @@ object ASJUtilities {
 	/**
 	 * Checks whether `stack` is registered to oredict `name`
 	 */
+	@JvmStatic
 	fun isOre(stack: ItemStack?, name: String) = OreDictionary.getOreIDs(stack).any { it == OreDictionary.getOreID(name) }
+	
+	@JvmStatic
+	fun removeRecipe(block: Block) = removeRecipe(ItemStack(block))
+	
+	@JvmStatic
+	fun removeRecipe(item: Item) = removeRecipe(ItemStack(item))
 	
 	/**
 	 * Removes recipe of `resultItem`
@@ -361,10 +368,8 @@ object ASJUtilities {
 		val i = CraftingManager.getInstance().recipeList.iterator()
 		while (i.hasNext()) {
 			val r = i.next() as IRecipe
-			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput)) {
-				FMLRelaunchLog.log("ASJLib", Level.INFO, "Removed Recipe: " + r + " -> " + r.recipeOutput)
+			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput))
 				i.remove()
-			}
 		}
 	}
 	
@@ -398,7 +403,7 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * Makes `e1` to face `e2`
+	 * Makes [e1] to face [e2]
 	 */
 	@JvmStatic
 	fun faceEntity(e1: EntityLivingBase, e2: Entity, yaw: Float, pitch: Float) {
@@ -434,9 +439,8 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getMouseOver(entity: EntityLivingBase?, dist: Double, interact: Boolean): MovingObjectPosition? {
-		if (entity?.worldObj == null) {
+		if (entity?.worldObj == null)
 			return null
-		}
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
@@ -836,7 +840,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun say(player: EntityPlayer?, message: String) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message)))
+		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message).replace('&', '\u00a7')))
 	}
 	
 	@JvmStatic

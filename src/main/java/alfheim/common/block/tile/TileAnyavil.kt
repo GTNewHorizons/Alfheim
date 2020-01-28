@@ -1,12 +1,11 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.network.MessageTileItem
+import alfheim.common.core.handler.AlfheimConfigHandler
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.passive.EntitySheep
@@ -16,8 +15,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
-import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.internal.IManaBurst
+import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.mana.TilePool
 import java.awt.Color
@@ -28,17 +27,20 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	var pinkCharge = 0
 	
 	fun onBurstCollision(burst: IManaBurst, world: World) {
+		val item = item
 		if (burst.isFake) return
 		if (item == null) return
+		if (GameRegistry.findUniqueIdentifierFor(item.item).toString() in AlfheimConfigHandler.anyavilBL) return
 		if (burst.color != -0xd7f5a) return
+		
 		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), yCoord.toDouble(), (zCoord - 1).toDouble(), (xCoord + 2).toDouble(), (yCoord + 2).toDouble(), (zCoord + 2).toDouble()).expand(5.0, 3.0, 5.0))
 		for (eitem in eitems) {
 			eitem as EntityItem
 			if (eitem.isDead) continue
-			val item = eitem.entityItem
-			val pinkness = AlfheimAPI.getPinkness(item)
+			val stack = eitem.entityItem
+			val pinkness = AlfheimAPI.getPinkness(stack)
 			if (pinkness > 0) {
-				pinkCharge += pinkness * item.stackSize
+				pinkCharge += pinkness * stack.stackSize
 				eitem.setDead()
 			}
 		}
@@ -56,19 +58,19 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 			}
 		}
 		
-		val needed = item!!.itemDamage
+		val needed = item.itemDamage
 		val transfer = max(0, min(needed, pinkCharge))
 		pinkCharge -= transfer
-		item!!.itemDamage = item!!.itemDamage - transfer
+		item.itemDamage = item.itemDamage - transfer
 		
 		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), yCoord + 1.5, zCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
 	fun renderHUD(res: ScaledResolution) {
-		val name = AlfheimBlocks.anyavil.localizedName
+		val name = ItemStack(AlfheimBlocks.anyavil).displayName
 		val col = EntitySheep.fleeceColorTable[6]
 		val color = Color(col[0], col[1], col[2]).rgb
-		BotaniaAPI.internalHandler.drawSimpleManaHUD(color, pinkCharge, MAX_PINK_CHARGE, name, res)
+		HUDHandler.drawSimpleManaHUD(color, pinkCharge, MAX_PINK_CHARGE, name, res)
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -143,8 +145,10 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	
 	override fun closeInventory() {}
 	
-	override fun isItemValidForSlot(slot: Int, stack: ItemStack?): Boolean {
-		return stack != null && stack.stackSize == 1 && stack.item.isDamageable
+	override fun isItemValidForSlot(slot: Int, stack: ItemStack): Boolean {
+		if (GameRegistry.findUniqueIdentifierFor(stack.item).toString() in AlfheimConfigHandler.anyavilBL) return false
+		
+		return stack.stackSize == 1 && stack.item.isDamageable
 	}
 	
 	override fun getAccessibleSlotsFromSide(side: Int): IntArray {
@@ -152,6 +156,8 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	}
 	
 	override fun canInsertItem(slot: Int, stack: ItemStack, side: Int): Boolean {
+		if (GameRegistry.findUniqueIdentifierFor(stack.item).toString() in AlfheimConfigHandler.anyavilBL) return false
+		
 		return side == 1 && isItemValidForSlot(slot, stack)
 	}
 	

@@ -1,7 +1,6 @@
 package alfheim.common.core.util
 
 import alfheim.AlfheimCore
-import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -107,6 +106,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -173,6 +173,7 @@ import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
 import alfheim.common.item.AlfheimItems.trisDagger
+import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
@@ -212,7 +213,6 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(kindling)
 		addBlock(alfStorage)
 		addBlock(rainbowPetalBlock)
-		addBlock(airyVirus)
 		
 		if (AlfheimCore.jingleTheBells) {
 			addBlock(snowGrass)
@@ -250,6 +250,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addItem (astrolabe)
 		addItem (lootInterceptor)
+		addItem (hyperBucket)
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
 		addItem (soulHorn)
@@ -412,9 +413,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaAnnihilator)
 		
 		try {
-			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol")
-				addItem(royalStaff)
-		} catch (e: Throwable) {}
+			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
+		} catch (ignore: Throwable) {}
 		
 		additionalDisplays.forEach { it.invoke() }
 	}

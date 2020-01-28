@@ -2,7 +2,10 @@ package alfheim.common.lexicon.page
 
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.asm.AlfheimHookHandler
+import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
@@ -60,10 +63,8 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 		val font = Minecraft.getMinecraft().fontRenderer
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		val manaUsage = StatCollector.translateToLocal("botaniamisc.manaUsage") + ": "
-		val x1 = gui.left + gui.width / 2 - font.getStringWidth(manaUsage + recipe2.manaUsage) / 2
-		font.drawString(manaUsage, x1, gui.top + 110, 0x66000000)
-		font.drawString("" + recipe2.manaUsage, x1 + font.getStringWidth(manaUsage), gui.top + 110, 0x0000FF)
+		val manaUsage = StatCollector.translateToLocal("botaniamisc.manaUsage")
+		font.drawString(manaUsage, gui.left + (gui.width - font.getStringWidth(manaUsage)) / 2, gui.top + 110, 0x66000000)
 		
 		var ratio = 5
 		val x = gui.left + gui.width / 2 - 50

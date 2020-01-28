@@ -63,11 +63,6 @@ class RenderBlockAlfheimThaumOre: BlockRenderer(), ISimpleBlockRenderingHandler 
 		return true
 	}
 	
-	override fun shouldRender3DInInventory(modelId: Int): Boolean {
-		return true
-	}
-	
-	override fun getRenderId(): Int {
-		return ThaumcraftAlfheimModule.renderIDOre
-	}
+	override fun shouldRender3DInInventory(modelId: Int) = true
+	override fun getRenderId() = ThaumcraftAlfheimModule.renderIDOre
 }

@@ -13,7 +13,7 @@ import net.minecraft.util.StatCollector
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.sin
 
-class RenderTileRaceSelector: TileEntitySpecialRenderer() {
+object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 	
 	override fun renderTileEntityAt(tile: TileEntity?, cx: Double, cy: Double, cz: Double, ticks: Float) {
 		if (tile !is TileRaceSelector) return

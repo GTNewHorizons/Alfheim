@@ -68,6 +68,10 @@ object LibResourceLocations {
 	val yordinPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png")
 	val yordinPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png")
 	
+	val obelisk = Array(5) {
+		ResourceLocation(ModInfo.MODID, "textures/model/block/Obelisc$it.png")
+	}
+	
 	val wings = arrayOf(
 		null,
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/SALAMANDER_wing.png"),

@@ -18,20 +18,20 @@ import vazkii.botania.common.block.tile.mana.TilePool
 import java.awt.Color
 import java.util.*
 
-class RenderTileManaAccelerator: TileEntitySpecialRenderer() {
+object RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 	
-	internal val rand = Random()
+	val rand = Random()
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))!!
+	val modelSimple = ModelSimpleItemHolder()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		renderTE(tile as TileManaAccelerator, x, y, z)
-	}
-	
-	private fun renderTE(tile: TileManaAccelerator, x: Double, y: Double, z: Double) {
+		if (tile !is TileManaAccelerator) return
+		
 		var inf = false
 		var dil = false
 		var fab = false
 		var c = 0
-		 run {
+		run {
 			if (tile.worldObj == null) return@run
 			val meta = tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord - 1, tile.zCoord)
 			inf = meta == 1
@@ -74,11 +74,5 @@ class RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 		
 		TileItemContainer.renderItem(tile)
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))!!
-		val modelSimple = ModelSimpleItemHolder()
 	}
 }

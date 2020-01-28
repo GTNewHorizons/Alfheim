@@ -16,8 +16,8 @@ class ItemPeacePipe: ItemMod("PeacePipe") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack? {
-		setFull3D()
 		if (!AlfheimCore.enableMMO) return stack
+		
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {
 				val pt = PartySystem.getParty(player)

@@ -256,10 +256,13 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecif
 				val cr = i.next()
 				timing[cr] = timing[cr]!!-1
 				if (timing[cr]!! <= 0) {
-					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let {
-						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfigHandler.lolicornCost, false)
-						if (can) can = it.worldObj.spawnEntityInWorld(EntityLolicorn(it.worldObj).apply { owner = it.commandSenderName }.apply { setPosition(it.posX, it.posY, it.posZ) })
-						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), it, AlfheimConfigHandler.lolicornCost, true)
+					
+					MinecraftServer.getServer()?.configurationManager?.func_152612_a(cr)?.let { player ->
+						var can = ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, AlfheimConfigHandler.lolicornCost, false)
+						if (!can) ASJUtilities.say(player, "alfheimmisc.cast.momana").also { return@let }
+						if (can) can = player.worldObj.spawnEntityInWorld(EntityLolicorn(player.worldObj).apply { owner = player.commandSenderName }.apply { setPosition(player.posX, player.posY, player.posZ) })
+						if (!can) ASJUtilities.say(player, "alfheimmisc.mount.unavailable").also { return@let }
+						if (can) ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, AlfheimConfigHandler.lolicornCost, true)
 					}
 					
 					i.remove()

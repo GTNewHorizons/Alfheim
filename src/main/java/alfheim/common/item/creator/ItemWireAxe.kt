@@ -110,7 +110,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 				if (entity.attackEntityFrom(DamageSource.causePlayerDamage(player), 0.001f)) {
 					count++
 					if (!world.isRemote) entity.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
-					entity.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 10, 0, true))
+					entity.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 10, 0, true))
 				}
 			}
 		}
@@ -119,7 +119,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
 			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.toDouble(), 0.0, 0.0)
-			player.addPotionEffect(PotionEffect(AlfheimRegistry.manaVoid.id, 2 * count, 0, true))
+			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 2 * count, 0, true))
 		}
 	}
 	

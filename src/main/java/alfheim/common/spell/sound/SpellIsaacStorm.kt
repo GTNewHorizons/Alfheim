@@ -2,6 +2,7 @@ package alfheim.common.spell.sound
 
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.util.expand
 import alfheim.common.entity.spell.EntitySpellIsaacMissile
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.IMob
@@ -17,7 +18,7 @@ object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 1
 		get() = arrayOf(damage, duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		if (caster.worldObj.getEntitiesWithinAABB(IMob::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(15.0, 15.0, 15.0)).isEmpty()) return SpellCastResult.WRONGTGT
+		if (caster.worldObj.getEntitiesWithinAABB(IMob::class.java, AxisAlignedBB.getBoundingBox(caster.posX, caster.posY + 2, caster.posZ, caster.posX, caster.posY + 2, caster.posZ).expand(radius)).isEmpty()) return SpellCastResult.WRONGTGT
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

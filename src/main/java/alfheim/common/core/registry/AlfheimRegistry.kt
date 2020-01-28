@@ -32,7 +32,6 @@ import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.*
 import net.minecraft.item.ItemStack
-import net.minecraft.potion.Potion
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.biome.BiomeGenBase
 import vazkii.botania.api.BotaniaAPI
@@ -45,31 +44,7 @@ import vazkii.botania.common.lib.LibBlockNames
 // FIXME decentralize
 object AlfheimRegistry {
 	
-	lateinit var berserk: Potion
-	lateinit var bleeding: Potion
-	lateinit var butterShield: Potion
-	lateinit var deathMark: Potion
-	lateinit var decay: Potion
-	lateinit var eternity: Potion
-	lateinit var goldRush: Potion
-	lateinit var icelens: Potion
-	lateinit var leftFlame: Potion
-	lateinit var manaVoid: Potion
-	lateinit var nineLifes: Potion
-	lateinit var ninja: Potion
-	lateinit var noclip: Potion
-	lateinit var overmage: Potion
-	lateinit var possession: Potion
-	lateinit var quadDamage: Potion
-	lateinit var sacrifice: Potion
-	lateinit var showMana: Potion
-	lateinit var soulburn: Potion
-	lateinit var stoneSkin: Potion
-	lateinit var tank: Potion
-	lateinit var tHrOw: Potion
-	lateinit var wellOLife: Potion
-	
-	lateinit var worldGen: IWorldGenerator
+	private lateinit var worldGen: IWorldGenerator
 	
 	fun preInit() {
 		registerPotions()
@@ -87,32 +62,37 @@ object AlfheimRegistry {
 	
 	fun postInit() {
 		if (AlfheimConfigHandler.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
+		
+		for (i in BiomeGenBase.getBiomeGenArray()) {
+			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
+				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
+		}
 	}
 	
 	fun registerPotions() {
-		berserk = PotionBerserk()
-		bleeding = PotionBleeding()
-		butterShield = PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
-		deathMark = PotionDeathMark()
-		decay = PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
-		eternity = PotionEternity()
-		goldRush = PotionGoldRush()
-		icelens = PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
-		leftFlame = PotionLeftFlame()
-		manaVoid = PotionManaVoid()
-		nineLifes = PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
-		ninja = PotionNinja()
-		noclip = PotionNoclip()
-		overmage = PotionAlfheim(AlfheimConfigHandler.potionIDOvermage, "overmage", false, 0x88FFFF)
-		possession = PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
-		quadDamage = PotionQuadDamage()
-		sacrifice = PotionSacrifice()
-		showMana = PotionShowMana()
-		soulburn = PotionSoulburn()
-		stoneSkin = PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
-		tank = PotionTank()
-		tHrOw = PotionThrow()
-		wellOLife = PotionWellOLife()
+		PotionBerserk()
+		PotionBleeding()
+		PotionAlfheim(AlfheimConfigHandler.potionIDButterShield, "butterShield", false, 0x00FFFF)
+		PotionDeathMark()
+		PotionAlfheim(AlfheimConfigHandler.potionIDDecay, "decay", true, 0x553355)
+		PotionEternity()
+		PotionGoldRush()
+		PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
+		PotionLeftFlame()
+		PotionManaVoid()
+		PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
+		PotionNinja()
+		PotionNoclip()
+		PotionAlfheim(AlfheimConfigHandler.potionIDOvermage, "overmage", false, 0x88FFFF)
+		PotionAlfheim(AlfheimConfigHandler.potionIDPossession, "possession", true, 0xCC0000)
+		PotionQuadDamage()
+		PotionSacrifice()
+		PotionShowMana()
+		PotionSoulburn()
+		PotionAlfheim(AlfheimConfigHandler.potionIDStoneSkin, "stoneSkin", false, 0x593C1F)
+		PotionTank()
+		PotionThrow()
+		PotionWellOLife()
 	}
 	
 	private fun registerEntities() {
@@ -126,11 +106,6 @@ object AlfheimRegistry {
 		
 		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
 		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
-		
-		for (i in BiomeGenBase.getBiomeGenArray()) {
-			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
-				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, 10, 1, 3, EnumCreatureType.monster, i)
-		}
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)
@@ -162,6 +137,7 @@ object AlfheimRegistry {
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileManaAccelerator::class.java, "ItemHolder")
 		registerTile(TileManaInfuser::class.java, "ManaInfuser")
+		registerTile(TilePowerStone::class.java, "PowerStone")
 		registerTile(TileRaceSelector::class.java, "RaceSelector")
 		registerTile(TileTradePortal::class.java, "TradePortal")
 		//registerTileEntity(TileTransferer.class, "Transferer"); BACK

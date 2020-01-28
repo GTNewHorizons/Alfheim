@@ -10,6 +10,7 @@ import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -238,32 +239,32 @@ object CardinalSystem {
 					0    -> {
 						if (e.spell.name == "stoneskin") {
 							++seg.quadStage
-						} else if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
+						} else if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin)) {
 							seg.quadStage += 2
 						} else {
 							seg.quadStage = 0
 						}
 					}
 					
-					1    -> if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimRegistry.stoneSkin)) {
+					1    -> if (e.spell.name == "uphealth" && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin)) {
 						++seg.quadStage
 					} else {
 						seg.quadStage = 0
 					}
 					
-					2    -> if (e.spell.name == "icelens" && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1) {
+					2    -> if (e.spell.name == "icelens" && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w.id)!!.amplifier == 1) {
 						++seg.quadStage
 					} else {
 						seg.quadStage = 0
 					}
 					
-					3    -> if (e.spell.name == "battlehorn" && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+					3    -> if (e.spell.name == "battlehorn" && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w.id)!!.amplifier == 1 && player.isPotionActive(AlfheimConfigHandler.potionIDIceLens)) {
 						++seg.quadStage
 					} else {
 						seg.quadStage = 0
 					}
 					
-					4    -> if (e.spell.name == "thor" && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+					4    -> if (e.spell.name == "thor" && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w.id)!!.amplifier == 1 && player.isPotionActive(AlfheimConfigHandler.potionIDIceLens)) {
 						++seg.quadStage
 					} else {
 						seg.quadStage = 0
@@ -281,14 +282,14 @@ object CardinalSystem {
 					if (e.entity !is EntityPlayer) return
 					val player = e.entity as EntityPlayer
 					val seg = forPlayer(player)
-					if (seg.quadStage >= 5 && player.isPotionActive(AlfheimRegistry.stoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w).amplifier == 1 && player.isPotionActive(AlfheimRegistry.icelens)) {
+					if (seg.quadStage >= 5 && player.isPotionActive(AlfheimConfigHandler.potionIDStoneSkin) && player.isPotionActive(Potion.field_76434_w) && player.getActivePotionEffect(Potion.field_76434_w.id)!!.amplifier == 1 && player.isPotionActive(AlfheimConfigHandler.potionIDIceLens)) {
 						seg.quadStage = 0
-						player.removePotionEffect(AlfheimRegistry.stoneSkin.id)
+						player.removePotionEffect(AlfheimConfigHandler.potionIDStoneSkin)
 						player.removePotionEffect(Potion.field_76434_w.id)
-						player.removePotionEffect(AlfheimRegistry.icelens.id)
+						player.removePotionEffect(AlfheimConfigHandler.potionIDIceLens)
 						player.removePotionEffect(Potion.damageBoost.id)
-						player.addPotionEffect(PotionEffect(AlfheimRegistry.quadDamage.id, 600, 0, false))
-						AlfheimCore.network.sendToAll(MessageEffect(e.entity.entityId, AlfheimRegistry.quadDamage.id, 600, 0))
+						player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDPossession, 600, 0, false))
+						AlfheimCore.network.sendToAll(MessageEffect(e.entity.entityId, AlfheimConfigHandler.potionIDPossession, 600, 0))
 						e.isCanceled = true
 					}
 				}

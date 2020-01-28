@@ -13,7 +13,6 @@ import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.EMERALD
-import alfheim.api.lib.LibOreDict.GLOWSTONE_DUST
 import alfheim.api.lib.LibOreDict.IFFESAL_DUST
 import alfheim.api.lib.LibOreDict.INFUSED_DREAM_TWIG
 import alfheim.api.lib.LibOreDict.MAUFTRIUM_INGOT
@@ -22,8 +21,6 @@ import alfheim.api.lib.LibOreDict.MUSPELHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.MUSPELHEIM_POWER_INGOT
 import alfheim.api.lib.LibOreDict.NIFLHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.NIFLHEIM_POWER_INGOT
-import alfheim.api.lib.LibOreDict.REDSTONE_DUST
-import alfheim.common.block.AlfheimBlocks.airyVirus
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -61,6 +58,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -83,6 +81,7 @@ import alfheim.common.item.AlfheimItems.elvoriumChestplate
 import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumHelmetRevealing
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
+import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.livingrockPickaxe
 import alfheim.common.item.AlfheimItems.lootInterceptor
@@ -132,8 +131,6 @@ object AlfheimRecipes {
 	lateinit var recipeManaStone: RecipeManaInfuser
 	lateinit var recipeManaStoneGreater: RecipeManaInfuser
 	
-	lateinit var recipeAiryVirus: IRecipe
-	lateinit var recipeAiryAntivirus: IRecipe
 	lateinit var recipeAlfheimPortal: IRecipe
 	lateinit var recipeAnimatedTorch: IRecipe
 	lateinit var recipeAnyavil: IRecipe
@@ -161,6 +158,7 @@ object AlfheimRecipes {
 	lateinit var recipeFurnace: IRecipe
 	lateinit var recipeGaiaPylon: IRecipe
 	lateinit var recipeGreenRod: IRecipe
+	lateinit var recipeHyperBucket: IRecipe
 	lateinit var recipeInvisibilityCloak: IRecipe
 	lateinit var recipeItemHolder: IRecipe
 	lateinit var recipeLensMessenger: IRecipe
@@ -212,24 +210,6 @@ object AlfheimRecipes {
 	}
 	
 	private fun registerCraftingRecipes() {
-		addOreDictRecipe(ItemStack(airyVirus, 3),
-						 "RGR", "EVE", "AAA",
-						 'R', REDSTONE_DUST,
-						 'G', GLOWSTONE_DUST,
-						 'E', MUSPELHEIM_ESSENCE,
-						 'V', virus,
-						 'A', ItemStack(altGrass, 1, 3))
-		recipeAiryVirus = BotaniaAPI.getLatestAddedRecipe()
-		
-		addOreDictRecipe(ItemStack(airyVirus, 3, 1),
-						 "IMI", "EVE", "AAA",
-						 'I', IFFESAL_DUST,
-						 'M', MANA_POWDER,
-						 'E', NIFLHEIM_ESSENCE,
-						 'V', virus,
-						 'A', ItemStack(altGrass, 1, 4))
-		recipeAiryAntivirus = BotaniaAPI.getLatestAddedRecipe()
-		
 		addOreDictRecipe(ItemStack(alfheimPortal, 1),
 						 "DPD", "GSG", "DTD",
 						 'D', DREAM_WOOD,
@@ -460,6 +440,14 @@ object AlfheimRecipes {
 						 'S', ItemStack(livingcobble, 1, 0))
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(hyperBucket),
+						 "III", "EBE", "MMM",
+						 'B', openBucket,
+						 'E', ELVORIUM_INGOT,
+						 'I', IFFESAL_DUST,
+						 'M', MAUFTRIUM_NUGGET)
+		recipeHyperBucket = BotaniaAPI.getLatestAddedRecipe()
+		
 		addOreDictRecipe(ItemStack(invisibilityCloak),
 						 "PWP", "GWG", "GJG",
 						 'P', PRISMARINE_SHARD,
@@ -467,13 +455,6 @@ object AlfheimRecipes {
 						 'G', manaGlass,
 						 'J', MANA_PEARL)
 		recipeInvisibilityCloak = BotaniaAPI.getLatestAddedRecipe()
-		
-		addOreDictRecipe(ItemStack(manaAccelerator),
-						 "MLM", "LDL",
-						 'D', MANA_DIAMOND,
-						 'L', LIVING_ROCK,
-						 'M', MANA_PEARL)
-		recipeItemHolder = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(lens, 1, 22),
 						 " P ", "PLP", " P ",
@@ -493,6 +474,13 @@ object AlfheimRecipes {
 						 'H', blackHoleTalisman,
 						 'D', DREAM_WOOD)
 		recipeLootInterceptor = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(manaAccelerator),
+						 "MLM", "LDL",
+						 'D', MANA_DIAMOND,
+						 'L', LIVING_ROCK,
+						 'M', MANA_PEARL)
+		recipeItemHolder = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(manaInfuser),
 						 "DCD", "IRI", "SSS",
@@ -891,8 +879,8 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
-		addRecipe(RecipeRechargeSoulHorn())
-		RecipeSorter.register("${ModInfo.MODID}:rechargehorn", RecipeRechargeSoulHorn::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeEnhanceBucket())
+		RecipeSorter.register("${ModInfo.MODID}:enhanceBucket", RecipeEnhanceBucket::class.java, RecipeSorter.Category.SHAPELESS, "")
 	}
 	
 	fun postInit() {
@@ -905,7 +893,7 @@ object AlfheimRecipes {
 	}
 	
 	fun removeMMORecipes() {
-		CraftingManager.getInstance().recipeList.remove(recipePaperBreak)
-		CraftingManager.getInstance().recipeList.remove(recipePeacePipe)
+		ASJUtilities.removeRecipe(paperBreak)
+		ASJUtilities.removeRecipe(peacePipe)
 	}
 }

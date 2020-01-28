@@ -13,13 +13,14 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderTileAnyavil: TileEntitySpecialRenderer() {
+object RenderTileAnyavil: TileEntitySpecialRenderer() {
+	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Anyavil.obj"))
+	val modelSimple = ModelSimpleAnyavil()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
-		renderTE(tile as TileAnyavil, x, y, z, partialTicks)
-	}
-	
-	private fun renderTE(tile: TileAnyavil, x: Double, y: Double, z: Double, partialTicks: Float) {
+		if (tile !is TileAnyavil) return
+		
 		glPushMatrix()
 		glTranslated(x + 0.5, y, z + 0.5)
 		glRotated((90 * (tile.blockMetadata + 1)).toDouble(), 0.0, 1.0, 0.0)
@@ -46,11 +47,4 @@ class RenderTileAnyavil: TileEntitySpecialRenderer() {
 		TileItemContainer.renderItem(tile)
 		glPopMatrix()
 	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Anyavil.obj"))
-		val modelSimple = ModelSimpleAnyavil()
-	}
-	
 }

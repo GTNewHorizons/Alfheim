@@ -1,8 +1,8 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
-import alfheim.api.ModInfo
-import alfheim.common.core.util.AlfheimTab
+import alfmod.AlfheimModularCore
+import alfmod.common.core.util.AlfheimModularTab
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
@@ -10,7 +10,7 @@ import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
-class BlockAiryVirus: BlockModMeta(Material.wood, 2, ModInfo.MODID, "AiryVirus", AlfheimTab, harvTool = "axe", harvLvl = 3) {
+class BlockAiryVirus: BlockModMeta(Material.wood, 2, AlfheimModularCore.MODID, "AiryVirus", AlfheimModularTab, harvTool = "axe", harvLvl = 3) {
 	
 	init {
 		tickRandomly = true

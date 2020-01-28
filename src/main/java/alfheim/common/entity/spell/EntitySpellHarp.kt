@@ -66,14 +66,14 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 	
 	override fun affectedBy(uuid: UUID) = caster?.uniqueID != uuid
 	
-	public override fun entityInit() {}
+	override fun entityInit() = Unit
 	
-	public override fun readEntityFromNBT(nbt: NBTTagCompound) {
+	override fun readEntityFromNBT(nbt: NBTTagCompound) {
 		if (nbt.hasKey("castername")) caster = worldObj.getPlayerEntityByName(nbt.getString("castername")) else setDead()
 		if (caster == null) setDead()
 	}
 	
-	public override fun writeEntityToNBT(nbt: NBTTagCompound) {
+	override fun writeEntityToNBT(nbt: NBTTagCompound) {
 		if (caster is EntityPlayer) nbt.setString("castername", caster!!.commandSenderName)
 	}
 }

@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.getActivePotionEffect
 import net.minecraft.entity.EntityLivingBase
 import kotlin.math.sqrt
 
@@ -13,7 +14,7 @@ class PotionShowMana: PotionAlfheim(AlfheimConfigHandler.potionIDShowMana, "show
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
 		if (!AlfheimCore.enableMMO) return
-		val pe = living.getActivePotionEffect(this) ?: return
+		val pe = living.getActivePotionEffect(this.id) ?: return
 		
 		if (ASJUtilities.isServer || pe.amplifier <= 0) {
 			pe.duration = 1

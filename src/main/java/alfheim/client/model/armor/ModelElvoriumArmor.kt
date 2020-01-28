@@ -18,18 +18,20 @@ class ModelElvoriumArmor
 /**armorType: 0 - head, 1 - body and arms, 2 - legs, 3 - feet. */
 (private val partType: Int): AdvancedArmorModel() {
 	
+	val sobakaSutula = arrayOf("GedeonGrays", "Gedeon_Grays")
+	
 	override fun pre(entity: Entity) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elvoriumArmor)
-		if (entity is EntityPlayer && entity.getCommandSenderName() == "GedeonGrays") {
+		if (entity is EntityPlayer && entity.getCommandSenderName() in sobakaSutula) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			if (Minecraft.getMinecraft().thePlayer.commandSenderName == "GedeonGrays" && !AlfheimConfigHandler.fancies) return
+			if (Minecraft.getMinecraft().thePlayer.commandSenderName in sobakaSutula && !AlfheimConfigHandler.fancies) return
 			ShaderHelper.useShader(ShaderHelper.halo)
 		}
 	}
 	
 	override fun post(entity: Entity) {
-		if (entity is EntityPlayer && entity.getCommandSenderName() == "GedeonGrays") {
+		if (entity is EntityPlayer && entity.getCommandSenderName() in sobakaSutula) {
 			glDisable(GL_BLEND)
 			ShaderHelper.releaseShader()
 		}

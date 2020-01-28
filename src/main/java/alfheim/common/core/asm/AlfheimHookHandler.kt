@@ -3,25 +3,27 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
+import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.lens.*
 import alfheim.common.potion.PotionSoulburn
-import codechicken.nei.recipe.GuiRecipe
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
 import gloomyfolken.hooklib.asm.ReturnCondition.*
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureManager
@@ -29,6 +31,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.EntityCreeper
+import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -36,15 +39,19 @@ import net.minecraft.potion.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
+import net.minecraft.world.biome.*
+import net.minecraft.world.chunk.Chunk
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
+import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
-import vazkii.botania.client.core.handler.HUDHandler
+import vazkii.botania.client.core.handler.*
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.client.render.tile.RenderTileAltar
@@ -54,6 +61,7 @@ import vazkii.botania.common.block.decor.walls.BlockModWall
 import vazkii.botania.common.block.mana.BlockSpreader
 import vazkii.botania.common.block.subtile.generating.SubTileDaybloom
 import vazkii.botania.common.block.tile.*
+import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
@@ -63,6 +71,7 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.lib.LibBlockNames
+import java.awt.Color
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.math.min
@@ -73,7 +82,6 @@ object AlfheimHookHandler {
 	private var updatingTile = false
 	private var updatingEntity = false
 	private const val TAG_TRANSFER_STACK = "transferStack"
-	var numMana = true
 	
 	var rt = 0f
 	var gt = 0f
@@ -307,31 +315,37 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun `TileHourglass$updateEntity`(hourglass: TileHourglass) {
-		if (hourglass.blockMetadata == 1 && hourglass.flipTicks == 3) {
+	fun `TileHourglass$updateEntity`(tile: TileHourglass) {
+		if (tile.blockMetadata == 1 && tile.flipTicks == 3) {
 			var block: Block
 			for (dir in ForgeDirection.VALID_DIRECTIONS) {
-				block = hourglass.worldObj.getBlock(hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ)
+				block = tile.worldObj.getBlock(tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ)
 				if (block is IHourglassTrigger)
-					(block as IHourglassTrigger).onTriggeredByHourglass(hourglass.worldObj, hourglass.xCoord + dir.offsetX, hourglass.yCoord + dir.offsetY, hourglass.zCoord + dir.offsetZ, hourglass)
+					(block as IHourglassTrigger).onTriggeredByHourglass(tile.worldObj, tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ, tile)
 			}
 		}
 	}
 	
 	@JvmStatic
 	@Hook(targetMethod = "updateEntity")
-	fun `TilePylon$updateEntity`(entity: TilePylon) {
-		updatingTile = entity.worldObj.isRemote
+	fun `TilePool$updateEntity`(tile: TilePool) {
+		if (tile.manaCap == -1 && tile.getBlockMetadata() == 3) tile.manaCap = AlfheimConfigHandler.poolRainbowCapacity
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "updateEntity")
+	fun `TilePylon$updateEntity`(tile: TilePylon) {
+		updatingTile = tile.worldObj.isRemote
 	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "updateEntity")
-	fun `TilePylon$updateEntityPost`(entity: TilePylon) {
-		if (entity.worldObj.isRemote) {
+	fun `TilePylon$updateEntityPost`(tile: TilePylon) {
+		if (tile.worldObj.isRemote) {
 			updatingTile = false
-			if (entity.worldObj.rand.nextBoolean()) {
-				val meta = entity.getBlockMetadata()
-				Botania.proxy.sparkleFX(entity.worldObj, entity.xCoord + Math.random(), entity.yCoord + Math.random() * 1.5, entity.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().toFloat(), 2)
+			if (tile.worldObj.rand.nextBoolean()) {
+				val meta = tile.getBlockMetadata()
+				Botania.proxy.sparkleFX(tile.worldObj, tile.xCoord + Math.random(), tile.yCoord + Math.random() * 1.5, tile.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().toFloat(), 2)
 			}
 		}
 	}
@@ -464,7 +478,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getNightVisionBrightness(render: EntityRenderer, player: EntityPlayer, partialTicks: Float) =
-		if (player.getActivePotionEffect(Potion.nightVision)?.duration ?: 0 > 0) 1f else 0f
+		if (player.getActivePotionEffect(Potion.nightVision.id)?.duration ?: 0 > 0) 1f else 0f
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -505,16 +519,54 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS)
 	fun hasSearchBar(tab: BotaniaCreativeTab) = AlfheimConfigHandler.searchTabBotania
 	
+	var chunkCoors = Int.MAX_VALUE to Int.MAX_VALUE
+	
+	@JvmStatic
+	@Hook(targetMethod = "getChunkFromBlockCoords")
+	fun getChunkFromBlockCoords(world: World, x: Int, z: Int) {
+		chunkCoors = x to z
+	}
+	
+	var replace = false
+	
+	@JvmStatic
+	@Hook
+	fun getCanSpawnHere(entity: EntityAnimal): Boolean {
+		replace = entity.worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
+		return replace
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getBlock(world: World, x: Int, y: Int, z: Int, @ReturnValue block: Block): Block {
+		if (replace && (block === AlfheimBlocks.snowGrass || block === AlfheimBlocks.snowLayer || block === Blocks.snow_layer)) {
+			replace = false
+			return Blocks.grass
+		}
+		return block
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getBiomeGenForWorldCoords(c: Chunk, x: Int, z: Int, cm: WorldChunkManager, @ReturnValue oldBiome: BiomeGenBase): BiomeGenBase? {
+		if (chunkCoors.first != Int.MAX_VALUE || chunkCoors.second != Int.MAX_VALUE) {
+			val biome = WE_Biome.getBiomeAt((cm as? WE_WorldChunkManager ?: return oldBiome).cp, chunkCoors.first.toLong(), chunkCoors.second.toLong())
+			chunkCoors = Int.MAX_VALUE to Int.MAX_VALUE
+			return biome
+		}
+		else
+			return oldBiome
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
-	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun getBinding(mirror: ItemManaMirror, stack: ItemStack): ChunkCoordinates? {
-		val world = Minecraft.getMinecraft().theWorld ?: return null
+		val world = mc.theWorld ?: return null
 		
 		if (world.provider.dimensionId != ItemNBTHelper.getInt(stack, "dim", Int.MAX_VALUE)) return null
 		
@@ -527,22 +579,26 @@ object AlfheimHookHandler {
 		return if (tile is IManaPool) coords else null
 	}
 	
-	@SideOnly(Side.CLIENT)
+	var moveText = false
+	
+	@JvmStatic
+	@Hook(isMandatory = true)
+	fun drawSimpleManaHUD(hh: HUDHandler?, color: Int, mana: Int, maxMana: Int, name: String?, res: ScaledResolution) {
+		moveText = mana >= 0
+	}
+	
+	var numMana = true
+	
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun renderManaBar(hh: HUDHandler?, x: Int, y: Int, color: Int, alpha: Float, mana: Int, maxMana: Int) {
 		if (mana < 0 || !AlfheimConfigHandler.numericalMana || !numMana) return
 		glPushMatrix()
-		val f = Minecraft.getMinecraft().currentScreen == null
-		var f1 = false
-		
-		if (AlfheimCore.NEILoaded)
-			f1 = !f && Minecraft.getMinecraft().currentScreen is GuiRecipe
 		
 		val text = "$mana/$maxMana"
-		val x = x + 51 - Minecraft.getMinecraft().fontRenderer.getStringWidth(text) / 2
-		val y = if (f1) y - 9 else y - 19
-		Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color, f)
+		val x = x + 51 - mc.fontRenderer.getStringWidth(text) / 2
+		val y = y - mc.fontRenderer.FONT_HEIGHT
+		mc.fontRenderer.drawString(text, x, y, color, mc.currentScreen == null)
 		glPopMatrix()
 	}
 	
@@ -551,7 +607,7 @@ object AlfheimHookHandler {
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
 		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
-			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, Minecraft.getMinecraft().timer.renderPartialTicks)
+			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, mc.timer.renderPartialTicks)
 		}
 	}
 	
@@ -559,7 +615,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun renderOverlays(renderer: ItemRenderer, partialTicks: Float) {
-		if (Minecraft.getMinecraft().thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
+		if (mc.thePlayer.isPotionActive(AlfheimConfigHandler.potionIDSoulburn)) {
 			glDisable(GL_ALPHA_TEST)
 			PotionSoulburn.renderFireInFirstPerson(partialTicks)
 			glEnable(GL_ALPHA_TEST)
@@ -608,7 +664,7 @@ object AlfheimHookHandler {
 				glFogf(GL_FOG_DENSITY, event.density)
 			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
 				f1 = 5.0f
-				val j = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration()
+				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
 				
 				if (j < 20) {
 					f1 = 5.0f + (renderer.farPlaneDistance - 5.0f) * (1.0f - j.toFloat() / 20.0f)
@@ -688,6 +744,75 @@ object AlfheimHookHandler {
 			
 			glEnable(GL_COLOR_MATERIAL)
 			glColorMaterial(GL_FRONT, GL_AMBIENT)
+		}
+	}
+	
+	var renderingBoss = false
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
+		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
+	}
+	
+	@JvmStatic
+	@Hook
+	fun render(handler: BossBarHandler?, res: ScaledResolution) {
+		if (BossBarHandler.currentBoss == null) return
+		renderingBoss = true
+	}
+	
+	@JvmStatic
+	@Hook
+	fun translateToLocal(sc: StatCollector?, text: String?): String? {
+		if (text == "botaniamisc.manaUsage")
+			moveText = true
+			
+		return text
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun drawString(font: FontRenderer, string: String?, x: Int, y: Int, color: Int): Int {
+		return font.drawString(string, x, y - if (moveText) font.FONT_HEIGHT + 1 else 0, color, false).also { moveText = false }
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun drawStringWithShadow(font: FontRenderer, string: String?, x: Int, y: Int, color: Int): Int {
+		val ny = y - if (moveText) font.FONT_HEIGHT + 1 else 0
+		moveText = false
+		
+		val result =
+			if (renderingBoss && color == 0xA2018C && (BossBarHandler.currentBoss is IBotaniaBossWithName || BossBarHandler.currentBoss is IBotaniaBossWithShaderAndName))
+				if (BossBarHandler.currentBoss is IBotaniaBossWithName)
+					font.drawString(string, x, ny, (BossBarHandler.currentBoss as IBotaniaBossWithName).getNameColor(), true).also { renderingBoss = false }
+				else
+					font.drawString(string, x, ny, (BossBarHandler.currentBoss as IBotaniaBossWithShaderAndName).getNameColor(), true).also { renderingBoss = false }
+			else
+				font.drawString(string, x, ny, color, true)
+		
+		glColor4f(1f, 1f, 1f, 1f)
+		
+		return result
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun getNameColor(gaia: EntityDoppleganger) = AlfheimConfigHandler.gaiaNameColor
+	
+	@JvmStatic
+	@Hook // for blue line above item tooltip
+	fun drawManaBar(handler: TooltipAdditionDisplayHandler?, stack: ItemStack, display: IManaTooltipDisplay, mouseX: Int, mouseY: Int, offx: Int, offy: Int, width: Int, height: Int) {
+		val item = stack.item
+		
+		if (item is IManaItem && AlfheimConfigHandler.numericalMana) {
+			glDisable(GL_DEPTH_TEST)
+			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.toFloat() + ClientTickHandler.partialTicks).toDouble() * 0.2).toFloat() + 1.0f) * 0.3f + 0.4f, 1.0f))
+			glEnable(GL_DEPTH_TEST)
 		}
 	}
 }

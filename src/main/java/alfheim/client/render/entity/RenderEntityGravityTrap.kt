@@ -2,12 +2,14 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.*
+import alfheim.common.spell.tech.SpellGravityTrap
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 import java.util.*
+import kotlin.math.min
 
 class RenderEntityGravityTrap: Render() {
 	
@@ -26,16 +28,12 @@ class RenderEntityGravityTrap: Render() {
 		glPushMatrix()
 		glTranslated(x, y + 0.01, z)
 		
-		val live = e.ticksExisted.toFloat()
-		val charge = Math.min(20f, live + partialTick)
-		val chargeMul = charge / 20f
+		val charge = min(20f, e.ticksExisted + partialTick)
 		
 		rand.setSeed(e.uniqueID.mostSignificantBits)
 		
-		var s = chargeMul
-		s += Math.min(1f, (live + partialTick) * 0.2f)
-		s *= 2f
-		glScalef(s, s, s)
+		val s = (charge / 20 + min(1f, (e.ticksExisted + partialTick) * 0.2f)) / 2 * SpellGravityTrap.radius
+		glScaled(s, s, s)
 		
 		glRotatef(charge * 9f + (e.ticksExisted + partialTick) * 0.5f + rand.nextFloat() * 360f, 0f, 1f, 0f)
 		

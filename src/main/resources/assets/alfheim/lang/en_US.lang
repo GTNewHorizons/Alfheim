@@ -52,7 +52,7 @@ tile.alfheim:DreamwoodBarkFence.name=Dreamwood Bark Fence
 tile.alfheim:DreamwoodBarkFenceGate.name=Dreamwood Bark Fence Gate
 tile.alfheim:DreamwoodFence.name=Dreamwood Planks Fence
 tile.alfheim:DreamwoodFenceGate.name=Dreamwood Planks Fence Gate
-tile.alfheim:DwarfLantern.name=Dvarf Lantern
+tile.alfheim:DwarfLantern.name=Livingrock Lantern
 tile.DwarfPlanks0.name=Dvarf Planks
 tile.ElvenOre0.name=Dragonstone Ore
 tile.ElvenOre1.name=Elementium Ore
@@ -69,8 +69,7 @@ tile.ElvenSandstone4.name=Cracked Elven Sandstone
 tile.botania:ElvenSandstone0Slab.name=Elven Sandstone Slab
 tile.botania:ElvenSandstone0SlabFull.name=Elven Sandstone Slab
 tile.botania:ElvenSandstoneStairs.name=Elven Sandstone Stairs
-tile.FlugelHeadBlock.name=Flügel Head
-tile.MikuHeadBlock.name=Miku Head
+tile.alfheim:FlugelHeadBlock.name=Flügel Head
 tile.LivingCobble0.name=Livingrock Cobblestone
 tile.LivingCobble1.name=Compressed Livingrock
 tile.LivingCobble2.name=Polished Cobblestone
@@ -87,13 +86,14 @@ tile.alfheim:LivingwoodFence.name=Livingwood Planks Fence
 tile.alfheim:LivingwoodFenceGate.name=Livingwood Planks Fence Gate
 tile.alfheim:ManaAccelerator.name=Mana Accelerator
 tile.alfheim:ManaInfuser.name=Mana Infuser
+tile.alfheim:MikuHeadBlock.name=Miku Head
 tile.alfheim:MuspelheimFire.name=Muspelheim Fire Of Eternity
 tile.alfheim:NiflheimIce.name=Niflheim Ice Of Eternity
 tile.PowerStone0.name=Stone of Null
 tile.PowerStone1.name=Stone of Berserker
-tile.PowerStone2.name=Stone of Overmage
-tile.PowerStone3.name=Stone of Tank
-tile.PowerStone4.name=Stone of Ninja
+tile.PowerStone2.name=Stone of Tank
+tile.PowerStone3.name=Stone of Ninja
+tile.PowerStone4.name=Stone of Overmage
 tile.alfheim:RaceSelector.name=Race Panel
 tile.alfheim:schemaController.name=Schematic Controller
 tile.alfheim:schemaFiller.name=Schematic Filler Block
@@ -177,6 +177,7 @@ item.alfheim:FlugelHead.name=Flügel Head
 item.alfheim:MikuHead.name=Miku Head
 item.botania:FlugelSoul.name=Flügel Soul
 item.alfheim:grassRod.name=Rod of the Green Hills
+item.alfheim:HyperpolatedBucket.name=Hyperpolated Bucket
 item.botania:IcePendant.name=Pendant Of Niflheim Protection
 item.alfheim:IffesalDust.name=Iffesal Dust
 item.alfheim:InfusedDreamwoodTwig.name=Infused Dreamwood Twig
@@ -272,6 +273,8 @@ achievement.mask=Unstoppable
 achievement.mask.desc=Be rewarded the Mysterious Mask for a heroic feat
 achievement.moonlightBow=To the Moon
 achievement.moonlightBow.desc=Be rewarded the Phoebus Catastrophe for a heroic feat
+achievement.outstander=Outstander
+achievement.outstander.desc=Prove that your Will is harder than a rock
 achievement.subspace=Nightglow
 achievement.subspace.desc=Be rewarded the Spear of Subspace for a heroic feat
 achievement.wingedHussaurs=And the Winged Hussars arrived!
@@ -519,6 +522,9 @@ item.thorRing.poem3=It'll begin anew a new era.
 
 #######################################################___ELVEN STORY___########################################################
 
+alfheimmisc.elvenAbility.true=Elven passive ability enabled
+alfheimmisc.elvenAbility.false=Elven passive ability disabled
+
 elvenstory.welcome0=§n§aWelcome to Alfheim - [Elven Story] Mode!
 elvenstory.welcome1=§6Please, select gender and race using panel in front of you
 elvenstory.selectgender=Select Gender
@@ -640,12 +646,12 @@ spell.night.mtinfo=Name: night
 spell.nightvision.mtinfo=Name: nightvision | duration %s
 spell.ninelifes.mtinfo=Name: ninelifes | duration %s
 spell.noclip.mtinfo=Name: noclip | duration %s
-spell.outdare.mtinfo=Name: outdare
+spell.outdare.mtinfo=Name: outdare | radius %s
 spell.poisonroots.mtinfo=Name: poisonroots | duration %s efficiency %s radius %s
 spell.purifyingsurface.mtinfo=Name: purifyingsurface | duration %s radius %s
 spell.rain.mtinfo=Name: rain
 spell.resurrect.mtinfo=Name: resurrect
-spell.sacrifice.mtinfo=Name: sacrifice | damage %s
+spell.sacrifice.mtinfo=Name: sacrifice | damage %s radius %s
 spell.shadowvortex.mtinfo=Name: shadowvortex | damage %s radius %s
 spell.smokescreen.mtinfo=Name: smokescreen | duration %s radius %s
 spell.stoneskin.mtinfo=Name: stoneskin | duration %s
@@ -1016,32 +1022,14 @@ alfheim.potion.manaVoid=Manatide Storm
 
 #######################################################___Configuration___######################################################
 
+general.preload=Preload
 general.alfheim=Alfheim
-general.alfheim.tooltip=Alfheim dimension settings
-
-general.Alfheim.woldgen=Worldgen
-general.Alfheim.woldgen.tooltip=Alfheim worldgen settings
-
-general.Alfheim.woldgen.spawnrate=Spawnrates
-general.Alfheim.woldgen.spawnrate.tooltip=Alfheim mobs spawnrate settings
-
+general.alfheim.worldgen=Worldgen
+general.alfheim.worldgen.spawnrate=Spawnrates
 general.integration=Integration
-general.integration.tooltip=Cross-mods integration
-
 general.integration.thaumcraft=Thaumcraft
-general.integration.thaumcraft.tooltip=Thaumcraft integration
-
 general.potions=Potions
-general.potions.tooltip=Potion IDs
-
-general.elvenstory.mmo.potions=Potions
-general.elvenstory.mmo.potions.tooltip=Potion IDs
-
 general.elvenstory=Elvenstory
-general.elvenstory.tooltip=Elvenstory Mode optional features
-
 general.elvenstory.mmo=MMO
-general.elvenstory.mmo.tooltip=MMO Mode optional features
-
 general.elvenstory.mmo.hud=HUD
-general.elvenstory.mmo.hud.tooltip=HUD elements customizations
+general.elvenstory.mmo.potions=Potions

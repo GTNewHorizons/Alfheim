@@ -3,6 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.mfloor
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
@@ -10,13 +11,14 @@ import java.io.*
 import kotlin.math.*
 
 object AlfheimConfigHandler {
+	
 	lateinit var config: Configuration
 	
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
-	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "Thaumcraft"
-	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "Alfheim"
-	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "woldgen"
+	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
+	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
+	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
 	const val CATEGORY_SPAWNRATE	= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "spawnrate"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
 	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
@@ -26,6 +28,8 @@ object AlfheimConfigHandler {
 	
 	// PRELOAD
 	var elementiumClusterMeta	= 22
+	var gaiaBarOffset			= 1
+	var gaiaNameColor			= 0x00D5FF
 	var hpHooks					= true
 	var maxParticles			= 4000
 	var modularThread			= false
@@ -33,6 +37,7 @@ object AlfheimConfigHandler {
 	
 	// DIMENSION
 	var biomeIDAlfheim			= 152
+	var destroyPortal			= true
 	var dimensionIDAlfheim		= -105
 	var enableAlfheimRespawn	= true
 	
@@ -41,6 +46,7 @@ object AlfheimConfigHandler {
 	var anomaliesUpdate			= 6000
 	var citiesDistance			= 1000
 	var oregenMultiplier		= 3
+	var winterGrassReadyGen		= true
 	
 	// SPAWNRATE
 	var chickSpawn				= intArrayOf(10, 4, 4)
@@ -51,8 +57,8 @@ object AlfheimConfigHandler {
 	var pixieSpawn				= intArrayOf(10, 1, 2)
 	
 	// OHTER
+	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
-	var destroyPortal			= true
 	var fancies					= true
 	var flugelBossBar			= true
 	var flugelSwapBL			= emptyArray<String>()
@@ -72,6 +78,10 @@ object AlfheimConfigHandler {
 	var tradePortalRate			= 1200
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
 	var wireoverpowered			= true
+	
+	// INTEGRATION
+	var chatLimiters			= "%s"
+	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION
 	var addAspectsToBotania		= true
@@ -115,9 +125,10 @@ object AlfheimConfigHandler {
 	// MMO
 	var deathScreenAddTime		= 1200
 	var frienldyFire			= false
+	var raceManaMult			= 2.0
 	var maxPartyMembers			= 5
-	
-	// HUD
+
+	// MMO HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
 	var targetUI				= true
@@ -126,23 +137,37 @@ object AlfheimConfigHandler {
 		config = Configuration(suggestedConfigurationFile)
 		
 		config.load()
-		config.addCustomCategoryComment(CATEGORY_PRELOAD, "${CATEGORY_PRELOAD}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "${CATEGORY_INTEGRATION}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_INT_TC, "${CATEGORY_INT_TC}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_DIMENSION, "${CATEGORY_DIMENSION}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_WORLDGEN, "${CATEGORY_WORLDGEN}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_SPAWNRATE, "${CATEGORY_SPAWNRATE}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_POTIONS, "${CATEGORY_POTIONS}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_ESMODE, "${CATEGORY_ESMODE}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_MMO, "${CATEGORY_MMO}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_MMOP, "${CATEGORY_MMOP}.tooltip")
-		config.addCustomCategoryComment(CATEGORY_HUD, "${CATEGORY_HUD}.tooltip")
+		config.addCustomCategoryComment(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")
+		config.addCustomCategoryComment(CATEGORY_DIMENSION, "Alfheim dimension settings")
+		config.addCustomCategoryComment(CATEGORY_WORLDGEN, "Alfheim worldgen settings")
+		config.addCustomCategoryComment(CATEGORY_SPAWNRATE, "Alfheim mobs spawnrate settings")
+		config.addCustomCategoryComment(CATEGORY_POTIONS, "Potion IDs")
+		config.addCustomCategoryComment(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
+		config.addCustomCategoryComment(CATEGORY_INT_TC, "Thaumcraft integration")
+		config.addCustomCategoryComment(CATEGORY_ESMODE, "Elvenstory Mode optional features")
+		config.addCustomCategoryComment(CATEGORY_MMO, "MMO Mode optional features")
+		config.addCustomCategoryComment(CATEGORY_HUD, "HUD elements customizations")
+		config.addCustomCategoryComment(CATEGORY_MMOP, "Potion IDs")
+		
+		config.getCategory(CATEGORY_PRELOAD).setLanguageKey(CATEGORY_PRELOAD)
+		config.getCategory(CATEGORY_DIMENSION).setLanguageKey(CATEGORY_DIMENSION)
+		config.getCategory(CATEGORY_WORLDGEN).setLanguageKey(CATEGORY_WORLDGEN)
+		config.getCategory(CATEGORY_SPAWNRATE).setLanguageKey(CATEGORY_SPAWNRATE)
+		config.getCategory(CATEGORY_POTIONS).setLanguageKey(CATEGORY_POTIONS)
+		config.getCategory(CATEGORY_INTEGRATION).setLanguageKey(CATEGORY_INTEGRATION)
+		config.getCategory(CATEGORY_INT_TC).setLanguageKey(CATEGORY_INT_TC)
+		config.getCategory(CATEGORY_ESMODE).setLanguageKey(CATEGORY_ESMODE)
+		config.getCategory(CATEGORY_MMO).setLanguageKey(CATEGORY_MMO)
+		config.getCategory(CATEGORY_HUD).setLanguageKey(CATEGORY_HUD)
+		config.getCategory(CATEGORY_MMOP).setLanguageKey(CATEGORY_MMOP)
 		
 		syncConfig()
 	}
 	
 	fun syncConfig() {
 		elementiumClusterMeta = loadProp(CATEGORY_PRELOAD, "elementiumClusterMeta", elementiumClusterMeta, true, "Effective only if Thaumcraft is installed. Change this if some other mod adds own clusters (max value is 63); also please, edit and spread modified .lang files")
+		gaiaBarOffset = loadProp(CATEGORY_PRELOAD, "gaiaBarOffset", gaiaBarOffset, true, "Gaia name hp and bg boss bar variant (from default texture pairs)")
+		gaiaNameColor = loadProp(CATEGORY_PRELOAD, "gaiaNameColor", gaiaNameColor, false, "Gaia name color on boss bar")
 		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
 		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
@@ -157,6 +182,7 @@ object AlfheimConfigHandler {
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
+		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
 		cowSpawn = loadProp(CATEGORY_SPAWNRATE, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_SPAWNRATE, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
@@ -165,15 +191,16 @@ object AlfheimConfigHandler {
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		
+		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]")
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
-		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap")
+		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]")
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
 		lolicornCost = loadProp(CATEGORY_GENERAL, "lolicornCost", lolicornCost, false, "How much mana lolicorn consumes on summoning (not teleporting)")
-		lolicornLife = loadProp(CATEGORY_GENERAL, "lolicornLife", lolicornLife, false, "How long lolicorn can stay unmounted")
+		lolicornLife = loadProp(CATEGORY_GENERAL, "lolicornLife", lolicornLife, false, "How many ticks lolicorn can stay unmounted")
 		looniumOverseed = loadProp(CATEGORY_GENERAL, "looniumOverseed", looniumOverseed, true, "Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
@@ -182,9 +209,12 @@ object AlfheimConfigHandler {
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
-		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every {N} ticks")
+		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
-		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, true, "Allow WireSegal far more power than any one person should have")
+		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
+		
+		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
+		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
@@ -216,12 +246,13 @@ object AlfheimConfigHandler {
 		potionIDWellOLife = loadProp(CATEGORY_MMOP, "potionIDWellOLife", potionIDWellOLife, true, "Potion id for Well'o'Life")
 		
 		bothSpawnStructures = loadProp(CATEGORY_ESMODE, "bothSpawnStructures", bothSpawnStructures, false, "Set this to true to generate both room in the skies and castle below (!contains portal!) on zero coords of Alfheim")
-		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, true, "How long can you fly as elf")
-		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, true, "Flight recover efficiency")
+		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, false, "Elven flight fly points (faster you move - more you spend)")
+		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, false, "Flight recover efficiency")
 		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)")
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
+		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult, false, "Mana cost multiplier for spells with not your affinity")
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
 		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
@@ -233,10 +264,22 @@ object AlfheimConfigHandler {
 		}
 	}
 	
+	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.getBoolean(default)
+	}
+	
 	fun loadProp(category: String, propName: String, default: Int, restart: Boolean, desc: String): Int {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
 		return prop.getInt(default)
+	}
+	
+	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
+		val prop = config.get(category, propName, default, desc)
+		prop.setRequiresMcRestart(restart)
+		return prop.intList
 	}
 	
 	fun loadProp(category: String, propName: String, default: Double, restart: Boolean, desc: String): Double {
@@ -245,16 +288,10 @@ object AlfheimConfigHandler {
 		return prop.getDouble(default)
 	}
 	
-	fun loadProp(category: String, propName: String, default: Boolean, restart: Boolean, desc: String): Boolean {
+	fun loadProp(category: String, propName: String, default: String, restart: Boolean, desc: String): String {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.getBoolean(default)
-	}
-	
-	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
-		val prop = config.get(category, propName, default, desc)
-		prop.setRequiresMcRestart(restart)
-		return prop.intList
+		return prop.string
 	}
 	
 	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String): Array<String> {

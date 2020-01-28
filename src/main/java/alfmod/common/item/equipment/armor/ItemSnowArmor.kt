@@ -4,6 +4,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
+import alfmod.common.core.util.AlfheimModularTab
 import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
@@ -30,7 +31,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	}
 	
 	init {
-		creativeTab = AlfheimTab
+		creativeTab = AlfheimModularTab
 	}
 	
 	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =
@@ -43,8 +44,14 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	
 	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack?) = false
 	
-	val armorSet = arrayOf(ItemStack(AlfheimModularItems.snowHelmet), ItemStack(AlfheimModularItems.snowChest), ItemStack(AlfheimModularItems.snowLeggings), ItemStack(AlfheimModularItems.snowBoots))
-	override fun getArmorSetStacks() = armorSet
+	var armorSet: Array<ItemStack>? = null
+	
+	override fun getArmorSetStacks(): Array<ItemStack> {
+		if (armorSet == null)
+			armorSet = arrayOf(ItemStack(AlfheimModularItems.snowHelmet), ItemStack(AlfheimModularItems.snowChest), ItemStack(AlfheimModularItems.snowLeggings), ItemStack(AlfheimModularItems.snowBoots))
+		
+		return armorSet!!
+	}
 	
 	override fun hasArmorSetItem(player: EntityPlayer, i: Int): Boolean {
 		val stack = player.inventory.armorInventory[3 - i] ?: return false

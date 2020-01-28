@@ -33,8 +33,8 @@ object MTHandlerSpells {
 	
 	private class ManaCost(name: String, private val newVal: Int): IUndoableAction {
 		
-		private var spell = AlfheimAPI.getSpellInstance(name)!!
-		internal var oldVal = 0
+		var spell = AlfheimAPI.getSpellInstance(name)!!
+		var oldVal = 0
 		
 		override fun apply() {
 			oldVal = spell.setManaCost(newVal)
@@ -55,8 +55,8 @@ object MTHandlerSpells {
 	
 	private class Cooldown(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell = AlfheimAPI.getSpellInstance(name)!!
-		internal var oldVal = 0
+		val spell = AlfheimAPI.getSpellInstance(name)!!
+		var oldVal = 0
 		
 		override fun apply() {
 			oldVal = spell.setCooldown(newVal)
@@ -77,8 +77,8 @@ object MTHandlerSpells {
 	
 	private class CastTime(name: String, private val newVal: Int): IUndoableAction {
 		
-		private val spell = AlfheimAPI.getSpellInstance(name)!!
-		internal var oldVal = 0
+		val spell = AlfheimAPI.getSpellInstance(name)!!
+		var oldVal = 0
 		
 		override fun apply() {
 			oldVal = spell.setCastTime(newVal)
@@ -99,8 +99,8 @@ object MTHandlerSpells {
 	
 	private class Params(name: String, private val damage: Float, private val duration: Int, private val efficiency: Double, private val radius: Double): IUndoableAction {
 		
-		private val spell = AlfheimAPI.getSpellInstance(name)!!
-		internal var oldVals = arrayOf(0f, 0, 0.0, 0.0)
+		val spell = AlfheimAPI.getSpellInstance(name)!!
+		var oldVals = arrayOf(0f, 0, 0.0, 0.0)
 		
 		override fun apply() {
 			oldVals = arrayOf(spell.damage, spell.duration, spell.efficiency, spell.radius)

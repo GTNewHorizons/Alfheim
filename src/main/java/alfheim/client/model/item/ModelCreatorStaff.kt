@@ -1,5 +1,6 @@
 package alfheim.client.model.item
 
+import alfheim.client.core.util.renderBlocks
 import alfheim.common.item.creator.ItemRoyalStaff
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.*
@@ -26,7 +27,6 @@ object ModelCreatorStaff: ModelBase() {
 	var Focus: ModelRenderer
 	var Cap: ModelRenderer
 	var CapBottom: ModelRenderer
-	val renderBlocks = RenderBlocks()
 	
 	init {
 		textureWidth = 32

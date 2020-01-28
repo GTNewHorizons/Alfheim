@@ -6,8 +6,10 @@ import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.WE_BiomeLayer
 import vazkii.botania.common.block.ModBlocks
 
-class BiomeLake: BiomeAlfheim(0) {
+object BiomeRiver: BiomeAlfheim() {
+	
 	init {
+		setBiomeName("River")
 		
 		BiomeDictionary.registerBiomeType(this, Type.RIVER, Type.WET)
 		

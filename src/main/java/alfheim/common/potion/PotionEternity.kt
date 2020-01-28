@@ -1,8 +1,10 @@
 package alfheim.common.potion
 
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.potion.PotionEffect
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
@@ -19,19 +21,23 @@ class PotionEternity: PotionAlfheim(AlfheimConfigHandler.potionIDEternity, "eter
 	@SubscribeEvent
 	fun onUpdate(event: LivingUpdateEvent) {
 		val target = event.entityLiving
-		if (target.isPotionActive(this) && target.getActivePotionEffect(this).getDuration() < 115) {
+		val eff = target.activePotionsMap[AlfheimConfigHandler.potionIDEternity] as? PotionEffect ?: return
+		
+		if (eff.amplifier == 0) {
 			if (target.isSneaking) target.removePotionEffect(id)
-			else {
-				target.motionX = 0.0
-				target.motionY = 0.0
-				target.motionZ = 0.0
-			}
+			
+			if (eff.duration >= 115) return
 		}
+		
+		target.motionX = 0.0
+		target.motionY = 0.0
+		target.motionZ = 0.0
 	}
 	
 	@SubscribeEvent
 	fun onDamageTaken(event: LivingHurtEvent) {
 		val player = event.entityLiving as? EntityPlayer ?: return
-		if (player.isPotionActive(this)) event.ammount = 0f
+		val eff = player.getActivePotionEffect(this.id) ?: return
+		if (eff.amplifier == 0) event.ammount = 0f
 	}
 }

@@ -16,7 +16,13 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import java.util.*
 import kotlin.math.sin
 
-class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
+object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
+	
+	var model: IPylonModel = if (ConfigHandler.oldPylonModel) ModelPylonOld() else ModelPylon()
+	var orange = false
+	var red = false
+	var hand = false
+	
 	val rand = Random()
 	
 	val shObjRO = ShadedObjectPylon(LibResourceLocations.antiPylonOld)
@@ -36,9 +42,6 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 	}
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
-		if (model == null)
-			model = if (ConfigHandler.oldPylonModel) ModelPylonOld() else ModelPylon()
-		
 		glPushMatrix()
 		glEnable(GL_RESCALE_NORMAL)
 		glEnable(GL_BLEND)
@@ -77,9 +80,9 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			if (!ConfigHandler.oldPylonModel)
 				glTranslatef(-0.5f, 0f, 0.5f)
 			
-			model!!.renderRing()
+			model.renderRing()
 			glTranslated(0.0, sin(worldTime / 20.0) / 20 - 0.025, 0.0)
-			model!!.renderGems()
+			model.renderGems()
 			glPopMatrix()
 		}
 		
@@ -94,7 +97,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			glTranslatef(-0.5f, 0f, 0.5f)
 		
 		glDisable(GL_CULL_FACE)
-		model!!.renderCrystal()
+		model.renderCrystal()
 		
 		glColor4f(1f, 1f, 1f, a)
 		
@@ -124,7 +127,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			val shObj = if (ConfigHandler.oldPylonModel) if (red) shObjRO else if (orange) shObjOO else shObjPO else if (red) shObjR else if (orange) shObjO else shObjP
 			shObj.addTranslation()
 		} else {
-			model!!.renderCrystal()
+			model.renderCrystal()
 		}
 		
 		glEnable(GL_ALPHA_TEST)
@@ -151,7 +154,7 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		}
 		
 		override fun drawMesh() {
-			model!!.renderCrystal()
+			model.renderCrystal()
 		}
 		
 		override fun postRender() {
@@ -165,13 +168,5 @@ class RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			
 			val matID = RenderPostShaders.nextAvailableRenderObjectMaterialID
 		}
-	}
-	
-	companion object {
-		
-		var model: IPylonModel? = null
-		var orange = false
-		var red = false
-		var hand = false
 	}
 }

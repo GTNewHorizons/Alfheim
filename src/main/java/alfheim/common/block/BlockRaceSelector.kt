@@ -1,9 +1,11 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.network.MessageRaceSelection
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -22,18 +24,37 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		val ret = onBlockActivated2(world, x, y, z, player, side, hitX, hitZ)
-		if (ret) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
-		return ret
+		if (!world.isRemote) return false
+		
+		val tile = world.getTileEntity(x, y, z) as? TileRaceSelector ?: return false
+		val res = onBlockActivated2(world, x, y, z, player, side, hitX, hitZ, tile)
+		if (res.first) {
+			tile.activeRotation = res.second.actRot
+			tile.rotation = res.second.rotation
+			tile.custom = res.second.custom
+			tile.female = res.second.female
+			tile.timer = res.second.timer
+			
+			AlfheimCore.network.sendToServer(MessageRaceSelection(res.second.meta.first, res.second.custom, res.second.female, res.second.giveRace, res.second.meta.second, res.second.rotation, res.second.actRot, res.second.timer, x, y, z, world.provider.dimensionId))
+		}
+		
+		return res.first
 	}
 	
-	fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitZ: Float): Boolean {
-		if (side != 1) return false
+	private fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitZ: Float, tile: TileRaceSelector): Pair<Boolean, ActivationResult> {
+		val res = ActivationResult()
+		
+		res.actRot = tile.activeRotation
+		res.rotation = tile.rotation
+		res.custom = tile.custom
+		res.female = tile.female
+		res.timer = tile.timer
+		
+		if (side != 1) return false to res
 		
 		val meta = world.getBlockMetadata(x, y, z)
-		val tile = (world.getTileEntity(x, y, z) ?: return false) as? TileRaceSelector ?: return false
 		
-		if (tile.activeRotation != 0) return false
+		if (tile.activeRotation != 0) return false to res
 		
 		fun within(hZ: Float) = hZ in 0.25f..0.75f
 		fun isLeft(hX: Float, hZ: Float) = hX in 0.0625f..0.5f && within(hZ)
@@ -52,38 +73,41 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 		
 		if (meta == 0) {
 			if (isMid(hitX, hitZ)) {
-				tile.custom = !tile.custom
-				if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(tile.custom) "1" else "0" }")
-				return true
+				res.custom = !tile.custom
+				ASJUtilities.say(player, "alfheimmisc.skintoggle${ if(res.custom) "1" else "0" }")
+				return true to res
 			}
 			
-			tile.female = if (isLeft(hitX, hitZ)) false else if (isRight(hitX, hitZ)) true else return false
+			res.female = if (isLeft(hitX, hitZ)) false else if (isRight(hitX, hitZ)) true else return false to res
 			
-			world.setBlockMetadataWithNotify(x, y, z, 1, 3)
-			tile.timer = 600
+			res.meta = true to 1
+			res.timer = 600
 			
-			return true
+			return true to res
 		} else if (meta == 1) {
 			if (isMid(hitX, hitZ)) {
-				return tile.giveRaceAndReset(player)
+				res.giveRace = true
+				return true to res
 			}
 			
 			if (isLeft(hitX, hitZ)) {
-				--tile.rotation
-				tile.activeRotation = 20
-				return true
+				res.rotation = --tile.rotation
+				res.actRot = 20
+				res.timer = 600
+				return true to res
 			}
 			
 			if (isRight(hitX, hitZ)) {
-				++tile.rotation
-				tile.activeRotation = -20
-				return true
+				res.rotation = ++tile.rotation
+				res.actRot = -20
+				res.timer = 600
+				return true to res
 			}
 			
-			return false
+			return false to res
 		}
 		
-		return false
+		return false to res
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
@@ -103,4 +127,8 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 	override fun getRenderBlockPass() = 1
 	override fun isOpaqueCube() = false
 	override fun renderAsNormalBlock() = false
+}
+
+private data class ActivationResult(var meta: Pair<Boolean, Int>, var custom: Boolean, var female: Boolean, var rotation: Int, var actRot: Int, var timer: Int, var giveRace: Boolean) {
+	constructor(): this(false to 0, false, false, 0, 0, 0, false)
 }

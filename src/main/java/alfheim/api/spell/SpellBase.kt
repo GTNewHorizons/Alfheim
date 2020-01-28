@@ -27,25 +27,25 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	open var radius = 16.0
 	
 	fun setManaCost(newVal: Int): Int {
-		val temp = mana
+		val was = mana
 		mana = newVal
-		return temp
+		return was
 	}
 	
 	open fun getManaCost() = mana
 	
 	fun setCooldown(newVal: Int): Int {
-		val temp = cldn
+		val was = cldn
 		cldn = newVal
-		return temp
+		return was
 	}
 	
 	open fun getCooldown() = cldn
 	
 	fun setCastTime(newVal: Int): Int {
-		val temp = cast
+		val was = cast
 		cast = newVal
-		return temp
+		return was
 	}
 	
 	fun getCastTime() = cast
@@ -55,14 +55,14 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	fun checkCast(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_double_int(getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else 2.0)
+		val cost = MathHelper.ceiling_double_int(getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else AlfheimConfigHandler.raceManaMult)
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}
 	
 	fun checkCastOver(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else 2.0))
+		val cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else AlfheimConfigHandler.raceManaMult))
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}

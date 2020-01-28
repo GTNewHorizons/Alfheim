@@ -1,7 +1,33 @@
 Innovations:
- Moved ASMdata to configs (preload category)
- Alfheim Modular for custom events
- Ultramode for Flugel using soulhorn
+ Anyavil items blacklist
+ Elven passive ability toggle notification
+ Hyperpolated bucket for drying lakes and seas
+ Schema generator now supports nbt
+ New models for stones of power
+ Temporarily removed [anti]virus blocks
+ New boss bars
+ Numerical mana tooltip on items above blue mana line
+ [MMO] Disabled default & Botania boss bars when MMO is enabled
+ 
+Integration:
+ Chat plugins:
+  Leading and ending parts customization for special chat lines
+ Servers/modpacks: 
+  Custom Fabulous manapool capacity if you have world overloaded with sparks
 
 Fixes:
- Some bugs (nobody cares anyways)
+ Crash on moving anyavil/mana accelerator with focus of dislocation (blacklisted)
+ InGateCore dupe on moving portal core with teleposers/FoD (blacklisted)
+ Rod of tricky flame makes parkicle w/o mana
+ Rod of thundering peaks - no particles
+ Race selection panel desync
+ Overmage-effected spells ignoring affinity multiplier
+ Custom spell radius render
+ Rain instead of snow (during winter)
+ Config files category tooltips
+ Biome display on F3
+ Snow grass ready generation (config), spreading and layering
+ Sun and moon visibility during rain
+ Flugel Soul dupe when clearing with Rheingold
+ [ESM] Alfheim allows respawn ignoring configs when with ESM
+ [witchery] vampire in mask exploit (sort of)

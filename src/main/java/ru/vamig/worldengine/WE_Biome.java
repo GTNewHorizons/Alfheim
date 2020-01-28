@@ -32,9 +32,9 @@ public class WE_Biome extends BiomeGenBase {
 	//////////////////
 	//- Generators -//
 	//////////////////
-	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
-	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
-	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
+	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList<>();
+	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList<>();
+	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList<>();
 	
 	/////
 	//=//
@@ -124,6 +124,11 @@ public class WE_Biome extends BiomeGenBase {
 		return biome.id;
 	}
 	
+	@SuppressWarnings("RedundantCast")
+	public static WE_Biome getBiomeAt(WE_ChunkProvider cp, int x, int z) {
+		return getBiomeAt(cp, (long) x, (long) z);
+	}
+	
 	public static WE_Biome getBiomeAt(WE_ChunkProvider cp, long x, long z) {
 		double biomeMapData = WE_PerlinNoise.PerlinNoise2D((long)Math.pow(cp.worldObj.getSeed() * 84, 6),
 			x / cp.biomemapScaleX, z / cp.biomemapScaleX,
@@ -162,5 +167,10 @@ public class WE_Biome extends BiomeGenBase {
 	@SideOnly(Side.CLIENT)
 	public int getBiomeGrassColor(int R, int G, int B) {
 		return 0x08F500;
+	}
+	
+	@Override
+	public boolean isEqualTo(BiomeGenBase biome) {
+		return super.isEqualTo(biome);
 	}
 }

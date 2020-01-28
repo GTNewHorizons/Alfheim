@@ -1,7 +1,9 @@
 package alfheim.common.entity
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.mfloor
 import alfheim.common.item.AlfheimItems
+import alfheim.common.world.dim.alfheim.biome.BiomeField
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
+import ru.vamig.worldengine.*
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFlyingCreature
@@ -41,6 +44,14 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		entityDropItem(ItemStack(ModItems.manaResource, 1, 8), 0.0f)
 	}
 	
+	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)
+	
+	override fun attackEntityFrom(src: DamageSource, amount: Float): Boolean {
+		if (src.damageType in immuneTo) return false
+		
+		return super.attackEntityFrom(src, amount)
+	}
+	
 	override fun updateEntityActionState() {
 		rotationYaw = -atan2(motionX, motionZ).toFloat() * 180.0f / Math.PI.toFloat()
 		renderYawOffset = rotationYaw
@@ -57,8 +68,8 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 			onDeath(DamageSource.outOfWorld)
 		}
 		
-		player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 4.0)
-		if (player != null && PlayerHandler.getPlayerBaubles(player) != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0).item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player).getStackInSlot(0), player, 1, true)) {
+		player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 16.0)
+		if (player != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0)?.item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player).getStackInSlot(0), player, 1, true)) {
 			val vec = player.getLook(1.0f)
 			motionX = (player.posX + vec.xCoord - posX) / 8.0f
 			motionY = (player.posY + vec.yCoord + 1.5 - posY) / 8.0f
@@ -104,7 +115,15 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun getCanSpawnHere(): Boolean {
-		return posY > 64 && 0 < worldObj.worldTime % 24000 && worldObj.worldTime % 24000 < 13333 || 22666 < worldObj.worldTime % 24000 && worldObj.getClosestPlayerToEntity(this, 64.0) != null && super.getCanSpawnHere()
+		setPosition(posX, posY + 5, posZ)
+		val flagTime = (worldObj.worldTime % 24000L).toInt() in ((0..13333) + (22666..23999))
+		var flagBiome = false
+		
+		val chunk = (worldObj.provider as? WE_WorldProvider)?.cp
+		if (chunk != null)
+			flagBiome = WE_Biome.getBiomeAt(chunk, posX.mfloor().toLong(), posZ.mfloor().toLong()).isEqualTo(BiomeField)
+		
+		return flagTime && flagBiome && posY > 64 && super.getCanSpawnHere()
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -3,7 +3,9 @@ package alfheim.client.gui
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
@@ -15,7 +17,7 @@ class GUIIceLens: Gui() {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || mc.thePlayer.getActivePotionEffect(AlfheimRegistry.icelens) == null) return
+		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || mc.thePlayer.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) == null) return
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)

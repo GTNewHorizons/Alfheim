@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
@@ -35,7 +36,6 @@ import net.minecraft.world.*
 import net.minecraftforge.common.util.FakePlayer
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
-import vazkii.botania.api.boss.IBotaniaBoss
 import vazkii.botania.client.core.handler.BossBarHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
@@ -50,7 +50,7 @@ import java.util.regex.Pattern
 import kotlin.math.*
 
 @Suppress("UNCHECKED_CAST")
-class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // EntityDoppleganger
+class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { // EntityDoppleganger
 	
 	val playersDamage: HashMap<String, Float> = HashMap()
 	
@@ -214,7 +214,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val z = posZ.mfloor()
 			
 			while (worldObj.setBlock(x, y, z, AlfheimBlocks.anomaly)) {
-				(worldObj.getTileEntity(x, y, z) as? TileAnomaly ?: break).addSubTile(SubTileEntity.forName("Lightning") ?: break, "Lightning")
+				(worldObj.getTileEntity(x, y, z) as? TileAnomaly ?: break).addSubTile(SubTileEntity.forName("Lightning")
+																					  ?: break, "Lightning")
 				return
 			}
 			
@@ -249,9 +250,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
 							val stat = player?.func_147099_x()
 							relic = when {
-								stat?.hasAchievementUnlocked(AlfheimAchievements.excaliber) == false    -> ItemStack(AlfheimItems.excaliber)		.also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-								stat?.hasAchievementUnlocked(AlfheimAchievements.subspace) == false     -> ItemStack(AlfheimItems.subspaceSpear)	.also { player.triggerAchievement(AlfheimAchievements.subspace) }
-								stat?.hasAchievementUnlocked(AlfheimAchievements.moonlightBow) == false -> ItemStack(AlfheimItems.moonlightBow)		.also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+								stat?.hasAchievementUnlocked(AlfheimAchievements.excaliber) == false    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+								stat?.hasAchievementUnlocked(AlfheimAchievements.subspace) == false     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
+								stat?.hasAchievementUnlocked(AlfheimAchievements.moonlightBow) == false -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
 								else                                                                    -> relic
 							}
 						}
@@ -317,7 +318,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		}
 		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null)
 		isPlayingMusic = false
-		if (worldObj.isRemote) BossBarHandler.setCurrentBoss(null)
 		
 		super.setDead()
 	}
@@ -358,8 +358,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (playersDamage.isEmpty()) playersDamage[summoner] = 0.1f
 		val source = source
 		var players = playersAround
-		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar) BossBarHandler.setCurrentBoss(this)
-		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
+		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar)
+			if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
 			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, (if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc) as ItemRecord)
@@ -468,7 +468,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 		if (invul <= 0) {
 			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
-				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
+				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key
+											   ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
@@ -539,14 +540,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	
 	public override fun entityInit() {
 		super.entityInit()
-		dataWatcher.addObject(21, 0.toByte())						// Stage
-		dataWatcher.addObject(22, 0.toByte())						// Hard mode
-		dataWatcher.addObject(23, ChunkCoordinates(0, 0, 0))		// Source position
-		dataWatcher.addObject(24, 0)								// Player count
-		dataWatcher.addObject(25, 0)								// AI task timer
-		dataWatcher.addObject(26, "")								// Summoner
-		dataWatcher.addObject(27, 0)								// Current AI task
-		dataWatcher.addObject(28, 0)								// Regens count
+		dataWatcher.addObject(21, 0.toByte())                        // Stage
+		dataWatcher.addObject(22, 0.toByte())                        // Hard mode
+		dataWatcher.addObject(23, ChunkCoordinates(0, 0, 0))        // Source position
+		dataWatcher.addObject(24, 0)                                // Player count
+		dataWatcher.addObject(25, 0)                                // AI task timer
+		dataWatcher.addObject(26, "")                                // Summoner
+		dataWatcher.addObject(27, 0)                                // Current AI task
+		dataWatcher.addObject(28, 0)                                // Regens count
 	}
 	
 	override fun isEntityInvulnerable() = playersAround.isNotEmpty() && aiTask == AITask.INVUL && aiTaskTimer > 0
@@ -795,19 +796,28 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 	/*	================================	HEALTHBAR STUFF	================================	*/
 	
 	@SideOnly(Side.CLIENT)
+	var barRect: Rectangle? = null
+	
+	@SideOnly(Side.CLIENT)
+	var hpBarRect: Rectangle? = null
+	
+	@SideOnly(Side.CLIENT)
+	override fun getNameColor() = if (isUltraMode) 0xAA0000 else 0xFF80FF
+	
+	@SideOnly(Side.CLIENT)
 	override fun getBossBarTexture() = BossBarHandler.defaultBossBar!!
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarTextureRect(): Rectangle {
 		if (barRect == null)
-			barRect = Rectangle(0, 0, 185, 15)
+			barRect = Rectangle(0, 44, 185, 15)
 		return barRect!!
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getBossBarHPTextureRect(): Rectangle {
 		if (hpBarRect == null)
-			hpBarRect = Rectangle(0, barRect!!.y + barRect!!.height, 181, 7)
+			hpBarRect = Rectangle(0, if (isUltraMode) 59 else 15, 181, 7)
 		return hpBarRect!!
 	}
 	
@@ -887,11 +897,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 						
 					}
 					
-					if (!ModInfo.DEV) {
-						if (!hasProperArena(world, x, y, z)) {
-							if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
-							return false
-						}
+					if (!ModInfo.DEV && !hasProperArena(world, x, y, z)) {
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
+						return false
 					}
 					
 					var miku = false
@@ -989,10 +997,5 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBoss { // Entit
 			val name = e.commandSenderName
 			return !(e is FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches())
 		}
-		
-		@SideOnly(Side.CLIENT)
-		var barRect: Rectangle? = null
-		@SideOnly(Side.CLIENT)
-		var hpBarRect: Rectangle? = null
 	}
 }

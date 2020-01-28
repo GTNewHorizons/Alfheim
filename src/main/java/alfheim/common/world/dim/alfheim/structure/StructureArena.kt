@@ -1,37 +1,29 @@
 package alfheim.common.world.dim.alfheim.structure
 
 import alexsocol.asjlib.ASJUtilities
-import net.minecraft.block.Block
-import net.minecraft.block.material.Material
+import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
+import ru.vamig.worldengine.*
 import vazkii.botania.common.block.*
 import java.util.*
 
 class StructureArena: StructureBaseClass() {
 	
-	protected fun GetValidSpawnBlocks(): Array<Block> {
-		return arrayOf(Blocks.grass)
-	}
-	
-	fun LocationIsValidSpawn(world: World, x: Int, y: Int, z: Int): Boolean {
-		val checkBlock = world.getBlock(x, y - 1, z)
-		val blockAbove = world.getBlock(x, y, z)
-		val blockBelow = world.getBlock(x, y - 2, z)
-		for (i in GetValidSpawnBlocks()) {
-			if (blockAbove !== Blocks.air)
-				return false
-			if (checkBlock === i)
-				return true
-			else if (checkBlock === Blocks.snow_layer && blockBelow === i)
-				return true
-			else if (checkBlock.material === Material.plants && blockBelow === i)
-				return true
-		}
-		return false
-	}
+	val xs = arrayOf(0, 0, 0, 20, 20, 20, 40, 40, 40)
+	val zs = arrayOf(0, 20, 40, 0, 20, 40, 0, 20, 40)
 	
 	override fun generate(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
+		val cp = (world.provider as? WE_WorldProvider)?.cp
+		if (cp != null) {
+			val biomes = Array(xs.size) { WE_Biome.getBiomeAt(cp, x + xs[it], z + zs[it]) }
+			if (biomes.any { it === BiomeRiver }) return false
+		}
+		
+		return generate01(world, rand, x, y + 1, z)
+	}
+	
+	fun generate01(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
 		world.setBlock(x + 13, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 14, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
 		world.setBlock(x + 15, y, z, ModFluffBlocks.livingrockBrickStairs, 2, 3)
@@ -2227,7 +2219,7 @@ class StructureArena: StructureBaseClass() {
 		world.setBlock(x + 34, y + 9, z + 32, ModFluffBlocks.livingrockWall, 0, 3)
 		world.setBlock(x + 6, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3)
 		world.setBlock(x + 32, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3)
-		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 40, y, z, z + 40, 22)
+		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 40, y, z, z + 40, 22)
 		
 		var count = world.rand.nextInt(3) + 1
 		var index: Int

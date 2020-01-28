@@ -11,15 +11,15 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
+import alfheim.client.core.util.mc
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
 import alfheim.client.render.particle.EntityFeatherFx
-import alfheim.client.render.world.AstrolabePreviewHandler
+import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.client.core.util.mc
+import alfheim.common.core.util.getActivePotionEffect
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -30,6 +30,7 @@ import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.boss.IBossDisplayData
+import net.minecraft.util.StatCollector
 import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
@@ -37,23 +38,30 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.*
 import org.lwjgl.opengl.GL11.*
-import vazkii.botania.client.render.world.SkyblockSkyRenderer
+import vazkii.botania.api.mana.*
 
-@Suppress("UNUSED_PARAMETER")
 object EventHandlerClient {
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun onDrawScreenPre(event: RenderGameOverlayEvent.Pre) {
+		if (event.type === ElementType.BOSSHEALTH && AlfheimCore.enableMMO)
+			event.isCanceled = true
+	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPost(event: RenderGameOverlayEvent.Post) {
 		if (event.type != ElementType.HOTBAR) return
+		
 		ItemsRemainingRenderHandler.render(event.resolution, event.partialTicks)
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onJoined(e: EntityJoinWorldEvent) {
-		if (e === Minecraft.getMinecraft().thePlayer)
-			PlayerSegmentClient.party = Party(Minecraft.getMinecraft().thePlayer)
+		if (e === mc.thePlayer)
+			PlayerSegmentClient.party = Party(mc.thePlayer)
 	}
 	
 	@SubscribeEvent
@@ -78,11 +86,11 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onClientTick(e: ClientTickEvent) {
-		val world = Minecraft.getMinecraft().theWorld
+		val world = mc.theWorld
 		if (world != null && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.provider.skyRenderer == null)
-			world.provider.skyRenderer = SkyblockSkyRenderer()
+			world.provider.skyRenderer = AlfheimSkyRenderer
 		
-		if (Minecraft.getMinecraft().thePlayer == null) PlayerSegmentClient.target = null
+		if (mc.thePlayer == null) PlayerSegmentClient.target = null
 	}
 	
 	@SubscribeEvent
@@ -90,7 +98,7 @@ object EventHandlerClient {
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
 		RenderItemFlugelHead.render(e, e.entityPlayer)
 		
-		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimRegistry.leftFlame.id)) {
+		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.isCanceled = true
 			return
 		}
@@ -162,7 +170,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onBlockOverlay(e: RenderBlockOverlayEvent) {
-		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimRegistry.noclip)
+		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimConfigHandler.potionIDNoclip)
 	}
 	
 	@SubscribeEvent
@@ -241,17 +249,21 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onItemTooltip(e: ItemTooltipEvent) {
-		if (GuiScreen.isShiftKeyDown() && e.itemStack.hasTagCompound() && e.showAdvancedItemTooltips) {
-			e.toolTip.add("")
-			e.toolTip.add("NBT Data:")
-			e.toolTip.addAll(listOf(*ASJUtilities.toString(e.itemStack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
+		if (GuiScreen.isShiftKeyDown()) {
+			val stack = e.itemStack
+			
+			if(stack.hasTagCompound() && e.showAdvancedItemTooltips) {
+				e.toolTip.add("")
+				e.toolTip.add("NBT Data:")
+				e.toolTip.addAll(listOf(*ASJUtilities.toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
+			}
 		}
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onFOV(e: FOVUpdateEvent) {
-		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimRegistry.icelens) != null) e.newfov = 0.1f
+		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) != null) e.newfov = 0.1f
 	}
 	
 	@SubscribeEvent

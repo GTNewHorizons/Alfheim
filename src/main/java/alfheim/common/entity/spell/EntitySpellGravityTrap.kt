@@ -23,7 +23,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 	
 	init {
 		setPosition(x, y, z)
-		setSize(8f, 0.01f)
+		setSize(SpellGravityTrap.radius.toFloat() * 2, 0.01f)
 	}
 	
 	override fun onEntityUpdate() {

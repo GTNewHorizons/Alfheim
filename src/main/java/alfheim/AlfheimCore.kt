@@ -6,8 +6,10 @@ import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
+import alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
+import alfheim.common.integration.thaumcraft.thaumictinkerer.ThaumicTinkererAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
 import alfheim.common.network.*
@@ -47,7 +49,6 @@ class AlfheimCore {
 		var MineTweakerLoaded = false
 		var NEILoaded = false
 		var TravellersGearLoaded = false
-		var WAILALoaded = false
 		
 		val jingleTheBells: Boolean
 		val winter: Boolean
@@ -80,7 +81,6 @@ class AlfheimCore {
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear")
-		WAILALoaded = Loader.isModLoaded("Waila")
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
 		
@@ -108,8 +108,10 @@ class AlfheimCore {
 			ThaumcraftAlfheimConfig.loadConfig()
 			ThaumcraftAlfheimModule.postInit()
 		}
+		if (Loader.isModLoaded("AWWayofTime")) BloodMagicAlfheimConfig
+		if (Loader.isModLoaded("ThaumicTinkerer")) ThaumicTinkererAlfheimConfig
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig()
-		if (WAILALoaded) WAILAAlfheimConfig.loadConfig()
+		if (Loader.isModLoaded("Waila")) WAILAAlfheimConfig.loadConfig()
 	}
 	
 	@EventHandler
@@ -133,17 +135,23 @@ class AlfheimCore {
 		network.registerMessage(MessageHotSpellSHandler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBindS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessagePlayerItemHandler::class.java, MessagePlayerItemS::class.java, nextPacketID++, Side.SERVER)
+		network.registerMessage(MessageRaceSelectionHandler::class.java, MessageRaceSelection::class.java, nextPacketID++, Side.SERVER)
 		
 		network.registerMessage(Message0dCHandler::class.java, Message0dC::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message1dHandler::class.java, Message1d::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(Message1lHandler::class.java, Message1l::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message2dHandler::class.java, Message2d::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(Message3dHandler::class.java, Message3d::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageNIHandler::class.java, MessageNI::class.java, nextPacketID++, Side.CLIENT)
+		
 		network.registerMessage(MessageEffectHandler::class.java, MessageEffect::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageEffectLightningHandler::class.java, MessageEffectLightning::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageHotSpellCHandler::class.java, MessageHotSpellC::class.java, nextPacketID++, Side.CLIENT)
-		network.registerMessage(MessageVisualEffectHandler::class.java, MessageVisualEffect::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessagePartyHandler::class.java, MessageParty::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageSkinInfoHandler::class.java, MessageSkinInfo::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageSpellParamsHandler::class.java, MessageSpellParams::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageTileItemHandler::class.java, MessageTileItem::class.java, nextPacketID++, Side.CLIENT)
 		network.registerMessage(MessageTimeStopHandler::class.java, MessageTimeStop::class.java, nextPacketID++, Side.CLIENT)
-		network.registerMessage(MessageSkinInfoHandler::class.java, MessageSkinInfo::class.java, nextPacketID++, Side.CLIENT)
+		network.registerMessage(MessageVisualEffectHandler::class.java, MessageVisualEffect::class.java, nextPacketID++, Side.CLIENT)
 	}
 }

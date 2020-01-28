@@ -7,13 +7,12 @@ import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.network.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent
-import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.passive.*
@@ -22,6 +21,7 @@ import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
+import net.minecraft.stats.AchievementList.potion
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
@@ -58,24 +58,57 @@ object ESMHandler {
 	// EVENTS
 	
 	@SubscribeEvent
-	fun onInteractWithBlock(event: PlayerInteractEvent) {
-		if (AlfheimCore.enableElvenStory && !Botania.gardenOfGlassLoaded) {
-			val equipped = event.entityPlayer.currentEquippedItem
-			if (equipped != null && equipped.item === Items.bowl && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && !event.world.isRemote) {
-				val movingobjectposition = ToolCommons.raytraceFromEntity(event.world, event.entityPlayer, true, 4.5)
+	fun getWaterBowl(event: PlayerInteractEvent) {
+		val player = event.entityPlayer
+		if (AlfheimCore.enableElvenStory && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+			val equipped = player.currentEquippedItem ?: return
+			
+			val mop = ToolCommons.raytraceFromEntity(event.world, player, true, (player as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 4.5) ?: return
+			
+			if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+				var i = mop.blockX
+				var j = mop.blockY
+				var k = mop.blockZ
 				
-				if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && !event.world.isRemote) {
-					val i = movingobjectposition.blockX
-					val j = movingobjectposition.blockY
-					val k = movingobjectposition.blockZ
-					
-					if (event.world.getBlock(i, j, k).material === Material.water) {
-						--equipped.stackSize
+				if (!Botania.gardenOfGlassLoaded) {
+					if (equipped.item === Items.bowl) {
+						if (event.world.getBlock(i, j, k) === Blocks.water) {
+							--equipped.stackSize
+							
+							val bowl = ItemStack(ModItems.waterBowl)
+							
+							if (equipped.stackSize <= 0)
+								player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+							else {
+								if (!player.inventory.addItemStackToInventory(bowl))
+									player.dropPlayerItemWithRandomChoice(bowl, false)
+							}
+						}
+					} else if (equipped.item === ModItems.waterBowl && ASJUtilities.getAmount(player.inventory, ItemStack(ModItems.waterBowl)) >= 4) {
+						when (mop.sideHit) {
+							0 -> j--
+							1 -> j++
+							2 -> k--
+							3 -> k++
+							4 -> i--
+							5 -> i++
+						}
 						
-						if (equipped.stackSize <= 0)
-							event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, ItemStack(ModItems.waterBowl))
-						else
-							event.entityPlayer.dropPlayerItemWithRandomChoice(ItemStack(ModItems.waterBowl), false)
+						if (event.world.isAirBlock(i, j, k)) {
+							--equipped.stackSize
+							ASJUtilities.consumeItemStack(player.inventory, ItemStack(ModItems.waterBowl, 3))
+							
+							event.world.setBlock(i, j, k, Blocks.water)
+							
+							val bowl = ItemStack(Items.bowl, 4)
+							
+							if (equipped.stackSize <= 0)
+								player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+							else {
+								if (!player.inventory.addItemStackToInventory(bowl))
+									player.dropPlayerItemWithRandomChoice(bowl, false)
+							}
+						}
 					}
 				}
 			}
@@ -109,13 +142,13 @@ object ESMHandler {
 	fun doSalamander(player: EntityPlayer) {
 		if (isAbilityDisabled(player)) return
 		
-		if (checkRemove(player, Potion.blindness)
-		||  checkRemove(player, Potion.poison)
-		||  checkRemove(player, Potion.confusion)) return
+		if (checkRemove(player, Potion.blindness.id)
+		||  checkRemove(player, Potion.poison.id)
+		||  checkRemove(player, Potion.confusion.id)) return
 	}
 	
-	fun checkRemove(player: EntityPlayer, potion: Potion): Boolean {
-		val effect = player.getActivePotionEffect(potion) ?: return false
+	fun checkRemove(player: EntityPlayer, id: Int): Boolean {
+		val effect = player.getActivePotionEffect(id) ?: return false
 		var dur = effect.duration
 		var amp = effect.amplifier
 		
@@ -129,7 +162,7 @@ object ESMHandler {
 			effect.amplifier = amp
 			effect.duration = dur
 			
-			AlfheimCore.network.sendToAll(MessageEffect(player.entityId, potion.id, dur, amp))
+			if (!player.worldObj.isRemote) AlfheimCore.network.sendToAll(MessageEffect(player.entityId, id, dur, amp))
 		}
 		
 		return false

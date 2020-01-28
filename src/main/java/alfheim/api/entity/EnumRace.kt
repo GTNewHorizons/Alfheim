@@ -30,9 +30,7 @@ enum class EnumRace {
 	
 	companion object {
 		
-		private val RACE: IAttribute = object: BaseAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0) {
-			override fun clampValue(d: Double) = d
-		}.setShouldWatch(true)
+		private val RACE: IAttribute = RangedAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0, 0.0, values().size.toDouble().minus(1)).setShouldWatch(true)
 		
 		fun getRGBColor(id: Double): Int {
 			//return ASJUtilities.enumColorToRGB(getEnumColor(id));
@@ -79,7 +77,12 @@ enum class EnumRace {
 			if (0 > id || id > values().size) HUMAN else values()[MathHelper.floor_double(id)]
 		
 		fun ensureExistance(player: EntityPlayer) {
-			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
+			if (player.getAttributeMap().getAttributeInstanceByName(RACE.attributeUnlocalizedName) == null) registerRace(player)
+		}
+		
+		private fun registerRace(player: EntityPlayer) {
+			player.getAttributeMap().registerAttribute(RACE)
+			setRaceID(player, 0.0)
 		}
 		
 		operator fun get(id: Int) = getByID(id.toDouble())
@@ -103,11 +106,6 @@ enum class EnumRace {
 		
 		internal fun setRaceID(player: EntityPlayer, raceID: Double) {
 			player.getEntityAttribute(RACE).baseValue = raceID
-		}
-		
-		private fun registerRace(player: EntityPlayer) {
-			player.getAttributeMap().registerAttribute(RACE)
-			setRaceID(player, 0.0)
 		}
 	}
 }

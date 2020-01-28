@@ -6,6 +6,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.expand
 import alfheim.common.network.MessageVisualEffect
 import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
@@ -21,9 +22,10 @@ object SpellEcho: SpellBase("echo", EnumRace.POOKA, 4000, 1500, 5) {
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(Entity::class.java, caster.boundingBox.expand(radius, radius, radius)) as List<Entity>
+		val list = caster.worldObj.getEntitiesWithinAABB(Entity::class.java, caster.boundingBox.expand(radius)) as List<Entity>
 		for (e in list) {
-			if (Vector3.entityDistance(e, caster) > radius) continue
+			if (Vector3.entityDistance(e, caster) > radius*2) continue
+			
 			when (e) {
 				is EntityItem       -> VisualEffectHandler.sendPacket(VisualEffects.ECHO_ITEM, e)
 				is IMob             -> VisualEffectHandler.sendPacket(VisualEffects.ECHO_MOB, e)

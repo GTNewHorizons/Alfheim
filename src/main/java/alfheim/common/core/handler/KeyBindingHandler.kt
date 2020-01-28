@@ -36,7 +36,7 @@ object KeyBindingHandler {
 	
 	fun cast(caster: EntityPlayerMP, raceID: Int, spellID: Int): Int {
 		if (!AlfheimCore.enableMMO) return -NOTALLOW.ordinal
-		if (caster.isPotionActive(AlfheimRegistry.leftFlame)) return -NOTALLOW.ordinal
+		if (caster.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) return -NOTALLOW.ordinal
 		val spell = AlfheimAPI.getSpellByIDs(raceID, spellID) ?: return -DESYNC.ordinal
 		if (SpellCastingSystem.getCoolDown(caster, spell) > 0) return -NOTREADY.ordinal
 		val result = spell.performCast(caster)

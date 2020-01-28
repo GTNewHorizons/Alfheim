@@ -14,6 +14,7 @@ object SpellThrow: SpellBase("throw", EnumRace.SYLPH, 8000, 600, 10) {
 	
 	override var damage = 5f
 	override var duration = 10
+	override var radius = 2.0
 	
 	override val usableParams
 		get() = arrayOf(damage, duration, efficiency, radius)

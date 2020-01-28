@@ -19,8 +19,7 @@ object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30)
 		get() = arrayOf(duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster))
-				 ?: return SpellCastResult.NOTARGET
+		val pt = (if (caster is EntityPlayer) PartySystem.getParty(caster) else PartySystem.getMobParty(caster)) ?: return SpellCastResult.NOTARGET
 		var flagBadEffs = false
 		var member: EntityLivingBase?
 		
@@ -51,8 +50,8 @@ object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30)
 		var pe: PotionEffect
 		
 		for (i in 0 until pt.count) {
-			member = pt[i]
-			for (o in member!!.activePotionEffects) {
+			member = pt[i] ?: continue
+			for (o in member.activePotionEffects) {
 				pe = o as PotionEffect
 				
 				while (pt.isMember(target) && mobs.hasNext()) target = mobs.next()

@@ -11,7 +11,8 @@ import alfheim.common.core.util.mfloor
 import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.*
+import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.ChunkCoordinates
 
 class TileRaceSelector: ASJTile() {
 	
@@ -74,6 +75,8 @@ class TileRaceSelector: ASJTile() {
 			custom = false
 			activeRotation = 0
 			rotation = 0
+			
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 		}
 		
 		

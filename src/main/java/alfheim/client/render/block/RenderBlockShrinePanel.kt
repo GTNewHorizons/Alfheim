@@ -13,11 +13,8 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class RenderBlockShrinePanel : ISimpleBlockRenderingHandler {
 	
-	override fun renderInventoryBlock(block: Block?, metadata: Int, modelId: Int, renderer: RenderBlocks?) = Unit
-	
 	override fun renderWorldBlock(world: IBlockAccess?, x: Int, y: Int, z: Int, block: Block?, modelId: Int, renderer: RenderBlocks?) =
 		(world != null && block is BlockPaneMeta && renderer != null) && renderBlockStainedGlassPane(world, block, x, y, z, renderer)
-	
 	
 	// unholly code from RenderBlocks#renderBlockStainedGlassPane
 	fun renderBlockStainedGlassPane(world: IBlockAccess, block: BlockPaneMeta, x: Int, y: Int, z: Int, renderer: RenderBlocks): Boolean {
@@ -359,7 +356,7 @@ class RenderBlockShrinePanel : ISimpleBlockRenderingHandler {
 	fun getIconSafe(icon: IIcon?): IIcon =
 		icon ?: (Minecraft.getMinecraft().textureManager.getTexture(TextureMap.locationBlocksTexture) as TextureMap).getAtlasSprite("missingno")
 	
+	override fun renderInventoryBlock(block: Block?, metadata: Int, modelId: Int, renderer: RenderBlocks?) = Unit
 	override fun shouldRender3DInInventory(modelId: Int) = false
-	
 	override fun getRenderId() = LibRenderIDs.idShrinePanel
 }

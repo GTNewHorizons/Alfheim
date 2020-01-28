@@ -14,7 +14,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.tool.ToolCommons
 
-object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
+object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 1) {
 	
 	/** temp value for counting total on block breaking  */
 	var tcd = 0
@@ -82,7 +82,6 @@ object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 2) {
 				if (remove && flag) {
 					block.onBlockDestroyedByPlayer(world, x, y, z, localMeta)
 					
-					//					if(!ItemElementiumPick.isDisposable(block))
 					block.harvestBlock(world, player, x, y, z, localMeta)
 					
 					mana += (block.getBlockHardness(world, x, y, z) * 10).toInt()

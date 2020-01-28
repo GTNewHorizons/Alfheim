@@ -25,7 +25,7 @@ import java.awt.Color
  * @author WireSegal
  * Created at 9:32 PM on 1/27/16.
  */
-open class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsingItem {
+class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsingItem {
 	
 	init {
 		maxStackSize = 1
@@ -34,7 +34,7 @@ open class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IMana
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) = Unit
+	override fun registerIcons(reg: IIconRegister) = Unit
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
@@ -57,48 +57,47 @@ open class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IMana
 		return par1ItemStack
 	}
 	
-	override fun onUsingTick(stack: ItemStack?, player: EntityPlayer?, count: Int) {
-		try {
-			if (player != null) {
-				val world = player.worldObj
-				
-				val priest = (ItemPriestEmblem.getEmblem(3, player) != null)
-				val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
-				
-				val power = getDamage(prowess, priest)
-				
-				val mop = ASJUtilities.getMouseOver(player, power.toDouble(), true)
-				
-				val hit = if (mop?.hitVec == null)
-					Vector3(player.lookVec).normalize().mul(power.toDouble()).add(player.posX, player.posY + player.eyeHeight, player.posZ)
-				else
-					Vector3(mop.hitVec)
-				
-				val (x, y, z) = hit
-				
-				val color = Color(ColorOverrideHelper.getColor(player, 0xF94407))
-				val r = color.red / 255f
-				val g = color.green / 255f
-				val b = color.blue / 255f
-				
-				Botania.proxy.sparkleFX(world, x, y, z, r, g, b, 1f, 5)
-				
-				if (count % 20 == 0) {
-					val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5))
-					val cost = getCost(prowess, priest)
-					for (entity in entities) {
-						if (entity is EntityLivingBase && entity != player && entity.health > 0) {
-							if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
-								if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.toFloat())) {
-									ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
-									entity.setFire(power * 20)
-								}
-							}
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
+		val world = player.worldObj
+		
+		val priest = (ItemPriestEmblem.getEmblem(3, player) != null)
+		val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
+		
+		val cost = getCost(prowess, priest)
+		val manaFlag = ManaItemHandler.requestManaExactForTool(stack, player, cost, false).also { if (!it) return }
+		
+		val power = getDamage(prowess, priest)
+		
+		val mop = ASJUtilities.getMouseOver(player, power.toDouble(), true)
+		
+		val hit = if (mop?.hitVec == null)
+			Vector3(player.lookVec).normalize().mul(power.toDouble()).add(player.posX, player.posY + player.eyeHeight, player.posZ)
+		else
+			Vector3(mop.hitVec)
+		
+		val (x, y, z) = hit
+		
+		val color = Color(ColorOverrideHelper.getColor(player, 0xF94407))
+		val r = color.red / 255f
+		val g = color.green / 255f
+		val b = color.blue / 255f
+		
+		Botania.proxy.sparkleFX(world, x, y, z, r, g, b, 1f, 5)
+		
+		if (count % 20 == 0) {
+			val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5))
+			
+			for (entity in entities) {
+				if (entity is EntityLivingBase && entity != player && entity.health > 0) {
+					if (manaFlag) {
+						if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.toFloat())) {
+							ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
+							entity.setFire(power * 20)
 						}
 					}
 				}
 			}
-		} catch (e: Throwable) {}
+		}
 	}
 	
 	val COST = 10

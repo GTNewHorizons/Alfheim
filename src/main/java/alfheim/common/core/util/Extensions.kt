@@ -1,17 +1,50 @@
 package alfheim.common.core.util
 
 import net.minecraft.entity.*
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
+import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
 
 fun Double.mfloor() = MathHelper.floor_double(this)
-// double value
+
 val Number.D get() = this.toDouble()
+val Number.F get() = this.toFloat()
+
+// ################ MINECRAFT ####################
 
 fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
+
+fun Entity.setSize(wid: Double, hei: Double) {
+    var f2: Float
+    val w = wid.toFloat()
+    val h = hei.toFloat()
+    
+    if (w != width || h != height) {
+        f2 = width
+        width = w
+        height = h
+        boundingBox.maxX = boundingBox.minX + width
+        boundingBox.maxZ = boundingBox.minZ + width
+        boundingBox.maxY = boundingBox.minY + height
+        if (width > f2 && !worldObj.isRemote)
+            moveEntity((f2 - width).toDouble(), 0.0, (f2 - width).toDouble())
+    }
+    
+    f2 = w % 2.0f
+    
+    myEntitySize = when {
+        f2 < 0.375 -> Entity.EnumEntitySize.SIZE_1
+        f2 < 0.75  -> Entity.EnumEntitySize.SIZE_2
+        f2 < 1.0   -> Entity.EnumEntitySize.SIZE_3
+        f2 < 1.375 -> Entity.EnumEntitySize.SIZE_4
+        f2 < 1.75  -> Entity.EnumEntitySize.SIZE_5
+        else       -> Entity.EnumEntitySize.SIZE_6
+    }
+}
 
 fun TileEntity.boundingBox(range: Number = 1) = getBoundingBox(xCoord.D, yCoord.D, zCoord).expand(range)
 
@@ -24,6 +57,8 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 }
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
+
+fun EntityPlayerMP.hasAchievement(a: Achievement?) = if(a == null) false else this.func_147099_x().hasAchievementUnlocked(a)
 
 fun ItemStack.itemEquals(rItem: Any): Boolean {
     if (rItem is String) {

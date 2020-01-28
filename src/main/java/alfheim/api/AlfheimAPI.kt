@@ -89,6 +89,7 @@ object AlfheimAPI {
 	fun registerSpell(spell: SpellBase) {
 		require(spell.race != EnumRace.HUMAN) { "Spell race must be one of the elements" }
 		require(spell.race != EnumRace.ALV) { "This race is currently not supported" }
+		
 		if (spells.add(spell)) {
 			checkGet(spell.race).add(spell)
 			LibResourceLocations.add(spell.name)
@@ -117,14 +118,14 @@ object AlfheimAPI {
 	}
 	
 	fun getSpellID(spell: SpellBase): Int {
-		var i: Int
 		for (race in EnumRace.values()) {
-			i = -1
+			var i = -1
 			for (sb in getSpellsFor(race)) {
 				++i
 				if (sb === spell) return i
 			}
 		}
+		
 		throw IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name)
 	}
 	

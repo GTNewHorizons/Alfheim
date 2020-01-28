@@ -1,7 +1,7 @@
 package alfheim.common.entity.spell
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.sound.SpellIsaacStorm
 import net.minecraft.block.*
 import net.minecraft.entity.*
@@ -38,8 +38,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 			if (target != null)
 				setTarget(null)
 			
-			val range = SpellIsaacStorm.radius
-			val entities = worldObj.getEntitiesWithinAABB(if (isEvil) EntityPlayer::class.java else IMob::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range))
+			val entities = worldObj.getEntitiesWithinAABB(if (isEvil) EntityPlayer::class.java else IMob::class.java, getBoundingBox(posX, posY, posZ).expand(SpellIsaacStorm.radius))
 			while (entities.size > 0) {
 				val e = entities[worldObj.rand.nextInt(entities.size)] as Entity
 				if (e !is EntityLivingBase || e.isDead) {
@@ -111,7 +110,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 				motionY = abs(motionY)
 			motionZ = motionVec.z
 			
-			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5))
+			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(posX, posY, posZ).expand(0.5))
 			if (targetList.contains(target)) {
 				val thrower = thrower
 				if (thrower != null)

@@ -9,6 +9,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.getBoundingBox
 import alfheim.common.network.MessageEffect
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
@@ -39,7 +40,7 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(hit.x, hit.y, hit.z, hit.x, hit.y, hit.z).expand(radius, 0.5, radius)) as List<EntityLivingBase>
+		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(hit.x, hit.y, hit.z).expand(radius, 0.5, radius)) as List<EntityLivingBase>
 		for (e in l) {
 			if (PartySystem.mobsSameParty(caster, e)) continue
 			val mob = Vector3.fromEntityCenter(e)

@@ -1,11 +1,11 @@
 package alfheim.client.render.world
 
 import alexsocol.asjlib.math.Vector3
+import alfheim.client.core.util.renderBlocks
 import alfheim.common.item.ItemAstrolabe
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.RenderBlocks
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
@@ -16,10 +16,8 @@ import org.lwjgl.opengl.GL11.*
 
 object AstrolabePreviewHandler {
 	
-	val blockRender = RenderBlocks()
-	
 	@SubscribeEvent
-	fun onWorldRenderLast(event: RenderWorldLastEvent) {
+	fun onWorldRenderLast(e: RenderWorldLastEvent) {
 		val world = Minecraft.getMinecraft().theWorld
 		val playerEntities = world.playerEntities
 		for (player in playerEntities) {
@@ -61,8 +59,8 @@ object AstrolabePreviewHandler {
 		glTranslated(pos.x + 0.5 - RenderManager.renderPosX, pos.y + 0.5 - RenderManager.renderPosY, pos.z + 0.5 - RenderManager.renderPosZ)
 		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
 		
-		blockRender.useInventoryTint = false
-		blockRender.renderBlockAsItem(block, meta, 1.0F)
+		renderBlocks.useInventoryTint = false
+		renderBlocks.renderBlockAsItem(block, meta, 1.0F)
 		
 		glEnable(GL_DEPTH_TEST)
 		glPopMatrix()

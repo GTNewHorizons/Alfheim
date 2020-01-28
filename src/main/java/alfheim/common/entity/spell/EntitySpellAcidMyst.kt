@@ -41,15 +41,11 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 		}
 		if (isDead || !ASJUtilities.isServer) return
 		
-		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellAcidMyst.radius)) as MutableList<EntityLivingBase>
+		if (ticksExisted % 20 == 0) VisualEffectHandler.sendPacket(VisualEffects.ACID, this)
+		
+		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(posX, posY, posZ).expand(SpellAcidMyst.radius)) as MutableList<EntityLivingBase>
 		l.remove(caster!!)
 		for (e in l) if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) <= SpellAcidMyst.radius) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, SpellAcidMyst.damage.toDouble()))
-	}
-	
-	fun getTopBlock(world: World, x: Int, z: Int): Int {
-		var y = 255
-		while (y > 0 && world.isAirBlock(x, y, z)) --y
-		return y
 	}
 	
 	override fun affectedBy(uuid: UUID): Boolean {

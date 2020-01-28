@@ -10,6 +10,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -33,6 +34,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.world.BlockEvent
@@ -68,7 +70,7 @@ object EventHandler {
 			CardinalSystem.transfer(e.player as EntityPlayerMP)
 			if (AlfheimCore.enableElvenStory) {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.toDouble()), e.player as EntityPlayerMP)
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, AlfheimConfigHandler.flightTime.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, ElvenFlightHelper.max), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(MessageNI(MessageNI.mni.WINGS_BL, AlfheimConfigHandler.wingsBlackList), e.player as EntityPlayerMP)
 				if (!(e.player as EntityPlayerMP).func_147099_x().hasAchievementUnlocked(AlfheimAchievements.alfheim) && e.player.dimension != AlfheimConfigHandler.dimensionIDAlfheim) {
 					ASJUtilities.sendToDimensionWithoutPortal(e.player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, 250.0, 0.5)
@@ -82,6 +84,13 @@ object EventHandler {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		val player = e.entity as? EntityPlayerMP ?: return
+		val seed = player.worldObj.seed
+		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)
 	}
 	
 	@SubscribeEvent
@@ -141,11 +150,7 @@ object EventHandler {
 			}
 		}
 		
-		if (target is EntityAlfheimPixie && e.source.getDamageType() == DamageSource.inWall.getDamageType()) {
-			e.isCanceled = true
-			return
-		}
-		if (AlfheimCore.enableElvenStory && e.source.getDamageType() == DamageSource.fall.getDamageType() && target is EntityPlayer && target.race != EnumRace.HUMAN) {
+		if (AlfheimCore.enableElvenStory && e.source.damageType == DamageSource.fall.damageType && target is EntityPlayer && target.race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
@@ -186,7 +191,7 @@ object EventHandler {
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
 			}
 			
-			var pe: PotionEffect? = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDNineLifes])
+			var pe: PotionEffect? = target.getActivePotionEffect(AlfheimConfigHandler.potionIDNineLifes)
 			run nl@{
 				@Suppress("NAME_SHADOWING")
 				val pe = pe ?: return@nl
@@ -212,7 +217,7 @@ object EventHandler {
 				}
 			}
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDStoneSkin])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDStoneSkin)
 			if (pe != null && !e.source.isMagical && !e.source.isDamageAbsolute) {
 				e.isCanceled = true
 				target.removePotionEffect(AlfheimConfigHandler.potionIDStoneSkin)
@@ -220,7 +225,7 @@ object EventHandler {
 				return
 			}
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDButterShield])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDButterShield)
 			if (pe != null && pe.duration > 0 && e.source.isMagical && !e.source.isDamageAbsolute) {
 				e.isCanceled = true
 				if (--pe.amplifier <= 0) pe.duration = 0 // target.removePotionEffect(AlfheimRegistry.butterShield.id) <- ConcurrentModificationException :(
@@ -230,7 +235,7 @@ object EventHandler {
 			
 			// ################################################################ NOT CANCELING ################################################################
 			
-			pe = target.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDButterShield])
+			pe = target.getActivePotionEffect(AlfheimConfigHandler.potionIDButterShield)
 			if (!e.source.isMagical && !e.source.isDamageAbsolute && pe != null && pe.duration > 0) {
 				e.ammount /= 2f
 				pe.duration -= (e.ammount * 20).toInt()
@@ -264,6 +269,7 @@ object EventHandler {
 				CardinalSystem.SpellCastingSystem.tick()
 				CardinalSystem.TimeStopSystem.tick()
 			}
+			
 			for (name in playerSegments.keys) {
 				val player = MinecraftServer.getServer().configurationManager.func_152612_a(name)
 				
@@ -292,7 +298,7 @@ object EventHandler {
 	fun onLivingUpdate(e: LivingUpdateEvent) {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
-				val pe = e.entityLiving.getActivePotionEffect(Potion.potionTypes[AlfheimConfigHandler.potionIDLeftFlame])
+				val pe = e.entityLiving.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
 				pe.duration--
 				if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
 				if (pe.duration <= 0)
@@ -316,7 +322,7 @@ object EventHandler {
 //		player.rotationYaw = 0f
 //		player.rotationPitch = 0f
 		
-		if (e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
+		if (AlfheimCore.enableElvenStory && e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
 			val seg = CardinalSystem.forPlayer(e.player)
 			val pos = Vector3.fromEntity(e.player)
 			

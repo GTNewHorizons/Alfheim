@@ -5,6 +5,7 @@ import alfheim.common.block.base.BlockMod
 import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.world.*
@@ -31,6 +32,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 		else    -> blockIcon
 	}!!
 	
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, hz: Boolean) = true
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int) = true
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) = Unit
@@ -42,7 +44,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 		
 		if (AlfheimCore.winter) {
 			if (world.isRaining) {
-				if (above === Blocks.air) {
+				if (above === Blocks.air || above === Blocks.snow_layer) {
 					world.setBlock(x, y + 1, z, AlfheimBlocks.snowLayer)
 				} else if (above === AlfheimBlocks.snowLayer) {
 					val meta = world.getBlockMetadata(x, y + 1, z)
@@ -50,10 +52,26 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 					
 					if (meta < upMeta)
 						world.setBlockMetadataWithNotify(x, y + 1, z, meta + 1, 1 or 2)
+				} else {
+					// from BlockGrass:
+					if (world.getBlockLightValue(x, y + 1, z) < 4 && world.getBlockLightOpacity(x, y + 1, z) > 2) {
+						world.setBlock(x, y, z, Blocks.dirt)
+					} else /*if (world.getBlockLightValue(x, y + 1, z) >= 9)*/ {
+						for (l in 0..3) {
+							val i = x + random.nextInt(3) - 1
+							val j = y + random.nextInt(4) - 3
+							val k = z + random.nextInt(3) - 1
+							val block = world.getBlock(i, j, k)
+							if ((block === Blocks.dirt || block === Blocks.grass) && world.getBlockMetadata(i, j, k) == 0 && world.getBlockLightValue(i, j + 1, k) >= 4 && world.getBlockLightOpacity(i, j + 1, k) <= 2)
+								world.setBlock(i, j, k, this)
+						}
+					}
 				}
 			}
 		} else {
-			if (above === AlfheimBlocks.snowLayer) world.setBlockToAir(x, y + 1, z)
+			if (above === AlfheimBlocks.snowLayer || above === Blocks.snow_layer)
+				world.setBlockToAir(x, y + 1, z)
+			
 			world.setBlock(x, y, z, Blocks.grass)
 		}
 	}

@@ -52,7 +52,7 @@ tile.alfheim:DreamwoodBarkFence.name=Забор из древесины мечт
 tile.alfheim:DreamwoodBarkFenceGate.name=Калитка из древесины мечтаний
 tile.alfheim:DreamwoodFence.name=Забор из досок мечтаний
 tile.alfheim:DreamwoodFenceGate.name=Калитка из досок мечтаний
-tile.alfheim:DwarfLantern.name=Светильник дварфов
+tile.alfheim:DwarfLantern.name=Светильник из жизнекамня
 tile.DwarfPlanks0.name=Доски дварфов
 tile.ElvenOre0.name=Руда драконьего камня
 tile.ElvenOre1.name=Руда элементия
@@ -69,8 +69,7 @@ tile.ElvenSandstone4.name=Растрескавшийся эльфийский п
 tile.botania:ElvenSandstone0Slab.name=Плита из эльфийского песчаника
 tile.botania:ElvenSandstone0SlabFull.name=Плита из эльфийского песчаника
 tile.botania:ElvenSandstoneStairs.name=Ступеньки из эльфийского песчаника
-tile.FlugelHeadBlock.name=Голова Флюгеля
-tile.MikuHeadBlock.name=Голова Мику
+tile.alfheim:FlugelHeadBlock.name=Голова Флюгеля
 tile.LivingCobble0.name=Жизнебулыжник
 tile.LivingCobble1.name=Прессованный жизнекамень
 tile.LivingCobble2.name=Полированный жизнекамень
@@ -87,13 +86,14 @@ tile.alfheim:LivingwoodFence.name=Забор из живых досок
 tile.alfheim:LivingwoodFenceGate.name=Калитка из живых досок
 tile.alfheim:ManaAccelerator.name=Ускоритель маны
 tile.alfheim:ManaInfuser.name=Мана-наполнитель
+tile.alfheim:MikuHeadBlock.name=Голова Мику
 tile.alfheim:MuspelheimFire.name=Вечный огонь Муспельхейма
 tile.alfheim:NiflheimIce.name=Вечный лёд Нифльхейма
 tile.PowerStone0.name=Камень нуля
 tile.PowerStone1.name=Камень берсерка
-tile.PowerStone2.name=Камень овермага
-tile.PowerStone3.name=Камень танка
-tile.PowerStone4.name=Камень ниндзя
+tile.PowerStone2.name=Камень танка
+tile.PowerStone3.name=Камень ниндзя
+tile.PowerStone4.name=Камень овермага
 tile.alfheim:RaceSelector.name=Панель выбора расы
 tile.alfheim:schemaController.name=Контроллер схемы
 tile.alfheim:schemaFiller.name=Заполнитель схемы
@@ -177,6 +177,7 @@ item.alfheim:FlugelHead.name=Голова Флюгеля
 item.alfheim:MikuHead.name=Голова Мику
 item.botania:FlugelSoul.name=Душа Флюгеля
 item.alfheim:grassRod.name=Жезл зелёных холмов
+item.alfheim:HyperpolatedBucket.name=Гиперполированное ведро
 item.botania:IcePendant.name=Подвеска защиты от Нифльхейма
 item.alfheim:IffesalDust.name=Пыль иффесалия
 item.alfheim:InfusedDreamwoodTwig.name=Наполненная ветвь древа мечтаний
@@ -272,6 +273,8 @@ achievement.mask=Неудержимый
 achievement.mask.desc=Будьте вознаграждены загадочной маской за героический подвиг
 achievement.moonlightBow=На Луну
 achievement.moonlightBow.desc=Будьте вознаграждены Катастрофой Феба за героический подвиг
+achievement.outstander=Непоколебимый
+achievement.outstander.desc=Докажите Вашу железобетонную Волю
 achievement.subspace=Свечение ночи
 achievement.subspace.desc=Будьте вознаграждены копьём подпространства за героический подвиг
 
@@ -509,6 +512,9 @@ item.thorRing.poem2=С мощью непреодолимой
 item.thorRing.poem3=Даст начало новой эры.
 
 ####################################################___ЭЛЬФИЙСКАЯ ИСТОРИЯ___####################################################
+
+alfheimmisc.elvenAbility.true=Пассивная способность включена
+alfheimmisc.elvenAbility.false=Пассивная способность отключена
 
 elvenstory.welcome0=§n§aДобро пожаловать в Альфхейм - Режим [Эльфийская история]!
 elvenstory.welcome1=§6Пожалуйста, выберите пол и расу, используя панель перед Вами.
@@ -948,6 +954,9 @@ tile.alfheim:crysanthermum.lore=Провернуть термостат
 alfheim.potion.manaVoid=Истощение маны
 
 #######################################################___КОНФИГУРАЦИЯ___#######################################################
+
+general.preload=Предзагрузка
+general.preload.tooltip=Настройки кормода Альфхейма
 
 general.alfheim=Альфхейм
 general.alfheim.tooltip=Настройки измерения Альфхейм.

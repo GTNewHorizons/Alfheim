@@ -55,6 +55,7 @@ object AlfheimLexiconData {
 	lateinit var excalibr: LexiconEntry
 	lateinit var flugel: LexiconEntry
 	lateinit var greenRod: LexiconEntry
+	lateinit var hyperBuk: LexiconEntry
 	lateinit var infuser: LexiconEntry
 	lateinit var lootInt: LexiconEntry
 	lateinit var manaAcc: LexiconEntry
@@ -114,6 +115,7 @@ object AlfheimLexiconData {
 		essences = BLexiconEntry("essences", categoryAlfheim)
 		flugel = BLexiconEntry("flugel", categoryAlfheim)
 		greenRod = BLexiconEntry("greenRod", categoryAlfheim)
+		hyperBuk = BLexiconEntry("hyperBuk", categoryAlfheim)
 		infuser = BLexiconEntry("infuser", categoryAlfheim)
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
@@ -324,9 +326,11 @@ object AlfheimLexiconData {
 		manaImba.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
 								PageCraftingRecipe("3", AlfheimRecipes.recipeManaMirrorImba))
 		
+		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
+		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		
-		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn)).icon = ItemStack(AlfheimItems.soulHorn)
+		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn), PageText("3")).icon = ItemStack(AlfheimItems.soulHorn)
 		
 		if (AlfheimCore.enableElvenStory) initElvenStory()
 		
@@ -377,7 +381,7 @@ object AlfheimLexiconData {
 		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.mask), mask, 1)
 		
-		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber!!)).icon = ItemStack(AlfheimItems.excaliber)
+		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber)).icon = ItemStack(AlfheimItems.excaliber)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
 		
 		/*mjolnir.setLexiconPages(new PageText("0")).setIcon(new ItemStack(AlfheimItems.mjolnir))*/
@@ -574,7 +578,6 @@ object AlfheimLexiconData {
 		if (AlfheimCore.enableMMO) {
 			preInitMMO()
 			initMMO()
-			postInitMMO()
 		}
 		
 		if (!categoryAlfheim.entries.contains(es)) BotaniaAPI.addEntry(es, categoryAlfheim)

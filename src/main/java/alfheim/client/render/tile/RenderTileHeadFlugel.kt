@@ -7,18 +7,15 @@ import net.minecraft.tileentity.*
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 
-class RenderTileHeadFlugel: TileEntitySkullRenderer() {
+object RenderTileHeadFlugel: TileEntitySkullRenderer() {
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
 		if (tile is TileEntitySkull) renderTileEntityAt(tile, x, y, z, ticks)
 	}
 	
 	override fun renderTileEntityAt(skull: TileEntitySkull, x: Double, y: Double, z: Double, ticks: Float) {
-		render(skull, x, y, z, skull.getBlockMetadata() and 7, skull.func_145906_b() * 360 / 16.0f, skull.func_145904_a())
-	}
-	
-	fun render(skull: TileEntitySkull, x: Double, y: Double, z: Double, meta: Int, rotation: Float, type: Int) {
-		var rotat = rotation
+		val meta = skull.getBlockMetadata() and 7
+		var rotation = skull.func_145906_b() * 360 / 16.0f
 		bindTexture(LibResourceLocations.jibril)
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
@@ -28,22 +25,22 @@ class RenderTileHeadFlugel: TileEntitySkullRenderer() {
 				
 				3    -> {
 					glTranslated(x + 0.5, y + 0.25, z + 0.26)
-					rotat = 180f
+					rotation = 180f
 				}
 				
 				4    -> {
 					glTranslated(x + 0.74, y + 0.25, z + 0.5)
-					rotat = 270f
+					rotation = 270f
 				}
 				
 				5    -> {
 					glTranslated(x + 0.26, y + 0.25, z + 0.5)
-					rotat = 90f
+					rotation = 90f
 				}
 				
 				else -> {
 					glTranslated(x + 0.26, y + 0.25, z + 0.5)
-					rotat = 90f
+					rotation = 90f
 				}
 			}
 		} else
@@ -52,7 +49,7 @@ class RenderTileHeadFlugel: TileEntitySkullRenderer() {
 		glEnable(GL_RESCALE_NORMAL)
 		glScaled(-1.0, -1.0, 1.0)
 		glEnable(GL_ALPHA_TEST)
-		glRotated(rotat.toDouble(), 0.0, 1.0, 0.0)
+		glRotated(rotation.toDouble(), 0.0, 1.0, 0.0)
 		ModelBipedNew.model.head.render(0.0625f)
 		
 		glPopMatrix()

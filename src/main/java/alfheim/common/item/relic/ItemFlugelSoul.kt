@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.*
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.Blocks
@@ -54,10 +56,9 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		super.registerIcons(par1IconRegister)
-		signs = arrayOfNulls<IIcon>(12) as Array<IIcon>
-		for (i in 0..11) signs[i] = IconHelper.forName(par1IconRegister, "unused/sign$i")
+	override fun registerIcons(reg: IIconRegister) {
+		super.registerIcons(reg)
+		signs = Array(12) { IconHelper.forName(reg, "unused/sign$it") }
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -418,7 +419,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	override fun updateBurst(burst: IManaBurst?, stack: ItemStack) {
 		val entity = burst as EntityThrowable
-		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0, 1.0, 1.0)
+		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0)
 		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		val attacker = ItemNBTHelper.getInt(burst.sourceLens, TAG_ATTACKER_ID, -1)
 		
@@ -435,10 +436,19 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 	}
 	
-	override fun getContainerItem(soul: ItemStack): ItemStack {
-		for (i in 0 until SEGMENTS) setDisabled(soul, i, true)
-		return soul
+	override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+		val horn: EntityItem? = (entity.worldObj.getEntitiesWithinAABB(EntityItem::class.java, entity.boundingBox(0.5)) as List<EntityItem>).firstOrNull { it.entityItem?.item === AlfheimItems.soulHorn }
+		
+		if (horn != null && horn.entityItem.meta == 0 && getBlocked(entity.entityItem) == 0) {
+			for (i in 0 until SEGMENTS) setDisabled(entity.entityItem, i, true)
+			horn.entityItem.meta = 1
+			
+			for (i in 0 until 360 step 10) {
+				val c = Color.getHSBColor(i.toFloat(), 1f, 1f)
+				Botania.proxy.sparkleFX(entity.worldObj, entity.posX, entity.posY, entity.posZ, c.red.F, c.green.F, c.blue.F, 0.5f, 2)
+			}
+		}
+		
+		return super.onEntityItemUpdate(entity)
 	}
-	
-	override fun hasContainerItem(stack: ItemStack) = true
 }

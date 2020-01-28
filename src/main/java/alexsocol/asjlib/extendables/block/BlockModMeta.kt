@@ -40,7 +40,7 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 		for (i in 0 until subtypes) list.add(ItemStack(block, 1, i))
 	}
 	
-	override fun getIcon(side: Int, meta: Int) = texture[max(0, min(meta, texture.size - 1))]
+	override fun getIcon(side: Int, meta: Int): IIcon? = texture[max(0, min(meta, texture.size - 1))]
 	
 	override fun damageDropped(meta: Int) = meta
 	

@@ -6,16 +6,16 @@ import alfheim.common.entity.EntityElf
 import net.minecraft.entity.passive.*
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
-import ru.vamig.worldengine.WE_Biome
+import ru.vamig.worldengine.*
 
-open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: Boolean = false): WE_Biome(ID_FOR_ALL_WE_BIOMES, r) {
+open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(WE_WorldProvider.we_id, r) {
 	
 	init {
+		setBiomeName("Alfheim")
 		
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
 		clearSpawn()
-		setBiomeName("Alfheim")
 		setColor(0xA67C00)
 		waterColorMultiplier = 0x1D1D4E
 		
@@ -23,7 +23,7 @@ open class BiomeAlfheim @JvmOverloads constructor(ID_FOR_ALL_WE_BIOMES: Int, r: 
 		createChunkGen_InXYZ_List.clear()
 		decorateChunkGen_List.clear()
 		
-		addEntry(EntityElf::class.java, AlfheimConfigHandler.pixieSpawn)
+		addEntry(EntityElf::class.java, AlfheimConfigHandler.elvesSpawn)
 		addEntry(EntitySheep::class.java, AlfheimConfigHandler.sheepSpawn)
 		addEntry(EntityPig::class.java, AlfheimConfigHandler.pigSpawn)
 		addEntry(EntityChicken::class.java, AlfheimConfigHandler.chickSpawn)
