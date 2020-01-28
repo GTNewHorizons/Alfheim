@@ -4,12 +4,12 @@
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
-		<val>>Happy lunar new year!</val>
+		<val>Happy lunar new year!</val>
 	</version>
 	<!-- New tag for ALL versions, now supports json - start with "$json" -->
 	<version id="UNIVERSAL">
 		<!--val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val-->
-		<val>>Happy lunar new year!</val>
+		<val>Happy lunar new year!</val>
 	</version>
 	<version id="MODULAR">
 		<val>https://bitbucket.org/AlexSocol/alfheim/raw/227f4373e1df7030e00659b7001d6b8b6623289b/modular/Alfheim-Modular-9.jar</val>
