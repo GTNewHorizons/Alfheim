@@ -1,24 +1,30 @@
 package alfmod.common.item.equipment.armor
 
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab
 import alfmod.common.item.AlfheimModularItems
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.util.StatCollector
+import net.minecraft.world.World
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.EnumHelper
+import net.minecraftforge.event.entity.living.*
+import vazkii.botania.api.mana.IManaDiscountArmor
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 
-open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name, snow) {
+open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name, snow), IManaDiscountArmor {
 	
 	companion object {
 		val snow = EnumHelper.addArmorMaterial("snow", 25, intArrayOf(2, 6, 5, 2), 16)!!
@@ -28,10 +34,63 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		var model3: ModelBiped? = null
 		
 		var model: ModelBiped? = null
+		
+		var replacePairs = arrayOf(Blocks.water to Blocks.ice, Blocks.flowing_water to Blocks.air, Blocks.lava to Blocks.obsidian, Blocks.flowing_lava to Blocks.air)
+		
+		init {
+			MinecraftForge.EVENT_BUS.register(this)
+		}
+		
+		@SubscribeEvent
+		fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
+			val player = e.entityLiving as? EntityPlayer ?: return
+			val rider = player.riddenByEntity as? EntityLivingBase ?: return
+			val className = rider::class.java.name
+			
+			if (className == "thaumcraft.common.entities.monster.EntityEldritchCrab" && player.rng.nextInt(5) == 0 && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) {
+				rider.dismountEntity(player)
+			}
+		}
+		
+		@SubscribeEvent
+		fun onLivingHurt(e: LivingHurtEvent) {
+			val player = e.entityLiving as? EntityPlayer ?: return
+			
+			if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player))
+				e.ammount /= 2
+		}
 	}
 	
 	init {
 		creativeTab = AlfheimModularTab
+	}
+	
+	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
+		super.onArmorTick(world, player, stack)
+		
+		if (!world.provider.hasNoSky && player.ticksExisted % 20 == 0 && world.getCelestialAngle(1f) in 0.45f..0.55f)
+			--stack.meta
+		
+		if (stack.item === AlfheimModularItems.snowBoots && hasArmorSet(player) && player.isSneaking) {
+			fun checkSet(world: World, x: Int, y: Int, z: Int) {
+				val block = world.getBlock(x, y, z)
+				
+				for (pair in replacePairs)
+					if (pair.first === block) {
+						world.setBlock(x, y, z, pair.second)
+					}
+			}
+			
+			val x = player.posX.mfloor()
+			val y = player.boundingBox.minY.mfloor() - 1
+			val z = player.posZ.mfloor()
+			
+			checkSet(world, x, y, z)
+			checkSet(world, x + 1, y, z)
+			checkSet(world, x - 1, y, z)
+			checkSet(world, x, y, z + 1)
+			checkSet(world, x, y, z - 1)
+		}
 	}
 	
 	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =
@@ -68,6 +127,8 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	
 	override fun getArmorSetTitle(player: EntityPlayer?) =
 		"${StatCollector.translateToLocal("botaniamisc.armorset")} $armorSetName (${getSetPiecesEquipped(player)}/${armorSetStacks.size})"
+	
+	
 	
 	@SideOnly(Side.CLIENT)
 	override fun getArmorModel(living: EntityLivingBase, stack: ItemStack, slot: Int): ModelBiped? {
@@ -109,4 +170,6 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		
 		return model
 	}
+	
+	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer) = -0.05f
 }
