@@ -897,11 +897,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						
 					}
 					
-					if (!ModInfo.DEV) {
-						if (!hasProperArena(world, x, y, z)) {
-							if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
-							return false
-						}
+					if (!ModInfo.DEV && !hasProperArena(world, x, y, z)) {
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
+						return false
 					}
 					
 					var miku = false

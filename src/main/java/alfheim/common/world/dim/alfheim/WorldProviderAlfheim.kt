@@ -85,7 +85,7 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		WE_Biome.addBiomeToGeneration(cp, BiomeField)
 		WE_Biome.addBiomeToGeneration(cp, BiomeBeach)
 		WE_Biome.addBiomeToGeneration(cp, BiomeSandbank)
-		WE_Biome.addBiomeToGeneration(cp, BiomeLake)
+		WE_Biome.addBiomeToGeneration(cp, BiomeRiver)
 		WE_Biome.addBiomeToGeneration(cp, BiomeMount1)
 		WE_Biome.addBiomeToGeneration(cp, BiomeMount2)
 		WE_Biome.addBiomeToGeneration(cp, BiomeMount3)

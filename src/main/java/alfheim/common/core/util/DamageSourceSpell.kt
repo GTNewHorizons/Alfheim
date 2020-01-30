@@ -85,7 +85,7 @@ open class EntityDamageSourceSpell(source: String, protected val attacker: Entit
 		attacker != null && attacker is EntityLivingBase && attacker !is EntityPlayer
 }
 
-class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, private val dealer: Entity?): EntityDamageSourceSpell(type, attacker) {
+open class EntityDamageSourceIndirectSpell(type: String, attacker: Entity?, protected val dealer: Entity?): EntityDamageSourceSpell(type, attacker) {
 	
 	override fun getSourceOfDamage() = dealer
 	

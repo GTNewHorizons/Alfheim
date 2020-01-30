@@ -3,6 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.mfloor
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
@@ -45,6 +46,7 @@ object AlfheimConfigHandler {
 	var anomaliesUpdate			= 6000
 	var citiesDistance			= 1000
 	var oregenMultiplier		= 3
+	var winterGrassReadyGen		= true
 	
 	// SPAWNRATE
 	var chickSpawn				= intArrayOf(10, 4, 4)
@@ -180,6 +182,7 @@ object AlfheimConfigHandler {
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
 		citiesDistance = loadProp(CATEGORY_WORLDGEN, "citiesDistance", citiesDistance, true, "Distance between any elven city and worlds center")
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
+		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
 		cowSpawn = loadProp(CATEGORY_SPAWNRATE, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_SPAWNRATE, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
@@ -208,7 +211,7 @@ object AlfheimConfigHandler {
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
-		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, true, "Allow WireSegal far more power than any one person should have")
+		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
@@ -243,8 +246,8 @@ object AlfheimConfigHandler {
 		potionIDWellOLife = loadProp(CATEGORY_MMOP, "potionIDWellOLife", potionIDWellOLife, true, "Potion id for Well'o'Life")
 		
 		bothSpawnStructures = loadProp(CATEGORY_ESMODE, "bothSpawnStructures", bothSpawnStructures, false, "Set this to true to generate both room in the skies and castle below (!contains portal!) on zero coords of Alfheim")
-		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, true, "Elven flight fly points (faster you move - more you spend)")
-		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, true, "Flight recover efficiency")
+		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, false, "Elven flight fly points (faster you move - more you spend)")
+		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, false, "Flight recover efficiency")
 		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)")
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")

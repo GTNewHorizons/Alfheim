@@ -349,10 +349,17 @@ object ASJUtilities {
 	/**
 	 * Checks whether `stack` is registered to oredict `name`
 	 */
+	@JvmStatic
 	fun isOre(stack: ItemStack?, name: String) = OreDictionary.getOreIDs(stack).any { it == OreDictionary.getOreID(name) }
 	
+	@JvmStatic
+	fun removeRecipe(block: Block, stackSize: Int = 1, meta: Int = 0) = removeRecipe(ItemStack(block, stackSize, meta))
+	
+	@JvmStatic
+	fun removeRecipe(item: Item, stackSize: Int = 1, meta: Int = 0) = removeRecipe(ItemStack(item, stackSize, meta))
+	
 	/**
-	 * Removes recipe of `resultItem`
+	 * Removes recipe of [resultItem]. Note: stackSize and meta sensitive
 	 * @param resultItem Stack to remove recipe
 	 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 	 */
@@ -361,10 +368,8 @@ object ASJUtilities {
 		val i = CraftingManager.getInstance().recipeList.iterator()
 		while (i.hasNext()) {
 			val r = i.next() as IRecipe
-			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput)) {
-				FMLRelaunchLog.log("ASJLib", Level.INFO, "Removed Recipe: " + r + " -> " + r.recipeOutput)
+			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput))
 				i.remove()
-			}
 		}
 	}
 	

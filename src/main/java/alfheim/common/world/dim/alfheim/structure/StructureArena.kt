@@ -1,14 +1,25 @@
 package alfheim.common.world.dim.alfheim.structure
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
+import ru.vamig.worldengine.*
 import vazkii.botania.common.block.*
 import java.util.*
 
 class StructureArena: StructureBaseClass() {
 	
+	val xs = arrayOf(0, 0, 0, 20, 20, 20, 40, 40, 40)
+	val zs = arrayOf(0, 20, 40, 0, 20, 40, 0, 20, 40)
+	
 	override fun generate(world: World, rand: Random, x: Int, y: Int, z: Int): Boolean {
+		val cp = (world.provider as? WE_WorldProvider)?.cp
+		if (cp != null) {
+			val biomes = Array(xs.size) { WE_Biome.getBiomeAt(cp, x + xs[it], z + zs[it]) }
+			if (biomes.any { it === BiomeRiver }) return false
+		}
+		
 		return generate01(world, rand, x, y + 1, z)
 	}
 	
@@ -2208,7 +2219,7 @@ class StructureArena: StructureBaseClass() {
 		world.setBlock(x + 34, y + 9, z + 32, ModFluffBlocks.livingrockWall, 0, 3)
 		world.setBlock(x + 6, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3)
 		world.setBlock(x + 32, y + 9, z + 34, ModFluffBlocks.livingrockWall, 0, 3)
-		ASJUtilities.fillGenHoles(world, Blocks.dirt, 0, x, x + 40, y, z, z + 40, 22)
+		ASJUtilities.fillGenHoles(world, Blocks.grass, 0, x, x + 40, y, z, z + 40, 22)
 		
 		var count = world.rand.nextInt(3) + 1
 		var index: Int

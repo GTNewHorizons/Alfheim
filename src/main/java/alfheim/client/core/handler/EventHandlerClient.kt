@@ -251,11 +251,6 @@ object EventHandlerClient {
 	fun onItemTooltip(e: ItemTooltipEvent) {
 		if (GuiScreen.isShiftKeyDown()) {
 			val stack = e.itemStack
-			val item = stack.item
-			
-			if (item is IManaTooltipDisplay && item is IManaItem) {
-				if (AlfheimConfigHandler.numericalMana) e.toolTip.add(StatCollector.translateToLocalFormatted("item.manastorage.desc1", item.getMana(stack), item.getMaxMana(stack)))
-			}
 			
 			if(stack.hasTagCompound() && e.showAdvancedItemTooltips) {
 				e.toolTip.add("")

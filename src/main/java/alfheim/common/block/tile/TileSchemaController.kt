@@ -353,7 +353,7 @@ open class TileSchemaController: TileMod() {
 				addProperty("z", z)
 				addProperty("meta", meta)
 				if (nbt != null)
-					addProperty("tile", nbt.toString())
+					addProperty("nbt", nbt.toString())
 			}
 		}
 		
@@ -366,7 +366,10 @@ open class TileSchemaController: TileMod() {
 					val meta = worldObj.getBlockMetadata(x, y, z)
 					val key = getUniqueName(worldObj.getBlock(x, y, z))
 					var nbt: NBTTagCompound? = null
-					worldObj.getTileEntity(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z))?.let { nbt = NBTTagCompound(); it.writeToNBT(nbt) }
+					worldObj.getTileEntity(x, y, z)?.let {
+						nbt = NBTTagCompound()
+						it.writeToNBT(nbt)
+					}
 					
 					if (map.containsKey(key))
 						map[key]?.add(LocationElement(mark_x!!.x.dif(x), mark_x!!.y.dif(y), mark_z!!.z.dif(z), meta, nbt))

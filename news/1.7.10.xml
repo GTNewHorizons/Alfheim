@@ -1,18 +1,18 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-25</val>
+		<val>BETA-26</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
-		<val>Congrats on two years Alfheim anniversary!</val>
+		<val>>Happy lunar new year!</val>
 	</version>
 	<!-- New tag for ALL versions, now supports json - start with "$json" -->
 	<version id="UNIVERSAL">
 		<!--val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val-->
-		<val>Congrats on two years Alfheim anniversary!</val>
+		<val>>Happy lunar new year!</val>
 	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/0517069d2cdcfdbe2b120c559e3b488950f8bd77/modular/Alfheim-Modular-7.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/227f4373e1df7030e00659b7001d6b8b6623289b/modular/Alfheim-Modular-9.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -72,6 +72,9 @@
 		<val>Holliday event is here!</val>
 	</version>
 	<version id="BETA-24">
-		<val>Ultramode Flugel</val>
+		<val>Ultramode Flugel is waiting for you!</val>
+	</version>
+	<version id="BETA-25">
+		<val>Lots of useful fixes and improvements!</val>
 	</version>
 </news>

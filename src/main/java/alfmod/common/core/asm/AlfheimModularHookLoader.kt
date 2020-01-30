@@ -8,7 +8,7 @@ import gloomyfolken.hooklib.minecraft.HookLoader
 @MCVersion(value = "1.7.10")
 class AlfheimModularHookLoader: HookLoader() {
 	
-	override fun getASMTransformerClass() = null
+	override fun getASMTransformerClass() = arrayOf(AlfheimModularClassTransformer::class.java.name)
 	
 	override fun registerHooks() {
 		FMLRelaunchLog.info("[${AlfheimModularCore.MODID.toUpperCase()}] Loaded coremod. Registering hooks...")

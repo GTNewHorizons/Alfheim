@@ -410,7 +410,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	}
 	
 	fun renderHUD(res: ScaledResolution) {
-		val name = StatCollector.translateToLocal(ItemStack(AlfheimBlocks.manaInfuser, 1, getBlockMetadata()).unlocalizedName + ".name")
+		val name = ItemStack(AlfheimBlocks.manaInfuser).displayName
 		val color = 0xCC00FF
 		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_MANA, name, res)
 		org.lwjgl.opengl.GL11.glColor4d(1.0, 1.0, 1.0, 1.0)

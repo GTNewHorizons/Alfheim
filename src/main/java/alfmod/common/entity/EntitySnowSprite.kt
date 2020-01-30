@@ -49,9 +49,17 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun canTriggerWalking() = false
 	override fun doesEntityNotTriggerPressurePlate() = true
 	override fun getDropItem() = Items.snowball!!
-	
+	override fun canDespawn() = WRATH_OF_THE_WINTER
 	override fun dropFewItems(hit: Boolean, looting: Int) {
 		entityDropItem(ItemStack(dropItem, looting + 1), 0.0f)
+	}
+	
+	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)
+	
+	override fun attackEntityFrom(src: DamageSource, amount: Float): Boolean {
+		if (src.damageType in immuneTo) return false
+		
+		return super.attackEntityFrom(src, amount)
 	}
 	
 	override fun onEntityUpdate() {
@@ -61,8 +69,8 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
 		
 		if ((worldObj.worldTime % 24000L).toInt() !in 13333..22666) {
-			setDead()
 			worldObj.spawnEntityInWorld(EntityAlfheimPixie(worldObj).also { it.setPosition(posX, posY, posZ) })
+			setDead()
 		}
 		
 		super.onEntityUpdate()
@@ -105,7 +113,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		
 		val chunk = (worldObj.provider as? WE_WorldProvider)?.cp
 		if (chunk != null)
-			flagBiome = WE_Biome.getBiomeAt(chunk, posX.mfloor().toLong(), posZ.mfloor().toLong()).isEqualTo(BiomeField)
+			flagBiome = WE_Biome.getBiomeAt(chunk, posX.mfloor().toLong(), posZ.mfloor().toLong()) === BiomeField
 		
 		return flagTime && flagBiome && posY > 64 && super.getCanSpawnHere()
 	}

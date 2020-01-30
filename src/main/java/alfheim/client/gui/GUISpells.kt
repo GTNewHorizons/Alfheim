@@ -167,7 +167,7 @@ class GUISpells: Gui() {
 		
 		// ################ Spell name ################
 		var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.toDouble())))
+		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.toDouble())), true)
 		
 		// ################################################################ HOTSPELLS ################################################################
 		

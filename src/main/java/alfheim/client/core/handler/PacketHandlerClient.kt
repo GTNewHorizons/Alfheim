@@ -16,7 +16,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
-import alfheim.common.core.helper.flight
+import alfheim.common.core.helper.*
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
@@ -56,7 +56,10 @@ object PacketHandlerClient {
 		when (m1d.values()[packet.type]) {
 			m1d.ESMABIL          -> PlayerSegmentClient.esmAbility = packet.data1 != 0.0
 			m1d.DEATH_TIMER      -> AlfheimConfigHandler.deathScreenAddTime = packet.data1.toInt()
-			m1d.ELVEN_FLIGHT_MAX -> AlfheimConfigHandler.flightTime = packet.data1.toInt()
+			m1d.ELVEN_FLIGHT_MAX -> {
+				AlfheimConfigHandler.flightTime = packet.data1.toInt()
+				ElvenFlightHelper.max = packet.data1
+			}
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.toInt()]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.toInt())
 		}

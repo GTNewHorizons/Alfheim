@@ -17,7 +17,6 @@ class BlockHeadFlugel: BlockSkull() {
 	
 	init {
 		setBlockName("FlugelHeadBlock")
-		setCreativeTab(AlfheimTab)
 		setHardness(1f)
 	}
 	

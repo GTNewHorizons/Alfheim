@@ -63,6 +63,7 @@ object AlfheimItems {
 	val flugelHead: Item
 	val flugelHead2: Item
 	val flugelSoul: Item
+	val hyperBucket: Item
 	val invisibilityCloak: Item
 	val invisibleFlameLens: Item
 	val irisSeeds: Item
@@ -98,9 +99,8 @@ object AlfheimItems {
 	//val storyToken: Item
 	val subspaceSpear: Item
 	val thinkingHand: Item
-	val trisDagger: Item
 	//val toolbelt: Item
-	val waterCleaner: Item
+	val trisDagger: Item
 	val wiltedLotus: Item
 	val wireAxe: Item
 	
@@ -142,6 +142,7 @@ object AlfheimItems {
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
+		hyperBucket = ItemHyperBucket()
 		invisibilityCloak = ItemInvisibilityCloak()
 		invisibleFlameLens = ItemLensFlashInvisible()
 		irisSeeds = ItemColorSeeds()
@@ -179,7 +180,6 @@ object AlfheimItems {
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()
 		//toolbelt = ItemToolbelt()
-		waterCleaner = ItemWaterCleaner()
 		wireAxe = ItemWireAxe()
 		wiltedLotus = ItemWiltedLotus()
 		

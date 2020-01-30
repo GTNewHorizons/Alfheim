@@ -165,7 +165,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	
 	override fun getYOffset() = super.getYOffset() - 0.5
 	
-	override fun canDespawn() = false
+	override fun canDespawn() = !WRATH_OF_THE_WINTER
 	
 	@SideOnly(Side.CLIENT)
 	override fun getNameColor() = 0x0095FF
