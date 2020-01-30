@@ -1,7 +1,5 @@
 ###########################################################___БЛОКИ___##########################################################
 # tile..name=
-tile.AiryVirus0.name=Воздушный вирус
-tile.AiryVirus1.name=Воздушный антивирус
 tile.alfheim:AlfheimPortal.name=Ядро портала в Альфхейм
 tile.alfStorage0.name=Блок эльвория
 tile.alfStorage1.name=§6Блок мауфтрия

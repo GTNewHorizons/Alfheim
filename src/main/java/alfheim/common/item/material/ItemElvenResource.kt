@@ -193,6 +193,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 }
 
 object ElvenResourcesMetas {
+	
 	val InterdimensionalGatewayCore: Int
 	val ManaInfusionCore: Int
 	val DasRheingold: Int

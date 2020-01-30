@@ -3,6 +3,8 @@ package alfmod.common.entity
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.mfloor
 import alfheim.common.entity.EntityAlfheimPixie
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.world.dim.alfheim.biome.BiomeField
 import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import alfmod.common.entity.boss.EntityDedMoroz
@@ -51,7 +53,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun getDropItem() = Items.snowball!!
 	override fun canDespawn() = WRATH_OF_THE_WINTER
 	override fun dropFewItems(hit: Boolean, looting: Int) {
-		entityDropItem(ItemStack(dropItem, looting + 1), 0.0f)
+		entityDropItem(if (rng.nextInt(20) == 0) ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.IffesalDust) else ItemStack(dropItem, looting + 1), 0f)
 	}
 	
 	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)

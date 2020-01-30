@@ -1,6 +1,5 @@
 package alfmod.common.core.util
 
-import alfmod.common.block.AlfheimModularBlocks
 import alfmod.common.item.AlfheimModularItems
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
@@ -22,7 +21,9 @@ object AlfheimModularTab: CreativeTabs("AlfheimModular") {
 	override fun displayAllReleventItems(list: MutableList<Any?>) {
 		this.list = list
 		
-		addBlock(AlfheimModularBlocks.airyVirus)
+		// addBlock(AlfheimModularBlocks.airyVirus)
+		
+		addItem(AlfheimModularItems.eventResource)
 		
 		addItem(AlfheimModularItems.snowSword)
 		addItem(AlfheimModularItems.snowHelmet)

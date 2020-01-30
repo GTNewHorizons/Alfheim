@@ -1,3 +1,7 @@
+tile.AiryVirus0.name=Воздушный вирус
+tile.AiryVirus1.name=Воздушный антивирус
+
+item.alfheim:SnowRelic.name=Реликвия снежной бури
 item.botania:SnowSword.name=Катана снежной бури
 item.botania:SnowHelmet.name=Шлем снежной бури
 item.botania:SnowHelmetRevealing.name=Шлем откровения снежной бури
@@ -18,3 +22,5 @@ alfmod.armorset.snow.desc=20% больше потребления Маны на 
 
 alfmodmisc.ded.awakening=&bВы пробудили мстительный дух Зимы!
 alfmodmisc.ded.icebound=Вы чувствуете как ледяные оковы взгляда Зимнего Сёгуна притягивают Вас к земле
+
+alfmodmisc.WIP=&4[WIP]&7 Будущий контент, пожалуйста, оставьте хотя бы один предмет
