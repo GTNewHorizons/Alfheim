@@ -14,6 +14,7 @@ death.attack.alfmod:frost=%s was chilled to bones by %s
 itemGroup.AlfheimModular=Alfheim Modular
 
 alfmod.armorset.snow.name=Snow Shogun Panzer
+alfmod.armorset.snow.desc=20% more Mana cost on Mana Tools and Rods
 
 alfmodmisc.ded.awakening=&bYou've awakened the vengeful Spirit of Winter!
 alfmodmisc.ded.icebound=You feel icy bounds of Winter Shogun's gaze pulling you to the ground

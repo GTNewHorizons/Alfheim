@@ -58,7 +58,6 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
-import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -893,7 +892,7 @@ object AlfheimRecipes {
 	}
 	
 	fun removeMMORecipes() {
-		ASJUtilities.removeRecipe(paperBreak)
+		ASJUtilities.removeRecipe(paperBreak, 4)
 		ASJUtilities.removeRecipe(peacePipe)
 	}
 }

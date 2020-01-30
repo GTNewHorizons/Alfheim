@@ -2,4 +2,4 @@ Innovations:
  --
 
 Fixes:
- --
+ [MMO] Parchment of Discord recipe is now unavailable w/o MMO

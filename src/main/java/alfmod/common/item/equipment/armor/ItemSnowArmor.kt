@@ -1,6 +1,7 @@
 package alfmod.common.item.equipment.armor
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.mfloor
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
@@ -10,7 +11,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -19,7 +20,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.event.entity.living.*
-import vazkii.botania.api.mana.IManaDiscountArmor
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
@@ -27,6 +28,8 @@ import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name, snow), IManaDiscountArmor {
 	
 	companion object {
+		private const val MANA_PER_DAMAGE = 70
+		
 		val snow = EnumHelper.addArmorMaterial("snow", 25, intArrayOf(2, 6, 5, 2), 16)!!
 		
 		var model1: ModelBiped? = null
@@ -35,7 +38,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		
 		var model: ModelBiped? = null
 		
-		var replacePairs = arrayOf(Blocks.water to Blocks.ice, Blocks.flowing_water to Blocks.air, Blocks.lava to Blocks.obsidian, Blocks.flowing_lava to Blocks.air)
+		var replacePairs = arrayOf(Blocks.water to Blocks.ice, Blocks.flowing_water to Blocks.ice, Blocks.lava to Blocks.obsidian, Blocks.flowing_lava to Blocks.cobblestone)
 		
 		init {
 			MinecraftForge.EVENT_BUS.register(this)
@@ -44,11 +47,19 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		@SubscribeEvent
 		fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
 			val player = e.entityLiving as? EntityPlayer ?: return
-			val rider = player.riddenByEntity as? EntityLivingBase ?: return
-			val className = rider::class.java.name
 			
-			if (className == "thaumcraft.common.entities.monster.EntityEldritchCrab" && player.rng.nextInt(5) == 0 && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) {
-				rider.dismountEntity(player)
+			if ((AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) {
+				player.isInWeb = false
+				
+				if (player.worldObj.isRemote) return
+				val rider = player.riddenByEntity as? EntityLivingBase ?: return
+				val className = rider::class.java.name
+				
+				if (className == "thaumcraft.common.entities.monster.EntityEldritchCrab" && player.rng.nextInt(5) == 0) {
+					rider.dismountEntity(rider.ridingEntity)
+					rider.ridingEntity = null
+					player.riddenByEntity = null
+				}
 			}
 		}
 		
@@ -56,7 +67,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		fun onLivingHurt(e: LivingHurtEvent) {
 			val player = e.entityLiving as? EntityPlayer ?: return
 			
-			if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player))
+			if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) Unit
 				e.ammount /= 2
 		}
 	}
@@ -65,11 +76,32 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		creativeTab = AlfheimModularTab
 	}
 	
+	fun repair(stack: ItemStack, world: World, player: EntityPlayer) {
+		if (stack.itemDamage > 0 && ManaItemHandler.requestManaExact(stack, player, 140, world.isRemote))
+			stack.itemDamage = stack.itemDamage - 1
+	}
+	
+	override fun onUpdate(stack: ItemStack, world: World, player: Entity, slot: Int, inHand: Boolean) {
+		repair(stack, world, player as? EntityPlayer ?: return)
+	}
+	
 	override fun onArmorTick(world: World, player: EntityPlayer, stack: ItemStack) {
-		super.onArmorTick(world, player, stack)
+		if (player.ticksExisted % 20 == 0 &&
+			!world.provider.hasNoSky && world.isDaytime &&
+			!world.isRaining &&
+			world.getCelestialAngle(0f).times(360f).let { it in 350f..360f || it in 0f..10f } &&
+			world.canBlockSeeTheSky(player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor()) &&
+			!ManaItemHandler.requestManaExact(stack, player, MANA_PER_DAMAGE, world.isRemote)) {
+			
+			stack.damageItem(1, player)
+			
+			if (stack.stackSize <= 0) {
+				player.setCurrentItemOrArmor(4 - armorType, null)
+				return
+			}
+		}
 		
-		if (!world.provider.hasNoSky && player.ticksExisted % 20 == 0 && world.getCelestialAngle(1f) in 0.45f..0.55f)
-			--stack.meta
+		repair(stack, world, player)
 		
 		if (stack.item === AlfheimModularItems.snowBoots && hasArmorSet(player) && player.isSneaking) {
 			fun checkSet(world: World, x: Int, y: Int, z: Int) {
@@ -128,7 +160,9 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	override fun getArmorSetTitle(player: EntityPlayer?) =
 		"${StatCollector.translateToLocal("botaniamisc.armorset")} $armorSetName (${getSetPiecesEquipped(player)}/${armorSetStacks.size})"
 	
-	
+	override fun addArmorSetDescription(stack: ItemStack?, list: MutableList<String>?) {
+		addStringToTooltip(StatCollector.translateToLocal("alfmod.armorset.snow.desc"), list)
+	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getArmorModel(living: EntityLivingBase, stack: ItemStack, slot: Int): ModelBiped? {
@@ -146,25 +180,27 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 			else -> model
 		}
 		
-		model!!.bipedHead.showModel = slot == 0
-		model!!.bipedHeadwear.showModel = slot == 0
-		model!!.bipedBody.showModel = slot == 1 || slot == 2
-		model!!.bipedRightArm.showModel = slot == 1
-		model!!.bipedLeftArm.showModel = slot == 1
-		model!!.bipedRightLeg.showModel = slot == 2 || slot == 3
-		model!!.bipedLeftLeg.showModel = slot == 2 || slot == 3
-		model!!.isSneak = living.isSneaking
-		model!!.isRiding = living.isRiding
-		model!!.isChild = living.isChild
-		model!!.aimedBow = false
-		model!!.heldItemRight = if (living.heldItem != null) 1 else 0
+		val model = model!!
+		
+		model.bipedHead.showModel = slot == 0
+		model.bipedHeadwear.showModel = slot == 0
+		model.bipedBody.showModel = slot == 1 || slot == 2
+		model.bipedRightArm.showModel = slot == 1
+		model.bipedLeftArm.showModel = slot == 1
+		model.bipedRightLeg.showModel = slot == 2 || slot == 3
+		model.bipedLeftLeg.showModel = slot == 2 || slot == 3
+		model.isSneak = living.isSneaking
+		model.isRiding = living.isRiding
+		model.isChild = living.isChild
+		model.aimedBow = false
+		model.heldItemRight = if (living.heldItem != null) 1 else 0
 		
 		if (living is EntityPlayer && living.itemInUseDuration > 0) {
 			val enumaction = living.getItemInUse().itemUseAction
 			if (enumaction == EnumAction.block) {
-				model!!.heldItemRight = 3
+				model.heldItemRight = 3
 			} else if (enumaction == EnumAction.bow) {
-				model!!.aimedBow = true
+				model.aimedBow = true
 			}
 		}
 		

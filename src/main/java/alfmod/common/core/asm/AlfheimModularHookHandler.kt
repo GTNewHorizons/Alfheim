@@ -5,14 +5,12 @@ import alfmod.common.entity.EntitySnowSprite
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.equipment.armor.ItemSnowArmor
 import gloomyfolken.hooklib.asm.*
-import net.minecraft.block.*
+import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntitySnowball
 import net.minecraft.util.MovingObjectPosition
-import net.minecraft.world.World
 
-@Suppress("UNUSED_PARAMETER")
 object AlfheimModularHookHandler {
 	
 	@JvmStatic
@@ -30,15 +28,8 @@ object AlfheimModularHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(injectOnExit = true)
-	fun onEntityCollidedWithBlock(web: BlockWeb, world: World, x: Int, y: Int, z: Int, entity: Entity) {
-		if ((AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(entity as? EntityPlayer ?: return))
-			entity.isInWeb = false
-	}
-	
-	@JvmStatic
-	@Hook(createMethod = true)
+	@Hook(createMethod = true, returnCondition = ReturnCondition.ALWAYS)
 	fun getRelativeSlipperiness(block: Block, requester: Entity): Float {
-		return if (requester is EntityPlayer && requester.isSneaking && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(requester)) 0.98f else block.slipperiness
+		return if (requester is EntityPlayer && !requester.isSneaking && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(requester)) 0.99f else block.slipperiness
 	}
 }

@@ -14,6 +14,7 @@ death.attack.alfmod:frost=%s был заморожен до костей %s
 itemGroup.AlfheimModular=Альфхейм модуляр
 
 alfmod.armorset.snow.name=Панцирь зимнего Сёгуна
+alfmod.armorset.snow.desc=20% больше потребления Маны на манаинструменты и жезлы
 
 alfmodmisc.ded.awakening=&bВы пробудили мстительный дух Зимы!
 alfmodmisc.ded.icebound=Вы чувствуете как ледяные оковы взгляда Зимнего Сёгуна притягивают Вас к земле

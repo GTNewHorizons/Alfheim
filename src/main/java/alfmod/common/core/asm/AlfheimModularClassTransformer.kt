@@ -28,7 +28,7 @@ class AlfheimModularClassTransformer: IClassTransformer {
 	private class `EntityLivingBase$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
-			if (name == "moveEntityWithHeading" || (name == "e" && desc == "(FF)V")) {
+			if (name == (if (OBF) "e" else "moveEntityWithHeading") && desc == "(FF)V") {
 				println("Visiting EntityLivingBase#moveEntityWithHeading: $name$desc")
 				return `EntityLivingBase$moveEntityWithHeading$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
@@ -38,9 +38,10 @@ class AlfheimModularClassTransformer: IClassTransformer {
 		private class `EntityLivingBase$moveEntityWithHeading$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitFieldInsn(opcode: Int, owner: String?, name: String?, desc: String?) {
-				if ((name == "slipperiness" || name == "K") && desc == "F") {
+				if (opcode == GETFIELD && owner == (if (OBF) "aji" else "net/minecraft/block/Block") && name == (if (OBF) "K" else "slipperiness") && desc == "F") {
 					mv.visitVarInsn(ALOAD, 0)
-					mv.visitMethodInsn(INVOKEVIRTUAL, if (OBF) "aji" else "net/minecraft/block/Block", "getRelativeSlipperiness", if (OBF) "sa" else "(Lnet/minecraft/entity/Entity;)F", false)
+					mv.visitTypeInsn(CHECKCAST, if (OBF) "sa" else "net/minecraft/entity/Entity")
+					mv.visitMethodInsn(INVOKEVIRTUAL, if (OBF) "aji" else "net/minecraft/block/Block", "getRelativeSlipperiness", if (OBF) "(Lsa;)F" else "(Lnet/minecraft/entity/Entity;)F", false)
 				} else
 					super.visitFieldInsn(opcode, owner, name, desc)
 			}
