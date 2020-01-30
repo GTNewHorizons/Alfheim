@@ -1,6 +1,5 @@
 package alfmod.common.item.equipment.armor
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.mfloor
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
@@ -41,34 +40,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		var replacePairs = arrayOf(Blocks.water to Blocks.ice, Blocks.flowing_water to Blocks.ice, Blocks.lava to Blocks.obsidian, Blocks.flowing_lava to Blocks.cobblestone)
 		
 		init {
-			MinecraftForge.EVENT_BUS.register(this)
-		}
-		
-		@SubscribeEvent
-		fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
-			val player = e.entityLiving as? EntityPlayer ?: return
-			
-			if ((AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) {
-				player.isInWeb = false
-				
-				if (player.worldObj.isRemote) return
-				val rider = player.riddenByEntity as? EntityLivingBase ?: return
-				val className = rider::class.java.name
-				
-				if (className == "thaumcraft.common.entities.monster.EntityEldritchCrab" && player.rng.nextInt(5) == 0) {
-					rider.dismountEntity(rider.ridingEntity)
-					rider.ridingEntity = null
-					player.riddenByEntity = null
-				}
-			}
-		}
-		
-		@SubscribeEvent
-		fun onLivingHurt(e: LivingHurtEvent) {
-			val player = e.entityLiving as? EntityPlayer ?: return
-			
-			if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) Unit
-				e.ammount /= 2
+			SnowArmorAbilityHandler
 		}
 	}
 	
@@ -208,4 +180,38 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	}
 	
 	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer) = -0.05f
+}
+
+object SnowArmorAbilityHandler {
+	
+	init {
+		MinecraftForge.EVENT_BUS.register(this)
+	}
+	
+	@SubscribeEvent
+	fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
+		val player = e.entityLiving as? EntityPlayer ?: return
+		
+		if ((AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) {
+			player.isInWeb = false
+			
+			if (player.worldObj.isRemote) return
+			val rider = player.riddenByEntity as? EntityLivingBase ?: return
+			val className = rider::class.java.name
+			
+			if (className == "thaumcraft.common.entities.monster.EntityEldritchCrab" && player.rng.nextInt(5) == 0) {
+				rider.dismountEntity(rider.ridingEntity)
+				rider.ridingEntity = null
+				player.riddenByEntity = null
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	fun onLivingHurt(e: LivingHurtEvent) {
+		val player = e.entityLiving as? EntityPlayer ?: return
+		
+		if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) Unit
+		e.ammount /= 2
+	}
 }
