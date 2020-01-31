@@ -87,6 +87,7 @@ jar {
 			attributes 'FMLAT': 'alfheim_at.cfg'
 			attributes 'FMLCorePlugin': 'alfheim.common.core.asm.AlfheimHookLoader'
 		} else {
+			attributes 'FMLAT': 'alfmod_at.cfg'
 			attributes 'FMLCorePlugin': 'alfmod.common.core.asm.AlfheimModularHookLoader'
 		}
 		
