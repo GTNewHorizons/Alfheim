@@ -1,3 +1,4 @@
 {
-	"music.flugel": { "category": "record", "sounds":[{"name": "music/DefendTheDormant", "stream": true}] }
+	"music.flugel": { "category": "record", "sounds":[{"name": "music/DefendTheDormant", "stream": true}] },
+	"music.miku": { "category": "record", "sounds":[{"name": "music/Senbonzakura", "stream": true}] }
 }

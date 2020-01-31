@@ -3,36 +3,35 @@
 
 package ru.vamig.worldengine;
 
-import alfheim.common.core.util.AlfheimConfig;
+import alfheim.common.core.handler.AlfheimConfigHandler;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.WorldChunkManagerHell;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {
-	int we_id = AlfheimConfig.biomeIDAlfheim;
-	float rainfall = 0.1F;
+	
+	public static final int we_id = AlfheimConfigHandler.INSTANCE.getBiomeIDAlfheim();
+	public final float rainfall = 0.1F;
+	public WE_ChunkProvider cp = null;
 	
 	@Override
 	public void registerWorldChunkManager() {
-		/*System.out.println("////////////////////////////////////-"                                      );
-		System.out.println("//#===============================//=* Version: " + WE_Main.VERSION + "."   );
-		System.out.println("//#=-------| WorldEngine |-------=//=* By Vamig Aliev (vk.com/win_vista)."  );
-		System.out.println("//#===============================//=* Part of VamigA_core (vk.com/vamiga).");
-		System.out.println("////////////////////////////////////-"                                      );
-		//-//
-		System.out.println("WorldEngine: -Registering WorldEngine..."          );*/
-		worldChunkMgr = new WorldChunkManagerHell(new WE_Biome(we_id, true), rainfall);
-		//System.out.println("WorldEngine: -Registration completed successfully!");
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		worldChunkMgr = new WE_WorldChunkManager(new WE_Biome(we_id, true), cp, rainfall);
     }
 	
 	@Override
 	public IChunkProvider createChunkGenerator() {
-		//System.out.println("WorldEngine: -Starting WorldEngine..."          );
-		WE_ChunkProvider m = new WE_ChunkProvider(this);
-		//System.out.println("WorldEngine: -WorldEngine started successfully!");
-		//-//
-		return m;
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		return cp;
 	}
 	
 	public abstract void genSettings(WE_ChunkProvider cp);
+	
+	@Override
+	public BiomeGenBase getBiomeGenForCoords(int x, int z) {
+		//worldObj.getChunkProvider()
+		if (cp == null) cp = new WE_ChunkProvider(this);
+		return WE_Biome.getBiomeAt(cp, x, z);
+	}
 }

@@ -6,19 +6,17 @@ package ru.vamig.worldengine.standardcustomgen;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
-import ru.vamig.worldengine.WE_Biome;
-import ru.vamig.worldengine.WE_PerlinNoise;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
+import ru.vamig.worldengine.*;
+import ru.vamig.worldengine.additions.*;
 
 public class WE_TerrainGenerator extends WE_CreateChunkGen {
 	public Block worldStoneBlock     = Blocks.stone;
-	public byte  worldStoneBlockMeta =            0;
+	public final byte  worldStoneBlockMeta =            0;
 	
-	public boolean worldSeaGen          =         true;
-	public int     worldSeaGenMaxY      =           63;
-	public Block   worldSeaGenBlock     = Blocks.water;
-	public byte    worldSeaGenBlockMeta =            0;
+	public final boolean worldSeaGen          =         true;
+	public final int     worldSeaGenMaxY      =           63;
+	public final Block   worldSeaGenBlock     = Blocks.water;
+	public final byte    worldSeaGenBlockMeta =            0;
 	
 	@Override
 	public void gen(WE_GeneratorData data) {

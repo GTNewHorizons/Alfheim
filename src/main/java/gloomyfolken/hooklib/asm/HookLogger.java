@@ -1,7 +1,6 @@
 package gloomyfolken.hooklib.asm;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public interface HookLogger {
 
@@ -39,7 +38,7 @@ public interface HookLogger {
 
 	class VanillaLogger implements HookLogger {
 
-		private Logger logger;
+		private final Logger logger;
 
 		public VanillaLogger(Logger logger) {
 			this.logger = logger;

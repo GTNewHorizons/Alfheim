@@ -262,7 +262,7 @@ botania.page.uphealth=对目标施加&d生命恢复
 botania.page.wallwarp=使施法者穿过不是很厚的墙壁
 botania.page.waterbreathing=对阵营施加水下呼吸效果
 botania.page.wellolife=如果目标在水中 则对目标施加治疗效果
-botania.page.windbalde=发射一枚空气弹 对触碰敌人造成 &b空气伤害
+botania.page.windblades=发射一枚空气弹 对触碰敌人造成 &b空气伤害
 
 botania.entry.targets= 选定目标
 botania.tagline.targets=无所遁形

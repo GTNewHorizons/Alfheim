@@ -1,10 +1,8 @@
 package gloomyfolken.hooklib.asm;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.objectweb.asm.*;
 
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
+import java.util.*;
 
 /**
  * Класс, позволяющий создавать типы из разных входных данных.

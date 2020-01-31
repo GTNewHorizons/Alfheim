@@ -1,0 +1,19 @@
+item.botania:SnowSword.name=Katana of the Blizzard
+item.botania:SnowHelmet.name=Helmet of the Blizzard
+item.botania:SnowHelmetRevealing.name=Revealing Helmet of the Blizzard
+item.botania:SnowChest.name=Chest of the Blizzard
+item.botania:SnowLeggings.name=Leggings of the Blizzard
+item.botania:SnowBoots.name=Boots of the Blizzard
+
+entity.alfmod:DedMoroz.name=Winter Shogun
+entity.alfmod:SnowSprite.name=Snow Sprite
+entity.alfmod:SniceBall.name=Snice Ball
+
+death.attack.alfmod:frost=%s was chilled to bones by %s
+
+itemGroup.AlfheimModular=Alfheim Modular
+
+alfmod.armorset.snow.name=Snow Shogun Panzer
+
+alfmodmisc.ded.awakening=&bYou've awakened the vengeful Spirit of Winter!
+alfmodmisc.ded.icebound=You feel icy bounds of Winter Shogun's gaze pulling you to the ground

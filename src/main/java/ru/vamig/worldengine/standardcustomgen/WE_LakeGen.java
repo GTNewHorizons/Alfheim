@@ -3,8 +3,6 @@
 
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.Random;
-
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -12,11 +10,20 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import java.util.Random;
+
 public class WE_LakeGen implements IWorldGenerator {
-	public Block lakeBlock     = Blocks.water, lakeBlock_f     = Blocks.ice;
-	public byte  lakeBlockMeta =            0, lakeBlockMeta_f =          0;
-	public int chunksForLake = 12, minY = 0, maxY = 255, fY = 192, random_fY = 2;
-	public boolean fGen = true, u = true;
+	public Block lakeBlock     = Blocks.water;
+	public final Block lakeBlock_f     = Blocks.ice;
+	public final byte  lakeBlockMeta =            0;
+	public final byte lakeBlockMeta_f =          0;
+	public int chunksForLake = 12;
+	public int minY = 0;
+	public int maxY = 255;
+	public int fY = 192;
+	public final int random_fY = 2;
+	public boolean fGen = true;
+	public final boolean u = true;
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -35,9 +42,7 @@ public class WE_LakeGen implements IWorldGenerator {
 		while(y > 5 && world.isAirBlock(x, y, z))
 			--y;
 		
-		if(y <= 4)
-			return;
-		else {
+		if (y > 4) {
 			y -= 4;
 			
 			boolean[] aboolean = new boolean[2048];
@@ -67,10 +72,12 @@ public class WE_LakeGen implements IWorldGenerator {
 			for(int bx = 0; bx < 16; ++bx)
 				for(int bz = 0; bz < 16; ++bz) {
 					for(int by = 0; by < 8; ++by) {
-						if(!aboolean[(bx * 16 + bz) * 8 + by] && (
+						int i = (bx * 16 + bz) * 8 + by;
+						boolean b = aboolean[i];
+						if(!b && (
 							bx < 15 && aboolean[((bx + 1) * 16 + bz    ) * 8 + by    ] || bx > 0 && aboolean[((bx - 1) * 16 + bz    ) * 8 + by    ] ||
 							bz < 15 && aboolean[( bx      * 16 + bz + 1) * 8 + by    ] || bz > 0 && aboolean[( bx      * 16 + bz - 1) * 8 + by    ] ||
-							by <  7 && aboolean[( bx      * 16 + bz    ) * 8 + by + 1] || by > 0 && aboolean[( bx      * 16 + bz    ) * 8 + by - 1])) {
+							by <  7 && aboolean[( bx      * 16 + bz    ) * 8 + by + 1] || by > 0 && aboolean[i - 1])) {
 							Material material = world.getBlock(x + bx, y + by, z + bz).getMaterial();
 							if(by >= 4 &&  material.isLiquid()                                                                                           )
 								return;
@@ -79,7 +86,7 @@ public class WE_LakeGen implements IWorldGenerator {
 								return;
 						}
 						//-//
-						if( aboolean[(bx * 16 + bz) * 8 + by]                                                                                       )
+						if(b)
 							world.setBlock(x + bx, y + by, z + bz, by >= 4 ? Blocks.air : lakeBlock,   lakeBlockMeta, u ? 3 : 2);
 					}
 					if(y + 4 >= fY + random.nextInt(random_fY + 1))

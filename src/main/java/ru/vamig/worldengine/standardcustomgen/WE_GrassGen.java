@@ -3,24 +3,22 @@
 
 package ru.vamig.worldengine.standardcustomgen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import java.util.*;
+
 public class WE_GrassGen implements IWorldGenerator {
-	public List<Block  > flowerList      = new ArrayList();
-	public List<Byte   > flowerMetaList  = new ArrayList();
-	public List<Integer> blocksForFlower = new ArrayList();
+	public final List<Block  > flowerList      = new ArrayList();
+	public final List<Byte   > flowerMetaList  = new ArrayList();
+	public final List<Integer> blocksForFlower = new ArrayList();
 	//-//
-	public List<Boolean> waterGen        = new ArrayList();
-	public List<Block  > surface         = new ArrayList();
-	public List<Byte   > surfaceMeta     = new ArrayList();
+	public final List<Boolean> waterGen        = new ArrayList();
+	public final List<Block  > surface         = new ArrayList();
+	public final List<Byte   > surfaceMeta     = new ArrayList();
 	
 	public void add(Block f, byte fm, int bff, boolean wg, Block s, byte sm) {
 		flowerList     .add(f  );

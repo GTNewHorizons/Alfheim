@@ -3,48 +3,36 @@
 
 package ru.vamig.worldengine;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.common.IWorldGenerator;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFalling;
+import net.minecraft.block.*;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.chunk.*;
 import net.minecraft.world.gen.ChunkProviderGenerate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import ru.vamig.worldengine.additions.WE_ChunkSmartLight;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXYZ;
-import ru.vamig.worldengine.additions.WE_CreateChunkGen_InXZ;
-import ru.vamig.worldengine.additions.WE_GeneratorData;
-import ru.vamig.worldengine.standardcustomgen.WE_CaveGen;
-import ru.vamig.worldengine.standardcustomgen.WE_LakeGen;
-import ru.vamig.worldengine.standardcustomgen.WE_OreGenSphere;
-import ru.vamig.worldengine.standardcustomgen.WE_RavineGen;
-import ru.vamig.worldengine.standardcustomgen.WE_TerrainGenerator;
+import ru.vamig.worldengine.additions.*;
+import ru.vamig.worldengine.standardcustomgen.*;
+
+import java.util.*;
 
 public class WE_ChunkProvider extends ChunkProviderGenerate {
-	public World worldObj;
-	public Random rand;
+	public final World worldObj;
+	public final Random rand;
 	
 	//////////////////
 	//- Generators -//
 	//////////////////
-	public List<WE_CreateChunkGen      > createChunkGen_List       = new ArrayList();
-	public List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
-	public List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
-	public List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
+	public final List<WE_CreateChunkGen      > createChunkGen_List       = new ArrayList();
+	public final List<WE_CreateChunkGen_InXZ > createChunkGen_InXZ_List  = new ArrayList();
+	public final List<WE_CreateChunkGen_InXYZ> createChunkGen_InXYZ_List = new ArrayList();
+	public final List<IWorldGenerator        > decorateChunkGen_List     = new ArrayList();
 	
 	//////////////////////
 	//- Biome Map Info -//
 	//////////////////////
-	public List<WE_Biome> biomesList = new ArrayList();
+	public final List<WE_Biome> biomesList = new ArrayList();
 	public WE_Biome standardBiomeOnMap;
 	//-//
 	public double biomemapPersistence = 1.0D, biomemapScaleX = 1.0D, biomemapScaleY = 1.0D;
@@ -108,19 +96,16 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 		//=//
 		/////
 		
-		for(int i = 0; i < createChunkGen_List.size(); i++)
-			createChunkGen_List.get(i).gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, 0, 0, 0));
+		for (WE_CreateChunkGen we_createChunkGen : createChunkGen_List) we_createChunkGen.gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, 0, 0, 0));
 		//-//
 		for(int x = 0; x < 16; x++)
 			for(int z = 0; z < 16; z++) {
-				for(int i = 0; i < createChunkGen_InXZ_List                  .size(); i++)
-					createChunkGen_InXZ_List                  .get(i).gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, 0, z));
+				for (WE_CreateChunkGen_InXZ we_createChunkGen_inXZ : createChunkGen_InXZ_List) we_createChunkGen_inXZ.gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, 0, z));
 				for(int i = 0; i < chunkBiomes[x][z].createChunkGen_InXZ_List.size(); i++)
 					chunkBiomes[x][z].createChunkGen_InXZ_List.get(i).gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, 0, z));
 				//-//
 				for(int y = 255; y >= 0; y--) {
-					for(int i = 0; i < createChunkGen_InXYZ_List.size(); i++)
-						createChunkGen_InXYZ_List                  .get(i).gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, y, z));
+					for (WE_CreateChunkGen_InXYZ we_createChunkGen_inXYZ : createChunkGen_InXYZ_List) we_createChunkGen_inXYZ.gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, y, z));
 					for(int i = 0; i < chunkBiomes[x][z].createChunkGen_InXYZ_List.size(); i++)
 						chunkBiomes[x][z].createChunkGen_InXYZ_List.get(i).gen(new WE_GeneratorData(this, chunkBlocks, chunkBlocksMeta, chunk_X, chunk_Z, chunkBiomes, x, y, z));
 				}
@@ -139,16 +124,14 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 	public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ) {
 		BlockFalling.fallInstantly =  true;
 		//-//
-		boolean flag = false;
 		rand.setSeed(worldObj.getSeed() * chunkX +(long)Math.pow(chunkZ, 2) * 107L + 2394720L);
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre (chunkProvider, worldObj, rand, chunkX, chunkZ, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre (chunkProvider, worldObj, rand, chunkX, chunkZ, false));
 		
 		/////
 		//=//
 		/////
 		
-		for(int i = 0; i <   decorateChunkGen_List.size(); i++)
-			decorateChunkGen_List  .get(i).generate(rand, chunkX, chunkZ, worldObj, this, this);
+		for (IWorldGenerator iWorldGenerator : decorateChunkGen_List) iWorldGenerator.generate(rand, chunkX, chunkZ, worldObj, this, this);
 		//-//
 		WE_Biome b = WE_Biome.getBiomeAt(this, (long)chunkX * 16L + (long)rand.nextInt(16), (long)chunkZ * 16L + (long)rand.nextInt(16));
 		for(int i = 0; i < b.decorateChunkGen_List.size(); i++)
@@ -158,15 +141,16 @@ public class WE_ChunkProvider extends ChunkProviderGenerate {
 		//=//
 		/////
 		
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, flag));
+		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, false));
 		//-//
 		BlockFalling.fallInstantly = false;
 	}
 	
 	public void genSetBlock(Block[] chunkBlocks, byte[] chunkBlocksMeta, int x, int y, int z, Block block, byte meta) {
 		if(x >= 0 && x <= 15 && y >= 0 && y <= 255 && z >= 0 && z <= 15) {
-			chunkBlocks    [(x * 16 + z) * 256 + y] = block;
-			chunkBlocksMeta[(x * 16 + z) * 256 + y] =  meta;
+			int i = (x * 16 + z) * 256 + y;
+			chunkBlocks    [i] = block;
+			chunkBlocksMeta[i] =  meta;
 		}
 	}
 	

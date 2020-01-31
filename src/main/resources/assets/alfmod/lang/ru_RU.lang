@@ -1,0 +1,19 @@
+item.botania:SnowSword.name=Катана снежной бури
+item.botania:SnowHelmet.name=Шлем снежной бури
+item.botania:SnowHelmetRevealing.name=Шлем откровения снежной бури
+item.botania:SnowChest.name=Нагрудник снежной бури
+item.botania:SnowLeggings.name=Поножи снежной бури
+item.botania:SnowBoots.name=Ботинки снежной бури
+
+entity.alfmod:DedMoroz.name=Зимний Сёгун
+entity.alfmod:SnowSprite.name=Снежная фея
+entity.alfmod:SniceBall.name=Снежулька
+
+death.attack.alfmod:frost=%s был заморожен до костей %s
+
+itemGroup.AlfheimModular=Альфхейм модуляр
+
+alfmod.armorset.snow.name=Панцирь зимнего Сёгуна
+
+alfmodmisc.ded.awakening=&bВы пробудили мстительный дух Зимы!
+alfmodmisc.ded.icebound=Вы чувствуете как ледяные оковы взгляда Зимнего Сёгуна притягивают Вас к земле
