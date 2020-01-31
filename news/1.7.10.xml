@@ -12,7 +12,7 @@
 		<val>Happy lunar new year!</val>
 	</version>
 	<version id="MODULAR">
-		<val></val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/5aea450dd6e34c269b51f8db21c523238b904691/modular/Alfheim-Modular-1.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
