@@ -14,7 +14,7 @@ import java.util.*
  * @author WireSegal
  * Created at 9:43 PM on 2/6/16.
  */
-class RenderStar : TileEntitySpecialRenderer() {
+object RenderStar : TileEntitySpecialRenderer() {
     
     override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partticks: Float) {
         if (tile is TileEntityStar) {

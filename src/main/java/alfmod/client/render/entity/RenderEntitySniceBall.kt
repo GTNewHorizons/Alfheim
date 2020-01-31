@@ -1,20 +1,16 @@
 package alfmod.client.render.entity
 
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
-import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntitySniceBall: Render() {
+object RenderEntitySniceBall: Render() {
 	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	val textureIce = ResourceLocation("textures/blocks/ice.png")
 	val textureSnow = ResourceLocation("textures/blocks/snow.png")
 	
@@ -56,9 +52,5 @@ class RenderEntitySniceBall: Render() {
 		
 		glEnable(GL_BLEND)
 		glPopMatrix()
-	}
-	
-	companion object {
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	}
 }

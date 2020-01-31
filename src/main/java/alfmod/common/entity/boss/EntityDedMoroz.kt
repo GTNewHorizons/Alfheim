@@ -26,6 +26,7 @@ import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
+import kotlin.math.max
 
 private const val FOLLOW = 20.0
 
@@ -119,7 +120,11 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		
 		super.onLivingUpdate()
 		
-		if (worldObj.isRaining && AlfheimCore.winter)
+		worldObj.worldInfo.isRaining = true
+		worldObj.worldInfo.rainTime = max(worldObj.worldInfo.rainTime, 3600)
+		worldObj.setRainStrength(1f)
+		
+		if (AlfheimCore.winter)
 			heal(if (attackTarget == null) 0.1f else 0.02f)
 		
 		if (attackTarget != null) {

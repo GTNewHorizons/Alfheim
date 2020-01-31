@@ -2,7 +2,6 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.mfloor
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.client.renderer.OpenGlHelper
@@ -12,7 +11,7 @@ import org.lwjgl.opengl.GL11.*
 import java.util.*
 import kotlin.math.*
 
-class RenderEntityFenrirStorm: Render() {
+object RenderEntityFenrirStorm: Render() {
 	
 	internal val rand = Random()
 	
@@ -27,15 +26,6 @@ class RenderEntityFenrirStorm: Render() {
 		
 		glPushMatrix()
 		glTranslated(x, y, z)
-		
-		/*try {
-			val area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8.0, 0.5, 0.5, 8.0))
-			area.rotateOX(e.rotationPitch.toDouble())
-			area.rotateOY(-e.rotationYaw.toDouble())
-			val v = Vector3(ASJUtilities.getLookVec(e)).mul(8.5)
-			area.translate(v.x, v.y, v.z)
-			area.draw(0)
-		} catch (ignore: Throwable) {}*/
 		
 		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.toInt() * 2))
 		
@@ -58,6 +48,12 @@ class RenderEntityFenrirStorm: Render() {
 	}
 	
 	private fun lightning(rand: Random, parts: Int, start: Vector3, dir: Vector3, end: Vector3) {
+		class Fork(s: Vector3, d: Vector3, p: Int) {
+			val parts = max(p, 1)
+			val start = s.copy()
+			val dir = d.copy()
+		}
+		
 		val amp = 0.65
 		val forks = ArrayList<Fork>()
 		
@@ -79,11 +75,5 @@ class RenderEntityFenrirStorm: Render() {
 	private fun randVec(dir: Vector3, rand: Random): Vector3 {
 		val amp = 0.65
 		return dir.copy().extend(1.0).add(rand.nextDouble() * amp * 2.0 - amp, rand.nextDouble() * amp * 2.0 - amp, rand.nextDouble() * amp * 2.0 - amp)
-	}
-	
-	private inner class Fork(s: Vector3, d: Vector3, p: Int) {
-		val parts = max(p, 1)
-		val start = s.copy()
-		val dir = d.copy()
 	}
 }

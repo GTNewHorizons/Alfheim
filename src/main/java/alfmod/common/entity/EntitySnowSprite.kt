@@ -68,7 +68,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
 		
 		motionY *= 0.6
-		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
+		if (worldObj.rand.nextInt(600) == 0) motionY -= 1.0
 		
 		if ((worldObj.worldTime % 24000L).toInt() !in 13333..22666) {
 			if (!worldObj.isRemote)
@@ -123,14 +123,12 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun isInRangeToRenderDist(distance: Double): Boolean {
-		return super.isInRangeToRenderDist(distance / 16.0)
-	}
+	override fun isInRangeToRenderDist(distance: Double) = super.isInRangeToRenderDist(distance / 16.0)
 }
 
 object SpriteKillhandler {
 	
-	private val regions = HashMap<Pair<Int, Int>, Int>()
+	val regions = HashMap<Pair<Int, Int>, Int>()
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)

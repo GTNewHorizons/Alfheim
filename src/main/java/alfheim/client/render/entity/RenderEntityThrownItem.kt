@@ -11,7 +11,7 @@ import org.lwjgl.opengl.*
 /**
  * Created by l0nekitsune on 1/20/16.
  */
-class RenderEntityThrownItem: Render() {
+object RenderEntityThrownItem: Render() {
 	
 	override fun doRender(p_76986_1_: Entity, p_76986_2_: Double, p_76986_4_: Double, p_76986_6_: Double, p_76986_8_: Float, p_76986_9_: Float) {
         //val c = p_76986_1_ as EntityThrowableItem

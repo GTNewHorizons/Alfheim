@@ -9,7 +9,6 @@ import alfheim.client.core.handler.EventHandlerClient
 import alfheim.client.core.util.*
 import alfheim.client.gui.*
 import alfheim.client.lib.LibResourceLocationsActual
-import alfheim.client.model.entity.*
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.*
@@ -29,6 +28,7 @@ import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
+import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.Minecraft
@@ -61,15 +61,15 @@ class ClientProxy: CommonProxy() {
 		
 		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly())
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff())
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly)
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPowerStone, RenderBlockPowerStone())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, RenderBlockAlfheimPylons())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idShrinePanel, RenderBlockShrinePanel())
-		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, RenderBlockTransferer())
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPowerStone, RenderBlockPowerStone)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, RenderBlockAlfheimPylons)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idShrinePanel, RenderBlockShrinePanel)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idTransferer, RenderBlockTransferer)
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPortal::class.java, RenderTileAlfheimPortal)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylon::class.java, RenderTileAlfheimPylons)
@@ -84,37 +84,37 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal::class.java, RenderTileTradePortal)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer)
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie())
-		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf(ModelEntityElf(), 0.25f))
-		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel(ModelEntityFlugel(), 0.25f))
-		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark())
-		RenderingRegistry.registerEntityRenderingHandler(EntityLolicorn::class.java, RenderEntityLolicorn(ModelEntityLolicorn(), 0.5f))
-		RenderingRegistry.registerEntityRenderingHandler(EntityRook::class.java, RenderEntityRook(ModelEntityRook(), 1.5f))
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp::class.java, RenderEntityHarp())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine::class.java, RenderEntityDriftingMine())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellGravityTrap::class.java, RenderEntityGravityTrap())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellFenrirStorm::class.java, RenderEntityFenrirStorm())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade())
+		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie)
+		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
+		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel)
+		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark)
+		RenderingRegistry.registerEntityRenderingHandler(EntityLolicorn::class.java, RenderEntityLolicorn)
+		RenderingRegistry.registerEntityRenderingHandler(EntityRook::class.java, RenderEntityRook)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellHarp::class.java, RenderEntityHarp)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellDriftingMine::class.java, RenderEntityDriftingMine)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellGravityTrap::class.java, RenderEntityGravityTrap)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellFenrirStorm::class.java, RenderEntityFenrirStorm)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellMortar::class.java, RenderEntityMortar)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellWindBlade::class.java, RenderEntityWindBlade)
 		
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.invisibleFlameLens, RenderLens())
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderMoonBow())
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.moonlightBow, RenderMoonBow)
 		
-		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass())
-		RenderingRegistry.registerBlockHandler(MultipassRenderer())
-		RenderingRegistry.registerBlockHandler(RenderBlockHopper())
+		RenderingRegistry.registerBlockHandler(RenderBlockColoredDoubleGrass)
+		RenderingRegistry.registerBlockHandler(MultipassRenderer)
+		RenderingRegistry.registerBlockHandler(RenderBlockHopper)
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay)
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar())
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar)
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderEntityThrownPotion())
-		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderEntityThrownItem())
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderEntityThrownPotion)
+		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderEntityThrownItem)
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderEntitySubspace())
-		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderEntitySubspaceSpear())
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspace::class.java, RenderEntitySubspace)
+		RenderingRegistry.registerEntityRenderingHandler(EntitySubspaceSpear::class.java, RenderEntitySubspaceSpear)
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderEntityGrieferCreeper())
-		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderEntityGrieferCreeper())
+		RenderingRegistry.registerEntityRenderingHandler(EntityGrieferCreeper::class.java, RenderEntityGrieferCreeper)
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper::class.java, RenderEntityGrieferCreeper)
 	}
 	
 	override fun registerKeyBinds() {

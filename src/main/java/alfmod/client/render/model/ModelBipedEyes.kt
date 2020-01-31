@@ -5,14 +5,13 @@ import alfmod.AlfheimModularCore
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.entity.Entity
-import net.minecraft.util.*
-import org.lwjgl.opengl.GL11
+import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
 class ModelBipedEyes: ModelBiped() {
 	
 	val bipedEyes: ModelRenderer = ModelRenderer(this, 0, 0)
-	val textureEyes = ResourceLocation("${AlfheimModularCore.MODID}:textures/entity/DedMorozEyes.png")
+	val textureEyes = ResourceLocation(AlfheimModularCore.MODID, "textures/model/entity/DedMorozEyes.png")
 	
 	init {
 		bipedEyes.addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8, 0f)

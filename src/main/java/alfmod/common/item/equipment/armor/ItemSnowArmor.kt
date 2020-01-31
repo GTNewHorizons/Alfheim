@@ -98,7 +98,7 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	}
 	
 	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int) =
-		"${AlfheimModularCore.MODID}:textures/model/snow${if (slot == 3) "0" else if (ConfigHandler.enableArmorModels) "New" else if (slot == 2) "1" else "0"}.png"
+		"${AlfheimModularCore.MODID}:textures/model/armor/snow${if (slot == 3) "0" else if (ConfigHandler.enableArmorModels) "New" else if (slot == 2) "1" else "0"}.png"
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {

@@ -13,14 +13,15 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntityDriftingMine: Render() {
+object RenderEntityDriftingMine: Render() {
+	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
+	
 	init {
 		shadowSize = 0.0f
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
-		return LibResourceLocations.mine2
-	}
+	override fun getEntityTexture(entity: Entity) = LibResourceLocations.mine2
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTick: Float) {
 		glPushMatrix()
@@ -29,15 +30,15 @@ class RenderEntityDriftingMine: Render() {
 		if (AlfheimConfigHandler.minimalGraphics) {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			glTranslated(-0.5, -0.5, 0.03125)
-			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine!!.maxU, ItemElvenResource.mine!!.minV, ItemElvenResource.mine!!.minU, ItemElvenResource.mine!!.maxV, ItemElvenResource.mine!!.iconWidth, ItemElvenResource.mine!!.iconHeight, 1f / 16f)
+			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)
 			
 			glRotated(90.0, 0.0, 1.0, 0.0)
 			glTranslated(-0.5, 0.0, 0.5 + 0.0625)
-			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine!!.maxU, ItemElvenResource.mine!!.minV, ItemElvenResource.mine!!.minU, ItemElvenResource.mine!!.maxV, ItemElvenResource.mine!!.iconWidth, ItemElvenResource.mine!!.iconHeight, 1f / 16f)
+			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)
 			
 			glRotated(90.0, 1.0, 0.0, 0.0)
 			glTranslated(0.0, -0.5, -0.5 + 0.0625)
-			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine!!.maxU, ItemElvenResource.mine!!.minV, ItemElvenResource.mine!!.minU, ItemElvenResource.mine!!.maxV, ItemElvenResource.mine!!.iconWidth, ItemElvenResource.mine!!.iconHeight, 1f / 16f)
+			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)
 		} else {
 			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.mine1)
 			model.renderPart("insphere")
@@ -47,10 +48,5 @@ class RenderEntityDriftingMine: Render() {
 			model.renderPart("spikes")
 		}
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	}
 }

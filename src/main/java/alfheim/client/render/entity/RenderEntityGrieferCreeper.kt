@@ -8,7 +8,8 @@ import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntityGrieferCreeper : RenderCreeper() {
+object RenderEntityGrieferCreeper : RenderCreeper() {
+    
     private val armoredCreeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/creeper_armor.png")
     private val creeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/griefer_creeper.png")
     /** The creeper model.  */
