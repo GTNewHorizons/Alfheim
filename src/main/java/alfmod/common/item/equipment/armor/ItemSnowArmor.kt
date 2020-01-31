@@ -211,7 +211,7 @@ object SnowArmorAbilityHandler {
 	fun onLivingHurt(e: LivingHurtEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
-		if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) Unit
-		e.ammount /= 2
+		if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player))
+			e.ammount /= 2
 	}
 }

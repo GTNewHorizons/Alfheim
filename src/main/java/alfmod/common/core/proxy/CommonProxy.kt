@@ -10,12 +10,15 @@ import alfmod.common.crafting.recipe.AlfheimModularRecipes
 import alfmod.common.entity.*
 import alfmod.common.entity.boss.EntityDedMoroz
 import alfmod.common.item.AlfheimModularItems
+import alfmod.common.lexicon.AlfheimModularLexiconData
 
 open class CommonProxy {
 	
 	open fun preInit() {
 		AlfheimModularBlocks
 		AlfheimModularItems
+		
+		AlfheimModularLexiconData
 		
 		EventHandler
 	}

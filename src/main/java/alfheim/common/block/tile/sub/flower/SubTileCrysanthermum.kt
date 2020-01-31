@@ -1,13 +1,12 @@
 package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.ModInfo
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.Item
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
 import vazkii.botania.api.BotaniaAPI
@@ -58,8 +57,10 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	var lastBlocks = LinkedList(IntArray(8) { -1 }.toList())
 	
 	fun getTemp(meta: Int): Int = if (meta % 8 == 3) supertile.worldObj.rand.nextInt(9) - 4 else TYPES[meta]
-	val biomeTemp
-		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).toDouble().mfloor()
+	val biomeTemp: Int
+		get() {
+			return supertile.worldObj?.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord)?.getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord)?.D?.mfloor() ?: 0
+		}
 	
 	override fun onUpdate() {
 		super.onUpdate()
@@ -107,11 +108,6 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		val c = Color(color)
 		if (ticksExisted % 20 == 0)
 			Botania.proxy.wispFX(supertile.worldObj, supertile.xCoord + 0.5, supertile.yCoord + 0.75, supertile.zCoord + 0.5, c.red / 255f, c.green / 255f, c.blue / 255f, 0.25f, -0.025f)
-	}
-	
-	override fun setSupertile(tile: TileEntity) {
-		super.setSupertile(tile)
-		temp = biomeTemp
 	}
 	
 	override fun getComparatorInputOverride(side: Int): Int = if (temp == -8 || temp == 8) 0 else temp + 8

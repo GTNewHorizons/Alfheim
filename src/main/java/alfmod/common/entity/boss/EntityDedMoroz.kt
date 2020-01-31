@@ -82,8 +82,8 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 			in 6..8   -> AlfheimModularItems.snowChest
 			in 9..11  -> AlfheimModularItems.snowLeggings
 			in 12..14 -> AlfheimModularItems.snowBoots
-			in 15..16 -> AlfheimItems.elvenResource
-			17        -> AlfheimModularItems.eventResource
+			in 15..17 -> AlfheimItems.elvenResource
+			18        -> AlfheimModularItems.eventResource
 			else      -> Items.snowball
 		}!!
 	

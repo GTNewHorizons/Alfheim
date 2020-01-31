@@ -71,7 +71,9 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
 		
 		if ((worldObj.worldTime % 24000L).toInt() !in 13333..22666) {
-			worldObj.spawnEntityInWorld(EntityAlfheimPixie(worldObj).also { it.setPosition(posX, posY, posZ) })
+			if (!worldObj.isRemote)
+				worldObj.spawnEntityInWorld(EntityAlfheimPixie(worldObj).also { it.setPosition(posX, posY, posZ) })
+			
 			setDead()
 		}
 		
