@@ -1,6 +1,5 @@
 package alfmod.client.render.entity
 
-import alfheim.common.core.util.*
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelBipedEyes
 import alfmod.common.entity.boss.EntityDedMoroz
@@ -20,4 +19,4 @@ object RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 		if (entity is EntityDedMoroz) BossBarHandler.setCurrentBoss(entity)
 		glScaled(2.5, 2.5, 2.5)
 	}
-	}}
+}

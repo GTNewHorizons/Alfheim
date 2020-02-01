@@ -1,8 +1,10 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
+import alfheim.client.model.entity.ModelEntityLolicorn
 import alfheim.common.entity.EntityLolicorn
-import net.minecraft.client.model.ModelBaseimport net.minecraft.client.renderer.entity.RenderLiving
+import net.minecraft.client.renderer.entity.RenderLiving
 import net.minecraft.entity.*
 import org.lwjgl.opengl.GL11.*
 

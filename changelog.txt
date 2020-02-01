@@ -2,4 +2,5 @@ Innovations:
  --
 
 Fixes:
+ No stream to manavoid from other players
  [MMO] Parchment of Discord recipe is now unavailable w/o MMO

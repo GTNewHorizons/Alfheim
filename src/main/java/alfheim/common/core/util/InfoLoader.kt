@@ -26,16 +26,16 @@ object InfoLoader {
 	fun getNodeValue(root: Node, attributeValue: String): String {
 		val versions = root.childNodes
 		for (i in 0 until versions.length) {
-			val minecraft = versions.item(i) // <addon> in next iteration
-			if (!minecraft.hasChildNodes() || !minecraft.hasAttributes() || minecraft.attributes.item(0).nodeValue != attributeValue) continue
+			val version = versions.item(i)
+			if (!version.hasChildNodes() || !version.hasAttributes() || version.attributes.item(0).nodeValue != attributeValue) continue
 			
-			val links = minecraft.childNodes // <string>s in next iteration
-			for (j in 0 until links.length) {
-				val link = links.item(j)
-				if (!link.hasChildNodes()) continue
+			val vals = version.childNodes // <string>s in next iteration
+			for (j in 0 until vals.length) {
+				val aval = vals.item(j)
+				if (!aval.hasChildNodes()) continue
 				
 				// only one will be parsed
-				return link.childNodes.item(0).nodeValue
+				return aval.childNodes.item(0).nodeValue
 			}
 		}
 		return ""
