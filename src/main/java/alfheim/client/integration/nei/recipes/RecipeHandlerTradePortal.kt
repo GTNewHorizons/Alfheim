@@ -73,7 +73,7 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 	override fun drawBackground(recipe: Int) {
 		super.drawBackground(recipe)
 		glEnable(GL_BLEND)
-		glColor4f(1.0f, 1.0f, 1.0f, 0.7f)
+		glColor4f(1f, 1f, 1f, 0.7f)
 		GuiDraw.changeTexture(ModInfo.MODID + ":textures/gui/TradePortalOverlay.png")
 		GuiDraw.drawTexturedModalRect(30, 10, 17, 17, 100, 80)
 		glDisable(GL_BLEND)
@@ -82,7 +82,7 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 	}
 	
 	private fun hasElvenKnowledge(): Boolean {
-		/*EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		/*EntityPlayer player = mc.thePlayer;
 		if (player != null) {
 			for (ItemStack stack : player.inventory.mainInventory) {
 				if (stack != null && stack.getItem() instanceof ILexicon) {

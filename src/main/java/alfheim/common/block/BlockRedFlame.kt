@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.I
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -54,7 +54,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		val bbls = PlayerHandler.getPlayerBaubles(player)
 		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 300, true)) hardness = 2f
 		
-		if (hardness < 0.0f) return 0.0f
+		if (hardness < 0f) return 0f
 		
 		return if (!ForgeHooks.canHarvestBlock(this, player, metadata))
 			player.getBreakSpeed(this, true, metadata, x, y, z) / hardness / 100f
@@ -115,7 +115,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		return if (!world.isAirBlock(x, y, z)) {
 			0
 		} else {
-			var l = b0.toInt()
+			var l = b0.I
 			l = getChanceToEncourageFire(world, x + 1, y, z, l, WEST)
 			l = getChanceToEncourageFire(world, x - 1, y, z, l, EAST)
 			l = getChanceToEncourageFire(world, x, y - 1, z, l, UP)

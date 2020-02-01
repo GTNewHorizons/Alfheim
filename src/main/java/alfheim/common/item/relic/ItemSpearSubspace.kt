@@ -2,7 +2,7 @@ package alfheim.common.item.relic
 
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import cpw.mods.fml.common.FMLCommonHandler
@@ -18,7 +18,7 @@ import net.minecraft.world.World
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.*
-import vazkii.botania.common.entity.*
+import vazkii.botania.common.entity.EntityManaBurst
 import vazkii.botania.common.item.relic.ItemRelic
 import java.util.*
 
@@ -52,7 +52,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 						sub.liveTicks = 24
 						sub.delay = 6
 						sub.posX = entity.posX
-						sub.posY = entity.posY - entity.yOffset + 2.5 + (world.rand.nextFloat() * 0.2f).toDouble()
+						sub.posY = entity.posY - entity.yOffset + 2.5 + (world.rand.nextFloat() * 0.2f).D
 						sub.posZ = entity.posZ
 						sub.rotationYaw = entity.rotationYaw
 						sub.rotation = MathHelper.wrapAngleTo180_float(-entity.rotationYaw + 180)
@@ -91,11 +91,11 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					look.normalize().negate().multiply(2.0)
 					val div = i / 5
 					val mod = i % 5
-					val pl = look.copy().add(Vector3.fromEntityCenter(player)).add(0.0, 1.6, div.toDouble() * 0.1)
+					val pl = look.copy().add(Vector3.fromEntityCenter(player)).add(0.0, 1.6, div.D * 0.1)
 					val axis = look.copy().normalize().crossProduct(Vector3(-1.0, 0.0, -1.0)).normalize()
 					val axis1 = axis.copy()
-					val rot = mod.toDouble() * 3.141592653589793 / 4.0 - 1.5707963267948966
-					axis1.multiply(div.toDouble() * 3.5 + 5.0).rotate(rot, look)
+					val rot = mod.D * 3.141592653589793 / 4.0 - 1.5707963267948966
+					axis1.multiply(div.D * 3.5 + 5.0).rotate(rot, look)
 					if (axis1.y < 0.0) {
 						axis1.y = -axis1.y
 					}
@@ -108,14 +108,14 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 					sub.posY = end.y - 0.5f + world.rand.nextFloat()
 					sub.posZ = end.z
 					sub.rotationYaw = player.rotationYaw
-					sub.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180.0f)
+					sub.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180f)
 					sub.interval = 10 + world.rand.nextInt(10)
-					sub.size = 1.0f + world.rand.nextFloat()
+					sub.size = 1f + world.rand.nextFloat()
 					sub.type = 0
 					
 					player.worldObj.spawnEntityInWorld(sub)
 					
-					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1.0f, 1.0f + player.worldObj.rand.nextFloat() * 3.0f)
+					if (i == 1) player.worldObj.playSoundAtEntity(sub, "${ModInfo.MODID}:spearsubspace", 1f, 1f + player.worldObj.rand.nextFloat() * 3f)
 				}
 			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 120, 0))
 			
@@ -139,7 +139,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 		val entity = burst as EntityThrowable
 		if (burst.color == 0xFFAF00) {
 			entity.worldObj.spawnParticle("hugeexplosion", entity.posX, entity.posY, entity.posZ, 1.0, 0.0, 0.0)
-			entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "random.explode", 4.0f, (1.0f + (entity.worldObj.rand.nextFloat() - entity.worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+			entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "random.explode", 4f, (1f + (entity.worldObj.rand.nextFloat() - entity.worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 		}
 		return dead
 	}

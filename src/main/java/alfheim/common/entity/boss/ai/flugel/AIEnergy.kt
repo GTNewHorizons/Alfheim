@@ -1,5 +1,6 @@
 package alfheim.common.entity.boss.ai.flugel
 
+import alfheim.common.core.util.D
 import alfheim.common.entity.EntityCharge
 import alfheim.common.entity.boss.EntityFlugel
 import vazkii.botania.common.core.helper.Vector3
@@ -19,7 +20,7 @@ class AIEnergy(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	override fun continueExecuting(): Boolean {
 		if (flugel.aiTaskTimer % 20 == 0) {
 			--left
-			val look = Vector3(flugel.lookVec).multiply(1.5).rotate(Math.toRadians((-45f + left * (90f / max)).toDouble()), oY)
+			val look = Vector3(flugel.lookVec).multiply(1.5).rotate(Math.toRadians((-45f + left * (90f / max)).D), oY)
 			val list = flugel.playersAround
 			if (list.isEmpty()) return false
 			val target = list[flugel.worldObj.rand.nextInt(list.size)]

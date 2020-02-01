@@ -2,7 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.SimpleTreeGen
@@ -120,7 +120,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	 *  shouldFertilize
 	 */
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int): Boolean {
-		if (world != null) return world.rand.nextFloat().toDouble() < 0.45
+		if (world != null) return world.rand.nextFloat().D < 0.45
 		return false
 	}
 	

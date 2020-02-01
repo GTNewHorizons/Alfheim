@@ -3,7 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileInvisibleManaFlame
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -55,7 +55,7 @@ class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	override fun getLensColor(stack: ItemStack?): Int {
 		return when (val storedColor = getStoredColor(stack!!)) {
 			-1   -> 16777215
-			16   -> Color.HSBtoRGB((Botania.proxy.worldElapsedTicks * 2L % 360L).toFloat() / 360.0f, 1.0f, 1.0f)
+			16   -> Color.HSBtoRGB((Botania.proxy.worldElapsedTicks * 2L % 360L).F / 360f, 1f, 1f)
 			
 			else -> {
 				val color = EntitySheep.fleeceColorTable[storedColor]
@@ -167,7 +167,7 @@ class ItemLensFlashInvisible: ItemMod("lensPhantomLight"), ICompositableLens {
 	override fun canCombineLenses(sourceLens: ItemStack, compositeLens: ItemStack): Boolean {
 		val sourceItem = sourceLens.item as ICompositableLens
 		val compositeItem = compositeLens.item as ICompositableLens
-		if (sourceItem == compositeItem && sourceLens.itemDamage == compositeLens.itemDamage)
+		if (sourceItem == compositeItem && sourceLens.meta == compositeLens.meta)
 			return false
 		
 		if (!sourceItem.isCombinable(sourceLens) || !compositeItem.isCombinable(compositeLens))

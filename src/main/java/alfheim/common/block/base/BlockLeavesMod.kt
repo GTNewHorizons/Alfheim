@@ -1,5 +1,6 @@
 package alfheim.common.block.base
 
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemSubtypedBlockMod
@@ -7,7 +8,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.item.ItemStack
 import net.minecraft.util.*
@@ -44,7 +44,7 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int): IIcon? {
-		setGraphicsLevel(Minecraft.getMinecraft().gameSettings.fancyGraphics)
+		setGraphicsLevel(mc.gameSettings.fancyGraphics)
 		return icons[if (field_150121_P) 0 else 1]
 	}
 	
@@ -186,7 +186,7 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	
 	override fun dropBlockAsItemWithChance(world: World, x: Int, y: Int, z: Int, metadata: Int, chance: Float, fortune: Int) {
-		super.dropBlockAsItemWithChance(world, x, y, z, metadata, 1.0f, fortune)
+		super.dropBlockAsItemWithChance(world, x, y, z, metadata, 1f, fortune)
 	}
 	
 	override fun getDrops(world: World, x: Int, y: Int, z: Int, metadata: Int, fortune: Int): ArrayList<ItemStack> {

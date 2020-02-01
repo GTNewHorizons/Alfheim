@@ -6,6 +6,7 @@ import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.D
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -46,7 +47,7 @@ class GUIRace: Gui() {
 		//		ASJShaderHelper.useShader(LibShaderIDs.idShadow);
 		
 		val mod = min(1.0, mc.thePlayer.flight / ElvenFlightHelper.max)
-		val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
+		val time = sin((mc.theWorld.totalWorldTime / 2).D) * 0.5
 		mc.thePlayer.race.glColorA(if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 		
 		Tessellator.instance.startDrawingQuads()

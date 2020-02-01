@@ -3,7 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -25,13 +25,13 @@ open class ItemIridescent(name: String) : Item() {
         fun rainbowColor() = Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360F, 1F, 1F)
 
         fun colorFromItemStack(par1ItemStack: ItemStack): Int {
-            if (par1ItemStack.itemDamage == TYPES) {
+            if (par1ItemStack.meta == TYPES) {
                 return rainbowColor()
             }
-            if (par1ItemStack.itemDamage >= EntitySheep.fleeceColorTable.size)
+            if (par1ItemStack.meta >= EntitySheep.fleeceColorTable.size)
                 return 0xFFFFFF
 
-            val color = EntitySheep.fleeceColorTable[par1ItemStack.itemDamage]
+            val color = EntitySheep.fleeceColorTable[par1ItemStack.meta]
             return Color(color[0], color[1], color[2]).rgb
         }
 
@@ -95,7 +95,7 @@ open class ItemIridescent(name: String) : Item() {
 
     override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
         if (par1ItemStack == null) return
-        addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + par1ItemStack.itemDamage) + "&r", par3List)
+        addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + par1ItemStack.meta) + "&r", par3List)
     }
 
     override fun getUnlocalizedName(par1ItemStack: ItemStack?) =

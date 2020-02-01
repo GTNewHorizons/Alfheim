@@ -1,7 +1,8 @@
 package alfheim.client.render.item
 
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.meta
 import cpw.mods.fml.relauncher.ReflectionHelper
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -36,8 +37,9 @@ class RenderMoonBow: IItemRenderer {
 			}
 			
 			ItemRenderType.EQUIPPED_FIRST_PERSON -> {
-				if (stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana" && Minecraft.getMinecraft().thePlayer.itemInUse !== stack)
+				if (stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana" && mc.thePlayer.itemInUse !== stack) {
 					glTranslated(0.1, 0.1, 0.0)
+				}
 				
 				render(stack, if (data[1] is EntityPlayer) data[1] as EntityPlayer else null, false)
 			}
@@ -48,7 +50,7 @@ class RenderMoonBow: IItemRenderer {
 	}
 	
 	fun render(item: ItemStack, player: EntityPlayer?, transform: Boolean) {
-		val dmg = item.itemDamage
+		val dmg = item.meta
 		var icon = item.item.getIconFromDamageForRenderPass(dmg, 0)
 		if (player != null) {
 			val using = ReflectionHelper.getPrivateValue<ItemStack, EntityPlayer>(EntityPlayer::class.java, player, *LibObfuscation.ITEM_IN_USE)
@@ -56,8 +58,8 @@ class RenderMoonBow: IItemRenderer {
 			icon = item.item.getIcon(item, 0, player, using, time)
 			if (transform) {
 				glTranslatef(0.2f, -0.3f, 0.1f)
-				//GL11.glRotatef(20.0F, 0.0F, 1.0F, 0.0F);
-				//GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
+				//GL11.glRotatef(20f, 0f, 1f, 0f);
+				//GL11.glRotatef(-100f, 1f, 0f, 0f);
 			}
 		}
 		

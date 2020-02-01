@@ -4,8 +4,7 @@ import alfheim.api.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import com.google.common.collect.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -80,8 +79,8 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World, player: Entity, par4: Int, par5: Boolean) {
-		if (!world.isRemote && player is EntityPlayer && stack.itemDamage > 0 && ManaItemHandler.requestManaExactForTool(stack, player, getManaPerDamage() * 2, true))
-			stack.itemDamage = stack.itemDamage - 1
+		if (!world.isRemote && player is EntityPlayer && stack.meta > 0 && ManaItemHandler.requestManaExactForTool(stack, player, getManaPerDamage() * 2, true))
+			stack.meta = stack.meta - 1
 	}
 	
 	override fun usesMana(stack: ItemStack) = true
@@ -118,7 +117,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 			world.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
 			if (!world.isRemote) player.addChatMessage(ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.wayOfUndoing").replace('&', '\u00a7')))
 			stack.damageStack(5, player)
-			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.toDouble(), 0.0, 0.0)
+			if (!world.isRemote) VisualEffectHandler.sendPacket(VisualEffects.WIRE, player.dimension, player.posX, player.posY - player.yOffset + player.height / 2.0, player.posZ, range.D, 0.0, 0.0)
 			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDManaVoid, 2 * count, 0, true))
 		}
 	}
@@ -144,7 +143,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	override fun getItemAttributeModifiers(): Multimap<Any, Any> {
 		val multimap = HashMultimap.create<Any, Any>()
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", toolMaterial.damageVsEntity.toDouble(), 0))
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", toolMaterial.damageVsEntity.D, 0))
 		multimap.put(godSlayingDamage.attributeUnlocalizedName, AttributeModifier(godUUID, "Weapon modifier", slayerDamage, 0))
 		return multimap
 	}
@@ -163,12 +162,12 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	
 	fun attackEntity(player: EntityLivingBase, entity: Entity, amount: Double, damageSource: DamageSource) {
 		var damage = amount
-		var extraDmg = 0.0f
+		var extraDmg = 0f
 		if (entity is EntityLivingBase)
 			extraDmg = EnchantmentHelper.getEnchantmentModifierLiving(player, entity)
 		
-		if (damage > 0.0 || extraDmg > 0.0f) {
-			val flag = player.fallDistance > 0.0f &&
+		if (damage > 0.0 || extraDmg > 0f) {
+			val flag = player.fallDistance > 0f &&
 					   !player.onGround &&
 					   !player.isOnLadder &&
 					   !player.isInWater &&
@@ -177,12 +176,12 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 					   entity is EntityLivingBase
 			if (flag && damage > 0.0)
 				damage *= 1.5
-			damage += extraDmg.toDouble()
-			val flag2 = entity.attackEntityFrom(damageSource, damage.toFloat())
+			damage += extraDmg.D
+			val flag2 = entity.attackEntityFrom(damageSource, damage.F)
 			if (flag2) {
 				if (flag && player is EntityPlayer)
 					player.onCriticalHit(entity)
-				if (extraDmg > 0.0f && player is EntityPlayer)
+				if (extraDmg > 0f && player is EntityPlayer)
 					player.onEnchantmentCritical(entity)
 				player.setLastAttacker(entity)
 				if (entity is EntityLivingBase)
@@ -193,7 +192,7 @@ class ItemWireAxe(val name: String = "axeRevelation", val toolMaterial: ToolMate
 	}
 	
 	override fun onBlockDestroyed(stack: ItemStack, world: World?, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase?): Boolean {
-		if (block.getBlockHardness(world, x, y, z).toDouble() != 0.0) {
+		if (block.getBlockHardness(world, x, y, z).D != 0.0) {
 			stack.damageStack(1, player)
 		}
 		

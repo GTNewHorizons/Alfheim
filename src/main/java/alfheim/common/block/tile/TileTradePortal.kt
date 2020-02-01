@@ -3,6 +3,7 @@ package alfheim.common.block.tile
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import com.google.common.base.Function
 import net.minecraft.block.Block
 import net.minecraft.entity.item.EntityItem
@@ -30,7 +31,7 @@ class TileTradePortal: TileMod() {
 	private var hasUnloadedParts = false
 	
 	internal val portalAABB: AxisAlignedBB
-		get() = if (getBlockMetadata() == 2) AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), (zCoord - 1).toDouble(), (xCoord + 1).toDouble(), (yCoord + 4).toDouble(), (zCoord + 2).toDouble()) else AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 2).toDouble(), (yCoord + 4).toDouble(), (zCoord + 1).toDouble())
+		get() = if (getBlockMetadata() == 2) AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, (zCoord - 1).D, (xCoord + 1).D, (yCoord + 4).D, (zCoord + 2).D) else AxisAlignedBB.getBoundingBox((xCoord - 1).D, (yCoord + 1).D, zCoord.D, (xCoord + 2).D, (yCoord + 4).D, (zCoord + 1).D)
 	
 	private val validMetadata: Int
 		get() {
@@ -94,19 +95,19 @@ class TileTradePortal: TileMod() {
 	}
 	
 	internal fun isTradeAvailable(input: ItemStack, output: ItemStack): Boolean {
-		return input.item === output.item && input.itemDamage == output.itemDamage && input.stackSize >= output.stackSize
+		return input.item === output.item && input.meta == output.meta && input.stackSize >= output.stackSize
 	}
 	
 	private fun blockParticle(meta: Int) {
 		val i = worldObj.rand.nextInt(AIR_POSITIONS.size)
-		var pos: DoubleArray? = doubleArrayOf((AIR_POSITIONS[i][0] + 0.5f).toDouble(), (AIR_POSITIONS[i][1] + 0.5f).toDouble(), (AIR_POSITIONS[i][2] + 0.5f).toDouble())
+		var pos: DoubleArray? = doubleArrayOf((AIR_POSITIONS[i][0] + 0.5f).D, (AIR_POSITIONS[i][1] + 0.5f).D, (AIR_POSITIONS[i][2] + 0.5f).D)
 		if (meta == 2) pos = CONVERTER_X_Z_FP.apply(pos)
 		
 		val motionMul = 0.2f
 		Botania.proxy.wispFX(getWorldObj(), xCoord + pos!![0], yCoord + pos[1], zCoord + pos[2],
-							 (Math.random() * 0.5f + 0.5f).toFloat(), (Math.random() * 0.25f + 0.5f).toFloat(), (Math.random() * 0.25f).toFloat(),
-							 (Math.random() * 0.15f + 0.1f).toFloat(), (Math.random() - 0.5f).toFloat() * motionMul,
-							 (Math.random() - 0.5f).toFloat() * motionMul, (Math.random() - 0.5f).toFloat() * motionMul)
+							 (Math.random() * 0.5f + 0.5f).F, (Math.random() * 0.25f + 0.5f).F, (Math.random() * 0.25f).F,
+							 (Math.random() * 0.15f + 0.1f).F, (Math.random() - 0.5f).F * motionMul,
+							 (Math.random() - 0.5f).F * motionMul, (Math.random() - 0.5f).F * motionMul)
 	}
 	
 	fun onWanded(): Boolean {
@@ -143,7 +144,7 @@ class TileTradePortal: TileMod() {
 				is ItemStack	-> `in`.copy()
 				else			-> throw IllegalArgumentException("Invalid input")
 			}
-			spawnItem(ItemStack(stack.item, 1, stack.itemDamage))
+			spawnItem(ItemStack(stack.item, 1, stack.meta))
 		}
 		if (--recipeMult <= 0) setTradeRecipe(null)
 		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord)

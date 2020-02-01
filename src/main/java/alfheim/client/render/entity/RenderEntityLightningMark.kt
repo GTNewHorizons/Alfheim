@@ -16,7 +16,7 @@ class RenderEntityLightningMark: Render() {
 	internal val rand = Random()
 	
 	init {
-		shadowSize = 0.0f
+		shadowSize = 0f
 		RenderPostShaders.registerShadedObject(so)
 	}
 	

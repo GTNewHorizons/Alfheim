@@ -3,6 +3,7 @@ package alfheim.api.spell
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.F
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
@@ -86,7 +87,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	companion object {
 		
 		fun over(caster: EntityLivingBase?, was: Double) =
-			(if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).toFloat()
+			(if (caster?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true) was * 1.2 else was).F
 		
 		fun consumeMana(player: EntityPlayer, mana: Int, req: Boolean) =
 			ManaItemHandler.requestManaExact(ItemStack(Blocks.stone), player, mana, req)

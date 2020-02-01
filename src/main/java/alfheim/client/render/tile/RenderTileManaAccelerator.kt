@@ -3,10 +3,11 @@ package alfheim.client.render.tile
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSimpleItemHolder
 import alfheim.common.block.tile.TileManaAccelerator
 import alfheim.common.core.handler.AlfheimConfigHandler
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.F
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.tileentity.TileEntity
@@ -45,12 +46,12 @@ object RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 		glPushMatrix()
 		glTranslated(x + 0.5, y - 0.5, z + 0.5)
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(if (inf) LibResourceLocations.poolPink else if (dil) LibResourceLocations.poolBlue else LibResourceLocations.livingrock)
+		mc.renderEngine.bindTexture(if (inf) LibResourceLocations.poolPink else if (dil) LibResourceLocations.poolBlue else LibResourceLocations.livingrock)
 		
 		if (fab) {
 			var time = ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks
 			rand.setSeed((tile.xCoord xor tile.yCoord - 1 xor tile.zCoord).toLong())
-			time += rand.nextInt(100000).toFloat()
+			time += rand.nextInt(100000).F
 			
 			val color = Color.getHSBColor(time * 0.005f, 0.6f, 1f)
 			glColor4ub(color.red.toByte(), color.green.toByte(), color.blue.toByte(), 255.toByte())

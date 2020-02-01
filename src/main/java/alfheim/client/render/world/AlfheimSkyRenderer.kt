@@ -1,5 +1,6 @@
 package alfheim.client.render.world
 
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.ReflectionHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.WorldClient
@@ -33,12 +34,12 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val starGLCallList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.STAR_GL_CALL_LIST)
 		GL11.glDisable(GL11.GL_TEXTURE_2D)
 		val vec3 = world.getSkyColor(mc.renderViewEntity, partialTicks)
-		var f1 = vec3.xCoord.toFloat()
-		var f2 = vec3.yCoord.toFloat()
-		var f3 = vec3.zCoord.toFloat()
+		var f1 = vec3.xCoord.F
+		var f2 = vec3.yCoord.F
+		var f3 = vec3.zCoord.F
 		var f6: Float
 		var insideVoid = 0f
-		if (mc.thePlayer.posY <= -2) insideVoid = min(1.0, -(mc.thePlayer.posY + 2) / 30f).toFloat()
+		if (mc.thePlayer.posY <= -2) insideVoid = min(1.0, -(mc.thePlayer.posY + 2) / 30f).F
 		f1 = max(0f, f1 - insideVoid)
 		f2 = max(0f, f2 - insideVoid)
 		f3 = max(0f, f3 - insideVoid)
@@ -74,10 +75,10 @@ object AlfheimSkyRenderer: IRenderHandler() {
 			val b0: Byte = 16
 			tessellator1.setColorRGBA_F(afloat[0], afloat[1], afloat[2], 0f)
 			for (j in 0..b0) {
-				f11 = j.toFloat() * Math.PI.toFloat() * 2f / b0.toFloat()
+				f11 = j.F * Math.PI.F * 2f / b0.F
 				val f12 = MathHelper.sin(f11)
 				val f13 = MathHelper.cos(f11)
-				tessellator1.addVertex(f12 * 120f.toDouble(), f13 * 120f.toDouble(), -f13 * 40f * afloat[3].toDouble())
+				tessellator1.addVertex(f12 * 120f.D, f13 * 120f.D, -f13 * 40f * afloat[3].D)
 			}
 			tessellator1.draw()
 			GL11.glPopMatrix()
@@ -164,11 +165,11 @@ object AlfheimSkyRenderer: IRenderHandler() {
 				val yo = sin(fuzzPer * j) * 1
 				val ut = ang * uPer
 				if (i % 2 == 0) {
-					tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.toDouble(), 1.0)
-					tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.toDouble(), 0.0)
+					tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.D, 1.0)
+					tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.D, 0.0)
 				} else {
-					tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.toDouble(), 0.0)
-					tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.toDouble(), 1.0)
+					tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.D, 0.0)
+					tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.D, 1.0)
 				}
 			}
 			tessellator1.draw()
@@ -198,7 +199,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		if (effCelAng1 > 0.25f) effCelAng1 = 1f - effCelAng1
 		effCelAng1 = 0.25f - min(0.25f, effCelAng1)
 		val time = world.worldTime + 1000
-		val day = (time / 24000L).toInt()
+		val day = (time / 24000L).I
 		val rand = Random((day * 0xFF).toLong())
 		val angle1 = rand.nextFloat() * 360f
 		val angle2 = rand.nextFloat() * 360f
@@ -215,11 +216,11 @@ object AlfheimSkyRenderer: IRenderHandler() {
 			val yo = 0.0
 			val ut = ang * uPer
 			if (i % 2 == 0) {
-				tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.toDouble(), 1.0)
-				tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.toDouble(), 0.0)
+				tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.D, 1.0)
+				tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.D, 0.0)
 			} else {
-				tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.toDouble(), 0.0)
-				tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.toDouble(), 1.0)
+				tessellator1.addVertexWithUV(xp, yo + y0, zp, ut.D, 0.0)
+				tessellator1.addVertexWithUV(xp, yo + y0 + y, zp, ut.D, 1.0)
 			}
 		}
 		tessellator1.draw()
@@ -237,15 +238,15 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val k = world.moonPhase
 		val l = k % 4
 		val i1 = k / 4 % 2
-		val f14 = l.toFloat() / 4f
-		val f15 = i1.toFloat() / 2f
+		val f14 = l.F / 4f
+		val f15 = i1.F / 2f
 		val f16 = (l + 1) / 4f
 		val f17 = (i1 + 1) / 2f
 		tessellator1.startDrawingQuads()
-		tessellator1.addVertexWithUV(-f10.toDouble(), -100.0, f10.toDouble(), f16.toDouble(), f17.toDouble())
-		tessellator1.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), f14.toDouble(), f17.toDouble())
-		tessellator1.addVertexWithUV(f10.toDouble(), -100.0, -f10.toDouble(), f14.toDouble(), f15.toDouble())
-		tessellator1.addVertexWithUV(-f10.toDouble(), -100.0, -f10.toDouble(), f16.toDouble(), f15.toDouble())
+		tessellator1.addVertexWithUV(-f10.D, -100.0, f10.D, f16.D, f17.D)
+		tessellator1.addVertexWithUV(f10.D, -100.0, f10.D, f14.D, f17.D)
+		tessellator1.addVertexWithUV(f10.D, -100.0, -f10.D, f14.D, f15.D)
+		tessellator1.addVertexWithUV(-f10.D, -100.0, -f10.D, f16.D, f15.D)
 		tessellator1.draw()
 		// === Stars
 		f6 *= max(0.1f, effCelAng * 2)
@@ -294,10 +295,10 @@ object AlfheimSkyRenderer: IRenderHandler() {
 	
 	private fun drawObject(tess: Tessellator, f10: Float) {
 		tess.startDrawingQuads()
-		tess.addVertexWithUV(-f10.toDouble(), 100.0, -f10.toDouble(), 0.0, 0.0)
-		tess.addVertexWithUV(f10.toDouble(), 100.0, -f10.toDouble(), 1.0, 0.0)
-		tess.addVertexWithUV(f10.toDouble(), 100.0, f10.toDouble(), 1.0, 1.0)
-		tess.addVertexWithUV(-f10.toDouble(), 100.0, f10.toDouble(), 0.0, 1.0)
+		tess.addVertexWithUV(-f10.D, 100.0, -f10.D, 0.0, 0.0)
+		tess.addVertexWithUV(f10.D, 100.0, -f10.D, 1.0, 0.0)
+		tess.addVertexWithUV(f10.D, 100.0, f10.D, 1.0, 1.0)
+		tess.addVertexWithUV(-f10.D, 100.0, f10.D, 0.0, 1.0)
 		tess.draw()
 	}
 }

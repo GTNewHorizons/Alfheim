@@ -1,9 +1,10 @@
 package alfheim.client.render.item
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.model.entity.*
+import alfheim.common.core.util.D
 import alfheim.common.item.*
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
@@ -35,26 +36,26 @@ object RenderItemFlugelHead {
 			
 			glPushMatrix()
 			glColor4d(1.0,1.0,1.0,1.0)
-			glRotated(yawOffset.toDouble(), 0.0, -1.0, 0.0)
-			glRotated((yaw - 270).toDouble(), 0.0, 1.0, 0.0)
-			glRotated(pitch.toDouble(), 0.0, 0.0, 1.0)
+			glRotated(yawOffset.D, 0.0, -1.0, 0.0)
+			glRotated((yaw - 270).D, 0.0, 1.0, 0.0)
+			glRotated(pitch.D, 0.0, 0.0, 1.0)
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			
 			when (player.getCurrentArmor(3)?.item) {
 				is ItemHeadFlugel	-> {
-					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.jibril)
+					mc.renderEngine.bindTexture(LibResourceLocations.jibril)
 					ModelBipedNew.model.head.render(0.0625f)
 				}
 				
 				is ItemHeadMiku		-> {
-					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku0)
+					mc.renderEngine.bindTexture(LibResourceLocations.miku0)
 					ModelBipedNew.model.head.render(0.0625f)
-					Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miku2)
+					mc.renderEngine.bindTexture(LibResourceLocations.miku2)
 					ModelEntityFlugel.model2.renderAll()
 				}
 				
 				is ItemGaiaHead		-> {
-					Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().thePlayer.locationSkin)
+					mc.renderEngine.bindTexture(mc.thePlayer.locationSkin)
 					ShaderHelper.useShader(ShaderHelper.doppleganger, RenderDoppleganger.defaultCallback)
 					RenderTileSkullOverride.modelSkull.render(null, 0f, 0f, 0f, 0f, 0f, 0.0625f)
 					ShaderHelper.releaseShader()

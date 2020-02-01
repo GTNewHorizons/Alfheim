@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.base.Function
@@ -39,9 +40,9 @@ class TileAlfheimPortal: TileMod() {
 	
 	val portalAABB: AxisAlignedBB
 		get() {
-			var aabb = AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), (yCoord + 1).toDouble(), zCoord + 0.25, (xCoord + 2).toDouble(), (yCoord + 4).toDouble(), zCoord + 0.75)
+			var aabb = AxisAlignedBB.getBoundingBox((xCoord - 1).D, (yCoord + 1).D, zCoord + 0.25, (xCoord + 2).D, (yCoord + 4).D, zCoord + 0.75)
 			if (getBlockMetadata() == 2)
-				aabb = AxisAlignedBB.getBoundingBox(xCoord + 0.25, (yCoord + 1).toDouble(), (zCoord - 1).toDouble(), xCoord + 0.75, (yCoord + 4).toDouble(), (zCoord + 2).toDouble())
+				aabb = AxisAlignedBB.getBoundingBox(xCoord + 0.25, (yCoord + 1).D, (zCoord - 1).D, xCoord + 0.75, (yCoord + 4).D, (zCoord + 2).D)
 			
 			return aabb
 		}
@@ -83,7 +84,7 @@ class TileAlfheimPortal: TileMod() {
 							if (coords == null) coords = ChunkCoordinates(0, MinecraftServer.getServer().worldServerForDimension(0).getHeightValue(0, 0) + 3, 0)
 							
 							if (AlfheimConfigHandler.destroyPortal && (xCoord != 0 || zCoord != 0)) {
-								worldObj.newExplosion(player, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), 5f, false, false)
+								worldObj.newExplosion(player, xCoord.D, yCoord.D, zCoord.D, 5f, false, false)
 								val x = if (meta == 1) 2 else 0
 								val z = if (meta == 1) 0 else 2
 								worldObj.setBlockToAir(xCoord - x, yCoord + 2, zCoord - z)
@@ -92,7 +93,7 @@ class TileAlfheimPortal: TileMod() {
 								worldObj.setBlockToAir(xCoord, yCoord, zCoord)
 							}
 							
-							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.toDouble(), coords.posY.toDouble(), coords.posZ.toDouble())
+							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.D, coords.posY.D, coords.posZ.D)
 						} else {
 							if (AlfheimCore.enableElvenStory) {
 								val race = player.raceID - 1 // for array length
@@ -136,7 +137,7 @@ class TileAlfheimPortal: TileMod() {
 		val alfheim = MinecraftServer.getServer().worldServerForDimension(AlfheimConfigHandler.dimensionIDAlfheim)
 		for (y in 50..149) {
 			if (alfheim.getBlock(0, y, 0) === AlfheimBlocks.alfheimPortal && alfheim.getBlockMetadata(0, y, 0) == 1) {
-				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, (y + 1).toDouble(), -1.5)
+				ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, 0.5, (y + 1).D, -1.5)
 				break
 			}
 		}
@@ -144,15 +145,15 @@ class TileAlfheimPortal: TileMod() {
 	
 	private fun blockParticle(meta: Int) {
 		val i = worldObj.rand.nextInt(AIR_POSITIONS.size)
-		var pos: DoubleArray? = doubleArrayOf((AIR_POSITIONS[i][0] + 0.5f).toDouble(), (AIR_POSITIONS[i][1] + 0.5f).toDouble(), (AIR_POSITIONS[i][2] + 0.5f).toDouble())
+		var pos: DoubleArray? = doubleArrayOf((AIR_POSITIONS[i][0] + 0.5f).D, (AIR_POSITIONS[i][1] + 0.5f).D, (AIR_POSITIONS[i][2] + 0.5f).D)
 		if (meta == 2)
 			pos = CONVERTER_X_Z_FP.apply(pos)
 		
 		val motionMul = 0.2f
 		Botania.proxy.wispFX(getWorldObj(), xCoord + pos!![0], yCoord + pos[1], zCoord + pos[2],
-							 Math.random().toFloat() * 0.25f + 0.5f, Math.random().toFloat() * 0.25f + 0.5f, Math.random().toFloat() * 0.25f,
-							 (Math.random() * 0.15f + 0.1f).toFloat(),
-							 (Math.random() - 0.5f).toFloat() * motionMul, (Math.random() - 0.5f).toFloat() * motionMul, (Math.random() - 0.5f).toFloat() * motionMul)
+							 Math.random().F * 0.25f + 0.5f, Math.random().F * 0.25f + 0.5f, Math.random().F * 0.25f,
+							 (Math.random() * 0.15f + 0.1f).F,
+							 (Math.random() - 0.5f).F * motionMul, (Math.random() - 0.5f).F * motionMul, (Math.random() - 0.5f).F * motionMul)
 	}
 	
 	fun onWanded(newMeta: Int): Boolean {
@@ -214,27 +215,27 @@ class TileAlfheimPortal: TileMod() {
 			var tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
 				
-				val centerBlock = Vector3(xCoord + 0.5, yCoord.toDouble() + 0.75 + (Math.random() - 0.5 * 0.25), zCoord + 0.5)
+				val centerBlock = Vector3(xCoord + 0.5, yCoord.D + 0.75 + (Math.random() - 0.5 * 0.25), zCoord + 0.5)
 				
 				if (ConfigHandler.elfPortalParticlesEnabled) {
-					var worldTime = worldObj.totalWorldTime.toDouble()
+					var worldTime = worldObj.totalWorldTime.D
 					rand.setSeed((xCoord + pos[0] xor yCoord + pos[1] xor zCoord + pos[2]).toLong())
-					worldTime += rand.nextInt(1000).toDouble()
+					worldTime += rand.nextInt(1000).D
 					worldTime /= 5.0
 					
-					val r = 0.75f + Math.random().toFloat() * 0.05f
-					val x = xCoord.toDouble() + pos[0].toDouble() + 0.5 + cos(worldTime) * r
-					val z = zCoord.toDouble() + pos[2].toDouble() + 0.5 + sin(worldTime) * r
+					val r = 0.75f + Math.random().F * 0.05f
+					val x = xCoord.D + pos[0].D + 0.5 + cos(worldTime) * r
+					val z = zCoord.D + pos[2].D + 0.5 + sin(worldTime) * r
 					
-					Botania.proxy.wispFX(worldObj, x, yCoord.toDouble() + pos[1].toDouble() + 0.25, z,
-										 0.75f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-										 0.25f + Math.random().toFloat() * 0.1f, -0.075f - Math.random().toFloat() * 0.015f)
+					Botania.proxy.wispFX(worldObj, x, yCoord.D + pos[1].D + 0.25, z,
+										 0.75f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+										 0.25f + Math.random().F * 0.1f, -0.075f - Math.random().F * 0.015f)
 					
 					if (worldObj.rand.nextInt(3) == 0)
-						Botania.proxy.wispFX(worldObj, x, yCoord.toDouble() + pos[1].toDouble() + 0.25, z,
-											 Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-											 0.25f + Math.random().toFloat() * 0.1f,
-											 centerBlock.x.toFloat(), centerBlock.y.toFloat(), centerBlock.z.toFloat())
+						Botania.proxy.wispFX(worldObj, x, yCoord.D + pos[1].D + 0.25, z,
+											 Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+											 0.25f + Math.random().F * 0.1f,
+											 centerBlock.x.F, centerBlock.y.F, centerBlock.z.F)
 				}
 			}
 			

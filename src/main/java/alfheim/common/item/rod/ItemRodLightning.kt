@@ -6,6 +6,7 @@ import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.network.MessageEffectLightning
@@ -113,8 +114,8 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					val playerShift = playerCenter.copy().add(getHeadOrientation(player))
 					
 					if (count % (shockspeed / 10) == 0) {
-						AlfheimCore.network.sendToDimension(MessageEffectLightning(targetCenter, targetShift, 2.0f, color, innerColor), player.dimension)
-						AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, playerShift, 2.0f, color, innerColor), player.dimension)
+						AlfheimCore.network.sendToDimension(MessageEffectLightning(targetCenter, targetShift, 2f, color, innerColor), player.dimension)
+						AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, playerShift, 2f, color, innerColor), player.dimension)
 					}
 					
 					if (count % shockspeed == 0) {
@@ -126,8 +127,8 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 						} else {
 							if (ManaItemHandler.requestManaExactForTool(stack, player, getCost(thor, prowess, priest), true)) {
 								target.attackEntityFrom(DamageSource.causePlayerDamage(player), damage)
-								AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, Vector3.fromEntityCenter(target), 1.0f, color, innerColor), player.dimension)
-								player.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100.0f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
+								AlfheimCore.network.sendToDimension(MessageEffectLightning(playerCenter, Vector3.fromEntityCenter(target), 1f, color, innerColor), player.dimension)
+								player.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
 							}
 							chainLightning(stack, target, player, thor, prowess, priest, color, innerColor)
 						}
@@ -158,7 +159,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 		return par1ItemStack
 	}
 	
-	fun getTarget(world: World, player: EntityPlayer, trial_target: Int, range: Float = 12.0f): EntityLivingBase? {
+	fun getTarget(world: World, player: EntityPlayer, trial_target: Int, range: Float = 12f): EntityLivingBase? {
 		val selector = IEntitySelector { e -> e is IMob && e !is EntityPlayer && e !is EntityPlayerMP }
 		
 		val potential = world.selectEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range), selector)
@@ -167,7 +168,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 			val target = world.getEntityByID(trial_target)
 			
 			if (target != null && target is EntityCreature)
-				if (target.health > 0.0f && !target.isDead && potential.contains(target)) {
+				if (target.health > 0f && !target.isDead && potential.contains(target)) {
 					return target
 				}
 		}
@@ -210,7 +211,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)
 				}
 				
-				AlfheimCore.network.sendToDimension(MessageEffectLightning(Vector3.fromEntityCenter(lightningSource), Vector3.fromEntityCenter(target), 1.0f, color, innerColor), entity.dimension)
+				AlfheimCore.network.sendToDimension(MessageEffectLightning(Vector3.fromEntityCenter(lightningSource), Vector3.fromEntityCenter(target), 1f, color, innerColor), entity.dimension)
 				alreadyTargetedEntities.add(target)
 				lightningSource = target
 				--dmg
@@ -232,11 +233,11 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 	override fun usesMana(stack: ItemStack) = true
 	
 	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
 		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
 		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	override fun onAvatarUpdate(tile: IAvatarTile, stack: ItemStack) {
@@ -250,8 +251,8 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 		if (tile.currentMana >= COST_AVATAR && tile.isEnabled && tile.elapsedFunctionalTicks % 10 == 0) {
 			val selector = IEntitySelector { e -> (e is EntityLivingBase) && e !is EntityPlayer && e !is EntityPlayerMP && e !is EntityDoppleganger }
 			
-			val entities = world.selectEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox((te.xCoord - range).toDouble(), (te.yCoord - range).toDouble(),
-																													 (te.zCoord - range).toDouble(), (te.xCoord + range).toDouble(), (te.yCoord + range).toDouble(), (te.zCoord + range).toDouble()), selector)
+			val entities = world.selectEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox((te.xCoord - range).D, (te.yCoord - range).D,
+																													 (te.zCoord - range).D, (te.xCoord + range).D, (te.yCoord + range).D, (te.zCoord + range).D), selector)
 			
 			if (entities.size == 0) return
 			
@@ -262,7 +263,7 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 				val ttarget = world.getEntityByID(trial_target)
 				
 				if (ttarget != null && ttarget is EntityCreature)
-					if (ttarget.health > 0.0f && !ttarget.isDead && entities.contains(ttarget)) {
+					if (ttarget.health > 0f && !ttarget.isDead && entities.contains(ttarget)) {
 						target = ttarget
 					}
 			}
@@ -294,8 +295,8 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 				val thisShift = thisCenter.copy().add(0.0, 1.0, 0.0)
 				
 				if (tile.elapsedFunctionalTicks % 10 == 0) {
-					Botania.proxy.lightningFX(world, targetCenter, targetShift, 2.0f, color, innerColor)
-					Botania.proxy.lightningFX(world, thisCenter, thisShift, 2.0f, color, innerColor)
+					Botania.proxy.lightningFX(world, targetCenter, targetShift, 2f, color, innerColor)
+					Botania.proxy.lightningFX(world, thisCenter, thisShift, 2f, color, innerColor)
 				}
 				
 				if (tile.elapsedFunctionalTicks % 100 == 0) {
@@ -306,9 +307,9 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 					
 					val vect = Bector3.fromTileEntityCenter(te).add(0.0, 0.5, 0.0)
 					
-					Botania.proxy.lightningFX(world, vect, Bector3.fromEntityCenter(target), 1.0f, color, innerColor)
+					Botania.proxy.lightningFX(world, vect, Bector3.fromEntityCenter(target), 1f, color, innerColor)
 					
-					world.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100.0f, 0.8f + world.rand.nextFloat() * 0.2f)
+					world.playSoundEffect(target.posX, target.posY, target.posZ, "ambient.weather.thunder", 100f, 0.8f + world.rand.nextFloat() * 0.2f)
 					
 					@Suppress("BooleanLiteralArgument")
 					chainLightning(stack, target, null, false, false, false, color, innerColor)

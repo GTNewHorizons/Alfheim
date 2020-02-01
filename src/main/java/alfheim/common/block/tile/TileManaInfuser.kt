@@ -6,6 +6,7 @@ import alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.Entity
@@ -15,7 +16,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import net.minecraft.util.*
+import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.lexicon.multiblock.*
 import vazkii.botania.api.mana.IManaPool
@@ -38,7 +39,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	internal val v = Vector3()
 	
 	internal val items: List<EntityItem>
-		get() = worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 2).toDouble(), (zCoord + 1).toDouble())) as List<EntityItem>
+		get() = worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D)) as List<EntityItem>
 	
 	internal val isReadyToKillGaia: Boolean
 		get() = checkPlatform(0, -2, 0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylon, 2)
@@ -56,7 +57,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 			if (isReadyToKillGaia) {
 				
 				run boom@{
-					val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), yCoord + 1.0, zCoord.toDouble(), xCoord + 1.0, yCoord + 3.0, zCoord + 1.0))
+					val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, yCoord + 1.0, zCoord.D, xCoord + 1.0, yCoord + 3.0, zCoord + 1.0))
 					
 					if (l.isNotEmpty()) {
 						if (l.size > 1)
@@ -119,7 +120,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				}
 				
 				// boom
-				worldObj.newExplosion(null, xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), boom.toFloat(), true, false)
+				worldObj.newExplosion(null, xCoord.D, yCoord.D, zCoord.D, boom.F, true, false)
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord)
 				
 				if (targetID != -1) {
@@ -166,7 +167,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 						if (otherItem !== item)
 							otherItem.setDead()
 						else
-							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.itemDamage))
+							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.meta))
 					item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
 					mana -= manaRequest
 					worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
@@ -186,7 +187,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	
 	internal fun doParticles() {
 		if (worldObj.isRemote) {
-			val ticks = (100.0 * (currentMana.toDouble() / manaRequest.toDouble())).toInt()
+			val ticks = (100.0 * (currentMana.D / manaRequest.D)).I
 			
 			val totalSpiritCount = 6
 			val tickIncrement = 360.0 / totalSpiritCount
@@ -198,18 +199,18 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 			val g = sin(wticks * Math.PI / 180 * 0.55)
 			
 			for (i in 0 until totalSpiritCount) {
-				val x = xCoord.toDouble() + sin(wticks * Math.PI / 180) * r + 0.5
-				val y = yCoord.toDouble() + 0.25 + abs(r) * 0.7
-				val z = zCoord.toDouble() + cos(wticks * Math.PI / 180) * r + 0.5
+				val x = xCoord.D + sin(wticks * Math.PI / 180) * r + 0.5
+				val y = yCoord.D + 0.25 + abs(r) * 0.7
+				val z = zCoord.D + cos(wticks * Math.PI / 180) * r + 0.5
 				
 				wticks += tickIncrement
-				val colorsfx = floatArrayOf(ticks.toFloat() / 100.toFloat(), 0f, 1f - ticks.toFloat() / 100.toFloat())
-				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], 0.85f, g.toFloat() * 0.05f, 0.25f)
-				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], Math.random().toFloat() * 0.1f + 0.1f, (Math.random() - 0.5).toFloat() * 0.05f, (Math.random() - 0.5).toFloat() * 0.05f, (Math.random() - 0.5).toFloat() * 0.05f, 0.9f)
+				val colorsfx = floatArrayOf(ticks.F / 100.F, 0f, 1f - ticks.F / 100.F)
+				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], 0.85f, g.F * 0.05f, 0.25f)
+				Botania.proxy.wispFX(worldObj, x, y + 1, z, colorsfx[0], colorsfx[1], colorsfx[2], Math.random().F * 0.1f + 0.1f, (Math.random() - 0.5).F * 0.05f, (Math.random() - 0.5).F * 0.05f, (Math.random() - 0.5).F * 0.05f, 0.9f)
 				
 				if (ticks == 100)
 					for (j in 0..14)
-						Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord + 1.25, zCoord + 0.5, colorsfx[0], colorsfx[1], colorsfx[2], Math.random().toFloat() * 0.15f + 0.15f, (Math.random() - 0.5f).toFloat() * 0.125f, (Math.random() - 0.5f).toFloat() * 0.125f, (Math.random() - 0.5f).toFloat() * 0.125f)
+						Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord + 1.25, zCoord + 0.5, colorsfx[0], colorsfx[1], colorsfx[2], Math.random().F * 0.15f + 0.15f, (Math.random() - 0.5f).F * 0.125f, (Math.random() - 0.5f).F * 0.125f, (Math.random() - 0.5f).F * 0.125f)
 			}
 		}
 	}
@@ -218,8 +219,8 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		Botania.proxy.setSparkleFXNoClip(true)
 		for ((ci, c) in PYLONS.withIndex()) {
 			for (i in -1..83) {
-				v.set(0.0, 0.0, 0.1).rotate((-45 - 90 * ci).toDouble(), Vector3.oY).extend(i / 10.0).add(c[0].toDouble(), c[1].toDouble(), c[2].toDouble())
-				Botania.proxy.sparkleFX(worldObj, xCoord.toDouble() + v.x + 0.5, yCoord.toDouble() + v.y + 0.65, zCoord.toDouble() + v.z + 0.5, 1f, 0.01f, 0.01f, 1f, 2)
+				v.set(0.0, 0.0, 0.1).rotate((-45 - 90 * ci).D, Vector3.oY).extend(i / 10.0).add(c[0].D, c[1].D, c[2].D)
+				Botania.proxy.sparkleFX(worldObj, xCoord.D + v.x + 0.5, yCoord.D + v.y + 0.65, zCoord.D + v.z + 0.5, 1f, 0.01f, 0.01f, 1f, 2)
 			}
 		}
 		Botania.proxy.setSparkleFXNoClip(false)
@@ -228,34 +229,34 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	internal fun soulParticles() {
 		if (soulParticlesTime < 10)
 			for (c in PYLONS) {
-				v.set((-c[0]).toDouble(), (-c[1]).toDouble(), (-c[2]).toDouble()).normalize().mul(0.4)
-				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+				v.set((-c[0]).D, (-c[1]).D, (-c[2]).D).normalize().mul(0.4)
+				Botania.proxy.wispFX(worldObj, xCoord.D + c[0].D + 0.5, yCoord.D + c[1].D + 0.65, zCoord.D + c[2].D + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 			}
 		
 		else
 			for (c in GAIAS) {
-				v.set(c[0].toDouble(), 0.0, c[2].toDouble()).normalize().mul(0.3)
-				val r = Math.random().toFloat() * 0.3f
-				val g = 0.7f + Math.random().toFloat() * 0.3f
-				val b = 0.7f + Math.random().toFloat() * 0.3f
+				v.set(c[0].D, 0.0, c[2].D).normalize().mul(0.3)
+				val r = Math.random().F * 0.3f
+				val g = 0.7f + Math.random().F * 0.3f
+				val b = 0.7f + Math.random().F * 0.3f
 				v.rotate(107.5, Vector3.oY)
-				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+				Botania.proxy.wispFX(worldObj, xCoord.D + c[0].D + 0.5, yCoord.D + c[1].D + 0.65, zCoord.D + c[2].D + 0.5, r, g, b, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 				v.rotate(-215.0, Vector3.oY)
-				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + c[0].toDouble() + 0.5, yCoord.toDouble() + c[1].toDouble() + 0.65, zCoord.toDouble() + c[2].toDouble() + 0.5, r, g, b, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+				Botania.proxy.wispFX(worldObj, xCoord.D + c[0].D + 0.5, yCoord.D + c[1].D + 0.65, zCoord.D + c[2].D + 0.5, r, g, b, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 			}
 	}
 	
 	internal fun doneParticles() {
 		for (i in 0..63) {
 			v.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 0.2 + 0.1)
-			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord.toDouble() + 1.65 + Math.random() * 0.2, zCoord + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord.D + 1.65 + Math.random() * 0.2, zCoord + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 		}
 		for (i in 0..15) {
 			v.set(0.0, 1.0, 0.0).mul(Math.random() * 0.2 + 0.1)
-			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord.toDouble() + 1.0 + Math.random(), zCoord + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.5f)
+			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord.D + 1.0 + Math.random(), zCoord + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
 		}
 		for (i in 0..63) {
-			Botania.proxy.sparkleFX(worldObj, xCoord.toDouble() + 0.5 + Math.random() * 0.25 - 0.125, (yCoord + 4).toDouble(), zCoord.toDouble() + 0.5 + Math.random() * 0.25 - 0.125, 1f, 0.01f, 0.01f, 5f, 15)
+			Botania.proxy.sparkleFX(worldObj, xCoord.D + 0.5 + Math.random() * 0.25 - 0.125, (yCoord + 4).D, zCoord.D + 0.5 + Math.random() * 0.25 - 0.125, 1f, 0.01f, 0.01f, 5f, 15)
 		}
 	}
 	
@@ -285,7 +286,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 					if (ing is ItemStack) {
 						val cing = ing.copy()
 						if (getTrueDamage(cing) == OreDictionary.WILDCARD_VALUE) { // Cause some shit clamps values to maxDamage
-							cing.itemDamage = getTrueDamage(stack)
+							cing.meta = getTrueDamage(stack)
 						}
 						flag = isItemStackTrueEqual(stack, cing)
 					} else
@@ -294,9 +295,9 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 							val ores = OreDictionary.getOres(ing)
 							for (ore in ores) {
 								val core = ore.copy()
-								if (getTrueDamage(core) == OreDictionary.WILDCARD_VALUE) core.itemDamage = getTrueDamage(stack)
+								if (getTrueDamage(core) == OreDictionary.WILDCARD_VALUE) core.meta = getTrueDamage(stack)
 								
-								if (isItemStackTrueEqual(stack, ItemStack(core.item, 1, core.itemDamage))) {
+								if (isItemStackTrueEqual(stack, ItemStack(core.item, 1, core.meta))) {
 									flag = true
 									break
 								}
@@ -379,7 +380,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	override fun attachSpark(entity: ISparkEntity) = Unit
 	
 	override fun getAttachedSpark(): ISparkEntity? {
-		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 2).toDouble(), (zCoord + 1).toDouble()))
+		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D))
 		if (sparks.size == 1) {
 			val e = sparks[0] as Entity
 			return e as ISparkEntity

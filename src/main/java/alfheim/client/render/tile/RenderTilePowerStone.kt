@@ -2,8 +2,8 @@ package alfheim.client.render.tile
 
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TilePowerStone
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
@@ -28,7 +28,7 @@ object RenderTilePowerStone: TileEntitySpecialRenderer() {
 		
 		glPushMatrix()
 		glTranslated(x + 0.5, y, z + 0.5)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.obelisk[meta])
+		mc.renderEngine.bindTexture(LibResourceLocations.obelisk[meta])
 		model.renderAll()
 		
 		glPopMatrix()

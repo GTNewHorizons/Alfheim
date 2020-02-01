@@ -3,6 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileCracklingStar
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemStarPlacer2
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
@@ -59,12 +60,12 @@ class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 				val color = te.color
 				val stack = ItemStarPlacer2.colorStack(color)
 				
-				val entityitem = EntityItem(world, x.toFloat() + f, y.toFloat() + f, z.toFloat() + f, stack)
+				val entityitem = EntityItem(world, x.F + f, y.F + f, z.F + f, stack)
 				
 				val f3 = 0.05f
-				entityitem.motionX = (world.rand.nextGaussian().toFloat() * f3).toDouble()
-				entityitem.motionY = (world.rand.nextGaussian().toFloat() * f3 + 0.2f).toDouble()
-				entityitem.motionZ = (world.rand.nextGaussian().toFloat() * f3).toDouble()
+				entityitem.motionX = (world.rand.nextGaussian().F * f3).D
+				entityitem.motionY = (world.rand.nextGaussian().F * f3 + 0.2f).D
+				entityitem.motionZ = (world.rand.nextGaussian().F * f3).D
 				world.spawnEntityInWorld(entityitem)
 			}
 		}
@@ -103,7 +104,7 @@ class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 				te.pos = null
 			} else if (dwp.dim == here.dim) {
 				val otherTe = world.getTileEntity(dwp.x, dwp.y, dwp.z) as? TileCracklingStar ?: return true
-				otherTe.pos = Vector3(x.toDouble(), y.toDouble(), z.toDouble())
+				otherTe.pos = Vector3(x.D, y.D, z.D)
 				otherTe.markDirty()
 				world.markBlockForUpdate(dwp.x, dwp.y, dwp.z)
 			}

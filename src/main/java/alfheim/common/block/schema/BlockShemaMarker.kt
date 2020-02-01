@@ -10,7 +10,7 @@ class BlockShemaMarker: BlockMod(Material.wood) {
 	
 	init {
 		val size = 0.1875f
-		setBlockBounds(size, size, size, 1.0f - size, 1.0f - size, 1.0f - size)
+		setBlockBounds(size, size, size, 1f - size, 1f - size, 1f - size)
 		setBlockName("schemaMarker")
 		setBlockUnbreakable()
 	}

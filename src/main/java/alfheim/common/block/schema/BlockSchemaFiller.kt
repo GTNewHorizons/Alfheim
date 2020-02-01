@@ -11,7 +11,7 @@ class BlockSchemaFiller: BlockMod(Material.wood) {
 	
 	init {
 		//        val size = 0.1875f
-		//        this.setBlockBounds(size, size, size, 1.0f - size, 1.0f - size, 1.0f - size)
+		//        this.setBlockBounds(size, size, size, 1f - size, 1f - size, 1f - size)
 		setBlockName("schemaFiller")
 		setBlockUnbreakable()
 	}

@@ -19,6 +19,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
+import alfheim.common.core.util.D
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -31,7 +32,6 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
-import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.Item
 import net.minecraft.world.World
@@ -160,13 +160,13 @@ class ClientProxy: CommonProxy() {
 		} else if (!ConfigHandler.useVanillaParticleLimiter) {
 			true
 		} else {
-			var chance = 1.0f
-			if (Minecraft.getMinecraft().gameSettings.particleSetting == 1) {
+			var chance = 1f
+			if (mc.gameSettings.particleSetting == 1) {
 				chance = 0.6f
-			} else if (Minecraft.getMinecraft().gameSettings.particleSetting == 2) {
+			} else if (mc.gameSettings.particleSetting == 2) {
 				chance = 0.2f
 			}
-			chance == 1.0f || Math.random() < chance.toDouble()
+			chance == 1f || Math.random() < chance.D
 		}
 	}
 	
@@ -334,9 +334,9 @@ class ClientProxy: CommonProxy() {
 		
 		private fun unregisterKeyBinding(key: KeyBinding) {
 			removeKeyBinding(key)
-			val id = ASJUtilities.indexOfComparableArray(Minecraft.getMinecraft().gameSettings.keyBindings, key)
-			if (id < 0 || id > Minecraft.getMinecraft().gameSettings.keyBindings.size) return
-			Minecraft.getMinecraft().gameSettings.keyBindings = ArrayUtils.remove(Minecraft.getMinecraft().gameSettings.keyBindings, id)
+			val id = ASJUtilities.indexOfComparableArray(mc.gameSettings.keyBindings, key)
+			if (id < 0 || id > mc.gameSettings.keyBindings.size) return
+			mc.gameSettings.keyBindings = ArrayUtils.remove(mc.gameSettings.keyBindings, id)
 		}
 		
 		private fun addKeyBinding(key: KeyBinding) {

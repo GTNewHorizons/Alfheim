@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alfheim.common.core.util.I
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
@@ -79,7 +80,7 @@ class TileItemDisplay: TileMod(), ISidedInventory {
 		for (i in 0 until nbttaglist.tagCount()) {
 			val nbttagcompound1 = nbttaglist.getCompoundTagAt(i)
 			
-			val b0: Int = (nbttagcompound1.getByte("Slot")).toInt()
+			val b0: Int = (nbttagcompound1.getByte("Slot")).I
 			
 			if (b0 >= 0 && b0 < inventory.size) {
 				inventory[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1)

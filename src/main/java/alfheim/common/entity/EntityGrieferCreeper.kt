@@ -1,5 +1,6 @@
 package alfheim.common.entity
 
+import alfheim.common.core.util.*
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
@@ -16,7 +17,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 	override fun writeEntityToNBT(tag: NBTTagCompound) {
 		super.writeEntityToNBT(tag)
 		
-		if (dataWatcher.getWatchableObjectByte(17).toInt() == 1) {
+		if (dataWatcher.getWatchableObjectByte(17).I == 1) {
 			tag.setBoolean("powered", true)
 		}
 		
@@ -32,7 +33,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 		dataWatcher.updateObject(17, java.lang.Byte.valueOf((if (tag.getBoolean("powered")) 1 else 0).toByte()))
 		
 		if (tag.hasKey("Fuse", 99)) {
-			this.fuseTime = tag.getShort("Fuse").toInt()
+			this.fuseTime = tag.getShort("Fuse").I
 		}
 		
 		if (tag.getBoolean("ignited")) {
@@ -51,7 +52,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 			val i = this.creeperState
 			
 			if (i > 0 && this.timeSinceIgnited == 0) {
-				playSound("creeper.primed", 1.0f, 0.5f)
+				playSound("creeper.primed", 1f, 0.5f)
 			}
 			
 			this.timeSinceIgnited += i
@@ -77,7 +78,7 @@ class EntityGrieferCreeper(world: World): EntityCreeper(world) {
 				storm.setPosition(posX + 0.5, posY + 0.5, posZ + 0.5)
 				worldObj.spawnEntityInWorld(storm)
 			} else {
-				worldObj.createExplosion(this, posX, posY, posZ, (this.explosionRadius).toFloat(), flag)
+				worldObj.createExplosion(this, posX, posY, posZ, (this.explosionRadius).F, flag)
 			}
 			
 			setDead()

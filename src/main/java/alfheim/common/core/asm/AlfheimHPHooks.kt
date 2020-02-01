@@ -46,10 +46,10 @@ object AlfheimHPHooks {
 			new = 0.01f
 		}
 		
-		e.dataWatcher.updateObject(6, MathHelper.clamp_float(new, 0.0f, e.maxHealth))
+		e.dataWatcher.updateObject(6, MathHelper.clamp_float(new, 0f, e.maxHealth))
 		if (pt != null) {
 			val i = pt.indexOf(e)
-			if (i != -1) pt.setHealth(i, MathHelper.clamp_float(new, 0.0f, e.maxHealth))
+			if (i != -1) pt.setHealth(i, MathHelper.clamp_float(new, 0f, e.maxHealth))
 		}
 	}
 }

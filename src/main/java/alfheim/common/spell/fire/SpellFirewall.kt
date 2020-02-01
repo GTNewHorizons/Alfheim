@@ -4,8 +4,9 @@ import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.D
 import alfheim.common.entity.spell.EntitySpellFirewall
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11.*
@@ -31,14 +32,14 @@ object SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) 
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		ASJRenderHelper.interpolatedTranslation(caster)
-		glRotated((-caster.rotationYaw).toDouble(), 0.0, 1.0, 0.0)
+		glRotated((-caster.rotationYaw).D, 0.0, 1.0, 0.0)
 		glTranslated(0.0, -1.62, 5.0)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.targetq)
+		mc.renderEngine.bindTexture(LibResourceLocations.targetq)
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV((-s).toDouble(), 0.1, -1.0, 0.0, 0.0)
-		Tessellator.instance.addVertexWithUV((-s).toDouble(), 0.1, 1.0, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(s.toDouble(), 0.1, 1.0, 1.0, 1.0)
-		Tessellator.instance.addVertexWithUV(s.toDouble(), 0.1, -1.0, 1.0, 0.0)
+		Tessellator.instance.addVertexWithUV((-s).D, 0.1, -1.0, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV((-s).D, 0.1, 1.0, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(s.D, 0.1, 1.0, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(s.D, 0.1, -1.0, 1.0, 0.0)
 		Tessellator.instance.draw()
 		glDisable(GL_BLEND)
 		glAlphaFunc(GL_GREATER, 0.1f)

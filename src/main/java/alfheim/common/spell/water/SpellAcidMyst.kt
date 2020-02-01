@@ -3,8 +3,8 @@ package alfheim.common.spell.water
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
 import alfheim.common.entity.spell.EntitySpellAcidMyst
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import org.lwjgl.opengl.GL11.*
@@ -29,7 +29,7 @@ object SpellAcidMyst: SpellBase("acidmyst", EnumRace.UNDINE, 8000, 400, 20) {
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glTranslated(0.0, -1.61, 0.0)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.target)
+		mc.renderEngine.bindTexture(LibResourceLocations.target)
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ - radius, 0.0, 0.0)
 		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ + radius, 0.0, 1.0)

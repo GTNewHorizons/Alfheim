@@ -1,5 +1,6 @@
 package alfheim.client.model.entity
 
+import alfheim.common.core.util.F
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper
@@ -297,64 +298,64 @@ class ModelEntityElf: ModelBase() {
 	
 	override fun setRotationAngles(f1: Float, f2: Float, f3: Float, f4: Float, f5: Float, f6: Float, entity: Entity?) {
 		super.setRotationAngles(f1, f2, f3, f4, f5, f6, entity)
-		this.head.rotateAngleY = f4 / (180f / Math.PI.toFloat())
-		this.head.rotateAngleX = f5 / (180f / Math.PI.toFloat())
-		this.helmet.rotateAngleY = this.head.rotateAngleY
-		this.helmet.rotateAngleX = this.head.rotateAngleX
-		this.Shape1.rotateAngleY = this.head.rotateAngleY
-		this.Shape1.rotateAngleX = this.head.rotateAngleX
-		this.Shape2.rotateAngleY = this.head.rotateAngleY
-		this.Shape2.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape3.rotateAngleY = this.head.rotateAngleY
-		this.Shape3.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape4.rotateAngleY = this.head.rotateAngleY
-		this.Shape4.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape5.rotateAngleY = this.head.rotateAngleY
-		this.Shape5.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape6.rotateAngleY = this.head.rotateAngleY
-		this.Shape6.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape7.rotateAngleY = this.head.rotateAngleY
-		this.Shape7.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape8.rotateAngleY = this.head.rotateAngleY
-		this.Shape8.rotateAngleX = this.head.rotateAngleX
-		this.Shape9.rotateAngleY = this.head.rotateAngleY
-		this.Shape9.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape10.rotateAngleY = this.head.rotateAngleY
-		this.Shape10.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape11.rotateAngleY = this.head.rotateAngleY
-		this.Shape11.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape12.rotateAngleY = this.head.rotateAngleY
-		this.Shape12.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape13.rotateAngleY = this.head.rotateAngleY
-		this.Shape13.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape14.rotateAngleY = this.head.rotateAngleY
-		this.Shape14.rotateAngleX = this.head.rotateAngleX - Math.toRadians(30.0).toFloat()
-		this.Shape15.rotateAngleY = this.head.rotateAngleY
-		this.Shape15.rotateAngleX = this.head.rotateAngleX
-		this.Shape16.rotateAngleY = this.head.rotateAngleY
-		this.Shape16.rotateAngleX = this.head.rotateAngleX
-		this.Shape17.rotateAngleY = this.head.rotateAngleY
-		this.Shape17.rotateAngleX = this.head.rotateAngleX
-		this.Shape18.rotateAngleY = this.head.rotateAngleY
-		this.Shape18.rotateAngleX = this.head.rotateAngleX
+		head.rotateAngleY = f4 / (180f / Math.PI.F)
+		head.rotateAngleX = f5 / (180f / Math.PI.F)
+		helmet.rotateAngleY = head.rotateAngleY
+		helmet.rotateAngleX = head.rotateAngleX
+		Shape1.rotateAngleY = head.rotateAngleY
+		Shape1.rotateAngleX = head.rotateAngleX
+		Shape2.rotateAngleY = head.rotateAngleY
+		Shape2.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape3.rotateAngleY = head.rotateAngleY
+		Shape3.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape4.rotateAngleY = head.rotateAngleY
+		Shape4.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape5.rotateAngleY = head.rotateAngleY
+		Shape5.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape6.rotateAngleY = head.rotateAngleY
+		Shape6.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape7.rotateAngleY = head.rotateAngleY
+		Shape7.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape8.rotateAngleY = head.rotateAngleY
+		Shape8.rotateAngleX = head.rotateAngleX
+		Shape9.rotateAngleY = head.rotateAngleY
+		Shape9.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape10.rotateAngleY = head.rotateAngleY
+		Shape10.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape11.rotateAngleY = head.rotateAngleY
+		Shape11.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape12.rotateAngleY = head.rotateAngleY
+		Shape12.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape13.rotateAngleY = head.rotateAngleY
+		Shape13.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape14.rotateAngleY = head.rotateAngleY
+		Shape14.rotateAngleX = head.rotateAngleX - Math.toRadians(30.0).F
+		Shape15.rotateAngleY = head.rotateAngleY
+		Shape15.rotateAngleX = head.rotateAngleX
+		Shape16.rotateAngleY = head.rotateAngleY
+		Shape16.rotateAngleX = head.rotateAngleX
+		Shape17.rotateAngleY = head.rotateAngleY
+		Shape17.rotateAngleX = head.rotateAngleX
+		Shape18.rotateAngleY = head.rotateAngleY
+		Shape18.rotateAngleX = head.rotateAngleX
 		
-		this.rightarm.rotateAngleX = MathHelper.cos(f1 * 0.6662f + Math.PI.toFloat()) * 2.0f * f2 * 0.5f
-		this.leftarm.rotateAngleX = MathHelper.cos(f1 * 0.6662f) * 2.0f * f2 * 0.5f
-		this.rightleg.rotateAngleX = MathHelper.cos(f1 * 0.6662f) * 1.4f * f2
-		this.leftleg.rotateAngleX = MathHelper.cos(f1 * 0.6662f + Math.PI.toFloat()) * 1.4f * f2
+		rightarm.rotateAngleX = MathHelper.cos(f1 * 0.6662f + Math.PI.F) * 2f * f2 * 0.5f
+		leftarm.rotateAngleX = MathHelper.cos(f1 * 0.6662f) * 2f * f2 * 0.5f
+		rightleg.rotateAngleX = MathHelper.cos(f1 * 0.6662f) * 1.4f * f2
+		leftleg.rotateAngleX = MathHelper.cos(f1 * 0.6662f + Math.PI.F) * 1.4f * f2
 		
-		this.rightshoulder.rotateAngleX = this.rightarm.rotateAngleX
-		this.leftshoulder.rotateAngleX = this.leftarm.rotateAngleX
-		this.rightboot.rotateAngleX = this.rightleg.rotateAngleX
-		this.leftboot.rotateAngleX = this.leftleg.rotateAngleX
+		rightshoulder.rotateAngleX = rightarm.rotateAngleX
+		leftshoulder.rotateAngleX = leftarm.rotateAngleX
+		rightboot.rotateAngleX = rightleg.rotateAngleX
+		leftboot.rotateAngleX = leftleg.rotateAngleX
 		
-		this.leftboot.rotateAngleY = 0.0f
-		this.rightboot.rotateAngleY = this.leftboot.rotateAngleY
-		this.leftshoulder.rotateAngleZ = this.rightboot.rotateAngleY
-		this.rightshoulder.rotateAngleZ = this.leftshoulder.rotateAngleZ
-		this.leftleg.rotateAngleY = this.rightshoulder.rotateAngleZ
-		this.rightleg.rotateAngleY = this.leftleg.rotateAngleY
-		this.leftarm.rotateAngleZ = this.rightleg.rotateAngleY
-		this.rightarm.rotateAngleZ = this.leftarm.rotateAngleZ
+		leftboot.rotateAngleY = 0f
+		rightboot.rotateAngleY = leftboot.rotateAngleY
+		leftshoulder.rotateAngleZ = rightboot.rotateAngleY
+		rightshoulder.rotateAngleZ = leftshoulder.rotateAngleZ
+		leftleg.rotateAngleY = rightshoulder.rotateAngleZ
+		rightleg.rotateAngleY = leftleg.rotateAngleY
+		leftarm.rotateAngleZ = rightleg.rotateAngleY
+		rightarm.rotateAngleZ = leftarm.rotateAngleZ
 	}
 }

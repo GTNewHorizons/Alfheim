@@ -3,10 +3,7 @@ package vazkii.botania.common.lexicon.page
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.asm.AlfheimHookHandler
-import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import org.lwjgl.opengl.GL11
@@ -24,7 +21,7 @@ class PageTreeCrafting: PagePetalRecipe<RecipeTreeCrafting> {
 	
 	@SideOnly(Side.CLIENT)
 	override fun renderManaBar(gui: IGuiLexiconEntry, recipe: RecipeTreeCrafting, mx: Int, my: Int) {
-		val font = Minecraft.getMinecraft().fontRenderer
+		val font = mc.fontRenderer
 		GL11.glEnable(GL11.GL_BLEND)
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 		val manaUsage = StatCollector.translateToLocal("botaniamisc.manaUsage")

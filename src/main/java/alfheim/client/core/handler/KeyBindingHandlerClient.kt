@@ -14,14 +14,13 @@ import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.D
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import baubles.api.BaublesApi
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.input.*
@@ -52,7 +51,7 @@ object KeyBindingHandlerClient {
 	var prevHotSlot = 1
 	
 	fun parseKeybindings(player: EntityPlayer) {
-		if (Minecraft.getMinecraft().currentScreen != null) return
+		if (mc.currentScreen != null) return
 		if (TimeStopSystemClient.affected(player)) return
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
@@ -95,13 +94,13 @@ object KeyBindingHandlerClient {
 				toggleESMAbility = false
 			}
 			
-			if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed && !toggleJump && safeKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
-				KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindJump.keyCode, false)
+			if (mc.gameSettings.keyBindJump.isPressed && !toggleJump && safeKeyDown(Keyboard.KEY_LMENU) && !toggleAlt && !player.capabilities.isFlying && player.onGround) {
+				KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, false)
 				toggleAlt = true
 				toggleJump = toggleAlt
 				val boost = player.flight >= 300
 				toggleFlight(boost)
-				if (boost && Minecraft.getMinecraft().thePlayer.race != EnumRace.HUMAN) {
+				if (boost && mc.thePlayer.race != EnumRace.HUMAN) {
 					player.motionY += 3.0
 				}
 			} else if (toggleJump && toggleAlt) {
@@ -111,12 +110,12 @@ object KeyBindingHandlerClient {
 		}
 		
 		if (AlfheimCore.enableMMO) {
-			if (prevHotSlot != Minecraft.getMinecraft().thePlayer.inventory.currentItem && safeKeyDown(Keyboard.KEY_LCONTROL)) {
+			if (prevHotSlot != mc.thePlayer.inventory.currentItem && safeKeyDown(Keyboard.KEY_LCONTROL)) {
 				val flag = PlayerSegmentClient.hotSpells.indices.any { safeKeyDown(it + 2) }
 				
-				if (flag) Minecraft.getMinecraft().thePlayer.inventory.currentItem = prevHotSlot
+				if (flag) mc.thePlayer.inventory.currentItem = prevHotSlot
 			} else
-				prevHotSlot = Minecraft.getMinecraft().thePlayer.inventory.currentItem
+				prevHotSlot = mc.thePlayer.inventory.currentItem
 			
 			run {
 				if (safeKeyDown(Keyboard.KEY_LCONTROL)) {
@@ -133,9 +132,9 @@ object KeyBindingHandlerClient {
 								
 								val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
 								if (spell == null)
-									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).toDouble()))
+									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).D))
 								else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
-									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).toDouble()))
+									PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).D))
 									return@run
 								}
 								
@@ -198,9 +197,9 @@ object KeyBindingHandlerClient {
 							
 							val spell = AlfheimAPI.getSpellByIDs(raceID, spellID)
 							if (spell == null)
-								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).toDouble()))
+								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-DESYNC.ordinal).D))
 							else if (!player.capabilities.isCreativeMode && !SpellBase.consumeMana(player, spell.getManaCost(), false) && !player.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
-								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).toDouble()))
+								PacketHandlerClient.handle(Message2d(m2d.COOLDOWN, 0.0, (-NOMANA.ordinal).D))
 								return@run
 							}
 							

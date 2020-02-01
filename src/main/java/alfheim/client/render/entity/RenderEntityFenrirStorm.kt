@@ -2,7 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
 import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.client.renderer.OpenGlHelper
@@ -17,7 +17,7 @@ class RenderEntityFenrirStorm: Render() {
 	internal val rand = Random()
 	
 	init {
-		shadowSize = 0.0f
+		shadowSize = 0f
 	}
 	
 	override fun getEntityTexture(entity: Entity) = null
@@ -30,14 +30,14 @@ class RenderEntityFenrirStorm: Render() {
 		
 		/*try {
 			val area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -8.0, 0.5, 0.5, 8.0))
-			area.rotateOX(e.rotationPitch.toDouble())
-			area.rotateOY(-e.rotationYaw.toDouble())
+			area.rotateOX(e.rotationPitch.D)
+			area.rotateOY(-e.rotationYaw.D)
 			val v = Vector3(ASJUtilities.getLookVec(e)).mul(8.5)
 			area.translate(v.x, v.y, v.z)
 			area.draw(0)
 		} catch (ignore: Throwable) {}*/
 		
-		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.toInt() * 2))
+		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.I * 2))
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
@@ -47,7 +47,7 @@ class RenderEntityFenrirStorm: Render() {
 		rand.setSeed((e.entityId + e.ticksExisted / 3).toLong())
 		
 		for (i in 0..2) {
-			glLineWidth(ASJUtilities.randInBounds(1, 3).toFloat())
+			glLineWidth(ASJUtilities.randInBounds(1, 3).F)
 			lightning(rand, parts, Vector3.zero.copy(), Vector3(ASJUtilities.getLookVec(e)).normalize(), Vector3.zero.copy())
 		}
 		

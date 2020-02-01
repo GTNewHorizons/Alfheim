@@ -33,7 +33,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		
 		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityPlayer::class.java, 1.2, false))
 		tasks.addTask(5, EntityAIWander(this, 1.0))
-		tasks.addTask(6, EntityAIWatchClosest(this, EntityPlayer::class.java, 8.0f))
+		tasks.addTask(6, EntityAIWatchClosest(this, EntityPlayer::class.java, 8f))
 		tasks.addTask(6, EntityAILookIdle(this))
 		
 		targetTasks.addTask(1, EntityAIHurtByTarget(this, false))

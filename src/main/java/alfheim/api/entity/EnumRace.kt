@@ -2,6 +2,7 @@ package alfheim.api.entity
 
 import alfheim.api.ModInfo
 import alfheim.api.event.PlayerChangedRaceEvent
+import alfheim.common.core.util.*
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*
@@ -12,17 +13,17 @@ enum class EnumRace {
 	HUMAN, SALAMANDER, SYLPH, CAITSITH, POOKA, GNOME, LEPRECHAUN, SPRIGGAN, UNDINE, IMP, ALV;
 	
 	val rgbColor: Int
-		get() = getRGBColor(ordinal.toDouble())
+		get() = getRGBColor(ordinal.D)
 	
 	val enumColor: EnumChatFormatting
-		get() = getEnumColor(ordinal.toDouble())
+		get() = getEnumColor(ordinal.D)
 	
 	fun glColor() {
-		glColor(ordinal.toDouble())
+		glColor(ordinal.D)
 	}
 	
 	fun glColorA(alpha: Double) {
-		glColorA(ordinal.toDouble(), alpha)
+		glColorA(ordinal.D, alpha)
 	}
 	
 	fun localize() =
@@ -30,7 +31,7 @@ enum class EnumRace {
 	
 	companion object {
 		
-		private val RACE: IAttribute = RangedAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0, 0.0, values().size.toDouble().minus(1)).setShouldWatch(true)
+		private val RACE: IAttribute = RangedAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0, 0.0, values().size.D.minus(1)).setShouldWatch(true)
 		
 		fun getRGBColor(id: Double): Int {
 			//return ASJUtilities.enumColorToRGB(getEnumColor(id));
@@ -63,7 +64,7 @@ enum class EnumRace {
 		}
 		
 		fun glColorA(id: Double, alpha: Double) {
-			glColor1u(addAlpha(getRGBColor(id), (alpha * 255).toInt()))
+			glColor1u(addAlpha(getRGBColor(id), (alpha * 255).I))
 		}
 		
 		private fun addAlpha(color: Int, alpha: Int) =
@@ -74,7 +75,7 @@ enum class EnumRace {
 		}
 		
 		private fun getByID(id: Double) =
-			if (0 > id || id > values().size) HUMAN else values()[MathHelper.floor_double(id)]
+			if (0 > id || id > values().size) HUMAN else values()[id.I]
 		
 		fun ensureExistance(player: EntityPlayer) {
 			if (player.getAttributeMap().getAttributeInstanceByName(RACE.attributeUnlocalizedName) == null) registerRace(player)
@@ -85,7 +86,7 @@ enum class EnumRace {
 			setRaceID(player, 0.0)
 		}
 		
-		operator fun get(id: Int) = getByID(id.toDouble())
+		operator fun get(id: Int) = getByID(id.D)
 		
 		operator fun get(player: EntityPlayer): EnumRace {
 			ensureExistance(player)
@@ -94,12 +95,12 @@ enum class EnumRace {
 		
 		fun getRaceID(player: EntityPlayer): Int {
 			ensureExistance(player)
-			return MathHelper.floor_double(player.getEntityAttribute(RACE).attributeValue)
+			return player.getEntityAttribute(RACE).attributeValue.I
 		}
 		
 		operator fun set(player: EntityPlayer, race: EnumRace) {
 			ensureExistance(player)
-			player.getEntityAttribute(RACE).baseValue = race.ordinal.toDouble()
+			player.getEntityAttribute(RACE).baseValue = race.ordinal.D
 			
 			MinecraftForge.EVENT_BUS.post(PlayerChangedRaceEvent(player, player.race, race))
 		}
@@ -124,5 +125,5 @@ var EntityPlayer.race
 var EntityPlayer.raceID
 	get() = EnumRace.getRaceID(this)
 	internal set(value) {
-		EnumRace.setRaceID(this, value.toDouble())
+		EnumRace.setRaceID(this, value.D)
 	}

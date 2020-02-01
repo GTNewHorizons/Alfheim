@@ -103,7 +103,7 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 			if (itemstack != null)
 				items.add(itemstack)
 			
-			ForgeEventFactory.fireBlockHarvesting(items, world, this, x, y, z, meta, 0, 1.0f, true, player)
+			ForgeEventFactory.fireBlockHarvesting(items, world, this, x, y, z, meta, 0, 1f, true, player)
 			for (item in items)
 				this.dropBlockAsItem(world, x, y, z, item)
 		} else {

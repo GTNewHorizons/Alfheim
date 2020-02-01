@@ -1,7 +1,7 @@
 package alfheim.common.block.colored.rainbow
 
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.Optional.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -36,9 +36,9 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 		setBlockName("rainbowMushroom")
 		setCreativeTab(AlfheimTab)
 		setLightLevel(0.2f)
-		setHardness(0.0f)
+		setHardness(0f)
 		setStepSound(Block.soundTypeGrass)
-		setBlockBounds(0.3f, 0.0f, 0.3f, 0.8f, 1.0f, 0.8f)
+		setBlockBounds(0.3f, 0f, 0.3f, 0.8f, 1f, 0.8f)
 		tickRandomly = false
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
@@ -75,7 +75,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	}
 	
 	override fun setLightLevel(lvl: Float): Block {
-		originalLight = (lvl * 15).toInt()
+		originalLight = (lvl * 15).I
 		return super.setLightLevel(lvl)
 	}
 	
@@ -89,7 +89,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	override fun randomDisplayTick(world: World, x: Int, y: Int, z: Int, rand: Random) {
 		val color = EntitySheep.fleeceColorTable[world.rand.nextInt(16)]
 		if (rand.nextDouble() < ConfigHandler.flowerParticleFrequency * 0.25) {
-			Botania.proxy.sparkleFX(world, x.toDouble() + 0.3 + rand.nextFloat().toDouble() * 0.5, y.toDouble() + 0.5 + rand.nextFloat().toDouble() * 0.5, z.toDouble() + 0.3 + rand.nextFloat().toDouble() * 0.5, color[0], color[1], color[2], rand.nextFloat(), 5)
+			Botania.proxy.sparkleFX(world, x.D + 0.3 + rand.nextFloat().D * 0.5, y.D + 0.5 + rand.nextFloat().D * 0.5, z.D + 0.3 + rand.nextFloat().D * 0.5, color[0], color[1], color[2], rand.nextFloat(), 5)
 		}
 	}
 	

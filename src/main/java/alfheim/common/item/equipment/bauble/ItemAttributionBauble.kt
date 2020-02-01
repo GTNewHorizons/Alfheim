@@ -1,11 +1,11 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
@@ -70,7 +70,7 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
 	
 	override fun getUnlocalizedName(par1ItemStack: ItemStack) =
-		super.getUnlocalizedName(par1ItemStack) + par1ItemStack.itemDamage
+		super.getUnlocalizedName(par1ItemStack) + par1ItemStack.meta
 	
 	fun faceTranslate() {
 		GL11.glRotatef(90F, 0F, 1F, 0F)
@@ -89,8 +89,8 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	
 	override fun onEquipped(stack: ItemStack, player: EntityLivingBase) {
 		super.onEquipped(stack, player)
-		if (stack.itemDamage != 1 && stack.displayName.toLowerCase().trim() == "vazkii is bae") {
-			stack.itemDamage = 1
+		if (stack.meta != 1 && stack.displayName.toLowerCase().trim() == "vazkii is bae") {
+			stack.meta = 1
 			stack.tagCompound.removeTag("display")
 		}
 	}
@@ -104,7 +104,7 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	//        GL11.glDisable(GL11.GL_LIGHTING)
 	//        GL11.glDisable(GL11.GL_CULL_FACE)
 	//
-	//        Minecraft.getMinecraft().renderEngine.bindTexture(kitsuneTexture)
+	//        mc.renderEngine.bindTexture(kitsuneTexture)
 	//
 	//        IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 	//        chestTranslate()
@@ -135,17 +135,17 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		val name = event.entityPlayer.commandSenderName
 		if (type == IBaubleRender.RenderType.HEAD) {
-			if (stack.itemDamage != 0) {
+			if (stack.meta != 0) {
 				// Render the Tiny Potato on your head... a tiny headtato, if you will.
-				Minecraft.getMinecraft().renderEngine.bindTexture(potatoTexture)
+				mc.renderEngine.bindTexture(potatoTexture)
 				val model = ModelTinyPotato()
-				GL11.glTranslatef(0.0F, -2.0F, 0.0F)
+				GL11.glTranslatef(0f, -2f, 0f)
 				GL11.glRotatef(-90F, 0F, 1F, 0F)
 				model.render()
 			} else {
 				if (name == "yrsegal" || name == "theLorist") {
 					// Render the Blueflare
-					Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+					mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 					IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
 					GL11.glEnable(GL11.GL_BLEND)
 					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -160,7 +160,7 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 					GL11.glDisable(GL11.GL_BLEND)
 				} else if (name == "Tristaric") {
 					// Render the Ezic Star
-					Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+					mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 					IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
 					faceTranslate()
 					scale(0.5F)
@@ -169,8 +169,8 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 				}
 			}
 		} else
-			if (type == IBaubleRender.RenderType.BODY && stack.itemDamage == 0) {
-				Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			if (type == IBaubleRender.RenderType.BODY && stack.meta == 0) {
+				mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 				IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 				if (name == "l0nekitsune") {
 					// Render a fox tail

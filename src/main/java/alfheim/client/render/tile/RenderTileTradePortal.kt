@@ -1,8 +1,9 @@
 package alfheim.client.render.tile
 
+import alfheim.client.core.util.mc
 import alfheim.common.block.BlockTradePortal
 import alfheim.common.block.tile.TileTradePortal
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.D
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -30,7 +31,7 @@ object RenderTileTradePortal: TileEntitySpecialRenderer() {
 		glDisable(GL_ALPHA_TEST)
 		glDisable(GL_LIGHTING)
 		glDisable(GL_CULL_FACE)
-		glColor4d(1.0, 1.0, 1.0, min(1.0, (sin(((ClientTickHandler.ticksInGame + ticks) / 8).toDouble()) + 1) / 7 + 0.6) * (min(60, tile.ticksOpen) / 60.0) * 0.85)
+		glColor4d(1.0, 1.0, 1.0, min(1.0, (sin(((ClientTickHandler.ticksInGame + ticks) / 8).D) + 1) / 7 + 0.6) * (min(60, tile.ticksOpen) / 60.0) * 0.85)
 		
 		glTranslated(x - 1, y + 1, z + 0.25)
 		if (meta == 2) {
@@ -38,7 +39,7 @@ object RenderTileTradePortal: TileEntitySpecialRenderer() {
 			glRotated(90.0, 0.0, 1.0, 0.0)
 		}
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture)
+		mc.renderEngine.bindTexture(TextureMap.locationBlocksTexture)
 		val icon = BlockTradePortal.textures[1]
 		if (icon != null) renderIcon(0.0, 0.0, icon, 3.0, 3.0, 240)
 		glTranslated(0.0, 0.0, 0.5)
@@ -74,10 +75,10 @@ object RenderTileTradePortal: TileEntitySpecialRenderer() {
 		val tessellator = Tessellator.instance
 		tessellator.startDrawingQuads()
 		tessellator.setBrightness(brightness)
-		tessellator.addVertexWithUV(par1 + 0, par2 + par5, 0.0, par3Icon.minU.toDouble(), par3Icon.maxV.toDouble())
-		tessellator.addVertexWithUV(par1 + par4, par2 + par5, 0.0, par3Icon.maxU.toDouble(), par3Icon.maxV.toDouble())
-		tessellator.addVertexWithUV(par1 + par4, par2 + 0, 0.0, par3Icon.maxU.toDouble(), par3Icon.minV.toDouble())
-		tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0.0, par3Icon.minU.toDouble(), par3Icon.minV.toDouble())
+		tessellator.addVertexWithUV(par1 + 0, par2 + par5, 0.0, par3Icon.minU.D, par3Icon.maxV.D)
+		tessellator.addVertexWithUV(par1 + par4, par2 + par5, 0.0, par3Icon.maxU.D, par3Icon.maxV.D)
+		tessellator.addVertexWithUV(par1 + par4, par2 + 0, 0.0, par3Icon.maxU.D, par3Icon.minV.D)
+		tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0.0, par3Icon.minU.D, par3Icon.minV.D)
 		tessellator.draw()
 	}
 	
@@ -85,7 +86,7 @@ object RenderTileTradePortal: TileEntitySpecialRenderer() {
 		if (stack == null) return
 		val entityitem = EntityItem(tile.worldObj, 0.0, 0.0, 0.0, stack)
 		entityitem.entityItem.stackSize = 1
-		entityitem.hoverStart = 0.0f
+		entityitem.hoverStart = 0f
 		RenderItem.renderInFrame = true
 		RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0f, 0f)
 		RenderItem.renderInFrame = false

@@ -2,11 +2,11 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
@@ -59,11 +59,11 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
 	
 	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
 		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
 		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
@@ -86,17 +86,17 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 				val x = player.posX + shift.x * 0.25
 				val y = player.posY + shift.y * 0.25
 				val z = player.posZ + shift.z * 0.25
-				val xmotion = shift.x.toFloat() * 0.025f
-				val ymotion = shift.y.toFloat() * 0.025f
-				val zmotion = shift.z.toFloat() * 0.025f
+				val xmotion = shift.x.F * 0.025f
+				val ymotion = shift.y.F * 0.025f
+				val zmotion = shift.z.F * 0.025f
 				val color = Color(ColorOverrideHelper.getColor(player, 0xFFFFFF))
-				val r = color.red.toFloat() / 255f
-				val g = color.green.toFloat() / 255f
-				val b = color.blue.toFloat() / 255f
-				Botania.proxy.wispFX(player.worldObj, x, y, z, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, xmotion, ymotion, zmotion)
+				val r = color.red.F / 255f
+				val g = color.green.F / 255f
+				val b = color.blue.F / 255f
+				Botania.proxy.wispFX(player.worldObj, x, y, z, r, g, b, Math.random().F * 0.15f + 0.15f, xmotion, ymotion, zmotion)
 			}
 			
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(player)
 			val armor = player.getCurrentArmor(2) != null
 			GL11.glRotatef(180F, 1F, 0F, 0F)

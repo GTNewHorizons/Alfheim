@@ -16,7 +16,7 @@ class FakeLightning(world: World, x: Double, y: Double, z: Double): EntityLightn
     private var boltLivingTime: Int = 0
     
     init {
-        setLocationAndAngles(x, y, z, 0.0f, 0.0f)
+        setLocationAndAngles(x, y, z, 0f, 0f)
         this.lightningState = 2
         boltVertex = rand.nextLong()
         this.boltLivingTime = rand.nextInt(3) + 1
@@ -26,8 +26,8 @@ class FakeLightning(world: World, x: Double, y: Double, z: Double): EntityLightn
         super.onUpdate()
         
         if (this.lightningState == 2) {
-            worldObj.playSoundEffect(posX, posY, posZ, "ambient.weather.thunder", 10000.0f, 0.8f + rand.nextFloat() * 0.2f)
-            worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 2.0f, 0.5f + rand.nextFloat() * 0.2f)
+            worldObj.playSoundEffect(posX, posY, posZ, "ambient.weather.thunder", 10000f, 0.8f + rand.nextFloat() * 0.2f)
+            worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 2f, 0.5f + rand.nextFloat() * 0.2f)
         }
         
         --this.lightningState

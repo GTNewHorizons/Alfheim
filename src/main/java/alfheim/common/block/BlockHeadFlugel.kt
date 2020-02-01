@@ -2,7 +2,6 @@ package alfheim.common.block
 
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileHeadFlugel
-import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry

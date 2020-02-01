@@ -2,6 +2,7 @@ package alfheim.common.core.handler
 
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.block.tile.TileManaInfuser
+import alfheim.common.core.util.D
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul
 import cpw.mods.fml.common.eventhandler.*
@@ -44,7 +45,7 @@ object SoulRestructurizationHandler {
 	fun onGaiaHurt(e: LivingHurtEvent) {
 		val gaia = e.entity as? EntityDoppleganger ?: return
 		
-		VisualEffectHandler.sendPacket(VisualEffects.GAIA_SOUL, gaia.dimension, gaia.source.posX.toDouble(), gaia.source.posY + 2.0, gaia.source.posZ.toDouble())
+		VisualEffectHandler.sendPacket(VisualEffects.GAIA_SOUL, gaia.dimension, gaia.source.posX.D, gaia.source.posY + 2.0, gaia.source.posZ.D)
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -66,7 +67,7 @@ object SoulRestructurizationHandler {
 					}
 				}
 				
-				world.newExplosion(null, x.toDouble(), y + 2.0, z.toDouble(), 10f, true, false)
+				world.newExplosion(null, x.D, y + 2.0, z.D, 10f, true, false)
 				world.setBlockToAir(x, y + 2, z)
 			}
 		}

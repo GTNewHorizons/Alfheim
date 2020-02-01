@@ -2,6 +2,7 @@ package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -10,7 +11,7 @@ import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.*
+import net.minecraft.util.StatCollector
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.glEnable
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
@@ -20,14 +21,14 @@ import kotlin.math.*
 class TileAnimatedTorch: TileMod() {
 	
 	var side: Int = 0
-	var rotation: Double = 0.toDouble()
+	var rotation: Double = 0.D
 	var rotating: Boolean = false
-	var lastTickRotation: Double = 0.toDouble()
+	var lastTickRotation: Double = 0.D
 	var nextRandomRotation: Int = 0
 	var currentRandomRotation: Int = 0
 	
 	private var rotationTicks: Int = 0
-	var anglePerTick: Double = 0.toDouble()
+	var anglePerTick: Double = 0.D
 	
 	private var torchMode = TorchMode.TOGGLE
 	
@@ -41,7 +42,7 @@ class TileAnimatedTorch: TileMod() {
 			nextRandomRotation = worldObj.rand.nextInt(4)
 		
 		if (entity != null)
-			side = MathHelper.floor_double((entity.rotationYaw * 4.0f / 360.0f).toDouble() + 0.5) and 3
+			side = ((entity.rotationYaw * 4f / 360f) + 0.5).mfloor() and 3
 		
 		worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType())
 	}
@@ -113,13 +114,13 @@ class TileAnimatedTorch: TileMod() {
 			}
 			
 		} else
-			rotation = (side * 90).toDouble()
+			rotation = (side * 90).D
 		
 		if (worldObj.isRemote) {
 			val amt = if (rotating) 3 else if (Math.random() < 0.1) 1 else 0
-			val x = xCoord.toDouble() + 0.5 + cos((rotation + 90) / 180.0 * Math.PI) * 0.35
+			val x = xCoord.D + 0.5 + cos((rotation + 90) / 180.0 * Math.PI) * 0.35
 			val y = yCoord + 0.2
-			val z = zCoord.toDouble() + 0.5 + sin((rotation + 90) / 180.0 * Math.PI) * 0.35
+			val z = zCoord.D + 0.5 + sin((rotation + 90) / 180.0 * Math.PI) * 0.35
 			
 			for (i in 0 until amt)
 				worldObj.spawnParticle("reddust", x, y, z, 0.0, 0.0, 0.0)

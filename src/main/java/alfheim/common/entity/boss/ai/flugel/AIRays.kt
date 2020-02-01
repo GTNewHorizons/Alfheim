@@ -1,6 +1,7 @@
 package alfheim.common.entity.boss.ai.flugel
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.F
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul.Companion.TAG_ATTACKER_ID
@@ -39,15 +40,15 @@ class AIRays(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		ItemNBTHelper.setInt(lens, TAG_ATTACKER_ID, flugel.entityId)
 		burst.sourceLens = lens
 		burst.setBurstSourceCoords(0, -1, 0)
-		burst.setLocationAndAngles(flugel.posX, flugel.posY + flugel.eyeHeight, flugel.posZ, i.toFloat(), -flugel.rotationPitch)
-		burst.posX -= MathHelper.cos(i / 180.0f * Math.PI.toFloat()) / 2.0
+		burst.setLocationAndAngles(flugel.posX, flugel.posY + flugel.eyeHeight, flugel.posZ, i.F, -flugel.rotationPitch)
+		burst.posX -= MathHelper.cos(i / 180f * Math.PI.F) / 2.0
 		burst.posY -= 0.1
-		burst.posZ -= MathHelper.sin(i / 180.0f * Math.PI.toFloat()) / 2.0
+		burst.posZ -= MathHelper.sin(i / 180f * Math.PI.F) / 2.0
 		burst.setPosition(burst.posX, burst.posY, burst.posZ)
-		burst.yOffset = 0.0f
+		burst.yOffset = 0f
 		val f = 0.4f
-		val mx = MathHelper.sin(burst.rotationYaw / 180.0f * Math.PI.toFloat()) * f / 2.0
-		val mz = -(MathHelper.cos(burst.rotationYaw / 180.0f * Math.PI.toFloat()) * f) / 2.0
+		val mx = MathHelper.sin(burst.rotationYaw / 180f * Math.PI.F) * f / 2.0
+		val mz = -(MathHelper.cos(burst.rotationYaw / 180f * Math.PI.F) * f) / 2.0
 		burst.setMotion(mx * 5, 0.0, mz * 5)
 		return burst
 	}

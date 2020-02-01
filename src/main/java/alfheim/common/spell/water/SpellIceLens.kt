@@ -5,7 +5,6 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageVisualEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP

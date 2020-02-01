@@ -2,15 +2,15 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
+import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.item.relic.ShootHelper.isLookingAtMoon
 import com.google.common.collect.Multimap
 import com.sun.xml.internal.fastinfoset.stax.events.AttributeBase
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -69,9 +69,9 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			val v = Vector3()
 			val l = player.lookVec
 			val look = Vector3()
-			val p = Vector3(0.0, if (player === Minecraft.getMinecraft().thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
+			val p = Vector3(0.0, if (player === mc.thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
 			val ds = arrayOf(0.3, 0.8)
-			val moon = isLookingAtMoon(player.entityWorld, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)
+			val moon = isLookingAtMoon(player.entityWorld, player, mc.timer.renderPartialTicks, false)
 			var r = 0.1f * if (moon) 3 else 1
 			var g = 0.85f
 			var b = if (moon) g else 0.1f
@@ -86,8 +86,8 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 				for (i in 1..36) {
 					v.set(0.0, d, 0.0)
 					v.rotate(i * 10.0, Vector3.oZ)
-					v.rotate(player.rotationPitch.toDouble(), Vector3.oX)
-					v.rotate(-player.rotationYaw.toDouble(), Vector3.oY)
+					v.rotate(player.rotationPitch.D, Vector3.oX)
+					v.rotate(-player.rotationYaw.D, Vector3.oY)
 					v.add(look.set(l).mul(if (d == 0.3) 1.75 else 1.0)).add(p)
 					Botania.proxy.wispFX(player.worldObj, v.x, v.y, v.z, r, g, b, if (d == 0.3) 0.1f else 0.25f, 0f, 0.1f)
 				}
@@ -98,10 +98,10 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
 		if (!isRightPlayer(player, stack)) return
 		val m = maxDmg / 10
-		val i = ((getMaxItemUseDuration(stack) - itemInUse) * chargeVelocityMultiplier).toInt()
+		val i = ((getMaxItemUseDuration(stack) - itemInUse) * chargeVelocityMultiplier).I
 		if (i < m) return
 		val rank = (i - m) / 5
-		var dmg = min(maxDmg, m + rank * 2).toFloat()
+		var dmg = min(maxDmg, m + rank * 2).F
 		var mana = min(maxDmg * 10, maxDmg + rank * 20) * 5
 		var life = min(150, 5 + i * 4)
 		var dispersion = 1f
@@ -124,7 +124,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			if (dmg != -1f) {
 				val j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)
 				if (j > 0) arrow.damage *= j * 0.1f + 1f
-				arrow.damage += player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue.toFloat()
+				arrow.damage += player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue.F
 			}
 			
 			arrow.life = life
@@ -174,7 +174,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		var moon = false
 		
 		if (player != null) {
-			if (isLookingAtMoon(player.worldObj, player, Minecraft.getMinecraft().timer.renderPartialTicks, false)) {
+			if (isLookingAtMoon(player.worldObj, player, mc.timer.renderPartialTicks, false)) {
 				moon = true
 				iconD = moonD
 				iconA = moons
@@ -205,15 +205,11 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	
 	// ################################ ItemRelic ################################
 	
-	val TAG_SOULBIND = "soulbind"
-	
 	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity?, slot: Int, inHand: Boolean) {
 		if (entity is EntityPlayer) {
 			updateRelic(stack, entity)
 		}
 	}
-	
-	fun shouldDamageWrongPlayer() = true
 	
 	override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = Int.MAX_VALUE
 	
@@ -231,7 +227,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			}
 			
 			if (!isRightPlayer(player, stack) && player.ticksExisted % 10 == 0 && (stack.item !is ItemRelic || (stack.item as ItemRelic).shouldDamageWrongPlayer())) {
-				player.attackEntityFrom(damageSource(), 2.0f)
+				player.attackEntityFrom(damageSource(), 2f)
 			}
 		}
 	}
@@ -297,9 +293,9 @@ private object ShootHelper {
 		if (ent.rotationPitch !in -120f..-60f) return false
 		
 		// val f2 = if (f > 0.5f) f - 0.5f else 0.5f - f // unused
-		var f3 = (if (ent.rotationYaw > 0f) 270 else -90).toFloat()
+		var f3 = (if (ent.rotationYaw > 0f) 270 else -90).F
 		f3 = if (f > 0.5f) if (ent.rotationYaw > 0f) 90f else -270f else f3
-		f = if (f > 0.5f) 1.0f - f else f
+		f = if (f > 0.5f) 1f - f else f
 		
 		de = when {
 			f <= 0.475  -> 2.71828183
@@ -310,13 +306,13 @@ private object ShootHelper {
 			else        -> de
 		}
 		
-		//yaw check = player.rotationYaw % 360 <= Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1.0F))) + f3 && mc.thePlayer.rotationYaw % 360 >= -Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1.0F))) + f3
+		//yaw check = player.rotationYaw % 360 <= Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1f))) + f3 && mc.thePlayer.rotationYaw % 360 >= -Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1f))) + f3
 		//pitch check = mc.thePlayer.rotationPitch <= ff + 2.5F && mc.thePlayer.rotationPitch >= ff - 2.5F
 		
-		//yaw check = player.rotationYaw % 360 <= Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1.0F))) + f3 && mc.thePlayer.rotationYaw % 360 >= -Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1.0F))) + f3
-		val yawCheck = ent.rotationYaw % 360 <= de.pow(4.92574 * world.getCelestialAngle(1.0f)) + f3 && ent.rotationYaw % 360 >= -de.pow(4.92574 * world.getCelestialAngle(1.0f)) + f3
-		var ff = world.getCelestialAngle(1.0f)
-		ff = if (ff > 0.5f) 1.0f - ff else ff
+		//yaw check = player.rotationYaw % 360 <= Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1f))) + f3 && mc.thePlayer.rotationYaw % 360 >= -Math.pow(de, (4.92574 * mc.theWorld.getCelestialAngle(1f))) + f3
+		val yawCheck = ent.rotationYaw % 360 <= de.pow(4.92574 * world.getCelestialAngle(1f)) + f3 && ent.rotationYaw % 360 >= -de.pow(4.92574 * world.getCelestialAngle(1f)) + f3
+		var ff = world.getCelestialAngle(1f)
+		ff = if (ff > 0.5f) 1f - ff else ff
 		ff -= 0.26f
 		ff = ff / 0.26f * -94f - 4f
 		//pitch check = mc.thePlayer.rotationPitch <= ff + 2.5F && mc.thePlayer.rotationPitch >= ff - 2.5F
@@ -331,8 +327,6 @@ private object ShootHelper {
 	fun rayTrace(world: World, vec3d0: Vec3, vec3d1: Vec3, flag: Boolean, flag1: Boolean, goThroughTransparentBlocks: Boolean, distance: Int): MovingObjectPosition? {
 		var vec3d = vec3d0
 		
-		data class Vec3i(var x: Int, var y: Int, var z: Int)
-		
 		if (java.lang.Double.isNaN(vec3d.xCoord) || java.lang.Double.isNaN(vec3d.yCoord) || java.lang.Double.isNaN(vec3d.zCoord)) {
 			return null
 		}
@@ -341,12 +335,12 @@ private object ShootHelper {
 			return null
 		}
 		
-		val i = MathHelper.floor_double(vec3d1.xCoord)
-		val j = MathHelper.floor_double(vec3d1.yCoord)
-		val k = MathHelper.floor_double(vec3d1.zCoord)
-		var l = MathHelper.floor_double(vec3d.xCoord)
-		var i1 = MathHelper.floor_double(vec3d.yCoord)
-		var j1 = MathHelper.floor_double(vec3d.zCoord)
+		val i = vec3d1.xCoord.mfloor()
+		val j = vec3d1.yCoord.mfloor()
+		val k = vec3d1.zCoord.mfloor()
+		var l = vec3d.xCoord.mfloor()
+		var i1 = vec3d.yCoord.mfloor()
+		var j1 = vec3d.zCoord.mfloor()
 		val block = world.getBlock(l, i1, j1)
 		val meta = world.getBlockMetadata(l, i1, j1)
 		
@@ -376,20 +370,20 @@ private object ShootHelper {
 			var d2 = 999.0
 			
 			when {
-				i > l -> d0 = l.toDouble() + 1.0
-				i < l -> d0 = l.toDouble() + 0.0
+				i > l -> d0 = l.D + 1.0
+				i < l -> d0 = l.D + 0.0
 				else  -> flag5 = false
 			}
 			
 			when {
-				j > i1 -> d1 = i1.toDouble() + 1.0
-				j < i1 -> d1 = i1.toDouble() + 0.0
+				j > i1 -> d1 = i1.D + 1.0
+				j < i1 -> d1 = i1.D + 0.0
 				else   -> flag3 = false
 			}
 			
 			when {
-				k > j1 -> d2 = j1.toDouble() + 1.0
-				k < j1 -> d2 = j1.toDouble() + 0.0
+				k > j1 -> d2 = j1.D + 1.0
+				k < j1 -> d2 = j1.D + 0.0
 				else   -> flag4 = false
 			}
 			
@@ -437,9 +431,9 @@ private object ShootHelper {
 				vec3d = Vec3.createVectorHelper(vec3d.xCoord + d6 * d5, vec3d.yCoord + d7 * d5, d2)
 			}
 			
-			l = MathHelper.floor_double(vec3d.xCoord) - if (enumfacing == EnumFacing.EAST) 1 else 0
-			i1 = MathHelper.floor_double(vec3d.yCoord) - if (enumfacing == EnumFacing.UP) 1 else 0
-			j1 = MathHelper.floor_double(vec3d.zCoord) - if (enumfacing == EnumFacing.SOUTH) 1 else 0
+			l = vec3d.xCoord.mfloor() - if (enumfacing == EnumFacing.EAST) 1 else 0
+			i1 = vec3d.yCoord.mfloor() - if (enumfacing == EnumFacing.UP) 1 else 0
+			j1 = vec3d.zCoord.mfloor() - if (enumfacing == EnumFacing.SOUTH) 1 else 0
 			
 			val block1 = world.getBlock(l, i1, j1)
 			val meta1 = world.getBlockMetadata(l, i1, j1)
@@ -463,12 +457,12 @@ private object ShootHelper {
 	fun isTransparent(block: Block) = block.lightOpacity != 0xff
 	
 	fun getEntityPositionEyes(ent: Entity, partialTicks: Float): Vec3 {
-		return if (partialTicks == 1.0f) {
+		return if (partialTicks == 1f) {
 			Vec3.createVectorHelper(ent.posX, ent.posY + ent.eyeHeight, ent.posZ)
 		} else {
-			val d0 = ent.prevPosX + (ent.posX - ent.prevPosX) * partialTicks.toDouble()
-			val d1 = ent.prevPosY + (ent.posY - ent.prevPosY) * partialTicks.toDouble() + ent.eyeHeight
-			val d2 = ent.prevPosZ + (ent.posZ - ent.prevPosZ) * partialTicks.toDouble()
+			val d0 = ent.prevPosX + (ent.posX - ent.prevPosX) * partialTicks.D
+			val d1 = ent.prevPosY + (ent.posY - ent.prevPosY) * partialTicks.D + ent.eyeHeight
+			val d2 = ent.prevPosZ + (ent.posZ - ent.prevPosZ) * partialTicks.D
 			Vec3.createVectorHelper(d0, d1, d2)
 		}
 	}

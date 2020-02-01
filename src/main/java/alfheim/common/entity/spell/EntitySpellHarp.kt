@@ -7,6 +7,7 @@ import alfheim.api.spell.ITimeStopSpecific
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.I
 import alfheim.common.spell.sound.SpellHarp
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -46,7 +47,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 				return
 			}
 			
-			if (worldObj.rand.nextInt() % (SpellHarp.efficiency.toInt() / pt.count) == 0) {
+			if (worldObj.rand.nextInt() % (SpellHarp.efficiency.I / pt.count) == 0) {
 				var mr = pt[worldObj.rand.nextInt(pt.count)] ?: return
 				if (Vector3.entityDistance(this, mr) > SpellHarp.radius) return
 				mr.heal(SpellHarp.damage)

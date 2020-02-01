@@ -3,6 +3,7 @@ package alfheim.common.spell.earth
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.util.I
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
@@ -45,12 +46,12 @@ object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 1) {
 	
 	fun removeBlocksInIteration(world: World, player: EntityPlayer, x: Int, y: Int, z: Int, side: Int, remove: Boolean, draw: Boolean): Int {
 		val direction = ForgeDirection.getOrientation(side)
-		val xs = if (direction.offsetX == 0) -radius.toInt() else 0
-		val ys = if (direction.offsetY == 0) -radius.toInt() else 0
-		val zs = if (direction.offsetZ == 0) -radius.toInt() else 0
-		val xe = if (direction.offsetX == 0) radius.toInt() + 1 else 1
-		val ye = if (direction.offsetY == 0) radius.toInt() + 1 else 1
-		val ze = if (direction.offsetZ == 0) radius.toInt() + 1 else 1
+		val xs = if (direction.offsetX == 0) -radius.I else 0
+		val ys = if (direction.offsetY == 0) -radius.I else 0
+		val zs = if (direction.offsetZ == 0) -radius.I else 0
+		val xe = if (direction.offsetX == 0) radius.I + 1 else 1
+		val ye = if (direction.offsetY == 0) radius.I + 1 else 1
+		val ze = if (direction.offsetZ == 0) radius.I + 1 else 1
 		var mana = 0
 		if (player.isSneaking)
 			mana = removeBlockWithDrops(world, player, x, y, z, remove, draw, MATERIALS)
@@ -84,12 +85,12 @@ object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 1) {
 					
 					block.harvestBlock(world, player, x, y, z, localMeta)
 					
-					mana += (block.getBlockHardness(world, x, y, z) * 10).toInt()
+					mana += (block.getBlockHardness(world, x, y, z) * 10).I
 					tcd += 2
 				}
 				if (!remove) {
 					flag = true
-					mana += (block.getBlockHardness(world, x, y, z) * 10).toInt()
+					mana += (block.getBlockHardness(world, x, y, z) * 10).I
 				}
 			} else {
 				if (remove)

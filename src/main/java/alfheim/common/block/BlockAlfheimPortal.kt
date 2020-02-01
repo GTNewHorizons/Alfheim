@@ -7,6 +7,7 @@ import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAlfheimPortal
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.meta
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -25,8 +26,8 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 	init {
 		setBlockName("AlfheimPortal")
 		setBlockTextureName(ModInfo.MODID + ":AlfheimPortal")
-		setHardness(10.0f)
-		setResistance(600.0f)
+		setHardness(10f)
+		setResistance(600f)
 		setStepSound(Block.soundTypeWood)
 	}
 	
@@ -43,7 +44,7 @@ class BlockAlfheimPortal: BlockContainerMod(Material.wood), ILexiconable {
 		if (newMeta == 0) return false
 		
 		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) {
-			if (world.getBlockMetadata(x, y, z) == 0 && player.currentEquippedItem?.item === AlfheimItems.elvenResource && player.currentEquippedItem.itemDamage == ElvenResourcesMetas.InterdimensionalGatewayCore) {
+			if (world.getBlockMetadata(x, y, z) == 0 && player.currentEquippedItem?.item === AlfheimItems.elvenResource && player.currentEquippedItem.meta == ElvenResourcesMetas.InterdimensionalGatewayCore) {
 				ASJUtilities.consumeItemStack(player.inventory, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore))
 			} else
 				return false

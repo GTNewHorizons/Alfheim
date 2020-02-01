@@ -2,12 +2,12 @@ package alfheim.common.core.helper
 
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.D
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
-import net.minecraft.entity.ai.attributes.*
+import net.minecraft.entity.ai.attributes.RangedAttribute
 import net.minecraft.entity.player.EntityPlayer
-import kotlin.math.*
 
 object ElvenFlightHelper {
 	
@@ -26,7 +26,7 @@ object ElvenFlightHelper {
 	}
 	
 	var max
-		get() = AlfheimConfigHandler.flightTime.toDouble()
+		get() = AlfheimConfigHandler.flightTime.D
 		internal set(value) {
 			FLIGHT.defaultValue = value
 		}
@@ -50,7 +50,7 @@ object ElvenFlightHelper {
 	}
 	
 	fun sub(player: EntityPlayer, value: Int) {
-		add(player, -value.toDouble())
+		add(player, -value.D)
 	}
 	
 	fun regen(player: EntityPlayer, value: Int) {
@@ -59,7 +59,7 @@ object ElvenFlightHelper {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onConfigChanged(e: ConfigChangedEvent.OnConfigChangedEvent) {
-		if (e.modID == ModInfo.MODID) max = AlfheimConfigHandler.flightTime.toDouble()
+		if (e.modID == ModInfo.MODID) max = AlfheimConfigHandler.flightTime.D
 	}
 }
 

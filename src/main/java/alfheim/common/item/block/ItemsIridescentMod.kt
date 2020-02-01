@@ -2,6 +2,7 @@ package alfheim.common.item.block
 
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.meta
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -33,7 +34,7 @@ class ItemIridescentWoodMod(par2Block: Block): ItemIridescentBlockMod(par2Block)
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
 		if (par1ItemStack == null) return
 		val metaMatch = "\\d+$".toRegex().find(field_150939_a.unlocalizedName)
-		val meta = if (metaMatch == null) 16 else metaMatch.value.toInt() * 4 + par1ItemStack.itemDamage
+		val meta = if (metaMatch == null) 16 else metaMatch.value.toInt() * 4 + par1ItemStack.meta
 		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.$meta") + "&r", par3List)
 	}
 }
@@ -47,7 +48,7 @@ class ItemIridescentLeavesMod(par2Block: Block): ItemIridescentBlockMod(par2Bloc
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
 		if (par1ItemStack == null) return
 		val metaMatch = "\\d+$".toRegex().find(field_150939_a.unlocalizedName)
-		val meta = if (metaMatch == null) 16 else metaMatch.value.toInt() * 8 + par1ItemStack.itemDamage % 8
+		val meta = if (metaMatch == null) 16 else metaMatch.value.toInt() * 8 + par1ItemStack.meta % 8
 		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color.$meta") + "&r", par3List)
 	}
 }

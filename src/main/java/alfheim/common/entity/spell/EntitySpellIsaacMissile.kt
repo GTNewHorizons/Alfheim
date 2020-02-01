@@ -19,7 +19,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	internal var time = 0
 	
 	var isEvil: Boolean
-		get() = dataWatcher.getWatchableObjectByte(25).toInt() == 1
+		get() = dataWatcher.getWatchableObjectByte(25).I == 1
 		set(evil) = dataWatcher.updateObject(25, (if (evil) 1 else 0).toByte())
 	
 	val targetEntity: EntityLivingBase?
@@ -88,7 +88,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 		val oldPos = Vector3(lastTickPosX, lastTickPosY, lastTickPosZ)
 		val diff = thisVec.copy().sub(oldPos)
 		val step = diff.copy().normalize().mul(0.05)
-		val steps = (diff.length() / step.length()).toInt()
+		val steps = (diff.length() / step.length()).I
 		val particlePos = oldPos.copy()
 		
 		for (i in 0 until steps) {

@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alfheim.common.core.util.*
 import alfheim.common.entity.EntityThrownPotion
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -51,7 +52,7 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 	fun getColor(stack: ItemStack?): Int {
 		if (stack != null) {
 			val color = Color(getBrew(stack).getColor(stack))
-			val add = (sin(Botania.proxy.worldElapsedTicks.toDouble() * 0.1) * 16.0).toInt()
+			val add = (sin(Botania.proxy.worldElapsedTicks.D * 0.1) * 16.0).I
 			val r = max(0, min(255, color.red + add))
 			val g = max(0, min(255, color.green + add))
 			val b = max(0, min(255, color.blue + add))
@@ -106,7 +107,7 @@ class ItemSplashPotion: ItemMod("splashPotion"), IBrewItem, IBrewContainer {
 		return BotaniaAPI.getBrewFromKey(key)
 	}
 	
-	override fun getManaCost(p0: Brew?, p1: ItemStack?) = p0?.manaCost?.times(1.5)?.toInt() ?: 400
+	override fun getManaCost(p0: Brew?, p1: ItemStack?) = p0?.manaCost?.times(1.5)?.I ?: 400
 	
 	fun setBrew(stack: ItemStack, brew: Brew?) {
 		setBrew(stack, (brew ?: BotaniaAPI.fallbackBrew).key)

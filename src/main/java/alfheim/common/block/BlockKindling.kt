@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.colored.BlockColoredLamp
+import alfheim.common.core.util.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -28,11 +29,11 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 			if (player.inventory.getCurrentItem() == null) {
 				if (world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z)) {
 					world.setBlock(x, y + 1, z, Blocks.fire)
-					world.playSoundEffect(x.toDouble() + 0.5, y.toDouble() + 0.5, z.toDouble() + 0.5, "fire.ignite", 1.0F, Math.random().toFloat() * 0.4F + 0.8F)
+					world.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "fire.ignite", 1f, Math.random().F * 0.4F + 0.8F)
 					return true
 				} else if (world.getBlock(x, y + 1, z) == Blocks.fire) {
 					world.setBlock(x, y + 1, z, Blocks.air)
-					world.playSoundEffect(x.toDouble() + 0.5, y.toDouble() + 0.5, z.toDouble() + 0.5, "random.fizz", 1.0F, Math.random().toFloat() * 0.4F + 0.8F)
+					world.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "random.fizz", 1f, Math.random().F * 0.4F + 0.8F)
 				}
 			}
 		}

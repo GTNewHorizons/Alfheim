@@ -3,10 +3,10 @@ package alfheim.client.render.world
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import alfheim.common.spell.tech.SpellTimeStop
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
-
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 import kotlin.math.*
@@ -30,7 +30,7 @@ object SpellVisualizations {
 			}
 			
 			override fun drawMesh() {
-				val size = (240 / 3.6 / 16 * SpellTimeStop.radius).toFloat()
+				val size = (240 / 3.6 / 16 * SpellTimeStop.radius).F
 				renderSphere(Tessellator.instance, size)
 			}
 			
@@ -48,8 +48,8 @@ object SpellVisualizations {
 	
 	fun redSphere(x: Double, y: Double, z: Double) {
 		glPushMatrix()
-		ASJRenderHelper.interpolatedTranslationReverse(Minecraft.getMinecraft().thePlayer)
-		val inside = TimeStopSystemClient.inside(Minecraft.getMinecraft().thePlayer)
+		ASJRenderHelper.interpolatedTranslationReverse(mc.thePlayer)
+		val inside = TimeStopSystemClient.inside(mc.thePlayer)
 		glTranslated(x, y, z)
 		glEnable(GL_RESCALE_NORMAL)
 		
@@ -59,7 +59,7 @@ object SpellVisualizations {
 			glColor4d(0.0, 0.0, 0.0, 1.0)
 		else
 			glColor4d(0.25, 0.0, 0.0, 1.0)
-		val size = (240 / 3.6 / 16 * SpellTimeStop.radius).toFloat()
+		val size = (240 / 3.6 / 16 * SpellTimeStop.radius).F
 		
 		glScaled(0.5, 0.5, 0.5)
 		if (RenderPostShaders.allowShaders)
@@ -84,7 +84,7 @@ object SpellVisualizations {
 	
 	fun negateSphere(s: Double) {
 		glPushMatrix()
-		ASJRenderHelper.interpolatedTranslation(Minecraft.getMinecraft().thePlayer)
+		ASJRenderHelper.interpolatedTranslation(mc.thePlayer)
 		val tes = Tessellator.instance
 		
 		glEnable(GL_RESCALE_NORMAL)
@@ -128,10 +128,10 @@ object SpellVisualizations {
 	 */
 	internal fun renderSphere(tessellator: Tessellator, width: Float) {
 		var width = width
-		val maxWidth = width / 2.0f
+		val maxWidth = width / 2f
 		val zAngleDivNum = 18
 		var angleZ: Double
-		val angleSpanZ = PI * 2.0 / zAngleDivNum.toDouble()
+		val angleSpanZ = PI * 2.0 / zAngleDivNum.D
 		val zDivNum = 9
 		var zPos = sin(-PI / 2.0) * maxWidth
 		var zPosOld = zPos
@@ -143,31 +143,31 @@ object SpellVisualizations {
 		var yPosOld: Float
 		var xPos2Old: Float
 		var yPos2Old: Float
-		var angle = -PI.toFloat() / 2.0f
-		val angleSpan = PI.toFloat() / zDivNum.toFloat()
+		var angle = -PI.F / 2f
+		val angleSpan = PI.F / zDivNum.F
 		angle += angleSpan
-		var widthOld = 0.0f
+		var widthOld = 0f
 		for (j in 0 until zDivNum) {
-			zPos = sin(angle.toDouble()) * maxWidth
-			width = cos(angle.toDouble()).toFloat() * maxWidth
+			zPos = sin(angle.D) * maxWidth
+			width = cos(angle.D).F * maxWidth
 			angleZ = 0.0
-			xPosOld = cos(angleZ).toFloat() * width
-			yPosOld = sin(angleZ).toFloat() * width
-			xPos2Old = cos(angleZ).toFloat() * widthOld
-			yPos2Old = sin(angleZ).toFloat() * widthOld
+			xPosOld = cos(angleZ).F * width
+			yPosOld = sin(angleZ).F * width
+			xPos2Old = cos(angleZ).F * widthOld
+			yPos2Old = sin(angleZ).F * widthOld
 			angleZ = angleSpanZ
 			for (i in 1..zAngleDivNum) {
-				xPos = cos(angleZ).toFloat() * width
-				yPos = sin(angleZ).toFloat() * width
-				xPos2 = cos(angleZ).toFloat() * widthOld
-				yPos2 = sin(angleZ).toFloat() * widthOld
+				xPos = cos(angleZ).F * width
+				yPos = sin(angleZ).F * width
+				xPos2 = cos(angleZ).F * widthOld
+				yPos2 = sin(angleZ).F * widthOld
 				tessellator.startDrawingQuads()
-				//tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F , alpha);
-				tessellator.setNormal(0.0f, 1.0f, 0.0f)
-				tessellator.addVertexWithUV(xPos.toDouble(), yPos.toDouble(), zPos, 1.0, 0.0)
-				tessellator.addVertexWithUV(xPosOld.toDouble(), yPosOld.toDouble(), zPos, 0.0, 0.0)
-				tessellator.addVertexWithUV(xPos2Old.toDouble(), yPos2Old.toDouble(), zPosOld, 0.0, 1.0)
-				tessellator.addVertexWithUV(xPos2.toDouble(), yPos2.toDouble(), zPosOld, 1.0, 1.0)
+				//tessellator.setColorRGBA_F(1f, 1f, 1f , alpha);
+				tessellator.setNormal(0f, 1f, 0f)
+				tessellator.addVertexWithUV(xPos.D, yPos.D, zPos, 1.0, 0.0)
+				tessellator.addVertexWithUV(xPosOld.D, yPosOld.D, zPos, 0.0, 0.0)
+				tessellator.addVertexWithUV(xPos2Old.D, yPos2Old.D, zPosOld, 0.0, 1.0)
+				tessellator.addVertexWithUV(xPos2.D, yPos2.D, zPosOld, 1.0, 1.0)
 				tessellator.draw()
 				xPosOld = xPos
 				yPosOld = yPos

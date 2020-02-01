@@ -3,9 +3,9 @@ package alfheim.client.model.armor
 import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
@@ -21,11 +21,11 @@ class ModelElvoriumArmor
 	val sobakaSutula = arrayOf("GedeonGrays", "Gedeon_Grays")
 	
 	override fun pre(entity: Entity) {
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.elvoriumArmor)
+		mc.renderEngine.bindTexture(LibResourceLocations.elvoriumArmor)
 		if (entity is EntityPlayer && entity.getCommandSenderName() in sobakaSutula) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			if (Minecraft.getMinecraft().thePlayer.commandSenderName in sobakaSutula && !AlfheimConfigHandler.fancies) return
+			if (mc.thePlayer.commandSenderName in sobakaSutula && !AlfheimConfigHandler.fancies) return
 			ShaderHelper.useShader(ShaderHelper.halo)
 		}
 	}

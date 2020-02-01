@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.armor.elemental
 
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElementalArmor
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
@@ -30,7 +30,7 @@ abstract class ElementalArmor(type: Int, name: String): ItemManasteelArmor(type,
 		"${ModInfo.MODID}:textures/model/armor/ElementalArmor_${(if (ConfigHandler.enableArmorModels) "new" else if (armorType == 2) "1" else "0")}.png"
 	
 	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack) =
-		par2ItemStack.item === ModItems.manaResource && par2ItemStack.itemDamage == 7 || super.getIsRepairable(par1ItemStack, par2ItemStack)
+		par2ItemStack.item === ModItems.manaResource && par2ItemStack.meta == 7 || super.getIsRepairable(par1ItemStack, par2ItemStack)
 	
 	override fun getArmorSetStacks(): Array<ItemStack> {
 		if (armorset == null)

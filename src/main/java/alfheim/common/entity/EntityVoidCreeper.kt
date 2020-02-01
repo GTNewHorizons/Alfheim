@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
@@ -26,7 +26,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 	override fun writeEntityToNBT(tag: NBTTagCompound) {
 		super.writeEntityToNBT(tag)
 		
-		if (dataWatcher.getWatchableObjectByte(17).toInt() == 1) {
+		if (dataWatcher.getWatchableObjectByte(17).I == 1) {
 			tag.setBoolean("powered", true)
 		}
 		
@@ -37,7 +37,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 	override fun readEntityFromNBT(tag: NBTTagCompound) {
 		super.readEntityFromNBT(tag)
 		dataWatcher.updateObject(17, java.lang.Byte.valueOf((if (tag.getBoolean("powered")) 1 else 0).toByte()))
-		if (tag.hasKey("Fuse", 99)) fuseTime = tag.getShort("Fuse").toInt()
+		if (tag.hasKey("Fuse", 99)) fuseTime = tag.getShort("Fuse").I
 		if (tag.getBoolean("ignited")) func_146079_cb()
 	}
 	
@@ -62,7 +62,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 			val i = this.creeperState
 			
 			if (i > 0 && this.timeSinceIgnited == 0) {
-				playSound("creeper.primed", 1.0f, 0.5f)
+				playSound("creeper.primed", 1f, 0.5f)
 			}
 			
 			this.timeSinceIgnited += i
@@ -81,7 +81,7 @@ class EntityVoidCreeper(world: World): EntityCreeper(world) {
 	
 	override fun fall(distance: Float) {
 		super.fall(distance)
-		this.timeSinceIgnited = (this.timeSinceIgnited.toFloat() + distance * 1.5f).toInt()
+		this.timeSinceIgnited = (this.timeSinceIgnited.F + distance * 1.5f).I
 		
 		if (this.timeSinceIgnited > this.fuseTime - 5) {
 			this.timeSinceIgnited = this.fuseTime - 5

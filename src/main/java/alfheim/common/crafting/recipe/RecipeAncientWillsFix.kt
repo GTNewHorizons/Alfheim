@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alfheim.common.core.util.meta
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -23,7 +24,7 @@ object RecipeAncientWillsFix {
 			val stack = inv.getStackInSlot(i)
 			if (stack != null) {
 				if (stack.item === ModItems.ancientWill) {
-					val meta = stack.itemDamage
+					val meta = stack.meta
 					if (meta !in 0..5) return false
 						if (foundWill[meta]) return false else foundWill[meta] = true
 					
@@ -53,8 +54,8 @@ object RecipeAncientWillsFix {
 				if (stack.item is IAncientWillContainer && item == null) {
 					item = stack
 				} else {
-					if (foundWill[stack.itemDamage]) return null
-					foundWill[stack.itemDamage] = true
+					if (foundWill[stack.meta]) return null
+					foundWill[stack.meta] = true
 				}
 			}
 		}

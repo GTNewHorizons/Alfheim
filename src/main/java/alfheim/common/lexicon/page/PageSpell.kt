@@ -2,11 +2,12 @@ package alfheim.common.lexicon.page
 
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.D
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.internal.IGuiLexiconEntry
@@ -21,16 +22,16 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
 		val xn = gui.left
 		val yn = gui.top
-		val font = Minecraft.getMinecraft().fontRenderer
+		val font = mc.fontRenderer
 		val unicode = font.unicodeFlag
 		font.unicodeFlag = true
 		var text: String
 		
 		glPushMatrix()
-		glTranslated(xn.toDouble(), yn.toDouble(), 0.0)
+		glTranslated(xn.D, yn.D, 0.0)
 		
 		glPushMatrix()
-		glTranslated((gui.width / 2 - 16).toDouble(), 8.0, 0.0)
+		glTranslated((gui.width / 2 - 16).D, 8.0, 0.0)
 		GUISpells.drawRect(if (spell.hard) LibResourceLocations.spellFrameEpic else LibResourceLocations.spellFrame, 32)
 		glTranslated(8.0, 8.0, 0.0)
 		GUISpells.drawRect(LibResourceLocations.spell(spell.name), 16)
@@ -56,7 +57,7 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 		
 		run {
 			// Mana bar
-			glTranslated((-xn).toDouble(), (-yn - 50).toDouble(), 0.0)
+			glTranslated((-xn).D, (-yn - 50).D, 0.0)
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			
@@ -80,7 +81,7 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 			font.drawString(text, x + 50 - font.getStringWidth(text) / 2, y + 5, -0x67000000)
 			
 			glDisable(GL_BLEND)
-			glTranslated(xn.toDouble(), yn.toDouble(), 0.0)
+			glTranslated(xn.D, yn.D, 0.0)
 		}
 		
 		glPopMatrix()

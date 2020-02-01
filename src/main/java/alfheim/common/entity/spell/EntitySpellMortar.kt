@@ -42,8 +42,8 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
 			if (mop != null && mop.entityHit is EntityLivingBase && !PartySystem.mobsSameParty(mop.entityHit as EntityLivingBase, caster)) {
-				mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.toDouble()))
-				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).toFloat())
+				mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.D))
+				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).F)
 			}
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellMortar.radius)) as List<EntityLivingBase>
 			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
@@ -53,7 +53,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.toInt(), posY.toInt(), posZ.toInt()))) {
+		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
 			setDead()
 		} else {
 			if (!ASJUtilities.isServer) {
@@ -86,13 +86,13 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			posY += motionY
 			posZ += motionZ
 			val f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ)
-			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() + 90.0f
+			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).F + 90f
 			
-			rotationPitch = (atan2(f1.toDouble(), motionY) * 180.0 / Math.PI).toFloat() - 90.0f
-			while (rotationPitch - prevRotationPitch < -180.0f) prevRotationPitch -= 360.0f
-			while (rotationPitch - prevRotationPitch >= 180.0f) prevRotationPitch += 360.0f
-			while (rotationYaw - prevRotationYaw < -180.0f) prevRotationYaw -= 360.0f
-			while (rotationYaw - prevRotationYaw >= 180.0f) prevRotationYaw += 360.0f
+			rotationPitch = (atan2(f1.D, motionY) * 180.0 / Math.PI).F - 90f
+			while (rotationPitch - prevRotationPitch < -180f) prevRotationPitch -= 360f
+			while (rotationPitch - prevRotationPitch >= 180f) prevRotationPitch += 360f
+			while (rotationYaw - prevRotationYaw < -180f) prevRotationYaw -= 360f
+			while (rotationYaw - prevRotationYaw >= 180f) prevRotationYaw += 360f
 			
 			rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2f
 			rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2f
@@ -106,12 +106,12 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun getCollisionBorderSize(): Float {
-		return 5.0f
+		return 5f
 	}
 	
 	@SideOnly(Side.CLIENT)
 	override fun getShadowSize(): Float {
-		return 0.0f
+		return 0f
 	}
 	
 	override fun affectedBy(uuid: UUID): Boolean {

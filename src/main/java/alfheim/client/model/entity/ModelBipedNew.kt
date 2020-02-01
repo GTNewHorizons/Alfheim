@@ -1,5 +1,6 @@
 package alfheim.client.model.entity
 
+import alfheim.common.core.util.*
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper
@@ -80,7 +81,7 @@ open class ModelBipedNew: ModelBase() {
 		if (isChild) {
 			glPushMatrix()
 			glScalef(0.5f, 0.5f, 0.5f)
-			glTranslatef(0.0f, 24.0f * size, 0.0f)
+			glTranslatef(0f, 24f * size, 0f)
 		}
 		
 		render(size)
@@ -99,73 +100,73 @@ open class ModelBipedNew: ModelBase() {
 	}
 	
 	override fun setRotationAngles(limbSwing: Float, limbAmpl: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float, entity: Entity?) {
-		head.rotateAngleY = yawHead / (180f / Math.PI.toFloat())
-		head.rotateAngleX = pitchHead / (180f / Math.PI.toFloat())
-		rightarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 2.0f * limbAmpl * 0.5f
-		leftarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbAmpl * 0.5f
-		rightarm.rotateAngleZ = 0.0f
-		leftarm.rotateAngleZ = 0.0f
+		head.rotateAngleY = yawHead / (180f / Math.PI.F)
+		head.rotateAngleX = pitchHead / (180f / Math.PI.F)
+		rightarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.F) * 2f * limbAmpl * 0.5f
+		leftarm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 2f * limbAmpl * 0.5f
+		rightarm.rotateAngleZ = 0f
+		leftarm.rotateAngleZ = 0f
 		rightleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbAmpl
-		leftleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 1.4f * limbAmpl
-		rightleg.rotateAngleY = 0.0f
-		leftleg.rotateAngleY = 0.0f
+		leftleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.F) * 1.4f * limbAmpl
+		rightleg.rotateAngleY = 0f
+		leftleg.rotateAngleY = 0f
 		
 		if (entity?.isRiding == true) {
-			rightarm.rotateAngleX += -(Math.PI.toFloat() / 5f)
-			leftarm.rotateAngleX += -(Math.PI.toFloat() / 5f)
-			rightleg.rotateAngleX = -(Math.PI.toFloat() * 2f / 5f)
-			leftleg.rotateAngleX = -(Math.PI.toFloat() * 2f / 5f)
-			rightleg.rotateAngleY = Math.PI.toFloat() / 10f
-			leftleg.rotateAngleY = -(Math.PI.toFloat() / 10f)
+			rightarm.rotateAngleX += -(Math.PI.F / 5f)
+			leftarm.rotateAngleX += -(Math.PI.F / 5f)
+			rightleg.rotateAngleX = -(Math.PI.F * 2f / 5f)
+			leftleg.rotateAngleX = -(Math.PI.F * 2f / 5f)
+			rightleg.rotateAngleY = Math.PI.F / 10f
+			leftleg.rotateAngleY = -(Math.PI.F / 10f)
 		}
 		
 		//if (heldItemLeft != 0) leftarm.rotateAngleX = leftarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemLeft;
 		//if (heldItemRight != 0) rightarm.rotateAngleX = rightarm.rotateAngleX * 0.5F - ((float)Math.PI / 10F) * (float)heldItemRight;
 		
-		rightarm.rotateAngleY = 0.0f
-		leftarm.rotateAngleY = 0.0f
+		rightarm.rotateAngleY = 0f
+		leftarm.rotateAngleY = 0f
 		var f6: Float
 		val f7: Float
 		
-		if (onGround > -9990.0f) {
+		if (onGround > -9990f) {
 			f6 = onGround
-			body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * Math.PI.toFloat() * 2.0f) * 0.2f
-			rightarm.rotationPointZ = MathHelper.sin(body.rotateAngleY) * 5.0f
-			rightarm.rotationPointX = -MathHelper.cos(body.rotateAngleY) * 5.0f
-			leftarm.rotationPointZ = -MathHelper.sin(body.rotateAngleY) * 5.0f
-			leftarm.rotationPointX = MathHelper.cos(body.rotateAngleY) * 5.0f
+			body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * Math.PI.F * 2f) * 0.2f
+			rightarm.rotationPointZ = MathHelper.sin(body.rotateAngleY) * 5f
+			rightarm.rotationPointX = -MathHelper.cos(body.rotateAngleY) * 5f
+			leftarm.rotationPointZ = -MathHelper.sin(body.rotateAngleY) * 5f
+			leftarm.rotationPointX = MathHelper.cos(body.rotateAngleY) * 5f
 			rightarm.rotateAngleY += body.rotateAngleY
 			leftarm.rotateAngleY += body.rotateAngleY
 			leftarm.rotateAngleX += body.rotateAngleY
-			f6 = 1.0f - onGround
+			f6 = 1f - onGround
 			f6 *= f6
 			f6 *= f6
-			f6 = 1.0f - f6
-			f7 = MathHelper.sin(f6 * Math.PI.toFloat())
-			val f8 = MathHelper.sin(onGround * Math.PI.toFloat()) * -(head.rotateAngleX - 0.7f) * 0.75f
-			rightarm.rotateAngleX = (rightarm.rotateAngleX.toDouble() - (f7.toDouble() * 1.2 + f8.toDouble())).toFloat()
-			rightarm.rotateAngleY += body.rotateAngleY * 2.0f
-			rightarm.rotateAngleZ = MathHelper.sin(onGround * Math.PI.toFloat()) * -0.4f
+			f6 = 1f - f6
+			f7 = MathHelper.sin(f6 * Math.PI.F)
+			val f8 = MathHelper.sin(onGround * Math.PI.F) * -(head.rotateAngleX - 0.7f) * 0.75f
+			rightarm.rotateAngleX = (rightarm.rotateAngleX.D - (f7.D * 1.2 + f8.D)).F
+			rightarm.rotateAngleY += body.rotateAngleY * 2f
+			rightarm.rotateAngleZ = MathHelper.sin(onGround * Math.PI.F) * -0.4f
 		}
 		
 		if (entity?.isSneaking == true) {
 			body.rotateAngleX = 0.5f
 			rightarm.rotateAngleX += 0.4f
 			leftarm.rotateAngleX += 0.4f
-			rightleg.rotationPointZ = 4.0f
-			leftleg.rotationPointZ = 4.0f
-			rightleg.rotationPointY = 9.0f
-			leftleg.rotationPointY = 9.0f
-			head.rotationPointY = 1.0f
-			hair.rotationPointY = 1.0f
+			rightleg.rotationPointZ = 4f
+			leftleg.rotationPointZ = 4f
+			rightleg.rotationPointY = 9f
+			leftleg.rotationPointY = 9f
+			head.rotationPointY = 1f
+			hair.rotationPointY = 1f
 		} else {
-			body.rotateAngleX = 0.0f
+			body.rotateAngleX = 0f
 			rightleg.rotationPointZ = 0.1f
 			leftleg.rotationPointZ = 0.1f
-			rightleg.rotationPointY = 12.0f
-			leftleg.rotationPointY = 12.0f
-			head.rotationPointY = 0.0f
-			hair.rotationPointY = 0.0f
+			rightleg.rotationPointY = 12f
+			leftleg.rotationPointY = 12f
+			head.rotationPointY = 0f
+			hair.rotationPointY = 0f
 		}
 		
 		rightarm.rotateAngleZ += MathHelper.cos(ticksExisted * 0.09f) * 0.05f + 0.05f

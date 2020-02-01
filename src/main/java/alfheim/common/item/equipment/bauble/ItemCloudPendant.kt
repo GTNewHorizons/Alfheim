@@ -1,10 +1,10 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
+import alfheim.client.core.util.mc
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
@@ -19,7 +19,7 @@ class ItemCloudPendant @JvmOverloads constructor(name: String = "CloudPendant", 
 	
 	@SideOnly(Side.CLIENT)
 	fun clientWornTick(stack: ItemStack, player: EntityLivingBase) {
-		if (player is EntityPlayerSP && player === Minecraft.getMinecraft().thePlayer) {
+		if (player is EntityPlayerSP && player === mc.thePlayer) {
 
 			if (player.onGround)
 				timesJumped = 0

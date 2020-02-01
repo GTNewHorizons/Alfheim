@@ -1,7 +1,8 @@
 package alfheim.client.render.tile
 
+import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TileAnimatedTorch
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
@@ -41,21 +42,21 @@ object RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 		glScaled(2.0, 2.0, 2.0)
 		glRotated(90.0, 1.0, 0.0, 0.0)
 		
-		var rotation = tile.rotation.toFloat()
+		var rotation = tile.rotation.F
 		if (tile.rotating)
-			rotation += (tile.anglePerTick * partialTicks).toFloat()
+			rotation += (tile.anglePerTick * partialTicks).F
 		
-		glRotated(rotation.toDouble(), 0.0, 0.0, 1.0)
+		glRotated(rotation.D, 0.0, 0.0, 1.0)
 		glTranslated(0.0, 0.15, 0.0)
 		
 		run {
 			glDisable(GL_CULL_FACE)
-			val entityitem = EntityItem(if (hasWorld) tile.worldObj else Minecraft.getMinecraft().theWorld, 0.0, 0.0, 0.0, ItemStack(Blocks.redstone_torch))
-			entityitem.hoverStart = 0.0f
+			val entityitem = EntityItem(if (hasWorld) tile.worldObj else mc.theWorld, 0.0, 0.0, 0.0, ItemStack(Blocks.redstone_torch))
+			entityitem.hoverStart = 0f
 			glPushMatrix()
 			Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))
 			RenderItem.renderInFrame = true
-			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0f, 0.0f)
+			RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0f, 0f)
 			RenderItem.renderInFrame = false
 			glEnable(GL_CULL_FACE)
 			glPopMatrix()

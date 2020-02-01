@@ -1,8 +1,7 @@
 package alfmod.common.entity
 
-import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.EntityDamageSourceIndirectSpell
+import alfheim.common.core.util.*
 import alfmod.AlfheimModularCore
 import alfmod.common.entity.boss.EntityDedMoroz
 import net.minecraft.entity.EntityLivingBase
@@ -40,7 +39,7 @@ class EntitySniceBall: EntityThrowableCopy {
 		val v = Vector3()
 		for (i in 0..1) {
 			v.rand().sub(0.5).normalize().mul(Math.random() * 0.3 + 0.3)
-			Botania.proxy.sparkleFX(worldObj, posX + v.x, posY + v.y + 0.25, posZ + v.z, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
+			Botania.proxy.sparkleFX(worldObj, posX + v.x, posY + v.y + 0.25, posZ + v.z, (Math.random() * 0.25 + 0.25).F, 1f, 1f, 1f + Math.random().F * 0.25f, 10)
 		}
 	}
 	

@@ -1,9 +1,9 @@
 package alfheim.common.item.equipment.bauble
 
+import alfheim.client.core.util.mc
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.item.ItemStack
@@ -34,7 +34,7 @@ open class ItemPendant(name: String): ItemBauble(name), IBaubleRender {
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type == IBaubleRender.RenderType.BODY) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 			val armor = event.entityPlayer.getCurrentArmor(2) != null
 			glPushMatrix()

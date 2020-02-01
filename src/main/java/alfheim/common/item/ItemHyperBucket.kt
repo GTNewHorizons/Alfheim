@@ -1,6 +1,5 @@
 package alfheim.common.item
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.util.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer

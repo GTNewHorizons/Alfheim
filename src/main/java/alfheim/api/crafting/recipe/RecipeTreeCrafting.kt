@@ -1,5 +1,6 @@
 package alfheim.api.crafting.recipe
 
+import alfheim.common.core.util.meta
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
@@ -28,8 +29,8 @@ class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: I
 		for (i in items) {
 			for (j in inputsMissing.indices) {
 				val inp = inputsMissing[j]
-				if (inp is ItemStack && inp.itemDamage == 32767)
-					inp.itemDamage = i.itemDamage
+				if (inp is ItemStack && inp.meta == 32767)
+					inp.meta = i.meta
 				if (itemEquals(i, inp)) {
 					inputsMissing.removeAt(j)
 					break
@@ -47,7 +48,7 @@ class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: I
 			for (orestack in OreDictionary.getOres(stack2)) {
 				val cstack = orestack.copy()
 				
-				if (cstack.itemDamage == 32767) cstack.itemDamage = stack.itemDamage
+				if (cstack.meta == 32767) cstack.meta = stack.meta
 				if (stack.isItemEqual(cstack)) return true
 			}
 			
@@ -57,5 +58,5 @@ class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: I
 	}
 	
 	private fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) =
-		stack.item === stack2.item && stack.itemDamage == stack2.itemDamage
+		stack.item === stack2.item && stack.meta == stack2.meta
 }

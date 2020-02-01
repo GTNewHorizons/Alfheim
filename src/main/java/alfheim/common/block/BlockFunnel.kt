@@ -5,6 +5,7 @@ import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileLivingwoodFunnel
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -49,7 +50,7 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 	init {
 		setBlockName("livingwoodFunnel")
 		blockHardness = 2f
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f)
 	}
 	
 	override fun isSideSolid(world: IBlockAccess?, x: Int, y: Int, z: Int, side: ForgeDirection?) =
@@ -59,22 +60,22 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 	 * Updates the blocks bounds based on its current state. Args: world, x, y, z
 	 */
 	override fun setBlockBoundsBasedOnState(world: IBlockAccess?, x: Int, y: Int, z: Int) {
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f)
 	}
 	
 	override fun addCollisionBoxesToList(world: World?, x: Int, y: Int, z: Int, axis: AxisAlignedBB?, bounds: MutableList<Any?>?, entity: Entity?) {
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.625f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, 1f, 0.625f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
 		val f = 0.125f
-		setBlockBounds(0.0f, 0.0f, 0.0f, f, 1.0f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, f, 1f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, f)
+		setBlockBounds(0f, 0f, 0f, 1f, 1f, f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
-		setBlockBounds(1.0f - f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f)
+		setBlockBounds(1f - f, 0f, 0f, 1f, 1f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
-		setBlockBounds(0.0f, 0.0f, 1.0f - f, 1.0f, 1.0f, 1.0f)
+		setBlockBounds(0f, 0f, 1f - f, 1f, 1f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f)
 	}
 	
 	/**
@@ -140,16 +141,16 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 						}
 						
 						itemstack.stackSize -= j1
-						val entityitem = EntityItem(world, (x.toFloat() + f).toDouble(), (y.toFloat() + f1).toDouble(), (z.toFloat() + f2).toDouble(), ItemStack(itemstack.item, j1, itemstack.itemDamage))
+						val entityitem = EntityItem(world, (x.F + f).D, (y.F + f1).D, (z.F + f2).D, ItemStack(itemstack.item, j1, itemstack.meta))
 						
 						if (itemstack.hasTagCompound()) {
 							entityitem.entityItem.tagCompound = itemstack.tagCompound.copy() as NBTTagCompound
 						}
 						
 						val f3 = 0.05f
-						entityitem.motionX = (this.random.nextGaussian().toFloat() * f3).toDouble()
-						entityitem.motionY = (this.random.nextGaussian().toFloat() * f3 + 0.2f).toDouble()
-						entityitem.motionZ = (this.random.nextGaussian().toFloat() * f3).toDouble()
+						entityitem.motionX = (this.random.nextGaussian().F * f3).D
+						entityitem.motionY = (this.random.nextGaussian().F * f3 + 0.2f).D
+						entityitem.motionZ = (this.random.nextGaussian().F * f3).D
 						world.spawnEntityInWorld(entityitem)
 					}
 				}

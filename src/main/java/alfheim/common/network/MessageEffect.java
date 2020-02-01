@@ -2,7 +2,7 @@ package alfheim.common.network;
 
 import alexsocol.asjlib.network.ASJPacket;
 import net.minecraft.entity.Entity;
-import net.minecraft.potion.*;
+import net.minecraft.potion.PotionEffect;
 
 public class MessageEffect extends ASJPacket {
 	

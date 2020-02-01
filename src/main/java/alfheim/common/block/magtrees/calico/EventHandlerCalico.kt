@@ -1,9 +1,8 @@
 package alfheim.common.block.magtrees.calico
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.util.MathHelper
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.world.ExplosionEvent
 
@@ -35,7 +34,7 @@ class EventHandlerCalico {
 					if (Vector3.pointDistanceSpace(x, y, z, eX, eY, eZ) <= 8) {
 						val block = e.world.getBlock(x, y, z)
 						if (block is IExplosionDampener)
-							explosiondampeners.add(Vector3(x.toDouble(), y.toDouble(), z.toDouble()))
+							explosiondampeners.add(Vector3(x.D, y.D, z.D))
 					}
 				}
 			}
@@ -51,7 +50,7 @@ class EventHandlerCalico {
 	
 	@SubscribeEvent
 	fun catchExplosionAfter(e: ExplosionEvent.Detonate) {
-		val block = e.world.getBlock(MathHelper.floor_double(e.explosion.explosionX), MathHelper.floor_double(e.explosion.explosionY), MathHelper.floor_double(e.explosion.explosionZ))
+		val block = e.world.getBlock(e.explosion.explosionX.mfloor(), e.explosion.explosionY.mfloor(), e.explosion.explosionZ.mfloor())
 		if (block is IExplosionDampener) {
 			e.affectedEntities.clear()
 			e.affectedBlocks.clear()

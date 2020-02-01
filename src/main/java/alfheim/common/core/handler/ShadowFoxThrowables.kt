@@ -45,7 +45,7 @@ object ShadowFoxThrowables {
 //				}
 //			}
 //
-//			throwable.worldObj.playAuxSFX(2002, throwable.posX.roundToLong().toInt(), throwable.posY.roundToLong().toInt(), throwable.posZ.roundToLong().toInt(), 0)
+//			throwable.worldObj.playAuxSFX(2002, throwable.posX.roundToLong().I, throwable.posY.roundToLong().I, throwable.posZ.roundToLong().I, 0)
 //		})
 	}
 }

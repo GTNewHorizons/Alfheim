@@ -33,9 +33,9 @@ class ItemElementalFireLeggings: ElementalArmor(2, "ElementalFireLeggings") {
 			val player = event.entityLiving as EntityPlayer
 			val belt = player.getCurrentArmor(1)
 			if (belt?.item is ItemElementalFireLeggings && ManaItemHandler.requestManaExact(belt, player, 1, false)) {
-				if ((player.onGround || player.capabilities.isFlying) && player.moveForward > 0.0f && !player.isInsideOfMaterial(Material.water)) {
+				if ((player.onGround || player.capabilities.isFlying) && player.moveForward > 0f && !player.isInsideOfMaterial(Material.water)) {
 					val speed = 0.185F
-					player.moveFlying(0.0f, 1.0f, if (player.capabilities.isFlying) speed else speed)
+					player.moveFlying(0f, 1f, if (player.capabilities.isFlying) speed else speed)
 					if (player.ticksExisted % 10 == 0) {
 						ManaItemHandler.requestManaExact(belt, player, 1, true)
 					}

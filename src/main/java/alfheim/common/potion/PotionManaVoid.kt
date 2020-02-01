@@ -1,6 +1,7 @@
 package alfheim.common.potion
 
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.meta
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
@@ -73,7 +74,7 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "mana
 				for (slot in 0 until invSize) {
 					val stackInSlot = mainInv.getStackInSlot(slot)
 					if (stackInSlot != null && stackInSlot.item == ModItems.blackLotus) {
-						val wiltStack = ItemStack(AlfheimItems.wiltedLotus, stackInSlot.stackSize, stackInSlot.itemDamage)
+						val wiltStack = ItemStack(AlfheimItems.wiltedLotus, stackInSlot.stackSize, stackInSlot.meta)
 						wiltStack.stackTagCompound = stackInSlot.tagCompound
 						mainInv.setInventorySlotContents(slot, wiltStack)
 					}

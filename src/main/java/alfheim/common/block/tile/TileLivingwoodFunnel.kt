@@ -1,6 +1,7 @@
 package alfheim.common.block.tile
 
 import alfheim.common.block.BlockFunnel
+import alfheim.common.core.util.*
 import net.minecraft.block.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -60,9 +61,9 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	fun getInventoryAt(world: World, x: Double, y: Double, z: Double): IInventory? {
 		var iinventory: IInventory? = null
-		val i = MathHelper.floor_double(x)
-		val j = MathHelper.floor_double(y)
-		val k = MathHelper.floor_double(z)
+		val i = x.mfloor()
+		val j = y.mfloor()
+		val k = z.mfloor()
 		val tileentity = world.getTileEntity(i, j, k)
 		
 		if (tileentity != null && tileentity is IInventory) {
@@ -198,7 +199,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	private fun getFacingInventory(): IInventory? {
 		val i = BlockFunnel.getDirectionFromMetadata(getBlockMetadata())
-		return getInventoryAt(getWorldObj(), (xCoord + Facing.offsetsXForSide[i]).toDouble(), (yCoord + Facing.offsetsYForSide[i]).toDouble(), (zCoord + Facing.offsetsZForSide[i]).toDouble())
+		return getInventoryAt(getWorldObj(), (xCoord + Facing.offsetsXForSide[i]).D, (yCoord + Facing.offsetsYForSide[i]).D, (zCoord + Facing.offsetsZForSide[i]).D)
 	}
 	
 	fun IInventory.addItemToSide(item: ItemStack?, side: Int): ItemStack? {
@@ -271,7 +272,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	}
 	
 	private fun canAddToStack(stack: ItemStack, mainStack: ItemStack) =
-		if (stack.item !== mainStack.item) false else (if (stack.itemDamage != mainStack.itemDamage) false else (if (stack.stackSize > stack.maxStackSize) false else ItemStack.areItemStackTagsEqual(stack, mainStack)))
+		if (stack.item !== mainStack.item) false else (if (stack.meta != mainStack.meta) false else (if (stack.stackSize > stack.maxStackSize) false else ItemStack.areItemStackTagsEqual(stack, mainStack)))
 	
 	fun pullEntityFromWorld(inventory: IInventory, item: EntityItem?): Boolean {
 		var flag = false
@@ -323,7 +324,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	private fun ItemStack.itemInFrames(): Boolean {
 		val frameItems: MutableList<ItemStack> = arrayListOf()
 		for (i in LibMisc.CARDINAL_DIRECTIONS) {
-			val var21 = AxisAlignedBB.getBoundingBox((xCoord + i.offsetX).toDouble(), (yCoord + i.offsetY).toDouble(), (zCoord + i.offsetZ).toDouble(), (xCoord + i.offsetX + 1).toDouble(), (yCoord + i.offsetY + 1).toDouble(), (zCoord + i.offsetZ + 1).toDouble())
+			val var21 = AxisAlignedBB.getBoundingBox((xCoord + i.offsetX).D, (yCoord + i.offsetY).D, (zCoord + i.offsetZ).D, (xCoord + i.offsetX + 1).D, (yCoord + i.offsetY + 1).D, (zCoord + i.offsetZ + 1).D)
 			val frames = worldObj.getEntitiesWithinAABB(EntityItemFrame::class.java, var21)
 			for (frame in frames) {
 				if (frame is EntityItemFrame)
@@ -333,7 +334,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 		}
 		if (frameItems.isEmpty()) return true
 		
-		return frameItems.any { this.item === it.item && itemDamage == it.itemDamage }
+		return frameItems.any { this.item === it.item && meta == it.meta }
 	}
 	
 	private fun canPullItem(inventory: IInventory, stack: ItemStack, slot: Int, side: Int) =
@@ -434,7 +435,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 		for (i in 0 until nbttaglist.tagCount()) {
 			val nbttagcompound1 = nbttaglist.getCompoundTagAt(i)
 			
-			val b0: Int = (nbttagcompound1.getByte("Slot")).toInt()
+			val b0: Int = (nbttagcompound1.getByte("Slot")).I
 			
 			if (b0 >= 0 && b0 < inventory.size) {
 				inventory[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1)
@@ -457,9 +458,9 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 		nbttagcompound.setTag("Items", nbttaglist)
 	}
 	
-	override fun getXPos() = xCoord.toDouble()
-	override fun getYPos() = yCoord.toDouble()
-	override fun getZPos() = zCoord.toDouble()
+	override fun getXPos() = xCoord.D
+	override fun getYPos() = yCoord.D
+	override fun getZPos() = zCoord.D
 	override fun openInventory() = Unit
 	override fun closeInventory() = Unit
 	override fun getInventoryStackLimit() = 1

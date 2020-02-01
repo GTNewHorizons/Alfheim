@@ -40,7 +40,7 @@ class EntityCharge: EntityThrowableCopy {
 			if (flugel != null)
 				pos.entityHit.attackEntityFrom(DamageSourceSpell.shadow(flugel), if (flugel.isUltraMode) 10f else 5f)
 			else
-				pos.entityHit.attackEntityFrom(DamageSource.magic, 5.0f)
+				pos.entityHit.attackEntityFrom(DamageSource.magic, 5f)
 		}
 	}
 }

@@ -15,7 +15,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 open class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17"), IFuelHandler {
     
     init {
-        setResistance(10.0f)
+        setResistance(10f)
         GameRegistry.registerFuelHandler(this)
     }
 	

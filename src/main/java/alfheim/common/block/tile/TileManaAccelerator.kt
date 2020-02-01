@@ -4,11 +4,8 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.AlfheimCore
 import alfheim.common.network.MessageTileItem
-import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.world.World
 import vazkii.botania.api.mana.IManaItem
 import vazkii.botania.client.core.handler.LightningHandler
 import vazkii.botania.common.block.tile.mana.*

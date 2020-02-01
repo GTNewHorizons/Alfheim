@@ -3,6 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -51,9 +52,9 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			
 			burst.setLocationAndAngles(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, -(rotationX + 90), rotationY)
 			val f = 0.4f
-			val mx = MathHelper.sin(burst.rotationYaw / 180.0f * PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * PI.toFloat()) * f / 2.0
-			val mz = -(MathHelper.cos(burst.rotationYaw / 180.0f * PI.toFloat()) * MathHelper.cos(burst.rotationPitch / 180.0f * PI.toFloat()) * f) / 2.0
-			val my = MathHelper.sin(burst.rotationPitch / 180.0f * PI.toFloat()) * f / 2.0
+			val mx = MathHelper.sin(burst.rotationYaw / 180f * PI.F) * MathHelper.cos(burst.rotationPitch / 180f * PI.F) * f / 2.0
+			val mz = -(MathHelper.cos(burst.rotationYaw / 180f * PI.F) * MathHelper.cos(burst.rotationPitch / 180f * PI.F) * f) / 2.0
+			val my = MathHelper.sin(burst.rotationPitch / 180f * PI.F) * f / 2.0
 			burst.setMotion(mx, my, mz)
 			
 			return burst
@@ -82,7 +83,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		if (isBound && item != null && mana == MAX_MANA) {
 			val burst = burst
 			if (!worldObj.isRemote) worldObj.spawnEntityInWorld(burst)
-			if (!ConfigHandler.silentSpreaders) worldObj.playSoundEffect(xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), "botania:spreaderFire", 0.05f, 0.7f + 0.3f * Math.random().toFloat())
+			if (!ConfigHandler.silentSpreaders) worldObj.playSoundEffect(xCoord.D, yCoord.D, zCoord.D, "botania:spreaderFire", 0.05f, 0.7f + 0.3f * Math.random().F)
 		}
 	}
 	
@@ -100,22 +101,22 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		} else {
 			val pos = raytraceFromEntity(worldObj, player, true, 5.0)
 			if (pos?.hitVec != null && !worldObj.isRemote) {
-				val x = pos.hitVec.xCoord - xCoord.toDouble() - 0.5
-				val y = pos.hitVec.yCoord - yCoord.toDouble() - 0.5
-				val z = pos.hitVec.zCoord - zCoord.toDouble() - 0.5
+				val x = pos.hitVec.xCoord - xCoord.D - 0.5
+				val y = pos.hitVec.yCoord - yCoord.D - 0.5
+				val z = pos.hitVec.zCoord - zCoord.D - 0.5
 				
 				if (pos.sideHit != 0 && pos.sideHit != 1) {
 					val clickVector = Vector3(x, 0.0, z)
 					val relative = Vector3(-0.5, 0.0, 0.0)
 					val angle = acos(clickVector.dotProduct(relative) / (relative.length() * clickVector.length())) * 180.0 / PI
 					
-					rotX = angle.toFloat() + 180f
+					rotX = angle.F + 180f
 					if (clickVector.z < 0)
 						rotX = 360 - rotationX
 				}
 				
 				val angle = y * 180
-				rotY = -angle.toFloat()
+				rotY = -angle.F
 				
 				ASJUtilities.dispatchTEToNearbyPlayers(worldObj, xCoord, yCoord, zCoord)
 			}
@@ -184,7 +185,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		
 		var axis: AxisAlignedBB? = player.worldObj.getBlock(x, y, z).getCollisionBoundingBoxFromPool(player.worldObj, x, y, z)
 		if (axis == null)
-			axis = AxisAlignedBB.getBoundingBox(x.toDouble(), y.toDouble(), z.toDouble(), (x + 1).toDouble(), (y + 1).toDouble(), (z + 1).toDouble())
+			axis = AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, (x + 1).D, (y + 1).D, (z + 1).D)
 		
 		if (!blockVec.isInside(axis!!))
 			blockVec.set(axis.minX + (axis.maxX - axis.minX) / 2, axis.minY + (axis.maxY - axis.minY) / 2, axis.minZ + (axis.maxZ - axis.minZ) / 2)
@@ -196,13 +197,13 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		if (blockVec.x < thisVec.x)
 			angle = -angle
 		
-		rotX = angle.toFloat() + 90
+		rotX = angle.F + 90
 		
 		rotVec.set(diffVec.x, 0.0, diffVec.z)
 		angle = diffVec.angle(rotVec) * 180f / PI
 		if (blockVec.y < thisVec.y)
 			angle = -angle
-		rotY = angle.toFloat()
+		rotY = angle.F
 		
 		return true
 	}
@@ -231,7 +232,7 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 		fun getStack(burst: EntityManaBurst) = ItemStack.loadItemStackFromNBT(ItemNBTHelper.getNBT(burst.sourceLens).getCompoundTag(TAG_STACK))
 		
 		fun raytraceFromEntity(world: World, player: Entity, par3: Boolean, range: Double): MovingObjectPosition? {
-			val f = 1.0f
+			val f = 1f
 			val f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f
 			val f2 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f
 			val d0 = player.prevPosX + (player.posX - player.prevPosX) * f
@@ -239,8 +240,8 @@ class TileTransferer: TileItemContainer(), IDirectioned, IManaReceiver, IWandBin
 			if (!world.isRemote && player is EntityPlayer) d1 += 1.62
 			val d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * f
 			val vec3 = Vec3.createVectorHelper(d0, d1, d2)
-			val f3 = MathHelper.cos(-f2 * 0.017453292f - PI.toFloat())
-			val f4 = MathHelper.sin(-f2 * 0.017453292f - PI.toFloat())
+			val f3 = MathHelper.cos(-f2 * 0.017453292f - PI.F)
+			val f4 = MathHelper.sin(-f2 * 0.017453292f - PI.F)
 			val f5 = -MathHelper.cos(-f1 * 0.017453292f)
 			val f6 = MathHelper.sin(-f1 * 0.017453292f)
 			val f7 = f4 * f5

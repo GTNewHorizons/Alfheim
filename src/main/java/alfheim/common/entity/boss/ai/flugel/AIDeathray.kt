@@ -3,10 +3,10 @@ package alfheim.common.entity.boss.ai.flugel
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
+import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFallingStar
-import java.util.*
 import kotlin.math.*
 
 class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
@@ -22,9 +22,9 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	override fun continueExecuting(): Boolean {
 		val deathray = flugel.aiTaskTimer
 		val source = flugel.source
-		val range = EntityFlugel.RANGE.toFloat()
+		val range = EntityFlugel.RANGE.F
 		if (ModInfo.DEV) if (!flugel.worldObj.isRemote) for (player in flugel.playersAround) ASJUtilities.chatLog("Deathray in $deathray", player)
-		flugel.setPosition(source.posX + 0.5, (source.posY + 3).toDouble(), source.posZ + 0.5)
+		flugel.setPosition(source.posX + 0.5, (source.posY + 3).D, source.posZ + 0.5)
 		flugel.motionX = 0.0
 		flugel.motionY = 0.0
 		flugel.motionZ = 0.0
@@ -32,7 +32,7 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 		if (deathray > 10) flugel.spawnPatyklz(true)
 		
 		if (deathray == 1) {
-			val rang = ceil(range.toDouble()).toInt()
+			val rang = ceil(range.D).I
 			
 			for (l in 1..(if (flugel.isUltraMode) 6 else 3)) {
 				for (i in 0..((if (flugel.isUltraMode) 32 else 16))) {
@@ -77,13 +77,13 @@ class AIDeathray(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 			
 			if (flugel.worldObj.isRemote) {
 				for (i in 0..359) {
-					val r = 0.2f + Math.random().toFloat() * 0.3f
-					val g = Math.random().toFloat() * 0.3f
-					val b = 0.2f + Math.random().toFloat() * 0.3f
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.4f, 0f, sin(i.toDouble()).toFloat() * 0.4f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.3f, 0f, sin(i.toDouble()).toFloat() * 0.3f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.2f, 0f, sin(i.toDouble()).toFloat() * 0.2f)
-					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.toDouble()).toFloat() * 0.1f, 0f, sin(i.toDouble()).toFloat() * 0.1f)
+					val r = 0.2f + Math.random().F * 0.3f
+					val g = Math.random().F * 0.3f
+					val b = 0.2f + Math.random().F * 0.3f
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.D).F * 0.4f, 0f, sin(i.D).F * 0.4f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.D).F * 0.3f, 0f, sin(i.D).F * 0.3f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.D).F * 0.2f, 0f, sin(i.D).F * 0.2f)
+					Botania.proxy.wispFX(flugel.worldObj, flugel.posX, flugel.posY + 1, flugel.posZ, r, g, b, 0.5f, cos(i.D).F * 0.1f, 0f, sin(i.D).F * 0.1f)
 				}
 			}
 		}

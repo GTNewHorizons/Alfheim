@@ -5,6 +5,7 @@ import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.*
 import alfheim.common.item.*
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodCoal
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodSplinters
@@ -45,16 +46,16 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 		GameRegistry.registerFuelHandler(this)
 	}
 	
-	override fun isElvenItem(stack: ItemStack) = stack.itemDamage == ElvenResourcesMetas.InterdimensionalGatewayCore
+	override fun isElvenItem(stack: ItemStack) = stack.meta == ElvenResourcesMetas.InterdimensionalGatewayCore
 	
 	fun isInterpolated(meta: Int) = meta == ThunderwoodTwig || meta == NetherwoodCoal || meta == RainbowQuartz
 	
 	fun isFlowerComponent(meta: Int) = meta == NetherwoodCoal || meta == RainbowPetal
 	
-	override fun canFit(stack: ItemStack, inventory: IInventory) = isFlowerComponent(stack.itemDamage)
+	override fun canFit(stack: ItemStack, inventory: IInventory) = isFlowerComponent(stack.meta)
 	
 	override fun getParticleColor(stack: ItemStack): Int {
-		return when (stack.itemDamage) {
+		return when (stack.meta) {
 			NetherwoodCoal -> 0x6B2406
 			RainbowPetal   -> ItemIridescent.rainbowColor()
 			else           -> 0xFFFFFF
@@ -62,7 +63,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	}
 	
 	override fun getColorFromItemStack(stack: ItemStack, pass: Int) =
-		if (stack.itemDamage == RainbowPetal || stack.itemDamage == RainbowDust)
+		if (stack.meta == RainbowPetal || stack.meta == RainbowDust)
 			ItemIridescent.rainbowColor()
 		else
 			super.getColorFromItemStack(stack, pass)
@@ -96,17 +97,17 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 			texture[max(0, min(meta, texture.size - 1))]!!
 	
 	override fun getUnlocalizedName(stack: ItemStack) =
-		if (AlfheimCore.jingleTheBells && stack.itemDamage == ElvenResourcesMetas.InfusedDreamwoodTwig)
+		if (AlfheimCore.jingleTheBells && stack.meta == ElvenResourcesMetas.InfusedDreamwoodTwig)
 			"item.InfusedCandy"
 		else
-			"item.${subItems[max(0, min(stack.itemDamage, subItems.size - 1))]}"
+			"item.${subItems[max(0, min(stack.meta, subItems.size - 1))]}"
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) list.add(ItemStack(item, 1, i))
 	}
 	
 	override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, target: Entity): Boolean {
-		return if (stack.itemDamage == ElvenResourcesMetas.DasRheingold && target is EntityPlayer)
+		return if (stack.meta == ElvenResourcesMetas.DasRheingold && target is EntityPlayer)
 			ItemNBTHelper.setString(stack, "nick", target.commandSenderName).let { true }
 		else
 			super.onLeftClickEntity(stack, player, target)
@@ -115,27 +116,27 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		// Fabulous manapool
-		if (block == ModBlocks.pool && world.getBlockMetadata(x, y, z) == 0 && stack.itemDamage == RainbowDust) {
+		if (block == ModBlocks.pool && world.getBlockMetadata(x, y, z) == 0 && stack.meta == RainbowDust) {
 			world.setBlockMetadataWithNotify(x, y, z, 3, 2)
 			stack.stackSize--
 			return true
 		} else
 		// Rainbow flower
-		if (block == ModBlocks.flower && stack.itemDamage == RainbowDust) {
+		if (block == ModBlocks.flower && stack.meta == RainbowDust) {
 			world.setBlock(x, y, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.FLOWER, 3)
 			for (i in 0..40) {
-				val color = Color.getHSBColor(Math.random().toFloat() + 1f / 2f, 1f, 1f)
+				val color = Color.getHSBColor(Math.random().F + 1f / 2f, 1f, 1f)
 				Botania.proxy.wispFX(world,
-									 x.toDouble() + Math.random(), y.toDouble() + Math.random(), z.toDouble() + Math.random(),
+									 x.D + Math.random(), y.D + Math.random(), z.D + Math.random(),
 									 color.red / 255f, color.green / 255f, color.blue / 255f,
 									 0.5f, 0f, 0.125f, 0f)
 			}
-			world.playSoundEffect(x.toDouble(), y.toDouble(), z.toDouble(), "botania:enchanterEnchant", 1f, 1f)
+			world.playSoundEffect(x.D, y.D, z.D, "botania:enchanterEnchant", 1f, 1f)
 			stack.stackSize--
 			return true
 		} else
 		// Burying petal
-		if (side == 1 && AlfheimBlocks.rainbowGrass.canBlockStay(world, x, y + 1, z) && stack.itemDamage == RainbowPetal) {
+		if (side == 1 && AlfheimBlocks.rainbowGrass.canBlockStay(world, x, y + 1, z) && stack.meta == RainbowPetal) {
 			world.setBlock(x, y + 1, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.BURIED, 3)
 			stack.stackSize--
 			return true
@@ -145,7 +146,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	override fun getBurnTime(fuel: ItemStack): Int {
 		if (fuel.item == AlfheimItems.elvenResource) {
-			when (fuel.itemDamage) {
+			when (fuel.meta) {
 				NetherwoodSplinters, ThunderwoodSplinters -> return 100 // Splinters smelt half an item.
 				NetherwoodCoal                            -> return 2400 // Flame-Laced Coal smelts 12 items.
 			}

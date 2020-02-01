@@ -3,6 +3,7 @@ package alfheim.common.block.mana
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileTransferer
+import alfheim.common.core.util.D
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -27,7 +28,7 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 	
 	init {
 		setBlockName("Transferer")
-		setHardness(2.0f)
+		setHardness(2f)
 		setStepSound(Block.soundTypeWood)
 		random = Random()
 	}
@@ -131,6 +132,6 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 	
 	override fun getWireframeAABB(world: World, x: Int, y: Int, z: Int): AxisAlignedBB {
 		val f = 1f / 16f
-		return AxisAlignedBB.getBoundingBox((x + f).toDouble(), (y + f).toDouble(), (z + f).toDouble(), (x + 1 - f).toDouble(), (y + 1 - f).toDouble(), (z + 1 - f).toDouble())
+		return AxisAlignedBB.getBoundingBox((x + f).D, (y + f).D, (z + f).D, (x + 1 - f).D, (y + 1 - f).D, (z + 1 - f).D)
 	}
 }

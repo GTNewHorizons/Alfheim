@@ -1,11 +1,11 @@
 package alfheim.common.item.rod
 
+import alfheim.common.core.util.mfloor
 import alfheim.common.item.ItemMod
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.item.IManaProficiencyArmor
@@ -34,9 +34,9 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 	fun terraform(stack: ItemStack?, world: World, player: EntityPlayer) {
 		val range = if (IManaProficiencyArmor.Helper.hasProficiency(player)) 22 else 16
 		
-		val x = MathHelper.floor_double(player.posX)
-		val y = MathHelper.floor_double(player.posY - if (world.isRemote) 2 else 1)
-		val z = MathHelper.floor_double(player.posZ)
+		val x = player.posX.mfloor()
+		val y = (player.posY - if (world.isRemote) 2 else 1).mfloor()
+		val z = player.posZ.mfloor()
 		
 		var done = false
 		for (i in -range..range) {

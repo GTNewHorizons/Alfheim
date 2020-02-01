@@ -1,9 +1,9 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
+import alfheim.client.core.util.mc
 import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.player.EntityPlayer
@@ -63,7 +63,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 		val attacker = event.source.entity
 		if (attacker is EntityPlayer) {
 			if (hasArmorSet(attacker)) {
-				val crit = attacker.fallDistance > 0.0f && !attacker.onGround && !attacker.isOnLadder && !attacker.isInWater && !attacker.isPotionActive(Potion.blindness) && attacker.ridingEntity == null
+				val crit = attacker.fallDistance > 0f && !attacker.onGround && !attacker.isOnLadder && !attacker.isInWater && !attacker.isPotionActive(Potion.blindness) && attacker.ridingEntity == null
 				val stack = attacker.inventory.armorItemInSlot(3)
 				if (crit && stack != null && stack.item is ItemElvoriumHelmet) {
 					val ahrim = hasAncientWill(stack, 0)
@@ -140,7 +140,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 				val f2 = willIcon.minV
 				val f3 = willIcon.maxV
 				vazkii.botania.api.item.IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
-				Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+				mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 				glRotated(90.0, 0.0, 1.0, 0.0)
 				glRotated(180.0, 1.0, 0.0, 0.0)
 				glTranslated(-0.26, 0.15, -0.39)

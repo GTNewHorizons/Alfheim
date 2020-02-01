@@ -42,19 +42,19 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.toDouble()))
+			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
 			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellDriftingMine.radius))) {
 				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.toDouble()))
+				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
 			}
-			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
 			setDead()
 		}
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.toInt(), posY.toInt(), posZ.toInt()))) {
+		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
 			setDead()
 		} else {
 			moveEntity(motionX, motionY, motionZ)
@@ -82,13 +82,13 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			if (movingobjectposition != null) onImpact(movingobjectposition)
 			
 			val f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ)
-			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() + 90.0f
+			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).F + 90f
 			
-			rotationPitch = (atan2(f1.toDouble(), motionY) * 180.0 / Math.PI).toFloat() - 90.0f
-			while (rotationPitch - prevRotationPitch < -180.0f) prevRotationPitch -= 360.0f
-			while (rotationPitch - prevRotationPitch >= 180.0f) prevRotationPitch += 360.0f
-			while (rotationYaw - prevRotationYaw < -180.0f) prevRotationYaw -= 360.0f
-			while (rotationYaw - prevRotationYaw >= 180.0f) prevRotationYaw += 360.0f
+			rotationPitch = (atan2(f1.D, motionY) * 180.0 / Math.PI).F - 90f
+			while (rotationPitch - prevRotationPitch < -180f) prevRotationPitch -= 360f
+			while (rotationPitch - prevRotationPitch >= 180f) prevRotationPitch += 360f
+			while (rotationYaw - prevRotationYaw < -180f) prevRotationYaw -= 360f
+			while (rotationYaw - prevRotationYaw >= 180f) prevRotationYaw += 360f
 			
 			rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2f
 			rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2f
@@ -101,7 +101,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	override fun getCollisionBorderSize() = 0.5f
 	
 	@SideOnly(Side.CLIENT)
-	override fun getShadowSize() = 0.0f
+	override fun getShadowSize() = 0f
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	

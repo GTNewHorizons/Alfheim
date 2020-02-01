@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.util.F
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -37,7 +38,7 @@ object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 		if (!mana) return SpellCastResult.NOMANA
 		
 		val stackToPlace = ItemStack(Blocks.fire)
-		stackToPlace.tryPlaceItemIntoWorld(caster, caster.worldObj, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, mop.hitVec.xCoord.toFloat(), mop.hitVec.yCoord.toFloat(), mop.hitVec.zCoord.toFloat())
+		stackToPlace.tryPlaceItemIntoWorld(caster, caster.worldObj, mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, mop.hitVec.xCoord.F, mop.hitVec.yCoord.F, mop.hitVec.zCoord.F)
 		
 		if (stackToPlace.stackSize == 0) {
 			consumeMana(caster, (getManaCost() * if (race == caster.race) 1 else 2), true)

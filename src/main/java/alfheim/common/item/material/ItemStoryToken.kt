@@ -2,7 +2,7 @@ package alfheim.common.item.material
 
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
@@ -34,17 +34,17 @@ class ItemStoryToken: ItemMod("StoryToken"), IElvenItem {
 	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, slotID: Int, inHand: Boolean) {
 		if (world.isRemote) return
 		
-		if (stack.itemDamage == 1 && !ItemNBTHelper.verifyExistance(stack, TAG_STORY))
+		if (stack.meta == 1 && !ItemNBTHelper.verifyExistance(stack, TAG_STORY))
 			ItemNBTHelper.setInt(stack, TAG_STORY, world.rand.nextInt(AlfheimConfigHandler.storyLines) + 1)
 	}
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, info: MutableList<Any?>, adv: Boolean) {
-		if (stack.itemDamage == 1) {
+		if (stack.meta == 1) {
 			info.add(StatCollector.translateToLocal("item.StoryToken.story.${ItemNBTHelper.getInt(stack, TAG_STORY, 0)}"))
 		}
 	}
 	
-	override fun isElvenItem(stack: ItemStack) = stack.itemDamage == 1
+	override fun isElvenItem(stack: ItemStack) = stack.meta == 1
 	
 	companion object {
 		val TAG_STORY = "story"

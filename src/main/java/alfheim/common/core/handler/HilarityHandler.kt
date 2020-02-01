@@ -2,6 +2,7 @@ package alfheim.common.core.handler
 
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
+import alfheim.common.core.util.*
 import alfheim.common.crafting.recipe.ShadowFoxRecipes
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -82,11 +83,11 @@ object HilarityHandler {
 			if (player.commandSenderName == playerName && msg == AlfheimConfigHandler.chatLimiters.format(cheatyString)) {
 				if (replaceItemInHand(player, resourceItem, outputItem)) {
 					e.component.chatStyle.color = chatColor
-					player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 100.0f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
+					player.worldObj.playSoundAtEntity(player, "ambient.weather.thunder", 100f, 0.8f + player.worldObj.rand.nextFloat() * 0.2f)
 					return true
 				}
 			} else if (msg == AlfheimConfigHandler.chatLimiters.format(normalString)) {
-				val items = getInfusionPlatforms(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ))
+				val items = getInfusionPlatforms(player.worldObj, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor())
 				
 				val itemsMissing = ArrayList(neededItems)
 				for (itemPair in items) {
@@ -94,7 +95,7 @@ object HilarityHandler {
 					for (itemNeeded in neededItems) {
 						if (itemNeeded !in itemsMissing) continue
 						if (itemNeeded.item != item.item) continue
-						if (itemNeeded.itemDamage != item.itemDamage && itemNeeded.itemDamage != OreDictionary.WILDCARD_VALUE) continue
+						if (itemNeeded.meta != item.meta && itemNeeded.meta != OreDictionary.WILDCARD_VALUE) continue
 						if (itemNeeded.hasTagCompound() && itemNeeded.tagCompound.getString("SkullOwner") != item.tagCompound.getString("SkullOwner")) continue
 						
 						itemsMissing.remove(itemNeeded)
@@ -106,7 +107,7 @@ object HilarityHandler {
 						e.component.chatStyle.color = chatColor
 						for (itemPair in items)
 							if (itemPair.flag) {
-								val te = itemPair.pos.getTileAt(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ))
+								val te = itemPair.pos.getTileAt(player.worldObj, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor())
 								if (te is TileItemDisplay)
 									te.setInventorySlotContents(0, null)
 							}
@@ -161,7 +162,7 @@ object HilarityHandler {
 		
 		private fun replaceItemInHand(player: EntityPlayer, oldStack: ItemStack, newStack: ItemStack): Boolean {
 			val stackInSlot = player.heldItem
-			if (stackInSlot != null && stackInSlot.item == oldStack.item && (stackInSlot.itemDamage == oldStack.itemDamage || oldStack.itemDamage == OreDictionary.WILDCARD_VALUE || stackInSlot.item.isDamageable)) {
+			if (stackInSlot != null && stackInSlot.item == oldStack.item && (stackInSlot.meta == oldStack.meta || oldStack.meta == OreDictionary.WILDCARD_VALUE || stackInSlot.item.isDamageable)) {
 				newStack.stackSize = oldStack.stackSize
 				newStack.stackTagCompound = stackInSlot.tagCompound
 				player.setCurrentItemOrArmor(0, newStack)

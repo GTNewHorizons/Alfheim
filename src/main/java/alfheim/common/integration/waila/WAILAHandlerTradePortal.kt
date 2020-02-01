@@ -1,6 +1,7 @@
 package alfheim.common.integration.waila
 
 import alfheim.common.block.tile.TileTradePortal
+import alfheim.common.core.util.*
 import mcp.mobius.waila.api.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
@@ -64,8 +65,8 @@ class WAILAHandlerTradePortal: IWailaDataProvider {
 		if (l.isEmpty()) return o
 		
 		val stack = l[0].copy()
-		if (stack.itemDamage == java.lang.Short.MAX_VALUE.toInt())
-			stack.itemDamage = 0
+		if (stack.meta == java.lang.Short.MAX_VALUE.I)
+			stack.meta = 0
 		
 		return stack.displayName + " x" + stack.stackSize
 	}

@@ -3,6 +3,7 @@ package alfheim.common.item.rod
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.*
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -46,7 +47,7 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 						   x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
 		if (par3World.getBlock(x, y, z) == AlfheimBlocks.rainbowFlame) {
 			par3World.setBlock(x, y, z, Blocks.air)
-			par3World.playSoundEffect(x.toDouble() + 0.5, y.toDouble() + 0.5, z.toDouble() + 0.5, "random.fizz", 0.3F, Math.random().toFloat() * 0.4F + 0.8F)
+			par3World.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "random.fizz", 0.3F, Math.random().F * 0.4F + 0.8F)
 			return true
 		}
 		val toPlace = ItemStack(AlfheimBlocks.rainbowFlame)
@@ -55,7 +56,7 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 			if (par3World.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(par3World, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
 				toPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, x, y, z, direction, par8, par9, par10)
 				if (toPlace.stackSize == 0) {
-					par3World.playSoundEffect(x.toDouble() + 0.5, y.toDouble() + 0.5, z.toDouble() + 0.5, "fire.ignite", 0.3F, Math.random().toFloat() * 0.4F + 0.8F)
+					par3World.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "fire.ignite", 0.3F, Math.random().F * 0.4F + 0.8F)
 					ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, COST, true)
 					val tile = par3World.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)
 					if (tile is TileRainbowManaFlame) {

@@ -1,8 +1,8 @@
 package alfheim.common.lexicon.page
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.item.*
 import net.minecraft.util.StatCollector
@@ -21,9 +21,8 @@ class PagePureDaisyRecipe(unlocalizedName: String, private val recipe: RecipePur
 	}
 	
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
-		val recipe = this.recipe
-		val render = Minecraft.getMinecraft().renderEngine
-		val font = Minecraft.getMinecraft().fontRenderer
+		val recipe = recipe
+		val render = mc.renderEngine
 		
 		render.bindTexture(LibResourceLocations.manaInfuserOverlay)
 		glEnable(GL_BLEND)

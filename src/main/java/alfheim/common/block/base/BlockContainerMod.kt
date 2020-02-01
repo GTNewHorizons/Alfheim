@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -34,7 +34,7 @@ abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	open fun shouldRegisterInNameSet() = true
 	
 	override fun setLightLevel(light: Float): Block {
-		originalLight = (light * 15.0f).toInt()
+		originalLight = (light * 15f).I
 		return super.setLightLevel(light)
 	}
 	

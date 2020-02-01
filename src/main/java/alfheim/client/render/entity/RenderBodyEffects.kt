@@ -3,7 +3,6 @@ package alfheim.client.render.entity
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*

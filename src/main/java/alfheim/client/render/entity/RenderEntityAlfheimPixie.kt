@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.core.util.F
 import alfheim.common.entity.EntityAlfheimPixie
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.RenderLiving
@@ -42,8 +43,8 @@ class RenderEntityAlfheimPixie: RenderLiving(ModelPixie(), 0.25f) {
 				glDepthMask(true)
 			
 			val c0: Char = 61680.toChar()
-			val j = (c0.toInt() % 65536).toFloat()
-			val k = (c0.toInt() / 65536).toFloat()
+			val j = (c0.toInt() % 65536).F
+			val k = (c0.toInt() / 65536).F
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k)
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glColor4d(1.0, 1.0, 1.0, 1.0)

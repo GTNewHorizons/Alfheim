@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.*
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
@@ -36,10 +36,10 @@ class TileCracklingStar: TileMod() {
 	}
 	
 	fun getLightColor(): Int {
-		val r = (color shr 16 and 255).toFloat() / 255.0f
-		val g = (color shr 8 and 255).toFloat() / 255.0f
-		val b = (color and 255).toFloat() / 255.0f
-		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1.0f)
+		val r = (color shr 16 and 255).F / 255f
+		val g = (color shr 8 and 255).F / 255f
+		val b = (color and 255).F / 255f
+		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1f)
 	}
 	
 	override fun getDescriptionPacket(): Packet {
@@ -79,9 +79,9 @@ class TileCracklingStar: TileMod() {
 	fun colorFromInt(color: Int): Int = if (color == -1) rainbow(1f) else color
 	fun colorFromIntAndPos(color: Int, pos: Vector3) = if (color == -1) rainbow(pos, 1f) else color
 	
-	fun rainbow(saturation: Float) = Color.HSBtoRGB((Botania.proxy.worldElapsedTicks * 2L % 360L).toFloat() / 360.0f, saturation, 1.0f)
+	fun rainbow(saturation: Float) = Color.HSBtoRGB((Botania.proxy.worldElapsedTicks * 2L % 360L).F / 360f, saturation, 1f)
 	fun rainbow(pos: Vector3, saturation: Float): Int {
-		val ticks = (Botania.proxy.worldElapsedTicks * 2L % 360L).toFloat() / 360f
+		val ticks = (Botania.proxy.worldElapsedTicks * 2L % 360L).F / 360f
 		val seed = ((pos.x.mfloor() xor pos.y.mfloor() xor pos.z.mfloor()) * 255 xor pos.hashCode()) % 360f / 360f
 		return Color.HSBtoRGB(seed + ticks, saturation, 1F)
 	}
@@ -89,7 +89,7 @@ class TileCracklingStar: TileMod() {
 	fun wispLine(start: Vector3, line: Vector3, color: Int, stepsPerBlock: Double, time: Int) {
 		val len = line.length()
 		val ray = line.copy().mul(1 / len)
-		val steps = (len * stepsPerBlock).toInt()
+		val steps = (len * stepsPerBlock).I
 		
 		for (i in 0 until steps) {
 			val extended = ray.copy().mul(i / stepsPerBlock)
@@ -99,9 +99,9 @@ class TileCracklingStar: TileMod() {
 			
 			val c = Color(color)
 			
-			val r = c.red.toFloat() / 255.0f
-			val g = c.green.toFloat() / 255.0f
-			val b = c.blue.toFloat() / 255.0f
+			val r = c.red.F / 255f
+			val g = c.green.F / 255f
+			val b = c.blue.F / 255f
 			
 			Botania.proxy.wispFX(worldObj, x, y, z, r, g, b, time * 0.0125f)
 		}

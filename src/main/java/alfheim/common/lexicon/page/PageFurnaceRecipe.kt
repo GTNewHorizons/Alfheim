@@ -1,8 +1,8 @@
 package alfheim.common.lexicon.page
 
 import alfheim.api.ModInfo
+import alfheim.client.core.util.mc
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -52,7 +52,7 @@ class PageFurnaceRecipe: PageRecipe {
 	@SideOnly(Side.CLIENT)
 	override fun renderRecipe(gui: IGuiLexiconEntry, mx: Int, my: Int) {
 		val recipe = recipes[recipeAt]
-		val render = Minecraft.getMinecraft().renderEngine
+		val render = mc.renderEngine
 		
 		renderItemAtGridPos(gui, 1, 1, recipe.input, false)
 		renderItemAtGridPos(gui, 2, 1, ItemStack(Blocks.furnace), false)

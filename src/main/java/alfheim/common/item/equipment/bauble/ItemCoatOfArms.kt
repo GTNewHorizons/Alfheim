@@ -2,11 +2,11 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemIridescent
 import baubles.api.BaubleType
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.creativetab.CreativeTabs
@@ -40,9 +40,9 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 		setHasSubtypes(true)
 	}
 	
-	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.itemDamage == 6
+	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.meta == 6
 	
-	override fun getParticleColor(stack: ItemStack) = colorMap[stack.itemDamage]
+	override fun getParticleColor(stack: ItemStack) = colorMap[stack.meta]
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {
 		for (i in 0 until TYPES)
@@ -50,9 +50,9 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	}
 	
 	override fun colorOverride(stack: ItemStack): Int {
-		if (stack.itemDamage < TYPES - 1 && stack.itemDamage >= 0 && stack.itemDamage != 16)
-			return colorMap[stack.itemDamage]
-		else if (stack.itemDamage == 16)
+		if (stack.meta < TYPES - 1 && stack.meta >= 0 && stack.meta != 16)
+			return colorMap[stack.meta]
+		else if (stack.meta == 16)
 			return ItemIridescent.rainbowColor()
 		return -1
 	}
@@ -66,14 +66,14 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	
 	override fun onEquipped(stack: ItemStack, player: EntityLivingBase) {
 		super.onEquipped(stack, player)
-		if (stack.itemDamage == 1 && "paris".toRegex().find(stack.displayName.toLowerCase()) != null) {
-			stack.itemDamage = 17
+		if (stack.meta == 1 && "paris".toRegex().find(stack.displayName.toLowerCase()) != null) {
+			stack.meta = 17
 			stack.tagCompound.removeTag("display")
 		}
 	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.botania:".toRegex(), "item.${ModInfo.MODID}:") + par1ItemStack.itemDamage
+		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.botania:".toRegex(), "item.${ModInfo.MODID}:") + par1ItemStack.meta
 	
 	override fun addHiddenTooltip(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3List: MutableList<Any?>, par4: Boolean) {
 		addStringToTooltip(StatCollector.translateToLocal("botaniamisc.cosmeticBauble"), par3List)
@@ -88,20 +88,20 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type == IBaubleRender.RenderType.BODY) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 			chestTranslate()
 			scale(0.8F)
 			GL11.glTranslatef(0.2F, -0.2F, -0.35F)
 			GL11.glRotatef(10F, 0F, 0F, 1F)
-			if (stack.itemDamage == 16) {
+			if (stack.meta == 16) {
 				GL11.glEnable(GL11.GL_BLEND)
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 				GL11.glAlphaFunc(GL11.GL_EQUAL, 1F)
 				ShaderHelper.useShader(ShaderHelper.halo)
 			}
-			renderIcon(stack.itemDamage)
-			if (stack.itemDamage == 16) {
+			renderIcon(stack.meta)
+			if (stack.meta == 16) {
 				ShaderHelper.releaseShader()
 				GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F)
 				GL11.glDisable(GL11.GL_BLEND)

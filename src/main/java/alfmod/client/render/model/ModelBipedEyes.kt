@@ -5,8 +5,7 @@ import alfmod.AlfheimModularCore
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.entity.Entity
-import net.minecraft.util.*
-import org.lwjgl.opengl.GL11
+import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
 class ModelBipedEyes: ModelBiped() {
@@ -15,7 +14,7 @@ class ModelBipedEyes: ModelBiped() {
 	val textureEyes = ResourceLocation("${AlfheimModularCore.MODID}:textures/entity/DedMorozEyes.png")
 	
 	init {
-		bipedEyes.addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8, 0f)
+		bipedEyes.addBox(-4f, -8f, -4f, 8, 8, 8, 0f)
 		bipedEyes.setRotationPoint(0f, 0f, 0f)
 	}
 	
@@ -30,10 +29,10 @@ class ModelBipedEyes: ModelBiped() {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		
 		if (isChild) {
-			val f6 = 2.0f
+			val f6 = 2f
 			glPushMatrix()
 			glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
-			glTranslatef(0.0f, 16.0f * f5, 0.0f)
+			glTranslatef(0f, 16f * f5, 0f)
 			bipedEyes.render(f5)
 			glPopMatrix()
 		} else {

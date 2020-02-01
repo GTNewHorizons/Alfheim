@@ -138,11 +138,11 @@ object ASJUtilities {
 		val living = event.entityLiving
 		if (!source.isUnblockable) {
 			val armor = 25 - living.totalArmorValue
-			amount = amount * armor / 25.0f
+			amount = amount * armor / 25f
 		}
 		if (!source.isDamageAbsolute && living.isPotionActive(Potion.resistance)) {
 			val resistance = 25 - (living.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5
-			amount = amount * resistance / 25.0f
+			amount = amount * resistance / 25f
 		}
 		return ceil(amount) >= floor(living.health)
 	}
@@ -416,7 +416,7 @@ object ASJUtilities {
 		}
 		
 		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).toDouble()
-		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).toFloat() - 90.0f
+		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).toFloat() - 90f
 		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).toFloat()
 		e1.rotationPitch = updateRotation(e1.rotationPitch, f3, pitch)
 		e1.rotationYaw = updateRotation(e1.rotationYaw, f2, yaw)
@@ -454,7 +454,7 @@ object ASJUtilities {
 			d1 = objectMouseOver.hitVec.distanceTo(vec3)
 		}
 		
-		val f1 = 1.0f
+		val f1 = 1f
 		val list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist).expand(f1.toDouble(), f1.toDouble(), f1.toDouble()))
 		var d2 = d1
 		
@@ -514,7 +514,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
-		val vec3 = getPosition(entity, 1.0f)
+		val vec3 = getPosition(entity, 1f)
 		vec3.yCoord += entity.eyeHeight.toDouble()
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
@@ -527,7 +527,7 @@ object ASJUtilities {
 	@JvmStatic
 	fun getPosition(living: EntityLivingBase, par1: Float): Vec3 {
 		val i = (living as? EntityPlayer)?.defaultEyeHeight ?: 0f
-		return if (par1 == 1.0f) {
+		return if (par1 == 1f) {
 			Vec3.createVectorHelper(living.posX, living.posY + (living.eyeHeight - i), living.posZ)
 		} else {
 			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.toDouble()

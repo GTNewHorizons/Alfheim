@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alfheim.api.ModInfo
+import alfheim.common.core.util.F
 import net.minecraft.client.model.ModelCreeper
 import net.minecraft.client.renderer.entity.RenderCreeper
 import net.minecraft.entity.Entity
@@ -12,7 +13,7 @@ class RenderEntityGrieferCreeper : RenderCreeper() {
     private val armoredCreeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/creeper_armor.png")
     private val creeperTextures = ResourceLocation("${ModInfo.MODID}:textures/model/entity/griefer_creeper/griefer_creeper.png")
     /** The creeper model.  */
-    private val creeperModel = ModelCreeper(2.0f)
+    private val creeperModel = ModelCreeper(2f)
 
     override fun shouldRenderPass(entity: EntityCreeper, pass: Int, par3Float: Float): Int {
         if (entity.powered) {
@@ -23,18 +24,18 @@ class RenderEntityGrieferCreeper : RenderCreeper() {
             }
 
             if (pass == 1) {
-                val f1 = entity.ticksExisted.toFloat() + par3Float
+                val f1 = entity.ticksExisted.F + par3Float
                 bindTexture(armoredCreeperTextures)
                 glMatrixMode(GL_TEXTURE)
                 glLoadIdentity()
                 val f2 = f1 * 0.01f
                 val f3 = f1 * 0.01f
-                glTranslatef(f2, f3, 0.0f)
+                glTranslatef(f2, f3, 0f)
                 setRenderPassModel(creeperModel)
                 glMatrixMode(GL_MODELVIEW)
                 glEnable(GL_BLEND)
                 val f4 = 0.5f
-                glColor4f(f4, f4, f4, 1.0f)
+                glColor4f(f4, f4, f4, 1f)
                 glDisable(GL_LIGHTING)
                 glBlendFunc(GL_ONE, GL_ONE)
                 return 1

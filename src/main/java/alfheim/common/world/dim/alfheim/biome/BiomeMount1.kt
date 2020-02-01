@@ -6,7 +6,6 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import net.minecraft.init.Blocks
-import net.minecraft.world.biome.BiomeGenMesa
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.standardcustomgen.*

@@ -2,6 +2,7 @@ package alfheim.common.item.rod
 
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemIridescent
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import net.minecraft.block.Block
@@ -33,9 +34,9 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 			if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
 				val dir = ForgeDirection.getOrientation(par7)
 				
-				val aabb = AxisAlignedBB.getBoundingBox((par4 + dir.offsetX).toDouble(),
-														(par5 + dir.offsetY).toDouble(), (par6 + dir.offsetZ).toDouble(),
-														(par4 + dir.offsetX + 1).toDouble(), (par5 + dir.offsetY + 1).toDouble(), (par6 + dir.offsetZ + 1).toDouble())
+				val aabb = AxisAlignedBB.getBoundingBox((par4 + dir.offsetX).D,
+														(par5 + dir.offsetY).D, (par6 + dir.offsetZ).D,
+														(par4 + dir.offsetX + 1).D, (par5 + dir.offsetY + 1).D, (par6 + dir.offsetZ + 1).D)
 				val entities = par3World.getEntitiesWithinAABB(EntityLivingBase::class.java, aabb).size
 				
 				if (entities == 0) {
@@ -58,20 +59,20 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 	}
 	
 	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float) =
-		place(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, dirtStack(par1ItemStack.itemDamage), COST, 0.35F, 0.2F, 0.05F)
+		place(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, dirtStack(par1ItemStack.meta), COST, 0.35F, 0.2F, 0.05F)
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		var blockstack = dirtStack(stack.itemDamage)
+		var blockstack = dirtStack(stack.meta)
 		
 		/*val beltStack = ItemToolbelt.getEquippedBelt(player)
 		if (beltStack != null && ItemToolbelt.isEquipped(beltStack))
 			return stack*/
 		
 		if (player.isSneaking) {
-			var damage = stack.itemDamage
+			var damage = stack.meta
 			if (!world.isRemote) {
-				if (stack.itemDamage >= 17) stack.itemDamage = 0 else stack.itemDamage++
-				damage = stack.itemDamage
+				if (stack.meta >= 17) stack.meta = 0 else stack.meta++
+				damage = stack.meta
 			} else if (damage >= 17) damage = 0 else damage++
 			world.playSoundAtEntity(player, "botania:ding", 0.1F, 1F)
 			blockstack = dirtStack(damage)
@@ -94,13 +95,13 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 			val lookVec = Vector3(player.lookVec).multiply(distmultiplier)
 			val placeVec = playerVec.copy().add(lookVec)
 			
-			val x = MathHelper.floor_double(placeVec.x)
-			val y = MathHelper.floor_double(placeVec.y) + 1
-			val z = MathHelper.floor_double(placeVec.z)
+			val x = placeVec.x.mfloor()
+			val y = placeVec.y.mfloor() + 1
+			val z = placeVec.z.mfloor()
 			
 			val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java,
-													   AxisAlignedBB.getBoundingBox(x.toDouble(), y.toDouble(), z.toDouble(), (x + 1).toDouble(),
-																					(y + 1).toDouble(), (z + 1).toDouble())).size
+													   AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, (x + 1).D,
+																					(y + 1).D, (z + 1).D)).size
 			
 			if (entities == 0) {
 				blockstack!!.tryPlaceItemIntoWorld(player, world, x, y, z, 0, 0F, 0F, 0F)
@@ -144,15 +145,15 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 		val b = color.blue / 255F
 		
 		if (tile.currentMana >= COST && block.isAir(world, x + xl, y, z + zl) && tile.elapsedFunctionalTicks % 50 == 0 && tile.isEnabled) {
-			world.setBlock(x + xl, y, z + zl, dirtFromMeta(stack.itemDamage), stack.itemDamage, 1 or 2)
+			world.setBlock(x + xl, y, z + zl, dirtFromMeta(stack.meta), stack.meta, 1 or 2)
 			tile.recieveMana(-COST)
 			for (i in 0..6)
 				Botania.proxy.sparkleFX(world, x + xl + Math.random(), y + Math.random(), z + zl + Math.random(),
 										r, g, b, 1F, 5)
-			if (stack.itemDamage == TYPES)
+			if (stack.meta == TYPES)
 				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.rainbowDirt))
 			else
-				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.irisDirt) + (stack.itemDamage shl 12))
+				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.irisDirt) + (stack.meta shl 12))
 			
 		}
 	}

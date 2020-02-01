@@ -6,6 +6,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.I
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -31,8 +32,8 @@ object SpellButterflyShield: SpellBase("butterflyshield", EnumRace.CAITSITH, 800
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDButterShield, duration, efficiency.toInt(), true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDButterShield, duration, efficiency.toInt()))
+			tg.target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDButterShield, duration, efficiency.I, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, AlfheimConfigHandler.potionIDButterShield, duration, efficiency.I))
 		}
 		
 		return result

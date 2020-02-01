@@ -1,6 +1,5 @@
 package alfmod.common.item.equipment.armor
 
-import alfheim.common.core.util.AlfheimTab
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper

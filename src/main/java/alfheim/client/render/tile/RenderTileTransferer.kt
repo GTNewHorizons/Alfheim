@@ -2,8 +2,9 @@ package alfheim.client.render.tile
 
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TileTransferer
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.F
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import org.lwjgl.opengl.GL11.*
@@ -32,7 +33,7 @@ object RenderTileTransferer: TileEntitySpecialRenderer() {
 		glRotatef(tile.rotationY, 1f, 0f, 0f)
 		glTranslatef(0f, 1f, 0f)
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.spreader)
+		mc.renderEngine.bindTexture(LibResourceLocations.spreader)
 		glScalef(1f, -1f, -1f)
 		
 		val time = ClientTickHandler.ticksInGame + ticks
@@ -41,7 +42,7 @@ object RenderTileTransferer: TileEntitySpecialRenderer() {
 		glColor3f(1f, 1f, 1f)
 		
 		glPushMatrix()
-		val worldTicks = if (tile.getWorldObj() == null) time else tile.getWorldObj().totalWorldTime.toFloat()
+		val worldTicks = if (tile.getWorldObj() == null) time else tile.getWorldObj().totalWorldTime.F
 		glRotatef(worldTicks % 360, 0f, 1f, 0f)
 		glTranslatef(0f, sin(worldTicks / 20f) * 0.05f, 0f)
 		model.renderCube()

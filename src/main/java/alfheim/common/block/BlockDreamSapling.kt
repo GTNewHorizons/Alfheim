@@ -22,7 +22,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setBlockName("DreamSapling")
 		setBlockTextureName(ModInfo.MODID + ":DreamSapling")
 		setCreativeTab(AlfheimTab)
-		setLightLevel(9.0f / 15.0f)
+		setLightLevel(9f / 15f)
 		setLightOpacity(0)
 		stepSound = soundTypeGrass
 		tickRandomly = true

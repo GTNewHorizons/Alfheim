@@ -3,6 +3,7 @@ package alfheim.common.entity
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemMoonlightBow
 import net.minecraft.entity.EntityLivingBase
@@ -86,11 +87,11 @@ class EntityMagicArrow: EntityThrowableCopy {
 			val rn = if (fromMoon) 0.1f else 0.25f
 			
 			do {
-				r = or + (Math.random().toFloat() - 0.5f) * rn
-				g = og + (Math.random().toFloat() - 0.5f) * rn
-				b = ob + (Math.random().toFloat() - 0.5f) * rn
-				size = osize + (Math.random().toFloat() - 0.5f) * 0.065f + sin(Random(entityUniqueID.mostSignificantBits).nextInt(9001).toDouble()).toFloat() * 0.4f
-				Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.2f * size, (-motionX).toFloat() * 0.01f, (-motionY).toFloat() * 0.01f, (-motionZ).toFloat() * 0.01f, life)
+				r = or + (Math.random().F - 0.5f) * rn
+				g = og + (Math.random().F - 0.5f) * rn
+				b = ob + (Math.random().F - 0.5f) * rn
+				size = osize + (Math.random().F - 0.5f) * 0.065f + sin(Random(entityUniqueID.mostSignificantBits).nextInt(9001).D).F * 0.4f
+				Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.2f * size, (-motionX).F * 0.01f, (-motionY).F * 0.01f, (-motionZ).F * 0.01f, life)
 				this.posX += diffVecNorm.x * distance
 				this.posY += diffVecNorm.y * distance
 				this.posZ += diffVecNorm.z * distance
@@ -98,7 +99,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 				diffVec = oldPos.copy().sub(currentPos)
 			} while (abs(diffVec.length()) > distance)
 			
-			Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.1f * size, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f, (Math.random() - 0.5).toFloat() * 0.06f, life)
+			Botania.proxy.wispFX(worldObj, posX, posY, posZ, r, g, b, 0.1f * size, (Math.random() - 0.5).F * 0.06f, (Math.random() - 0.5).F * 0.06f, (Math.random() - 0.5).F * 0.06f, life)
 			posX = savedPosX
 			posY = savedPosY
 			posZ = savedPosZ
@@ -109,9 +110,9 @@ class EntityMagicArrow: EntityThrowableCopy {
 				if (toMoon) {
 					for (i in 1..100) {
 						val arrow = EntityMagicArrow(worldObj, thrower as EntityPlayer) // non-null check above
-						val yaw = (Math.random() * 360).toFloat()
-						arrow.shoot(thrower, 90f, yaw, 0f, (Math.random() * 2 + 4).toFloat(), 5f)
-						arrow.damage = -(Math.random() * 5 + 5).toFloat()
+						val yaw = (Math.random() * 360).F
+						arrow.shoot(thrower, 90f, yaw, 0f, (Math.random() * 2 + 4).F, 5f)
+						arrow.damage = -(Math.random() * 5 + 5).F
 						arrow.rotationYaw = thrower.rotationYaw
 						arrow.rotation = MathHelper.wrapAngleTo180_float(yaw)
 						arrow.life = 256
@@ -166,7 +167,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 		val axis = bb.expand(5.0, 5.0, 5.0)
 		val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		entities.forEach {
-			attackedFrom(it, thrower as EntityPlayer?, max(20.0, 20 / Vector3.entityDistance(this, it)).toFloat())
+			attackedFrom(it, thrower as EntityPlayer?, max(20.0, 20 / Vector3.entityDistance(this, it)).F)
 		}
 		
 		VisualEffectHandler.sendPacket(VisualEffects.MOON, this)

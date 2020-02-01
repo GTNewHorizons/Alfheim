@@ -2,13 +2,13 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
@@ -39,7 +39,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			val stack = baubles.getStackInSlot(0)
-			return if (stack != null && ((stack.item == AlfheimItems.emblem && stack.itemDamage == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
+			return if (stack != null && ((stack.item == AlfheimItems.emblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		
 		fun isActive(stack: ItemStack) = ItemNBTHelper.getByte(stack, "active", 0) == 1.toByte()
@@ -84,7 +84,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>, par4: Boolean) {
 		if (par1ItemStack == null || par2EntityPlayer == null) return
 		if (!GuiScreen.isShiftKeyDown() && !par2EntityPlayer.capabilities.isCreativeMode) {
-			if (par2EntityPlayer.health <= 6.0f)
+			if (par2EntityPlayer.health <= 6f)
 				this.addStringToTooltip(StatCollector.translateToLocal("misc.${ModInfo.MODID}.healthDanger"), par3List)
 			else
 				this.addStringToTooltip(StatCollector.translateToLocal("misc.${ModInfo.MODID}.healthWarning"), par3List)
@@ -95,7 +95,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	override fun addHiddenTooltip(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>, par4: Boolean) {
 		if (par1ItemStack == null || par2EntityPlayer == null) return
 		if (!par2EntityPlayer.capabilities.isCreativeMode) {
-			if (par2EntityPlayer.health <= 6.0f)
+			if (par2EntityPlayer.health <= 6f)
 				addStringToTooltip(StatCollector.translateToLocal("misc.${ModInfo.MODID}.crisisOfFaith"), par3List)
 			else
 				addStringToTooltip(StatCollector.translateToLocal("misc.${ModInfo.MODID}.lackOfFaith"), par3List)
@@ -114,7 +114,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
 	
 	override fun getUnlocalizedName(par1ItemStack: ItemStack) =
-		super.getUnlocalizedName(par1ItemStack) + par1ItemStack.itemDamage
+		super.getUnlocalizedName(par1ItemStack) + par1ItemStack.meta
 	
 	override fun onEquippedOrLoadedIntoWorld(stack: ItemStack, player: EntityLivingBase) {
 		setDangerous(stack, false)
@@ -122,7 +122,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	
 	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase) {
 		if (!(!isDangerous(stack) || (player is EntityPlayer && player.capabilities.isCreativeMode))) {
-			player.attackEntityFrom(FaithDamageSource.instance, 6.0f)
+			player.attackEntityFrom(FaithDamageSource.instance, 6f)
 			player.addPotionEffect(PotionEffect(Potion.blindness.id, 150, 0))
 			player.addPotionEffect(PotionEffect(Potion.confusion.id, 150, 2))
 			player.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 300, 2))
@@ -142,11 +142,11 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	}
 	
 	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
 		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
 		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
@@ -166,27 +166,27 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		if (type == IBaubleRender.RenderType.BODY) {
 			val player = event.entityPlayer
 			if (isActive(stack)) {
-				when (stack.itemDamage) {
+				when (stack.meta) {
 					0 -> {
 						if (player.ticksExisted % 10 == 0) {
 							val playerHead = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
 							val playerShift = playerHead.copy().add(getHeadOrientation(player))
 							val color = Color(ColorOverrideHelper.getColor(player, 0x0079C4))
 							val innerColor = Color(color.rgb).brighter().brighter()
-							Botania.proxy.lightningFX(player.worldObj, playerHead, playerShift, 2.0f, color.rgb, innerColor.rgb)
+							Botania.proxy.lightningFX(player.worldObj, playerHead, playerShift, 2f, color.rgb, innerColor.rgb)
 						}
 					}
 					
 					1 -> {
 						if (player.ticksExisted % 10 == 0) {
 							for (i in 0..6) {
-								val xmotion = (Math.random() - 0.5).toFloat() * 0.15f
-								val zmotion = (Math.random() - 0.5).toFloat() * 0.15f
+								val xmotion = (Math.random() - 0.5).F * 0.15f
+								val zmotion = (Math.random() - 0.5).F * 0.15f
 								val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
-								val r = color.red.toFloat() / 255F
-								val g = color.green.toFloat() / 255F
-								val b = color.blue.toFloat() / 255F
-								Botania.proxy.wispFX(player.worldObj, player.posX, player.posY - player.yOffset, player.posZ, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, xmotion, 0.0075f, zmotion)
+								val r = color.red.F / 255F
+								val g = color.green.F / 255F
+								val b = color.blue.F / 255F
+								Botania.proxy.wispFX(player.worldObj, player.posX, player.posY - player.yOffset, player.posZ, r, g, b, Math.random().F * 0.15f + 0.15f, xmotion, 0.0075f, zmotion)
 							}
 						}
 					}
@@ -196,10 +196,10 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 							for (i in 0..6) {
 								val vec = getHeadOrientation(player).multiply(0.52)
 								val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
-								val r = color.red.toFloat() / 255F
-								val g = color.green.toFloat() / 255F
-								val b = color.blue.toFloat() / 255F
-								Botania.proxy.sparkleFX(player.worldObj, player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r, g, b, 1.0f, 5)
+								val r = color.red.F / 255F
+								val g = color.green.F / 255F
+								val b = color.blue.F / 255F
+								Botania.proxy.sparkleFX(player.worldObj, player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r, g, b, 1f, 5)
 							}
 						}
 					}
@@ -218,14 +218,14 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 				}
 			}
 			
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(player)
 			val armor = player.getCurrentArmor(2) != null
 			GL11.glRotatef(180F, 1F, 0F, 0F)
 			GL11.glTranslatef(-0.26F, -0.4F, if (armor) 0.21F else 0.15F)
 			GL11.glScalef(0.5F, 0.5F, 0.5F)
 			
-			val icon = getBaubleIconFromDamage(stack.itemDamage)
+			val icon = getBaubleIconFromDamage(stack.meta)
 			if (icon != null)
 				ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 32F)
 		}

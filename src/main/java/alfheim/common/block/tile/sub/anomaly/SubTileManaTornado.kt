@@ -3,6 +3,7 @@ package alfheim.common.block.tile.sub.anomaly
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.common.core.util.*
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityManaBurst
@@ -35,7 +36,7 @@ class SubTileManaTornado: SubTileEntity() {
 		
 		val c = ASJRenderHelper.colorCode[worldObj.rand.nextInt(ASJRenderHelper.colorCode.size)]
 		v.rand().sub(0.5).normalize().mul(Math.random()).add(superTile!!).add(0.5)
-		Botania.proxy.wispFX(worldObj, v.x, v.y, v.z, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.25 + 0.25).toFloat(), 0f, (Math.random() * 2 + 1).toFloat())
+		Botania.proxy.wispFX(worldObj, v.x, v.y, v.z, (c shr 16 and 0xFF) / 255f, (c shr 8 and 0xFF) / 255f, (c and 0xFF) / 255f, (Math.random() * 0.25 + 0.25).F, 0f, (Math.random() * 2 + 1).F)
 	}
 	
 	fun spawnBurst(): EntityManaBurst {
@@ -54,7 +55,7 @@ class SubTileManaTornado: SubTileEntity() {
 		val lens = ItemStack(ModItems.lens, 1, meta)
 		burst.sourceLens = lens
 		
-		v.rand().sub(0.5).normalize().mul(motionModifier.toDouble()).add(0.5).add(superTile!!)
+		v.rand().sub(0.5).normalize().mul(motionModifier.D).add(0.5).add(superTile!!)
 		burst.setPosition(v.x, v.y, v.z)
 		v.sub(0.5).sub(superTile!!)
 		burst.setMotion(v.x, v.y, v.z)

@@ -13,7 +13,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 open class BlockRainbowWoodSlab(full: Boolean, source: Block = AlfheimBlocks.rainbowPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "")), IFuelHandler {
     
     init {
-        setResistance(10.0f)
+        setResistance(10f)
         GameRegistry.registerFuelHandler(this)
     }
     

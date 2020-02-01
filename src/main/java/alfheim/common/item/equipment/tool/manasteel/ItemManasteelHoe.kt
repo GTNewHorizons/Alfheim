@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.tool.manasteel
 
 import alfheim.api.ModInfo
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.Event.Result
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -79,12 +79,12 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 	}
 	
 	override fun onUpdate(stack: ItemStack?, world: World, player: Entity?, par4: Int, par5: Boolean) {
-		if (!world.isRemote && player is EntityPlayer && stack!!.itemDamage > 0 && ManaItemHandler.requestManaExactForTool(stack, (player as EntityPlayer?)!!, manaPerDamage * 2, true))
-			stack.itemDamage = stack.itemDamage - 1
+		if (!world.isRemote && player is EntityPlayer && stack!!.meta > 0 && ManaItemHandler.requestManaExactForTool(stack, (player as EntityPlayer?)!!, manaPerDamage * 2, true))
+			stack.meta = stack.meta - 1
 	}
 	
 	override fun getIsRepairable(par1ItemStack: ItemStack?, par2ItemStack: ItemStack): Boolean {
-		return par2ItemStack.item === ModItems.manaResource && par2ItemStack.itemDamage == 0 || super.getIsRepairable(par1ItemStack, par2ItemStack)
+		return par2ItemStack.item === ModItems.manaResource && par2ItemStack.meta == 0 || super.getIsRepairable(par1ItemStack, par2ItemStack)
 	}
 	
 	override fun usesMana(stack: ItemStack): Boolean {

@@ -108,7 +108,7 @@ class Matrix4 {
 	fun rotate(angle: Double, axis: Vector3): Matrix4 {
 		val c = Math.cos(angle)
 		val s = Math.sin(angle)
-		val mc = 1.0f - c
+		val mc = 1f - c
 		val xy = axis.x * axis.y
 		val yz = axis.y * axis.z
 		val xz = axis.x * axis.z

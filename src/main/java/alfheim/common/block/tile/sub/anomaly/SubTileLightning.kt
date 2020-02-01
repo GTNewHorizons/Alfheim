@@ -2,17 +2,16 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
-import alfheim.common.core.util.DamageSourceSpell
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
@@ -34,7 +33,7 @@ class SubTileLightning: SubTileEntity() {
 				if (ticks % 50 == 0) {
 					val e = findNearestVulnerableEntity(radius) ?: return@run
 					
-					worldObj.playSoundEffect(x().toDouble(), y().toDouble(), z().toDouble(), "botania:runeAltarCraft", 1f, 1f)
+					worldObj.playSoundEffect(x().D, y().D, z().D, "botania:runeAltarCraft", 1f, 1f)
 					
 					val l = ArrayList<Any>()
 					l.add(e)
@@ -58,12 +57,12 @@ class SubTileLightning: SubTileEntity() {
 		if (worldObj.rand.nextInt(6000) == 0) {
 			val x = x() + Math.random() * 10 - 5
 			val z = z() + Math.random() * 10 - 5
-			worldObj.addWeatherEffect(EntityLightningBolt(worldObj, x, worldObj.getTopSolidOrLiquidBlock(MathHelper.floor_double(x), MathHelper.floor_double(z)).toDouble(), z))
+			worldObj.addWeatherEffect(EntityLightningBolt(worldObj, x, worldObj.getTopSolidOrLiquidBlock(x.mfloor(), z.mfloor()).D, z))
 			return
 		}
 		
 		if (!ASJUtilities.isServer) {
-			if (superTile != null && ASJVec3.entityTileDistance(Minecraft.getMinecraft().thePlayer, superTile!!) > 32) return
+			if (superTile != null && ASJVec3.entityTileDistance(mc.thePlayer, superTile!!) > 32) return
 			
 			if (AlfheimConfigHandler.lightningsSpeed > 0 && ticks % AlfheimConfigHandler.lightningsSpeed == 0) {
 				ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
@@ -75,7 +74,7 @@ class SubTileLightning: SubTileEntity() {
 	}
 	
 	override fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
-		if (player is EntityPlayerMP && stack != null && stack.item === ModItems.manaResource && stack.stackSize > 0 && stack.itemDamage == 5) {
+		if (player is EntityPlayerMP && stack != null && stack.item === ModItems.manaResource && stack.stackSize > 0 && stack.meta == 5) {
 			--stack.stackSize
 			
 			if (world.getBlock(x, y + 1, z) === ModBlocks.pylon && world.getBlockMetadata(x, y + 1, z) == 2)
@@ -91,7 +90,7 @@ class SubTileLightning: SubTileEntity() {
 			else if (world.getBlock(x, y, z - 1) === ModBlocks.pylon && world.getBlockMetadata(x, y, z - 1) == 2)
 				world.setBlock(x, y, z - 1, AlfheimBlocks.alfheimPylon, 2, 3)
 			
-			world.playSoundEffect(x.toDouble(), y.toDouble(), z.toDouble(), "botania:runeAltarStart", 1f, 1f)
+			world.playSoundEffect(x.D, y.D, z.D, "botania:runeAltarStart", 1f, 1f)
 			
 			for (i in 0..7) {
 				ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
@@ -110,7 +109,7 @@ class SubTileLightning: SubTileEntity() {
 		if (target !is EntityLivingBase) return
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
 		
-		target.attackEntityFrom(DamageSourceSpell.anomaly, min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).toFloat() * 4f)
+		target.attackEntityFrom(DamageSourceSpell.anomaly, min((Math.random() * 2 + 3) / vt.set(x() + 0.5, y() + 0.5, z() + 0.5).add(-target.posX, -target.posY, -target.posZ).mag() / 2.0, 2.5).F * 4f)
 		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
 		ve.set(target.posX, target.posY, target.posZ).normalize()

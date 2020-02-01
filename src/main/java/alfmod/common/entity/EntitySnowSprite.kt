@@ -1,7 +1,7 @@
 package alfmod.common.entity
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.entity.EntityAlfheimPixie
 import alfheim.common.world.dim.alfheim.biome.BiomeField
 import alfmod.common.core.handler.WRATH_OF_THE_WINTER
@@ -38,7 +38,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun updateEntityActionState() {
 		super.updateEntityActionState()
 		
-		rotationYaw = (-atan2(motionX, motionZ) * 180 / Math.PI).toFloat()
+		rotationYaw = (-atan2(motionX, motionZ) * 180 / Math.PI).F
 		renderYawOffset = rotationYaw
 	}
 	
@@ -51,7 +51,7 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	override fun getDropItem() = Items.snowball!!
 	override fun canDespawn() = WRATH_OF_THE_WINTER
 	override fun dropFewItems(hit: Boolean, looting: Int) {
-		entityDropItem(ItemStack(dropItem, looting + 1), 0.0f)
+		entityDropItem(ItemStack(dropItem, looting + 1), 0f)
 	}
 	
 	private val immuneTo = arrayOf(DamageSource.inWall.damageType, DamageSource.drown.damageType, DamageSource.fall.damageType)
@@ -63,12 +63,12 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 	}
 	
 	override fun onEntityUpdate() {
-		Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
+		Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).F, 1f, 1f, 1f + Math.random().F * 0.25f, 10)
 		
 		motionY *= 0.6
 		if (worldObj.rand.nextInt(600) == 0) motionY -= 5.0
 		
-		if ((worldObj.worldTime % 24000L).toInt() !in 13333..22666) {
+		if ((worldObj.worldTime % 24000L).I !in 13333..22666) {
 			worldObj.spawnEntityInWorld(EntityAlfheimPixie(worldObj).also { it.setPosition(posX, posY, posZ) })
 			setDead()
 		}
@@ -82,17 +82,17 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 			spawnPosition = null
 		}
 		
-		if (spawnPosition == null || rand.nextInt(30) == 0 || spawnPosition!!.getDistanceSquared(posX.toInt(), posY.toInt(), posZ.toInt()) < 4.0f) {
-			spawnPosition = ChunkCoordinates(posX.toInt() + rand.nextInt(7) - rand.nextInt(7), posY.toInt() + rand.nextInt(6) - 2, posZ.toInt() + rand.nextInt(7) - rand.nextInt(7))
+		if (spawnPosition == null || rand.nextInt(30) == 0 || spawnPosition!!.getDistanceSquared(posX.I, posY.I, posZ.I) < 4f) {
+			spawnPosition = ChunkCoordinates(posX.I + rand.nextInt(7) - rand.nextInt(7), posY.I + rand.nextInt(6) - 2, posZ.I + rand.nextInt(7) - rand.nextInt(7))
 		}
 		
-		val d0 = spawnPosition!!.posX.toDouble() + 0.5 - posX
-		val d1 = spawnPosition!!.posY.toDouble() + 0.1 - posY
-		val d2 = spawnPosition!!.posZ.toDouble() + 0.5 - posZ
+		val d0 = spawnPosition!!.posX.D + 0.5 - posX
+		val d1 = spawnPosition!!.posY.D + 0.1 - posY
+		val d2 = spawnPosition!!.posZ.D + 0.5 - posZ
 		motionX += (sign(d0) * 0.5 - motionX) * 0.01
 		motionY += (sign(d1) * 0.7 - motionY) * 0.01
 		motionZ += (sign(d2) * 0.5 - motionZ) * 0.01
-		val f = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() - 90.0f
+		val f = (atan2(motionZ, motionX) * 180.0 / Math.PI).F - 90f
 		val f1 = MathHelper.wrapAngleTo180_float(f - rotationYaw)
 		moveForward = 0.05f
 		rotationYaw += f1
@@ -103,12 +103,12 @@ class EntitySnowSprite(world: World): EntityFlyingCreature(world) {
 		isDead = dead
 		if (worldObj.isRemote)
 			for (i in 0..11)
-				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).toFloat(), 1f, 1f, 1f + Math.random().toFloat() * 0.25f, 10)
+				Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, (Math.random() * 0.25 + 0.25).F, 1f, 1f, 1f + Math.random().F * 0.25f, 10)
 	}
 	
 	override fun getCanSpawnHere(): Boolean {
 		setPosition(posX, posY + 5, posZ)
-		val flagTime = (worldObj.worldTime % 24000L).toInt() in 13333..22666 && worldObj.isRaining && WRATH_OF_THE_WINTER
+		val flagTime = (worldObj.worldTime % 24000L).I in 13333..22666 && worldObj.isRaining && WRATH_OF_THE_WINTER
 		var flagBiome = false
 		
 		val chunk = (worldObj.provider as? WE_WorldProvider)?.cp

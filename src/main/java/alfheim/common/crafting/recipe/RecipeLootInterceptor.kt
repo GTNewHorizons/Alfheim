@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alfheim.common.core.util.meta
 import alfheim.common.item.ItemLootInterceptor
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.*
@@ -40,7 +41,7 @@ class RecipeLootInterceptor: IRecipe {
 			
 			val stack = inv.getStackInSlot(i)
 			if (stack != null && stack.item !is ItemLootInterceptor)
-				ItemLootInterceptor.add(inter!!, Item.getIdFromItem(stack.item), stack.itemDamage)
+				ItemLootInterceptor.add(inter!!, Item.getIdFromItem(stack.item), stack.meta)
 		}
 		
 		return inter

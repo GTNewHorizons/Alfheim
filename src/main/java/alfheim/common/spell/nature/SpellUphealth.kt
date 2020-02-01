@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.I
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -32,8 +33,8 @@ object SpellUphealth: SpellBase("uphealth", EnumRace.CAITSITH, 10000, 1200, 30) 
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.field_76434_w.id, duration, efficiency.toInt(), true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, duration, efficiency.toInt()))
+			tg.target.addPotionEffect(PotionEffect(Potion.field_76434_w.id, duration, efficiency.I, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.field_76434_w.id, duration, efficiency.I))
 			VisualEffectHandler.sendPacket(VisualEffects.UPHEAL, tg.target)
 		}
 		

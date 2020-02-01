@@ -6,16 +6,15 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.getBoundingBox
+import alfheim.common.core.util.*
 import alfheim.common.network.MessageEffect
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
-import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import org.lwjgl.opengl.GL11.*
 
@@ -46,8 +45,8 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 			val mob = Vector3.fromEntityCenter(e)
 			mob.y = hit.y
 			if (hit.copy().sub(mob).length() <= radius) {
-				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.toInt(), true))
-				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, duration, efficiency.toInt()))
+				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.I, true))
+				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, duration, efficiency.I))
 			}
 		}
 		
@@ -64,7 +63,7 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.target)
+		mc.renderEngine.bindTexture(LibResourceLocations.target)
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord - radius, 0.0, 0.0)
 		Tessellator.instance.addVertexWithUV(mop.hitVec.xCoord - radius, mop.hitVec.yCoord + y, mop.hitVec.zCoord + radius, 0.0, 1.0)

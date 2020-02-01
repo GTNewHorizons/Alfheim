@@ -18,8 +18,8 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
     init {
         setBlockName(name)
         val f = 0.25f
-        setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
-        setLightLevel(1.0f)
+        setBlockBounds(f, f, f, 1f - f, 1f - f, 1f - f)
+        setLightLevel(1f)
         setStepSound(soundTypeCloth)
     }
 

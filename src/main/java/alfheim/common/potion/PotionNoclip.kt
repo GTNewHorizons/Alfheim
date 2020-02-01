@@ -3,7 +3,6 @@ package alfheim.common.potion
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap

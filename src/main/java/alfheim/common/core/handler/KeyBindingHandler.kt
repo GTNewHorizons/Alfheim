@@ -8,7 +8,6 @@ import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem
 import alfheim.common.core.helper.ElvenFlightHelper
-import alfheim.common.core.registry.AlfheimRegistry
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.common.MinecraftForge

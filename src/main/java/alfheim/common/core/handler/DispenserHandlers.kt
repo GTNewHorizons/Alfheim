@@ -1,6 +1,7 @@
 package alfheim.common.core.handler
 
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -24,7 +25,7 @@ object BifrostFlowerDispenserHandler: IBehaviorDispenseItem {
 	}
 	
 	override fun dispense(block: IBlockSource, stack: ItemStack): ItemStack? {
-		if (stack.itemDamage != ElvenResourcesMetas.RainbowDust) return defaultBehavior.dispense(block, stack)
+		if (stack.meta != ElvenResourcesMetas.RainbowDust) return defaultBehavior.dispense(block, stack)
 		
 		val facing = ForgeDirection.getOrientation(BlockDispenser.func_149937_b(block.blockMetadata).ordinal)
 		val x = block.xInt + facing.offsetX
@@ -33,7 +34,7 @@ object BifrostFlowerDispenserHandler: IBehaviorDispenseItem {
 		
 		if (block.world.getBlock(x, y, z) == ModBlocks.flower) {
 			block.world.setBlock(x, y, z, AlfheimBlocks.rainbowGrass, 2, 3)
-			block.world.playSoundEffect(x.toDouble(), y.toDouble(), z.toDouble(), "botania:enchanterEnchant", 1f, 1f)
+			block.world.playSoundEffect(x.D, y.D, z.D, "botania:enchanterEnchant", 1f, 1f)
 			stack.stackSize--
 			return stack
 		}
@@ -74,16 +75,16 @@ object ThrownPotionDispenserHandler: IBehaviorDispenseItem {
 		--stack.stackSize
 		
 		potion.setLocationAndAngles(x, y, z, yaw, pitch)
-		potion.posX -= (MathHelper.cos(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * 0.16f).toDouble()
+		potion.posX -= (MathHelper.cos(potion.rotationYaw / 180f * Math.PI.F) * 0.16f).D
 		potion.posY -= 0.10000000149011612
-		potion.posZ -= (MathHelper.sin(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * 0.16f).toDouble()
+		potion.posZ -= (MathHelper.sin(potion.rotationYaw / 180f * Math.PI.F) * 0.16f).D
 		potion.setPosition(potion.posX, potion.posY, potion.posZ)
-		potion.yOffset = 0.0f
+		potion.yOffset = 0f
 		val f = 0.4f
-		potion.motionX = (-MathHelper.sin(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(potion.rotationPitch / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.motionZ = (MathHelper.cos(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(potion.rotationPitch / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.motionY = (-MathHelper.sin((potion.rotationPitch + potion.func_70183_g()) / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.setThrowableHeading(potion.motionX, potion.motionY, potion.motionZ, potion.func_70182_d(), 1.0f)
+		potion.motionX = (-MathHelper.sin(potion.rotationYaw / 180f * Math.PI.F) * MathHelper.cos(potion.rotationPitch / 180f * Math.PI.F) * f).D
+		potion.motionZ = (MathHelper.cos(potion.rotationYaw / 180f * Math.PI.F) * MathHelper.cos(potion.rotationPitch / 180f * Math.PI.F) * f).D
+		potion.motionY = (-MathHelper.sin((potion.rotationPitch + potion.func_70183_g()) / 180f * Math.PI.F) * f).D
+		potion.setThrowableHeading(potion.motionX, potion.motionY, potion.motionZ, potion.func_70182_d(), 1f)
 		
 		block.world.spawnEntityInWorld(potion)
 		
@@ -124,16 +125,16 @@ object ThrownItemDispenserHandler: IBehaviorDispenseItem {
 		--stack.stackSize
 		
 		potion.setLocationAndAngles(x, y, z, yaw, pitch)
-		potion.posX -= (MathHelper.cos(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * 0.16f).toDouble()
+		potion.posX -= (MathHelper.cos(potion.rotationYaw / 180f * Math.PI.F) * 0.16f).D
 		potion.posY -= 0.10000000149011612
-		potion.posZ -= (MathHelper.sin(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * 0.16f).toDouble()
+		potion.posZ -= (MathHelper.sin(potion.rotationYaw / 180f * Math.PI.F) * 0.16f).D
 		potion.setPosition(potion.posX, potion.posY, potion.posZ)
-		potion.yOffset = 0.0f
+		potion.yOffset = 0f
 		val f = 0.4f
-		potion.motionX = (-MathHelper.sin(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(potion.rotationPitch / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.motionZ = (MathHelper.cos(potion.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(potion.rotationPitch / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.motionY = (-MathHelper.sin((potion.rotationPitch + potion.func_70183_g()) / 180.0f * Math.PI.toFloat()) * f).toDouble()
-		potion.setThrowableHeading(potion.motionX, potion.motionY, potion.motionZ, potion.func_70182_d(), 1.0f)
+		potion.motionX = (-MathHelper.sin(potion.rotationYaw / 180f * Math.PI.F) * MathHelper.cos(potion.rotationPitch / 180f * Math.PI.F) * f).D
+		potion.motionZ = (MathHelper.cos(potion.rotationYaw / 180f * Math.PI.F) * MathHelper.cos(potion.rotationPitch / 180f * Math.PI.F) * f).D
+		potion.motionY = (-MathHelper.sin((potion.rotationPitch + potion.func_70183_g()) / 180f * Math.PI.F) * f).D
+		potion.setThrowableHeading(potion.motionX, potion.motionY, potion.motionZ, potion.func_70182_d(), 1f)
 		
 		block.world.spawnEntityInWorld(potion)
 		

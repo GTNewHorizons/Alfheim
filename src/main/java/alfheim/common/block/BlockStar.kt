@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileEntityStar
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemStarPlacer
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional
@@ -25,8 +26,8 @@ class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexicona
 	init {
 		setBlockName(name)
 		val f = 0.25f
-		setBlockBounds(f, f, f, 1.0f - f, 1.0f - f, 1.0f - f)
-		setLightLevel(1.0f)
+		setBlockBounds(f, f, f, 1f - f, 1f - f, 1f - f)
+		setLightLevel(1f)
 		setStepSound(soundTypeCloth)
 	}
 	
@@ -61,12 +62,12 @@ class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexicona
 				val color = te.getColor()
 				val stack = ItemStarPlacer.colorStack(color)
 				
-				val entityitem = EntityItem(world, x.toFloat() + f, y.toFloat() + f, z.toFloat() + f, stack)
+				val entityitem = EntityItem(world, x.F + f, y.F + f, z.F + f, stack)
 				
 				val f3 = 0.05f
-				entityitem.motionX = (world.rand.nextGaussian().toFloat() * f3).toDouble()
-				entityitem.motionY = (world.rand.nextGaussian().toFloat() * f3 + 0.2f).toDouble()
-				entityitem.motionZ = (world.rand.nextGaussian().toFloat() * f3).toDouble()
+				entityitem.motionX = (world.rand.nextGaussian().F * f3).D
+				entityitem.motionY = (world.rand.nextGaussian().F * f3 + 0.2f).D
+				entityitem.motionZ = (world.rand.nextGaussian().F * f3).D
 				world.spawnEntityInWorld(entityitem)
 			}
 		}

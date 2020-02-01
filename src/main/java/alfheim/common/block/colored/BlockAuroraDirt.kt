@@ -1,16 +1,16 @@
 package alfheim.common.block.colored
 
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.MathHelper
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection
@@ -36,7 +36,7 @@ class BlockAuroraDirt : BlockMod(Material.ground), IGrowable, ILexiconable {
 				z *= d
 				return this
 			}
-			constructor(v: Vec3i): this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
+			constructor(v: Vec3i): this(v.x.D, v.y.D, v.z.D)
 		}
 		
 		private fun fromVec(vec: Vec3i): Int = (((vec.x + 256) % 256) shl 16) or (((vec.y + 256) % 256) shl 8) or ((vec.z + 256) % 256)
@@ -99,12 +99,12 @@ class BlockAuroraDirt : BlockMod(Material.ground), IGrowable, ILexiconable {
 			
 			val c = (c0 * zd) + (c1 * (zl - zd))
 			
-			return Vec3i(MathHelper.floor_double(c.x), MathHelper.floor_double(c.y), MathHelper.floor_double(c.z))
+			return Vec3i(c.x.mfloor(), c.y.mfloor(), c.z.mfloor())
 		}
 		
 		fun getBlockColor(x: Int, y: Int, z: Int) = fromVec(fromPos(x, y, z))
 		
-		fun getItemColor() = fromPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ)
+		fun getItemColor() = fromPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ)
 	}
 	
 	init {

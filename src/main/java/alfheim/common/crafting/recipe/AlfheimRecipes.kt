@@ -58,7 +58,6 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
-import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -775,10 +774,10 @@ object AlfheimRecipes {
 	}
 	
 	private fun registerSmeltingRecipes() {
-		addSmelting(ItemStack(elvenOres, 1, 1), ItemStack(manaResource, 1, 7), 1.0f)
-		addSmelting(ItemStack(elvenOres, 1, 3), ItemStack(gold_ingot, 1, 0), 1.0f)
-		addSmelting(elvenSand, ItemStack(elfGlass), 1.0f)
-		addSmelting(elvenSandstone, ItemStack(elvenSandstone, 1, 4), 1.0f)
+		addSmelting(ItemStack(elvenOres, 1, 1), ItemStack(manaResource, 1, 7), 1f)
+		addSmelting(ItemStack(elvenOres, 1, 3), ItemStack(gold_ingot, 1, 0), 1f)
+		addSmelting(elvenSand, ItemStack(elfGlass), 1f)
+		addSmelting(elvenSandstone, ItemStack(elvenSandstone, 1, 4), 1f)
 		addSmelting(manaGlass, ItemStack(glass), 0f)
 	}
 	

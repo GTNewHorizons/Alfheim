@@ -2,7 +2,8 @@ package alfheim.client.render.tile
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import net.minecraft.client.Minecraft
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
@@ -54,14 +55,14 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		}
 		
 		if (ConfigHandler.oldPylonModel)
-			Minecraft.getMinecraft().renderEngine.bindTexture(if (red) LibResourceLocations.antiPylonOld else if (orange) LibResourceLocations.yordinPylonOld else LibResourceLocations.elvenPylonOld)
+			mc.renderEngine.bindTexture(if (red) LibResourceLocations.antiPylonOld else if (orange) LibResourceLocations.yordinPylonOld else LibResourceLocations.elvenPylonOld)
 		else
-			Minecraft.getMinecraft().renderEngine.bindTexture(if (red) LibResourceLocations.antiPylon else if (orange) LibResourceLocations.yordinPylon else LibResourceLocations.elvenPylon)
+			mc.renderEngine.bindTexture(if (red) LibResourceLocations.antiPylon else if (orange) LibResourceLocations.yordinPylon else LibResourceLocations.elvenPylon)
 		
-		var worldTime = if (tile.worldObj == null) 0.0 else (ClientTickHandler.ticksInGame + ticks).toDouble()
+		var worldTime = if (tile.worldObj == null) 0.0 else (ClientTickHandler.ticksInGame + ticks).D
 		
 		rand.setSeed((tile.xCoord xor tile.yCoord xor tile.zCoord).toLong())
-		worldTime += rand.nextInt(360).toDouble()
+		worldTime += rand.nextInt(360).D
 		
 		if (ConfigHandler.oldPylonModel) {
 			glTranslated(x + 0.5, y + 2.2, z + 0.5)
@@ -76,7 +77,7 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			glPushMatrix()
 			if (!ConfigHandler.oldPylonModel)
 				glTranslatef(0.5f, 0f, -0.5f)
-			glRotatef(worldTime.toFloat() * 1.5f, 0f, 1f, 0f)
+			glRotatef(worldTime.F * 1.5f, 0f, 1f, 0f)
 			if (!ConfigHandler.oldPylonModel)
 				glTranslatef(-0.5f, 0f, 0.5f)
 			
@@ -92,7 +93,7 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		if (!ConfigHandler.oldPylonModel)
 			glTranslatef(0.5f, 0f, -0.5f)
 		
-		glRotatef((-worldTime).toFloat(), 0f, 1f, 0f)
+		glRotatef((-worldTime).F, 0f, 1f, 0f)
 		if (!ConfigHandler.oldPylonModel)
 			glTranslatef(-0.5f, 0f, 0.5f)
 		
@@ -103,7 +104,7 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		
 		if (!ShaderHelper.useShaders() || hand) {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-			val alpha = ((sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
+			val alpha = ((sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).F
 			glColor4f(1f, 1f, 1f, a * (alpha + 0.183f))
 		}
 		
@@ -118,8 +119,8 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 			val light = 15728880
 			val lightmapX = light % 65536
 			val lightmapY = light / 65536
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX.toFloat(), lightmapY.toFloat())
-			val alpha = ((sin(worldTime / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).toFloat()
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapX.F, lightmapY.F)
+			val alpha = ((sin(worldTime / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).F
 			glColor4f(1f, 1f, 1f, a * (alpha + 0.183f))
 		}
 		

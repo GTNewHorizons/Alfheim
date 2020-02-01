@@ -2,7 +2,7 @@ package alfheim.common.item.creator
 
 import alfheim.api.*
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import com.google.common.collect.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -81,14 +81,13 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World, player: Entity, par4: Int, par5: Boolean) {
-		if (!world.isRemote && player is EntityPlayer && stack.itemDamage > 0 && ManaItemHandler.requestManaExactForTool(stack, player, getManaPerDamage() * 2, true))
-			stack.itemDamage = stack.itemDamage - 1
+		if (!world.isRemote && player is EntityPlayer && stack.meta > 0 && ManaItemHandler.requestManaExactForTool(stack, player, getManaPerDamage() * 2, true))
+			stack.meta = stack.meta - 1
 	}
 	
 	override fun onBlockDestroyed(stack: ItemStack, world: World?, block: Block, x: Int, y: Int, z: Int, player: EntityLivingBase?): Boolean {
-		if (block.getBlockHardness(world, x, y, z).toDouble() != 0.0) {
+		if (block.getBlockHardness(world, x, y, z) != 0f)
 			stack.damageStack(2, player)
-		}
 		
 		return true
 	}
@@ -111,7 +110,7 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 	
 	override fun getItemAttributeModifiers(): Multimap<Any, Any> {
 		val multimap = HashMultimap.create<Any, Any>()
-		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", toolMaterial.damageVsEntity.toDouble(), 0))
+		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", toolMaterial.damageVsEntity.D, 0))
 		return multimap
 	}
 	
@@ -165,11 +164,11 @@ class DaggerEventHandler {
 	}
 	
 	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.toFloat())
+		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
 		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
 		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	@SubscribeEvent
@@ -194,7 +193,7 @@ class DaggerEventHandler {
 								enemyEntity.attackEntityFrom(DamageSourceOculus(player), e.ammount * 2f) // dammit cpw, you misspelled amount
 								val xDif = enemyEntity.posX - player.posX
 								val zDif = enemyEntity.posZ - player.posZ
-								player.worldObj.playSoundAtEntity(enemyEntity, "random.anvil_land", 1f, 0.9f + 0.1f * Math.random().toFloat())
+								player.worldObj.playSoundAtEntity(enemyEntity, "random.anvil_land", 1f, 0.9f + 0.1f * Math.random().F)
 								if (enemyEntity is EntityPlayer && enemyEntity.currentEquippedItem != null)
 									enemyEntity.currentEquippedItem.damageItem(30, enemyEntity)
 								enemyEntity.knockBack(player, 1f, -xDif, -zDif)

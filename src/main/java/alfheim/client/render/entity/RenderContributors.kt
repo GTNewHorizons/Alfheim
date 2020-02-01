@@ -2,13 +2,14 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
 import alfheim.common.item.relic.ItemTankMask
 import baubles.common.lib.PlayerHandler
-import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -55,8 +56,8 @@ object RenderContributors {
 	}
 	
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		if (player.isInvisible || player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || player.isPotionActive(Potion.invisibility)) return
-		if (player == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
+		if (player.isInvisible || player.isInvisibleToPlayer(mc.thePlayer) || player.isPotionActive(Potion.invisibility)) return
+		if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
@@ -94,7 +95,7 @@ object RenderContributors {
 				Helper.rotateIfSneaking(player)
 				glTranslated(0.0, 0.15, -0.25)
 				
-				glRotated(Minecraft.getMinecraft().theWorld.totalWorldTime / 2.0 + Minecraft.getMinecraft().timer.renderPartialTicks, 0.0, 1.0, 0.0)
+				glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
 				glScaled(0.2, 0.2, 0.2)
 				
 				so.addTranslation()
@@ -104,12 +105,12 @@ object RenderContributors {
 			run {
 				// wings
 				val icon = ItemElvenResource.wing
-				Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+				mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 				
 				val flying = player.capabilities.isFlying
 				
 				val rz = 120f
-				val rx = 20f + ((sin((player.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).toFloat()
+				val rx = 20f + ((sin((player.ticksExisted + mc.timer.renderPartialTicks).D * if (flying) 0.4f else 0.2f) + 0.5f) * if (flying) 30f else 5f).F
 				val ry = 0f
 				val h = 0.2f
 				val i = 0.15f
@@ -156,15 +157,15 @@ object RenderContributors {
 		if (player.commandSenderName == "DmitryWS") {
 			glPushMatrix()
 			glEnable(GL_CULL_FACE)
-			val t = sin((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks) / 10.0)
+			val t = sin((mc.theWorld.totalWorldTime + mc.timer.renderPartialTicks) / 10.0)
 			
 			glTranslated(0.0, -(0.9 + t * 0.05), 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			glRotated(60.0, 0.0, 0.0, 1.0)
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.lexica)
+			mc.renderEngine.bindTexture(LibResourceLocations.lexica)
 			val model = ModelBook()
-			model.render(null, 0f, 0.075f + (t * 0.025).toFloat(), 0.925f - (t * 0.025).toFloat(), 1f, 0.0f, 0.0625f)
+			model.render(null, 0f, 0.075f + (t * 0.025).F, 0.925f - (t * 0.025).F, 1f, 0f, 0.0625f)
 			glPopMatrix()
 		}
 		
@@ -178,11 +179,11 @@ object RenderContributors {
 			glShadeModel(GL_SMOOTH)
 			
 			glTranslated(0.0, 1.35, 0.0)
-			glRotated(Minecraft.getMinecraft().theWorld.totalWorldTime / 2.0 + Minecraft.getMinecraft().timer.renderPartialTicks, 0.0, 1.0, 0.0)
+			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScaled(2.0, 2.0, 2.0)
 			
 			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.aura)
+			mc.renderEngine.bindTexture(LibResourceLocations.aura)
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()
 			tes.addVertexWithUV(-1.0, 0.0, -1.0, 0.0, 0.0)
@@ -204,7 +205,7 @@ object RenderContributors {
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
 			if (player.isSneaking) glTranslatef(0f, 0f, -0.25f)
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko1)
+			mc.renderEngine.bindTexture(LibResourceLocations.miko1)
 			ModelEntityFlugel.model1.renderAll()
 			glPopMatrix()
 			
@@ -219,7 +220,7 @@ object RenderContributors {
 			glRotatef(pitch, 0f, 0f, 1f)
 			
 			glRotated(-90.0, 0.0, 1.0, 0.0)
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.miko2)
+			mc.renderEngine.bindTexture(LibResourceLocations.miko2)
 			ModelEntityFlugel.model2.renderAll()
 			glPopMatrix()
 		}

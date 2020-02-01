@@ -2,6 +2,7 @@ package alfheim.client.render.block
 
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.BlockFunnel
+import alfheim.common.core.util.*
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
@@ -13,14 +14,14 @@ class RenderBlockHopper: ISimpleBlockRenderingHandler {
 		val tessellator = Tessellator.instance
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z))
 		val l = block.colorMultiplier(world, x, y, z)
-		var f = (l shr 16 and 255).toFloat() / 255.0f
-		var f1 = (l shr 8 and 255).toFloat() / 255.0f
-		var f2 = (l and 255).toFloat() / 255.0f
+		var f = (l shr 16 and 255).F / 255f
+		var f1 = (l shr 8 and 255).F / 255f
+		var f2 = (l and 255).F / 255f
 		
 		if (EntityRenderer.anaglyphEnable) {
-			val f3 = (f * 30.0f + f1 * 59.0f + f2 * 11.0f) / 100.0f
-			val f4 = (f * 30.0f + f1 * 70.0f) / 100.0f
-			val f5 = (f * 30.0f + f2 * 70.0f) / 100.0f
+			val f3 = (f * 30f + f1 * 59f + f2 * 11f) / 100f
+			val f4 = (f * 30f + f1 * 70f) / 100f
+			val f5 = (f * 30f + f2 * 70f) / 100f
 			f = f3
 			f1 = f4
 			f2 = f5
@@ -37,14 +38,14 @@ class RenderBlockHopper: ISimpleBlockRenderingHandler {
 		
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z))
 		val j1 = block.colorMultiplier(renderer.blockAccess, x, y, z)
-		var g = (j1 shr 16 and 255).toFloat() / 255.0f
-		f1 = (j1 shr 8 and 255).toFloat() / 255.0f
-		var g1 = (j1 and 255).toFloat() / 255.0f
+		var g = (j1 shr 16 and 255).F / 255f
+		f1 = (j1 shr 8 and 255).F / 255f
+		var g1 = (j1 and 255).F / 255f
 		
 		if (EntityRenderer.anaglyphEnable) {
-			val f3 = (g * 30.0f + f1 * 59.0f + g1 * 11.0f) / 100.0f
-			val f4 = (g * 30.0f + f1 * 70.0f) / 100.0f
-			val f5 = (g * 30.0f + g1 * 70.0f) / 100.0f
+			val f3 = (g * 30f + f1 * 59f + g1 * 11f) / 100f
+			val f4 = (g * 30f + f1 * 70f) / 100f
+			val f5 = (g * 30f + g1 * 70f) / 100f
 			g = f3
 			f1 = f4
 			g1 = f5
@@ -56,11 +57,11 @@ class RenderBlockHopper: ISimpleBlockRenderingHandler {
 		val iicon1 = BlockFunnel.getHopperIcon("funnel_inside")
 		f1 = 0.125f
 		
-		renderer.renderFaceXPos(block, (x.toFloat() - 1.0f + f1).toDouble(), y.toDouble(), z.toDouble(), iicon)
-		renderer.renderFaceXNeg(block, (x.toFloat() + 1.0f - f1).toDouble(), y.toDouble(), z.toDouble(), iicon)
-		renderer.renderFaceZPos(block, x.toDouble(), y.toDouble(), (z.toFloat() - 1.0f + f1).toDouble(), iicon)
-		renderer.renderFaceZNeg(block, x.toDouble(), y.toDouble(), (z.toFloat() + 1.0f - f1).toDouble(), iicon)
-		renderer.renderFaceYPos(block, x.toDouble(), (y.toFloat() - 1.0f).toDouble() + d0, z.toDouble(), iicon1)
+		renderer.renderFaceXPos(block, (x.F - 1f + f1).D, y.D, z.D, iicon)
+		renderer.renderFaceXNeg(block, (x.F + 1f - f1).D, y.D, z.D, iicon)
+		renderer.renderFaceZPos(block, x.D, y.D, (z.F - 1f + f1).D, iicon)
+		renderer.renderFaceZNeg(block, x.D, y.D, (z.F + 1f - f1).D, iicon)
+		renderer.renderFaceYPos(block, x.D, (y.F - 1f).D + d0, z.D, iicon1)
 		
 		renderer.setOverrideBlockTexture(iicon)
 		val d3 = 0.25

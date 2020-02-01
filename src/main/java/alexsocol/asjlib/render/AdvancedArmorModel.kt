@@ -68,16 +68,16 @@ abstract class AdvancedArmorModel: ModelBiped() {
 		
 		if (entity is EntityZombie || entity is EntitySkeleton || entity is EntityGiantZombie) {
 			val f6 = MathHelper.sin(onGround * Math.PI.toFloat())
-			val f7 = MathHelper.sin((1.0f - (1.0f - onGround) * (1.0f - onGround)) * Math.PI.toFloat())
+			val f7 = MathHelper.sin((1f - (1f - onGround) * (1f - onGround)) * Math.PI.toFloat())
 			
-			bipedRightArm.rotateAngleZ = 0.0f
+			bipedRightArm.rotateAngleZ = 0f
 			bipedRightArm.rotateAngleY = -(0.1f - f6 * 0.6f)
 			bipedRightArm.rotateAngleX = -(Math.PI.toFloat() / 2f)
 			bipedRightArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
 			bipedRightArm.rotateAngleZ += MathHelper.cos(z * 0.09f) * 0.05f + 0.05f
 			bipedRightArm.rotateAngleX += MathHelper.sin(z * 0.067f) * 0.05f
 			
-			bipedLeftArm.rotateAngleZ = 0.0f
+			bipedLeftArm.rotateAngleZ = 0f
 			bipedLeftArm.rotateAngleY = 0.1f - f6 * 0.6f
 			bipedLeftArm.rotateAngleX = -(Math.PI.toFloat() / 2f)
 			bipedLeftArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
@@ -100,14 +100,14 @@ abstract class AdvancedArmorModel: ModelBiped() {
 		
 		pre(entity)
 		
-		val f6 = 2.0f
+		val f6 = 2f
 		
 		run {
 			//partHead
 			glPushMatrix()
 			if (isChild) {
 				glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
-				glTranslatef(0.0f, 16.0f * parTicks, 0.0f)
+				glTranslatef(0f, 16f * parTicks, 0f)
 			}
 			glTranslatef(bipedHead.rotationPointX * parTicks, bipedHead.rotationPointY * parTicks, bipedHead.rotationPointZ * parTicks)
 			glRotatef(bipedHead.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
@@ -120,8 +120,8 @@ abstract class AdvancedArmorModel: ModelBiped() {
 		
 		if (isChild) {
 			glPushMatrix()
-			glScalef(1.0f / f6, 1.0f / f6, 1.0f / f6)
-			glTranslatef(0.0f, 24.0f * parTicks, 0.0f)
+			glScalef(1f / f6, 1f / f6, 1f / f6)
+			glTranslatef(0f, 24f * parTicks, 0f)
 		}
 		
 		run {

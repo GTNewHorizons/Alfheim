@@ -8,8 +8,8 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient
 import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.util.*
@@ -33,7 +33,7 @@ class GUISpells: Gui() {
 		val width = e.resolution.scaledWidth
 		val height = e.resolution.scaledHeight
 		
-		zLevel = -90.0f
+		zLevel = -90f
 		
 		val count = AlfheimAPI.getSpellsFor(EnumRace[KeyBindingHandlerClient.raceID]).size
 		val length = if (count >= 5) 81 else 1 + (count - 1) * 20
@@ -61,7 +61,7 @@ class GUISpells: Gui() {
 			ASJRenderHelper.glColor1u(-0x779f8a80)
 			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 25, e.resolution.scaledHeight / 2 + 8, 0, 0, 52, 5)
 			ASJRenderHelper.glColor1u(-0x77ff5501)
-			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 24, e.resolution.scaledHeight / 2 + 9, 0, 0, 50 - (50.0 * (PlayerSegmentClient.init / PlayerSegmentClient.initM.toDouble())).toInt(), 3)
+			drawTexturedModalRect(e.resolution.scaledWidth / 2 - 24, e.resolution.scaledHeight / 2 + 9, 0, 0, 50 - (50.0 * (PlayerSegmentClient.init / PlayerSegmentClient.initM.D)).I, 3)
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glEnable(GL_TEXTURE_2D)
 		}
@@ -74,7 +74,7 @@ class GUISpells: Gui() {
 		
 		// ################ spells icons ################
 		glPushMatrix()
-		glTranslated(24.0, (height - 40).toDouble(), 0.0)
+		glTranslated(24.0, (height - 40).D, 0.0)
 		for (i in 0 until min(count, 5)) {
 			if (i != pos) glColor4d(1.0, 1.0, 1.0, 0.5) else glColor4d(1.0, 1.0, 1.0, 1.0)
 			
@@ -135,7 +135,7 @@ class GUISpells: Gui() {
 		
 		// ################ Vertical bar ################
 		glPushMatrix()
-		glTranslated(0.0, (height - 62).toDouble(), 0.0)
+		glTranslated(0.0, (height - 62).D, 0.0)
 		eng.bindTexture(LibResourceLocations.spellRace)
 		tes.startDrawingQuads()
 		tes.addVertexWithUV(0.0, 0.0, 0.0, 1.0, 0.0)
@@ -148,7 +148,7 @@ class GUISpells: Gui() {
 		// ################ Race icons ################
 		glPopMatrix()
 		glPushMatrix()
-		glTranslated(4.0, (height - 40).toDouble(), 0.0)
+		glTranslated(4.0, (height - 40).D, 0.0)
 		drawRect(LibResourceLocations.affinities[rID], 16)
 		
 		glColor4d(1.0, 1.0, 1.0, 0.75)
@@ -167,21 +167,21 @@ class GUISpells: Gui() {
 		
 		// ################ Spell name ################
 		var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.toDouble())), true)
+		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.D)), true)
 		
 		// ################################################################ HOTSPELLS ################################################################
 		
 		glPushMatrix()
 		glColor4f(1f, 1f, 1f, 1f)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.hotSpells)
+		mc.renderEngine.bindTexture(LibResourceLocations.hotSpells)
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV((width - 22).toDouble(), (height / 2 - 121).toDouble(), 0.0, 0.0, 0.0)
-		Tessellator.instance.addVertexWithUV((width - 22).toDouble(), (height / 2 + 121).toDouble(), 0.0, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(width.toDouble(), (height / 2 + 121).toDouble(), 0.0, 1.0, 1.0)
-		Tessellator.instance.addVertexWithUV(width.toDouble(), (height / 2 - 121).toDouble(), 0.0, 1.0, 0.0)
+		Tessellator.instance.addVertexWithUV((width - 22).D, (height / 2 - 121).D, 0.0, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV((width - 22).D, (height / 2 + 121).D, 0.0, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(width.D, (height / 2 + 121).D, 0.0, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(width.D, (height / 2 - 121).D, 0.0, 1.0, 0.0)
 		Tessellator.instance.draw()
 		
-		glTranslated((width - 19).toDouble(), (height / 2 - 138).toDouble(), 0.0)
+		glTranslated((width - 19).D, (height / 2 - 138).D, 0.0)
 		var txt: String
 		for (i in PlayerSegmentClient.hotSpells.indices) {
 			glTranslated(0.0, 20.0, 0.0)
@@ -219,19 +219,19 @@ class GUISpells: Gui() {
 		fun drawRect(size: Int) {
 			Tessellator.instance.startDrawingQuads()
 			Tessellator.instance.addVertex(0.0, 0.0, 0.0)
-			Tessellator.instance.addVertex(0.0, size.toDouble(), 0.0)
-			Tessellator.instance.addVertex(size.toDouble(), size.toDouble(), 0.0)
-			Tessellator.instance.addVertex(size.toDouble(), 0.0, 0.0)
+			Tessellator.instance.addVertex(0.0, size.D, 0.0)
+			Tessellator.instance.addVertex(size.D, size.D, 0.0)
+			Tessellator.instance.addVertex(size.D, 0.0, 0.0)
 			Tessellator.instance.draw()
 		}
 		
 		fun drawRect(texture: ResourceLocation, size: Int) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(texture)
+			mc.renderEngine.bindTexture(texture)
 			Tessellator.instance.startDrawingQuads()
 			Tessellator.instance.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0)
-			Tessellator.instance.addVertexWithUV(0.0, size.toDouble(), 0.0, 0.0, 1.0)
-			Tessellator.instance.addVertexWithUV(size.toDouble(), size.toDouble(), 0.0, 1.0, 1.0)
-			Tessellator.instance.addVertexWithUV(size.toDouble(), 0.0, 0.0, 1.0, 0.0)
+			Tessellator.instance.addVertexWithUV(0.0, size.D, 0.0, 0.0, 1.0)
+			Tessellator.instance.addVertexWithUV(size.D, size.D, 0.0, 1.0, 1.0)
+			Tessellator.instance.addVertexWithUV(size.D, 0.0, 0.0, 1.0, 0.0)
 			Tessellator.instance.draw()
 		}
 	}

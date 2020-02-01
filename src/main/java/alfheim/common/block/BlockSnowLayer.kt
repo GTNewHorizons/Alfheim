@@ -16,7 +16,7 @@ import java.util.*
 class BlockSnowLayer: BlockMod(Material.snow) {
 	
 	init {
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f)
+		setBlockBounds(0f, 0f, 0f, 1f, 0.125f, 1f)
 		setBlockName("SnowLayer")
 		setCreativeTab(AlfheimTab)
 		setHardness(0.1f)
@@ -44,8 +44,8 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	
 	fun setSizeForMeta(meta: Int) {
 		val j = meta and 7
-		val f = (2 * (1 + j)).toFloat() / 16.0f
-		setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, f, 1.0f)
+		val f = (2 * (1 + j)).F / 16f
+		setBlockBounds(0f, 0f, 0f, 1f, f, 1f)
 	}
 	
 	override fun canPlaceBlockAt(world: World, x: Int, y: Int, z: Int): Boolean {

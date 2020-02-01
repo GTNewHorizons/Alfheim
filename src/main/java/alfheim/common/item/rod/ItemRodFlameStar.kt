@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -68,10 +69,10 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 		
 		val power = getDamage(prowess, priest)
 		
-		val mop = ASJUtilities.getMouseOver(player, power.toDouble(), true)
+		val mop = ASJUtilities.getMouseOver(player, power.D, true)
 		
 		val hit = if (mop?.hitVec == null)
-			Vector3(player.lookVec).normalize().mul(power.toDouble()).add(player.posX, player.posY + player.eyeHeight, player.posZ)
+			Vector3(player.lookVec).normalize().mul(power.D).add(player.posX, player.posY + player.eyeHeight, player.posZ)
 		else
 			Vector3(mop.hitVec)
 		
@@ -90,7 +91,7 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 			for (entity in entities) {
 				if (entity is EntityLivingBase && entity != player && entity.health > 0) {
 					if (manaFlag) {
-						if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.toFloat())) {
+						if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.F)) {
 							ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 							entity.setFire(power * 20)
 						}

@@ -3,7 +3,7 @@ package alfheim.common.item.rod
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -74,17 +74,17 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		val m = 0.15F
 		val mv = 0.35F
 		for (i in 0..359 step 8) {
-			val rad = i.toDouble() * Math.PI / 180.0
-			val dispx = x + 0.5 - cos(rad) * range.toFloat()
+			val rad = i.D * Math.PI / 180.0
+			val dispx = x + 0.5 - cos(rad) * range.F
 			val dispy = y + 0.5
-			val dispz = z + 0.5 - sin(rad) * range.toFloat()
+			val dispz = z + 0.5 - sin(rad) * range.F
 			
-			Botania.proxy.wispFX(world, dispx, dispy, dispz, r, g, b, 0.2F, (Math.random() - 0.5).toFloat() * m, (Math.random() - 0.5).toFloat() * mv, (Math.random() - 0.5F).toFloat() * m)
+			Botania.proxy.wispFX(world, dispx, dispy, dispz, r, g, b, 0.2F, (Math.random() - 0.5).F * m, (Math.random() - 0.5).F * mv, (Math.random() - 0.5F).F * m)
 		}
 	}
 	
 	fun pushEntities(x: Int, y: Int, z: Int, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>) =
-		pushEntities(x.toDouble(), y.toDouble(), z.toDouble(), range, velocity, player, entities)
+		pushEntities(x.D, y.D, z.D, range, velocity, player, entities)
 	
 	fun pushEntities(x: Double, y: Double, z: Double, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>): Boolean {
 		var flag = false
@@ -121,9 +121,9 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		
 		if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
 			val color = Color(ColorOverrideHelper.getColor(player, 0x0000FF))
-			val r = color.red.toFloat() / 255f
-			val g = color.green.toFloat() / 255f
-			val b = color.blue.toFloat() / 255f
+			val r = color.red.F / 255f
+			val g = color.green.F / 255f
+			val b = color.blue.F / 255f
 			if (count % 5 == 0) particleRing(world, x, y, z, range, r, g, b)
 			
 			val exclude: EntityLivingBase = player
@@ -165,9 +165,9 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 	override fun onAvatarUpdate(tile: IAvatarTile, stack: ItemStack) {
 		val te = tile as TileEntity
 		val world = te.worldObj
-		val x = te.xCoord.toDouble()
-		val y = te.yCoord.toDouble()
-		val z = te.zCoord.toDouble()
+		val x = te.xCoord.D
+		val y = te.yCoord.D
+		val z = te.zCoord.D
 		
 		if (tile.currentMana >= AVATAR_COST) {
 			if (tile.elapsedFunctionalTicks % 5 == 0) particleRing(world, x, y, z, RANGE, 0f, 0f, 1f)

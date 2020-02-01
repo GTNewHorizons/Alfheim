@@ -11,7 +11,7 @@ import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
-import alfheim.common.core.util.getActivePotionEffect
+import alfheim.common.core.util.*
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -235,10 +235,10 @@ object AlfheimHookHandler {
 				}
 				
 				if (flag) {
-					val d0 = (i shr 16 and 255).toDouble() / 255.0
-					val d1 = (i shr 8 and 255).toDouble() / 255.0
-					val d2 = (i and 255).toDouble() / 255.0
-					e.worldObj.spawnParticle(if (flag1) "mobSpellAmbient" else "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5) * e.width.toDouble(), e.posY + e.worldObj.rand.nextDouble() * e.height.toDouble() - e.yOffset.toDouble(), e.posZ + (e.worldObj.rand.nextDouble() - 0.5) * e.width.toDouble(), d0, d1, d2)
+					val d0 = (i shr 16 and 255).D / 255.0
+					val d1 = (i shr 8 and 255).D / 255.0
+					val d2 = (i and 255).D / 255.0
+					e.worldObj.spawnParticle(if (flag1) "mobSpellAmbient" else "mobSpell", e.posX + (e.worldObj.rand.nextDouble() - 0.5) * e.width.D, e.posY + e.worldObj.rand.nextDouble() * e.height.D - e.yOffset.D, e.posZ + (e.worldObj.rand.nextDouble() - 0.5) * e.width.D, d0, d1, d2)
 				}
 			}
 		} catch (ex: ConcurrentModificationException) {
@@ -266,11 +266,11 @@ object AlfheimHookHandler {
 		var g = g
 		var b = b
 		if (updatingEntity) {
-			rt = Math.random().toFloat() * 0.3f
+			rt = Math.random().F * 0.3f
 			r = rt
-			gt = 0.7f + Math.random().toFloat() * 0.3f
+			gt = 0.7f + Math.random().F * 0.3f
 			g = gt
-			bt = 0.7f + Math.random().toFloat() * 0.3f
+			bt = 0.7f + Math.random().F * 0.3f
 			b = bt
 		}
 		Botania.proxy.wispFX(world, x, y, z, r, g, b, size, gravity, 1f)
@@ -345,7 +345,7 @@ object AlfheimHookHandler {
 			updatingTile = false
 			if (tile.worldObj.rand.nextBoolean()) {
 				val meta = tile.getBlockMetadata()
-				Botania.proxy.sparkleFX(tile.worldObj, tile.xCoord + Math.random(), tile.yCoord + Math.random() * 1.5, tile.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().toFloat(), 2)
+				Botania.proxy.sparkleFX(tile.worldObj, tile.xCoord + Math.random(), tile.yCoord + Math.random() * 1.5, tile.zCoord + Math.random(), if (meta == 2) 0f else 0.5f, if (meta == 0) 0.5f else 1f, if (meta == 1) 0.5f else 1f, Math.random().F, 2)
 			}
 		}
 	}
@@ -464,7 +464,7 @@ object AlfheimHookHandler {
 		if (side == 5) ++x
 		val b = world.getBlock(x, y, z)
 		
-		var f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0.0f
+		var f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f
 		
 		if (player != null) f = f || player.capabilities.isCreativeMode
 		if (b.material === Material.fire && f) {
@@ -641,39 +641,39 @@ object AlfheimHookHandler {
 		}
 		
 		if (fogMode == 999) {
-			glFog(GL_FOG_COLOR, setFogColorBuffer(0.0f, 0.0f, 0.0f, 1.0f))
+			glFog(GL_FOG_COLOR, setFogColorBuffer(0f, 0f, 0f, 1f))
 			glFogi(GL_FOG_MODE, GL_LINEAR)
-			glFogf(GL_FOG_START, 0.0f)
-			glFogf(GL_FOG_END, 8.0f)
+			glFogf(GL_FOG_START, 0f)
+			glFogf(GL_FOG_END, 8f)
 			
 			if (GLContext.getCapabilities().GL_NV_fog_distance) {
 				glFogi(34138, 34139)
 			}
 			
-			glFogf(GL_FOG_START, 0.0f)
+			glFogf(GL_FOG_START, 0f)
 		} else {
-			glFog(GL_FOG_COLOR, setFogColorBuffer(renderer.fogColorRed, renderer.fogColorGreen, renderer.fogColorBlue, 1.0f))
-			glNormal3f(0.0f, -1.0f, 0.0f)
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+			glFog(GL_FOG_COLOR, setFogColorBuffer(renderer.fogColorRed, renderer.fogColorGreen, renderer.fogColorBlue, 1f))
+			glNormal3f(0f, -1f, 0f)
+			glColor4f(1f, 1f, 1f, 1f)
 			val block = ActiveRenderInfo.getBlockAtEntityViewpoint(renderer.mc.theWorld, entitylivingbase, renderPartialTicks)
 			var f1: Float
 			
-			val event = net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity(renderer, entitylivingbase, block, renderPartialTicks.toDouble(), 0.1f)
+			val event = net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity(renderer, entitylivingbase, block, renderPartialTicks.D, 0.1f)
 			
 			if (MinecraftForge.EVENT_BUS.post(event)) {
 				glFogf(GL_FOG_DENSITY, event.density)
 			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
-				f1 = 5.0f
+				f1 = 5f
 				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
 				
 				if (j < 20) {
-					f1 = 5.0f + (renderer.farPlaneDistance - 5.0f) * (1.0f - j.toFloat() / 20.0f)
+					f1 = 5f + (renderer.farPlaneDistance - 5f) * (1f - j.F / 20f)
 				}
 				
 				glFogi(GL_FOG_MODE, GL_LINEAR)
 				
 				if (fogMode < 0) {
-					glFogf(GL_FOG_START, 0.0f)
+					glFogf(GL_FOG_START, 0f)
 					glFogf(GL_FOG_END, f1 * 0.8f)
 				} else {
 					glFogf(GL_FOG_START, f1 * 0.25f)
@@ -692,16 +692,16 @@ object AlfheimHookHandler {
 				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
 					glFogf(GL_FOG_DENSITY, 0.05f)
 				} else {
-					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).toFloat() * 0.03f)
+					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2.0f)
+				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
 			} else {
 				f1 = renderer.farPlaneDistance
 				
 				if (renderer.mc.theWorld.provider.worldHasVoidParticles && !flag) {
-					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).toDouble() / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.toDouble() + 4.0) / 32.0
+					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).D / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.D + 4.0) / 32.0
 					
 					if (d0 < 1.0) {
 						if (d0 < 0.0) {
@@ -709,10 +709,10 @@ object AlfheimHookHandler {
 						}
 						
 						d0 *= d0
-						var f2 = 100.0f * d0.toFloat()
+						var f2 = 100f * d0.F
 						
-						if (f2 < 5.0f) {
-							f2 = 5.0f
+						if (f2 < 5f) {
+							f2 = 5f
 						}
 						
 						if (f1 > f2) {
@@ -724,7 +724,7 @@ object AlfheimHookHandler {
 				glFogi(GL_FOG_MODE, GL_LINEAR)
 				
 				if (fogMode < 0) {
-					glFogf(GL_FOG_START, 0.0f)
+					glFogf(GL_FOG_START, 0f)
 					glFogf(GL_FOG_END, f1)
 				} else {
 					glFogf(GL_FOG_START, f1 * 0.75f)
@@ -735,11 +735,11 @@ object AlfheimHookHandler {
 					glFogi(34138, 34139)
 				}
 				
-				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.toInt(), entitylivingbase.posZ.toInt())) {
+				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.I, entitylivingbase.posZ.I)) {
 					glFogf(GL_FOG_START, f1 * 0.05f)
-					glFogf(GL_FOG_END, min(f1, 192.0f) * 0.5f)
+					glFogf(GL_FOG_END, min(f1, 192f) * 0.5f)
 				}
-				MinecraftForge.EVENT_BUS.post(net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent(renderer, entitylivingbase, block, renderPartialTicks.toDouble(), fogMode, f1))
+				MinecraftForge.EVENT_BUS.post(net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent(renderer, entitylivingbase, block, renderPartialTicks.D, fogMode, f1))
 			}
 			
 			glEnable(GL_COLOR_MATERIAL)
@@ -811,7 +811,7 @@ object AlfheimHookHandler {
 		
 		if (item is IManaItem && AlfheimConfigHandler.numericalMana) {
 			glDisable(GL_DEPTH_TEST)
-			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.toFloat() + ClientTickHandler.partialTicks).toDouble() * 0.2).toFloat() + 1.0f) * 0.3f + 0.4f, 1.0f))
+			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.F + ClientTickHandler.partialTicks).D * 0.2).F + 1f) * 0.3f + 0.4f, 1f))
 			glEnable(GL_DEPTH_TEST)
 		}
 	}

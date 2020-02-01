@@ -1,13 +1,8 @@
 package alfmod.client.render.entity
 
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.item.material.ItemElvenResource
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.*
+import alfheim.client.core.util.mc
 import net.minecraft.client.renderer.entity.Render
-import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
@@ -30,12 +25,12 @@ class RenderEntitySniceBall: Render() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		
 		glTranslated(x, y + 0.25, z)
-		glRotated((Minecraft.getMinecraft().theWorld.totalWorldTime + entity.ticksExisted + Minecraft.getMinecraft().timer.renderPartialTicks) * 0.5, 1.0, 1.0, 1.0)
+		glRotated((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 0.5, 1.0, 1.0, 1.0)
 		
 		glScaled(0.5, 0.5, 0.5)
 		
 		/*if (AlfheimConfigHandler.minimalGraphics) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			glTranslated(-0.5, -0.5, 0.03125)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)
 			
@@ -47,9 +42,9 @@ class RenderEntitySniceBall: Render() {
 			glTranslated(0.0, -0.5, -0.5 + 0.0625)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)
 		} else {*/
-			Minecraft.getMinecraft().renderEngine.bindTexture(textureSnow)
+			mc.renderEngine.bindTexture(textureSnow)
 			model.renderPart("insphere")
-			Minecraft.getMinecraft().renderEngine.bindTexture(textureIce)
+			mc.renderEngine.bindTexture(textureIce)
 			model.renderPart("outsphere")
 			model.renderPart("spikes")
 		//}

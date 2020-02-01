@@ -7,12 +7,11 @@ import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.ElvenSkinSystem
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import alfheim.common.network.MessageSkinInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.AxisAlignedBB
-import net.minecraft.util.ChunkCoordinates
+import net.minecraft.util.*
 
 class TileRaceSelector: ASJTile() {
 	
@@ -84,7 +83,7 @@ class TileRaceSelector: ASJTile() {
 		// if (getBlockMetadata() != 1) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3)
 	}
 	
-	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.toDouble(), zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
+	override fun getRenderBoundingBox() = AxisAlignedBB.getBoundingBox(xCoord -3.0, yCoord.D, zCoord -6.0, xCoord + 4.0, yCoord + 2.0, zCoord + 1.0)!!
 	
 	val TAG_TIMER = "timer"
 	val TAG_GENDER = "gender"

@@ -5,12 +5,12 @@ import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
+import alfheim.client.core.util.mc
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.expand
 import alfheim.common.network.MessageEffect
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
@@ -50,7 +50,7 @@ object SpellPurifyingSurface: SpellBase("purifyingsurface", EnumRace.UNDINE, 500
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glTranslated(0.0, -1.61, 0.0)
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.target)
+		mc.renderEngine.bindTexture(LibResourceLocations.target)
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ - radius, 0.0, 0.0)
 		Tessellator.instance.addVertexWithUV(caster.posX - radius, caster.posY, caster.posZ + radius, 0.0, 1.0)

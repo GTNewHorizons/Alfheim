@@ -3,6 +3,7 @@ package alfheim.common.spell.water
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.util.D
 import alfheim.common.network.Message3d
 import alfheim.common.network.Message3d.m3d
 import net.minecraft.entity.EntityLivingBase
@@ -24,7 +25,7 @@ object SpellRain: SpellBase("rain", EnumRace.UNDINE, 30000, 6000, 50) {
 			world.worldInfo.rainTime = r
 			world.worldInfo.isThundering = false
 			world.worldInfo.thunderTime = t
-			AlfheimCore.network.sendToDimension(Message3d(m3d.WAETHER, 1.0, r.toDouble(), t.toDouble()), world.provider.dimensionId)
+			AlfheimCore.network.sendToDimension(Message3d(m3d.WAETHER, 1.0, r.D, t.D), world.provider.dimensionId)
 		}
 		
 		return result

@@ -3,7 +3,7 @@ package alfheim.common.block.colored.rainbow
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.*
 import alfheim.common.item.block.ItemRainbowGrassMod
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -52,7 +52,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun setBlockBoundsBasedOnState(world: IBlockAccess, x: Int, y: Int, z: Int) {
 		when (world.getBlockMetadata(x, y, z)) {
 			GRASS, AURORA   -> setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
-			FLOWER, GLIMMER -> setBlockBounds(0.3f, 0f, 0.3f, 0.8f, 1.0f, 0.8f)
+			FLOWER, GLIMMER -> setBlockBounds(0.3f, 0f, 0.3f, 0.8f, 1f, 0.8f)
 			BURIED          -> setBlockBounds(0f, 0f, 0f, 1f, 0.1f, 1f)
 			else            -> setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f)
 		}
@@ -67,10 +67,10 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 		when (meta) {
 			FLOWER, GLIMMER -> {
 				if (rand.nextDouble() < ConfigHandler.flowerParticleFrequency)
-					Botania.proxy.sparkleFX(world, x.toDouble() + 0.3 + rand.nextFloat() * 0.5, y.toDouble() + 0.5 + rand.nextFloat() * 0.5, z.toDouble() + 0.3 + rand.nextFloat() * 0.5, color.red / 255f, color.green / 255f, color.blue / 255f, rand.nextFloat(), 5)
+					Botania.proxy.sparkleFX(world, x.D + 0.3 + rand.nextFloat() * 0.5, y.D + 0.5 + rand.nextFloat() * 0.5, z.D + 0.3 + rand.nextFloat() * 0.5, color.red / 255f, color.green / 255f, color.blue / 255f, rand.nextFloat(), 5)
 			}
 			
-			BURIED          -> Botania.proxy.sparkleFX(world, x.toDouble() + 0.3 + rand.nextFloat() * 0.5, y.toDouble() + 0.1 + rand.nextFloat() * 0.1, z.toDouble() + 0.3 + rand.nextFloat() * 0.5, color.red / 255f, color.green / 255f, color.blue / 255f, rand.nextFloat(), 5)
+			BURIED          -> Botania.proxy.sparkleFX(world, x.D + 0.3 + rand.nextFloat() * 0.5, y.D + 0.1 + rand.nextFloat() * 0.1, z.D + 0.3 + rand.nextFloat() * 0.5, color.red / 255f, color.green / 255f, color.blue / 255f, rand.nextFloat(), 5)
 		}
 		
 		Botania.proxy.setSparkleFXNoClip(false)

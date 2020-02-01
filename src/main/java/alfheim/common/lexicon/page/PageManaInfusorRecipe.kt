@@ -4,10 +4,8 @@ import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.asm.AlfheimHookHandler
-import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
@@ -26,14 +24,14 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 	override fun onPageAdded(entry: LexiconEntry?, index: Int) = LexiconRecipeMappings.map(recipe.output, entry!!, index)
 	
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
-		val render = Minecraft.getMinecraft().renderEngine
+		val render = mc.renderEngine
 		
 		renderItemAtGridPos(gui, 3, 0, recipe.output, false)
 		renderItemAtGridPos(gui, 2, 1, ItemStack(AlfheimBlocks.manaInfuser), false)
 		
 		val inputs = recipe.inputs
-		val degreePerInput = (360f / inputs.size).toInt()
-		var currentDegree = if (ConfigHandler.lexiconRotatingItems) if (GuiScreen.isShiftKeyDown()) ticksElapsed.toFloat() else ticksElapsed + ClientTickHandler.partialTicks else 0f
+		val degreePerInput = (360f / inputs.size).I
+		var currentDegree = if (ConfigHandler.lexiconRotatingItems) if (GuiScreen.isShiftKeyDown()) ticksElapsed.F else ticksElapsed + ClientTickHandler.partialTicks else 0f
 		
 		for (obj in inputs) {
 			var input = obj
@@ -42,7 +40,7 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 			
 			renderItemAtAngle(gui, currentDegree, input as ItemStack)
 			
-			currentDegree += degreePerInput.toFloat()
+			currentDegree += degreePerInput.F
 		}
 		
 		renderManaBar(gui, recipe, mx, my)
@@ -60,7 +58,7 @@ class PageManaInfusorRecipe(unlocalizedName: String, private val recipe: RecipeM
 	
 	@SideOnly(Side.CLIENT)
 	fun renderManaBar(gui: IGuiLexiconEntry, recipe2: RecipeManaInfuser, mx: Int, my: Int) {
-		val font = Minecraft.getMinecraft().fontRenderer
+		val font = mc.fontRenderer
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		val manaUsage = StatCollector.translateToLocal("botaniamisc.manaUsage")

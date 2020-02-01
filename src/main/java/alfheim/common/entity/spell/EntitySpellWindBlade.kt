@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.wind.SpellWindBlades
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -39,7 +39,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		}
 		
 		if (!ASJUtilities.isServer) {
-			Botania.proxy.wispFX(worldObj, posX + Math.random() * 2 - 1, posY, posZ + Math.random() * 2 - 1, Math.random().toFloat() * 0.1f + 0.8f, Math.random().toFloat() * 0.1f + 0.9f, Math.random().toFloat() * 0.1f + 0.8f, Math.random().toFloat() * 0.3f + 0.2f, motionX.toFloat() / -10f, motionY.toFloat() / -10f, motionZ.toFloat() / -10f, 0.5f)
+			Botania.proxy.wispFX(worldObj, posX + Math.random() * 2 - 1, posY, posZ + Math.random() * 2 - 1, Math.random().F * 0.1f + 0.8f, Math.random().F * 0.1f + 0.9f, Math.random().F * 0.1f + 0.8f, Math.random().F * 0.3f + 0.2f, motionX.F / -10f, motionY.F / -10f, motionZ.F / -10f, 0.5f)
 			return
 		}
 		
@@ -52,7 +52,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		l.remove(caster)
-		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.windblade(this, caster), SpellBase.over(caster, SpellWindBlades.damage.toDouble()))
+		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.windblade(this, caster), SpellBase.over(caster, SpellWindBlades.damage.D))
 	}
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid

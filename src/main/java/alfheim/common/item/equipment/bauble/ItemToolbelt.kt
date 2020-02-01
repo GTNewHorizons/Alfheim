@@ -68,7 +68,7 @@ package alfheim.common.item.equipment.bauble
 //			val angles = 360
 //			val segAngles = angles / SEGMENTS
 //			for (seg in 0 until SEGMENTS) {
-//				val calcAngle = seg.toFloat() * segAngles
+//				val calcAngle = seg.F * segAngles
 //				if (yaw >= calcAngle && yaw < calcAngle + segAngles)
 //					return seg
 //			}
@@ -156,7 +156,7 @@ package alfheim.common.item.equipment.bauble
 //					setItem(p0, p2, slotStack, segment)
 //					if (count == -1) return -1
 //					total += count
-//				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.itemDamage == p4) {
+//				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.meta == p4) {
 //					total += slotStack.stackSize
 //				}
 //			}
@@ -173,7 +173,7 @@ package alfheim.common.item.equipment.bauble
 //					val provided = slotItem.provideBlock(p0, p1, slotStack, p3, p4, p5)
 //					setItem(p0, p2, slotStack, segment)
 //					if (provided) return true
-//				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.itemDamage == p4) {
+//				} else if (slotItem is ItemBlock && Block.getBlockFromItem(slotItem) == p3 && slotStack.meta == p4) {
 //					if (p5) slotStack.stackSize--
 //
 //					if (slotStack.stackSize == 0) setItem(p0, p2, null, segment)
@@ -236,7 +236,7 @@ package alfheim.common.item.equipment.bauble
 //	@SideOnly(Side.CLIENT)
 //	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 //		if (type == IBaubleRender.RenderType.BODY) {
-//			Minecraft.getMinecraft().renderEngine.bindTexture(beltTexture)
+//			mc.renderEngine.bindTexture(beltTexture)
 //			IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 //			GL11.glTranslatef(0F, 0.2F, 0F)
 //
@@ -296,7 +296,7 @@ package alfheim.common.item.equipment.bauble
 //	@SideOnly(Side.CLIENT)
 //	@SubscribeEvent
 //	fun onRenderWorldLast(event: RenderWorldLastEvent) {
-//		val player = Minecraft.getMinecraft().thePlayer
+//		val player = mc.thePlayer
 //		val beltStack = ItemToolbelt.getEquippedBelt(player)
 //		if (beltStack != null && ItemToolbelt.isEquipped(beltStack))
 //			render(beltStack, player, event.partialTicks)
@@ -304,14 +304,14 @@ package alfheim.common.item.equipment.bauble
 //
 //	@SideOnly(Side.CLIENT)
 //	fun render(stack: ItemStack, player: EntityPlayer, partialTicks: Float) {
-//		val mc = Minecraft.getMinecraft()
+//		val mc = mc
 //		val tess = Tessellator.instance
 //		Tessellator.renderingWorldRenderer = false
 //
 //		GL11.glPushMatrix()
 //		GL11.glEnable(GL11.GL_BLEND)
 //		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-//		val alpha = (sin((ClientTickHandler.ticksInGame + partialTicks).toDouble() * 0.2) * 0.5F + 0.5F) * 0.4F + 0.3F
+//		val alpha = (sin((ClientTickHandler.ticksInGame + partialTicks).D * 0.2) * 0.5F + 0.5F) * 0.4F + 0.3F
 //
 //		val posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks
 //		val posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks
@@ -354,7 +354,7 @@ package alfheim.common.item.equipment.bauble
 //					GL11.glRotatef(180F, 0F, 1F, 0F)
 //					GL11.glTranslatef(0F, 0.6F, 0F)
 //
-//					RenderBlocks.getInstance().renderBlockAsItem(Block.getBlockFromItem(slotStack.item), slotStack.itemDamage, 1F)
+//					RenderBlocks.getInstance().renderBlockAsItem(Block.getBlockFromItem(slotStack.item), slotStack.meta, 1F)
 //				} else if (slotStack.item is ItemBlock || shouldRenderAsEntity(slotStack)) {
 //					var entityitem: EntityItem?
 //					GL11.glPushMatrix()
@@ -370,11 +370,11 @@ package alfheim.common.item.equipment.bauble
 //					val `is` = slotStack.copy()
 //					`is`.stackSize = 1
 //					entityitem = EntityItem(player.worldObj, 0.0, 0.0, 0.0, `is`)
-//					entityitem.hoverStart = 0.0f
+//					entityitem.hoverStart = 0f
 //
 //					GL11.glEnable(GL11.GL_BLEND)
 //					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-//					RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0.0f, 0.0f)
+//					RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0f, 0f)
 //					GL11.glDisable(GL11.GL_BLEND)
 //
 //					GL11.glPopMatrix()
@@ -396,21 +396,21 @@ package alfheim.common.item.equipment.bauble
 //							val f3 = icon.maxV
 //
 //							ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 0.0625f)
-//							GL11.glColor3f(1.0f, 1.0f, 1.0f)
+//							GL11.glColor3f(1f, 1f, 1f)
 //						}
 //
 //						++renderPass
-//					} while (renderPass < slotStack.item.getRenderPasses(slotStack.itemDamage))
+//					} while (renderPass < slotStack.item.getRenderPasses(slotStack.meta))
 //				}
 //			}
 //			GL11.glPopMatrix()
 //
 //			GL11.glPushMatrix()
 //			GL11.glRotatef(180F, 1F, 0F, 0F)
-//			var a = alpha.toFloat()
+//			var a = alpha.F
 //			if (inside) {
 //				a += 0.3F
-//				y0 = -y.toDouble()
+//				y0 = -y.D
 //			}
 //
 //			if (seg % 2 == 0)
@@ -428,14 +428,14 @@ package alfheim.common.item.equipment.bauble
 //				var xp = cos(ang * Math.PI / 180F) * s
 //				var zp = sin(ang * Math.PI / 180F) * s
 //
-//				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, u.toDouble(), v.toDouble())
-//				tess.addVertexWithUV(xp, y0, zp, u.toDouble(), 0.0)
+//				tess.addVertexWithUV(xp * m, y.D, zp * m, u.D, v.D)
+//				tess.addVertexWithUV(xp, y0, zp, u.D, 0.0)
 //
 //				xp = cos((ang + 1) * Math.PI / 180F) * s
 //				zp = sin((ang + 1) * Math.PI / 180F) * s
 //
 //				tess.addVertexWithUV(xp, y0, zp, 0.0, 0.0)
-//				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, 0.0, v.toDouble())
+//				tess.addVertexWithUV(xp * m, y.D, zp * m, 0.0, v.D)
 //			}
 //			y0 = 0.0
 //			tess.draw()

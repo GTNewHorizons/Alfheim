@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.armor.elemental
 
+import alfheim.common.core.util.F
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -41,7 +42,7 @@ class ItemElementalAirBoots: ElementalArmor(3, "ElementalAirBoots") {
 			
 			if (event.distance >= 4.5063215) {
 				val decrease = ManaItemHandler.requestMana((event.entityLiving as EntityPlayer).getCurrentArmor(0), event.entityLiving as EntityPlayer, MathHelper.floor_float(event.distance) * ONEBLOCKCOST, true)
-				event.distance -= (decrease / ONEBLOCKCOST).toFloat()
+				event.distance -= (decrease / ONEBLOCKCOST).F
 			}
 		}
 	}

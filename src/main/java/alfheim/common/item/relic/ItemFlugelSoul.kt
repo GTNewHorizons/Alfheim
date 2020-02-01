@@ -3,13 +3,13 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
@@ -116,7 +116,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		if ((!equipped || firstTick) && entity is EntityLivingBase) {
 			val angles = 360
 			val segAngles = angles / SEGMENTS
-			val shift = (segAngles / 2).toFloat()
+			val shift = (segAngles / 2).F
 			setRotationBase(stack, getCheckingAngle(entity) - shift)
 			if (firstTick) tickFirst(stack)
 		}
@@ -131,7 +131,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onRenderWorldLast(event: RenderWorldLastEvent) {
-		val player = Minecraft.getMinecraft().thePlayer
+		val player = mc.thePlayer
 		val stack = player.currentEquippedItem
 		if (stack != null && stack.item === this)
 			render(stack, player, event.partialTicks)
@@ -141,21 +141,20 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPost(e: RenderGameOverlayEvent.Post) {
 		if (e.type != ElementType.ALL) return
-		val player = Minecraft.getMinecraft().thePlayer
+		val player = mc.thePlayer
 		val stack = player.currentEquippedItem
 		if (stack != null && stack.item === this) renderHUD(e.resolution, player, stack)
 	}
 	
 	@SideOnly(Side.CLIENT)
 	fun render(stack: ItemStack, player: EntityPlayer, partialTicks: Float) {
-		val mc = Minecraft.getMinecraft()
 		val tess = Tessellator.instance
 		Tessellator.renderingWorldRenderer = false
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		val alpha = (sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).toDouble()).toFloat() * 0.5f + 0.5f) * 0.4f + 0.3f
+		val alpha = (sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).D).F * 0.5f + 0.5f) * 0.4f + 0.3f
 		
 		val posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks
 		val posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks
@@ -192,7 +191,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			glTranslatef(0f, 0f, 0.5f)
 			val icon = signs[seg]
 			glRotatef(90f, 0f, 1f, 0f)
-			glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), (if (!isDisabled(stack, seg)) 1 else 0).toFloat(), if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1f else 0.2f)
+			glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).F, (if (!isDisabled(stack, seg)) 1 else 0).F, if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1f else 0.2f)
 			val f = icon.minU
 			val f1 = icon.maxU
 			val f2 = icon.minV
@@ -219,18 +218,18 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			mc.renderEngine.bindTexture(if (isDisabled(stack, seg)) LibResourceLocations.glow else LibResourceLocations.glowCyan)
 			tess.startDrawingQuads()
 			for (i in 0 until segAngles) {
-				val ang = i.toFloat() + (seg * segAngles).toFloat() + shift
+				val ang = i.F + (seg * segAngles).F + shift
 				var xp = cos(ang * Math.PI / 180f) * s
 				var zp = sin(ang * Math.PI / 180f) * s
 				
-				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, u.toDouble(), v.toDouble())
-				tess.addVertexWithUV(xp, y0.toDouble(), zp, u.toDouble(), 0.0)
+				tess.addVertexWithUV(xp * m, y.D, zp * m, u.D, v.D)
+				tess.addVertexWithUV(xp, y0.D, zp, u.D, 0.0)
 				
 				xp = cos((ang + 1) * Math.PI / 180f) * s
 				zp = sin((ang + 1) * Math.PI / 180f) * s
 				
-				tess.addVertexWithUV(xp, y0.toDouble(), zp, 0.0, 0.0)
-				tess.addVertexWithUV(xp * m, y.toDouble(), zp * m, 0.0, v.toDouble())
+				tess.addVertexWithUV(xp, y0.D, zp, 0.0, 0.0)
+				tess.addVertexWithUV(xp * m, y.D, zp * m, 0.0, v.D)
 			}
 			y0 = 0f
 			tess.draw()
@@ -245,7 +244,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		val slot = getSegmentLookedAt(stack, player)
 		val pos = getWarpPoint(stack, slot)
 		
-		val font = Minecraft.getMinecraft().fontRenderer
+		val font = mc.fontRenderer
 		var s = StatCollector.translateToLocal("item.FlugelSoul.sign$slot")
 		font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 65, if (isDisabled(stack, slot)) 0xAAAAAA else 0xFFD409)
 		
@@ -315,7 +314,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			val angles = 360
 			val segAngles = angles / SEGMENTS
 			for (seg in 0 until SEGMENTS) {
-				val calcAngle = seg.toFloat() * segAngles
+				val calcAngle = seg.F * segAngles
 				if (yaw >= calcAngle && yaw < calcAngle + segAngles) return seg
 			}
 			return 0
@@ -331,7 +330,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			var yaw = MathHelper.wrapAngleTo180_float(player.rotationYaw) + 90f
 			val angles = 360
 			val segAngles = angles / SEGMENTS
-			val shift = (segAngles / 2).toFloat()
+			val shift = (segAngles / 2).F
 			
 			if (yaw < 0) yaw = 180f + (180f + yaw)
 			yaw -= 360f - base
@@ -407,7 +406,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		
 		fun getFirstCoords(stack: ItemStack): ChunkCoordinates {
 			val pos = getWarpPoint(stack, getBlocked(stack))
-			return ChunkCoordinates(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
+			return ChunkCoordinates(pos.x.I, pos.y.I, pos.z.I)
 		}
 	}
 	
@@ -428,7 +427,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			
 			if (living.hurtTime == 0) {
 				if (!burst.isFake && !entity.worldObj.isRemote) {
-					living.attackEntityFrom(DamageSource.magic, if (stack.itemDamage > 0) 10f else 8f)
+					living.attackEntityFrom(DamageSource.magic, if (stack.meta > 0) 10f else 8f)
 					entity.setDead()
 					break
 				}
@@ -444,7 +443,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			horn.entityItem.meta = 1
 			
 			for (i in 0 until 360 step 10) {
-				val c = Color.getHSBColor(i.toFloat(), 1f, 1f)
+				val c = Color.getHSBColor(i.F, 1f, 1f)
 				Botania.proxy.sparkleFX(entity.worldObj, entity.posX, entity.posY, entity.posZ, c.red.F, c.green.F, c.blue.F, 0.5f, 2)
 			}
 		}

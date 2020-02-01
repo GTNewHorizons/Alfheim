@@ -7,7 +7,7 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.tech.SpellGravityTrap
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -23,7 +23,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 	
 	init {
 		setPosition(x, y, z)
-		setSize(SpellGravityTrap.radius.toFloat() * 2, 0.01f)
+		setSize(SpellGravityTrap.radius.F * 2, 0.01f)
 	}
 	
 	override fun onEntityUpdate() {
@@ -41,7 +41,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 				e.motionY -= 1.0
 				e.motionX -= dist.x / 5
 				e.motionZ -= dist.z / 5
-				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, SpellGravityTrap.damage.toDouble()))
+				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, SpellGravityTrap.damage.D))
 			}
 		}
 		

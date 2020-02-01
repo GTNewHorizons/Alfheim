@@ -1,10 +1,10 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.renderBlocks
+import alfheim.client.core.util.*
 import alfheim.common.block.tile.TileItemDisplay
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.TextureMap
@@ -24,53 +24,51 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
     override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, ticks: Float) {
         if (tile !is TileItemDisplay) return
         
-        val seed = Minecraft.getMinecraft()
-
-        if (tile.worldObj != null && seed != null) {
+        if (tile.worldObj != null) {
 
             glPushMatrix()
-            glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+            glColor4f(1f, 1f, 1f, 1f)
             glTranslated(x, y, z)
 
-            val var27 = (ClientTickHandler.ticksInGame.toFloat() + ticks).toDouble()
+            val var27 = (ClientTickHandler.ticksInGame.F + ticks).D
 
             glPushMatrix()
             glScalef(0.5f, 0.5f, 0.5f)
-            glTranslatef(1.0f, 1.25f, 1.0f)
-            glRotatef(360f + var27.toFloat(), 0.0f, 1.0f, 0.0f)
-            glTranslatef(0.0f, 0.0f, 0.5f)
-            glRotatef(90.0f, 0.0f, 1.0f, 0.0f)
+            glTranslatef(1f, 1.25f, 1f)
+            glRotatef(360f + var27.F, 0f, 1f, 0f)
+            glTranslatef(0f, 0f, 0.5f)
+            glRotatef(90f, 0f, 1f, 0f)
             glTranslated(0.0, 0.15 * sin(var27 / 7.5), 0.0)
             val scale = tile.getStackInSlot(0)
 
             if (scale != null) {
-                seed.renderEngine.bindTexture(if (scale.item is ItemBlock) TextureMap.locationBlocksTexture else TextureMap.locationItemsTexture)
-                glScalef(2.0f, 2.0f, 2.0f)
+                mc.renderEngine.bindTexture(if (scale.item is ItemBlock) TextureMap.locationBlocksTexture else TextureMap.locationItemsTexture)
+                glScalef(2f, 2f, 2f)
                 glTranslatef(0.25f, 0f, 0f)
-                if (!ForgeHooksClient.renderEntityItem(EntityItem(tile.worldObj, tile.xCoord.toDouble(), tile.yCoord.toDouble(), tile.zCoord.toDouble(), scale), scale, 0.0f, 0.0f, tile.worldObj.rand, seed.renderEngine, renderBlocks, 1)) {
+                if (!ForgeHooksClient.renderEntityItem(EntityItem(tile.worldObj, tile.xCoord.D, tile.yCoord.D, tile.zCoord.D, scale), scale, 0f, 0f, tile.worldObj.rand, mc.renderEngine, renderBlocks, 1)) {
                     glTranslatef(-0.25f, 0f, 0f)
                     glScalef(0.5f, 0.5f, 0.5f)
                     if (scale.item is ItemBlock && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(scale.item).renderType)) {
                         glScalef(0.5f, 0.5f, 0.5f)
-                        glTranslatef(1.0f, 1.1f, 0.0f)
-                        renderBlocks.renderBlockAsItem(Block.getBlockFromItem(scale.item), scale.itemDamage, 1.0f)
-                        glTranslatef(-1.0f, -1.1f, 0.0f)
-                        glScalef(2.0f, 2.0f, 2.0f)
+                        glTranslatef(1f, 1.1f, 0f)
+                        renderBlocks.renderBlockAsItem(Block.getBlockFromItem(scale.item), scale.meta, 1f)
+                        glTranslatef(-1f, -1.1f, 0f)
+                        glScalef(2f, 2f, 2f)
                     } else if (scale.item is ItemBlock && !RenderBlocks.renderItemIn3d(Block.getBlockFromItem(scale.item).renderType)) {
                         val entityitem: EntityItem?
                         glPushMatrix()
 
-                        glScalef(2.0f, 2.0f, 2.0f)
-                        glTranslatef(.25f, .275f, 0.0f)
+                        glScalef(2f, 2f, 2f)
+                        glTranslatef(.25f, .275f, 0f)
 
 
                         val `is` = scale.copy()
                         `is`.stackSize = 1
                         entityitem = EntityItem(tile.worldObj, 0.0, 0.0, 0.0, `is`)
-                        entityitem.hoverStart = 0.0f
-                        RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0.0f, 0.0f)
+                        entityitem.hoverStart = 0f
+                        RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, 0.0, 0.0, 0f, 0f)
 
-                        glTranslatef(-.25f, -.275f, 0.0f)
+                        glTranslatef(-.25f, -.275f, 0f)
 
                         glPopMatrix()
                     } else {
@@ -86,11 +84,11 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
                                 val f2 = icon.minV
                                 val f3 = icon.maxV
                                 ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 0.0625f)
-                                glColor3f(1.0f, 1.0f, 1.0f)
+                                glColor3f(1f, 1f, 1f)
                             }
 
                             ++renderPass
-                        } while (renderPass < scale.item.getRenderPasses(scale.itemDamage))
+                        } while (renderPass < scale.item.getRenderPasses(scale.meta))
                     }
                 }
             }
@@ -100,9 +98,9 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
             glDisable(3008)
             glPushMatrix()
             glTranslatef(0.5f, 1.8f, 0.5f)
-            glRotatef(180.0f, 1.0f, 0.0f, 1.0f)
+            glRotatef(180f, 1f, 0f, 1f)
             glPopMatrix()
-            glTranslatef(0.0f, 0.2f, 0.0f)
+            glTranslatef(0f, 0.2f, 0f)
 
             glEnable(3008)
             glPopMatrix()

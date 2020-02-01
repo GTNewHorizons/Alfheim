@@ -12,7 +12,7 @@ import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.getActivePotionEffect
+import alfheim.common.core.util.*
 import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
@@ -166,7 +166,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 				val seg = CardinalSystem.forPlayer(player)
 				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
 				if (spell == null)
-					AlfheimCore.network.sendTo(Message2d(Message2d.m2d.COOLDOWN, ids.toDouble(), (-SpellBase.SpellCastResult.DESYNC.ordinal).toDouble()), player)
+					AlfheimCore.network.sendTo(Message2d(Message2d.m2d.COOLDOWN, ids.D, (-SpellBase.SpellCastResult.DESYNC.ordinal).D), player)
 				else {
 					seg.ids = ids
 					seg.init = spell.getCastTime()

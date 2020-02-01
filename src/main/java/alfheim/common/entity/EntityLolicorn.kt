@@ -5,6 +5,7 @@ import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.mfloor
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
@@ -75,14 +76,14 @@ class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecif
 	override fun setHealth(hp: Float) = Unit // NO-OP
 	
 	override fun fall(f: Float) {
-		if (f > 1.0f) {
-			playSound("mob.horse.land", 0.4f, 1.0f)
+		if (f > 1f) {
+			playSound("mob.horse.land", 0.4f, 1f)
 		}
 		
-		val i = MathHelper.ceiling_float_int(f * 0.5f - 3.0f)
+		val i = MathHelper.ceiling_float_int(f * 0.5f - 3f)
 		
 		if (i > 0) {
-			val block = worldObj.getBlock(MathHelper.floor_double(posX), MathHelper.floor_double(posY - 0.2 - prevRotationYaw.toDouble()), MathHelper.floor_double(posZ))
+			val block = worldObj.getBlock(posX.mfloor(), (posY - 0.2 - prevRotationYaw).mfloor(), posZ.mfloor())
 			
 			if (block.material !== Material.air) {
 				val soundtype = block.stepSound

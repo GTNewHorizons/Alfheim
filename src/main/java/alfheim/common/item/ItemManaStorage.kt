@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alfheim.common.core.util.*
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -14,7 +15,7 @@ import kotlin.math.min
 
 class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaItem, IManaTooltipDisplay {
 	
-	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).toInt()
+	val MAX_MANA = (TilePool.MAX_MANA * maxManaCap).I
 	
 	init {
 		maxDamage = 1000
@@ -30,8 +31,8 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	}
 	
 	override fun getDamage(stack: ItemStack): Int {
-		val mana = getMana(stack).toFloat()
-		return 1000 - (mana / getMaxMana(stack) * 1000).toInt()
+		val mana = getMana(stack).F
+		return 1000 - (mana / getMaxMana(stack) * 1000).I
 	}
 	
 	override fun getDisplayDamage(stack: ItemStack) = getDamage(stack)
@@ -44,7 +45,7 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	
 	override fun addMana(stack: ItemStack, mana: Int) {
 		setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))
-		stack.itemDamage = getDamage(stack)
+		stack.meta = getDamage(stack)
 	}
 	
 	override fun canReceiveManaFromPool(stack: ItemStack, pool: TileEntity) = true
@@ -57,7 +58,7 @@ class ItemManaStorage(name: String, maxManaCap: Double): ItemMod(name), IManaIte
 	
 	override fun isNoExport(stack: ItemStack) = false
 	
-	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()
+	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).F / getMaxMana(stack).F
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
 		if (GuiScreen.isShiftKeyDown()) {

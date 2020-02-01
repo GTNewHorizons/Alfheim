@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
+import alfheim.common.core.util.I
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -30,8 +31,8 @@ object SpellWellOLife: SpellBase("wellolife", EnumRace.UNDINE, 7000, 600, 30) {
 		for (i in 0 until pt.count) {
 			val living = pt[i] ?: continue
 			if (Vector3.entityDistance(living, caster) < 32) {
-				living.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDWellOLife, duration, efficiency.toInt(), true))
-				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, AlfheimConfigHandler.potionIDWellOLife, duration, efficiency.toInt()))
+				living.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDWellOLife, duration, efficiency.I, true))
+				AlfheimCore.network.sendToAll(MessageEffect(living.entityId, AlfheimConfigHandler.potionIDWellOLife, duration, efficiency.I))
 			}
 		}
 		

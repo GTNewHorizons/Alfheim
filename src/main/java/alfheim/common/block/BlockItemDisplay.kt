@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.D
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -61,7 +62,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	}
 	
 	override fun addCollisionBoxesToList(world: World, x: Int, y: Int, z: Int, axis: AxisAlignedBB, bounds: MutableList<Any?>, entity: Entity?) {
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F)
+		setBlockBounds(0f, 0f, 0f, 1f, 0.5F, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
 	}
 	
@@ -114,7 +115,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 			for (i in 0 until tileEntity.sizeInventory) {
 				val item = tileEntity.getStackInSlot(i)
 				if (item != null && item.stackSize > 0) {
-					val entityItem = EntityItem(world, entity.posX, entity.posY + (entity.eyeHeight / 2.0f).toDouble(), entity.posZ, item.copy())
+					val entityItem = EntityItem(world, entity.posX, entity.posY + (entity.eyeHeight / 2f).D, entity.posZ, item.copy())
 					world.spawnEntityInWorld(entityItem)
 					tileEntity.setInventorySlotContents(i, null)
 				}
@@ -148,7 +149,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 			for (i in 0 until tileEntity.sizeInventory) {
 				val item = tileEntity.getStackInSlot(i)
 				if (item != null && item.stackSize > 0) {
-					val entityItem = EntityItem(world, x.toDouble(), y.toDouble(), z.toDouble(), item.copy())
+					val entityItem = EntityItem(world, x.D, y.D, z.D, item.copy())
 					world.spawnEntityInWorld(entityItem)
 				}
 			}

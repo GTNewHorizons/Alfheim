@@ -3,6 +3,7 @@ package alfheim.common.world.dim.alfheim
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import alfheim.common.world.dim.alfheim.biome.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre
 import ru.vamig.worldengine.*
@@ -16,20 +17,20 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 	override fun isSurfaceWorld() = true
 	
 	override fun calculateCelestialAngle(var1: Long, var3: Float): Float {
-		val j = (var1 % 24000L).toInt()
-		var f1 = (j.toFloat() + var3) / 24000.0f - 0.25f
+		val j = (var1 % 24000L).I
+		var f1 = (j.F + var3) / 24000f - 0.25f
 		
-		if (f1 < 0.0f) {
+		if (f1 < 0f) {
 			++f1
 		}
 		
-		if (f1 > 1.0f) {
+		if (f1 > 1f) {
 			--f1
 		}
 		
 		val f2 = f1
-		f1 = 1.0f - ((Math.cos(f1.toDouble() * Math.PI) + 1.0) / 2.0).toFloat()
-		f1 = f2 + (f1 - f2) / 3.0f
+		f1 = 1f - ((Math.cos(f1.D * Math.PI) + 1.0) / 2.0).F
+		f1 = f2 + (f1 - f2) / 3f
 		return f1
 	}
 	

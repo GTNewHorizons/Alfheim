@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.itemEquals
+import alfheim.common.core.util.*
 import alfheim.common.lexicon.MultiblockComponentRainbow
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
@@ -136,13 +136,13 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			}
 			
 			for (var11 in 0..49) {
-				val var13 = Math.random().toFloat()
-				val var16 = Math.random().toFloat()
-				val var19 = Math.random().toFloat()
-				Botania.proxy.wispFX(worldObj, xCoord.toDouble() + 0.5, yCoord.toDouble() + 0.5, zCoord.toDouble() + 0.5, var13, var16, var19, Math.random().toFloat() * 0.15f + 0.15f, (Math.random() - 0.5).toFloat() * 0.25f, (Math.random() - 0.5).toFloat() * 0.25f, (Math.random() - 0.5).toFloat() * 0.25f)
+				val var13 = Math.random().F
+				val var16 = Math.random().F
+				val var19 = Math.random().F
+				Botania.proxy.wispFX(worldObj, xCoord.D + 0.5, yCoord.D + 0.5, zCoord.D + 0.5, var13, var16, var19, Math.random().F * 0.15f + 0.15f, (Math.random() - 0.5).F * 0.25f, (Math.random() - 0.5).F * 0.25f, (Math.random() - 0.5).F * 0.25f)
 			}
 			
-			worldObj.playSoundEffect(xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), "botania:enchanterBlock", 0.5F, 10F)
+			worldObj.playSoundEffect(xCoord.D, yCoord.D, zCoord.D, "botania:enchanterBlock", 0.5F, 10F)
 			
 			return //finishes execution just in case
 		}
@@ -155,16 +155,16 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val stack = it.getStackInSlot(0)
 			if (stack != null) {
 				
-				val s = 0.2f + Math.random().toFloat() * 0.1f
-				val m = 0.03f + Math.random().toFloat() * 0.015f
+				val s = 0.2f + Math.random().F * 0.1f
+				val m = 0.03f + Math.random().F * 0.015f
 				
 				for (rItem in recipeItems) {
 					if (rItem != null)
 						if (stack.itemEquals(rItem)) {
 							if (mana > 0) {
-								if (stack.item is ItemBlock) worldObj.spawnParticle("blockcrack_${Item.getIdFromItem(stack.item)}_${stack.itemDamage}", it.xCoord.toDouble() + .5, it.yCoord + 1.0, it.zCoord.toDouble() + .5, (xCoord.toDouble() - it.xCoord.toDouble()) * 8.0, 0.1, (zCoord.toDouble() - it.zCoord.toDouble()) * 8.0)
-								else worldObj.spawnParticle("iconcrack_${Item.getIdFromItem(stack.item)}_${stack.itemDamage}", it.xCoord.toDouble() + .5, it.yCoord + 1.0, it.zCoord.toDouble() + .5, (xCoord.toDouble() - it.xCoord.toDouble()) / 8.0, 0.1, (zCoord.toDouble() - it.zCoord.toDouble()) / 8.0)
-								Botania.proxy.wispFX(worldObj, it.xCoord.toDouble() + .5, it.yCoord + 3.toDouble() + .5, it.zCoord.toDouble() + .5, 1.0f, 1.0f, 1.0f, s, -m)
+								if (stack.item is ItemBlock) worldObj.spawnParticle("blockcrack_${Item.getIdFromItem(stack.item)}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) * 8.0, 0.1, (zCoord.D - it.zCoord.D) * 8.0)
+								else worldObj.spawnParticle("iconcrack_${Item.getIdFromItem(stack.item)}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) / 8.0, 0.1, (zCoord.D - it.zCoord.D) / 8.0)
+								Botania.proxy.wispFX(worldObj, it.xCoord.D + .5, it.yCoord + 3.D + .5, it.zCoord.D + .5, 1f, 1f, 1f, s, -m)
 							}
 							recipeItems.remove(rItem)
 							break
@@ -198,7 +198,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 					advanceStage()
 				} else {
 					if (attachedSpark != null) {
-						val sparks = SparkHelper.getSparksAround(worldObj, xCoord.toDouble() + 0.5, yCoord.toDouble() + 0.5, zCoord.toDouble() + 0.5)
+						val sparks = SparkHelper.getSparksAround(worldObj, xCoord.D + 0.5, yCoord.D + 0.5, zCoord.D + 0.5)
 						if (sparks != null) for (spark in sparks)
 							if (spark != null && attachedSpark !== spark && spark.attachedTile != null && spark.attachedTile is IManaPool)
 								spark.registerTransfer(attachedSpark)
@@ -221,10 +221,10 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	fun workingFanciness() {
 		10.tickDelay {
 			for (i in 0..359) {
-				val radian = (i.toDouble() * 3.141592653589793 / 180.0).toFloat()
-				val xp = xCoord.toDouble() + cos(radian.toDouble()) * 3
-				val zp = zCoord.toDouble() + sin(radian.toDouble()) * 3
-				Botania.proxy.wispFX(worldObj, xp + 0.5, yCoord - 3.0, zp + 0.5, 0.0f, 1.0f, 1.0f, 0.3f, -0.01f)
+				val radian = (i.D * 3.141592653589793 / 180.0).F
+				val xp = xCoord.D + cos(radian.D) * 3
+				val zp = zCoord.D + sin(radian.D) * 3
+				Botania.proxy.wispFX(worldObj, xp + 0.5, yCoord - 3.0, zp + 0.5, 0f, 1f, 1f, 0.3f, -0.01f)
 			}
 		}
 	}
@@ -272,7 +272,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			GL11.glEnable(GL11.GL_BLEND)
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL)
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-			val progress = mana.toFloat() / manaRequired.toFloat()
+			val progress = mana.F / manaRequired.F
 			mc.renderEngine.bindTexture(HUDHandler.manaBar)
 			GL11.glColor4f(1f, 1f, 1f, 1f)
 			RenderHelper.drawTexturedModalRect(xc + radius + 9, yc - 8, 0f, if (sapling) 0 else 22, 8, 22, 15)
@@ -342,13 +342,13 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		worldObj.setBlockToAir(xCoord, yCoord - 3, zCoord)
 		worldObj.setBlock(xCoord, yCoord - 3, zCoord, recipe.outputBlock, recipe.meta, 3)
 		
-		worldObj.playSoundEffect(xCoord.toDouble(), yCoord.toDouble(), zCoord.toDouble(), "botania:enchanterEnchant", 1.0f, 1.0f)
+		worldObj.playSoundEffect(xCoord.D, yCoord.D, zCoord.D, "botania:enchanterEnchant", 1f, 1f)
 		
 		for (i in 0..24) {
-			val red = Math.random().toFloat()
-			val green = Math.random().toFloat()
-			val blue = Math.random().toFloat()
-			Botania.proxy.sparkleFX(worldObj, xCoord.toDouble() + 0.5 + Math.random() * 0.4 - 0.2, (yCoord + 1).toDouble(), zCoord.toDouble() + 0.5 + Math.random() * 0.4 - 0.2, red, green, blue, Math.random().toFloat(), 10)
+			val red = Math.random().F
+			val green = Math.random().F
+			val blue = Math.random().F
+			Botania.proxy.sparkleFX(worldObj, xCoord.D + 0.5 + Math.random() * 0.4 - 0.2, (yCoord + 1).D, zCoord.D + 0.5 + Math.random() * 0.4 - 0.2, red, green, blue, Math.random().F, 10)
 		}
 		
 		val recipeItems = ArrayList(recipe.inputs)
@@ -395,7 +395,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	override fun attachSpark(entity: ISparkEntity) = Unit /*Pass*/
 	
 	override fun getAttachedSpark(): ISparkEntity? {
-		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.toDouble(), (yCoord + 1).toDouble(), zCoord.toDouble(), (xCoord + 1).toDouble(), (yCoord + 2).toDouble(), (zCoord + 1).toDouble()))
+		val sparks = worldObj.getEntitiesWithinAABB(ISparkEntity::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D))
 		return if (sparks.size == 1) {
 			val e = sparks[0] as Entity
 			e as ISparkEntity

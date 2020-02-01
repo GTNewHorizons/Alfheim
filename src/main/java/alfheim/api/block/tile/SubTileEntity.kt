@@ -4,15 +4,15 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.api.lib.LibResourceLocations
-import net.minecraft.client.Minecraft
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.*
+import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
-
 import java.util.*
 
 // Used for anomalies - TileAnomaly
@@ -85,15 +85,15 @@ abstract class SubTileEntity {
 	
 	fun x() = superTile!!.xCoord
 	
-	fun x(x: Double) = x() + MathHelper.floor_double(x)
+	fun x(x: Double) = x() + x.mfloor()
 	
 	fun y() = superTile!!.yCoord
 	
-	fun y(y: Double) = y() + MathHelper.floor_double(y)
+	fun y(y: Double) = y() + y.mfloor()
 	
 	fun z() = superTile!!.zCoord
 	
-	fun z(z: Double) = z() + MathHelper.floor_double(z)
+	fun z(z: Double) = z() + z.mfloor()
 	
 	// ################################ UTILS ################################
 	
@@ -135,17 +135,17 @@ abstract class SubTileEntity {
 	}
 	
 	fun <E> allAround(clazz: Class<E>, radius: Double) =
-		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<E>
+		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().D, y().D, z().D, x(1.0).D, y(1.0).D, z(1.0).D).expand(radius, radius, radius)) as MutableList<E>
 	
 	fun allAroundRaw(clazz: Class<*>, radius: Double) =
-		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius, radius)) as MutableList<Any>
+		worldObj.getEntitiesWithinAABB(clazz, AxisAlignedBB.getBoundingBox(x().D, y().D, z().D, x(1.0).D, y(1.0).D, z(1.0).D).expand(radius, radius, radius)) as MutableList<Any>
 	
 	fun inWG() = worldGen
 	
 	// ################################ RENDER ################################
 	
 	fun bindTexture() {
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.anomalies)
+		mc.renderEngine.bindTexture(LibResourceLocations.anomalies)
 	}
 	
 	companion object {

@@ -147,7 +147,7 @@ object ThaumcraftAlfheimModule {
 		}
 
 		addSpecialMiningResult(ItemStack(alfheimThaumOre, 1, 0), ItemStack(ConfigItems.itemNugget, 1, 21), 0.9f)
-		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1.0f)
+		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1f)
 	}
 	
 	fun registerRecipes() {
@@ -264,17 +264,17 @@ object ThaumcraftAlfheimModule {
 		
 		addSmelting(ItemStack(alfheimThaumOre, 1, 0),
 					ItemStack(ConfigItems.itemResource, 1, 3), // Cinnabar
-					1.0f
+					1f
 		)
 		
 		addSmelting(ItemStack(alfheimThaumOre, 1, 7),
 					ItemStack(ConfigItems.itemResource, 1, 6), // Amber
-					1.0f
+					1f
 		)
 		
 		addSmelting(ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta),
 					ItemStack(ModItems.manaResource, 2, 7), // Elementium
-					1.0f
+					1f
 		)
 		
 		addSmeltingBonus(ELEMENTIUM_ORE,

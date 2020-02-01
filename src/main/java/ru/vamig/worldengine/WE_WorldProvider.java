@@ -5,7 +5,7 @@ package ru.vamig.worldengine;
 
 import alfheim.common.core.handler.AlfheimConfigHandler;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.*;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public abstract class WE_WorldProvider extends WorldProvider {

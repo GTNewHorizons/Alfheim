@@ -1,5 +1,6 @@
 package alfheim.common.item.compat.thaumcraft
 
+import alfheim.common.core.util.meta
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -32,8 +33,8 @@ class ItemAlfheimWandRod: Item() {
 			list.add(ItemStack(this, 1, i))
 	}
 	
-	override fun getUnlocalizedName(par1ItemStack: ItemStack): String {
-		return super.getUnlocalizedName() + "." + par1ItemStack.itemDamage
+	override fun getUnlocalizedName(stack: ItemStack): String {
+		return "${super.getUnlocalizedName()}.${stack.meta}"
 	}
 	
 	companion object {

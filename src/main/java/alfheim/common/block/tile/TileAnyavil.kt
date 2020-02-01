@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
@@ -33,7 +34,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		if (GameRegistry.findUniqueIdentifierFor(item.item).toString() in AlfheimConfigHandler.anyavilBL) return
 		if (burst.color != -0xd7f5a) return
 		
-		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).toDouble(), yCoord.toDouble(), (zCoord - 1).toDouble(), (xCoord + 2).toDouble(), (yCoord + 2).toDouble(), (zCoord + 2).toDouble()).expand(5.0, 3.0, 5.0))
+		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).D, yCoord.D, (zCoord - 1).D, (xCoord + 2).D, (yCoord + 2).D, (zCoord + 2).D).expand(5.0, 3.0, 5.0))
 		for (eitem in eitems) {
 			eitem as EntityItem
 			if (eitem.isDead) continue
@@ -53,17 +54,17 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 			val m = Vector3()
 			while (extraPink > 0) {
 				m.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.1)
-				Botania.proxy.wispFX(world, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, col[0], col[1], col[2], 0.25f, m.x.toFloat(), m.y.toFloat(), m.z.toFloat())
+				Botania.proxy.wispFX(world, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, col[0], col[1], col[2], 0.25f, m.x.F, m.y.F, m.z.F)
 				extraPink--
 			}
 		}
 		
-		val needed = item.itemDamage
+		val needed = item.meta
 		val transfer = max(0, min(needed, pinkCharge))
 		pinkCharge -= transfer
-		item.itemDamage = item.itemDamage - transfer
+		item.meta = item.meta - transfer
 		
-		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), yCoord + 1.5, zCoord.toDouble() + 0.5 + (worldObj.rand.nextFloat() / 5.0f - 0.1f).toDouble(), col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
+		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, yCoord + 1.5, zCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
 	fun renderHUD(res: ScaledResolution) {
@@ -83,7 +84,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	override fun readCustomNBT(nbt: NBTTagCompound) {
 		super.readCustomNBT(nbt)
 		pinkCharge = nbt.getInteger(TAG_MANA)
-		this.blockMetadata = nbt.getInteger(TAG_METADATA)
+		blockMetadata = nbt.getInteger(TAG_METADATA)
 	}
 	
 	override fun getSizeInventory(): Int {
@@ -103,8 +104,8 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 				setInventorySlotContents(slot, null)
 				itemstack
 			} else {
-				itemstack = this.getStackInSlot(slot)!!.splitStack(ammount)
-				if (this.getStackInSlot(slot)!!.stackSize == 0) setInventorySlotContents(slot, null)
+				itemstack = getStackInSlot(slot)!!.splitStack(ammount)
+				if (getStackInSlot(slot)!!.stackSize == 0) setInventorySlotContents(slot, null)
 				itemstack
 			}
 		}

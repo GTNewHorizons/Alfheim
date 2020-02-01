@@ -3,11 +3,11 @@ package alfheim.common.block.tile.sub.anomaly
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.common.core.util.*
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.MathHelper
 import vazkii.botania.common.Botania
 import java.util.*
 import kotlin.math.*
@@ -22,10 +22,10 @@ class SubTileWarp: SubTileEntity() {
 			var l: MutableList<Any>? = null
 			
 			if (ticks % 100 == 0 && !inWG()) {
-				l = allAroundRaw(EntityLivingBase::class.java, radius.toDouble())
+				l = allAroundRaw(EntityLivingBase::class.java, radius.D)
 				if (l.size > 0) {
 					if (l.size == 1) {
-						l.add(LivingCoords(l.removeAt(0) as EntityLivingBase, x().toDouble(), y().toDouble(), z().toDouble(), radius))
+						l.add(LivingCoords(l.removeAt(0) as EntityLivingBase, x().D, y().D, z().D, radius))
 					} else {
 						l.add(LivingPair(rand(l), rand(l)))
 					}
@@ -78,54 +78,54 @@ class SubTileWarp: SubTileEntity() {
 		
 		rand.setSeed((x() xor y() xor z()).toLong())
 		val worldTime = (worldObj.totalWorldTime + rand.nextInt(1000)) / 5.0
-		val r = 0.75f + Math.random().toFloat() * 0.05f
+		val r = 0.75f + Math.random().F * 0.05f
 		
-		val x = x().toDouble() + 0.5 + sin(worldTime) * r
-		val y = y().toDouble() + 0.5 + sin(worldTime) * r
-		val z = z().toDouble() + 0.5 + sin(worldTime) * r
-		val X = x().toDouble() + 0.5 + cos(worldTime) * r
-		val Y = y().toDouble() + 0.5 + cos(worldTime) * r
-		val Z = z().toDouble() + 0.5 + cos(worldTime) * r
+		val x = x().D + 0.5 + sin(worldTime) * r
+		val y = y().D + 0.5 + sin(worldTime) * r
+		val z = z().D + 0.5 + sin(worldTime) * r
+		val i = x().D + 0.5 + cos(worldTime) * r
+		val j = y().D + 0.5 + cos(worldTime) * r
+		val k = z().D + 0.5 + cos(worldTime) * r
 		
-		val _x = x().toDouble() + 0.5 + sin(-worldTime) * r
-		val _y = y().toDouble() + 0.5 + sin(-worldTime) * r
-		val _z = z().toDouble() + 0.5 + sin(-worldTime) * r
+		val m = x().D + 0.5 + sin(-worldTime) * r
+		val n = y().D + 0.5 + sin(-worldTime) * r
+		val o = z().D + 0.5 + sin(-worldTime) * r
 		
-		Botania.proxy.wispFX(worldObj, x() + 0.5, Y, Z,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, x() + 0.5, j, k,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, x() + 0.5, _y, z,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, x() + 0.5, n, z,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, X, y() + 0.5, Z,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, i, y() + 0.5, k,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, x, y() + 0.5, _z,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, x, y() + 0.5, o,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, X, Y, z() + 0.5,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, i, j, z() + 0.5,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, _x, y, z() + 0.5,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, m, y, z() + 0.5,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, x() + 0.5, y() + 0.5, Z,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, x() + 0.5, y() + 0.5, k,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
 		Botania.proxy.wispFX(worldObj, x() + 0.5, y, z() + 0.5,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 		
-		Botania.proxy.wispFX(worldObj, X, y() + 0.5, z() + 0.5,
-							 0.25f + Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.25f, 0.75f + Math.random().toFloat() * 0.25f,
-							 0.1f + Math.random().toFloat() * 0.1f)
+		Botania.proxy.wispFX(worldObj, i, y() + 0.5, z() + 0.5,
+							 0.25f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
+							 0.1f + Math.random().F * 0.1f)
 	}
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
@@ -190,17 +190,17 @@ class SubTileWarp: SubTileEntity() {
 			y2 = rand.nextInt(radius * 2) - radius
 			z2 = rand.nextInt(radius * 2) - radius
 			
-			v.set(x1.toDouble(), y1.toDouble(), z1.toDouble())
+			v.set(x1.D, y1.D, z1.D)
 			if (v.length() > radius) v.shrink(v.length() - radius)
-			x1 = MathHelper.floor_double(v.x)
-			y1 = MathHelper.floor_double(v.y)
-			z1 = MathHelper.floor_double(v.z)
+			x1 = v.x.mfloor()
+			y1 = v.y.mfloor()
+			z1 = v.z.mfloor()
 			
-			v.set(x2.toDouble(), y2.toDouble(), z2.toDouble())
+			v.set(x2.D, y2.D, z2.D)
 			if (v.length() > radius) v.shrink(v.length() - radius)
-			x2 = MathHelper.floor_double(v.x)
-			y2 = MathHelper.floor_double(v.y)
-			z2 = MathHelper.floor_double(v.z)
+			x2 = v.x.mfloor()
+			y2 = v.y.mfloor()
+			z2 = v.z.mfloor()
 			
 			x1 = max(-30000000, min(x + x1, 30000000))
 			y1 = max(0, min(y + y1, 255))
@@ -218,9 +218,9 @@ class SubTileWarp: SubTileEntity() {
 	}
 	
 	private class LivingCoords(val e: EntityLivingBase, posX: Double, posY: Double, posZ: Double, radius: Int) {
-		val x: Double = max(-30000000.0, min(posX + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
-		val y: Double = max(1.0, min(posY + Math.random() * radius.toDouble() * 2.0 - radius, 255.0))
-		val z: Double = max(-30000000.0, min(posZ + Math.random() * radius.toDouble() * 2.0 - radius, 30000000.0))
+		val x: Double = max(-30000000.0, min(posX + Math.random() * radius.D * 2.0 - radius, 30000000.0))
+		val y: Double = max(1.0, min(posY + Math.random() * radius.D * 2.0 - radius, 255.0))
+		val z: Double = max(-30000000.0, min(posZ + Math.random() * radius.D * 2.0 - radius, 30000000.0))
 	}
 	
 	private class LivingPair(val e1: EntityLivingBase, val e2: EntityLivingBase)

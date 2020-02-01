@@ -40,7 +40,7 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	
 	override fun canBePushed() = riddenByEntity == null
 	
-	override fun getShadowSize() = 0.0f
+	override fun getShadowSize() = 0f
 	
 	override fun canDespawn() = false
 	
@@ -77,9 +77,9 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 			prevLimbSwingAmount = limbSwingAmount
 			val d0 = posX - prevPosX
 			val d1 = posZ - prevPosZ
-			var f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0f
-			if (f4 > 1.0f) {
-				f4 = 1.0f
+			var f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4f
+			if (f4 > 1f) {
+				f4 = 1f
 			}
 			
 			limbSwingAmount += (f4 - limbSwingAmount) * 0.4f

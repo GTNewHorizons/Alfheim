@@ -79,17 +79,17 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 		} else {
 			val short1: Short = 128
 			for (l in 0 until short1) {
-				val d6 = l.toDouble() / (short1.toDouble() - 1.0)
+				val d6 = l.D / (short1.D - 1.0)
 				val f = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
 				val f1 = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
 				val f2 = (entity.worldObj.rand.nextFloat() - 0.5f) * 0.2f
 				val d7 = prevX + (entity.posX - prevX) * d6 + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
 				val d8 = prevY + (entity.posY - prevY) * d6 + entity.worldObj.rand.nextDouble() * entity.height
 				val d9 = prevZ + (entity.posZ - prevZ) * d6 + (entity.worldObj.rand.nextDouble() - 0.5) * entity.width * 2.0
-				entity.worldObj.spawnParticle("portal", d7, d8, d9, f.toDouble(), f1.toDouble(), f2.toDouble())
+				entity.worldObj.spawnParticle("portal", d7, d8, d9, f.D, f1.D, f2.D)
 			}
-			entity.worldObj.playSoundEffect(prevX, prevY, prevZ, "mob.endermen.portal", 1.0f, 1.0f)
-			entity.playSound("mob.endermen.portal", 1.0f, 1.0f)
+			entity.worldObj.playSoundEffect(prevX, prevY, prevZ, "mob.endermen.portal", 1f, 1f)
+			entity.playSound("mob.endermen.portal", 1f, 1f)
 			true
 		}
 	}

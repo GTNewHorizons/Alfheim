@@ -1,7 +1,8 @@
 package alfheim.common.block.magtrees.sealing
 
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.I
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.*
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
@@ -26,8 +27,8 @@ class EventHandlerSealingOak {
 	
 	@SubscribeEvent
 	fun onSound(event: PlaySoundEvent17) {
-		if (Minecraft.getMinecraft().theWorld != null && event.result != null) {
-			val world = Minecraft.getMinecraft().theWorld
+		if (mc.theWorld != null && event.result != null) {
+			val world = mc.theWorld
 			if (event.result !is ITickableSound) {
 				
 				val x = event.result.xPosF
@@ -36,9 +37,9 @@ class EventHandlerSealingOak {
 				
 				var volumeMultiplier = 1f
 				
-				for (dx in (x - MAXRANGE).toInt()..(x + MAXRANGE).toInt()) {
-					for (dy in (y - MAXRANGE).toInt()..(y + MAXRANGE).toInt()) {
-						for (dz in (z - MAXRANGE).toInt()..(z + MAXRANGE).toInt()) {
+				for (dx in (x - MAXRANGE).I..(x + MAXRANGE).I) {
+					for (dy in (y - MAXRANGE).I..(y + MAXRANGE).I) {
+						for (dz in (z - MAXRANGE).I..(z + MAXRANGE).I) {
 							val block = world.getBlock(dx, dy, dz)
 							if (block is ISoundSilencer) {
 								val distance = dist(dx, dy, dz, x, y, z)

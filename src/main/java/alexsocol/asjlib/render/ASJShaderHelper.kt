@@ -27,7 +27,7 @@ object ASJShaderHelper {
 		if (shaderID != 0) {
 			if (Minecraft.getMinecraft().theWorld != null) {
 				glUniform1i(glGetUniformLocation(shaderID, "time"), (Minecraft.getMinecraft().theWorld.totalWorldTime / 20).toInt())
-				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.totalWorldTime / 20.0f)
+				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.totalWorldTime / 20f)
 			}
 			
 			callback?.call(shaderID)

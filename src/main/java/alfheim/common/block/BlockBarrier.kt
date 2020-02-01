@@ -11,7 +11,7 @@ class BlockBarrier: BlockMod(Material.cake) {
 	
 	init {
 		setBlockUnbreakable()
-		setResistance(6000001.0F)
+		setResistance(6000001f)
 		setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F)
 		disableStats()
 		setLightOpacity(0)
@@ -27,7 +27,7 @@ class BlockBarrier: BlockMod(Material.cake) {
 	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
 	
 	@SideOnly(Side.CLIENT)
-	override fun getAmbientOcclusionLightValue(): Float = 1.0F
+	override fun getAmbientOcclusionLightValue(): Float = 1f
 	
 	override fun dropBlockAsItemWithChance(worldIn: World, x: Int, y: Int, z: Int, meta: Int, chance: Float, fortune: Int) = Unit
 }

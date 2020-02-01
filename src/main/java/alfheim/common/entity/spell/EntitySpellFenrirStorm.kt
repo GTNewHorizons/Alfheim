@@ -4,7 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -22,7 +22,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		get() = false
 	
 	init {
-		setSize((SpellFenrirStorm.radius * 4).toFloat(), (SpellFenrirStorm.radius * 4).toFloat())
+		setSize((SpellFenrirStorm.radius * 4).F, (SpellFenrirStorm.radius * 4).F)
 		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
 		renderDistanceWeight = SpellFenrirStorm.radius / 2
 	}
@@ -30,11 +30,11 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 	constructor(world: World, caster: EntityLivingBase): this(world) {
 		this.caster = caster
 		val l = Vector3(caster.lookVec).mul(0.1)
-		setPositionAndRotation(caster.posX + l.x, caster.posY + caster.eyeHeight.toDouble() + l.y, caster.posZ + l.z, caster.rotationYaw, caster.rotationPitch)
+		setPositionAndRotation(caster.posX + l.x, caster.posY + caster.eyeHeight.D + l.y, caster.posZ + l.z, caster.rotationYaw, caster.rotationPitch)
 		
 		area!!.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
-		area.rotateOX(-caster.rotationPitch.toDouble())
-		area.rotateOY((caster.rotationYaw).toDouble())
+		area.rotateOX(-caster.rotationPitch.D)
+		area.rotateOY((caster.rotationYaw).D)
 		
 		val v = Vector3(caster.lookVec).mul(SpellFenrirStorm.radius + 0.5)
 		area.translate(v.x, v.y, v.z)
@@ -49,7 +49,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		
 		if (ticksExisted == 4) {
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
-			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.toDouble()))
+			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
 		}
 	}
 	

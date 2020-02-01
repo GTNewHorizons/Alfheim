@@ -2,6 +2,7 @@ package alfheim.common.item
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.gui.ItemsRemainingRenderHandler
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -71,7 +72,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			return false
 		
 		val stackToPlace = ItemStack(getBlock(stack), 1, getBlockMeta(stack))
-		for (v in blocksToPlace) placeBlockAndConsume(player, stack, stackToPlace, v.x.toInt(), v.y.toInt(), v.z.toInt())
+		for (v in blocksToPlace) placeBlockAndConsume(player, stack, stackToPlace, v.x.I, v.y.I, v.z.I)
 		ManaItemHandler.requestManaExact(stack, player, cost, true)
 		
 		return true
@@ -82,7 +83,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			return
 		
 		val block = Block.getBlockFromItem(blockToPlace.item)
-		val meta = blockToPlace.itemDamage
+		val meta = blockToPlace.meta
 		player.worldObj.setBlock(x, y, z, block, meta, 3)
 		player.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block))
 		
@@ -91,7 +92,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		val stacksToCheck = ArrayList<ItemStack>()
 		for (i in 0 until player.inventory.sizeInventory) {
 			val stackInSlot = player.inventory.getStackInSlot(i)
-			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.itemDamage == blockToPlace.itemDamage) {
+			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.meta == blockToPlace.meta) {
 				stackInSlot.stackSize--
 				return
 			}
@@ -154,7 +155,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			val stacksToCheck = ArrayList<ItemStack>()
 			for (i in 0 until player.inventory.sizeInventory) {
 				val stackInSlot = player.inventory.getStackInSlot(i)
-				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.itemDamage == reqStack.itemDamage) {
+				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.meta == reqStack.meta) {
 					current += stackInSlot.stackSize
 					if (current >= required)
 						return true
@@ -182,14 +183,14 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			val coords = ArrayList<Vector3>()
 			val mop = ToolCommons.raytraceFromEntity(player.worldObj, player, true, 5.0)
 			if (mop != null) {
-				val p = Vector3(mop.blockX.toDouble(), mop.blockY.toDouble(), mop.blockZ.toDouble())
-				val block = player.worldObj.getBlock(p.x.toInt(), p.y.toInt(), p.z.toInt())
-				if (block.isReplaceable(player.worldObj, p.x.toInt(), p.y.toInt(), p.z.toInt())) p.sub(0.0, 1.0, 0.0)
+				val p = Vector3(mop.blockX.D, mop.blockY.D, mop.blockZ.D)
+				val block = player.worldObj.getBlock(p.x.I, p.y.I, p.z.I)
+				if (block.isReplaceable(player.worldObj, p.x.I, p.y.I, p.z.I)) p.sub(0.0, 1.0, 0.0)
 				
 				val range = (getSize(stack) xor 1) / 2
 				
 				val dir = ForgeDirection.getOrientation(mop.sideHit)
-				val rot = floor(player.rotationYaw / 90.0 + 0.5).toInt() and 3
+				val rot = floor(player.rotationYaw / 90.0 + 0.5).I and 3
 				val rotationDir = if (rot == 0) EnumFacing.SOUTH else if (rot == 1) EnumFacing.WEST else if (rot == 2) EnumFacing.NORTH else EnumFacing.EAST
 				
 				val pitchedVertically = player.rotationPitch > 60 || player.rotationPitch < -60
@@ -204,11 +205,11 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 				for (x in -xOff until xOff + 1) {
 					for (y in 0 until yOff * 2 + 1) {
 						for (z in -zOff until zOff + 1) {
-							val xp = (p.x + x.toDouble() + dir.offsetX.toDouble()).toInt()
-							val yp = (p.y + y.toDouble() + dir.offsetY.toDouble()).toInt()
-							val zp = (p.z + z.toDouble() + dir.offsetZ.toDouble()).toInt()
+							val xp = (p.x + x.D + dir.offsetX.D).I
+							val yp = (p.y + y.D + dir.offsetY.D).I
+							val zp = (p.z + z.D + dir.offsetZ.D).I
 							
-							val newPos = Vector3(xp.toDouble(), yp.toDouble(), zp.toDouble())
+							val newPos = Vector3(xp.D, yp.D, zp.D)
 							val block1 = player.worldObj.getBlock(xp, yp, zp)
 							if (player.worldObj.isAirBlock(xp, yp, zp) || block1.isReplaceable(player.worldObj, xp, yp, zp)) coords.add(newPos)
 						}

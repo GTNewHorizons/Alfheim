@@ -1,7 +1,7 @@
 package alfheim.common.lexicon
 
+import alfheim.client.core.util.mc
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.item.*
 import vazkii.botania.api.lexicon.LexiconCategory
 
@@ -16,5 +16,5 @@ class ShadowFoxRelicEntry : ShadowfoxLexiconEntry {
     
     constructor(unlocalizedName: String, category: LexiconCategory, item: Item) : super(unlocalizedName, category, item)
     
-    override fun isVisible(): Boolean = Minecraft.getMinecraft().thePlayer.inventory.hasItem(icon.item)
+    override fun isVisible(): Boolean = mc.thePlayer.inventory.hasItem(icon.item)
 }

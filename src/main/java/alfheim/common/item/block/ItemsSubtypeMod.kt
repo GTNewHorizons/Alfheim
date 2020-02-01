@@ -2,6 +2,7 @@ package alfheim.common.item.block
 
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.meta
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -23,7 +24,7 @@ open class ItemSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, bloc
 	
 	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
 		if (par1ItemStack == null) return
-		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + par1ItemStack.itemDamage) + "&r", par3List)
+		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + par1ItemStack.meta) + "&r", par3List)
 	}
 }
 
@@ -34,5 +35,5 @@ class ItemUniqueSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, blo
 	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("tile.", "tile.${ModInfo.MODID}:") + par1ItemStack.itemDamage
+		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("tile.", "tile.${ModInfo.MODID}:") + par1ItemStack.meta
 }

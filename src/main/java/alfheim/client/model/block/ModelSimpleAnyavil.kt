@@ -17,17 +17,17 @@ class ModelSimpleAnyavil: ModelBase() {
 		textureWidth = 52
 		textureHeight = 50
 		shape1 = ModelRenderer(this, 0, 16)
-		shape1.setRotationPoint(-6.0f, 20.0f, -6.0f)
-		shape1.addBox(0.0f, 0.0f, 0.0f, 12, 4, 12, 0.0f)
+		shape1.setRotationPoint(-6f, 20f, -6f)
+		shape1.addBox(0f, 0f, 0f, 12, 4, 12, 0f)
 		shape2 = ModelRenderer(this, 0, 32)
-		shape2.setRotationPoint(-5.0f, 19.0f, -4.0f)
-		shape2.addBox(0.0f, 0.0f, 0.0f, 10, 1, 8, 0.0f)
+		shape2.setRotationPoint(-5f, 19f, -4f)
+		shape2.addBox(0f, 0f, 0f, 10, 1, 8, 0f)
 		shape3 = ModelRenderer(this, 0, 41)
-		shape3.setRotationPoint(-4.0f, 14.0f, -2.0f)
-		shape3.addBox(0.0f, 0.0f, 0.0f, 8, 5, 4, 0.0f)
+		shape3.setRotationPoint(-4f, 14f, -2f)
+		shape3.addBox(0f, 0f, 0f, 8, 5, 4, 0f)
 		shape4 = ModelRenderer(this, 0, 0)
-		shape4.setRotationPoint(-8.0f, 8.0f, -5.0f)
-		shape4.addBox(0.0f, 0.0f, 0.0f, 16, 6, 10, 0.0f)
+		shape4.setRotationPoint(-8f, 8f, -5f)
+		shape4.addBox(0f, 0f, 0f, 16, 6, 10, 0f)
 	}
 	
 	fun renderAll() {

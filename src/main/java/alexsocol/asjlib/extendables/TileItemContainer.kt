@@ -47,7 +47,7 @@ open class TileItemContainer: ASJTile() {
 				val entityitem = EntityItem(tile.getWorldObj(), 0.0, 0.0, 0.0, itemstack)
 				val item = entityitem.entityItem.item
 				entityitem.entityItem.stackSize = tile.item!!.stackSize
-				entityitem.hoverStart = 0.0f
+				entityitem.hoverStart = 0f
 				glPushMatrix()
 				Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord))
 				
@@ -73,7 +73,7 @@ open class TileItemContainer: ASJTile() {
 					}
 				}
 				RenderItem.renderInFrame = true
-				RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0.0f, 0.0f)
+				RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0, -0.2501, 0.0, 0f, 0f)
 				RenderItem.renderInFrame = false
 				
 				glEnable(GL_CULL_FACE)

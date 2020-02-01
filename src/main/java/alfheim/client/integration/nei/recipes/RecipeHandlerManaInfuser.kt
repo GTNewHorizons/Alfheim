@@ -2,9 +2,10 @@ package alfheim.client.integration.nei.recipes
 
 import alfheim.api.AlfheimAPI
 import alfheim.api.crafting.recipe.RecipeManaInfuser
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.D
 import codechicken.nei.PositionedStack
-import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import vazkii.botania.api.recipe.RecipePetals
@@ -36,8 +37,8 @@ class RecipeHandlerManaInfuser: RecipeHandlerPetalApothecary() {
 		super.drawBackground(recipe)
 		val mana = (arecipes[recipe] as CachedManaInfuserRecipe).manaUsage
 		HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75f, mana, TilePool.MAX_MANA * 5)
-		val m = ("${(mana * 10 / TilePool.MAX_MANA.toDouble() / 10)} x mana pool(s)").replace("\\.0 ".toRegex(), " ")
-		Minecraft.getMinecraft().fontRenderer.drawString(m, (168 - Minecraft.getMinecraft().fontRenderer.getStringWidth(m)) / 2, 120, 0x0000FF)
+		val m = ("${(mana * 10 / TilePool.MAX_MANA.D / 10)} x mana pool(s)").replace("\\.0 ".toRegex(), " ")
+		mc.fontRenderer.drawString(m, (168 - mc.fontRenderer.getStringWidth(m)) / 2, 120, 0x0000FF)
 	}
 	
 	override fun getRecipes() = AlfheimAPI.manaInfuserRecipes

@@ -4,8 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.getActivePotionEffect
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
@@ -34,9 +33,9 @@ class GUIIceLens: Gui() {
 		val tes = Tessellator.instance
 		tes.startDrawingQuads()
 		tes.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0)
-		tes.addVertexWithUV(0.0, v.toDouble(), 0.0, 0.0, 1.0)
-		tes.addVertexWithUV(u.toDouble(), v.toDouble(), 0.0, 1.0, 1.0)
-		tes.addVertexWithUV(u.toDouble(), 0.0, 0.0, 1.0, 0.0)
+		tes.addVertexWithUV(0.0, v.D, 0.0, 0.0, 1.0)
+		tes.addVertexWithUV(u.D, v.D, 0.0, 1.0, 1.0)
+		tes.addVertexWithUV(u.D, 0.0, 0.0, 1.0, 0.0)
 		tes.draw()
 		
 		glAlphaFunc(GL_GREATER, 0.1f)

@@ -6,6 +6,7 @@ import alfheim.api.entity.*
 import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
+import alfheim.client.core.util.mc
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.network.*
@@ -13,7 +14,6 @@ import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.*
@@ -21,7 +21,6 @@ import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
-import net.minecraft.stats.AchievementList.potion
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing
@@ -259,17 +258,17 @@ object ESMHandler {
 		} else {
 			player.removePotionEffectClient(Potion.nightVision.id)
 			player.removePotionEffectClient(Potion.blindness.id)
-			Minecraft.getMinecraft().gameSettings.gammaSetting = 10f
+			mc.gameSettings.gammaSetting = 10f
 		}
 	}
 	
 	fun fixSpriggan() {
 		if (AlfheimCore.enableElvenStory) {
-			if (Minecraft.getMinecraft().thePlayer.race !== SPRIGGAN) {
-				Minecraft.getMinecraft().gameSettings.gammaSetting = min(1f, Minecraft.getMinecraft().gameSettings.gammaSetting)
+			if (mc.thePlayer.race !== SPRIGGAN) {
+				mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
 			}
 		} else {
-			Minecraft.getMinecraft().gameSettings.gammaSetting = min(1f, Minecraft.getMinecraft().gameSettings.gammaSetting)
+			mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
 		}
 	}
 	
@@ -384,7 +383,7 @@ object ElvenRaceHandler {
 	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
 		if (AlfheimCore.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
-				AlfheimCore.network.sendTo(Message2d(Message2d.m2d.ATTRIBUTE, 0.0, e.player.raceID.toDouble()), e.player as EntityPlayerMP)
+				AlfheimCore.network.sendTo(Message2d(Message2d.m2d.ATTRIBUTE, 0.0, e.player.raceID.D), e.player as EntityPlayerMP)
 			}
 		}
 	}

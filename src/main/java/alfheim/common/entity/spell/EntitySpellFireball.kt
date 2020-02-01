@@ -21,9 +21,9 @@ import kotlin.math.atan2
 
 class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
-	var accelerationX: Double = 0.toDouble()
-	var accelerationY: Double = 0.toDouble()
-	var accelerationZ: Double = 0.toDouble()
+	var accelerationX: Double = 0.D
+	var accelerationY: Double = 0.D
+	var accelerationZ: Double = 0.D
 	var caster: EntityLivingBase? = null
 	
 	override val isImmune: Boolean
@@ -35,7 +35,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
 	constructor(world: World, x: Double, y: Double, z: Double, accX: Double, accY: Double, accZ: Double): this(world) {
 		setLocationAndAngles(x, y, z, rotationYaw, rotationPitch)
-		val d = MathHelper.sqrt_double(accX * accX + accY * accY + accZ * accZ).toDouble()
+		val d = MathHelper.sqrt_double(accX * accX + accY * accY + accZ * accZ).D
 		accelerationX = accX / d * SpellFireball.efficiency
 		accelerationY = accY / d * SpellFireball.efficiency
 		accelerationZ = accZ / d * SpellFireball.efficiency
@@ -50,19 +50,19 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
+			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
 			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellFireball.radius))) {
 				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.toDouble()))
+				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
 			}
-			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
 			setDead()
 		}
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.toInt(), posY.toInt(), posZ.toInt()))) {
+		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
 			setDead()
 		} else {
 			//if (!ASJUtilities.isServer()) return;
@@ -91,13 +91,13 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 			posY += motionY
 			posZ += motionZ
 			val f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ)
-			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).toFloat() + 90.0f
+			rotationYaw = (atan2(motionZ, motionX) * 180.0 / Math.PI).F + 90f
 			
-			rotationPitch = (atan2(f1.toDouble(), motionY) * 180.0 / Math.PI).toFloat() - 90.0f
-			while (rotationPitch - prevRotationPitch < -180.0f) prevRotationPitch -= 360.0f
-			while (rotationPitch - prevRotationPitch >= 180.0f) prevRotationPitch += 360.0f
-			while (rotationYaw - prevRotationYaw < -180.0f) prevRotationYaw -= 360.0f
-			while (rotationYaw - prevRotationYaw >= 180.0f) prevRotationYaw += 360.0f
+			rotationPitch = (atan2(f1.D, motionY) * 180.0 / Math.PI).F - 90f
+			while (rotationPitch - prevRotationPitch < -180f) prevRotationPitch -= 360f
+			while (rotationPitch - prevRotationPitch >= 180f) prevRotationPitch += 360f
+			while (rotationYaw - prevRotationYaw < -180f) prevRotationYaw -= 360f
+			while (rotationYaw - prevRotationYaw >= 180f) prevRotationYaw += 360f
 			
 			rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2f
 			rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2f
@@ -106,7 +106,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 			if (isInWater) {
 				for (j in 0..3) {
 					val f3 = 0.25f
-					worldObj.spawnParticle("bubble", posX - motionX * f3.toDouble(), posY - motionY * f3.toDouble(), posZ - motionZ * f3.toDouble(), motionX, motionY, motionZ)
+					worldObj.spawnParticle("bubble", posX - motionX * f3.D, posY - motionY * f3.D, posZ - motionZ * f3.D, motionX, motionY, motionZ)
 				}
 				
 				f2 = 0.8f
@@ -115,18 +115,18 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 			motionX += accelerationX
 			motionY += accelerationY
 			motionZ += accelerationZ
-			motionX *= f2.toDouble()
-			motionY *= f2.toDouble()
-			motionZ *= f2.toDouble()
+			motionX *= f2.D
+			motionY *= f2.D
+			motionZ *= f2.D
 			setPosition(posX, posY, posZ)
 			
 			for (i in 0..4) {
 				val v = Vector3(motionX, motionY, motionZ)//.normalize().multiply(0.05);
-				Botania.proxy.wispFX(worldObj, posX, posY - 0.2, posZ, 1f, Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.075f, 0.65f + Math.random().toFloat() * 0.45f, v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), 0.1f)
+				Botania.proxy.wispFX(worldObj, posX, posY - 0.2, posZ, 1f, Math.random().F * 0.25f, Math.random().F * 0.075f, 0.65f + Math.random().F * 0.45f, v.x.F, v.y.F, v.z.F, 0.1f)
 				
-				Botania.proxy.wispFX(worldObj, posX + Math.random() * 0.5 - 0.25, posY + Math.random() * 0.5 - 0.25, posZ + Math.random() * 0.5 - 0.25, 1f, Math.random().toFloat() * 0.25f, Math.random().toFloat() * 0.075f, Math.random().toFloat() * 0.25f, 0f, 0.5f)
+				Botania.proxy.wispFX(worldObj, posX + Math.random() * 0.5 - 0.25, posY + Math.random() * 0.5 - 0.25, posZ + Math.random() * 0.5 - 0.25, 1f, Math.random().F * 0.25f, Math.random().F * 0.075f, Math.random().F * 0.25f, 0f, 0.5f)
 				// smoke
-				val gs = Math.random().toFloat() * 0.15f
+				val gs = Math.random().F * 0.15f
 				Botania.proxy.wispFX(worldObj, posX, posY - 0.25, posZ, gs, gs, gs, 2f, -0.15f)
 			}
 		}
@@ -134,10 +134,10 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
 	override fun canBeCollidedWith() = true
 	
-	override fun getCollisionBorderSize() = 1.0f
+	override fun getCollisionBorderSize() = 1f
 	
 	@SideOnly(Side.CLIENT)
-	override fun getShadowSize() = 0.0f
+	override fun getShadowSize() = 0f
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid
 	

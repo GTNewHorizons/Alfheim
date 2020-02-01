@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alfheim.client.model.item.ModelCreatorStaff
+import alfheim.common.core.util.F
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.item.ItemStack
@@ -26,8 +27,8 @@ object RenderEntitysLeftHand {
 		
 		if (e.renderer.mainModel.isChild) {
 			f1 = 0.5f
-			glTranslatef(0.0f, 0.625f, 0.0f)
-			glRotatef(-20.0f, -1.0f, 0.0f, 0.0f)
+			glTranslatef(0f, 0.625f, 0f)
+			glRotatef(-20f, -1f, 0f, 0f)
 			glScalef(f1, f1, f1)
 		}
 		
@@ -36,19 +37,19 @@ object RenderEntitysLeftHand {
 		
 		f1 = 0.625f
 		
-		glTranslatef(0.0f, 0.1875f, 0.0f)
+		glTranslatef(0f, 0.1875f, 0f)
 		glScalef(f1, -f1, f1)
-		glRotatef(-80.0f, 1.0f, 0.0f, 0.0f)
-		glRotatef(45.0f, 0.0f, 1.0f, 0.0f)
+		glRotatef(-80f, 1f, 0f, 0f)
+		glRotatef(45f, 0f, 1f, 0f)
 		
 		val f2: Float
 		val i = 0xFFFFFF
 		val f5: Float
 		
-		val f4 = (i shr 16 and 255).toFloat() / 255.0f
-		f5 = (i shr 8 and 255).toFloat() / 255.0f
-		f2 = (i and 255).toFloat() / 255.0f
-		glColor4f(f4, f5, f2, 1.0f)
+		val f4 = (i shr 16 and 255).F / 255f
+		f5 = (i shr 8 and 255).F / 255f
+		f2 = (i and 255).F / 255f
+		glColor4f(f4, f5, f2, 1f)
 		
 		glPushMatrix()
 		render.invoke(e)

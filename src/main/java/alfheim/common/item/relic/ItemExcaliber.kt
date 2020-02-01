@@ -44,7 +44,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 			ItemRelic.updateRelic(stack, player)
 			if (ItemRelic.isRightPlayer(player!!, stack)) {
 				val haste = player.getActivePotionEffect(Potion.digSpeed.id)
-				val check = if (haste == null) 1.0f / 6.0f else if (haste.getAmplifier() == 0) 0.4f else if (haste.getAmplifier() == 2) 1.0f / 3.0f else 0.5f
+				val check = if (haste == null) 1f / 6f else if (haste.getAmplifier() == 0) 0.4f else if (haste.getAmplifier() == 2) 1f / 3f else 0.5f
 				if (!world.isRemote && inHand && player.swingProgress == check && ManaItemHandler.requestManaExact(stack, player, 1, true)) {
 					val burst = getBurst(player, stack!!)
 					world.spawnEntityInWorld(burst)
@@ -84,14 +84,14 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	fun getBurst(player: EntityPlayer, stack: ItemStack): EntityManaBurst {
 		val burst = EntityManaBurst(player)
 		
-		val motionModifier = 7.0f
+		val motionModifier = 7f
 		
 		burst.color = 0xFFFF20
 		burst.mana = 1
 		burst.startingMana = 100
 		burst.minManaLoss = 200
-		burst.manaLossPerTick = 1.0f
-		burst.gravity = 0.0f
+		burst.manaLossPerTick = 1f
+		burst.gravity = 0f
 		burst.setMotion(burst.motionX * motionModifier, burst.motionY * motionModifier, burst.motionZ * motionModifier)
 		
 		val lens = stack.copy()
@@ -138,10 +138,10 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 					val mana = burst.mana
 					if (mana >= cost) {
 						burst.mana = mana - cost
-						var damage = 4.0f + toolMaterial.damageVsEntity
+						var damage = 4f + toolMaterial.damageVsEntity
 						if (!burst.isFake && !entity.worldObj.isRemote) {
 							val player = living.worldObj.getPlayerEntityByName(attacker)
-							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.toFloat()
+							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.F
 							damage = mod ?: damage
 							// TODO add sharpness check
 							living.attackEntityFrom(if (player == null) DamageSource.magic else DamageSource.causePlayerDamage(player), damage)
@@ -164,6 +164,6 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		const val TAG_ATTACKER_USERNAME = "attackerUsername"
 		const val TAG_HOME_ID = "homeID"
 		
-		val toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2f, 6.0f, 40)!!
+		val toolMaterial = EnumHelper.addToolMaterial("B_EXCALIBER", 3, -1, 6.2f, 6f, 40)!!
 	}
 }

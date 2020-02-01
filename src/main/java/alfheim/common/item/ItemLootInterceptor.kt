@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -36,7 +37,7 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 						++pos
 						
 						if (id == cid) {
-							if (metas[pos] == slot.itemDamage) {
+							if (metas[pos] == slot.meta) {
 								val size = slot.stackSize
 								player.inventory.setInventorySlotContents(i, null)
 								addMana(stack, PER_ITEM * size)
@@ -48,7 +49,7 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 		}
 	}
 	
-	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).toFloat() / getMaxMana(stack).toFloat()
+	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).F / getMaxMana(stack).F
 	override fun getMana(stack: ItemStack) = getInt(stack, TAG_MANA, 0)
 	override fun getMaxMana(stack: ItemStack) = Int.MAX_VALUE
 	override fun addMana(stack: ItemStack, mana: Int) = setMana(stack, min(getMana(stack) + mana, getMaxMana(stack)))

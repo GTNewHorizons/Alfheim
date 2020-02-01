@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.armor.elvoruim
 
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.collect.*
@@ -44,13 +44,13 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	}
 	
 	override fun getIsRepairable(armor: ItemStack?, material: ItemStack): Boolean {
-		return material.item === AlfheimItems.elvenResource && material.itemDamage == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
+		return material.item === AlfheimItems.elvenResource && material.meta == ElvenResourcesMetas.ElvoriumIngot || super.getIsRepairable(armor, material)
 	}
 	
 	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		val uuid = UUID(unlocalizedName.hashCode().toLong(), 0)
-		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).toDouble() / 20, 0))
+		multimap.put(SharedMonsterAttributes.knockbackResistance.attributeUnlocalizedName, AttributeModifier(uuid, "Terrasteel modifier $type", getArmorDisplay(null, ItemStack(this), type).D / 20, 0))
 		return multimap
 	}
 	
@@ -115,7 +115,7 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	}
 	
 	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer): Float {
-		return if (hasArmorSet(player)) 0.3f / 4.0f else 0f
+		return if (hasArmorSet(player)) 0.3f / 4f else 0f
 	}
 	
 	override fun shouldGiveProficiency(stack: ItemStack, slot: Int, player: EntityPlayer): Boolean {

@@ -3,6 +3,7 @@ package alfheim.client.integration.nei.recipes
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import codechicken.lib.gui.GuiDraw
 import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler
@@ -24,7 +25,7 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
     override fun drawBackground(recipe: Int) {
         super.drawBackground(recipe)
         GL11.glEnable(GL11.GL_BLEND)
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F)
+        GL11.glColor4f(1f, 1f, 1f, 0.5F)
         GuiDraw.changeTexture(LibResources.GUI_PETAL_OVERLAY)
         GuiDraw.drawTexturedModalRect(45, 10, 38, 7, 92, 92)
         HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75F, (arecipes[recipe] as CachedTreeRecipe).manaUsage, TilePool.MAX_MANA / 10)
@@ -105,14 +106,14 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
         }
 
         fun setIngredients(inputs: List<Any>) {
-            val degreePerInput = 360.0f / inputs.size.toFloat()
-            var currentDegree = -90.0f
+            val degreePerInput = 360f / inputs.size.F
+            var currentDegree = -90f
 
             val var4 = inputs.iterator()
             while (var4.hasNext()) {
                 val o = var4.next()
-                val posX = (73.0 + cos(currentDegree.toDouble() * 3.141592653589793 / 180.0) * 32.0).roundToInt()
-                val posY = (55.0 + sin(currentDegree.toDouble() * 3.141592653589793 / 180.0) * 32.0).roundToInt()
+                val posX = (73.0 + cos(currentDegree.D * 3.141592653589793 / 180.0) * 32.0).roundToInt()
+                val posY = (55.0 + sin(currentDegree.D * 3.141592653589793 / 180.0) * 32.0).roundToInt()
                 if (o is String) {
                     this.inputs.add(PositionedStack(OreDictionary.getOres(o), posX, posY))
                 } else {

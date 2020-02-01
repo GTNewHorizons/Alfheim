@@ -2,17 +2,16 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.network.MessageEffect
 import baubles.api.*
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.*
@@ -123,12 +122,12 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, e: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type != IBaubleRender.RenderType.HEAD) return
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 		val stone = stack.displayName.toLowerCase().trim() == "kono dio da"
 		val icon = if (stone) jojocon else itemIcon
 		glPushMatrix()
 		
-		glTranslated(0.0, (if (e.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - e.entityPlayer.defaultEyeHeight + if (e.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
+		glTranslated(0.0, (if (e.entityPlayer !== mc.thePlayer) 1.68 else 0.0) - e.entityPlayer.defaultEyeHeight + if (e.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 		glRotated(90.0, 0.0, 1.0, 0.0)
 		glRotated(180.0, 1.0, 0.0, 0.0)
 		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.5, -0.2 * 8/7)

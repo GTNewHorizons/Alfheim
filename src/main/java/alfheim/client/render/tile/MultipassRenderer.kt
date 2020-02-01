@@ -2,6 +2,7 @@ package alfheim.client.render.tile
 
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.IMultipassRenderer
+import alfheim.common.core.util.F
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
@@ -20,8 +21,8 @@ class MultipassRenderer : ISimpleBlockRenderingHandler {
 
     override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
         if (block is IMultipassRenderer) {
-            renderInventoryBlock(block.innerBlock(metadata), metadata, 1.0F, renderer, 0)
-            renderInventoryBlock(block, metadata, 1.0F, renderer, 1)
+            renderInventoryBlock(block.innerBlock(metadata), metadata, 1f, renderer, 0)
+            renderInventoryBlock(block, metadata, 1f, renderer, 1)
         }
     }
 
@@ -39,42 +40,42 @@ class MultipassRenderer : ISimpleBlockRenderingHandler {
         if (renderer.useInventoryTint) {
             val j = block.getRenderColor(meta)
 
-            val f1 = (j shr 16 and 255).toFloat() / 255.0F
-            val f2 = (j shr 8 and 255).toFloat() / 255.0F
-            val f3 = (j and 255).toFloat() / 255.0F
-            glColor4f(f1 * brightness, f2 * brightness, f3 * brightness, 1.0F)
+            val f1 = (j shr 16 and 255).F / 255f
+            val f2 = (j shr 8 and 255).F / 255f
+            val f3 = (j and 255).F / 255f
+            glColor4f(f1 * brightness, f2 * brightness, f3 * brightness, 1f)
         }
 
         block.setBlockBoundsForItemRender()
         renderer.setRenderBoundsFromBlock(block)
-        glRotatef(90.0f, 0.0f, 1.0f, 0.0f)
+        glRotatef(90f, 0f, 1f, 0f)
         glTranslatef(-0.5f, -0.5f, -0.5f)
 
-        val zf = stage.toFloat() / 200f
+        val zf = stage.F / 200f
         glTranslatef(-zf, -zf, -zf)
         glScalef(1f + zf * 2f, 1f + zf * 2f, 1f + zf * 2f)
         tessellator.startDrawingQuads()
-        tessellator.setNormal(0.0f, -1.0f, 0.0f)
+        tessellator.setNormal(0f, -1f, 0f)
         renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 0, meta))
         tessellator.draw()
         tessellator.startDrawingQuads()
-        tessellator.setNormal(0.0f, 1.0f, 0.0f)
+        tessellator.setNormal(0f, 1f, 0f)
         renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 1, meta))
         tessellator.draw()
         tessellator.startDrawingQuads()
-        tessellator.setNormal(0.0f, 0.0f, -1.0f)
+        tessellator.setNormal(0f, 0f, -1f)
         renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 2, meta))
         tessellator.draw()
         tessellator.startDrawingQuads()
-        tessellator.setNormal(0.0f, 0.0f, 1.0f)
+        tessellator.setNormal(0f, 0f, 1f)
         renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 3, meta))
         tessellator.draw()
         tessellator.startDrawingQuads()
-        tessellator.setNormal(-1.0f, 0.0f, 0.0f)
+        tessellator.setNormal(-1f, 0f, 0f)
         renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 4, meta))
         tessellator.draw()
         tessellator.startDrawingQuads()
-        tessellator.setNormal(1.0f, 0.0f, 0.0f)
+        tessellator.setNormal(1f, 0f, 0f)
         renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 5, meta))
         tessellator.draw()
         glTranslatef(0.5f + zf, 0.5f + zf, 0.5f + zf)

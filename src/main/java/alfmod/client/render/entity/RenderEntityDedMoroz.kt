@@ -1,5 +1,6 @@
 package alfmod.client.render.entity
 
+import alfheim.common.core.util.*
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelBipedEyes
 import alfmod.common.entity.boss.EntityDedMoroz
@@ -90,11 +91,11 @@ class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 			
 			if (itemstack.item.requiresMultipleRenderPasses()) {
 				i = 0
-				while (i < itemstack.item.getRenderPasses(itemstack.itemDamage)) {
+				while (i < itemstack.item.getRenderPasses(itemstack.meta)) {
 					val j = itemstack.item.getColorFromItemStack(itemstack, i)
-					f5 = (j shr 16 and 255).toFloat() / 255f
-					f2 = (j shr 8 and 255).toFloat() / 255f
-					val f3 = (j and 255).toFloat() / 255f
+					f5 = (j shr 16 and 255).F / 255f
+					f2 = (j shr 8 and 255).F / 255f
+					val f3 = (j and 255).F / 255f
 					glColor4f(f5, f2, f3, 1f)
 					glScaled(1.25, 1.25, 1.25)
 					renderManager.itemRenderer.renderItem(entity, itemstack, i)
@@ -103,9 +104,9 @@ class RenderEntityDedMoroz: RenderBiped(ModelBipedEyes(), 0.5f) {
 				}
 			} else {
 				i = itemstack.item.getColorFromItemStack(itemstack, 0)
-				val f4 = (i shr 16 and 255).toFloat() / 255f
-				f5 = (i shr 8 and 255).toFloat() / 255f
-				f2 = (i and 255).toFloat() / 255f
+				val f4 = (i shr 16 and 255).F / 255f
+				f5 = (i shr 8 and 255).F / 255f
+				f2 = (i and 255).F / 255f
 				glColor4f(f4, f5, f2, 1f)
 				glScaled(1.25, 1.25, 1.25)
 				glTranslated(0.0, 0.2, 0.0)

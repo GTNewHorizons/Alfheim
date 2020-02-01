@@ -2,7 +2,7 @@ package alfheim.client.gui
 
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import org.lwjgl.opengl.GL11.*
@@ -27,7 +27,7 @@ class GUIDeathTimer: GuiScreen() {
 		run {
 			glPushMatrix()
 			glColor4d(1.0, 1.0, 1.0, 1.0)
-			glTranslated((resolution.scaledWidth / 4 - 32).toDouble(), (resolution.scaledHeight / 4 - 32).toDouble(), 0.0)
+			glTranslated((resolution.scaledWidth / 4 - 32).D, (resolution.scaledHeight / 4 - 32).D, 0.0)
 			val tes = Tessellator.instance
 			mc.renderEngine.bindTexture(LibResourceLocations.deathTimerBG)
 			tes.startDrawingQuads()
@@ -38,7 +38,7 @@ class GUIDeathTimer: GuiScreen() {
 			tes.draw()
 			mc.renderEngine.bindTexture(LibResourceLocations.deathTimer)
 			glTranslated(32.0, 32.0, 0.0)
-			glRotated((-(timer % 20) * 18).toDouble(), 0.0, 0.0, 1.0)
+			glRotated((-(timer % 20) * 18).D, 0.0, 0.0, 1.0)
 			glTranslated(-32.0, -32.0, 0.0)
 			tes.startDrawingQuads()
 			tes.addVertexWithUV(0.0, 0.0, 0.0, 0.0, 0.0)
@@ -54,7 +54,7 @@ class GUIDeathTimer: GuiScreen() {
 			val sc = 1.5
 			glScaled(sc, sc, 1.0)
 			val s = "${max(timer / 20, 0)}"
-			font.drawString(s, (resolution.scaledWidth / (4 * sc) - font.getStringWidth(s) / 2).toInt(), (resolution.scaledHeight / (4 * sc) - 4).toInt(), 0xFFFFFF, true)
+			font.drawString(s, (resolution.scaledWidth / (4 * sc) - font.getStringWidth(s) / 2).I, (resolution.scaledHeight / (4 * sc) - 4).I, 0xFFFFFF, true)
 			glPopMatrix()
 		}
 		

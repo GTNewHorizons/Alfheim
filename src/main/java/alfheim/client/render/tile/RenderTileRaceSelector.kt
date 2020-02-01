@@ -2,10 +2,11 @@ package alfheim.client.render.tile
 
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.client.model.entity.ModelBipedNew
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.block.tile.TileRaceSelector
-import net.minecraft.client.Minecraft
+import alfheim.common.core.util.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
@@ -18,7 +19,6 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 	override fun renderTileEntityAt(tile: TileEntity?, cx: Double, cy: Double, cz: Double, ticks: Float) {
 		if (tile !is TileRaceSelector) return
 		
-		val mc = Minecraft.getMinecraft()
 		val font = mc.fontRenderer
 		val meta = tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)
 		
@@ -64,7 +64,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				
 				val angles = 360
 				val segAngles = angles / 9
-				val shift = (360 - segAngles / 2).toFloat() - 90
+				val shift = (360 - segAngles / 2).F - 90
 				
 				for (seg in 0 until 9) {
 					val rotationAngle = (seg + 0.5f) * segAngles + shift
@@ -113,7 +113,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				
 				glTranslated(0.0, 0.1, 0.0)
 				
-				val ry = ((sin((Minecraft.getMinecraft().theWorld.totalWorldTime + Minecraft.getMinecraft().timer.renderPartialTicks).toDouble() * spd * 0.2) + 0.5) * 5f).toFloat()
+				val ry = ((sin((mc.theWorld.totalWorldTime + mc.timer.renderPartialTicks).D * spd * 0.2) + 0.5) * 5f).F
 				
 				// Wing left
 				glPushMatrix()
@@ -121,7 +121,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				val swr = 1.5
 				glScaled(swr, swr, swr)
 				//glRotated(10, 0, 0, 1);
-				glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
+				glRotated((-ry).D, 0.0, 1.0, 0.0)
 				LibResourceLocations.wings[tile.rotation + 1]?.let { RenderWings.drawRect(it, -1) }
 				glPopMatrix()
 				
@@ -131,7 +131,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				val swl = 1.5
 				glScaled(-swl, swl, swl)
 				//glRotated(10, 0, 0, 1);
-				glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
+				glRotated((-ry).D, 0.0, 1.0, 0.0)
 				LibResourceLocations.wings[tile.rotation + 1]?.let { RenderWings.drawRect(it, -1) }
 				glPopMatrix()
 				
@@ -153,7 +153,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				val race = EnumRace[tile.rotation + 1]
 				val text = StatCollector.translateToLocal("race.$race.name")
 				val width = font.getStringWidth(text) / -2
-				val w = -width.toDouble()
+				val w = -width.D
 				glTranslatef(0f, 0f, 1f)
 				glColor4f(0f, 0f, 0f, 0.5f)
 				glDisable(GL_TEXTURE_2D)

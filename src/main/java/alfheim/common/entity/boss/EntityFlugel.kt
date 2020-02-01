@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.boss.IBotaniaBossWithName
+import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
@@ -17,7 +18,6 @@ import alfheim.common.item.relic.ItemFlugelSoul
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.client.renderer.texture.TextureMap
@@ -61,11 +61,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		get() {
 			val source = source
 			val range = RANGE + 3
-			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX.toDouble() + 0.5 + range.toDouble(), source.posY.toDouble() + 0.5 + range.toDouble(), source.posZ.toDouble() + 0.5 + range.toDouble())) as List<EntityPlayer>
+			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX.D + 0.5 + range.D, source.posY.D + 0.5 + range.D, source.posZ.D + 0.5 + range.D)) as List<EntityPlayer>
 		}
 	
 	var stage: Int
-		get() = dataWatcher.getWatchableObjectByte(21).toInt()
+		get() = dataWatcher.getWatchableObjectByte(21).I
 		set(stage) {
 			dataWatcher.updateObject(21, stage.toByte())
 			
@@ -183,7 +183,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		super.setHealth(hp)
 		
 		if (aiTask == AITask.INVUL) return
-		if (health < prevHealth && (health / (maxHealth / 10)).toInt() < (prevHealth / (maxHealth / 10)).toInt()) {
+		if (health < prevHealth && (health / (maxHealth / 10)).I < (prevHealth / (maxHealth / 10)).I) {
 			if (!aiTask.instant && aiTask != AITask.DEATHRAY)
 				aiTaskTimer = 0
 		}
@@ -244,16 +244,17 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					if (ConfigHandler.relicsEnabled && name == summoner) {
 						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(rand, 4, 6) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
 						
-						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.func_147099_x()?.hasAchievementUnlocked(AlfheimAchievements.mask) == false) {
+						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false) {
 							relic = ItemStack(AlfheimItems.mask)
 						} else if (ultra) {
 							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
-							val stat = player?.func_147099_x()
-							relic = when {
-								stat?.hasAchievementUnlocked(AlfheimAchievements.excaliber) == false    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-								stat?.hasAchievementUnlocked(AlfheimAchievements.subspace) == false     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-								stat?.hasAchievementUnlocked(AlfheimAchievements.moonlightBow) == false -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-								else                                                                    -> relic
+							if (player != null) {
+								relic = when {
+									!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also		{ player.triggerAchievement(AlfheimAchievements.excaliber) }
+									!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also	{ player.triggerAchievement(AlfheimAchievements.subspace) }
+									!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also	{ player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+									else                                                     -> relic
+								}
 							}
 						}
 						
@@ -334,9 +335,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL) setDead()
 		
 		if (!worldObj.isRemote) {
-			val posXInt = MathHelper.floor_double(posX)
-			val posYInt = MathHelper.floor_double(posY)
-			val posZInt = MathHelper.floor_double(posZ)
+			val posXInt = posX.mfloor()
+			val posYInt = posY.mfloor()
+			val posZInt = posZ.mfloor()
 			for (i in -RANGE..RANGE)
 				for (j in -RANGE..RANGE)
 					for (k in -RANGE..RANGE) {
@@ -375,8 +376,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					var yaw = 0
 					while (yaw < 360) {
 						// angle in rads
-						val radY = yaw * PI.toFloat() / 180f
-						val radP = pitch * PI.toFloat() / 180f
+						val radY = yaw * PI.F / 180f
+						val radP = pitch * PI.F / 180f
 						
 						// world coords
 						val wX = source.posX + 0.5
@@ -384,23 +385,23 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						val wZ = source.posZ + 0.5
 						
 						// local coords
-						val x = sin(radP.toDouble()) * cos(radY.toDouble()) * RANGE.toDouble()
-						val y = cos(radP.toDouble()) * RANGE
-						val z = sin(radP.toDouble()) * sin(radY.toDouble()) * RANGE.toDouble()
+						val x = sin(radP.D) * cos(radY.D) * RANGE.D
+						val y = cos(radP.D) * RANGE
+						val z = sin(radP.D) * sin(radY.D) * RANGE.D
 						
 						// particle source position
 						val nrm = Vector3(x, y, z).normalize()
 						
 						// noraml to pos
-						val radp = (pitch + 90f) * PI.toFloat() / 180f
-						val kx = sin(radp.toDouble()) * cos(radY.toDouble())
-						val ky = cos(radp.toDouble())
-						val kz = sin(radp.toDouble()) * sin(radY.toDouble())
+						val radp = (pitch + 90f) * PI.F / 180f
+						val kx = sin(radp.D) * cos(radY.D)
+						val ky = cos(radp.D)
+						val kz = sin(radp.D) * sin(radY.D)
 						val kos = Vector3(kx, ky, kz).normalize().rotate(Math.toRadians(PI * 2.0 * Math.random()), nrm).mul(0.1)
 						
-						val motX = kos.x.toFloat()
-						val motY = kos.y.toFloat()
-						val motZ = kos.z.toFloat()
+						val motX = kos.x.F
+						val motY = kos.y.F
+						val motZ = kos.z.F
 						
 						if (customNameTag == "Hatsune Miku") Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, 0f, 0.75f, 1f, 1f, motX, motY, motZ)
 						else Botania.proxy.wispFX(worldObj, wX - x, wY - y, wZ - z, 0.5f, 0f, 1f, 1f, motX, motY, motZ)
@@ -420,7 +421,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			val tiara = baubles.getStackInSlot(0)
-			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.itemDamage == 1)
+			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.meta == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else {
 				if (!worldObj.isRemote) {
@@ -466,7 +467,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (invul > 10) spawnPatyklz(false)
 		
 		if (invul <= 0) {
-			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+			if (pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
 				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key
 											   ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
@@ -499,29 +500,29 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val y = arr[1]
 			val z = arr[2]
 			
-			val pylonPos = Vector3((source.posX + x).toDouble(), (source.posY + y).toDouble(), (source.posZ + z).toDouble())
-			var worldTime = ticksExisted.toDouble()
+			val pylonPos = Vector3((source.posX + x).D, (source.posY + y).D, (source.posZ + z).D)
+			var worldTime = ticksExisted.D
 			worldTime /= 5.0
 			
-			val rad = 0.75f + Math.random().toFloat() * 0.05f
+			val rad = 0.75f + Math.random().F * 0.05f
 			val xp = pylonPos.x + 0.5 + cos(worldTime) * rad
 			val zp = pylonPos.z + 0.5 + sin(worldTime) * rad
 			
 			val partPos = Vector3(xp, pylonPos.y, zp)
 			val mot = pos.copy().sub(partPos).mul(0.04)
 			
-			var r = (if (deathRay) 0.2f else 0.7f) + Math.random().toFloat() * 0.3f
-			var g = Math.random().toFloat() * 0.3f
-			var b = (if (deathRay) 0.7f else 0.2f) + Math.random().toFloat() * 0.3f
+			var r = (if (deathRay) 0.2f else 0.7f) + Math.random().F * 0.3f
+			var g = Math.random().F * 0.3f
+			var b = (if (deathRay) 0.7f else 0.2f) + Math.random().F * 0.3f
 			
 			if (miku) {
-				r = Math.random().toFloat() * 0.3f
-				g = (if (deathRay) 0.2f else 0.7f) + Math.random().toFloat() * 0.3f
-				b = 0.7f + Math.random().toFloat() * 0.3f
+				r = Math.random().F * 0.3f
+				g = (if (deathRay) 0.2f else 0.7f) + Math.random().F * 0.3f
+				b = 0.7f + Math.random().F * 0.3f
 			}
 			
-			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.25f + Math.random().toFloat() * 0.1f, -0.075f - Math.random().toFloat() * 0.015f)
-			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.4f, mot.x.toFloat(), mot.y.toFloat(), mot.z.toFloat())
+			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.25f + Math.random().F * 0.1f, -0.075f - Math.random().F * 0.015f)
+			Botania.proxy.wispFX(worldObj, partPos.x, partPos.y, partPos.z, r, g, b, 0.4f, mot.x.F, mot.y.F, mot.z.F)
 		}
 	}
 	
@@ -530,7 +531,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	public override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.5
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = MAX_HP.toDouble()
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = MAX_HP.D
 		getEntityAttribute(SharedMonsterAttributes.knockbackResistance).baseValue = 1.0
 	}
 	
@@ -693,9 +694,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		posY = par3
 		posZ = par5
 		var flag = false
-		val i = MathHelper.floor_double(posX)
-		val j = MathHelper.floor_double(posY)
-		val k = MathHelper.floor_double(posZ)
+		val i = posX.mfloor()
+		val j = posY.mfloor()
+		val k = posZ.mfloor()
 		
 		if (worldObj.blockExists(i, j, k)) {
 			setPosition(posX, posY, posZ)
@@ -707,7 +708,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			
 			// Prevent out of bounds teleporting
 			val source = source
-			if (pointDistanceSpace(posX, posY, posZ, source.posX.toDouble(), source.posY.toDouble(), source.posZ.toDouble()) > RANGE) flag = false
+			if (pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) flag = false
 		}
 		
 		if (!flag) {
@@ -722,14 +723,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val f = (rand.nextFloat() - 0.5f) * 0.2f
 			val f1 = (rand.nextFloat() - 0.5f) * 0.2f
 			val f2 = (rand.nextFloat() - 0.5f) * 0.2f
-			val d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
+			val d7 = d3 + (posX - d3) * d6 + (rand.nextDouble() - 0.5) * width.D * 2.0
 			val d8 = d4 + (posY - d4) * d6 + rand.nextDouble() * height
-			val d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5) * width.toDouble() * 2.0
-			worldObj.spawnParticle("portal", d7, d8, d9, f.toDouble(), f1.toDouble(), f2.toDouble())
+			val d9 = d5 + (posZ - d5) * d6 + (rand.nextDouble() - 0.5) * width.D * 2.0
+			worldObj.spawnParticle("portal", d7, d8, d9, f.D, f1.D, f2.D)
 		}
 		
-		worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0f, 1.0f)
-		playSound("mob.endermen.portal", 1.0f, 1.0f)
+		worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1f, 1f)
+		playSound("mob.endermen.portal", 1f, 1f)
 		return true
 	}
 	
@@ -755,7 +756,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			
 			if (entity1.canBeCollidedWith()) {
 				val f = 0.3f
-				val axisalignedbb = entity1.boundingBox.expand(f.toDouble(), f.toDouble(), f.toDouble())
+				val axisalignedbb = entity1.boundingBox.expand(f.D, f.D, f.D)
 				val movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31)
 				
 				if (movingobjectposition1 != null) {
@@ -827,7 +828,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		val px = x + 160
 		val py = y + 12
 		
-		val mc = Minecraft.getMinecraft()
 		val stack = ItemStack(Items.skull, 1, 3)
 		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting()
@@ -917,7 +917,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					if (world.isRemote) return true
 					
 					val e = EntityFlugel(world)
-					e.setPosition(x + 0.5, (y + 3).toDouble(), z + 0.5)
+					e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
 					e.aiTask = AITask.INVUL
 					e.aiTaskTimer = 0
 					do {
@@ -940,7 +940,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					val playerCount = players.count { isTruePlayer(it) }
 					
 					e.playerCount = playerCount
-					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).toDouble()
+					e.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).baseValue = (MAX_HP * playerCount * if (hard) 2 else 1).D
 					e.noClip = true
 					
 					world.playSoundAtEntity(e, "mob.enderdragon.growl", 10f, 0.1f)
@@ -967,7 +967,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			for (i in -RANGE until RANGE + 1)
 				for (j in -RANGE until RANGE + 1)
 					for (k in -RANGE until RANGE + 1) {
-						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || pointDistancePlane(i.toDouble(), j.toDouble(), 0.0, 0.0) > RANGE)
+						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || pointDistancePlane(i.D, j.D, 0.0, 0.0) > RANGE)
 							continue // Ignore pylons, beacon and out of circle
 						
 						val x = sx + i

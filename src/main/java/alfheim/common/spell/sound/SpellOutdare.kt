@@ -7,7 +7,6 @@ import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.AxisAlignedBB
 
 object SpellOutdare: SpellBase("outdare", EnumRace.POOKA, 6000, 2400, 20) {
 	

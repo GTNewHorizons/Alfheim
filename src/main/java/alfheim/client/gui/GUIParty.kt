@@ -10,7 +10,7 @@ import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
@@ -69,7 +69,7 @@ class GUIParty: Gui() {
 			mc.renderEngine.bindTexture(mc.thePlayer.getLocationSkin());
 			zLevel = -89.5F;
 			drawTexturedModalRect(0, 0, 32, 64, 32, 64);
-			zLevel = -89.0F;
+			zLevel = -89f;
 			drawTexturedModalRect(0, 0, 160, 64, 32, 64);
 			glPopMatrix();*/
 			
@@ -81,7 +81,7 @@ class GUIParty: Gui() {
 			
 			// ################ health: ################
 			run {
-				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).toInt() / 158.0
+				val mod = (min(player.health, player.maxHealth) / max(player.maxHealth, 1f) * 158.0).I / 158.0
 				ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 				val length = (158 * mod).mfloor()
 				
@@ -137,7 +137,7 @@ class GUIParty: Gui() {
 					}
 				}
 				
-				val col = Color(Color.HSBtoRGB(0.55f, if (anyRequest) min(1.0, sin(System.currentTimeMillis() / 1000.0) * 0.25 + 1.0).toFloat() else 1f, 1f))
+				val col = Color(Color.HSBtoRGB(0.55f, if (anyRequest) min(1.0, sin(System.currentTimeMillis() / 1000.0) * 0.25 + 1.0).F else 1f, 1f))
 				glColor4ub(col.red.toByte(), col.green.toByte(), col.blue.toByte(), 255.toByte())
 				
 				var length = 158
@@ -146,8 +146,8 @@ class GUIParty: Gui() {
 					length = if (totalMaxMana == 0)
 						0
 					else {
-						val temp = totalMana.toDouble() / totalMaxMana.toDouble() * length
-						temp.toInt()
+						val temp = totalMana.D / totalMaxMana.D * length
+						temp.I
 					}
 				}
 				
@@ -172,7 +172,7 @@ class GUIParty: Gui() {
 			// ################ hp: ################
 			run {
 				glTranslated(0.0, -0.5, -89.0)
-				data = (format.format(player.health.toDouble()) + "/" + format.format(player.maxHealth.toDouble())).replace(',', '.')
+				data = (format.format(player.health.D) + "/" + format.format(player.maxHealth.D)).replace(',', '.')
 				font.drawString(data, 117 - font.getStringWidth(data) / 2, 16, 0x0)
 				glTranslated(0.0, 0.5, 89.0)
 			}
@@ -227,7 +227,7 @@ class GUIParty: Gui() {
 				if (l == null) {
 					color = 0xCCCCCC
 					col = when (val it = pt.getType(i)) {
-						in EnumRace.values().indices -> EnumRace.getRGBColor(it.toDouble())
+						in EnumRace.values().indices -> EnumRace.getRGBColor(it.D)
 						LibResourceLocations.BOSS    -> 0xA2018C
 						LibResourceLocations.NPC     -> -0xFF5501
 						LibResourceLocations.MOB     -> col
@@ -275,7 +275,7 @@ class GUIParty: Gui() {
 					
 					val mod: Double
 					if (hp != -1f && hpm != -1f) {
-						mod = (hp / max(hpm, 1f) * 100.0).toInt() / 100.0
+						mod = (hp / max(hpm, 1f) * 100.0).I / 100.0
 						ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 					} else {
 						mod = 1.0
@@ -375,7 +375,7 @@ class GUIParty: Gui() {
 					glTranslated(0.0, -0.5, -85.0)
 					val unicode = font.unicodeFlag
 					font.unicodeFlag = true
-					data = (format.format(hp.toDouble()) + "/" + format.format(hpm.toDouble())).replace(',', '.')
+					data = (format.format(hp.D) + "/" + format.format(hpm.D)).replace(',', '.')
 					font.drawString(data, 84 - font.getStringWidth(data) / 2, y + 16, 0x0)
 					font.unicodeFlag = unicode
 					glTranslated(0.0, 0.5, 85.0)
@@ -387,7 +387,7 @@ class GUIParty: Gui() {
 					val pes = l!!.activePotionEffects as Collection<PotionEffect>
 					if (pes.isEmpty()) return@debuffs
 					glPushMatrix()
-					glTranslated(34.0, (y + 32).toDouble(), 0.0)
+					glTranslated(34.0, (y + 32).D, 0.0)
 					val s2 = 0.5
 					glScaled(s2, s2, s2)
 					glColor4d(1.0, 1.0, 1.0, 1.0)
@@ -413,7 +413,7 @@ class GUIParty: Gui() {
 		if (AlfheimConfigHandler.targetUI && PlayerSegmentClient.target != null) {
 			glPushMatrix()
 			glColor4d(1.0, 1.0, 1.0, 1.0)
-			glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 120, 0.0, 0.0)
+			glTranslated(event.resolution.scaledWidth.D / 2.0 / s - 120, 0.0, 0.0)
 			zLevel = -80f
 			l = PlayerSegmentClient.target
 			var hp = min(l!!.health, l!!.maxHealth)
@@ -459,7 +459,7 @@ class GUIParty: Gui() {
 			run health@{
 				if (!l!!.isEntityAlive) return@health
 				
-				val mod = (hp / max(hpm, 1f) * 200.0).toInt() / 200.0
+				val mod = (hp / max(hpm, 1f) * 200.0).I / 200.0
 				ASJRenderHelper.glColor1u(if (mod > 0.5) green else if (mod > 0.1) yellow else red)
 				val length = (200 * mod).mfloor()
 				
@@ -562,7 +562,7 @@ class GUIParty: Gui() {
 				if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idShadow)
 				
 				val mod = if (mc.thePlayer.race == EnumRace.HUMAN) 1.0 else mc.thePlayer.flight.mfloor() / ElvenFlightHelper.max
-				val time = sin((mc.theWorld.totalWorldTime / 2).toDouble()) * 0.5
+				val time = sin((mc.theWorld.totalWorldTime / 2).D) * 0.5
 				glColor4d(1.0, 1.0, 1.0, if (mc.thePlayer.capabilities.isFlying) if (mod > 0.1) time + 0.5 else time else 1.0)
 				
 				Tessellator.instance.startDrawingQuads()
@@ -586,7 +586,7 @@ class GUIParty: Gui() {
 					glColor4f(1f, 1f, 1f, if (l == null) 0.9f else 1f)
 					
 					glPushMatrix()
-					glTranslated(4.0, y.toDouble(), 0.0)
+					glTranslated(4.0, y.D, 0.0)
 					mc.textureManager.bindTexture(LibResourceLocations.icons[pt.getType(i)])
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER)
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER)
@@ -608,7 +608,7 @@ class GUIParty: Gui() {
 				if (!AlfheimConfigHandler.targetUI) return@tg_icon
 				
 				glPushMatrix()
-				glTranslated(event.resolution.scaledWidth.toDouble() / 2.0 / s - 116, 11.0, 0.0)
+				glTranslated(event.resolution.scaledWidth.D / 2.0 / s - 116, 11.0, 0.0)
 				mc.textureManager.bindTexture(if (l is EntityPlayer) RenderWings.getPlayerIconTexture(l as EntityPlayer) else if (l is IBossDisplayData) LibResourceLocations.icons[LibResourceLocations.BOSS] else if (l is INpc) LibResourceLocations.icons[LibResourceLocations.NPC] else LibResourceLocations.icons[LibResourceLocations.MOB])
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER)
@@ -645,14 +645,14 @@ class GUIParty: Gui() {
 			
 			if (potion.hasStatusIcon()) {
 				glDisable(GL_BLEND)
-				glColor4d((if (bads) 1 else 0).toDouble(), (if (bads) 0 else 1).toDouble(), 0.0, 1.0)
+				glColor4d((if (bads) 1 else 0).D, (if (bads) 0 else 1).D, 0.0, 1.0)
 				mc.textureManager.bindTexture(LibResourceLocations.widgets)
 				drawTexturedModalRect(j, 0.0, 1.0, 1.0, 20.0, 20.0)
 				glEnable(GL_BLEND)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				mc.textureManager.bindTexture(LibResourceLocations.inventory)
 				val l = potion.statusIconIndex
-				drawTexturedModalRect(j + 1, 1.0, (l % 8 * 18).toDouble(), (198 + l / 8 * 18).toDouble(), 18.0, 18.0)
+				drawTexturedModalRect(j + 1, 1.0, (l % 8 * 18).D, (198 + l / 8 * 18).D, 18.0, 18.0)
 				j += k
 			}
 		}
@@ -662,10 +662,10 @@ class GUIParty: Gui() {
 		val f = 0.00390625f
 		val f1 = 0.00390625f
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV(x, y + height, zLevel.toDouble(), u * f, (v + height) * f1)
-		Tessellator.instance.addVertexWithUV(x + width, y + height, zLevel.toDouble(), (u + width) * f, (v + height) * f1)
-		Tessellator.instance.addVertexWithUV(x + width, y, zLevel.toDouble(), (u + width) * f, v * f1)
-		Tessellator.instance.addVertexWithUV(x, y, zLevel.toDouble(), u * f, v * f1)
+		Tessellator.instance.addVertexWithUV(x, y + height, zLevel.D, u * f, (v + height) * f1)
+		Tessellator.instance.addVertexWithUV(x + width, y + height, zLevel.D, (u + width) * f, (v + height) * f1)
+		Tessellator.instance.addVertexWithUV(x + width, y, zLevel.D, (u + width) * f, v * f1)
+		Tessellator.instance.addVertexWithUV(x, y, zLevel.D, u * f, v * f1)
 		Tessellator.instance.draw()
 	}
 	

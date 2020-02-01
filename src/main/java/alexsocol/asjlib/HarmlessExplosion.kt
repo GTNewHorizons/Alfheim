@@ -21,10 +21,10 @@ class HarmlessExplosion(private val worldObj: World, val exploder: EntityPlayer?
 		var d6: Double
 		var d7: Double
 		
-		worldObj.playSoundEffect(explosionX, explosionY, explosionZ, "random.explode", 4.0f, (1.0f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
+		worldObj.playSoundEffect(explosionX, explosionY, explosionZ, "random.explode", 4f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 		worldObj.spawnParticle("hugeexplosion", explosionX, explosionY, explosionZ, 1.0, 0.0, 0.0)
 		
-		explosionSize *= 2.0f
+		explosionSize *= 2f
 		val i = MathHelper.floor_double(explosionX - explosionSize.toDouble() - 1.0)
 		val j = MathHelper.floor_double(explosionX + explosionSize.toDouble() + 1.0)
 		val k = MathHelper.floor_double(explosionY - explosionSize.toDouble() - 1.0)

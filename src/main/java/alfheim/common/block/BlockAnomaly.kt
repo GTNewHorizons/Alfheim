@@ -28,7 +28,7 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 		setCreativeTab(null)
 		setLightLevel(1f)
 		setLightOpacity(0)
-		setResistance(java.lang.Float.MAX_VALUE / 3.0f)
+		setResistance(java.lang.Float.MAX_VALUE / 3f)
 		setStepSound(Block.soundTypeCloth)
 	}
 	

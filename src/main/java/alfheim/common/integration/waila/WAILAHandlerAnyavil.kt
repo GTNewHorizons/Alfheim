@@ -1,6 +1,7 @@
 package alfheim.common.integration.waila
 
 import alfheim.common.block.tile.TileAnyavil
+import alfheim.common.core.util.meta
 import mcp.mobius.waila.api.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
@@ -14,7 +15,7 @@ class WAILAHandlerAnyavil: IWailaDataProvider {
 		if (tile is TileAnyavil) {
 			val stack = tile.item
 			if (stack != null)
-				result.setString(TAG_ITEM, String.format("%s (%d/%d)", stack.displayName, stack.maxDamage - stack.itemDamage, stack.maxDamage))
+				result.setString(TAG_ITEM, String.format("%s (%d/%d)", stack.displayName, stack.maxDamage - stack.meta, stack.maxDamage))
 			else
 				result.removeTag(TAG_ITEM)
 		}

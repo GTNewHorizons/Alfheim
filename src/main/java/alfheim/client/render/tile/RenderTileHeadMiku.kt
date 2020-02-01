@@ -2,6 +2,7 @@ package alfheim.client.render.tile
 
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.entity.ModelBipedNew
+import alfheim.common.core.util.D
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer
 import net.minecraft.tileentity.*
 import org.lwjgl.opengl.GL11.*
@@ -15,7 +16,7 @@ object RenderTileHeadMiku: TileEntitySkullRenderer() {
 	
 	override fun renderTileEntityAt(skull: TileEntitySkull, x: Double, y: Double, z: Double, ticks: Float) {
 		val meta = skull.getBlockMetadata() and 7
-		var rotation = skull.func_145906_b() * 360 / 16.0f
+		var rotation = skull.func_145906_b() * 360 / 16f
 		bindTexture(LibResourceLocations.miku0)
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
@@ -49,7 +50,7 @@ object RenderTileHeadMiku: TileEntitySkullRenderer() {
 		glEnable(GL_RESCALE_NORMAL)
 		glScaled(-1.0, -1.0, 1.0)
 		glEnable(GL_ALPHA_TEST)
-		glRotated(rotation.toDouble(), 0.0, 1.0, 0.0)
+		glRotated(rotation.D, 0.0, 1.0, 0.0)
 		ModelBipedNew.model.head.render(0.0625f)
 		
 		glPopMatrix()

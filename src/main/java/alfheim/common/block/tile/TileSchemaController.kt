@@ -3,6 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import codechicken.core.CommonUtils
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
@@ -143,8 +144,8 @@ open class TileSchemaController: TileMod() {
 											 xCoord + (dir.offsetX * i) + .5,
 											 yCoord + (dir.offsetY * i) + .5,
 											 zCoord + (dir.offsetZ * i) + .5,
-                                             abs(dir.offsetY).toFloat(), abs(dir.offsetX).toFloat(),
-                                             abs(dir.offsetZ).toFloat(), 0.3f, -0.01f)
+                                             abs(dir.offsetY).F, abs(dir.offsetX).F,
+                                             abs(dir.offsetZ).F, 0.3f, -0.01f)
 					}
 			}
 			
@@ -247,7 +248,7 @@ open class TileSchemaController: TileMod() {
 		val y2 = pos2?.y ?: yCoord
 		val z2 = pos2?.z ?: zCoord
 		
-		if (checkPos(x2.toDouble(), y2.toDouble(), z2.toDouble(), x.toDouble(), y.toDouble(), z.toDouble())) {
+		if (checkPos(x2.D, y2.D, z2.D, x.D, y.D, z.D)) {
 			drawBoundingLine(pos2, pos1)
 			return
 		}
@@ -259,7 +260,7 @@ open class TileSchemaController: TileMod() {
 						 z + .5 + (dir.offsetZ * (i * .25)))
 			
 			if (checkPos(
-					x2.toDouble(), y2.toDouble(), z2.toDouble(),
+					x2.D, y2.D, z2.D,
 					x + (dir.offsetX * (i * .25)),
 					y + (dir.offsetY * (i * .25)),
 					z + (dir.offsetZ * (i * .25))))
@@ -292,9 +293,9 @@ open class TileSchemaController: TileMod() {
 	
 	private fun coloredFlame(x: Double, y: Double, z: Double) {
 		val v = 0.1f
-		val r = (getColor() shr 16 and 255).toFloat() / 255.0f + (Math.random() - 0.5).toFloat() * v
-		val g = (getColor() shr 8 and 255).toFloat() / 255.0f + (Math.random() - 0.5).toFloat() * v
-		val b = (getColor() and 255).toFloat() / 255.0f + (Math.random() - 0.5).toFloat() * v
+		val r = (getColor() shr 16 and 255).F / 255f + (Math.random() - 0.5).F * v
+		val g = (getColor() shr 8 and 255).F / 255f + (Math.random() - 0.5).F * v
+		val b = (getColor() and 255).F / 255f + (Math.random() - 0.5).F * v
 		
 		Botania.proxy.wispFX(worldObj, x, y, z, r, g, b, 0.3f, -0.01f)
 	}

@@ -1,6 +1,7 @@
 package alfheim.common.item.rod
 
 import alfheim.api.ModInfo
+import alfheim.common.core.util.*
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -8,7 +9,7 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.mana.*
@@ -28,7 +29,7 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
-		itemIcon = reg.registerIcon(ModInfo.MODID + ':'.toString() + this.unlocalizedName.substring(5))
+		itemIcon = reg.registerIcon(ModInfo.MODID + ':'.toString() + unlocalizedName.substring(5))
 		rubyIcon = reg.registerIcon(ModInfo.MODID + ":RubyRod")
 		sapphireIcon = reg.registerIcon(ModInfo.MODID + ":SapphireRod")
 	}
@@ -43,28 +44,28 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		if (stack.itemDamage > 0) return stack
+		if (stack.meta > 0) return stack
 		if (!world.isRemote) {
 			var cd = false
 			for (x in -6..6)
 				for (z in -6..6)
 					for (y in -2..2)
-						if (3 < sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) && sqrt(x.toDouble().pow(2.0) + z.toDouble().pow(2.0)) < 6) {
-							val X = MathHelper.floor_double(player.posX) + x
-							val Y = MathHelper.floor_double(player.posY) + y
-							val Z = MathHelper.floor_double(player.posZ) + z
+						if (3 < sqrt(x.D.pow(2.0) + z.D.pow(2.0)) && sqrt(x.D.pow(2.0) + z.D.pow(2.0)) < 6) {
+							val i = player.posX.mfloor() + x
+							val j = player.posY.mfloor() + y
+							val k = player.posZ.mfloor() + z
 							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)
-							if (world.isAirBlock(X, Y, Z) && barrier.canPlaceBlockAt(world, X, Y, Z)) {
-								cd = cd or place(stack, player, world, X, Y, Z, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.toFloat(), c.green.toFloat(), c.blue.toFloat())
+							if (world.isAirBlock(i, j, k) && barrier.canPlaceBlockAt(world, i, j, k)) {
+								cd = cd or place(stack, player, world, i, j, k, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.F, c.green.F, c.blue.F)
 							}
 						}
-			if (cd) stack.itemDamage = this.maxDamage
+			if (cd) stack.meta = maxDamage
 		}
 		return stack
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity?, slotID: Int, inHand: Boolean) {
-		if (stack.itemDamage > 0) stack.itemDamage = stack.itemDamage - 1
+		if (stack.meta > 0) stack.meta = stack.meta - 1
 	}
 	
 	override fun usesMana(stack: ItemStack): Boolean {
@@ -83,7 +84,7 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 				
 				if (stackToPlace.stackSize == 0) {
 					ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, true)
-					for (i in 0..5) Botania.proxy.sparkleFX(par3World, par4.toDouble() + dir.offsetX.toDouble() + Math.random(), par5.toDouble() + dir.offsetY.toDouble() + Math.random(), par6.toDouble() + dir.offsetZ.toDouble() + Math.random(), r, g, b, 1f, 5)
+					for (i in 0..5) Botania.proxy.sparkleFX(par3World, par4.D + dir.offsetX.D + Math.random(), par5.D + dir.offsetY.D + Math.random(), par6.D + dir.offsetZ.D + Math.random(), r, g, b, 1f, 5)
 					return true
 				}
 			}

@@ -1,6 +1,7 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -47,7 +48,7 @@ class BlockPatternLexicon(modid: String, material: Material, name: String, tab: 
 			
 			if (!fallInstantly && world.checkChunksExist(x - b0, y - b0, z - b0, x + b0, y + b0, z + b0)) {
 				if (!world.isRemote) {
-					val entityfallingblock = EntityFallingBlock(world, (x.toFloat() + 0.5f).toDouble(), (y.toFloat() + 0.5f).toDouble(), (z.toFloat() + 0.5f).toDouble(), this, world.getBlockMetadata(x, y, z))
+					val entityfallingblock = EntityFallingBlock(world, (x.F + 0.5f).D, (y.F + 0.5f).D, (z.F + 0.5f).D, this, world.getBlockMetadata(x, y, z))
 					func_149829_a(entityfallingblock)
 					world.spawnEntityInWorld(entityfallingblock)
 				}

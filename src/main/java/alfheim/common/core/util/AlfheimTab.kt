@@ -1,6 +1,7 @@
 package alfheim.common.core.util
 
 import alfheim.AlfheimCore
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -106,7 +107,6 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.item.AlfheimItems
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -139,6 +139,7 @@ import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
@@ -173,11 +174,9 @@ import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
 import alfheim.common.item.AlfheimItems.trisDagger
-import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
-import net.minecraft.client.Minecraft
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 
@@ -413,7 +412,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaAnnihilator)
 		
 		try {
-			if (Minecraft.getMinecraft()?.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
+			if (mc.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
 		} catch (ignore: Throwable) {}
 		
 		additionalDisplays.forEach { it.invoke() }

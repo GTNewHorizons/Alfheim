@@ -4,6 +4,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
+import alfheim.common.core.util.D
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
@@ -49,7 +50,7 @@ class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 		if (p2 != null) {
 			if (TileTreeCrafter.canEnchanterExist(p2, p3, p4, p5)) {
 				p2.setBlock(p3, p4, p5, AlfheimBlocks.treeCrafterBlockAU, p6, 3)
-				p2.playSoundEffect(p3.toDouble(), p4.toDouble(), p5.toDouble(), "botania:enchanterBlock", 0.5F, 0.6F)
+				p2.playSoundEffect(p3.D, p4.D, p5.D, "botania:enchanterBlock", 0.5F, 0.6F)
 				
 				return true
 			}

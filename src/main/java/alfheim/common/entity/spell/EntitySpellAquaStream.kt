@@ -6,7 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.DamageSourceSpell
+import alfheim.common.core.util.*
 import alfheim.common.spell.water.SpellAquaStream
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -46,14 +46,14 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 		if (mop?.hitVec != null) {
 			hp = Vector3(mop.hitVec)
 			if (mop.typeOfHit == MovingObjectType.ENTITY) {
-				mop.entityHit.attackEntityFrom(DamageSourceSpell.water(caster!!), SpellBase.over(caster, SpellAquaStream.damage.toDouble()))
+				mop.entityHit.attackEntityFrom(DamageSourceSpell.water(caster!!), SpellBase.over(caster, SpellAquaStream.damage.D))
 			}
 		} else {
-			hp = look.copy().extend(SpellAquaStream.radius).add(Vector3.fromEntity(caster!!)).add(0.0, caster!!.eyeHeight.toDouble(), 0.0)
+			hp = look.copy().extend(SpellAquaStream.radius).add(Vector3.fromEntity(caster!!)).add(0.0, caster!!.eyeHeight.D, 0.0)
 		}
 		
 		val d = 0.75
-		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.toDouble(), look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d)
+		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.D, look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d)
 		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM_HIT, dimension, hp.x, hp.y, hp.z)
 	}
 	

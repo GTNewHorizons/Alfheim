@@ -1,5 +1,6 @@
 package alfheim.common.item.compat.thaumcraft
 
+import alfheim.common.core.util.meta
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -33,7 +34,7 @@ class ItemAlfheimWandCap: Item() {
 	}
 	
 	override fun getUnlocalizedName(stack: ItemStack): String {
-		return super.getUnlocalizedName() + "." + stack.itemDamage
+		return "${super.getUnlocalizedName()}.${stack.meta}"
 	}
 	
 	companion object {

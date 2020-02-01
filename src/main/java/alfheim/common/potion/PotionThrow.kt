@@ -5,7 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.util.expand
+import alfheim.common.core.util.*
 import alfheim.common.spell.wind.SpellThrow
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.DamageSource
@@ -17,7 +17,7 @@ class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", fa
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
 		if (!AlfheimCore.enableMMO) return
 		
-		val v = Vector3(target.lookVec).mul((mod + 1).toDouble())
+		val v = Vector3(target.lookVec).mul((mod + 1).D)
 		target.motionX = v.x
 		target.motionY = v.y
 		target.motionZ = v.z

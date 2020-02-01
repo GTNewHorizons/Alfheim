@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.D
 import alfheim.common.network.MessageVisualEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
@@ -29,7 +30,7 @@ object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			val mana = CardinalSystem.ManaSystem.getMana(tg.target)
-			AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.MANA.ordinal, tg.target.entityId.toDouble(), mana.toDouble(), 0.0), caster)
+			AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.MANA.ordinal, tg.target.entityId.D, mana.D, 0.0), caster)
 		}
 		
 		return result

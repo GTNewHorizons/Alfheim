@@ -19,8 +19,8 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 		setBlockName("TradePortal")
 		setBlockTextureName(ModInfo.MODID + ":TradePortal")
 		setHarvestLevel("pickaxe", 0)
-		setHardness(10.0f)
-		setResistance(600.0f)
+		setHardness(10f)
+		setResistance(600f)
 		setStepSound(soundTypeStone)
 	}
 	

@@ -1,5 +1,6 @@
 package alfheim.common.entity
 
+import alfheim.common.core.util.*
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.IMob
@@ -16,13 +17,13 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 	init {
 		setSize(0.6f, 1.8f)
 		tasks.addTask(1, EntityAIAttackOnCollide(this, 1.0, true))
-		tasks.addTask(2, EntityAIMoveTowardsTarget(this, 0.9, 32.0f))
+		tasks.addTask(2, EntityAIMoveTowardsTarget(this, 0.9, 32f))
 		tasks.addTask(3, EntityAIMoveThroughVillage(this, 0.6, true))
 		tasks.addTask(4, EntityAIMoveTowardsRestriction(this, 1.0))
 		tasks.addTask(5, EntityAISwimming(this))
 		tasks.addTask(6, EntityAIWander(this, 0.6))
-		tasks.addTask(7, EntityAIWatchClosest(this, EntityPlayer::class.java, 6.0f))
-		tasks.addTask(7, EntityAIWatchClosest(this, EntityElf::class.java, 6.0f))
+		tasks.addTask(7, EntityAIWatchClosest(this, EntityPlayer::class.java, 6f))
+		tasks.addTask(7, EntityAIWatchClosest(this, EntityElf::class.java, 6f))
 		tasks.addTask(8, EntityAILookIdle(this))
 		targetTasks.addTask(2, EntityAIHurtByTarget(this, false))
 		targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityLiving::class.java, 0, false, true, IMob.mobSelector))
@@ -30,7 +31,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 	
 	public override fun applyEntityAttributes() {
 		super.applyEntityAttributes()
-		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = (25 + rng.nextInt(15)).toDouble()
+		getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = (25 + rng.nextInt(15)).D
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).baseValue = 0.5
 	}
 	
@@ -47,7 +48,7 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 	override fun attackEntityAsMob(entity: Entity): Boolean {
 		attackTimer = 10
 		worldObj.setEntityState(this, 4.toByte())
-		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (3 + rand.nextInt(5)).toFloat())
+		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (3 + rand.nextInt(5)).F)
 	}
 	
 	override fun setCustomer(p_70932_1_: EntityPlayer)  = Unit

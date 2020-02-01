@@ -7,7 +7,6 @@ import alfheim.client.core.util.mc
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.spell.tech.SpellTimeStop
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.EntityPlayer
@@ -60,7 +59,7 @@ object CardinalSystemClient {
 			val mop = ASJUtilities.getMouseOver(mc.thePlayer, 128.0, true)
 			if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit is EntityLivingBase) {
 				if (PlayerSegmentClient.party?.isMember(mop.entityHit as EntityLivingBase) == false) {
-					val invis = (mop.entityHit as EntityLivingBase).isPotionActive(Potion.invisibility) || mop.entityHit.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)
+					val invis = (mop.entityHit as EntityLivingBase).isPotionActive(Potion.invisibility) || mop.entityHit.isInvisibleToPlayer(mc.thePlayer)
 					if (Vector3.entityDistance(mop.entityHit, mc.thePlayer) < (if (mop.entityHit is IBossDisplayData) 128 else 32) && !invis) {
 						PlayerSegmentClient.target = mop.entityHit as EntityLivingBase
 						PlayerSegmentClient.isParty = false

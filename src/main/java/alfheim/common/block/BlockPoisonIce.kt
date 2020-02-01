@@ -2,6 +2,7 @@ package alfheim.common.block
 
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.util.D
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
@@ -44,7 +45,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		val bbls = PlayerHandler.getPlayerBaubles(player)
 		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 5, true)) hardness = 2f
 		
-		if (hardness < 0.0f) return 0.0f
+		if (hardness < 0f) return 0f
 		
 		return if (!ForgeHooks.canHarvestBlock(this, player, metadata))
 			player.getBreakSpeed(this, true, metadata, x, y, z) / hardness / 100f
@@ -86,7 +87,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
 		if (world.gameRules.getGameRuleBooleanValue("doFireTick")
 			&& rand!!.nextInt(10) == 0
-			&& world.getEntitiesWithinAABB(EntityMob::class.java, AxisAlignedBB.getBoundingBox(x.toDouble(), y.toDouble(), z.toDouble(), (x + 1).toDouble(), (y + 1).toDouble(), (z + 1).toDouble()).expand(5.0, 5.0, 5.0)).isEmpty()) {
+			&& world.getEntitiesWithinAABB(EntityMob::class.java, AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, (x + 1).D, (y + 1).D, (z + 1).D).expand(5.0, 5.0, 5.0)).isEmpty()) {
 			world.setBlockToAir(x, y, z)
 		}
 	}

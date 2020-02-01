@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alfheim.common.core.util.*
 import alfheim.common.item.equipment.bauble.ItemColorOverride
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.inventory.InventoryCrafting
@@ -75,7 +76,7 @@ class RecipeRingDyes : IRecipe {
                     if (tempstack.item != BotaniaItems.dye)
                         return null
 
-                    val dyecolortable = EntitySheep.fleeceColorTable[tempstack.itemDamage]
+                    val dyecolortable = EntitySheep.fleeceColorTable[tempstack.meta]
                     val dyecolor = Color(dyecolortable[0], dyecolortable[1], dyecolortable[2])
                     colors++
                     r += dyecolor.red
@@ -89,7 +90,7 @@ class RecipeRingDyes : IRecipe {
             if (resetcolor)
                 colorOverride.removeColor(itemstack)
             else {
-                val color = Color(r.toFloat() / colors.toFloat() / 255f, g.toFloat() / colors.toFloat() / 255f, b.toFloat() / colors.toFloat() / 255f).rgb and 0xFFFFFF
+                val color = Color(r.F / colors.F / 255f, g.F / colors.F / 255f, b.F / colors.F / 255f).rgb and 0xFFFFFF
                 colorOverride.setColor(itemstack, color)
             }
             return itemstack

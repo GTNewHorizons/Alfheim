@@ -1,13 +1,13 @@
 package alfheim.common.item
 
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.mfloor
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntitySkull
-import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 
@@ -78,7 +78,7 @@ class ItemHeadMiku: ItemMod("MikuHead") {
 		// If we place the skull on top of a block, we should also make it
 		// face the player by rotating it.
 		if (sideDir == ForgeDirection.UP)
-			headAngle = MathHelper.floor_double(player!!.rotationYaw * 16.0f / 360.0f + 0.5) and 15
+			headAngle = (player!!.rotationYaw * 16f / 360f + 0.5).mfloor() and 15
 		
 		// Update the skull's orientation if it lets us.
 		val tileentity = world.getTileEntity(x, y, z)

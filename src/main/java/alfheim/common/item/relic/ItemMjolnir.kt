@@ -1,6 +1,7 @@
 package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -31,7 +32,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
 		var pass = pass
 		pass = if (pass == 1 && getCharge(stack) >= MAX_CHARGE) 1 else 0
-		return if (pass == 1) Color.HSBtoRGB((200 + (sin(Botania.proxy.worldElapsedTicks / 10.0 % 20) * 20).toFloat()) / 360f, 0.5f, 1f) else -0x1
+		return if (pass == 1) Color.HSBtoRGB((200 + (sin(Botania.proxy.worldElapsedTicks / 10.0 % 20) * 20).F) / 360f, 0.5f, 1f) else -0x1
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -58,7 +59,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World?, player: EntityPlayer, itemInUseCount: Int) {
 		if (getCharge(stack) >= MAX_CHARGE && !world!!.isRemote) {
 			val mop = ASJUtilities.getSelectedBlock(player, 256.0, true)
-			if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) world.addWeatherEffect(EntityLightningBolt(world, mop.blockX.toDouble(), (mop.blockY + 1).toDouble(), mop.blockZ.toDouble()))
+			if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) world.addWeatherEffect(EntityLightningBolt(world, mop.blockX.D, (mop.blockY + 1).D, mop.blockZ.D))
 		}
 		if (!getBoolean(stack, TAG_CREATIVE, false)) setCharge(stack, 0)
 	}

@@ -6,10 +6,9 @@ import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
 import net.minecraft.init.Items
 import net.minecraft.item.*
-import net.minecraft.stats.*
+import net.minecraft.stats.Achievement
 import net.minecraftforge.common.AchievementPage
 import vazkii.botania.api.item.IRelic
-import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.item.ModItems
 import java.util.*
 

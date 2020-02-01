@@ -8,9 +8,9 @@ import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
+import alfheim.client.core.util.mc
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.core.util.getActivePotionEffect
+import alfheim.common.core.util.*
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -20,7 +20,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.*
 import cpw.mods.fml.common.network.ByteBufUtils
 import io.netty.buffer.ByteBuf
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.player.*
@@ -114,7 +113,7 @@ object CardinalSystem {
 			val seg = forPlayer(player)
 			if (!know(player, kn)) {
 				seg.knowledge.add("$kn")
-				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
+				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.D), player)
 			}
 			
 			save(AlfheimCore.save)
@@ -123,7 +122,7 @@ object CardinalSystem {
 		fun know(player: EntityPlayerMP, kn: Knowledge) = forPlayer(player).knowledge.contains("$kn")
 		
 		fun transfer(player: EntityPlayerMP) {
-			for (kn in Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.toDouble()), player)
+			for (kn in Knowledge.values()) if (know(player, kn)) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.KNOWLEDGE, kn.ordinal.D), player)
 		}
 		
 		enum class Knowledge {
@@ -136,7 +135,7 @@ object CardinalSystem {
 		fun transfer(player: EntityPlayerMP) {
 			for (affinity in EnumRace.values())
 				for (spell in AlfheimAPI.getSpellsFor(affinity))
-					AlfheimCore.network.sendTo(Message2d(COOLDOWN, (affinity.ordinal and 0xF shl 28 or (AlfheimAPI.getSpellID(spell) and 0xFFFFFFF)).toDouble(), getCoolDown(player, spell).toDouble()), player)
+					AlfheimCore.network.sendTo(Message2d(COOLDOWN, (affinity.ordinal and 0xF shl 28 or (AlfheimAPI.getSpellID(spell) and 0xFFFFFFF)).D, getCoolDown(player, spell).D), player)
 		}
 		
 		fun setCoolDown(caster: EntityPlayer, spell: SpellBase, cd: Int): Int {
@@ -171,7 +170,7 @@ object CardinalSystem {
 						if (segment.init > 0) --segment.init
 						else {
 							if (segment.ids != 0 && segment.castableSpell != null) {
-								AlfheimCore.network.sendTo(Message2d(COOLDOWN, segment.ids.toDouble(), KeyBindingHandler.cast(player, segment.ids shr 28 and 0xF, segment.ids and 0xFFFFFFF).toDouble()), player)
+								AlfheimCore.network.sendTo(Message2d(COOLDOWN, segment.ids.D, KeyBindingHandler.cast(player, segment.ids shr 28 and 0xF, segment.ids and 0xFFFFFFF).D), player)
 								segment.ids = 0
 								segment.init = 0
 								segment.castableSpell = null
@@ -434,7 +433,7 @@ object CardinalSystem {
 							if (segment.party.isPlayer(i)) {
 								val mr = segment.party[i]
 								if (mr is EntityPlayerMP) {
-									AlfheimCore.network.sendTo(Message2d(Message2d.m2d.UUID, e.getEntityId().toDouble(), segment.party.indexOf(e).toDouble()), mr as EntityPlayerMP?)
+									AlfheimCore.network.sendTo(Message2d(Message2d.m2d.UUID, e.getEntityId().D, segment.party.indexOf(e).D), mr as EntityPlayerMP?)
 								}
 							}
 						}
@@ -468,7 +467,7 @@ object CardinalSystem {
 					return if (ASJUtilities.isServer) {
 						MinecraftServer.getServer().configurationManager.func_152612_a(members[i]?.name)
 					} else {
-						Minecraft.getMinecraft().theWorld.getPlayerEntityByName(members[i]?.name)
+						mc.theWorld.getPlayerEntityByName(members[i]?.name)
 					}
 				}
 				if (ASJUtilities.isServer) {
@@ -480,7 +479,7 @@ object CardinalSystem {
 						}
 					}
 				} else {
-					val e = Minecraft.getMinecraft().theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.toInt()
+					val e = mc.theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.I
 																			?: 0)
 					return if (e is EntityLivingBase) e else null
 				}
@@ -696,7 +695,7 @@ object CardinalSystem {
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal.toDouble(), id.toDouble(), (if (d) -10 else -100).toDouble()), e)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.DEAD.ordinal.D, id.D, (if (d) -10 else -100).D), e)
 				}
 			}
 			
@@ -704,7 +703,7 @@ object CardinalSystem {
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.HEALTH.ordinal.toDouble(), index.toDouble(), health.toDouble()), e)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.HEALTH.ordinal.D, index.D, health.D), e)
 				}
 			}
 			
@@ -712,7 +711,7 @@ object CardinalSystem {
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MAXHEALTH.ordinal.toDouble(), index.toDouble(), maxHealth.toDouble()), e)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MAXHEALTH.ordinal.D, index.D, maxHealth.D), e)
 				}
 			}
 			
@@ -722,7 +721,7 @@ object CardinalSystem {
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal.toDouble(), index.toDouble(), mana.toDouble()), e)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.MANA.ordinal.D, index.D, mana.D), e)
 				}
 			}
 			
@@ -730,7 +729,7 @@ object CardinalSystem {
 				for (i in 0 until count) {
 					val e = get(i)
 					if (e != null && members[i]?.isPlayer == true && e is EntityPlayerMP)
-						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.TYPE.ordinal.toDouble(), index.toDouble(), type.toDouble()), e)
+						AlfheimCore.network.sendTo(Message3d(PARTY_STATUS, PartyStatus.TYPE.ordinal.D, index.D, type.D), e)
 				}
 			}
 			
@@ -857,12 +856,12 @@ object CardinalSystem {
 		var tsAreas = HashMap<Int, LinkedList<TimeStopArea>>()
 		
 		fun transfer(player: EntityPlayerMP, fromDim: Int) {
-			if (tsAreas[fromDim] != null) for (tsa in tsAreas[fromDim]!!) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.TIME_STOP_REMOVE, tsa.id.toDouble()), player)
+			if (tsAreas[fromDim] != null) for (tsa in tsAreas[fromDim]!!) AlfheimCore.network.sendTo(Message1d(Message1d.m1d.TIME_STOP_REMOVE, tsa.id.D), player)
 			if (tsAreas[player.dimension] != null) for (tsa in tsAreas[player.dimension]!!) AlfheimCore.network.sendTo(MessageTimeStop(PartySystem.getUUIDParty(tsa.uuid), tsa.pos.x, tsa.pos.y, tsa.pos.z, tsa.id), player)
 		}
 		
 		fun stop(caster: EntityLivingBase) {
-			caster.worldObj.playBroadcastSound(1013, caster.posX.toInt(), caster.posY.toInt(), caster.posZ.toInt(), 0)
+			caster.worldObj.playBroadcastSound(1013, caster.posX.I, caster.posY.I, caster.posZ.I, 0)
 			if (tsAreas[caster.dimension] == null) tsAreas[caster.dimension] = LinkedList()
 			tsAreas[caster.dimension]!!.addLast(TimeStopArea(caster))
 			AlfheimCore.network.sendToDimension(MessageTimeStop(PartySystem.getMobParty(caster), caster.posX, caster.posY, caster.posZ, TimeStopArea.nextID), caster.dimension)
@@ -877,7 +876,7 @@ object CardinalSystem {
 					tsa = i.next()
 					if (--tsa.life <= 0) {
 						i.remove()
-						AlfheimCore.network.sendToDimension(Message1d(Message1d.m1d.TIME_STOP_REMOVE, tsa.id.toDouble()), dim)
+						AlfheimCore.network.sendToDimension(Message1d(Message1d.m1d.TIME_STOP_REMOVE, tsa.id.D), dim)
 					}
 				}
 			}

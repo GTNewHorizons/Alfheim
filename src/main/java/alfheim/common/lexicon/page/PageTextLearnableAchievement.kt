@@ -1,14 +1,14 @@
 package alfheim.common.lexicon.page
 
 import alexsocol.asjlib.ASJUtilities
-import net.minecraft.client.Minecraft
+import alfheim.client.core.util.*
 import net.minecraft.stats.Achievement
 import vazkii.botania.common.lexicon.page.PageText
 
 class PageTextLearnableAchievement(unName: String, internal val achievement: Achievement): PageText(unName) {
 	
 	fun known(): Boolean {
-		return if (Minecraft.getMinecraft().thePlayer == null) false else Minecraft.getMinecraft().thePlayer.statFileWriter.hasAchievementUnlocked(achievement)
+		return if (mc.thePlayer == null) false else mc.thePlayer.hasAchievement(achievement)
 	}
 	
 	override fun getUnlocalizedName(): String {

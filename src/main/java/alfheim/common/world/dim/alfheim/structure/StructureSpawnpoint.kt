@@ -8,7 +8,6 @@ import alfheim.common.block.schema.SchemaGenerator
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
-import java.util.*
 
 object StructureSpawnpoint {
 	

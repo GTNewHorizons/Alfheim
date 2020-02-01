@@ -2,6 +2,7 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
+import alfheim.common.core.util.D
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.AxisAlignedBB
@@ -11,7 +12,7 @@ class SubTileAntigrav: SubTileEntity() {
 	internal val v = Vector3()
 	
 	override val targets: List<Any>
-		get() = if (inWG()) EMPTY_LIST else worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().toDouble(), y().toDouble(), z().toDouble(), x(1.0).toDouble(), y(1.0).toDouble(), z(1.0).toDouble()).expand(radius, radius * 2, radius)) as List<Any>
+		get() = if (inWG()) EMPTY_LIST else worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(x().D, y().D, z().D, x(1.0).D, y(1.0).D, z(1.0).D).expand(radius, radius * 2, radius)) as List<Any>
 	
 	override val strip: Int
 		get() = 7

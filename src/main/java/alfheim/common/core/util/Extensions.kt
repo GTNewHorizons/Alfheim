@@ -9,19 +9,20 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
 
-fun Double.mfloor() = MathHelper.floor_double(this)
-
 val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()
+val Number.I get() = this.toInt()
 
 // ################ MINECRAFT ####################
+
+fun Double.mfloor() = MathHelper.floor_double(this)
 
 fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
 
 fun Entity.setSize(wid: Double, hei: Double) {
     var f2: Float
-    val w = wid.toFloat()
-    val h = hei.toFloat()
+    val w = wid.F
+    val h = hei.F
     
     if (w != width || h != height) {
         f2 = width
@@ -31,10 +32,10 @@ fun Entity.setSize(wid: Double, hei: Double) {
         boundingBox.maxZ = boundingBox.minZ + width
         boundingBox.maxY = boundingBox.minY + height
         if (width > f2 && !worldObj.isRemote)
-            moveEntity((f2 - width).toDouble(), 0.0, (f2 - width).toDouble())
+            moveEntity((f2 - width).D, 0.0, (f2 - width).D)
     }
     
-    f2 = w % 2.0f
+    f2 = w % 2f
     
     myEntitySize = when {
         f2 < 0.375 -> Entity.EnumEntitySize.SIZE_1
@@ -58,7 +59,7 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
-fun EntityPlayerMP.hasAchievement(a: Achievement?) = if(a == null) false else this.func_147099_x().hasAchievementUnlocked(a)
+fun EntityPlayerMP.hasAchievement(a: Achievement?) = if(a == null) false else func_147099_x().hasAchievementUnlocked(a)
 
 fun ItemStack.itemEquals(rItem: Any): Boolean {
     if (rItem is String) {
@@ -66,7 +67,7 @@ fun ItemStack.itemEquals(rItem: Any): Boolean {
         for (stack in OreDictionary.getOres(rItem)) {
             val cstack = stack.copy()
             
-            if (cstack.itemDamage == 32767) cstack.itemDamage = itemDamage
+            if (cstack.meta == 32767) cstack.meta = meta
             if (isItemEqual(cstack)) return true
         }
         
@@ -80,4 +81,4 @@ var ItemStack.meta
         itemDamage = meta
     }
 
-internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.itemDamage == stack2.itemDamage
+internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.meta == stack2.meta

@@ -3,7 +3,8 @@ package alfheim.common.block.tile.sub.anomaly
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileEntity
-import net.minecraft.client.Minecraft
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.F
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -42,7 +43,7 @@ class SubTileGravity: SubTileEntity() {
 		vt.rand().sub(0.5).normalize().mul(Math.random() * radius / 2).add(superTile!!).add(0.5)
 		ve.set(superTile!!).add(0.5).sub(vt).mul(0.05)
 		
-		Botania.proxy.wispFX(worldObj, vt.x, vt.y, vt.z, 1f, 1f, 1f, 0.5f, ve.x.toFloat(), ve.y.toFloat(), ve.z.toFloat(), 0.5f)
+		Botania.proxy.wispFX(worldObj, vt.x, vt.y, vt.z, 1f, 1f, 1f, 0.5f, ve.x.F, ve.y.F, ve.z.F, 0.5f)
 	}
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
@@ -62,7 +63,7 @@ class SubTileGravity: SubTileEntity() {
 		val radius = power * 10
 		
 		ve.set(target)
-		if (!ASJUtilities.isServer) if (target === Minecraft.getMinecraft().thePlayer) ve.add(0.0, -1.62, 0.0)
+		if (!ASJUtilities.isServer) if (target === mc.thePlayer) ve.add(0.0, -1.62, 0.0)
 		
 		val dist = sqrt((ve.x - x() + 0.5).pow(2.0) + (ve.y - y() + 0.5).pow(2.0) + (ve.z - z() + 0.5).pow(2.0))
 		if (dist > radius) return

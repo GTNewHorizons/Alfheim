@@ -1,8 +1,8 @@
 package alfheim.common.potion
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.brew.potion.PotionMod
 
@@ -16,7 +16,7 @@ open class PotionAlfheim(id: Int, name: String, badEffect: Boolean, color: Int):
 	override fun getStatusIconIndex(): Int {
 		glEnable(GL_BLEND)
 		val id = super.getStatusIconIndex()
-		Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.potions)
+		mc.renderEngine.bindTexture(LibResourceLocations.potions)
 		return id
 	}
 	

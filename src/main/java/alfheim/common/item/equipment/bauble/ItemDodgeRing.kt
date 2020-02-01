@@ -1,7 +1,8 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.AlfheimCore
-import alfheim.common.core.util.AlfheimTab
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
 import baubles.api.BaubleType
@@ -10,7 +11,6 @@ import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -31,8 +31,6 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onKeyDown(event: KeyInputEvent) {
-		val mc = Minecraft.getMinecraft()
-		
 		val baublesInv = PlayerHandler.getPlayerBaubles(mc.thePlayer)
 		var ringStack: ItemStack? = baublesInv.getStackInSlot(1)
 		if (ringStack == null || ringStack.item !is ItemDodgeRing) {
@@ -82,10 +80,10 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			if (player.capabilities.isFlying || !player.onGround || player.moveForward > 0.2 || player.moveForward < -0.2) return
 			
 			val yaw = player.rotationYaw
-			val x = MathHelper.sin(-yaw * 0.017453292f - Math.PI.toFloat())
-			val z = MathHelper.cos(-yaw * 0.017453292f - Math.PI.toFloat())
-			val lookVec = Vector3(x.toDouble(), 0.0, z.toDouble())
-			val sideVec = lookVec.crossProduct(Vector3(0.0, (if (left) 1 else -1).toDouble(), 0.0)).multiply(1.25)
+			val x = MathHelper.sin(-yaw * 0.017453292f - Math.PI.F)
+			val z = MathHelper.cos(-yaw * 0.017453292f - Math.PI.F)
+			val lookVec = Vector3(x.D, 0.0, z.D)
+			val sideVec = lookVec.crossProduct(Vector3(0.0, (if (left) 1 else -1).D, 0.0)).multiply(1.25)
 			
 			player.motionX = sideVec.x
 			player.motionY = sideVec.y
@@ -93,7 +91,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			
 			AlfheimCore.network.sendToServer(Message0dS(m0ds.DODGE))
 			// stupid singleplayer NBT autosync -_-
-			if (!Minecraft.getMinecraft().isSingleplayer) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD)
+			if (!mc.isSingleplayer) ItemNBTHelper.setInt(stack, TAG_DODGE_COOLDOWN, MAX_CD)
 		}
 		
 		@SideOnly(Side.CLIENT)
@@ -103,7 +101,7 @@ class ItemDodgeRing: ItemBauble("DodgeRing") {
 			
 			if (!player.capabilities.isFlying) {
 				val cd = ItemNBTHelper.getInt(stack, TAG_DODGE_COOLDOWN, 0)
-				val width = ((cd - pticks) * 2).toInt().coerceAtMost(40)
+				val width = ((cd - pticks) * 2).I.coerceAtMost(40)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				if (width > 0) {
 					Gui.drawRect(xo, y - 2, xo + 40, y - 1, -0x78000000)

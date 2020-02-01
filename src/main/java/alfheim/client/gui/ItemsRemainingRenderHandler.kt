@@ -1,7 +1,8 @@
 package alfheim.client.gui
 
+import alfheim.client.core.util.mc
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.entity.RenderItem
@@ -28,7 +29,6 @@ object ItemsRemainingRenderHandler {
 	fun render(resolution: ScaledResolution, partTicks: Float) {
 		if (ticks > 0 && isNotEmpty(stack)) {
 			val pos = maxTicks - ticks
-			val mc = Minecraft.getMinecraft()
 			val x = resolution.scaledWidth / 2 + 10 + max(0, pos - leaveTicks)
 			val y = resolution.scaledHeight / 2
 			
@@ -42,12 +42,12 @@ object ItemsRemainingRenderHandler {
 			
 			glColor4f(1f, 1f, 1f, alpha)
 			RenderHelper.enableGUIStandardItemLighting()
-			val xp = x + (16f * (1f - alpha)).toInt()
-			glTranslatef(xp.toFloat(), y.toFloat(), 0f)
+			val xp = x + (16f * (1f - alpha)).I
+			glTranslatef(xp.F, y.F, 0f)
 			glScalef(alpha, 1f, 1f)
 			RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, stack, 0, 0)
 			glScalef(1f / alpha, 1f, 1f)
-			glTranslatef((-xp).toFloat(), (-y).toFloat(), 0f)
+			glTranslatef((-xp).F, (-y).F, 0f)
 			RenderHelper.disableStandardItemLighting()
 			glColor4f(1f, 1f, 1f, 1f)
 			glEnable(GL_BLEND)
@@ -72,7 +72,7 @@ object ItemsRemainingRenderHandler {
 			} else
 				text = customString!!
 			
-			val color = 0x00FFFFFF or ((alpha * 0xFF).toInt() shl 24)
+			val color = 0x00FFFFFF or ((alpha * 0xFF).I shl 24)
 			mc.fontRenderer.drawStringWithShadow(text, x + 20, y + 6, color)
 			
 			glDisable(GL_BLEND)

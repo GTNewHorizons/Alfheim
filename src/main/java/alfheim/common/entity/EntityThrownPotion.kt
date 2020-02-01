@@ -2,6 +2,7 @@ package alfheim.common.entity
 
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.util.*
 import alfheim.common.item.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -80,7 +81,7 @@ class EntityThrownPotion: EntityThrowable {
 							if (Potion.potionTypes[e.potionID].isInstant) {
 								Potion.potionTypes[e.potionID].affectEntity(thrower, entitylivingbase, e.amplifier, d1)
 							} else {
-								val j = (d1 * e.duration.toDouble() + 0.5).toInt()
+								val j = (d1 * e.duration.D + 0.5).I
 								
 								if (j > 20) {
 									entitylivingbase.addPotionEffect(PotionEffect(e.potionID, j, e.amplifier))
@@ -91,7 +92,7 @@ class EntityThrownPotion: EntityThrowable {
 				}
 			}
 			
-			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.POTION, dimension, posX, posY, posZ, color.toDouble(), if (effects.contains(peClear)) 1.0 else 0.0, 0.0)
+			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.POTION, dimension, posX, posY, posZ, color.D, if (effects.contains(peClear)) 1.0 else 0.0, 0.0)
 		}
 		
 		setDead()
@@ -99,7 +100,7 @@ class EntityThrownPotion: EntityThrowable {
 	
 	override fun getGravityVelocity() = dataWatcher.getWatchableObjectFloat(30)
 	
-	public override fun func_70183_g() = -10.0f
+	public override fun func_70183_g() = -10f
 	
-	public override fun func_70182_d() = 1.0f
+	public override fun func_70182_d() = 1f
 }

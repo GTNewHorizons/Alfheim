@@ -25,7 +25,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 		if (!AlfheimCore.enableMMO) return
 		if (timeQueued == 32)
 			for (i in 0..7)
-				target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000.0f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
+				target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
 		else
 			particles(target, 32 - timeQueued)
 	}
@@ -44,9 +44,9 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	
 	fun particles(target: EntityLivingBase, time: Int) {
 		val v = Vector3()
-		for (i in 1..(SpellSacrifice.radius.toInt() * 4)) {
+		for (i in 1..(SpellSacrifice.radius.I * 4)) {
 			v.rand().sub(0.5).normalize().mul(time / 32.0 * SpellSacrifice.radius)
-			Botania.proxy.wispFX(target.worldObj, target.posX + v.x, target.posY + v.y, target.posZ + v.z, 1f, Math.random().toFloat() * 0.5f, Math.random().toFloat() * 0.075f, (Math.random() * time + 1).toFloat(), 0f, (Math.random() * 3.0 + 2).toFloat())
+			Botania.proxy.wispFX(target.worldObj, target.posX + v.x, target.posY + v.y, target.posZ + v.z, 1f, Math.random().F * 0.5f, Math.random().F * 0.075f, (Math.random() * time + 1).F, 0f, (Math.random() * 3.0 + 2).F)
 		}
 	}
 }

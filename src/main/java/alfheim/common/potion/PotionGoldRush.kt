@@ -2,7 +2,7 @@ package alfheim.common.potion
 
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.registry.AlfheimRegistry
+import alfheim.common.core.util.F
 import alfheim.common.spell.earth.SpellGoldRush
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.common.MinecraftForge
@@ -16,6 +16,6 @@ class PotionGoldRush: PotionAlfheim(AlfheimConfigHandler.potionIDGoldRush, "gold
 	
 	@SubscribeEvent
 	fun onBreakSpeed(e: BreakSpeed) {
-		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(this.id)) e.newSpeed *= SpellGoldRush.efficiency.toFloat()
+		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(this.id)) e.newSpeed *= SpellGoldRush.efficiency.F
 	}
 }

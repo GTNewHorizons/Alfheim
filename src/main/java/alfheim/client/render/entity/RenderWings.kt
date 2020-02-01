@@ -6,6 +6,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.player.EntityPlayer
@@ -37,7 +38,7 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		player.race.glColorA(if (player.flight / player.flight < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).toDouble() * spd * 0.3).toFloat() * 0.2, 1.0) else 1.0)
+		player.race.glColorA(if (player.flight / player.flight < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
@@ -54,7 +55,7 @@ object RenderWings {
 		
 		player.sendPlayerAbilities()
 		val flying = player.capabilities.isFlying
-		val ry = 20f + ((sin((player.ticksExisted + mc.timer.renderPartialTicks).toDouble() * spd * (if (flying) 0.4f else 0.2f).toDouble()) + 0.5f) * if (flying) 30f else 5f).toFloat()
+		val ry = 20f + ((sin((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * (if (flying) 0.4f else 0.2f).D) + 0.5f) * if (flying) 30f else 5f).F
 		
 		// Wing left
 		glPushMatrix()
@@ -62,7 +63,7 @@ object RenderWings {
 		val swr = 1.5
 		glScaled(swr, swr, swr)
 		//glRotated(10, 0, 0, 1);
-		glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
+		glRotated((-ry).D, 0.0, 1.0, 0.0)
 		getPlayerWingTexture(player)?.let { drawRect(it, -1) }
 		glPopMatrix()
 		
@@ -72,7 +73,7 @@ object RenderWings {
 		val swl = 1.5
 		glScaled(-swl, swl, swl)
 		//glRotated(10, 0, 0, 1);
-		glRotated((-ry).toDouble(), 0.0, 1.0, 0.0)
+		glRotated((-ry).D, 0.0, 1.0, 0.0)
 		getPlayerWingTexture(player)?.let { drawRect(it, -1) }
 		glPopMatrix()
 		
@@ -88,18 +89,18 @@ object RenderWings {
 		if (mc.thePlayer === player && mc.gameSettings.thirdPersonView == 0) return
 		
 		if (mc.theWorld.totalWorldTime % 10 == 0L && !mc.isGamePaused) {
-			val v = Vector3(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().add(0.0, Math.random(), 0.0).mul(Math.random(), 1.0, Math.random()).mul(player.width.toDouble(), player.height.toDouble(), player.width.toDouble())
-			Botania.proxy.sparkleFX(player.worldObj, player.posX + v.x, player.posY + v.y - if (mc.thePlayer === player) 1.62 else 0.0, player.posZ + v.z, 1f, 1f, 1f, 2f * Math.random().toFloat(), 20)
+			val v = Vector3(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().add(0.0, Math.random(), 0.0).mul(Math.random(), 1.0, Math.random()).mul(player.width.D, player.height.D, player.width.D)
+			Botania.proxy.sparkleFX(player.worldObj, player.posX + v.x, player.posY + v.y - if (mc.thePlayer === player) 1.62 else 0.0, player.posZ + v.z, 1f, 1f, 1f, 2f * Math.random().F, 20)
 		}
 	}
 	
 	fun drawRect(texture: ResourceLocation, i: Int) {
 		mc.renderEngine.bindTexture(texture)
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.addVertexWithUV(0.0, i.toDouble(), 0.0, 1.0, 0.0)
+		Tessellator.instance.addVertexWithUV(0.0, i.D, 0.0, 1.0, 0.0)
 		Tessellator.instance.addVertexWithUV(0.0, 1.0, 0.0, 1.0, 1.0)
 		Tessellator.instance.addVertexWithUV(1.0, 1.0, 0.0, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(1.0, i.toDouble(), 0.0, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV(1.0, i.D, 0.0, 0.0, 0.0)
 		Tessellator.instance.draw()
 	}
 	

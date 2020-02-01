@@ -5,6 +5,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
@@ -69,11 +70,11 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 	}
 	
 	override fun getIslandType(stack: ItemStack) = run {
-		if (stack.itemDamage == AURORA) null
-		else islandTypes[stack.itemDamage % (TYPES + 1)]
+		if (stack.meta == AURORA) null
+		else islandTypes[stack.meta % (TYPES + 1)]
 	}
 	
-	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.itemDamage == TYPES
+	override fun canFit(stack: ItemStack, inventory: IInventory) = stack.meta == TYPES
 	
 	override fun getParticleColor(stack: ItemStack) = rainbowColor()
 	
@@ -85,7 +86,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		val bmeta = world.getBlockMetadata(x, y, z)
-		val meta = stack.itemDamage
+		val meta = stack.meta
 		
 		val color = Color(if (meta == AURORA) BlockAuroraDirt.getBlockColor(x, y, z) else getColorFromItemStack(stack, 0))
 		val r = color.red / 255F
@@ -123,7 +124,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 				px = (Math.random() - 0.5) * 3
 				py = Math.random() - 0.5 + 1
 				pz = (Math.random() - 0.5) * 3
-				Botania.proxy.wispFX(world, x + 0.5 + px, y + 0.5 + py, z + 0.5 + pz, r, g, b, Math.random().toFloat() * 0.15f + 0.15f, (-px).toFloat() * velMul, (-py).toFloat() * velMul, (-pz).toFloat() * velMul)
+				Botania.proxy.wispFX(world, x + 0.5 + px, y + 0.5 + py, z + 0.5 + pz, r, g, b, Math.random().F * 0.15f + 0.15f, (-px).F * velMul, (-py).F * velMul, (-pz).F * velMul)
 			}
 			stack.stackSize--
 		}

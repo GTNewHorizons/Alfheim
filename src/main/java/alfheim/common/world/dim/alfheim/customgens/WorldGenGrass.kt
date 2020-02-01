@@ -2,7 +2,7 @@ package alfheim.common.world.dim.alfheim.customgens
 
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.inn
+import alfheim.common.core.util.*
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.*
 import net.minecraft.init.Blocks
@@ -15,6 +15,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.lib.LibBlockNames
 import java.util.*
 import kotlin.math.*
+import kotlin.math.roundToLong as roundToLong1
 
 class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers: Boolean, val botanicalFlowers: Boolean, val mod: Double): IWorldGenerator {
 	
@@ -26,7 +27,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 		if (botanicalFlowers) {
 			val dist = min(8, max(1, ConfigHandler.flowerPatchSize))
 			for (i in 0 until ConfigHandler.flowerQuantity)
-				if (rand.nextInt((ConfigHandler.flowerPatchChance / mod).roundToLong().toInt()) == 0) {
+				if (rand.nextInt((ConfigHandler.flowerPatchChance / mod).roundToLong1().I) == 0) {
 					val x = cx + rand.nextInt(16)
 					val z = cz + rand.nextInt(16)
 					val y = world.getTopSolidOrLiquidBlock(x, z)
@@ -85,7 +86,7 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 			}
 		}
 		
-		var perChunk = (64 * mod).roundToLong().toInt()
+		var perChunk = (64 * mod).roundToLong1().I
 		var iteration = 256
 		
 		val types = arrayOf<Block>(Blocks.yellow_flower, Blocks.yellow_flower, // 0 1
@@ -118,11 +119,11 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 						world.setBlock(x, y + 1, z, types[11], metas[11] + 8, 2)
 					else if (type == 12) {
 						metas[12] = rand.nextInt(6).toByte()
-						if (metas[12].toInt() == 2) return@loop
+						if (metas[12].I == 2) return@loop
 						world.setBlock(x, y + 1, z, types[12], metas[12] + 8, 2)
 					}
 					
-					world.setBlock(x, y, z, types[type], metas[type].toInt(), 2)
+					world.setBlock(x, y, z, types[type], metas[type].I, 2)
 				}
 				--perChunk
 			}

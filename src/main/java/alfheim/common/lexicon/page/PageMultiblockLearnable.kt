@@ -1,8 +1,9 @@
 package alfheim.common.lexicon.page
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.client.core.util.*
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.entity.RenderItem
@@ -28,13 +29,13 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 	
 	internal val buttonStr: String
 		get() {
-			val set = if (known()) this.set else this.setUn
+			val set = if (known()) set else setUn
 			return StatCollector.translateToLocal(if (MultiblockRenderHandler.currentMultiblock === set) "botaniamisc.unvisualize" else "botaniamisc.visualize")
 		}
 	
 	@SideOnly(Side.CLIENT)
 	override fun renderScreen(gui: IGuiLexiconEntry, mx: Int, my: Int) {
-		val render = Minecraft.getMinecraft().renderEngine
+		val render = mc.renderEngine
 		render.bindTexture(multiblockOverlay)
 		
 		glEnable(GL_BLEND)
@@ -48,12 +49,12 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 		val maxX = 90f
 		val maxY = 60f
 		glPushMatrix()
-		glTranslatef((gui.left + gui.getWidth() / 2).toFloat(), (gui.top + 90).toFloat(), gui.zLevel + 100f)
+		glTranslatef((gui.left + gui.getWidth() / 2).F, (gui.top + 90).F, gui.zLevel + 100f)
 		
 		val m = if (known()) mb else mbUn
 		
-		val diag = sqrt((m.xSize * m.xSize + m.zSize * m.zSize).toDouble()).toFloat()
-		val height = m.ySize.toFloat()
+		val diag = sqrt((m.xSize * m.xSize + m.zSize * m.zSize).D).F
+		val height = m.ySize.F
 		val scaleX = maxX / diag
 		val scaleY = maxY / height
 		val scale = -min(scaleY, scaleX)
@@ -66,7 +67,7 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 		
 		glPopMatrix()
 		
-		val font = Minecraft.getMinecraft().fontRenderer
+		val font = mc.fontRenderer
 		val unicode = font.unicodeFlag
 		val s = EnumChatFormatting.BOLD.toString() + StatCollector.translateToLocal(getUnlocalizedName())
 		font.unicodeFlag = true
@@ -109,7 +110,7 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 	
 	@SideOnly(Side.CLIENT)
 	override fun onActionPerformed(gui: IGuiLexiconEntry?, button: GuiButton?) {
-		val set = if (known()) this.set else this.setUn
+		val set = if (known()) set else setUn
 		if (button === this.button) {
 			if (MultiblockRenderHandler.currentMultiblock === set)
 				MultiblockRenderHandler.setMultiblock(null)
@@ -125,7 +126,7 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 	}
 	
 	fun known(): Boolean {
-		return if (Minecraft.getMinecraft().thePlayer == null) false else Minecraft.getMinecraft().thePlayer.statFileWriter.hasAchievementUnlocked(achievement)
+		return if (mc.thePlayer == null) false else mc.thePlayer.hasAchievement(achievement)
 	}
 	
 	override fun getUnlocalizedName(): String {

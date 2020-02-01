@@ -4,6 +4,7 @@ import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaAccelerator
+import alfheim.common.core.util.mfloor
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -12,7 +13,6 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.MathHelper
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaItem
@@ -84,7 +84,7 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 			val mana = te.item!!.item as IManaItem
 			
 			if (mana.getMana(stack) == mana.getMaxMana(stack)) return 15
-			return if (mana.getMana(stack) == 0) 0 else MathHelper.floor_double(min(max(0.0, mana.getMana(stack) * 15.0 / mana.getMaxMana(stack)), 15.0))
+			return if (mana.getMana(stack) == 0) 0 else min(max(0.0, mana.getMana(stack) * 15.0 / mana.getMaxMana(stack)), 15.0).mfloor()
 			
 		}
 		return 0

@@ -1,7 +1,7 @@
 package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.ModInfo
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
@@ -43,8 +43,8 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		 * Map inp from an integer range (x1<->x2) to a second (y1<->y2)
 		 */
 		private fun map(inp: Int, x1: Int, x2: Int, y1: Int, y2: Int): Int {
-			val distance = (inp - x1).toFloat() / (x2 - x1).toFloat()
-			return (distance * (y2 - y1)).toInt() + y1
+			val distance = (inp - x1).F / (x2 - x1).F
+			return (distance * (y2 - y1)).I + y1
 		}
 	}
 	
@@ -59,7 +59,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	
 	fun getTemp(meta: Int): Int = if (meta % 8 == 3) supertile.worldObj.rand.nextInt(9) - 4 else TYPES[meta]
 	val biomeTemp
-		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).toDouble().mfloor()
+		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).D.mfloor()
 	
 	override fun onUpdate() {
 		super.onUpdate()
@@ -68,7 +68,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 		
 		val remote = supertile.worldObj.isRemote
 		val biomeStone = Item.getItemFromBlock(ModFluffBlocks.biomeStoneA)
-		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((supertile.xCoord - RANGE).toDouble(), (supertile.yCoord - RANGE).toDouble(), (supertile.zCoord - RANGE).toDouble(), (supertile.xCoord + RANGE + 1).toDouble(), (supertile.yCoord + RANGE + 1).toDouble(), (supertile.zCoord + RANGE + 1).toDouble()))
+		val items = supertile.worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((supertile.xCoord - RANGE).D, (supertile.yCoord - RANGE).D, (supertile.zCoord - RANGE).D, (supertile.xCoord + RANGE + 1).D, (supertile.yCoord + RANGE + 1).D, (supertile.zCoord + RANGE + 1).D))
 		val slowdown = slowdownFactor
 		
 		if (ticksExisted % 600 == 0) {
@@ -82,7 +82,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 			if (item is EntityItem) {
 				val stack = item.entityItem
 				if (stack != null && stack.item === biomeStone && !item.isDead && item.age >= slowdown) {
-					val meta = stack.itemDamage % 8
+					val meta = stack.meta % 8
 					if (!remote && canGeneratePassively()) {
 						deminishing = if (lastBlocks.contains(meta)) 8 else max(0, deminishing - 1)
 						if (lastBlocks.size > 7) lastBlocks.removeFirst()
@@ -93,10 +93,10 @@ class SubTileCrysanthermum: SubTileGenerating() {
 					
 					for (i in 0..9) {
 						val m = 0.2f
-						val mx = (Math.random() - 0.5).toFloat() * m
-						val my = (Math.random() - 0.5).toFloat() * m
-						val mz = (Math.random() - 0.5).toFloat() * m
-						supertile.worldObj.spawnParticle("blockcrack_" + Item.getIdFromItem(stack.item) + "_" + meta, item.posX, item.posY, item.posZ, mx.toDouble(), my.toDouble(), mz.toDouble())
+						val mx = (Math.random() - 0.5).F * m
+						val my = (Math.random() - 0.5).F * m
+						val mz = (Math.random() - 0.5).F * m
+						supertile.worldObj.spawnParticle("blockcrack_" + Item.getIdFromItem(stack.item) + "_" + meta, item.posX, item.posY, item.posZ, mx.D, my.D, mz.D)
 					}
 					--item.entityItem.stackSize
 					if (!remote && item.entityItem.stackSize <= 0)

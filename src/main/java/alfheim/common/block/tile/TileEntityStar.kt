@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alfheim.common.core.util.F
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.*
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
@@ -30,10 +31,10 @@ class TileEntityStar: TileMod() {
 	fun getColor() = starColor
 	
 	fun getLightColor(): Int {
-		val r = (getColor() shr 16 and 255).toFloat() / 255.0f
-		val g = (getColor() shr 8 and 255).toFloat() / 255.0f
-		val b = (getColor() and 255).toFloat() / 255.0f
-		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1.0f)
+		val r = (getColor() shr 16 and 255).F / 255f
+		val g = (getColor() shr 8 and 255).F / 255f
+		val b = (getColor() and 255).F / 255f
+		return ColoredLightHelper.makeRGBLightValue(r, g, b, 1f)
 	}
 	
 	override fun getDescriptionPacket(): Packet {

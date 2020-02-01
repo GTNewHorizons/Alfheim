@@ -6,6 +6,7 @@ import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.meta
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -36,7 +37,7 @@ class BlockDreamLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	
 	// IDK whether this is good source of glowstone or not
 	override fun onBlockActivated(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (player.currentEquippedItem != null && player.currentEquippedItem.item === ModItems.manaResource && player.currentEquippedItem.itemDamage == 9) {
+		if (player.currentEquippedItem != null && player.currentEquippedItem.item === ModItems.manaResource && player.currentEquippedItem.meta == 9) {
 			var eat = 2
 			val sides = BooleanArray(6)
 			

@@ -5,6 +5,7 @@ import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.util.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -31,8 +32,8 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 		setBlockName("Anyavil")
 		setBlockTextureName("botania:storage2")
 		setLightOpacity(0)
-		setHardness(5.0f)
-		setResistance(2000.0f)
+		setHardness(5f)
+		setResistance(2000f)
 		setStepSound(Block.soundTypeAnvil)
 	}
 	
@@ -45,7 +46,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 	override fun getRenderType() = LibRenderIDs.idAnyavil
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase, stack: ItemStack?) {
-		val l = MathHelper.floor_double((entity.rotationYaw * 4.0f / 360.0f).toDouble() + 0.5) and 3
+		val l = (entity.rotationYaw * 4f / 360f + 0.5).I and 3
 		world.setBlockMetadataWithNotify(x, y, z, l, 3)
 	}
 	
@@ -75,9 +76,9 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 		val l = world.getBlockMetadata(x, y, z) and 3
 		
 		if (l != 3 && l != 1) {
-			setBlockBounds(0.125f, 0.0f, 0.0f, 0.875f, 1.0f, 1.0f)
+			setBlockBounds(0.125f, 0f, 0f, 0.875f, 1f, 1f)
 		} else {
-			setBlockBounds(0.0f, 0.0f, 0.125f, 1.0f, 1.0f, 0.875f)
+			setBlockBounds(0f, 0f, 0.125f, 1f, 1f, 0.875f)
 		}
 	}
 	
@@ -102,9 +103,9 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 	override fun getComparatorInputOverride(world: World, x: Int, y: Int, z: Int, side: Int): Int {
 		val te = world.getTileEntity(x, y, z) as TileItemContainer
 		if (te.item != null) {
-			if (te.item!!.itemDamage == te.item!!.maxDamage) return 1
-			if (te.item!!.itemDamage == 0) return 15
-			val pow = MathHelper.ceiling_double_int((te.item!!.maxDamage - te.item!!.itemDamage) * 15.0 / te.item!!.maxDamage)
+			if (te.item!!.meta == te.item!!.maxDamage) return 1
+			if (te.item!!.meta == 0) return 15
+			val pow = MathHelper.ceiling_double_int((te.item!!.maxDamage - te.item!!.meta) * 15.0 / te.item!!.maxDamage)
 			return min(pow, 14)
 		}
 		

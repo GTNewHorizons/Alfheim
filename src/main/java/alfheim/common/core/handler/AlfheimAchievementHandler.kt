@@ -1,6 +1,7 @@
 package alfheim.common.core.handler
 
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.util.meta
 import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
@@ -36,7 +37,7 @@ object AlfheimAchievementHandler {
 		}
 		
 		val tiaraStack = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0)
-		val baublesFlag = tiaraStack?.item == ModItems.flightTiara && tiaraStack?.itemDamage == 4
+		val baublesFlag = tiaraStack?.item == ModItems.flightTiara && tiaraStack?.meta == 4
 		
 		val horse = player.ridingEntity
 		val horseFlag = horse is EntityHorse &&

@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
+import alfheim.client.core.util.mc
 import baubles.api.BaubleType
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
@@ -22,11 +22,11 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 	override fun getBaubleType(itemstack: ItemStack) = BaubleType.AMULET
 	
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture)
+		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 		
 		if (type == IBaubleRender.RenderType.HEAD) {
 			glPushMatrix()
-			glTranslated(0.0, (if (event.entityPlayer !== Minecraft.getMinecraft().thePlayer) 1.68 else 0.0) - event.entityPlayer.defaultEyeHeight + if (event.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
+			glTranslated(0.0, (if (event.entityPlayer !== mc.thePlayer) 1.68 else 0.0) - event.entityPlayer.defaultEyeHeight + if (event.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 			glRotated(90.0, 0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.4, 0.1, -0.1175)

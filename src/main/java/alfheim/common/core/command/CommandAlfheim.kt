@@ -3,6 +3,7 @@ package alfheim.common.core.command
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.*
+import alfheim.common.core.util.D
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.network.Message3d
@@ -47,7 +48,7 @@ class CommandAlfheim: CommandBase() {
 													  if (AlfheimCore.enableMMO) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED,
 													  EnumChatFormatting.RESET))
 			
-			AlfheimCore.network.sendToAll(Message3d(m3d.TOGGLER, (if (args[0].equals("ESM", ignoreCase = true)) 1 else 0).toDouble(), ((if (esmOld) 1 else 0) shl 1 or if (AlfheimCore.enableElvenStory) 1 else 0).toDouble(), ((if (mmoOld) 1 else 0) shl 1 or if (AlfheimCore.enableMMO) 1 else 0).toDouble()))
+			AlfheimCore.network.sendToAll(Message3d(m3d.TOGGLER, (if (args[0].equals("ESM", ignoreCase = true)) 1 else 0).D, ((if (esmOld) 1 else 0) shl 1 or if (AlfheimCore.enableElvenStory) 1 else 0).D, ((if (mmoOld) 1 else 0) shl 1 or if (AlfheimCore.enableMMO) 1 else 0).D))
 		} else
 			throw WrongUsageException("alfheim.commands.alfheim.wrong")
 	}

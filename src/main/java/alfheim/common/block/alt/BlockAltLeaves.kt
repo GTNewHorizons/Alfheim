@@ -1,6 +1,7 @@
 package alfheim.common.block.alt
 
 import alfheim.api.lib.LibOreDict.ALT_TYPES
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.helper.IconHelper
@@ -8,7 +9,6 @@ import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -45,7 +45,7 @@ class BlockAltLeaves(): BlockLeavesMod() {
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon {
-		setGraphicsLevel(Minecraft.getMinecraft().gameSettings.fancyGraphics)
+		setGraphicsLevel(mc.gameSettings.fancyGraphics)
 		return if (field_150121_P) icon_norm[meta and decayBit().inv()] else icon_opaque[meta and decayBit().inv()]
 	}
 	

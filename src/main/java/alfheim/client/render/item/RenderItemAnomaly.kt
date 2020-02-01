@@ -3,9 +3,10 @@ package alfheim.client.render.item
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockAnomaly
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -50,9 +51,9 @@ class RenderItemAnomaly: IItemRenderer {
 			glColor4d(1.0, 1.0, 1.0, 1.0)
 			glPushMatrix()
 			
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.anomalies)
+			mc.renderEngine.bindTexture(LibResourceLocations.anomalies)
 			val frames = subtile.frames
-			val frame = ((System.nanoTime() / 40000000L + 1L) % frames.toLong()).toInt()
+			val frame = ((System.nanoTime() / 40000000L + 1L) % frames.toLong()).I
 			val strip = subtile.strip
 			val color = subtile.color
 			
@@ -72,20 +73,20 @@ class RenderItemAnomaly: IItemRenderer {
 		}
 		
 		fun renderAnimatedQuadStrip(scale: Float, alpha: Float, frames: Int, strip: Int, cframe: Int, color: Int) {
-			if (Minecraft.getMinecraft().renderViewEntity is EntityPlayer) {
+			if (mc.renderViewEntity is EntityPlayer) {
 				val tessellator = Tessellator.instance
 				tessellator.startDrawingQuads()
 				tessellator.setBrightness(220)
-				tessellator.setColorRGBA_I(color, (alpha * 255.0f).toInt())
-				val f2 = cframe.toFloat() / frames.toFloat()
-				val f3 = (cframe + 1).toFloat() / frames.toFloat()
-				val f4 = strip.toFloat() / frames.toFloat()
-				val f5 = (strip + 1).toFloat() / frames.toFloat()
-				tessellator.setNormal(0.0f, 0.0f, -1.0f)
-				tessellator.addVertexWithUV(-0.5 * scale.toDouble(), 0.5 * scale.toDouble(), 0.0, f2.toDouble(), f5.toDouble())
-				tessellator.addVertexWithUV(0.5 * scale.toDouble(), 0.5 * scale.toDouble(), 0.0, f3.toDouble(), f5.toDouble())
-				tessellator.addVertexWithUV(0.5 * scale.toDouble(), -0.5 * scale.toDouble(), 0.0, f3.toDouble(), f4.toDouble())
-				tessellator.addVertexWithUV(-0.5 * scale.toDouble(), -0.5 * scale.toDouble(), 0.0, f2.toDouble(), f4.toDouble())
+				tessellator.setColorRGBA_I(color, (alpha * 255f).I)
+				val f2 = cframe.F / frames.F
+				val f3 = (cframe + 1).F / frames.F
+				val f4 = strip.F / frames.F
+				val f5 = (strip + 1).F / frames.F
+				tessellator.setNormal(0f, 0f, -1f)
+				tessellator.addVertexWithUV(-0.5 * scale.D, 0.5 * scale.D, 0.0, f2.D, f5.D)
+				tessellator.addVertexWithUV(0.5 * scale.D, 0.5 * scale.D, 0.0, f3.D, f5.D)
+				tessellator.addVertexWithUV(0.5 * scale.D, -0.5 * scale.D, 0.0, f3.D, f4.D)
+				tessellator.addVertexWithUV(-0.5 * scale.D, -0.5 * scale.D, 0.0, f2.D, f4.D)
 				tessellator.draw()
 			}
 		}
