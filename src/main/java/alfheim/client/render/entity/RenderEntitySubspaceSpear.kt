@@ -10,7 +10,10 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.*
 
-class RenderEntitySubspaceSpear: Render() {
+object RenderEntitySubspaceSpear: Render() {
+	
+	val model = ModelSubspaceSpear()
+	val SPEAR_TEXTURES = ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/spearsubspace.png")
 	
 	override fun doRender(weapon: Entity, d0: Double, d1: Double, d2: Double, par8: Float, par9: Float) {
 		weapon as EntitySubspaceSpear
@@ -33,9 +36,4 @@ class RenderEntitySubspaceSpear: Render() {
 	}
 	
 	override fun getEntityTexture(entity: Entity) = TextureMap.locationBlocksTexture!!
-	
-	companion object {
-		val model = ModelSubspaceSpear()
-		val SPEAR_TEXTURES = ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/spearsubspace.png")
-	}
 }

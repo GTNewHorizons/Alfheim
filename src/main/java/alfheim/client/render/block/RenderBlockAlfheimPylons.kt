@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
 import net.minecraft.world.IBlockAccess
 import org.lwjgl.opengl.GL11.*
 
-class RenderBlockAlfheimPylons: ISimpleBlockRenderingHandler {
+object RenderBlockAlfheimPylons: ISimpleBlockRenderingHandler {
 	
 	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
 		glPushMatrix()

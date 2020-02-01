@@ -1,10 +1,10 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
-import net.minecraft.client.model.ModelBase
+import alfheim.client.model.entity.ModelEntityElf
 import net.minecraft.client.renderer.entity.RenderLiving
 import net.minecraft.entity.Entity
 
-class RenderEntityElf(model: ModelBase, shadowSize: Float): RenderLiving(model, shadowSize) {
+object RenderEntityElf: RenderLiving(ModelEntityElf(), 0.25f) {
 	override fun getEntityTexture(par1Entity: Entity) = LibResourceLocations.elf
 }

@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11.*
 import java.util.*
 import kotlin.math.*
 
-class RenderEntityFenrirStorm: Render() {
+object RenderEntityFenrirStorm: Render() {
 	
 	internal val rand = Random()
 	
@@ -36,8 +36,7 @@ class RenderEntityFenrirStorm: Render() {
 			area.translate(v.x, v.y, v.z)
 			area.draw(0)
 		} catch (ignore: Throwable) {}*/
-		
-		val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.I * 2))
+				val parts = max(1, min(e.ticksExisted * 2, SpellFenrirStorm.radius.I * 2))
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
@@ -58,6 +57,12 @@ class RenderEntityFenrirStorm: Render() {
 	}
 	
 	private fun lightning(rand: Random, parts: Int, start: Vector3, dir: Vector3, end: Vector3) {
+		class Fork(s: Vector3, d: Vector3, p: Int) {
+			val parts = max(p, 1)
+			val start = s.copy()
+			val dir = d.copy()
+		}
+		
 		val amp = 0.65
 		val forks = ArrayList<Fork>()
 		
@@ -79,11 +84,5 @@ class RenderEntityFenrirStorm: Render() {
 	private fun randVec(dir: Vector3, rand: Random): Vector3 {
 		val amp = 0.65
 		return dir.copy().extend(1.0).add(rand.nextDouble() * amp * 2.0 - amp, rand.nextDouble() * amp * 2.0 - amp, rand.nextDouble() * amp * 2.0 - amp)
-	}
-	
-	private inner class Fork(s: Vector3, d: Vector3, p: Int) {
-		val parts = max(p, 1)
-		val start = s.copy()
-		val dir = d.copy()
 	}
 }

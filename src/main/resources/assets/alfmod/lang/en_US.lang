@@ -1,3 +1,7 @@
+tile.AiryVirus0.name=Airy Virus
+tile.AiryVirus1.name=Airy Antivirus
+
+item.alfheim:SnowRelic.name=Relic of the Blizzard
 item.botania:SnowSword.name=Katana of the Blizzard
 item.botania:SnowHelmet.name=Helmet of the Blizzard
 item.botania:SnowHelmetRevealing.name=Revealing Helmet of the Blizzard
@@ -14,6 +18,19 @@ death.attack.alfmod:frost=%s was chilled to bones by %s
 itemGroup.AlfheimModular=Alfheim Modular
 
 alfmod.armorset.snow.name=Snow Shogun Panzer
+alfmod.armorset.snow.desc=20% more Mana cost on Mana Tools and Rods
 
 alfmodmisc.ded.awakening=&bYou've awakened the vengeful Spirit of Winter!
 alfmodmisc.ded.icebound=You feel icy bounds of Winter Shogun's gaze pulling you to the ground
+
+alfmodmisc.WIP=&4[WIP]&7 Future content, please, keep at least one item
+
+################ LEXICON ################
+
+alfmod.category.AlfMod=Alfheim Events
+
+alfmod.entry.WOTW=Wrath of the Winter
+alfmod.tagline.WOTW=The Winter is Coming...
+alfmod.page.WOTW0=Winter ... On the one hand, this is a wonderful time for frosty adventures, games in the snow and creative buildings of ice, but on the other, a snowstorm hiding all kinds of trails and houses, a formidable storm and severe frosts.
+alfmod.page.WOTW1=Perhaps everyone, whether a human or an elf, at least once in his life sculpted a snowman, although among elves it is more like a snowball with wings (in honor of the spirits of festive colds). And only a few experienced adventurers, in whom the spirit of the New Year is still left, dream to fight and, possibly, even overcome a severe frost.
+alfmod.page.WOTW2=Unfortunately, all tales and stories about unprecedented snow warriors do not inspire confidence in anyone but children. Although, who knows - the wrath of the winter may fall on anyone who neglects reverence for the creatures of the cold - the snow sprites.

@@ -892,7 +892,7 @@ object AlfheimRecipes {
 	}
 	
 	fun removeMMORecipes() {
-		ASJUtilities.removeRecipe(paperBreak)
+		ASJUtilities.removeRecipe(paperBreak, 4)
 		ASJUtilities.removeRecipe(peacePipe)
 	}
 }

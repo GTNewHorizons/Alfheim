@@ -3,10 +3,13 @@ package alfmod.common.item
 import alfmod.common.item.equipment.armor.ItemSnowArmor
 import alfmod.common.item.equipment.tool.ItemSnowSword
 import alfmod.common.item.interaction.thaumcraft.ItemSnowHelmetRevealing
+import alfmod.common.item.material.ItemEventResource
 import net.minecraft.item.Item
 import vazkii.botania.common.Botania
 
 object AlfheimModularItems {
+	
+	val eventResource: Item
 	
 	val snowSword: Item
 	val snowHelmet: Item
@@ -16,6 +19,8 @@ object AlfheimModularItems {
 	val snowBoots: Item
 	
 	init {
+		eventResource = ItemEventResource()
+		
 		snowSword = ItemSnowSword()
 		snowHelmet = ItemSnowArmor(0, "SnowHelmet")
 		snowHelmetRevealing = if (Botania.thaumcraftLoaded) ItemSnowHelmetRevealing() else null

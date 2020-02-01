@@ -14,6 +14,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		
 		return when (transformedName) {
 			"alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig" -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BloodMagicAlfheimConfig$ClassVisitor`(cw)
@@ -22,6 +23,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.client.network.NetHandlerPlayClient"             -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `NetHandlerPlayClient$ClassVisitor`(cw)
@@ -30,6 +32,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.client.particle.EffectRenderer"                  -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EffectRenderer$ClassVisitor`(cw)
@@ -38,6 +41,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.entity.EntityTrackerEntry"                       -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityTrackerEntry$ClassVisitor`(cw)
@@ -46,6 +50,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.potion.Potion"                                   -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `Potion$ClassVisitor`(cw)
@@ -54,6 +59,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.server.management.ItemInWorldManager"            -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInWorldManager$ClassVisitor`(cw)
@@ -62,6 +68,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"net.minecraft.world.World"                                     -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `World$ClassVisitor`(cw)
@@ -70,6 +77,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"thaumcraft.common.blocks.BlockCustomOre"                       -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BlockCustomOre$ClassVisitor`(cw)
@@ -78,6 +86,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"thaumcraft.common.items.ItemNugget"                            -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemNugget$ClassVisitor`(cw)
@@ -86,6 +95,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.client.core.handler.BaubleRenderHandler"        -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BaubleRenderHandler$ClassVisitor`(cw)
@@ -94,6 +104,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.client.render.tile.RenderTileFloatingFlower"    -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `RenderTileFloatingFlower$ClassVisitor`(cw)
@@ -102,6 +113,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.block.decor.IFloatingFlower\$IslandType" -> {
+				println("Transforming $transformedName")
 				if (OBF) {
 					val cr = ClassReader(basicClass)
 					val cw = ClassWriter(cr, ClassWriter.COMPUTE_MAXS)
@@ -119,6 +131,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.entity.EntityDoppleganger"               -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `EntityDoppleganger$ClassVisitor`(cw)
@@ -128,6 +141,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			
 			"vazkii.botania.common.item.equipment.bauble.ItemMiningRing",
 			"vazkii.botania.common.item.equipment.bauble.ItemWaterRing"     -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemInfiniEffect$ClassVisitor`(transformedName.split("\\.".toRegex())[6], cw)
@@ -136,6 +150,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.item.lens.ItemLens"                      -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemLens$ClassVisitor`(cw)
@@ -144,6 +159,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.item.relic.ItemRelic"                    -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemRelic$ClassVisitor`(cw)
@@ -152,6 +168,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.item.rod.ItemTerraformRod"               -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ItemTerraformRod$ClassVisitor`(cw)
@@ -160,6 +177,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"vazkii.botania.common.lib.LibItemNames"                        -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `LibItemNames$ClassVisitor`(cw)
@@ -168,6 +186,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 			
 			"com.emoniph.witchery.client.ClientEvents\$GUIOverlay"          -> {
+				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `ClientEvents$GUIOverlay$ClassVisitor`(cw)

@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockAccess
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.*
 
-class RenderBlockPowerStone: ISimpleBlockRenderingHandler {
+object RenderBlockPowerStone: ISimpleBlockRenderingHandler {
 	
 	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
 		glPushMatrix()

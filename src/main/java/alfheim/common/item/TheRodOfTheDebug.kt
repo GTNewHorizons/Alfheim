@@ -4,11 +4,14 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
+import alfmod.client.render.item.RenderItemSnowSword
+import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
+import net.minecraftforge.client.MinecraftForgeClient
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
 

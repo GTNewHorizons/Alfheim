@@ -8,7 +8,7 @@ import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
 import net.minecraft.world.IBlockAccess
 
-class RenderBlockHopper: ISimpleBlockRenderingHandler {
+object RenderBlockHopper: ISimpleBlockRenderingHandler {
 	
 	override fun renderWorldBlock(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, modelId: Int, renderer: RenderBlocks): Boolean {
 		val tessellator = Tessellator.instance

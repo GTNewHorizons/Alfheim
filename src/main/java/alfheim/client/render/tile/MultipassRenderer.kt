@@ -9,11 +9,9 @@ import net.minecraft.client.renderer.*
 import net.minecraft.world.IBlockAccess
 import org.lwjgl.opengl.GL11.*
 
-class MultipassRenderer : ISimpleBlockRenderingHandler {
+object MultipassRenderer : ISimpleBlockRenderingHandler {
 
-    companion object {
-        var pass = 0
-    }
+    var pass = 0
 
     override fun getRenderId() = LibRenderIDs.idMultipass
 

@@ -13,14 +13,15 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntityDriftingMine: Render() {
+object RenderEntityDriftingMine: Render() {
+	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
+	
 	init {
 		shadowSize = 0f
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
-		return LibResourceLocations.mine2
-	}
+	override fun getEntityTexture(entity: Entity) = LibResourceLocations.mine2
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTick: Float) {
 		glPushMatrix()
@@ -47,10 +48,5 @@ class RenderEntityDriftingMine: Render() {
 			model.renderPart("spikes")
 		}
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	}
 }

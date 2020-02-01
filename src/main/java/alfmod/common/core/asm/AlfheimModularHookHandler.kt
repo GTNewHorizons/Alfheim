@@ -2,7 +2,12 @@ package alfmod.common.core.asm
 
 import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import alfmod.common.entity.EntitySnowSprite
-import gloomyfolken.hooklib.asm.Hook
+import alfmod.common.item.AlfheimModularItems
+import alfmod.common.item.equipment.armor.ItemSnowArmor
+import gloomyfolken.hooklib.asm.*
+import net.minecraft.block.Block
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntitySnowball
 import net.minecraft.util.MovingObjectPosition
 
@@ -20,5 +25,11 @@ object AlfheimModularHookHandler {
 					ball.worldObj.spawnEntityInWorld(sprite)
 			}
 		}
+	}
+	
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ReturnCondition.ALWAYS)
+	fun getRelativeSlipperiness(block: Block, requester: Entity): Float {
+		return if (requester is EntityPlayer && !requester.isSneaking && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(requester)) 0.99f else block.slipperiness
 	}
 }

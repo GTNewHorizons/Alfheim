@@ -14,14 +14,15 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntityWindBlade: Render() {
+object RenderEntityWindBlade: Render() {
+	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/tor.obj"))
+	
 	init {
 		shadowSize = 0f
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
-		return LibResourceLocations.wind
-	}
+	override fun getEntityTexture(entity: Entity) = LibResourceLocations.wind
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTick: Float) {
 		glPushMatrix()
@@ -43,10 +44,5 @@ class RenderEntityWindBlade: Render() {
 		}
 		glDisable(GL_BLEND)
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/tor.obj"))
 	}
 }

@@ -8,8 +8,9 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 
-class RenderEntitySniceBall: Render() {
+object RenderEntitySniceBall: Render() {
 	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	val textureIce = ResourceLocation("textures/blocks/ice.png")
 	val textureSnow = ResourceLocation("textures/blocks/snow.png")
 	
@@ -51,9 +52,5 @@ class RenderEntitySniceBall: Render() {
 		
 		glEnable(GL_BLEND)
 		glPopMatrix()
-	}
-	
-	companion object {
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	}
 }

@@ -6,10 +6,13 @@ import alfheim.AlfheimCore
 import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
+import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.network.MessageEffect
 import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import alfmod.common.entity.EntitySniceBall
 import alfmod.common.item.AlfheimModularItems
+import alfmod.common.item.material.EventResourcesMetas
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.*
@@ -23,11 +26,12 @@ import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 import vazkii.botania.client.core.handler.BossBarHandler
 import java.awt.Rectangle
+import kotlin.math.max
 
 private const val FOLLOW = 20.0
 
 class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
-
+	
 	init {
 		setSize(1.5f, 4.5f)
 		
@@ -73,18 +77,32 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	}
 	
 	override fun getDropItem() =
-		when ((Math.random() * 6).mfloor()) {
-			0 -> AlfheimModularItems.snowSword
-			1 -> AlfheimModularItems.snowHelmet
-			2 -> AlfheimModularItems.snowChest
-			3 -> AlfheimModularItems.snowLeggings
-			4 -> AlfheimModularItems.snowBoots
-			else -> Items.snowball
+		when (rng.nextInt(30)) {
+			in 0..2   -> AlfheimModularItems.snowSword
+			in 3..5   -> AlfheimModularItems.snowHelmet
+			in 6..8   -> AlfheimModularItems.snowChest
+			in 9..11  -> AlfheimModularItems.snowLeggings
+			in 12..14 -> AlfheimModularItems.snowBoots
+			in 15..17 -> AlfheimItems.elvenResource
+			18        -> AlfheimModularItems.eventResource
+			else      -> Items.snowball
 		}!!
 	
 	override fun dropFewItems(gotHit: Boolean, looting: Int) {
 		val item = dropItem
-		entityDropItem(ItemStack(item, 1 + if (item === Items.snowball) looting else 0, if (item.isDamageable) item.maxDamage / (looting + 1) else 0), 0f)
+		val size = 1 + when (item) {
+			Items.snowball -> 2 + looting * 3
+			AlfheimItems.elvenResource -> looting * 2
+			else -> 0
+		}
+		
+		val meta = when (item) {
+			Items.snowball                    -> 0
+			AlfheimItems.elvenResource        -> ElvenResourcesMetas.IffesalDust
+			AlfheimModularItems.eventResource -> EventResourcesMetas.SnowRelic
+			else                              -> item.maxDamage / (looting + 1)
+		}
+		entityDropItem(ItemStack(item, size, meta), 0f)
 	}
 	
 	override fun addRandomArmor() {
@@ -102,7 +120,11 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		
 		super.onLivingUpdate()
 		
-		if (worldObj.isRaining && AlfheimCore.winter)
+		worldObj.worldInfo.isRaining = true
+		worldObj.worldInfo.rainTime = max(worldObj.worldInfo.rainTime, 3600)
+		worldObj.setRainStrength(1f)
+		
+		if (AlfheimCore.winter)
 			heal(if (attackTarget == null) 0.1f else 0.02f)
 		
 		if (attackTarget != null) {

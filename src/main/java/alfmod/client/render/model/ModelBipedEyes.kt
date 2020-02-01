@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11.*
 class ModelBipedEyes: ModelBiped() {
 	
 	val bipedEyes: ModelRenderer = ModelRenderer(this, 0, 0)
-	val textureEyes = ResourceLocation("${AlfheimModularCore.MODID}:textures/entity/DedMorozEyes.png")
+	val textureEyes = ResourceLocation(AlfheimModularCore.MODID, "textures/model/entity/DedMorozEyes.png")
 	
 	init {
 		bipedEyes.addBox(-4f, -8f, -4f, 8, 8, 8, 0f)

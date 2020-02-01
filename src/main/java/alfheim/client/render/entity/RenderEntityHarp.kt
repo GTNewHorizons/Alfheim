@@ -15,14 +15,15 @@ import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 import kotlin.math.sin
 
-class RenderEntityHarp: Render() {
+object RenderEntityHarp: Render() {
+	
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Arfa.obj"))
+	
 	init {
 		shadowSize = 0f
 	}
 	
-	override fun getEntityTexture(entity: Entity): ResourceLocation {
-		return LibResourceLocations.harp
-	}
+	override fun getEntityTexture(entity: Entity) = LibResourceLocations.harp
 	
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTick: Float) {
 		glPushMatrix()
@@ -39,10 +40,5 @@ class RenderEntityHarp: Render() {
 			model.renderAll()
 		}
 		glPopMatrix()
-	}
-	
-	companion object {
-		
-		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Arfa.obj"))
 	}
 }

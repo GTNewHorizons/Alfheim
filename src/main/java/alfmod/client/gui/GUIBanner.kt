@@ -29,6 +29,7 @@ object GUIBanner: Gui() {
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
 		if (!WRATH_OF_THE_WINTER) return
+		
 		if (e.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
 		
 		glPushMatrix()

@@ -9,62 +9,59 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IItemRenderer
 import org.lwjgl.opengl.GL11
 
-class RenderItemRoyalStaff: IItemRenderer {
+object RenderItemRoyalStaff: IItemRenderer {
 	
-	override fun renderItem(type: IItemRenderer.ItemRenderType?, item: ItemStack?, vararg data: Any?) {
-		if (item != null) {
-			val pt = mc.timer.renderPartialTicks
-			var wielder: EntityLivingBase? = null
-			if (type === IItemRenderer.ItemRenderType.EQUIPPED || type === IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
-				wielder = data[1] as EntityLivingBase
+	override fun renderItem(type: IItemRenderer.ItemRenderType, item: ItemStack, vararg data: Any?) {
+		val pt = Minecraft.getMinecraft().timer.renderPartialTicks
+		var wielder: EntityLivingBase? = null
+		if (type === IItemRenderer.ItemRenderType.EQUIPPED || type === IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
+			wielder = data[1] as EntityLivingBase
+		}
+		
+		GL11.glPushMatrix()
+		GL11.glTranslated(0.0, 0.5, 0.0)
+		
+		if (type !== IItemRenderer.ItemRenderType.INVENTORY) {
+			if (type === IItemRenderer.ItemRenderType.ENTITY) {
+				GL11.glTranslated(0.0, 1.5, 0.0)
+				GL11.glScaled(0.9, 0.9, 0.9)
+			} else {
+				GL11.glTranslated(0.5, 1.5, 0.5)
+				if (type === IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
+					GL11.glScaled(1.0, 1.1, 1.0)
+				}			}
+		} else {
+			GL11.glScaled(0.8, 0.8, 0.8)
+			GL11.glRotatef(66.0f, 0.0f, 0.0f, 1.0f)
+			GL11.glTranslated(0.0, 0.6, 0.0)
+			GL11.glTranslated(-0.7, 0.6, 0.0)
+		}
+		
+		GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f)
+		if (wielder != null && wielder is EntityPlayer && wielder.itemInUse != null) {
+			var t = wielder.itemInUseDuration.toFloat() + pt
+			if (t > 3.0f) {
+				t = 3.0f
 			}
 			
-			GL11.glPushMatrix()
-			GL11.glTranslated(0.0, 0.5, 0.0)
-			
-			if (type !== IItemRenderer.ItemRenderType.INVENTORY) {
-				if (type === IItemRenderer.ItemRenderType.ENTITY) {
-					GL11.glTranslated(0.0, 1.5, 0.0)
-					GL11.glScaled(0.9, 0.9, 0.9)
-				} else {
-					GL11.glTranslated(0.5, 1.5, 0.5)
-					if (type === IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
-						GL11.glScaled(1.0, 1.1, 1.0)
-					}
-				}
+			GL11.glTranslated(0.0, 1.0, 0.0)
+			if (type !== IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
+				GL11.glRotatef(33.0f, 0.0f, 0.0f, 1.0f)
 			} else {
 				GL11.glScaled(0.8, 0.8, 0.8)
 				GL11.glRotatef(66f, 0f, 0f, 1f)
 				GL11.glTranslated(0.0, 0.6, 0.0)
-				GL11.glTranslated(-0.7, 0.6, 0.0)
-			}
+				GL11.glTranslated(-0.7, 0.6, 0.0)			}
 			
-			GL11.glRotatef(180f, 1f, 0f, 0f)
-			if (wielder != null && wielder is EntityPlayer && wielder.itemInUse != null) {
-				var t = wielder.itemInUseDuration.F + pt
-				if (t > 3f) {
-					t = 3f
-				}
-				
-				GL11.glTranslated(0.0, 1.0, 0.0)
-				if (type !== IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
-					GL11.glRotatef(33f, 0f, 0f, 1f)
-				} else {
-					GL11.glRotatef(10f, 1f, 0f, 0f)
-					GL11.glRotatef(10f, 0f, 0f, 1f)
-				}
-				
-				GL11.glRotatef(60f * (t / 3f), -1f, 0f, 0f)
-				
-				GL11.glTranslated(0.0, -1.0, 0.0)
-			}
-			
-			GL11.glEnable(GL11.GL_BLEND)
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-			ModelCreatorStaff.render()
-			GL11.glDisable(GL11.GL_BLEND)
-			GL11.glPopMatrix()
+			}			
+			GL11.glTranslated(0.0, -1.0, 0.0)
 		}
+		
+		GL11.glEnable(GL11.GL_BLEND)
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+		ModelCreatorStaff.render()
+		GL11.glDisable(GL11.GL_BLEND)
+		GL11.glPopMatrix()
 	}
 	
 	override fun handleRenderType(item: ItemStack, type: IItemRenderer.ItemRenderType) = true

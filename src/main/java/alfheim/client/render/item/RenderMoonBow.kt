@@ -11,7 +11,7 @@ import net.minecraftforge.client.IItemRenderer.ItemRenderType
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.lib.LibObfuscation
 
-class RenderMoonBow: IItemRenderer {
+object RenderMoonBow: IItemRenderer {
 	
 	override fun handleRenderType(item: ItemStack, type: ItemRenderType) =
 		type != ItemRenderType.INVENTORY

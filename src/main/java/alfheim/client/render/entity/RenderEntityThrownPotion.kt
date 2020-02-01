@@ -12,7 +12,7 @@ import net.minecraft.util.IIcon
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL
 
-class RenderEntityThrownPotion: Render() {
+object RenderEntityThrownPotion: Render() {
 	
 	override fun doRender(p_76986_1_: Entity, p_76986_2_: Double, p_76986_4_: Double, p_76986_6_: Double, p_76986_8_: Float, p_76986_9_: Float) {
 		val e = p_76986_1_ as EntityThrownPotion
