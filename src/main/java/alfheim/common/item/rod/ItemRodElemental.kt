@@ -18,6 +18,7 @@ import java.awt.Color
 import kotlin.math.*
 
 class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name), IManaUsingItem {
+	
 	private var rubyIcon: IIcon? = null
 	private var sapphireIcon: IIcon? = null
 	
@@ -75,16 +76,16 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 	companion object {
 		
 		// Modified code from ItemDirtRod
-		fun place(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
-			if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
-				val dir = ForgeDirection.getOrientation(par7)
+		fun place(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
+			if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
+				val dir = ForgeDirection.getOrientation(side)
 				
 				val stackToPlace = ItemStack(block)
-				stackToPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10)
+				stackToPlace.tryPlaceItemIntoWorld(player, world, x, y, z, side, hitX, hitY, hitZ)
 				
 				if (stackToPlace.stackSize == 0) {
-					ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, true)
-					for (i in 0..5) Botania.proxy.sparkleFX(par3World, par4.D + dir.offsetX.D + Math.random(), par5.D + dir.offsetY.D + Math.random(), par6.D + dir.offsetZ.D + Math.random(), r, g, b, 1f, 5)
+					ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
+					for (i in 0..5) Botania.proxy.sparkleFX(world, x.D + dir.offsetX.D + Math.random(), y.D + dir.offsetY.D + Math.random(), z.D + dir.offsetZ.D + Math.random(), r, g, b, 1f, 5)
 					return true
 				}
 			}

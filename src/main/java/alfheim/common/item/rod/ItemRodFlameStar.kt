@@ -53,9 +53,9 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 	
 	override fun usesMana(stack: ItemStack) = true
 	
-	override fun onItemRightClick(par1ItemStack: ItemStack, par2World: World?, par3EntityPlayer: EntityPlayer?): ItemStack {
-		par3EntityPlayer!!.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack))
-		return par1ItemStack
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		player.setItemInUse(stack, getMaxItemUseDuration(stack))
+		return stack
 	}
 	
 	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
@@ -90,11 +90,9 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 			
 			for (entity in entities) {
 				if (entity is EntityLivingBase && entity != player && entity.health > 0) {
-					if (manaFlag) {
-						if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.F)) {
-							ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
-							entity.setFire(power * 20)
-						}
+					if (entity.attackEntityFrom(EntityDamageSource("onFire", player), power.F)) {
+						ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
+						entity.setFire(power * 20)
 					}
 				}
 			}

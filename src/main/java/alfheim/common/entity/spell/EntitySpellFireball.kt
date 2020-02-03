@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
-
 import java.util.*
 import kotlin.math.atan2
 
@@ -50,11 +49,19 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
-			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellFireball.radius))) {
-				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
+			if (mop?.entityHit is EntityLivingBase) {
+				do {
+					if (WorldGuardCommons.canHurtEntity(caster ?: break, mop.entityHit as EntityLivingBase))
+						mop.entityHit.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
+				} while (false)
 			}
+			
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(SpellFireball.radius)) as List<EntityLivingBase>
+			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) {
+				if (!WorldGuardCommons.canHurtEntity(caster ?: continue, e)) continue
+				e.attackEntityFrom(DamageSourceSpell.fireball(this, caster), SpellBase.over(caster, SpellFireball.damage.D))
+			}
+			
 			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
 			setDead()

@@ -43,7 +43,9 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(posX, posY, posZ).expand(SpellAcidMyst.radius)) as MutableList<EntityLivingBase>
 		l.remove(caster!!)
-		for (e in l) if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) <= SpellAcidMyst.radius) e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, SpellAcidMyst.damage.D))
+		for (e in l)
+			if (!PartySystem.mobsSameParty(caster!!, e) && Vector3.entityDistance(caster!!, e) <= SpellAcidMyst.radius && WorldGuardCommons.canHurtEntity(caster ?: continue, e))
+				e.attackEntityFrom(DamageSourceSpell.poison, SpellBase.over(caster, SpellAcidMyst.damage.D))
 	}
 	
 	override fun affectedBy(uuid: UUID): Boolean {

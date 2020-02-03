@@ -37,7 +37,9 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 		var dmg: DamageSource
 		for (e in l) {
 			if (e is IBossDisplayData) continue
-			dmg = if (e === target) DamageSourceSpell.sacrifice else DamageSourceSpell.darkness(target)
+			if (!WorldGuardCommons.canHurtEntity(target, e)) continue
+			
+			dmg = if (e === target) DamageSourceSpell.sacrifice else DamageSourceSpell.sacrifice(target)
 			e.attackEntityFrom(dmg, SpellSacrifice.damage)
 		}
 	}

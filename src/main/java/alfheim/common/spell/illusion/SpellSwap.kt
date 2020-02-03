@@ -6,7 +6,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.EntityDamageSourceSpell
+import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -32,6 +32,15 @@ object SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
 		if (tgt !is EntityPlayer && tgt.dimension != caster.dimension) return SpellCastResult.WRONGTGT
 		
 		if (!tg.isParty && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+		
+		if (tg.isParty) {
+			if (!WorldGuardCommons.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+			if (!WorldGuardCommons.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
+			if (!WorldGuardCommons.canDoSomethingHere(caster, tgt.posX, tgt.posY, tgt.posZ, tgt.worldObj)) return SpellCastResult.NOTALLOW
+			if (!WorldGuardCommons.canDoSomethingHere(tgt, caster.posX, caster.posY, caster.posZ, caster.worldObj)) return SpellCastResult.NOTALLOW
+		} else {
+			if (!WorldGuardCommons.canHurtEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		}
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

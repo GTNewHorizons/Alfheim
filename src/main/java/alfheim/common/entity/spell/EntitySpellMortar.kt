@@ -41,12 +41,19 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop != null && mop.entityHit is EntityLivingBase && !PartySystem.mobsSameParty(mop.entityHit as EntityLivingBase, caster)) {
-				mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.D))
-				if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).F)
+			if (mop?.entityHit is EntityLivingBase && !PartySystem.mobsSameParty(mop.entityHit as EntityLivingBase, caster)) {
+				do {
+					if (!WorldGuardCommons.canHurtEntity(caster ?: break, mop.entityHit as EntityLivingBase)) break
+					mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.D))
+					if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).F)
+				} while (false)
 			}
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellMortar.radius)) as List<EntityLivingBase>
-			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
+			
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(SpellMortar.radius)) as List<EntityLivingBase>
+			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) {
+				if (!WorldGuardCommons.canHurtEntity(caster ?: continue, e)) continue
+				e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
+			}
 			
 			setDead()
 		}

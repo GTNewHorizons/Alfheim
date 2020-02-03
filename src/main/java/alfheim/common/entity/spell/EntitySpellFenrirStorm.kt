@@ -49,7 +49,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		
 		if (ticksExisted == 4) {
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
-			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
+			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox) && WorldGuardCommons.canHurtEntity(caster ?: continue, e)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
 		}
 	}
 	

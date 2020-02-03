@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.WorldGuardCommons
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -31,6 +32,8 @@ object SpellDeathMark: SpellBase("deathmark", EnumRace.IMP, 24000, 3000, 10) {
 			return SpellCastResult.WRONGTGT
 		
 		if (ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		
+		if (!WorldGuardCommons.canHurtEntity(caster, tg.target)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

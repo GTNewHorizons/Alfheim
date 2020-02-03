@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
-
 import java.util.*
 import kotlin.math.atan2
 
@@ -42,11 +41,19 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	
 	fun onImpact(mop: MovingObjectPosition?) {
 		if (!worldObj.isRemote) {
-			if (mop?.entityHit != null) mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
-			for (o in worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX, posY, posZ).expand(SpellDriftingMine.radius))) {
-				val e = o as EntityLivingBase
-				if (!PartySystem.mobsSameParty(e, caster)) e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
+			if (mop?.entityHit is EntityLivingBase) {
+				do {
+					if (WorldGuardCommons.canHurtEntity(caster ?: break, mop.entityHit as EntityLivingBase))
+						mop.entityHit.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
+				} while (false)
 			}
+			
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(SpellDriftingMine.radius)) as List<EntityLivingBase>
+			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) {
+				if (!WorldGuardCommons.canHurtEntity(caster ?: continue, e)) continue
+				e.attackEntityFrom(DamageSourceSpell.explosion(this, caster), SpellBase.over(caster, SpellDriftingMine.damage.D))
+			}
+			
 			worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4f, (1f + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2f) * 0.7f)
 			VisualEffectHandler.sendPacket(VisualEffects.EXPL, this)
 			setDead()
@@ -69,7 +76,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			var movingobjectposition: MovingObjectPosition? = worldObj.rayTraceBlocks(vec3, vec31)
 			
 			if (movingobjectposition == null) {
-				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0, 1.0, 1.0)) as  MutableList<EntityLivingBase>
+				val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox.addCoord(motionX, motionY, motionZ).expand(1)) as  MutableList<EntityLivingBase>
 				l.remove(caster)
 				
 				for (e in l)

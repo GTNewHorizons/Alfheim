@@ -37,6 +37,8 @@ object SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 		}
 		
 		for (i in 0..radius.I) {
+			if (!WorldGuardCommons.canDoSomethingHere(caster, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.NOTALLOW
+			
 			if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY, mop.blockZ)) {
 				if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY + 1, mop.blockZ)) {
 					result = checkCast(caster)
@@ -73,9 +75,9 @@ object SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 				}
 			}
 			
-			if (caster.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ) === Blocks.bedrock) {
+			if (caster.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ) === Blocks.bedrock)
 				return SpellCastResult.OBSTRUCT
-			}
+			
 			mop.blockX += px
 			mop.blockY += py
 			mop.blockZ += pz

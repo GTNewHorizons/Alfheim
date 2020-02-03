@@ -45,6 +45,8 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 			val mob = Vector3.fromEntityCenter(e)
 			mob.y = hit.y
 			if (hit.copy().sub(mob).length() <= radius) {
+				if (!WorldGuardCommons.canDoSomethingWithEntity(caster, e)) continue
+				
 				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.I, true))
 				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, duration, efficiency.I))
 			}

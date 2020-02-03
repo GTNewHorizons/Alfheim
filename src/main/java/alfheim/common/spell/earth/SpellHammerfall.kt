@@ -25,6 +25,8 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (!caster.onGround || caster.worldObj.isAirBlock(caster.posX.mfloor(), caster.posY.mfloor() - 1, caster.posZ.mfloor())) return SpellCastResult.WRONGTGT
 		
+		// if (!WorldGuardCommons.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+		
 		val result = checkCastOver(caster)
 		if (result != SpellCastResult.OK) return result
 		
@@ -32,6 +34,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, radius/5, radius)) as MutableList<EntityLivingBase>
 		list.remove(caster)
+		
 		for (living in list) {
 			val block = living.worldObj.getBlock(living.posX.mfloor(), (living.posY - 1).mfloor(), living.posZ.mfloor())
 			if (living.onGround &&
@@ -39,9 +42,14 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 				block.isSideSolid(living.worldObj, living.posX.mfloor(), (living.posY - 1).mfloor(), living.posZ.mfloor(), ForgeDirection.UP) &&
 				block.getBlockHardness(living.worldObj, living.posX.mfloor(), (living.posY - 1).mfloor(), living.posZ.mfloor()) < 2 &&
 				!PartySystem.mobsSameParty(caster, living) &&
-				Vector3.entityDistancePlane(living, caster) < radius)
+				Vector3.entityDistancePlane(living, caster) < radius) {
+				
+				if (!WorldGuardCommons.canHurtEntity(caster, living)) continue
+				
 				living.attackEntityFrom(DamageSourceSpell.hammerfall(caster), over(caster, damage.D))
+			}
 		}
+		
 		return result
 	}
 	

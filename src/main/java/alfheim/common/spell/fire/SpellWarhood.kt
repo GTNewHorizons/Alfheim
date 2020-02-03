@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem
+import alfheim.common.core.util.WorldGuardCommons
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -14,12 +15,16 @@ object SpellWarhood: SpellBase("warhood", EnumRace.SALAMANDER, 256000, 72000, 10
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
+		if (pt.count == 1 && pt[0] === caster) return SpellCastResult.NOTARGET
+		
+		if (!WorldGuardCommons.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			for (i in 0..pt.count) {
 				val mr = pt[i]
 				if (mr === caster || mr !is EntityPlayer) continue
+				if (!WorldGuardCommons.canDoSomethingHere(mr, caster.posX, caster.posY, caster.posZ, caster.worldObj)) continue
 				
 				ASJUtilities.sendToDimensionWithoutPortal(mr, caster.dimension, caster.posX, caster.posY, caster.posZ)
 			}

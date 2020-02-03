@@ -27,6 +27,6 @@ class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", fa
 		
 		val l = target.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(SpellThrow.radius)) as MutableList<EntityLivingBase>
 		l.remove(target)
-		for (e in l) if (!pt.isMember(e)) e.attackEntityFrom(DamageSource.causeMobDamage(target), SpellThrow.damage)
+		for (e in l) if (!pt.isMember(e) && WorldGuardCommons.canHurtEntity(target, e)) e.attackEntityFrom(DamageSource.causeMobDamage(target), SpellThrow.damage)
 	}
 }

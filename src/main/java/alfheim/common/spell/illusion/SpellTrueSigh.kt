@@ -7,7 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.network.MessageVisualEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
@@ -21,16 +21,18 @@ object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 		if (caster !is EntityPlayerMP) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster as EntityPlayer)
-		if (tg.target == null) return SpellCastResult.NOTARGET
+		val tgt = tg.target ?: return SpellCastResult.NOTARGET
 		
-		if (tg.isParty || tg.target !is EntityPlayer) return SpellCastResult.WRONGTGT
+		if (tg.isParty || tgt !is EntityPlayer) return SpellCastResult.WRONGTGT
 		
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+		
+		if (!WorldGuardCommons.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			val mana = CardinalSystem.ManaSystem.getMana(tg.target)
-			AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.MANA.ordinal, tg.target.entityId.D, mana.D, 0.0), caster)
+			val mana = CardinalSystem.ManaSystem.getMana(tgt)
+			AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.MANA.ordinal, tgt.entityId.D, mana.D, 0.0), caster)
 		}
 		
 		return result

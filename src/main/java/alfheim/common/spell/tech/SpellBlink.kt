@@ -39,6 +39,8 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 			}
 		}
 		
+		if (!WorldGuardCommons.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
+		
 		if (caster.worldObj.isAirBlock(x, y, z)) {
 			if (caster.worldObj.isAirBlock(x, y + 1, z)) {
 				val result = checkCast(caster)

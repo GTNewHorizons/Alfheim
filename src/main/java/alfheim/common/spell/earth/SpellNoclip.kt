@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.util.WorldGuardCommons
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -23,9 +24,11 @@ object SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg.target == null) return SpellCastResult.NOTARGET
-		if (!tg.isParty || tg.target !is EntityPlayer || !tg.target.capabilities.allowFlying) return SpellCastResult.WRONGTGT
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		val tgt = tg.target ?: return SpellCastResult.NOTARGET
+		if (!tg.isParty || tgt !is EntityPlayer || !tgt.capabilities.allowFlying) return SpellCastResult.WRONGTGT
+		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		
+		if (!WorldGuardCommons.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

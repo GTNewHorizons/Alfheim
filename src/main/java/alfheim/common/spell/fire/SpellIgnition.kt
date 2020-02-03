@@ -31,9 +31,10 @@ object SpellIgnition: SpellBase("ignition", EnumRace.SALAMANDER, 2000, 100, 5) {
 			5 -> ++mop.blockX
 		}
 		
-		if (!Blocks.fire.canPlaceBlockAt(caster.worldObj, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.WRONGTGT
+		if (!Blocks.fire.canPlaceBlockAt(caster.worldObj, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.OBSTRUCT
 		
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
+		
 		val mana = caster.capabilities.isCreativeMode || consumeMana(caster, (getManaCost() * if (race == caster.race) 1 else 2), false)
 		if (!mana) return SpellCastResult.NOMANA
 		

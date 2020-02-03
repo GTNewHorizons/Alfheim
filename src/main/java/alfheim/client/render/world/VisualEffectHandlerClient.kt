@@ -49,7 +49,7 @@ object VisualEffectHandlerClient {
 				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
 				HORN           -> horn(x, y, z)
 				ICELENS        -> addIceLens()
-				MANA           -> addMana(x, y)
+				MANA           -> addMana(x, y.I)
 				MANABURST      -> spawnManaburst(x, y, z)
 				MANAVOID       -> spawnManaVoid(x, y, z, x2, y2, z2)
 				MOON           -> moonBoom(x, y, z)
@@ -90,16 +90,17 @@ object VisualEffectHandlerClient {
 		mc.thePlayer.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDIceLens, SpellIceLens.duration, -1, true))
 	}
 	
-	fun addMana(enID: Double, mana: Double) {
+	fun addMana(enID: Double, mana: Int) {
 		val e = mc.theWorld.getEntityByID(enID.I) as? EntityPlayer ?: return
-		if (mana == 0.0) {
+		
+		if (mana == 0 || mana.I == Int.MAX_VALUE) {
 			var d = 0.0
 			while (d < 1.0) {
-				spawnBurst(e.posX, e.posY + d, e.posZ, 0.975f, 0.85f, 0.1f)
+				spawnBurst(e.posX, e.posY + d, e.posZ, 0.975f, if (mana == 0) 0.1f else 0.85f, 0.1f)
 				d += .2
 			}
 		} else
-			e.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDShowMana, mana.I, 100, true))
+			e.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDShowMana, mana, 100, true))
 	}
 	
 	fun horn(x: Double, y: Double, z: Double) {
