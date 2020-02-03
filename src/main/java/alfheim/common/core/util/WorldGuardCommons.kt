@@ -1,5 +1,6 @@
 package alfheim.common.core.util
 
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.world.*
@@ -12,6 +13,7 @@ object WorldGuardCommons {
 	fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World = performer.worldObj) = canDoSomethingHere(performer, x.mfloor(), y.mfloor(), z.mfloor(), world)
 	
 	fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World = performer.worldObj): Boolean {
+		if (AlfheimConfigHandler.ignoreWG) return true
 		if (performer !is EntityPlayerMP) return true
 		
 		var gt = WorldSettings.GameType.SURVIVAL

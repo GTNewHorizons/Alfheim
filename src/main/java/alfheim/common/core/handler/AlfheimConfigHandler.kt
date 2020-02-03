@@ -80,6 +80,7 @@ object AlfheimConfigHandler {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
+	var ignoreWG				= true
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION
@@ -213,6 +214,7 @@ object AlfheimConfigHandler {
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
+		ignoreWG = loadProp(CATEGORY_INTEGRATION, "ignoreWG", ignoreWG, false, "Set this to false to check if there are WG region on some action position and deny it")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")

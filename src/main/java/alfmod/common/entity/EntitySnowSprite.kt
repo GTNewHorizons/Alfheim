@@ -156,3 +156,7 @@ object SpriteKillhandler {
 		}
 	}
 }
+
+// FIXME remove when beta-27 is out
+private val Number.F get() = this.toFloat()
+private val Number.I get() = this.toInt()
