@@ -122,7 +122,8 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		
 		worldObj.worldInfo.isRaining = true
 		worldObj.worldInfo.rainTime = max(worldObj.worldInfo.rainTime, 3600)
-		worldObj.setRainStrength(1f)
+		worldObj.prevRainingStrength = 1f
+		worldObj.rainingStrength = 1f
 		
 		if (AlfheimCore.winter)
 			heal(if (attackTarget == null) 0.1f else 0.02f)
