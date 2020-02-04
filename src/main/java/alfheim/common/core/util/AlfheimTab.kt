@@ -179,6 +179,7 @@ import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
+import vazkii.botania.common.block.ModBlocks
 
 object AlfheimTab: CreativeTabs("Alfheim") {
 	
@@ -201,6 +202,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(manaInfuser)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
+		addBlock(ModBlocks.spreader, 4)
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
 		addBlock(manaAccelerator)

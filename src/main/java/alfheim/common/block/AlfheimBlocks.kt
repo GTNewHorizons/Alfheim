@@ -106,10 +106,10 @@ object AlfheimBlocks {
 	val starBlock: Block
 	val starBlock2: Block
 	val tradePortal: Block
+	//val transferer: Block BACK
 	val treeCrafterBlock: Block
 	val treeCrafterBlockRB: Block
 	val treeCrafterBlockAU: Block
-	//val transferer: Block BACK
 	
 	// DENDROLOGY
 	
@@ -248,10 +248,10 @@ object AlfheimBlocks {
 		starBlock = BlockStar()
 		starBlock2 = BlockCracklingStar()
 		tradePortal = BlockTradePortal()
+		//transferer = BlockTransferer() BACK
 		treeCrafterBlock = BlockTreeCrafter("treeCrafter", irisPlanks)
 		treeCrafterBlockRB = BlockTreeCrafter("treeCrafterRB", rainbowPlanks)
 		treeCrafterBlockAU = BlockTreeCrafter("treeCrafterAU", auroraPlanks)
-		//transferer = BlockTransferer() BACK
 		
 		// DENDOROLOGY
 		

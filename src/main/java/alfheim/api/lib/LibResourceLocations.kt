@@ -64,6 +64,8 @@ object LibResourceLocations {
 	var spreader = ResourceLocation("botania:textures/model/spreader.png")
 	val target = ResourceLocation(ModInfo.MODID, "textures/misc/target.png")
 	val targetq = ResourceLocation(ModInfo.MODID, "textures/misc/targetq.png")
+	val uberSpreader = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreader.png")
+	val uberSpreaderHalloween = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderHalloween.png")
 	val wind = ResourceLocation(ModInfo.MODID, "textures/model/entity/wind.png")
 	val yordinPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylon.png")
 	val yordinPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/ElvenPylonOld.png")
