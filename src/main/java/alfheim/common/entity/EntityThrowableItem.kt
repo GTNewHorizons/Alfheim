@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
 import alfheim.common.core.util.*
-import net.minecraft.block.material.Material
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
@@ -25,11 +25,11 @@ class EntityThrowableItem: EntityThrowable {
 				val iterator = list1.iterator()
 				
 				while (iterator.hasNext()) {
-					val entitylivingbase = iterator.next() as EntityLivingBase
-					val d0 = getDistanceSqToEntity(entitylivingbase)
+					val living = iterator.next() as EntityLivingBase
 					
-					if (d0 < 16.0) {
-						entitylivingbase.setFire(10)
+					if (getDistanceSqToEntity(living) < 16.0) {
+						if (InteractionSecurity.canHurtEntity(thrower ?: continue, living))
+							living.setFire(10)
 					}
 				}
 			}
@@ -38,7 +38,12 @@ class EntityThrowableItem: EntityThrowable {
 			var j = posY.mfloor()
 			var k = posZ.mfloor()
 			
-			if (worldObj.getBlock(i, j, k).material === Material.air && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
+			worldObj.playAuxSFX(2002, posX.roundToLong().I, posY.roundToLong().I, posZ.roundToLong().I, 16451) // fire resistance meta
+			setDead()
+			
+			if (InteractionSecurity.canDoSomethingHere(thrower ?: return, i, j, k, worldObj))
+			
+			if (worldObj.isAirBlock(i, j, k) && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
 				worldObj.setBlock(i, j, k, Blocks.fire)
 			}
 			
@@ -47,14 +52,13 @@ class EntityThrowableItem: EntityThrowable {
 				j = posY.mfloor() + rand.nextInt(6) - 1
 				k = posZ.mfloor() + rand.nextInt(6) - 1
 				
-				if (worldObj.getBlock(i, j, k).material === Material.air && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
+				if (!InteractionSecurity.canDoSomethingHere(thrower ?: continue, i, j, k, worldObj)) continue
+				
+				if (worldObj.isAirBlock(i, j, k) && Blocks.fire.canPlaceBlockAt(worldObj, i, j, k)) {
 					worldObj.setBlock(i, j, k, Blocks.fire)
 				}
 			}
 		}
-		
-		worldObj.playAuxSFX(2002, posX.roundToLong().I, posY.roundToLong().I, posZ.roundToLong().I, 16451) // fire resistance meta
-		setDead()
 	}
 	
 	public override fun func_70183_g() = -10f

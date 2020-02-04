@@ -1,5 +1,6 @@
 package alfheim.common.entity
 
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -125,7 +126,8 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 				if (target.capabilities.isCreativeMode)
 					return result
 			
-			target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), amount)
+			if (InteractionSecurity.canHurtEntity(player, target))
+				target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), amount)
 			
 			/*target.hurtTime = 0
 			target.hurtResistantTime = 0*/

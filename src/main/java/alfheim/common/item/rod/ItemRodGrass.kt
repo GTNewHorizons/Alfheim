@@ -2,6 +2,7 @@ package alfheim.common.item.rod
 
 import alfheim.common.core.util.mfloor
 import alfheim.common.item.ItemMod
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -22,11 +23,11 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 	
 	override fun getMaxItemUseDuration(stack: ItemStack?) = 72000
 	
-	override fun onUsingTick(stack: ItemStack?, player: EntityPlayer?, count: Int) {
-		if (count != getMaxItemUseDuration(stack) && count % 5 == 0) terraform(stack, player!!.worldObj, player)
+	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, count: Int) {
+		if (count != getMaxItemUseDuration(stack) && count % 5 == 0) terraform(stack, player.worldObj, player)
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
@@ -60,7 +61,7 @@ class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 		
 		fun place(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, block: Block, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return false
-			if (!player.canPlayerEdit(x, y, z, side, stack)) return false // FIXME ignores
+			if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return false
 			
 			world.setBlock(x, y, z, block)
 			ManaItemHandler.requestManaExactForTool(stack, player, cost, true)

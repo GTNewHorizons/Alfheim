@@ -3,6 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -36,6 +37,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			}
 		} else {
 			val did = placeAllBlocks(stack, player)
+			
 			if (did) {
 				displayRemainderCounter(player, stack)
 				if (!world.isRemote)
@@ -63,24 +65,21 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 	
 	fun placeAllBlocks(stack: ItemStack, player: EntityPlayer): Boolean {
 		val blocksToPlace = getBlocksToPlace(stack, player)
-		if (!hasBlocks(stack, player, blocksToPlace))
-			return false
 		
-		val size = getSize(stack)
-		val cost = size * 320
-		if (!ManaItemHandler.requestManaExact(stack, player, cost, false))
+		if (!hasBlocks(stack, player, blocksToPlace))
 			return false
 		
 		val stackToPlace = ItemStack(getBlock(stack), 1, getBlockMeta(stack))
 		for (v in blocksToPlace) placeBlockAndConsume(player, stack, stackToPlace, v.x.I, v.y.I, v.z.I)
-		ManaItemHandler.requestManaExact(stack, player, cost, true)
 		
 		return true
 	}
 	
 	private fun placeBlockAndConsume(player: EntityPlayer, requestor: ItemStack, blockToPlace: ItemStack, x: Int, y: Int, z: Int) {
-		if (blockToPlace.item == null)
-			return
+		if (blockToPlace.item == null) return
+		
+		if (!InteractionSecurity.canDoSomethingHere(player, x, y, z)) return
+		if (!ManaItemHandler.requestManaExact(requestor, player, 320, true)) return
 		
 		val block = Block.getBlockFromItem(blockToPlace.item)
 		val meta = blockToPlace.meta

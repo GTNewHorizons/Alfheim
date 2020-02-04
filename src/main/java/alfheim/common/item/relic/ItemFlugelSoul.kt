@@ -7,6 +7,7 @@ import alfheim.client.core.util.mc
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
+import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -76,18 +77,20 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		return false
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack? {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (isRightPlayer(player, stack) && !player.isSneaking) {
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
-				if (!world!!.isRemote && player is EntityPlayerMP && (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true))) {
-					world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
-					ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
+				if (!world.isRemote && player is EntityPlayerMP && ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true)) {
+					if (InteractionSecurity.canDoSomethingHere(player, pos.x, pos.y, pos.z, MinecraftServer.getServer().worldServerForDimension(pos.dim))) {
+						world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
+						ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
+					}
 				}
 			} else {
-				if (player.canPlayerEdit(player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor(), 1, stack))
-					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world!!.provider.dimensionId)
+				if (InteractionSecurity.canDoSomethingHere(player))
+					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world.provider.dimensionId)
 			}
 		}
 		
@@ -107,7 +110,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		return false
 	}
 	
-	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity, pos: Int, equipped: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, pos: Int, equipped: Boolean) {
 		super.onUpdate(stack, world, entity, pos, equipped)
 		val eqLastTick = wasEquipped(stack)
 		val firstTick = isFirstTick(stack)

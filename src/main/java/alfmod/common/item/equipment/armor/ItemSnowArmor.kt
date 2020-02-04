@@ -1,6 +1,7 @@
 package alfmod.common.item.equipment.armor
 
 import alfheim.common.core.util.mfloor
+import alfheim.common.security.InteractionSecurity
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
@@ -76,7 +77,9 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 		repair(stack, world, player)
 		
 		if (stack.item === AlfheimModularItems.snowBoots && hasArmorSet(player) && player.isSneaking) {
-			fun checkSet(world: World, x: Int, y: Int, z: Int) {
+			fun checkSet(world: World, player: EntityPlayer, x: Int, y: Int, z: Int) {
+				if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return
+				
 				val block = world.getBlock(x, y, z)
 				
 				for (pair in replacePairs)
@@ -89,11 +92,11 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 			val y = player.boundingBox.minY.mfloor() - 1
 			val z = player.posZ.mfloor()
 			
-			checkSet(world, x, y, z)
-			checkSet(world, x + 1, y, z)
-			checkSet(world, x - 1, y, z)
-			checkSet(world, x, y, z + 1)
-			checkSet(world, x, y, z - 1)
+			checkSet(world, player, x, y, z)
+			checkSet(world, player, x + 1, y, z)
+			checkSet(world, player, x - 1, y, z)
+			checkSet(world, player, x, y, z + 1)
+			checkSet(world, player, x, y, z - 1)
 		}
 	}
 	
