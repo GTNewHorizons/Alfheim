@@ -130,6 +130,7 @@ tile.botania:ShrineRock0Slab.name=Shrine Rock Slab
 tile.botania:ShrineRock0SlabFull.name=Shrine Rock Slab
 tile.alfheim:SnowGrass.name=Snowy Grass
 tile.alfheim:SnowLayer.name=Snow Layer
+tile.botania:spreader4.name=Mauftrium Mana Spreader
 tile.alfheim:TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
 
