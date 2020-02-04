@@ -3,7 +3,9 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.api.ModInfo
 import alfheim.common.core.util.mfloor
+import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -216,7 +218,7 @@ object AlfheimConfigHandler {
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
-		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "ignoreWG", interactionSecurity, false, "Set this to false to check if there are WG region on some action position and deny it")
+		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")

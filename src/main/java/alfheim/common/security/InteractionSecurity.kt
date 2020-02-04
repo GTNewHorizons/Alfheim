@@ -1,7 +1,9 @@
 package alfheim.common.security
 
+import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
+import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.DamageSource
@@ -23,6 +25,10 @@ object InteractionSecurity: ISecurityManager {
 		"block" -> BlockSecurityManager
 		"mixed" -> MixedSecurityManager
 		else -> DefaultSecurityManager
+	}
+	
+	init {
+		manager.also { FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Security manager is set to ${AlfheimConfigHandler.interactionSecurity}") }
 	}
 	
 	override fun canDoSomethingHere(performer: EntityLivingBase) = manager.canDoSomethingHere(performer)
