@@ -16,6 +16,7 @@ import vazkii.botania.common.Botania
 class ItemRodGrass: ItemMod("grassRod"), IManaUsingItem {
 
 	init {
+		setFull3D()
 		maxStackSize = 1
 	}
 	

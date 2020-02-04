@@ -3,9 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.api.ModInfo
 import alfheim.common.core.util.mfloor
-import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -83,7 +81,7 @@ object AlfheimConfigHandler {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
-	var interactionSecurity 	= "default"
+	var interactionSecurity 	= "mixed"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION

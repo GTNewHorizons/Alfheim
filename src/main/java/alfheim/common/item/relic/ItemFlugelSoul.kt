@@ -79,6 +79,9 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (isRightPlayer(player, stack) && !player.isSneaking) {
+			val metaWas = stack.meta
+			stack.meta = 0xFACE17
+			
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
@@ -92,6 +95,8 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 				if (InteractionSecurity.canDoSomethingHere(player))
 					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world.provider.dimensionId)
 			}
+			
+			stack.meta = metaWas
 		}
 		
 		return stack

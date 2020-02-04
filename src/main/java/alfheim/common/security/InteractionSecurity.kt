@@ -6,6 +6,7 @@ import alfheim.common.core.util.mfloor
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
 import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
@@ -20,22 +21,23 @@ interface ISecurityManager {
 
 object InteractionSecurity: ISecurityManager {
 	
-	val manager: ISecurityManager
-		get() = when(AlfheimConfigHandler.interactionSecurity) {
-		"block" -> BlockSecurityManager
-		"mixed" -> MixedSecurityManager
-		else -> DefaultSecurityManager
-	}
+	fun manager(): ISecurityManager =
+		when (AlfheimConfigHandler.interactionSecurity) {
+			"default" -> DefaultSecurityManager
+			"block"   -> BlockSecurityManager
+			"mixed"   -> MixedSecurityManager
+			else      -> MixedSecurityManager
+		}
 	
 	init {
-		manager.also { FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Security manager is set to ${AlfheimConfigHandler.interactionSecurity}") }
+		manager().also { FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Security manager is set to ${AlfheimConfigHandler.interactionSecurity}") }
 	}
 	
-	override fun canDoSomethingHere(performer: EntityLivingBase) = manager.canDoSomethingHere(performer)
-	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = manager.canDoSomethingHere(performer, x, y, z)
-	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = manager.canDoSomethingHere(performer, x, y, z)
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = manager.canDoSomethingWithEntity(performer, target)
-	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = manager.canHurtEntity(attacker, target)
+	override fun canDoSomethingHere(performer: EntityLivingBase) = manager().canDoSomethingHere(performer)
+	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = manager().canDoSomethingHere(performer, x, y, z)
+	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = manager().canDoSomethingHere(performer, x, y, z)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = manager().canDoSomethingWithEntity(performer, target)
+	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = manager().canHurtEntity(attacker, target)
 }
 
 private object DefaultSecurityManager: ISecurityManager {
@@ -52,16 +54,9 @@ private object BlockSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = canDoSomethingHere(performer, x.mfloor(), y.mfloor(), z.mfloor(), world)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World): Boolean {
 		if (performer !is EntityPlayerMP) return true
+		if (MinecraftServer.getServer().isSinglePlayer) return true
 		
-		var gt = WorldSettings.GameType.SURVIVAL
-		
-		if (performer.capabilities.allowEdit) {
-			if (performer.capabilities.isCreativeMode)
-				gt = WorldSettings.GameType.CREATIVE
-		} else
-			gt = WorldSettings.GameType.ADVENTURE
-		
-		return !ForgeHooks.onBlockBreakEvent(world, gt, performer, x, y, z).isCanceled
+		return !ForgeHooks.onBlockBreakEvent(world, WorldSettings.GameType.SURVIVAL, performer, x, y, z).isCanceled.also { world.markBlockForUpdate(x, y, z) }
 	}
 	
 	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = canDoSomethingHere(performer, target.posX.mfloor(), target.posY.mfloor(), target.posZ.mfloor(), world)
