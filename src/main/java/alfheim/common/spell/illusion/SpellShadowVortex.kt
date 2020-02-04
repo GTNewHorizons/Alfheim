@@ -5,6 +5,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 
@@ -23,7 +24,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, 0.0, radius)) as MutableList<EntityLivingBase>
 		list.forEach {
-			if (it != caster && !CardinalSystem.PartySystem.mobsSameParty(caster, it) && WorldGuardCommons.canHurtEntity(caster, it))
+			if (it != caster && !CardinalSystem.PartySystem.mobsSameParty(caster, it) && InteractionSecurity.canHurtEntity(caster, it))
 				for (i in 1..50)
 					if (teleportRandomly(it)) {
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)

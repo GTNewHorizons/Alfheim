@@ -6,6 +6,7 @@ import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.fire.SpellFirewall
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.*
@@ -61,7 +62,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 			for (e in list) {
 				if (e !== caster && obb!!.intersectsWith(e.boundingBox)) {
 					
-					if (!WorldGuardCommons.canHurtEntity(caster ?: continue, e)) continue
+					if (!InteractionSecurity.canHurtEntity(caster ?: continue, e)) continue
 					
 					e.attackEntityFrom(DamageSourceSpell.firewall(this, caster), SpellBase.over(caster, SpellFirewall.damage.D))
 					if (!PartySystem.mobsSameParty(caster, e) || AlfheimConfigHandler.frienldyFire) e.setFire(3)

@@ -9,6 +9,7 @@ import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageVisualEffect
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
 
@@ -27,7 +28,7 @@ object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 		
 		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
 		
-		if (!WorldGuardCommons.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

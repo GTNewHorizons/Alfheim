@@ -9,6 +9,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraftforge.common.util.ForgeDirection
@@ -44,7 +45,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 				!PartySystem.mobsSameParty(caster, living) &&
 				Vector3.entityDistancePlane(living, caster) < radius) {
 				
-				if (!WorldGuardCommons.canHurtEntity(caster, living)) continue
+				if (!InteractionSecurity.canHurtEntity(caster, living)) continue
 				
 				living.attackEntityFrom(DamageSourceSpell.hammerfall(caster), over(caster, damage.D))
 			}

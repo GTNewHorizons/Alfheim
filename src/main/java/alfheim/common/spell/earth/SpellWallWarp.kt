@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
@@ -37,7 +38,7 @@ object SpellWallWarp: SpellBase("wallwarp", EnumRace.GNOME, 4000, 600, 5) {
 		}
 		
 		for (i in 0..radius.I) {
-			if (!WorldGuardCommons.canDoSomethingHere(caster, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canDoSomethingHere(caster, mop.blockX, mop.blockY, mop.blockZ)) return SpellCastResult.NOTALLOW
 			
 			if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY, mop.blockZ)) {
 				if (caster.worldObj.isAirBlock(mop.blockX, mop.blockY + 1, mop.blockZ)) {

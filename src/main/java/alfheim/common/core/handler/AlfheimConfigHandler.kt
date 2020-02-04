@@ -32,6 +32,7 @@ object AlfheimConfigHandler {
 	var hpHooks					= true
 	var maxParticles			= 4000
 	var modularThread			= false
+	var modularFilename			= ""
 	var primaryClassTransformer	= true
 	
 	// DIMENSION
@@ -80,7 +81,7 @@ object AlfheimConfigHandler {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
-	var ignoreWG				= true
+	var interactionSecurity 	= "default"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION
@@ -170,6 +171,7 @@ object AlfheimConfigHandler {
 		gaiaNameColor = loadProp(CATEGORY_PRELOAD, "gaiaNameColor", gaiaNameColor, false, "Gaia name color on boss bar")
 		hpHooks = loadProp(CATEGORY_PRELOAD, "hpHooks", hpHooks, true, "Toggles hooks to vanilla health system. Set this to false if you have any issues with other systems")
 		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
+		modularFilename = loadProp(CATEGORY_PRELOAD, "modularFilename", modularFilename, true, "Custom name for Alfheim Modular .jar file")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
 		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
 		
@@ -214,7 +216,7 @@ object AlfheimConfigHandler {
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
-		ignoreWG = loadProp(CATEGORY_INTEGRATION, "ignoreWG", ignoreWG, false, "Set this to false to check if there are WG region on some action position and deny it")
+		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "ignoreWG", interactionSecurity, false, "Set this to false to check if there are WG region on some action position and deny it")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity [for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools]")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")

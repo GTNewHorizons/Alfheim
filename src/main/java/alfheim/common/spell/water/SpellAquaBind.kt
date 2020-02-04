@@ -12,6 +12,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageEffect
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
@@ -45,7 +46,7 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 			val mob = Vector3.fromEntityCenter(e)
 			mob.y = hit.y
 			if (hit.copy().sub(mob).length() <= radius) {
-				if (!WorldGuardCommons.canDoSomethingWithEntity(caster, e)) continue
+				if (!InteractionSecurity.canDoSomethingWithEntity(caster, e)) continue
 				
 				e.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, duration, efficiency.I, true))
 				AlfheimCore.network.sendToAll(MessageEffect(e.entityId, Potion.moveSlowdown.id, duration, efficiency.I))

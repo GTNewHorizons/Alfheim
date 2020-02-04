@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -34,12 +35,12 @@ object SpellSwap: SpellBase("swap", EnumRace.LEPRECHAUN, 12000, 1200, 20) {
 		if (!tg.isParty && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
 		
 		if (tg.isParty) {
-			if (!WorldGuardCommons.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
-			if (!WorldGuardCommons.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
-			if (!WorldGuardCommons.canDoSomethingHere(caster, tgt.posX, tgt.posY, tgt.posZ, tgt.worldObj)) return SpellCastResult.NOTALLOW
-			if (!WorldGuardCommons.canDoSomethingHere(tgt, caster.posX, caster.posY, caster.posZ, caster.worldObj)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canDoSomethingHere(caster, tgt.posX, tgt.posY, tgt.posZ, tgt.worldObj)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canDoSomethingHere(tgt, caster.posX, caster.posY, caster.posZ, caster.worldObj)) return SpellCastResult.NOTALLOW
 		} else {
-			if (!WorldGuardCommons.canHurtEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+			if (!InteractionSecurity.canHurtEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		}
 		
 		val result = checkCast(caster)

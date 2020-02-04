@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem
-import alfheim.common.core.util.WorldGuardCommons
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -27,8 +27,8 @@ object SpellJoin: SpellBase("join", EnumRace.IMP, 10000, 1800, 30) {
 		if (tgt === caster) return SpellCastResult.WRONGTGT
 		
 		val (tx, ty, tz) = Vector3.fromEntity(tgt)
-		if (!WorldGuardCommons.canDoSomethingHere(caster, tx, ty, tz, tgt.worldObj)) return SpellCastResult.NOTALLOW
-		if (!WorldGuardCommons.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(caster, tx, ty, tz, tgt.worldObj)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK)

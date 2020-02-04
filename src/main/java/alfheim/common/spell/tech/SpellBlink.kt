@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
@@ -39,7 +40,7 @@ object SpellBlink: SpellBase("blink", EnumRace.LEPRECHAUN, 10000, 1200, 5) {
 			}
 		}
 		
-		if (!WorldGuardCommons.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
 		
 		if (caster.worldObj.isAirBlock(x, y, z)) {
 			if (caster.worldObj.isAirBlock(x, y + 1, z)) {

@@ -7,6 +7,7 @@ import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.water.SpellAquaStream
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -49,7 +50,7 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 		if (mop?.hitVec != null) {
 			hp = Vector3(mop.hitVec)
 			if (mop.typeOfHit == MovingObjectType.ENTITY) {
-				if (mop.entityHit is EntityLivingBase && !WorldGuardCommons.canHurtEntity(caster ?: return, mop.entityHit as EntityLivingBase)) return
+				if (mop.entityHit is EntityLivingBase && !InteractionSecurity.canHurtEntity(caster ?: return, mop.entityHit as EntityLivingBase)) return
 				
 				mop.entityHit.attackEntityFrom(DamageSourceSpell.water(caster!!), SpellBase.over(caster, SpellAquaStream.damage.D))
 			}

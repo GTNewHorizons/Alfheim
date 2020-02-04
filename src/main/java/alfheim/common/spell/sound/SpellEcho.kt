@@ -8,6 +8,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageVisualEffect
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.monster.IMob
@@ -26,7 +27,7 @@ object SpellEcho: SpellBase("echo", EnumRace.POOKA, 4000, 1500, 5) {
 		for (e in list) {
 			if (Vector3.entityDistance(e, caster) > radius*2) continue
 			
-			if (!WorldGuardCommons.canDoSomethingWithEntity(caster, e)) continue
+			if (!InteractionSecurity.canDoSomethingWithEntity(caster, e)) continue
 			
 			when (e) {
 				is EntityItem       -> VisualEffectHandler.sendPacket(VisualEffects.ECHO_ITEM, e)

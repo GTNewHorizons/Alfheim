@@ -14,6 +14,7 @@ import alfheim.common.core.util.*
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellTimeStop
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -899,7 +900,7 @@ object CardinalSystem {
 			
 			for (tsa in tsAreas[e.dimension]!!) {
 				if (Vector3.vecEntityDistance(tsa.pos, e) < SpellTimeStop.radius) {
-					if (MinecraftServer.getServer().configurationManager.playerEntityList.firstOrNull { it as EntityPlayerMP; it.uniqueID == tsa.uuid }?.let { !WorldGuardCommons.canDoSomethingWithEntity(it as EntityPlayerMP, e) } != false) return false
+					if (MinecraftServer.getServer().configurationManager.playerEntityList.firstOrNull { it as EntityPlayerMP; it.uniqueID == tsa.uuid }?.let { !InteractionSecurity.canDoSomethingWithEntity(it as EntityPlayerMP, e) } != false) return false
 					
 					if (e is ITimeStopSpecific && (e as ITimeStopSpecific).affectedBy(tsa.uuid)) return true
 					

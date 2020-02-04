@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
@@ -40,7 +41,7 @@ object SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {
 			}
 		}
 		
-		if (!WorldGuardCommons.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
 		
 		if (caster.worldObj.canBlockSeeTheSky(x, y, z) && caster.worldObj.getPrecipitationHeight(x, z) <= y) {
 			result = checkCast(caster)

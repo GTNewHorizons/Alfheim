@@ -5,6 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.darkness.SpellSacrifice
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
@@ -37,7 +38,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 		var dmg: DamageSource
 		for (e in l) {
 			if (e is IBossDisplayData) continue
-			if (!WorldGuardCommons.canHurtEntity(target, e)) continue
+			if (!InteractionSecurity.canHurtEntity(target, e)) continue
 			
 			dmg = if (e === target) DamageSourceSpell.sacrifice else DamageSourceSpell.sacrifice(target)
 			e.attackEntityFrom(dmg, SpellSacrifice.damage)

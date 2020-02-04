@@ -7,7 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.WorldGuardCommons
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -28,7 +28,7 @@ object SpellNoclip: SpellBase("noclip", EnumRace.GNOME, 24000, 2400, 20) {
 		if (!tg.isParty || tgt !is EntityPlayer || !tgt.capabilities.allowFlying) return SpellCastResult.WRONGTGT
 		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
 		
-		if (!WorldGuardCommons.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

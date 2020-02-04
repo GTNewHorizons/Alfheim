@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.earth.SpellMortar
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -43,7 +44,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 		if (!worldObj.isRemote) {
 			if (mop?.entityHit is EntityLivingBase && !PartySystem.mobsSameParty(mop.entityHit as EntityLivingBase, caster)) {
 				do {
-					if (!WorldGuardCommons.canHurtEntity(caster ?: break, mop.entityHit as EntityLivingBase)) break
+					if (!InteractionSecurity.canHurtEntity(caster ?: break, mop.entityHit as EntityLivingBase)) break
 					mop.entityHit.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage.D))
 					if (mop.entityHit is EntityPlayer) (mop.entityHit as EntityPlayer).inventory.damageArmor(MathHelper.ceiling_float_int(SpellBase.over(caster, SpellMortar.damage * 2.5)).F)
 				} while (false)
@@ -51,7 +52,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			
 			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, this.boundingBox(SpellMortar.radius)) as List<EntityLivingBase>
 			for (e in l) if (!PartySystem.mobsSameParty(e, caster)) {
-				if (!WorldGuardCommons.canHurtEntity(caster ?: continue, e)) continue
+				if (!InteractionSecurity.canHurtEntity(caster ?: continue, e)) continue
 				e.attackEntityFrom(DamageSourceSpell.mortar(this, caster), SpellBase.over(caster, SpellMortar.damage * 0.625))
 			}
 			

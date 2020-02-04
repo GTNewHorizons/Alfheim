@@ -7,8 +7,8 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.WorldGuardCommons
 import alfheim.common.network.MessageEffect
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
@@ -31,7 +31,7 @@ object SpellDecay: SpellBase("decay", EnumRace.IMP, 12000, 2400, 25) {
 		
 		if (ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
 		
-		if (!WorldGuardCommons.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
