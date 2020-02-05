@@ -1,6 +1,8 @@
 package alfheim.common.block.mana
 
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.mc
+import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.helper.IconHelper
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
@@ -13,10 +15,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.mana.BurstProperties
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.lib.LibResources
+import vazkii.botania.client.model.ModelSpreader
 import vazkii.botania.client.render.block.RenderSpreader
 import vazkii.botania.client.render.tile.RenderTileSpreader
 import vazkii.botania.common.block.ModBlocks
@@ -135,11 +139,15 @@ object ManaSpreaderExtender {
 	// ######## RenderTileSpreader
 	
 	var textureHook = false
+	var modelHook = false
 	
 	@JvmStatic
 	@Hook
 	fun renderTileEntityAt(render: RenderTileSpreader, tile: TileEntity, d0: Double, d1: Double, d2: Double, ticks: Float) {
-		if (isUBER_SPREADER(tile as? TileSpreader ?: return)) textureHook = true
+		if (isUBER_SPREADER(tile as? TileSpreader ?: return)) {
+			textureHook = true
+			modelHook = true
+		}
 	}
 	
 	@JvmStatic
@@ -153,5 +161,28 @@ object ManaSpreaderExtender {
 		}
 		
 		return false
+	}
+	
+	// ######## ModelSpreader
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun render(model: ModelSpreader) {
+		if (modelHook) {
+			mc.renderEngine.bindTexture(LibResourceLocations.uberSpreaderFrame)
+			
+			var s = 1.1f
+			val t = s - 1
+			glTranslatef(0f, -t, 0f)
+			glScalef(s, s, s)
+			ModelSpreaderFrame.render()
+			s = 1 / s
+			glScalef(s, s, s)
+			glTranslatef(0f, t, 0f)
+			
+			modelHook = false
+			
+			mc.renderEngine.bindTexture(if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader)
+		}
 	}
 }
