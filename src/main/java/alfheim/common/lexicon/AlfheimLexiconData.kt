@@ -61,6 +61,7 @@ object AlfheimLexiconData {
 	lateinit var manaAcc: LexiconEntry
 	lateinit var manaImba: LexiconEntry
 	lateinit var mask: LexiconEntry
+	lateinit var uberSpreader: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
 	lateinit var moonbow: LexiconEntry
@@ -120,6 +121,7 @@ object AlfheimLexiconData {
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
 		manaImba = BLexiconEntry("manaImba", categoryAlfheim)
+		uberSpreader = BLexiconEntry("mauSpred", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
 		multbaub = BLexiconEntry("multbaub", categoryAlfheim)
 		ores = BLexiconEntry("ores", categoryAlfheim)
@@ -328,6 +330,8 @@ object AlfheimLexiconData {
 		
 		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
+		uberSpreader.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeUberSpreader))
+		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		
 		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn), PageText("3")).icon = ItemStack(AlfheimItems.soulHorn)
@@ -479,6 +483,7 @@ object AlfheimLexiconData {
 		ruling.knowledgeType = kt
 		crescent.knowledgeType = kt
 		reality.knowledgeType = kt
+		uberSpreader.knowledgeType = kt
 		flugel.knowledgeType = kt
 		
 		if (AlfheimCore.enableElvenStory) {

@@ -30,7 +30,7 @@ import net.minecraft.util.*
 object PacketHandlerClient {
 	
 	fun handle(packet: MessageVisualEffect) {
-		VisualEffectHandlerClient.select(VisualEffects.values()[packet.i], packet.x, packet.y, packet.z, packet.x2, packet.y2, packet.z2)
+		VisualEffectHandlerClient.select(VisualEffects.values()[packet.type], packet.data)
 	}
 	
 	fun handle(packet: MessageParty) {

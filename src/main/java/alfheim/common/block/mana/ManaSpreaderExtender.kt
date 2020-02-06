@@ -3,6 +3,7 @@ package alfheim.common.block.mana
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSpreaderFrame
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
@@ -14,7 +15,6 @@ import net.minecraft.client.renderer.texture.*
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
-import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.mana.BurstProperties
 import vazkii.botania.client.core.handler.HUDHandler
@@ -31,9 +31,7 @@ import vazkii.botania.common.entity.EntityManaBurst
 @Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object ManaSpreaderExtender {
 	
-	const val MAX_MANA = 1000
-	const val ULTRA_MAX_MANA = 6400
-	const val UBER_MAX_MANA = 24000
+	val UBER_MAX_MANA get() = AlfheimConfigHandler.uberSpreaderCapacity
 	
 	lateinit var icon: IIcon
 	
@@ -79,7 +77,7 @@ object ManaSpreaderExtender {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getMaxMana(tile: TileSpreader) = if (isUBER_SPREADER(tile)) UBER_MAX_MANA else if (tile.isULTRA_SPREADER) ULTRA_MAX_MANA else MAX_MANA
+	fun getMaxMana(tile: TileSpreader) = if (isUBER_SPREADER(tile)) UBER_MAX_MANA else if (tile.isULTRA_SPREADER) TileSpreader.ULTRA_MAX_MANA else TileSpreader.MAX_MANA
 	
 	fun isUBER_SPREADER(tile: TileSpreader) = if (tile.worldObj == null) staticUber else tile.getBlockMetadata() == 4
 	
@@ -91,8 +89,8 @@ object ManaSpreaderExtender {
 		HUDHandler.drawSimpleManaHUD(color, tile.knownMana, tile.maxMana, name, res)
 		val lens: ItemStack? = tile.getStackInSlot(0)
 		if (lens != null) {
-			GL11.glEnable(GL11.GL_BLEND)
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			val lensName = lens.displayName
 			val width = 16 + mc.fontRenderer.getStringWidth(lensName) / 2
 			val x = res.scaledWidth / 2 - width
@@ -101,14 +99,14 @@ object ManaSpreaderExtender {
 			RenderHelper.enableGUIStandardItemLighting()
 			RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, lens, x, y)
 			RenderHelper.disableStandardItemLighting()
-			GL11.glDisable(GL11.GL_LIGHTING)
-			GL11.glDisable(GL11.GL_BLEND)
+			glDisable(GL_LIGHTING)
+			glDisable(GL_BLEND)
 		}
 		if (tile.receiver != null) {
 			val receiverTile = tile.receiver as TileEntity
 			val recieverStack = ItemStack(tile.worldObj.getBlock(receiverTile.xCoord, receiverTile.yCoord, receiverTile.zCoord), 1, receiverTile.getBlockMetadata())
-			GL11.glEnable(GL11.GL_BLEND)
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			
 			@Suppress("UNNECESSARY_SAFE_CALL")
 			if (recieverStack?.item != null) {
@@ -121,10 +119,10 @@ object ManaSpreaderExtender {
 				RenderItem.getInstance().renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, recieverStack, x, y)
 				RenderHelper.disableStandardItemLighting()
 			}
-			GL11.glDisable(GL11.GL_LIGHTING)
-			GL11.glDisable(GL11.GL_BLEND)
+			glDisable(GL_LIGHTING)
+			glDisable(GL_BLEND)
 		}
-		GL11.glColor4f(1f, 1f, 1f, 1f)
+		glColor4f(1f, 1f, 1f, 1f)
 	}
 	
 	
@@ -155,7 +153,7 @@ object ManaSpreaderExtender {
 	fun bindTexture(tm: TextureManager, loc: ResourceLocation?): Boolean {
 		if (textureHook) {
 			textureHook = false
-			tm.bindTexture(if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader)
+			tm.bindTexture(if (AlfheimConfigHandler.uberSpreaderColorGolden) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
 			
 			return true
 		}
@@ -182,7 +180,7 @@ object ManaSpreaderExtender {
 			
 			modelHook = false
 			
-			mc.renderEngine.bindTexture(if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader)
+			mc.renderEngine.bindTexture(if (AlfheimConfigHandler.uberSpreaderColorGolden) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
 		}
 	}
 }

@@ -188,6 +188,7 @@ object AlfheimRecipes {
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
 	lateinit var recipeTradePortal: IRecipe
+	lateinit var recipeUberSpreader: IRecipe
 	
 	lateinit var recipeInterdimensional: RecipeElvenTrade
 	//lateinit var recipeStoryToken: RecipeElvenTrade
@@ -605,6 +606,14 @@ object AlfheimRecipes {
 						 'L', LIVING_ROCK,
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(spreader, 1, 4),
+						 "MMM", "ESI", "MMM",
+						 'M', MAUFTRIUM_INGOT,
+						 'E', ELVORIUM_INGOT,
+						 'S', ItemStack(spreader, 1, 3),
+						 'I', IFFESAL_DUST)
+		recipeUberSpreader = BotaniaAPI.getLatestAddedRecipe()
 		
 		// #############################################################################################################
 		// ################################################ DECO BLOCKS ################################################

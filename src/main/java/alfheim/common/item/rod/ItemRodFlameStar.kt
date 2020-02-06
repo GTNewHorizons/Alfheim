@@ -3,6 +3,8 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
@@ -19,7 +21,6 @@ import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.item.IManaProficiencyArmor
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.Botania
 import java.awt.Color
 
 /**
@@ -65,7 +66,7 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 		val prowess = IManaProficiencyArmor.Helper.hasProficiency(player)
 		
 		val cost = getCost(prowess, priest)
-		val manaFlag = ManaItemHandler.requestManaExactForTool(stack, player, cost, false).also { if (!it) return }
+		if (!ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) return
 		
 		val power = getDamage(prowess, priest)
 		
@@ -83,7 +84,7 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 		val g = color.green / 255f
 		val b = color.blue / 255f
 		
-		Botania.proxy.sparkleFX(world, x, y, z, r, g, b, 1f, 5)
+		VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.FLAMESTAR, world.provider.dimensionId, x, y, z, r.D, g.D, b.D)
 		
 		if (count % 20 == 0) {
 			val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB.getBoundingBox(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5))

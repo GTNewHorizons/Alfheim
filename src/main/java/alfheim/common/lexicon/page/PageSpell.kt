@@ -1,12 +1,13 @@
 package alfheim.common.lexicon.page
 
+import alfheim.api.entity.race
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.core.util.mc
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
@@ -66,15 +67,17 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 			val y = yn + 115
 			if (mx > x + 1 && mx <= x + 101 && my > y - 52 && my <= y - 38) ratio = 1
 			
+			val cost = spell.getManaCost().times(if (spell.race == mc.thePlayer.race || spell.hard) 1.0 else AlfheimConfigHandler.raceManaMult).I
+			
 			if (AlfheimConfigHandler.numericalMana) {
 				font.drawString(StatCollector.translateToLocal("lexicon.mana"), xn + 16, y - 8, 0)
 				font.drawString("/" + TilePool.MAX_MANA / ratio, xn + gui.width / 2, y - 8, 0x0000FF)
-				text = spell.getManaCost().toString() + ""
+				text = cost.toString()
 				font.drawString(text, xn + gui.width / 2 - font.getStringWidth(text), y - 8, 0x0000FF)
 			}
 			
 			AlfheimHookHandler.numMana = false
-			HUDHandler.renderManaBar(x, y, 0x0000FF, 0.75f, spell.getManaCost(), TilePool.MAX_MANA / ratio)
+			HUDHandler.renderManaBar(x, y, 0x0000FF, 0.75f, cost, TilePool.MAX_MANA / ratio)
 			AlfheimHookHandler.numMana = true
 			
 			text = String.format(StatCollector.translateToLocal("botaniamisc.ratio"), ratio)

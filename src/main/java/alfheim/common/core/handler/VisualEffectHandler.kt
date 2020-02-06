@@ -11,11 +11,7 @@ object VisualEffectHandler {
 		sendPacket(s, e.dimension, e.posX, e.posY, e.posZ)
 	}
 	
-	fun sendPacket(s: VisualEffects, dimension: Int, x: Double, y: Double, z: Double) {
-		AlfheimCore.network.sendToDimension(MessageVisualEffect(s.ordinal, x, y, z), dimension)
-	}
-	
-	fun sendPacket(s: VisualEffects, dimension: Int, x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
-		AlfheimCore.network.sendToDimension(MessageVisualEffect(s.ordinal, x, y, z, x2, y2, z2), dimension)
+	fun sendPacket(s: VisualEffects, dimension: Int, vararg data: Double) {
+		AlfheimCore.network.sendToDimension(MessageVisualEffect(s.ordinal, *data), dimension)
 	}
 }

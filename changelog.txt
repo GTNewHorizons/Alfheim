@@ -1,6 +1,7 @@
 Innovations:
- --
+ Worldguard regions security manager
+ Configurable-capacity manaspreader (2400 mp/burst)
 
 Fixes:
- No stream to manavoid from other players
+ No manavoid stream, god emblems and firerod particles from other players
  [MMO] Parchment of Discord recipe is now unavailable w/o MMO

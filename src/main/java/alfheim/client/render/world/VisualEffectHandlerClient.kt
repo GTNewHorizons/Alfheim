@@ -28,46 +28,48 @@ object VisualEffectHandlerClient {
 	
 	val v = Vector3()
 	
-	fun select(s: VisualEffects, x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
-		if (s == SPLASH) spawnSplash(x, y, z)
-		
+	fun select(s: VisualEffects, d: DoubleArray) {
 		if (AlfheimCore.enableMMO) {
 			when (s) {
-				ACID           -> spawnAcid(x, y, z)
-				AQUABIND       -> spawnAquaBind(x, y, z)
-				AQUASTREAM     -> spawnAquaStream(x, y, z, x2, y2, z2)
-				AQUASTREAM_HIT -> spawnAquaStreamHit(x, y, z)
-				DISPEL         -> spawnBurst(x, y, z, 1f, 0f, 0f)
-				ECHO           -> spawnEcho(x, y, z)
-				ECHO_ENTITY    -> spawnEchoEntity(x, y, z)
-				ECHO_ITEM      -> spawnEchoItem(x, y, z)
-				ECHO_MOB       -> spawnEchoMob(x, y, z)
-				ECHO_PLAYER    -> spawnEchoPlayer(x, y, z)
-				EXPL           -> spawnExplosion(x, y, z)
-				GAIA_SOUL      -> spawnGaiaSoul(x, y, z)
-				GRAVITY        -> spawnGravity(x, y, z, x2, y2, z2)
-				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
-				HORN           -> horn(x, y, z)
+				ACID           -> spawnAcid(d[0], d[1], d[2])
+				AQUABIND       -> spawnAquaBind(d[0], d[1], d[2])
+				AQUASTREAM     -> spawnAquaStream(d[0], d[1], d[2], d[3], d[4], d[5])
+				AQUASTREAM_HIT -> spawnAquaStreamHit(d[0], d[1], d[2])
+				DISPEL         -> spawnBurst(d[0], d[1], d[2], 1f, 0f, 0f)
+				ECHO           -> spawnEcho(d[0], d[1], d[2])
+				ECHO_ENTITY    -> spawnEchoEntity(d[0], d[1], d[2])
+				ECHO_ITEM      -> spawnEchoItem(d[0], d[1], d[2])
+				ECHO_MOB       -> spawnEchoMob(d[0], d[1], d[2])
+				ECHO_PLAYER    -> spawnEchoPlayer(d[0], d[1], d[2])
+				EMBLEM0        -> spawnEmblem0(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7])
+				EMBLEM1        -> spawnEmblem1(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7])
+				EMBLEM2        -> spawnEmblem2(d[0], d[1], d[2], d[3], d[4], d[5])
+				EMBLEM3        -> spawnEmblem3(d[0], d[1], d[2], d[3])
+				EXPL           -> spawnExplosion(d[0], d[1], d[2])
+				FLAMESTAR      -> spawnFlameStar(d[0], d[1], d[2], d[3], d[4], d[5])
+				GAIA_SOUL      -> spawnGaiaSoul(d[0], d[1], d[2])
+				GRAVITY        -> spawnGravity(d[0], d[1], d[2], d[3], d[4], d[5])
+				HEAL           -> spawnBurst(d[0], d[1], d[2], 0f, 1f, 0f)
+				HORN           -> horn(d[0], d[1], d[2])
 				ICELENS        -> addIceLens()
-				MANA           -> addMana(x, y.I)
-				MANABURST      -> spawnManaburst(x, y, z)
-				MANAVOID       -> spawnManaVoid(x, y, z, x2, y2, z2)
-				MOON           -> moonBoom(x, y, z)
-				NOTE           -> spawnNote(x, y, z)
-				NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
-				POTION         -> spawnPotion(x, y, z, x2.I, y2 == 1.0)
-				PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
-				PURE_AREA      -> spawnPure(x, y, z)
+				MANA           -> addMana(d[0], d[1].I)
+				MANABURST      -> spawnManaburst(d[0], d[1], d[2])
+				MANAVOID       -> spawnManaVoid(d[0], d[1], d[2], d[3], d[4], d[5])
+				MOON           -> moonBoom(d[0], d[1], d[2])
+				NOTE           -> spawnNote(d[0], d[1], d[2])
+				NVISION        -> spawnBurst(d[0], d[1], d[2], 0f, 0f, 1f)
+				POTION         -> spawnPotion(d[0], d[1], d[2], d[3].I, d[4] == 1.0)
+				PURE           -> spawnBurst(d[0], d[1], d[2], 0f, 0.75f, 1f)
+				PURE_AREA      -> spawnPure(d[0], d[1], d[2])
 				QUAD           -> quadDamage()
 				QUADH          -> quadHurt()
-				SHADOW         -> spawnBurst(x, y, z, 0.75f, 0.75f, 0.75f)
-				SMOKE          -> spawnSmoke(x, y, z)
-				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
-				TREMORS        -> spawnTremors(x, y, z)
-				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
-				WIRE           -> spawnWire(x, y, z, x2)
-				
-				else           -> Unit
+				SHADOW         -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
+				SMOKE          -> spawnSmoke(d[0], d[1], d[2])
+				SPLASH         -> spawnSplash(d[0], d[1], d[2])
+				THROW          -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
+				TREMORS        -> spawnTremors(d[0], d[1], d[2])
+				UPHEAL         -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
+				WIRE           -> spawnWire(d[0], d[1], d[2], d[3])
 			}
 		}
 	}
@@ -182,6 +184,27 @@ object VisualEffectHandlerClient {
 		Botania.proxy.setWispFXDepthTest(true)
 	}
 	
+	fun spawnEmblem0(xs: Double, ys: Double, zs: Double, xe: Double, ye: Double, ze: Double, color: Double, innerColor: Double) {
+		Botania.proxy.lightningFX(mc.theWorld, VVec3(xs, ys, zs), VVec3(xe, ye, ze), 2f, color.I, innerColor.I)
+	}
+	
+	fun spawnEmblem1(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double, motionX: Double, motionZ: Double) {
+		Botania.proxy.wispFX(mc.theWorld, x, y, z, r.F, g.F, b.F, Math.random().F * 0.15f + 0.15f, motionX.F, 0.0075f, motionZ.F)
+	}
+	
+	fun spawnEmblem2(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double) {
+		Botania.proxy.sparkleFX(mc.theWorld, x, y, z, r.F, g.F, b.F, 1f, 5)
+	}
+	
+	fun spawnEmblem3(eID: Double, r: Double, g: Double, b: Double) {
+		val player = mc.theWorld.getEntityByID(eID.I)
+		
+		for (i in 1..9) {
+			val pos = Vector3.fromEntity(player).add(0.0, -player.yOffset + 0.25, 0.0).add(Vector3(0.0, 0.0, 0.5).rotate(Botania.proxy.worldElapsedTicks * 5 % 360 + i * 40.0, Vector3.oY))
+			Botania.proxy.sparkleFX(player.worldObj, pos.x, pos.y, pos.z, r.F, g.F, b.F, 1f, 4)
+		}
+	}
+	
 	fun spawnExplosion(x: Double, y: Double, z: Double) {
 		mc.theWorld.spawnParticle("largeexplode", x, y, z, 1.0, 0.0, 0.0)
 		
@@ -189,6 +212,10 @@ object VisualEffectHandlerClient {
 			v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15)
 			Botania.proxy.wispFX(mc.theWorld, x, y, z, 1f, Math.random().F * 0.25f, Math.random().F * 0.075f, 0.25f + Math.random().F * 0.45f, v.x.F, v.y.F, v.z.F, 0.5f)
 		}
+	}
+	
+	fun spawnFlameStar(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
+		Botania.proxy.sparkleFX(mc.theWorld, x, y, z, x2.F, y2.F, z2.F, 1f, 5)
 	}
 	
 	fun spawnGaiaSoul(x: Double, y: Double, z: Double) {
@@ -300,7 +327,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM0, EMBLEM1, EMBLEM2, EMBLEM3, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

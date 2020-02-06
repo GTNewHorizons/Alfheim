@@ -1,23 +1,34 @@
 package alfheim.common.network;
 
 import alexsocol.asjlib.network.ASJPacket;
+import io.netty.buffer.ByteBuf;
+import org.jetbrains.annotations.NotNull;
 
 public class MessageVisualEffect extends ASJPacket {
 
-	public int i;
-	public double x, y, z, x2, y2, z2;
+	public int type;
+	public double[] data;
 	
-	public MessageVisualEffect(int i, double x, double y, double z) {
-		this(i, x, y, z, 0, 0, 0);
+	public MessageVisualEffect(int i, double... params) {
+		type = i;
+		data = params;
 	}
 	
-	public MessageVisualEffect(int i, double x, double y, double z, double x2, double y2, double z2) {
-		this.i = i;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.z2 = z2;
+	@Override
+	public void toCustomBytes(@NotNull ByteBuf buf) {
+		super.toCustomBytes(buf);
+		buf.writeInt(data.length);
+		for (double d : data)
+			buf.writeDouble(d);
 	}
+	
+	@Override
+	public void fromCustomBytes(@NotNull ByteBuf buf) {
+		super.fromCustomBytes(buf);
+		data = new double[buf.readInt()];
+		for (int i = 0; i < data.length; i++)
+			data[i] = buf.readDouble();
+	}
+	
+	
 }
