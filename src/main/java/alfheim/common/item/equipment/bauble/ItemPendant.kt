@@ -16,7 +16,7 @@ import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 open class ItemPendant(name: String): ItemBauble(name), IBaubleRender {
 	
-	private var icon: IIcon? = null
+	lateinit var icon: IIcon
 	
 	init {
 		creativeTab = AlfheimTab
@@ -41,7 +41,7 @@ open class ItemPendant(name: String): ItemBauble(name), IBaubleRender {
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.25, -0.4, if (armor) 0.21 else 0.14)
 			glScaled(0.5, 0.5, 0.5)
-			ItemRenderer.renderItemIn2D(Tessellator.instance, icon!!.maxU, icon!!.minV, icon!!.minU, icon!!.maxV, icon!!.iconWidth, icon!!.iconHeight, 1f / 32f)
+			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 32f)
 			glPopMatrix()
 		}
 	}

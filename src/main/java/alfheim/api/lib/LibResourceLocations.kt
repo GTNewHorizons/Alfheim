@@ -91,6 +91,8 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
 	)
 	
+	val wingsButterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Butterfly.png")
+	
 	const val MOB = 11
 	const val NPC = 12
 	const val BOSS = 13
