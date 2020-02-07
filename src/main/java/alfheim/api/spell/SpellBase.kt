@@ -3,7 +3,7 @@ package alfheim.api.spell
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.F
+import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
@@ -56,14 +56,16 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	fun checkCast(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_double_int(getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else AlfheimConfigHandler.raceManaMult)
+		val cost = MathHelper.ceiling_double_int((getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.toByte() else AlfheimConfigHandler.raceManaMult).D)
+		if (cost < 0) throw IllegalArgumentException("Manacost for $name was $cost. Check your minetweaker scripts")
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}
 	
 	fun checkCastOver(caster: EntityLivingBase): SpellCastResult {
 		if (MinecraftForge.EVENT_BUS.post(SpellCastEvent.Pre(this, caster))) return SpellCastResult.NOTALLOW
-		val cost = MathHelper.ceiling_float_int(over(caster, getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.0 else AlfheimConfigHandler.raceManaMult))
+		val cost = MathHelper.ceiling_float_int(over(caster, (getManaCost() * if ((caster as? EntityPlayer)?.race === race || hard) 1.toByte() else AlfheimConfigHandler.raceManaMult).D))
+		if (cost < 0) throw IllegalArgumentException("Manacost for $name was $cost (with overmage). Check your minetweaker scripts")
 		val mana = caster !is EntityPlayer || caster.capabilities.isCreativeMode || consumeMana(caster, cost, true)
 		return if (mana) SpellCastResult.OK else SpellCastResult.NOMANA
 	}

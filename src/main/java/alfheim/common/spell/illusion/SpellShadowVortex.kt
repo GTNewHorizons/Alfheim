@@ -19,7 +19,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 	
 	@Suppress("UNCHECKED_CAST")
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
-		val res = checkCast(caster)
+		val res = checkCastOver(caster)
 		if (res != SpellCastResult.OK) return res
 		
 		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius, 0.0, radius)) as MutableList<EntityLivingBase>
@@ -28,7 +28,7 @@ object SpellShadowVortex: SpellBase("shadowvortex", EnumRace.SPRIGGAN, 2000, 80,
 				for (i in 1..50)
 					if (teleportRandomly(it)) {
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
-						it.attackEntityFrom(DamageSourceSpell.shadowSpell(caster), damage)
+						it.attackEntityFrom(DamageSourceSpell.shadowSpell(caster), over(caster, damage.D))
 						VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SHADOW, it)
 						break
 					}

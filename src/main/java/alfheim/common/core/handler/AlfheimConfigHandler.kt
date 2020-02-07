@@ -3,7 +3,7 @@ package alfheim.common.core.handler
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.common.core.util.mfloor
+import alfheim.common.core.util.*
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -128,7 +128,7 @@ object AlfheimConfigHandler {
 	// MMO
 	var deathScreenAddTime		= 1200
 	var frienldyFire			= false
-	var raceManaMult			= 2.0
+	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
 
 	// MMO HUD
@@ -259,7 +259,7 @@ object AlfheimConfigHandler {
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
-		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult, false, "Mana cost multiplier for spells with not your affinity")
+		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
 		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")

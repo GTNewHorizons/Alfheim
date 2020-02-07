@@ -67,7 +67,7 @@ class PageSpell(internal val spell: SpellBase): LexiconPage("botania.page." + sp
 			val y = yn + 115
 			if (mx > x + 1 && mx <= x + 101 && my > y - 52 && my <= y - 38) ratio = 1
 			
-			val cost = spell.getManaCost().times(if (spell.race == mc.thePlayer.race || spell.hard) 1.0 else AlfheimConfigHandler.raceManaMult).I
+			val cost = spell.getManaCost().times(if (spell.race == mc.thePlayer.race || spell.hard) 1.toByte() else AlfheimConfigHandler.raceManaMult).I
 			
 			if (AlfheimConfigHandler.numericalMana) {
 				font.drawString(StatCollector.translateToLocal("lexicon.mana"), xn + 16, y - 8, 0)
