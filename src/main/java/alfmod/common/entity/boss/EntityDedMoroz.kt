@@ -73,7 +73,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		if (attackTarget == null && src.entity is EntityLivingBase)
 			attackTarget = src.entity as EntityLivingBase
 		
-		super.damageEntity(src, amount * if (src.isMagicDamage || src is DamageSourceSpell) 0.1f else 0.75f)
+		super.damageEntity(src, amount * if (src.isMagicDamage || src is DamageSourceSpell) 0.1f else if (src.isFireDamage) 1.5f else 0.75f)
 	}
 	
 	override fun getDropItem() =
