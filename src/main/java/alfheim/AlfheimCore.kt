@@ -2,6 +2,7 @@ package alfheim
 
 import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
+import alfheim.common.core.asm.AlfheimModularLoader
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
@@ -77,6 +78,8 @@ class AlfheimCore {
 	
 	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
+		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod")) throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
+		
 		AlfheimConfigHandler.readModes()
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")

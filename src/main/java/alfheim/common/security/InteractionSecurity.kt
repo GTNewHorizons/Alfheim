@@ -1,6 +1,7 @@
 package alfheim.common.security
 
-import alfheim.api.ModInfo
+import alfheim.api.*
+import alfheim.api.security.ISecurityManager
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.mfloor
 import cpw.mods.fml.relauncher.FMLRelaunchLog
@@ -11,33 +12,28 @@ import net.minecraft.util.DamageSource
 import net.minecraft.world.*
 import net.minecraftforge.common.ForgeHooks
 
-interface ISecurityManager {
-	fun canDoSomethingHere(performer: EntityLivingBase): Boolean
-	fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World = performer.worldObj): Boolean
-	fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World = performer.worldObj): Boolean
-	fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World = target.worldObj): Boolean
-	fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase): Boolean
-}
-
 object InteractionSecurity: ISecurityManager {
 	
 	fun manager(): ISecurityManager =
-		when (AlfheimConfigHandler.interactionSecurity) {
-			"default" -> DefaultSecurityManager
-			"block"   -> BlockSecurityManager
-			"mixed"   -> MixedSecurityManager
-			else      -> MixedSecurityManager
-		}
+		AlfheimAPI.securityManagers[AlfheimConfigHandler.interactionSecurity]?.also {
+			if (it === this)
+				throw IllegalArgumentException("General InteractionSecurity manager was set as custom security manager. This will cause recursive stack overflow")
+		} ?:
+			throw IllegalArgumentException("No security manager was found with name ${AlfheimConfigHandler.interactionSecurity}")
 	
 	init {
+		AlfheimAPI.registerSecurityManager(DefaultSecurityManager, "default")
+		AlfheimAPI.registerSecurityManager(BlockSecurityManager, "block")
+		AlfheimAPI.registerSecurityManager(MixedSecurityManager, "mixed")
+		
 		manager().also { FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Security manager is set to ${AlfheimConfigHandler.interactionSecurity}") }
 	}
 	
 	override fun canDoSomethingHere(performer: EntityLivingBase) = manager().canDoSomethingHere(performer)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = manager().canDoSomethingHere(performer, x, y, z)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = manager().canDoSomethingHere(performer, x, y, z)
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = manager().canDoSomethingWithEntity(performer, target)
-	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = manager().canHurtEntity(attacker, target)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (performer === target) true else manager().canDoSomethingWithEntity(performer, target)
+	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = if (attacker === target) true else manager().canHurtEntity(attacker, target)
 }
 
 private object DefaultSecurityManager: ISecurityManager {
@@ -69,6 +65,6 @@ private object MixedSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z)
 	
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (MinecraftServer.getServer().isSinglePlayer) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
 }

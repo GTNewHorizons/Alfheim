@@ -247,8 +247,7 @@ botania.page.mask0=Fury and danger emanates from this mask. When you try to put 
 
 botania.entry.excaliber=Holly Sword Excaliber
 botania.tagline.excaliber=Not fake! Promise!
-botania.page.excaliber0=Well, that's embarrassing...
-botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
+botania.page.excaliber0=Lost long ago, &1Holly Sword Excaliber&0 was finally found. As the legends say, this sword is unbreakable and can shoot a mana ray on every swing, that will look for nearest hostile target and deal as much damage, as regular attack. Also you feel strange lightness while holding the sword, so you can run a little bit faster.
 
 botania.entry.stories=Token of Banter
 botania.tagline.stories=Yet knowledge can be bought

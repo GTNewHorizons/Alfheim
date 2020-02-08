@@ -17,7 +17,7 @@ class AlfheimHookLoader: HookLoader() {
 		ModInfo.DEV = true // !ModInfo.OBF
 		
 		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
-		if (ModInfo.OBF) AlfheimModularLoader
+		AlfheimModularLoader
 	}
 	
 	override fun getASMTransformerClass(): Array<String>? {

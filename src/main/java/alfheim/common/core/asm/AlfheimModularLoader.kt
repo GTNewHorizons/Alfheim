@@ -18,16 +18,24 @@ import kotlin.system.exitProcess
 
 object AlfheimModularLoader {
 	
+	var linkSpecified = false
+	
 	init {
+		download()
+	}
+	
+	private fun download() {
+		if (!ModInfo.OBF) return
+		
 		FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Trying to update Alfheim Modular...")
 		
 		if (AlfheimConfigHandler.modularThread)
-			Thread(Runnable { download() }, "Alfheim Modular Download").also { it.isDaemon = true }.start()
+			Thread(Runnable { doDownload() }, "Alfheim Modular Download").also { it.isDaemon = true }.start()
 		else
-			download()
+			doDownload()
 	}
 	
-	fun download() {
+	private fun doDownload() {
 		var crash = false
 		
 		try {
@@ -39,6 +47,7 @@ object AlfheimModularLoader {
 				return
 			}
 			
+			linkSpecified = true
 			var possibleMatch = false
 			var download = true
 			
@@ -56,24 +65,25 @@ object AlfheimModularLoader {
 			
 			if (possibleMatch) {
 				subModsDir.listFiles()?.forEach { mod ->
-					ZipFile(mod).use { zip ->
-						val modInfo = zip.getEntry("mcmod.info") ?: return@use
-						
-						val info = loadJSon(zip.getInputStream(modInfo))
-						
-						if (!info.first) return@use
-						val versionLocal = info.second
-						
-						if (versionRemote != versionLocal) {
-							crash = deleteMod(mod)
+					if (mod.extension == "jar")
+						ZipFile(mod).use { zip ->
+							val modInfo = zip.getEntry("mcmod.info") ?: return@use
+							
+							val info = loadJSon(zip.getInputStream(modInfo))
+							
+							if (!info.first) return@use
+							val versionLocal = info.second
+							
+							if (versionRemote != versionLocal) {
+								crash = deleteMod(mod)
+								
+								return@forEach
+							}
+							
+							download = false
 							
 							return@forEach
 						}
-						
-						download = false
-						
-						return@forEach
-					}
 				}
 			}
 			
@@ -88,7 +98,8 @@ object AlfheimModularLoader {
 					
 					err = "Unable to save Alfheim Modular"
 					
-					val fileName = if (AlfheimConfigHandler.modularFilename.isBlank()) fullname else AlfheimConfigHandler.modularFilename.format(versionRemote)
+					var fileName = if (AlfheimConfigHandler.modularFilename.isBlank()) fullname else AlfheimConfigHandler.modularFilename.format(versionRemote)
+					if (!fileName.endsWith(".jar")) fileName += ".jar"
 					val modular = File(subModsDir, fileName).also { if (!it.exists()) it.createNewFile() }
 					val fos = FileOutputStream(modular)
 					fos.write(mod)
@@ -110,7 +121,7 @@ object AlfheimModularLoader {
 			FMLRelaunchLog.warning("[${ModInfo.MODID.toUpperCase()}] Exiting JVM due to mod duplication")
 			exitProcess(1)
 		}
- 	}
+	}
 	
 	fun loadJSon(input: InputStream): Pair<Boolean, String> {
 		InputStreamReader(input).use { reader ->

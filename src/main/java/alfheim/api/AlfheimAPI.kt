@@ -4,6 +4,7 @@ import alfheim.api.block.tile.SubTileEntity
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
+import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.util.meta
 import com.google.common.collect.Lists
@@ -35,6 +36,8 @@ object AlfheimAPI {
 	val anomalies = HashMap<String, Class<out SubTileEntity>>()
 	/** Map of anomaly types and their subtile instances, used for render :o  */
 	val anomalyInstances = HashMap<String, SubTileEntity>()
+	/** Map of security managers by name */
+	val securityManagers = HashMap<String, ISecurityManager>()
 	
 	fun addInfuserRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? {
 		if (rec != null) manaInfuserRecipes.add(rec)
@@ -146,6 +149,13 @@ object AlfheimAPI {
 	
 	fun getAnomalyInstance(name: String) =
 		anomalyInstances[name] ?: FallbackAnomaly
+	
+	fun registerSecurityManager(man: ISecurityManager, name: String) {
+		if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
+		if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager with name $name is already registered")
+		
+		securityManagers[name] = man
+	}
 	
 	object FallbackAnomaly: SubTileEntity() {
 		override val targets: List<Any> = emptyList()

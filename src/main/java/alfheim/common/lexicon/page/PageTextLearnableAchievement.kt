@@ -8,7 +8,7 @@ import vazkii.botania.common.lexicon.page.PageText
 class PageTextLearnableAchievement(unName: String, internal val achievement: Achievement): PageText(unName) {
 	
 	fun known(): Boolean {
-		return if (mc.thePlayer == null) false else mc.thePlayer.hasAchievement(achievement)
+		return mc.thePlayer?.hasAchievement(achievement) == true
 	}
 	
 	override fun getUnlocalizedName(): String {
