@@ -25,31 +25,31 @@ object RenderWings {
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		player.sendPlayerAbilities()
+		
 		if (player.commandSenderName != "MonoShiki") {
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
 			if (player.commandSenderName == "AlexSocol") return
-		} else {
-			if (!player.capabilities.isFlying) return
 		}
 		
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(mc.thePlayer)) return
 		
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		if (player.commandSenderName != "MonoShiki") {
+			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+			glDepthMask(false)
+			glAlphaFunc(GL_GREATER, 0.003921569f)
+		}
 		glDisable(GL_LIGHTING)
-		glDepthMask(false)
-		glAlphaFunc(GL_GREATER, 0.003921569f)
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		val alpha = if (player.flight / ElvenFlightHelper.max < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0
 		if (player.commandSenderName == "MonoShiki")
-			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), alpha.I * 255))
+			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
 		else
-			player.race.glColorA(alpha)
+			player.race.glColorA(if (player.flight / ElvenFlightHelper.max < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
@@ -90,11 +90,13 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
-		glAlphaFunc(GL_GREATER, 0.1f)
-		glDepthMask(true)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
 		glEnable(GL_LIGHTING)
-		glDisable(GL_BLEND)
+		if (player.commandSenderName != "MonoShiki") {
+			glAlphaFunc(GL_GREATER, 0.1f)
+			glDepthMask(true)
+			glDisable(GL_BLEND)
+		}
 		glEnable(GL_CULL_FACE)
 		glPopMatrix()
 		

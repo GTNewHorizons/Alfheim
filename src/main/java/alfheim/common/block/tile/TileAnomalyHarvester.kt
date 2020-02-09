@@ -163,7 +163,7 @@ object AnomalyHarvesterBehaviors {
 	private fun doAntigrav(tile: TileAnomalyHarvester) {
 		val aabb = tile.getAoE()
 		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach { it as Entity
-			it.motionY += if (it.isSneaking) 0.05 else tile.power * 0.08
+			it.motionY += if (it.isSneaking) 0.05 else 0.085 + tile.power * 0.005
 			it.fallDistance = 0f
 		}
 		

@@ -215,7 +215,7 @@ object AlfheimConfigHandler {
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, true, "Mauftrium Spreader max mana cap")
-		uberSpreaderColorGolden = loadProp(CATEGORY_GENERAL, "uberSpreaderColorGolden", uberSpreaderColorGolden, true, "Mauftrium Spreader texture color golden/blue")
+		uberSpreaderColorGolden = loadProp(CATEGORY_GENERAL, "uberSpreaderColorGolden", uberSpreaderColorGolden, false, "Mauftrium Spreader texture color golden/blue")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		

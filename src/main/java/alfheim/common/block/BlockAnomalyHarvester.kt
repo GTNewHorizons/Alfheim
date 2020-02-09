@@ -1,5 +1,6 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
@@ -44,6 +45,8 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 		
 		if (!world.isRemote) player.addChatComponentMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.power")}: ${tile.power}"))
 		
+		ASJUtilities.dispatchTEToNearbyPlayers(tile)
+		
 		return true
 	}
 	
@@ -57,9 +60,11 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 				if (!world.isRemote) player.addChatComponentMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.radius")}: [${it.x}, ${it.y}, ${it.z}]"))
 			}
 		else
-			tile.offset.add(fd.offsetX, fd.offsetY, fd.offsetZ).also {
+			tile.offset.add(fd.offsetX * 0.5, fd.offsetY * 0.5, fd.offsetZ * 0.5).also {
 				if (!world.isRemote) player.addChatComponentMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.offset")}: [${it.x}, ${it.y}, ${it.z}]"))
 			}
+		
+		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
 		return true
 	}

@@ -5,6 +5,7 @@ import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.lexicon.AlfheimLexiconData
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
@@ -12,10 +13,13 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.client.renderer.texture.*
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
+import net.minecraft.world.World
 import org.lwjgl.opengl.GL11.*
+import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.mana.BurstProperties
 import vazkii.botania.client.core.handler.HUDHandler
 import vazkii.botania.client.core.proxy.ClientProxy
@@ -33,7 +37,7 @@ object ManaSpreaderExtender {
 	
 	val UBER_MAX_MANA get() = AlfheimConfigHandler.uberSpreaderCapacity
 	
-	lateinit var icon: IIcon
+	lateinit var iconGolden: IIcon
 	
 	var staticUber = false
 	
@@ -42,12 +46,22 @@ object ManaSpreaderExtender {
 	@JvmStatic
 	@Hook
 	fun registerBlockIcons(spreader: BlockSpreader, reg: IIconRegister) {
-		icon = IconHelper.forName(reg, "UberSpreader")
+		iconGolden = IconHelper.forName(reg, "UberSpreaderGolden")
 	}
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
-	fun getIcon(spreader: BlockSpreader, side: Int, meta: Int): IIcon = if (meta == 4) icon else if (meta >= 2) ModBlocks.dreamwood.getIcon(side, 0) else ModBlocks.livingwood.getIcon(side, 0)
+	fun getIcon(spreader: BlockSpreader, side: Int, meta: Int): IIcon = when (meta) {
+		4    -> if (AlfheimConfigHandler.uberSpreaderColorGolden) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
+		2, 3 -> ModBlocks.dreamwood.getIcon(side, 0)
+		else -> ModBlocks.livingwood.getIcon(side, 0)
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_NOT_NULL)
+	fun getEntry(spreader: BlockSpreader, world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack): LexiconEntry? {
+		return if (world.getBlockMetadata(x, y, z) == 4) AlfheimLexiconData.uberSpreader else null
+	}
 	
 	// ######## TileSpreader
 	
@@ -125,7 +139,6 @@ object ManaSpreaderExtender {
 		glColor4f(1f, 1f, 1f, 1f)
 	}
 	
-	
 	// ######## RenderSpreader
 	
 	@JvmStatic
@@ -169,7 +182,7 @@ object ManaSpreaderExtender {
 		if (modelHook) {
 			mc.renderEngine.bindTexture(LibResourceLocations.uberSpreaderFrame)
 			
-			var s = 1.1f
+			var s = 1.15f
 			val t = s - 1
 			glTranslatef(0f, -t, 0f)
 			glScalef(s, s, s)

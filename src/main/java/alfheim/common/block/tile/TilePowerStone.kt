@@ -1,5 +1,6 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.player.EntityPlayer
@@ -21,6 +22,7 @@ class TilePowerStone: TileMod() {
 		if (cooldown <= 0 && SpellBase.consumeMana(player, 10000, false) && press(player)) {
 			SpellBase.consumeMana(player, 10000, true)
 			cooldown = 6000
+			ASJUtilities.dispatchTEToNearbyPlayers(this)
 			return true
 		}
 		

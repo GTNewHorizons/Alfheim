@@ -121,7 +121,6 @@ object AlfheimLexiconData {
 		lootInt = BLexiconEntry("lootInt", categoryAlfheim)
 		manaAcc = BLexiconEntry("itemHold", categoryAlfheim)
 		manaImba = BLexiconEntry("manaImba", categoryAlfheim)
-		uberSpreader = BLexiconEntry("mauSpred", categoryAlfheim)
 		mobs = BLexiconEntry("mobs", categoryAlfheim)
 		multbaub = BLexiconEntry("multbaub", categoryAlfheim)
 		ores = BLexiconEntry("ores", categoryAlfheim)
@@ -135,6 +134,7 @@ object AlfheimLexiconData {
 		//stories = BLexiconEntry("stories", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
+		uberSpreader = BLexiconEntry("uberSpreader", categoryAlfheim)
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory()
