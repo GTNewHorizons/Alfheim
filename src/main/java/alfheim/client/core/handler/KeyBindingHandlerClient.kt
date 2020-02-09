@@ -248,6 +248,7 @@ object KeyBindingHandlerClient {
 	fun safeKeyDown(id: Int) = try { Keyboard.isKeyDown(id) } catch (e: IndexOutOfBoundsException) { false }
 	
 	fun toggleFlight(boost: Boolean) {
+		mc.thePlayer.sendPlayerAbilities()
 		AlfheimCore.network.sendToServer(MessageKeyBindS(FLIGHT.ordinal, boost, 0))
 	}
 	

@@ -19,7 +19,7 @@ object InteractionSecurity: ISecurityManager {
 			if (it === this)
 				throw IllegalArgumentException("General InteractionSecurity manager was set as custom security manager. This will cause recursive stack overflow")
 		} ?:
-			throw IllegalArgumentException("No security manager was found with name ${AlfheimConfigHandler.interactionSecurity}")
+			throw IllegalArgumentException("No security manager was found with name \"${AlfheimConfigHandler.interactionSecurity}\". Available managers are: ${AlfheimAPI.securityManagers.keys}")
 	
 	init {
 		AlfheimAPI.registerSecurityManager(DefaultSecurityManager, "default")

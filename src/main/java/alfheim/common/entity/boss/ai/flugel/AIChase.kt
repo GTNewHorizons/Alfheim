@@ -28,7 +28,25 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 					val stack1 = player.inventory.mainInventory[slot1]
 					val stack2 = player.inventory.mainInventory[slot2]
 					
-					if ((stack1 != null && AlfheimConfigHandler.flugelSwapBL.contains(GameRegistry.findUniqueIdentifierFor(stack1.item).toString())) || (stack2 != null && AlfheimConfigHandler.flugelSwapBL.contains(GameRegistry.findUniqueIdentifierFor(stack2.item).toString()))) continue
+					var flagStack1 = stack1 != null
+					if (flagStack1) {
+						val id = GameRegistry.findUniqueIdentifierFor(stack1.item)
+						flagStack1 = if (id != null)
+							flagStack1 && AlfheimConfigHandler.flugelSwapBL.contains(id.toString())
+						else
+							false
+					}
+					
+					var flagStack2 = stack2 != null
+					if (flagStack2) {
+						val id = GameRegistry.findUniqueIdentifierFor(stack2.item)
+						flagStack2 = if (id != null)
+							flagStack2 && AlfheimConfigHandler.flugelSwapBL.contains(id.toString())
+						else
+							false
+					}
+					
+					if (flagStack1 || flagStack2) continue
 					
 					player.inventory.mainInventory[slot1] = stack2
 					player.inventory.mainInventory[slot2] = stack1

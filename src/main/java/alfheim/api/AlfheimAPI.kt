@@ -1,5 +1,6 @@
 package alfheim.api
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.entity.EnumRace
@@ -157,6 +158,7 @@ object AlfheimAPI {
 		if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
 		if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager \"$name\" is already registered")
 		
+		ASJUtilities.log("Registering security manager with name \"$name\"")
 		securityManagers[name] = man
 	}
 	

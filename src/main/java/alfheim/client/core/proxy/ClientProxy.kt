@@ -29,7 +29,6 @@ import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
-import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.settings.KeyBinding
@@ -65,6 +64,7 @@ class ClientProxy: CommonProxy() {
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idHarvester, RenderBlockAnomalyHarvester)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPowerStone, RenderBlockPowerStone)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPylon, RenderBlockAlfheimPylons)
@@ -75,6 +75,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAlfheimPylon::class.java, RenderTileAlfheimPylons)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnimatedTorch::class.java, RenderTileAnimatedTorch)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomaly::class.java, RenderTileAnomaly)
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomalyHarvester::class.java, RenderTileAnomalyHarvester)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil::class.java, RenderTileAnyavil)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadFlugel::class.java, RenderTileHeadFlugel)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadMiku::class.java, RenderTileHeadMiku)

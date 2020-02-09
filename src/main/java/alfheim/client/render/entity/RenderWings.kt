@@ -24,6 +24,7 @@ object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
+		player.sendPlayerAbilities()
 		if (player.commandSenderName != "MonoShiki") {
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
@@ -65,7 +66,6 @@ object RenderWings {
 		
 		glTranslated(0.0, 0.1, 0.0)
 		
-		player.sendPlayerAbilities()
 		val flying = player.capabilities.isFlying
 		val ry = 20f + ((sin((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * (if (flying) 0.4f else 0.2f).D) + 0.5f) * if (flying) 30f else 5f).F
 		

@@ -224,7 +224,9 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 							val g = color.green.F / 255F
 							val b = color.blue.F / 255F
 							
-							spawnEmblem2(player.posX + vec.x, player.posY + vec.y + 1.62, player.posZ + vec.z, r.D, g.D, b.D)
+							if (mc.thePlayer !== player) vec.y += 1.62f
+							
+							spawnEmblem2(player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r.D, g.D, b.D)
 						}
 					}
 				}
