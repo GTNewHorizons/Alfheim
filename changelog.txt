@@ -4,4 +4,5 @@ Innovations:
 
 Fixes:
  No manavoid stream, god emblems and firerod particles from other players
+ Manatide Bellows animation when attached to pool with accelerator
  [MMO] Parchment of Discord recipe is now unavailable w/o MMO

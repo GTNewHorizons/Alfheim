@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -133,6 +134,8 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).getStackInSlot(0)
 			if (tiara != null && tiara.item is ItemFlightTiara)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, MAX_FLY_TIME)
+			
+			ElvenFlightHelper.regen(entity, 10)
 		}
 	}
 	

@@ -36,6 +36,7 @@ object AlfheimBlocks {
 	val amplifier: Block
 	val animatedTorch: Block
 	val anomaly: Block
+	val anomalyHarvester: Block
 	val anyavil: Block
 	val auroraDirt: Block
 	val auroraLeaves: Block
@@ -170,6 +171,7 @@ object AlfheimBlocks {
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
 		anomaly = BlockAnomaly()
+		anomalyHarvester = BlockAnomalyHarvester()
 		anyavil = BlockAnyavil()
 		auroraDirt = BlockAuroraDirt()
 		auroraLeaves = BlockAuroraLeaves()

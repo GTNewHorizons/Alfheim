@@ -42,9 +42,7 @@ class Vector3: Serializable {
 	}
 	
 	constructor(vec: Vec3) {
-		x = vec.xCoord
-		y = vec.yCoord
-		z = vec.zCoord
+		set(vec)
 	}
 	
 	fun toVec3() = Vec3.createVectorHelper(x, y, z)!!

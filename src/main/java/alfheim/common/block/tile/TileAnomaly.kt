@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -12,7 +12,7 @@ import java.util.*
 
 class TileAnomaly: TileMod() {
 	
-	val subTiles = HashMap<String, SubTileEntity>()
+	val subTiles = HashMap<String, SubTileAnomalyBase>()
 	var mainSubTile: String? = null
 	var compatibilityBit = 0 // not serializing because will be recalculated on load
 	
@@ -32,10 +32,10 @@ class TileAnomaly: TileMod() {
 	}
 	
 	fun addSubTile(name: String): TileAnomaly {
-		return addSubTile(SubTileEntity.forName(name), name)
+		return addSubTile(SubTileAnomalyBase.forName(name), name)
 	}
 	
-	fun addSubTile(sub: SubTileEntity?, name: String): TileAnomaly {
+	fun addSubTile(sub: SubTileAnomalyBase?, name: String): TileAnomaly {
 		if (sub == null || !canAdd(sub)) return this
 		
 		compatibilityBit = compatibilityBit or sub.typeBits()
@@ -47,7 +47,7 @@ class TileAnomaly: TileMod() {
 		return sub.superTile as TileAnomaly
 	}
 	
-	fun canAdd(sub: SubTileEntity): Boolean {
+	fun canAdd(sub: SubTileAnomalyBase): Boolean {
 		return compatibilityBit and sub.typeBits() == 0
 	}
 	
@@ -88,11 +88,11 @@ class TileAnomaly: TileMod() {
 		
 		var subTileName: String
 		var subCmp: NBTTagCompound
-		var subTile: SubTileEntity?
+		var subTile: SubTileAnomalyBase?
 		
 		while (c > 0) {
 			subTileName = cmp.getString(TAG_SUBTILE_NAME + c)
-			subTile = SubTileEntity.forName(subTileName)
+			subTile = SubTileAnomalyBase.forName(subTileName)
 			
 			subCmp = cmp.getCompoundTag(TAG_SUBTILE_CMP + c)
 			if (subTile != null && !subCmp.hasNoTags())

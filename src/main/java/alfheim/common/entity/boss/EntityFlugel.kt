@@ -3,7 +3,7 @@ package alfheim.common.entity.boss
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.boss.IBotaniaBossWithName
 import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
@@ -214,7 +214,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val z = posZ.mfloor()
 			
 			while (worldObj.setBlock(x, y, z, AlfheimBlocks.anomaly)) {
-				(worldObj.getTileEntity(x, y, z) as? TileAnomaly ?: break).addSubTile(SubTileEntity.forName("Lightning")
+				(worldObj.getTileEntity(x, y, z) as? TileAnomaly ?: break).addSubTile(SubTileAnomalyBase.forName("Lightning")
 																					  ?: break, "Lightning")
 				return
 			}

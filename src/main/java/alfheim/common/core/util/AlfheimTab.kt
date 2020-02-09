@@ -10,6 +10,7 @@ import alfheim.common.block.AlfheimBlocks.altWood0
 import alfheim.common.block.AlfheimBlocks.altWood1
 import alfheim.common.block.AlfheimBlocks.amplifier
 import alfheim.common.block.AlfheimBlocks.animatedTorch
+import alfheim.common.block.AlfheimBlocks.anomalyHarvester
 import alfheim.common.block.AlfheimBlocks.anyavil
 import alfheim.common.block.AlfheimBlocks.auroraDirt
 import alfheim.common.block.AlfheimBlocks.auroraLeaves
@@ -203,6 +204,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
 		addBlock(ModBlocks.spreader, 4)
+		addBlock(anomalyHarvester)
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
 		addBlock(manaAccelerator)

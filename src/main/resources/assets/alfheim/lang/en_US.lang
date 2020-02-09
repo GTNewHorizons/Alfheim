@@ -360,6 +360,10 @@ alfheimmisc.teamnotmob=Party member cannot be selected as enemy target.
 alfheimmisc.tgtooltip=Press &b%key%&7 to open the Traveller's Gear menu
 alfheimmisc.update=O-oh, it seems you are playing on an outdated version (%s). Perhaps you should update to %s?
 
+alfheimmisc.offset=Offset
+alfheimmisc.power=Power
+alfheimmisc.radius=Radius
+
 alfheimmisc.cast.notarget=Select target
 alfheimmisc.cast.notready=Spell not ready
 alfheimmisc.cast.notseeing=You can't see target

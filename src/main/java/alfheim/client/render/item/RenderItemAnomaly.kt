@@ -1,7 +1,7 @@
 package alfheim.client.render.item
 
 import alfheim.api.AlfheimAPI
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.entity.player.EntityPlayer
@@ -33,7 +33,7 @@ object RenderItemAnomaly: IItemRenderer {
 		renderItemAnomaly(AlfheimAPI.getAnomalyInstance(ItemBlockAnomaly.getType(item)))
 	}
 	
-	fun renderItemAnomaly(subtile: SubTileEntity) {
+	fun renderItemAnomaly(subtile: SubTileAnomalyBase) {
 		glPushMatrix()
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glDepthMask(false)

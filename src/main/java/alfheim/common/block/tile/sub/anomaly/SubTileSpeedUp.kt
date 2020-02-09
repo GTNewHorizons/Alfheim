@@ -1,6 +1,6 @@
 package alfheim.common.block.tile.sub.anomaly
 
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.block.tile.TileAnomaly
 import alfheim.common.core.util.*
 import net.minecraft.entity.Entity
@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity
 import vazkii.botania.common.Botania
 import kotlin.math.*
 
-class SubTileSpeedUp: SubTileEntity() {
+class SubTileSpeedUp: SubTileAnomalyBase() {
 	
 	override val targets: List<Any>
 		get() {

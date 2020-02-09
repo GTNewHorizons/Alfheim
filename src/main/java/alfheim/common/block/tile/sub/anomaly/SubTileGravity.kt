@@ -2,7 +2,7 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.client.core.util.mc
 import alfheim.common.core.util.F
 import net.minecraft.entity.Entity
@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.common.Botania
 import kotlin.math.*
 
-class SubTileGravity: SubTileEntity() {
+class SubTileGravity: SubTileAnomalyBase() {
 	
 	var power = 0.65
 	internal val vt = Vector3()
@@ -69,7 +69,7 @@ class SubTileGravity: SubTileEntity() {
 		if (dist > radius) return
 		
 		vt.set(superTile!!).add(0.5)
-		vt.set(vt).sub(ve).normalize().mul(power * 0.5 * 1.0 / dist)
+		vt.set(vt).sub(ve).normalize().mul(power * 0.5 / dist)
 		
 		target.motionX += vt.x
 		target.motionY += vt.y * 1.25

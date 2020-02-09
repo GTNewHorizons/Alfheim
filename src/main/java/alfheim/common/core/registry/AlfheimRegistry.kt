@@ -132,6 +132,7 @@ object AlfheimRegistry {
 		registerTile(TileAlfheimPylon::class.java, "AlfheimPylon")
 		registerTile(TileAnimatedTorch::class.java, "AnimatedTorch")
 		registerTile(TileAnomaly::class.java, "Anomaly")
+		registerTile(TileAnomalyHarvester::class.java, "AnomalyHarvester")
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")

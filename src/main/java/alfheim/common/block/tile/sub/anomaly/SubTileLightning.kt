@@ -1,7 +1,7 @@
 package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.math.min
 import alexsocol.asjlib.math.Vector3 as ASJVec3
 
-class SubTileLightning: SubTileEntity() {
+class SubTileLightning: SubTileAnomalyBase() {
 	internal val vt = Vector3()
 	internal val ve = Vector3()
 	
