@@ -1,6 +1,7 @@
 package alfheim.client.render.item
 
 import alfheim.client.model.item.ModelCreatorStaff
+import alfheim.common.core.util.F
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -38,7 +39,7 @@ object RenderItemRoyalStaff: IItemRenderer {
 		
 		GL11.glRotatef(180.0f, 1.0f, 0.0f, 0.0f)
 		if (wielder != null && wielder is EntityPlayer && wielder.itemInUse != null) {
-			var t = wielder.itemInUseDuration.toFloat() + pt
+			var t = wielder.itemInUseDuration.F + pt
 			if (t > 3.0f) {
 				t = 3.0f
 			}

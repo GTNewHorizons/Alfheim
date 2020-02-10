@@ -1,5 +1,6 @@
 package alfheim.common.block.mana
 
+import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSpreaderFrame
@@ -36,6 +37,7 @@ import vazkii.botania.common.entity.EntityManaBurst
 object ManaSpreaderExtender {
 	
 	val UBER_MAX_MANA get() = AlfheimConfigHandler.uberSpreaderCapacity
+	val UBER_MANA_PER_SHOT get() = AlfheimConfigHandler.uberSpreaderSpeed
 	
 	lateinit var iconGolden: IIcon
 	
@@ -52,7 +54,7 @@ object ManaSpreaderExtender {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getIcon(spreader: BlockSpreader, side: Int, meta: Int): IIcon = when (meta) {
-		4    -> if (AlfheimConfigHandler.uberSpreaderColorGolden) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
+		4    -> if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
 		2, 3 -> ModBlocks.dreamwood.getIcon(side, 0)
 		else -> ModBlocks.livingwood.getIcon(side, 0)
 	}
@@ -79,7 +81,7 @@ object ManaSpreaderExtender {
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `BurstProperties$init`(bp: BurstProperties, maxMana: Int, ticksBeforeManaLoss: Int, manaLossPerTick: Float, gravity: Float, motionModifier: Float, color: Int) {
 		if (burstPropHook) {
-			bp.maxMana = 2400
+			bp.maxMana = UBER_MANA_PER_SHOT
 			bp.color = 0xFFD400
 			bp.ticksBeforeManaLoss = 180
 			bp.manaLossPerTick = 32f
@@ -166,7 +168,7 @@ object ManaSpreaderExtender {
 	fun bindTexture(tm: TextureManager, loc: ResourceLocation?): Boolean {
 		if (textureHook) {
 			textureHook = false
-			tm.bindTexture(if (AlfheimConfigHandler.uberSpreaderColorGolden) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
+			tm.bindTexture(if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
 			
 			return true
 		}
@@ -193,7 +195,7 @@ object ManaSpreaderExtender {
 			
 			modelHook = false
 			
-			mc.renderEngine.bindTexture(if (AlfheimConfigHandler.uberSpreaderColorGolden) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
+			mc.renderEngine.bindTexture(if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
 		}
 	}
 }

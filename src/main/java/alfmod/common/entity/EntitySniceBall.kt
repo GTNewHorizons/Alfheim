@@ -1,7 +1,7 @@
 package alfmod.common.entity
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.EntityDamageSourceIndirectSpell
+import alfheim.common.core.util.*
 import alfmod.AlfheimModularCore
 import alfmod.common.entity.boss.EntityDedMoroz
 import net.minecraft.entity.EntityLivingBase
@@ -72,7 +72,3 @@ class EntitySniceBall: EntityThrowableCopy {
 		}
 	}
 }
-
-// FIXME remove when beta-27 is out
-private val Number.F get() = this.toFloat()
-private val Number.I get() = this.toInt()

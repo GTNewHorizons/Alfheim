@@ -63,7 +63,7 @@ object AlfheimModularLoader {
 			val fullname = url.substring(url.lastIndexOf('/') + 1)
 			val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
 			
-			if (possibleMatch) {
+			if (possibleMatch) run check@ {
 				subModsDir.listFiles()?.forEach { mod ->
 					if (mod.extension == "jar")
 						ZipFile(mod).use { zip ->
@@ -77,14 +77,16 @@ object AlfheimModularLoader {
 							if (versionRemote != versionLocal) {
 								crash = deleteMod(mod)
 								
-								return@forEach
+								return@check
 							}
 							
 							download = false
 							
-							return@forEach
+							return@check
 						}
 				}
+				
+				crash = true
 			}
 			
 			if (download) {

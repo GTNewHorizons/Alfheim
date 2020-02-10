@@ -16,6 +16,7 @@ object AlfheimConfigHandler {
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
+	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
 	const val CATEGORY_SPAWNRATE	= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "spawnrate"
@@ -77,7 +78,7 @@ object AlfheimConfigHandler {
 	var storyLines				= 4
 	var tradePortalRate			= 1200
 	var uberSpreaderCapacity	= 24000
-	var uberSpreaderColorGolden = true
+	var uberSpreaderSpeed		= 2400
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
 	var wireoverpowered			= true
 	
@@ -90,6 +91,8 @@ object AlfheimConfigHandler {
 	var addAspectsToBotania		= true
 	var addTincturemAspect		= true
 	var thaumTreeSuffusion		= true
+	
+	var materialIDs				= intArrayOf(50, 51, 52, 53, 54)
 	
 	// POTIONS
 	var potionSlots				= 1024
@@ -214,8 +217,8 @@ object AlfheimConfigHandler {
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
-		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, true, "Mauftrium Spreader max mana cap")
-		uberSpreaderColorGolden = loadProp(CATEGORY_GENERAL, "uberSpreaderColorGolden", uberSpreaderColorGolden, false, "Mauftrium Spreader texture color golden/blue")
+		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
+		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader max mana cap")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
@@ -226,6 +229,8 @@ object AlfheimConfigHandler {
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
 		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
+		
+		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel materials respectively")
 		
 		potionSlots = loadProp(CATEGORY_POTIONS, "potionSlots", potionSlots, true, "Available potions ids in range [0-potionSlots)")
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")

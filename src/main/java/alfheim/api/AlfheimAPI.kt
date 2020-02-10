@@ -20,9 +20,10 @@ import java.util.*
 
 object AlfheimAPI {
 	
-	val ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
-	val ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
-	val REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 30)!!
+	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
+	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)!!
+	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
+	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)!!
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()

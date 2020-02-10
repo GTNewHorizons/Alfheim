@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter
 import kotlin.experimental.xor
 import kotlin.math.max
 
-class ItemRealitySword: ItemSword(AlfheimAPI.REALITY), IManaUsingItem {
+class ItemRealitySword: ItemSword(AlfheimAPI.mauftriumToolmaterial), IManaUsingItem {
 
 	init {
 		creativeTab = AlfheimTab

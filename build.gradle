@@ -37,10 +37,14 @@ repositories {
 		name "MineTweaker3"
 		artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-([classifier]-)[revision].[ext]"
 	}
+	maven {
+		name "DVS1 Maven FS"
+		url "http://dvs1.progwml6.com/files/maven"
+	}
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-pre27.5" : "3"
+version = mainMod ? "BETA-27" : "4"
 group= "main"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
 
@@ -63,6 +67,9 @@ dependencies {
 	//compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
 	
 	compile name: "MineTweaker3", group: "minetweaker", version: "1.7.10-3.0.10B", classifier: "Dev-Full"
+	
+	// compile "mantle:Mantle:1.7.10-0.3.2.jenkins207:deobf"
+	compile "tconstruct:TConstruct:1.7.10-1.8.8.build991:deobf"
 	
 	compile fileTree(dir: 'lib', include: ['*.jar'])
 	if (mainMod)

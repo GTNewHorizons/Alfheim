@@ -455,7 +455,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			
 			val v = Vector3()
 			for (i in 0 until 360 step 5) {
-				val c = Color.getHSBColor(i.toFloat() / 360f, 1f, 1f)
+				val c = Color.getHSBColor(i.F / 360f, 1f, 1f)
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.5)
 				Botania.proxy.sparkleFX(entity.worldObj, entity.posX + v.x, entity.posY + v.y, entity.posZ + v.z, c.red.F, c.green.F, c.blue.F, 1.5f, 10)
 			}

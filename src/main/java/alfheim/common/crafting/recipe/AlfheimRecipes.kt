@@ -607,13 +607,17 @@ object AlfheimRecipes {
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(spreader, 1, 4),
-						 "MMM", "ESI", "MMM",
-						 'M', MAUFTRIUM_INGOT,
-						 'E', ELVORIUM_INGOT,
-						 'S', ItemStack(spreader, 1, 3),
-						 'I', IFFESAL_DUST)
-		recipeUberSpreader = BotaniaAPI.getLatestAddedRecipe()
+		val s = AlfheimCore.stupidMode
+		
+		if (!AlfheimCore.TiCLoaded || s) {
+			addOreDictRecipe(ItemStack(spreader, 1, 4),
+							 "MMM", "ESI", "MMM",
+							 'M', if (s) ItemStack(alfStorage, 1, 1) else MAUFTRIUM_INGOT,
+							 'E', if (s) ItemStack(alfStorage, 1, 0) else ELVORIUM_INGOT,
+							 'S', ItemStack(spreader, 1, 3),
+							 'I', if (s) ItemStack(elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore) else IFFESAL_DUST)
+			recipeUberSpreader = BotaniaAPI.getLatestAddedRecipe()
+		}
 		
 		// #############################################################################################################
 		// ################################################ DECO BLOCKS ################################################
@@ -760,11 +764,10 @@ object AlfheimRecipes {
 		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), ItemStack(alfStorage, 1, 0))
 		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumIngot), ItemStack(alfStorage, 1, 1))
 		
-		// NNN-NNN-NNN-N!!!
-		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), "NNN", "NNN", "NNN", 'N', ELVORIUM_NUGGET)
-		addOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), "NNN", "NNN", "NNN", 'N', MAUFTRIUM_NUGGET)
-		addOreDictRecipe(ItemStack(alfStorage, 1, 0), "NNN", "NNN", "NNN", 'N', ELVORIUM_INGOT)
-		addOreDictRecipe(ItemStack(alfStorage, 1, 1), "NNN", "NNN", "NNN", 'N', MAUFTRIUM_INGOT)
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), *Array(9) { ELVORIUM_NUGGET } )
+		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), *Array(9) { MAUFTRIUM_NUGGET } )
+		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 0), *Array(9) { ELVORIUM_INGOT } )
+		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 1), *Array(9) { MAUFTRIUM_INGOT } )
 		
 		addShapelessOreDictRecipe(ItemStack(lens, 1, 23), ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM)
 		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe()
