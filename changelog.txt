@@ -3,6 +3,10 @@ Innovations:
  Configurable-capacity manaspreader (2400 mp/burst)
  No more Muspelheim Flame spreading
 
+Integration:
+ Tinkers' Construct:
+  Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel smelting and casting
+
 Fixes:
  No manavoid stream, god emblems and firerod particles from other players
  Manatide Bellows animation when attached to pool with accelerator

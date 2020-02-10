@@ -20,6 +20,7 @@ import net.minecraftforge.fluids.BlockFluidFinite
 class ItemNaturalBucket: ItemMod("NaturalBucket") {
 	
 	init {
+		creativeTab = CreativeTabs.tabMisc
 		containerItem = Items.bucket
 		setHasSubtypes(true)
 	}
