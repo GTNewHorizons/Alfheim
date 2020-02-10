@@ -13,8 +13,6 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		/** Decay Spell */
 		val bleeding = DamageSourceSpell("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
-		/** Gravity Trap Spell */
-		val gravity = DamageSourceSpell("gravity").setDamageBypassesArmor()!!
 		/** Death Mark Spell */
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		/** Regular poison */
@@ -28,10 +26,6 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		/** Red Flame */
 		val soulburn = DamageSource("soulburn").setDamageBypassesArmor().setMagicDamage()!!
 		
-		/** Sacrifice type of damage to attack other mobs  */
-		fun darkness(caster: EntityLivingBase?) =
-			EntityDamageSourceSpell("darkness_FF", caster).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
-		
 		fun explosion(dm: EntitySpellDriftingMine, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("explosion.player", caster, dm).setExplosion()!!
 		
@@ -40,6 +34,9 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()!!
+		
+		fun gravity(gt: EntitySpellGravityTrap, caster: EntityLivingBase?) =
+			EntityDamageSourceIndirectSpell("gravity", caster, gt).setDamageBypassesArmor()!!
 		
 		fun hammerfall(caster: EntityLivingBase?) =
 			EntityDamageSourceSpell("hammerfall", caster).setDamageBypassesArmor().setProjectile()!!
@@ -53,6 +50,9 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		fun mortar(mt: EntitySpellMortar, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("mortar", caster, mt).setProjectile()!!
+		
+		fun sacrifice(caster: EntityLivingBase?) =
+			EntityDamageSourceSpell("darkness_FF", caster).setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		
 		fun shadow(caster: EntityLivingBase?) =
 			EntityDamageSource("shadow", caster).setDamageBypassesArmor().setMagicDamage()!!

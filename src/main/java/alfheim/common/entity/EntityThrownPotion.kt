@@ -4,6 +4,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
 import alfheim.common.item.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
@@ -66,25 +67,27 @@ class EntityThrownPotion: EntityThrowable {
 				val iterator = list1.iterator()
 				
 				while (iterator.hasNext()) {
-					val entitylivingbase = iterator.next() as EntityLivingBase
-					val d0 = getDistanceSqToEntity(entitylivingbase)
+					val living = iterator.next() as EntityLivingBase
+					val d0 = getDistanceSqToEntity(living)
 					
 					if (d0 < 16.0) {
 						var d1 = 1.0 - sqrt(d0) / 4.0
 						
-						if (entitylivingbase === movingObject.entityHit) {
+						if (living === movingObject.entityHit) {
 							d1 = 1.0
 						}
+						
+						if (!InteractionSecurity.canDoSomethingWithEntity(thrower ?: continue, living)) continue
 						
 						for (e: PotionEffect in effects) {
 							
 							if (Potion.potionTypes[e.potionID].isInstant) {
-								Potion.potionTypes[e.potionID].affectEntity(thrower, entitylivingbase, e.amplifier, d1)
+								Potion.potionTypes[e.potionID].affectEntity(thrower, living, e.amplifier, d1)
 							} else {
 								val j = (d1 * e.duration.D + 0.5).I
 								
 								if (j > 20) {
-									entitylivingbase.addPotionEffect(PotionEffect(e.potionID, j, e.amplifier))
+									living.addPotionEffect(PotionEffect(e.potionID, j, e.amplifier))
 								}
 							}
 						}

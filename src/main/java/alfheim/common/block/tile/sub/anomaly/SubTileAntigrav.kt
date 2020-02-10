@@ -1,14 +1,14 @@
 package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.core.util.D
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.AxisAlignedBB
 import vazkii.botania.common.Botania
 
-class SubTileAntigrav: SubTileEntity() {
+class SubTileAntigrav: SubTileAnomalyBase() {
 	internal val v = Vector3()
 	
 	override val targets: List<Any>

@@ -1,9 +1,7 @@
 package alfheim.common.block.tile.sub.anomaly
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.block.tile.SubTileEntity
-import alfheim.client.core.util.mc
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
@@ -13,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.api.mana.ManaItemHandler
 
-class SubTileManaVoid: SubTileEntity() {
+class SubTileManaVoid: SubTileAnomalyBase() {
 	var mana: Int = 0
 	internal val v = Vector3()
 	
@@ -49,10 +47,7 @@ class SubTileManaVoid: SubTileEntity() {
 		if (m > 0) {
 			mana += m
 			
-			var flag = false
-			if (!ASJUtilities.isServer) flag = mc.thePlayer !== target
-			
-			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.MANAVOID, worldObj.provider.dimensionId, x().D, y().D, z().D, target.posX, target.posY + if (flag) 1.0 else -0.62, target.posZ)
+			if (!target.worldObj.isRemote) VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.MANAVOID, worldObj.provider.dimensionId, x().D, y().D, z().D, target.posX, target.posY + 1.0, target.posZ)
 		}
 	}
 	

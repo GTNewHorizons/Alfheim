@@ -128,19 +128,20 @@ object EventHandler {
 	fun onEntityAttacked(e: LivingAttackEvent) {
 		var amount = e.ammount // oh srsly 'mm' ?
 		val target = e.entityLiving
+		val attacker = e.source.entity
 		
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			amount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (e.source.entity as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount * 100).I, true) } == true)))
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && (e.source is DamageSourceSpell || (e.source.isMagicDamage && (attacker as? EntityPlayer)?.let { SpellBase.consumeMana(it, (amount * 100).I, true) } == true)))
 			amount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			amount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
-			if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true)
+			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true)
 				amount *= 4f
 			
-			if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame) == true || target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
+			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame) == true || target.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 				e.isCanceled = true
 				return
 			}
@@ -172,23 +173,24 @@ object EventHandler {
 	@SubscribeEvent
 	fun onEntityHurt(e: LivingHurtEvent) {
 		val target = e.entityLiving
+		val attacker = e.source.entity
 		
 		if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
 			e.isCanceled = true
 			return
 		}
 		
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			e.ammount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && e.source.isMagical)
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && e.source.isMagical)
 			e.ammount *= 1.2f
-		if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
+		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			e.ammount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
-			if ((e.source.entity as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
+			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
 				e.ammount *= 4f
-				VisualEffectHandler.sendPacket(VisualEffects.QUADH, e.source.entity)
+				VisualEffectHandler.sendPacket(VisualEffects.QUADH, attacker)
 			}
 			
 			var pe: PotionEffect? = target.getActivePotionEffect(AlfheimConfigHandler.potionIDNineLifes)
@@ -212,8 +214,8 @@ object EventHandler {
 						e.isCanceled = true
 						return
 					}
-				} else if (e.source.entity is EntityLivingBase && e.source.entity.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
-					e.source.entity.attackEntityFrom(e.source, e.ammount / 2)
+				} else if (attacker is EntityLivingBase && attacker.isEntityAlive && target.worldObj.rand.nextInt(3) == 0) {
+					attacker.attackEntityFrom(e.source, e.ammount / 2)
 				}
 			}
 			
@@ -291,7 +293,7 @@ object EventHandler {
 	@SubscribeEvent
 	fun onBlockBreak(e: BlockEvent.BreakEvent) {
 		val item = e.player.currentEquippedItem?.item ?: return
-		if (item === AlfheimItems.flugelSoul) e.isCanceled = true
+		if (item === AlfheimItems.flugelSoul && e.player.currentEquippedItem.meta != 0xFACE17) e.isCanceled = true
 	}
 	
 	@SubscribeEvent

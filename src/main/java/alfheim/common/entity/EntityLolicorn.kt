@@ -21,7 +21,7 @@ import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
 import java.util.*
 
-class EntityLolicorn(world: World) : EntityRidableFlying(world), ITimeStopSpecific {
+class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecific {
 	
 	val fallbackUUID = UUID(0, 0)
 	override val isImmune = false

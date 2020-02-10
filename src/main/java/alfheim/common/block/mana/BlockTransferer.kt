@@ -113,8 +113,8 @@ class BlockTransferer: BlockModContainer<TileEntity>(Material.wood), IWandable, 
 		super.breakBlock(world, x, y, z, block, meta)
 	}
 	
-	override fun onUsedByWand(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
-		(world.getTileEntity(x, y, z) as TileTransferer).onWanded(player)
+	override fun onUsedByWand(player: EntityPlayer?, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
+		(world.getTileEntity(x, y, z) as? TileTransferer)?.onWanded(player ?: return false) ?: return false
 		return true
 	}
 	

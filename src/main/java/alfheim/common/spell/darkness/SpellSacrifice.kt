@@ -16,6 +16,8 @@ object SpellSacrifice: SpellBase("sacrifice", EnumRace.IMP, 256000, 75000, 100, 
 		get() = arrayOf(damage, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		// if (!WorldGuardCommons.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			val pe = PotionEffect(AlfheimConfigHandler.potionIDSacrifice, 32, 0, false)

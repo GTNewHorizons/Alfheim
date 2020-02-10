@@ -24,6 +24,8 @@ object SpellGravityTrap: SpellBase("gravitytrap", EnumRace.LEPRECHAUN, 10000, 60
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val mop = ASJUtilities.getSelectedBlock(caster, efficiency, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
+			// if (!WorldGuardCommons.canDoSomethingHere(caster, mop.hitVec.xCoord, mop.hitVec.yCoord + 0.1, mop.hitVec.zCoord)) return SpellCastResult.NOTALLOW
+			
 			val result = checkCastOver(caster)
 			if (result == SpellCastResult.OK)
 				caster.worldObj.spawnEntityInWorld(EntitySpellGravityTrap(caster.worldObj, caster, mop.hitVec.xCoord, mop.hitVec.yCoord + 0.1, mop.hitVec.zCoord))

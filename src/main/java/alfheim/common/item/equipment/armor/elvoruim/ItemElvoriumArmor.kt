@@ -27,7 +27,7 @@ import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
 import java.util.*
 
 @Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IVisDiscountGear", striprefs = true)
-open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, name, AlfheimAPI.ELVORIUM), IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
+open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, name, AlfheimAPI.ElvoriumArmor), IManaDiscountArmor, IManaProficiencyArmor, IVisDiscountGear {
 	
 	init {
 		creativeTab = AlfheimTab

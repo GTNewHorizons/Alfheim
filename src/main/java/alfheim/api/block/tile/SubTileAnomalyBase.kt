@@ -17,7 +17,7 @@ import java.util.*
 
 // Used for anomalies - TileAnomaly
 @Suppress("UNCHECKED_CAST")
-abstract class SubTileEntity {
+abstract class SubTileAnomalyBase {
 	
 	val rand = Random()
 	var superTile: TileEntity? = null
@@ -80,20 +80,10 @@ abstract class SubTileEntity {
 	
 	// ################################ SUPERTILE ################################
 	
-	val worldObj
-	get() = superTile!!.worldObj!!
-	
-	fun x() = superTile!!.xCoord
-	
-	fun x(x: Double) = x() + x.mfloor()
-	
-	fun y() = superTile!!.yCoord
-	
-	fun y(y: Double) = y() + y.mfloor()
-	
-	fun z() = superTile!!.zCoord
-	
-	fun z(z: Double) = z() + z.mfloor()
+	val worldObj get() = superTile!!.worldObj!!
+	fun x(x: Double = 0.0) = superTile!!.xCoord + x.mfloor()
+	fun y(y: Double = 0.0) = superTile!!.yCoord + y.mfloor()
+	fun z(z: Double = 0.0) = superTile!!.zCoord + z.mfloor()
 	
 	// ################################ UTILS ################################
 	
@@ -153,21 +143,22 @@ abstract class SubTileEntity {
 		const val TAG_TICKS = "ticks"
 		val EMPTY_LIST = ArrayList<Any>(0)
 		
+		/**	0b00000 - fully compatible, do not use this unless you know what you are doing*/
 		const val NONE = 0
-		//	0b00000 - fully compatible, do not use this unless you know what you are doing
+		/**	0b00001 - motion manipulation	- gravity */
 		const val MOTION = 1
-		//	0b00001 - motion manipulation	- gravity
+		/**	0b00010 - health manipulation	- damaging */
 		const val HEALTH = 2
-		//	0b00010 - health manipulation	- damaging
+		/**	0b00100 - mana manipulation		- drain mana */
 		const val MANA = 4
-		//	0b00100 - mana manipulation		- drain mana
+		/**	0b01000 - ticks manipulation	- time speedup */
 		const val TIME = 8
-		//	0b01000 - ticks manipulation	- time speedup
+		/**	0b10001 - space manipulation	- teleportation		- also incompatible with motion */
 		const val SPACE = 17
-		//	0b10001 - space manipulation	- teleportation		- also incompatible with motion
-		const val ALL = -0x1    // 			- fully incompatible
+		/** 								- fully incompatible */
+		const val ALL = -0x1
 		
-		fun forName(name: String): SubTileEntity? {
+		fun forName(name: String): SubTileAnomalyBase? {
 			return try {
 				AlfheimAPI.getAnomaly(name).newInstance()
 			} catch (e: Exception) {

@@ -6,8 +6,8 @@ object LibRenderIDs {
 	
 	// Alfheim
 	val idAniTorch = RenderingRegistry.getNextAvailableRenderId()
-	val idAnomaly = RenderingRegistry.getNextAvailableRenderId()
 	val idAnyavil = RenderingRegistry.getNextAvailableRenderId()
+	val idHarvester = RenderingRegistry.getNextAvailableRenderId()
 	val idManaAccelerator = RenderingRegistry.getNextAvailableRenderId()
 	val idPowerStone = RenderingRegistry.getNextAvailableRenderId()
 	val idPylon = RenderingRegistry.getNextAvailableRenderId()

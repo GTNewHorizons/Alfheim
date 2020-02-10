@@ -1,0 +1,23 @@
+tile.fluid.molten.Elementium.name=Molten Elementium
+tile.fluid.molten.Elvorium.name=Molten Elvorium
+tile.fluid.molten.Manasteel.name=Molten Manasteel
+tile.fluid.molten.Mauftrium.name=Molten Mauftrium
+tile.fluid.molten.Terrasteel.name=Molten Terrasteel
+
+item.alfheim:NaturalBucket.Elementium.name=Molten Elementium Bucket
+item.alfheim:NaturalBucket.Elvorium.name=Molten Elvorium Bucket
+item.alfheim:NaturalBucket.Manasteel.name=Molten Manasteel Bucket
+item.alfheim:NaturalBucket.Mauftrium.name=Molten Mauftrium Bucket
+item.alfheim:NaturalBucket.Terrasteel.name=Molten Terrasteel Bucket
+
+fluid.Elementium.molten=Molten Elementium
+fluid.Elvorium.molten=Molten Elvorium
+fluid.Manasteel.molten=Molten Manasteel
+fluid.Mauftrium.molten=Molten Mauftrium
+fluid.Terrasteel.molten=Molten Terrasteel
+
+material.elementium=Elementium
+material.elvorium=Elvorium
+material.manasteel=Manasteel
+material.mauftrium=Mauftrium
+material.terrasteel=Terrasteel

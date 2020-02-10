@@ -2,7 +2,7 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.core.util.*
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
@@ -12,7 +12,7 @@ import vazkii.botania.common.Botania
 import java.util.*
 import kotlin.math.*
 
-class SubTileWarp: SubTileEntity() {
+class SubTileWarp: SubTileAnomalyBase() {
 	var radius = 20
 	
 	override val targets: List<Any>

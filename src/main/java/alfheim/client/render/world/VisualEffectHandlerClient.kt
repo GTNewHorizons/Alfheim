@@ -26,80 +26,70 @@ import vazkii.botania.common.core.helper.Vector3 as VVec3
 
 object VisualEffectHandlerClient {
 	
+	val activeAmblems = HashMap<Int, Boolean>()
 	val v = Vector3()
 	
-	fun select(s: VisualEffects, x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
-		if (s == SPLASH) spawnSplash(x, y, z)
-		
-		if (AlfheimCore.enableMMO) {
-			when (s) {
-				ACID           -> spawnAcid(x, y, z)
-				AQUABIND       -> spawnAquaBind(x, y, z)
-				AQUASTREAM     -> spawnAquaStream(x, y, z, x2, y2, z2)
-				AQUASTREAM_HIT -> spawnAquaStreamHit(x, y, z)
-				DISPEL         -> spawnBurst(x, y, z, 1f, 0f, 0f)
-				ECHO           -> spawnEcho(x, y, z)
-				ECHO_ENTITY    -> spawnEchoEntity(x, y, z)
-				ECHO_ITEM      -> spawnEchoItem(x, y, z)
-				ECHO_MOB       -> spawnEchoMob(x, y, z)
-				ECHO_PLAYER    -> spawnEchoPlayer(x, y, z)
-				EXPL           -> spawnExplosion(x, y, z)
-				GAIA_SOUL      -> spawnGaiaSoul(x, y, z)
-				GRAVITY        -> spawnGravity(x, y, z, x2, y2, z2)
-				HEAL           -> spawnBurst(x, y, z, 0f, 1f, 0f)
-				HORN           -> horn(x, y, z)
-				ICELENS        -> addIceLens()
-				MANA           -> addMana(x, y)
-				MANABURST      -> spawnManaburst(x, y, z)
-				MANAVOID       -> spawnManaVoid(x, y, z, x2, y2, z2)
-				MOON           -> moonBoom(x, y, z)
-				NOTE           -> spawnNote(x, y, z)
-				NVISION        -> spawnBurst(x, y, z, 0f, 0f, 1f)
-				POTION         -> spawnPotion(x, y, z, x2.I, y2 == 1.0)
-				PURE           -> spawnBurst(x, y, z, 0f, 0.75f, 1f)
-				PURE_AREA      -> spawnPure(x, y, z)
-				QUAD           -> quadDamage()
-				QUADH          -> quadHurt()
-				SHADOW         -> spawnBurst(x, y, z, 0.75f, 0.75f, 0.75f)
-				SMOKE          -> spawnSmoke(x, y, z)
-				THROW          -> spawnThrow(x, y, z, x2, y2, z2)
-				TREMORS        -> spawnTremors(x, y, z)
-				UPHEAL         -> spawnBurst(x, y, z, 1f, 0.75f, 0f)
-				WIRE           -> spawnWire(x, y, z, x2)
-				
-				else           -> Unit
-			}
+	fun select(s: VisualEffects, d: DoubleArray) {
+		//if (AlfheimCore.enableMMO) {
+		when (s) {
+			ACID              -> spawnAcid(d[0], d[1], d[2])
+			AQUABIND          -> spawnAquaBind(d[0], d[1], d[2])
+			AQUASTREAM        -> spawnAquaStream(d[0], d[1], d[2], d[3], d[4], d[5])
+			AQUASTREAM_HIT    -> spawnAquaStreamHit(d[0], d[1], d[2])
+			DISPEL            -> spawnBurst(d[0], d[1], d[2], 1f, 0f, 0f)
+			ECHO              -> spawnEcho(d[0], d[1], d[2])
+			ECHO_ENTITY       -> spawnEchoEntity(d[0], d[1], d[2])
+			ECHO_ITEM         -> spawnEchoItem(d[0], d[1], d[2])
+			ECHO_MOB          -> spawnEchoMob(d[0], d[1], d[2])
+			ECHO_PLAYER       -> spawnEchoPlayer(d[0], d[1], d[2])
+			EMBLEM_ACTIVATION -> activateEmblem(d[0], d[1])
+			EXPL              -> spawnExplosion(d[0], d[1], d[2])
+			FLAMESTAR         -> spawnFlameStar(d[0], d[1], d[2], d[3], d[4], d[5])
+			GAIA_SOUL         -> spawnGaiaSoul(d[0], d[1], d[2])
+			GRAVITY           -> spawnGravity(d[0], d[1], d[2], d[3], d[4], d[5])
+			HEAL              -> spawnBurst(d[0], d[1], d[2], 0f, 1f, 0f)
+			HORN              -> horn(d[0], d[1], d[2])
+			ICELENS           -> addIceLens()
+			MANA              -> addMana(d[0], d[1].I)
+			MANABURST         -> spawnManaburst(d[0], d[1], d[2])
+			MANAVOID          -> spawnManaVoid(d[0], d[1], d[2], d[3], d[4], d[5])
+			MOON              -> moonBoom(d[0], d[1], d[2])
+			NOTE              -> spawnNote(d[0], d[1], d[2])
+			NVISION           -> spawnBurst(d[0], d[1], d[2], 0f, 0f, 1f)
+			POTION            -> spawnPotion(d[0], d[1], d[2], d[3].I, d[4] == 1.0)
+			PURE              -> spawnBurst(d[0], d[1], d[2], 0f, 0.75f, 1f)
+			PURE_AREA         -> spawnPure(d[0], d[1], d[2])
+			QUAD              -> quadDamage()
+			QUADH             -> quadHurt()
+			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
+			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
+			SPLASH            -> spawnSplash(d[0], d[1], d[2])
+			THROW             -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
+			TREMORS           -> spawnTremors(d[0], d[1], d[2])
+			UPHEAL            -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
+			WIRE              -> spawnWire(d[0], d[1], d[2], d[3])
 		}
 	}
 	
-	fun spawnWire(x: Double, y: Double, z: Double, range: Double) {
-		val v = VVec3(x, y, z)
-		for (var11 in 0..20) {
-			Botania.proxy.lightningFX(mc.theWorld, v, v.copy().add(randomVec(range)), (range * 0.01).F, 255 shl 16, 0)
-		}
-	}
-	
-	private fun randomVec(length: Double): vazkii.botania.common.core.helper.Vector3 {
-		val vec = VVec3(0.0, Math.random() * length, 0.0)
-		vec.rotate(Math.random() * Math.PI * 2, VVec3(1.0, 0.0, 0.0))
-		vec.rotate(Math.random() * Math.PI * 2, VVec3(0.0, 0.0, 1.0))
-		return vec
+	fun activateEmblem(eID: Double, active: Double) {
+		activeAmblems[eID.I] = active != 0.0
 	}
 	
 	fun addIceLens() {
 		mc.thePlayer.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDIceLens, SpellIceLens.duration, -1, true))
 	}
 	
-	fun addMana(enID: Double, mana: Double) {
+	fun addMana(enID: Double, mana: Int) {
 		val e = mc.theWorld.getEntityByID(enID.I) as? EntityPlayer ?: return
-		if (mana == 0.0) {
+		
+		if (mana == 0 || mana.I == Int.MAX_VALUE) {
 			var d = 0.0
 			while (d < 1.0) {
-				spawnBurst(e.posX, e.posY + d, e.posZ, 0.975f, 0.85f, 0.1f)
+				spawnBurst(e.posX, e.posY + d, e.posZ, 0.975f, if (mana == 0) 0.1f else 0.85f, 0.1f)
 				d += .2
 			}
 		} else
-			e.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDShowMana, mana.I, 100, true))
+			e.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDShowMana, mana, 100, true))
 	}
 	
 	fun horn(x: Double, y: Double, z: Double) {
@@ -188,6 +178,10 @@ object VisualEffectHandlerClient {
 			v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15)
 			Botania.proxy.wispFX(mc.theWorld, x, y, z, 1f, Math.random().F * 0.25f, Math.random().F * 0.075f, 0.25f + Math.random().F * 0.45f, v.x.F, v.y.F, v.z.F, 0.5f)
 		}
+	}
+	
+	fun spawnFlameStar(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
+		Botania.proxy.sparkleFX(mc.theWorld, x, y, z, x2.F, y2.F, z2.F, 1f, 5)
 	}
 	
 	fun spawnGaiaSoul(x: Double, y: Double, z: Double) {
@@ -298,8 +292,22 @@ object VisualEffectHandlerClient {
 		}
 	}
 	
+	fun spawnWire(x: Double, y: Double, z: Double, range: Double) {
+		val v = VVec3(x, y, z)
+		for (var11 in 0..20) {
+			Botania.proxy.lightningFX(mc.theWorld, v, v.copy().add(randomVec(range)), (range * 0.01).F, 255 shl 16, 0)
+		}
+	}
+	
+	private fun randomVec(length: Double): vazkii.botania.common.core.helper.Vector3 {
+		val vec = VVec3(0.0, Math.random() * length, 0.0)
+		vec.rotate(Math.random() * Math.PI * 2, VVec3(1.0, 0.0, 0.0))
+		vec.rotate(Math.random() * Math.PI * 2, VVec3(0.0, 0.0, 1.0))
+		return vec
+	}
+	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EXPL, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

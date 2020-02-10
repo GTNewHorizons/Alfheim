@@ -18,6 +18,7 @@ class TileManaAccelerator: TileItemContainer() {
 	
 	// for some reason it updates as many times per tick as many times you right-click on it
 	private var lastTick: Long = 0
+	var ticksDoingTransfer = 0
 	
 	//private var dummy: DummyUpdater? = null
 	
@@ -82,7 +83,20 @@ class TileManaAccelerator: TileItemContainer() {
 						val tileVec = Vector3.fromTileEntity(te).add(0.2 + Math.random() * 0.6, 0.0, 0.2 + Math.random() * 0.6)
 						LightningHandler.spawnLightningBolt(worldObj, if (te.isOutputtingPower) tileVec else itemVec, if (te.isOutputtingPower) itemVec else tileVec, 80f, worldObj.rand.nextLong(), 0x4400799c, 0x4400C6FF)
 					}
+					
 					te.isDoingTransfer = te.isOutputtingPower
+					
+					if (te.isDoingTransfer) {
+						ticksDoingTransfer++
+						for (dir in LibMisc.CARDINAL_DIRECTIONS) {
+							val tile = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord - 1, zCoord + dir.offsetZ)
+							if (tile is TileBellows && tile.linkedTile === te && ticksDoingTransfer >= tile.getBlockMetadata() * 2 - 2)
+								tile.setActive(true)
+						}
+					} else {
+						ticksDoingTransfer = 0
+					}
+					
 					if (worldObj.totalWorldTime % 20 == 0L) {
 						worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType())
 						if (ASJUtilities.isServer) AlfheimCore.network.sendToDimension(MessageTileItem(xCoord, yCoord, zCoord, stack), worldObj.provider.dimensionId)

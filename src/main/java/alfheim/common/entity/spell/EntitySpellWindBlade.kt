@@ -6,6 +6,7 @@ import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellWindBlades
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -29,7 +30,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 	
 	constructor(world: World, caster: EntityLivingBase, i: Double): this(world) {
 		this.caster = caster
-		setPositionAndRotation(caster.posX, caster.posY + i + caster.height * 0.75, caster.posZ, caster.rotationYaw, caster.rotationPitch)
+		setPositionAndRotation(caster.posX, caster.posY + i + caster.height * 0.75, caster.posZ, caster.rotationYaw, 0f)
 	}
 	
 	override fun onEntityUpdate() {
@@ -52,7 +53,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 		
 		val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, boundingBox) as MutableList<EntityLivingBase>
 		l.remove(caster)
-		for (e in l) if (!PartySystem.mobsSameParty(caster, e)) e.attackEntityFrom(DamageSourceSpell.windblade(this, caster), SpellBase.over(caster, SpellWindBlades.damage.D))
+		for (e in l) if (!PartySystem.mobsSameParty(caster, e) && InteractionSecurity.canHurtEntity(caster ?: continue, e)) e.attackEntityFrom(DamageSourceSpell.windblade(this, caster), SpellBase.over(caster, SpellWindBlades.damage.D))
 	}
 	
 	override fun affectedBy(uuid: UUID) = caster!!.uniqueID != uuid

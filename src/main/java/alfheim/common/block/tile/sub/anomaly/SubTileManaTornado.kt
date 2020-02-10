@@ -2,7 +2,7 @@ package alfheim.common.block.tile.sub.anomaly
 
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.api.block.tile.SubTileEntity
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.core.util.*
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.Botania
@@ -11,7 +11,7 @@ import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.lens.ItemLens
 import java.util.*
 
-class SubTileManaTornado: SubTileEntity() {
+class SubTileManaTornado: SubTileAnomalyBase() {
 	
 	internal val v = Vector3()
 	

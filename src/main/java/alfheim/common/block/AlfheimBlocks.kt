@@ -36,6 +36,7 @@ object AlfheimBlocks {
 	val amplifier: Block
 	val animatedTorch: Block
 	val anomaly: Block
+	val anomalyHarvester: Block
 	val anyavil: Block
 	val auroraDirt: Block
 	val auroraLeaves: Block
@@ -106,10 +107,10 @@ object AlfheimBlocks {
 	val starBlock: Block
 	val starBlock2: Block
 	val tradePortal: Block
+	//val transferer: Block BACK
 	val treeCrafterBlock: Block
 	val treeCrafterBlockRB: Block
 	val treeCrafterBlockAU: Block
-	//val transferer: Block BACK
 	
 	// DENDROLOGY
 	
@@ -170,6 +171,7 @@ object AlfheimBlocks {
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
 		anomaly = BlockAnomaly()
+		anomalyHarvester = BlockAnomalyHarvester()
 		anyavil = BlockAnyavil()
 		auroraDirt = BlockAuroraDirt()
 		auroraLeaves = BlockAuroraLeaves()
@@ -248,10 +250,10 @@ object AlfheimBlocks {
 		starBlock = BlockStar()
 		starBlock2 = BlockCracklingStar()
 		tradePortal = BlockTradePortal()
+		//transferer = BlockTransferer() BACK
 		treeCrafterBlock = BlockTreeCrafter("treeCrafter", irisPlanks)
 		treeCrafterBlockRB = BlockTreeCrafter("treeCrafterRB", rainbowPlanks)
 		treeCrafterBlockAU = BlockTreeCrafter("treeCrafterAU", auroraPlanks)
-		//transferer = BlockTransferer() BACK
 		
 		// DENDOROLOGY
 		

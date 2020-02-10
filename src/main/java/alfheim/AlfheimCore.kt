@@ -2,6 +2,7 @@ package alfheim
 
 import alexsocol.asjlib.command.CommandDimTP
 import alfheim.api.ModInfo.MODID
+import alfheim.common.core.asm.AlfheimModularLoader
 import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
@@ -10,6 +11,7 @@ import alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
 import alfheim.common.integration.thaumcraft.thaumictinkerer.ThaumicTinkererAlfheimConfig
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
 import alfheim.common.network.*
@@ -48,6 +50,8 @@ class AlfheimCore {
 		var enableMMO = true
 		var MineTweakerLoaded = false
 		var NEILoaded = false
+		var stupidMode = false
+		var TiCLoaded = false
 		var TravellersGearLoaded = false
 		
 		val jingleTheBells: Boolean
@@ -77,10 +81,15 @@ class AlfheimCore {
 	
 	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
+		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod")) throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
+		
 		AlfheimConfigHandler.readModes()
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
+		TiCLoaded = Loader.isModLoaded("TConstruct")
 		TravellersGearLoaded = Loader.isModLoaded("TravellersGear")
+		
+		stupidMode = Loader.isModLoaded("Avaritia")
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
 		
@@ -111,6 +120,7 @@ class AlfheimCore {
 		if (Loader.isModLoaded("AWWayofTime")) BloodMagicAlfheimConfig
 		if (Loader.isModLoaded("ThaumicTinkerer")) ThaumicTinkererAlfheimConfig
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig()
+		if (TiCLoaded) TinkersConstructAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("Waila")) WAILAAlfheimConfig.loadConfig()
 	}
 	

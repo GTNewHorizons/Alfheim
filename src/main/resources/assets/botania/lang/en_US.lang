@@ -214,6 +214,14 @@ botania.tagline.hyperBuk=Dryouter
 botania.page.hyperBuk0=&1Extrapolatedpolated Bucket&0 is to weak for you? You want to clear oceans in single click? Then &1Hyperpolated Bucket&0 is for you. It is 27x times more powerful and will clear out more fluid blocks at once. Just enhance your pink bucket with mauftriom and iffesal dust to get devastating drying effect. You can further extend it's AoE by adding &1Mauftrium&0 to it.
 botania.page.hyperBuk1=Hyper-uber-mega-extrapolation
 
+botania.entry.uberSpreader=Mauftrium Mana Spreader
+botania.tagline.uberSpreader=Even harder, even better, even faster, even stronger
+botania.page.uberSpreader0=Among all advantages of &6Mauftrium&0, it is difficult not to note its extreme strength and excellent mana conductivity. And these properties were not missed by one of the students of Mastray while helping the teacher in his researches. He suggested that since single Gaia Spirit is capable of significantly enhancing regular mana spreader, then what will happen if you make a second improvement using Mauftrum?
+botania.page.uberSpreader1=After a series of experiments and several consultations with Dwarven masters, the result was obtained: &1Mauftrium mana spreader&0, many times stronger than its predecessor. However, Mastray did not appreciate the efforts of his student, calling him a wasteful fool. Since then, several more people have tried to create such a spreader, but they have not received widespread use, as well as public acceptance.
+botania.page.uberSpreader2=Creating &1Mauftrium Mana Spreader&0
+botania.page.uberSpreader2s=&oGo to hell, useless balance&0
+botania.page.uberSpreader2t=To create &1Mauftrium Mana Spreader&0 you need to put &1Gaia Mana Spreader&0 into &4Casting Basin&0 and pour down 8 &6Mauftrium Ingots&0
+
 botania.entry.flugel=Flügel
 botania.tagline.flugel=Weapon of Gods
 botania.page.flugel0=Not much can be said about the Flügels. Angels of death - so they are called. Wayward, cruel and almost immortal. Their ability to teleport in the places they've seen previously has attracted many brave explorers, but not everyone decides to challenge Gaia's Guardian to get one of their eyes.
@@ -247,8 +255,7 @@ botania.page.mask0=Fury and danger emanates from this mask. When you try to put 
 
 botania.entry.excaliber=Holly Sword Excaliber
 botania.tagline.excaliber=Not fake! Promise!
-botania.page.excaliber0=Well, that's embarrassing...
-botania.page.excaliber0u=&oLost long ago, this sword is still not found...&r
+botania.page.excaliber0=Lost long ago, &1Holly Sword Excaliber&0 was finally found. As the legends say, this sword is unbreakable and can shoot a mana ray on every swing, that will look for nearest hostile target and deal as much damage, as regular attack. Also you feel strange lightness while holding the sword, so you can run a little bit faster.
 
 botania.entry.stories=Token of Banter
 botania.tagline.stories=Yet knowledge can be bought
@@ -354,8 +361,8 @@ botania.tagline.spells=No magic outside Hogwarts!
 botania.page.spells0=Each elven race has its own set of &1Spells&0, with a certain affinities: &2Salamanders&0 are skillful &4Fire&0 mages, &2Sylphs&0 - &4Wind&0, &2Kait Sith&0 can subdue the &4Nature&0, &2Pookas&0 are excellent &4Musicians&0, &2Gnomes&0 specialize in &4Earth&0 magic, &2Leprechauns&0 on various &4Technologies&0, &2Spriggans&0 are masters of &4Illusions&0, &2Undines&0 - &4Water&0 mages, and &2Imps&0 are servants of &4Darkness&0.
 botania.page.spells1=Before using the &1Spell&0, you will have to wait for some time to concentrate the energy in your hands, as well as after, so that your energy balance will return to normal.
 botania.page.spells2=The &1Spell&0 is selected using the arrows, cast happens when you press [C]. Also, while holding [Ctrl]+[Shift], you have the opportunity to set the current spell in one of the twelve quick access slots and use it by the slot number with the buttons from [1] to [=], while holding [Ctrl]. You can also cancel the current spell by pressing the [X] button.
-botania.page.spells3=&1Spells&0 for your race will cost exactly as much &4Mana&0 as indicated in their description, the rest - twice expensive. Also, some races have &4Top-level Magic&0, the price of which does not change.
-botania.page.spells3u=&1Spells&0 for your race will cost exactly as much &4Mana&0 as indicated in their description, the rest - twice expensive. Also, some races have &4Top-level Magic&0, the price of which does not change, but it cannot be used without certain knowledge.
+botania.page.spells3=&1Spells&0 will cost exactly as much &4Mana&0 as indicated in their description, except you have affinity to it's element (Fireball for Salamander, etc) - then the cost will be twice lower (by default). Also, some races have &4Top-level Magic&0, the price of which does not change.
+botania.page.spells3u=&1Spells&0 will cost exactly as much &4Mana&0 as indicated in their description, except you have affinity to it's element (Fireball for Salamander, etc) - then the cost will be twice lower (by default). Also, some races have &4Top-level Magic&0, the price of which does not change, but they cannot be used without certain knowledge.
 botania.page.acidmyst=Sprays acid, causing continuous minor poison damage to creatures in 9 blocks diametered area.
 botania.page.aquabind=Binds all creatures in a region with a diameter of 7 blocks, imposing slowness.
 botania.page.aquastream=Releases a stream of water in the direction of sight, causing minor water damage. Interrupts if you move.

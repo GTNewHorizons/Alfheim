@@ -8,6 +8,14 @@ import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraftforge.oredict.OreDictionary
+import kotlin.math.*
+
+fun safeIndex(id: Int, size: Int) = max(0, min(id, size-1))
+fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+
+@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+fun String.substringEnding(lastNChars: Int): String = (this as java.lang.String).substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()

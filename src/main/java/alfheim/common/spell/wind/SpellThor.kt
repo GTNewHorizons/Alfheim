@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
@@ -19,6 +20,7 @@ object SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		val result: SpellCastResult
 		val mop = ASJUtilities.getSelectedBlock(caster, radius, true)
+		
 		val hit = if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK || mop.sideHit == -1)
 			Vector3(caster.lookVec).normalize().mul(radius).add(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
 		else
@@ -39,9 +41,12 @@ object SpellThor: SpellBase("thor", EnumRace.SYLPH, 6000, 1200, 30) {
 			}
 		}
 		
+		if (!InteractionSecurity.canDoSomethingHere(caster, x, y, z)) return SpellCastResult.NOTALLOW
+		
 		if (caster.worldObj.canBlockSeeTheSky(x, y, z) && caster.worldObj.getPrecipitationHeight(x, z) <= y) {
 			result = checkCast(caster)
 			if (result != SpellCastResult.OK) return result
+			
 			caster.worldObj.addWeatherEffect(EntityLightningBolt(caster.worldObj, x.D, y.D, z.D))
 			return result
 		}

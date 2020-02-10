@@ -18,16 +18,24 @@ import kotlin.system.exitProcess
 
 object AlfheimModularLoader {
 	
+	var linkSpecified = false
+	
 	init {
+		download()
+	}
+	
+	private fun download() {
+		if (!ModInfo.OBF) return
+		
 		FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Trying to update Alfheim Modular...")
 		
 		if (AlfheimConfigHandler.modularThread)
-			Thread(Runnable { download() }, "Alfheim Modular Download").also { it.isDaemon = true }.start()
+			Thread(Runnable { doDownload() }, "Alfheim Modular Download").also { it.isDaemon = true }.start()
 		else
-			download()
+			doDownload()
 	}
 	
-	fun download() {
+	private fun doDownload() {
 		var crash = false
 		
 		try {
@@ -39,6 +47,7 @@ object AlfheimModularLoader {
 				return
 			}
 			
+			linkSpecified = true
 			var possibleMatch = false
 			var download = true
 			
@@ -52,46 +61,36 @@ object AlfheimModularLoader {
 			}
 			
 			val fullname = url.substring(url.lastIndexOf('/') + 1)
+			val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
 			
-			//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] 1 pm: $possibleMatch dl: $download") // TODO
-			
-			if (possibleMatch) {
+			if (possibleMatch) run check@ {
 				subModsDir.listFiles()?.forEach { mod ->
-					ZipFile(mod).use { zip ->
-						val modInfo = zip.getEntry("mcmod.info") ?: return@use
-						
-						val info = loadJSon(zip.getInputStream(modInfo))
-						
-						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] info: $info") // TODO
-						
-						if (!info.first) return@use
-						val versionLocal = info.second
-						
-						val versionRemote = fullname.substring(fullname.lastIndexOf('-') + 1).let { it.substring(0, it.lastIndexOf('.')) }
-						
-						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] New Alfheim Modular version found: $versionRemote (was $versionLocal)") // TODO
-						
-						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] ${versionRemote == versionLocal}") // TODO
-						
-						if (versionRemote != versionLocal) {
-							crash = deleteMod(mod)
+					if (mod.extension == "jar")
+						ZipFile(mod).use { zip ->
+							val modInfo = zip.getEntry("mcmod.info") ?: return@use
 							
-							return@forEach
+							val info = loadJSon(zip.getInputStream(modInfo))
+							
+							if (!info.first) return@use
+							val versionLocal = info.second
+							
+							if (versionRemote != versionLocal) {
+								crash = deleteMod(mod)
+								
+								return@check
+							}
+							
+							download = false
+							
+							return@check
 						}
-						
-						download = false
-						
-						//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] dl: $download") // TODO
-						
-						return@forEach
-					}
 				}
+				
+				crash = true
 			}
 			
-			//FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] 2 pm: $possibleMatch dl: $download") // TODO
-			
 			if (download) {
-				var err = "Unable to download Alfheim Modular from official repo. Check your internet connection"
+				var err = "Unable to download Alfheim Modular from official repo"
 				
 				try {
 					val connection = URL(url).openConnection()
@@ -101,7 +100,9 @@ object AlfheimModularLoader {
 					
 					err = "Unable to save Alfheim Modular"
 					
-					val modular = File(subModsDir, fullname).also { if (!it.exists()) it.createNewFile() }
+					var fileName = if (AlfheimConfigHandler.modularFilename.isBlank()) fullname else AlfheimConfigHandler.modularFilename.format(versionRemote)
+					if (!fileName.endsWith(".jar")) fileName += ".jar"
+					val modular = File(subModsDir, fileName).also { if (!it.exists()) it.createNewFile() }
 					val fos = FileOutputStream(modular)
 					fos.write(mod)
 					fos.close()
@@ -119,10 +120,10 @@ object AlfheimModularLoader {
 		}
 		
 		if (crash) {
-			FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Exiting JVM due to mod duplication")
+			FMLRelaunchLog.warning("[${ModInfo.MODID.toUpperCase()}] Exiting JVM due to mod duplication")
 			exitProcess(1)
 		}
- 	}
+	}
 	
 	fun loadJSon(input: InputStream): Pair<Boolean, String> {
 		InputStreamReader(input).use { reader ->
@@ -157,17 +158,17 @@ object AlfheimModularLoader {
 			try {
 				val classLoader = this::class.java.classLoader
 				val url = mod.toURI().toURL()
-				val f_ucp = URLClassLoader::class.java.getDeclaredField("ucp")
-				val f_loaders = URLClassPath::class.java.getDeclaredField("loaders")
-				val f_lmap = URLClassPath::class.java.getDeclaredField("lmap")
-				f_ucp.isAccessible = true
-				f_loaders.isAccessible = true
-				f_lmap.isAccessible = true
-				val ucp = f_ucp[classLoader] as URLClassPath
-				val loader = (f_lmap[ucp] as MutableMap<*, *>).remove(URLUtil.urlNoFragString(url)) as Closeable?
+				val ucpF = URLClassLoader::class.java.getDeclaredField("ucp")
+				val loadersF = URLClassPath::class.java.getDeclaredField("loaders")
+				val lmapF = URLClassPath::class.java.getDeclaredField("lmap")
+				ucpF.isAccessible = true
+				loadersF.isAccessible = true
+				lmapF.isAccessible = true
+				val ucp = ucpF[classLoader] as URLClassPath
+				val loader = (lmapF[ucp] as MutableMap<*, *>).remove(URLUtil.urlNoFragString(url)) as Closeable?
 				if (loader != null) {
 					loader.close()
-					(f_loaders[ucp] as MutableList<*>).remove(loader)
+					(loadersF[ucp] as MutableList<*>).remove(loader)
 				}
 			} catch (e: Throwable) {
 				FMLRelaunchLog.log(Level.ERROR, e, "[${ModInfo.MODID.toUpperCase()}] Error occured while trying to $act")

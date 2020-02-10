@@ -84,7 +84,7 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 			if (player.ticksExisted % 10 == 0) {
 				val shift = getHeadOrientation(player)
 				val x = player.posX + shift.x * 0.25
-				val y = player.posY + shift.y * 0.25
+				val y = player.posY + shift.y * 0.25 + if (mc.thePlayer === player) 0f else 1.62f
 				val z = player.posZ + shift.z * 0.25
 				val xmotion = shift.x.F * 0.025f
 				val ymotion = shift.y.F * 0.025f

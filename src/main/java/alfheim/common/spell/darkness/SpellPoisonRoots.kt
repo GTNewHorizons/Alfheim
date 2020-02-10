@@ -5,6 +5,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.*
@@ -26,8 +27,9 @@ object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30)
 		scanpt@ for (i in 0 until pt.count) {
 			member = pt[i]
 			if (member == null || Vector3.entityDistance(caster, member) > 32) continue
+			
 			for (o in member.activePotionEffects) {
-				if (Potion.potionTypes[(o as PotionEffect).getPotionID()].isBadEffect) {
+				if (Potion.potionTypes[(o as PotionEffect).potionID].isBadEffect) {
 					flagBadEffs = true
 					break@scanpt
 				}
@@ -36,8 +38,9 @@ object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30)
 		
 		if (!flagBadEffs) return SpellCastResult.WRONGTGT
 		
-		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius)) as List<EntityLivingBase>
-		val flagNotParty = l.any { pt.isMember(it) }
+		val l = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius)) as MutableList<EntityLivingBase>
+		l.removeAll { !InteractionSecurity.canDoSomethingWithEntity(caster, it) }
+		val flagNotParty = l.any { !pt.isMember(it) }
 		
 		if (!flagNotParty) return SpellCastResult.NOTARGET
 		
@@ -55,6 +58,7 @@ object SpellPoisonRoots: SpellBase("poisonroots", EnumRace.IMP, 60000, 6000, 30)
 				pe = o as PotionEffect
 				
 				while (pt.isMember(target) && mobs.hasNext()) target = mobs.next()
+				
 				if (pt.isMember(target)) return SpellCastResult.NOTARGET            // Some desync, sorry for your mana :(
 				
 				if (Potion.potionTypes[pe.getPotionID()].isBadEffect) {

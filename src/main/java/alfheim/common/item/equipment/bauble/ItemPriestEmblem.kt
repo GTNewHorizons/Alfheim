@@ -3,6 +3,8 @@ package alfheim.common.item.equipment.bauble
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.client.core.util.mc
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
@@ -28,7 +30,7 @@ import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 import java.awt.Color
 import kotlin.math.min
-import alexsocol.asjlib.math.Vector3 as ASJVec
+import alexsocol.asjlib.math.Vector3 as AVector3
 
 class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingItem {
 	
@@ -153,8 +155,11 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		if (player.ticksExisted % 10 == 0) {
 			
 			if (player is EntityPlayer) {
-				setActive(stack, ManaItemHandler.requestManaExact(stack, player, COST, true))
+				val flag: Boolean
+				setActive(stack, ManaItemHandler.requestManaExact(stack, player, COST, true).also { flag = it })
 				setDangerous(stack, true)
+				
+				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.EMBLEM_ACTIVATION, player.dimension, player.entityId.D, if (flag) 1.0 else 0.0)
 			}
 		}
 	}
@@ -165,58 +170,8 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
 		if (type == IBaubleRender.RenderType.BODY) {
 			val player = event.entityPlayer
-			if (isActive(stack)) {
-				when (stack.meta) {
-					0 -> {
-						if (player.ticksExisted % 10 == 0) {
-							val playerHead = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
-							val playerShift = playerHead.copy().add(getHeadOrientation(player))
-							val color = Color(ColorOverrideHelper.getColor(player, 0x0079C4))
-							val innerColor = Color(color.rgb).brighter().brighter()
-							Botania.proxy.lightningFX(player.worldObj, playerHead, playerShift, 2f, color.rgb, innerColor.rgb)
-						}
-					}
-					
-					1 -> {
-						if (player.ticksExisted % 10 == 0) {
-							for (i in 0..6) {
-								val xmotion = (Math.random() - 0.5).F * 0.15f
-								val zmotion = (Math.random() - 0.5).F * 0.15f
-								val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
-								val r = color.red.F / 255F
-								val g = color.green.F / 255F
-								val b = color.blue.F / 255F
-								Botania.proxy.wispFX(player.worldObj, player.posX, player.posY - player.yOffset, player.posZ, r, g, b, Math.random().F * 0.15f + 0.15f, xmotion, 0.0075f, zmotion)
-							}
-						}
-					}
-					
-					2 -> {
-						if (player.ticksExisted % 10 == 0) {
-							for (i in 0..6) {
-								val vec = getHeadOrientation(player).multiply(0.52)
-								val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
-								val r = color.red.F / 255F
-								val g = color.green.F / 255F
-								val b = color.blue.F / 255F
-								Botania.proxy.sparkleFX(player.worldObj, player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r, g, b, 1f, 5)
-							}
-						}
-					}
-					
-					3 -> {
-						val color = Color(ColorOverrideHelper.getColor(player, 0xF94407))
-						val r = color.red / 255f
-						val g = color.green / 255f
-						val b = color.blue / 255f
-						
-						for (i in 1..9) {
-							val pos = ASJVec.fromEntity(player).add(0.0, -player.yOffset + 0.25, 0.0).add(ASJVec(0.0, 0.0, 0.5).rotate(Botania.proxy.worldElapsedTicks * 5 % 360 + i*40.0, ASJVec.oY))
-							Botania.proxy.sparkleFX(player.worldObj, pos.x, pos.y, pos.z, r, g, b, 1f, 4)
-						}
-					}
-				}
-			}
+			
+			doParticles(stack, player)
 			
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(player)
@@ -228,6 +183,84 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 			val icon = getBaubleIconFromDamage(stack.meta)
 			if (icon != null)
 				ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 32F)
+		}
+	}
+	
+	fun doParticles(stack: ItemStack, player: EntityPlayer) {
+		if (VisualEffectHandlerClient.activeAmblems.getOrDefault(player.entityId, false)) {
+			when (stack.meta) {
+				0 -> {
+					if (player.ticksExisted % 10 == 0) {
+						val playerHead = Vector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
+						val playerShift = playerHead.copy().add(getHeadOrientation(player))
+						val color = Color(ColorOverrideHelper.getColor(player, 0x0079C4))
+						val innerColor = Color(color.rgb).brighter().brighter()
+						
+						spawnEmblem0(playerHead.x, playerHead.y, playerHead.z, playerShift.x, playerShift.y, playerShift.z, color.rgb.D, innerColor.rgb.D)
+					}
+				}
+				
+				1 -> {
+					if (player.ticksExisted % 10 == 0) {
+						for (i in 0..6) {
+							val xmotion = (Math.random() - 0.5) * 0.15
+							val zmotion = (Math.random() - 0.5) * 0.15
+							val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
+							val r = color.red.F / 255F
+							val g = color.green.F / 255F
+							val b = color.blue.F / 255F
+							
+							spawnEmblem1(player.posX, player.posY - player.yOffset, player.posZ, r.D, g.D, b.D, xmotion, zmotion)
+						}
+					}
+				}
+				
+				2 -> {
+					if (player.ticksExisted % 10 == 0) {
+						for (i in 0..6) {
+							val vec = getHeadOrientation(player).multiply(0.52)
+							val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
+							val r = color.red.F / 255F
+							val g = color.green.F / 255F
+							val b = color.blue.F / 255F
+							
+							if (mc.thePlayer !== player) vec.y += 1.62f
+							
+							spawnEmblem2(player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r.D, g.D, b.D)
+						}
+					}
+				}
+				
+				3 -> {
+					val color = Color(ColorOverrideHelper.getColor(player, 0xF94407))
+					val r = color.red / 255f
+					val g = color.green / 255f
+					val b = color.blue / 255f
+					
+					var (x, y, z) = AVector3.fromEntity(player)
+					y = if (mc.thePlayer == player) y - player.yOffset else y
+					spawnEmblem3(x, y, z, r.D, g.D, b.D)
+				}
+			}
+		}
+	}
+	
+	fun spawnEmblem0(xs: Double, ys: Double, zs: Double, xe: Double, ye: Double, ze: Double, color: Double, innerColor: Double) {
+		Botania.proxy.lightningFX(mc.theWorld, Vector3(xs, ys, zs), Vector3(xe, ye, ze), 2f, color.I, innerColor.I)
+	}
+	
+	fun spawnEmblem1(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double, motionX: Double, motionZ: Double) {
+		Botania.proxy.wispFX(mc.theWorld, x, y, z, r.F, g.F, b.F, Math.random().F * 0.15f + 0.15f, motionX.F, 0.0075f, motionZ.F)
+	}
+	
+	fun spawnEmblem2(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double) {
+		Botania.proxy.sparkleFX(mc.theWorld, x, y, z, r.F, g.F, b.F, 1f, 5)
+	}
+	
+	fun spawnEmblem3(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double) {
+		for (i in 1..9) {
+			val pos = AVector3(x, y, z).add(0.0, 0.25, 0.0).add(AVector3(0.0, 0.0, 0.5).rotate((Botania.proxy.worldElapsedTicks * 5 % 360 + i * 40.0), AVector3.oY))
+			Botania.proxy.sparkleFX(mc.theWorld, pos.x, pos.y, pos.z, r.F, g.F, b.F, 1f, 4)
 		}
 	}
 }

@@ -130,6 +130,7 @@ tile.botania:ShrineRock0Slab.name=Плита из блока храма
 tile.botania:ShrineRock0SlabFull.name=Плита из блока храма
 tile.alfheim:SnowGrass.name=Заснеженная трава
 tile.alfheim:SnowLayer.name=Снежный покров
+tile.botania:spreader4.name=Мауфтриевый распространитель маны
 tile.alfheim:TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 
@@ -356,6 +357,10 @@ alfheimmisc.skintoggle1=Скин будет эльфийский
 alfheimmisc.teamnotmob=Член группы не может быть выделен в качестве вражеской цели
 alfheimmisc.tgtooltip=Нажмите &b%key%&7, чтобы открыть меню Traveller's Gear
 alfheimmisc.update=О-оу, кажется, Вы играете на устаревшей версии (%s). Возможно, Вам стоит обновиться до %s?
+
+alfheimmisc.offset=Смещение
+alfheimmisc.power=Мощность
+alfheimmisc.radius=Радиус
 
 alfheimmisc.cast.notarget=Выберите цель!
 alfheimmisc.cast.notready=Заклинание не готово!

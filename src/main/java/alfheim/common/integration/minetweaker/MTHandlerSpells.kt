@@ -10,24 +10,28 @@ object MTHandlerSpells {
 	@ZenMethod
 	@JvmStatic
 	fun setManaCost(name: String, mana: Int) {
+		if (mana < 0) throw IllegalArgumentException("Manacost for $name must not be negative")
 		MineTweakerAPI.apply(ManaCost(name, mana))
 	}
 	
 	@ZenMethod
 	@JvmStatic
 	fun setCooldown(name: String, cd: Int) {
+		if (cd < 0) throw IllegalArgumentException("Cooldown for $name must not be negative")
 		MineTweakerAPI.apply(Cooldown(name, cd))
 	}
 	
 	@ZenMethod
 	@JvmStatic
 	fun setCastTime(name: String, time: Int) {
+		if (time < 0) throw IllegalArgumentException("Cast time for $name must not be negative")
 		MineTweakerAPI.apply(CastTime(name, time))
 	}
 	
 	@ZenMethod
 	@JvmStatic
 	fun setParams(name: String, damage: Float, duration: Int, efficiency: Double, radius: Double) {
+		if (damage < 0 || duration < 0 || efficiency < 0 || radius < 0) throw IllegalArgumentException("Params for $name must not be negative")
 		MineTweakerAPI.apply(Params(name, damage, duration, efficiency, radius))
 	}
 	

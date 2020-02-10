@@ -19,9 +19,14 @@ object SpellFirewall: SpellBase("firewall", EnumRace.SALAMANDER, 4000, 200, 15) 
 		get() = arrayOf(damage, duration)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		val wall = EntitySpellFirewall(caster.worldObj, caster)
+		
+		// if (!WorldGuardCommons.canDoSomethingWithEntity(caster, wall)) return SpellCastResult.NOTALLOW
+		
 		val result = checkCastOver(caster)
 		if (result == SpellCastResult.OK)
-			caster.worldObj.spawnEntityInWorld(EntitySpellFirewall(caster.worldObj, caster))
+			caster.worldObj.spawnEntityInWorld(wall)
+		
 		return result
 	}
 	

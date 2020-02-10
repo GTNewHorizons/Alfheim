@@ -10,7 +10,7 @@ import vazkii.botania.common.Botania
 
 class ItemElementiumHoe: ItemManasteelHoe(BotaniaAPI.elementiumToolMaterial, "ElementiumHoe") {
 	
-	override fun onItemUse(stack: ItemStack?, player: EntityPlayer, world: World?, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.isSneaking)
 			return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ)
 		

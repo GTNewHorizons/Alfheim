@@ -3,7 +3,8 @@ package alfheim.common.spell.earth
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.common.core.util.I
+import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
@@ -65,6 +66,8 @@ object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 1) {
 	
 	fun removeBlockWithDrops(world: World, player: EntityPlayer, x: Int, y: Int, z: Int, remove: Boolean, draw: Boolean, materialsListing: Array<Material>): Int {
 		if (!world.blockExists(x, y, z)) return 0
+		
+		if (!InteractionSecurity.canDoSomethingHere(player, x, y, z)) return 0
 		
 		val block = world.getBlock(x, y, z)
 		val meta = world.getBlockMetadata(x, y, z)

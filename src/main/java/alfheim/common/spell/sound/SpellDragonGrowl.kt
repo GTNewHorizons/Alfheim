@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageEffect
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.*
 
@@ -20,12 +21,16 @@ object SpellDragonGrowl: SpellBase("dragongrowl", EnumRace.POOKA, 12000, 2400, 2
 		get() = arrayOf(duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius)) as List<EntityLivingBase>
+		
+		if (list.isEmpty()) return SpellCastResult.NOTARGET
+		
 		val result = checkCast(caster)
 		if (result != SpellCastResult.OK) return result
 		
-		val list = caster.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, caster.boundingBox.expand(radius)) as List<EntityLivingBase>
 		for (living in list) {
 			if (PartySystem.mobsSameParty(caster, living) || Vector3.entityDistance(living, caster) > radius*2) continue
+			if (!InteractionSecurity.canDoSomethingWithEntity(caster, living)) continue
 			
 			living.addPotionEffect(PotionEffect(Potion.blindness.id, duration, 0, true))
 			AlfheimCore.network.sendToAll(MessageEffect(living.entityId, Potion.blindness.id, duration, 0))

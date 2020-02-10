@@ -19,7 +19,6 @@ import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.EntityMob
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
@@ -73,7 +72,7 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		if (attackTarget == null && src.entity is EntityLivingBase)
 			attackTarget = src.entity as EntityLivingBase
 		
-		super.damageEntity(src, amount * if (src.isMagicDamage || src is DamageSourceSpell) 0.1f else 0.75f)
+		super.damageEntity(src, amount * if (src.isMagicDamage || src is DamageSourceSpell) 0.1f else if (src.isFireDamage) 1.5f else 0.75f)
 	}
 	
 	override fun getDropItem() =
@@ -83,24 +82,21 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 			in 6..8   -> AlfheimModularItems.snowChest
 			in 9..11  -> AlfheimModularItems.snowLeggings
 			in 12..14 -> AlfheimModularItems.snowBoots
-			in 15..17 -> AlfheimItems.elvenResource
 			18        -> AlfheimModularItems.eventResource
-			else      -> Items.snowball
-		}!!
+			else      -> AlfheimItems.elvenResource
+		}
 	
 	override fun dropFewItems(gotHit: Boolean, looting: Int) {
 		val item = dropItem
 		val size = 1 + when (item) {
-			Items.snowball -> 2 + looting * 3
 			AlfheimItems.elvenResource -> looting * 2
 			else -> 0
 		}
 		
 		val meta = when (item) {
-			Items.snowball                    -> 0
 			AlfheimItems.elvenResource        -> ElvenResourcesMetas.IffesalDust
 			AlfheimModularItems.eventResource -> EventResourcesMetas.SnowRelic
-			else                              -> item.maxDamage / (looting + 1)
+			else                              -> (item.maxDamage - 1) / (looting + 1)
 		}
 		entityDropItem(ItemStack(item, size, meta), 0f)
 	}
@@ -120,9 +116,14 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		
 		super.onLivingUpdate()
 		
+		val iter = activePotionEffects.iterator()
+		
+		while(iter.hasNext()) if (Potion.potionTypes[(iter.next() as PotionEffect).potionID].isBadEffect) iter.remove()
+		
 		worldObj.worldInfo.isRaining = true
 		worldObj.worldInfo.rainTime = max(worldObj.worldInfo.rainTime, 3600)
-		worldObj.setRainStrength(1f)
+		worldObj.prevRainingStrength = 1f
+		worldObj.rainingStrength = 1f
 		
 		if (AlfheimCore.winter)
 			heal(if (attackTarget == null) 0.1f else 0.02f)

@@ -1,3 +1,5 @@
+@file:Suppress("ClassName", "PropertyName")
+
 package alfheim.common.item.rod
 
 import alfheim.api.ModInfo
@@ -6,6 +8,7 @@ import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -36,7 +39,7 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
+	override fun registerIcons(reg: IIconRegister) {
 	}
 	
 	@SubscribeEvent
@@ -55,9 +58,9 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 	
 	override fun usesMana(stack: ItemStack) = true
 	
-	override fun onItemRightClick(par1ItemStack: ItemStack, par2World: World?, par3EntityPlayer: EntityPlayer?): ItemStack {
-		par3EntityPlayer!!.setItemInUse(par1ItemStack, getMaxItemUseDuration(par1ItemStack))
-		return par1ItemStack
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		player.setItemInUse(stack, getMaxItemUseDuration(stack))
+		return stack
 	}
 	
 	object PLAYER_SELECTOR: IEntitySelector {
@@ -83,14 +86,12 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		}
 	}
 	
-	fun pushEntities(x: Int, y: Int, z: Int, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>) =
-		pushEntities(x.D, y.D, z.D, range, velocity, player, entities)
-	
-	fun pushEntities(x: Double, y: Double, z: Double, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Any?>): Boolean {
+	fun pushEntities(x: Double, y: Double, z: Double, range: Int, velocity: Double, player: EntityPlayer?, entities: List<Entity>): Boolean {
 		var flag = false
 		for (entity in entities) {
-			if (entity is Entity && player?.canPlayerEdit(entity.posX.mfloor(), entity.posY.mfloor(), entity.posZ.mfloor(), 1, player.currentEquippedItem) == true) {
-				val xDif = entity.posX - x
+			if (player != null && !InteractionSecurity.canDoSomethingWithEntity(player, entity)) continue
+			
+			val xDif = entity.posX - x
 				val yDif = entity.posY - (y + 1)
 				val zDif = entity.posZ - z
 				val dist = sqrt(xDif * xDif + yDif * yDif + zDif * zDif)
@@ -101,7 +102,6 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 					entity.fallDistance = 0f
 					flag = true
 				}
-			}
 		}
 		return flag
 	}
@@ -127,7 +127,7 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			if (count % 5 == 0) particleRing(world, x, y, z, range, r, g, b)
 			
 			val exclude: EntityLivingBase = player
-			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR)
+			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR) as List<Entity>
 			
 			if (pushEntities(x, y, z, range, velocity, player, entities)) {
 				if (count % 3 == 0) world.playSoundAtEntity(player, "${ModInfo.MODID}:wind", 0.4F, 1F)
@@ -174,7 +174,7 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			
 			val entities = world.selectEntitiesWithinAABB(EntityLivingBase::class.java,
 														  AxisAlignedBB.getBoundingBox(x - RANGE, y - RANGE, z - RANGE,
-																					   x + RANGE, y + RANGE, z + RANGE), AVATAR_SELECTOR)
+																					   x + RANGE, y + RANGE, z + RANGE), AVATAR_SELECTOR) as List<EntityLivingBase>
 			
 			if (pushEntities(x, y, z, RANGE, VELOCITY, null, entities)) {
 				if (tile.elapsedFunctionalTicks % 3 == 0) world.playSoundEffect(x, y, z, "${ModInfo.MODID}:wind", 0.4F, 1F)

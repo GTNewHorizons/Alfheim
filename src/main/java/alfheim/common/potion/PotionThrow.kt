@@ -6,6 +6,7 @@ import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellThrow
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.DamageSource
@@ -27,6 +28,6 @@ class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", fa
 		
 		val l = target.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(SpellThrow.radius)) as MutableList<EntityLivingBase>
 		l.remove(target)
-		for (e in l) if (!pt.isMember(e)) e.attackEntityFrom(DamageSource.causeMobDamage(target), SpellThrow.damage)
+		for (e in l) if (!pt.isMember(e) && InteractionSecurity.canHurtEntity(target, e)) e.attackEntityFrom(DamageSource.causeMobDamage(target), SpellThrow.damage)
 	}
 }

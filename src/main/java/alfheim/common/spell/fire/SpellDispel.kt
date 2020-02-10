@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -24,25 +25,27 @@ object SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg.target == null) return SpellCastResult.NOTARGET
+		val tgt = tg.target ?: return SpellCastResult.NOTARGET
 		
-		if (tg.target !== caster && ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+		
+		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			val l = ArrayList<PotionEffect>()
-			for (o in tg.target.activePotionEffects) if (Potion.potionTypes[(o as PotionEffect).potionID].isBadEffect == tg.isParty) if (o.potionID != AlfheimConfigHandler.potionIDLeftFlame) l.add(o)
+			for (o in tgt.activePotionEffects) if (Potion.potionTypes[(o as PotionEffect).potionID].isBadEffect == tg.isParty) if (o.potionID != AlfheimConfigHandler.potionIDLeftFlame) l.add(o)
 			
 			if (l.isEmpty()) {
-				tg.target.addPotionEffect(PotionEffect(Potion.confusion.id, duration, 0, true))
-				AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.confusion.id, duration, 0))
+				tgt.addPotionEffect(PotionEffect(Potion.confusion.id, duration, 0, true))
+				AlfheimCore.network.sendToAll(MessageEffect(tgt.entityId, Potion.confusion.id, duration, 0))
 			} else {
 				for (pe in l) {
-					tg.target.removePotionEffect(pe.potionID)
-					AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, pe.getPotionID(), 0, 0))
+					tgt.removePotionEffect(pe.potionID)
+					AlfheimCore.network.sendToAll(MessageEffect(tgt.entityId, pe.getPotionID(), 0, 0))
 				}
 			}
-			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
+			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tgt)
 		}
 		
 		return result

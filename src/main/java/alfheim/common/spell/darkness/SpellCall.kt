@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.core.handler.CardinalSystem
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -19,16 +20,20 @@ object SpellCall: SpellBase("call", EnumRace.IMP, 10000, 1800, 30) {
 		val tg = CardinalSystem.TargetingSystem.getTarget(caster)
 		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
 		
-		val tgt = pt[tg.partyIndex] ?: return SpellCastResult.NOTARGET
+		if (!tg.isParty) return SpellCastResult.WRONGTGT
 		
-		if (tgt === caster || !tg.isParty) return SpellCastResult.WRONGTGT
+		val tgt = pt[tg.partyIndex] ?: return SpellCastResult.WRONGTGT
+		
+		if (tgt === caster) return SpellCastResult.WRONGTGT
 		
 		if (tgt !is EntityPlayer && tgt.dimension != caster.dimension) return SpellCastResult.WRONGTGT
 		
+		val (cx, cy, cz) = Vector3.fromEntity(caster)
+		if (!InteractionSecurity.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+		if (!InteractionSecurity.canDoSomethingHere(tgt, cx, cy, cz, caster.worldObj)) return SpellCastResult.NOTALLOW
+		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			val (cx, cy, cz) = Vector3.fromEntity(caster)
-			
 			if (tgt is EntityPlayer) {
 				ASJUtilities.sendToDimensionWithoutPortal(tgt, caster.dimension, cx, cy, cz)
 			} else {

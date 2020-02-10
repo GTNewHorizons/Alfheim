@@ -1,0 +1,23 @@
+tile.fluid.molten.Elementium.name=Расплавленный элементий
+tile.fluid.molten.Elvorium.name=Расплавленный эльворий
+tile.fluid.molten.Manasteel.name=Расплавленная манасталь
+tile.fluid.molten.Mauftrium.name=Расплавленный мауфтрий
+tile.fluid.molten.Terrasteel.name=Расплавленная террасталь
+
+item.alfheim:NaturalBucket.Elementium.name=Ведро расплавленного элементия
+item.alfheim:NaturalBucket.Elvorium.name=Ведро расплавленного эльвория
+item.alfheim:NaturalBucket.Manasteel.name=Ведро расплавленной манастали
+item.alfheim:NaturalBucket.Mauftrium.name=Ведро расплавленного мауфтрия
+item.alfheim:NaturalBucket.Terrasteel.name=Ведро расплавленной террастали
+
+fluid.Elementium.molten=Расплавленный элементий
+fluid.Elvorium.molten=Расплавленный эльворий
+fluid.Manasteel.molten=Расплавленная манасталь
+fluid.Mauftrium.molten=Расплавленный мауфтрий
+fluid.Terrasteel.molten=Расплавленная террасталь
+
+material.elementium=Элементиевый
+material.elvorium=Эльвориевый
+material.manasteel=Манастальной
+material.mauftrium=Мауфтриевый
+material.terrasteel=Террастальной

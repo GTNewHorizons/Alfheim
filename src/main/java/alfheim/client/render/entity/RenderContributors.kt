@@ -225,6 +225,20 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
+		if (player.commandSenderName == "MonoShiki") {
+			glPushMatrix()
+			glColor4f(1f, 1f, 1f, 1f)
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			Helper.rotateIfSneaking(e.entityPlayer)
+			val armor = e.entityPlayer.getCurrentArmor(2) != null
+			glRotatef(180f, 1f, 0f, 0f)
+			glTranslated(-0.25, -0.4, if (armor) 0.21 else 0.14)
+			glScaled(0.5, 0.5, 0.5)
+			val icon = ItemElvenResource.amulet
+			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 32f)
+			glPopMatrix()
+		}
+		
 		glColor4f(1f, 1f, 1f, 1f)
 	}
 }

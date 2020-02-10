@@ -65,7 +65,7 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 		(world.getTileEntity(x, y, z) as TileManaInfuser).renderHUD(res)
 	}
 	
-	override fun onUsedByWand(player: EntityPlayer, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
+	override fun onUsedByWand(player: EntityPlayer?, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
 		(world.getTileEntity(x, y, z) as TileManaInfuser).onWanded(player)
 		return true
 	}

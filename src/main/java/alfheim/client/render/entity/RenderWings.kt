@@ -1,11 +1,12 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.flight
+import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
@@ -16,44 +17,55 @@ import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender.Helper
 import vazkii.botania.common.Botania
+import java.awt.Color
 import kotlin.math.*
 
 object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
+		player.sendPlayerAbilities()
 		
-		if (player.race == EnumRace.HUMAN) return
+		if (player.commandSenderName != "MonoShiki") {
+			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
+			if (player.race == EnumRace.HUMAN) return
+			if (player.commandSenderName == "AlexSocol") return
+		}
+		
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(mc.thePlayer)) return
-		if (player.commandSenderName == "AlexSocol") return
 		
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		if (player.commandSenderName != "MonoShiki") {
+			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+			glDepthMask(false)
+			glAlphaFunc(GL_GREATER, 0.003921569f)
+		}
 		glDisable(GL_LIGHTING)
-		glDepthMask(false)
-		glAlphaFunc(GL_GREATER, 0.003921569f)
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		player.race.glColorA(if (player.flight / player.flight < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0)
+		if (player.commandSenderName == "MonoShiki")
+			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
+		else
+			player.race.glColorA(if (player.flight / ElvenFlightHelper.max < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
 		
 		// Icon
-		glPushMatrix()
-		glTranslated(-0.25, 0.25, 0.15)
-		val si = 0.5
-		glScaled(si, si, si)
-		drawRect(getPlayerIconTexture(player), 0)
-		glPopMatrix()
+		if (player.commandSenderName != "MonoShiki") {
+			glPushMatrix()
+			glTranslated(-0.25, 0.25, 0.15)
+			val si = 0.5
+			glScaled(si, si, si)
+			drawRect(getPlayerIconTexture(player), 0)
+			glPopMatrix()
+		}
 		
 		glTranslated(0.0, 0.1, 0.0)
 		
-		player.sendPlayerAbilities()
 		val flying = player.capabilities.isFlying
 		val ry = 20f + ((sin((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * (if (flying) 0.4f else 0.2f).D) + 0.5f) * if (flying) 30f else 5f).F
 		
@@ -78,11 +90,13 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
-		glAlphaFunc(GL_GREATER, 0.1f)
-		glDepthMask(true)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
 		glEnable(GL_LIGHTING)
-		glDisable(GL_BLEND)
+		if (player.commandSenderName != "MonoShiki") {
+			glAlphaFunc(GL_GREATER, 0.1f)
+			glDepthMask(true)
+			glDisable(GL_BLEND)
+		}
 		glEnable(GL_CULL_FACE)
 		glPopMatrix()
 		
@@ -104,7 +118,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer) = LibResourceLocations.wings[player.raceID]
+	fun getPlayerWingTexture(player: EntityPlayer) = if (player.commandSenderName == "MonoShiki") LibResourceLocations.wingsButterfly else LibResourceLocations.wings[player.raceID]
 	
 	fun getPlayerIconTexture(player: EntityPlayer) = LibResourceLocations.icons[player.raceID]
 }

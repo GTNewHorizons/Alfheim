@@ -14,10 +14,10 @@ class AlfheimHookLoader: HookLoader() {
 	
 	init {
 		ModInfo.OBF = !ASJReflectionHelper.getStaticValue<CoreModManager, Boolean>(CoreModManager::class.java, "deobfuscatedEnvironment")
-		ModInfo.DEV = true // !ModInfo.OBF
+		ModInfo.DEV = !ModInfo.OBF
 		
 		AlfheimConfigHandler.loadConfig(File("config/Alfheim/Alfheim.cfg"))
-		if (ModInfo.OBF) AlfheimModularLoader
+		AlfheimModularLoader
 	}
 	
 	override fun getASMTransformerClass(): Array<String>? {
@@ -30,6 +30,7 @@ class AlfheimHookLoader: HookLoader() {
 		
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
 		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
+		registerHookContainer("alfheim.common.block.mana.ManaSpreaderExtender")
 		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
 		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter")

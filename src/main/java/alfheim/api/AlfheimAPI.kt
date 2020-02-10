@@ -1,10 +1,13 @@
 package alfheim.api
 
-import alfheim.api.block.tile.SubTileEntity
+import alexsocol.asjlib.ASJUtilities
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
+import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
+import alfheim.common.block.tile.TileAnomalyHarvester
 import alfheim.common.core.util.meta
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
@@ -17,9 +20,10 @@ import java.util.*
 
 object AlfheimAPI {
 	
-	val ELVORIUM = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
-	val ELEMENTAL = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
-	val REALITY = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 30)!!
+	val ElvoriumArmor = EnumHelper.addArmorMaterial("ELVORIUM", 50, intArrayOf(5, 10, 8, 5), 30)!!
+	val elvoriumToolMaterial = EnumHelper.addToolMaterial("ELVORIUM", 4, 2400, 9.5f, 3f, 30)!!
+	val ElementalArmor = EnumHelper.addArmorMaterial("ELEMENTAL", 20, intArrayOf(2, 9, 5, 2), 20)!!
+	val mauftriumToolmaterial = EnumHelper.addToolMaterial("REALITY", 10, 9000, 3f, 8f, 40)!!
 	
 	/** List of [RecipeElvenTrade] outputs banned for re'trading in Alfheim trade portal  */
 	val bannedRetrades = ArrayList<ItemStack>()
@@ -32,9 +36,13 @@ object AlfheimAPI {
 	/** Map of elven spells associated with their race (affinity), sorted by name  */
 	val spellMapping = HashMap<EnumRace, HashSet<SpellBase>>()
 	/** Map of anomaly types and their subtiles, specifying their behavior  */
-	val anomalies = HashMap<String, Class<out SubTileEntity>>()
+	val anomalies = HashMap<String, Class<out SubTileAnomalyBase>>()
+	/** Map of anomaly types and their behavior for use in [TileAnomalyHarvester] */
+	val anomalyBehaviors = HashMap<String, ((TileAnomalyHarvester) -> Unit)>()
 	/** Map of anomaly types and their subtile instances, used for render :o  */
-	val anomalyInstances = HashMap<String, SubTileEntity>()
+	val anomalyInstances = HashMap<String, SubTileAnomalyBase>()
+	/** Map of security managers by name */
+	val securityManagers = HashMap<String, ISecurityManager>()
 	
 	fun addInfuserRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? {
 		if (rec != null) manaInfuserRecipes.add(rec)
@@ -130,24 +138,32 @@ object AlfheimAPI {
 		throw IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name)
 	}
 	
-	fun registerAnomaly(name: String, behavior: Class<out SubTileEntity>) {
+	/** Register anomaly subtile with unique [name] and [behavior] */
+	fun registerAnomaly(name: String, behavior: Class<out SubTileAnomalyBase>) {
+		if (anomalies.containsKey(name)) throw IllegalArgumentException("Anomaly \"$name\" is already registered")
 		anomalies[name] = behavior
+		
 		try {
 			anomalyInstances[name] = behavior.newInstance()
 		} catch (e: Throwable) {
 			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, e, "Cannot instantiate anomaly subtile for ${behavior.canonicalName}")
 			throw IllegalArgumentException("Uninstantiatable anomaly subtile.")
 		}
-		
 	}
 	
-	fun getAnomaly(name: String): Class<out SubTileEntity> =
-		anomalies[name] ?: FallbackAnomaly::class.java
+	fun getAnomaly(name: String): Class<out SubTileAnomalyBase> = anomalies[name] ?: FallbackAnomaly::class.java
 	
-	fun getAnomalyInstance(name: String) =
-		anomalyInstances[name] ?: FallbackAnomaly
+	fun getAnomalyInstance(name: String) = anomalyInstances[name] ?: FallbackAnomaly
 	
-	object FallbackAnomaly: SubTileEntity() {
+	fun registerSecurityManager(man: ISecurityManager, name: String) {
+		if (name.isBlank()) throw IllegalArgumentException("Name should not be blank")
+		if (securityManagers.containsKey(name)) throw IllegalArgumentException("Security Manager \"$name\" is already registered")
+		
+		ASJUtilities.log("Registering security manager with name \"$name\"")
+		securityManagers[name] = man
+	}
+	
+	object FallbackAnomaly: SubTileAnomalyBase() {
 		override val targets: List<Any> = emptyList()
 		override val rarity = EnumAnomalityRarity.COMMON
 		override val strip = 31

@@ -8,6 +8,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellGravityTrap
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -36,12 +37,14 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(SpellGravityTrap.radius, 9.0, SpellGravityTrap.radius)) as List<Entity>
 		for (e in l) {
 			if (e === this || e === caster || e is EntityLivingBase && PartySystem.mobsSameParty(caster, e) && !AlfheimConfigHandler.frienldyFire || e is EntityPlayer && e.capabilities.isCreativeMode) continue
+			if (!InteractionSecurity.canDoSomethingWithEntity(caster ?: continue, e)) continue
+			
 			val dist = Vector3.fromEntity(e).sub(Vector3.fromEntity(this))
 			if (Vector3.entityDistancePlane(e, this) <= SpellGravityTrap.radius) {
 				e.motionY -= 1.0
 				e.motionX -= dist.x / 5
 				e.motionZ -= dist.z / 5
-				e.attackEntityFrom(DamageSourceSpell.gravity, SpellBase.over(caster, SpellGravityTrap.damage.D))
+				e.attackEntityFrom(DamageSourceSpell.gravity(this, caster), SpellBase.over(caster, SpellGravityTrap.damage.D))
 			}
 		}
 		

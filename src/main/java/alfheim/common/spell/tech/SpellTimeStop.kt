@@ -4,6 +4,7 @@ import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellVisualizations
 import alfheim.common.core.handler.CardinalSystem.TimeStopSystem
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 
 object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {
@@ -14,6 +15,8 @@ object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 
 		get() = arrayOf(duration, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		if (!InteractionSecurity.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
+		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) TimeStopSystem.stop(caster)
 		return result

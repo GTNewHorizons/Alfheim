@@ -1,13 +1,9 @@
 package alfheim.client.render.item
 
 import alfheim.api.AlfheimAPI
-import alfheim.api.block.tile.SubTileEntity
-import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockAnomaly
-import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraftforge.client.IItemRenderer
@@ -37,7 +33,7 @@ object RenderItemAnomaly: IItemRenderer {
 		renderItemAnomaly(AlfheimAPI.getAnomalyInstance(ItemBlockAnomaly.getType(item)))
 	}
 	
-	fun renderItemAnomaly(subtile: SubTileEntity) {
+	fun renderItemAnomaly(subtile: SubTileAnomalyBase) {
 		glPushMatrix()
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		glDepthMask(false)
@@ -47,7 +43,5 @@ object RenderItemAnomaly: IItemRenderer {
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		glPushMatrix()
 		
-		}		
-			}		}
 	}
 }

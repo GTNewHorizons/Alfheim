@@ -1,7 +1,9 @@
 package alfheim.common.item.equipment.tool.manasteel
 
 import alfheim.api.ModInfo
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.common.eventhandler.Event.Result
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -28,12 +30,12 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 		setTextureName("${ModInfo.MODID}:$name")
 		unlocalizedName = name
 	}
-
+	
 	override fun setUnlocalizedName(name: String): Item {
 		GameRegistry.registerItem(this, name)
 		return super.setUnlocalizedName(name)
 	}
-
+	
 	override fun hitEntity(par1ItemStack: ItemStack?, par2EntityLivingBase: EntityLivingBase?, par3EntityLivingBase: EntityLivingBase?): Boolean {
 		ToolCommons.damageItem(par1ItemStack, 1, par3EntityLivingBase, manaPerDamage)
 		return true
@@ -45,36 +47,33 @@ open class ItemManasteelHoe @JvmOverloads constructor(mat: ToolMaterial = Botani
 		return true
 	}
 	
-	override fun onItemUse(stack: ItemStack?, player: EntityPlayer, world: World?, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (!player.canPlayerEdit(x, y, z, side, stack)) {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		val event = UseHoeEvent(player, stack, world, x, y, z)
+		if (MinecraftForge.EVENT_BUS.post(event))
 			return false
-		} else {
-			val event = UseHoeEvent(player, stack, world, x, y, z)
-			if (MinecraftForge.EVENT_BUS.post(event)) {
-				return false
-			}
+		
+		if (event.result == Result.ALLOW) {
+			ToolCommons.damageItem(stack, 1, player, manaPerDamage)
+			return true
+		}
+		
+		val block = world.getBlock(x, y, z)
+		
+		return if (side != 0 && world.isAirBlock(x, y + 1, z) && (block === Blocks.grass || block === Blocks.dirt || block === AlfheimBlocks.snowGrass)) {
+			if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return false
 			
-			if (event.result == Result.ALLOW) {
-				ToolCommons.damageItem(stack, 1, player, manaPerDamage)
-				return true
-			}
+			val block1 = Blocks.farmland
+			world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block1.stepSound.stepResourcePath, (block1.stepSound.getVolume() + 1) * 0.5f, block1.stepSound.pitch * 0.8f)
 			
-			val block = world!!.getBlock(x, y, z)
-			
-			return if (side != 0 && world.isAirBlock(x, y + 1, z) && (block === Blocks.grass || block === Blocks.dirt)) {
-				val block1 = Blocks.farmland
-				world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, block1.stepSound.stepResourcePath, (block1.stepSound.getVolume() + 1) * 0.5f, block1.stepSound.pitch * 0.8f)
-				
-				if (world.isRemote) {
-					true
-				} else {
-					world.setBlock(x, y, z, block1)
-					ToolCommons.damageItem(stack, 1, player, manaPerDamage)
-					true
-				}
+			if (world.isRemote) {
+				true
 			} else {
-				false
+				world.setBlock(x, y, z, block1)
+				ToolCommons.damageItem(stack, 1, player, manaPerDamage)
+				true
 			}
+		} else {
+			false
 		}
 	}
 	

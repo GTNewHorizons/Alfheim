@@ -4,9 +4,11 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
+import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
+import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -76,19 +78,26 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		return false
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack? {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (isRightPlayer(player, stack) && !player.isSneaking) {
+			val metaWas = stack.meta
+			stack.meta = 0xFACE17
+			
 			val segment = getSegmentLookedAt(stack, player)
 			val pos = getWarpPoint(stack, segment)
 			if (pos.isValid) {
-				if (!world!!.isRemote && player is EntityPlayerMP && (player.capabilities.isCreativeMode || ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true))) {
-					world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
-					ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
+				if (!world.isRemote && player is EntityPlayerMP && ManaItemHandler.requestManaExact(stack, player, pos.mana(player), true)) {
+					if (InteractionSecurity.canDoSomethingHere(player, pos.x, pos.y, pos.z, MinecraftServer.getServer().worldServerForDimension(pos.dim))) {
+						world.playSoundAtEntity(player, "mob.endermen.portal", 1f, 1f)
+						ASJUtilities.sendToDimensionWithoutPortal(player, pos.dim, pos.x, pos.y, pos.z)
+					}
 				}
 			} else {
-				if (player.canPlayerEdit(player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor(), 1, stack))
-					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world!!.provider.dimensionId)
+				if (InteractionSecurity.canDoSomethingHere(player))
+					setWarpPoint(stack, segment, player.posX, player.posY, player.posZ, world.provider.dimensionId)
 			}
+			
+			stack.meta = metaWas
 		}
 		
 		return stack
@@ -107,7 +116,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		return false
 	}
 	
-	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity, pos: Int, equipped: Boolean) {
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, pos: Int, equipped: Boolean) {
 		super.onUpdate(stack, world, entity, pos, equipped)
 		val eqLastTick = wasEquipped(stack)
 		val firstTick = isFirstTick(stack)
@@ -125,6 +134,8 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).getStackInSlot(0)
 			if (tiara != null && tiara.item is ItemFlightTiara)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, MAX_FLY_TIME)
+			
+			ElvenFlightHelper.regen(entity, 10)
 		}
 	}
 	
@@ -444,7 +455,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			
 			val v = Vector3()
 			for (i in 0 until 360 step 5) {
-				val c = Color.getHSBColor(i.toFloat() / 360f, 1f, 1f)
+				val c = Color.getHSBColor(i.F / 360f, 1f, 1f)
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.5)
 				Botania.proxy.sparkleFX(entity.worldObj, entity.posX + v.x, entity.posY + v.y, entity.posZ + v.z, c.red.F, c.green.F, c.blue.F, 1.5f, 10)
 			}

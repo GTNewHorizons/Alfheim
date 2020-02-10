@@ -7,6 +7,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.security.InteractionSecurity
 import alfheim.common.network.MessageEffect
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -23,17 +24,19 @@ object SpellConfusion: SpellBase("confusion", EnumRace.SPRIGGAN, 4000, 1200, 15)
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = TargetingSystem.getTarget(caster)
-		if (tg.target == null) return SpellCastResult.NOTARGET
+		val tgt = tg.target ?: return SpellCastResult.NOTARGET
 		
-		if (tg.target === caster || tg.isParty) return SpellCastResult.WRONGTGT
+		if (tgt === caster || tg.isParty) return SpellCastResult.WRONGTGT
 		
-		if (ASJUtilities.isNotInFieldOfVision(tg.target, caster)) return SpellCastResult.NOTSEEING
+		if (ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+		
+		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
-			tg.target.addPotionEffect(PotionEffect(Potion.confusion.id, duration, -1, true))
-			AlfheimCore.network.sendToAll(MessageEffect(tg.target.entityId, Potion.confusion.id, duration, -1))
-			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tg.target)
+			tgt.addPotionEffect(PotionEffect(Potion.confusion.id, duration, -1, true))
+			AlfheimCore.network.sendToAll(MessageEffect(tgt.entityId, Potion.confusion.id, duration, -1))
+			VisualEffectHandler.sendPacket(VisualEffects.DISPEL, tgt)
 		}
 		
 		return result

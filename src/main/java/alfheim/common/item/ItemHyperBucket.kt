@@ -1,7 +1,7 @@
 package alfheim.common.item
 
 import alfheim.common.core.util.*
-import net.minecraft.block.material.Material
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -17,6 +17,7 @@ class ItemHyperBucket: ItemMod("HyperpolatedBucket") {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (world.isRemote) return stack
+		
 		val mop = getMovingObjectPositionFromPlayer(world, player, true) ?: return stack
 		
 		if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
@@ -30,11 +31,7 @@ class ItemHyperBucket: ItemMod("HyperpolatedBucket") {
 			for (j in ((y - range)..(y + range)).reversed())
 				for (i in (x - range)..(x + range))
 					for (k in (z - range)..(z + range)) {
-						if (!world.canMineBlock(player, i, j, k))
-							continue
-						
-						if (!player.canPlayerEdit(i, j, k, mop.sideHit, stack))
-							continue
+						if (!world.canMineBlock(player, i, j, k)) continue
 						
 						val at = world.getBlock(i, j, k)
 						
@@ -44,11 +41,12 @@ class ItemHyperBucket: ItemMod("HyperpolatedBucket") {
 						if (block === Blocks.flowing_water && at === Blocks.water); else
 						if (at !== block) continue
 						
-						
 						val material = at.material
 						val l = world.getBlockMetadata(i, j, k)
 						
-						if ((material === Material.lava || material === Material.water) && l == 0) {
+						if (material.isLiquid && l == 0) {
+							if (!InteractionSecurity.canDoSomethingHere(player, i, j, k, world)) continue
+							
 							world.setBlockToAir(i, j, k)
 							
 							for (f in 0..4)

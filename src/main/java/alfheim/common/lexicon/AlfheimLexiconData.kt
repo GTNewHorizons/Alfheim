@@ -61,6 +61,7 @@ object AlfheimLexiconData {
 	lateinit var manaAcc: LexiconEntry
 	lateinit var manaImba: LexiconEntry
 	lateinit var mask: LexiconEntry
+	lateinit var uberSpreader: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
 	lateinit var moonbow: LexiconEntry
@@ -133,6 +134,7 @@ object AlfheimLexiconData {
 		//stories = BLexiconEntry("stories", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
+		uberSpreader = BLexiconEntry("uberSpreader", categoryAlfheim)
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
 		
 		if (AlfheimCore.enableElvenStory) preInitElvenStory()
@@ -328,6 +330,8 @@ object AlfheimLexiconData {
 		
 		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
+		uberSpreader.setLexiconPages(PageText("0"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) PageText("1t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "1s" else "1", AlfheimRecipes.recipeUberSpreader))
+		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		
 		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn), PageText("3")).icon = ItemStack(AlfheimItems.soulHorn)
@@ -381,7 +385,7 @@ object AlfheimLexiconData {
 		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.mask), mask, 1)
 		
-		excalibr.setLexiconPages(PageTextLearnableAchievement("0", AlfheimAchievements.excaliber)).icon = ItemStack(AlfheimItems.excaliber)
+		excalibr.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.excaliber)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.excaliber), excalibr, 1)
 		
 		/*mjolnir.setLexiconPages(new PageText("0")).setIcon(new ItemStack(AlfheimItems.mjolnir))*/
@@ -479,6 +483,7 @@ object AlfheimLexiconData {
 		ruling.knowledgeType = kt
 		crescent.knowledgeType = kt
 		reality.knowledgeType = kt
+		uberSpreader.knowledgeType = kt
 		flugel.knowledgeType = kt
 		
 		if (AlfheimCore.enableElvenStory) {
