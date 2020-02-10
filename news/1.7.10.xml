@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-26</val>
+		<val>BETA-27</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -76,5 +76,8 @@
 	</version>
 	<version id="BETA-25">
 		<val>Lots of useful fixes and improvements!</val>
+	</version>
+	<version id="BETA-26">
+		<val>Worldguard security managers and TiC integration! Sweet!</val>
 	</version>
 </news>
