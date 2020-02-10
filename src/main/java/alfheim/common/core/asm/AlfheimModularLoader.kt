@@ -38,6 +38,8 @@ object AlfheimModularLoader {
 	private fun doDownload() {
 		var crash = false
 		
+		FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Mode: ${(if (ModInfo.DEV) "development" else "master")}")
+		
 		try {
 			val root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(URL("https://bitbucket.org/AlexSocol/alfheim/raw/" + (if (ModInfo.DEV) "development" else "master") + "/news/" + MinecraftForge.MC_VERSION + ".xml").openStream()).documentElement
 			val url = InfoLoader.getNodeValue(root, "MODULAR")
