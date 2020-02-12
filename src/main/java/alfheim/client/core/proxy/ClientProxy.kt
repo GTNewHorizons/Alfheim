@@ -137,9 +137,9 @@ class ClientProxy: CommonProxy() {
 		AlfheimBotaniaModifiersClient.postInit()
 	}
 	
-	override fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float, must: Boolean) {
+	override fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float, distance: Float, must: Boolean) {
 		if (mc.renderViewEntity != null && mc.effectRenderer != null) {
-			val particle = EntityFeatherFx(world, x, y, z, color, scale, lifetime)
+			val particle = EntityFeatherFx(world, x, y, z, color, size, lifetime)
 			
 			if (!must) {
 				if (!doParticle(world)) return

@@ -84,8 +84,8 @@ open class CommonProxy {
 	}
 	
 	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int) = featherFX(world, x, y, z, color, 1f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float) = featherFX(world, x, y, z, color, scale, 1f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float) = featherFX(world, x, y, z, color, scale, lifetime, 16f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float) = featherFX(world, x, y, z, color, scale, lifetime, distance, false)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, scale: Float, lifetime: Float, distance: Float, must: Boolean) = Unit
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float) = featherFX(world, x, y, z, color, size, 1f)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float) = featherFX(world, x, y, z, color, size, lifetime, 16f)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float, distance: Float) = featherFX(world, x, y, z, color, size, lifetime, distance, false)
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float, distance: Float, must: Boolean) = Unit
 }

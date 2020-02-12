@@ -65,6 +65,6 @@ private object MixedSecurityManager: ISecurityManager {
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Double, y: Double, z: Double, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z)
 	override fun canDoSomethingHere(performer: EntityLivingBase, x: Int, y: Int, z: Int, world: World) = BlockSecurityManager.canDoSomethingHere(performer, x, y, z)
 	
-	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (MinecraftServer.getServer().isSinglePlayer) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
+	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = if (MinecraftServer.getServer() == null || MinecraftServer.getServer().isSinglePlayer) true else target.attackEntityFrom(DamageSource.causeMobDamage(performer), 0f)
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
 }

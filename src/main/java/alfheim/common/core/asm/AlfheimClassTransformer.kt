@@ -218,7 +218,7 @@ class AlfheimClassTransformer: IClassTransformer {
 				vis.visitLineNumber(18, l1)
 				vis.visitFieldInsn(GETSTATIC, "alfheim/common/integration/bloodmagic/BloodMagicAlfheimConfig", "blacklist", if (OBF) "[Laji;" else "[Lnet/minecraft/block/Block;")
 				vis.visitVarInsn(ALOAD, 1)
-				vis.visitFieldInsn(GETFIELD, "WayofTime/alchemicalWizardry/api/event/TeleposeEvent", "finalBlock", if (OBF) "[Laji;" else "Lnet/minecraft/block/Block;")
+				vis.visitFieldInsn(GETFIELD, "WayofTime/alchemicalWizardry/api/event/TeleposeEvent", "finalBlock", if (OBF) "Laji;" else "Lnet/minecraft/block/Block;")
 				vis.visitMethodInsn(INVOKESTATIC, "kotlin/collections/ArraysKt", "contains", "([Ljava/lang/Object;Ljava/lang/Object;)Z", false)
 				val l2 = Label()
 				vis.visitJumpInsn(IFNE, l2)

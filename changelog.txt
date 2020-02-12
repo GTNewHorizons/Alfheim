@@ -2,4 +2,6 @@ Innovations:
  --
 
 Fixes:
- --
+ Security Manager crash when no server (why?)
+ Bloodmagic crash on swaping blocks (teleposer, etc)
+ 
