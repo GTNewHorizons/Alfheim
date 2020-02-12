@@ -81,7 +81,8 @@ class AlfheimCore {
 	
 	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
-		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod")) throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
+		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod"))
+			throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
 		
 		AlfheimConfigHandler.readModes()
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")

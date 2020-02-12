@@ -1,8 +1,8 @@
-tile.fluid.molten.Elementium.name=Molten Elementium
-tile.fluid.molten.Elvorium.name=Molten Elvorium
-tile.fluid.molten.Manasteel.name=Molten Manasteel
-tile.fluid.molten.Mauftrium.name=Molten Mauftrium
-tile.fluid.molten.Terrasteel.name=Molten Terrasteel
+tile.fluid.molten.elementium.name=Molten Elementium
+tile.fluid.molten.elvorium.name=Molten Elvorium
+tile.fluid.molten.manasteel.name=Molten Manasteel
+tile.fluid.molten.mauftrium.name=Molten Mauftrium
+tile.fluid.molten.terrasteel.name=Molten Terrasteel
 
 item.alfheim:NaturalBucket.Elementium.name=Molten Elementium Bucket
 item.alfheim:NaturalBucket.Elvorium.name=Molten Elvorium Bucket
@@ -10,14 +10,27 @@ item.alfheim:NaturalBucket.Manasteel.name=Molten Manasteel Bucket
 item.alfheim:NaturalBucket.Mauftrium.name=Molten Mauftrium Bucket
 item.alfheim:NaturalBucket.Terrasteel.name=Molten Terrasteel Bucket
 
-fluid.Elementium.molten=Molten Elementium
-fluid.Elvorium.molten=Molten Elvorium
-fluid.Manasteel.molten=Molten Manasteel
-fluid.Mauftrium.molten=Molten Mauftrium
-fluid.Terrasteel.molten=Molten Terrasteel
+item.alfheim:RedBowstring.name=Red Bowstring
+item.alfheim:ManaBowstring.name=Mana Infused Bowstring
 
-material.elementium=Elementium
-material.elvorium=Elvorium
-material.manasteel=Manasteel
-material.mauftrium=Mauftrium
-material.terrasteel=Terrasteel
+fluid.elementium.molten=Molten Elementium
+fluid.elvorium.molten=Molten Elvorium
+fluid.manasteel.molten=Molten Manasteel
+fluid.mauftrium.molten=Molten Mauftrium
+fluid.terrasteel.molten=Molten Terrasteel
+
+material.Elementium=Elementium
+material.Elvorium=Elvorium
+material.Manasteel=Manasteel
+material.Mauftrium=Mauftrium
+material.Terrasteel=Terrasteel
+material.Dreamwood=Dreamwood
+material.Livingwood=Livingwood
+
+material.Elementium.ability=Manarepair | Pixie Call
+material.Elvorium.ability=Manarepair | Manaregen
+material.Manasteel.ability=Manarepair
+material.Mauftrium.ability=Manarepair | Manaregen
+material.Terrasteel.ability=Manarepair | Manaregen
+
+modifier.tool.manacore=Manarepair

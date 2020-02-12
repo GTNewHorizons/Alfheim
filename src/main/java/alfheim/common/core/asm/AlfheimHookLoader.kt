@@ -34,6 +34,7 @@ class AlfheimHookLoader: HookLoader() {
 		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
 		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter")
+		registerHookContainer("alfheim.common.integration.tinkersconstruct.TraitFairySpawner")
 		
 		// if (ModInfo.OBF) ASJASM.registerFieldHookContainer("alfheim.common.core.asm.AlfheimFieldHookHandler")
 	}

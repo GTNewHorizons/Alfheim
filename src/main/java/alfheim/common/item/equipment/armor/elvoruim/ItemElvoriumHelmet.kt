@@ -38,7 +38,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 			val food = player!!.foodStats.foodLevel
 			if (food in 1..17 && player.shouldHeal() && player.ticksExisted % 80 == 0)
 				player.heal(1f)
-			ManaItemHandler.dispatchManaExact(stack, player, 1, true)
+			ManaItemHandler.dispatchManaExact(stack, player, 2, true)
 		}
 	}
 	

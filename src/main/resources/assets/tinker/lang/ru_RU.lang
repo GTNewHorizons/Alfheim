@@ -1,8 +1,8 @@
-tile.fluid.molten.Elementium.name=Расплавленный элементий
-tile.fluid.molten.Elvorium.name=Расплавленный эльворий
-tile.fluid.molten.Manasteel.name=Расплавленная манасталь
-tile.fluid.molten.Mauftrium.name=Расплавленный мауфтрий
-tile.fluid.molten.Terrasteel.name=Расплавленная террасталь
+tile.fluid.molten.elementium.name=Расплавленный элементий
+tile.fluid.molten.elvorium.name=Расплавленный эльворий
+tile.fluid.molten.manasteel.name=Расплавленная манасталь
+tile.fluid.molten.mauftrium.name=Расплавленный мауфтрий
+tile.fluid.molten.terrasteel.name=Расплавленная террасталь
 
 item.alfheim:NaturalBucket.Elementium.name=Ведро расплавленного элементия
 item.alfheim:NaturalBucket.Elvorium.name=Ведро расплавленного эльвория
@@ -10,14 +10,27 @@ item.alfheim:NaturalBucket.Manasteel.name=Ведро расплавленной 
 item.alfheim:NaturalBucket.Mauftrium.name=Ведро расплавленного мауфтрия
 item.alfheim:NaturalBucket.Terrasteel.name=Ведро расплавленной террастали
 
-fluid.Elementium.molten=Расплавленный элементий
-fluid.Elvorium.molten=Расплавленный эльворий
-fluid.Manasteel.molten=Расплавленная манасталь
-fluid.Mauftrium.molten=Расплавленный мауфтрий
-fluid.Terrasteel.molten=Расплавленная террасталь
+item.alfheim:RedBowstring.name=Красная нить лука
+item.alfheim:ManaBowstring.name=Наполненная маной нить лука
 
-material.elementium=Элементиевый
-material.elvorium=Эльвориевый
-material.manasteel=Манастальной
-material.mauftrium=Мауфтриевый
-material.terrasteel=Террастальной
+fluid.elementium.molten=Расплавленный элементий
+fluid.elvorium.molten=Расплавленный эльворий
+fluid.manasteel.molten=Расплавленная манасталь
+fluid.mauftrium.molten=Расплавленный мауфтрий
+fluid.terrasteel.molten=Расплавленная террасталь
+
+material.Elementium=Элементий:
+material.Elvorium=Эльворий:
+material.Manasteel=Манасталь:
+material.Mauftrium=Мауфтрий:
+material.Terrasteel=Террасталь:
+material.Dreamwood=Древесина мечтаний:
+material.Livingwood=Жизнедерево:
+
+material.Elementium.ability=Манапочинка | Призыв феи
+material.Elvorium.ability=Манапочинка | Манарегенерация
+material.Manasteel.ability=Манапочинка
+material.Mauftrium.ability=Манапочинка | Манарегенерация
+material.Terrasteel.ability=Манапочинка | Манарегенерация
+
+modifier.tool.manacore=Манапочинка

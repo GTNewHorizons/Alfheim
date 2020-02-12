@@ -92,7 +92,8 @@ object AlfheimConfigHandler {
 	var addTincturemAspect		= true
 	var thaumTreeSuffusion		= true
 	
-	var materialIDs				= intArrayOf(50, 51, 52, 53, 54)
+	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 3, 4)
+	var modifierIDs				= intArrayOf(20)
 	
 	// POTIONS
 	var potionSlots				= 1024
@@ -198,11 +199,11 @@ object AlfheimConfigHandler {
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		
-		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]")
+		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
-		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]")
+		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
@@ -214,12 +215,12 @@ object AlfheimConfigHandler {
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
 		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
-		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated")
+		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated", false)
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader max mana cap")
-		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers")
+		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers", false)
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
@@ -230,7 +231,8 @@ object AlfheimConfigHandler {
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")
 		thaumTreeSuffusion = loadProp(CATEGORY_INT_TC, "TC.treeCrafting", thaumTreeSuffusion, true, "[TC] [GoG] Set this to false to remove Thaumcraft plants Dendric Suffusion")
 		
-		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel materials respectively")
+		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Redstring, Manastring materials respectively")
+		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
 		
 		potionSlots = loadProp(CATEGORY_POTIONS, "potionSlots", potionSlots, true, "Available potions ids in range [0-potionSlots)")
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
@@ -260,7 +262,7 @@ object AlfheimConfigHandler {
 		bothSpawnStructures = loadProp(CATEGORY_ESMODE, "bothSpawnStructures", bothSpawnStructures, false, "Set this to true to generate both room in the skies and castle below (!contains portal!) on zero coords of Alfheim")
 		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, false, "Elven flight fly points (faster you move - more you spend)")
 		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, false, "Flight recover efficiency")
-		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)")
+		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)", false)
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
@@ -288,10 +290,10 @@ object AlfheimConfigHandler {
 		return prop.getInt(default)
 	}
 	
-	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String): IntArray {
+	fun loadProp(category: String, propName: String, default: IntArray, restart: Boolean, desc: String, ensureLength: Boolean = true): IntArray {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.intList
+		return prop.intList.also { if (ensureLength && it.size < default.size) throw IllegalArgumentException("Array $propName is not of suitable length (${it.size}), must be at least ${default.size}") }
 	}
 	
 	fun loadProp(category: String, propName: String, default: Double, restart: Boolean, desc: String): Double {
@@ -306,10 +308,10 @@ object AlfheimConfigHandler {
 		return prop.string
 	}
 	
-	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String): Array<String> {
+	fun loadProp(category: String, propName: String, default: Array<String>, restart: Boolean, desc: String, ensureLength: Boolean = true): Array<String> {
 		val prop = config.get(category, propName, default, desc)
 		prop.setRequiresMcRestart(restart)
-		return prop.stringList
+		return prop.stringList.also { if (ensureLength && it.size < default.size) throw IllegalArgumentException("Array $propName is not of suitable length (${it.size}), must be at least ${default.size}") }
 	}
 	
 	fun initWorldCoordsForElvenStory(save: String) {

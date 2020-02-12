@@ -214,6 +214,7 @@ object AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.DYES[16], ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust))
 		OreDictionary.registerOre(LibOreDict.FLORAL_POWDER, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowDust))
 		OreDictionary.registerOre(LibOreDict.RAINBOW_PETAL, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
+		OreDictionary.registerOre(LibOreDict.RAINBOW_QUARTZ, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowQuartz))
 		OreDictionary.registerOre(LibOreDict.PETAL, ItemStack(elvenResource, 1, ElvenResourcesMetas.RainbowPetal))
 		
 		OreDictionary.registerOre(LibOreDict.HOLY_PENDANT, ItemStack(attributionBauble, 1, OreDictionary.WILDCARD_VALUE))

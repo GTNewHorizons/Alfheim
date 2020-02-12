@@ -33,13 +33,14 @@ object LibOreDict {
 	val WOOD = Array(COLORS.size) { i -> "$IRIS_WOOD${COLORS[i]}" }
 	val LEAVES = Array(COLORS.size) { i -> "$IRIS_LEAVES${COLORS[i]}" }
 	val DIRT = Array(COLORS.size) { i -> "$IRIS_DIRT${COLORS[i]}" }
-	val DYES = Array(COLORS.size-1) { i -> "dye${COLORS[i]}" }
+	val DYES = Array(COLORS.size - 1) { i -> "dye${COLORS[i]}" }
 	const val FLORAL_POWDER = "dyeFloralPowder"
 	const val PETAL = "petalMystic"
 	const val MUSHROOM = "mushroomShimmer"
 	const val RAINBOW_PETAL = "petalRainbow"
 	const val RAINBOW_FLOWER = "mysticFlowerRainbow"
 	const val RAINBOW_DOUBLE_FLOWER = "${RAINBOW_FLOWER}Double"
+	const val RAINBOW_QUARTZ = "quartzRainbow"
 	
 	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated")
 	

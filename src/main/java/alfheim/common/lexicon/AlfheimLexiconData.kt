@@ -330,7 +330,7 @@ object AlfheimLexiconData {
 		
 		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
-		uberSpreader.setLexiconPages(PageText("0"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) PageText("1t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "1s" else "1", AlfheimRecipes.recipeUberSpreader))
+		uberSpreader.setLexiconPages(PageText("0"), PageText("1"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) PageText("2t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "2s" else "2", AlfheimRecipes.recipeUberSpreader))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

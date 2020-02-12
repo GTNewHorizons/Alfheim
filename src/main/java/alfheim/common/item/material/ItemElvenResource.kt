@@ -33,7 +33,6 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.awt.Color
-import kotlin.math.*
 
 class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IFuelHandler/*, ILensEffect*/ {
 	
@@ -95,13 +94,13 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 		if (AlfheimCore.jingleTheBells && meta == ElvenResourcesMetas.InfusedDreamwoodTwig)
 			candy
 		else
-			texture[max(0, min(meta, texture.size - 1))]!!
+			texture.safeGet(meta)!!
 	
 	override fun getUnlocalizedName(stack: ItemStack) =
 		if (AlfheimCore.jingleTheBells && stack.meta == ElvenResourcesMetas.InfusedDreamwoodTwig)
 			"item.InfusedCandy"
 		else
-			"item.${subItems[max(0, min(stack.meta, subItems.size - 1))]}"
+			"item.${subItems.safeGet(stack.meta)}"
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) list.add(ItemStack(item, 1, i))
