@@ -12,7 +12,7 @@ import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.render.block.*
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.*
-import alfheim.client.render.particle.EntityFeatherFx
+import alfheim.client.render.particle.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
@@ -152,6 +152,12 @@ class ClientProxy: CommonProxy() {
 			}
 			
 			mc.effectRenderer.addEffect(particle)
+		}
+	}
+	
+	override fun bloodFX(world: World, x: Double, y: Double, z: Double, lifetime: Int, size: Float) {
+		if (mc.renderViewEntity != null && mc.effectRenderer != null && doParticle(world)) {
+			mc.effectRenderer.addEffect(EntityBloodFx(world, x, y, z, size, lifetime))
 		}
 	}
 	

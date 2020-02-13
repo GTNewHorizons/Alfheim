@@ -3,23 +3,17 @@ package alfheim.client.render.particle
 import alfheim.api.ModInfo
 import alfheim.client.core.util.mc
 import alfheim.common.core.util.*
-import cpw.mods.fml.relauncher.*
+import net.minecraft.block.BlockLiquid
 import net.minecraft.client.particle.EntityFX
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import org.lwjgl.opengl.GL11.*
-import java.awt.Color
 import java.util.*
 
-/**
- * @author riskyken
- */
-@SideOnly(Side.CLIENT)
-class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int, size: Float, lifetime: Float): EntityFX(world, x, y, z) {
+class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, lifetime: Int): EntityFX(world, x, y, z) {
 	
-	var rotationSpeed: Float
 	var f0 = 0f
 	var f1 = 0f
 	var f2 = 0f
@@ -28,47 +22,17 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 	var f5 = 0f
 	
 	init {
-		posX = x
-		posY = y
-		posZ = z
-		prevPosX = x
-		prevPosY = y
-		prevPosZ = z
-		particleScale = size
-		val c = Color(colour)
-		val red = c.red.toFloat() / 255
-		val green = c.green.toFloat() / 255
-		val blue = c.blue.toFloat() / 255
-		particleRed = red
-		particleGreen = green
-		particleBlue = blue
-		particleMaxAge = (50 * lifetime).toInt()
-		motionX = (rand.nextFloat() - 0.5f) * 0.01f.toDouble()
-		motionZ = (rand.nextFloat() - 0.5f) * 0.01f.toDouble()
-		motionY = -0.03
-		rotationSpeed = 2.0f + rand.nextFloat()
-		rotationPitch = rand.nextFloat() * 20 - 10
-		if (rand.nextFloat() >= 0.5f) {
-			rotationSpeed = -rotationSpeed
-		}
-		particleGravity = 0f
-		particleTextureIndexX = 0
-		particleTextureIndexY = 1
-	}
-	
-	override fun onUpdate() {
-		super.onUpdate()
-		if (isCollidedVertically) {
-			rotationSpeed = 0f
-		}
-		motionY = -0.085
-		rotationPitch += rotationSpeed
-		if (rotationPitch > 360f) {
-			rotationPitch -= 360f
-		}
-		if (particleMaxAge - particleAge < 50) {
-			particleAlpha = 1 + -((particleAge - particleMaxAge + 50).toFloat() / 50)
-		}
+		motionY = 0.0
+		
+		particleRed = 1f
+		particleGreen = 0f
+		particleBlue = 0f
+		
+		particleAge = lifetime
+		
+		setSize(size, size)
+		particleGravity = 0.06f
+		particleMaxAge = (64.0 / (Math.random() * 0.8 + 0.2)).I
 	}
 	
 	override fun renderParticle(tessellator: Tessellator, f0: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
@@ -83,23 +47,20 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 	
 	fun postRender() {
 		if (isDead) return
-		
 		Tessellator.instance.setBrightness(getBrightnessForRender(0f))
-		
 		val x = (prevPosX + (posX - prevPosX) * f0 - interpPosX).F
 		val y = (prevPosY + (posY - prevPosY) * f0 - interpPosY).F
 		val z = (prevPosZ + (posZ - prevPosZ) * f0 - interpPosZ).F
-		
 		glPushMatrix()
 		Tessellator.instance.startDrawingQuads()
-		drawBillboard(x.D, y.D, z.D, rotationPitch)
+		drawBillboard(x.D - 0.90625, y.D, z.D - 0.90625, rotationPitch)
 		Tessellator.instance.draw()
 		glPopMatrix()
 	}
 	
 	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) {
 		val scale = 0.05f
-		glTranslatef(x.toFloat(), y.toFloat(), z.toFloat())
+		glTranslatef(x.F, y.F, z.F)
 		glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)
 		glRotatef(RenderManager.instance.playerViewX, 1.0f, 0.0f, 0.0f)
 		glRotatef(180f, 0f, 0f, 1f)
@@ -115,18 +76,39 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 		Tessellator.instance.addVertexWithUV(1.0, -1.0, 0.0, 1.0, 0.0)
 	}
 	
+	override fun onUpdate() {
+		prevPosX = posX
+		prevPosY = posY
+		prevPosZ = posZ
+		
+		motionY -= particleGravity.D
+		
+		moveEntity(0.0, motionY, 0.0)
+		
+		motionY *= 0.9800000190734863
+		
+		if (particleMaxAge-- <= 0) setDead()
+		
+		val material = worldObj.getBlock(posX.mfloor(), posY.mfloor(), posZ.mfloor()).material
+		
+		if ((material.isLiquid || material.isSolid) && posY < (posY + 1 - BlockLiquid.getLiquidHeightPercent(worldObj.getBlockMetadata(posX.mfloor(), posY.mfloor(), posZ.mfloor()))))
+			setDead()
+	}
+	
 	companion object {
 		
-		val texture = ResourceLocation(ModInfo.MODID, "textures/misc/particles/feather.png")
-		val renderQueue: Queue<EntityFeatherFx> = ArrayDeque()
+		val texture = ResourceLocation(ModInfo.MODID, "textures/misc/particles/blood.png")
+		val textureDrop = ResourceLocation(ModInfo.MODID, "textures/misc/particles/bloodDrop.png")
+		val renderQueue: Queue<EntityBloodFx> = ArrayDeque()
 		
 		fun renderQueue() {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			mc.renderEngine.bindTexture(texture)
-			for (featherFx in renderQueue) {
-				featherFx.postRender()
-			}
+			renderQueue.forEach { if (!it.onGround) it.postRender() }
+			mc.renderEngine.bindTexture(textureDrop)
+			renderQueue.forEach { if (it.onGround) it.postRender() }
+			
 			renderQueue.clear()
 			glDisable(GL_BLEND)
 		}

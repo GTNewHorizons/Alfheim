@@ -130,8 +130,10 @@ object AdvancedTitleHandler {
 				val x = player.posX + Math.random() - 0.5
 				val y = player.posY + Math.random()
 				val z = player.posZ + Math.random() - 0.5
-				for (i in 0..4)
-					Botania.proxy.sparkleFX(world, x, y, z, 0.5f, 1f, 0f, 2f, 100, true)
+//				for (i in 0..4)
+//					Botania.proxy.sparkleFX(world, x, y, z, 0.5f, 1f, 0f, 2f, 100, true)
+				
+				AlfheimCore.proxy.bloodFX(world, x, y, z, 20)
 			}
 			SELIA     -> {
 				AlfheimCore.proxy.featherFX(world, player.posX + Math.random() - 0.5, player.posY + Math.random(), player.posZ + Math.random() - 0.5, Color(0x008800).rgb)

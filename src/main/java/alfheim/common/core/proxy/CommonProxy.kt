@@ -83,9 +83,7 @@ open class CommonProxy {
 		})
 	}
 	
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int) = featherFX(world, x, y, z, color, 1f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float) = featherFX(world, x, y, z, color, size, 1f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float) = featherFX(world, x, y, z, color, size, lifetime, 16f)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float, distance: Float) = featherFX(world, x, y, z, color, size, lifetime, distance, false)
-	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float, lifetime: Float, distance: Float, must: Boolean) = Unit
+	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float = 1f, lifetime: Float = 1f, distance: Float = 16f, must: Boolean = false) = Unit
+	
+	open fun bloodFX(world: World, x: Double, y: Double, z: Double, lifetime: Int = 100, size: Float = 0.01f) = Unit
 }

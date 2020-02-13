@@ -15,7 +15,7 @@ import alfheim.client.core.util.mc
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
-import alfheim.client.render.particle.EntityFeatherFx
+import alfheim.client.render.particle.*
 import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
@@ -275,6 +275,8 @@ object EventHandlerClient {
 		glAlphaFunc(GL_GREATER, 0.003921569f)
 		mc.mcProfiler.startSection("wingParticles")
 		EntityFeatherFx.renderQueue()
+		mc.mcProfiler.endStartSection("bloodParticles")
+		EntityBloodFx.renderQueue()
 		mc.mcProfiler.endSection()
 		glDisable(GL_BLEND)
 		glDepthMask(true)

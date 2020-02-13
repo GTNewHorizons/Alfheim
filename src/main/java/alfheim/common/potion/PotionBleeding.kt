@@ -11,6 +11,10 @@ class PotionBleeding: PotionAlfheim(AlfheimConfigHandler.potionIDBleeding, "blee
 	override fun isReady(time: Int, ampl: Int) = time % (20 / max(1, ampl)) == 0
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
-		if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.bleeding, (ampl + 1).F)
+		if (AlfheimCore.enableMMO) {
+			living.attackEntityFrom(DamageSourceSpell.bleeding, (ampl + 1).F)
+			
+			AlfheimCore.proxy.bloodFX(living.worldObj, living.posX, living.posY + living.height, living.posZ, size = 2f)
+		}
 	}
 }
