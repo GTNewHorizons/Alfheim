@@ -120,7 +120,7 @@ object TinkersConstructAlfheimModule {
 			}
 	}
 	
-	fun registerSmelteryFluid(name: String, renderBlock: Block, renderMeta: Int, texture: String = "liquid_$name", fluidName: String = "$name.molten", blockName: String = "fluid.molten.$name", density: Int = 3000, viscosity: Int = 6000, temperature: Int = 1300, material: Material = Material.lava) =
+	fun registerSmelteryFluid(name: String, renderBlock: Block, renderMeta: Int, texture: String = "liquids/liquid_$name", fluidName: String = "$name.molten", blockName: String = "fluid.molten.$name", density: Int = 3000, viscosity: Int = 6000, temperature: Int = 1300, material: Material = Material.lava) =
 		TinkerSmeltery.registerFluid(name, fluidName, blockName, texture, density, viscosity, temperature, material).also {
 			FluidType.registerFluidType(name, renderBlock, renderMeta, it.temperature, it, false)
 		}!!

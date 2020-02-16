@@ -188,9 +188,13 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 						TargetingSystem.setTarget(player, mr, packet.state, packet.data)
 					}
 				} else {
-					val e = player.worldObj.getEntityByID(packet.data)
-					if (e is EntityLivingBase) {
-						TargetingSystem.setTarget(player, e, packet.state)
+					if (packet.data != -1) {
+						val e = player.worldObj.getEntityByID(packet.data)
+						if (e is EntityLivingBase) {
+							TargetingSystem.setTarget(player, e, packet.state)
+						}
+					} else {
+						TargetingSystem.setTarget(player, null, false)
 					}
 				}
 			}

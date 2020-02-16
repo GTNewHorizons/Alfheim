@@ -7,6 +7,7 @@ import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
@@ -828,11 +829,22 @@ object AlfheimHookHandler {
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun isInvisibleToPlayer(player: EntityPlayer, other: EntityPlayer, @ReturnValue result: Boolean): Boolean {
+	fun isInvisibleToPlayer(player: EntityPlayer, thePlayer: EntityPlayer, @ReturnValue result: Boolean): Boolean {
 		if (result && AlfheimCore.enableMMO) {
-			if (CardinalSystem.PartySystem.getParty(player).isMember(other)) return false
+			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(player) == true) return false
 		}
 		
 		return result
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun isInvisibleToPlayer(entity: EntityLivingBase, thePlayer: EntityPlayer): Boolean {
+		if (AlfheimCore.enableMMO) {
+			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(entity) == true) return false
+		}
+		
+		return entity.isInvisible
 	}
 }

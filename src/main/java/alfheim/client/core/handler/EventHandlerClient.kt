@@ -20,6 +20,7 @@ import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.util.*
+import alfheim.common.network.MessageKeyBindS
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -88,6 +89,13 @@ object EventHandlerClient {
 			world.provider.skyRenderer = AlfheimSkyRenderer
 		
 		if (mc.thePlayer == null) PlayerSegmentClient.target = null
+		
+		if (mc.isGamePaused) return
+		
+		if (PlayerSegmentClient.target?.isInvisibleToPlayer(mc.thePlayer) == true) {
+			PlayerSegmentClient.target = null
+			AlfheimCore.network.sendToServer(MessageKeyBindS(KeyBindingHandlerClient.KeyBindingIDs.SEL.ordinal, false, -1))
+		}
 	}
 	
 	@SubscribeEvent
