@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.ItemIridescent
@@ -16,7 +16,7 @@ import net.minecraft.inventory.IInventory
 import net.minecraft.item.*
 import net.minecraft.util.*
 import net.minecraftforge.client.event.RenderPlayerEvent
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.*
 import vazkii.botania.api.recipe.IFlowerComponent
 import vazkii.botania.client.core.helper.ShaderHelper
@@ -91,31 +91,27 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
 			chestTranslate()
-			scale(0.8F)
-			GL11.glTranslatef(0.2F, -0.2F, -0.35F)
-			GL11.glRotatef(10F, 0F, 0F, 1F)
+			glScaled(0.8)
+			glTranslatef(0.2F, -0.2F, -0.35F)
+			glRotatef(10F, 0F, 0F, 1F)
 			if (stack.meta == 16) {
-				GL11.glEnable(GL11.GL_BLEND)
-				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-				GL11.glAlphaFunc(GL11.GL_EQUAL, 1F)
+				glEnable(GL_BLEND)
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+				glAlphaFunc(GL_EQUAL, 1F)
 				ShaderHelper.useShader(ShaderHelper.halo)
 			}
 			renderIcon(stack.meta)
 			if (stack.meta == 16) {
 				ShaderHelper.releaseShader()
-				GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F)
-				GL11.glDisable(GL11.GL_BLEND)
+				glAlphaFunc(GL_GREATER, 0.1F)
+				glDisable(GL_BLEND)
 			}
 		}
 	}
 	
 	fun chestTranslate() {
-		GL11.glRotatef(180F, 1F, 0F, 0F)
-		GL11.glTranslatef(-0.5F, -0.7F, 0.15F)
-	}
-	
-	fun scale(f: Float) {
-		GL11.glScalef(f, f, f)
+		glRotatef(180F, 1F, 0F, 0F)
+		glTranslatef(-0.5F, -0.7F, 0.15F)
 	}
 	
 	fun renderIcon(i: Int) {

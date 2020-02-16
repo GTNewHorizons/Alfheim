@@ -20,7 +20,7 @@ import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.spell.darkness.SpellDecay
 import cpw.mods.fml.common.FMLCommonHandler
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
@@ -53,7 +53,7 @@ object EventHandler {
 		FMLCommonHandler.instance().bus().register(this)
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onPlayerLoggedIn(e: PlayerLoggedInEvent) {
 		if (InfoLoader.doneChecking && !InfoLoader.triedToWarnPlayer) {
 			InfoLoader.triedToWarnPlayer = true
@@ -282,7 +282,7 @@ object EventHandler {
 				} else {
 					val tg = CardinalSystem.TargetingSystem.getTarget(player).target ?: continue
 					
-					if (tg.isDead || Vector3.entityDistance(player, tg) > if (tg is IBossDisplayData) 128.0 else 32.0) {
+					if (tg.isDead || tg.isInvisibleToPlayer(player) || Vector3.entityDistance(player, tg) > if (tg is IBossDisplayData) 128.0 else 32.0) {
 						CardinalSystem.TargetingSystem.setTarget(player, null, false, -2)
 					}
 				}

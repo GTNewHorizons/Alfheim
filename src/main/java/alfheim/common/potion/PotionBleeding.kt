@@ -14,7 +14,7 @@ class PotionBleeding: PotionAlfheim(AlfheimConfigHandler.potionIDBleeding, "blee
 		if (AlfheimCore.enableMMO) {
 			living.attackEntityFrom(DamageSourceSpell.bleeding, (ampl + 1).F)
 			
-			AlfheimCore.proxy.bloodFX(living.worldObj, living.posX, living.posY + living.height, living.posZ, size = 2f)
+			AlfheimCore.proxy.bloodFX(living.worldObj, living.posX, living.posY + living.height, living.posZ, 200, (Math.random() * 2 + 1).F / 10, 0.5F)
 		}
 	}
 }

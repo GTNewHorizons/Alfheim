@@ -1,6 +1,7 @@
 package alfheim.client.render.block
 
 import alfheim.api.lib.*
+import alfheim.client.core.util.glTranslated
 import alfheim.client.render.tile.RenderTilePowerStone
 import alfheim.common.block.tile.TilePowerStone
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
@@ -15,7 +16,7 @@ object RenderBlockPowerStone: ISimpleBlockRenderingHandler {
 	
 	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
 		glPushMatrix()
-		glTranslated(-0.5, -0.5, -0.5)
+		glTranslated(-0.5)
 		RenderTilePowerStone.forceMeta = max(0, min(metadata, LibResourceLocations.obelisk.size))
 		
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(TilePowerStone(), 0.0, 0.0, 0.0, 0f)

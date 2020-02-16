@@ -12,6 +12,7 @@ import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.core.util.mc
+import alfheim.client.gui.GUISpells
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
 import alfheim.common.core.util.D
@@ -121,6 +122,7 @@ object KeyBindingHandlerClient {
 				if (safeKeyDown(Keyboard.KEY_LCONTROL)) {
 					for (i in PlayerSegmentClient.hotSpells.indices) {
 						if (safeKeyDown(i + 2)) {
+							GUISpells.fadeOut = 5f
 							if (safeKeyDown(Keyboard.KEY_LSHIFT)) {
 								PlayerSegmentClient.hotSpells[i] = raceID and 0xF shl 28 or (spellID and 0xFFFFFFF)
 								AlfheimCore.network.sendToServer(MessageHotSpellS(i, PlayerSegmentClient.hotSpells[i]))
@@ -148,6 +150,7 @@ object KeyBindingHandlerClient {
 			}
 			
 			if (safeKeyDown(Keyboard.KEY_UP)) {
+				GUISpells.fadeOut = 5f
 				if (!toggleUp) {
 					toggleUp = true
 					raceID = if (++raceID > 9) 1 else raceID
@@ -159,6 +162,7 @@ object KeyBindingHandlerClient {
 			}
 			
 			if (safeKeyDown(Keyboard.KEY_DOWN)) {
+				GUISpells.fadeOut = 5f
 				if (!toggleDown) {
 					toggleDown = true
 					raceID = if (--raceID < 1) 9 else raceID
@@ -170,6 +174,7 @@ object KeyBindingHandlerClient {
 			}
 			
 			if (safeKeyDown(Keyboard.KEY_RIGHT)) {
+				GUISpells.fadeOut = 5f
 				if (!toggleRight) {
 					toggleRight = true
 					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
@@ -180,6 +185,7 @@ object KeyBindingHandlerClient {
 			}
 			
 			if (safeKeyDown(Keyboard.KEY_LEFT)) {
+				GUISpells.fadeOut = 5f
 				if (!toggleLeft) {
 					toggleLeft = true
 					val size = AlfheimAPI.getSpellsFor(EnumRace[raceID]).size
@@ -191,6 +197,7 @@ object KeyBindingHandlerClient {
 			
 			run {
 				if (safeKeyDown(ClientProxy.keyCast.keyCode)) {
+					GUISpells.fadeOut = 5f
 					if (!toggleCast) {
 						toggleCast = true
 						if (PlayerSegmentClient.init <= 0) {

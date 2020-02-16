@@ -2,7 +2,7 @@ package alfheim.client.render.tile
 
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelBipedNew
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.block.tile.TileRaceSelector
@@ -29,8 +29,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 			glTranslated(cx + 0.5, cy + 2.0 / 16, cz + 13.1 / 16)
 			glRotatef(180f, 1f, 0f, 0f)
 			
-			val s = 1f / 8 / 16
-			glScalef(s, s, s)
+			glScalef(1f / 8 / 16)
 			val text = StatCollector.translateToLocal("elvenstory.select${if (meta == 0) "gender" else if (meta == 1) "race" else ""}")
 			font.drawString(text, font.getStringWidth(text) / -2, 0, 0)
 			glPopMatrix()
@@ -40,8 +39,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 			glPushMatrix()
 			glTranslated(cx + 0.5, cy + 0.5, cz + 0.5)
 			glRotatef(180f, 1f, 0f, 0f)
-			val s = 1f/16
-			glScalef(s, s, s)
+			glScalef(1f/16)
 			
 			font.drawString("\u2642", -5, -3, 0x0000FF)
 			font.drawString("\u2640", 2, -3, 0xFF00FF)
@@ -75,7 +73,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 					glColor4f(1f, 1f, 1f, if (seg == tile.rotation) 1f else 0.5f)
 					
 					mc.renderEngine.bindTexture(if (tile.female) LibResourceLocations.female[seg] else LibResourceLocations.male[seg])
-					glScaled(0.75, 0.75, 0.75)
+					glScaled(0.75)
 					glRotatef(180f, 1f, 0f, 0f)
 					glRotatef((seg - tile.rotation) * 40 - 90f - adRot, 0f, 1f, 0f)
 					glTranslatef(0f, -0.75f, 0f)
@@ -107,7 +105,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glPushMatrix()
 				glTranslated(-0.25, 0.25, 0.15)
 				val si = 0.5
-				glScaled(si, si, si)
+				glScaled(si)
 				RenderWings.drawRect(LibResourceLocations.icons[tile.rotation + 1], 0)
 				glPopMatrix()
 				
@@ -119,7 +117,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glPushMatrix()
 				glTranslated(0.15, 0.1, 0.15)
 				val swr = 1.5
-				glScaled(swr, swr, swr)
+				glScaled(swr)
 				//glRotated(10, 0, 0, 1);
 				glRotated((-ry).D, 0.0, 1.0, 0.0)
 				LibResourceLocations.wings[tile.rotation + 1]?.let { RenderWings.drawRect(it, -1) }
@@ -147,8 +145,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glPushMatrix()
 				glTranslated(cx + 0.5, cy + 0.35, cz + 2.9 / 16)
 				glRotatef(180f, 1f, 0f, 0f)
-				val s = 1f / 64
-				glScalef(s, s, s)
+				glScalef(1f / 64)
 				
 				val race = EnumRace[tile.rotation + 1]
 				val text = StatCollector.translateToLocal("race.$race.name")

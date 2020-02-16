@@ -1,5 +1,6 @@
 package alfmod.client.render.entity
 
+import alfheim.client.core.util.glScaled
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowSprite
 import alfmod.common.entity.EntitySnowSprite
@@ -43,7 +44,7 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 			glDepthMask(true)
 		
 		glTranslatef(0f, -0.105f, 0f)
-		glScaled(1.1, 1.1, 1.1)
+		glScaled(1.1)
 		glColor4f(1f, 1f, 1f, 0.5f)
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		

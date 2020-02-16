@@ -1,7 +1,7 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.relauncher.*
@@ -23,7 +23,7 @@ object RenderButterflies {
 		
 		glTranslated(x, y, z)
 		val s = entity.width.coerceAtLeast(entity.height) / 1.25
-		glScaled(s, s, s)
+		glScaled(s)
 		
 		rand.setSeed(entity.getEntityId().toLong())
 		mc.renderEngine.bindTexture(LibResourceLocations.butterfly)

@@ -2,7 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
@@ -96,7 +96,7 @@ object RenderContributors {
 				glTranslated(0.0, 0.15, -0.25)
 				
 				glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
-				glScaled(0.2, 0.2, 0.2)
+				glScaled(0.2)
 				
 				so.addTranslation()
 				glPopMatrix()
@@ -180,7 +180,7 @@ object RenderContributors {
 			
 			glTranslated(0.0, 1.35, 0.0)
 			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
-			glScaled(2.0, 2.0, 2.0)
+			glScaled(2.0)
 			
 			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
 			mc.renderEngine.bindTexture(LibResourceLocations.aura)
@@ -194,6 +194,7 @@ object RenderContributors {
 			glColor4f(1f, 1f, 1f, 1f)
 			
 			glShadeModel(GL_FLAT)
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
 			glEnable(GL_LIGHTING)
 			glEnable(GL_CULL_FACE)
 			glDisable(GL_BLEND)
@@ -233,7 +234,7 @@ object RenderContributors {
 			val armor = e.entityPlayer.getCurrentArmor(2) != null
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslated(-0.25, -0.4, if (armor) 0.21 else 0.14)
-			glScaled(0.5, 0.5, 0.5)
+			glScaled(0.5)
 			val icon = ItemElvenResource.amulet
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 32f)
 			glPopMatrix()

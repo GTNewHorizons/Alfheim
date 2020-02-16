@@ -2,7 +2,7 @@ package alfheim.client.render.tile
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
@@ -109,7 +109,7 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		}
 		
 		glDisable(GL_ALPHA_TEST)
-		glScalef(1.1f, 1.1f, 1.1f)
+		glScaled(1.1)
 		if (!ConfigHandler.oldPylonModel)
 			glTranslatef(-0.05f, -0.1f, 0.05f)
 		else

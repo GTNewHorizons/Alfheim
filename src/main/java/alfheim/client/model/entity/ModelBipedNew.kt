@@ -1,5 +1,6 @@
 package alfheim.client.model.entity
 
+import alfheim.client.core.util.glScaled
 import alfheim.common.core.util.*
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
@@ -80,7 +81,7 @@ open class ModelBipedNew: ModelBase() {
 		
 		if (isChild) {
 			glPushMatrix()
-			glScalef(0.5f, 0.5f, 0.5f)
+			glScaled(0.5)
 			glTranslatef(0f, 24f * size, 0f)
 		}
 		

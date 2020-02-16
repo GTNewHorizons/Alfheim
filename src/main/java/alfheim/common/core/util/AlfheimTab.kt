@@ -157,6 +157,7 @@ import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
+import alfheim.common.item.AlfheimItems.raceNullifier
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFire
@@ -291,6 +292,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (flugelSoul)
 		addItem (wireAxe)
 		addItem (trisDagger)
+		if (AlfheimCore.enableElvenStory) addItem (raceNullifier)
 		
 		addBlock(lightningWood)
 		addBlock(netherWood)

@@ -61,7 +61,6 @@ object AlfheimLexiconData {
 	lateinit var manaAcc: LexiconEntry
 	lateinit var manaImba: LexiconEntry
 	lateinit var mask: LexiconEntry
-	lateinit var uberSpreader: LexiconEntry
 	//public static LexiconEntry mjolnir;
 	lateinit var mobs: LexiconEntry
 	lateinit var moonbow: LexiconEntry
@@ -80,6 +79,7 @@ object AlfheimLexiconData {
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
+	lateinit var uberSpreader: LexiconEntry
 	lateinit var worldgen: LexiconEntry
 	
 	// Elven Story information
@@ -330,7 +330,7 @@ object AlfheimLexiconData {
 		
 		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
-		uberSpreader.setLexiconPages(PageText("0"), PageText("1"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) PageText("2t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "2s" else "2", AlfheimRecipes.recipeUberSpreader))
+		uberSpreader.setLexiconPages(PageText("0"), PageText("1"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1) PageText("2t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "2s" else "2", AlfheimRecipes.recipeUberSpreader))
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

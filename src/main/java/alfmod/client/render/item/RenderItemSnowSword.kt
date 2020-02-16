@@ -1,6 +1,6 @@
 package alfmod.client.render.item
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfmod.AlfheimModularCore
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -36,7 +36,7 @@ object RenderItemSnowSword: IItemRenderer {
 		if (type == INVENTORY) {
 			glRotatef(-45f, 1f, 1f, 1f)
 			glTranslatef(0f, -1f, 0f)
-			glScaled(0.75, 0.75, 0.75)
+			glScaled(0.75)
 		}
 		
 		mc.renderEngine.bindTexture(texture)

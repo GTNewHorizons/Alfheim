@@ -82,6 +82,7 @@ object AlfheimItems {
 	val paperBreak: Item
 	val peacePipe: Item
 	val pixieAttractor: Item
+	val raceNullifier: Item
 	val realitySword: Item
 	val rodColorfulSkyDirt: Item
 	val rodFire: Item
@@ -161,6 +162,7 @@ object AlfheimItems {
 		paperBreak = ItemPaperBreak()
 		peacePipe = ItemPeacePipe()
 		pixieAttractor = ItemPendant("PixieAttractor")
+		raceNullifier = ItemRaceNullifier()
 		realitySword = ItemRealitySword()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodFire = ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame)

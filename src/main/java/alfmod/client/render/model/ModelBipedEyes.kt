@@ -1,6 +1,6 @@
 package alfmod.client.render.model
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfmod.AlfheimModularCore
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.OpenGlHelper
@@ -29,9 +29,8 @@ class ModelBipedEyes: ModelBiped() {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		
 		if (isChild) {
-			val f6 = 2f
 			glPushMatrix()
-			glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
+			glScaled(0.75)
 			glTranslatef(0f, 16f * f5, 0f)
 			bipedEyes.render(f5)
 			glPopMatrix()

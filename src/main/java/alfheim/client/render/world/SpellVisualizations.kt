@@ -3,7 +3,7 @@ package alfheim.client.render.world
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.*
 import alfheim.common.spell.tech.SpellTimeStop
 import net.minecraft.client.renderer.Tessellator
@@ -61,7 +61,7 @@ object SpellVisualizations {
 			glColor4d(0.25, 0.0, 0.0, 1.0)
 		val size = (240 / 3.6 / 16 * SpellTimeStop.radius).F
 		
-		glScaled(0.5, 0.5, 0.5)
+		glScaled(0.5)
 		if (RenderPostShaders.allowShaders)
 			so.addTranslation()
 		else
@@ -109,9 +109,9 @@ object SpellVisualizations {
 		tes.draw()
 		glPopMatrix()
 		
-		glScaled(s, s, s)
+		glScaled(s)
 		renderSphere(tes, size)
-		glScaled(1 / s, 1 / s, 1 / s)
+		glScaled(1 / s)
 		
 		glEnable(GL_LIGHTING)
 		glEnable(GL_TEXTURE_2D)

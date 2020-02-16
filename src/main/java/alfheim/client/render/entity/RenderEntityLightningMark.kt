@@ -2,6 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.glScalef
 import alfheim.common.entity.EntityLightningMark
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
@@ -36,7 +37,7 @@ object RenderEntityLightningMark: Render() {
 		var s = chargeMul
 		s += min(1f, (live + partialTick) * 0.2f)
 		s /= 2f
-		glScalef(s, s, s)
+		glScalef(s)
 		
 		glRotatef(charge * 9f + (mark.ticksExisted + partialTick) * 0.5f + rand.nextFloat() * 360f, 0f, 1f, 0f)
 		

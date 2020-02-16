@@ -84,7 +84,9 @@ class AlfheimCore {
 		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod"))
 			throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
 		
-		AlfheimConfigHandler.readModes()
+		if (!AlfheimConfigHandler.readModes())
+			AlfheimConfigHandler.writeModes()
+		
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
 		TiCLoaded = Loader.isModLoaded("TConstruct")

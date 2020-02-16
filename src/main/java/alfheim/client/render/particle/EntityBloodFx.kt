@@ -1,8 +1,8 @@
 package alfheim.client.render.particle
 
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.*
+import alfheim.client.core.util.*
+import alfheim.common.core.util.mfloor
 import net.minecraft.block.BlockLiquid
 import net.minecraft.client.particle.EntityFX
 import net.minecraft.client.renderer.Tessellator
@@ -12,7 +12,7 @@ import net.minecraft.world.World
 import org.lwjgl.opengl.GL11.*
 import java.util.*
 
-class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, lifetime: Int): EntityFX(world, x, y, z) {
+open class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, lifetime: Int, gravity: Float): EntityFX(world, x, y, z) {
 	
 	var f0 = 0f
 	var f1 = 0f
@@ -22,17 +22,18 @@ class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, 
 	var f5 = 0f
 	
 	init {
+		motionX = 0.0
 		motionY = 0.0
+		motionZ = 0.0
+		
+		particleScale = size
 		
 		particleRed = 1f
 		particleGreen = 0f
 		particleBlue = 0f
 		
-		particleAge = lifetime
-		
-		setSize(size, size)
-		particleGravity = 0.06f
-		particleMaxAge = (64.0 / (Math.random() * 0.8 + 0.2)).I
+		particleGravity = gravity
+		particleMaxAge = lifetime
 	}
 	
 	override fun renderParticle(tessellator: Tessellator, f0: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
@@ -48,47 +49,42 @@ class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, 
 	fun postRender() {
 		if (isDead) return
 		Tessellator.instance.setBrightness(getBrightnessForRender(0f))
-		val x = (prevPosX + (posX - prevPosX) * f0 - interpPosX).F
-		val y = (prevPosY + (posY - prevPosY) * f0 - interpPosY).F
-		val z = (prevPosZ + (posZ - prevPosZ) * f0 - interpPosZ).F
+		val x = (prevPosX + (posX - prevPosX) * f0 - interpPosX)
+		val y = (prevPosY + (posY - prevPosY) * f0 - interpPosY)
+		val z = (prevPosZ + (posZ - prevPosZ) * f0 - interpPosZ)
 		glPushMatrix()
 		Tessellator.instance.startDrawingQuads()
-		drawBillboard(x.D - 0.90625, y.D, z.D - 0.90625, rotationPitch)
+		drawBillboard(x, y, z)
 		Tessellator.instance.draw()
 		glPopMatrix()
 	}
 	
-	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) {
-		val scale = 0.05f
-		glTranslatef(x.F, y.F, z.F)
-		glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)
-		glRotatef(RenderManager.instance.playerViewX, 1.0f, 0.0f, 0.0f)
+	fun drawBillboard(x: Double, y: Double, z: Double) {
+		glTranslated(x, y, z)
+		if (!onGround) {
+			glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)
+			glRotatef(RenderManager.instance.playerViewX, 1.0f, 0.0f, 0.0f)
+		}
 		glRotatef(180f, 0f, 0f, 1f)
-		glTranslatef(-0.01f, -0.01f, -0.01f)
-		glRotatef(rotation, 0f, 0f, 1f)
-		glTranslatef(0.01f, 0.01f, 0.01f)
-		glScalef(scale, scale, scale)
-		glScalef(particleScale, particleScale, particleScale)
-		Tessellator.instance.setColorRGBA_F(particleRed, particleGreen, particleBlue, particleAlpha * 0.85f)
-		Tessellator.instance.addVertexWithUV(-1.0, -1.0, 0.0, 0.0, 0.0)
-		Tessellator.instance.addVertexWithUV(-1.0, 1.0, 0.0, 0.0, 1.0)
-		Tessellator.instance.addVertexWithUV(1.0, 1.0, 0.0, 1.0, 1.0)
-		Tessellator.instance.addVertexWithUV(1.0, -1.0, 0.0, 1.0, 0.0)
+		if (onGround) {
+			glRotatef(-90f, 1f, 0f, 0f)
+			glTranslatef(0f, 0f, 3/32f)
+		}
+		
+		glScalef(particleScale)
+		Tessellator.instance.setColorRGBA_F(particleRed, particleGreen, particleBlue, particleAlpha)
+		Tessellator.instance.addVertexWithUV(-0.5, -0.5, 0.0, 0.0, 0.0)
+		Tessellator.instance.addVertexWithUV(-0.5, 0.5, 0.0, 0.0, 1.0)
+		Tessellator.instance.addVertexWithUV(0.5, 0.5, 0.0, 1.0, 1.0)
+		Tessellator.instance.addVertexWithUV(0.5, -0.5, 0.0, 1.0, 0.0)
 	}
 	
 	override fun onUpdate() {
-		prevPosX = posX
-		prevPosY = posY
-		prevPosZ = posZ
-		
-		motionY -= particleGravity.D
-		
-		moveEntity(0.0, motionY, 0.0)
-		
-		motionY *= 0.9800000190734863
-		
-		if (particleMaxAge-- <= 0) setDead()
-		
+		super.onUpdate()
+		onUpdate2()
+	}
+	
+	open fun onUpdate2() {
 		val material = worldObj.getBlock(posX.mfloor(), posY.mfloor(), posZ.mfloor()).material
 		
 		if ((material.isLiquid || material.isSolid) && posY < (posY + 1 - BlockLiquid.getLiquidHeightPercent(worldObj.getBlockMetadata(posX.mfloor(), posY.mfloor(), posZ.mfloor()))))
@@ -107,8 +103,9 @@ class EntityBloodFx(world: World, x: Double, y: Double, z: Double, size: Float, 
 			mc.renderEngine.bindTexture(texture)
 			renderQueue.forEach { if (!it.onGround) it.postRender() }
 			mc.renderEngine.bindTexture(textureDrop)
+			glDisable(GL_CULL_FACE)
 			renderQueue.forEach { if (it.onGround) it.postRender() }
-			
+			glEnable(GL_CULL_FACE)
 			renderQueue.clear()
 			glDisable(GL_BLEND)
 		}

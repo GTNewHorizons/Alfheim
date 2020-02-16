@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.*
 import baubles.api.BaubleType
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.*
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.client.core.proxy.ClientProxy
@@ -73,18 +73,14 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 		super.getUnlocalizedName(par1ItemStack) + par1ItemStack.meta
 	
 	fun faceTranslate() {
-		GL11.glRotatef(90F, 0F, 1F, 0F)
-		GL11.glRotatef(180F, 1F, 0F, 0F)
-		GL11.glTranslatef(-0.4F, 0.1F, -0.25F)
+		glRotatef(90F, 0F, 1F, 0F)
+		glRotatef(180F, 1F, 0F, 0F)
+		glTranslatef(-0.4F, 0.1F, -0.25F)
 	}
 	
 	fun chestTranslate() {
-		GL11.glRotatef(180F, 1F, 0F, 0F)
-		GL11.glTranslatef(-0.5F, -0.7F, 0.15F)
-	}
-	
-	fun scale(f: Float) {
-		GL11.glScalef(f, f, f)
+		glRotatef(180F, 1F, 0F, 0F)
+		glTranslatef(-0.5F, -0.7F, 0.15F)
 	}
 	
 	override fun onEquipped(stack: ItemStack, player: EntityLivingBase) {
@@ -139,32 +135,32 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 				// Render the Tiny Potato on your head... a tiny headtato, if you will.
 				mc.renderEngine.bindTexture(potatoTexture)
 				val model = ModelTinyPotato()
-				GL11.glTranslatef(0f, -2f, 0f)
-				GL11.glRotatef(-90F, 0F, 1F, 0F)
+				glTranslatef(0f, -2f, 0f)
+				glRotatef(-90F, 0F, 1F, 0F)
 				model.render()
 			} else {
 				if (name == "yrsegal" || name == "theLorist") {
 					// Render the Blueflare
 					mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 					IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
-					GL11.glEnable(GL11.GL_BLEND)
-					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-					GL11.glAlphaFunc(GL11.GL_EQUAL, 1F)
+					glEnable(GL_BLEND)
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+					glAlphaFunc(GL_EQUAL, 1F)
 					ShaderHelper.useShader(ShaderHelper.halo)
 					faceTranslate()
-					scale(0.35F)
-					GL11.glTranslatef(0.9F, -0.505F, -0.4F)
+					glScaled(0.35)
+					glTranslatef(0.9F, -0.505F, -0.4F)
 					ItemRenderer.renderItemIn2D(Tessellator.instance, wireIcon.maxU, wireIcon.minV, wireIcon.minU, wireIcon.maxV, wireIcon.iconWidth, wireIcon.iconHeight, 1F / 32F)
 					ShaderHelper.releaseShader()
-					GL11.glAlphaFunc(GL11.GL_ALWAYS, 1F)
-					GL11.glDisable(GL11.GL_BLEND)
+					glAlphaFunc(GL_ALWAYS, 1F)
+					glDisable(GL_BLEND)
 				} else if (name == "Tristaric") {
 					// Render the Ezic Star
 					mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 					IBaubleRender.Helper.translateToHeadLevel(event.entityPlayer)
 					faceTranslate()
-					scale(0.5F)
-					GL11.glTranslatef(0.3F, -0.45F, 0F)
+					glScaled(0.5)
+					glTranslatef(0.3F, -0.45F, 0F)
 					ItemRenderer.renderItemIn2D(Tessellator.instance, trisIcon.maxU, trisIcon.minV, trisIcon.minU, trisIcon.maxV, trisIcon.iconWidth, trisIcon.iconHeight, 1F / 32F)
 				}
 			}
@@ -175,18 +171,18 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 				if (name == "l0nekitsune") {
 					// Render a fox tail
 					chestTranslate()
-					GL11.glRotatef(-90F, 0F, 1F, 0F)
-					GL11.glScalef(1F, 1F, 1F)
-					GL11.glTranslatef(-1F, -0.2F, -.50F)
+					glRotatef(-90F, 0F, 1F, 0F)
+					glScalef(1F, 1F, 1F)
+					glTranslatef(-1F, -0.2F, -.50F)
 					ItemRenderer.renderItemIn2D(Tessellator.instance, kitsuneIcon.maxU, kitsuneIcon.minV, kitsuneIcon.minU, kitsuneIcon.maxV, kitsuneIcon.iconWidth, kitsuneIcon.iconHeight, 1F / 32F)
-					GL11.glTranslatef(0F, 0F, 0.025F)
+					glTranslatef(0F, 0F, 0.025F)
 					ItemRenderer.renderItemIn2D(Tessellator.instance, kitsuneIcon.maxU, kitsuneIcon.minV, kitsuneIcon.minU, kitsuneIcon.maxV, kitsuneIcon.iconWidth, kitsuneIcon.iconHeight, 1F / 32F)
 				} else if (name != "yrsegal" && name != "theLorist" && name != "Tristaric") {
 					// Render the Holy Symbol
 					val armor = event.entityPlayer.getCurrentArmor(2) != null
-					GL11.glRotatef(180F, 1F, 0F, 0F)
-					GL11.glTranslatef(-0.26F, -0.4F, if (armor) 0.21F else 0.15F)
-					scale(0.5F)
+					glRotatef(180F, 1F, 0F, 0F)
+					glTranslatef(-0.26F, -0.4F, if (armor) 0.21F else 0.15F)
+					glScaled(0.5)
 					ItemRenderer.renderItemIn2D(Tessellator.instance, defaultIcon.maxU, defaultIcon.minV, defaultIcon.minU, defaultIcon.maxV, defaultIcon.iconWidth, defaultIcon.iconHeight, 1F / 32F)
 				}
 			}

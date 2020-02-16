@@ -1,10 +1,12 @@
 package alfheim.client.render.entity
 
+import alfheim.client.core.util.*
 import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.common.core.util.F
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.item.ItemStack
+import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.item.ModItems
@@ -13,6 +15,8 @@ import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 object RenderEntitysLeftHand {
 	
 	fun render(e: RenderPlayerEvent.Specials.Pre) {
+		if (e.entityPlayer.isInvisible || e.entityPlayer.isInvisibleToPlayer(mc.thePlayer) || e.entityPlayer.isPotionActive(Potion.invisibility)) return
+		
 		renderLeftArm(e) {
 			when (e.entityPlayer.commandSenderName) {
 				"AlexSocol" -> renderRoyalStaff(e)
@@ -23,19 +27,17 @@ object RenderEntitysLeftHand {
 	
 	private fun renderLeftArm(e: RenderPlayerEvent.Specials.Pre, render: (RenderPlayerEvent.Specials.Pre) -> Unit) {
 		glPushMatrix()
-		var f1: Float
 		
 		if (e.renderer.mainModel.isChild) {
-			f1 = 0.5f
 			glTranslatef(0f, 0.625f, 0f)
 			glRotatef(-20f, -1f, 0f, 0f)
-			glScalef(f1, f1, f1)
+			glScaled(0.5)
 		}
 		
 		e.renderer.modelBipedMain.bipedLeftArm.postRender(0.0625f)
 		glTranslatef(-0.0625f, 0.4375f, 0.0625f)
 		
-		f1 = 0.625f
+		val f1 = 0.625f
 		
 		glTranslatef(0f, 0.1875f, 0f)
 		glScalef(f1, -f1, f1)

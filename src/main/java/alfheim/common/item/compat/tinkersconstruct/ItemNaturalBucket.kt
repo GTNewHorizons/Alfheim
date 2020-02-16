@@ -8,7 +8,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Items
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
@@ -84,7 +84,8 @@ class ItemNaturalBucket: ItemMod("NaturalBucket") {
 	
 	override fun getSubItems(b: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in icons.indices)
-			list.add(ItemStack(b, 1, i))
+			if (TinkersConstructAlfheimModule.naturalFluidBlocks[i] !== Blocks.flowing_water)
+				list.add(ItemStack(b, 1, i))
 	}
 	
 	lateinit var icons: Array<IIcon>
@@ -118,6 +119,8 @@ class ItemNaturalBucket: ItemMod("NaturalBucket") {
 					return
 				
 				val bID = e.world.getBlock(hitX, hitY, hitZ)
+				
+				if (bID === Blocks.flowing_water) return // not getting water if some material is disabled and set as water
 				
 				for (id in TinkersConstructAlfheimModule.naturalFluidBlocks.indices) {
 					if (bID === TinkersConstructAlfheimModule.naturalFluidBlocks[id]) {

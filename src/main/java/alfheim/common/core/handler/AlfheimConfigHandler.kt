@@ -138,6 +138,7 @@ object AlfheimConfigHandler {
 	// MMO HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
+	var spellsFadeOut			= false
 	var targetUI				= true
 	
 	fun loadConfig(suggestedConfigurationFile: File) {
@@ -271,7 +272,9 @@ object AlfheimConfigHandler {
 		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")
+		spellsFadeOut = loadProp(CATEGORY_HUD, "spellsFadeOut", spellsFadeOut, false, "Set this to true to make spell UI fade out when not active")
 		targetUI = loadProp(CATEGORY_HUD, "targethUI", targetUI, false, "Set this to false to hide target's healthbar")
+		
 		
 		if (config.hasChanged()) {
 			config.save()
@@ -395,9 +398,10 @@ object AlfheimConfigHandler {
 	private fun makeVectorOfLengthRotated(length: Int, angle: Double) =
 		Vector3(cos(Math.toRadians(angle)) * length, 64.0, sin(Math.toRadians(angle)) * length)
 	
-	fun readModes() {
+	fun readModes(): Boolean {
 		val f = File("config/Alfheim/ElvenStoryMode.cfg")
-		if (!f.exists()) return
+		if (!f.exists()) return false
+		
 		try {
 			val fr = FileReader(f)
 			val br = BufferedReader(fr)
@@ -424,10 +428,12 @@ object AlfheimConfigHandler {
 				}
 			} else
 				throw IllegalArgumentException(String.format("Unknown param value for ESM mode: %s", flags[0]))
+			
+			return true
 		} catch (e: IOException) {
 			e.printStackTrace()
+			return false
 		}
-		
 	}
 	
 	fun writeModes() {

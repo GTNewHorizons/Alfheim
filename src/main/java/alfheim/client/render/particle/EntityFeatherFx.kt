@@ -1,7 +1,7 @@
 package alfheim.client.render.particle
 
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.particle.EntityFX
@@ -97,17 +97,17 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 		glPopMatrix()
 	}
 	
-	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) {
+	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) { // FIXME size
 		val scale = 0.05f
 		glTranslatef(x.toFloat(), y.toFloat(), z.toFloat())
 		glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)
 		glRotatef(RenderManager.instance.playerViewX, 1.0f, 0.0f, 0.0f)
 		glRotatef(180f, 0f, 0f, 1f)
-		glTranslatef(-0.01f, -0.01f, -0.01f)
+		glTranslatef(-0.01f)
 		glRotatef(rotation, 0f, 0f, 1f)
-		glTranslatef(0.01f, 0.01f, 0.01f)
-		glScalef(scale, scale, scale)
-		glScalef(particleScale, particleScale, particleScale)
+		glTranslatef(0.01f)
+		glScalef(scale)
+		glScalef(particleScale)
 		Tessellator.instance.setColorRGBA_F(particleRed, particleGreen, particleBlue, particleAlpha * 0.85f)
 		Tessellator.instance.addVertexWithUV(-1.0, -1.0, 0.0, 0.0, 0.0)
 		Tessellator.instance.addVertexWithUV(-1.0, 1.0, 0.0, 0.0, 1.0)

@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.client.core.util.glScaled
 import alfheim.common.core.util.*
 import alfheim.common.entity.EntityThrownPotion
 import alfheim.common.item.AlfheimItems
@@ -24,7 +25,7 @@ object RenderEntityThrownPotion: Render() {
             glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			
-            glScalef(0.5f, 0.5f, 0.5f)
+            glScaled(0.5)
             bindEntityTexture(p_76986_1_)
             val tessellator = Tessellator.instance
 			func_77026_a(tessellator, iicon, -1)

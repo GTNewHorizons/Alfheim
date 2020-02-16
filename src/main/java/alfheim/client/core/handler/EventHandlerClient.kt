@@ -11,7 +11,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
@@ -214,7 +214,7 @@ object EventHandlerClient {
 					glTranslated(0.0, -(1.5 + mc.thePlayer.eyeHeight), 0.0)
 				}
 				glRotated((mc.theWorld.totalWorldTime + mc.timer.renderPartialTicks).D, 0.0, 1.0, 0.0)
-				glScalef(target.width, target.width, target.width)
+				glScalef(target.width)
 				ASJRenderHelper.glColor1u(if (PlayerSegmentClient.isParty) -0xff0100 else -0x10000)
 				mc.renderEngine.bindTexture(LibResourceLocations.cross)
 				Tessellator.instance.startDrawingQuads()

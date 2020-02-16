@@ -824,4 +824,15 @@ object AlfheimHookHandler {
 	fun `FXWisp$init`(fx: FXWisp, world: World?, d: Double, d1: Double, d2: Double, size: Float, red: Float, green: Float, blue: Float, distanceLimit: Boolean, depthTest: Boolean, maxAgeMul: Float) {
 		fx.noClip = wispNoclip
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun isInvisibleToPlayer(player: EntityPlayer, other: EntityPlayer, @ReturnValue result: Boolean): Boolean {
+		if (result && AlfheimCore.enableMMO) {
+			if (CardinalSystem.PartySystem.getParty(player).isMember(other)) return false
+		}
+		
+		return result
+	}
 }

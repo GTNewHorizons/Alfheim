@@ -1,12 +1,14 @@
 package alfmod.client.render.model
 
+import alfheim.client.core.util.glScaled
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.monster.*
 import net.minecraft.util.MathHelper
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 
 /** Thaumic Fortress Armor model by @Azanor  */
+@Suppress("PropertyName")
 class ModelSnowArmor(f: Float): ModelBiped(f, 0f, 128, 64) {
 	
 	var Helmet: ModelRenderer
@@ -443,26 +445,26 @@ class ModelSnowArmor(f: Float): ModelBiped(f, 0f, 128, 64) {
 		
 		if (isChild) {
 			val var11 = 2f
-			GL11.glPushMatrix()
-			GL11.glScalef(1.5f / var11, 1.5f / var11, 1.5f / var11)
-			GL11.glTranslatef(0f, 16f * f5, 0f)
+			glPushMatrix()
+			glScalef(1.5f / var11, 1.5f / var11, 1.5f / var11)
+			glTranslatef(0f, 16f * f5, 0f)
 			bipedHead.render(f5)
-			GL11.glPopMatrix()
-			GL11.glPushMatrix()
-			GL11.glScalef(1f / var11, 1f / var11, 1f / var11)
-			GL11.glTranslatef(0f, 24f * f5, 0f)
+			glPopMatrix()
+			glPushMatrix()
+			glScalef(1f / var11, 1f / var11, 1f / var11)
+			glTranslatef(0f, 24f * f5, 0f)
 			bipedBody.render(f5)
 			bipedRightArm.render(f5)
 			bipedLeftArm.render(f5)
 			bipedRightLeg.render(f5)
 			bipedLeftLeg.render(f5)
 			bipedHeadwear.render(f5)
-			GL11.glPopMatrix()
+			glPopMatrix()
 		} else {
-			GL11.glPushMatrix()
-			GL11.glScalef(1.01f, 1.01f, 1.01f)
+			glPushMatrix()
+			glScaled(1.01)
 			bipedHead.render(f5)
-			GL11.glPopMatrix()
+			glPopMatrix()
 			bipedBody.render(f5)
 			bipedRightArm.render(f5)
 			bipedLeftArm.render(f5)

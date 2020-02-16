@@ -29,16 +29,20 @@ object AlfheimAchievements {
 	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
 	
+	val newChance: Achievement // gain race nullifier			G
+	
 	val flugelKill: Achievement // kill hardmode flugel			F
 	val outstander: Achievement // live 3 minutes in mask		O
 	
-	//                 |
-	//    W  I          |
-	//          B       |
-	//     A S M E      |
-	//        F U       |
-	//                  |
-	//         O        |
+	// ---------------> X
+	// |
+	// |    W  I
+	// |          B
+	// |     A S M E
+	// |        F U
+	// |       G
+	// |         O
+	// Y
 	
 	init {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
@@ -48,6 +52,8 @@ object AlfheimAchievements {
 		
 		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
 		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
+		
+		newChance = AlfheimAchievement("newChance", 2, 2, AlfheimItems.raceNullifier, flugelKill)
 		
 		excaliber = AlfheimAchievement("excaliber", 6, 0, AlfheimItems.excaliber, mask)
 		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)

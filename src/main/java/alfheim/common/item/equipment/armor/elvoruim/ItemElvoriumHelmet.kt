@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -144,7 +144,7 @@ open class ItemElvoriumHelmet(name: String): ItemElvoriumArmor(0, name), IAncien
 				glRotated(90.0, 0.0, 1.0, 0.0)
 				glRotated(180.0, 1.0, 0.0, 0.0)
 				glTranslated(-0.26, 0.15, -0.39)
-				glScaled(0.5, 0.5, 0.5)
+				glScaled(0.5)
 				ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, willIcon.iconWidth, willIcon.iconHeight, 1f / 16f)
 				glPopMatrix()
 			}

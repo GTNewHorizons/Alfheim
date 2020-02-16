@@ -5,7 +5,7 @@ import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.render.entity.RenderEntityFlugel
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -55,7 +55,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 			glRotated((leftarm.rotateAngleY * (180f / Math.PI.F)).D, 0.0, 1.0, 0.0)
 			glRotated((leftarm.rotateAngleX * (180f / Math.PI.F)).D, 1.0, 0.0, 0.0)
 			var s = 0.01
-			glScaled(s, s, s)
+			glScaled(s)
 			
 			glPushMatrix()
 			glTranslated(19.0, -5.0, font.getStringWidth("01") / -2.0)
@@ -68,7 +68,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 			glRotated(-90.0, 0.0, 1.0, 0.0)
 			
 			s = 0.175
-			glScaled(s, s, s)
+			glScaled(s)
 			font.drawString("Hatsune Miku.", 0, 0, 0xFF0000)
 			glPopMatrix()
 			
@@ -147,11 +147,11 @@ class ModelEntityFlugel: ModelBipedNew() {
 		glRotatef(rz, 0f, 0f, 1f)
 		glRotatef(rx, 1f, 0f, 0f)
 		glRotatef(ry, 0f, 1f, 0f)
-		glScalef(s, s, s)
+		glScalef(s)
 		if (color != -0x1) glScaled(1.0, 1.0, 0.5)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 32f)
 		if (color != -0x1) glScaled(1.0, 1.0, 2.0)
-		glScalef(sr, sr, sr)
+		glScalef(sr)
 		glRotatef(-ry, 0f, 1f, 0f)
 		glRotatef(-rx, 1f, 0f, 0f)
 		glRotatef(-rz, 0f, 0f, 1f)
@@ -160,11 +160,11 @@ class ModelEntityFlugel: ModelBipedNew() {
 		glRotatef(rz, 0f, 0f, 1f)
 		glRotatef(rx, 1f, 0f, 0f)
 		glRotatef(ry, 0f, 1f, 0f)
-		glScalef(s, s, s)
+		glScalef(s)
 		if (color != -0x1) glScaled(1.0, 1.0, 0.5)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 32f)
 		if (color != -0x1) glScaled(1.0, 1.0, 2.0)
-		glScalef(sr, sr, sr)
+		glScalef(sr)
 		glRotatef(-ry, 1f, 0f, 0f)
 		glRotatef(-rx, 1f, 0f, 0f)
 		glRotatef(-rz, 0f, 0f, 1f)

@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
@@ -40,7 +40,7 @@ open class ItemPendant(name: String): ItemBauble(name), IBaubleRender {
 			glPushMatrix()
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.25, -0.4, if (armor) 0.21 else 0.14)
-			glScaled(0.5, 0.5, 0.5)
+			glScaled(0.5)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 32f)
 			glPopMatrix()
 		}

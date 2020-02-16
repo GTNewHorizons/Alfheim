@@ -9,8 +9,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
-import net.minecraftforge.fluids.Fluid
+import net.minecraftforge.fluids.*
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent
 import tconstruct.library.TConstructRegistry
 import tconstruct.library.client.TConstructClientRegistry
@@ -27,20 +28,20 @@ import vazkii.botania.common.lib.LibOreDict
 
 object TinkersConstructAlfheimModule {
 	
-	val liquidElvorium: Fluid
-	val liquidElvoriumBlock: Block
+	lateinit var liquidElvorium: Fluid
+	lateinit var liquidElvoriumBlock: Block
 	
-	val liquidElementium: Fluid
-	val liquidElementiumBlock: Block
+	lateinit var liquidElementium: Fluid
+	lateinit var liquidElementiumBlock: Block
 	
-	val liquidManasteel: Fluid
-	val liquidManasteelBlock: Block
+	lateinit var liquidManasteel: Fluid
+	lateinit var liquidManasteelBlock: Block
 	
-	val liquidMauftrium: Fluid
-	val liquidMauftriumBlock: Block
+	lateinit var liquidMauftrium: Fluid
+	lateinit var liquidMauftriumBlock: Block
 	
-	val liquidTerrasteel: Fluid
-	val liquidTerrasteelBlock: Block
+	lateinit var liquidTerrasteel: Fluid
+	lateinit var liquidTerrasteelBlock: Block
 	
 	val naturalFluids: Array<Fluid>
 	val naturalFluidBlocks: Array<Block>
@@ -56,23 +57,52 @@ object TinkersConstructAlfheimModule {
 	
 	init {
 		// fuck you Forge and your fluid names lowercasing
-		liquidElementium = registerSmelteryFluid("elementium", ModBlocks.storage, 2)
-		liquidElementiumBlock = liquidElementium.block
 		
-		liquidElvorium = registerSmelteryFluid("elvorium", AlfheimBlocks.alfStorage, 0)
-		liquidElvoriumBlock = liquidElvorium.block
+		val nfs = ArrayList<Fluid>()
+		val nfbs = ArrayList<Block>()
 		
-		liquidManasteel = registerSmelteryFluid("manasteel", ModBlocks.storage, 0)
-		liquidManasteelBlock = liquidManasteel.block
+		if (AlfheimConfigHandler.materialIDs[0] != -1) {
+			liquidElementium = registerSmelteryFluid("elementium", ModBlocks.storage, 2).also { nfs.add(it) }
+			liquidElementiumBlock = liquidElementium.block.also { nfbs.add(it) }
+		} else {
+			nfs.add(FluidRegistry.WATER)
+			nfbs.add(Blocks.flowing_water)
+		}
 		
-		liquidMauftrium = registerSmelteryFluid("mauftrium", AlfheimBlocks.alfStorage, 1)
-		liquidMauftriumBlock = liquidMauftrium.block
+		if (AlfheimConfigHandler.materialIDs[1] != -1) {
+			liquidElvorium = registerSmelteryFluid("elvorium", AlfheimBlocks.alfStorage, 0).also { nfs.add(it) }
+			liquidElvoriumBlock = liquidElvorium.block.also { nfbs.add(it) }
+		} else {
+			nfs.add(FluidRegistry.WATER)
+			nfbs.add(Blocks.flowing_water)
+		}
 		
-		liquidTerrasteel = registerSmelteryFluid("terrasteel", ModBlocks.storage, 1)
-		liquidTerrasteelBlock = liquidTerrasteel.block
+		if (AlfheimConfigHandler.materialIDs[2] != -1) {
+			liquidManasteel = registerSmelteryFluid("manasteel", ModBlocks.storage, 0).also { nfs.add(it) }
+			liquidManasteelBlock = liquidManasteel.block.also { nfbs.add(it) }
+		} else {
+			nfs.add(FluidRegistry.WATER)
+			nfbs.add(Blocks.flowing_water)
+		}
 		
-		naturalFluids = arrayOf(liquidElementium, liquidElvorium, liquidManasteel, liquidMauftrium, liquidTerrasteel)
-		naturalFluidBlocks = arrayOf(liquidElementiumBlock, liquidElvoriumBlock, liquidManasteelBlock, liquidMauftriumBlock, liquidTerrasteelBlock)
+		if (AlfheimConfigHandler.materialIDs[3] != -1) {
+			liquidMauftrium = registerSmelteryFluid("mauftrium", AlfheimBlocks.alfStorage, 1).also { nfs.add(it) }
+			liquidMauftriumBlock = liquidMauftrium.block.also { nfbs.add(it) }
+		} else {
+			nfs.add(FluidRegistry.WATER)
+			nfbs.add(Blocks.flowing_water)
+		}
+		
+		if (AlfheimConfigHandler.materialIDs[4] != -1) {
+			liquidTerrasteel = registerSmelteryFluid("terrasteel", ModBlocks.storage, 1).also { nfs.add(it) }
+			liquidTerrasteelBlock = liquidTerrasteel.block.also { nfbs.add(it) }
+		} else {
+			nfs.add(FluidRegistry.WATER)
+			nfbs.add(Blocks.flowing_water)
+		}
+		
+		naturalFluids = nfs.toTypedArray()
+		naturalFluidBlocks = nfbs.toTypedArray()
 		
 		naturalBucket = ItemNaturalBucket()
 		naturalMaterial = ItemNaturalMaterial()

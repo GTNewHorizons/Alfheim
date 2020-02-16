@@ -1,6 +1,7 @@
 package alfheim.client.render.block
 
 import alfheim.api.lib.LibRenderIDs
+import alfheim.client.core.util.glTranslated
 import alfheim.common.block.tile.TileTransferer
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
@@ -13,8 +14,7 @@ object RenderBlockTransferer: ISimpleBlockRenderingHandler {
 	
 	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
 		glPushMatrix()
-		glTranslated(-0.5, -0.5, -0.5)
-		
+		glTranslated(-0.5)
 		val spreader = TileTransferer()
 		spreader.rotX = -180f
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(spreader, 0.0, 0.0, 0.0, 0f)

@@ -4,7 +4,7 @@ import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
@@ -59,7 +59,7 @@ object RenderWings {
 			glPushMatrix()
 			glTranslated(-0.25, 0.25, 0.15)
 			val si = 0.5
-			glScaled(si, si, si)
+			glScaled(si)
 			drawRect(getPlayerIconTexture(player), 0)
 			glPopMatrix()
 		}
@@ -73,7 +73,7 @@ object RenderWings {
 		glPushMatrix()
 		glTranslated(0.15, 0.1, 0.15)
 		val swr = 1.5
-		glScaled(swr, swr, swr)
+		glScaled(swr)
 		//glRotated(10, 0, 0, 1);
 		glRotated((-ry).D, 0.0, 1.0, 0.0)
 		getPlayerWingTexture(player)?.let { drawRect(it, -1) }

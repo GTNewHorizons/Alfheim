@@ -1,6 +1,6 @@
 package alfheim.client.model.entity
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.EntityLolicorn
 import net.minecraft.client.model.*
@@ -402,9 +402,9 @@ class ModelEntityLolicorn: ModelBase() {
 		glRotatef(rz, 0f, 0f, 1f)
 		glRotatef(ry, 0f, 1f, 0f)
 		glRotatef(rx, 1f, 0f, 0f)
-		glScalef(s, s, s)
+		glScalef(s)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f0, f, f2, icon.iconWidth, icon.iconHeight, 1f / 32f)
-		glScalef(sr, sr, sr)
+		glScalef(sr)
 		glRotatef(-rx, 1f, 0f, 0f)
 		glRotatef(-ry, 0f, 1f, 0f)
 		glRotatef(-rz, 0f, 0f, 1f)
@@ -415,9 +415,9 @@ class ModelEntityLolicorn: ModelBase() {
 		glRotatef(rz, 0f, 0f, 1f)
 		glRotatef(ry, 0f, 1f, 0f)
 		glRotatef(rx, 1f, 0f, 0f)
-		glScalef(s, s, s)
+		glScalef(s)
 		ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f0, f, f2, icon.iconWidth, icon.iconHeight, 1f / 32f)
-		glScalef(sr, sr, sr)
+		glScalef(sr)
 		glRotatef(-rx, 1f, 0f, 0f)
 		glRotatef(-ry, 1f, 0f, 0f)
 		glRotatef(-rz, 0f, 0f, 1f)

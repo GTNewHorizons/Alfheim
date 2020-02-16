@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import baubles.api.BaubleType
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -30,7 +30,7 @@ class ItemThinkingHand: ItemBauble("ThinkingHand"), ICosmeticBauble {
 			glRotated(90.0, 0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.4, 0.1, -0.1175)
-			glScaled(0.495, 0.495, 0.495)
+			glScaled(0.495)
 			glTranslated(0.4, -0.7, -0.27)
 			glRotated(15.0, 0.0, 0.0, -1.0)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, itemIcon.maxU, itemIcon.minV, itemIcon.minU, itemIcon.maxV, itemIcon.iconWidth, itemIcon.iconHeight, 1f / 16f)

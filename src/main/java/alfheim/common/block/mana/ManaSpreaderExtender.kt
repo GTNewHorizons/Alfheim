@@ -2,7 +2,7 @@ package alfheim.common.block.mana
 
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
@@ -187,10 +187,10 @@ object ManaSpreaderExtender {
 			var s = 1.15f
 			val t = s - 1
 			glTranslatef(0f, -t, 0f)
-			glScalef(s, s, s)
+			glScalef(s)
 			ModelSpreaderFrame.render()
 			s = 1 / s
-			glScalef(s, s, s)
+			glScalef(s)
 			glTranslatef(0f, t, 0f)
 			
 			modelHook = false

@@ -8,7 +8,8 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
-import org.lwjgl.opengl.*
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12
 
 object RenderEntitySubspaceSpear: Render() {
 	
@@ -17,22 +18,22 @@ object RenderEntitySubspaceSpear: Render() {
 	
 	override fun doRender(weapon: Entity, d0: Double, d1: Double, d2: Double, par8: Float, par9: Float) {
 		weapon as EntitySubspaceSpear
-		GL11.glPushMatrix()
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL)
-		GL11.glColor4f(1f, 1f, 1f, 1f)
-		GL11.glTranslated(d0, d1, d2)
-		GL11.glTranslatef(0f, -1f, 0f)
-		GL11.glTranslatef(0f, 1f, 0f)
-		GL11.glRotatef(weapon.rotation, 0f, 1f, 0f)
-		GL11.glRotatef(90f, 1f, 0f, 0f)
-		GL11.glRotatef(weapon.pitch, 1f, 0f, 0f)
+		glPushMatrix()
+		glEnable(GL12.GL_RESCALE_NORMAL)
+		glColor4f(1f, 1f, 1f, 1f)
+		glTranslated(d0, d1, d2)
+		glTranslatef(0f, -1f, 0f)
+		glTranslatef(0f, 1f, 0f)
+		glRotatef(weapon.rotation, 0f, 1f, 0f)
+		glRotatef(90f, 1f, 0f, 0f)
+		glRotatef(weapon.pitch, 1f, 0f, 0f)
 		mc.renderEngine.bindTexture(SPEAR_TEXTURES)
-		GL11.glScalef(1f, -1f, -1f)
+		glScalef(1f, -1f, -1f)
 		model.render(0.07f)
-		GL11.glColor3f(1f, 1f, 1f)
-		GL11.glScalef(1f, -1f, -1f)
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL)
-		GL11.glPopMatrix()
+		glColor3f(1f, 1f, 1f)
+		glScalef(1f, -1f, -1f)
+		glEnable(GL12.GL_RESCALE_NORMAL)
+		glPopMatrix()
 	}
 	
 	override fun getEntityTexture(entity: Entity) = TextureMap.locationBlocksTexture!!

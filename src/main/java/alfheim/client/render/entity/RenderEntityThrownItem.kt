@@ -1,5 +1,6 @@
 package alfheim.client.render.entity
 
+import alfheim.client.core.util.glScaled
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.Tessellator
@@ -7,7 +8,8 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity
 import net.minecraft.util.IIcon
-import org.lwjgl.opengl.*
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL12
 
 /**
  * Created by l0nekitsune on 1/20/16.
@@ -18,15 +20,15 @@ object RenderEntityThrownItem: Render() {
         //val c = p_76986_1_ as EntityThrowableItem
         val iicon = AlfheimItems.fireGrenade.getIconFromDamage(0) // c.event.itemStack.item.getIconFromDamage(c.event.itemStack.meta)
         if (iicon != null) {
-            GL11.glPushMatrix()
-            GL11.glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL)
-            GL11.glScalef(0.5f, 0.5f, 0.5f)
+            glPushMatrix()
+            glTranslatef(p_76986_2_.F, p_76986_4_.F, p_76986_6_.F)
+            glEnable(GL12.GL_RESCALE_NORMAL)
+            glScaled(0.5)
             bindEntityTexture(p_76986_1_)
             val tessellator = Tessellator.instance
             func_77026_a(tessellator, iicon, -1)
-            GL11.glDisable(GL12.GL_RESCALE_NORMAL)
-            GL11.glPopMatrix()
+            glDisable(GL12.GL_RESCALE_NORMAL)
+            glPopMatrix()
         }
 	}
 	
@@ -40,8 +42,8 @@ object RenderEntityThrownItem: Render() {
 		val f4 = 1f
 		val f5 = 0.5f
 		val f6 = 0.25f
-		GL11.glRotatef(180f - renderManager.playerViewY, 0f, 1f, 0f)
-		GL11.glRotatef(-renderManager.playerViewX, 1f, 0f, 0f)
+		glRotatef(180f - renderManager.playerViewY, 0f, 1f, 0f)
+		glRotatef(-renderManager.playerViewX, 1f, 0f, 0f)
 		p_77026_1_.startDrawingQuads()
 		p_77026_1_.setNormal(0f, 1f, 0f)
 		if (light != -1) {

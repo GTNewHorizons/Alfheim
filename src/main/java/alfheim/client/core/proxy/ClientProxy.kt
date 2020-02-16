@@ -155,9 +155,9 @@ class ClientProxy: CommonProxy() {
 		}
 	}
 	
-	override fun bloodFX(world: World, x: Double, y: Double, z: Double, lifetime: Int, size: Float) {
+	override fun bloodFX(world: World, x: Double, y: Double, z: Double, lifetime: Int, size: Float, gravity: Float) {
 		if (mc.renderViewEntity != null && mc.effectRenderer != null && doParticle(world)) {
-			mc.effectRenderer.addEffect(EntityBloodFx(world, x, y, z, size, lifetime))
+			mc.effectRenderer.addEffect(EntityBloodFx(world, x, y, z, size, lifetime, gravity))
 		}
 	}
 	

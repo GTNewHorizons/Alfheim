@@ -3,7 +3,7 @@ package alfheim.client.model.armor
 import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.entity.Entity
@@ -42,7 +42,7 @@ class ModelElvoriumArmor
 		if (partType == 0) {
 			val s = 0.01
 			glTranslatef(0f, -0.75f, 0f)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("Head")
 		}
 	}
@@ -52,12 +52,12 @@ class ModelElvoriumArmor
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(0.0, -0.75, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("Body")
 		} else if (partType == 2) {
 			val s = 0.01
 			glTranslated(0.0, -0.73, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("Belt")
 		}
 	}
@@ -67,7 +67,7 @@ class ModelElvoriumArmor
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(0.31, -0.55, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("ArmO")
 		}
 	}
@@ -77,7 +77,7 @@ class ModelElvoriumArmor
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(-0.31, -0.55, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("ArmT")
 		}
 	}
@@ -87,12 +87,12 @@ class ModelElvoriumArmor
 		if (partType == 2) {
 			val s = 0.01
 			glTranslated(0.125, 0.01, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("pantsO")
 		} else if (partType == 3) {
 			val s = 0.01
 			glTranslated(0.125, 0.0, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("BootO")
 		}
 	}
@@ -102,12 +102,12 @@ class ModelElvoriumArmor
 		if (partType == 2) {
 			val s = 0.01
 			glTranslated(-0.125, 0.01, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("PantsT")
 		} else if (partType == 3) {
 			val s = 0.01
 			glTranslated(-0.125, 0.0, 0.0)
-			glScaled(s, s, s)
+			glScaled(s)
 			model.renderPart("BootT")
 		}
 	}

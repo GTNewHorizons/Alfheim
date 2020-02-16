@@ -5,7 +5,7 @@ import alexsocol.asjlib.render.*
 import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
@@ -57,7 +57,7 @@ class GUIParty: Gui() {
 		glEnable(GL_BLEND)
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		glScaled(s, s, s)
+		glScaled(s)
 		
 		// ################################################################ SELF ################################################################
 		
@@ -389,7 +389,7 @@ class GUIParty: Gui() {
 					glPushMatrix()
 					glTranslated(34.0, (y + 32).D, 0.0)
 					val s2 = 0.5
-					glScaled(s2, s2, s2)
+					glScaled(s2)
 					glColor4d(1.0, 1.0, 1.0, 1.0)
 					
 					var bads = 0
@@ -518,7 +518,7 @@ class GUIParty: Gui() {
 				
 				glPushMatrix()
 				val s2 = 0.5
-				glScaled(s2, s2, s2)
+				glScaled(s2)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				
 				var bads = 0

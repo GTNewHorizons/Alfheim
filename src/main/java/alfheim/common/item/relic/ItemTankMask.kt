@@ -2,7 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper
@@ -131,7 +131,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		glRotated(90.0, 0.0, 1.0, 0.0)
 		glRotated(180.0, 1.0, 0.0, 0.0)
 		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.5, -0.2 * 8/7)
-		glScaled(0.5 * 7.75/7, 0.5 * 7.75/7, 0.5 * 7.75/7)
+		glScaled(0.5 * 7.75 / 7)
 		
 		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)
 		

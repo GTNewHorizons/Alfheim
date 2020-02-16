@@ -3,7 +3,7 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
@@ -30,6 +30,7 @@ import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL11.glScaled
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.handler.ClientTickHandler
@@ -198,7 +199,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			glTranslatef(s * m, -0.75f, 0f)
 			
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
-			glScalef(0.75f, 0.75f, 0.75f)
+			glScaled(0.75)
 			glTranslatef(0f, 0f, 0.5f)
 			val icon = signs[seg]
 			glRotatef(90f, 0f, 1f, 0f)

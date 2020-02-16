@@ -8,6 +8,7 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient
 import alfheim.client.core.util.mc
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.gui.Gui
@@ -16,13 +17,21 @@ import net.minecraft.util.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import org.lwjgl.opengl.GL11.*
-import kotlin.math.min
+import kotlin.math.*
 
 class GUISpells: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
 		if (e.type != ElementType.HOTBAR) return
+		
+		if (AlfheimConfigHandler.spellsFadeOut)
+			fadeOut--
+		else
+			fadeOut = 1f
+		
+		val fadeOut = min(1f, fadeOut)
+		
 		glPushMatrix()
 		glTranslated(-1.0, -1.0, 0.0)
 		
@@ -48,7 +57,7 @@ class GUISpells: Gui() {
 			}
 		}
 		
-		glColor4d(1.0, 1.0, 1.0, 1.0)
+		glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 		glEnable(GL_ALPHA_TEST)
 		
 		glPushMatrix()
@@ -76,7 +85,7 @@ class GUISpells: Gui() {
 		glPushMatrix()
 		glTranslated(24.0, (height - 40).D, 0.0)
 		for (i in 0 until min(count, 5)) {
-			if (i != pos) glColor4d(1.0, 1.0, 1.0, 0.5) else glColor4d(1.0, 1.0, 1.0, 1.0)
+			if (i != pos) glColor4d(1.0, 1.0, 1.0, 0.5 * fadeOut) else glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 			
 			var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
 			
@@ -117,12 +126,14 @@ class GUISpells: Gui() {
 			
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) {
 				glDisable(GL_TEXTURE_2D)
-				glColor4d(0.0, 0.0, 0.0, 0.5)
+				glColor4d(0.0, 0.0, 0.0, 0.5 * fadeOut)
 				drawRect(16)
-				glColor4d(1.0, 1.0, 1.0, 1.0)
+				glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 				glEnable(GL_TEXTURE_2D)
-				val ttt = ticksToTime(SpellCastingSystemClient.getCoolDown(spell))
-				font.drawString(ttt, 2 + (12 - font.getStringWidth(ttt)) / 2, 4, 0xFFFFFF)
+				if (fadeOut > 0) {
+					val ttt = ticksToTime(SpellCastingSystemClient.getCoolDown(spell))
+					font.drawString(ttt, 2 + (12 - font.getStringWidth(ttt)) / 2, 4, 0xFFFFFF)
+				}
 			}
 			
 			glTranslated(20.0, 0.0, 0.0)
@@ -131,7 +142,7 @@ class GUISpells: Gui() {
 		glEnable(GL_TEXTURE_2D)
 		glPopMatrix()
 		
-		glColor4d(1.0, 1.0, 1.0, 1.0)
+		glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 		
 		// ################ Vertical bar ################
 		glPushMatrix()
@@ -151,7 +162,7 @@ class GUISpells: Gui() {
 		glTranslated(4.0, (height - 40).D, 0.0)
 		drawRect(LibResourceLocations.affinities[rID], 16)
 		
-		glColor4d(1.0, 1.0, 1.0, 0.75)
+		glColor4d(1.0, 1.0, 1.0, 0.75 * fadeOut)
 		
 		glTranslated(0.0, 20.0, 0.0)
 		var nrID = rID - 1
@@ -162,17 +173,20 @@ class GUISpells: Gui() {
 		nrID = rID + 1
 		nrID = if (nrID > 9) 1 else nrID
 		drawRect(LibResourceLocations.affinities[nrID], 16)
-		glColor4d(1.0, 1.0, 1.0, 1.0)
+		glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 		glPopMatrix()
 		
 		// ################ Spell name ################
+		
 		var spell = AlfheimAPI.getSpellByIDs(KeyBindingHandlerClient.raceID, KeyBindingHandlerClient.spellID)
-		font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.D)), true)
+		if (fadeOut > 0) {
+			font.drawString(StatCollector.translateToLocal("spell." + spell!!.name + ".name"), 24, height - 18, ASJRenderHelper.enumColorToRGB(EnumRace.getEnumColor(KeyBindingHandlerClient.raceID.D)), true)
+		}
 		
 		// ################################################################ HOTSPELLS ################################################################
 		
 		glPushMatrix()
-		glColor4f(1f, 1f, 1f, 1f)
+		glColor4f(1f, 1f, 1f, 1f * fadeOut)
 		mc.renderEngine.bindTexture(LibResourceLocations.hotSpells)
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.addVertexWithUV((width - 22).D, (height / 2 - 121).D, 0.0, 0.0, 0.0)
@@ -187,15 +201,17 @@ class GUISpells: Gui() {
 			glTranslated(0.0, 20.0, 0.0)
 			spell = AlfheimAPI.getSpellByIDs(PlayerSegmentClient.hotSpells[i] shr 28 and 0xF, PlayerSegmentClient.hotSpells[i] and 0xFFFFFFF)
 			if (spell == null) continue
-			glColor4d(1.0, 1.0, 1.0, 1.0)
+			glColor4d(1.0, 1.0, 1.0, 1.0 * fadeOut)
 			drawRect(LibResourceLocations.spell(spell.name), 16)
 			if (SpellCastingSystemClient.getCoolDown(spell) > 0) {
 				glDisable(GL_TEXTURE_2D)
-				glColor4d(0.0, 0.0, 0.0, 0.5)
+				glColor4d(0.0, 0.0, 0.0, 0.5 * fadeOut)
 				drawRect(16)
 				glEnable(GL_TEXTURE_2D)
-				txt = ticksToTime(SpellCastingSystemClient.getCoolDown(spell))
-				font.drawString(txt, 2 + (12 - font.getStringWidth(txt)) / 2, 4, 0xFFFFFF)
+				if (fadeOut > 0) {
+					txt = ticksToTime(SpellCastingSystemClient.getCoolDown(spell))
+					font.drawString(txt, 2 + (12 - font.getStringWidth(txt)) / 2, 4, 0xFFFFFF)
+				}
 			}
 			//txt = StatCollector.translateToLocal("spell." + spell.name + ".name");
 			//font.drawString(txt, -font.getStringWidth(txt) - 4, 4, EnumRace.getRGBColor((PlayerSegmentClient.hotSpells[i] >> 28) & 0xF));
@@ -208,6 +224,12 @@ class GUISpells: Gui() {
 	}
 	
 	companion object {
+		
+		var fadeOut = 5f
+			set(value) {
+				fun clamp(f: Float) = max(0f, f)
+				field = if (value < field) clamp(field - 0.01f) else value
+			}
 		
 		fun ticksToTime(ticks: Int): String {
 			if (ticks < 20) return "\u00a7f$ticks"

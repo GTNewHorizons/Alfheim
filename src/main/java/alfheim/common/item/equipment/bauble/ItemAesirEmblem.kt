@@ -2,7 +2,7 @@ package alfheim.common.item.equipment.bauble
 
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.*
 import baubles.api.BaubleType
@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.util.MathHelper
 import net.minecraftforge.client.event.RenderPlayerEvent
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
@@ -99,9 +99,9 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(player)
 			val armor = player.getCurrentArmor(2) != null
-			GL11.glRotatef(180F, 1F, 0F, 0F)
-			GL11.glTranslatef(-0.26F, -0.4F, if (armor) 0.21F else 0.15F)
-			GL11.glScalef(0.5F, 0.5F, 0.5F)
+			glRotatef(180F, 1F, 0F, 0F)
+			glTranslatef(-0.26F, -0.4F, if (armor) 0.21F else 0.15F)
+			glScalef(0.5f)
 			
 			ItemRenderer.renderItemIn2D(Tessellator.instance, baubleIcon.maxU, baubleIcon.minV, baubleIcon.minU, baubleIcon.maxV, baubleIcon.iconWidth, baubleIcon.iconHeight, 1F / 32F)
 		}

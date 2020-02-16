@@ -3,7 +3,7 @@ package alfheim.client.render.tile
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.client.model.block.ModelSimpleAnyavil
 import alfheim.common.block.tile.TileAnyavil
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -43,7 +43,7 @@ object RenderTileAnyavil: TileEntitySpecialRenderer() {
 		glRotated(90.0, 1.0, 0.0, 0.0)
 		glRotated(135.0, 0.0, 0.0, 1.0)
 		glTranslated(0.0, 0.07, -0.6)
-		glScaled(1.5, 1.5, 1.5)
+		glScaled(1.5)
 		
 		TileItemContainer.renderItem(tile)
 		glPopMatrix()

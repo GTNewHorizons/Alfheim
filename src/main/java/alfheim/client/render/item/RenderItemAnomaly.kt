@@ -2,6 +2,7 @@ package alfheim.client.render.item
 
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileAnomalyBase
+import alfheim.client.core.util.glScaled
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.entity.player.EntityPlayer
@@ -21,7 +22,7 @@ object RenderItemAnomaly: IItemRenderer {
 	
 	override fun renderItem(type: ItemRenderType, item: ItemStack, vararg data: Any) {
 		if (type == ItemRenderType.ENTITY) {
-			glScaled(2.0, 2.0, 2.0)
+			glScaled(2.0)
 			glTranslated(-0.5, -0.25, -0.5)
 		} else if (type == ItemRenderType.EQUIPPED && data[1] is EntityPlayer) {
 			glTranslated(0.0, 0.0, -0.5)

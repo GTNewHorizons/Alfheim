@@ -53,12 +53,7 @@ class PageMultiblockLearnable(unName: String, internal val setUn: MultiblockSet,
 		
 		val m = if (known()) mb else mbUn
 		
-		val diag = sqrt((m.xSize * m.xSize + m.zSize * m.zSize).D).F
-		val height = m.ySize.F
-		val scaleX = maxX / diag
-		val scaleY = maxY / height
-		val scale = -min(scaleY, scaleX)
-		glScalef(scale, scale, scale)
+		glScalef(-min(maxY / m.ySize.F, maxX / sqrt((m.xSize * m.xSize + m.zSize * m.zSize).D).F))
 		
 		glRotatef(-20f, 1f, 0f, 0f)
 		glRotatef(gui.elapsedTicks, 0f, 1f, 0f)

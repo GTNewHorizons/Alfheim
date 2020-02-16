@@ -1,4 +1,4 @@
-package alfheim.common.block
+package alfmod.common.block
 
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfmod.AlfheimModularCore

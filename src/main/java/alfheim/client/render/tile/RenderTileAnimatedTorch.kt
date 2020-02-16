@@ -1,6 +1,6 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.mc
+import alfheim.client.core.util.*
 import alfheim.common.block.tile.TileAnimatedTorch
 import alfheim.common.core.util.*
 import net.minecraft.client.renderer.Tessellator
@@ -39,7 +39,7 @@ object RenderTileAnimatedTorch: TileEntitySpecialRenderer() {
 		val zt = 0.5 + sin(time * 0.05) * 0.025
 		glTranslated(xt, yt, zt)
 		
-		glScaled(2.0, 2.0, 2.0)
+		glScaled(2.0)
 		glRotated(90.0, 1.0, 0.0, 0.0)
 		
 		var rotation = tile.rotation.F
