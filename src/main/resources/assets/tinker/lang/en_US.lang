@@ -34,3 +34,4 @@ material.Mauftrium.ability=Manarepair | Manaregen
 material.Terrasteel.ability=Manarepair | Manaregen
 
 modifier.tool.manacore=Manarepair
+modifier.toolstation.ManaCore=Mana Core

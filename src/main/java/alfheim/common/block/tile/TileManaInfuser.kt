@@ -31,108 +31,27 @@ import kotlin.math.*
 @Suppress("ConstantConditionIf")
 class TileManaInfuser: TileMod(), ISparkAttachable {
 	
-	internal var mana = 0
-	internal var manaRequest = 0
-	internal var knownMana = -1
-	internal var result: ItemStack? = null
+	var mana = 0
+	var manaRequest = 0
+	var knownMana = -1
+	var result: ItemStack? = null
 	
-	internal val v = Vector3()
+	val v = Vector3()
 	
-	internal val items: List<EntityItem>
+	val items: List<EntityItem>
 		get() = worldObj.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, (yCoord + 1).D, zCoord.D, (xCoord + 1).D, (yCoord + 2).D, (zCoord + 1).D)) as List<EntityItem>
 	
-	internal val isReadyToKillGaia: Boolean
+	val isReadyToKillGaia: Boolean
 		get() = checkPlatform(0, -2, 0, Blocks.beacon, 0) && checkAll(PYLONS, AlfheimBlocks.alfheimPylon, 2)
 	
-	internal var deGaiaingTime = 0
-	internal var soulParticlesTime = 0
+	var deGaiaingTime = 0
+	var soulParticlesTime = 0
 	
 	override fun updateEntity() {
 		if (isReadyToKillGaia) {
 			if (--soulParticlesTime > 0) soulParticles()
 			if(--deGaiaingTime > 0) return
 		}
-		
-		/*run gaia@{
-			if (isReadyToKillGaia) {
-				
-				run boom@{
-					val l = worldObj.getEntitiesWithinAABB(EntityDoppleganger::class.java, AxisAlignedBB.getBoundingBox(xCoord.D, yCoord + 1.0, zCoord.D, xCoord + 1.0, yCoord + 3.0, zCoord + 1.0))
-					
-					if (l.isNotEmpty()) {
-						if (l.size > 1)
-							return@boom
-						
-						if (blockMetadata != 2) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3)
-						
-						val dop = l[0] as EntityDoppleganger
-						val hard = dop.isHardMode
-						
-						if (targetUUID?.equals(dop.entityUniqueID) == false)
-							return@boom
-						
-						targetUUID = dop.entityUniqueID
-						targetID = dop.entityId
-						
-						if (dop.invulTime <= 0) {
-							soulParticles()
-							boom = 7
-							dop.health = dop.health - 10
-							
-							if (dop.health <= 0) {
-								dop.setDead()
-								if (dop.isEntityAlive) return@boom
-							} else
-								return
-							
-							val te = worldObj.getTileEntity(xCoord, yCoord + 3, zCoord)
-							
-							if (te is TileBrewery) {
-								
-								if (te.getStackInSlot(0) != null && te.getStackInSlot(0).item === AlfheimItems.flugelSoul) {
-									if (ItemFlugelSoul.getBlocked(te.getStackInSlot(0)) > 0) {
-										boom = 10
-										if (hard || Math.random() > 0.5) {
-											ItemFlugelSoul.setDisabled(te.getStackInSlot(0), ItemFlugelSoul.getBlocked(te.getStackInSlot(0)), false)
-											targetUUID = null
-										}
-										else
-											return@boom
-										doneParticles()
-										return@gaia
-									}
-								}
-							} else
-								return@boom
-						} else {
-							if (worldObj.totalWorldTime % 5 == 0L) prepareParticles()
-							return
-						}
-					} else {
-						if (targetUUID != null) {
-							boom = 10
-							return@boom
-						}
-						
-						if (blockMetadata != 0) worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-						return@gaia
-					}
-				}
-				
-				// boom
-				worldObj.newExplosion(null, xCoord.D, yCoord.D, zCoord.D, boom.F, true, false)
-				worldObj.setBlockToAir(xCoord, yCoord, zCoord)
-				
-				if (targetID != -1) {
-					val dop = worldObj.getEntityByID(targetID) as? EntityDoppleganger ?: return
-					
-					dop.health = dop.maxHealth
-				}
-				
-				targetUUID = null
-				return
-			}
-		}*/
 		
 		var removeMana = true
 		
@@ -351,17 +270,19 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		super.writeCustomNBT(nbt)
 		nbt.setInteger(TAG_MANA, mana)
 		nbt.setInteger(TAG_MANA_REQUIRED, manaRequest)
-		nbt.setInteger(TAG_KNOWN_MANA, knownMana)
 		nbt.setInteger(TAG_DEGAIAING, deGaiaingTime)
 		nbt.setInteger(TAG_SOUL_EFFECT, soulParticlesTime)
+		// nbt.setInteger(TAG_KNOWN_MANA, knownMana)
 	}
 	
 	override fun readCustomNBT(nbt: NBTTagCompound) {
 		super.readCustomNBT(nbt)
 		mana = nbt.getInteger(TAG_MANA)
-		knownMana = nbt.getInteger(TAG_KNOWN_MANA)
 		deGaiaingTime = nbt.getInteger(TAG_DEGAIAING)
 		soulParticlesTime = nbt.getInteger(TAG_SOUL_EFFECT)
+		
+		if (nbt.hasKey(TAG_KNOWN_MANA))
+			knownMana = nbt.getInteger(TAG_KNOWN_MANA)
 	}
 	
 	override fun getCurrentMana() = mana

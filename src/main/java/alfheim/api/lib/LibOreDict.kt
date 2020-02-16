@@ -4,7 +4,7 @@ object LibOreDict {
 	
 	const val DRAGON_ORE = "oreDragonstone"
 	const val ELEMENTIUM_ORE = "oreElementium"
-	const val ELVEN_QUARTZ_ORE = "oreElvenQuartz"
+	const val ELVEN_QUARTZ_ORE = "oreQuartzElven"
 	const val GOLD_ORE = "oreGold"
 	const val IFFESAL_ORE = "oreIffesal"
 	const val ELVORIUM_INGOT = "ingotElvorium"
@@ -41,6 +41,7 @@ object LibOreDict {
 	const val RAINBOW_FLOWER = "mysticFlowerRainbow"
 	const val RAINBOW_DOUBLE_FLOWER = "${RAINBOW_FLOWER}Double"
 	const val RAINBOW_QUARTZ = "quartzRainbow"
+	const val RAINBOW_QUARTZ_BLOCK = "blockQuartzRainbow"
 	
 	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated")
 	

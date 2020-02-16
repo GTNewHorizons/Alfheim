@@ -10,10 +10,11 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.passive.EntitySheep
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.*
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
 import vazkii.botania.api.internal.IManaBurst
@@ -26,6 +27,7 @@ import kotlin.math.*
 class TileAnyavil: TileItemContainer(), ISidedInventory {
 	
 	var pinkCharge = 0
+	var knownMana = -1
 	
 	fun onBurstCollision(burst: IManaBurst, world: World) {
 		val item = item
@@ -67,11 +69,26 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		for (i in 0..23) Botania.proxy.wispFX(world, xCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, yCoord + 1.5, zCoord.D + 0.5 + (worldObj.rand.nextFloat() / 5f - 0.1f).D, col[0], col[1], col[2], 0.25f, 0f, worldObj.rand.nextFloat() * 0.2f - 0.1f, 0f)
 	}
 	
+	fun onWanded(player: EntityPlayer?, wand: ItemStack): Boolean {
+		if (player == null) return false
+		
+		if (!worldObj.isRemote) {
+			val nbttagcompound = NBTTagCompound()
+			writeCustomNBT(nbttagcompound)
+			nbttagcompound.setInteger(TAG_KNOWN_MANA, pinkCharge)
+			if (player is EntityPlayerMP) player.playerNetServerHandler.sendPacket(S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound))
+		}
+		
+		worldObj.playSoundAtEntity(player, "botania:ding", 0.11f, 1f)
+		
+		return true
+	}
+	
 	fun renderHUD(res: ScaledResolution) {
 		val name = ItemStack(AlfheimBlocks.anyavil).displayName
 		val col = EntitySheep.fleeceColorTable[6]
 		val color = Color(col[0], col[1], col[2]).rgb
-		HUDHandler.drawSimpleManaHUD(color, pinkCharge, MAX_PINK_CHARGE, name, res)
+		HUDHandler.drawSimpleManaHUD(color, knownMana, MAX_PINK_CHARGE, name, res)
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -79,12 +96,16 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		nbt.setInteger(TAG_MANA, pinkCharge)
 		nbt.setInteger(TAG_MANA_CAP, MAX_PINK_CHARGE)
 		nbt.setInteger(TAG_METADATA, blockMetadata)
+		// nbt.setInteger(TAG_KNOWN_MANA, knownMana)
 	}
 	
 	override fun readCustomNBT(nbt: NBTTagCompound) {
 		super.readCustomNBT(nbt)
 		pinkCharge = nbt.getInteger(TAG_MANA)
 		blockMetadata = nbt.getInteger(TAG_METADATA)
+		
+		if (nbt.hasKey(TAG_KNOWN_MANA))
+			knownMana = nbt.getInteger(TAG_KNOWN_MANA)
 	}
 	
 	override fun getSizeInventory(): Int {
@@ -169,8 +190,9 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 	companion object {
 		
 		const val MAX_PINK_CHARGE = TilePool.MAX_MANA_DILLUTED
-		private const val TAG_MANA = "mana"
-		private const val TAG_MANA_CAP = "manaCap"
-		private const val TAG_METADATA = "metadata"
+		const val TAG_MANA = "mana"
+		const val TAG_MANA_CAP = "manaCap"
+		const val TAG_METADATA = "metadata"
+		const val TAG_KNOWN_MANA = "knownMana"
 	}
 }

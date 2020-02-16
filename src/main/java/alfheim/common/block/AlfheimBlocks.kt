@@ -26,7 +26,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.api.BotaniaAPI
-import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.block.*
 
 object AlfheimBlocks {
 	
@@ -317,17 +317,23 @@ object AlfheimBlocks {
 		sealingStairs = BlockSealingWoodStairs()
 		sealingWood = BlockSealingWood()
 		
-		regOreDict()
 		registerBurnables()
 		registerFlora()
 	}
 	
-	private fun regOreDict() {
-		registerOre(LibOreDict.DRAGON_ORE, ItemStack(elvenOres, 1, 0))
+	fun regOreDict() {
+		registerOre(LibOreDict.DRAGON_ORE, ItemStack(elvenOres))
 		registerOre(LibOreDict.ELEMENTIUM_ORE, ItemStack(elvenOres, 1, 1))
 		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, ItemStack(elvenOres, 1, 2))
 		registerOre(LibOreDict.GOLD_ORE, ItemStack(elvenOres, 1, 3))
 		registerOre(LibOreDict.IFFESAL_ORE, ItemStack(elvenOres, 1, 4))
+		
+		val quartzs = arrayOf(ModFluffBlocks.darkQuartz, ModFluffBlocks.manaQuartz, ModFluffBlocks.blazeQuartz, ModFluffBlocks.lavenderQuartz, ModFluffBlocks.redQuartz, ModFluffBlocks.elfQuartz, ModFluffBlocks.sunnyQuartz)
+		
+		vazkii.botania.common.lib.LibOreDict.QUARTZ.forEachIndexed { id, it ->
+			registerOre("block${it.capitalize()}", ItemStack(quartzs[id]))
+		}
+		registerOre(LibOreDict.RAINBOW_QUARTZ_BLOCK, ItemStack(shimmerQuartz))
 		
 		registerOre("sand", ItemStack(elvenSand))
 		

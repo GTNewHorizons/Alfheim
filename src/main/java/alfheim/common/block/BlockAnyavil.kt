@@ -23,10 +23,11 @@ import net.minecraft.world.*
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.mana.IManaTrigger
-import vazkii.botania.api.wand.IWandHUD
+import vazkii.botania.api.wand.*
+import vazkii.botania.common.item.ModItems
 import kotlin.math.min
 
-class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, ILexiconable {
+class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, IWandHUD, ILexiconable {
 	
 	init {
 		setBlockName("Anyavil")
@@ -53,6 +54,9 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val te = world.getTileEntity(x, y, z) as TileItemContainer
 		val stack = player.inventory.getCurrentItem()
+		
+		if (stack?.item === ModItems.twigWand) return onUsedByWand(player, stack, world, x, y, z, side)
+		
 		if (player.isSneaking) return false
 		if (te.item != null) {
 			if (!world.isRemote) {
@@ -120,11 +124,14 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandHUD, IL
 		world.notifyBlocksOfNeighborChange(x, y, z, this)
 	}
 	
+	override fun onUsedByWand(player: EntityPlayer?, stack: ItemStack, world: World, x: Int, y: Int, z: Int, side: Int): Boolean {
+		return (world.getTileEntity(x, y, z) as? TileAnyavil)?.onWanded(player, stack) == true
+	}
+	
 	@SideOnly(Side.CLIENT)
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) {
 		val tile = world.getTileEntity(x, y, z)
 		if (tile is TileAnyavil) tile.renderHUD(res)
 	}
-	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.anyavil
 }

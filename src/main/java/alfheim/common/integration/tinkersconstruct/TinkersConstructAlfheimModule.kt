@@ -5,14 +5,14 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.integration.tinkersconstruct.modifier.*
 import alfheim.common.item.compat.tinkersconstruct.*
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
+import net.minecraft.util.StatCollector
 import net.minecraftforge.fluids.*
-import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent
+import net.minecraftforge.oredict.OreDictionary
 import tconstruct.library.TConstructRegistry
 import tconstruct.library.client.TConstructClientRegistry
 import tconstruct.library.crafting.*
@@ -107,7 +107,7 @@ object TinkersConstructAlfheimModule {
 		naturalBucket = ItemNaturalBucket()
 		naturalMaterial = ItemNaturalMaterial()
 		
-		extendModifierList()
+		ModifiersExtender
 		
 		ModifyBuilder.registerModifier(ModManaRepair)
 		TConstructRegistry.registerActiveToolMod(AModNatural)
@@ -124,17 +124,18 @@ object TinkersConstructAlfheimModule {
 		TinkerSmeltery.registerFluid(name, fluidName, blockName, texture, density, viscosity, temperature, material).also {
 			FluidType.registerFluidType(name, renderBlock, renderMeta, it.temperature, it, false)
 		}!!
-	
-	fun extendModifierList() {
-		ModifyBuilder.instance.itemModifiers.firstOrNull { it is ModInteger && it.key == "Moss" }?.stacks?.add(ItemStack(ModItems.vineBall))
-	}
+}
+
+object ModifiersExtender {
 	
 	val sharpnessOres = arrayOf<String>(LibOreDict.PRISMARINE_SHARD, *LibOreDict.QUARTZ, alfheim.api.lib.LibOreDict.RAINBOW_QUARTZ)
+	val sharpnessOreBlocks = arrayOf(LibOreDict.PRISMARINE_BLOCK, *(LibOreDict.QUARTZ.map { "block${it.capitalize()}" }.toTypedArray()), alfheim.api.lib.LibOreDict.RAINBOW_QUARTZ_BLOCK)
 	
-	@SubscribeEvent
-	fun onOreRegistration(e: OreRegisterEvent) {
-		if (e.Name in sharpnessOres)
-			TinkerTools.modAttack.addStackToMatchList(e.Ore, 2)
+	init {
+		ModifyBuilder.registerModifier(ModInteger(arrayOf(ItemStack(ModItems.vineBall)), 4, "Moss", 3, "\u00a72", StatCollector.translateToLocal("modifier.tool.moss")))
+		
+		sharpnessOreBlocks.forEach { ore -> OreDictionary.getOres(ore).forEach { stack -> TinkerTools.modAttack.addStackToMatchList(stack, 8) } }
+		sharpnessOres.forEach { ore -> OreDictionary.getOres(ore).forEach { stack -> TinkerTools.modAttack.addStackToMatchList(stack, 2) } }
 	}
 }
 

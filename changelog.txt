@@ -1,7 +1,13 @@
 Innovations:
- --
+ Race reset item
+ [MMO] invisible enemies now can't be in target; and alies are semitransparent
+ 
+Integration:
+ TConstruct:
+  Disabling custom material by setting ID to -1
 
 Fixes:
  Security Manager crash when no server (why?)
  Bloodmagic crash on swaping blocks (teleposer, etc)
- 
+ Crash on entering new world with WRCBE
+ TiC molten fluid conflicts

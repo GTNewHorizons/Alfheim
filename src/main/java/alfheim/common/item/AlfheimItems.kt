@@ -187,11 +187,9 @@ object AlfheimItems {
 		
 		royalStaff = ItemRoyalStaff()
 		`DEV-NULL` = if (ModInfo.DEV) TheRodOfTheDebug() else null
-		
-		regOreDict()
 	}
 	
-	private fun regOreDict() {
+	fun regOreDict() {
 		OreDictionary.registerOre(LibOreDict.ELVORIUM_INGOT, ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot))
 		OreDictionary.registerOre(LibOreDict.MAUFTRIUM_INGOT, ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot))
 		OreDictionary.registerOre(LibOreDict.MUSPELHEIM_POWER_INGOT, ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimPowerIngot))
