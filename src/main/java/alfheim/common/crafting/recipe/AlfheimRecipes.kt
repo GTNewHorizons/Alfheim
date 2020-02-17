@@ -102,6 +102,7 @@ import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.thinkingHand
+import alfheim.common.item.AlfheimItems.triquetrum
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry.*
@@ -189,6 +190,7 @@ object AlfheimRecipes {
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
 	lateinit var recipeTradePortal: IRecipe
+	lateinit var recipeTriquetrum: IRecipe
 	lateinit var recipeUberSpreader: IRecipe
 	
 	lateinit var recipeInterdimensional: RecipeElvenTrade
@@ -607,6 +609,14 @@ object AlfheimRecipes {
 						 'L', LIVING_ROCK,
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(triquetrum),
+						 "NLN", " NL", " II",
+						 'N', TERRASTEEL_NUGGET,
+						 'L', LIVINGWOOD_TWIG,
+						 'I', TERRA_STEEL)
+		
+		recipeTriquetrum = BotaniaAPI.getLatestAddedRecipe()
 		
 		val s = AlfheimCore.stupidMode
 		

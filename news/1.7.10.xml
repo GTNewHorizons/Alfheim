@@ -1,18 +1,18 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-27</val>
+		<val>BETA-28</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
-		<val>Happy lunar new year!</val>
+		<val> </val>
 	</version>
 	<!-- New tag for ALL versions, now supports json - start with "$json" -->
 	<version id="UNIVERSAL">
 		<!--val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val-->
-		<val>Happy lunar new year!</val>
+		<val> </val>
 	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/9808c100f696bc9f260ec94ad312e399b7549ab7/modular/Alfheim-Modular-5.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/749f423ed181bdd6daa2e0f38695768db1b19cbc/modular/Alfheim-Modular-5.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -79,5 +79,8 @@
 	</version>
 	<version id="BETA-26">
 		<val>Worldguard security managers and TiC integration! Sweet!</val>
+	</version>
+	<version id="BETA-27">
+		<val>Crashfixes and new system optimizations!</val>
 	</version>
 </news>

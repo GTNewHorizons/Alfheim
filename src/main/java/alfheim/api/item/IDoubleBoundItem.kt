@@ -14,7 +14,6 @@ import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import java.awt.Color
-import kotlin.math.sin
 
 interface IDoubleBoundItem {
 	
@@ -44,6 +43,7 @@ object DoubleBoundItemRender {
 		
 		glPushMatrix()
 		glPushAttrib(GL_LIGHTING)
+		glDisable(GL_CULL_FACE)
 		glDisable(GL_DEPTH_TEST)
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
@@ -55,8 +55,23 @@ object DoubleBoundItemRender {
 			val color1 = Color.HSBtoRGB(ClientTickHandler.ticksInGame % 300 / 300f, 0.6f, 1f)
 			val color2 = Color.HSBtoRGB((ClientTickHandler.ticksInGame + 100) % 300 / 300f, 0.6f, 1f)
 			
-			item.getFirstPosition(stack)?.also { renderBlockOutlineAt(it, color1, 1f) }
-			item.getSecondPosition(stack)?.also { renderBlockOutlineAt(it, color2, 1f) }
+			fun draw(it: ChunkCoordinates, n: String, color: Int) {
+				glPushMatrix()
+				glEnable(GL_TEXTURE_2D)
+				glTranslated(it.posX - RenderManager.renderPosX, it.posY - RenderManager.renderPosY, it.posZ - RenderManager.renderPosZ)
+				alfheim.client.core.util.glTranslated(0.5)
+				alfheim.client.core.util.glScalef(1 / 16f)
+				glTranslatef(mc.fontRenderer.getStringWidth(n) / 2f, mc.fontRenderer.FONT_HEIGHT / 2f, 0f)
+				glRotatef(180f, 0f, 0f, 1f)
+				mc.fontRenderer.drawString(n, 0, 0, color)
+				glDisable(GL_TEXTURE_2D)
+				glPopMatrix()
+				
+				renderBlockOutlineAt(it, color, 1f)
+			}
+			
+			item.getFirstPosition(stack)?.also { draw(it, "1", color1) }
+			item.getSecondPosition(stack)?.also { draw(it, "2", color2) }
 		}
 		
 		if (item is IRotationDisplay) {
@@ -88,26 +103,22 @@ object DoubleBoundItemRender {
 					3 -> glTranslated(0.0, 0.0, -1.0)
 				}
 				
-				val o = sin(Math.toRadians(60.0))
-				
-				glDisable(GL_CULL_FACE)
 				tes.startDrawing(GL_LINES)
-				tes.addVertex(0.0, 0.0, 0.0)
-				tes.addVertex(1.0, 1.0, 1.0)
-				tes.addVertex(1.0, o, 0.75)
-				tes.addVertex(1.0, 1.0, 1.0)
-				tes.addVertex(0.75, o, 1.0)
-				tes.addVertex(1.0, 1.0, 1.0)
-				tes.addVertex(1.0, o, 0.75)
-				tes.addVertex(0.75, o, 1.0)
+				tes.addVertex(0.0, 0.5, 0.0)
+				tes.addVertex(1.0, 0.5, 1.0)
+				tes.addVertex(1.0, 0.5, 0.75)
+				tes.addVertex(1.0, 0.5, 1.0)
+				tes.addVertex(0.75, 0.5, 1.0)
+				tes.addVertex(1.0, 0.5, 1.0)
+				tes.addVertex(1.0, 0.5, 0.75)
+				tes.addVertex(0.75, 0.5, 1.0)
 				tes.draw()
 				
 				tes.startDrawing(GL_POLYGON)
-				tes.addVertex(1.0, 1.0, 1.0)
-				tes.addVertex(1.0, o, 0.75)
-				tes.addVertex(0.75, o, 1.0)
+				tes.addVertex(1.0, 0.5, 1.0)
+				tes.addVertex(1.0, 0.5, 0.75)
+				tes.addVertex(0.75, 0.5, 1.0)
 				tes.draw()
-				glEnable(GL_CULL_FACE)
 				
 				glPopMatrix()
 				
@@ -118,6 +129,7 @@ object DoubleBoundItemRender {
 		glEnable(GL_DEPTH_TEST)
 		glEnable(GL_TEXTURE_2D)
 		glDisable(GL_BLEND)
+		glEnable(GL_CULL_FACE)
 		glPopAttrib()
 		glPopMatrix()
 	}

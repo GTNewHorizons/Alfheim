@@ -1,10 +1,14 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
+import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ChunkCoordinates
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
@@ -14,6 +18,15 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 	
 	init {
 		maxStackSize = 1
+	}
+	
+	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
+		val first = getFirstPosition(stack) ?: return
+		val second = getSecondPosition(stack) ?: return
+		
+		val v = Vector3(first.posX, first.posY, first.posZ).add(second.posX, second.posY, second.posZ)
+		list.add(StatCollector.translateToLocalFormatted("item.Triquetrum.blocks", abs(v.x * v.y * v.z).I))
+		list.add(StatCollector.translateToLocalFormatted("item.Triquetrum.rotation", getRotation(stack) * 90))
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
@@ -28,6 +41,8 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hX: Float, hY: Float, hZ: Float): Boolean {
+		if (player.isSneaking) return false
+		
 		val first = getFirstPosition(stack)
 		val second = getSecondPosition(stack)
 		
@@ -69,23 +84,44 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 						for ((zOff, k) in (fz..fZ).withIndex()) {
 							val block = world.getBlock(i, j, k)
 							val meta = world.getBlockMetadata(i, j, k)
-							
 							var flag = false
+							val nbt = NBTTagCompound()
 							
-							when (rotation) {
-								0 -> world.setBlock(x + xOff + dir.offsetX, y + yOff + dir.offsetY, z + zOff + dir.offsetZ, block, meta, 3).also { flag = it }
-								1 -> world.setBlock(x + zOff + dir.offsetX, y + yOff + dir.offsetY, z - xOff + dir.offsetZ, block, meta, 3).also { flag = it }
-								2 -> world.setBlock(x - xOff + dir.offsetX, y + yOff + dir.offsetY, z - zOff + dir.offsetZ, block, meta, 3).also { flag = it }
-								3 -> world.setBlock(x - zOff + dir.offsetX, y + yOff + dir.offsetY, z + xOff + dir.offsetZ, block, meta, 3).also { flag = it }
+							if (block is ITileEntityProvider) world.getTileEntity(i, j, k)?.writeToNBT(nbt)
+							
+							fun setBlockTile(world: World, x: Int, y: Int, z: Int, block: Block, meta: Int, cmp: NBTTagCompound): Boolean {
+								if (world.setBlock(x, y, z, block, meta, 3)) {
+									if (block is ITileEntityProvider) {
+										val tile = TileEntity.createAndLoadEntity(cmp)
+										tile.xCoord = x
+										tile.yCoord = y
+										tile.zCoord = z
+										world.setTileEntity(x, y, z, tile)
+									}
+									
+									return true
+								}
+								return false
 							}
 							
-							if (flag) world.setBlockToAir(i, j, k)
+							when (rotation) {
+								0 -> flag = setBlockTile(world, x + xOff + dir.offsetX, y + yOff + dir.offsetY, z + zOff + dir.offsetZ, block, meta, nbt)
+								1 -> flag = setBlockTile(world, x + zOff + dir.offsetX, y + yOff + dir.offsetY, z - xOff + dir.offsetZ, block, meta, nbt)
+								2 -> flag = setBlockTile(world, x - xOff + dir.offsetX, y + yOff + dir.offsetY, z - zOff + dir.offsetZ, block, meta, nbt)
+								3 -> flag = setBlockTile(world, x - zOff + dir.offsetX, y + yOff + dir.offsetY, z + xOff + dir.offsetZ, block, meta, nbt)
+							}
+							
+							if (flag) {
+								if (block is ITileEntityProvider) world.removeTileEntity(i, j, k)
+								world.setBlockToAir(i, j, k)
+							}
 						}
 					}
 				}
 				
 				setFirstPosition(stack, 0, -1, 0)
 				setSecondPosition(stack, 0, -1, 0)
+				setInt(stack, TAG_ROTATION, 0)
 			}
 		}
 		
@@ -115,9 +151,9 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 	}
 	
 	override fun getRotation(stack: ItemStack): Int {
-		
 		if (getFirstPosition(stack) != null && getSecondPosition(stack) != null)
 			return getInt(stack, TAG_ROTATION, 0)
+		
 		return -1
 	}
 	

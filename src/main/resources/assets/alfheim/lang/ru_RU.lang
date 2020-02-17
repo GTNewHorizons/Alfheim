@@ -257,6 +257,8 @@ item.alfheim:ThunderwoodSplinters.name=Грозовые щепки
 item.alfheim:ThunderwoodTwig.name=Грозовая ветвь
 item.Transferer.name=Деструктуризатор
 item.alfheim:Triquetrum.name=Трикветрум формирователя мира
+item.Triquetrum.blocks=Выделено %s блоков
+item.Triquetrum.rotation=Поворот на %s градусов против часовой стрелки
 
 #########################################################___ОСТАЛЬНОЕ___########################################################
 

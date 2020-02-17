@@ -257,6 +257,8 @@ item.alfheim:ThunderwoodSplinters.name=Thunderous Splinters
 item.alfheim:ThunderwoodTwig.name=Thunderous Twig
 item.Transferer.name=Destructurizer
 item.alfheim:Triquetrum.name=Worldshaper's Triquetrum
+item.Triquetrum.blocks=%s blocks selected
+item.Triquetrum.rotation=Rotation %s degrees counterclockwise
 
 ##########################################################___OTHER___###########################################################
 
