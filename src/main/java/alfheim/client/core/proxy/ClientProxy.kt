@@ -3,6 +3,7 @@ package alfheim.client.core.proxy
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.AlfheimCore
+import alfheim.api.item.DoubleBoundItemRender
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.EventHandlerClient
@@ -127,6 +128,7 @@ class ClientProxy: CommonProxy() {
 		super.initializeAndRegisterHandlers()
 		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
 		FMLCommonHandler.instance().bus().register(EventHandlerClient)
+		if (ConfigHandler.boundBlockWireframe) MinecraftForge.EVENT_BUS.register(DoubleBoundItemRender)
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()

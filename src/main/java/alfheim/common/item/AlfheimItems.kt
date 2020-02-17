@@ -102,6 +102,7 @@ object AlfheimItems {
 	val thinkingHand: Item
 	//val toolbelt: Item
 	val trisDagger: Item
+	val triquetrum: Item
 	val wiltedLotus: Item
 	val wireAxe: Item
 	
@@ -181,6 +182,7 @@ object AlfheimItems {
 		subspaceSpear = ItemSpearSubspace()
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()
+		triquetrum = ItemTriquetrum()
 		//toolbelt = ItemToolbelt()
 		wireAxe = ItemWireAxe()
 		wiltedLotus = ItemWiltedLotus()
