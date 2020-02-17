@@ -61,6 +61,8 @@ fun getBoundingBox(x: Number, y: Number, z: Number) = AxisAlignedBB.getBoundingB
 
 fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 
+fun AxisAlignedBB.offset(d: Number) = this.offset(d.D, d.D, d.D)!!
+
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
     worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }

@@ -1,5 +1,6 @@
 Innovations:
- --
+ Soul Restructurization Ritual is now slightly harder to complete
 
 Fixes:
- --
+ Flugel area range check was cube instead of sphere
+ SRR visualization

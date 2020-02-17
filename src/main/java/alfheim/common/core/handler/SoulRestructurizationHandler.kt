@@ -2,15 +2,19 @@ package alfheim.common.core.handler
 
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.block.tile.TileManaInfuser
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul
 import cpw.mods.fml.common.eventhandler.*
+import net.minecraft.entity.effect.EntityLightningBolt
+import net.minecraft.util.DamageSource
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
+import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.TileBrewery
+import vazkii.botania.common.core.helper.Vector3
 import vazkii.botania.common.entity.EntityDoppleganger
 
 object SoulRestructurizationHandler {
@@ -27,6 +31,7 @@ object SoulRestructurizationHandler {
 		
 		infuser.deGaiaingTime = 20
 		world.setBlockMetadataWithNotify(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ, 2, 3)
+		world.markBlockForUpdate(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ)
 	}
 	
 	@SubscribeEvent
@@ -35,17 +40,51 @@ object SoulRestructurizationHandler {
 		val world = gaia.worldObj
 		val infuser = world.getTileEntity(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ) as? TileManaInfuser ?: return
 		
-		infuser.deGaiaingTime = 20
-		if (!gaia.isAggored && gaia.invulTime > 0 && gaia.mobSpawnTicks == EntityDoppleganger.MOB_SPAWN_TICKS) infuser.prepareParticles().also { return }
+		if (infuser.blockMetadata != 2) return
 		
-		// TODO make Gaia tougher
+		infuser.deGaiaingTime = 20
+		world.markBlockForUpdate(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ)
+		if (!gaia.isAggored && gaia.invulTime > 0 && gaia.mobSpawnTicks == EntityDoppleganger.MOB_SPAWN_TICKS) {
+			infuser.prepareParticles()
+			return
+		}
+		
+		// like 3rd tier :D
+		gaia.heal(0.1f)
+		
+		if (gaia.ticksExisted % 1200 == 600) {
+			gaia.playersAround.forEach {
+				world.addWeatherEffect(EntityLightningBolt(world, it.posX, it.posY, it.posZ))
+			}
+		}
+		
+		if (gaia.ticksExisted % 100 == 50) {
+			gaia.playersAround.random()?.also {
+				it.attackEntityFrom(DamageSourceSpell.anomaly, 2f)
+				
+				val (x, y, z) = TileManaInfuser.PYLONS.random()
+				val v = Vector3(gaia.source.posX.D, gaia.source.posY.D, gaia.source.posZ.D).add(0.5).add(x.D, y.D + 2.8, z.D)
+				Botania.proxy.lightningFX(gaia.worldObj, v, Vector3.fromEntity(it), 2f, gaia.worldObj.rand.nextLong(), 0, 0xFF0000)
+			}
+		}
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun onGaiaHurt(e: LivingHurtEvent) {
 		val gaia = e.entity as? EntityDoppleganger ?: return
+		val infuser = gaia.worldObj.getTileEntity(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ) as? TileManaInfuser ?: return
 		
+		if (infuser.blockMetadata != 2) return
+		
+		infuser.soulParticlesTime = 20
 		VisualEffectHandler.sendPacket(VisualEffects.GAIA_SOUL, gaia.dimension, gaia.source.posX.D, gaia.source.posY + 2.0, gaia.source.posZ.D)
+		
+		// reflecting 10% damage
+		e.source.entity?.let {
+			if (!it.attackEntityFrom(e.source, e.ammount * 0.1f))
+				it.attackEntityFrom(DamageSource.causeMobDamage(e.entityLiving), e.ammount * 0.1f)
+		}
+		e.ammount *= 0.9f
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -54,6 +93,9 @@ object SoulRestructurizationHandler {
 		val world = gaia.worldObj
 		val (x, y, z) = arrayOf(gaia.source.posX, gaia.source.posY, gaia.source.posZ)
 		val infuser = world.getTileEntity(x, y + 2, z) as? TileManaInfuser ?: return
+		
+		if (infuser.blockMetadata != 2) return
+		
 		val brewer = world.getTileEntity(x, y + 5, z) as? TileBrewery ?: return
 		
 		run exp@{
@@ -61,6 +103,7 @@ object SoulRestructurizationHandler {
 				if (brewer.getStackInSlot(0)?.item === AlfheimItems.flugelSoul) {
 					if (ItemFlugelSoul.getBlocked(brewer.getStackInSlot(0)) > 0) {
 						if (gaia.isHardMode || Math.random() > 0.5) {
+							world.setBlockMetadataWithNotify(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ, 0, 3)
 							ItemFlugelSoul.setDisabled(brewer.getStackInSlot(0), ItemFlugelSoul.getBlocked(brewer.getStackInSlot(0)), false)
 							return@exp
 						}
