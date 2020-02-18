@@ -174,6 +174,7 @@ import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
+import alfheim.common.item.AlfheimItems.triquetrum
 import alfheim.common.item.AlfheimItems.trisDagger
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
@@ -252,6 +253,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (pixieAttractor)
 		
 		addItem (astrolabe)
+		addItem (triquetrum)
 		addItem (lootInterceptor)
 		addItem (hyperBucket)
 		addItem (manaMirrorImba)

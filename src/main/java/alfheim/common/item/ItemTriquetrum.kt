@@ -3,6 +3,7 @@ package alfheim.common.item
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
 import alfheim.common.core.util.*
+import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -11,6 +12,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
+import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
 import kotlin.math.*
 
@@ -41,13 +43,12 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hX: Float, hY: Float, hZ: Float): Boolean {
-		if (player.isSneaking) return false
-		
 		val first = getFirstPosition(stack)
 		val second = getSecondPosition(stack)
 		
 		when {
-			first == null -> setFirstPosition(stack, x, y, z)
+			first == null  -> setFirstPosition(stack, x, y, z)
+			
 			second == null -> {
 				val i = min(first.posX, x)
 				val j = min(first.posY, y)
@@ -79,17 +80,28 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 				val fz = min(first.posZ, second.posZ)
 				val fZ = max(first.posZ, second.posZ)
 				
-				for ((xOff, i) in (fx..fX).withIndex()) {
+				outer@ for ((xOff, i) in (fx..fX).withIndex()) {
 					for ((yOff, j) in (fy..fY).withIndex()) {
 						for ((zOff, k) in (fz..fZ).withIndex()) {
-							val block = world.getBlock(i, j, k)
+							if (!InteractionSecurity.canDoSomethingHere(player, i, j, k, world)) continue
+							
+							val block = world.getBlock(i, j, k) // block to be moved
 							val meta = world.getBlockMetadata(i, j, k)
 							var flag = false
 							val nbt = NBTTagCompound()
 							
 							if (block is ITileEntityProvider) world.getTileEntity(i, j, k)?.writeToNBT(nbt)
 							
+							if (!ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, false)) break@outer
+							
 							fun setBlockTile(world: World, x: Int, y: Int, z: Int, block: Block, meta: Int, cmp: NBTTagCompound): Boolean {
+								if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return false
+								
+								val airOnTarget = world.isAirBlock(x, y, z)
+								if (player.isSneaking && !airOnTarget) return false
+								
+								if (airOnTarget && world.isAirBlock(i, j, k)) return false // no sense in moving air
+								
 								if (world.setBlock(x, y, z, block, meta, 3)) {
 									if (block is ITileEntityProvider) {
 										val tile = TileEntity.createAndLoadEntity(cmp)
@@ -101,17 +113,21 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 									
 									return true
 								}
+								
 								return false
 							}
 							
-							when (rotation) {
-								0 -> flag = setBlockTile(world, x + xOff + dir.offsetX, y + yOff + dir.offsetY, z + zOff + dir.offsetZ, block, meta, nbt)
-								1 -> flag = setBlockTile(world, x + zOff + dir.offsetX, y + yOff + dir.offsetY, z - xOff + dir.offsetZ, block, meta, nbt)
-								2 -> flag = setBlockTile(world, x - xOff + dir.offsetX, y + yOff + dir.offsetY, z - zOff + dir.offsetZ, block, meta, nbt)
-								3 -> flag = setBlockTile(world, x - zOff + dir.offsetX, y + yOff + dir.offsetY, z + xOff + dir.offsetZ, block, meta, nbt)
+							flag = when (rotation) {
+								0    -> setBlockTile(world, x + xOff + dir.offsetX, y + yOff + dir.offsetY, z + zOff + dir.offsetZ, block, meta, nbt)
+								1    -> setBlockTile(world, x + zOff + dir.offsetX, y + yOff + dir.offsetY, z - xOff + dir.offsetZ, block, meta, nbt)
+								2    -> setBlockTile(world, x - xOff + dir.offsetX, y + yOff + dir.offsetY, z - zOff + dir.offsetZ, block, meta, nbt)
+								3    -> setBlockTile(world, x - zOff + dir.offsetX, y + yOff + dir.offsetY, z + xOff + dir.offsetZ, block, meta, nbt)
+								else -> false
 							}
 							
-							if (flag) {
+							if (flag && stack.meta != 1) {
+								ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, true)
+								
 								if (block is ITileEntityProvider) world.removeTileEntity(i, j, k)
 								world.setBlockToAir(i, j, k)
 							}

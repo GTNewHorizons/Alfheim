@@ -108,6 +108,12 @@ botania.tagline.anomaRing=Protect yourself from anomalies
 botania.page.anomaRing0=As the result of hard work of two worlds it became finally possible to invent something to protect both nations from deadly anomalies of the world of &4Alfheim&0. The solution came in form of the &1Ring of Spatiotemporal Stabilization&0 passively protecting the wearer from any influence in exchange for some &4Mana&0. You can also right click with it to switch to active mode to disable protection while sneaking.
 botania.page.anomaRing1=&oI hate portals...&0
 
+botania.entry.triquetrum=Worldshaper's Triquetrum
+botania.tagline.triquetrum=Just take and move
+botania.page.triquetrum0=&1Worldshaper's Triquetrum&0 - a novelty created by Midgard craftsmen for unsuccessful architects. This tool is designed to transfer your buildings from place to place for a certain amount of &4Mana&0.<br>To select a portable area, select two blocks that denote two diametrically opposite angles of the cuboid.
+botania.page.triquetrum1=Next, select the area in which your building will be located, a marker in the world will tell you the direction in which your structure will spread. You can rotate it by rightclick. Sneak to enable "Safe Mode", which will not carry the block if the target position is not air.
+botania.page.triquetrum2=Creating &1Triquetrum&0
+
 botania.entry.infuser=Infusion
 botania.tagline.infuser=Almost like Thaumcraft
 botania.page.infuser0=Basic filling with mana is the basis of all botanical magic. Is it difficult to just throw an item in the mana pool to just fill it? Everyone will say at once: it's easy! However, the elves went further. Their goal was to create a special device that allows filling one object with the properties of others and mana. Just like Thaumaturges of Midgard.

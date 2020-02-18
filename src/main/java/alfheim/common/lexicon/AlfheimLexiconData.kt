@@ -79,6 +79,7 @@ object AlfheimLexiconData {
 	lateinit var subspear: LexiconEntry
 	lateinit var trade: LexiconEntry
 	//public static LexiconEntry trans;		// BACK
+	lateinit var triquetrum: LexiconEntry
 	lateinit var uberSpreader: LexiconEntry
 	lateinit var worldgen: LexiconEntry
 	
@@ -134,6 +135,7 @@ object AlfheimLexiconData {
 		//stories = BLexiconEntry("stories", categoryAlfheim)
 		trade = BLexiconEntry("trade", categoryAlfheim)
 		//trans		= new BLexiconEntry("trans",	categoryAlfheim); BACK
+		triquetrum = BLexiconEntry("triquetrum", categoryAlfheim)
 		uberSpreader = BLexiconEntry("uberSpreader", categoryAlfheim)
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
 		
@@ -246,6 +248,8 @@ object AlfheimLexiconData {
 		pixie.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipePixieAttractor)).icon = ItemStack(AlfheimItems.pixieAttractor)
 		
 		anyavil.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeAnyavil))
+		
+		triquetrum.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeTriquetrum))
 		
 		infuser.setLexiconPages(PageText("0"), PageText("1"),
 								PageCraftingRecipe("2", AlfheimRecipes.recipeManaInfusionCore),
