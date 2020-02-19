@@ -32,8 +32,10 @@ object AlfheimConfigHandler {
 	var gaiaNameColor			= 0x00D5FF
 	var hpHooks					= true
 	var maxParticles			= 4000
-	var modularThread			= false
 	var modularFilename			= ""
+	var modularThread			= false
+	var modularUpdate			= true
+	var modularUpdateConfirm	= false
 	var primaryClassTransformer	= true
 	
 	// DIMENSION
@@ -180,6 +182,8 @@ object AlfheimConfigHandler {
 		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularFilename = loadProp(CATEGORY_PRELOAD, "modularFilename", modularFilename, true, "Custom name for Alfheim Modular .jar file")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
+		modularUpdate = loadProp(CATEGORY_PRELOAD, "modularUpdate", modularUpdate, true, "[HIGHLY !NOT! RECOMMENDED - can cause me be angry at you] Set this to false if you REALLY don't want Alfheim Modular to be downloaded/updated automatically")
+		modularUpdateConfirm = loadProp(CATEGORY_PRELOAD, "modularUpdateConfirm", modularUpdateConfirm, true, "Set this to true if you are totally 146% sure you don't want modular auto updates")
 		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
 		
 		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
