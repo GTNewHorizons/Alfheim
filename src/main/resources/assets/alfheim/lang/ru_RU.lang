@@ -137,6 +137,7 @@ tile.Transferer.name=Переносчик
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
+item.botania:AkashicRecords.name=Хроники Акаши
 item.alfheim:Astrolabe.name=Астролябия формирователя мира
 item.botania:AuraRingElven.name=Эльфийское кольцо ауры
 item.botania:AuraRingGod.name=Божественное кольцо ауры
@@ -264,6 +265,8 @@ item.Triquetrum.rotation=Поворот на %s градусов против ч
 
 achievement.alfheim=Новые земли
 achievement.alfheim.desc=Попадите в Альфхейм
+achievement.divineMarksman=Божественный Стрелок
+achievement.divineMarksman.desc=Мастерство Воина
 achievement.excaliber=Биение сердца
 achievement.excaliber.desc=Будьте вознаграждены святым мечом Экскалибером за героический подвиг
 achievement.flugelSoul=Ты моя душа
@@ -280,8 +283,12 @@ achievement.newChance=Новый шанс
 achievement.newChance.desc=Будьте вознаграждены Флюгельгехейменом за героический подвиг
 achievement.outstander=Непоколебимый
 achievement.outstander.desc=Докажите Вашу железобетонную Волю
+achievement.rosaBomb=Бомбардировка Розы
+achievement.rosaBomb.desc=Убийственный стиль
 achievement.subspace=Свечение ночи
 achievement.subspace.desc=Будьте вознаграждены копьём подпространства за героический подвиг
+#
+#
 
 alfheim.armorset.elemental.name=Повелитель элементов
 alfheim.armorset.elvorium.name=Королевский эльфийский страж
@@ -377,6 +384,14 @@ alfheimmisc.cast.wrongtgt=Неверная цель!
 alfheimmisc.cast.momana=Недостаточно маны!
 alfheimmisc.cast.notallow=Вы не можете колдовать здесь!
 
+alfheimmisc.modular.available=Доступно обновление Alfheim Modular
+alfheimmisc.modular.update10=Сервер будет остановлен через 10 минут
+alfheimmisc.modular.update5=Сервер будет остановлен через 5 минут
+alfheimmisc.modular.update2=Сервер будет остановлен через 2 минуты
+alfheimmisc.modular.update1=Сервер будет остановлен через 1 минуту
+alfheimmisc.modular.update30s=Сервер будет остановлен через 30 секунд
+alfheimmisc.modular.restart=Остановка сервера для обновления Alfheim Modular. Пожалуйста, перезапустите вручную.
+
 alfheimmisc.mount.unavailable=Призыв невозможен в этом измерении!
 
 alfheimmisc.party.already=Вы уже состоите в этой группе!
@@ -460,6 +475,11 @@ itemGroup.Alfheim=Alfheim
 lang.name=ru_RU
 
 ######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################
+
+item.AkashicRecords.poem0=Стихов
+item.AkashicRecords.poem1=Тут
+item.AkashicRecords.poem2=Нет
+item.AkashicRecords.poem3=:(
 
 item.aesirRing.poem0=Силы высших богов Асгарда
 item.aesirRing.poem1=Представляют части одного,

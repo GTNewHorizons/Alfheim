@@ -57,6 +57,7 @@ object LibResourceLocations {
 	val potions = ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png")
 	val rook = ResourceLocation(ModInfo.MODID, "textures/model/entity/Rook.png")
 	val roricorn = ResourceLocation(ModInfo.MODID, "textures/model/entity/Roricorn.png")
+	val shavermik = ResourceLocation(ModInfo.MODID, "textures/model/entity/shavermik.png")
 	val skin = ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png")
 	val spellFrame = ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png")
 	val spellFrameEpic = ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png")

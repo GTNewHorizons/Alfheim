@@ -1,7 +1,9 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.entity.*
+import alfheim.api.lib.LibShaderIDs
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
@@ -26,6 +28,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 						//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
 						CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
 					}
+					
+					LibShaderIDs.idColor3d = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/color3d.frag")
 					
 					/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)
 					if (mop?.entityHit != null) {

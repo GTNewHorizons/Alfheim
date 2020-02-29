@@ -101,12 +101,12 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
-		RenderItemFlugelHead.render(e, e.entityPlayer)
-		
 		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.isCanceled = true
 			return
 		}
+		
+		RenderItemFlugelHead.render(e, e.entityPlayer)
 	}
 	
 	@SubscribeEvent
@@ -136,6 +136,13 @@ object EventHandlerClient {
 		
 		
 		RenderEntitysLeftHand.render(e)
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	fun onHandRender(e: RenderHandEvent) {
+		if (mc.thePlayer.commandSenderName == "AlexSocol")
+			mc.thePlayer.func_152121_a(Type.SKIN, LibResourceLocations.skin)
 	}
 	
 	@SubscribeEvent

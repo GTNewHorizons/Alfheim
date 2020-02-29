@@ -19,7 +19,7 @@ object ASJShaderHelper {
 	private const val VERT = GL_VERTEX_SHADER
 	
 	@JvmOverloads
-	fun useShader(shaderID: Int, callback: ShaderCallback? = null) {
+	fun useShader(shaderID: Int, callback: ((Int) -> Unit)? = null) {
 		if (!OpenGlHelper.shadersSupported) return
 		
 		glUseProgram(shaderID)
@@ -30,7 +30,7 @@ object ASJShaderHelper {
 				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.totalWorldTime / 20f)
 			}
 			
-			callback?.call(shaderID)
+			callback?.invoke(shaderID)
 		}
 	}
 	

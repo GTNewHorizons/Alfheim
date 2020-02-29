@@ -4,7 +4,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
-import net.minecraft.init.Items
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.stats.Achievement
 import net.minecraftforge.common.AchievementPage
@@ -29,24 +29,26 @@ object AlfheimAchievements {
 	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
 	
+	val divineMarksman: Achievement //							D
 	val newChance: Achievement // gain race nullifier			G
+	val rosaBomb: Achievement //								R
 	
 	val flugelKill: Achievement // kill hardmode flugel			F
 	val outstander: Achievement // live 3 minutes in mask		O
 	
 	// ---------------> X
 	// |
-	// |    W  I
+	// |    W I    D
 	// |          B
 	// |     A S M E
 	// |        F U
-	// |       G
+	// |       G   R
 	// |         O
 	// Y
 	
 	init {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
-		infuser = AlfheimAchievement("infuser", 2, -2, AlfheimBlocks.manaInfuser, null)
+		infuser = AlfheimAchievement("infuser", 1, -2, AlfheimBlocks.manaInfuser, alfheim)
 		
 		flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
 		
@@ -60,9 +62,11 @@ object AlfheimAchievements {
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
+		divineMarksman = AlfheimAchievement("divineMarksman", 6, -2, ItemStack(Blocks.red_flower, 1, 2), moonlightBow).setSpecial()
+		rosaBomb = AlfheimAchievement("rosaBomb", 6, 2, Blocks.red_flower, subspace).setSpecial()
 		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
-		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
 		
 		AchievementPage.registerAchievementPage(AchievementPage("Alfheim", *achievements.toTypedArray()))
 		

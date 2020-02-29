@@ -1,6 +1,5 @@
 package alfheim.api.item
 
-import alexsocol.asjlib.ASJUtilities
 import alfheim.client.core.util.mc
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
@@ -76,7 +75,7 @@ object DoubleBoundItemRender {
 		
 		if (item is IRotationDisplay) {
 			val rotation = item.getRotation(stack)
-			val mop = ASJUtilities.getSelectedBlock(player, 5.0, false)
+			val mop = mc.objectMouseOver
 			
 			if (mop != null && rotation != -1) {
 				val color = Color.HSBtoRGB((ClientTickHandler.ticksInGame + 200) % 300 / 300f, 0.6f, 1f)

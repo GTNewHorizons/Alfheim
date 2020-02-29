@@ -94,6 +94,7 @@ object AlfheimConfigHandler {
 	var addTincturemAspect		= true
 	var thaumTreeSuffusion		= true
 	
+	// TiC INTEGRATION
 	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 3, 4)
 	var modifierIDs				= intArrayOf(20)
 	

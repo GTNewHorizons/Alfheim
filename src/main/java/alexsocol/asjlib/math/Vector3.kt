@@ -277,8 +277,8 @@ class Vector3: Serializable {
 		return this
 	}
 	
-	fun rotate(angle: Double, axis: Vector3): Vector3 {
-		Quaternion.aroundAxis(axis.copy().normalize(), Math.toRadians(angle)).rotate(this)
+	fun rotate(angle: Number, axis: Vector3): Vector3 {
+		Quaternion.aroundAxis(axis.copy().normalize(), Math.toRadians(angle.D)).rotate(this)
 		return this
 	}
 	

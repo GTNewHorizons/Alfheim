@@ -28,9 +28,10 @@ object AlfheimItems {
 	
 	val `DEV-NULL`: Item?
 	
-	val attributionBauble: Item
+	val akashiсRecords: Item
 	val aesirEmblem: Item
 	val astrolabe: Item
+	val attributionBauble: Item
 	val auraRingElven: Item
 	val auraRingGod: Item
 	val balanceCloak: Item
@@ -109,6 +110,7 @@ object AlfheimItems {
 	val royalStaff: Item
 
 	init {
+		akashiсRecords = ItemAkashicRecords()
 		aesirEmblem = ItemAesirEmblem()
 		astrolabe = ItemAstrolabe()
 		attributionBauble = ItemAttributionBauble()

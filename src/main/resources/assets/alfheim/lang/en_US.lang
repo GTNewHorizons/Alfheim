@@ -137,6 +137,7 @@ tile.Transferer.name=Transferer
 ##########################################################___ITEMS___###########################################################
 
 # item..name=
+item.botania:AkashicRecords.name=Akashic Records
 item.alfheim:Astrolabe.name=Worldshaper's Astrolabe
 item.botania:AuraRingElven.name=Elven Band of Aura
 item.botania:AuraRingGod.name=God's Band of Aura
@@ -264,6 +265,8 @@ item.Triquetrum.rotation=Rotation %s degrees counterclockwise
 
 achievement.alfheim=New Lands
 achievement.alfheim.desc=Enter Alfheim
+achievement.divineMarksman=Divine Marksman
+achievement.divineMarksman.desc=Warrior Mastery
 achievement.excaliber=Streaming Heart
 achievement.excaliber.desc=Be rewarded the Holy Sword Excaliber for a heroic feat
 achievement.flugelSoul=You're my soul
@@ -280,6 +283,8 @@ achievement.newChance=New chance
 achievement.newChance.desc=Be rewarded the Flügelgeheimen for a heroic feat
 achievement.outstander=Outstander
 achievement.outstander.desc=Prove that your Will is harder than a rock
+achievement.rosaBomb=Rosa Bombardamento
+achievement.rosaBomb.desc=Killing Style
 achievement.subspace=Nightglow
 achievement.subspace.desc=Be rewarded the Spear of Subspace for a heroic feat
 achievement.wingedHussaurs=And the Winged Hussars arrived!
@@ -379,6 +384,14 @@ alfheimmisc.cast.wrongtgt=Wrong target
 alfheimmisc.cast.momana=Not enough mana
 alfheimmisc.cast.notallow=You cannot cast here
 
+alfheimmisc.modular.available=Alfheim Modular update available.
+alfheimmisc.modular.update10=Server will be stopped in 10 minutes.
+alfheimmisc.modular.update5=Server will be stopped in 5 minutes.
+alfheimmisc.modular.update2=Server will be stopped in 2 minutes.
+alfheimmisc.modular.update1=Server will be stopped in 1 minute.
+alfheimmisc.modular.update30s=Server will be stopped in 30 seconds.
+alfheimmisc.modular.restart=Stopping server for Alfheim Modular update. Please, restart manually.
+
 alfheimmisc.mount.unavailable=Mount is unavailable here
 
 alfheimmisc.party.already=You are aleady in this party
@@ -469,6 +482,11 @@ itemGroup.Alfheim=Alfheim
 lang.name=en_US
 
 #######################################################___RELIC POEMS___########################################################
+
+item.AkashicRecords.poem0=No
+item.AkashicRecords.poem1=English
+item.AkashicRecords.poem2=Poem
+item.AkashicRecords.poem3=Here :(
 
 item.aesirRing.poem0=The forces of the Gods
 item.aesirRing.poem1=In this band form as one,

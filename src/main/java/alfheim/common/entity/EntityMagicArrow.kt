@@ -2,6 +2,7 @@ package alfheim.common.entity
 
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
@@ -73,7 +74,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 			val og = g
 			val ob = if (fromMoon) g else b
 			var size = (damage / (AlfheimItems.moonlightBow as ItemMoonlightBow).maxDmg) * 0.75f
-			if (fromMoon) size *= 5
+			if (!toMoon && fromMoon) size *= 50
 			val life = if (fromMoon) 3f else 1f
 			val osize = size
 			val savedPosX = posX
@@ -142,8 +143,10 @@ class EntityMagicArrow: EntityThrowableCopy {
 			val axis = if (fromMoon) bb.expand(1.0, 1.0, 1.0) else bb.expand(0.5, 0.5, 0.5)
 			
 			val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
+			
 			for (living in entities) {
 				if (living === player) continue
+				
 				if (toMoon) {
 					explode()
 					setDead()
@@ -154,6 +157,8 @@ class EntityMagicArrow: EntityThrowableCopy {
 					living.hurtResistantTime = 0
 					living.hurtTime = 0
 				}
+				
+				if (!toMoon && !fromMoon && Vector3.entityDistance(living, player) >= 120.0) player.triggerAchievement(AlfheimAchievements.divineMarksman)
 				
 				attackedFrom(living, player, abs(damage))
 			}
@@ -167,7 +172,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 		val axis = bb.expand(5.0, 5.0, 5.0)
 		val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		entities.forEach {
-			attackedFrom(it, thrower as EntityPlayer?, max(20.0, 20 / Vector3.entityDistance(this, it)).F)
+			attackedFrom(it, thrower as? EntityPlayer, max(20.0, 20 / Vector3.entityDistance(this, it)).F)
 		}
 		
 		VisualEffectHandler.sendPacket(VisualEffects.MOON, this)

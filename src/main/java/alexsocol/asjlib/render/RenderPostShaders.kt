@@ -60,7 +60,6 @@ object RenderPostShaders {
 	
 	class RendererPostShaders {
 		
-		@Suppress("UNUSED_PARAMETER")
 		@SubscribeEvent
 		@SideOnly(Side.CLIENT)
 		fun onWorldLastRender(e: RenderWorldLastEvent) {
