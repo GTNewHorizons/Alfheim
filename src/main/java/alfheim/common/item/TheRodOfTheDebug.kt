@@ -22,38 +22,39 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		try {
-			if (true/*!world.isRemote*/) {
-				if (!player.isSneaking) {
-					if (!world.isRemote) {
-						//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
-						CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
-					}
-					
-					LibShaderIDs.idColor3d = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/color3d.frag")
-					
-					/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)
-					if (mop?.entityHit != null) {
-						player.ridingEntity = mop.entityHit
-						mop.entityHit.riddenByEntity = player
-						mop.entityHit.updateRiderPosition()
-					}*/
-					
-					// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
-					
-					//					int r = 12;
-					//					for (int x = -r; x < r; x++) {
-					//						for (int z = -r; z < r; z++) {
-					//							for (int y = 1; y < 4; y++) {
-					//								world.setBlock(x, y, z + 50, Blocks.grass);
-					//							}
-					//						}
-					//					}
-					
-					//					ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
+			if (!player.isSneaking) {
+				if (!world.isRemote) {
+					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
+					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
 				} else {
-					player.raceID = (player.race.ordinal + 1) % 11
-					ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
+					val was = ASJShaderHelper.crashOnError
+					ASJShaderHelper.crashOnError = true
+					LibShaderIDs.idColor3d = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/color3d.frag")
+					ASJShaderHelper.crashOnError = was
 				}
+				
+				/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)
+				if (mop?.entityHit != null) {
+					player.ridingEntity = mop.entityHit
+					mop.entityHit.riddenByEntity = player
+					mop.entityHit.updateRiderPosition()
+				}*/
+				
+				// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
+				
+				//					int r = 12;
+				//					for (int x = -r; x < r; x++) {
+				//						for (int z = -r; z < r; z++) {
+				//							for (int y = 1; y < 4; y++) {
+				//								world.setBlock(x, y, z + 50, Blocks.grass);
+				//							}
+				//						}
+				//					}
+				
+				//					ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
+			} else {
+				player.raceID = (player.race.ordinal + 1) % 11
+				ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
 			}
 		} catch (e: Throwable) {
 			ASJUtilities.log("Oops!")

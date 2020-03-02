@@ -1,10 +1,11 @@
 package alfheim.client.render.item
 
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.ModInfo
-import alfheim.api.lib.LibResourceLocations
+import alfheim.api.lib.*
 import alfheim.client.core.util.*
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.item.relic.ItemAkashicRecords
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.item.ItemStack
@@ -12,7 +13,9 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL20
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import kotlin.math.*
 
@@ -21,6 +24,8 @@ object RenderItemAkashicRecords: IItemRenderer {
 	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/AkashicRecords.obj"))
 	
 	override fun renderItem(type: IItemRenderer.ItemRenderType, stack: ItemStack, vararg data: Any?) {
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glPushMatrix()
 		
 		val frame = if (type == IItemRenderer.ItemRenderType.EQUIPPED || type == IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
@@ -36,67 +41,72 @@ object RenderItemAkashicRecords: IItemRenderer {
 			glTranslatef(220f, 0f, 440f)
 		} else if (type == IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
 			glTranslatef(220f, 330f, 220f)
+			glRotatef(-10f, 0f, 0f, 1f)
+			glRotatef(-5f, 1f, 0f, 0f)
 		}
 		
-		mc.renderEngine.bindTexture(LibResourceLocations.mine2)
+		val renders = arrayOf(LibResourceLocations.akashikCube to "Cylinder.0", LibResourceLocations.akashikCyl to "Cylinder.6")
 		
-		fun wrap(f: () -> Unit) {
+		fun wrap(part: String, f: () -> Unit) {
 			glPushMatrix()
 			f.invoke()
-			model.renderOnly("Cylinder.0", "Cylinder.6")
+			model.renderPart(part)
 			glPopMatrix()
 		}
 		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30
-			glTranslatef(0f, y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
+		glColor3f(0.75f, 0.75f, 0.75f)
+		renders.forEach { (texture, part) ->
+			mc.renderEngine.bindTexture(texture)
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30
+				glTranslatef(0f, y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
+			}
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30
+				glTranslatef(0f, -y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
+			}
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30 * 330 / 440 + (frame - 45).coerceIn(0f, 5f) * 2
+				val angle = 90f - (frame - 30).coerceIn(0f, 15f) * 6
+				glRotatef(angle, 0f, 0f, 1f)
+				glTranslatef(0f, y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
+			}
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30 * 330 / 440 + (frame - 45).coerceIn(0f, 5f) * 2
+				val angle = 90f + (frame - 30).coerceIn(0f, 15f) * 6
+				glRotatef(angle, 0f, 0f, -1f)
+				glTranslatef(0f, y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, -1f, 0f)
+			}
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30 * 220 / 440 + (frame - 45).coerceIn(0f, 5f) * 4
+				val angle = 90f - (frame - 30).coerceIn(0f, 15f) * 6
+				glRotatef(angle, 1f, 0f, 0f)
+				glTranslatef(0f, y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
+			}
+			
+			wrap(part) {
+				val y = 110f + min(frame, 30f) * 440 / 30 * 220 / 440 + (frame - 45).coerceIn(0f, 5f) * 4
+				val angle = 90f + (frame - 30).coerceIn(0f, 15f) * 6
+				glRotatef(angle, -1f, 0f, 0f)
+				glTranslatef(0f, y, 0f)
+				glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, -1f, 0f)
+			}
 		}
+		glColor3f(1f, 1f, 1f)
 		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30
-			glTranslatef(0f, -y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
-		}
+		mc.renderEngine.bindTexture((if (ConfigHandler.useShaders) LibResourceLocations.akashikCube else LibResourceLocations.akashikCube_))
 		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30 * 330 / 440 + (frame - 45).coerceIn(0f, 5f) * 2
-			val angle = 90f - (frame - 30).coerceIn(0f, 15f) * 6
-			glRotatef(angle, 0f, 0f, 1f)
-			glTranslatef(0f, y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
-		}
-		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30 * 330 / 440 + (frame - 45).coerceIn(0f, 5f) * 2
-			val angle = 90f + (frame - 30).coerceIn(0f, 15f) * 6
-			glRotatef(angle, 0f, 0f, -1f)
-			glTranslatef(0f, y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, -1f, 0f)
-		}
-		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30 * 220 / 440 + (frame - 45).coerceIn(0f, 5f) * 4
-			val angle = 90f - (frame - 30).coerceIn(0f, 15f) * 6
-			glRotatef(angle, 1f, 0f, 0f)
-			glTranslatef(0f, y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, 1f, 0f)
-		}
-		
-		wrap {
-			val y = 110f + min(frame, 30f) * 440 / 30 * 220 / 440 + (frame - 45).coerceIn(0f, 5f) * 4
-			val angle = 90f + (frame - 30).coerceIn(0f, 15f) * 6
-			glRotatef(angle, -1f, 0f, 0f)
-			glTranslatef(0f, y, 0f)
-			glRotatef(max(0f, frame - 60) % 100 * 3.6f, 0f, -1f, 0f)
-		}
-		
-//		ASJShaderHelper.useShader(LibShaderIDs.idColor3d) {
-//			GL20.glUniform3f(GL20.glGetUniformLocation(it, "center"), 0f, 0f, 0f)
-//		}
-		
-		mc.renderEngine.bindTexture(LibResourceLocations.mine3)
-		
+		glDisable(GL_CULL_FACE)
 		for (i in -110..110 step 110) {
 			for (j in -110..110 step 110) {
 				for (k in -110..110 step 110) {
@@ -108,20 +118,23 @@ object RenderItemAkashicRecords: IItemRenderer {
 					val f = max(0f, frame - 60) % 100 * 3.6
 					val v = Vector3(i, j, k).extend((frame - 50).coerceIn(0f, 10f) * 33).rotate(f, Vector3(1).rotate(f, Vector3.oY))
 					
+					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idColor3d) {
+						GL20.glUniform3f(GL20.glGetUniformLocation(it, "translation"), v.x.F, v.y.F + 50, v.z.F) // FIXME use translation variable
+					}
+					
 					glPushMatrix()
 					glTranslated(v.x, v.y, v.z)
+					glScalef(-1f)
 					model.renderPart("core")
 					glPopMatrix()
 				}
 			}
 		}
+		glEnable(GL_CULL_FACE)
 		
-//		ASJShaderHelper.releaseShader()
+		if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader()
 		
 		glPushMatrix()
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val a = (sin(Botania.proxy.worldElapsedTicks / 4f) / 2 + 0.5f)
@@ -129,18 +142,17 @@ object RenderItemAkashicRecords: IItemRenderer {
 		glColor4f(0.7f + m, m, 1f, 1f)
 		model.renderPart("core")
 		for (i in 1..50) {
-			glScalef((i / 100f + 1) / ((i-1) / 100f + 1))
+			glScalef((i / 100f + 1) / ((i - 1) / 100f + 1))
 			glColor4d(0.7 + m, m.D, 1.0, a * 0.025 + 0.01)
 			model.renderPart("core")
 		}
 		glColor4f(1f, 1f, 1f, 1f)
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
 		glEnable(GL_LIGHTING)
-		glEnable(GL_TEXTURE_2D)
-		glDisable(GL_BLEND)
 		glPopMatrix()
 		
 		glPopMatrix()
+		glDisable(GL_BLEND)
 	}
 	
 	override fun handleRenderType(item: ItemStack?, type: IItemRenderer.ItemRenderType?) = true

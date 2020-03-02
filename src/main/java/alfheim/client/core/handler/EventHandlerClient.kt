@@ -2,12 +2,12 @@ package alfheim.client.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.asjlib.render.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.raceID
 import alfheim.api.event.EntityUpdateEvent
-import alfheim.api.lib.LibResourceLocations
+import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
