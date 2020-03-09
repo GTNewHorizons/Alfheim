@@ -426,7 +426,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
-		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
+		// Stupid Et Futurum
+		if (player.isSneaking) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)

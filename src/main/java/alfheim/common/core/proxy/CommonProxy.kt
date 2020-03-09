@@ -56,7 +56,7 @@ open class CommonProxy {
 		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
 		AlfheimBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
-		if (Loader.isModLoaded("etfuturem")) EtFuturumAlfheimConfig.loadConfig()
+		if (Loader.isModLoaded("etfuturum")) EtFuturumAlfheimConfig.loadConfig()
 	}
 	
 	open fun postInit() {

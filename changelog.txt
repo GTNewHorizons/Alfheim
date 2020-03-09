@@ -3,4 +3,6 @@ Innovations:
 
 Fixes:
  Flugel area range check was cube instead of sphere
- SRR visualization
+ Can't spawn flugel with Et Futurum
+ Shields application to Et Futurum banners
+ SRR visualization 

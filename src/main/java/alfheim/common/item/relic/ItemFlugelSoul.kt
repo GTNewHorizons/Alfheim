@@ -66,15 +66,15 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val block = world.getBlock(x, y, z)
-		if (block === Blocks.beacon) {
+		if (block === ModBlocks.brewery) {
+			val brew = world.getTileEntity(x, y, z) as TileBrewery
+			brew.setInventorySlotContents(0, stack.splitStack(1))
+		} else { // Stupid Et Futurum
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
 				if (success) setDisabled(stack, getBlocked(stack), true)
 				return success
 			}
-		} else if (block === ModBlocks.brewery) {
-			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew.setInventorySlotContents(0, stack.splitStack(1))
 		}
 		return false
 	}

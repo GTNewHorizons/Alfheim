@@ -1,7 +1,9 @@
 package alfheim.common.integration.etfuturum
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.item.AlfheimItems.coatOfArms
+import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 
@@ -22,9 +24,15 @@ object EFHandlerBanners {
 			for (i in coatNames.indices) {
 				try {
 					addPattern(clazz, coatNames[i], "c${if (i < 10) "0$i" else "$i"}", ItemStack(coatOfArms, 1, i))
-				} catch (e: Exception) {}
+				} catch (e: Exception) {
+					ASJUtilities.error("Error trying to add ${coatNames[i]} banner: ${e.message}")
+					e.printStackTrace()
+				}
 			}
-		} catch (e: Exception) {}
+		} catch (e: Exception) {
+			ASJUtilities.error("Error trying to add Et Futurum banners: ${e.message}")
+			e.printStackTrace()
+		}
 	}
 	
 	fun addPattern(clazz: Class<Enum<*>>, name: String, id: String, craftingItem: ItemStack) {
