@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockNetherWood: BlockModRotatedPillar(Material.wood), ILexiconable {
+class BlockNetherWood: BlockModRotatedPillar(Material.wood) {
 	
 	init {
 		setBlockName("netherWood")

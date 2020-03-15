@@ -20,15 +20,6 @@ class BlockNetherLeaves: BlockLeavesMod() {
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor() = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
-	
 	override fun isInterpolated() = true
 	
 	override fun register(name: String) {

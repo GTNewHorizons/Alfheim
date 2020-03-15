@@ -2,7 +2,6 @@ package alfheim.common.entity.boss
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.boss.IBotaniaBossWithName
@@ -251,11 +250,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
 							if (player != null) {
 								relic = when {
-									!player.hasAchievement(AlfheimAchievements.excaliber)                                 -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-									!player.hasAchievement(AlfheimAchievements.subspace)                                  -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-									!player.hasAchievement(AlfheimAchievements.moonlightBow)                              -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-									!player.hasAchievement(AlfheimAchievements.newChance) && AlfheimCore.enableElvenStory -> ItemStack(AlfheimItems.raceNullifier).also { player.triggerAchievement(AlfheimAchievements.newChance) }
-									else                                                                                  -> relic
+									!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+									!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
+									!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+									!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
+									else                                                     -> relic
 								}
 							}
 						}

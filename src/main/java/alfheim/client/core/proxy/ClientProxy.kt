@@ -63,7 +63,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly)
-		MinecraftForgeClient.registerItemRenderer(AlfheimItems.akashiсRecords, RenderItemAkashicRecords)
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.akashicRecords, RenderItemAkashicRecords)
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)

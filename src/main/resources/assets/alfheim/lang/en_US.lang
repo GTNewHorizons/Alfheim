@@ -100,6 +100,9 @@ tile.alfheim:schematicAnnihilator.name=Schematic Annihilator
 tile.alfheim:schematicOak.name=Schematic Sapling
 tile.ShrineGlass0.name=Shrine Glass
 tile.ShrineGlass1.name=Shrine Glass
+tile.ShrineGlass2.name=Shrine Glass
+tile.ShrineGlass3.name=Shrine Glass
+tile.ShrineGlass4.name=Shrine Glass
 tile.ShrineLight0.name=Shrine Light
 tile.ShrineLight1.name=Shrine Light
 tile.ShrineLight2.name=Shrine Light
@@ -991,12 +994,14 @@ tile.alfheim:altLeaves2.name=Vivid Leaves
 tile.alfheim:altLeaves3.name=Scorched Leaves
 tile.alfheim:altLeaves4.name=Infused Leaves
 tile.alfheim:altLeaves5.name=Mutated Leaves
+tile.alfheim:altLeaves6.name=Yggdrasil Leaves
 tile.alfheim:altLeaves8.name=Dry Leaves
 tile.alfheim:altLeaves9.name=Golden Leaves
 tile.alfheim:altLeaves10.name=Vivid Leaves
 tile.alfheim:altLeaves11.name=Scorched Leaves
 tile.alfheim:altLeaves12.name=Infused Leaves
 tile.alfheim:altLeaves13.name=Mutated Leaves
+tile.alfheim:altLeaves14.name=Yggdrasil Leaves
 
 tile.alfheim:altPlanks0.name=Dry Planks
 tile.alfheim:altPlanks1.name=Golden Planks
@@ -1004,6 +1009,7 @@ tile.alfheim:altPlanks2.name=Vivid Planks
 tile.alfheim:altPlanks3.name=Scorched Planks
 tile.alfheim:altPlanks4.name=Infused Planks
 tile.alfheim:altPlanks5.name=Mutated Planks
+tile.alfheim:altPlanks6.name=Yggdrasil Planks
 
 tile.alfheim:altWood00.name=Dry Wood
 tile.alfheim:altWood01.name=Golden Wood
@@ -1011,6 +1017,7 @@ tile.alfheim:altWood02.name=Vivid Wood
 tile.alfheim:altWood03.name=Scorched Wood
 tile.alfheim:altWood10.name=Infused Wood
 tile.alfheim:altWood11.name=Mutated Wood
+tile.alfheim:altWood12.name=Yggdrasil Wood
 
 tile.alfheim:altPlanksSlab0.name=Dry Planks Slab
 tile.alfheim:altPlanksSlab1.name=Golden Planks Slab
@@ -1018,6 +1025,7 @@ tile.alfheim:altPlanksSlab2.name=Vivid Planks Slab
 tile.alfheim:altPlanksSlab3.name=Scorched Planks Slab
 tile.alfheim:altPlanksSlab4.name=Infused Planks Slab
 tile.alfheim:altPlanksSlab5.name=Mutated Planks Slab
+tile.alfheim:altPlanksSlab6.name=Yggdrasil Planks Slab
 
 tile.alfheim:altPlanksSlabFull0.name=Dry Planks Slab
 tile.alfheim:altPlanksSlabFull1.name=Golden Planks Slab
@@ -1025,6 +1033,7 @@ tile.alfheim:altPlanksSlabFull2.name=Vivid Planks Slab
 tile.alfheim:altPlanksSlabFull3.name=Scorched Planks Slab
 tile.alfheim:altPlanksSlabFull4.name=Infused Planks Slab
 tile.alfheim:altPlanksSlabFull5.name=Mutated Planks Slab
+tile.alfheim:altPlanksSlabFull6.name=Yggdrasil Planks Slab
 
 tile.alfheim:altPlanksStairs0.name=Dry Planks Stairs
 tile.alfheim:altPlanksStairs1.name=Golden Planks Stairs
@@ -1032,6 +1041,7 @@ tile.alfheim:altPlanksStairs2.name=Vivid Planks Stairs
 tile.alfheim:altPlanksStairs3.name=Scorched Planks Stairs
 tile.alfheim:altPlanksStairs4.name=Infused Planks Stairs
 tile.alfheim:altPlanksStairs5.name=Mutated Planks Stairs
+tile.alfheim:altPlanksStairs6.name=Yggdrasil Planks Stairs
 
 tile.alfheim:irisLamp.name=Iridescent Lantern
 

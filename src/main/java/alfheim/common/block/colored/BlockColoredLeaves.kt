@@ -29,9 +29,6 @@ class BlockColoredLeaves(val colorSet: Int): BlockLeavesMod() {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getBlockColor() = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
 	override fun getRenderColor(meta: Int): Int {
 		val shiftedMeta = meta % TYPES + colorSet * TYPES
 		if (shiftedMeta >= EntitySheep.fleeceColorTable.size)

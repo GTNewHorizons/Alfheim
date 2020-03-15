@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockDreamLog: BlockModRotatedPillar(Material.wood), ILexiconable {
+class BlockDreamLog: BlockModRotatedPillar(Material.wood) {
 	
 	init {
 		setBlockName("DreamLog")

@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockSealingWood: BlockModRotatedPillar(Material.wood), ILexiconable, ISoundSilencer {
+class BlockSealingWood: BlockModRotatedPillar(Material.wood), ISoundSilencer {
 	
 	init {
 		setBlockName("sealingWood")

@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener, ILexiconable {
+class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener {
 	
 	init {
 		setBlockName("calicoWood")

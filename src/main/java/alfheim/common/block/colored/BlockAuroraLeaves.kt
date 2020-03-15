@@ -25,7 +25,7 @@ class BlockAuroraLeaves : BlockLeavesMod(), ILexiconable {
 	override fun quantityDropped(random: Random) = if (random.nextInt(20) == 0) 1 else 0
 	
 	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = BlockAuroraDirt.getBlockColor(x, y, z)
+	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = BlockAuroraDirt.getBlockColor(x, y, z)
 	
 	override fun func_150125_e() = arrayOf("auroraLeaves")
 	

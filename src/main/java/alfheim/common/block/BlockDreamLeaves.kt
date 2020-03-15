@@ -76,9 +76,9 @@ class BlockDreamLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	override fun isOpaqueCube() = Blocks.leaves.isOpaqueCube
 	override fun getItemDropped(meta: Int, rand: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.dreamSapling)!!
 	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = Integer.parseInt("E5FFF9", 16)
+	override fun getRenderColor(meta: Int) = 0xE5FFF9
 	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = Integer.parseInt("E5FFF9", 16)
+	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xE5FFF9
 	override fun getIcon(side: Int, meta: Int) = textures[if (Blocks.leaves.isOpaqueCube) 1 else 0]
 	override fun getGlowIcon(side: Int, meta: Int) = textures[2]
 	

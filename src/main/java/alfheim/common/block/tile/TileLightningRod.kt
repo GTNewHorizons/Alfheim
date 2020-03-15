@@ -33,9 +33,9 @@ class TileLightningRod: TileEntity() {
 		
 		for (effect in world.weatherEffects) {
 			if (effect is EntityLightningBolt && effect !is FakeLightning) {
-				if (effect.posX.inRange(box.minX, box.maxX) &&
-					effect.posY.inRange(box.minY, box.maxY) &&
-					effect.posZ.inRange(box.minZ, box.maxZ)) {
+				if (effect.posX in box.minX..box.maxX &&
+					effect.posY in box.minY..box.maxY &&
+					effect.posZ in box.minZ..box.maxZ) {
 					
 					bolts.add(effect)
 				}
@@ -44,6 +44,4 @@ class TileLightningRod: TileEntity() {
 		
 		return bolts
 	}
-	
-	fun Double.inRange(min: Double, max: Double) = (this > min && this < max)
 }

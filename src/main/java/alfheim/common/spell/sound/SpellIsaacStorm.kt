@@ -23,7 +23,7 @@ object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 1
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			var missile: EntitySpellIsaacMissile
-			for (i in 0..efficiency.I) {
+			for (i in 1..efficiency.I) {
 				missile = EntitySpellIsaacMissile(caster, false)
 				missile.setPosition(caster.posX + (Math.random() - 0.5) * 0.1, caster.posY + 2.4 + (Math.random() - 0.5) * 0.1, caster.posZ + (Math.random() - 0.5) * 0.1)
 				caster.worldObj.spawnEntityInWorld(missile)

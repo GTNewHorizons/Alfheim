@@ -28,7 +28,7 @@ object AlfheimItems {
 	
 	val `DEV-NULL`: Item?
 	
-	val akashiсRecords: Item
+	val akashicRecords: Item
 	val aesirEmblem: Item
 	val astrolabe: Item
 	val attributionBauble: Item
@@ -83,7 +83,6 @@ object AlfheimItems {
 	val paperBreak: Item
 	val peacePipe: Item
 	val pixieAttractor: Item
-	val raceNullifier: Item
 	val realitySword: Item
 	val rodColorfulSkyDirt: Item
 	val rodFire: Item
@@ -110,7 +109,7 @@ object AlfheimItems {
 	val royalStaff: Item
 
 	init {
-		akashiсRecords = ItemAkashicRecords()
+		akashicRecords = ItemAkashicRecords()
 		aesirEmblem = ItemAesirEmblem()
 		astrolabe = ItemAstrolabe()
 		attributionBauble = ItemAttributionBauble()
@@ -165,7 +164,6 @@ object AlfheimItems {
 		paperBreak = ItemPaperBreak()
 		peacePipe = ItemPeacePipe()
 		pixieAttractor = ItemPendant("PixieAttractor")
-		raceNullifier = ItemRaceNullifier()
 		realitySword = ItemRealitySword()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodFire = ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame)

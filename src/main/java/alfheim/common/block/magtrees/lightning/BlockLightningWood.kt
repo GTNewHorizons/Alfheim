@@ -13,7 +13,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockLightningWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider, ILexiconable {
+class BlockLightningWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider {
 	
 	init {
 		setBlockName("lightningWood")

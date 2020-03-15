@@ -76,7 +76,7 @@ import vazkii.botania.common.lib.LibBlockNames
 import java.awt.Color
 import java.nio.FloatBuffer
 import java.util.*
-import kotlin.math.min
+import kotlin.math.*
 
 @Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object AlfheimHookHandler {
@@ -814,7 +814,7 @@ object AlfheimHookHandler {
 		
 		if (item is IManaItem && AlfheimConfigHandler.numericalMana) {
 			glDisable(GL_DEPTH_TEST)
-			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.F + ClientTickHandler.partialTicks).D * 0.2).F + 1f) * 0.3f + 0.4f, 1f))
+			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (sin((ClientTickHandler.ticksInGame.F + ClientTickHandler.partialTicks).D * 0.2).F + 1f) * 0.3f + 0.4f, 1f))
 			glEnable(GL_DEPTH_TEST)
 		}
 	}

@@ -259,11 +259,11 @@ object AlfheimBlocks {
 		
 		altLeaves = BlockAltLeaves()
 		altPlanks = BlockAltPlanks()
-		altSlabs = Array(6) { BlockAltWoodSlab(false, it) }
-		altSlabsFull = Array(6) { BlockAltWoodSlab(true, it) }
+		altSlabs = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodSlab(false, it) }
+		altSlabsFull = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodSlab(true, it) }
 		altSlabs.forEach { (it as BlockSlabMod).register() }
 		altSlabsFull.forEach { (it as BlockSlabMod).register() }
-		altStairs = Array(6) { BlockAltWoodStairs(it) }
+		altStairs = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodStairs(it) }
 		altWood0 = BlockAltWood(0)
 		altWood1 = BlockAltWood(1)
 		

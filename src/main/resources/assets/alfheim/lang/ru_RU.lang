@@ -100,6 +100,9 @@ tile.alfheim:schematicAnnihilator.name=Аннигилятор схемы
 tile.alfheim:schematicOak.name=Саженец схемы
 tile.ShrineGlass0.name=Стекло храма
 tile.ShrineGlass1.name=Стекло храма
+tile.ShrineGlass2.name=Стекло храма
+tile.ShrineGlass3.name=Стекло храма
+tile.ShrineGlass4.name=Стекло храма
 tile.ShrineLight0.name=Светящийся блок храма
 tile.ShrineLight1.name=Светящийся блок храма
 tile.ShrineLight2.name=Светящийся блок храма
@@ -926,12 +929,14 @@ tile.alfheim:altLeaves2.name=Яркая листва
 tile.alfheim:altLeaves3.name=Выжженная листва
 tile.alfheim:altLeaves4.name=Настоянная листва
 tile.alfheim:altLeaves5.name=Видоизменённая листва
+tile.alfheim:altLeaves6.name=Листва Иггдрасиля
 tile.alfheim:altLeaves8.name=Сухая листва
 tile.alfheim:altLeaves9.name=Золотая листва
 tile.alfheim:altLeaves10.name=Яркая листва
 tile.alfheim:altLeaves11.name=Выжженная листва
 tile.alfheim:altLeaves12.name=Настоянная листва
 tile.alfheim:altLeaves13.name=Видоизменённая листва
+tile.alfheim:altLeaves14.name=Листва Иггдрасиля
 
 tile.alfheim:altPlanks0.name=Сухие доски
 tile.alfheim:altPlanks1.name=Золотые доски
@@ -939,6 +944,7 @@ tile.alfheim:altPlanks2.name=Яркие доски
 tile.alfheim:altPlanks3.name=Выжженные доски
 tile.alfheim:altPlanks4.name=Настоянные доски
 tile.alfheim:altPlanks5.name=Видоизменённые доски
+tile.alfheim:altPlanks6.name=Доски Иггдрасиля
 
 tile.alfheim:altWood00.name=Сухая древесина
 tile.alfheim:altWood01.name=Золотая древесина
@@ -946,6 +952,7 @@ tile.alfheim:altWood02.name=Яркая древесина
 tile.alfheim:altWood03.name=Выжженная древесина
 tile.alfheim:altWood10.name=Настоянная древесина
 tile.alfheim:altWood11.name=Видоизменённая древесина
+tile.alfheim:altWood12.name=Древесина Иггдрасиля
 
 tile.alfheim:altPlanksSlab0.name=Плита из сухой древесины
 tile.alfheim:altPlanksSlab1.name=Плита из золотой древесины
@@ -953,6 +960,7 @@ tile.alfheim:altPlanksSlab2.name=Плита из яркой древесины
 tile.alfheim:altPlanksSlab3.name=Плита из выжженной древесины
 tile.alfheim:altPlanksSlab4.name=Плита из настоянной древесины
 tile.alfheim:altPlanksSlab5.name=Плита из видоизменённой древесины
+tile.alfheim:altPlanksSlab6.name=Плита из древесины Иггдрасиля
 
 tile.alfheim:altPlanksSlabFull0.name=Плита из сухой древесины
 tile.alfheim:altPlanksSlabFull1.name=Плита из золотой древесины
@@ -960,6 +968,7 @@ tile.alfheim:altPlanksSlabFull2.name=Плита из яркой древесин
 tile.alfheim:altPlanksSlabFull3.name=Плита из выжженной древесины
 tile.alfheim:altPlanksSlabFull4.name=Плита из настоянной древесины
 tile.alfheim:altPlanksSlabFull5.name=Плита из видоизменённой древесины
+tile.alfheim:altPlanksSlabFull6.name=Плита из древесины Иггдрасиля
 
 tile.alfheim:altPlanksStairs0.name=Ступеньки из сухой древесины
 tile.alfheim:altPlanksStairs1.name=Ступеньки из золотой древесины
@@ -967,6 +976,7 @@ tile.alfheim:altPlanksStairs2.name=Ступеньки из яркой древе
 tile.alfheim:altPlanksStairs3.name=Ступеньки из выжженной древесины
 tile.alfheim:altPlanksStairs4.name=Ступеньки из настоянной древесины
 tile.alfheim:altPlanksStairs5.name=Ступеньки из видоизменённой древесины
+tile.alfheim:altPlanksStairs6.name=Ступеньки из древесины Иггдрасиля
 
 tile.alfheim:irisLamp.name=Цветная лампа
 

@@ -5,6 +5,7 @@ import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.safeGet
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -17,36 +18,31 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import java.util.*
 
-class BlockAltLeaves(): BlockLeavesMod() {
+class BlockAltLeaves: BlockLeavesMod() {
 	
-	var icon_norm: Array<IIcon> = emptyArray()
-	var icon_opaque: Array<IIcon> = emptyArray()
+	companion object {
+		lateinit var textures: Array<Array<IIcon>>
+		val yggMeta = ALT_TYPES.indexOf("Wisdom")
+	}
 	
 	init {
 		setBlockName("altLeaves")
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor() = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
+	override fun getBlockHardness(world: World, x: Int, y: Int, z: Int) =
+		if (world.getBlockMetadata(x, y, z) == yggMeta) -1f else super.getBlockHardness(world, x, y ,z)
 	
 	override fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemUniqueSubtypedBlockMod::class.java, name)
 	}
 	
-	override fun registerBlockIcons(iconRegister: IIconRegister) {
-		icon_norm = Array(6) { i -> IconHelper.forBlock(iconRegister, this, ALT_TYPES[i]) }
-		icon_opaque = Array(6) { i -> IconHelper.forBlock(iconRegister, this, "${ALT_TYPES[i]}_opaque") }
+	override fun registerBlockIcons(reg: IIconRegister) {
+		textures = arrayOf(Array(ALT_TYPES.size) { i -> IconHelper.forBlock(reg, this, ALT_TYPES[i]) }, Array(ALT_TYPES.size) { i -> IconHelper.forBlock(reg, this, "${ALT_TYPES[i]}_opaque") })
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon {
 		setGraphicsLevel(mc.gameSettings.fancyGraphics)
-		return if (field_150121_P) icon_norm[meta and decayBit().inv()] else icon_opaque[meta and decayBit().inv()]
+		return textures[field_150127_b].safeGet(meta and decayBit().inv())
 	}
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) =
@@ -56,14 +52,15 @@ class BlockAltLeaves(): BlockLeavesMod() {
 	
 	override fun func_150125_e() = arrayOf("altLeaves")
 	
-	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
-		if (list != null && item != null)
-			for (i in 0..5) {
-				list.add(ItemStack(item, 1, i))
-			}
+	override fun getSubBlocks(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
+		for (i in ALT_TYPES.indices) {
+			list.add(ItemStack(item, 1, i))
+		}
 	}
 	
 	override fun decayBit() = 0x8
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun canDecay(meta: Int) = if (meta == yggMeta) false else super.canDecay(meta)
+	
+	override fun getEntry(p0: World, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = if (p0.getBlockMetadata(p1, p2, p3) == yggMeta) null else ShadowFoxLexiconData.irisSapling
 }

@@ -6,9 +6,10 @@ import java.util.*
 
 object LibResourceLocations {
 	
-	val akashikCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png");
-	val akashikCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png");
-	val akashikCyl = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCyl.png");
+	val akashicBox = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicBox.png");
+	val akashicCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png");
+	val akashicCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png");
+	val akashicCyl = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCyl.png");
 	val altar9 = ResourceLocation(ModInfo.MODID, "textures/model/block/altar9.png");
 	val anomalies = ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png")
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")

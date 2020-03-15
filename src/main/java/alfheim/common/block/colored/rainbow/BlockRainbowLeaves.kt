@@ -27,12 +27,6 @@ class BlockRainbowLeaves: BlockLeavesMod() {
 	
 	override fun func_150125_e() = arrayOf("rainbowLeaves")
 	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
-	
 	override fun isInterpolated() = true
 	
 	override fun decayBit() = 0x1

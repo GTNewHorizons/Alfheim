@@ -43,7 +43,7 @@ object LibOreDict {
 	const val RAINBOW_QUARTZ = "quartzRainbow"
 	const val RAINBOW_QUARTZ_BLOCK = "blockQuartzRainbow"
 	
-	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated")
+	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated", "Wisdom")
 	
 	val EMERALD = "gemEmerald"
 	val GLOWSTONE_DUST = "dustGlowstone"

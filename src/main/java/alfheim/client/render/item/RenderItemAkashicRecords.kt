@@ -26,6 +26,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 	override fun renderItem(type: IItemRenderer.ItemRenderType, stack: ItemStack, vararg data: Any?) {
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		glAlphaFunc(GL_GREATER, 0f)
 		glPushMatrix()
 		
 		val frame = if (type == IItemRenderer.ItemRenderType.EQUIPPED || type == IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
@@ -45,7 +46,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 			glRotatef(-5f, 1f, 0f, 0f)
 		}
 		
-		val renders = arrayOf(LibResourceLocations.akashikCube to "Cylinder.0", LibResourceLocations.akashikCyl to "Cylinder.6")
+		val renders = arrayOf(LibResourceLocations.akashicCube to "Cylinder.0", LibResourceLocations.akashicCyl to "Cylinder.6")
 		
 		fun wrap(part: String, f: () -> Unit) {
 			glPushMatrix()
@@ -104,7 +105,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 		}
 		glColor3f(1f, 1f, 1f)
 		
-		mc.renderEngine.bindTexture((if (ConfigHandler.useShaders) LibResourceLocations.akashikCube else LibResourceLocations.akashikCube_))
+		mc.renderEngine.bindTexture((if (ConfigHandler.useShaders) LibResourceLocations.akashicCube else LibResourceLocations.akashicCube_))
 		
 		glDisable(GL_CULL_FACE)
 		for (i in -110..110 step 110) {
@@ -153,6 +154,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 		
 		glPopMatrix()
 		glDisable(GL_BLEND)
+		glAlphaFunc(GL_GREATER, 0.1f)
 	}
 	
 	override fun handleRenderType(item: ItemStack?, type: IItemRenderer.ItemRenderType?) = true

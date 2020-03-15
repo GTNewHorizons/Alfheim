@@ -18,13 +18,11 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
-import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), ILexiconable {
+class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood) {
 	
-	lateinit var iconsTop: Array<IIcon?>
-	lateinit var iconsSide: Array<IIcon?>
+	lateinit var icons: Array<Array<IIcon?>>
 	
 	init {
 		setBlockName("altWood$set")
@@ -34,11 +32,18 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), ILexicon
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
-	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
+	override fun getBlockHardness(world: World, x: Int, y: Int, z: Int) =
+		if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) -1f else super.getBlockHardness(world, x, y, z)
 	
-	override fun isWood(world: IBlockAccess?, x: Int, y: Int, z: Int) = true
+	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z) != BlockAltLeaves.yggMeta
+	
+	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z) != BlockAltLeaves.yggMeta
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {
+		if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) {
+			return super.breakBlock(world, x, y, z, block, fortune)
+		}
+		
 		val b0: Byte = 4
 		val i1: Int = b0 + 1
 		
@@ -58,13 +63,13 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), ILexicon
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemUniqueSubtypedBlockMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemUniqueSubtypedBlockMod::class.java, name)
 	}
 	
-	override fun getTopIcon(meta: Int) = iconsTop[meta % (if (set == 1) 2 else 4)]
+	override fun getTopIcon(meta: Int) = icons[0][meta % (if (set == 1) 3 else 4)]
 	
-	override fun getSideIcon(meta: Int) = iconsSide[meta % (if (set == 1) 2 else 4)]
+	override fun getSideIcon(meta: Int) = icons[1][meta % (if (set == 1) 3 else 4)]
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
 		if (list != null && item != null) {
@@ -76,28 +81,25 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), ILexicon
 			} else {
 				list.add(ItemStack(this, 1, 0))
 				list.add(ItemStack(this, 1, 1))
+				list.add(ItemStack(this, 1, 2))
 			}
 		}
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
-		iconsTop = Array(if (set == 0) 4 else 2) { i ->
-			if (set == 0 && i == 3) null else IconHelper.forName(par1IconRegister, "altOak${ALT_TYPES[(set * 4) + i]}Top")
-		}
-		iconsSide = Array(if (set == 0) 4 else 2) { i ->
-			if (set == 0 && i == 3) null else IconHelper.forName(par1IconRegister, "altOak${ALT_TYPES[(set * 4) + i]}Side")
-		}
+	override fun registerBlockIcons(reg: IIconRegister) {
+		icons = arrayOf( Array(if (set == 0) 4 else 3) { i -> if (set == 0 && i == 3) null else IconHelper.forName(reg, "altOak${ALT_TYPES[(set * 4) + i]}Top") },
+						 Array(if (set == 0) 4 else 3) { i -> if (set == 0 && i == 3) null else IconHelper.forName(reg, "altOak${ALT_TYPES[(set * 4) + i]}Side") } )
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	override fun loadTextures(event: TextureStitchEvent.Pre) {
 		if (event.map.textureType == 0 && set == 0) {
-			iconsTop[3] = InterpolatedIconHelper.forName(event.map, "altOak${ALT_TYPES[3]}Top")
-			iconsSide[3] = InterpolatedIconHelper.forName(event.map, "altOak${ALT_TYPES[3]}Side")
+			icons[0][3] = InterpolatedIconHelper.forName(event.map, "altOak${ALT_TYPES[3]}Top")
+			icons[1][3] = InterpolatedIconHelper.forName(event.map, "altOak${ALT_TYPES[3]}Side")
 		}
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
+	override fun getEntry(p0: World, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = if (p0.getBlockMetadata(p1, p2, p3) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
 }

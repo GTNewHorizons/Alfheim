@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock, ILexiconable {
+class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock {
 	
 	init {
 		setBlockName("circuitWood")

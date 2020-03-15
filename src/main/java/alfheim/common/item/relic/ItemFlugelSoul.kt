@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.*
 import alfheim.common.core.helper.ElvenFlightHelper
@@ -20,7 +21,6 @@ import net.minecraft.entity.*
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.*
 import net.minecraft.entity.projectile.EntityThrowable
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.server.MinecraftServer
@@ -30,7 +30,6 @@ import net.minecraftforge.client.event.*
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL11.glScaled
 import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
 import vazkii.botania.client.core.handler.ClientTickHandler
@@ -44,13 +43,11 @@ import vazkii.botania.common.item.relic.ItemRelic
 import java.awt.Color
 import kotlin.math.*
 
+@Suppress("UNCHECKED_CAST")
 class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
-	
-	internal lateinit var signs: Array<IIcon>
 	
 	init {
 		creativeTab = AlfheimTab
-		MinecraftForge.EVENT_BUS.register(this)
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -140,169 +137,9 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 	}
 	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	fun onRenderWorldLast(event: RenderWorldLastEvent) {
-		val player = mc.thePlayer
-		val stack = player.currentEquippedItem
-		if (stack != null && stack.item === this)
-			render(stack, player, event.partialTicks)
-	}
-	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	fun onDrawScreenPost(e: RenderGameOverlayEvent.Post) {
-		if (e.type != ElementType.ALL) return
-		val player = mc.thePlayer
-		val stack = player.currentEquippedItem
-		if (stack != null && stack.item === this) renderHUD(e.resolution, player, stack)
-	}
-	
-	@SideOnly(Side.CLIENT)
-	fun render(stack: ItemStack, player: EntityPlayer, partialTicks: Float) {
-		val tess = Tessellator.instance
-		Tessellator.renderingWorldRenderer = false
-		
-		glPushMatrix()
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		val alpha = (sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).D).F * 0.5f + 0.5f) * 0.4f + 0.3f
-		
-		val posX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks
-		val posY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks
-		val posZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks
-		
-		glTranslated(posX - RenderManager.renderPosX, posY - RenderManager.renderPosY, posZ - RenderManager.renderPosZ)
-		
-		val base = getRotationBase(stack)
-		val angles = 360
-		val segAngles = angles / SEGMENTS
-		val shift = base - segAngles / 2f
-		
-		val u = 1f
-		val v = 0.25f
-		
-		val s = 3f
-		val m = 0.8f
-		val y = v * s * 2f
-		var y0 = 0f
-		
-		val segmentLookedAt = getSegmentLookedAt(stack, player)
-		
-		for (seg in 0 until SEGMENTS) {
-			var inside = false
-			val rotationAngle = (seg + 0.5f) * segAngles + shift
-			if (segmentLookedAt == seg) inside = true
-			
-			glPushMatrix()
-			glRotatef(rotationAngle, 0f, 1f, 0f)
-			glTranslatef(s * m, -0.75f, 0f)
-			
-			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
-			glScaled(0.75)
-			glTranslatef(0f, 0f, 0.5f)
-			val icon = signs[seg]
-			glRotatef(90f, 0f, 1f, 0f)
-			glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).F, (if (!isDisabled(stack, seg)) 1 else 0).F, if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1f else 0.2f)
-			val f = icon.minU
-			val f1 = icon.maxU
-			val f2 = icon.minV
-			val f3 = icon.maxV
-			ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 16f)
-			
-			glColor3f(1f, 1f, 1f)
-			glPopMatrix()
-			
-			glPushMatrix()
-			glRotatef(180f, 1f, 0f, 0f)
-			var a = alpha
-			if (inside) {
-				a += 0.3f
-				y0 = -y
-			}
-			
-			val c = if (seg % 2 == 0) 0.6f else 1f
-			if (isDisabled(stack, seg))
-				glColor4f(c, 0f, 0f, a)
-			else
-				glColor4f(c, c, c, a)
-			
-			mc.renderEngine.bindTexture(if (isDisabled(stack, seg)) LibResourceLocations.glow else LibResourceLocations.glowCyan)
-			tess.startDrawingQuads()
-			for (i in 0 until segAngles) {
-				val ang = i.F + (seg * segAngles).F + shift
-				var xp = cos(ang * Math.PI / 180f) * s
-				var zp = sin(ang * Math.PI / 180f) * s
-				
-				tess.addVertexWithUV(xp * m, y.D, zp * m, u.D, v.D)
-				tess.addVertexWithUV(xp, y0.D, zp, u.D, 0.0)
-				
-				xp = cos((ang + 1) * Math.PI / 180f) * s
-				zp = sin((ang + 1) * Math.PI / 180f) * s
-				
-				tess.addVertexWithUV(xp, y0.D, zp, 0.0, 0.0)
-				tess.addVertexWithUV(xp * m, y.D, zp * m, 0.0, v.D)
-			}
-			y0 = 0f
-			tess.draw()
-			
-			glPopMatrix()
-		}
-		glPopMatrix()
-	}
-	
-	@SideOnly(Side.CLIENT)
-	fun renderHUD(resolution: ScaledResolution, player: EntityPlayer, stack: ItemStack) {
-		val slot = getSegmentLookedAt(stack, player)
-		val pos = getWarpPoint(stack, slot)
-		
-		val font = mc.fontRenderer
-		var s = StatCollector.translateToLocal("item.FlugelSoul.sign$slot")
-		font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 65, if (isDisabled(stack, slot)) 0xAAAAAA else 0xFFD409)
-		
-		when {
-			pos.isValid             -> {
-				val dist = Vector3.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).mfloor()
-				
-				if (pos.dim != player.dimension) {
-					s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
-					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 50, 0x9999FF)
-				}
-				s = if (dist == 1) StatCollector.translateToLocal("item.FlugelSoul.blockAway") else String.format(StatCollector.translateToLocal("item.FlugelSoul.blocksAway"), dist)
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0x9999FF)
-				s = StatCollector.translateToLocal("item.FlugelSoul.clickToTeleport")
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
-				s = StatCollector.translateToLocal("item.FlugelSoul.clickToRemoveWarp")
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 20, 0xFFFFFF)
-			}
-			isDisabled(stack, slot) -> {
-				s = StatCollector.translateToLocal("item.FlugelSoul.blockedWarp")
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xAAAAAA)
-			}
-			else                    -> {
-				s = StatCollector.translateToLocal("item.FlugelSoul.unboundWarp")
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xFFFFFF)
-				s = StatCollector.translateToLocal("item.FlugelSoul.clickToAddWarp")
-				font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
-			}
-		}
-	}
-	
-	class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
-		
-		internal val isValid: Boolean
-			get() = y > 0 && (!ASJUtilities.isServer || MinecraftServer.getServer().worldServerForDimension(dim) != null)
-		
-		internal fun mana(player: EntityPlayer): Int {
-			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0
-			return (Vector3.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod).mfloor() * 10
-		}
-	}
-	
 	companion object {
 		
 		const val SEGMENTS = 12
-		val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
 		
 		const val TAG_ATTACKER_ID = "attackerId"
 		const val TAG_EQUIPPED = "equipped"
@@ -320,7 +157,163 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		const val TAG_TIME_LEFT = "timeLeft"
 		const val MAX_FLY_TIME = 1200
 		
-		fun getSegmentLookedAt(stack: ItemStack, player: EntityLivingBase): Int {
+		val FALLBACK_POSITION = MultiversePosition(0.0, -1.0, 0.0, 0)
+		
+		lateinit var signs: Array<IIcon>
+		
+		init {
+			MinecraftForge.EVENT_BUS.register(this)
+		}
+		
+		@SubscribeEvent
+		@SideOnly(Side.CLIENT)
+		fun onRenderWorldLast(event: RenderWorldLastEvent) {
+			val player = mc.thePlayer
+			val stack = player.currentEquippedItem
+			if (stack != null && stack.item === AlfheimItems.flugelSoul)
+				render(stack, player, event.partialTicks)
+		}
+		
+		@SubscribeEvent
+		@SideOnly(Side.CLIENT)
+		fun onDrawScreenPost(e: RenderGameOverlayEvent.Post) {
+			if (e.type != ElementType.ALL) return
+			
+			val player = mc.thePlayer
+			val stack = player.currentEquippedItem
+			if (stack != null && stack.item === AlfheimItems.flugelSoul) renderHUD(e.resolution, player, stack)
+		}
+		
+		@SideOnly(Side.CLIENT)
+		fun render(stack: ItemStack, player: EntityPlayer, partialTicks: Float) {
+			val tess = Tessellator.instance
+			Tessellator.renderingWorldRenderer = false
+			
+			glPushMatrix()
+			glEnable(GL_BLEND)
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+			val alpha = (sin(((ClientTickHandler.ticksInGame + partialTicks) * 0.2f).D).F * 0.5f + 0.5f) * 0.4f + 0.3f
+			
+			ASJRenderHelper.interpolatedTranslation(player)
+			glTranslated(-RenderManager.renderPosX, -RenderManager.renderPosY, -RenderManager.renderPosZ)
+			
+			val base = getRotationBase(stack)
+			val angles = 360
+			val segAngles = angles / SEGMENTS
+			val shift = base - segAngles / 2f
+			
+			val u = 1f
+			val v = 0.25f
+			
+			val s = 3f
+			val m = 0.8f
+			val y = v * s * 2f
+			var y0 = 0f
+			
+			val segmentLookedAt = getSegmentLookedAt(stack, player)
+			
+			for (seg in 0 until SEGMENTS) {
+				var inside = false
+				val rotationAngle = (seg + 0.5f) * segAngles + shift
+				if (segmentLookedAt == seg) inside = true
+				
+				glPushMatrix()
+				glRotatef(rotationAngle, 0f, 1f, 0f)
+				glTranslatef(s * m, -0.75f, 0f)
+				
+				mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
+				glScaled(0.75)
+				glTranslatef(0f, 0f, 0.5f)
+				val icon = signs[seg]
+				glRotatef(90f, 0f, 1f, 0f)
+				glColor4f(1f, (if (!isDisabled(stack, seg)) 1 else 0).F, (if (!isDisabled(stack, seg)) 1 else 0).F, if (getWarpPoint(stack, seg).isValid && !isDisabled(stack, seg)) 1f else 0.2f)
+				val f = icon.minU
+				val f1 = icon.maxU
+				val f2 = icon.minV
+				val f3 = icon.maxV
+				ItemRenderer.renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.iconWidth, icon.iconHeight, 1f / 16f)
+				
+				glColor3f(1f, 1f, 1f)
+				glPopMatrix()
+				
+				glPushMatrix()
+				glRotatef(180f, 1f, 0f, 0f)
+				var a = alpha
+				if (inside) {
+					a += 0.3f
+					y0 = -y
+				}
+				
+				val c = if (seg % 2 == 0) 0.6f else 1f
+				if (isDisabled(stack, seg))
+					glColor4f(c, 0f, 0f, a)
+				else
+					glColor4f(c, c, c, a)
+				
+				mc.renderEngine.bindTexture(if (isDisabled(stack, seg)) LibResourceLocations.glow else LibResourceLocations.glowCyan)
+				tess.startDrawingQuads()
+				for (i in 0 until segAngles) {
+					val ang = i.F + (seg * segAngles).F + shift
+					var xp = cos(ang * Math.PI / 180f) * s
+					var zp = sin(ang * Math.PI / 180f) * s
+					
+					tess.addVertexWithUV(xp * m, y.D, zp * m, u.D, v.D)
+					tess.addVertexWithUV(xp, y0.D, zp, u.D, 0.0)
+					
+					xp = cos((ang + 1) * Math.PI / 180f) * s
+					zp = sin((ang + 1) * Math.PI / 180f) * s
+					
+					tess.addVertexWithUV(xp, y0.D, zp, 0.0, 0.0)
+					tess.addVertexWithUV(xp * m, y.D, zp * m, 0.0, v.D)
+				}
+				y0 = 0f
+				tess.draw()
+				
+				glPopMatrix()
+			}
+			glPopMatrix()
+		}
+		
+		@SideOnly(Side.CLIENT)
+		fun renderHUD(resolution: ScaledResolution, player: EntityPlayer, stack: ItemStack) {
+			val slot = getSegmentLookedAt(stack, player)
+			val pos = getWarpPoint(stack, slot)
+			
+			val font = mc.fontRenderer
+			var s = StatCollector.translateToLocal("item.FlugelSoul.sign$slot")
+			font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 65, if (isDisabled(stack, slot)) 0xAAAAAA else 0xFFD409)
+			
+			when {
+				pos.isValid             -> {
+					val dist = Vector3.pointDistanceSpace(pos.x, pos.y, pos.z, player.posX, player.posY - 1.6, player.posZ).mfloor()
+					
+					if (pos.dim != player.dimension) {
+						s = String.format(StatCollector.translateToLocal("item.FlugelSoul.anotherDim"), pos.dim)
+						font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 50, 0x9999FF)
+					}
+					s = if (dist == 1) StatCollector.translateToLocal("item.FlugelSoul.blockAway") else String.format(StatCollector.translateToLocal("item.FlugelSoul.blocksAway"), dist)
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0x9999FF)
+					s = StatCollector.translateToLocal("item.FlugelSoul.clickToTeleport")
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
+					s = StatCollector.translateToLocal("item.FlugelSoul.clickToRemoveWarp")
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 20, 0xFFFFFF)
+				}
+				
+				isDisabled(stack, slot) -> {
+					s = StatCollector.translateToLocal("item.FlugelSoul.blockedWarp")
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xAAAAAA)
+				}
+				
+				else                    -> {
+					s = StatCollector.translateToLocal("item.FlugelSoul.unboundWarp")
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 40, 0xFFFFFF)
+					s = StatCollector.translateToLocal("item.FlugelSoul.clickToAddWarp")
+					font.drawStringWithShadow(s, resolution.scaledWidth / 2 - font.getStringWidth(s) / 2, resolution.scaledHeight / 2 - 30, 0xFFFFFF)
+				}
+			}
+		}
+		
+		fun getSegmentLookedAt(stack: ItemStack, player: Entity): Int {
 			val yaw = getCheckingAngle(player, getRotationBase(stack))
 			
 			val angles = 360
@@ -332,13 +325,13 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			return 0
 		}
 		
-		fun getCheckingAngle(player: EntityLivingBase): Float {
+		fun getCheckingAngle(player: Entity): Float {
 			return getCheckingAngle(player, 0f)
 		}
 		
 		// Screw the way minecraft handles rotation
 		// Really...
-		fun getCheckingAngle(player: EntityLivingBase, base: Float): Float {
+		fun getCheckingAngle(player: Entity, base: Float): Float {
 			var yaw = MathHelper.wrapAngleTo180_float(player.rotationYaw) + 90f
 			val angles = 360
 			val segAngles = angles / SEGMENTS
@@ -419,6 +412,17 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		fun getFirstCoords(stack: ItemStack): ChunkCoordinates {
 			val pos = getWarpPoint(stack, getBlocked(stack))
 			return ChunkCoordinates(pos.x.I, pos.y.I, pos.z.I)
+		}
+	}
+	
+	class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
+		
+		internal val isValid: Boolean
+			get() = y > 0 && (!ASJUtilities.isServer || MinecraftServer.getServer().worldServerForDimension(dim) != null)
+		
+		internal fun mana(player: EntityPlayer): Int {
+			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0
+			return (Vector3.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod).mfloor() * 10
 		}
 	}
 	

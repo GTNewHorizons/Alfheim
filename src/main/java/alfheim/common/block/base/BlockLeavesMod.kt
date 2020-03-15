@@ -43,6 +43,15 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	override fun getBlockColor() = 0xFFFFFF
+	
+	@SideOnly(Side.CLIENT)
+	override fun getRenderColor(meta: Int) = 0xFFFFFF
+	
+	@SideOnly(Side.CLIENT)
+	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
+	
+	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int): IIcon? {
 		setGraphicsLevel(mc.gameSettings.fancyGraphics)
 		return icons[if (field_150121_P) 0 else 1]
@@ -170,9 +179,7 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 			
 			l1 = decayField!![k1 * j1 + k1 * b1 + k1]
 			
-			if (l1 >= 0) {
-			} else removeLeaves(world, x, y, z)
-			
+			if (l1 < 0) removeLeaves(world, x, y, z)
 		}
 	}
 	
@@ -181,7 +188,7 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 	
 	abstract fun decayBit(): Int
 	
-	fun canDecay(meta: Int) = meta and decayBit() == 0
+	open fun canDecay(meta: Int) = meta and decayBit() == 0
 	
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	

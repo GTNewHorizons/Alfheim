@@ -20,15 +20,6 @@ class BlockCircuitLeaves: BlockLeavesMod(), ICircuitBlock, ILexiconable {
 	
 	override fun isInterpolated() = true
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor(): Int = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
-	
 	override fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}

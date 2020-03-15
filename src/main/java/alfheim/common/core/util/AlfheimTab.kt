@@ -6,6 +6,9 @@ import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.altLeaves
+import alfheim.common.block.AlfheimBlocks.altPlanks
+import alfheim.common.block.AlfheimBlocks.altSlabs
+import alfheim.common.block.AlfheimBlocks.altStairs
 import alfheim.common.block.AlfheimBlocks.altWood0
 import alfheim.common.block.AlfheimBlocks.altWood1
 import alfheim.common.block.AlfheimBlocks.amplifier
@@ -18,10 +21,16 @@ import alfheim.common.block.AlfheimBlocks.auroraSlab
 import alfheim.common.block.AlfheimBlocks.auroraStairs
 import alfheim.common.block.AlfheimBlocks.auroraWood
 import alfheim.common.block.AlfheimBlocks.calicoLeaves
+import alfheim.common.block.AlfheimBlocks.calicoPlanks
 import alfheim.common.block.AlfheimBlocks.calicoSapling
+import alfheim.common.block.AlfheimBlocks.calicoSlabs
+import alfheim.common.block.AlfheimBlocks.calicoStairs
 import alfheim.common.block.AlfheimBlocks.calicoWood
 import alfheim.common.block.AlfheimBlocks.circuitLeaves
+import alfheim.common.block.AlfheimBlocks.circuitPlanks
 import alfheim.common.block.AlfheimBlocks.circuitSapling
+import alfheim.common.block.AlfheimBlocks.circuitSlabs
+import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
 import alfheim.common.block.AlfheimBlocks.dreamLeaves
 import alfheim.common.block.AlfheimBlocks.dreamLog
@@ -46,14 +55,20 @@ import alfheim.common.block.AlfheimBlocks.irisWood3
 import alfheim.common.block.AlfheimBlocks.itemDisplay
 import alfheim.common.block.AlfheimBlocks.kindling
 import alfheim.common.block.AlfheimBlocks.lightningLeaves
+import alfheim.common.block.AlfheimBlocks.lightningPlanks
 import alfheim.common.block.AlfheimBlocks.lightningSapling
+import alfheim.common.block.AlfheimBlocks.lightningSlabs
+import alfheim.common.block.AlfheimBlocks.lightningStairs
 import alfheim.common.block.AlfheimBlocks.lightningWood
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.livingwoodFunnel
 import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.manaInfuser
 import alfheim.common.block.AlfheimBlocks.netherLeaves
+import alfheim.common.block.AlfheimBlocks.netherPlanks
 import alfheim.common.block.AlfheimBlocks.netherSapling
+import alfheim.common.block.AlfheimBlocks.netherSlabs
+import alfheim.common.block.AlfheimBlocks.netherStairs
 import alfheim.common.block.AlfheimBlocks.netherWood
 import alfheim.common.block.AlfheimBlocks.powerStone
 import alfheim.common.block.AlfheimBlocks.rainbowDirt
@@ -73,7 +88,10 @@ import alfheim.common.block.AlfheimBlocks.schemaFiller
 import alfheim.common.block.AlfheimBlocks.schemaGenerator
 import alfheim.common.block.AlfheimBlocks.schemaMarker
 import alfheim.common.block.AlfheimBlocks.sealingLeaves
+import alfheim.common.block.AlfheimBlocks.sealingPlanks
 import alfheim.common.block.AlfheimBlocks.sealingSapling
+import alfheim.common.block.AlfheimBlocks.sealingSlabs
+import alfheim.common.block.AlfheimBlocks.sealingStairs
 import alfheim.common.block.AlfheimBlocks.sealingWood
 import alfheim.common.block.AlfheimBlocks.shimmerQuartz
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
@@ -109,6 +127,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
+import alfheim.common.item.AlfheimItems.akashicRecords
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.attributionBauble
 import alfheim.common.item.AlfheimItems.auraRingElven
@@ -157,7 +176,6 @@ import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
-import alfheim.common.item.AlfheimItems.raceNullifier
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFire
@@ -292,9 +310,9 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)
+		addItem (akashicRecords)
 		addItem (wireAxe)
 		addItem (trisDagger)
-		if (AlfheimCore.enableElvenStory) addItem (raceNullifier)
 		
 		addBlock(lightningWood)
 		addBlock(netherWood)
@@ -304,6 +322,27 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dreamLog)
 		addBlock(altWood0)
 		addBlock(altWood1)
+		
+		addBlock(lightningPlanks)
+		addBlock(netherPlanks)
+		addBlock(circuitPlanks)
+		addBlock(calicoPlanks)
+		addBlock(sealingPlanks)
+		addBlock(altPlanks)
+		
+		addBlock(lightningStairs)
+		addBlock(netherStairs)
+		addBlock(circuitStairs)
+		addBlock(calicoStairs)
+		addBlock(sealingStairs)
+		altStairs.forEach { addBlock(it) }
+		
+		addBlock(lightningSlabs)
+		addBlock(netherSlabs)
+		addBlock(circuitSlabs)
+		addBlock(calicoSlabs)
+		addBlock(sealingSlabs)
+		altSlabs.forEach { addBlock(it) }
 		
 		addBlock(lightningLeaves)
 		addBlock(netherLeaves)
@@ -369,36 +408,41 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dwarfPlanks)
 		
 		addBlock(irisDirt)
+		addBlock(rainbowDirt)
+		addBlock(auroraDirt)
+		
 		addBlock(irisWood0)
 		addBlock(irisWood1)
 		addBlock(irisWood2)
 		addBlock(irisWood3)
+		addBlock(rainbowWood)
+		addBlock(auroraWood)
+		
 		addBlock(irisPlanks)
+		addBlock(rainbowPlanks)
+		addBlock(auroraPlanks)
+		
 		irisStairs.forEach { addBlock(it) }
+		addBlock(rainbowStairs)
+		addBlock(auroraStairs)
+		
 		irisSlabs.forEach { addBlock(it) }
+		addBlock(rainbowSlab)
+		addBlock(auroraSlab)
+		
 		addBlock(irisLeaves0)
 		addBlock(irisLeaves1)
+		addBlock(rainbowLeaves)
+		addBlock(auroraLeaves)
+		
 		addBlock(irisGrass)
+		addBlock(rainbowGrass, 0)
+		addBlock(rainbowGrass, 1)
+		
 		addBlock(irisTallGrass0)
 		addBlock(irisTallGrass1)
-		
-		addBlock(auroraDirt)
-		addBlock(auroraWood)
-		addBlock(auroraPlanks)
-		addBlock(auroraStairs)
-		addBlock(auroraSlab)
-		addBlock(auroraLeaves)
-		addBlock(rainbowGrass, 1)
+		addBlock(rainbowTallGrass, 0)
 		addBlock(rainbowTallGrass, 1)
-		
-		addBlock(rainbowDirt)
-		addBlock(rainbowWood)
-		addBlock(rainbowPlanks)
-		addBlock(rainbowStairs)
-		addBlock(rainbowSlab)
-		addBlock(rainbowLeaves)
-		addBlock(rainbowGrass)
-		addBlock(rainbowTallGrass)
 		
 		addBlock(rainbowTallFlower)
 		addBlock(rainbowGrass, 2)
