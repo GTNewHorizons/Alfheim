@@ -1,6 +1,6 @@
 package alfheim.common.block.base
 
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -28,11 +28,11 @@ abstract class BlockSlabMod(val full: Boolean, val meta: Int, val source: Block,
 		source.getBlockHardness(world, x, y, z)
 	
 	@SideOnly(Side.CLIENT)
-	override fun getIcon(par1: Int, par2: Int) = source.getIcon(par1, par2)!!
+	override fun getIcon(side: Int, meta: Int) = source.getIcon(side, meta)!!
 	
 	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int) = ItemStack(getSingleBlock())
 	
-	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Item.getItemFromBlock(getSingleBlock())!!
+	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = getSingleBlock().toItem()
 	
 	public override fun createStackedBlock(par1: Int) = ItemStack(getSingleBlock())
 	

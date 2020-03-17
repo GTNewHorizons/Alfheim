@@ -4,7 +4,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
@@ -86,7 +86,7 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	internal fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemSubtypedBlockMod::class.java, name)
@@ -106,5 +106,5 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 300 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 300 else 0
 }

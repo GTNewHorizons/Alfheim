@@ -32,8 +32,6 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
-import alfheim.common.block.AlfheimBlocks.dreamLeaves
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -203,7 +201,7 @@ import vazkii.botania.common.block.ModBlocks
 
 object AlfheimTab: CreativeTabs("Alfheim") {
 	
-	override fun getTabIconItem() = Item.getItemFromBlock(alfheimPortal)!!
+	override fun getTabIconItem() = alfheimPortal.toItem()
 	
 	lateinit var list: MutableList<Any?>
 	
@@ -319,7 +317,6 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(circuitWood)
 		addBlock(calicoWood)
 		addBlock(sealingWood)
-		addBlock(dreamLog)
 		addBlock(altWood0)
 		addBlock(altWood1)
 		
@@ -342,14 +339,13 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(circuitSlabs)
 		addBlock(calicoSlabs)
 		addBlock(sealingSlabs)
-		altSlabs.forEach { addBlock(it) }
+		addBlock(altSlabs)
 		
 		addBlock(lightningLeaves)
 		addBlock(netherLeaves)
 		addBlock(circuitLeaves)
 		addBlock(calicoLeaves)
 		addBlock(sealingLeaves)
-		addBlock(dreamLeaves)
 		addBlock(altLeaves)
 		
 		addBlock(lightningSapling)

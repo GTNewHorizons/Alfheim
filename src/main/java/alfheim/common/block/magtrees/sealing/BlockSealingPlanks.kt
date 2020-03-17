@@ -25,8 +25,6 @@ class BlockSealingPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun getVolumeMultiplier(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = 0.5f
 	
-	override fun isInterpolated() = true
-	
 	override fun isToolEffective(type: String?, metadata: Int) = (type != null && type == "axe")
 	
 	override fun getHarvestTool(metadata: Int) = "axe"

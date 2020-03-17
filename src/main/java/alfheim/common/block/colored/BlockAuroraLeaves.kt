@@ -2,6 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -31,7 +32,7 @@ class BlockAuroraLeaves : BlockLeavesMod(), ILexiconable {
 	
 	override fun decayBit(): Int = 0x8
 	
-	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int) =	Item.getItemFromBlock(AlfheimBlocks.irisSapling)!!
+	override fun getItemDropped(p_149650_1_: Int, p_149650_2_: Random?, p_149650_3_: Int) =	AlfheimBlocks.irisSapling.toItem()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.aurora
 }

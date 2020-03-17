@@ -4,10 +4,12 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.entity.*
 import alfheim.api.lib.LibShaderIDs
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World

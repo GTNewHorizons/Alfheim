@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.calico
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -24,7 +25,7 @@ class BlockCalicoLeaves : BlockLeavesMod(), IExplosionDampener, ILexiconable {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.calicoSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.calicoSapling.toItem()
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	

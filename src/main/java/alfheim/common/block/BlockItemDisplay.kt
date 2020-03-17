@@ -66,10 +66,10 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
 	}
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		for (i in 0 until TYPES) {
-			icons[i] = IconHelper.forBlock(par1IconRegister, this, i)
-			sideIcons[i] = IconHelper.forBlock(par1IconRegister, this, "Side$i")
+			icons[i] = IconHelper.forBlock(reg, this, i)
+			sideIcons[i] = IconHelper.forBlock(reg, this, "Side$i")
 		}
 		
 	}

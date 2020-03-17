@@ -95,7 +95,7 @@ object ItemsRemainingRenderHandler {
 		ItemsRemainingRenderHandler.stack = stack
 		ItemsRemainingRenderHandler.count = count
 		customString = str
-		ticks = if (stack.item === Item.getItemFromBlock(Blocks.air)) 0 else maxTicks
+		ticks = if (stack.item === Blocks.air.toItem()) 0 else maxTicks
 	}
 	
 	operator fun set(player: EntityPlayer, displayStack: ItemStack, pattern: Pattern) {
@@ -110,6 +110,6 @@ object ItemsRemainingRenderHandler {
 	}
 	
 	fun isNotEmpty(stack: ItemStack): Boolean {
-		return stack.item !== Item.getItemFromBlock(Blocks.air)
+		return stack.item !== Blocks.air.toItem()
 	}
 }

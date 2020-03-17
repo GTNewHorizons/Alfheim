@@ -93,7 +93,7 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hx: Float, hy: Float, hz: Float): Boolean {
 		val meta = world.getBlockMetadata(x, y, z)
-		if (player.currentEquippedItem?.item === Item.getItemFromBlock(this) && meta < 7) world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
+		if (player.currentEquippedItem?.item === this.toItem() && meta < 7) world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
 		
 		if (player.currentEquippedItem == null && meta > 0) {
 			world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3)

@@ -4,7 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.I
+import alfheim.common.core.util.*
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimModule.liquidMauftrium
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -54,8 +54,8 @@ object TinkersConstructAlfheimConfig {
 		if (AlfheimConfigHandler.materialIDs[5] != -1) addMaterial(AlfheimConfigHandler.materialIDs[5], "Livingwood",	1, 175, 550, 3,						1.1f,	Color(0x4D2113).rgb, EnumChatFormatting.DARK_RED.toString(),	16, 3.4f, 0.7F, 0.8F)
 		if (AlfheimConfigHandler.materialIDs[6] != -1) addMaterial(AlfheimConfigHandler.materialIDs[6], "Dreamwood",	1, 200, 600, 3,						1.2f,	Color(0xCED9D9).rgb, EnumChatFormatting.GRAY.toString(),		24, 3.2f, 0.6F, 1.1F)
 		
-		if (AlfheimConfigHandler.materialIDs[5] != -1) addPartBuilderMaterial(AlfheimConfigHandler.materialIDs[5], ModItems.manaResource,	3,	Item.getItemFromBlock(ModBlocks.livingwood),	0, 4)
-		if (AlfheimConfigHandler.materialIDs[6] != -1) addPartBuilderMaterial(AlfheimConfigHandler.materialIDs[6], ModItems.manaResource,	13,	Item.getItemFromBlock(ModBlocks.dreamwood),		0, 4)
+		if (AlfheimConfigHandler.materialIDs[5] != -1) ModBlocks.livingwood	.toItem()?.let { addPartBuilderMaterial(AlfheimConfigHandler.materialIDs[5], ModItems.manaResource,	3,	it,	0, 4) }
+		if (AlfheimConfigHandler.materialIDs[6] != -1) ModBlocks.dreamwood	.toItem()?.let { addPartBuilderMaterial(AlfheimConfigHandler.materialIDs[6], ModItems.manaResource,	13,	it,	0, 4) }
 		
 		// Bowstring
 		if (AlfheimConfigHandler.materialIDs[7] != -1) TConstructRegistry.addBowstringMaterial(AlfheimConfigHandler.materialIDs[7], 2, ItemStack(ModItems.manaResource, 1, 12), ItemStack(TinkersConstructAlfheimModule.naturalMaterial),			0.9f, 0.8f, 1.2f, Color(0xE52222).rgb)
@@ -171,7 +171,7 @@ object TinkersConstructAlfheimConfig {
 	 * Renders as is
 	 */
 	fun addSmelteryMelting(block: Block, blockMeta: Int, fluid: Fluid, cost: Int)
-		= addSmelteryMelting(Item.getItemFromBlock(block), blockMeta, block, blockMeta, fluid, cost)
+		= block.toItem()?.let { addSmelteryMelting(it, blockMeta, block, blockMeta, fluid, cost) }
 	
 	/**
 	 * Add [item] with [itemMeta] to become smeltable to [cost] mB of [fluid]

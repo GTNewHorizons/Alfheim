@@ -81,7 +81,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		if (!InteractionSecurity.canDoSomethingHere(player, x, y, z)) return
 		if (!ManaItemHandler.requestManaExact(requestor, player, 320, true)) return
 		
-		val block = Block.getBlockFromItem(blockToPlace.item)
+		val block = blockToPlace.item.toBlock()
 		val meta = blockToPlace.meta
 		player.worldObj.setBlock(x, y, z, block, meta, 3)
 		player.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block))

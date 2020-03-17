@@ -140,7 +140,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 100 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 100 else 0
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(par1IconRegister: IIconRegister) {

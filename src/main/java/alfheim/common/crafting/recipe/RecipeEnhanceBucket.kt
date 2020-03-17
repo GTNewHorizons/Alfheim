@@ -3,7 +3,7 @@ package alfheim.common.crafting.recipe
 import alexsocol.asjlib.ASJUtilities
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.meta
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
 import net.minecraft.inventory.InventoryCrafting
@@ -68,7 +68,7 @@ class RecipeEnhanceBucket: IRecipe {
 	fun checkRequirements(meta: Int, stack: ItemStack): Boolean {
 		return when (meta) {
 			in 0..2	-> ASJUtilities.isOre(stack, LibOreDict.MAUFTRIUM_INGOT)
-			in 3..5	-> Block.getBlockFromItem(stack.item) === AlfheimBlocks.alfStorage && stack.meta == 1
+			in 3..5	-> stack.item.toBlock() === AlfheimBlocks.alfStorage && stack.meta == 1
 			else	-> false
 		}
 	}

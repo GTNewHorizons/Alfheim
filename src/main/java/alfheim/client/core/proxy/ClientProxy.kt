@@ -19,7 +19,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -62,7 +62,7 @@ class ClientProxy: CommonProxy() {
 		
 		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly)
+		MinecraftForgeClient.registerItemRenderer(AlfheimBlocks.anomaly.toItem(), RenderItemAnomaly)
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.akashicRecords, RenderItemAkashicRecords)
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		

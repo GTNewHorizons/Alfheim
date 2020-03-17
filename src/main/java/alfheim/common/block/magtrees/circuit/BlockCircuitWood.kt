@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
 class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock {
@@ -20,8 +19,6 @@ class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock {
 		blockHardness = 2f
 		tickRandomly = true
 	}
-	
-	override fun isInterpolated() = true
 	
 	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
@@ -43,18 +40,12 @@ class BlockCircuitWood: BlockModRotatedPillar(Material.wood), ICircuitBlock {
 		super.breakBlock(world, x, y, z, block, fortune)
 	}
 	
-	override fun isFireSource(world: World?, x: Int, y: Int, z: Int, side: ForgeDirection?) = true
-	
-	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
-	
-	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
-	
 	override fun damageDropped(meta: Int) = 0
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.circuitSapling

@@ -46,8 +46,6 @@ object AlfheimBlocks {
 	val auroraStairs: Block
 	val auroraWood: Block
 	val barrier: Block
-	val dreamLeaves: Block
-	val dreamLog: Block
 	val dreamSapling: Block
 	val elvenOres: Block
 	val elvenSand: Block
@@ -116,8 +114,8 @@ object AlfheimBlocks {
 	
 	val altLeaves: Block
 	val altPlanks: Block
-	val altSlabs: Array<Block>
-	val altSlabsFull: Array<Block>
+	val altSlabs: Block
+	val altSlabsFull: Block
 	val altStairs: Array<Block>
 	val altWood0: Block
 	val altWood1: Block
@@ -183,8 +181,6 @@ object AlfheimBlocks {
 		auroraStairs = BlockAuroraWoodStairs()
 		auroraWood = BlockAuroraWood()
 		barrier = BlockBarrier()
-		dreamLeaves = BlockDreamLeaves()
-		dreamLog = BlockDreamLog()
 		dreamSapling = BlockDreamSapling()
 		elvenOres = BlockElvenOres()
 		elvenSand = BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen)
@@ -259,11 +255,11 @@ object AlfheimBlocks {
 		
 		altLeaves = BlockAltLeaves()
 		altPlanks = BlockAltPlanks()
-		altSlabs = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodSlab(false, it) }
-		altSlabsFull = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodSlab(true, it) }
-		altSlabs.forEach { (it as BlockSlabMod).register() }
-		altSlabsFull.forEach { (it as BlockSlabMod).register() }
-		altStairs = Array(LibOreDict.ALT_TYPES.size) { BlockAltWoodStairs(it) }
+		altSlabs = BlockAltWoodSlab(false)
+		altSlabsFull = BlockAltWoodSlab(true)
+		(altSlabs as BlockSlabMod).register()
+		(altSlabsFull as BlockSlabMod).register()
+		altStairs = Array(LibOreDict.ALT_TYPES.size - 1) { if (it == BlockAltLeaves.yggMeta) BlockYggStairs() else BlockAltWoodStairs(it) }
 		altWood0 = BlockAltWood(0)
 		altWood1 = BlockAltWood(1)
 		
@@ -337,6 +333,8 @@ object AlfheimBlocks {
 		
 		registerOre("sand", ItemStack(elvenSand))
 		
+		registerOre(LibOreDict.DREAM_WOOD_LOG, ItemStack(altWood1, 1, 3))
+		
 		// ################
 		
 		registerOre(LibOreDict.RAINBOW_FLOWER, ItemStack(rainbowGrass, 1, 2))
@@ -349,10 +347,8 @@ object AlfheimBlocks {
 		
 		var t: ItemStack
 		
-		t = ItemStack(rainbowWood)
-		registerOre(LibOreDict.WOOD[16], t)
-		t = ItemStack(auroraWood)
-		registerOre(LibOreDict.WOOD[17], t)
+		registerOre(LibOreDict.WOOD[16], ItemStack(rainbowWood))
+		registerOre(LibOreDict.WOOD[17], ItemStack(auroraWood))
 		
 		registerOre(LibOreDict.DIRT[16], ItemStack(rainbowDirt))
 		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
@@ -394,40 +390,32 @@ object AlfheimBlocks {
 		registerOre("slabWood", ItemStack(sealingSlabs))
 		registerOre("stairWood", ItemStack(sealingStairs))
 		
+		
 		for (i in 0..3) {
-			t = ItemStack(irisWood0, 1, i)
-			registerOre(LibOreDict.WOOD[i], t)
+			registerOre(LibOreDict.WOOD[i], ItemStack(irisWood0, 1, i))
 			
-			t = ItemStack(irisWood1, 1, i)
-			registerOre(LibOreDict.WOOD[i + 4], t)
+			registerOre(LibOreDict.WOOD[i + 4], ItemStack(irisWood1, 1, i))
 			
-			t = ItemStack(irisWood2, 1, i)
-			registerOre(LibOreDict.WOOD[i + 8], t)
+			registerOre(LibOreDict.WOOD[i + 8], ItemStack(irisWood2, 1, i))
 			
-			t = ItemStack(irisWood3, 1, i)
-			registerOre(LibOreDict.WOOD[i + 12], t)
+			registerOre(LibOreDict.WOOD[i + 12], ItemStack(irisWood3, 1, i))
 		}
 		
 		for (i in 0..7) {
-			t = ItemStack(irisLeaves0, 1, i)
-			registerOre(LibOreDict.LEAVES[i], t)
-			
-			t = ItemStack(irisLeaves1, 1, i)
-			registerOre(LibOreDict.LEAVES[i + 8], t)
+			registerOre(LibOreDict.LEAVES[i], ItemStack(irisLeaves0, 1, i))
+			registerOre(LibOreDict.LEAVES[i + 8], ItemStack(irisLeaves1, 1, i))
 		}
 		
 		for (i in 0..5) {
-			t = ItemStack(altStairs[i], 1)
-			registerOre("stairWood", t)
+			registerOre("stairWood", ItemStack(altStairs[i], 1))
 			
-			t = ItemStack(altSlabs[i], 1)
-			registerOre("slabWood", t)
+			registerOre("treeLeaves", ItemStack(altLeaves, 1, i))
+		}
+		
+		for (i in 0 until LibOreDict.ALT_TYPES.size - 1) {
+			registerOre("slabWood", ItemStack(altSlabs, 1, i))
 			
-			t = ItemStack(altSlabsFull[i], 1)
-			registerOre("slabWood", t)
-			
-			t = ItemStack(altLeaves, 1, i)
-			registerOre("treeLeaves", t)
+			registerOre("slabWood", ItemStack(altSlabsFull, 1, i))
 		}
 		
 		for (i in 0..15) {
@@ -513,8 +501,8 @@ object AlfheimBlocks {
 	fun registerBurnables() {
 		setBurnable(altLeaves, 30, 60)
 		setBurnable(altPlanks, 5, 20)
-		altSlabs.forEach { setBurnable(it, 5, 20) }
-		altSlabsFull.forEach { setBurnable(it, 5, 20) }
+		setBurnable(altSlabs, 5, 20)
+		setBurnable(altSlabsFull, 5, 20)
 		altStairs.forEach { setBurnable(it, 5, 20) }
 		setBurnable(altWood0, 5, 5)
 		setBurnable(altWood1, 5, 5)

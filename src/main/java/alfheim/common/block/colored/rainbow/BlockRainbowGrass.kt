@@ -133,7 +133,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 	override fun getItemDropped(meta: Int, rand: Random?, fortune: Int) = when (meta) {
 		GRASS, AURORA -> null
 		BURIED        -> AlfheimItems.elvenResource
-		else          -> Item.getItemFromBlock(this)
+		else          -> this.toItem()
 	}
 	
 	override fun onSheared(item: ItemStack, world: IBlockAccess, x: Int, y: Int, z: Int, fortune: Int): ArrayList<ItemStack> {

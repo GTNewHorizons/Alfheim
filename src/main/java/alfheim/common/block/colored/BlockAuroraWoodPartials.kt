@@ -2,6 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -36,7 +37,7 @@ open class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auro
     
     override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = (source as ILexiconable).getEntry(world, x, y, z, player, lexicon)!!
     
-    override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 150 else 0
+    override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
 }
 
 open class BlockAuroraWoodStairs(source: Block = AlfheimBlocks.auroraPlanks):

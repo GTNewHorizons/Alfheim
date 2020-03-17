@@ -159,7 +159,7 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
-			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 600 else 0
+			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 600 else 0
 		} else time
 	
 	@JvmStatic
@@ -167,7 +167,7 @@ object AlfheimHookHandler {
 	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
 		val stack = tile.getStackInSlot(0)
 		return if (stack != null && color == 0) {
-			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 0xf7f5d9 else 0
+			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
 	}
 	

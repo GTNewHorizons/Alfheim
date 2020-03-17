@@ -145,7 +145,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	}
 	
 	override fun getBurnTime(fuel: ItemStack): Int {
-		if (fuel.item == AlfheimItems.elvenResource) {
+		if (fuel.item === AlfheimItems.elvenResource) {
 			when (fuel.meta) {
 				NetherwoodSplinters, ThunderwoodSplinters -> return 100 // Splinters smelt half an item.
 				NetherwoodCoal                            -> return 2400 // Flame-Laced Coal smelts 12 items.

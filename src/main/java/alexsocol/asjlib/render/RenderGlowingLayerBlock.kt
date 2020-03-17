@@ -4,6 +4,7 @@ import cpw.mods.fml.client.registry.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
 import net.minecraft.world.IBlockAccess
+import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 
 class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
@@ -23,12 +24,13 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		tes.startDrawingQuads()
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		tes.setColorRGBA_F(1f, 1f, 1f, 1f)
-		if (block.getGlowIcon(0, meta) != null && block.shouldSideBeRendered(world, x, y - 1, z, 0)) renderer.renderFaceYNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(0, meta))
-		if (block.getGlowIcon(1, meta) != null && block.shouldSideBeRendered(world, x, y + 1, z, 1)) renderer.renderFaceYPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(1, meta))
-		if (block.getGlowIcon(2, meta) != null && block.shouldSideBeRendered(world, x + 1, y, z, 2)) renderer.renderFaceXPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(2, meta))
-		if (block.getGlowIcon(3, meta) != null && block.shouldSideBeRendered(world, x - 1, y, z, 3)) renderer.renderFaceXNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(3, meta))
-		if (block.getGlowIcon(4, meta) != null && block.shouldSideBeRendered(world, x, y, z - 1, 4)) renderer.renderFaceZNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(4, meta))
-		if (block.getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(5, meta))
+		
+		val renderers = arrayOf(RenderBlocks::renderFaceYNeg, RenderBlocks::renderFaceYPos, RenderBlocks::renderFaceXPos, RenderBlocks::renderFaceXNeg, RenderBlocks::renderFaceZPos, RenderBlocks::renderFaceZNeg)
+		
+		for (dir in ForgeDirection.VALID_DIRECTIONS)
+			if (block.getGlowIcon(dir.ordinal, meta) != null && block.shouldSideBeRendered(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, dir.ordinal))
+				renderers[dir.ordinal].invoke(renderer, block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(dir.ordinal, meta))
+		
 		tes.draw()
 		
 		glPopMatrix()
@@ -54,6 +56,8 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		}
 		
 		fun renderInvNormalBlock(renderer: RenderBlocks, block: Block, meta: Int) {
+			block as IGlowingLayerBlock
+			
 			glPushMatrix()
 			val tes = Tessellator.instance
 			glRotated(90.0, 0.0, 1.0, 0.0)
@@ -78,18 +82,37 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 			glDisable(GL_LIGHTING)
 			tes.startDrawingQuads()
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(0, meta))
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(1, meta))
-			tes.setNormal(0f, 0f, 1f)
-			renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(2, meta))
-			tes.setNormal(0f, 0f, -1f)
-			renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(3, meta))
-			tes.setNormal(0f, 0f, 0f)
-			renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(4, meta))
-			tes.setNormal(-0.5f, 0f, 0f)
-			renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(5, meta))
+			
+			if (block.getGlowIcon(0, meta) != null) {
+				tes.setNormal(0f, 0.8f, 0f)
+				renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, block.getGlowIcon(0, meta))
+			}
+			
+			if (block.getGlowIcon(1, meta) != null) {
+				tes.setNormal(0f, 0.8f, 0f)
+				renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, block.getGlowIcon(1, meta))
+			}
+			
+			if (block.getGlowIcon(1, meta) != null) {
+				tes.setNormal(0f, 0f, 1f)
+				renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, block.getGlowIcon(2, meta))
+			}
+			
+			if (block.getGlowIcon(1, meta) != null) {
+				tes.setNormal(0f, 0f, -1f)
+				renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, block.getGlowIcon(3, meta))
+			}
+			
+			if (block.getGlowIcon(1, meta) != null) {
+				tes.setNormal(0f, 0f, 0f)
+				renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, block.getGlowIcon(4, meta))
+			}
+			
+			if (block.getGlowIcon(1, meta) != null) {
+				tes.setNormal(-0.5f, 0f, 0f)
+				renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, block.getGlowIcon(5, meta))
+			}
+			
 			tes.draw()
 			glEnable(GL_LIGHTING)
 			glPopMatrix()

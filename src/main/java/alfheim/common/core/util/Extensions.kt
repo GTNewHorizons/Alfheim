@@ -1,8 +1,9 @@
 package alfheim.common.core.util
 
+import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
@@ -90,5 +91,8 @@ var ItemStack.meta
     set(meta) {
         itemDamage = meta
     }
+
+fun Block.toItem(): Item? = Item.getItemFromBlock(this)
+fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
 
 internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.meta == stack2.meta

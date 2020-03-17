@@ -4,6 +4,7 @@ import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.client.core.util.glScaled
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
@@ -15,7 +16,7 @@ import org.lwjgl.opengl.GL11.*
 object RenderItemAnomaly: IItemRenderer {
 	
 	override fun handleRenderType(item: ItemStack?, type: ItemRenderType) =
-		item != null && item.item === Item.getItemFromBlock(AlfheimBlocks.anomaly) && ItemBlockAnomaly.getType(item) != ItemBlockAnomaly.TYPE_UNDEFINED
+		item != null && item.item === AlfheimBlocks.anomaly.toItem() && ItemBlockAnomaly.getType(item) != ItemBlockAnomaly.TYPE_UNDEFINED
 	
 	override fun shouldUseRenderHelper(type: ItemRenderType, item: ItemStack, helper: IItemRenderer.ItemRendererHelper) =
 		helper != IItemRenderer.ItemRendererHelper.EQUIPPED_BLOCK

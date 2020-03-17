@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.lightning
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
@@ -44,7 +45,7 @@ class BlockLightningPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexi
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	internal fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
@@ -57,5 +58,5 @@ class BlockLightningPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexi
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.lightningSapling
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 300 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 300 else 0
 }

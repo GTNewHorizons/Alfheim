@@ -23,7 +23,7 @@ class MultiblockComponentRainbow(relPos: ChunkCoordinates, default: Block, varar
 	private fun populatePairs(block: Block, pairs: MutableList<BlockPair>) {
 		if (FMLLaunchHandler.side().isServer) return
 		val stacks = ArrayList<ItemStack>()
-		val item = Item.getItemFromBlock(block)
+		val item = block.toItem()
 		block.getSubBlocks(item, block.creativeTabToDisplayOn, stacks)
 		
 		for (stack in stacks)

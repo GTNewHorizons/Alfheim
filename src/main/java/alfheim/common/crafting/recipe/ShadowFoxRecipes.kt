@@ -2,6 +2,7 @@ package alfheim.common.crafting.recipe
 
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
+import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.api.lib.LibOreDict.COAL_NETHERWOOD
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
@@ -39,7 +40,6 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.irisDirt
 import alfheim.common.block.AlfheimBlocks.irisGrass
 import alfheim.common.block.AlfheimBlocks.irisLamp
@@ -633,19 +633,20 @@ object ShadowFoxRecipes {
 		
 		for (i in 0..3)
 			addShapelessOreDictRecipe(ItemStack(altPlanks, 4, i), ItemStack(altWood0, 1, i))
+		
 		addShapelessOreDictRecipe(ItemStack(altPlanks, 4, 4), ItemStack(altWood1, 1, 0))
 		addShapelessOreDictRecipe(ItemStack(altPlanks, 4, 5), ItemStack(altWood1, 1, 1))
 		
 		recipesAltPlanks = BotaniaAPI.getLatestAddedRecipes(6)
 		
-		for (i in 0..5)
-			GameRegistry.addRecipe(ItemStack(altSlabs[i], 6),
+		for (i in 0 until ALT_TYPES.size - 1)
+			GameRegistry.addRecipe(ItemStack(altSlabs, 6, i),
 								   "QQQ",
 								   'Q', ItemStack(altPlanks, 1, i))
 		
 		recipesAltSlabs = BotaniaAPI.getLatestAddedRecipes(6)
 		
-		for (i in 0..5)
+		for (i in 0 until ALT_TYPES.size - 1)
 			addOreDictRecipe(ItemStack(altStairs[i], 4), true,
 								   "Q  ", "QQ ", "QQQ",
 								   'Q', ItemStack(altPlanks, 1, i))
@@ -793,7 +794,7 @@ object ShadowFoxRecipes {
 															 RUNE[7], // Winter
 															 RUNE[5]) // Summer
 		
-		GameRegistry.addSmelting(dreamLog, ItemStack(Items.coal, 1, 1), 0.15F)
+		GameRegistry.addSmelting(ItemStack(altWood1, 1, 3), ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood2, ItemStack(Items.coal, 1, 1), 0.15F)

@@ -63,6 +63,7 @@ object AlfheimConfigHandler {
 	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
+	var floatingTrapDoors		= true
 	var flugelBossBar			= true
 	var flugelSwapBL			= emptyArray<String>()
 	var info					= true
@@ -208,6 +209,7 @@ object AlfheimConfigHandler {
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
+		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
 		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")

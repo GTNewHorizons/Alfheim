@@ -8,6 +8,8 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
 import alfheim.client.model.item.ModelAkashicBox
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.relic.AkashikModels.bookModel
+import alfheim.common.item.relic.AkashikModels.boxModel
 import alfheim.common.item.relic.record.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent
@@ -115,9 +117,6 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		
 		val records = HashMap<String, AkashicRecord>()
 		val recordTextures = HashMap<String, ResourceLocation>()
-		
-		val boxModel = ModelAkashicBox()
-		val bookModel = ModelBook()
 		
 		init {
 			MinecraftForge.EVENT_BUS.register(this)
@@ -285,4 +284,10 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 			glPopMatrix()
 		}
 	}
+}
+
+// I hate those SideOnly things -_-
+private object AkashikModels{
+	val boxModel = ModelAkashicBox()
+	val bookModel = ModelBook()
 }

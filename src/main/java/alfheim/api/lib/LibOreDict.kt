@@ -1,5 +1,7 @@
 package alfheim.api.lib
 
+import vazkii.botania.common.lib.LibOreDict
+
 object LibOreDict {
 	
 	const val DRAGON_ORE = "oreDragonstone"
@@ -17,7 +19,8 @@ object LibOreDict {
 	const val NIFLHEIM_ESSENCE = "essenceNiflheim"
 	const val IFFESAL_DUST = "dustIffesal"
 	val ARUNE = arrayOf("runePrimalA", "runeMuspelheimA", "runeNiflheimA")
-	const val INFUSED_DREAM_TWIG = "twigDreamwoodInsufed"
+	const val INFUSED_DREAM_TWIG = "twig${LibOreDict.DREAM_WOOD}Insufed"
+	const val DREAM_WOOD_LOG = "log${LibOreDict.DREAM_WOOD}"
 	
 	// Iridescence
 	const val TWIG_THUNDERWOOD = "twigThunderwood"
@@ -43,7 +46,7 @@ object LibOreDict {
 	const val RAINBOW_QUARTZ = "quartzRainbow"
 	const val RAINBOW_QUARTZ_BLOCK = "blockQuartzRainbow"
 	
-	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated", "Wisdom")
+	val ALT_TYPES = arrayOf("Dry", "Golden", "Vivid", "Scorched", "Infused", "Mutated", "Wisdom", "Dreamwood")
 	
 	val EMERALD = "gemEmerald"
 	val GLOWSTONE_DUST = "dustGlowstone"

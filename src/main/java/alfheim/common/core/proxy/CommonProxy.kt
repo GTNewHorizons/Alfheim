@@ -17,6 +17,7 @@ import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.eventhandler.*
+import net.minecraft.block.BlockTrapDoor
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
@@ -45,9 +46,9 @@ open class CommonProxy {
 		InteractionSecurity
 	}
 	
-	open fun registerRenderThings() {}
+	open fun registerRenderThings() = Unit
 	
-	open fun registerKeyBinds() {}
+	open fun registerKeyBinds() = Unit
 	
 	fun init() {
 		AlfheimRecipes
@@ -57,6 +58,7 @@ open class CommonProxy {
 		AlfheimBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("etfuturum")) EtFuturumAlfheimConfig.loadConfig()
+		BlockTrapDoor.disableValidation = AlfheimConfigHandler.floatingTrapDoors
 	}
 	
 	open fun postInit() {

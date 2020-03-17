@@ -46,7 +46,7 @@ object BiomeMount2: BiomeAlfheim() {
 		decorateChunkGen_List.add(b)
 		val t = WE_StructureGen()
 		t.add(StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 0), 12)
-		t.add(StructureDreamsTree(AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0), 20)
+		t.add(StructureDreamsTree(AlfheimBlocks.altWood1, AlfheimBlocks.altLeaves, 3, 7, 11, 7), 20)
 		decorateChunkGen_List.add(t)
 		val g = WorldGenGrass(true, true, true, true, 1.2)
 		decorateChunkGen_List.add(g)

@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -44,7 +45,7 @@ class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
 	

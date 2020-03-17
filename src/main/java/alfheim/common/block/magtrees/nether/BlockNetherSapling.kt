@@ -9,8 +9,9 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.world.World
+import net.minecraft.world.*
 import net.minecraft.world.gen.feature.WorldGenerator
+import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.event.terraingen.TerrainGen
 import java.util.*
 
@@ -41,4 +42,8 @@ class BlockNetherSapling : BlockColoredSapling(name = "netherSapling") {
         block.material == Material.ground || block.material == Material.grass
 
     override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling
+    
+    override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
+    
+    override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 }

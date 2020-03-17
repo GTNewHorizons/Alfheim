@@ -9,6 +9,7 @@ import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibOreDict
 import alfheim.api.lib.LibOreDict.ARUNE
+import alfheim.api.lib.LibOreDict.DREAM_WOOD_LOG
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
@@ -26,7 +27,6 @@ import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.livingcobble
@@ -882,7 +882,7 @@ object AlfheimRecipes {
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), ItemStack(nether_star))
 		//recipeStoryToken = BotaniaAPI.registerElvenTradeRecipe(ItemStack(storyToken, 1, 1), ItemStack(storyToken, 1, 0))
 		
-		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0)
+		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(DREAM_WOOD_LOG, dreamwood, 0)
 		BotaniaAPI.registerPureDaisyRecipe("cobblestone", livingcobble, 0)
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)

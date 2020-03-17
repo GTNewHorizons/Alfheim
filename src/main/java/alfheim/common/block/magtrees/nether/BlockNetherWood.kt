@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
 class BlockNetherWood: BlockModRotatedPillar(Material.wood) {
@@ -52,8 +51,8 @@ class BlockNetherWood: BlockModRotatedPillar(Material.wood) {
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling

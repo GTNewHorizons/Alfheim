@@ -6,7 +6,7 @@ import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
-import alfheim.common.lexicon.ShadowFoxLexiconData
+import alfheim.common.lexicon.*
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -21,7 +21,7 @@ import net.minecraft.world.*
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
+import vazkii.botania.api.lexicon.*
 import java.util.*
 
 class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler {
@@ -43,7 +43,7 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 	override fun getBlockHardness(world: World, x: Int, y: Int, z: Int) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) -1f else super.getBlockHardness(world, x, y, z)
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		icons = Array(ALT_TYPES.size) { i ->
+		icons = Array(ALT_TYPES.size - 1) { i ->
 			if (i == ALT_TYPES.indexOf("Scorched")) null else IconHelper.forBlock(reg, this, ALT_TYPES[i])
 		}
 	}
@@ -56,7 +56,7 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 		}
 	}
 	
-	override fun getIcon(side: Int, meta: Int) = icons.safeGet(meta % ALT_TYPES.size)
+	override fun getIcon(side: Int, meta: Int) = icons.safeGet(meta % (ALT_TYPES.size - 1))
 	
 	override fun isToolEffective(type: String?, metadata: Int) = (type != null && type == "axe")
 	
@@ -73,7 +73,7 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
 	
@@ -85,7 +85,7 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
 		if (list != null && item != null)
-			for (i in ALT_TYPES.indices) {
+			for (i in 0 until ALT_TYPES.size - 1) {
 				list.add(ItemStack(item, 1, i))
 			}
 	}
@@ -95,7 +95,13 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 		return ItemStack(this, 1, meta)
 	}
 	
-	override fun getEntry(p0: World, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = if (p0.getBlockMetadata(p1, p2, p3) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
-	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 4 else 300 else 0
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?): LexiconEntry? {
+		val meta = world.getBlockMetadata(x, y, z)
+		return when {
+			meta % 8 == BlockAltLeaves.yggMeta + 1 -> AlfheimLexiconData.worldgen
+			meta % 8 == BlockAltLeaves.yggMeta     -> null
+			else                                   -> ShadowFoxLexiconData.irisSapling
+		}
+	}
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 4 else 300 else 0
 }
