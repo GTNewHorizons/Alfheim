@@ -163,7 +163,7 @@ object EventHandlerClient {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
 			SpellCastingSystemClient.tick()
 			
-			if (mc != null && player != null) {
+			if (player != null) {
 				val tg = PlayerSegmentClient.target
 				if (tg != null) {
 					if (!tg.isEntityAlive || Vector3.entityDistance(player, tg) > (if (tg is IBossDisplayData) 128 else 32)) PlayerSegmentClient.target = null

@@ -1,6 +1,8 @@
 package alfheim.common.block
 
+import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -75,9 +77,9 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	override fun quantityDropped(rand: Random?) = 1
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
-		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11) {
+		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11
+		|| (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && AlfheimCore.winter))
 			world.setBlockToAir(x, y, z)
-		}
 	}
 	
 	@SideOnly(Side.CLIENT)
