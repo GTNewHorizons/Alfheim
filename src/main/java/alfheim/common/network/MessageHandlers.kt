@@ -9,18 +9,12 @@ import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
-import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.CardinalSystem.TargetingSystem
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
+import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.entity.EntityLolicorn
-import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.network.simpleimpl.*
-import net.minecraft.command.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.init.Items
-import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
@@ -105,7 +99,7 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 					password = creds.getOrElse(1) { password }
 				}
 				
-				return MessageContributor(login, password)
+				return MessageContributor(login, HashHelper.hash(password))
 			} else {
 				// new alias registration
 				ContributorsPrivacyHelper.contributors[message.key] = message.value
@@ -137,7 +131,7 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 				// so you are noname...
 				
 				// do you want to stay nobody ?
-				if (message.key == "login" && message.value == "password")
+				if (message.key == "login" && message.value == "CCF9AF1939482C852F74C84A7CEDFE4EDC65B2FDCC4C11F7AD9F393D91948BFC")
 					return null
 				
 				// ok, your new identity will be set
