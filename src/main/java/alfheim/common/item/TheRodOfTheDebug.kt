@@ -4,12 +4,12 @@ import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.entity.*
 import alfheim.api.lib.LibShaderIDs
+import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
@@ -28,11 +28,6 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 				if (!world.isRemote) {
 					//CardinalSystem.PartySystem.setParty(player, CardinalSystem.PartySystem.Party(player))
 					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
-				} else {
-					val was = ASJShaderHelper.crashOnError
-					ASJShaderHelper.crashOnError = true
-					LibShaderIDs.idColor3d = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/color3d.frag")
-					ASJShaderHelper.crashOnError = was
 				}
 				
 				/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)

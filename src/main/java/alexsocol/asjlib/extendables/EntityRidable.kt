@@ -23,15 +23,9 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	}
 	
 	override fun onLivingUpdate() {
-		if (riddenByEntity != null && riddenByEntity is EntityPlayer) {
-			rider = riddenByEntity as EntityPlayer
-		} else {
-			rider = null
-		}
+		rider = if (riddenByEntity != null && riddenByEntity is EntityPlayer) riddenByEntity as EntityPlayer else null
 		
-		if (rider != null && rider!!.isJumping) {
-			jumpHelper.setJumping()
-		}
+		if (rider != null && rider!!.isJumping) jumpHelper.setJumping()
 		
 		super.onLivingUpdate()
 	}
@@ -93,7 +87,7 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	override fun jump() {
 		motionY = 0.5
 		if (this.isPotionActive(Potion.jump)) {
-			motionY += ((getActivePotionEffect(Potion.jump.id)!!.getAmplifier() + 1).toFloat() * 0.1f).toDouble()
+			motionY += ((getActivePotionEffect(Potion.jump.id)!!.amplifier + 1).toFloat() * 0.1f).toDouble()
 		}
 		
 		isAirBorne = true

@@ -4,6 +4,7 @@ import alfheim.api.ModInfo
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
+import alfheim.common.world.dim.alfheim.biome.BiomeAlfheim
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -57,7 +58,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		if (!TerrainGen.saplingGrowTree(world, rand, x, y, z)) return
 		val l = world.getBlockMetadata(x, y, z) and 7
 		world.setBlock(x, y, z, Blocks.air, 0, 4)
-		if (!StructureDreamsTree(AlfheimBlocks.altWood1, AlfheimBlocks.altLeaves, 3, 7, 11, 7).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4)
+		if (!BiomeAlfheim.dreamTree.generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4)
 	}
 	
 	/** Can the block grow

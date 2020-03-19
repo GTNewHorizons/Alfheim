@@ -1,8 +1,14 @@
 Innovations:
  Soul Restructurization Ritual is now slightly harder to complete
+ Yggdrasil blocks
+ Dreamwood log and leaves were deleted and now share id with Alt trees
+ New relic - Akashik Records: get books with powerful spells! [Will be improved]
+ Soviet shield (cosmetic)
+ Contributor's Fancies 2FA (request activation in PM)
 
 Fixes:
  Flugel area range check was cube instead of sphere
  Can't spawn flugel with Et Futurum
  Shields application to Et Futurum banners
- SRR visualization 
+ SR ritual visualization
+ Dreamwood leaves render (++optimization)

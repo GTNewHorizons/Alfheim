@@ -1,9 +1,12 @@
 package alfheim.common.world.dim.alfheim.biome
 
 import alfheim.AlfheimCore
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.EntityElf
+import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import net.minecraft.entity.passive.*
+import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
 import ru.vamig.worldengine.*
@@ -37,5 +40,10 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 	
 	override fun getFloatTemperature(x: Int, y: Int, z: Int): Float {
 		return if (AlfheimCore.winter) 0f else 0.5f
+	}
+	
+	companion object {
+		val dreamTree = StructureDreamsTree(AlfheimBlocks.altWood1, AlfheimBlocks.altLeaves, 3, 7, 11, 15)
+		val sadOak = StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 4)
 	}
 }

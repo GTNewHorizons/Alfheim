@@ -26,6 +26,7 @@ import alfheim.common.block.AlfheimBlocks.altWood0
 import alfheim.common.block.AlfheimBlocks.altWood1
 import alfheim.common.block.AlfheimBlocks.amplifier
 import alfheim.common.block.AlfheimBlocks.auroraDirt
+import alfheim.common.block.AlfheimBlocks.auroraLeaves
 import alfheim.common.block.AlfheimBlocks.auroraPlanks
 import alfheim.common.block.AlfheimBlocks.auroraSlab
 import alfheim.common.block.AlfheimBlocks.auroraStairs
@@ -393,7 +394,14 @@ object ShadowFoxRecipes {
 						 'L', ItemStack(rainbowLeaves),
 						 'S', MANA_STRING)
 		
-		recipesCoatOfArms = BotaniaAPI.getLatestAddedRecipes(17)
+		addOreDictRecipe(ItemStack(coatOfArms, 1, 17),
+						 "LLL",
+						 "LSL",
+						 "LLL",
+						 'L', ItemStack(auroraLeaves),
+						 'S', MANA_STRING)
+		
+		recipesCoatOfArms = BotaniaAPI.getLatestAddedRecipes(18)
 		
 		addOreDictRecipe(ItemStack(colorOverride),
 						 "PE ",

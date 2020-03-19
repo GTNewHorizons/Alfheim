@@ -3,7 +3,6 @@ package alfheim.common.network
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
-import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
 import alfheim.client.core.util.mc
@@ -12,109 +11,198 @@ import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
+import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.EntityLolicorn
+import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.network.simpleimpl.*
+import net.minecraft.command.*
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.init.Items
+import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.Vector3
+import java.io.File
 
 class Message0dSHandler: IMessageHandler<Message0dS, IMessage?> {
 		
-	override fun onMessage(packet: Message0dS, message: MessageContext): IMessage? {
-		PacketHandler.handle(packet, message)
+	override fun onMessage(message: Message0dS, ctx: MessageContext): IMessage? {
+		PacketHandler.handle(message, ctx)
 		return null
 	}
 }
 
 class Message0dCHandler: IMessageHandler<Message0dC, IMessage?> {
 	
-	override fun onMessage(packet: Message0dC, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: Message0dC, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class Message1dHandler: IMessageHandler<Message1d, IMessage?> {
 	
-	override fun onMessage(packet: Message1d, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: Message1d, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class Message1lHandler: IMessageHandler<Message1l, IMessage?> {
 	
-	override fun onMessage(packet: Message1l, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: Message1l, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class Message2dHandler: IMessageHandler<Message2d, IMessage?> {
 
-	override fun onMessage(packet: Message2d, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: Message2d, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class Message3dHandler: IMessageHandler<Message3d, IMessage?> {
 
-	override fun onMessage(packet: Message3d, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: Message3d, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class MessageNIHandler:  IMessageHandler<MessageNI, IMessage?> {
 	
-	override fun onMessage(packet: MessageNI, ctx: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageNI, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 // ----
 
+class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> {
+	
+	override fun onMessage(message: MessageContributor, ctx: MessageContext): IMessage? {
+		println("Message!")
+		
+		if (ctx.side.isClient) {
+			// we are on client
+			
+			// this is li:pw request
+			if (message.isRequest) {
+				val info = File("contributor.info")
+				var login = "login"
+				var password = "password"
+				
+				if (info.exists()) {
+					val creds = info.readLines()
+					login = creds.getOrElse(0) { login }
+					password = creds.getOrElse(1) { password }
+				}
+				
+				return MessageContributor(login, password)
+			} else {
+				// new alias registration
+				ContributorsPrivacyHelper.contributors[message.key] = message.value
+			}
+		} else {
+			// we are on server
+			
+			val player = ctx.serverHandler.playerEntity
+			val username = player.commandSenderName
+			
+			val passMatch = HashHelper.hash(message.value) == ContributorsPrivacyHelper.getPassHash(message.key)
+			
+			// are you the person you are saying you are ?
+			if (ContributorsPrivacyHelper.isRegistered(username)) {
+				if (message.key != username) {
+					player.playerNetServerHandler.kickPlayerFromServer("Invalid login provided, it must be equal to your username")
+					return null
+				}
+				
+				// yes, you are. Welcome!
+				if (passMatch) {
+					// TODO proceed
+				} else {
+					// no, you not. Get out!
+					player.playerNetServerHandler.kickPlayerFromServer("Incorrect credentials for your contributor username")
+					return null
+				}
+			} else {
+				// so you are noname...
+				
+				// do you want to stay nobody ?
+				if (message.key == "login" && message.value == "password")
+					return null
+				
+				// ok, your new identity will be set
+				if (passMatch) {
+					// TODO proceed
+				} else {
+					// incorrect password for identity
+					player.playerNetServerHandler.kickPlayerFromServer("Incorrect contributor credentials")
+					return null
+				}
+			}
+			
+			// set contributor name alias to current username
+			ContributorsPrivacyHelper.contributors[message.key] = username
+			
+			// tell everyone about new alias
+			MinecraftServer.getServer()?.configurationManager?.playerEntityList?.forEach {
+				if (it is EntityPlayerMP)
+					AlfheimCore.network.sendTo(MessageContributor(message.key, username), it)
+			}
+			
+			// send all aliases to new player
+			ContributorsPrivacyHelper.contributors.forEach { (k, v) -> AlfheimCore.network.sendTo(MessageContributor(k, v), player) }
+		}
+		
+		return null
+	}
+}
+
 class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
-	override fun onMessage(packet: MessageEffect, message: MessageContext): IMessage? {
-		val e = message.clientHandler.clientWorldController.getEntityByID(packet.entity)
+	override fun onMessage(message: MessageEffect, ctx: MessageContext): IMessage? {
+		val e = ctx.clientHandler.clientWorldController.getEntityByID(message.entity)
 		if (e is EntityLivingBase) {
-			val pe = e.getActivePotionEffect(packet.id)
-			when (packet.state) {
+			val pe = e.getActivePotionEffect(message.id)
+			when (message.state) {
 				1	/* add	*/	-> {
 					if (pe == null) {
-						e.addPotionEffect(PotionEffect(packet.id, packet.dur, packet.amp, true))
-						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+						e.addPotionEffect(PotionEffect(message.id, message.dur, message.amp, true))
+						Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
 					} else {
-						if (packet.readd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
-						pe.amplifier = packet.amp
-						pe.duration = packet.dur
+						if (message.readd) Potion.potionTypes[message.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), message.amp)
+						pe.amplifier = message.amp
+						pe.duration = message.dur
 						pe.isAmbient = true
-						if (packet.readd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+						if (message.readd) Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
 					}
 				}
 				
 				0	/* upd	*/	-> {
 					if (pe == null) {
-						e.addPotionEffect(PotionEffect(packet.id, packet.dur, packet.amp, true))
-						Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+						e.addPotionEffect(PotionEffect(message.id, message.dur, message.amp, true))
+						Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
 					} else {
-						if (packet.readd) Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
-						pe.amplifier = packet.amp
-						pe.duration = packet.dur
+						if (message.readd) Potion.potionTypes[message.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), message.amp)
+						pe.amplifier = message.amp
+						pe.duration = message.dur
 						pe.isAmbient = true
-						if (packet.readd) Potion.potionTypes[packet.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), packet.amp)
+						if (message.readd) Potion.potionTypes[message.id].applyAttributesModifiersToEntity(e, e.getAttributeMap(), message.amp)
 					}
 				}
 				
 				-1	/* rem	*/	-> {
 					if (pe != null) {
-						e.removePotionEffect(packet.id)
-						Potion.potionTypes[packet.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), packet.amp)
+						e.removePotionEffect(message.id)
+						Potion.potionTypes[message.id].removeAttributesModifiersFromEntity(e, e.getAttributeMap(), message.amp)
 					}
 				}
 			}
@@ -125,79 +213,42 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 
 class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage?> {
 	
-	override fun onMessage(packet: MessageEffectLightning, message: MessageContext): IMessage? {
-		Botania.proxy.lightningFX(mc.theWorld, Vector3(packet.x1, packet.y1, packet.z1), Vector3(packet.x2, packet.y2, packet.z2), packet.ticksPerMeter, packet.colorOuter, packet.colorInner)
+	override fun onMessage(message: MessageEffectLightning, ctx: MessageContext): IMessage? {
+		Botania.proxy.lightningFX(mc.theWorld, Vector3(message.x1, message.y1, message.z1), Vector3(message.x2, message.y2, message.z2), message.ticksPerMeter, message.colorOuter, message.colorInner)
 		return null
 	}
 }
 
 class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage?> {
 
-	override fun onMessage(packet: MessageHotSpellC, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageHotSpellC, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class MessageHotSpellSHandler: IMessageHandler<MessageHotSpellS, IMessage?> {
 
-	override fun onMessage(packet: MessageHotSpellS, message: MessageContext): IMessage? {
-		HotSpellsSystem.setHotSpellID(message.serverHandler.playerEntity, packet.slot, packet.id)
+	override fun onMessage(message: MessageHotSpellS, ctx: MessageContext): IMessage? {
+		HotSpellsSystem.setHotSpellID(ctx.serverHandler.playerEntity, message.slot, message.id)
 		return null
 	}
 }
 
 class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 
-	override fun onMessage(packet: MessageKeyBindS, message: MessageContext): IMessage? {
-		val player = message.serverHandler.playerEntity
+	override fun onMessage(message: MessageKeyBindS, ctx: MessageContext): IMessage? {
+		val player = ctx.serverHandler.playerEntity
 		
-		when (values()[packet.action]) {
+		when (values()[message.action]) {
 			ATTACK  -> KeyBindingHandler.atack(player)
-			
 			CORN    -> EntityLolicorn.call(player)
-			
-			FLIGHT  -> KeyBindingHandler.enableFlight(player, packet.state)
-			
+			FLIGHT  -> KeyBindingHandler.enableFlight(player, message.state)
 			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
-			
-			CAST    -> {
-				val ids = if (packet.state) HotSpellsSystem.getHotSpellID(player, packet.data) else packet.data
-				val seg = CardinalSystem.forPlayer(player)
-				val spell = AlfheimAPI.getSpellByIDs(ids shr 28 and 0xF, ids and 0xFFFFFFF)
-				if (spell == null)
-					AlfheimCore.network.sendTo(Message2d(Message2d.m2d.COOLDOWN, ids.D, (-SpellBase.SpellCastResult.DESYNC.ordinal).D), player)
-				else {
-					seg.ids = ids
-					seg.init = spell.getCastTime()
-					seg.castableSpell = spell
-				}
-			}
-			
-			UNCAST  -> {
-				val seg = CardinalSystem.forPlayer(player)
-				seg.ids = 0
-				seg.init = seg.ids
-				seg.castableSpell = null
-			}
-			
-			SEL     -> {
-				if (packet.state) {
-					val mr = PartySystem.getParty(player)[packet.data]
-					if (mr is EntityLivingBase) {
-						TargetingSystem.setTarget(player, mr, packet.state, packet.data)
-					}
-				} else {
-					if (packet.data != -1) {
-						val e = player.worldObj.getEntityByID(packet.data)
-						if (e is EntityLivingBase) {
-							TargetingSystem.setTarget(player, e, packet.state)
-						}
-					} else {
-						TargetingSystem.setTarget(player, null, false)
-					}
-				}
-			}
+			CAST    -> KeyBindingHandler.cast(player, message.state, message.data)
+			UNCAST  -> KeyBindingHandler.unCast(player)
+			SEL     -> KeyBindingHandler.select(player, message.state, message.data)
+			SECRET  -> KeyBindingHandler.secret(player)
 		}
 		return null
 	}
@@ -205,24 +256,24 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 
 class MessagePartyHandler: IMessageHandler<MessageParty, IMessage?> {
 	
-	override fun onMessage(packet: MessageParty, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageParty, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage?> {
 	
-	override fun onMessage(packet: MessagePlayerItemS?, ctx: MessageContext?): IMessage? {
-		if (ctx != null && packet != null && packet.item != null && ctx.side.isServer) {
+	override fun onMessage(message: MessagePlayerItemS, ctx: MessageContext): IMessage? {
+		if (message.item != null && ctx.side.isServer) {
 			val player = ctx.serverHandler.playerEntity
 			
 			val heldItem = player.currentEquippedItem
 			
 			if (heldItem == null) {
-				player.setCurrentItemOrArmor(0, packet.item!!.copy())
-			} else if (!player.inventory.addItemStackToInventory(packet.item!!.copy())) {
-				player.dropPlayerItemWithRandomChoice(packet.item!!.copy(), false)
+				player.setCurrentItemOrArmor(0, message.item!!.copy())
+			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
+				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
 			}
 		}
 		
@@ -232,8 +283,8 @@ class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage?> {
 
 class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage?> {
 	
-	override fun onMessage(packet: MessageSkinInfo, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageSkinInfo, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		
 		return null
 	}
@@ -241,12 +292,12 @@ class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage?> {
 
 class MessageSpellParamsHandler: IMessageHandler<MessageSpellParams, IMessage?> {
 	
-	override fun onMessage(packet: MessageSpellParams, message: MessageContext): IMessage? {
-		val spell = AlfheimAPI.getSpellInstance(packet.name) ?: return null
-		spell.damage = packet.damage
-		spell.duration = packet.duration
-		spell.efficiency = packet.efficiency
-		spell.radius = packet.radius
+	override fun onMessage(message: MessageSpellParams, ctx: MessageContext): IMessage? {
+		val spell = AlfheimAPI.getSpellInstance(message.name) ?: return null
+		spell.damage = message.damage
+		spell.duration = message.duration
+		spell.efficiency = message.efficiency
+		spell.radius = message.radius
 		
 		return null
 	}
@@ -254,19 +305,19 @@ class MessageSpellParamsHandler: IMessageHandler<MessageSpellParams, IMessage?> 
 
 class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage?> {
 	
-	override fun onMessage(packet: MessageRaceSelection, message: MessageContext): IMessage? {
-		val world = MinecraftServer.getServer().worldServerForDimension(packet.dim) ?: return null
-		val tile = world.getTileEntity(packet.x, packet.y, packet.z) as? TileRaceSelector ?: return null
+	override fun onMessage(message: MessageRaceSelection, ctx: MessageContext): IMessage? {
+		val world = MinecraftServer.getServer().worldServerForDimension(message.dim) ?: return null
+		val tile = world.getTileEntity(message.x, message.y, message.z) as? TileRaceSelector ?: return null
 		
-		if (packet.doMeta) world.setBlockMetadataWithNotify(packet.x, packet.y, packet.z, packet.meta, 3)
+		if (message.doMeta) world.setBlockMetadataWithNotify(message.x, message.y, message.z, message.meta, 3)
 		
-		tile.activeRotation = packet.arot
-		tile.rotation = packet.rot
-		tile.custom = packet.custom
-		tile.female = packet.female
-		tile.timer = packet.timer
+		tile.activeRotation = message.arot
+		tile.rotation = message.rot
+		tile.custom = message.custom
+		tile.female = message.female
+		tile.timer = message.timer
 		
-		if (packet.give) tile.giveRaceAndReset(message.serverHandler.playerEntity)
+		if (message.give) tile.giveRaceAndReset(ctx.serverHandler.playerEntity)
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
@@ -276,24 +327,24 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 
 class MessageTileItemHandler: IMessageHandler<MessageTileItem, IMessage?> {
 
-	override fun onMessage(packet: MessageTileItem, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageTileItem, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class MessageTimeStopHandler: IMessageHandler<MessageTimeStop, IMessage?> {
 
-	override fun onMessage(packet: MessageTimeStop, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageTimeStop, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }
 
 class MessageVisualEffectHandler: IMessageHandler<MessageVisualEffect, IMessage?> {
 	
-	override fun onMessage(packet: MessageVisualEffect, message: MessageContext): IMessage? {
-		PacketHandlerClient.handle(packet)
+	override fun onMessage(message: MessageVisualEffect, ctx: MessageContext): IMessage? {
+		PacketHandlerClient.handle(message)
 		return null
 	}
 }

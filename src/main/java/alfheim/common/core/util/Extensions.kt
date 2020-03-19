@@ -1,5 +1,6 @@
 package alfheim.common.core.util
 
+import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
@@ -8,6 +9,7 @@ import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
 import kotlin.math.*
 
@@ -94,5 +96,8 @@ var ItemStack.meta
 
 fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
+
+fun <T> T.eventForge() = MinecraftForge.EVENT_BUS.register(this)
+fun <T> T.eventFML() = FMLCommonHandler.instance().bus().register(this)
 
 internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.meta == stack2.meta

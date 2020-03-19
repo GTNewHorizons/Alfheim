@@ -16,7 +16,7 @@ object EtFuturumAlfheimConfig {
 
 @Suppress("UNCHECKED_CAST")
 object EFHandlerBanners {
-	val coatNames = arrayOf("chile", "france", "japan", "germany", "greece", "iceland", "ireland", "israel", "jamaica", "singapore", "southafrica", "spain", "switzerland", "texas", "ukraine", "unitedstates", "alfheim")
+	val coatNames = arrayOf("chile", "france", "japan", "germany", "greece", "iceland", "ireland", "israel", "jamaica", "singapore", "southafrica", "spain", "switzerland", "texas", "ukraine", "unitedstates", "alfheim", "ussr" )
 	
 	fun addBanners() {
 		try {

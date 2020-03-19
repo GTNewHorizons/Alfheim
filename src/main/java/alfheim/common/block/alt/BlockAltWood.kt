@@ -41,15 +41,16 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood) {
 	override fun isWood(world: IBlockAccess, x: Int, y: Int, z: Int) = !(set == 1 && world.getBlockMetadata(x, y, z) % 4 == 2)
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {
-		if (set == 1 && world.getBlockMetadata(x, y, z) % 4 == 2)
+		val meta = world.getBlockMetadata(x, y, z)
+		if (set == 1 && meta % 4 == 2)
 			return super.breakBlock(world, x, y, z, block, fortune)
 		
-		val b0: Byte = 4
-		val i1: Int = b0 + 1
+		val range = if (set == 1 && meta % 4 == 3) 12 else 4
+		val chunkRange = range + 1
 		
-		if (world.checkChunksExist(x - i1, y - i1, z - i1, x + i1, y + i1, z + i1)) {
-			for (j1 in -b0..b0) for (k1 in -b0..b0)
-				for (l1 in -b0..b0) {
+		if (world.checkChunksExist(x - chunkRange, y - chunkRange, z - chunkRange, x + chunkRange, y + chunkRange, z + chunkRange)) {
+			for (j1 in -range..range) for (k1 in -range..range)
+				for (l1 in -range..range) {
 					val blockInWorld: Block = world.getBlock(x + j1, y + k1, z + l1)
 					if (blockInWorld.isLeaves(world, x + j1, y + k1, z + l1)) {
 						blockInWorld.beginLeavesDecay(world, x + j1, y + k1, z + l1)

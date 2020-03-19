@@ -19,6 +19,7 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageKeyBindS
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
@@ -116,7 +117,7 @@ object EventHandlerClient {
 		
 		val name = player.commandSenderName
 		
-		if (name == "AlexSocol")
+		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol"))
 			player.func_152121_a(Type.SKIN, LibResourceLocations.skin)
 			
 		run skin@ {
@@ -141,7 +142,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onHandRender(e: RenderHandEvent) {
-		if (mc.thePlayer.commandSenderName == "AlexSocol")
+		if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "AlexSocol"))
 			mc.thePlayer.func_152121_a(Type.SKIN, LibResourceLocations.skin)
 	}
 	

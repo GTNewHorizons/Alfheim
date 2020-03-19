@@ -31,11 +31,18 @@ open class ItemSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, bloc
 class ItemUniqueSubtypedBlockMod(block: Block): ItemBlockWithMetadata(block, block) {
 	
 	override fun getMetadata(meta: Int): Int {
-		if (field_150939_a is BlockLeavesMod) return meta % field_150939_a.decayBit()
+		if (field_150939_a is BlockLeavesMod) return meta or field_150939_a.decayBit()
 		if (field_150939_a is BlockModRotatedPillar) return meta and 0x3
 		return meta
 	}
 	
+	override fun getDamage(stack: ItemStack): Int {
+		var meta = super.getDamage(stack)
+		if (field_150939_a is BlockLeavesMod) meta %= 8
+		if (field_150939_a is BlockModRotatedPillar) meta %= 4
+		return meta
+	}
+	
 	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(stack).replace("tile.", "tile.${ModInfo.MODID}:") + getMetadata(stack.meta)
+		super.getUnlocalizedNameInefficiently(stack).replace("tile.", "tile.${ModInfo.MODID}:") + getDamage(stack)
 }

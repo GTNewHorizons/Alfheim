@@ -5,6 +5,7 @@ import alfheim.api.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.crafting.recipe.*
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
@@ -85,6 +86,8 @@ open class CommonProxy {
 				if (e.modID == ModInfo.MODID) AlfheimConfigHandler.syncConfig()
 			}
 		})
+		
+		ContributorsPrivacyHelper
 	}
 	
 	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float = 1f, lifetime: Float = 1f, distance: Float = 16f, must: Boolean = false) = Unit

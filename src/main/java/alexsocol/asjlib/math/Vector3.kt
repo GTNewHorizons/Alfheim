@@ -248,8 +248,8 @@ class Vector3: Serializable {
 	fun vector4f() = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), 1f)
 	
 	@SideOnly(Side.CLIENT)
-	fun glVertex(): Vector3 {
-		org.lwjgl.opengl.GL11.glVertex3d(x, y, z)
+	fun glVertex(xOff: Number = 0.0, yOff: Number = 0.0, zOff: Number = 0.0): Vector3 {
+		org.lwjgl.opengl.GL11.glVertex3d(x + xOff.toDouble(), y + yOff.toDouble(), z + zOff.toDouble())
 		return this
 	}
 	

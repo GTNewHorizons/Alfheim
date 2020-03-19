@@ -943,7 +943,8 @@ item.alfheim:coatOfArms13.name=Texan Shield
 item.alfheim:coatOfArms14.name=Ukranian Shield
 item.alfheim:coatOfArms15.name=American Shield
 item.alfheim:coatOfArms16.name=Fabulous Shield
-item.alfheim:coatOfArms17.name=Parisian Shield
+item.alfheim:coatOfArms17.name=Soviet Shield
+item.alfheim:coatOfArms18.name=Parisian Shield
 
 item.alfheim:colorOverride.name=Clerical Colorizer
 

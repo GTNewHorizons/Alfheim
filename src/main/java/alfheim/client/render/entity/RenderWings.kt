@@ -29,7 +29,7 @@ object RenderWings {
 		if (player.commandSenderName != "MonoShiki") {
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
-			if (player.commandSenderName == "AlexSocol") return
+			if (ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol")) return
 		}
 		
 		if (player.isInvisible || player.isPotionActive(Potion.invisibility) || player.isInvisibleToPlayer(mc.thePlayer)) return

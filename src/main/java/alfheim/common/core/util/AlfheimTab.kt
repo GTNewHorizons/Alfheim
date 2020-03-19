@@ -1,5 +1,6 @@
 package alfheim.common.core.util
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks.alfStorage
@@ -123,6 +124,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.akashicRecords
@@ -458,9 +460,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaGenerator)
 		addBlock(schemaAnnihilator)
 		
-		try {
-			if (mc.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
-		} catch (ignore: Throwable) {}
+		if (!ASJUtilities.isServer) {
+			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
+				addItem(royalStaff)
+		}
 		
 		additionalDisplays.forEach { it.invoke() }
 	}

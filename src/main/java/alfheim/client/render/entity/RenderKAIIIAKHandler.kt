@@ -3,6 +3,7 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.mc
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.setSize
 import cpw.mods.fml.client.registry.RenderingRegistry
 import cpw.mods.fml.common.FMLCommonHandler
@@ -23,8 +24,8 @@ import org.lwjgl.opengl.GL11.*
 
 object RenderKAIIIAKHandler {
 	
-	val name: String
-		get() = "KAIIIAK"
+	private fun EntityPlayer.correct() = ContributorsPrivacyHelper.isCorrect(this, "KAIIIAK")
+	private fun String.correct() = ContributorsPrivacyHelper.isCorrect(this, "KAIIIAK")
 	
 	init {
 		RenderingRegistry.registerEntityRenderingHandler(EntityKAIIIAK::class.java, RenderKAIIIAK())
@@ -35,7 +36,7 @@ object RenderKAIIIAKHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
-		if (e.entityPlayer.commandSenderName == name) {
+		if (e.entityPlayer.correct()) {
 			e.isCanceled = true
 			
 			renderCat(e.entityPlayer)
@@ -45,28 +46,31 @@ object RenderKAIIIAKHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Post) {
-		if (e.entityPlayer.commandSenderName == name)
+		if (e.entityPlayer.correct())
 			e.isCanceled = true
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Specials.Pre) {
-		if (e.entityPlayer.commandSenderName == name)
+		if (e.entityPlayer.correct())
 			e.isCanceled = true
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Specials.Post) {
-		if (e.entityPlayer.commandSenderName == name)
+		if (e.entityPlayer.correct()) {
 			e.isCanceled = true
+			
+			RenderContributors.render(e, e.entityPlayer)
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onPlayerPreRender(e: RenderPlayerEvent.SetArmorModel) {
-		if (e.entityPlayer.commandSenderName == name)
+		if (e.entityPlayer.correct())
 			e.isCanceled = true
 	}
 	
@@ -114,7 +118,7 @@ object RenderKAIIIAKHandler {
 	
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
-		if (e.entityLiving is EntityPlayer && e.entityLiving.commandSenderName == name) {
+		if (e.entityLiving is EntityPlayer && e.entityLiving.commandSenderName.correct()) {
 			e.entityLiving.setSize(0.45, 0.45)
 			if (!e.entityLiving.worldObj.isRemote)
 				(e.entityLiving as EntityPlayer).eyeHeight = 0.45f * 0.92f
@@ -123,7 +127,7 @@ object RenderKAIIIAKHandler {
 	
 	@SubscribeEvent
 	fun onRenderTick(event: TickEvent.RenderTickEvent) {
-		if (event.phase != TickEvent.Phase.START || mc.thePlayer == null || mc.thePlayer.commandSenderName != name) return
+		if (event.phase != TickEvent.Phase.START || mc.thePlayer == null || !mc.thePlayer.correct()) return
 		
 		mc.entityRenderer = RenderEntityViewer
 	}
