@@ -1,31 +1,20 @@
 package alfheim.common.item.relic.record
 
-import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.render.*
 import alfheim.AlfheimCore
-import alfheim.api.entity.EnumRace.Companion.glColor
 import alfheim.api.item.relic.record.AkashicRecord
-import alfheim.client.core.handler.CardinalSystemClient
-import alfheim.client.core.util.*
-import alfheim.client.render.world.SpellVisualizations
+import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.F
 import alfheim.common.network.Message1d
-import alfheim.common.spell.tech.SpellTimeStop
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.WorldClient
-import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IRenderHandler
 import net.minecraftforge.common.MinecraftForge
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL11.glScaled
-import org.lwjgl.opengl.GL12
 
 object AkashicRecordGinnungagap: AkashicRecord("ginnungagap") {
 	

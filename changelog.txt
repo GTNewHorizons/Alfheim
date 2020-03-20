@@ -12,3 +12,4 @@ Fixes:
  Shields application to Et Futurum banners
  SR ritual visualization
  Dreamwood leaves render (++optimization)
+ Anomaly item render

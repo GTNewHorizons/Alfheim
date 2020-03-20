@@ -1,6 +1,5 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
 import alfheim.api.item.relic.record.AkashicRecord
@@ -35,13 +34,13 @@ import kotlin.math.max
 class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		ASJUtilities.chatLog("Set in use")
+		// ASJUtilities.chatLog("Set in use")
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
 	}
 	
 	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, left: Int) {
-		ASJUtilities.chatLog("Use tick ($left left)")
+		// ASJUtilities.chatLog("Use tick ($left left)")
 		
 		// TODO play some "progress" sound
 	}
@@ -49,22 +48,22 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 	override fun getMaxItemUseDuration(stack: ItemStack) = 120
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, left: Int) {
-		ASJUtilities.chatLog("Stopped. Left: $left")
+		// ASJUtilities.chatLog("Stopped. Left: $left")
 		
 		if (left > getMaxItemUseDuration(stack) - 20) {
 			if (player.isSneaking) {
 				setBoolean(stack, TAG_SWITCH, true)
 			} else {
-				if (getInt(stack, TAG_FRAME, 0) > 60)
+				if (isOpen(stack))
 					nextRecord(player, stack)
 			}
 		} else Unit // TODO play some "fail" sound
 	}
 	
 	override fun onEaten(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
-		ASJUtilities.chatLog("Eaten!")
+		// ASJUtilities.chatLog("Eaten!")
 		
-		if (getInt(stack, TAG_FRAME, 0) > 60)
+		if (isOpen(stack))
 			generateRecord(player, stack)
 		
 		player.clearItemInUse()
@@ -73,6 +72,8 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity, slot: Int, inHand: Boolean) {
+		super.onUpdate(stack, world, entity, slot, inHand)
+		
 		if (!inHand) {
 			setInt(stack, TAG_MULT, -1)
 			setInt(stack, TAG_FRAME, 0)
@@ -95,7 +96,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 	}
 	
 	override fun onEntitySwing(living: EntityLivingBase, stack: ItemStack): Boolean {
-		if (living is EntityPlayer)
+		if (living is EntityPlayer && isOpen(stack))
 			cast(living, stack)
 		
 		return true
@@ -124,6 +125,8 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 			registerRecord(AkashicRecordGinnungagap)
 			registerRecord(AkashicRecordNewChance)
 		}
+		
+		fun isOpen(stack: ItemStack) = getInt(stack, TAG_FRAME, 0) > 60 && getInt(stack, TAG_MULT, -1) == 1 && !getBoolean(stack, TAG_SWITCH, false)
 		
 		fun generateRecord(player: EntityPlayer, stack: ItemStack) {
 			if (generateRecordActual(player, stack)) {
@@ -287,7 +290,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 }
 
 // I hate those SideOnly things -_-
-private object AkashikModels{
+private object AkashikModels {
 	val boxModel = ModelAkashicBox()
 	val bookModel = ModelBook()
 }

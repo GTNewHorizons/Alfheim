@@ -69,6 +69,8 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 				}
 			}
 		} else {
+			if (world.rand.nextInt(20) != 0) return
+			
 			if (above === AlfheimBlocks.snowLayer || above === Blocks.snow_layer)
 				world.setBlockToAir(x, y + 1, z)
 			

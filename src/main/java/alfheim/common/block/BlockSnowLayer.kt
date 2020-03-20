@@ -1,5 +1,6 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -23,9 +24,10 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 		setCreativeTab(AlfheimTab)
 		setHardness(0.1f)
 		setHarvestLevel("shovel", 0)
-		setStepSound(soundTypeSnow)
+		stepSound = soundTypeSnow
 		
 		setSizeForMeta(0)
+		tickRandomly = true
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -77,8 +79,7 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	override fun quantityDropped(rand: Random?) = 1
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
-		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11
-		|| (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && AlfheimCore.winter))
+		if (!AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && !world.isRemote && world.rand.nextInt(20) != 0)
 			world.setBlockToAir(x, y, z)
 	}
 	

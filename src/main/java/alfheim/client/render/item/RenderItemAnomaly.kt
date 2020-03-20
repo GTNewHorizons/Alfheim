@@ -2,10 +2,12 @@ package alfheim.client.render.item
 
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileAnomalyBase
-import alfheim.client.core.util.glScaled
+import alfheim.api.lib.LibResourceLocations
+import alfheim.client.core.util.*
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.toItem
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockAnomaly
+import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraftforge.client.IItemRenderer
@@ -45,5 +47,43 @@ object RenderItemAnomaly: IItemRenderer {
 		glColor4d(1.0, 1.0, 1.0, 1.0)
 		glPushMatrix()
 		
+		mc.renderEngine.bindTexture(LibResourceLocations.anomalies)
+		val frames = subtile.frames
+		val frame = ((System.nanoTime() / 40000000L + 1L) % frames.toLong()).I
+		val strip = subtile.strip
+		val color = subtile.color
+		
+		glTranslated(0.5, 0.5, 0.5)
+		renderAnimatedQuadStrip(1.5f, 1f, frames, strip, frame, color)
+		glRotated(90.0, 0.0, 1.0, 0.0)
+		renderAnimatedQuadStrip(1.5f, 1f, frames, strip, frame, color)
+		glRotatef(90f, 1f, 0f, 0f)
+		renderAnimatedQuadStrip(1.5f, 1f, frames, strip, frame, color)
+		
+		glPopMatrix()
+		glDisable(GL_BLEND)
+		glEnable(GL_CULL_FACE)
+		glDepthMask(true)
+		glAlphaFunc(GL_GREATER, 0.1f)
+		glPopMatrix()
+	}
+	
+	fun renderAnimatedQuadStrip(scale: Float, alpha: Float, frames: Int, strip: Int, cframe: Int, color: Int) {
+		if (mc.renderViewEntity is EntityPlayer) {
+			val tessellator = Tessellator.instance
+			tessellator.startDrawingQuads()
+			tessellator.setBrightness(220)
+			tessellator.setColorRGBA_I(color, (alpha * 255f).I)
+			val f2 = cframe.F / frames.F
+			val f3 = (cframe + 1).F / frames.F
+			val f4 = strip.F / frames.F
+			val f5 = (strip + 1).F / frames.F
+			tessellator.setNormal(0f, 0f, -1f)
+			tessellator.addVertexWithUV(-0.5 * scale.D, 0.5 * scale.D, 0.0, f2.D, f5.D)
+			tessellator.addVertexWithUV(0.5 * scale.D, 0.5 * scale.D, 0.0, f3.D, f5.D)
+			tessellator.addVertexWithUV(0.5 * scale.D, -0.5 * scale.D, 0.0, f3.D, f4.D)
+			tessellator.addVertexWithUV(-0.5 * scale.D, -0.5 * scale.D, 0.0, f2.D, f4.D)
+			tessellator.draw()
+		}
 	}
 }

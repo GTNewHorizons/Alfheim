@@ -1,12 +1,14 @@
 package alfheim.client.render.item
 
-import alfheim.client.core.util.glScaled
+import alfheim.client.core.util.*
 import alfheim.client.model.item.ModelCreatorStaff
+import alfheim.common.core.util.F
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IItemRenderer
 import org.lwjgl.opengl.GL11.*
+import kotlin.math.min
 
 object RenderItemRoyalStaff: IItemRenderer {
 	
@@ -31,22 +33,25 @@ object RenderItemRoyalStaff: IItemRenderer {
 			}
 		} else {
 			glScaled(0.8)
-			glRotatef(66.0f, 0.0f, 0.0f, 1.0f)
+			glRotatef(66f, 0f, 0f, 1f)
 			glTranslated(0.0, 0.6, 0.0)
 			glTranslated(-0.7, 0.6, 0.0)
 		}
 		
 		glRotatef(180.0f, 1.0f, 0.0f, 0.0f)
 		if (wielder != null && wielder is EntityPlayer && wielder.itemInUse != null) {
-			glTranslated(0.0, 1.0, 0.0)
+			val t = min(3f, wielder.itemInUseDuration.F + mc.timer.renderPartialTicks)
+			
+			glTranslatef(0f, 1f, 0f)
 			if (type !== IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON) {
-				glRotatef(33.0f, 0.0f, 0.0f, 1.0f)
+				glRotatef(33f, 0f, 0f, 1f)
 			} else {
-				glScaled(0.8)
-				glRotatef(66f, 0f, 0f, 1f)
-				glTranslated(0.0, 0.6, 0.0)
-				glTranslated(-0.7, 0.6, 0.0)
+				glRotatef(10f, 1f, 0f, 0f)
+				glRotatef(10f, 0f, 0f, 1f)
 			}
+			
+			glRotatef(60f * (t / 3f), -1f, 0f, 0f)
+			
 			glTranslated(0.0, -1.0, 0.0)
 		}
 		
