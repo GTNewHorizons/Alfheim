@@ -29,7 +29,7 @@ class BlockCalicoLeaves : BlockLeavesMod(), IExplosionDampener, ILexiconable {
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	
-	override fun func_150125_e() = arrayOf("circuitLeaves")
+	override fun func_150125_e() = arrayOf("calicoLeaves")
 	
 	override fun decayBit(): Int = 0x1
 	

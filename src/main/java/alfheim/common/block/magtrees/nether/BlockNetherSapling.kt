@@ -15,8 +15,11 @@ import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.event.terraingen.TerrainGen
 import java.util.*
 
-
 class BlockNetherSapling : BlockColoredSapling(name = "netherSapling") {
+    
+    init {
+    	setLightLevel(0.5f)
+    }
     
     override fun growTree(world: World?, x: Int, y: Int, z: Int, random: Random?) {
         if (world != null) {
@@ -27,7 +30,7 @@ class BlockNetherSapling : BlockColoredSapling(name = "netherSapling") {
             if (canGrowHere(plantedOn)) {
                 val l = world.getBlockMetadata(x, y, z)
 
-                val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.netherWood, 0, AlfheimBlocks.netherWood, 0, AlfheimBlocks.netherLeaves, 0)
+                val obj: WorldGenerator = HeartWoodTreeGen(5, AlfheimBlocks.netherWood, 0, AlfheimBlocks.netherWood, 1, AlfheimBlocks.netherLeaves, 0)
 
                 world.setBlock(x, y, z, Blocks.air, 0, 4)
 

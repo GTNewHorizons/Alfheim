@@ -87,7 +87,7 @@ object AlfheimConfigHandler {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
-	var interactionSecurity 	= "mixed"
+	var interactionSecurity 	= "default"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION

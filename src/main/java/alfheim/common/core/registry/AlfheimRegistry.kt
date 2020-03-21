@@ -154,6 +154,7 @@ object AlfheimRegistry {
 		registerTile(TileRainbowManaFlame::class.java, "ManaRainbowFlame")
 		registerTile(TileSchemaController::class.java, "SchemaController")
 		registerTile(TileSchemaAnnihilator::class.java, "SchemaAnnihilator")
+		registerTile(TileTreeCook::class.java, "TreeCook")
 		registerTile(TileTreeCrafter::class.java, "TreeCrafter")
 	}
 	
@@ -249,12 +250,12 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModBlocks.flower, 1, 6), 2)
 		addPink(ItemStack(ModBlocks.floatingFlower, 1, 6), 2)
 		addPink(ItemStack(ModBlocks.shinyFlower, 1, 6), 2)
-		addPink(ItemStack(ModBlocks.doubleFlower1, 1, 6), 4)
-		addPink(ItemStack(ModBlocks.doubleFlower2, 1, 6), 4)
+		addPink(ItemStack(ModBlocks.doubleFlower1, 1, 6), 4) // upper part
+		addPink(ItemStack(ModBlocks.doubleFlower1, 1, 14), 4) // bottom part just in case
 		addPink(ItemStack(ModBlocks.petalBlock, 1, 6), 9)
 		addPink(ItemStack(ModItems.petal, 1, 6), 1)
 		addPink(ItemStack(ModItems.dye, 1, 6), 1)
-		addPink(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_ARCANE_ROSE), 4)
+		addPink(ItemBlockSpecialFlower.ofType(LibBlockNames.SUBTILE_ARCANE_ROSE), 2) // was 4
 		addPink(ItemStack(ModItems.manaResource, 1, 7), 9)
 		addPink(ItemStack(ModItems.manaResource, 1, 8), 9)
 		addPink(ItemStack(ModItems.manaResource, 1, 9), 9)
@@ -268,7 +269,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.elementiumChest), 72)
 		addPink(ItemStack(ModItems.elementiumHelm), 45)
 		if (Botania.thaumcraftLoaded) addPink(ItemStack(ModItems.elementiumHelmRevealing), 45)
-		addPink(ItemStack(ModItems.elementiumLegs), 56)
+		addPink(ItemStack(ModItems.elementiumLegs), 63)
 		addPink(ItemStack(ModItems.elementiumPick), 27)
 		addPink(ItemStack(ModItems.elementiumShears), 18)
 		addPink(ItemStack(ModItems.elementiumShovel), 9)
@@ -277,24 +278,24 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.thorRing), 1000)
 		addPink(ItemStack(ModItems.odinRing), 1000)
 		addPink(ItemStack(ModItems.lokiRing), 1000)
-		addPink(ItemStack(ModItems.aesirRing), 3000)
+		// addPink(ItemStack(ModItems.aesirRing), 3000) - can't drop
 		addPink(ItemStack(ModBlocks.unstableBlock, 1, 6), 2)
 		addPink(ItemStack(ModBlocks.manaBeacon, 1, 6), 8)
 		addPink(ItemStack(ModItems.pinkinator), 100)
 		addPink(ItemStack(ModItems.rune, 1, 4), 10)
 		addPink(ItemStack(ModItems.baubleBox), 5)
-		addPink(ItemStack(ModItems.cosmetic, 1, 8), 8)
-		addPink(ItemStack(ModItems.reachRing, 1, 8), 36)
-		addPink(ItemStack(ModItems.pixieRing, 1, 8), 45)
-		addPink(ItemStack(ModItems.superTravelBelt, 1, 8), 38)
-		addPink(ItemStack(ModItems.rainbowRod, 1, 8), 45)
+		addPink(ItemStack(ModItems.cosmetic, 1, 8), 4) // was 8
+		addPink(ItemStack(ModItems.reachRing), 36)
+		addPink(ItemStack(ModItems.pixieRing), 45)
+		addPink(ItemStack(ModItems.superTravelBelt), 27) // was 38
+		addPink(ItemStack(ModItems.rainbowRod), 45)
 		for (i in 0..9) addPink(ItemStack(ModItems.flightTiara, 1, i), 88)
 		addPink(ItemStack(AlfheimItems.elementalBoots), 36)
 		addPink(ItemStack(AlfheimItems.elementalChestplate), 72)
 		addPink(ItemStack(AlfheimItems.elementalHelmet), 45)
 		if (Botania.thaumcraftLoaded) addPink(ItemStack(AlfheimItems.elementalHelmetRevealing), 45)
-		addPink(ItemStack(AlfheimItems.elementalLeggings), 56)
-		addPink(ItemStack(AlfheimItems.pixieAttractor), 36)
+		addPink(ItemStack(AlfheimItems.elementalLeggings), 63)
+		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
 		//addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);
 		addPink(ItemStack(AlfheimBlocks.manaInfuser), 90)
 		addPink(ItemStack(AlfheimBlocks.alfheimPylon), 45)

@@ -17,6 +17,7 @@ class BlockNetherLeaves: BlockLeavesMod() {
 	
 	init {
 		setBlockName("netherLeaves")
+		setLightLevel(0.5f)
 	}
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false

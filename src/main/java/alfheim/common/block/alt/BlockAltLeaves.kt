@@ -58,12 +58,11 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(func_150123_b(0)) == 0) 1 else 0
 	
-	override fun func_150125_e() = arrayOf("altLeaves")
+	override fun func_150125_e() = ALT_TYPES
 	
 	override fun getSubBlocks(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
-		for (i in ALT_TYPES.indices) {
+		for (i in ALT_TYPES.indices)
 			list.add(ItemStack(item, 1, i))
-		}
 	}
 	
 	override fun decayBit() = 0b1000

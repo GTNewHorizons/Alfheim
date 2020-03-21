@@ -5,7 +5,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.*
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.helper.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
@@ -195,7 +195,7 @@ object ManaSpreaderExtender {
 			
 			modelHook = false
 			
-			mc.renderEngine.bindTexture(if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
+			mc.renderEngine.bindTexture(if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays") || (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
 		}
 	}
 }

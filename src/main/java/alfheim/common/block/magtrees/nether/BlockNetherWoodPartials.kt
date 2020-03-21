@@ -10,6 +10,10 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodSlab(full, source) {
 	
+	init {
+		setLightLevel(0.5f)
+	}
+	
 	override fun getFullBlock() = AlfheimBlocks.netherSlabsFull as BlockSlab
 	
 	override fun register() {
@@ -24,6 +28,10 @@ class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPla
 }
 
 class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodStairs(source) {
+	
+	init {
+		setLightLevel(0.5f)
+	}
 	override fun register() {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}

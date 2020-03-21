@@ -5,11 +5,18 @@ Innovations:
  New relic - Akashik Records: get books with powerful spells! [Will be improved]
  Soviet shield (cosmetic)
  Contributor's Fancies 2FA (request activation in PM)
+ Infernal oak now cooks food around it
+ Elven sand now can sustain cactus and sugar canes
+ Improved pink item PP values
 
 Fixes:
  Flugel area range check was cube instead of sphere
  Can't spawn flugel with Et Futurum
  Shields application to Et Futurum banners
  SR ritual visualization
+ Alfheim portal particles
  Dreamwood leaves render (++optimization)
  Anomaly item render
+ Regions Security disappearing blocks
+ Lightning particles sometimes not drawing
+ Friendly fire check if MMO mode is disabled

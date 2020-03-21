@@ -23,6 +23,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemStack
 import net.minecraft.world.IBlockAccess
+import net.minecraftforge.common.*
+import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.api.BotaniaAPI
@@ -183,7 +185,13 @@ object AlfheimBlocks {
 		barrier = BlockBarrier()
 		dreamSapling = BlockDreamSapling()
 		elvenOres = BlockElvenOres()
-		elvenSand = BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen)
+		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
+			override fun canSustainPlant(world: IBlockAccess, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable) = when (plantable.getPlantType(world, x, y, z)) {
+				EnumPlantType.Desert -> true
+				EnumPlantType.Beach -> world.getBlock(x - 1, y, z).material === Material.water || world.getBlock(x + 1, y, z).material === Material.water || world.getBlock(x, y, z - 1).material === Material.water || world.getBlock(x, y, z + 1).material === Material.water
+				else -> super.canSustainPlant(world, x, y, z, direction, plantable)
+			}
+		}
 		flugelHeadBlock = BlockHeadFlugel()
 		flugelHead2Block = BlockHeadMiku()
 		itemDisplay = BlockItemDisplay()

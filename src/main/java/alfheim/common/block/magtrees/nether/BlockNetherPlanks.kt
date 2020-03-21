@@ -22,10 +22,9 @@ class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	
 	init {
 		blockHardness = 2F
-		setLightLevel(0f)
-		stepSound = soundTypeWood
-		
 		setBlockName(name)
+		setLightLevel(0.5f)
+		stepSound = soundTypeWood
 	}
 	
 	override fun isInterpolated() = true

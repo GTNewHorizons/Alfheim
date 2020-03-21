@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.entity.FakeLightning
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.init.Blocks
@@ -13,7 +13,7 @@ class TileLightningRod: TileEntity() {
 	
 	override fun updateEntity() {
 		if (worldObj != null) {
-			for (e in getBoltsWithinAABB(worldObj, AxisAlignedBB.getBoundingBox((xCoord - 48).D, (yCoord - 48).D, (zCoord - 48).D, (xCoord + 48).D, (yCoord + 48).D, (zCoord + 48).D))) {
+			for (e in getBoltsWithinAABB(worldObj, boundingBox(48))) {
 				worldObj.removeEntity(e)
 				worldObj.addWeatherEffect(FakeLightning(worldObj, xCoord.D, (yCoord + 1).D, zCoord.D))
 			}

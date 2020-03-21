@@ -138,6 +138,10 @@ object EventHandler {
 			amount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
+			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
+				e.isCanceled = true
+				return
+			}
 			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true)
 				amount *= 4f
 			
@@ -155,10 +159,7 @@ object EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
-			e.isCanceled = true
-			return
-		}
+		
 		if (e.source.isFireDamage && !e.source.isUnblockable && (target as? EntityPlayer)?.getCurrentArmor(1)?.item === AlfheimItems.elementalLeggings && ManaItemHandler.requestManaExact(target.getCurrentArmor(1), target, MathHelper.ceiling_float_int(10 * amount), !target.worldObj.isRemote)) {
 			e.isCanceled = true
 			return
@@ -175,11 +176,6 @@ object EventHandler {
 		val target = e.entityLiving
 		val attacker = e.source.entity
 		
-		if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
-			e.isCanceled = true
-			return
-		}
-		
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			e.ammount *= 1.2f
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && e.source.isMagical)
@@ -188,6 +184,11 @@ object EventHandler {
 			e.ammount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
+			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
+				e.isCanceled = true
+				return
+			}
+			
 			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
 				e.ammount *= 4f
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, attacker)

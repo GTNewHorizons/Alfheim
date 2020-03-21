@@ -1,5 +1,6 @@
 package alfheim.common.block.colored
 
+import alfheim.api.lib.LibOreDict.LEAVES
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.core.util.toItem
@@ -54,7 +55,7 @@ class BlockColoredLeaves(val colorSet: Int): BlockLeavesMod() {
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.irisSapling.toItem()
 	
-	override fun func_150125_e() = arrayOf("ColoredLeaves")
+	override fun func_150125_e() = LEAVES.sliceArray(colorSet * 8 until (colorSet + 1) * 8)
 	
 	override fun decayBit(): Int = 0x8
 	
