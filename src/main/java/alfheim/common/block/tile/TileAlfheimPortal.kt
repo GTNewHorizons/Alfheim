@@ -215,8 +215,6 @@ class TileAlfheimPortal: TileMod() {
 			var tile = worldObj.getTileEntity(xCoord + pos[0], yCoord + pos[1], zCoord + pos[2])
 			if (tile is TileAlfheimPylon) {
 				
-				val centerBlock = Vector3(xCoord + 0.5, yCoord.D + 0.75 + (Math.random() - 0.5 * 0.25), zCoord + 0.5)
-				
 				if (ConfigHandler.elfPortalParticlesEnabled) {
 					var worldTime = worldObj.totalWorldTime.D
 					rand.setSeed((xCoord + pos[0] xor yCoord + pos[1] xor zCoord + pos[2]).toLong())
@@ -227,6 +225,8 @@ class TileAlfheimPortal: TileMod() {
 					val x = xCoord.D + pos[0].D + 0.5 + cos(worldTime) * r
 					val z = zCoord.D + pos[2].D + 0.5 + sin(worldTime) * r
 					
+					val movementVector = Vector3(xCoord - x + 0.5, Math.random() - 1.125, zCoord - z + 0.5).normalize().mul(0.2)
+					
 					Botania.proxy.wispFX(worldObj, x, yCoord.D + pos[1].D + 0.25, z,
 										 0.75f + Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
 										 0.25f + Math.random().F * 0.1f, -0.075f - Math.random().F * 0.015f)
@@ -235,7 +235,7 @@ class TileAlfheimPortal: TileMod() {
 						Botania.proxy.wispFX(worldObj, x, yCoord.D + pos[1].D + 0.25, z,
 											 Math.random().F * 0.25f, Math.random().F * 0.25f, 0.75f + Math.random().F * 0.25f,
 											 0.25f + Math.random().F * 0.1f,
-											 centerBlock.x.F, centerBlock.y.F, centerBlock.z.F)
+											 movementVector.x.F, movementVector.y.F, movementVector.z.F)
 				}
 			}
 			

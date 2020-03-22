@@ -80,7 +80,7 @@ abstract class SpellBase @JvmOverloads constructor(val name: String, val race: E
 	
 	override fun toString() = name
 	
-	abstract val usableParams: Array<Any>
+	abstract val usableParams: Array<out Any>
 	
 	enum class SpellCastResult {
 		OK, DESYNC, NOTREADY, NOTARGET, WRONGTGT, OBSTRUCT, NOMANA, NOTALLOW, NOTSEEING

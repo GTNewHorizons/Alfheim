@@ -43,15 +43,29 @@ tile.alfheim:circuitPlanksStairs.name=Circuitree Planks Stairs
 tile.alfheim:circuitSapling.name=Circuitree Sapling
 tile.alfheim:circuitWood.name=Circuitree Wood
 tile.alfheim:cracklingStar.name=Crackling Star
-tile.alfheim:DreamLeaves.name=Dreamwood Leaves
-tile.alfheim:DreamLog.name=Dreamwood Log
+tile.DarkLivingRock0.name=Dark Livingrock
+tile.DarkLivingRock1.name=Dark Livingrock Brick
+tile.DarkLivingRock2.name=Chiseled Dark Livingrock
+tile.DarkLivingRock3.name=Dark Livingrock Tile
+tile.botania:DarkLivingRock0Slab.name=Dark Livingrock Slab
+tile.botania:DarkLivingRock1Slab.name=Dark Livingrock Brick Slab
+tile.botania:DarkLivingRock3Slab.name=Dark Livingrock Tile Slab
+tile.botania:DarkLivingRock0SlabFull.name=Dark Livingrock Slab
+tile.botania:DarkLivingRock1SlabFull.name=Dark Livingrock Brick Slab
+tile.botania:DarkLivingRock3SlabFull.name=Dark Livingrock Tile Slab
+tile.botania:DarkLivingRockStairs0.name=Dark Livingrock Stairs
+tile.botania:DarkLivingRockStairs1.name=Dark Livingrock Brick Stairs
+tile.botania:DarkLivingRockStairs3.name=Dark Livingrock Tile Stairs
+tile.botania:DarkLivingRock0Wall.name=Dark Livingrock Wall
+tile.botania:DarkLivingRock1Wall.name=Dark Livingrock Brick Wall
 tile.alfheim:DreamSapling.name=Dreamwood Sapling
 tile.alfheim:DreamwoodBarkFence.name=Dreamwood Bark Fence
 tile.alfheim:DreamwoodBarkFenceGate.name=Dreamwood Bark Fence Gate
 tile.alfheim:DreamwoodFence.name=Dreamwood Planks Fence
 tile.alfheim:DreamwoodFenceGate.name=Dreamwood Planks Fence Gate
 tile.alfheim:DwarfLantern.name=Livingrock Lantern
-tile.DwarfPlanks0.name=Dvarf Planks
+tile.DwarfPlanks0.name=Dwarf Planks
+tile.alfheim:DwarfTrapDoor.name=Dwarf Trapdoor
 tile.ElvenOre0.name=Dragonstone Ore
 tile.ElvenOre1.name=Elementium Ore
 tile.ElvenOre2.name=Elven Quartz Ore
@@ -70,7 +84,7 @@ tile.botania:ElvenSandstoneStairs.name=Elven Sandstone Stairs
 tile.alfheim:FlugelHeadBlock.name=Flügel Head
 tile.LivingCobble0.name=Livingrock Cobblestone
 tile.LivingCobble1.name=Compressed Livingrock
-tile.LivingCobble2.name=Polished Cobblestone
+tile.LivingCobble2.name=Polished Livingrock
 tile.botania:LivingCobble0Slab.name=Livingrock Cobblestone Slab
 tile.botania:LivingCobble0SlabFull.name=Livingrock Cobblestone Slab
 tile.botania:LivingCobble0Wall.name=Livingrock Cobblestone Wall
@@ -100,6 +114,9 @@ tile.alfheim:schematicAnnihilator.name=Schematic Annihilator
 tile.alfheim:schematicOak.name=Schematic Sapling
 tile.ShrineGlass0.name=Shrine Glass
 tile.ShrineGlass1.name=Shrine Glass
+tile.ShrineGlass2.name=Shrine Glass
+tile.ShrineGlass3.name=Shrine Glass
+tile.ShrineGlass4.name=Shrine Glass
 tile.ShrineLight0.name=Shrine Light
 tile.ShrineLight1.name=Shrine Light
 tile.ShrineLight2.name=Shrine Light
@@ -137,6 +154,7 @@ tile.Transferer.name=Transferer
 ##########################################################___ITEMS___###########################################################
 
 # item..name=
+item.botania:AkashicRecords.name=Akashic Records
 item.alfheim:Astrolabe.name=Worldshaper's Astrolabe
 item.botania:AuraRingElven.name=Elven Band of Aura
 item.botania:AuraRingGod.name=God's Band of Aura
@@ -256,11 +274,16 @@ item.botania:ThinkingHand.name=Thinking Hand
 item.alfheim:ThunderwoodSplinters.name=Thunderous Splinters
 item.alfheim:ThunderwoodTwig.name=Thunderous Twig
 item.Transferer.name=Destructurizer
+item.alfheim:Triquetrum.name=Worldshaper's Triquetrum
+item.Triquetrum.blocks=%s blocks selected
+item.Triquetrum.rotation=Rotation %s degrees counterclockwise
 
 ##########################################################___OTHER___###########################################################
 
 achievement.alfheim=New Lands
 achievement.alfheim.desc=Enter Alfheim
+achievement.divineMarksman=Divine Marksman
+achievement.divineMarksman.desc=Warrior Mastery
 achievement.excaliber=Streaming Heart
 achievement.excaliber.desc=Be rewarded the Holy Sword Excaliber for a heroic feat
 achievement.flugelSoul=You're my soul
@@ -277,6 +300,8 @@ achievement.newChance=New chance
 achievement.newChance.desc=Be rewarded the Flügelgeheimen for a heroic feat
 achievement.outstander=Outstander
 achievement.outstander.desc=Prove that your Will is harder than a rock
+achievement.rosaBomb=Rosa Bombardamento
+achievement.rosaBomb.desc=Killing Style
 achievement.subspace=Nightglow
 achievement.subspace.desc=Be rewarded the Spear of Subspace for a heroic feat
 achievement.wingedHussaurs=And the Winged Hussars arrived!
@@ -376,6 +401,14 @@ alfheimmisc.cast.wrongtgt=Wrong target
 alfheimmisc.cast.momana=Not enough mana
 alfheimmisc.cast.notallow=You cannot cast here
 
+alfheimmisc.modular.available=Alfheim Modular update available.
+alfheimmisc.modular.update10=Server will be stopped in 10 minutes.
+alfheimmisc.modular.update5=Server will be stopped in 5 minutes.
+alfheimmisc.modular.update2=Server will be stopped in 2 minutes.
+alfheimmisc.modular.update1=Server will be stopped in 1 minute.
+alfheimmisc.modular.update30s=Server will be stopped in 30 seconds.
+alfheimmisc.modular.restart=Stopping server for Alfheim Modular update. Please, restart manually.
+
 alfheimmisc.mount.unavailable=Mount is unavailable here
 
 alfheimmisc.party.already=You are aleady in this party
@@ -466,6 +499,11 @@ itemGroup.Alfheim=Alfheim
 lang.name=en_US
 
 #######################################################___RELIC POEMS___########################################################
+
+item.AkashicRecords.poem0=No
+item.AkashicRecords.poem1=English
+item.AkashicRecords.poem2=Poem
+item.AkashicRecords.poem3=Here :(
 
 item.aesirRing.poem0=The forces of the Gods
 item.aesirRing.poem1=In this band form as one,
@@ -921,7 +959,8 @@ item.alfheim:coatOfArms13.name=Texan Shield
 item.alfheim:coatOfArms14.name=Ukranian Shield
 item.alfheim:coatOfArms15.name=American Shield
 item.alfheim:coatOfArms16.name=Fabulous Shield
-item.alfheim:coatOfArms17.name=Parisian Shield
+item.alfheim:coatOfArms17.name=Soviet Shield
+item.alfheim:coatOfArms18.name=Parisian Shield
 
 item.alfheim:colorOverride.name=Clerical Colorizer
 
@@ -970,12 +1009,8 @@ tile.alfheim:altLeaves2.name=Vivid Leaves
 tile.alfheim:altLeaves3.name=Scorched Leaves
 tile.alfheim:altLeaves4.name=Infused Leaves
 tile.alfheim:altLeaves5.name=Mutated Leaves
-tile.alfheim:altLeaves8.name=Dry Leaves
-tile.alfheim:altLeaves9.name=Golden Leaves
-tile.alfheim:altLeaves10.name=Vivid Leaves
-tile.alfheim:altLeaves11.name=Scorched Leaves
-tile.alfheim:altLeaves12.name=Infused Leaves
-tile.alfheim:altLeaves13.name=Mutated Leaves
+tile.alfheim:altLeaves6.name=Yggdrasil Leaves
+tile.alfheim:altLeaves7.name=Dreamwood Leaves
 
 tile.alfheim:altPlanks0.name=Dry Planks
 tile.alfheim:altPlanks1.name=Golden Planks
@@ -983,6 +1018,7 @@ tile.alfheim:altPlanks2.name=Vivid Planks
 tile.alfheim:altPlanks3.name=Scorched Planks
 tile.alfheim:altPlanks4.name=Infused Planks
 tile.alfheim:altPlanks5.name=Mutated Planks
+tile.alfheim:altPlanks6.name=Yggdrasil Planks
 
 tile.alfheim:altWood00.name=Dry Wood
 tile.alfheim:altWood01.name=Golden Wood
@@ -990,6 +1026,8 @@ tile.alfheim:altWood02.name=Vivid Wood
 tile.alfheim:altWood03.name=Scorched Wood
 tile.alfheim:altWood10.name=Infused Wood
 tile.alfheim:altWood11.name=Mutated Wood
+tile.alfheim:altWood12.name=Yggdrasil Wood
+tile.alfheim:altWood13.name=Dreamwood Log
 
 tile.alfheim:altPlanksSlab0.name=Dry Planks Slab
 tile.alfheim:altPlanksSlab1.name=Golden Planks Slab
@@ -997,6 +1035,7 @@ tile.alfheim:altPlanksSlab2.name=Vivid Planks Slab
 tile.alfheim:altPlanksSlab3.name=Scorched Planks Slab
 tile.alfheim:altPlanksSlab4.name=Infused Planks Slab
 tile.alfheim:altPlanksSlab5.name=Mutated Planks Slab
+tile.alfheim:altPlanksSlab6.name=Yggdrasil Planks Slab
 
 tile.alfheim:altPlanksSlabFull0.name=Dry Planks Slab
 tile.alfheim:altPlanksSlabFull1.name=Golden Planks Slab
@@ -1004,6 +1043,7 @@ tile.alfheim:altPlanksSlabFull2.name=Vivid Planks Slab
 tile.alfheim:altPlanksSlabFull3.name=Scorched Planks Slab
 tile.alfheim:altPlanksSlabFull4.name=Infused Planks Slab
 tile.alfheim:altPlanksSlabFull5.name=Mutated Planks Slab
+tile.alfheim:altPlanksSlabFull6.name=Yggdrasil Planks Slab
 
 tile.alfheim:altPlanksStairs0.name=Dry Planks Stairs
 tile.alfheim:altPlanksStairs1.name=Golden Planks Stairs
@@ -1011,6 +1051,7 @@ tile.alfheim:altPlanksStairs2.name=Vivid Planks Stairs
 tile.alfheim:altPlanksStairs3.name=Scorched Planks Stairs
 tile.alfheim:altPlanksStairs4.name=Infused Planks Stairs
 tile.alfheim:altPlanksStairs5.name=Mutated Planks Stairs
+tile.alfheim:altPlanksStairs6.name=Yggdrasil Planks Stairs
 
 tile.alfheim:irisLamp.name=Iridescent Lantern
 

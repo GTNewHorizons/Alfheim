@@ -141,7 +141,7 @@ object ASJUtilities {
 			amount = amount * armor / 25f
 		}
 		if (!source.isDamageAbsolute && living.isPotionActive(Potion.resistance)) {
-			val resistance = 25 - (living.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5
+			val resistance = 25 - (living.getActivePotionEffect(Potion.resistance).amplifier + 1) * 5
 			amount = amount * resistance / 25f
 		}
 		return ceil(amount) >= floor(living.health)
@@ -154,8 +154,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getSlotWithItem(item: Item, inventory: IInventory) =
-		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it) != null && inventory.getStackInSlot(it).item === item }
-		?: -1
+		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it)?.item === item } ?: -1
 	
 	/**
 	 * Removes itemstack from inventory
@@ -282,13 +281,12 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun isItemStackEqualNBT(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-		return if (stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage) {
-			if (!stack1.hasTagCompound() && !stack2.hasTagCompound()) {
-				true
-			} else if (stack1.hasTagCompound() != stack2.hasTagCompound()) {
-				false
-			} else
-				stack1.stackTagCompound == stack2.stackTagCompound
+		return if (isItemStackEqualData(stack1, stack2)) {
+			when {
+				!stack1!!.hasTagCompound() and !stack2!!.hasTagCompound() -> true
+				stack1.hasTagCompound() != stack2.hasTagCompound()        -> false
+				else                                                      -> stack1.stackTagCompound == stack2.stackTagCompound
+			}
 		} else false
 	}
 	
@@ -439,8 +437,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getMouseOver(entity: EntityLivingBase?, dist: Double, interact: Boolean): MovingObjectPosition? {
-		if (entity?.worldObj == null)
-			return null
+		if (entity?.worldObj == null) return null
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
@@ -619,10 +616,7 @@ object ASJUtilities {
 	 */
 	@Deprecated("")
 	@JvmStatic
-	fun setBiomeAt(world: World, x: Int, z: Int, biome: BiomeGenBase?) {
-		if (biome == null) {
-			return
-		}
+	fun setBiomeAt(world: World, x: Int, z: Int, biome: BiomeGenBase) {
 		val chunk = world.getChunkFromBlockCoords(x, z)
 		val array = chunk.biomeArray
 		array[z and 0xF shl 4 or (x and 0xF)] = (biome.biomeID and 0xFF).toByte()
@@ -783,8 +777,9 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun chatLog(message: String) {
-		val msg = "${time(Minecraft.getMinecraft()?.theWorld)} $message"
-		if (!isServer)
+		val world = if (isServer) MinecraftServer.getServer()?.entityWorld else Minecraft.getMinecraft()?.theWorld
+		val msg = "${time(world)} $message"
+		if (isServer)
 			sayToAllOnline(msg)
 		else
 			Minecraft.getMinecraft()?.thePlayer?.addChatMessage(ChatComponentText(msg))

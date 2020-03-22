@@ -2,12 +2,12 @@ package alfheim.client.core.handler
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.ASJRenderHelper
+import alexsocol.asjlib.render.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.raceID
 import alfheim.api.event.EntityUpdateEvent
-import alfheim.api.lib.LibResourceLocations
+import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
@@ -19,6 +19,7 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.*
 import alfheim.common.network.MessageKeyBindS
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
@@ -101,12 +102,12 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
-		RenderItemFlugelHead.render(e, e.entityPlayer)
-		
 		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.isCanceled = true
 			return
 		}
+		
+		RenderItemFlugelHead.render(e, e.entityPlayer)
 	}
 	
 	@SubscribeEvent
@@ -116,7 +117,7 @@ object EventHandlerClient {
 		
 		val name = player.commandSenderName
 		
-		if (name == "AlexSocol")
+		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol"))
 			player.func_152121_a(Type.SKIN, LibResourceLocations.skin)
 			
 		run skin@ {
@@ -140,6 +141,13 @@ object EventHandlerClient {
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
+	fun onHandRender(e: RenderHandEvent) {
+		if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "AlexSocol"))
+			mc.thePlayer.func_152121_a(Type.SKIN, LibResourceLocations.skin)
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	fun onPlayerSpecialPostRender(e: RenderPlayerEvent.Specials.Post) {
 		RenderItemFlugelHead.render(e, e.entityPlayer)
 		RenderWings.render(e, e.entityPlayer)
@@ -156,7 +164,7 @@ object EventHandlerClient {
 			KeyBindingHandlerClient.parseKeybindings(e.player)
 			SpellCastingSystemClient.tick()
 			
-			if (mc != null && player != null) {
+			if (player != null) {
 				val tg = PlayerSegmentClient.target
 				if (tg != null) {
 					if (!tg.isEntityAlive || Vector3.entityDistance(player, tg) > (if (tg is IBossDisplayData) 128 else 32)) PlayerSegmentClient.target = null

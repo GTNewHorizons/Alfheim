@@ -76,7 +76,7 @@ import vazkii.botania.common.lib.LibBlockNames
 import java.awt.Color
 import java.nio.FloatBuffer
 import java.util.*
-import kotlin.math.min
+import kotlin.math.*
 
 @Suppress("UNUSED_PARAMETER", "NAME_SHADOWING", "unused", "FunctionName")
 object AlfheimHookHandler {
@@ -159,7 +159,7 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
-			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 600 else 0
+			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 600 else 0
 		} else time
 	
 	@JvmStatic
@@ -167,7 +167,7 @@ object AlfheimHookHandler {
 	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
 		val stack = tile.getStackInSlot(0)
 		return if (stack != null && color == 0) {
-			if (stack.item === Item.getItemFromBlock(AlfheimBlocks.elvenSand)) 0xf7f5d9 else 0
+			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
 	}
 	
@@ -295,9 +295,27 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun updateTick(grass: BlockGrass, world: World, x: Int, y: Int, z: Int, random: Random) {
-		if (AlfheimCore.winter && !world.isRemote && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.canBlockSeeTheSky(x, y + 1, z)) {
+		if (AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote && world.canBlockSeeTheSky(x, y + 1, z)) {
 			world.setBlock(x, y, z, AlfheimBlocks.snowGrass)
 		}
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun updateTick(grass: BlockSnow, world: World, x: Int, y: Int, z: Int, random: Random) {
+		if (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && !world.isRemote)
+			if (AlfheimCore.winter) {
+				world.setBlock(x, y, z, AlfheimBlocks.snowLayer)
+			} else if (world.rand.nextInt(20) == 0) {
+				world.setBlockToAir(x, y, z)
+			}
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun updateTick(grass: BlockIce, world: World, x: Int, y: Int, z: Int, random: Random) {
+		if (!AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote)
+			world.setBlock(x, y, z, Blocks.flowing_water)
 	}
 	
 	@JvmStatic
@@ -426,7 +444,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun onItemUse(eye: ItemFlugelEye, stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
-		if (player.isSneaking && world.getBlock(x, y, z) === Blocks.beacon) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
+		// Stupid Et Futurum
+		if (player.isSneaking) EntityFlugel.spawn(player, stack, world, x, y, z, false, false) else false
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
@@ -813,7 +832,7 @@ object AlfheimHookHandler {
 		
 		if (item is IManaItem && AlfheimConfigHandler.numericalMana) {
 			glDisable(GL_DEPTH_TEST)
-			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (Math.sin((ClientTickHandler.ticksInGame.F + ClientTickHandler.partialTicks).D * 0.2).F + 1f) * 0.3f + 0.4f, 1f))
+			mc.fontRenderer.drawStringWithShadow("${item.getMana(stack)}/${item.getMaxMana(stack)}", mouseX + offx - 1, mouseY - offy - height - 1 - mc.fontRenderer.FONT_HEIGHT, Color.HSBtoRGB(0.528f, (sin((ClientTickHandler.ticksInGame.F + ClientTickHandler.partialTicks).D * 0.2).F + 1f) * 0.3f + 0.4f, 1f))
 			glEnable(GL_DEPTH_TEST)
 		}
 	}

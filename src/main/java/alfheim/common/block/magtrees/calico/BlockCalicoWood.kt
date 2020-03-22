@@ -13,15 +13,13 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener, ILexiconable {
+class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener {
 	
 	init {
 		setBlockName("calicoWood")
 		blockHardness = 2f
 		EventHandlerCalico.register()
 	}
-	
-	override fun isInterpolated() = true
 	
 	override fun canSustainLeaves(world: IBlockAccess, x: Int, y: Int, z: Int) = true
 	
@@ -42,12 +40,6 @@ class BlockCalicoWood: BlockModRotatedPillar(Material.wood), IExplosionDampener,
 		}
 		super.breakBlock(world, x, y, z, block, fortune)
 	}
-	
-	override fun isFireSource(world: World?, x: Int, y: Int, z: Int, side: ForgeDirection?) = true
-	
-	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
-	
-	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 	
 	override fun damageDropped(meta: Int) = 0
 	

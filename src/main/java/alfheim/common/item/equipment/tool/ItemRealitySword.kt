@@ -4,6 +4,7 @@ import alexsocol.asjlib.ASJUtilities
 import alfheim.api.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.registry.GameRegistry
@@ -53,7 +54,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.mauftriumToolmaterial), IManaUsingI
 		if (player.isSneaking) {
 			if (getInt(stack, TAG_ELEMENT, 0) == 5) return stack
 
-			if (merge(player.commandSenderName, stack.displayName) == "756179BA5B0697ED01B6CD292A3A726BACD5B99E0E624B37A11E18CE0B40B83E") {
+			if (merge(ASJUtilities.mapGetKeyOrDefault(ContributorsPrivacyHelper.contributors, player.commandSenderName, "itsmemario"), stack.displayName) == "756179BA5B0697ED01B6CD292A3A726BACD5B99E0E624B37A11E18CE0B40B83E") {
 				setInt(stack, TAG_ELEMENT, 5)
 				stack.tagCompound.removeTag("display")
 				return stack
@@ -113,7 +114,7 @@ class ItemRealitySword: ItemSword(AlfheimAPI.mauftriumToolmaterial), IManaUsingI
 				if (!ManaItemHandler.requestManaExact(stack, entity as EntityPlayer?, 1, !world.isRemote))
 					setInt(stack, TAG_ELEMENT, 0)
 			
-			if (flag && entity.commandSenderName != "AlexSocol") {
+			if (flag && !ContributorsPrivacyHelper.isCorrect(entity.commandSenderName, "AlexSocol")) {
 				world.spawnEntityInWorld(EntityItem(world, entity.posX, entity.posY, entity.posZ, stack.copy()))
 				entity.inventory.consumeInventoryItem(AlfheimItems.realitySword)
 				entity.health = 0f

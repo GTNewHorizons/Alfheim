@@ -3,6 +3,7 @@ package alfheim.common.integration.thaumcraft
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.api.lib.LibOreDict.LEAVES
+import alfheim.common.core.util.toBlock
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
@@ -28,7 +29,7 @@ object ThaumcraftSuffusionRecipes {
 	lateinit var silverwoodLeaves: ItemStack
 	
 	fun initRecipes() {
-		plantBlock = Block.getBlockFromItem(ItemApi.getBlock("blockCustomPlant", 0).item)
+		plantBlock = ItemApi.getBlock("blockCustomPlant", 0)?.item?.toBlock() ?: Blocks.sapling
 		balanceShard = ItemApi.getItem("itemShard", 6)
 		silverwoodLeaves = ItemApi.getBlock("blockMagicalLeaves", 1)
 		

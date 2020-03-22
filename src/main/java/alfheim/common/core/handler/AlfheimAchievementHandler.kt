@@ -1,7 +1,7 @@
 package alfheim.common.core.handler
 
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.meta
+import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
@@ -32,7 +32,7 @@ object AlfheimAchievementHandler {
 				2    -> AlfheimItems.elvoriumLeggings
 				3    -> AlfheimItems.elvoriumChestplate
 				4    -> AlfheimItems.elvoriumHelmet
-				else -> Item.getItemFromBlock(Blocks.air)
+				else -> Blocks.air.toItem()
 			}
 		}
 		

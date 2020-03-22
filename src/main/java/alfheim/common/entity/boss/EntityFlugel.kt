@@ -2,7 +2,6 @@ package alfheim.common.entity.boss
 
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.boss.IBotaniaBossWithName
@@ -10,7 +9,6 @@ import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import alfheim.common.entity.boss.ai.flugel.*
 import alfheim.common.item.AlfheimItems
@@ -42,7 +40,6 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import vazkii.botania.common.core.helper.MathHelper.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.*
 import java.awt.Rectangle
@@ -62,7 +59,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		get() {
 			val source = source
 			val range = RANGE + 3
-			return worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(source.posX + 0.5 - range, source.posY + 0.5 - range, source.posZ + 0.5 - range, source.posX.D + 0.5 + range.D, source.posY.D + 0.5 + range.D, source.posZ.D + 0.5 + range.D)) as List<EntityPlayer>
+			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
+			list.removeAll { Vector3.pointDistanceSpace(it.posX, it.posY, it.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= range }
+			return list
 		}
 	
 	var stage: Int
@@ -251,11 +250,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
 							if (player != null) {
 								relic = when {
-									!player.hasAchievement(AlfheimAchievements.excaliber)                                 -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-									!player.hasAchievement(AlfheimAchievements.subspace)                                  -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-									!player.hasAchievement(AlfheimAchievements.moonlightBow)                              -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-									!player.hasAchievement(AlfheimAchievements.newChance) && AlfheimCore.enableElvenStory -> ItemStack(AlfheimItems.raceNullifier).also { player.triggerAchievement(AlfheimAchievements.newChance) }
-									else                                                                                  -> relic
+									!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+									!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
+									!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+									!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
+									else                                                     -> relic
 								}
 							}
 						}
@@ -361,8 +360,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (playersDamage.isEmpty()) playersDamage[summoner] = 0.1f
 		val source = source
 		var players = playersAround
-		if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar)
-			if (players.isEmpty() && aiTask != AITask.NONE) dropState()
+		// if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar)
+		
+		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
 			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, (if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc) as ItemRecord)
@@ -431,7 +431,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					
 					fun isTooNear(bed: ChunkCoordinates?) =
 						if (bed == null) true
-						else pointDistanceSpace(bed.posX.D, bed.posY.D, bed.posZ.D, source.posX.D, source.posY.D, source.posZ.D) <= RANGE + 3
+						else Vector3.pointDistanceSpace(bed.posX.D, bed.posY.D, bed.posZ.D, source.posX.D, source.posY.D, source.posZ.D) <= RANGE + 3
 					
 					if (isTooNear(player.getBedLocation(player.dimension))) {
 						if (isTooNear(player.worldObj.spawnPoint)) {
@@ -451,7 +451,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			}
 			
 			// Get player back!
-			if (pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
+			if (Vector3.pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
 				val motion = Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).sub(Vector3.fromEntityCenter(player)).normalize()
 				
 				player.motionX = motion.x
@@ -469,7 +469,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (invul > 10) spawnPatyklz(false)
 		
 		if (invul <= 0) {
-			if (pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+			if (Vector3.pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
 			if (isAggroed) {
 				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key
 											   ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
@@ -710,7 +710,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			
 			// Prevent out of bounds teleporting
 			val source = source
-			if (pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) flag = false
+			if (Vector3.pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) flag = false
 		}
 		
 		if (!flag) {
@@ -899,7 +899,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						
 					}
 					
-					if (!ModInfo.DEV && !hasProperArena(world, x, y, z)) {
+					if (!hasProperArena(world, x, y, z)) {
 						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
 						return false
 					}
@@ -969,7 +969,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			for (i in -RANGE until RANGE + 1)
 				for (j in -RANGE until RANGE + 1)
 					for (k in -RANGE until RANGE + 1) {
-						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || pointDistancePlane(i.D, j.D, 0.0, 0.0) > RANGE)
+						if (k == -1 && i > -2 && i < 2 && j > -2 && j < 2 || k == 1 && abs(i) == 4 && abs(j) == 4 || k == 0 && i == 0 && j == 0 || Vector3.pointDistancePlane(i.D, j.D, 0.0, 0.0) > RANGE)
 							continue // Ignore pylons, beacon and out of circle
 						
 						val x = sx + i

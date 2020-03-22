@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -16,18 +17,12 @@ class BlockNetherLeaves: BlockLeavesMod() {
 	
 	init {
 		setBlockName("netherLeaves")
+		setLightLevel(0.5f)
 	}
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor() = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
+	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 	
 	override fun isInterpolated() = true
 	
@@ -35,7 +30,7 @@ class BlockNetherLeaves: BlockLeavesMod() {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.netherSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.netherSapling.toItem()
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	

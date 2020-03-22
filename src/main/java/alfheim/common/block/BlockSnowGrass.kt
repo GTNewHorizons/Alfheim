@@ -2,7 +2,7 @@ package alfheim.common.block
 
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -37,7 +37,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int) = true
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) = Unit
 	override fun canSustainPlant(world: IBlockAccess?, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable?) = true
-	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Item.getItemFromBlock(Blocks.dirt)!!
+	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Blocks.dirt.toItem()
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, random: Random) {
 		val above = world.getBlock(x, y + 1, z)
@@ -69,6 +69,8 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 				}
 			}
 		} else {
+			if (world.rand.nextInt(20) != 0) return
+			
 			if (above === AlfheimBlocks.snowLayer || above === Blocks.snow_layer)
 				world.setBlockToAir(x, y + 1, z)
 			

@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.*
 
-open class BlockStairsMod(val source: Block, val meta: Int, val name: String): BlockStairs(source, meta), ILexiconable {
+abstract class BlockStairsMod(val source: Block, val meta: Int, val name: String): BlockStairs(source, meta), ILexiconable {
 	
 	init {
 		setCreativeTab(AlfheimTab)
@@ -18,7 +18,7 @@ open class BlockStairsMod(val source: Block, val meta: Int, val name: String): B
 		useNeighborBrightness = true
 	}
 	
-	override fun getBlockHardness(world: World?, x: Int, y: Int, z: Int) =
+	override fun getBlockHardness(world: World, x: Int, y: Int, z: Int) =
 		source.getBlockHardness(world, x, y, z)
 	
 	override fun setBlockName(par1Str: String): Block {
@@ -30,5 +30,4 @@ open class BlockStairsMod(val source: Block, val meta: Int, val name: String): B
 		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, name)
 	}
 	
-	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?): LexiconEntry? = null
 }

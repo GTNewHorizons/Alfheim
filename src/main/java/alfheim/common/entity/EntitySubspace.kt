@@ -1,10 +1,13 @@
 package alfheim.common.entity
 
+import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.util.toItem
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemSpearSubspace
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
+import net.minecraft.init.Blocks
+import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
@@ -86,7 +89,10 @@ class EntitySubspace: EntityThrowableCopy {
 					&& ticksExisted < liveTicks - delay - 10) {
 					if (thrower !is EntityPlayer)
 						setDead()
+					
 					val player = getThrower() as EntityPlayer
+					
+					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName == "Rose") player.triggerAchievement(AlfheimAchievements.rosaBomb)
 					
 					val burst = (AlfheimItems.subspaceSpear as ItemSpearSubspace).getBurst(player, ItemStack(AlfheimItems.subspaceSpear))
 					burst.setPosition(posX, posY, posZ)

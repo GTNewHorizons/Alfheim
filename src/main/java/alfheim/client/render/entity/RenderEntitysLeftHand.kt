@@ -2,6 +2,7 @@ package alfheim.client.render.entity
 
 import alfheim.client.core.util.*
 import alfheim.client.model.item.ModelCreatorStaff
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.F
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.entity.RenderManager
@@ -17,10 +18,12 @@ object RenderEntitysLeftHand {
 	fun render(e: RenderPlayerEvent.Specials.Pre) {
 		if (e.entityPlayer.isInvisible || e.entityPlayer.isInvisibleToPlayer(mc.thePlayer) || e.entityPlayer.isPotionActive(Potion.invisibility)) return
 		
+		val name = e.entityPlayer.commandSenderName
+		
 		renderLeftArm(e) {
-			when (e.entityPlayer.commandSenderName) {
-				"AlexSocol" -> renderRoyalStaff(e)
-				"Kirito"    -> renderDualSwords(e)
+			when {
+				ContributorsPrivacyHelper.isCorrect(name, "AlexSocol") -> renderRoyalStaff(e)
+				name == "Kirito"                                       -> renderDualSwords(e)
 			}
 		}
 	}
@@ -85,7 +88,9 @@ object RenderEntitysLeftHand {
 			glRotatef(-10f, 0f, 1f, 0f)
 			glTranslatef(0.25f, 0f, 0.15f)
 			
-			RenderManager.instance.itemRenderer.renderItem(player, if (exc && !ell) { val els = ItemStack(ModItems.manasteelSword); els.setStackDisplayName("the elucidator") } else ItemStack(AlfheimItems.excaliber), 0)
+			RenderManager.instance.itemRenderer.renderItem(player, if (exc && !ell) {
+				val els = ItemStack(ModItems.manasteelSword); els.setStackDisplayName("the elucidator")
+			} else ItemStack(AlfheimItems.excaliber), 0)
 			glPopMatrix()
 		}
 	}

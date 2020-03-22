@@ -1,12 +1,15 @@
 package alfheim.common.core.util
 
+import cpw.mods.fml.common.FMLCommonHandler
+import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
 import kotlin.math.*
 
@@ -14,8 +17,23 @@ fun safeIndex(id: Int, size: Int) = max(0, min(id, size-1))
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 
-@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-fun String.substringEnding(lastNChars: Int): String = (this as java.lang.String).substring(0, length - lastNChars)
+/**
+ * Makes a list of [Pair]s from original [Iterable] (zero to first, second to third, etc)
+ *
+ * If there are odd amount of elements - then last pair will have either last element to [last] argument or same element in both positions if [last] is null/unprovided
+ */
+fun <T> Iterable<T>.paired(last: T? = null): List<Pair<T, T>> {
+    val pairs = ArrayList<Pair<T, T>>()
+    val i = this.iterator()
+    while (i.hasNext()) {
+        val a = i.next()
+        val b = if (i.hasNext()) i.next() else last ?: a
+        pairs.add(a to b)
+    }
+    return pairs
+}
+
+fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()
@@ -61,6 +79,8 @@ fun getBoundingBox(x: Number, y: Number, z: Number) = AxisAlignedBB.getBoundingB
 
 fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 
+fun AxisAlignedBB.offset(d: Number) = this.offset(d.D, d.D, d.D)!!
+
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
     worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
@@ -88,5 +108,11 @@ var ItemStack.meta
     set(meta) {
         itemDamage = meta
     }
+
+fun Block.toItem(): Item? = Item.getItemFromBlock(this)
+fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
+
+fun <T> T.eventForge() = MinecraftForge.EVENT_BUS.register(this)
+fun <T> T.eventFML() = FMLCommonHandler.instance().bus().register(this)
 
 internal fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) = stack.item === stack2.item && stack.meta == stack2.meta

@@ -32,8 +32,10 @@ object AlfheimConfigHandler {
 	var gaiaNameColor			= 0x00D5FF
 	var hpHooks					= true
 	var maxParticles			= 4000
-	var modularThread			= false
 	var modularFilename			= ""
+	var modularThread			= false
+	var modularUpdate			= true
+	var modularUpdateConfirm	= false
 	var primaryClassTransformer	= true
 	
 	// DIMENSION
@@ -61,6 +63,7 @@ object AlfheimConfigHandler {
 	var anyavilBL				= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
+	var floatingTrapDoors		= true
 	var flugelBossBar			= true
 	var flugelSwapBL			= emptyArray<String>()
 	var info					= true
@@ -84,7 +87,7 @@ object AlfheimConfigHandler {
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
-	var interactionSecurity 	= "mixed"
+	var interactionSecurity 	= "default"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
 	
 	// TC INTEGRATION
@@ -92,6 +95,7 @@ object AlfheimConfigHandler {
 	var addTincturemAspect		= true
 	var thaumTreeSuffusion		= true
 	
+	// TiC INTEGRATION
 	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 3, 4)
 	var modifierIDs				= intArrayOf(20)
 	
@@ -180,6 +184,8 @@ object AlfheimConfigHandler {
 		maxParticles = loadProp(CATEGORY_PRELOAD, "maxParticles", maxParticles, true, "How many [any] particles can there be at one time (defaults to vanilla value)")
 		modularFilename = loadProp(CATEGORY_PRELOAD, "modularFilename", modularFilename, true, "Custom name for Alfheim Modular .jar file")
 		modularThread = loadProp(CATEGORY_PRELOAD, "modularThread", modularThread, true, "Set this to true if you want Alfheim Modular to download in separate thread")
+		modularUpdate = loadProp(CATEGORY_PRELOAD, "modularUpdate", modularUpdate, true, "[HIGHLY !NOT! RECOMMENDED - can cause me be angry at you] Set this to false if you REALLY don't want Alfheim Modular to be downloaded/updated automatically")
+		modularUpdateConfirm = loadProp(CATEGORY_PRELOAD, "modularUpdateConfirm", modularUpdateConfirm, true, "Set this to true if you are totally 146% sure you don't want modular auto updates")
 		primaryClassTransformer = loadProp(CATEGORY_PRELOAD, "primaryClassTransformer", primaryClassTransformer, true, "Set this to false if some mod in your modpack is also using GloomyFolken's hooklib and there are conflicts")
 		
 		biomeIDAlfheim = loadProp(CATEGORY_DIMENSION, "biomeIDAlfheim", biomeIDAlfheim, true, "Biome ID for standart biome")
@@ -203,6 +209,7 @@ object AlfheimConfigHandler {
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
+		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
 		flugelBossBar = loadProp(CATEGORY_GENERAL, "flugelBossBar", flugelBossBar, false, "Set this to false to disable displaying flugel's boss bar")
 		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")

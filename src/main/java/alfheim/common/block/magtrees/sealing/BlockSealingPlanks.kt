@@ -1,15 +1,15 @@
 package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockSealingPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, ISoundSilencer {
+class BlockSealingPlanks: BlockMod(Material.wood), ILexiconable, ISoundSilencer {
 	
 	private val name = "sealingPlanks"
 	
@@ -24,8 +24,6 @@ class BlockSealingPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	override fun canSilence(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = dist <= 8
 	
 	override fun getVolumeMultiplier(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = 0.5f
-	
-	override fun isInterpolated() = true
 	
 	override fun isToolEffective(type: String?, metadata: Int) = (type != null && type == "axe")
 	

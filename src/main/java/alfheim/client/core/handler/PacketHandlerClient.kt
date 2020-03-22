@@ -18,6 +18,7 @@ import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
+import alfheim.common.item.relic.record.*
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
@@ -63,6 +64,7 @@ object PacketHandlerClient {
 			}
 			m1d.KNOWLEDGE        -> PlayerSegmentClient.knowledge.add("${Knowledge.values()[packet.data1.I]}")
 			m1d.TIME_STOP_REMOVE -> TimeStopSystemClient.remove(packet.data1.I)
+			m1d.GINNUNGAGAP      -> GinnungagapHandler.active = packet.data1 != 0.0
 		}
 	}
 	

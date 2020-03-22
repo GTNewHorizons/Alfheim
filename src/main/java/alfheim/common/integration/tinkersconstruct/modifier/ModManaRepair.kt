@@ -33,7 +33,7 @@ object ModManaRepair: ModBoolean(arrayOf(ItemStack(AlfheimItems.elvenResource, 1
 
 object AModNatural: ActiveToolMod() {
 	
-	override fun updateTool(tool: ToolCore, stack: ItemStack, world: World, entity: Entity) {
+	override fun updateTool(tool: ToolCore, stack: ItemStack, world: World, entity: Entity?) {
 		val player = entity as? EntityPlayer ?: return
 		if (tool is IAmmo) return
 		val tag = ItemNBTHelper.getCompound(stack, tool.baseTagName, true) ?: return
@@ -62,7 +62,7 @@ object AModNatural: ActiveToolMod() {
 			ManaItemHandler.dispatchManaExact(stack, player, 1, true)
 	}
 	
-	override fun damageTool(stack: ItemStack, damage: Int, entity: EntityLivingBase): Boolean {
+	override fun damageTool(stack: ItemStack, damage: Int, entity: EntityLivingBase?): Boolean {
 		if (damage <= 0) return false
 		val player = entity as? EntityPlayer ?: return false
 		val item = stack.item as? IModifyable ?: return false

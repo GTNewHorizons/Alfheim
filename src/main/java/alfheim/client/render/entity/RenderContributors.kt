@@ -5,6 +5,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
@@ -61,7 +62,7 @@ object RenderContributors {
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
-		if (player.commandSenderName == "AlexSocol") {
+		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
 			run {
 				// jojo's mask
 				if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
@@ -169,7 +170,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (player.commandSenderName == "KAIIIAK") {
+		if (ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")) {
 			glPushMatrix()
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -180,7 +181,7 @@ object RenderContributors {
 			
 			glTranslated(0.0, 1.35, 0.0)
 			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
-			glScaled(2.0)
+			glScalef(player.width * 10 / 3)
 			
 			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
 			mc.renderEngine.bindTexture(LibResourceLocations.aura)

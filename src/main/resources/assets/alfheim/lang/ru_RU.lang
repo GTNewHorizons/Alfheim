@@ -43,8 +43,21 @@ tile.alfheim:circuitPlanksStairs.name=Ступеньки из досок схе�
 tile.alfheim:circuitSapling.name=Саженец схемодрева
 tile.alfheim:circuitWood.name=Древесина схемодрева
 tile.alfheim:cracklingStar.name=Потрескавшаяся звезда
-tile.alfheim:DreamLeaves.name=Листва древа мечтаний
-tile.alfheim:DreamLog.name=Ствол древа мечтаний
+tile.DarkLivingRock0.name=Тёмный жизнекамень
+tile.DarkLivingRock1.name=Кирпич из тёмного жизнекамня
+tile.DarkLivingRock2.name=Обрамлённый кирпич из тёмного жизнекамня
+tile.DarkLivingRock3.name=Плитка из тёмного жизнекамня
+tile.botania:DarkLivingRock0Slab.name=Плита из тёмного жизнекамня
+tile.botania:DarkLivingRock1Slab.name=Плита из тёмного живого кирпича
+tile.botania:DarkLivingRock3Slab.name=Плита из тёмной живой плитки
+tile.botania:DarkLivingRock0SlabFull.name=Плита из тёмного жизнекамня
+tile.botania:DarkLivingRock1SlabFull.name=Плита из тёмного живого кирпича
+tile.botania:DarkLivingRock3SlabFull.name=Плита из тёмной живой плитки
+tile.botania:DarkLivingRockStairs0.name=Ступеньки из тёмного жизнекамня
+tile.botania:DarkLivingRockStairs1.name=Ступеньки из тёмного живого кирпича
+tile.botania:DarkLivingRockStairs3.name=Ступеньки из тёмной живой плитки
+tile.botania:DarkLivingRock0Wall.name=Ограда из тёмного жизнекамня
+tile.botania:DarkLivingRock1Wall.name=Ограда из тёмного живого кирпича
 tile.alfheim:DreamSapling.name=Саженец древа мечтаний
 tile.alfheim:DreamwoodBarkFence.name=Забор из древесины мечтаний
 tile.alfheim:DreamwoodBarkFenceGate.name=Калитка из древесины мечтаний
@@ -52,6 +65,7 @@ tile.alfheim:DreamwoodFence.name=Забор из досок мечтаний
 tile.alfheim:DreamwoodFenceGate.name=Калитка из досок мечтаний
 tile.alfheim:DwarfLantern.name=Светильник из жизнекамня
 tile.DwarfPlanks0.name=Доски дварфов
+tile.alfheim:DwarfTrapDoor.name=Еловый трабдор
 tile.ElvenOre0.name=Руда драконьего камня
 tile.ElvenOre1.name=Руда элементия
 tile.ElvenOre2.name=Руда эльфийского кварца
@@ -100,6 +114,9 @@ tile.alfheim:schematicAnnihilator.name=Аннигилятор схемы
 tile.alfheim:schematicOak.name=Саженец схемы
 tile.ShrineGlass0.name=Стекло храма
 tile.ShrineGlass1.name=Стекло храма
+tile.ShrineGlass2.name=Стекло храма
+tile.ShrineGlass3.name=Стекло храма
+tile.ShrineGlass4.name=Стекло храма
 tile.ShrineLight0.name=Светящийся блок храма
 tile.ShrineLight1.name=Светящийся блок храма
 tile.ShrineLight2.name=Светящийся блок храма
@@ -137,6 +154,7 @@ tile.Transferer.name=Переносчик
 #########################################################___ПРЕДМЕТЫ___#########################################################
 
 # item..name=
+item.botania:AkashicRecords.name=Хроники Акаши
 item.alfheim:Astrolabe.name=Астролябия формирователя мира
 item.botania:AuraRingElven.name=Эльфийское кольцо ауры
 item.botania:AuraRingGod.name=Божественное кольцо ауры
@@ -256,11 +274,16 @@ item.botania:ThinkingHand.name=Думающая рука
 item.alfheim:ThunderwoodSplinters.name=Грозовые щепки
 item.alfheim:ThunderwoodTwig.name=Грозовая ветвь
 item.Transferer.name=Деструктуризатор
+item.alfheim:Triquetrum.name=Трикветрум формирователя мира
+item.Triquetrum.blocks=Выделено %s блоков
+item.Triquetrum.rotation=Поворот на %s градусов против часовой стрелки
 
 #########################################################___ОСТАЛЬНОЕ___########################################################
 
 achievement.alfheim=Новые земли
 achievement.alfheim.desc=Попадите в Альфхейм
+achievement.divineMarksman=Божественный Стрелок
+achievement.divineMarksman.desc=Мастерство Воина
 achievement.excaliber=Биение сердца
 achievement.excaliber.desc=Будьте вознаграждены святым мечом Экскалибером за героический подвиг
 achievement.flugelSoul=Ты моя душа
@@ -277,8 +300,12 @@ achievement.newChance=Новый шанс
 achievement.newChance.desc=Будьте вознаграждены Флюгельгехейменом за героический подвиг
 achievement.outstander=Непоколебимый
 achievement.outstander.desc=Докажите Вашу железобетонную Волю
+achievement.rosaBomb=Бомбардировка Розы
+achievement.rosaBomb.desc=Убийственный стиль
 achievement.subspace=Свечение ночи
 achievement.subspace.desc=Будьте вознаграждены копьём подпространства за героический подвиг
+#
+#
 
 alfheim.armorset.elemental.name=Повелитель элементов
 alfheim.armorset.elvorium.name=Королевский эльфийский страж
@@ -374,6 +401,14 @@ alfheimmisc.cast.wrongtgt=Неверная цель!
 alfheimmisc.cast.momana=Недостаточно маны!
 alfheimmisc.cast.notallow=Вы не можете колдовать здесь!
 
+alfheimmisc.modular.available=Доступно обновление Alfheim Modular
+alfheimmisc.modular.update10=Сервер будет остановлен через 10 минут
+alfheimmisc.modular.update5=Сервер будет остановлен через 5 минут
+alfheimmisc.modular.update2=Сервер будет остановлен через 2 минуты
+alfheimmisc.modular.update1=Сервер будет остановлен через 1 минуту
+alfheimmisc.modular.update30s=Сервер будет остановлен через 30 секунд
+alfheimmisc.modular.restart=Остановка сервера для обновления Alfheim Modular. Пожалуйста, перезапустите вручную.
+
 alfheimmisc.mount.unavailable=Призыв невозможен в этом измерении!
 
 alfheimmisc.party.already=Вы уже состоите в этой группе!
@@ -457,6 +492,11 @@ itemGroup.Alfheim=Alfheim
 lang.name=ru_RU
 
 ######################################################___ПОЭМЫ РЕЛИКВИЙ___######################################################
+
+item.AkashicRecords.poem0=Стихов
+item.AkashicRecords.poem1=Тут
+item.AkashicRecords.poem2=Нет
+item.AkashicRecords.poem3=:(
 
 item.aesirRing.poem0=Силы высших богов Асгарда
 item.aesirRing.poem1=Представляют части одного,
@@ -854,7 +894,8 @@ item.alfheim:coatOfArms13.name=Техасский щит
 item.alfheim:coatOfArms14.name=Украинский щит
 item.alfheim:coatOfArms15.name=Американский щит
 item.alfheim:coatOfArms16.name=Сказочный щит
-item.alfheim:coatOfArms17.name=Парижский щит
+item.alfheim:coatOfArms17.name=Советский щит
+item.alfheim:coatOfArms18.name=Парижский щит
 
 item.alfheim:colorOverride.name=Кольцо художника
 
@@ -903,12 +944,8 @@ tile.alfheim:altLeaves2.name=Яркая листва
 tile.alfheim:altLeaves3.name=Выжженная листва
 tile.alfheim:altLeaves4.name=Настоянная листва
 tile.alfheim:altLeaves5.name=Видоизменённая листва
-tile.alfheim:altLeaves8.name=Сухая листва
-tile.alfheim:altLeaves9.name=Золотая листва
-tile.alfheim:altLeaves10.name=Яркая листва
-tile.alfheim:altLeaves11.name=Выжженная листва
-tile.alfheim:altLeaves12.name=Настоянная листва
-tile.alfheim:altLeaves13.name=Видоизменённая листва
+tile.alfheim:altLeaves6.name=Листва Иггдрасиля
+tile.alfheim:altLeaves7.name=Листва древа мечтаний
 
 tile.alfheim:altPlanks0.name=Сухие доски
 tile.alfheim:altPlanks1.name=Золотые доски
@@ -916,6 +953,7 @@ tile.alfheim:altPlanks2.name=Яркие доски
 tile.alfheim:altPlanks3.name=Выжженные доски
 tile.alfheim:altPlanks4.name=Настоянные доски
 tile.alfheim:altPlanks5.name=Видоизменённые доски
+tile.alfheim:altPlanks6.name=Доски Иггдрасиля
 
 tile.alfheim:altWood00.name=Сухая древесина
 tile.alfheim:altWood01.name=Золотая древесина
@@ -923,6 +961,8 @@ tile.alfheim:altWood02.name=Яркая древесина
 tile.alfheim:altWood03.name=Выжженная древесина
 tile.alfheim:altWood10.name=Настоянная древесина
 tile.alfheim:altWood11.name=Видоизменённая древесина
+tile.alfheim:altWood12.name=Древесина Иггдрасиля
+tile.alfheim:altWood13.name=Ствол древа мечтаний
 
 tile.alfheim:altPlanksSlab0.name=Плита из сухой древесины
 tile.alfheim:altPlanksSlab1.name=Плита из золотой древесины
@@ -930,6 +970,7 @@ tile.alfheim:altPlanksSlab2.name=Плита из яркой древесины
 tile.alfheim:altPlanksSlab3.name=Плита из выжженной древесины
 tile.alfheim:altPlanksSlab4.name=Плита из настоянной древесины
 tile.alfheim:altPlanksSlab5.name=Плита из видоизменённой древесины
+tile.alfheim:altPlanksSlab6.name=Плита из древесины Иггдрасиля
 
 tile.alfheim:altPlanksSlabFull0.name=Плита из сухой древесины
 tile.alfheim:altPlanksSlabFull1.name=Плита из золотой древесины
@@ -937,6 +978,7 @@ tile.alfheim:altPlanksSlabFull2.name=Плита из яркой древесин
 tile.alfheim:altPlanksSlabFull3.name=Плита из выжженной древесины
 tile.alfheim:altPlanksSlabFull4.name=Плита из настоянной древесины
 tile.alfheim:altPlanksSlabFull5.name=Плита из видоизменённой древесины
+tile.alfheim:altPlanksSlabFull6.name=Плита из древесины Иггдрасиля
 
 tile.alfheim:altPlanksStairs0.name=Ступеньки из сухой древесины
 tile.alfheim:altPlanksStairs1.name=Ступеньки из золотой древесины
@@ -944,6 +986,7 @@ tile.alfheim:altPlanksStairs2.name=Ступеньки из яркой древе
 tile.alfheim:altPlanksStairs3.name=Ступеньки из выжженной древесины
 tile.alfheim:altPlanksStairs4.name=Ступеньки из настоянной древесины
 tile.alfheim:altPlanksStairs5.name=Ступеньки из видоизменённой древесины
+tile.alfheim:altPlanksStairs6.name=Ступеньки из древесины Иггдрасиля
 
 tile.alfheim:irisLamp.name=Цветная лампа
 

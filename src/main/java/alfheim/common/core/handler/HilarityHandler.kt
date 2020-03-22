@@ -67,8 +67,6 @@ object HilarityHandler {
 		registerHandler("Tristaric", "I claim the Blade of Order!", "Female", EnumChatFormatting.LIGHT_PURPLE,
 						itemsRequiredTris, "My inward eye sees the depths of my soul! I accept both sides, and reject my downfall!",
 						ItemStack(ModItems.elementiumSword, 1, OreDictionary.WILDCARD_VALUE), ItemStack(AlfheimItems.trisDagger))
-		registerHandler("AlexSocol", "High Consul of Alfheim commands you: grant me unlimited power!", "Overlord", EnumChatFormatting.DARK_RED,
-						listOf(ItemStack(Blocks.piston_extension)), "\n", ItemStack(Items.stick), ItemStack(AlfheimItems.royalStaff))
 	}
 	
 	private class CraftHandler(val playerName: String, val cheatyString: String,
@@ -116,13 +114,9 @@ object HilarityHandler {
 					}
 				}
 			} else if (msg == AlfheimConfigHandler.chatLimiters.format(cheatyString)) {
-				if (gender == "Overlord") {
-					player.setPositionAndUpdate(player.posX, -66666.6, player.posZ)
-				} else {
-					val chat = ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.youAreNotTheChosenOne$gender"))
-					chat.chatStyle.color = chatColor
-					player.addChatMessage(chat)
-				}
+				val chat = ChatComponentText(StatCollector.translateToLocal("misc.${ModInfo.MODID}.youAreNotTheChosenOne$gender"))
+				chat.chatStyle.color = chatColor
+				player.addChatMessage(chat)
 				e.isCanceled = true
 				return true
 			}

@@ -73,8 +73,7 @@ object TGHandlerBotaniaAdapter {
 				if (key != null)
 					addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
 			}
-		} catch (e: Throwable) {
-		}
+		} catch (ignore: Throwable) {}
 		
 		val cosmetic = cloak.getCosmeticItem(stack)
 		if (cosmetic != null)
@@ -83,6 +82,8 @@ object TGHandlerBotaniaAdapter {
 		if (cloak.hasPhantomInk(stack))
 			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
 	}
+	
+	// --------------------------------
 	
 	fun addStringToTooltip(s: String, tooltip: MutableList<String>) {
 		tooltip.add(s.replace("&".toRegex(), "\u00a7"))

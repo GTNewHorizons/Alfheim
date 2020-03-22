@@ -1,15 +1,15 @@
 package alfheim.common.block.magtrees.calico
 
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockCalicoPlanks: BlockMod(MaterialCustomSmeltingWood.instance), IExplosionDampener, ILexiconable {
+class BlockCalicoPlanks: BlockMod(Material.wood), IExplosionDampener, ILexiconable {
 	
 	private val name = "calicoPlanks"
 	

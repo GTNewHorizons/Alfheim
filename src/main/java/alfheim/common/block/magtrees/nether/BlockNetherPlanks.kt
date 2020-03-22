@@ -1,11 +1,13 @@
 package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
@@ -15,16 +17,16 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable {
+class BlockNetherPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 	
 	private val name = "netherPlanks"
 	
 	init {
 		blockHardness = 2F
-		setLightLevel(0f)
-		stepSound = soundTypeWood
-		
 		setBlockName(name)
+		setLightLevel(0.5f)
+		stepSound = soundTypeWood
+		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun isInterpolated() = true
@@ -44,7 +46,7 @@ class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
 	
@@ -61,4 +63,6 @@ class BlockNetherPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 2000 else 0
 }

@@ -48,13 +48,13 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
                 if (!ForgeHooksClient.renderEntityItem(EntityItem(tile.worldObj, tile.xCoord.D, tile.yCoord.D, tile.zCoord.D, scale), scale, 0f, 0f, tile.worldObj.rand, mc.renderEngine, renderBlocks, 1)) {
                     glTranslatef(-0.25f, 0f, 0f)
                     glScaled(0.5)
-                    if (scale.item is ItemBlock && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(scale.item).renderType)) {
+                    if (scale.item is ItemBlock && RenderBlocks.renderItemIn3d(scale.item.toBlock()?.renderType ?: 0)) {
                         glScaled(0.5)
                         glTranslatef(1f, 1.1f, 0f)
-                        renderBlocks.renderBlockAsItem(Block.getBlockFromItem(scale.item), scale.meta, 1f)
+                        renderBlocks.renderBlockAsItem(scale.item.toBlock(), scale.meta, 1f)
                         glTranslatef(-1f, -1.1f, 0f)
                         glScalef(2f)
-                    } else if (scale.item is ItemBlock && !RenderBlocks.renderItemIn3d(Block.getBlockFromItem(scale.item).renderType)) {
+                    } else if (scale.item is ItemBlock && !RenderBlocks.renderItemIn3d(scale.item.toBlock()?.renderType ?: 0)) {
                         val entityitem: EntityItem?
                         glPushMatrix()
 

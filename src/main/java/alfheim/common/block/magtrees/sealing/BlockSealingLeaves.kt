@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -20,15 +21,6 @@ class BlockSealingLeaves: BlockLeavesMod(), ISoundSilencer {
 		setStepSound(Block.soundTypeCloth)
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor() = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
-	
 	override fun canSilence(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = dist <= 8
 	
 	override fun getVolumeMultiplier(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = 0.5f
@@ -37,7 +29,7 @@ class BlockSealingLeaves: BlockLeavesMod(), ISoundSilencer {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.sealingSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.sealingSapling.toItem()
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	

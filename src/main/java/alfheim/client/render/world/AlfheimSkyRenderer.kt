@@ -7,7 +7,7 @@ import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.client.renderer.*
 import net.minecraft.util.*
 import net.minecraftforge.client.IRenderHandler
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.lib.LibResources
 import vazkii.botania.common.lib.LibObfuscation
@@ -20,6 +20,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 	private val textureRainbow = ResourceLocation(LibResources.MISC_RAINBOW)
 	private val textureMoonPhases = ResourceLocation("textures/environment/moon_phases.png")
 	private val textureSun = ResourceLocation("textures/environment/sun.png")
+	
 	private val planetTextures = arrayOf(
 		ResourceLocation(LibResources.MISC_PLANET + "0.png"),
 		ResourceLocation(LibResources.MISC_PLANET + "1.png"),
@@ -32,7 +33,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 	override fun render(partialTicks: Float, world: WorldClient, mc: Minecraft) {
 		val glSkyList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.GL_SKY_LIST)
 		val starGLCallList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.STAR_GL_CALL_LIST)
-		GL11.glDisable(GL11.GL_TEXTURE_2D)
+		glDisable(GL_TEXTURE_2D)
 		val vec3 = world.getSkyColor(mc.renderViewEntity, partialTicks)
 		var f1 = vec3.xCoord.F
 		var f2 = vec3.yCoord.F
@@ -44,14 +45,14 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		f2 = max(0f, f2 - insideVoid)
 		f3 = max(0f, f3 - insideVoid)
 		val tessellator1 = Tessellator.instance
-		GL11.glDepthMask(false)
-		GL11.glEnable(GL11.GL_FOG)
-		GL11.glColor3f(f1, f2, f3)
-		GL11.glCallList(glSkyList)
-		GL11.glDisable(GL11.GL_FOG)
-		GL11.glDisable(GL11.GL_ALPHA_TEST)
-		GL11.glEnable(GL11.GL_BLEND)
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0)
+		glDepthMask(false)
+		glEnable(GL_FOG)
+		glColor3f(f1, f2, f3)
+		glCallList(glSkyList)
+		glDisable(GL_FOG)
+		glDisable(GL_ALPHA_TEST)
+		glEnable(GL_BLEND)
+		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
 		RenderHelper.disableStandardItemLighting()
 		val afloat = world.provider.calcSunriseSunsetColors(world.getCelestialAngle(partialTicks), partialTicks)
 		var f7: Float
@@ -59,12 +60,12 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		var f10: Float
 		// === Sunset
 		if (afloat != null) {
-			GL11.glDisable(GL11.GL_TEXTURE_2D)
-			GL11.glShadeModel(GL11.GL_SMOOTH)
-			GL11.glPushMatrix()
-			GL11.glRotatef(90f, 1f, 0f, 0f)
-			GL11.glRotatef(if (MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0f) 180f else 0f, 0f, 0f, 1f)
-			GL11.glRotatef(90f, 0f, 0f, 1f)
+			glDisable(GL_TEXTURE_2D)
+			glShadeModel(GL_SMOOTH)
+			glPushMatrix()
+			glRotatef(90f, 1f, 0f, 0f)
+			glRotatef(if (MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0f) 180f else 0f, 0f, 0f, 1f)
+			glRotatef(90f, 0f, 0f, 1f)
 			f6 = afloat[0]
 			f7 = afloat[1]
 			f8 = afloat[2]
@@ -81,17 +82,13 @@ object AlfheimSkyRenderer: IRenderHandler() {
 				tessellator1.addVertex(f12 * 120f.D, f13 * 120f.D, -f13 * 40f * afloat[3].D)
 			}
 			tessellator1.draw()
-			GL11.glPopMatrix()
-			GL11.glShadeModel(GL11.GL_FLAT)
+			glPopMatrix()
+			glShadeModel(GL_FLAT)
 		}
-		GL11.glEnable(GL11.GL_TEXTURE_2D)
-		GL11.glPushMatrix()
+		glEnable(GL_TEXTURE_2D)
+		glPushMatrix()
 		f6 = max(0.2f, 1f - world.getRainStrength(partialTicks)) * (1f - insideVoid)
-		f7 = 0f
-		f8 = 0f
-		val f9 = 0f
-		GL11.glTranslatef(f7, f8, f9)
-		GL11.glRotatef(-90f, 0f, 1f, 0f)
+		glRotatef(-90f, 0f, 1f, 0f)
 		val celAng = world.getCelestialAngle(partialTicks)
 		var effCelAng = celAng
 		if (celAng > 0.5) effCelAng = 0.5f - (celAng - 0.5f)
@@ -99,51 +96,51 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		f10 = 20f
 		val lowA = max(0f, effCelAng - 0.3f) * f6
 		var a = max(0.1f, lowA)
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0)
-		GL11.glPushMatrix()
-		GL11.glColor4f(1f, 1f, 1f, a * 4 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
-		GL11.glRotatef(90f, 0.5f, 0.5f, 0f)
+		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
+		glPushMatrix()
+		glColor4f(1f, 1f, 1f, a * 4 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
+		glRotatef(90f, 0.5f, 0.5f, 0f)
 		for (p in planetTextures.indices) {
 			mc.renderEngine.bindTexture(planetTextures[p])
 			drawObject(tessellator1, f10)
 			when (p) {
 				0 -> {
-					GL11.glRotatef(70f, 1f, 0f, 0f)
+					glRotatef(70f, 1f, 0f, 0f)
 					f10 = 12f
 				}
 				
 				1 -> {
-					GL11.glRotatef(120f, 0f, 0f, 1f)
+					glRotatef(120f, 0f, 0f, 1f)
 					f10 = 15f
 				}
 				
 				2 -> {
-					GL11.glRotatef(80f, 1f, 0f, 1f)
+					glRotatef(80f, 1f, 0f, 1f)
 					f10 = 25f
 				}
 				
 				3 -> {
-					GL11.glRotatef(100f, 0f, 0f, 1f)
+					glRotatef(100f, 0f, 0f, 1f)
 					f10 = 10f
 				}
 				
 				4 -> {
-					GL11.glRotatef(-60f, 1f, 0f, 0.5f)
+					glRotatef(-60f, 1f, 0f, 0.5f)
 					f10 = 40f
 				}
 			}
 		}
-		GL11.glColor4f(1f, 1f, 1f, 1f)
-		GL11.glPopMatrix()
+		glColor4f(1f, 1f, 1f, 1f)
+		glPopMatrix()
 		// === Rays
 		mc.renderEngine.bindTexture(textureSkybox)
 		f10 = 20f
 		a = lowA
-		GL11.glPushMatrix()
-		OpenGlHelper.glBlendFunc(770, 1, 1, 0)
-		GL11.glTranslatef(0f, -1f, 0f)
-		GL11.glRotatef(220f, 1f, 0f, 0f)
-		GL11.glColor4f(1f, 1f, 1f, a * (1f - mc.theWorld.rainingStrength))
+		glPushMatrix()
+		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE, 1, 0)
+		glTranslatef(0f, -1f, 0f)
+		glRotatef(220f, 1f, 0f, 0f)
+		glColor4f(1f, 1f, 1f, a * (1f - mc.theWorld.rainingStrength))
 		val angles = 90
 		val y = 2f
 		val y0 = 0f
@@ -154,7 +151,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val rotSpeedMod = 0.4f
 		for (p in 0..2) {
 			val baseAngle = rotSpeed * rotSpeedMod * (ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks)
-			GL11.glRotatef((ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks) * 0.25f * rotSpeed * rotSpeedMod, 0f, 1f, 0f)
+			glRotatef((ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks) * 0.25f * rotSpeed * rotSpeedMod, 0f, 1f, 0f)
 			tessellator1.startDrawingQuads()
 			for (i in 0 until angles) {
 				var j = i
@@ -175,24 +172,24 @@ object AlfheimSkyRenderer: IRenderHandler() {
 			tessellator1.draw()
 			when (p) {
 				0 -> {
-					GL11.glRotatef(20f, 1f, 0f, 0f)
-					GL11.glColor4f(1f, 0.4f, 0.4f, a)
+					glRotatef(20f, 1f, 0f, 0f)
+					glColor4f(1f, 0.4f, 0.4f, a)
 					fuzzPer = Math.PI * 14 / angles
 					rotSpeed = 0.2f
 				}
 				
 				1 -> {
-					GL11.glRotatef(50f, 1f, 0f, 0f)
-					GL11.glColor4f(0.4f, 1f, 0.7f, a)
+					glRotatef(50f, 1f, 0f, 0f)
+					glColor4f(0.4f, 1f, 0.7f, a)
 					fuzzPer = Math.PI * 6 / angles
 					rotSpeed = 2f
 				}
 			}
 		}
-		GL11.glPopMatrix()
+		glPopMatrix()
 		// === Rainbow
-		GL11.glPushMatrix()
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0)
+		glPushMatrix()
+		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
 		mc.renderEngine.bindTexture(textureRainbow)
 		f10 = 10f
 		var effCelAng1 = celAng
@@ -203,9 +200,9 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val rand = Random((day * 0xFF).toLong())
 		val angle1 = rand.nextFloat() * 360f
 		val angle2 = rand.nextFloat() * 360f
-		GL11.glColor4f(1f, 1f, 1f, effCelAng1 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
-		GL11.glRotatef(angle1, 0f, 1f, 0f)
-		GL11.glRotatef(angle2, 0f, 0f, 1f)
+		glColor4f(1f, 1f, 1f, effCelAng1 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
+		glRotatef(angle1, 0f, 1f, 0f)
+		glRotatef(angle2, 0f, 0f, 1f)
 		tessellator1.startDrawingQuads()
 		for (i in 0 until angles) {
 			var j = i
@@ -224,11 +221,11 @@ object AlfheimSkyRenderer: IRenderHandler() {
 			}
 		}
 		tessellator1.draw()
-		GL11.glPopMatrix()
-		GL11.glColor4f(1f, 1f, 1f, (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
-		OpenGlHelper.glBlendFunc(770, 1, 1, 0)
+		glPopMatrix()
+		glColor4f(1f, 1f, 1f, (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
+		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE, 1, 0)
 		// === Sun
-		GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360f, 1f, 0f, 0f)
+		glRotatef(world.getCelestialAngle(partialTicks) * 360f, 1f, 0f, 0f)
 		f10 = 60f
 		mc.renderEngine.bindTexture(textureSun)
 		drawObject(tessellator1, f10)
@@ -251,46 +248,46 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		// === Stars
 		f6 *= max(0.1f, effCelAng * 2)
 		val t = (ClientTickHandler.ticksInGame + partialTicks + 2000) * 0.005f
-		GL11.glPushMatrix()
-		GL11.glDisable(GL11.GL_TEXTURE_2D)
-		GL11.glPushMatrix()
-		GL11.glRotatef(t * 3, 0f, 1f, 0f)
-		GL11.glColor4f(1f, 1f, 1f, f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glPushMatrix()
-		GL11.glRotatef(t, 0f, 1f, 0f)
-		GL11.glColor4f(0.5f, 1f, 1f, f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glPushMatrix()
-		GL11.glRotatef(t * 2, 0f, 1f, 0f)
-		GL11.glColor4f(1f, 0.75f, 0.75f, f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glPushMatrix()
-		GL11.glRotatef(t * 3, 0f, 0f, 1f)
-		GL11.glColor4f(1f, 1f, 1f, 0.25f * f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glPushMatrix()
-		GL11.glRotatef(t, 0f, 0f, 1f)
-		GL11.glColor4f(0.5f, 1f, 1f, 0.25f * f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glPushMatrix()
-		GL11.glRotatef(t * 2, 0f, 0f, 1f)
-		GL11.glColor4f(1f, 0.75f, 0.75f, 0.25f * f6)
-		GL11.glCallList(starGLCallList)
-		GL11.glPopMatrix()
-		GL11.glEnable(GL11.GL_TEXTURE_2D)
-		GL11.glPopMatrix()
-		GL11.glColor4f(1f, 1f, 1f, 1f)
-		GL11.glDisable(GL11.GL_BLEND)
-		GL11.glEnable(GL11.GL_ALPHA_TEST)
-		GL11.glEnable(GL11.GL_FOG)
-		GL11.glPopMatrix()
-		GL11.glDepthMask(true)
+		glPushMatrix()
+		glDisable(GL_TEXTURE_2D)
+		glPushMatrix()
+		glRotatef(t * 3, 0f, 1f, 0f)
+		glColor4f(1f, 1f, 1f, f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glPushMatrix()
+		glRotatef(t, 0f, 1f, 0f)
+		glColor4f(0.5f, 1f, 1f, f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glPushMatrix()
+		glRotatef(t * 2, 0f, 1f, 0f)
+		glColor4f(1f, 0.75f, 0.75f, f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glPushMatrix()
+		glRotatef(t * 3, 0f, 0f, 1f)
+		glColor4f(1f, 1f, 1f, 0.25f * f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glPushMatrix()
+		glRotatef(t, 0f, 0f, 1f)
+		glColor4f(0.5f, 1f, 1f, 0.25f * f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glPushMatrix()
+		glRotatef(t * 2, 0f, 0f, 1f)
+		glColor4f(1f, 0.75f, 0.75f, 0.25f * f6)
+		glCallList(starGLCallList)
+		glPopMatrix()
+		glEnable(GL_TEXTURE_2D)
+		glPopMatrix()
+		glColor4f(1f, 1f, 1f, 1f)
+		glDisable(GL_BLEND)
+		glEnable(GL_ALPHA_TEST)
+		glEnable(GL_FOG)
+		glPopMatrix()
+		glDepthMask(true)
 	}
 	
 	private fun drawObject(tess: Tessellator, f10: Float) {

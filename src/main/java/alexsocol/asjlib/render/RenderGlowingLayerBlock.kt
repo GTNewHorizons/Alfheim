@@ -3,38 +3,34 @@ package alexsocol.asjlib.render
 import cpw.mods.fml.client.registry.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
+import net.minecraft.util.IIcon
 import net.minecraft.world.IBlockAccess
+import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 
 class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 	
-	override fun renderInventoryBlock(block: Block, metadata: Int, modelID: Int, renderer: RenderBlocks) {
-		renderInvNormalBlock(renderer, block, metadata)
+	override fun renderWorldBlock(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, modelId: Int, renderer: RenderBlocks): Boolean {
+		renderer.renderStandardBlock(block, x, y, z)
+		
+		Tessellator.instance.setColorOpaque_I(0xFFFFFF)
+		Tessellator.instance.setBrightness(240)
+		renderAllSides(world, x, y, z, block, renderer, false) { s, m -> (block as IGlowingLayerBlock).getGlowIcon(s, m)}
+		
+		return true
 	}
 	
-	override fun renderWorldBlock(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, modelId: Int, renderer: RenderBlocks): Boolean {
-		val meta = world.getBlockMetadata(x, y, z)
-		val tes = Tessellator.instance
-		renderer.renderStandardBlock(block, x, y, z)
-		tes.draw()
-		
-		glPushMatrix()
+	override fun renderInventoryBlock(block: Block, meta: Int, modelID: Int, renderer: RenderBlocks) {
 		block as IGlowingLayerBlock
-		tes.startDrawingQuads()
+		
+		renderer.setRenderBoundsFromBlock(block)
+		drawFaces(renderer, block) { block.getIcon(it, meta) }
+		
+		glDisable(GL_LIGHTING)
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-		tes.setColorRGBA_F(1f, 1f, 1f, 1f)
-		if (block.getGlowIcon(0, meta) != null && block.shouldSideBeRendered(world, x, y - 1, z, 0)) renderer.renderFaceYNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(0, meta))
-		if (block.getGlowIcon(1, meta) != null && block.shouldSideBeRendered(world, x, y + 1, z, 1)) renderer.renderFaceYPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(1, meta))
-		if (block.getGlowIcon(2, meta) != null && block.shouldSideBeRendered(world, x + 1, y, z, 2)) renderer.renderFaceXPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(2, meta))
-		if (block.getGlowIcon(3, meta) != null && block.shouldSideBeRendered(world, x - 1, y, z, 3)) renderer.renderFaceXNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(3, meta))
-		if (block.getGlowIcon(4, meta) != null && block.shouldSideBeRendered(world, x, y, z - 1, 4)) renderer.renderFaceZNeg(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(4, meta))
-		if (block.getGlowIcon(5, meta) != null && block.shouldSideBeRendered(world, x, y, z + 1, 5)) renderer.renderFaceZPos(block, x.toDouble(), y.toDouble(), z.toDouble(), block.getGlowIcon(5, meta))
-		tes.draw()
-		
-		glPopMatrix()
-		
-		tes.startDrawingQuads()
-		return false
+		drawFaces(renderer, block) { block.getGlowIcon(it, meta) }
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
+		glEnable(GL_LIGHTING)
 	}
 	
 	override fun shouldRender3DInInventory(modelId: Int): Boolean {
@@ -53,46 +49,21 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 			RenderingRegistry.registerBlockHandler(glowBlockID, RenderGlowingLayerBlock())
 		}
 		
-		fun renderInvNormalBlock(renderer: RenderBlocks, block: Block, meta: Int) {
-			glPushMatrix()
-			val tes = Tessellator.instance
-			glRotated(90.0, 0.0, 1.0, 0.0)
-			glTranslated(-0.5, -0.5, -0.5)
-			glColor4d(1.0, 1.0, 1.0, 1.0)
-			renderer.setRenderBounds(0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
-			tes.startDrawingQuads()
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, block.getIcon(0, meta))
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, block.getIcon(1, meta))
-			tes.setNormal(0f, 0f, 1f)
-			renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, block.getIcon(2, meta))
-			tes.setNormal(0f, 0f, -1f)
-			renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, block.getIcon(3, meta))
-			tes.setNormal(0f, 0f, 0f)
-			renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, block.getIcon(4, meta))
-			tes.setNormal(-0.5f, 0f, 0f)
-			renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, block.getIcon(5, meta))
-			tes.draw()
-			
-			glDisable(GL_LIGHTING)
-			tes.startDrawingQuads()
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(0, meta))
-			tes.setNormal(0f, 0.8f, 0f)
-			renderer.renderFaceYPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(1, meta))
-			tes.setNormal(0f, 0f, 1f)
-			renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(2, meta))
-			tes.setNormal(0f, 0f, -1f)
-			renderer.renderFaceXNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(3, meta))
-			tes.setNormal(0f, 0f, 0f)
-			renderer.renderFaceZNeg(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(4, meta))
-			tes.setNormal(-0.5f, 0f, 0f)
-			renderer.renderFaceZPos(block, 0.0, 0.0, 0.0, (block as IGlowingLayerBlock).getGlowIcon(5, meta))
-			tes.draw()
-			glEnable(GL_LIGHTING)
-			glPopMatrix()
+		val renderers = arrayOf(RenderBlocks::renderFaceYNeg, RenderBlocks::renderFaceYPos, RenderBlocks::renderFaceZNeg, RenderBlocks::renderFaceZPos, RenderBlocks::renderFaceXNeg, RenderBlocks::renderFaceXPos)
+		
+		fun renderAllSides(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, renderer: RenderBlocks, allsides: Boolean, getIcon: (Int, Int) -> IIcon?) {
+			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex())
+				if (allsides || block.shouldSideBeRendered(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ, i))
+					getIcon.invoke(i, world.getBlockMetadata(x, y, z))?.let { renderers[i].invoke(renderer, block, x.toDouble(), y.toDouble(), z.toDouble(), it) }
+		}
+		
+		fun drawFaces(renderblocks: RenderBlocks, block: Block, getIcon: (Int) -> IIcon?) {
+			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex()) {
+				Tessellator.instance.startDrawingQuads()
+				Tessellator.instance.setNormal(d.offsetX.toFloat(), d.offsetY.toFloat(), d.offsetZ.toFloat())
+				getIcon.invoke(i)?.let { renderers[i].invoke(renderblocks, block, -0.5, -0.5, -0.5, it) }
+				Tessellator.instance.draw()
+			}
 		}
 	}
 }

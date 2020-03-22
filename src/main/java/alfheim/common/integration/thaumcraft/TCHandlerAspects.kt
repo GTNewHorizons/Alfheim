@@ -8,11 +8,11 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
+import alfheim.common.block.AlfheimBlocks.altLeaves
+import alfheim.common.block.AlfheimBlocks.altWood1
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anomaly
 import alfheim.common.block.AlfheimBlocks.anyavil
-import alfheim.common.block.AlfheimBlocks.dreamLeaves
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -101,8 +101,8 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 4), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("sensus"), 3))                                                // iffesal
 		ThaumcraftApi.registerObjectTag(ItemStack(livingcobble), AspectList().add(Aspect.getAspect("perditio"), 1).add(Aspect.getAspect("terra"), 1))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenSand), AspectList().add(Aspect.getAspect("perditio"), 1).add(Aspect.getAspect("terra"), 1))
-		ThaumcraftApi.registerObjectTag(ItemStack(dreamLog), AspectList().add(Aspect.getAspect("arbor"), 4).add(Aspect.getAspect("herba"), 4))
-		ThaumcraftApi.registerObjectTag(ItemStack(dreamLeaves), AspectList().add(Aspect.getAspect("herba"), 1))
+		ThaumcraftApi.registerObjectTag(ItemStack(altWood1, 1, 3), AspectList().add(Aspect.getAspect("arbor"), 4).add(Aspect.getAspect("herba"), 4))
+		ThaumcraftApi.registerObjectTag(ItemStack(altLeaves, 1, 8), AspectList().add(Aspect.getAspect("herba"), 1))
 		ThaumcraftApi.registerObjectTag(ItemStack(dreamSapling), AspectList().add(Aspect.getAspect("arbor"), 1).add(Aspect.getAspect("herba"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(redFlame), AspectList().add(Aspect.getAspect("ignis"), 16).add(Aspect.getAspect("perditio"), 16))
 		ThaumcraftApi.registerObjectTag(ItemStack(poisonIce), AspectList().add(Aspect.getAspect("gelum"), 16).add(Aspect.getAspect("ordo"), 16))

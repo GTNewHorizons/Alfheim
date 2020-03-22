@@ -3,9 +3,10 @@ package alfheim.common.block
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileItemDisplay
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -23,7 +24,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 import kotlin.math.min
 
-class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvider {
+class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvider, IFuelHandler {
 	
 	val TYPES = 3
 	var icons: Array<IIcon?> = arrayOfNulls(TYPES)
@@ -35,6 +36,8 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		setHardness(2f)
 		setStepSound(soundTypeWood)
 		setBlockBounds(0f, 0f, 0f, 1f, 0.5f, 1f)
+		
+		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun getSubBlocks(item: Item?, tab: CreativeTabs?, list: MutableList<Any?>?) {
@@ -66,10 +69,10 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		super.addCollisionBoxesToList(world, x, y, z, axis, bounds, entity)
 	}
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		for (i in 0 until TYPES) {
-			icons[i] = IconHelper.forBlock(par1IconRegister, this, i)
-			sideIcons[i] = IconHelper.forBlock(par1IconRegister, this, "Side$i")
+			icons[i] = IconHelper.forBlock(reg, this, i)
+			sideIcons[i] = IconHelper.forBlock(reg, this, "Side$i")
 		}
 		
 	}
@@ -162,4 +165,6 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =
 		ShadowFoxLexiconData.itemDisplay
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
 }

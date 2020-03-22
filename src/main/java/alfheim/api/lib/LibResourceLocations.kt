@@ -6,6 +6,10 @@ import java.util.*
 
 object LibResourceLocations {
 	
+	val akashicBox = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicBox.png");
+	val akashicCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png");
+	val akashicCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png");
+	val akashicCyl = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCyl.png");
 	val altar9 = ResourceLocation(ModInfo.MODID, "textures/model/block/altar9.png");
 	val anomalies = ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png")
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")
@@ -57,6 +61,7 @@ object LibResourceLocations {
 	val potions = ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png")
 	val rook = ResourceLocation(ModInfo.MODID, "textures/model/entity/Rook.png")
 	val roricorn = ResourceLocation(ModInfo.MODID, "textures/model/entity/Roricorn.png")
+	val shavermik = ResourceLocation(ModInfo.MODID, "textures/model/entity/shavermik.png")
 	val skin = ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png")
 	val spellFrame = ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png")
 	val spellFrameEpic = ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png")

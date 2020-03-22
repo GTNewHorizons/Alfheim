@@ -1,6 +1,7 @@
 package alfheim.common.block.base
 
 import alfheim.common.core.helper.*
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemIridescentBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -29,7 +30,7 @@ abstract class BlockModRotatedPillar(mat: Material): BlockMod(mat), ILexiconable
 		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int): IIcon? {
@@ -51,7 +52,7 @@ abstract class BlockModRotatedPillar(mat: Material): BlockMod(mat), ILexiconable
 	@SideOnly(Side.CLIENT)
 	open fun getTopIcon(meta: Int) = iconTop
 	
-	override fun createStackedBlock(meta: Int) = ItemStack(Item.getItemFromBlock(this), 1, meta and 3)
+	override fun createStackedBlock(meta: Int) = ItemStack(this, 1, meta and 3)
 	
 	override fun onBlockPlaced(world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, meta: Int): Int {
 		val j1 = meta and 3

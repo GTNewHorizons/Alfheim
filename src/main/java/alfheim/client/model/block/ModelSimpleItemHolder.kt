@@ -2,10 +2,6 @@ package alfheim.client.model.block
 
 import net.minecraft.client.model.*
 
-/**
- * ModelSimpleItemHolder - AlexSocol
- * Created using Tabula 4.1.1
- */
 class ModelSimpleItemHolder: ModelBase() {
 	
 	val shape2: ModelRenderer

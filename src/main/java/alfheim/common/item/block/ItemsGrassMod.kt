@@ -45,9 +45,9 @@ open class ItemIridescentTallGrassMod0(par2Block: Block): ItemSubtypedBlockMod(p
 		return Color(color[0], color[1], color[2]).rgb
 	}
 	
-	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
-		if (par1ItemStack == null) return
-		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + (par1ItemStack.meta + (colorSet * 8))) + "&r", par3List)
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, list: MutableList<Any?>?, par4: Boolean) {
+		if (stack == null) return
+		addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.color." + (stack.meta + (colorSet * 8))) + "&r", list)
 	}
 }
 

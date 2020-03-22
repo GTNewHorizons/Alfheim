@@ -1,11 +1,15 @@
 package alfheim.common.core.util
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.altLeaves
+import alfheim.common.block.AlfheimBlocks.altPlanks
+import alfheim.common.block.AlfheimBlocks.altSlabs
+import alfheim.common.block.AlfheimBlocks.altStairs
 import alfheim.common.block.AlfheimBlocks.altWood0
 import alfheim.common.block.AlfheimBlocks.altWood1
 import alfheim.common.block.AlfheimBlocks.amplifier
@@ -18,13 +22,17 @@ import alfheim.common.block.AlfheimBlocks.auroraSlab
 import alfheim.common.block.AlfheimBlocks.auroraStairs
 import alfheim.common.block.AlfheimBlocks.auroraWood
 import alfheim.common.block.AlfheimBlocks.calicoLeaves
+import alfheim.common.block.AlfheimBlocks.calicoPlanks
 import alfheim.common.block.AlfheimBlocks.calicoSapling
+import alfheim.common.block.AlfheimBlocks.calicoSlabs
+import alfheim.common.block.AlfheimBlocks.calicoStairs
 import alfheim.common.block.AlfheimBlocks.calicoWood
 import alfheim.common.block.AlfheimBlocks.circuitLeaves
+import alfheim.common.block.AlfheimBlocks.circuitPlanks
 import alfheim.common.block.AlfheimBlocks.circuitSapling
+import alfheim.common.block.AlfheimBlocks.circuitSlabs
+import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
-import alfheim.common.block.AlfheimBlocks.dreamLeaves
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -46,14 +54,20 @@ import alfheim.common.block.AlfheimBlocks.irisWood3
 import alfheim.common.block.AlfheimBlocks.itemDisplay
 import alfheim.common.block.AlfheimBlocks.kindling
 import alfheim.common.block.AlfheimBlocks.lightningLeaves
+import alfheim.common.block.AlfheimBlocks.lightningPlanks
 import alfheim.common.block.AlfheimBlocks.lightningSapling
+import alfheim.common.block.AlfheimBlocks.lightningSlabs
+import alfheim.common.block.AlfheimBlocks.lightningStairs
 import alfheim.common.block.AlfheimBlocks.lightningWood
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.livingwoodFunnel
 import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.manaInfuser
 import alfheim.common.block.AlfheimBlocks.netherLeaves
+import alfheim.common.block.AlfheimBlocks.netherPlanks
 import alfheim.common.block.AlfheimBlocks.netherSapling
+import alfheim.common.block.AlfheimBlocks.netherSlabs
+import alfheim.common.block.AlfheimBlocks.netherStairs
 import alfheim.common.block.AlfheimBlocks.netherWood
 import alfheim.common.block.AlfheimBlocks.powerStone
 import alfheim.common.block.AlfheimBlocks.rainbowDirt
@@ -73,7 +87,10 @@ import alfheim.common.block.AlfheimBlocks.schemaFiller
 import alfheim.common.block.AlfheimBlocks.schemaGenerator
 import alfheim.common.block.AlfheimBlocks.schemaMarker
 import alfheim.common.block.AlfheimBlocks.sealingLeaves
+import alfheim.common.block.AlfheimBlocks.sealingPlanks
 import alfheim.common.block.AlfheimBlocks.sealingSapling
+import alfheim.common.block.AlfheimBlocks.sealingSlabs
+import alfheim.common.block.AlfheimBlocks.sealingStairs
 import alfheim.common.block.AlfheimBlocks.sealingWood
 import alfheim.common.block.AlfheimBlocks.shimmerQuartz
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
@@ -94,6 +111,11 @@ import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabsFull
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
@@ -107,8 +129,10 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
 import alfheim.common.item.AlfheimItems.aesirEmblem
+import alfheim.common.item.AlfheimItems.akashicRecords
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.attributionBauble
 import alfheim.common.item.AlfheimItems.auraRingElven
@@ -157,7 +181,6 @@ import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
-import alfheim.common.item.AlfheimItems.raceNullifier
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFire
@@ -174,6 +197,7 @@ import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.AlfheimItems.starPlacer
 import alfheim.common.item.AlfheimItems.starPlacer2
 import alfheim.common.item.AlfheimItems.subspaceSpear
+import alfheim.common.item.AlfheimItems.triquetrum
 import alfheim.common.item.AlfheimItems.trisDagger
 import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
@@ -184,7 +208,7 @@ import vazkii.botania.common.block.ModBlocks
 
 object AlfheimTab: CreativeTabs("Alfheim") {
 	
-	override fun getTabIconItem() = Item.getItemFromBlock(alfheimPortal)!!
+	override fun getTabIconItem() = alfheimPortal.toItem()
 	
 	lateinit var list: MutableList<Any?>
 	
@@ -252,6 +276,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (pixieAttractor)
 		
 		addItem (astrolabe)
+		addItem (triquetrum)
 		addItem (lootInterceptor)
 		addItem (hyperBucket)
 		addItem (manaMirrorImba)
@@ -290,25 +315,44 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)
+		addItem (akashicRecords)
 		addItem (wireAxe)
 		addItem (trisDagger)
-		if (AlfheimCore.enableElvenStory) addItem (raceNullifier)
 		
 		addBlock(lightningWood)
 		addBlock(netherWood)
 		addBlock(circuitWood)
 		addBlock(calicoWood)
 		addBlock(sealingWood)
-		addBlock(dreamLog)
 		addBlock(altWood0)
 		addBlock(altWood1)
+		
+		addBlock(lightningPlanks)
+		addBlock(netherPlanks)
+		addBlock(circuitPlanks)
+		addBlock(calicoPlanks)
+		addBlock(sealingPlanks)
+		addBlock(altPlanks)
+		
+		addBlock(lightningStairs)
+		addBlock(netherStairs)
+		addBlock(circuitStairs)
+		addBlock(calicoStairs)
+		addBlock(sealingStairs)
+		altStairs.forEach { addBlock(it) }
+		
+		addBlock(lightningSlabs)
+		addBlock(netherSlabs)
+		addBlock(circuitSlabs)
+		addBlock(calicoSlabs)
+		addBlock(sealingSlabs)
+		addBlock(altSlabs)
 		
 		addBlock(lightningLeaves)
 		addBlock(netherLeaves)
 		addBlock(circuitLeaves)
 		addBlock(calicoLeaves)
 		addBlock(sealingLeaves)
-		addBlock(dreamLeaves)
 		addBlock(altLeaves)
 		
 		addBlock(lightningSapling)
@@ -333,6 +377,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
 		addBlock(shrineRock)
+		addBlock(livingrockDark)
+		livingrockDarkStairs.forEach { addBlock(it) }
+		livingrockDarkSlabs.forEach { addBlock(it) }
+		livingrockDarkWalls.forEach { addBlock(it) }
 		addBlock(shimmerQuartz)
 		addBlock(shimmerQuartzStairs)
 		addBlock(shimmerQuartzSlab)
@@ -367,36 +415,41 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dwarfPlanks)
 		
 		addBlock(irisDirt)
+		addBlock(rainbowDirt)
+		addBlock(auroraDirt)
+		
 		addBlock(irisWood0)
 		addBlock(irisWood1)
 		addBlock(irisWood2)
 		addBlock(irisWood3)
+		addBlock(rainbowWood)
+		addBlock(auroraWood)
+		
 		addBlock(irisPlanks)
+		addBlock(rainbowPlanks)
+		addBlock(auroraPlanks)
+		
 		irisStairs.forEach { addBlock(it) }
+		addBlock(rainbowStairs)
+		addBlock(auroraStairs)
+		
 		irisSlabs.forEach { addBlock(it) }
+		addBlock(rainbowSlab)
+		addBlock(auroraSlab)
+		
 		addBlock(irisLeaves0)
 		addBlock(irisLeaves1)
+		addBlock(rainbowLeaves)
+		addBlock(auroraLeaves)
+		
 		addBlock(irisGrass)
+		addBlock(rainbowGrass, 0)
+		addBlock(rainbowGrass, 1)
+		
 		addBlock(irisTallGrass0)
 		addBlock(irisTallGrass1)
-		
-		addBlock(auroraDirt)
-		addBlock(auroraWood)
-		addBlock(auroraPlanks)
-		addBlock(auroraStairs)
-		addBlock(auroraSlab)
-		addBlock(auroraLeaves)
-		addBlock(rainbowGrass, 1)
+		addBlock(rainbowTallGrass, 0)
 		addBlock(rainbowTallGrass, 1)
-		
-		addBlock(rainbowDirt)
-		addBlock(rainbowWood)
-		addBlock(rainbowPlanks)
-		addBlock(rainbowStairs)
-		addBlock(rainbowSlab)
-		addBlock(rainbowLeaves)
-		addBlock(rainbowGrass)
-		addBlock(rainbowTallGrass)
 		
 		addBlock(rainbowTallFlower)
 		addBlock(rainbowGrass, 2)
@@ -416,16 +469,16 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaGenerator)
 		addBlock(schemaAnnihilator)
 		
-		try {
-			if (mc.thePlayer?.commandSenderName == "AlexSocol") addItem(royalStaff)
-		} catch (ignore: Throwable) {}
+		if (!ASJUtilities.isServer) {
+			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
+				addItem(royalStaff)
+		}
 		
 		additionalDisplays.forEach { it.invoke() }
 	}
 	
 	fun addBlock(block: Block) {
-		val stack = ItemStack(block)
-		block.getSubBlocks(stack.item, this, list)
+		block.getSubBlocks(block.toItem(), this, list)
 	}
 	
 	fun addItem(item: Item) {

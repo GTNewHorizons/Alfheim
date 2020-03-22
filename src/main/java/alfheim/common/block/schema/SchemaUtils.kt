@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import net.minecraft.nbt.*
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
 object SchemaGenerator {
@@ -18,13 +19,13 @@ object SchemaGenerator {
 		for (ele in arr) {
 			for (loc in ele.location) {
 				world.setBlock(x + loc.x, y + loc.y, z + loc.z, Block.getBlockFromName(ele.block), loc.meta, 3)
-				if (loc.nbt != null)
-					world.getTileEntity(x + loc.x, y + loc.y, z + loc.z)?.let {
-						it.readFromNBT(JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound)
-						it.xCoord = x + loc.x
-						it.yCoord = y + loc.y
-						it.zCoord = z + loc.z
-					}
+				if (loc.nbt != null) {
+					val tile = TileEntity.createAndLoadEntity(JsonToNBT.func_150315_a(loc.nbt) as NBTTagCompound)
+					tile.xCoord = x + loc.x
+					tile.yCoord = y + loc.y
+					tile.zCoord = z + loc.z
+					world.setTileEntity(x + loc.x, y + loc.y, z + loc.z, tile)
+				}
 			}
 		}
 	}

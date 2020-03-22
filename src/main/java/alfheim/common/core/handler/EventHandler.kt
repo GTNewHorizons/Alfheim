@@ -19,7 +19,7 @@ import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.spell.darkness.SpellDecay
-import cpw.mods.fml.common.FMLCommonHandler
+import cpw.mods.fml.common.*
 import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
@@ -34,6 +34,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.FuelBurnTimeEvent
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
@@ -116,6 +117,17 @@ object EventHandler {
 		}
 	}
 	
+	@SubscribeEvent(priority = EventPriority.HIGHEST) // highest priority for other mods to change values
+	fun onFuelValueCheck(e: FuelBurnTimeEvent) {
+		if (e.fuel?.item is IFuelHandler) {
+			e.burnTime = (e.fuel.item as IFuelHandler).getBurnTime(e.fuel)
+			e.result = Event.Result.ALLOW
+		} else if (e.fuel?.item?.toBlock() is IFuelHandler) {
+			e.burnTime = (e.fuel.item.toBlock() as IFuelHandler).getBurnTime(e.fuel)
+			e.result = Event.Result.ALLOW
+		}
+	}
+	
 	// ################################### POTIONS & STUFF ####################################
 	// not decentralized because of importance of the order
 	
@@ -138,6 +150,10 @@ object EventHandler {
 			amount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
+			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
+				e.isCanceled = true
+				return
+			}
 			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true)
 				amount *= 4f
 			
@@ -155,10 +171,7 @@ object EventHandler {
 			e.isCanceled = true
 			return
 		}
-		if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
-			e.isCanceled = true
-			return
-		}
+		
 		if (e.source.isFireDamage && !e.source.isUnblockable && (target as? EntityPlayer)?.getCurrentArmor(1)?.item === AlfheimItems.elementalLeggings && ManaItemHandler.requestManaExact(target.getCurrentArmor(1), target, MathHelper.ceiling_float_int(10 * amount), !target.worldObj.isRemote)) {
 			e.isCanceled = true
 			return
@@ -175,11 +188,6 @@ object EventHandler {
 		val target = e.entityLiving
 		val attacker = e.source.entity
 		
-		if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
-			e.isCanceled = true
-			return
-		}
-		
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDBerserk) == true)
 			e.ammount *= 1.2f
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDOvermage) == true && e.source.isMagical)
@@ -188,6 +196,11 @@ object EventHandler {
 			e.ammount *= 0.8f
 		
 		if (AlfheimCore.enableMMO) {
+			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
+				e.isCanceled = true
+				return
+			}
+			
 			if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDQuadDamage) == true) {
 				e.ammount *= 4f
 				VisualEffectHandler.sendPacket(VisualEffects.QUADH, attacker)

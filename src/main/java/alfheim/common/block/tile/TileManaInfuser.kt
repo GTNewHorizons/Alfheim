@@ -104,7 +104,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		if (removeMana) recieveMana(-1000)
 	}
 	
-	internal fun doParticles() {
+	fun doParticles() {
 		if (worldObj.isRemote) {
 			val ticks = (100.0 * (currentMana.D / manaRequest.D)).I
 			
@@ -134,7 +134,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		}
 	}
 	
-	internal fun prepareParticles() {
+	fun prepareParticles() {
 		Botania.proxy.setSparkleFXNoClip(true)
 		for ((ci, c) in PYLONS.withIndex()) {
 			for (i in -1..83) {
@@ -145,7 +145,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		Botania.proxy.setSparkleFXNoClip(false)
 	}
 	
-	internal fun soulParticles() {
+	fun soulParticles() {
 		if (soulParticlesTime < 10)
 			for (c in PYLONS) {
 				v.set((-c[0]).D, (-c[1]).D, (-c[2]).D).normalize().mul(0.4)
@@ -165,7 +165,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 			}
 	}
 	
-	internal fun doneParticles() {
+	fun doneParticles() {
 		for (i in 0..63) {
 			v.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 0.2 + 0.1)
 			Botania.proxy.wispFX(worldObj, xCoord + 0.5, yCoord.D + 1.65 + Math.random() * 0.2, zCoord + 0.5, 1f, 0.01f, 0.01f, 0.5f, v.x.F, v.y.F, v.z.F, 0.5f)
@@ -179,7 +179,7 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		}
 	}
 	
-	internal fun areItemsValid(items: List<EntityItem>): Boolean {
+	fun areItemsValid(items: List<EntityItem>): Boolean {
 		//boolean DBG = !worldObj.isRemote;
 		if (items.isEmpty()) return false
 		for (recipe in AlfheimAPI.manaInfuserRecipes) {
@@ -256,14 +256,14 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		return false
 	}
 	
-	internal fun hasValidPlatform(): Boolean {
+	fun hasValidPlatform(): Boolean {
 		return checkAll(QUARTZ_BLOCK, ModFluffBlocks.elfQuartz, 0) && checkAll(ELEMENTIUM_BLOCKS, ModBlocks.storage, 2)
 	}
 	
-	internal fun checkAll(positions: Array<IntArray>, block: Block, meta: Int) = positions.all { checkPlatform(it[0], it[1], it[2], block, meta) }
+	fun checkAll(positions: Array<IntArray>, block: Block, meta: Int) = positions.all { checkPlatform(it[0], it[1], it[2], block, meta) }
 	
-	internal fun checkPlatform(xOff: Int, yOff: Int, zOff: Int, block: Block, meta: Int): Boolean {
-		return worldObj.getBlock(xCoord + xOff, yOff + yCoord, zOff + zCoord) === block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zOff + zCoord) == meta
+	fun checkPlatform(xOff: Int, yOff: Int, zOff: Int, block: Block, meta: Int): Boolean {
+		return worldObj.getBlock(xCoord + xOff, yCoord + yOff, zCoord + zOff) === block && worldObj.getBlockMetadata(xCoord + xOff, yCoord + yOff, zCoord + zOff) == meta
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -340,20 +340,20 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 	
 	companion object {
 		
-		private const val DEBUG = false
+		const val DEBUG = false
 		
 		const val MAX_MANA = TilePool.MAX_MANA * 8
 		
-		private val GAIAS = arrayOf(intArrayOf(4, -1, 4), intArrayOf(-4, -1, 4), intArrayOf(-4, -1, -4), intArrayOf(4, -1, -4))
-		private val PYLONS = arrayOf(intArrayOf(6, -1, 0), intArrayOf(0, -1, 6), intArrayOf(-6, -1, 0), intArrayOf(0, -1, -6))
-		private val QUARTZ_BLOCK = arrayOf(intArrayOf(1, 0, 0), intArrayOf(-1, 0, 0), intArrayOf(0, 0, 1), intArrayOf(0, 0, -1))
-		private val ELEMENTIUM_BLOCKS = arrayOf(intArrayOf(1, 0, 1), intArrayOf(1, 0, -1), intArrayOf(-1, 0, 1), intArrayOf(-1, 0, -1))
+		val GAIAS = arrayOf(intArrayOf(4, -1, 4), intArrayOf(-4, -1, 4), intArrayOf(-4, -1, -4), intArrayOf(4, -1, -4))
+		val PYLONS = arrayOf(intArrayOf(6, -1, 0), intArrayOf(0, -1, 6), intArrayOf(-6, -1, 0), intArrayOf(0, -1, -6))
+		val QUARTZ_BLOCK = arrayOf(intArrayOf(1, 0, 0), intArrayOf(-1, 0, 0), intArrayOf(0, 0, 1), intArrayOf(0, 0, -1))
+		val ELEMENTIUM_BLOCKS = arrayOf(intArrayOf(1, 0, 1), intArrayOf(1, 0, -1), intArrayOf(-1, 0, 1), intArrayOf(-1, 0, -1))
 		
-		private const val TAG_MANA = "mana"
-		private const val TAG_MANA_REQUIRED = "manaRequired"
-		private const val TAG_KNOWN_MANA = "knownMana"
-		private const val TAG_DEGAIAING = "degaiatimer"
-		private const val TAG_SOUL_EFFECT = "soulEffect"
+		const val TAG_MANA = "mana"
+		const val TAG_MANA_REQUIRED = "manaRequired"
+		const val TAG_KNOWN_MANA = "knownMana"
+		const val TAG_DEGAIAING = "degaiatimer"
+		const val TAG_SOUL_EFFECT = "soulEffect"
 		
 		fun makeMultiblockSetSoul(): MultiblockSet {
 			val mb = Multiblock()

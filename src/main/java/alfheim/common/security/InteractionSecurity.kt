@@ -7,10 +7,15 @@ import alfheim.common.core.util.mfloor
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.init.Blocks
+import net.minecraft.item.ItemSword
+import net.minecraft.network.play.server.S23PacketBlockChange
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
 import net.minecraft.world.*
-import net.minecraftforge.common.ForgeHooks
+import net.minecraft.world.WorldSettings.GameType
+import net.minecraftforge.common.*
+import net.minecraftforge.event.world.BlockEvent.BreakEvent
 
 object InteractionSecurity: ISecurityManager {
 	
@@ -52,11 +57,46 @@ private object BlockSecurityManager: ISecurityManager {
 		if (performer !is EntityPlayerMP) return true
 		if (MinecraftServer.getServer().isSinglePlayer) return true
 		
-		return !ForgeHooks.onBlockBreakEvent(world, WorldSettings.GameType.SURVIVAL, performer, x, y, z).isCanceled.also { world.markBlockForUpdate(x, y, z) }
+		return !onBlockBreakEvent(world, GameType.SURVIVAL, performer, x, y, z).isCanceled.also { world.markBlockForUpdate(x, y, z) }
 	}
 	
 	override fun canDoSomethingWithEntity(performer: EntityLivingBase, target: Entity, world: World) = canDoSomethingHere(performer, target.posX.mfloor(), target.posY.mfloor(), target.posZ.mfloor(), world)
 	override fun canHurtEntity(attacker: EntityLivingBase, target: EntityLivingBase) = canDoSomethingWithEntity(attacker, target)
+	
+	// from ForgeHooks
+	fun onBlockBreakEvent(world: World, gameType: GameType, entityPlayer: EntityPlayerMP, x: Int, y: Int, z: Int): BreakEvent {
+		// Logic from tryHarvestBlock for pre-canceling the event
+		var preCancelEvent = false
+		if (gameType.isAdventure && !entityPlayer.isCurrentToolAdventureModeExempt(x, y, z)) {
+			preCancelEvent = true
+		} else if (gameType.isCreative && entityPlayer.heldItem != null && entityPlayer.heldItem.item is ItemSword) {
+			preCancelEvent = true
+		}
+		
+		// Post the block break event
+		val block = world.getBlock(x, y, z)
+		val blockMetadata = world.getBlockMetadata(x, y, z)
+		val event = BreakEvent(x, y, z, world, block, blockMetadata, entityPlayer)
+		event.isCanceled = preCancelEvent
+		MinecraftForge.EVENT_BUS.post(event)
+		
+		// Handle if the event is canceled
+		if (event.isCanceled) {
+			// Let the client know the block still exists
+			entityPlayer.playerNetServerHandler.sendPacket(S23PacketBlockChange(x, y, z, world))
+			
+			// Update any tile entity data for this block
+			val tileentity = world.getTileEntity(x, y, z)
+			if (tileentity != null) {
+				val pkt = tileentity.descriptionPacket
+				if (pkt != null) {
+					entityPlayer.playerNetServerHandler.sendPacket(pkt)
+				}
+			}
+		}
+		
+		return event
+	}
 }
 
 private object MixedSecurityManager: ISecurityManager {

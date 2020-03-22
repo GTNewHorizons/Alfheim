@@ -3,6 +3,7 @@ package alfheim.client.core.proxy
 import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.AlfheimCore
+import alfheim.api.item.DoubleBoundItemRender
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.EventHandlerClient
@@ -18,7 +19,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
 import alfheim.common.core.handler.ESMHandler
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -53,6 +54,7 @@ class ClientProxy: CommonProxy() {
 		LibRenderIDs
 		
 		if (ConfigHandler.useShaders) {
+			LibShaderIDs.idColor3d = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/color3d.frag")
 			LibShaderIDs.idGravity = ASJShaderHelper.createProgram(null, "shaders/gravity.frag")
 			LibShaderIDs.idNoise = ASJShaderHelper.createProgram("shaders/position.vert", "shaders/noise4d.frag")
 			LibShaderIDs.idShadow = ASJShaderHelper.createProgram(null, "shaders/shadow.frag")
@@ -60,7 +62,8 @@ class ClientProxy: CommonProxy() {
 		
 		ClientRegistry.registerKeyBinding(keyLolicorn)
 		
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AlfheimBlocks.anomaly), RenderItemAnomaly)
+		MinecraftForgeClient.registerItemRenderer(AlfheimBlocks.anomaly.toItem(), RenderItemAnomaly)
+		MinecraftForgeClient.registerItemRenderer(AlfheimItems.akashicRecords, RenderItemAkashicRecords)
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
@@ -84,6 +87,8 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRaceSelector::class.java, RenderTileRaceSelector)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTradePortal::class.java, RenderTileTradePortal)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer)
+		
+		RenderKAIIIAKHandler
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie)
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
@@ -127,6 +132,7 @@ class ClientProxy: CommonProxy() {
 		super.initializeAndRegisterHandlers()
 		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
 		FMLCommonHandler.instance().bus().register(EventHandlerClient)
+		if (ConfigHandler.boundBlockWireframe) MinecraftForge.EVENT_BUS.register(DoubleBoundItemRender)
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()

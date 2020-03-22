@@ -5,7 +5,6 @@ import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.item.AlfheimItems
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
@@ -37,8 +36,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partHead(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partHead(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 0) {
 			val s = 0.01
 			glTranslatef(0f, -0.75f, 0f)
@@ -47,8 +46,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partBody(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partBody(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(0.0, -0.75, 0.0)
@@ -62,8 +61,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partRightArm(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partRightArm(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(0.31, -0.55, 0.0)
@@ -72,8 +71,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partLeftArm(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partLeftArm(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 1) {
 			val s = 0.01
 			glTranslated(-0.31, -0.55, 0.0)
@@ -82,8 +81,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partRightLeg(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partRightLeg(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 2) {
 			val s = 0.01
 			glTranslated(0.125, 0.01, 0.0)
@@ -97,8 +96,8 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun partLeftLeg(e: Entity) {
-		if (ink(e, partType)) return
+	override fun partLeftLeg(entity: Entity) {
+		if (ink(entity, partType)) return
 		if (partType == 2) {
 			val s = 0.01
 			glTranslated(-0.125, 0.01, 0.0)
@@ -112,16 +111,14 @@ class ModelElvoriumArmor
 		}
 	}
 	
-	override fun hasOffhand(entity: Entity) = entity is EntityPlayer && entity.commandSenderName == "AlexSocol" && entity.heldItem?.item !== AlfheimItems.royalStaff
+	override fun hasOffhand(entity: Entity) = false // entity is EntityPlayer && entity.commandSenderName == "AlexSocol" && entity.heldItem?.item !== AlfheimItems.royalStaff
 	
 	companion object {
 		
 		val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/ElvoriumArmor.obj"))!!
 		
 		fun ink(e: Entity, slot: Int): Boolean {
-			var slot = slot
-			slot = 3 - slot
-			return e is EntityPlayer && e.inventory.armorItemInSlot(slot) != null && e.inventory.armorItemInSlot(slot).item is IPhantomInkable && (e.inventory.armorItemInSlot(slot).item as IPhantomInkable).hasPhantomInk(e.inventory.armorItemInSlot(slot))
+			return e is EntityPlayer && (e.inventory.armorItemInSlot(3 - slot)?.item as? IPhantomInkable)?.hasPhantomInk(e.inventory.armorItemInSlot(3 - slot)) == true
 		}
 	}
 }

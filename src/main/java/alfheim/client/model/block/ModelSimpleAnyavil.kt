@@ -2,10 +2,6 @@ package alfheim.client.model.block
 
 import net.minecraft.client.model.*
 
-/**
- * ModelSimpleAnyavil - AlexSocol
- * Created using Tabula 4.1.1
- */
 class ModelSimpleAnyavil: ModelBase() {
 	
 	val shape1: ModelRenderer

@@ -5,6 +5,7 @@ import alfheim.api.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.crafting.recipe.*
 import alfheim.common.integration.etfuturum.EtFuturumAlfheimConfig
@@ -17,6 +18,7 @@ import alfheim.common.world.dim.alfheim.WorldProviderAlfheim
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.eventhandler.*
+import net.minecraft.block.BlockTrapDoor
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
@@ -45,9 +47,9 @@ open class CommonProxy {
 		InteractionSecurity
 	}
 	
-	open fun registerRenderThings() {}
+	open fun registerRenderThings() = Unit
 	
-	open fun registerKeyBinds() {}
+	open fun registerKeyBinds() = Unit
 	
 	fun init() {
 		AlfheimRecipes
@@ -56,7 +58,8 @@ open class CommonProxy {
 		ASJUtilities.registerDimension(AlfheimConfigHandler.dimensionIDAlfheim, WorldProviderAlfheim::class.java, false)
 		AlfheimBlocks.registerBurnables()
 		if (Loader.isModLoaded("ForgeMultipart")) MultipartAlfheimConfig.loadConfig()
-		if (Loader.isModLoaded("etfuturem")) EtFuturumAlfheimConfig.loadConfig()
+		if (Loader.isModLoaded("etfuturum")) EtFuturumAlfheimConfig.loadConfig()
+		BlockTrapDoor.disableValidation = AlfheimConfigHandler.floatingTrapDoors
 	}
 	
 	open fun postInit() {
@@ -83,6 +86,8 @@ open class CommonProxy {
 				if (e.modID == ModInfo.MODID) AlfheimConfigHandler.syncConfig()
 			}
 		})
+		
+		ContributorsPrivacyHelper
 	}
 	
 	open fun featherFX(world: World, x: Double, y: Double, z: Double, color: Int, size: Float = 1f, lifetime: Float = 1f, distance: Float = 16f, must: Boolean = false) = Unit

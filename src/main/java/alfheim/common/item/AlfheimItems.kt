@@ -16,6 +16,7 @@ import alfheim.common.item.interaction.thaumcraft.*
 import alfheim.common.item.material.*
 import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
+import net.minecraft.init.Items
 import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -28,9 +29,10 @@ object AlfheimItems {
 	
 	val `DEV-NULL`: Item?
 	
-	val attributionBauble: Item
+	val akashicRecords: Item
 	val aesirEmblem: Item
 	val astrolabe: Item
+	val attributionBauble: Item
 	val auraRingElven: Item
 	val auraRingGod: Item
 	val balanceCloak: Item
@@ -82,7 +84,6 @@ object AlfheimItems {
 	val paperBreak: Item
 	val peacePipe: Item
 	val pixieAttractor: Item
-	val raceNullifier: Item
 	val realitySword: Item
 	val rodColorfulSkyDirt: Item
 	val rodFire: Item
@@ -102,12 +103,14 @@ object AlfheimItems {
 	val thinkingHand: Item
 	//val toolbelt: Item
 	val trisDagger: Item
+	val triquetrum: Item
 	val wiltedLotus: Item
 	val wireAxe: Item
 	
 	val royalStaff: Item
 
 	init {
+		akashicRecords = ItemAkashicRecords()
 		aesirEmblem = ItemAesirEmblem()
 		astrolabe = ItemAstrolabe()
 		attributionBauble = ItemAttributionBauble()
@@ -162,7 +165,6 @@ object AlfheimItems {
 		paperBreak = ItemPaperBreak()
 		peacePipe = ItemPeacePipe()
 		pixieAttractor = ItemPendant("PixieAttractor")
-		raceNullifier = ItemRaceNullifier()
 		realitySword = ItemRealitySword()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodFire = ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame)
@@ -181,6 +183,7 @@ object AlfheimItems {
 		subspaceSpear = ItemSpearSubspace()
 		thinkingHand = ItemThinkingHand()
 		trisDagger = ItemTrisDagger()
+		triquetrum = ItemTriquetrum()
 		//toolbelt = ItemToolbelt()
 		wireAxe = ItemWireAxe()
 		wiltedLotus = ItemWiltedLotus()
@@ -222,5 +225,10 @@ object AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.DYES[16], ItemStack(ModBlocks.bifrostPerm))
 		OreDictionary.registerOre(LibOreDict.FLORAL_POWDER, ItemStack(ModItems.dye, 1, OreDictionary.WILDCARD_VALUE))
 		OreDictionary.registerOre(LibOreDict.PETAL, ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE))
+		
+		
+		
+		OreDictionary.registerOre("coal", ItemStack(Items.coal))
+		OreDictionary.registerOre("coal", ItemStack(Items.coal, 1, 1))
 	}
 }

@@ -19,7 +19,7 @@ object ASJShaderHelper {
 	private const val VERT = GL_VERTEX_SHADER
 	
 	@JvmOverloads
-	fun useShader(shaderID: Int, callback: ShaderCallback? = null) {
+	fun useShader(shaderID: Int, callback: ((Int) -> Unit)? = null) {
 		if (!OpenGlHelper.shadersSupported) return
 		
 		glUseProgram(shaderID)
@@ -30,7 +30,7 @@ object ASJShaderHelper {
 				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.totalWorldTime / 20f)
 			}
 			
-			callback?.call(shaderID)
+			callback?.invoke(shaderID)
 		}
 	}
 	
@@ -79,14 +79,14 @@ object ASJShaderHelper {
 		if (glGetProgrami(programID, GL_LINK_STATUS) == GL_FALSE) {
 			val info = getProgramLogInfo(programID)
 			glDeleteProgram(programID)
-			throw RuntimeException("Error Linking program: $info")
+			throw RuntimeException("Error Linking program [$vertLocation x $fragLocation]: $info")
 		}
 		
 		glValidateProgram(programID)
 		if (glGetProgrami(programID, GL_VALIDATE_STATUS) == GL_FALSE) {
 			val info = getProgramLogInfo(programID)
 			glDeleteProgram(programID)
-			throw RuntimeException("Error Validating program: $info")
+			throw RuntimeException("Error Validating program [$vertLocation x $fragLocation]: $info")
 		}
 		
 		return programID
@@ -104,7 +104,7 @@ object ASJShaderHelper {
 			glCompileShader(shaderID)
 			
 			if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE)
-				throw RuntimeException("Error Compiling shader: " + getShaderLogInfo(shaderID))
+				throw RuntimeException("Error Compiling shader [$filename]: " + getShaderLogInfo(shaderID))
 			
 			return shaderID
 		} catch (e: Exception) {

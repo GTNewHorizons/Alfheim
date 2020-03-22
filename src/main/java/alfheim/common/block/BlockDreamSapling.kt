@@ -1,10 +1,12 @@
 package alfheim.common.block
 
 import alfheim.api.ModInfo
-import alfheim.common.core.util.AlfheimTab
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.AlfheimLexiconData
+import alfheim.common.world.dim.alfheim.biome.BiomeAlfheim
 import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
+import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
@@ -15,7 +17,7 @@ import net.minecraftforge.event.terraingen.TerrainGen
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
+class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable, IFuelHandler {
 	
 	init {
 		setBlockBounds(0.1f, 0f, 0.1f, 0.9f, 0.8f, 0.9f)
@@ -26,6 +28,8 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		setLightOpacity(0)
 		stepSound = soundTypeGrass
 		tickRandomly = true
+		
+		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun setBlockName(name: String): Block {
@@ -57,7 +61,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 		if (!TerrainGen.saplingGrowTree(world, rand, x, y, z)) return
 		val l = world.getBlockMetadata(x, y, z) and 7
 		world.setBlock(x, y, z, Blocks.air, 0, 4)
-		if (!StructureDreamsTree(AlfheimBlocks.dreamLog, AlfheimBlocks.dreamLeaves, 0, 4, 8, 0).generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4)
+		if (!BiomeAlfheim.dreamTree.generate(world, rand, x, y, z)) world.setBlock(x, y, z, this, l, 4)
 	}
 	
 	/** Can the block grow
@@ -77,6 +81,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable {
 	
 	override fun damageDropped(meta: Int) = 0
 	
-	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) =
-		AlfheimLexiconData.worldgen
+	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.worldgen
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 100 else 0
 }

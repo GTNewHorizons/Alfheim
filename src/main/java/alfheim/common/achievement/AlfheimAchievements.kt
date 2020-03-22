@@ -1,10 +1,12 @@
 package alfheim.common.achievement
 
+import alfheim.AlfheimCore
+import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler
 import alfheim.common.item.AlfheimItems
 import net.minecraft.block.Block
-import net.minecraft.init.Items
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.stats.Achievement
 import net.minecraftforge.common.AchievementPage
@@ -21,50 +23,55 @@ object AlfheimAchievements {
 	val wingedHussar: Achievement // become winged hussar		W
 	
 	// relics
+	val akashic: Achievement //									K
 	val excaliber: Achievement //								E
-	
 	val flugelSoul: Achievement //								S
 	val mask: Achievement //									M
 	//val mjolnir: Achievement
 	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
 	
-	val newChance: Achievement // gain race nullifier			G
+	val divineMarksman: Achievement //							D
+	val newChance: Achievement // gain race nullifier			N
+	val rosaBomb: Achievement //								R
 	
 	val flugelKill: Achievement // kill hardmode flugel			F
 	val outstander: Achievement // live 3 minutes in mask		O
 	
 	// ---------------> X
 	// |
-	// |    W  I
-	// |          B
-	// |     A S M E
-	// |        F U
-	// |       G
+	// |    W I    D N
+	// |          B K
+	// |     A S M
+	// |        F U E
+	// |           R
 	// |         O
 	// Y
 	
 	init {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
-		infuser = AlfheimAchievement("infuser", 2, -2, AlfheimBlocks.manaInfuser, null)
+		infuser = AlfheimAchievement("infuser", 1, -2, AlfheimBlocks.manaInfuser, alfheim)
 		
 		flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
 		
 		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
 		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
 		
-		newChance = AlfheimAchievement("newChance", 2, 2, AlfheimItems.raceNullifier, flugelKill)
-		
-		excaliber = AlfheimAchievement("excaliber", 6, 0, AlfheimItems.excaliber, mask)
+		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
+		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
 		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
+		newChance = AlfheimAchievement("newChance", 8, -2, Items.spawn_egg, akashic)
+		
+		divineMarksman = AlfheimAchievement("divineMarksman", 6, -2, ItemStack(Blocks.red_flower, 1, 2), moonlightBow).setSpecial()
+		rosaBomb = AlfheimAchievement("rosaBomb", 6, 2, Blocks.red_flower, subspace).setSpecial()
 		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
-		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, null).setSpecial()
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
 		
-		AchievementPage.registerAchievementPage(AchievementPage("Alfheim", *achievements.toTypedArray()))
+		AchievementPage.registerAchievementPage(AchievementPage(ModInfo.MODID.capitalize(), *achievements.toTypedArray()))
 		
 		AlfheimAchievementHandler
 	}

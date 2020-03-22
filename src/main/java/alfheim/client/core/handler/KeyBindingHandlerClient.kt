@@ -30,20 +30,21 @@ import org.lwjgl.input.*
 object KeyBindingHandlerClient {
 	
 	/** Toggle Keys  */
-	var toggleESMAbility: Boolean = false
-	var toggleCorn: Boolean = false
-	var toggleFlight: Boolean = false
-	var toggleJump: Boolean = false
-	var toggleCast: Boolean = false
-	var toggleUnCast: Boolean = false
-	var toggleSelMob: Boolean = false
-	var toggleSelTeam: Boolean = false
-	var toggleLMB: Boolean = false
-	var toggleAlt: Boolean = false
-	var toggleLeft: Boolean = false
-	var toggleUp: Boolean = false
-	var toggleDown: Boolean = false
-	var toggleRight: Boolean = false
+	var toggleESMAbility = false
+	var toggleCorn = false
+	var toggleFlight = false
+	var toggleJump = false
+	var toggleCast = false
+	var toggleUnCast = false
+	var toggleSelMob = false
+	var toggleSelTeam = false
+	var toggleLMB = false
+	var toggleAlt = false
+	var toggleLeft = false
+	var toggleUp = false
+	var toggleDown = false
+	var toggleRight = false
+	var toggleSecret = false
 	
 	/** IDs for spell selection GUI  */
 	var raceID = 1
@@ -250,6 +251,15 @@ object KeyBindingHandlerClient {
 				toggleSelTeam = false
 			}
 		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_U)) {
+			if (!toggleSecret) {
+				toggleSecret = true
+				AlfheimCore.network.sendToServer(MessageKeyBindS(SECRET.ordinal, false, 0))
+			}
+		} else if (toggleSecret) {
+			toggleSecret = false
+		}
 	}
 	
 	fun safeKeyDown(id: Int) = try { Keyboard.isKeyDown(id) } catch (e: IndexOutOfBoundsException) { false }
@@ -260,6 +270,6 @@ object KeyBindingHandlerClient {
 	}
 	
 	enum class KeyBindingIDs {
-		CORN, FLIGHT, ESMABIL, ATTACK, CAST, UNCAST, SEL
+		CORN, FLIGHT, ESMABIL, ATTACK, CAST, UNCAST, SEL, SECRET
 	}
 }

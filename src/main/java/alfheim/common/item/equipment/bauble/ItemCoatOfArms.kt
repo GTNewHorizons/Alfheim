@@ -21,18 +21,18 @@ import vazkii.botania.api.item.*
 import vazkii.botania.api.recipe.IFlowerComponent
 import vazkii.botania.client.core.helper.ShaderHelper
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
-import kotlin.math.min
 
 class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOverride, IFlowerComponent {
 	
-	val TYPES = 18
-	var icons: Array<IIcon?> = arrayOfNulls(TYPES)
+	val TYPES = 19
+	lateinit var icons: Array<IIcon>
+	
 	val colorMap = intArrayOf(
 		0x00137F, 0x0043FF, 0xFF0037, 0xFFD800,
 		0x002EFF, 0x001A8E, 0x009944, 0x003BFF,
 		0x00FF3B, 0xFF003B, 0x603A20, 0xFFFF00,
 		0xFF0015, 0x0048FF, 0xFFD400, 0xFFFFFF,
-		0xFFFFFF, 0xFF0037
+		0xFFFFFF, 0xDD0000, 0xFF0037
 	)
 	
 	init {
@@ -45,8 +45,7 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	override fun getParticleColor(stack: ItemStack) = colorMap[stack.meta]
 	
 	override fun registerIcons(par1IconRegister: IIconRegister) {
-		for (i in 0 until TYPES)
-			icons[i] = IconHelper.forItem(par1IconRegister, this, i, "coatofarms")
+		icons = Array(TYPES) { IconHelper.forItem(par1IconRegister, this, it, "coatofarms") }
 	}
 	
 	override fun colorOverride(stack: ItemStack): Int {
@@ -62,12 +61,12 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 			list.add(ItemStack(item, 1, i))
 	}
 	
-	override fun getIconFromDamage(dmg: Int) = icons[min(TYPES - 1, dmg)]
+	override fun getIconFromDamage(meta: Int) = icons.safeGet(meta)
 	
 	override fun onEquipped(stack: ItemStack, player: EntityLivingBase) {
 		super.onEquipped(stack, player)
 		if (stack.meta == 1 && "paris".toRegex().find(stack.displayName.toLowerCase()) != null) {
-			stack.meta = 17
+			stack.meta = TYPES - 1
 			stack.tagCompound.removeTag("display")
 		}
 	}
@@ -115,8 +114,7 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 	}
 	
 	fun renderIcon(i: Int) {
-		val icon = icons[i]
-		if (icon != null)
-			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 16F)
+		val icon = icons.safeGet(i)
+		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 16F)
 	}
 }

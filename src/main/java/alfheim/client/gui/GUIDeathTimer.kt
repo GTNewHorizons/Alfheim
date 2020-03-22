@@ -61,11 +61,9 @@ class GUIDeathTimer: GuiScreen() {
 		super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_)
 	}
 	
-	override fun keyTyped(c: Char, i: Int) {}
+	override fun keyTyped(c: Char, i: Int) = Unit
 	
-	override fun doesGuiPauseGame(): Boolean {
-		return false
-	}
+	override fun doesGuiPauseGame() = false
 	
 	override fun updateScreen() {
 		super.updateScreen()

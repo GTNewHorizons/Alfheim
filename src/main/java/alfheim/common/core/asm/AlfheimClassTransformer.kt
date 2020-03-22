@@ -3,6 +3,7 @@ package alfheim.common.core.asm
 import alfheim.api.ModInfo.OBF
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.launchwrapper.IClassTransformer
+import org.lwjgl.opengl.GL11
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
@@ -67,6 +68,15 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
+			"net.minecraft.tileentity.TileEntityFurnace"                    -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `TileEntityFurnace$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.world.World"                                     -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -99,6 +109,15 @@ class AlfheimClassTransformer: IClassTransformer {
 				val cr = ClassReader(basicClass)
 				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
 				val ct = `BaubleRenderHandler$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
+			"vazkii.botania.client.core.handler.LightningHandler"           -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `LightningHandler$ClassVisitor`(cw)
 				cr.accept(ct, ClassReader.SKIP_FRAMES)
 				cw.toByteArray()
 			}
@@ -377,6 +396,45 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 	}
 	
+	internal class `TileEntityFurnace$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "readFromNBT" || (name == "a" && desc == "(Ldh;)V")) {
+				println("Visiting TileEntityFurnace#readFromNBT: $name$desc")
+				return `TileEntityFurnace$readFromNBT$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			} else if (name == "writeToNBT" || (name == "b" && desc == "(Ldh;)V")) {
+				println("Visiting TileEntityFurnace#writeToNBT: $name$desc")
+				return `TileEntityFurnace$writeToNBT$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `TileEntityFurnace$readFromNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
+				if (name == "getShort" || (name == "e" && desc == "(Ljava/lang/String;)S")) {
+					super.visitMethodInsn(opcode, owner, if (OBF) "f" else "getInteger", "(Ljava/lang/String;)I", itf)
+				} else
+					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+		}
+		
+		internal class `TileEntityFurnace$writeToNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
+				if (name == "setShort" || (name == "a" && desc == "(Ljava/lang/String;S)V")) {
+					super.visitMethodInsn(opcode, owner, if (OBF) "a" else "setInteger", "(Ljava/lang/String;I)V", itf)
+				} else
+					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode != I2S) super.visitInsn(opcode)
+			}
+		}
+	}
+	
 	internal class `World$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -480,6 +538,34 @@ class AlfheimClassTransformer: IClassTransformer {
 		}
 	}
 	
+	internal class `LightningHandler$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "onRenderWorldLast") {
+				println("Visiting LightningHandler#onRenderWorldLast: $name$desc")
+				return `LightningHandler$onRenderWorldLast$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `LightningHandler$onRenderWorldLast$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String, name: String, desc: String, itf: Boolean) {
+				super.visitMethodInsn(opcode, owner, name, desc, itf)
+				
+				if (opcode == INVOKESTATIC) {
+					if (name == "glPushMatrix") {
+						mv.visitIntInsn(SIPUSH, GL11.GL_CULL_FACE)
+						mv.visitMethodInsn(INVOKESTATIC, "org/lwjgl/opengl/GL11", "glDisable", "(I)V", false)
+					} else if (name == "glPopmatrix") {
+						mv.visitIntInsn(SIPUSH, GL11.GL_CULL_FACE)
+						mv.visitMethodInsn(INVOKESTATIC, "org/lwjgl/opengl/GL11", "glEnable", "(I)V", false)
+					}
+				}
+			}
+		}
+	}
+	
 	internal class `BaubleRenderHandler$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -499,7 +585,6 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 		}
 	}
-	
 	internal class `RenderTileFloatingFlower$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {

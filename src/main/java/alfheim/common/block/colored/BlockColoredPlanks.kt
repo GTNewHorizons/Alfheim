@@ -2,15 +2,14 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.core.util.D
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemSubtypedBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
-import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
@@ -22,7 +21,7 @@ import vazkii.botania.api.wand.IWandable
 import java.awt.Color
 import java.util.*
 
-class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler, IWandable {
+class BlockColoredPlanks: BlockMod(Material.wood), ILexiconable, IWandable {
 	
 	private val name = "irisPlanks"
 	private val TYPES = 16
@@ -33,7 +32,6 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 		stepSound = soundTypeWood
 		
 		setBlockName(name)
-		GameRegistry.registerFuelHandler(this)
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -86,7 +84,7 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	
 	override fun quantityDropped(random: Random) = 1
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(this)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	internal fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemSubtypedBlockMod::class.java, name)
@@ -105,6 +103,4 @@ class BlockColoredPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
-	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 300 else 0
 }

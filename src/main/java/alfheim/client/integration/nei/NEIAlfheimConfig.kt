@@ -4,6 +4,7 @@ import alfheim.AlfheimCore
 import alfheim.client.core.util.mc
 import alfheim.client.integration.nei.recipes.*
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems
 import codechicken.nei.api.*
 import net.minecraft.item.ItemStack
@@ -30,7 +31,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.starBlock2))
 		API.hideItem(ItemStack(AlfheimItems.flugelDisc2))
 		API.hideItem(ItemStack(AlfheimItems.flugelHead2))
-		if (mc.session.username != "AlexSocol")
+		if (!ContributorsPrivacyHelper.isCorrect(mc.session.username, "AlexSocol"))
 			API.hideItem(ItemStack(AlfheimItems.royalStaff))
 		
 		API.hideItem(ItemStack(AlfheimBlocks.anomalyHarvester)) // FIXME back!

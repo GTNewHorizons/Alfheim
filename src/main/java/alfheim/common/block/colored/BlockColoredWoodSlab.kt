@@ -2,6 +2,7 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockSlabMod
+import alfheim.common.core.util.toItem
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -44,5 +45,5 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBloc
 	
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.irisSapling
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item == Item.getItemFromBlock(this)) 150 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
 }

@@ -2,6 +2,8 @@ package alfheim.common.core.command
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
+import alfheim.api.ModInfo
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.D
 import alfheim.common.crafting.recipe.AlfheimRecipes
@@ -12,6 +14,7 @@ import net.minecraft.command.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
+import net.minecraftforge.common.AchievementPage
 import vazkii.botania.common.Botania
 
 class CommandAlfheim: CommandBase() {
@@ -61,11 +64,13 @@ class CommandAlfheim: CommandBase() {
 			if (on) {
 				AlfheimConfigHandler.initWorldCoordsForElvenStory(AlfheimCore.save)
 				ESMHandler.checkAddAttrs()
+				AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.add(AlfheimAchievements.newChance)
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			} else {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
 				AlfheimCore.enableMMO = false
 				toggleMMO(AlfheimCore.enableMMO)
+				AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.remove(AlfheimAchievements.newChance)
 			}
 		}
 		

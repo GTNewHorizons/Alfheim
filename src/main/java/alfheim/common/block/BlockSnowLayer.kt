@@ -1,6 +1,9 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
+import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
@@ -21,9 +24,10 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 		setCreativeTab(AlfheimTab)
 		setHardness(0.1f)
 		setHarvestLevel("shovel", 0)
-		setStepSound(soundTypeSnow)
+		stepSound = soundTypeSnow
 		
 		setSizeForMeta(0)
+		tickRandomly = true
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -75,9 +79,8 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	override fun quantityDropped(rand: Random?) = 1
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, rand: Random?) {
-		if (world.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11) {
+		if (!AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && !world.isRemote && world.rand.nextInt(20) != 0)
 			world.setBlockToAir(x, y, z)
-		}
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -93,7 +96,7 @@ class BlockSnowLayer: BlockMod(Material.snow) {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hx: Float, hy: Float, hz: Float): Boolean {
 		val meta = world.getBlockMetadata(x, y, z)
-		if (player.currentEquippedItem?.item === Item.getItemFromBlock(this) && meta < 7) world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
+		if (player.currentEquippedItem?.item === this.toItem() && meta < 7) world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
 		
 		if (player.currentEquippedItem == null && meta > 0) {
 			world.setBlockMetadataWithNotify(x, y, z, meta - 1, 3)

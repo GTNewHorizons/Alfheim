@@ -9,6 +9,7 @@ import alfheim.api.AlfheimAPI.addInfuserRecipe
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibOreDict
 import alfheim.api.lib.LibOreDict.ARUNE
+import alfheim.api.lib.LibOreDict.DREAM_WOOD_LOG
 import alfheim.api.lib.LibOreDict.DYES
 import alfheim.api.lib.LibOreDict.ELVORIUM_INGOT
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
@@ -26,7 +27,6 @@ import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
-import alfheim.common.block.AlfheimBlocks.dreamLog
 import alfheim.common.block.AlfheimBlocks.elvenOres
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.livingcobble
@@ -46,6 +46,10 @@ import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
@@ -58,6 +62,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
+import alfheim.common.block.AlfheimFluffBlocks.dwardTrapDoor
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
@@ -102,6 +107,7 @@ import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.thinkingHand
+import alfheim.common.item.AlfheimItems.triquetrum
 import alfheim.common.item.equipment.tool.ItemTwigWandExtender
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry.*
@@ -115,6 +121,7 @@ import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.recipe.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks.*
+import vazkii.botania.common.block.ModFluffBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems.*
@@ -189,6 +196,7 @@ object AlfheimRecipes {
 	lateinit var recipeSword: IRecipe
 	lateinit var recipeThinkingHand: IRecipe
 	lateinit var recipeTradePortal: IRecipe
+	lateinit var recipeTriquetrum: IRecipe
 	lateinit var recipeUberSpreader: IRecipe
 	
 	lateinit var recipeInterdimensional: RecipeElvenTrade
@@ -608,6 +616,14 @@ object AlfheimRecipes {
 						 'E', ELVORIUM_NUGGET)
 		recipeTradePortal = BotaniaAPI.getLatestAddedRecipe()
 		
+		addOreDictRecipe(ItemStack(triquetrum),
+						 "NLN", " NL", " II",
+						 'N', TERRASTEEL_NUGGET,
+						 'L', LIVINGWOOD_TWIG,
+						 'I', TERRA_STEEL)
+		
+		recipeTriquetrum = BotaniaAPI.getLatestAddedRecipe()
+		
 		val s = AlfheimCore.stupidMode
 		
 		// if no TiC || if Avaritia loaded || if molten Mauftrium is disabled
@@ -671,9 +687,7 @@ object AlfheimRecipes {
 						 'C', ItemStack(livingrock, 1, 4),
 						 'S', ItemStack(shrineLight, 1, 1))
 		
-		val out = arrayOf(5, 9, 10, 11, 13)
-		for (i in 0..15) {
-			if (i in out) continue
+		for (i in (0..15) - 5 - 9 - 10 - 11 - 13) {
 			addOreDictRecipe(ItemStack(shrineRock, 8, i),
 							 "LLL", "LDL", "LLL",
 							 'L', LIVING_ROCK,
@@ -704,11 +718,71 @@ object AlfheimRecipes {
 						 'L', LIVING_ROCK,
 						 'D', DYES[16])
 		
-		addOreDictRecipe(ItemStack(shrineRockWhiteStairs, 4),
+		// ################################################################
+		
+		addShapedRecipe(ItemStack(livingrockDark, 4, 1),
+						 "LL", "LL",
+						 'L', ItemStack(livingrockDark))
+		
+		addShapedRecipe(ItemStack(livingrockDark, 4, 2),
+						 "LL", "LL",
+						 'L', ItemStack(livingrockDark, 1, 1))
+		
+		addShapedRecipe(ItemStack(livingrockDark, 4, 3),
+						 "LL", "LL",
+						 'L', ItemStack(livingrockDark, 1, 2))
+		
+		addShapedRecipe(ItemStack(livingrockDark),
+						 "L", "L",
+						 'L', ItemStack(livingrockDarkSlabs[0]))
+		
+		addShapedRecipe(ItemStack(livingrockDark, 1, 1),
+						 "L", "L",
+						 'L', ItemStack(livingrockDarkSlabs[1]))
+		
+		addShapedRecipe(ItemStack(livingrockDark, 1, 3),
+						 "L", "L",
+						 'L', ItemStack(livingrockDarkSlabs[2]))
+		
+		addShapedRecipe(ItemStack(livingrockDarkStairs[0], 4),
+						 "L  ", "LL ", "LLL",
+						 'L', ItemStack(livingrockDark))
+		
+		addShapedRecipe(ItemStack(livingrockDarkStairs[1], 4),
+						 "L  ", "LL ", "LLL",
+						 'L', ItemStack(livingrockDark, 1, 1))
+		
+		addShapedRecipe(ItemStack(livingrockDarkStairs[2], 4),
+						 "L  ", "LL ", "LLL",
+						 'L', ItemStack(livingrockDark, 1, 3))
+		
+		addShapedRecipe(ItemStack(livingrockDarkSlabs[0], 6),
+						 "LLL",
+						 'L', ItemStack(livingrockDark))
+		
+		addShapedRecipe(ItemStack(livingrockDarkSlabs[1], 6),
+						 "LLL",
+						 'L', ItemStack(livingrockDark, 1, 1))
+		
+		addShapedRecipe(ItemStack(livingrockDarkSlabs[2], 6),
+						 "LLL",
+						 'L', ItemStack(livingrockDark, 1, 3))
+		
+		addShapedRecipe(ItemStack(livingrockDarkWalls[0], 6),
+						"LLL", "LLL",
+						'L', ItemStack(livingrockDark))
+		
+		addShapedRecipe(ItemStack(livingrockDarkWalls[1], 6),
+						"LLL", "LLL",
+						'L', ItemStack(livingrockDark, 1, 1))
+		
+		// ################################################################
+		
+		addShapedRecipe(ItemStack(shrineRockWhiteStairs, 4),
 						 "L  ", "LL ", "LLL",
 						 'L', ItemStack(shrineRock, 1, 0))
 		
-		addOreDictRecipe(ItemStack(shrineRockWhiteSlab, 6),
+		addShapedRecipe(ItemStack(shrineRockWhiteSlab, 6),
 						 "LLL",
 						 'L', ItemStack(shrineRock, 1, 0))
 		
@@ -719,7 +793,7 @@ object AlfheimRecipes {
 							 'D', DYES[if (i == 0) 14 else i])
 		}
 		
-		addOreDictRecipe(ItemStack(shrinePillar, 2), "S", "S", 'S', ItemStack(shrineRock, 1, 0))
+		addShapedRecipe(ItemStack(shrinePillar, 2), "S", "S", 'S', ItemStack(shrineRock, 1, 0))
 		
 		addOreDictRecipe(ItemStack(shrineGlass, 8, 0),
 						 "GGG", "GDG", "GGG",
@@ -731,9 +805,9 @@ object AlfheimRecipes {
 						 'G', elfGlass,
 						 'D', DYES[14])
 		
-		addOreDictRecipe(ItemStack(livingcobble, 4, 1),
-						 "LL", "LL",
-						 'L', ItemStack(livingcobble, 1, 2))
+		addShapedRecipe(ItemStack(livingcobble, 4, 1),
+						"LL", "LL",
+						'L', ItemStack(livingcobble, 1, 2))
 		
 		addOreDictRecipe(ItemStack(livingcobble, 8, 2),
 						 "LLL", "L L", "LLL",
@@ -746,6 +820,10 @@ object AlfheimRecipes {
 							 'G', ItemStack(shrineGlass, 1, 0),
 							 'D', DYES[dyes[i]])
 		}
+		
+		addShapedRecipe(ItemStack(dwardTrapDoor),
+						"WWW", "WWW",
+						'W', ItemStack(dwarfPlanks))
 	}
 	
 	private fun registerShapelessRecipes() {
@@ -776,6 +854,19 @@ object AlfheimRecipes {
 		
 		addShapelessOreDictRecipe(ItemStack(livingcobble), LIVING_ROCK)
 		recipeLivingcobble = BotaniaAPI.getLatestAddedRecipe()
+		
+		addShapelessOreDictRecipe(ItemStack(livingrockDark), livingrock, "coal")
+		addShapelessOreDictRecipe(ItemStack(livingrockDark, 1, 1), ItemStack(livingrock, 1, 1), "coal")
+		addShapelessOreDictRecipe(ItemStack(livingrockDark, 1, 2), ItemStack(livingrock, 1, 4), "coal")
+		
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkStairs[0]), ItemStack(livingrockStairs), "coal")
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkStairs[1]), ItemStack(livingrockBrickStairs), "coal")
+		
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkSlabs[0]), ItemStack(livingrockSlab), "coal")
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkSlabs[1]), ItemStack(livingrockBrickSlab), "coal")
+		
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkWalls[0]), ItemStack(livingrockWall), "coal")
+		addShapelessOreDictRecipe(ItemStack(livingrockDarkWalls[1]), ItemStack(livingrockBrickWall), "coal")
 		
 		for (i in 0..5)
 			addShapelessOreDictRecipe(ItemStack(manaResource, 4, 5), ItemStack(ancientWill, 1, i))
@@ -872,7 +963,7 @@ object AlfheimRecipes {
 		recipeInterdimensional = BotaniaAPI.registerElvenTradeRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore), ItemStack(nether_star))
 		//recipeStoryToken = BotaniaAPI.registerElvenTradeRecipe(ItemStack(storyToken, 1, 1), ItemStack(storyToken, 1, 0))
 		
-		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(dreamLog, dreamwood, 0)
+		recipeDreamwood = BotaniaAPI.registerPureDaisyRecipe(DREAM_WOOD_LOG, dreamwood, 0)
 		BotaniaAPI.registerPureDaisyRecipe("cobblestone", livingcobble, 0)
 		
 		BotaniaAPI.registerManaInfusionRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.InfusedDreamwoodTwig), ItemStack(manaResource, 1, 13), 10000)

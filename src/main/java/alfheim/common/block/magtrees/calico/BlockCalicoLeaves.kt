@@ -2,6 +2,7 @@ package alfheim.common.block.magtrees.calico
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -20,24 +21,15 @@ class BlockCalicoLeaves : BlockLeavesMod(), IExplosionDampener, ILexiconable {
 	
 	override fun isInterpolated() = true
 	
-	@SideOnly(Side.CLIENT)
-	override fun getBlockColor(): Int = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun getRenderColor(meta: Int) = 0xFFFFFF
-	
-	@SideOnly(Side.CLIENT)
-	override fun colorMultiplier(world: IBlockAccess?, x: Int, y: Int, z: Int) = 0xFFFFFF
-	
 	override fun register(name: String) {
 		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
 	}
 	
-	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = Item.getItemFromBlock(AlfheimBlocks.calicoSapling)!!
+	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.calicoSapling.toItem()
 	
 	override fun quantityDropped(random: Random) = if (random.nextInt(60) == 0) 1 else 0
 	
-	override fun func_150125_e() = arrayOf("circuitLeaves")
+	override fun func_150125_e() = arrayOf("calicoLeaves")
 	
 	override fun decayBit(): Int = 0x1
 	

@@ -5,6 +5,7 @@ import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.toItem
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -40,7 +41,7 @@ class BlockTreeCrafter(name: String, val block: Block): BlockContainerMod(Materi
 	override fun createNewTileEntity(var1: World, var2: Int) = TileTreeCrafter()
 	override fun hasComparatorInputOverride() = true
 	override fun getComparatorInputOverride(par1World: World?, par2: Int, par3: Int, par4: Int, par5: Int) = (par1World!!.getTileEntity(par2, par3, par4) as TileTreeCrafter).signal
-	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = Item.getItemFromBlock(innerBlock(0))!!
+	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = innerBlock(0).toItem()
 	override fun damageDropped(meta: Int) = meta
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = world.getBlockMetadata(x, y, z)
 	override fun renderHUD(mc: Minecraft, res: ScaledResolution, world: World, x: Int, y: Int, z: Int) = (world.getTileEntity(x, y, z) as TileTreeCrafter).renderHUD(mc, res)
