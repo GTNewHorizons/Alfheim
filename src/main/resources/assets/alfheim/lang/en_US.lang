@@ -64,7 +64,8 @@ tile.alfheim:DreamwoodBarkFenceGate.name=Dreamwood Bark Fence Gate
 tile.alfheim:DreamwoodFence.name=Dreamwood Planks Fence
 tile.alfheim:DreamwoodFenceGate.name=Dreamwood Planks Fence Gate
 tile.alfheim:DwarfLantern.name=Livingrock Lantern
-tile.DwarfPlanks0.name=Dvarf Planks
+tile.DwarfPlanks0.name=Dwarf Planks
+tile.alfheim:DwarfTrapDoor.name=Dwarf Trapdoor
 tile.ElvenOre0.name=Dragonstone Ore
 tile.ElvenOre1.name=Elementium Ore
 tile.ElvenOre2.name=Elven Quartz Ore
@@ -147,7 +148,6 @@ tile.botania:ShrineRock0SlabFull.name=Shrine Rock Slab
 tile.alfheim:SnowGrass.name=Snowy Grass
 tile.alfheim:SnowLayer.name=Snow Layer
 tile.botania:spreader4.name=Mauftrium Mana Spreader
-tile.alfheim:SpruceTrapDoor.name=Spruce Trapdoor
 tile.alfheim:TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
 

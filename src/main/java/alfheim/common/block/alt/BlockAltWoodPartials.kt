@@ -12,7 +12,7 @@ import net.minecraft.block.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
-import net.minecraft.util.IIcon
+import net.minecraft.util.*
 import net.minecraft.world.World
 
 class BlockAltWoodSlab(full: Boolean, source: Block = AlfheimBlocks.altPlanks):

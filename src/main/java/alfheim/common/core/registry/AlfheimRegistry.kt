@@ -15,6 +15,7 @@ import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
 import alfheim.common.entity.spell.*
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.potion.*
 import alfheim.common.spell.darkness.*
 import alfheim.common.spell.earth.*
@@ -278,7 +279,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.thorRing), 1000)
 		addPink(ItemStack(ModItems.odinRing), 1000)
 		addPink(ItemStack(ModItems.lokiRing), 1000)
-		// addPink(ItemStack(ModItems.aesirRing), 3000) - can't drop
+		addPink(ItemStack(ModItems.aesirRing), 3000)
 		addPink(ItemStack(ModBlocks.unstableBlock, 1, 6), 2)
 		addPink(ItemStack(ModBlocks.manaBeacon, 1, 6), 8)
 		addPink(ItemStack(ModItems.pinkinator), 100)
@@ -296,7 +297,7 @@ object AlfheimRegistry {
 		if (Botania.thaumcraftLoaded) addPink(ItemStack(AlfheimItems.elementalHelmetRevealing), 45)
 		addPink(ItemStack(AlfheimItems.elementalLeggings), 63)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
-		//addPink(new ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9);
+		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9)
 		addPink(ItemStack(AlfheimBlocks.manaInfuser), 90)
 		addPink(ItemStack(AlfheimBlocks.alfheimPylon), 45)
 		addPink(ItemStack(AlfheimBlocks.elvenOres), 9)

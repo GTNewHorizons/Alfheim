@@ -30,7 +30,7 @@ abstract class BlockSlabMod(val full: Boolean, val meta: Int, val source: Block,
 	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int) = source.getIcon(side, meta)!!
 	
-	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int) = ItemStack(getSingleBlock())
+	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int) = ItemStack(getSingleBlock(), 1, world.getBlockMetadata(x, y, z))
 	
 	override fun getItemDropped(meta: Int, random: Random?, fortune: Int) = getSingleBlock().toItem()
 	

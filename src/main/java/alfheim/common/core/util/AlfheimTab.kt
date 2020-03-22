@@ -478,8 +478,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 	}
 	
 	fun addBlock(block: Block) {
-		val stack = ItemStack(block)
-		block.getSubBlocks(stack.item, this, list)
+		block.getSubBlocks(block.toItem(), this, list)
 	}
 	
 	fun addItem(item: Item) {

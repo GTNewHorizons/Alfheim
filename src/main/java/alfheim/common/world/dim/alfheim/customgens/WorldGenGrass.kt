@@ -2,6 +2,7 @@ package alfheim.common.world.dim.alfheim.customgens
 
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.*
@@ -22,6 +23,8 @@ class WorldGenGrass(val grass: Boolean, val flowers: Boolean, val doubleFlowers:
 	val G = if (AlfheimCore.winter) arrayOf(AlfheimBlocks.snowGrass, Blocks.grass) else arrayOf(Blocks.grass)
 	
 	override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider, chunkProvider: IChunkProvider) {
+		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
+		
 		val cx = chunkX * 16
 		val cz = chunkZ * 16
 		if (botanicalFlowers) {

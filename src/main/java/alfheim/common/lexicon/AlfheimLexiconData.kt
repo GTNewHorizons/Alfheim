@@ -203,10 +203,10 @@ object AlfheimLexiconData {
 								 PageText("3"),
 								 PageCraftingRecipe("4", AlfheimRecipes.recipeLivingcobble),
 								 PageCraftingRecipe("5", AlfheimRecipes.recipeLivingrockPickaxe),
-								 PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace)).icon = ItemStack(AlfheimBlocks.altLeaves, 1, 8)
+								 PageCraftingRecipe("6", AlfheimRecipes.recipeFurnace)).icon = ItemStack(AlfheimBlocks.altLeaves, 1, 7)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenSand), worldgen, 3)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altWood1, 1, 3), worldgen, 1)
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altLeaves, 1, 8), worldgen, 1)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altLeaves, 1, 7), worldgen, 1)
 		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.dreamSapling), worldgen, 1)
 		
 		shrines.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(AlfheimBlocks.powerStone)

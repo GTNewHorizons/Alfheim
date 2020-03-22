@@ -54,7 +54,7 @@ object ManaSpreaderExtender {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS)
 	fun getIcon(spreader: BlockSpreader, side: Int, meta: Int): IIcon = when (meta) {
-		4    -> if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
+		4    -> if (isGolden()) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
 		2, 3 -> ModBlocks.dreamwood.getIcon(side, 0)
 		else -> ModBlocks.livingwood.getIcon(side, 0)
 	}
@@ -159,7 +159,7 @@ object ManaSpreaderExtender {
 	fun renderTileEntityAt(render: RenderTileSpreader, tile: TileEntity, d0: Double, d1: Double, d2: Double, ticks: Float) {
 		if (isUBER_SPREADER(tile as? TileSpreader ?: return)) {
 			textureHook = true
-			modelHook = true
+			modelHook = !isGolden()
 		}
 	}
 	
@@ -169,8 +169,7 @@ object ManaSpreaderExtender {
 		if (textureHook) {
 			textureHook = false
 			tm.bindTexture(
-				if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
-				|| (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (
+				if (isGolden()) (
 					if (ClientProxy.dootDoot)
 						LibResourceLocations.uberSpreaderHalloweenGolden
 					else
@@ -208,20 +207,14 @@ object ManaSpreaderExtender {
 			
 			modelHook = false
 			
-			mc.renderEngine.bindTexture(
-				if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
-					|| (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (
-					if (ClientProxy.dootDoot)
-						LibResourceLocations.uberSpreaderHalloweenGolden
-					else
-						LibResourceLocations.uberSpreaderGolden
-				) else (
-					if (ClientProxy.dootDoot)
-						LibResourceLocations.uberSpreaderHalloween
-					else
-						LibResourceLocations.uberSpreader
-				)
-			)
+			mc.renderEngine.bindTexture(if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader)
 		}
+	}
+	
+	fun isGolden(): Boolean {
+		val bakasobaka = ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
+		val casting = AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1
+		
+		return bakasobaka || casting
 	}
 }

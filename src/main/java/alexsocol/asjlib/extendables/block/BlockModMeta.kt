@@ -36,8 +36,8 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 		}
 	}
 	
-	override fun getSubBlocks(block: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
-		for (i in 0 until subtypes) list.add(ItemStack(block, 1, i))
+	override fun getSubBlocks(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
+		for (i in 0 until subtypes) list.add(ItemStack(item, 1, i))
 	}
 	
 	override fun getIcon(side: Int, meta: Int): IIcon? = texture[max(0, min(meta, texture.size - 1))]

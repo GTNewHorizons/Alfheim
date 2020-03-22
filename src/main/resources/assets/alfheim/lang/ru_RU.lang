@@ -65,6 +65,7 @@ tile.alfheim:DreamwoodFence.name=Забор из досок мечтаний
 tile.alfheim:DreamwoodFenceGate.name=Калитка из досок мечтаний
 tile.alfheim:DwarfLantern.name=Светильник из жизнекамня
 tile.DwarfPlanks0.name=Доски дварфов
+tile.alfheim:DwarfTrapDoor.name=Еловый трабдор
 tile.ElvenOre0.name=Руда драконьего камня
 tile.ElvenOre1.name=Руда элементия
 tile.ElvenOre2.name=Руда эльфийского кварца
@@ -147,7 +148,6 @@ tile.botania:ShrineRock0SlabFull.name=Плита из блока храма
 tile.alfheim:SnowGrass.name=Заснеженная трава
 tile.alfheim:SnowLayer.name=Снежный покров
 tile.botania:spreader4.name=Мауфтриевый распространитель маны
-tile.alfheim:SpruceTrapDoor.name=Еловый трабдор
 tile.alfheim:TradePortal.name=Ядро врат Мидгарда
 tile.Transferer.name=Переносчик
 

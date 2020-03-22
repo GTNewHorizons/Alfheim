@@ -16,6 +16,7 @@ import alfheim.common.item.interaction.thaumcraft.*
 import alfheim.common.item.material.*
 import alfheim.common.item.relic.*
 import alfheim.common.item.rod.*
+import net.minecraft.init.Items
 import net.minecraft.item.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
@@ -224,5 +225,10 @@ object AlfheimItems {
 		OreDictionary.registerOre(LibOreDict.DYES[16], ItemStack(ModBlocks.bifrostPerm))
 		OreDictionary.registerOre(LibOreDict.FLORAL_POWDER, ItemStack(ModItems.dye, 1, OreDictionary.WILDCARD_VALUE))
 		OreDictionary.registerOre(LibOreDict.PETAL, ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE))
+		
+		
+		
+		OreDictionary.registerOre("coal", ItemStack(Items.coal))
+		OreDictionary.registerOre("coal", ItemStack(Items.coal, 1, 1))
 	}
 }

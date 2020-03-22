@@ -58,7 +58,7 @@ object AlfheimFluffBlocks {
 	val shrineRockWhiteSlab: Block
 	val shrineRockWhiteSlabFull: Block
 	val shrineRockWhiteStairs: Block
-	val spruceTrapDoor: Block
+	val dwardTrapDoor: Block
 	
 	init {
 		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "shrines/")
@@ -196,7 +196,7 @@ object AlfheimFluffBlocks {
 			.setResistance(5f)
 			.setStepSound(Block.soundTypeWood)
 		
-		spruceTrapDoor = BlockModTrapDoor(Material.wood, "SpruceTrapDoor")
+		dwardTrapDoor = BlockModTrapDoor(Material.wood, "DwarfTrapDoor")
 			.setCreativeTab(CreativeTabs.tabRedstone)
 			.setHardness(3f)
 			.setStepSound(Block.soundTypeWood)

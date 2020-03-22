@@ -342,7 +342,7 @@ object ShadowFoxLexiconData {
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisDirt, 1, i), coloredDirt, 1)
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisGrass, 1, i), pastoralSeeds, 0)
 		}
-		for (i in 0 until LibOreDict.ALT_TYPES.size - 1) {
+		for (i in 0 until LibOreDict.ALT_TYPES.size - 2) {
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altPlanks, 1, i), irisSapling, 1)
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altSlabs, 1, i), irisSapling, 2)
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.altStairs[i], 1), irisSapling, 3)
