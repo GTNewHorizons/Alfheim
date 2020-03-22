@@ -3,9 +3,10 @@ package alfheim.common.block.alt
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.safeGet
+import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.*
+import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -22,7 +23,7 @@ import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.lexicon.LexiconEntry
 import java.util.*
 
-class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood) {
+class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), IFuelHandler {
 	
 	lateinit var icons: Array<Array<IIcon?>>
 	
@@ -32,6 +33,8 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood) {
 		blockHardness = 2F
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)
+		
+		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun getBlockHardness(world: World, x: Int, y: Int, z: Int) = if (set == 1 && world.getBlockMetadata(x, y, z) % 4 == 2) -1f else super.getBlockHardness(world, x, y, z)
@@ -102,4 +105,6 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood) {
 			else                                                   -> ShadowFoxLexiconData.irisSapling
 		}
 	}
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (set == 1 && fuel.meta % 8 == BlockAltLeaves.yggMeta - 4) Int.MAX_VALUE else 300 else 0
 }

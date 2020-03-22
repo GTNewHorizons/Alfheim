@@ -2,19 +2,18 @@ package alfheim.common.core.helper
 
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
-import alfheim.common.core.util.eventFML
+import alfheim.common.core.util.*
 import alfheim.common.network.MessageContributor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent
-import cpw.mods.fml.common.network.FMLNetworkEvent
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.*
 import net.minecraft.server.MinecraftServer
-import java.io.File
+import java.net.URL
 import java.nio.charset.Charset
 import java.security.*
 import java.util.*
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.experimental.xor
 
@@ -26,10 +25,19 @@ object ContributorsPrivacyHelper {
 	
 	init {
 		this.eventFML()
-		
-		register("AlexSocol", "C483AC3FF3031172FD8D1EB5A727B186C4059B927C38C0A19C202D748D2D0428")
-		register("KAIIIAK", "D761FAABD0C7F4042189C0CE308FDAD79566B198416BFDE23361EBA8DCB0BB96")
-		register("GedeonGrays", "B2612EA4C009B2C3FDDCAA7D6C1FFB8DD6C9C7ECFFD785DCD1A08BB41CAD47C0")
+		download()
+	}
+	
+	private fun download() {
+		try {
+			URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/hashes.txt").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().paired().forEach { (k, v) -> register(k, v) }
+		} catch (ignore: Throwable) {
+			ASJUtilities.error("Failed to register contributors, using default parameters")
+			// default username:password pairs just in case
+			register("AlexSocol", "C483AC3FF3031172FD8D1EB5A727B186C4059B927C38C0A19C202D748D2D0428")
+			register("GedeonGrays", "B2612EA4C009B2C3FDDCAA7D6C1FFB8DD6C9C7ECFFD785DCD1A08BB41CAD47C0")
+			register("KAIIIAK", "D761FAABD0C7F4042189C0CE308FDAD79566B198416BFDE23361EBA8DCB0BB96")
+		}
 	}
 	
 	private fun register(contributor: String, passwordHash: String) {
@@ -55,6 +63,8 @@ object ContributorsPrivacyHelper {
 	
 	@SubscribeEvent
 	fun onPlayerLogout(e: PlayerEvent.PlayerLoggedOutEvent) {
+		if (MinecraftServer.getServer()?.isSinglePlayer == true) return
+		
 		ASJUtilities.mapGetKey(contributors, e.player.commandSenderName)?.let { contributors.remove(it) }
 	}
 }

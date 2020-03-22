@@ -1,8 +1,8 @@
 package alfheim.common.block.magtrees.circuit
 
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
@@ -10,7 +10,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
-class BlockCircuitPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ICircuitBlock, ILexiconable {
+class BlockCircuitPlanks: BlockMod(Material.wood), ICircuitBlock, ILexiconable {
 	
 	private val name = "circuitPlanks"
 	

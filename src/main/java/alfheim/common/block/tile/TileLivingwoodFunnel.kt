@@ -342,10 +342,8 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	private fun inventoryEmpty(inventory: IInventory, side: Int): Boolean {
 		if (inventory is ISidedInventory && side > -1) {
-			val aint = inventory.getAccessibleSlotsFromSide(side)
-			
 			for (l in inventory.getAccessibleSlotsFromSide(side)) {
-				if (inventory.getStackInSlot(aint[l]) != null) {
+				if (inventory.getStackInSlot(l) != null) {
 					return false
 				}
 			}

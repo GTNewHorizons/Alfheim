@@ -1,6 +1,7 @@
 package alfheim.common.block
 
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.safeGet
 import net.minecraft.block.BlockSlab
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
@@ -25,6 +26,13 @@ class BlockLivingCobbleSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.
 	override fun getFullBlock() = AlfheimFluffBlocks.livingcobbleSlabFull as BlockSlab
 	
 	override fun getSingleBlock() = AlfheimFluffBlocks.livingcobbleSlab as BlockSlab
+}
+
+class BlockLivingrockDarkSlab(full: Boolean, val meta: Int): BlockLivingSlab(full, AlfheimFluffBlocks.livingrockDark, meta) {
+	
+	override fun getFullBlock() = AlfheimFluffBlocks.livingrockDarkSlabsFull.safeGet(meta) as BlockSlab
+	
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingrockDarkSlabs.safeGet(meta) as BlockSlab
 }
 
 class BlockLivingRockTileSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 2) {

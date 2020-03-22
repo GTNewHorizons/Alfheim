@@ -111,7 +111,7 @@ botania.page.anomaRing1=&oI hate portals...&0
 botania.entry.triquetrum=Worldshaper's Triquetrum
 botania.tagline.triquetrum=Just take and move
 botania.page.triquetrum0=&1Worldshaper's Triquetrum&0 - a novelty created by Midgard craftsmen for unsuccessful architects. This tool is designed to transfer your buildings from place to place for a certain amount of &4Mana&0.<br>To select a portable area, select two blocks that denote two diametrically opposite angles of the cuboid.
-botania.page.triquetrum1=Next, select the area in which your building will be located, a marker in the world will tell you the direction in which your structure will spread. You can rotate it by rightclick. Sneak to enable "Safe Mode", which will not carry the block if the target position is not air.
+botania.page.triquetrum1=Next, select the area in which your building will be located, a marker in the world will tell you the direction in which your structure will spread. You can rotate it by rightclick. Sneak to enable "Safe Mode", which will not carry the block if the target position is not air.<br>&l&4WARNING&r&0! Areas must not overlap
 botania.page.triquetrum2=Creating &1Triquetrum&0
 
 botania.entry.infuser=Infusion

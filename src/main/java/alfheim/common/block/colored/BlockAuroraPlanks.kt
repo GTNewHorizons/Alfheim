@@ -2,23 +2,22 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.core.util.*
+import alfheim.common.core.util.D
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
-import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandable
 
-class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler, IWandable {
+class BlockAuroraPlanks: BlockMod(Material.wood), ILexiconable, IWandable {
 	
 	private val name = "auroraPlanks"
 	
@@ -27,9 +26,6 @@ class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 		
 		stepSound = soundTypeWood
 		setBlockName(name)
-		
-		tickRandomly = true
-		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun setBlockName(name: String): Block {
@@ -65,6 +61,4 @@ class BlockAuroraPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexicon
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.aurora
-	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 300 else 0
 }

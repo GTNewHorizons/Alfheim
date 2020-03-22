@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.common.MinecraftForge
@@ -45,7 +45,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		// TODO play some "progress" sound
 	}
 	
-	override fun getMaxItemUseDuration(stack: ItemStack) = 120
+	override fun getMaxItemUseDuration(stack: ItemStack) = 1200
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, left: Int) {
 		// ASJUtilities.chatLog("Stopped. Left: $left")
@@ -102,6 +102,11 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		return true
 	}
 	
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, tooltip: MutableList<Any?>, adv: Boolean) {
+		tooltip.add("${EnumChatFormatting.DARK_RED}[WIP]")
+		super.addInformation(stack, player, tooltip, adv)
+	}
+	
 	companion object {
 		
 		const val TAG_ROTATION = "rotation"
@@ -122,7 +127,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		init {
 			MinecraftForge.EVENT_BUS.register(this)
 			
-			registerRecord(AkashicRecordGinnungagap)
+			// registerRecord(AkashicRecordGinnungagap)
 			registerRecord(AkashicRecordNewChance)
 		}
 		
@@ -218,7 +223,7 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		
 		@SubscribeEvent
 		@SideOnly(Side.CLIENT)
-		fun onRenderWorldLast(event: RenderWorldLastEvent) {
+		fun onRenderWorldLast(e: RenderWorldLastEvent) {
 			val player = mc.thePlayer
 			val stack = player.currentEquippedItem
 			if (stack != null && stack.item === AlfheimItems.akashicRecords)

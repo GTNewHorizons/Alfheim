@@ -1,15 +1,15 @@
 package alfheim.common.block.magtrees.sealing
 
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraftforge.client.event.sound.PlaySoundEvent17
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockSealingPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, ISoundSilencer {
+class BlockSealingPlanks: BlockMod(Material.wood), ILexiconable, ISoundSilencer {
 	
 	private val name = "sealingPlanks"
 	

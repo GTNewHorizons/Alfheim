@@ -168,7 +168,20 @@ object ManaSpreaderExtender {
 	fun bindTexture(tm: TextureManager, loc: ResourceLocation?): Boolean {
 		if (textureHook) {
 			textureHook = false
-			tm.bindTexture(if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
+			tm.bindTexture(
+				if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
+				|| (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (
+					if (ClientProxy.dootDoot)
+						LibResourceLocations.uberSpreaderHalloweenGolden
+					else
+						LibResourceLocations.uberSpreaderGolden
+				) else (
+					if (ClientProxy.dootDoot)
+						LibResourceLocations.uberSpreaderHalloween
+					else
+						LibResourceLocations.uberSpreader
+				)
+			)
 			
 			return true
 		}
@@ -195,7 +208,20 @@ object ManaSpreaderExtender {
 			
 			modelHook = false
 			
-			mc.renderEngine.bindTexture(if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays") || (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloweenGolden else LibResourceLocations.uberSpreaderGolden) else (if (ClientProxy.dootDoot) LibResourceLocations.uberSpreaderHalloween else LibResourceLocations.uberSpreader))
+			mc.renderEngine.bindTexture(
+				if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
+					|| (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1)) (
+					if (ClientProxy.dootDoot)
+						LibResourceLocations.uberSpreaderHalloweenGolden
+					else
+						LibResourceLocations.uberSpreaderGolden
+				) else (
+					if (ClientProxy.dootDoot)
+						LibResourceLocations.uberSpreaderHalloween
+					else
+						LibResourceLocations.uberSpreader
+				)
+			)
 		}
 	}
 }

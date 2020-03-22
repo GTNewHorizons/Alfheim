@@ -2,8 +2,10 @@ package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockColoredSapling
+import alfheim.common.core.util.toItem
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.HeartWoodTreeGen
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
@@ -49,4 +51,6 @@ class BlockNetherSapling : BlockColoredSapling(name = "netherSapling") {
     override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false
     
     override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
+    
+    override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 800 else 0
 }

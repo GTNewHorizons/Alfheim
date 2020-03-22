@@ -2,7 +2,6 @@ package alfheim.common.block.alt
 
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
@@ -12,6 +11,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.*
 import java.util.*
 
-class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler {
+class BlockAltPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 	
 	val name = "altPlanks"
 	var icons: Array<IIcon?> = emptyArray()
@@ -96,11 +96,10 @@ class BlockAltPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconabl
 	}
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?): LexiconEntry? {
-		val meta = world.getBlockMetadata(x, y, z)
-		return when {
-			meta % 8 == BlockAltLeaves.yggMeta + 1 -> AlfheimLexiconData.worldgen
-			meta % 8 == BlockAltLeaves.yggMeta     -> null
-			else                                   -> ShadowFoxLexiconData.irisSapling
+		return when (world.getBlockMetadata(x, y, z)) {
+			BlockAltLeaves.yggMeta + 1 -> AlfheimLexiconData.worldgen
+			BlockAltLeaves.yggMeta     -> null
+			else                       -> ShadowFoxLexiconData.irisSapling
 		}
 	}
 	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 4 else 300 else 0

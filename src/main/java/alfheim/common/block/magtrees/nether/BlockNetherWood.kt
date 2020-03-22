@@ -2,8 +2,10 @@ package alfheim.common.block.magtrees.nether
 
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.block.tile.*
+import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
+import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -13,12 +15,14 @@ import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
-class BlockNetherWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider {
+class BlockNetherWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider, IFuelHandler {
 	
 	init {
 		blockHardness = 2f
 		setBlockName("netherWood")
 		setLightLevel(0.5f)
+		
+		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun isInterpolated() = true
@@ -64,4 +68,6 @@ class BlockNetherWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider
 	override fun createNewTileEntity(world: World?, meta: Int) = TileTreeCook()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.netherSapling
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 2000 else 0
 }

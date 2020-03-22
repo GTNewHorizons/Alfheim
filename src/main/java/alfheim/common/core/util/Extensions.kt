@@ -17,8 +17,23 @@ fun safeIndex(id: Int, size: Int) = max(0, min(id, size-1))
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 
-@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-fun String.substringEnding(lastNChars: Int): String = (this as java.lang.String).substring(0, length - lastNChars)
+/**
+ * Makes a list of [Pair]s from original [Iterable] (zero to first, second to third, etc)
+ *
+ * If there are odd amount of elements - then last pair will have either last element to [last] argument or same element in both positions if [last] is null/unprovided
+ */
+fun <T> Iterable<T>.paired(last: T? = null): List<Pair<T, T>> {
+    val pairs = ArrayList<Pair<T, T>>()
+    val i = this.iterator()
+    while (i.hasNext()) {
+        val a = i.next()
+        val b = if (i.hasNext()) i.next() else last ?: a
+        pairs.add(a to b)
+    }
+    return pairs
+}
+
+fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
 val Number.F get() = this.toFloat()

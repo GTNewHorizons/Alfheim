@@ -19,7 +19,7 @@ import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.spell.darkness.SpellDecay
-import cpw.mods.fml.common.FMLCommonHandler
+import cpw.mods.fml.common.*
 import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
@@ -34,6 +34,7 @@ import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.FuelBurnTimeEvent
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
@@ -113,6 +114,17 @@ object EventHandler {
 				entityitem.delayBeforeCanPickup = 10
 				event.drops.add(entityitem)
 			}
+		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.HIGHEST) // highest priority for other mods to change values
+	fun onFuelValueCheck(e: FuelBurnTimeEvent) {
+		if (e.fuel?.item is IFuelHandler) {
+			e.burnTime = (e.fuel.item as IFuelHandler).getBurnTime(e.fuel)
+			e.result = Event.Result.ALLOW
+		} else if (e.fuel?.item?.toBlock() is IFuelHandler) {
+			e.burnTime = (e.fuel.item.toBlock() as IFuelHandler).getBurnTime(e.fuel)
+			e.result = Event.Result.ALLOW
 		}
 	}
 	

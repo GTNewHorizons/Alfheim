@@ -68,6 +68,15 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
+			"net.minecraft.tileentity.TileEntityFurnace"                    -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `TileEntityFurnace$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"net.minecraft.world.World"                                     -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -383,6 +392,45 @@ class AlfheimClassTransformer: IClassTransformer {
 				if (opcode != CHECKCAST || type != (if (OBF) "yz" else "net/minecraft/entity/player/EntityPlayer")) {
 					super.visitTypeInsn(opcode, type)
 				}
+			}
+		}
+	}
+	
+	internal class `TileEntityFurnace$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "readFromNBT" || (name == "a" && desc == "(Ldh;)V")) {
+				println("Visiting TileEntityFurnace#readFromNBT: $name$desc")
+				return `TileEntityFurnace$readFromNBT$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			} else if (name == "writeToNBT" || (name == "b" && desc == "(Ldh;)V")) {
+				println("Visiting TileEntityFurnace#writeToNBT: $name$desc")
+				return `TileEntityFurnace$writeToNBT$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `TileEntityFurnace$readFromNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
+				if (name == "getShort" || (name == "e" && desc == "(Ljava/lang/String;)S")) {
+					super.visitMethodInsn(opcode, owner, if (OBF) "f" else "getInteger", "(Ljava/lang/String;)I", itf)
+				} else
+					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+		}
+		
+		internal class `TileEntityFurnace$writeToNBT$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
+				if (name == "setShort" || (name == "a" && desc == "(Ljava/lang/String;S)V")) {
+					super.visitMethodInsn(opcode, owner, if (OBF) "a" else "setInteger", "(Ljava/lang/String;I)V", itf)
+				} else
+					super.visitMethodInsn(opcode, owner, name, desc, itf)
+			}
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode != I2S) super.visitInsn(opcode)
 			}
 		}
 	}

@@ -11,11 +11,10 @@ import net.minecraft.item.*
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 
-open class BlockRainbowWoodSlab(full: Boolean, source: Block = AlfheimBlocks.rainbowPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "")), IFuelHandler {
+open class BlockRainbowWoodSlab(full: Boolean, source: Block = AlfheimBlocks.rainbowPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "")) {
     
     init {
         setResistance(10f)
-        GameRegistry.registerFuelHandler(this)
     }
     
     override fun isToolEffective(type: String?, metadata: Int) = (type != null && type == "axe")
@@ -27,8 +26,6 @@ open class BlockRainbowWoodSlab(full: Boolean, source: Block = AlfheimBlocks.rai
     override fun getSingleBlock() = AlfheimBlocks.rainbowSlab as BlockSlab
     
     override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = (source as ILexiconable).getEntry(world, x, y, z, player, lexicon)!!
-    
-    override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
 }
 
 open class BlockRainbowWoodStairs(source: Block = AlfheimBlocks.rainbowPlanks):

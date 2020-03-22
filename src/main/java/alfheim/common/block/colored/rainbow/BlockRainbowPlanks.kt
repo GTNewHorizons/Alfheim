@@ -2,23 +2,22 @@ package alfheim.common.block.colored.rainbow
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
-import alfheim.common.block.material.MaterialCustomSmeltingWood
 import alfheim.common.block.tile.TileTreeCrafter
 import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemIridescentBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
-import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandable
 import java.util.*
 
-class BlockRainbowPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexiconable, IFuelHandler, IWandable {
+class BlockRainbowPlanks: BlockMod(Material.wood), ILexiconable, IWandable {
 	
 	private val name = "rainbowPlanks"
 	
@@ -28,7 +27,6 @@ class BlockRainbowPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 		stepSound = soundTypeWood
 		
 		setBlockName(name)
-		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun isInterpolated() = true
@@ -73,6 +71,4 @@ class BlockRainbowPlanks: BlockMod(MaterialCustomSmeltingWood.instance), ILexico
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.irisSapling
-	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 300 else 0
 }

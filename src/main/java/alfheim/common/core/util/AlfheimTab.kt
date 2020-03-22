@@ -111,6 +111,11 @@ import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabsFull
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
@@ -372,6 +377,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
 		addBlock(shrineRock)
+		addBlock(livingrockDark)
+		livingrockDarkStairs.forEach { addBlock(it) }
+		livingrockDarkSlabs.forEach { addBlock(it) }
+		livingrockDarkWalls.forEach { addBlock(it) }
 		addBlock(shimmerQuartz)
 		addBlock(shimmerQuartzStairs)
 		addBlock(shimmerQuartzSlab)
