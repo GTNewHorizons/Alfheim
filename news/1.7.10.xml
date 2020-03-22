@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-28</val>
+		<val>BETA-29</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -82,5 +82,8 @@
 	</version>
 	<version id="BETA-27">
 		<val>Crashfixes and new system optimizations!</val>
+	</version>
+	<version id="BETA-28">
+		<val>New decor; fixes and improvements were made</val>
 	</version>
 </news>
