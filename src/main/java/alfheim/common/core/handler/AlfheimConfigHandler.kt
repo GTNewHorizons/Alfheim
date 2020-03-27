@@ -100,7 +100,6 @@ object AlfheimConfigHandler {
 	var modifierIDs				= intArrayOf(20)
 	
 	// POTIONS
-	var potionSlots				= 1024
 	var potionID___COUNTER		= 30
 	var potionIDBerserk			= potionID___COUNTER++
 	var potionIDBleeding		= potionID___COUNTER++
@@ -138,7 +137,7 @@ object AlfheimConfigHandler {
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
-
+	
 	// MMO HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
@@ -242,7 +241,6 @@ object AlfheimConfigHandler {
 		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Redstring, Manastring materials respectively")
 		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
 		
-		potionSlots = loadProp(CATEGORY_POTIONS, "potionSlots", potionSlots, true, "Available potions ids in range [0-potionSlots)")
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
 		potionIDBleeding = loadProp(CATEGORY_MMOP, "potionIDBleeding", potionIDBleeding, true, "Potion id for Bleeding")
 		potionIDButterShield = loadProp(CATEGORY_MMOP, "potionIDButterShield", potionIDButterShield, true, "Potion id for Butterfly Shield")
@@ -253,7 +251,7 @@ object AlfheimConfigHandler {
 		potionIDIceLens = loadProp(CATEGORY_MMOP, "potionIDIceLens", potionIDIceLens, true, "Potion id for Ice Lense")
 		potionIDLeftFlame = loadProp(CATEGORY_MMOP, "potionIDLeftFlame", potionIDLeftFlame, true, "Potion id for Leftover Flame")
 		potionIDManaVoid = loadProp(CATEGORY_POTIONS, "potionIDManaVoid", potionIDManaVoid, true, "Potion id for Mana Void")
-		potionIDNineLifes = loadProp(CATEGORY_POTIONS, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
+		potionIDNineLifes = loadProp(CATEGORY_MMOP, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
 		potionIDNinja = loadProp(CATEGORY_POTIONS, "potionIDNinja", potionIDNinja, true, "Potion id for Ninja")
 		potionIDNoclip = loadProp(CATEGORY_MMOP, "potionIDNoclip", potionIDNoclip, true, "Potion id for Noclip")
 		potionIDOvermage = loadProp(CATEGORY_POTIONS, "potionIDOvermage", potionIDOvermage, true, "Potion id for Overmage")

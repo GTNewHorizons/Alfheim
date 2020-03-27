@@ -75,11 +75,6 @@ class AlfheimCore {
 	}
 	
 	@EventHandler
-	fun constructing(e: FMLConstructionEvent) {
-		Potion.potionTypes = Potion.potionTypes.copyOf(AlfheimConfigHandler.potionSlots)
-	}
-	
-	@EventHandler
 	fun preInit(e: FMLPreInitializationEvent) {
 		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod"))
 			throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
