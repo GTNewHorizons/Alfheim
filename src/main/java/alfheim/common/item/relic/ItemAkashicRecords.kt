@@ -1,15 +1,15 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.mc
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
 import alfheim.api.item.relic.record.AkashicRecord
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.client.model.item.ModelAkashicBox
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.AkashikModels.bookModel
 import alfheim.common.item.relic.AkashikModels.boxModel
-import alfheim.common.item.relic.record.*
+import alfheim.common.item.relic.record.AkashicRecordNewChance
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.relauncher.*

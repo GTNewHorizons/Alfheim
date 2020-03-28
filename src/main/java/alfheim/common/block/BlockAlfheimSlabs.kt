@@ -1,7 +1,7 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.safeGet
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.safeGet
 import net.minecraft.block.BlockSlab
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon

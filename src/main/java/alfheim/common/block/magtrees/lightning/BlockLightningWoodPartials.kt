@@ -19,6 +19,6 @@ class BlockLightningWoodSlab(full: Boolean, source: Block = AlfheimBlocks.lightn
 
 class BlockLightningWoodStairs(source: Block = AlfheimBlocks.lightningPlanks): BlockRainbowWoodStairs(source) {
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 }

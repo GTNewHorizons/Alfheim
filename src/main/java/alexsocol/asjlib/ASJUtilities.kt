@@ -2,12 +2,14 @@ package alexsocol.asjlib
 
 import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.*
+import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.Material.*
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiScreen
 import net.minecraft.entity.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
@@ -22,8 +24,9 @@ import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.gen.feature.WorldGenMinable
-import net.minecraftforge.common.DimensionManager
+import net.minecraftforge.common.*
 import net.minecraftforge.event.entity.living.*
+import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.oredict.*
 import org.apache.logging.log4j.Level
 import java.text.DecimalFormat
@@ -36,6 +39,25 @@ import kotlin.math.*
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object ASJUtilities {
+	
+	init {
+		MinecraftForge.EVENT_BUS.register(object {
+			
+			@SideOnly(Side.CLIENT)
+			@SubscribeEvent(priority = EventPriority.LOWEST)
+			fun onItemTooltip(e: ItemTooltipEvent) {
+				if (GuiScreen.isShiftKeyDown()) {
+					val stack = e.itemStack
+					
+					if(stack.hasTagCompound() && e.showAdvancedItemTooltips) {
+						e.toolTip.add("")
+						e.toolTip.add("NBT Data:")
+						e.toolTip.addAll(listOf(*toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
+					}
+				}
+			}
+		})
+	}
 	
 	/**
 	 * Returns the name of the block
@@ -393,14 +415,14 @@ object ASJUtilities {
 		val d0 = e2.posX - e1.posX
 		val d2 = e2.posZ - e1.posZ
 		val d1 = if (e2 is EntityLivingBase) {
-			e2.posY + e2.eyeHeight.toDouble() - (e1.posY + e1.eyeHeight.toDouble())
+			e2.posY + e2.eyeHeight.D - (e1.posY + e1.eyeHeight.D)
 		} else {
-			(e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0 - (e1.posY + e1.eyeHeight.toDouble())
+			(e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0 - (e1.posY + e1.eyeHeight.D)
 		}
 		
-		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).toDouble()
-		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).toFloat() - 90f
-		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).toFloat()
+		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).D
+		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).F - 90f
+		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).F
 		e1.rotationPitch = updateRotation(e1.rotationPitch, f3, pitch)
 		e1.rotationYaw = updateRotation(e1.rotationYaw, f2, yaw)
 	}
@@ -437,14 +459,14 @@ object ASJUtilities {
 		}
 		
 		val f1 = 1f
-		val list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist).expand(f1.toDouble(), f1.toDouble(), f1.toDouble()))
+		val list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist).expand(f1.D, f1.D, f1.D))
 		var d2 = d1
 		
 		for (e in list) {
 			e as Entity
 			if (e.canBeCollidedWith() || interact) {
 				val f2 = e.collisionBorderSize
-				val axisalignedbb = e.boundingBox.expand(f2.toDouble(), f2.toDouble(), f2.toDouble())
+				val axisalignedbb = e.boundingBox.expand(f2.D, f2.D, f2.D)
 				val movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32)
 				
 				if (axisalignedbb.isVecInside(vec3)) {
@@ -497,7 +519,7 @@ object ASJUtilities {
 	@JvmStatic
 	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
 		val vec3 = getPosition(entity, 1f)
-		vec3.yCoord += entity.eyeHeight.toDouble()
+		vec3.yCoord += entity.eyeHeight.D
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		return entity.worldObj.rayTraceBlocks(vec3, vec32, interact)
@@ -512,20 +534,20 @@ object ASJUtilities {
 		return if (par1 == 1f) {
 			Vec3.createVectorHelper(living.posX, living.posY + (living.eyeHeight - i), living.posZ)
 		} else {
-			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.toDouble()
-			val d1 = living.prevPosY + (living.posY - living.prevPosY) * par1.toDouble() + (living.eyeHeight - i).toDouble()
-			val d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * par1.toDouble()
+			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.D
+			val d1 = living.prevPosY + (living.posY - living.prevPosY) * par1.D + (living.eyeHeight - i).D
+			val d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * par1.D
 			Vec3.createVectorHelper(d0, d1, d2)
 		}
 	}
 	
 	@JvmStatic
 	fun getLookVec(e: Entity): Vec3 {
-		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.toFloat())
-		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.toFloat())
+		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.F)
+		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.F)
 		val f3 = -MathHelper.cos(-e.rotationPitch * 0.017453292f)
 		val f4 = MathHelper.sin(-e.rotationPitch * 0.017453292f)
-		return Vec3.createVectorHelper((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vec3.createVectorHelper((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	/**
@@ -612,13 +634,13 @@ object ASJUtilities {
 	 * @return random value in range [[min], [max]] (inclusive)
 	 */
 	@JvmStatic
-	fun randInBounds(min: Int, max: Int) = randInBounds(Random(), min, max)
+	fun randInBounds(min: Int, max: Int, rand: Random = Random()) = rand.nextInt(max - min + 1) + min
 	
 	/**
-	 * @return random value in range [[min], [max]] (inclusive)
+	 * @return true with [percent]% chance
 	 */
 	@JvmStatic
-	fun randInBounds(rand: Random, min: Int, max: Int) = rand.nextInt(max - min + 1) + min
+	fun chance(percent: Number) = Math.random() * 100 < percent.D
 	
 	/**
 	 * @return String which tolds you to hold shift-key
@@ -692,7 +714,8 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun generateOre(ore: Block, meta: Int, replace: Block, world: World, rand: Random, blockXPos: Int, blockZPos: Int, minVeinSize: Int, maxVeinSize: Int, minVeinsPerChunk: Int, maxVeinsPerChunk: Int, chanceToSpawn: Int, minY: Int, maxY: Int) {
-		if (rand.nextInt(101) > chanceToSpawn) return
+		if (!chance(chanceToSpawn)) return
+		
 		val veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk
 		for (i in 0 until veins) {
 			val posX = blockXPos + rand.nextInt(16) + 8
@@ -714,7 +737,7 @@ object ASJUtilities {
 			for (k in zmn..zmx) {
 				var j = ystart - 1
 				while (j >= 0 && isBlockReplaceable(world.getBlock(i, j, k))) {
-					if (radius != 0) if (sqrt(((xmx - xmn) / 2 + xmn - i).toDouble().pow(2.0) + ((zmx - zmn) / 2 + zmn - k).toDouble().pow(2.0)) > radius) {
+					if (radius != 0) if (sqrt(((xmx - xmn) / 2 + xmn - i).D.pow(2.0) + ((zmx - zmn) / 2 + zmn - k).D.pow(2.0)) > radius) {
 						j--
 						continue
 					}

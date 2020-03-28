@@ -1,7 +1,7 @@
 package alfheim.common.potion
 
+import alexsocol.asjlib.mc
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import cpw.mods.fml.relauncher.*
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.brew.potion.PotionMod

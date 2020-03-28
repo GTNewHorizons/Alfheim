@@ -1,15 +1,14 @@
 package alfheim.common.block.magtrees.lightning
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
-import alfheim.common.core.util.toItem
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
-import net.minecraft.world.*
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
 import java.util.*
 
 class BlockLightningLeaves: BlockLeavesMod() {
@@ -21,7 +20,7 @@ class BlockLightningLeaves: BlockLeavesMod() {
 	override fun isInterpolated() = true
 	
 	override fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.lightningSapling.toItem()

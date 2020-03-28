@@ -1,8 +1,7 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.block.tile.TileAnimatedTorch
-import alfheim.common.core.util.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer

@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.common.core.util.mfloor
+import alexsocol.asjlib.mfloor
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer

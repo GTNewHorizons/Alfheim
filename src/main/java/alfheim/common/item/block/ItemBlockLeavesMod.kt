@@ -5,7 +5,7 @@ import alfheim.common.block.base.BlockLeavesMod
 import net.minecraft.block.Block
 import net.minecraft.item.*
 
-open class ItemBlockMod(block: Block): ItemBlock(block) {
+open class ItemBlockLeavesMod(block: Block): ItemBlock(block) {
 	
 	override fun setUnlocalizedName(name: String): ItemBlock? {
 		(this as Item).unlocalizedName = name

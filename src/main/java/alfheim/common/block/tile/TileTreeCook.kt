@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.util.boundingBox
+import alexsocol.asjlib.boundingBox
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemFood
 import net.minecraft.item.crafting.FurnaceRecipes

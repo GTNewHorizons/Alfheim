@@ -1,11 +1,10 @@
 package alfheim.client.render.item
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.ModInfo
 import alfheim.api.lib.*
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
 import alfheim.common.item.relic.ItemAkashicRecords
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.item.ItemStack
@@ -34,7 +33,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 			if (f == 0) 0f else f + (mc.timer.renderPartialTicks * ItemNBTHelper.getInt(stack, ItemAkashicRecords.TAG_MULT, -1))
 		} else 0f
 		
-		glScalef(1f/110/4)
+		glScalef(1f / 110 / 4)
 		glTranslatef(0f, 50f, 0f)
 		
 		if (type == IItemRenderer.ItemRenderType.EQUIPPED) {

@@ -1,6 +1,6 @@
 package alfheim.common.entity
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World

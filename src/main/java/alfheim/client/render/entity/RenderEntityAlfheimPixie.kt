@@ -1,7 +1,6 @@
 package alfheim.client.render.entity
 
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.F
 import alfheim.common.entity.EntityAlfheimPixie
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.RenderLiving

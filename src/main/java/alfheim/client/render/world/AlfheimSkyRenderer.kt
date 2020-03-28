@@ -1,6 +1,6 @@
 package alfheim.client.render.world
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.ReflectionHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.WorldClient

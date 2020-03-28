@@ -1,11 +1,11 @@
 package alfheim.common.potion
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.util.*
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellThrow
 import net.minecraft.entity.EntityLivingBase

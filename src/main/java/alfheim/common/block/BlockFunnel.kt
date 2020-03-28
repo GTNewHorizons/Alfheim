@@ -1,11 +1,11 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileLivingwoodFunnel
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block

@@ -1,13 +1,12 @@
 package alfheim.common.spell.illusion
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.*
 import alfheim.common.network.MessageVisualEffect
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase

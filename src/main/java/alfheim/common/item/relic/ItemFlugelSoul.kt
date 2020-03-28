@@ -1,12 +1,11 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.common.core.helper.ElvenFlightHelper
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.security.InteractionSecurity

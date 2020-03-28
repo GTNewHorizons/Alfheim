@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.util.I
+import alexsocol.asjlib.I
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack

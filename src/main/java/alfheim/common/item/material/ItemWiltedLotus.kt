@@ -1,7 +1,7 @@
 package alfheim.common.item.material
 
+import alexsocol.asjlib.meta
 import alfheim.api.ModInfo
-import alfheim.common.core.util.meta
 import alfheim.common.item.ItemMod
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer

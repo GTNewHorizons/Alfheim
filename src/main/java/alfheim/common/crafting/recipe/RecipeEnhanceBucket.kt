@@ -1,11 +1,9 @@
 package alfheim.common.crafting.recipe
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
-import net.minecraft.block.Block
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe

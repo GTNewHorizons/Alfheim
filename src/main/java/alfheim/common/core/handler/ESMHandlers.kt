@@ -1,14 +1,12 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.util.mc
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import alfheim.common.network.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*

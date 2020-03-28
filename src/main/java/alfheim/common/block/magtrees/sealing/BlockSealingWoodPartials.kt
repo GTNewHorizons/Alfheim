@@ -34,7 +34,7 @@ class BlockSealingWoodStairs(source: Block = AlfheimBlocks.sealingPlanks): Block
 	}
 	
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun canSilence(world: World, x: Int, y: Int, z: Int, dist: Double, soundEvent: PlaySoundEvent17) = dist <= 8

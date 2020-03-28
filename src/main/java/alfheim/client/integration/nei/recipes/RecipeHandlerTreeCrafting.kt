@@ -1,9 +1,8 @@
 package alfheim.client.integration.nei.recipes
 
+import alexsocol.asjlib.*
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import codechicken.lib.gui.GuiDraw
 import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler

@@ -1,7 +1,7 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer

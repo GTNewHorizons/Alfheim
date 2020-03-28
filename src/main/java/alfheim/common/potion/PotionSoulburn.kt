@@ -1,9 +1,9 @@
 package alfheim.common.potion
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.block.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap

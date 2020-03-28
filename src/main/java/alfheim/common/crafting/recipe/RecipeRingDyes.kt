@@ -1,6 +1,6 @@
 package alfheim.common.crafting.recipe
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.item.equipment.bauble.ItemColorOverride
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.inventory.InventoryCrafting

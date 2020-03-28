@@ -1,7 +1,7 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.mc
 import alfheim.api.ModInfo
-import alfheim.client.core.util.*
 import alfheim.common.entity.EntitySubspace
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
@@ -42,7 +42,7 @@ object RenderEntitySubspace: Render() {
 		val tes = Tessellator.instance
 		ShaderHelper.useShader(ShaderHelper.halo)
 		glRotatef(-90f, 1f, 0f, 0f)
-		glScalef(if (weapon.ticksExisted < weapon.liveTicks) min(weapon.size, max(0f, (weapon.ticksExisted - weapon.delay) / 10f)) else max(0f, weapon.size - (weapon.ticksExisted - weapon.liveTicks) / 5f))
+		alexsocol.asjlib.glScalef(if (weapon.ticksExisted < weapon.liveTicks) min(weapon.size, max(0f, (weapon.ticksExisted - weapon.delay) / 10f)) else max(0f, weapon.size - (weapon.ticksExisted - weapon.liveTicks) / 5f))
 		
 		tes.startDrawingQuads()
 		tes.addVertexWithUV(-1.0, 0.0, -1.0, 0.0, 0.0)

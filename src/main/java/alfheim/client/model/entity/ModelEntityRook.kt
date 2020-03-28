@@ -1,6 +1,6 @@
 package alfheim.client.model.entity
 
-import alfheim.common.core.util.F
+import alexsocol.asjlib.F
 import alfheim.common.entity.boss.EntityRook
 import net.minecraft.client.model.*
 import net.minecraft.entity.*

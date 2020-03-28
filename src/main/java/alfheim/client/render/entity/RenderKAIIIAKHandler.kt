@@ -1,10 +1,9 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.common.core.helper.ContributorsPrivacyHelper
-import alfheim.common.core.util.setSize
 import cpw.mods.fml.client.registry.RenderingRegistry
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*

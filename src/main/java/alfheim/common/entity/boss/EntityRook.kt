@@ -1,8 +1,8 @@
 package alfheim.common.entity.boss
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.boss.IBotaniaBossWithName
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

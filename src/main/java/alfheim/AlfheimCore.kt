@@ -22,7 +22,6 @@ import cpw.mods.fml.common.event.*
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import cpw.mods.fml.relauncher.Side
-import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
 import java.util.*
 

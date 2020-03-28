@@ -1,9 +1,8 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity

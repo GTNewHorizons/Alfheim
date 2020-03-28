@@ -8,7 +8,6 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
 import alfheim.common.block.tile.TileAnomalyHarvester
-import alfheim.common.core.util.meta
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog

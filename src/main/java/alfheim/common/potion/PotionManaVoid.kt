@@ -1,7 +1,7 @@
 package alfheim.common.potion
 
+import alexsocol.asjlib.meta
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.meta
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer

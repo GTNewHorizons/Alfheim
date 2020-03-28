@@ -1,10 +1,10 @@
 package alfheim.common.entity.spell
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellFenrirStorm
 import net.minecraft.entity.*

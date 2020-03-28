@@ -1,7 +1,6 @@
 package alfheim.client.model.item
 
 import net.minecraft.client.model.*
-import net.minecraft.entity.Entity
 
 class ModelAkashicBox: ModelBase() {
 	

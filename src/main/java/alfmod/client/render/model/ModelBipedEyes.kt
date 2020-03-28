@@ -1,6 +1,6 @@
 package alfmod.client.render.model
 
-import alfheim.client.core.util.*
+import alexsocol.asjlib.mc
 import alfmod.AlfheimModularCore
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.OpenGlHelper
@@ -30,7 +30,7 @@ class ModelBipedEyes: ModelBiped() {
 		
 		if (isChild) {
 			glPushMatrix()
-			glScaled(0.75)
+			alexsocol.asjlib.glScaled(0.75)
 			glTranslatef(0f, 16f * f5, 0f)
 			bipedEyes.render(f5)
 			glPopMatrix()

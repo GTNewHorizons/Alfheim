@@ -1,16 +1,15 @@
 package alfheim.client.gui
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.*
 import alfheim.api.entity.*
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.util.*
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator

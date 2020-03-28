@@ -1,7 +1,7 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.mc
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSpreaderFrame
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity

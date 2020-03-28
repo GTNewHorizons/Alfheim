@@ -1,9 +1,9 @@
 package alfheim.common.block.mana
 
+import alexsocol.asjlib.D
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.tile.TileTransferer
-import alfheim.common.core.util.D
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft

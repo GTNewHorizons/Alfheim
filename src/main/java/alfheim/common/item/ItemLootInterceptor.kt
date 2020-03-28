@@ -1,6 +1,6 @@
 package alfheim.common.item
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer

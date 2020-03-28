@@ -21,12 +21,12 @@ public class WE_OreGen implements IWorldGenerator {
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		for (WorldGenMinableParametrized wgmp : oreGen) {
 			if (random.nextInt(101) < (100 - wgmp.chanceToSpawn)) return;
-			int veins = ASJUtilities.randInBounds(random, wgmp.minVeinsPerChunk, wgmp.maxVeinsPerChunk);
+			int veins = ASJUtilities.randInBounds(wgmp.minVeinsPerChunk, wgmp.maxVeinsPerChunk, random);
 			for (int i = 0; i < veins; i++) {
 				int posX = chunkX * 16 + random.nextInt(16) + 8;
-				int posY = ASJUtilities.randInBounds(random, wgmp.minY, wgmp.maxY);
+				int posY = ASJUtilities.randInBounds(wgmp.minY, wgmp.maxY, random);
 				int posZ = chunkZ * 16 + random.nextInt(16) + 8;
-				(new WorldGenMinable(wgmp.ore, wgmp.meta, ASJUtilities.randInBounds(random, wgmp.minVeinSize, wgmp.maxVeinSize), wgmp.replace)).generate(world, random, posX, posY, posZ);
+				(new WorldGenMinable(wgmp.ore, wgmp.meta, ASJUtilities.randInBounds(wgmp.minVeinSize, wgmp.maxVeinSize, random), wgmp.replace)).generate(world, random, posX, posY, posZ);
 			}
 		}
 	}

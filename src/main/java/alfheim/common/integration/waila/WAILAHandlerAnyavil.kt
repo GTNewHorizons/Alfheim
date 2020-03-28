@@ -1,7 +1,7 @@
 package alfheim.common.integration.waila
 
+import alexsocol.asjlib.meta
 import alfheim.common.block.tile.TileAnyavil
-import alfheim.common.core.util.meta
 import mcp.mobius.waila.api.*
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack

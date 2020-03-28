@@ -22,6 +22,4 @@ abstract class	BlockModContainerMeta(mat: Material, subtypes: Int, modid: String
 		val tileentity = world.getTileEntity(x, y, z)
 		return tileentity != null && tileentity.receiveClientEvent(id, value)
 	}
-	
-	override fun damageDropped(meta: Int) = meta
 }

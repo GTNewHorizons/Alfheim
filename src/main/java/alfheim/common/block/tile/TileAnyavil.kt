@@ -1,11 +1,11 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem

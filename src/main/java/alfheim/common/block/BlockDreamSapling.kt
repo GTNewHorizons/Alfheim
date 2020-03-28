@@ -1,11 +1,11 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.toItem
 import alfheim.api.ModInfo
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.world.dim.alfheim.biome.BiomeAlfheim
-import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -33,7 +33,7 @@ class BlockDreamSapling: BlockBush(), IGrowable, ILexiconable, IFuelHandler {
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

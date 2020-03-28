@@ -1,16 +1,14 @@
 package alfheim.common.network
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
-import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.getActivePotionEffect
 import alfheim.common.entity.EntityLolicorn
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase

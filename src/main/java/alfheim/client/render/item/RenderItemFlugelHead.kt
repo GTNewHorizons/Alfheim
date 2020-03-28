@@ -1,9 +1,8 @@
 package alfheim.client.render.item
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.client.model.entity.*
-import alfheim.common.core.util.D
 import alfheim.common.item.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.client.event.RenderPlayerEvent

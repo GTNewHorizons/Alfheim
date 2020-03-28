@@ -1,7 +1,6 @@
 package alfheim.common.lexicon.page
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.client.core.util.*
+import alexsocol.asjlib.*
 import net.minecraft.stats.Achievement
 import vazkii.botania.common.lexicon.page.PageText
 

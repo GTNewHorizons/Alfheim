@@ -1,13 +1,12 @@
 package alfheim.client.model.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.render.entity.RenderEntityFlugel
-import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.material.ItemElvenResource
 import cpw.mods.fml.relauncher.*

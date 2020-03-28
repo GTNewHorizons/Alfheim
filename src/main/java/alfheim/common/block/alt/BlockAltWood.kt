@@ -1,9 +1,9 @@
 package alfheim.common.block.alt
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemUniqueSubtypedBlockMod
 import alfheim.common.lexicon.*
 import cpw.mods.fml.common.IFuelHandler

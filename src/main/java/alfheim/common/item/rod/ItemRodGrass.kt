@@ -1,6 +1,6 @@
 package alfheim.common.item.rod
 
-import alfheim.common.core.util.mfloor
+import alexsocol.asjlib.mfloor
 import alfheim.common.item.ItemMod
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.Block

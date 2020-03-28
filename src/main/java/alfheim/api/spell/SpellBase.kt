@@ -1,9 +1,9 @@
 package alfheim.api.spell
 
+import alexsocol.asjlib.*
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*

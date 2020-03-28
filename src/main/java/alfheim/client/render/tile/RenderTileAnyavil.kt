@@ -1,13 +1,12 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.model.block.ModelSimpleAnyavil
 import alfheim.common.block.tile.TileAnyavil
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.D
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation

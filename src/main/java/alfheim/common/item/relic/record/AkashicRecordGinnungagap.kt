@@ -1,8 +1,8 @@
 package alfheim.common.item.relic.record
 
+import alexsocol.asjlib.mc
 import alfheim.AlfheimCore
 import alfheim.api.item.relic.record.AkashicRecord
-import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.network.Message1d
 import cpw.mods.fml.common.FMLCommonHandler

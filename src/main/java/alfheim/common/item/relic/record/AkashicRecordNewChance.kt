@@ -1,10 +1,10 @@
 package alfheim.common.item.relic.record
 
+import alexsocol.asjlib.hasAchievement
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
-import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.hasAchievement
 import alfheim.api.item.relic.record.AkashicRecord
+import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.item.relic.ItemAkashicRecords
 import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack

@@ -1,7 +1,7 @@
 package alfmod.client.render.entity
 
+import alexsocol.asjlib.mc
 import alfheim.api.ModInfo
-import alfheim.client.core.util.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
@@ -28,7 +28,7 @@ object RenderEntitySniceBall: Render() {
 		glTranslated(x, y + 0.25, z)
 		glRotated((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 0.5, 1.0, 1.0, 1.0)
 		
-		glScaled(0.5)
+		alexsocol.asjlib.glScaled(0.5)
 		
 		/*if (AlfheimConfigHandler.minimalGraphics) {
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)

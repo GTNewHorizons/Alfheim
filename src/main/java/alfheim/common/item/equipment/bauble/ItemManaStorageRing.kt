@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
+import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer

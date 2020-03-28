@@ -1,6 +1,6 @@
 package alfheim.common.item
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.entity.EntityThrownPotion
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs

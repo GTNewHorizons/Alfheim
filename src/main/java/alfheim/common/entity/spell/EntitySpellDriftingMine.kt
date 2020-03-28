@@ -1,13 +1,13 @@
 package alfheim.common.entity.spell
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellDriftingMine
 import cpw.mods.fml.relauncher.*

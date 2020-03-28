@@ -3,11 +3,10 @@ package alfheim.common.block
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileHeadFlugel
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import java.util.*
@@ -20,7 +19,7 @@ class BlockHeadFlugel: BlockSkull() {
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

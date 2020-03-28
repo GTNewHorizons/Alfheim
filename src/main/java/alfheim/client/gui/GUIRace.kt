@@ -1,12 +1,11 @@
 package alfheim.client.gui
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
-import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.D
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator

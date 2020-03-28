@@ -1,7 +1,7 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.*
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
@@ -9,7 +9,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.passive.EntityHorse
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.*
-import net.minecraft.item.Item
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import vazkii.botania.common.item.ModItems

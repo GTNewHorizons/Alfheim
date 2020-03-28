@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.util.F
+import alexsocol.asjlib.F
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.*
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity

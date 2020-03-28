@@ -1,6 +1,6 @@
 package alexsocol.asjlib.extendables.block
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ItemBlockMetaName
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -10,11 +10,11 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import kotlin.math.*
+import kotlin.math.max
 
 open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: Int, val modid: String, val name: String, tab: CreativeTabs? = null, hard: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resist: Float = 5f, val folder: String = ""): Block(mat) {
 	
-	lateinit var texture: Array<IIcon>
+	lateinit var icons: Array<IIcon>
 	
 	init {
 		setBlockName(name)
@@ -31,16 +31,14 @@ open class BlockModMeta @JvmOverloads constructor(mat: Material, val subtypes: I
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		texture = Array(subtypes) {
-			reg.registerIcon("$modid:$folder$name$it")
-		}
+		icons = Array(subtypes) { reg.registerIcon("$modid:$folder$name${if (subtypes > 1) it else ""}") }
 	}
 	
 	override fun getSubBlocks(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in 0 until subtypes) list.add(ItemStack(item, 1, i))
 	}
 	
-	override fun getIcon(side: Int, meta: Int): IIcon? = texture[max(0, min(meta, texture.size - 1))]
+	override fun getIcon(side: Int, meta: Int) = icons.safeGet(meta)
 	
 	override fun damageDropped(meta: Int) = meta
 	

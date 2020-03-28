@@ -1,9 +1,9 @@
 package alfheim.common.block.magtrees.nether
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.base.BlockModRotatedPillar
-import alfheim.common.block.tile.*
-import alfheim.common.core.util.toItem
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.block.tile.TileTreeCook
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -58,7 +58,7 @@ class BlockNetherWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider
 	override fun quantityDropped(random: Random) = 1
 	
 	override fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	fun isHeartWood(meta: Int) = meta and 3 == 1

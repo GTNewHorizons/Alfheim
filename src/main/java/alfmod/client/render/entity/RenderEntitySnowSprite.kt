@@ -1,6 +1,6 @@
 package alfmod.client.render.entity
 
-import alfheim.client.core.util.glScaled
+import alexsocol.asjlib.glScaled
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowSprite
 import alfmod.common.entity.EntitySnowSprite

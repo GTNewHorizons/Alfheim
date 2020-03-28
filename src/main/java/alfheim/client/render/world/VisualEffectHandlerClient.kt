@@ -1,16 +1,15 @@
 package alfheim.client.render.world
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.race
-import alfheim.client.core.util.mc
 import alfheim.client.gui.GUIDeathTimer
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects.*
 import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.block.tile.sub.anomaly.SubTileManaVoid
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*

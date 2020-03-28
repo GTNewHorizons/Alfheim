@@ -1,12 +1,13 @@
 package alfheim.common.block.base
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.toItem
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable

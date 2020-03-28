@@ -1,9 +1,9 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileCracklingStar
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemStarPlacer2
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional

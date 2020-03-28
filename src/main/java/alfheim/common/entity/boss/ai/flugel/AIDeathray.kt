@@ -1,9 +1,8 @@
 package alfheim.common.entity.boss.ai.flugel
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
-import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityFallingStar

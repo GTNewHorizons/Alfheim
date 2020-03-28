@@ -1,8 +1,8 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.*
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
-import alfheim.common.core.util.*
 import alfheim.common.item.*
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase

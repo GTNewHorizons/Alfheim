@@ -2,10 +2,10 @@
 
 package alfheim.common.item.rod
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.*
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.security.InteractionSecurity

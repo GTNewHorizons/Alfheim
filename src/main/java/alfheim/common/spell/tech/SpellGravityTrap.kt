@@ -1,10 +1,9 @@
 package alfheim.common.spell.tech
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.core.util.mc
 import alfheim.common.entity.spell.EntitySpellGravityTrap
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase

@@ -1,8 +1,8 @@
 package alfheim.common.block.magtrees.lightning
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.util.toItem
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -46,7 +46,7 @@ class BlockLightningPlanks: BlockMod(Material.wood), ILexiconable {
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = this.toItem()
 	
 	internal fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun getPickBlock(target: MovingObjectPosition?, world: World, x: Int, y: Int, z: Int): ItemStack {

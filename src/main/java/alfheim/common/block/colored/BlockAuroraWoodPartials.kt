@@ -2,14 +2,12 @@ package alfheim.common.block.colored
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemColoredSlabMod
-import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 

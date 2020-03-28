@@ -1,16 +1,12 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
-import alfheim.common.core.util.*
-import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
-import alfheim.common.item.relic.ItemTankMask
-import baubles.common.lib.PlayerHandler
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap

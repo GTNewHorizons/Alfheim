@@ -1,9 +1,9 @@
 package alfheim.common.spell.sound
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.common.core.util.*
 import alfheim.common.entity.boss.EntityFlugel
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer

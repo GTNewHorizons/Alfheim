@@ -5,7 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect
 import baubles.api.BaublesApi
@@ -39,7 +39,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

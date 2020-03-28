@@ -1,8 +1,8 @@
 package alfheim.common.block.magtrees.nether
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.util.toItem
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -10,7 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
@@ -53,7 +53,7 @@ class BlockNetherPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 	
 	internal fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		Blocks.netherrack
 	}
 	

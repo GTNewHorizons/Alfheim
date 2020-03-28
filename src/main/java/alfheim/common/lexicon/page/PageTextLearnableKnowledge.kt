@@ -1,8 +1,7 @@
 package alfheim.common.lexicon.page
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.util.mc
 import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import vazkii.botania.common.lexicon.page.PageText
 

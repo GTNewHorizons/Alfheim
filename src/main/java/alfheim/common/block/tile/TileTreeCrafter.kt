@@ -1,10 +1,9 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.MultiblockComponentRainbow
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft

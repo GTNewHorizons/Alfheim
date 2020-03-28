@@ -1,10 +1,8 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.texture.TextureMap
@@ -33,7 +31,7 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
             val var27 = (ClientTickHandler.ticksInGame.F + ticks).D
 
             glPushMatrix()
-            glScaled(0.5)
+			glScaled(0.5)
             glTranslatef(1f, 1.25f, 1f)
             glRotatef(360f + var27.F, 0f, 1f, 0f)
             glTranslatef(0f, 0f, 0.5f)
@@ -43,22 +41,22 @@ object RenderTileItemDisplay : TileEntitySpecialRenderer() {
 
             if (scale != null) {
                 mc.renderEngine.bindTexture(if (scale.item is ItemBlock) TextureMap.locationBlocksTexture else TextureMap.locationItemsTexture)
-                glScalef(2f)
+				glScalef(2f)
                 glTranslatef(0.25f, 0f, 0f)
                 if (!ForgeHooksClient.renderEntityItem(EntityItem(tile.worldObj, tile.xCoord.D, tile.yCoord.D, tile.zCoord.D, scale), scale, 0f, 0f, tile.worldObj.rand, mc.renderEngine, renderBlocks, 1)) {
                     glTranslatef(-0.25f, 0f, 0f)
-                    glScaled(0.5)
+					glScaled(0.5)
                     if (scale.item is ItemBlock && RenderBlocks.renderItemIn3d(scale.item.toBlock()?.renderType ?: 0)) {
-                        glScaled(0.5)
+						glScaled(0.5)
                         glTranslatef(1f, 1.1f, 0f)
                         renderBlocks.renderBlockAsItem(scale.item.toBlock(), scale.meta, 1f)
                         glTranslatef(-1f, -1.1f, 0f)
-                        glScalef(2f)
+						glScalef(2f)
                     } else if (scale.item is ItemBlock && !RenderBlocks.renderItemIn3d(scale.item.toBlock()?.renderType ?: 0)) {
                         val entityitem: EntityItem?
                         glPushMatrix()
-
-                        glScalef(2f)
+	
+						glScalef(2f)
                         glTranslatef(.25f, .275f, 0f)
 
 

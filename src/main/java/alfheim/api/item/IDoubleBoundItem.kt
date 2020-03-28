@@ -1,6 +1,6 @@
 package alfheim.api.item
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.Tessellator
@@ -58,8 +58,8 @@ object DoubleBoundItemRender {
 				glPushMatrix()
 				glEnable(GL_TEXTURE_2D)
 				glTranslated(it.posX - RenderManager.renderPosX, it.posY - RenderManager.renderPosY, it.posZ - RenderManager.renderPosZ)
-				alfheim.client.core.util.glTranslated(0.5)
-				alfheim.client.core.util.glScalef(1 / 16f)
+				alexsocol.asjlib.glTranslated(0.5)
+				alexsocol.asjlib.glScalef(1 / 16f)
 				glTranslatef(mc.fontRenderer.getStringWidth(n) / 2f, mc.fontRenderer.FONT_HEIGHT / 2f, 0f)
 				glRotatef(180f, 0f, 0f, 1f)
 				mc.fontRenderer.drawString(n, 0, 0, color)
@@ -145,12 +145,12 @@ object DoubleBoundItemRender {
 		run drawWireframe@ {
 			if (block != null) {
 				val axis: AxisAlignedBB = block.getSelectedBoundingBoxFromPool(world, pos.posX, pos.posY, pos.posZ) ?: return@drawWireframe
-				axis.minX -= pos.posX.toDouble()
-				axis.maxX -= pos.posX.toDouble()
-				axis.minY -= pos.posY.toDouble()
-				axis.maxY -= pos.posY.toDouble()
-				axis.minZ -= pos.posZ + 1.toDouble()
-				axis.maxZ -= pos.posZ + 1.toDouble()
+				axis.minX -= pos.posX.D
+				axis.maxX -= pos.posX.D
+				axis.minY -= pos.posY.D
+				axis.maxY -= pos.posY.D
+				axis.minZ -= pos.posZ + 1.D
+				axis.maxZ -= pos.posZ + 1.D
 				glScalef(1f, 1f, 1f)
 				glLineWidth(thickness)
 				renderBlockOutline(axis)

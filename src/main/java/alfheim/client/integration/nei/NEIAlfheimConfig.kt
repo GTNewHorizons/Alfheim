@@ -1,7 +1,7 @@
 package alfheim.client.integration.nei
 
+import alexsocol.asjlib.mc
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
 import alfheim.client.integration.nei.recipes.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.ContributorsPrivacyHelper

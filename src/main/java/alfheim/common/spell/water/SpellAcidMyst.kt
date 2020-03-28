@@ -1,9 +1,9 @@
 package alfheim.common.spell.water
 
+import alexsocol.asjlib.mc
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.core.util.mc
 import alfheim.common.entity.spell.EntitySpellAcidMyst
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase

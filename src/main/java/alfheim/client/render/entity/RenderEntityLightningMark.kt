@@ -1,8 +1,8 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.glScalef
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.glScalef
 import alfheim.common.entity.EntityLightningMark
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render

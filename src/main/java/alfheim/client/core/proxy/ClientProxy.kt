@@ -1,13 +1,13 @@
 package alfheim.client.core.proxy
 
-import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.render.ASJShaderHelper
+import alexsocol.asjlib.*
+import alexsocol.asjlib.render.*
 import alfheim.AlfheimCore
 import alfheim.api.item.DoubleBoundItemRender
 import alfheim.api.lib.*
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.EventHandlerClient
-import alfheim.client.core.util.*
+import alfheim.client.core.util.AlfheimBotaniaModifiersClient
 import alfheim.client.gui.*
 import alfheim.client.lib.LibResourceLocationsActual
 import alfheim.client.render.block.*
@@ -17,9 +17,8 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
-import alfheim.common.core.handler.ESMHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
-import alfheim.common.core.util.*
 import alfheim.common.crafting.recipe.AlfheimRecipes
 import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
@@ -33,7 +32,6 @@ import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.settings.KeyBinding
-import net.minecraft.item.Item
 import net.minecraft.world.World
 import net.minecraftforge.client.MinecraftForgeClient
 import net.minecraftforge.common.MinecraftForge
@@ -136,6 +134,8 @@ class ClientProxy: CommonProxy() {
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
 		if (AlfheimCore.enableElvenStory) enableESMGUIs()
 		if (AlfheimCore.enableMMO) enableMMOGUIs()
+		
+		RenderPostShaders.allowShaders = !AlfheimConfigHandler.minimalGraphics
 	}
 	
 	override fun postInit() {

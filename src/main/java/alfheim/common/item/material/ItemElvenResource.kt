@@ -1,11 +1,11 @@
 package alfheim.common.item.material
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import alfheim.common.item.*
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodCoal
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodSplinters

@@ -1,8 +1,9 @@
 // This is here since ItemHolyCloak#getRenderTexture is package-private
 package vazkii.botania.common.item.equipment.bauble
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource

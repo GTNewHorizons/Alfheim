@@ -1,6 +1,7 @@
 package alfheim.common.item
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.meta
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks

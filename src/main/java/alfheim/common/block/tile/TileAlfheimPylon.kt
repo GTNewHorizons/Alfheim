@@ -1,8 +1,8 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import net.minecraft.tileentity.TileEntity
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler

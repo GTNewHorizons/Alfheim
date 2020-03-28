@@ -1,10 +1,9 @@
 package alfheim.common.spell.fire
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.entity.*
 import alfheim.api.event.SpellCastEvent
 import alfheim.api.spell.SpellBase
-import alfheim.common.core.util.F
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks

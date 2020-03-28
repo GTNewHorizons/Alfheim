@@ -1,6 +1,6 @@
 package alexsocol.asjlib.math
 
-import alfheim.common.core.util.D
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.Entity
 import net.minecraft.tileentity.TileEntity
@@ -242,14 +242,14 @@ class Vector3: Serializable {
 	fun isInside(aabb: AxisAlignedBB) = x >= aabb.minX && y >= aabb.maxY && z >= aabb.minZ && x < aabb.maxX && y < aabb.maxY && z < aabb.maxZ
 	
 	@SideOnly(Side.CLIENT)
-	fun vector3f() = Vector3f(x.toFloat(), y.toFloat(), z.toFloat())
+	fun vector3f() = Vector3f(x.F, y.F, z.F)
 	
 	@SideOnly(Side.CLIENT)
-	fun vector4f() = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), 1f)
+	fun vector4f() = Vector4f(x.F, y.F, z.F, 1f)
 	
 	@SideOnly(Side.CLIENT)
 	fun glVertex(xOff: Number = 0.0, yOff: Number = 0.0, zOff: Number = 0.0): Vector3 {
-		org.lwjgl.opengl.GL11.glVertex3d(x + xOff.toDouble(), y + yOff.toDouble(), z + zOff.toDouble())
+		org.lwjgl.opengl.GL11.glVertex3d(x + xOff.D, y + yOff.D, z + zOff.D)
 		return this
 	}
 	

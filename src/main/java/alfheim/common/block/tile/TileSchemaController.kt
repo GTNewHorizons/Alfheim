@@ -1,9 +1,8 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import codechicken.core.CommonUtils
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*

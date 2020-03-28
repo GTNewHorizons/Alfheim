@@ -1,11 +1,10 @@
 package alfheim.common.spell.fire
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.D
 import alfheim.common.entity.spell.EntitySpellFirewall
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase

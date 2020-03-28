@@ -1,10 +1,9 @@
 package alfheim.common.item.material
 
-import alfheim.common.core.util.meta
+import alexsocol.asjlib.meta
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.ItemMod
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 

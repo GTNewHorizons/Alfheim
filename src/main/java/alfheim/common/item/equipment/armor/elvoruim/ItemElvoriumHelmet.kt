@@ -1,7 +1,6 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
-import alfheim.client.core.util.*
-import alfheim.common.core.util.getActivePotionEffect
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*

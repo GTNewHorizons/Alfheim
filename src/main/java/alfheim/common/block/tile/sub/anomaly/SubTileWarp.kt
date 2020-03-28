@@ -1,9 +1,8 @@
 package alfheim.common.block.tile.sub.anomaly
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileAnomalyBase
-import alfheim.common.core.util.*
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase

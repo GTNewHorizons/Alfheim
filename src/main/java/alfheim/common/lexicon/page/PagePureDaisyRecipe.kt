@@ -1,8 +1,7 @@
 package alfheim.common.lexicon.page
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.toBlock
 import net.minecraft.block.Block
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.init.Blocks

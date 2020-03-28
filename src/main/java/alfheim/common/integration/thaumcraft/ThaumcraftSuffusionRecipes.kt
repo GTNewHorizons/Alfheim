@@ -1,10 +1,10 @@
 package alfheim.common.integration.thaumcraft
 
+import alexsocol.asjlib.toBlock
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.api.lib.LibOreDict.LEAVES
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.toBlock
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack

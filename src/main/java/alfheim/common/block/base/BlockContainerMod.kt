@@ -1,8 +1,9 @@
 package alfheim.common.block.base
 
+import alexsocol.asjlib.I
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -25,7 +26,7 @@ abstract class BlockContainerMod(material: Material): BlockContainer(material) {
 	
 	override fun setBlockName(name: String): Block {
 		if (shouldRegisterInNameSet()) {
-			GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+			GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		}
 		
 		return super.setBlockName(name)

@@ -1,10 +1,10 @@
 package alfheim.common.block.mana
 
+import alexsocol.asjlib.safeGet
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.safeGet
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft

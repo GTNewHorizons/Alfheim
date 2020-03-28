@@ -1,8 +1,7 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
-import alfheim.client.core.util.*
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.IconHelper

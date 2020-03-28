@@ -1,14 +1,14 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*

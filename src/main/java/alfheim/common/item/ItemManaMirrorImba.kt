@@ -1,9 +1,8 @@
 package alfheim.common.item
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister

@@ -1,6 +1,6 @@
 package alfheim.common.entity
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer

@@ -1,8 +1,7 @@
 package alfheim.common.core.util
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -113,7 +112,6 @@ import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
-import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabsFull
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab

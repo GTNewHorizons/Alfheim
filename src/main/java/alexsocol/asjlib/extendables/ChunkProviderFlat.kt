@@ -1,5 +1,6 @@
 package alexsocol.asjlib.extendables
 
+import alexsocol.asjlib.I
 import net.minecraft.block.Block
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.util.IProgressUpdate
@@ -49,7 +50,7 @@ class ChunkProviderFlat(private val worldObj: World, seed: Long, genString: Stri
 				for (i1 in 0..15) {
 					for (j1 in 0..15) {
 						extendedblockstorage.func_150818_a(i1, k and 15, j1, block)
-						extendedblockstorage.setExtBlockMetadata(i1, k and 15, j1, this.cachedBlockMetadata[k].toInt())
+						extendedblockstorage.setExtBlockMetadata(i1, k and 15, j1, this.cachedBlockMetadata[k].I)
 					}
 				}
 			}

@@ -1,6 +1,6 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -11,11 +11,9 @@ import alfheim.client.core.handler.CardinalSystemClient.TargetingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.client.core.util.mc
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
-import alfheim.common.core.util.D
 import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d

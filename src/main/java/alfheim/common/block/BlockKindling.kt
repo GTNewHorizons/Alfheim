@@ -1,8 +1,8 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.colored.BlockColoredLamp
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -10,7 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable

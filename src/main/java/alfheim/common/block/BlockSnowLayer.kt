@@ -1,17 +1,17 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.*
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.*
 import java.util.*

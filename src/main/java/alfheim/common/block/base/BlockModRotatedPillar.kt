@@ -1,7 +1,7 @@
 package alfheim.common.block.base
 
+import alexsocol.asjlib.toItem
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemIridescentBlockMod
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent

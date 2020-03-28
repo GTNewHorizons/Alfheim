@@ -1,7 +1,6 @@
 package alfheim.client.model.entity
 
-import alfheim.client.core.util.glScaled
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper

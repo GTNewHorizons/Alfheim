@@ -1,6 +1,6 @@
 package alexsocol.asjlib.extendables
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
@@ -61,7 +61,7 @@ open class TileItemContainer: ASJTile() {
 						val d1 = textureatlassprite1.angleDelta
 						textureatlassprite1.currentAngle = 0.0
 						textureatlassprite1.angleDelta = 0.0
-						textureatlassprite1.updateCompass(tile.getWorldObj(), tile.xCoord.toDouble(), tile.zCoord.toDouble(), MathHelper.wrapAngleTo180_float((180 + tile.blockMetadata * 90).toFloat()).toDouble(), false, true)
+						textureatlassprite1.updateCompass(tile.getWorldObj(), tile.xCoord.D, tile.zCoord.D, MathHelper.wrapAngleTo180_double(180 + tile.blockMetadata * 90.0), false, true)
 						textureatlassprite1.currentAngle = d0
 						textureatlassprite1.angleDelta = d1
 					}

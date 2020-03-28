@@ -1,6 +1,6 @@
 package alfheim.common.block.base
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.mc
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemSubtypedBlockMod

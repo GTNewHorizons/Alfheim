@@ -1,13 +1,13 @@
 package alfheim.common.entity
 
+import alexsocol.asjlib.toItem
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.toItem
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemSpearSubspace
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World

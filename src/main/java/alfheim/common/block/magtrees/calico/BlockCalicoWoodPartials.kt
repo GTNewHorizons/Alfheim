@@ -22,7 +22,7 @@ class BlockCalicoWoodSlab(full: Boolean, source: Block = AlfheimBlocks.calicoPla
 
 class BlockCalicoWoodStairs(source: Block = AlfheimBlocks.calicoPlanks): BlockRainbowWoodStairs(source), IExplosionDampener {
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun onBlockExploded(world: World, x: Int, y: Int, z: Int, explosion: Explosion) = Unit

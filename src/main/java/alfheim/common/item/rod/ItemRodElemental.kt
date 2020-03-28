@@ -1,7 +1,7 @@
 package alfheim.common.item.rod
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.common.core.util.*
 import alfheim.common.item.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block

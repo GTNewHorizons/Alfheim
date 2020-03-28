@@ -1,10 +1,9 @@
 package alfheim.client.integration.nei.recipes
 
+import alexsocol.asjlib.*
 import alfheim.api.AlfheimAPI
 import alfheim.api.crafting.recipe.RecipeManaInfuser
-import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.D
 import codechicken.nei.PositionedStack
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector

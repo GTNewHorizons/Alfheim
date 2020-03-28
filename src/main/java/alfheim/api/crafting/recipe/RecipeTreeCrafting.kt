@@ -1,9 +1,7 @@
 package alfheim.api.crafting.recipe
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.meta
+import alexsocol.asjlib.*
 import net.minecraft.item.ItemStack
-import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.recipe.RecipePetals
 import java.util.*
 
@@ -36,7 +34,7 @@ class RecipeTreeCrafting(val manaUsage: Int, val out: ItemStack, val core: ItemS
 				if (inp is ItemStack && inp.meta == 32767)
 					inp.meta = i.meta
 				
-				if (itemEquals(i, inp)) {
+				if (i.itemEquals(inp)) {
 					inputsMissing.removeAt(j)
 					break
 				}
@@ -46,20 +44,6 @@ class RecipeTreeCrafting(val manaUsage: Int, val out: ItemStack, val core: ItemS
 	}
 	
 	override fun getInputs() = this.inputs
-	
-	private fun itemEquals(input: ItemStack, ingredient: Any): Boolean {
-		if (ingredient is String) {
-			for (orestack in OreDictionary.getOres(ingredient)) {
-				val cstack = orestack.copy()
-				
-				if (cstack.meta == 32767) cstack.meta = input.meta
-				if (input.isItemEqual(cstack)) return true
-			}
-			
-		} else
-			return ingredient is ItemStack && ASJUtilities.isItemStackEqualCrafting(ingredient, input)
-		return false
-	}
 	
 	override fun toString(): String {
 		val s = StringBuilder()

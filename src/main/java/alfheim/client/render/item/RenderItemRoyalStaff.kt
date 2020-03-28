@@ -1,8 +1,7 @@
 package alfheim.client.render.item
 
-import alfheim.client.core.util.*
+import alexsocol.asjlib.*
 import alfheim.client.model.item.ModelCreatorStaff
-import alfheim.common.core.util.F
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack

@@ -1,6 +1,5 @@
 package alexsocol.asjlib.render
 
-import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
@@ -10,8 +9,7 @@ import java.util.*
 
 object RenderPostShaders {
 	
-	val allowShaders: Boolean
-		get() = !AlfheimConfigHandler.minimalGraphics
+	var allowShaders = true
 	
 	val shaders = ArrayList<ShadedObject>()
 	private var renderObjectMaterialID = 0

@@ -1,7 +1,6 @@
 package alfheim.client.model.item
 
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.item.creator.ItemRoyalStaff
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.*

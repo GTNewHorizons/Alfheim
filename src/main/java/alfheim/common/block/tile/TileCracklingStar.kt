@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.*
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity

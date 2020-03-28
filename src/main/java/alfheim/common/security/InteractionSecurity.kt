@@ -1,20 +1,19 @@
 package alfheim.common.security
 
+import alexsocol.asjlib.mfloor
 import alfheim.api.*
 import alfheim.api.security.ISecurityManager
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.mfloor
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemSword
 import net.minecraft.network.play.server.S23PacketBlockChange
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
-import net.minecraft.world.*
+import net.minecraft.world.World
 import net.minecraft.world.WorldSettings.GameType
-import net.minecraftforge.common.*
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.world.BlockEvent.BreakEvent
 
 object InteractionSecurity: ISecurityManager {

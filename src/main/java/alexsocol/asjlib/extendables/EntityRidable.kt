@@ -1,6 +1,6 @@
 package alexsocol.asjlib.extendables
 
-import alfheim.common.core.util.getActivePotionEffect
+import alexsocol.asjlib.*
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.Potion
@@ -62,7 +62,7 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 			par1 = rider!!.moveStrafing * 0.5f
 			par2 = rider!!.moveForward
 			if (!worldObj.isRemote) {
-				this.aiMoveSpeed = walkSpeed.toFloat()
+				this.aiMoveSpeed = walkSpeed.F
 				super.moveEntityWithHeading(par1, par2)
 			} else {
 				super.moveEntityWithHeading(par1, par2)
@@ -86,8 +86,9 @@ abstract class EntityRidable(world: World): EntityCreature(world) {
 	
 	override fun jump() {
 		motionY = 0.5
-		if (this.isPotionActive(Potion.jump)) {
-			motionY += ((getActivePotionEffect(Potion.jump.id)!!.amplifier + 1).toFloat() * 0.1f).toDouble()
+		
+		getActivePotionEffect(Potion.jump.id)?.let {
+			motionY += (it.amplifier + 1) * 0.1
 		}
 		
 		isAirBorne = true

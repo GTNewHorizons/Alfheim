@@ -1,9 +1,10 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.*
 import alfheim.api.ShadowFoxAPI
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import alfheim.common.world.gen.SimpleTreeGen
 import cpw.mods.fml.common.IFuelHandler
@@ -35,7 +36,7 @@ open class BlockColoredSapling(val name: String = "irisSapling"): BlockSapling()
 	}
 	
 	override fun setBlockName(par1Str: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, par1Str)
 		return super.setBlockName(par1Str)
 	}
 	

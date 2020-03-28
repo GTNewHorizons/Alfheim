@@ -1,6 +1,6 @@
 package alfmod.common.item.material
 
-import alfheim.common.core.util.meta
+import alexsocol.asjlib.meta
 import alfheim.common.item.ItemMod
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab

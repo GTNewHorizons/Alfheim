@@ -1,7 +1,8 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.mfloor
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.BlockSkull
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer

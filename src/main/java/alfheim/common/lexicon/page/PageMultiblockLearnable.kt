@@ -1,8 +1,6 @@
 package alfheim.common.lexicon.page
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.RenderHelper

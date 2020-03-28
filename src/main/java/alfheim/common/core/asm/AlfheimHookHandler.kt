@@ -1,6 +1,6 @@
 package alfheim.common.core.asm
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.boss.*
@@ -8,11 +8,9 @@ import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient
-import alfheim.client.core.util.mc
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
-import alfheim.common.core.util.*
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems

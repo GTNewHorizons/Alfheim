@@ -1,8 +1,7 @@
 package alfheim.client.render.block
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.block.compat.thaumcraft.BlockAlfheimThaumOre
-import alfheim.common.core.util.F
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block

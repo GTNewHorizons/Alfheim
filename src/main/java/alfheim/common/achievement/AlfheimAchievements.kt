@@ -1,6 +1,5 @@
 package alfheim.common.achievement
 
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimAchievementHandler

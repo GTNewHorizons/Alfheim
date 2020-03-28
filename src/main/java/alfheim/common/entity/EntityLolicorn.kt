@@ -1,11 +1,10 @@
 package alfheim.common.entity
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.mfloor
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*

@@ -2,7 +2,6 @@ package alfheim.common.integration.minetweaker
 
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import alfheim.common.core.util.*
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getObjects
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig.getStack
 import minetweaker.*

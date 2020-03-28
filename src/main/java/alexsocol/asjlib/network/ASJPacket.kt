@@ -1,5 +1,6 @@
 package alexsocol.asjlib.network
 
+import alexsocol.asjlib.I
 import cpw.mods.fml.common.network.ByteBufUtils
 import cpw.mods.fml.common.network.simpleimpl.IMessage
 import io.netty.buffer.ByteBuf
@@ -37,7 +38,7 @@ abstract class ASJPacket: IMessage {
 		
 		@JvmStatic
 		fun write(buf: ByteBuf, w: Byte) {
-			buf.writeByte(w.toInt())
+			buf.writeByte(w.I)
 		}
 		
 		@JvmStatic
@@ -67,7 +68,7 @@ abstract class ASJPacket: IMessage {
 		
 		@JvmStatic
 		fun write(buf: ByteBuf, w: Short) {
-			buf.writeShort(w.toInt())
+			buf.writeShort(w.I)
 		}
 		
 		@JvmStatic

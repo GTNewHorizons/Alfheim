@@ -1,8 +1,9 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.D
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.block.tile.TileManaInfuser
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul
 import cpw.mods.fml.common.eventhandler.*

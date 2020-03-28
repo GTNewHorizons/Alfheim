@@ -9,7 +9,6 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
-import vazkii.botania.api.lexicon.ILexiconable
 
 class BlockRainbowWood: BlockModRotatedPillar(Material.wood) {
 	

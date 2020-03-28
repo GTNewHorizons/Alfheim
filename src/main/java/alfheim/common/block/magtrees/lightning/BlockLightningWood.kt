@@ -2,7 +2,7 @@ package alfheim.common.block.magtrees.lightning
 
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.block.tile.TileLightningRod
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
@@ -10,7 +10,6 @@ import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
-import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
 class BlockLightningWood: BlockModRotatedPillar(Material.wood), ITileEntityProvider {
@@ -61,7 +60,7 @@ class BlockLightningWood: BlockModRotatedPillar(Material.wood), ITileEntityProvi
 	override fun hasTileEntity(metadata: Int) = isHeartWood(metadata)
 	
 	override fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) =

@@ -1,8 +1,8 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.D
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.util.D
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import alfheim.common.network.MessageEffect

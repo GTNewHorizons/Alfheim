@@ -1,15 +1,14 @@
 package alfheim.common.entity.boss
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.boss.IBotaniaBossWithName
-import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.util.*
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.boss.ai.flugel.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -59,7 +58,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		get() {
 			val source = source
 			val range = RANGE + 3
-			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
+			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, alexsocol.asjlib.getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
 			list.removeAll { Vector3.pointDistanceSpace(it.posX, it.posY, it.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= range }
 			return list
 		}
@@ -242,7 +241,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				
 				if (hard) {
 					if (ConfigHandler.relicsEnabled && name == summoner) {
-						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(rand, 4, 6) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
+						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
 						
 						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false) {
 							relic = ItemStack(AlfheimItems.mask)

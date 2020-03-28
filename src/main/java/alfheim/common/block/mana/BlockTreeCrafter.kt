@@ -1,11 +1,11 @@
 package alfheim.common.block.mana
 
+import alexsocol.asjlib.toItem
 import alfheim.api.lib.LibRenderIDs
 import alfheim.client.render.tile.MultipassRenderer
 import alfheim.common.block.base.*
 import alfheim.common.block.tile.TileTreeCrafter
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.toItem
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandHUD

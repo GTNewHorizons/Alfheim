@@ -76,6 +76,7 @@ object AlfheimBlocks {
 	val kindling: Block
 	val manaAccelerator: Block
 	val manaInfuser: Block
+	val manaTuner: Block
 	val poisonIce: Block
 	val powerStone: Block
 	val raceSelector: Block
@@ -219,6 +220,7 @@ object AlfheimBlocks {
 		livingwoodFunnel = BlockFunnel()
 		manaAccelerator = BlockManaAccelerator()
 		manaInfuser = BlockManaInfuser()
+		manaTuner = BlockManaTuner()
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
 		raceSelector = BlockRaceSelector()

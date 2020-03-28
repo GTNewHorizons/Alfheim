@@ -115,7 +115,7 @@ class BlockShimmerQuartzStairs(val block: BlockShimmerQuartz): BlockSpecialQuart
 	}
 	
 	override fun setBlockName(par1Str: String): Block? {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, par1Str)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, par1Str)
 		unlocName = "tile.$par1Str"
 		return this
 	}

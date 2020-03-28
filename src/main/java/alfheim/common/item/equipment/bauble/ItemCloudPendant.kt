@@ -1,7 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.mc
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
 import cpw.mods.fml.relauncher.*

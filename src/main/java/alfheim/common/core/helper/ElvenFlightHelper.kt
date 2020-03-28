@@ -1,8 +1,8 @@
 package alfheim.common.core.helper
 
+import alexsocol.asjlib.D
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.D
 import cpw.mods.fml.client.event.ConfigChangedEvent
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*

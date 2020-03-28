@@ -4,7 +4,6 @@ import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
-import alfheim.common.world.dim.alfheim.structure.StructureDreamsTree
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type

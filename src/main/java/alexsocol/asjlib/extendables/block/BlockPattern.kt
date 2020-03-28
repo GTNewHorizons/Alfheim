@@ -39,7 +39,7 @@ class BlockPattern(modid: String, material: Material, name: String, tab: Creativ
 			
 			if (!fallInstantly && world.checkChunksExist(x - b0, y - b0, z - b0, x + b0, y + b0, z + b0)) {
 				if (!world.isRemote) {
-					val entityfallingblock = EntityFallingBlock(world, (x.toFloat() + 0.5f).toDouble(), (y.toFloat() + 0.5f).toDouble(), (z.toFloat() + 0.5f).toDouble(), this, world.getBlockMetadata(x, y, z))
+					val entityfallingblock = EntityFallingBlock(world, x + 0.5, y + 0.5, z + 0.5, this, world.getBlockMetadata(x, y, z))
 					func_149829_a(entityfallingblock)
 					world.spawnEntityInWorld(entityfallingblock)
 				}

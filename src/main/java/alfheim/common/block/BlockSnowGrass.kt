@@ -1,13 +1,13 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.toItem
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.init.Blocks
-import net.minecraft.item.Item
 import net.minecraft.world.*
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.util.ForgeDirection

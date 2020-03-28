@@ -1,8 +1,7 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alexsocol.asjlib.*
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -29,7 +28,7 @@ open class BlockPatternLexicon(modid: String, material: Material, name: String, 
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

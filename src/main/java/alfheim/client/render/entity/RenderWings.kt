@@ -1,13 +1,12 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.player.EntityPlayer

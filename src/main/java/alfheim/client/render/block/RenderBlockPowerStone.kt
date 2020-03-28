@@ -1,7 +1,7 @@
 package alfheim.client.render.block
 
+import alexsocol.asjlib.glTranslated
 import alfheim.api.lib.*
-import alfheim.client.core.util.glTranslated
 import alfheim.client.render.tile.RenderTilePowerStone
 import alfheim.common.block.tile.TilePowerStone
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler

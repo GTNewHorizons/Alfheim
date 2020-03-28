@@ -3,14 +3,9 @@ package alfheim.common.block.magtrees.circuit
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.*
 import alfheim.common.item.block.*
-import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.world.*
-import net.minecraftforge.common.util.ForgeDirection
-import vazkii.botania.api.lexicon.ILexiconable
 import java.util.*
 
 class BlockCircuitWoodSlab(full: Boolean, source: Block = AlfheimBlocks.circuitPlanks): BlockRainbowWoodSlab(full, source) {
@@ -41,7 +36,7 @@ class BlockCircuitWoodSlab(full: Boolean, source: Block = AlfheimBlocks.circuitP
 
 class BlockCircuitWoodStairs(source: Block = AlfheimBlocks.circuitPlanks): BlockRainbowWoodStairs(source) {
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	// ####
