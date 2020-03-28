@@ -147,6 +147,8 @@ object ASJUtilities {
 		return ceil(amount) >= floor(living.health)
 	}
 	
+	// ################################ STACKS ################################
+	
 	/**
 	 * Returns the number of the slot with item matching to item passed in
 	 * @param item The item to compare
@@ -157,28 +159,51 @@ object ASJUtilities {
 		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it)?.item === item } ?: -1
 	
 	/**
-	 * Removes itemstack from inventory
-	 * @param inventory Inventory
-	 * @param stack ItemStack to remove
-	 * @return If the stack was removed
+	 * Checks if two itemstacks has same ID, metadata and NBT
+	 * @param stack1 First itemstack
+	 * @param stack2 Second itemstack
 	 */
 	@JvmStatic
-	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
-		if (getAmount(inventory, stack) >= stack.stackSize) {
-			for (i in 0 until inventory.sizeInventory) {
-				if (isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
-					val amount = min(stack.stackSize, inventory.getStackInSlot(i).stackSize)
-					if (amount > 0) {
-						inventory.decrStackSize(i, amount)
-						stack.stackSize -= amount
-					}
-					if (stack.stackSize <= 0) {
-						return true
-					}
+	fun isItemStackEqualData(stack1: ItemStack, stack2: ItemStack): Boolean {
+		return stack1.isItemEqual(stack2) && ItemStack.areItemStackTagsEqual(stack1, stack2)
+	}
+	
+	/**
+	 * Boolean tag label for ingredient to ignore nbt on crafting
+	 */
+	const val TAG_ASJIGNORENBT = "ASJIGNORENBT"
+	
+	/**
+	 * Boolean tag label for ingredient to check only tags presented in it
+	 */
+	const val TAG_ASJONLYNBT = "ASJONLYNBT"
+	
+	/**
+	 * Checks if two itemstacks has same ID, metadata and NBT]
+	 *
+	 * @param ingredient stack from recipe
+	 * @param input stack from crafting input
+	 * @see [TAG_ASJIGNORENBT]
+	 * @see [TAG_ASJONLYNBT]
+	 */
+	@JvmStatic
+	fun isItemStackEqualCrafting(ingredient: ItemStack, input: ItemStack): Boolean {
+		return ingredient.isItemEqual(input) && when {
+			ingredient.tagCompound?.getBoolean(TAG_ASJIGNORENBT) == true -> true
+			ingredient.tagCompound?.getBoolean(TAG_ASJONLYNBT) == true -> {
+				val tags = input.tagCompound ?: return false
+				val itags = ingredient.tagCompound.copy() as NBTTagCompound
+				itags.removeTag(TAG_ASJONLYNBT)
+				
+				for (key in itags.func_150296_c()) {
+					if (!tags.hasKey(key as String)) return false
+					if (itags.getTag(key) != tags.getTag(key)) return false
 				}
+				
+				true
 			}
+			else -> ItemStack.areItemStackTagsEqual(ingredient, input)
 		}
-		return false
 	}
 	
 	/**
@@ -191,60 +216,43 @@ object ASJUtilities {
 	fun getAmount(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			if (isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
-				amount += inventory.getStackInSlot(i).stackSize
-			}
+			val slot = inventory.getStackInSlot(i) ?: continue
+			if (stack.isItemEqual(slot))
+				amount += slot.stackSize
 		}
 		return amount
 	}
 	
 	/**
-	 * @return damage from stack itself, not through item
+	 * Returns the amount of items in stack with NBT from inventory
+	 * @param inventory Inventory
+	 * @param stack Stack to compare item
+	 * @return Amount
 	 */
 	@JvmStatic
-	fun getTrueDamage(stack: ItemStack) =
-		"$stack".split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].toInt()
+	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
+		var amount = 0
+		for (i in 0 until inventory.sizeInventory) {
+			val slot = inventory.getStackInSlot(i) ?: continue
+			if (isItemStackEqualData(slot, stack))
+				amount += slot.stackSize
+		}
+		return amount
+	}
 	
 	/**
-	 * Checks if two itemstacks has same ID, size and metadata
-	 */
-	@JvmStatic
-	fun isItemStackEqual(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && stack1.itemDamage == stack2.itemDamage
-	
-	/**
-	 * Checks if two itemstacks has same ID and metadata
-	 */
-	@JvmStatic
-	fun isItemStackEqualData(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage
-	
-	/**
-	 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
-	 */
-	@JvmStatic
-	fun isItemStackTrueEqual(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2)
-	
-	/**
-	 * Checks if two itemstacks has same ID and metadata (from stack itself)
-	 */
-	@JvmStatic
-	fun isItemStackTrueEqualData(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && getTrueDamage(stack1) == getTrueDamage(stack2)
-	
-	/**
-	 * Removes itemstack with NBT from inventory
+	 * Removes itemstack from inventory
 	 * @param inventory Inventory
 	 * @param stack ItemStack to remove
 	 * @return If the stack was removed
 	 */
 	@JvmStatic
-	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
-		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
+	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
+		if (getAmount(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack)) {
-					val amount = min(stack.stackSize, inventory.getStackInSlot(i).stackSize)
+				val slot = inventory.getStackInSlot(i) ?: continue
+				if (stack.isItemEqual(slot)) {
+					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
 						inventory.decrStackSize(i, amount)
 						stack.stackSize -= amount
@@ -259,47 +267,29 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * Returns the amount of items in stack with NBT from inventory
+	 * Removes itemstack with NBT from inventory
 	 * @param inventory Inventory
-	 * @param stack Stack to compare item
-	 * @return Amount
+	 * @param stack ItemStack to remove
+	 * @return If the stack was removed
 	 */
 	@JvmStatic
-	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
-		var amount = 0
-		for (i in 0 until inventory.sizeInventory) {
-			if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack))
-				amount += inventory.getStackInSlot(i).stackSize
-		}
-		return amount
-	}
-	
-	/**
-	 * Checks if two itemstacks has same ID, metadata and NBT
-	 * @param stack1 First itemstack
-	 * @param stack2 Second itemstack
-	 */
-	@JvmStatic
-	fun isItemStackEqualNBT(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-		return if (isItemStackEqualData(stack1, stack2)) {
-			when {
-				!stack1!!.hasTagCompound() and !stack2!!.hasTagCompound() -> true
-				stack1.hasTagCompound() != stack2.hasTagCompound()        -> false
-				else                                                      -> stack1.stackTagCompound == stack2.stackTagCompound
+	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
+		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
+			for (i in 0 until inventory.sizeInventory) {
+				val slot = inventory.getStackInSlot(i) ?: continue
+				if (isItemStackEqualData(slot, stack)) {
+					val amount = min(stack.stackSize, slot.stackSize)
+					if (amount > 0) {
+						inventory.decrStackSize(i, amount)
+						stack.stackSize -= amount
+					}
+					if (stack.stackSize <= 0) {
+						return true
+					}
+				}
 			}
-		} else false
-	}
-	
-	/**
-	 * Changes itemstack's item
-	 * @param stack Stack to change its item
-	 * @param item Item to set in `stack`
-	 */
-	@JvmStatic
-	fun changeStackItem(stack: ItemStack, item: Item): ItemStack {
-		val newStack = ItemStack(item, stack.stackSize, stack.itemDamage)
-		newStack.stackTagCompound = stack.stackTagCompound
-		return newStack
+		}
+		return false
 	}
 	
 	// Removes <b>block</b> from GameRegistry
@@ -359,17 +349,12 @@ object ASJUtilities {
 	/**
 	 * Removes recipe of [resultItem]. Note: stackSize and meta sensitive
 	 * @param resultItem Stack to remove recipe
-	 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 	 */
 	@JvmStatic
-	fun removeRecipe(resultItem: ItemStack) {
-		val i = CraftingManager.getInstance().recipeList.iterator()
-		while (i.hasNext()) {
-			val r = i.next() as IRecipe
-			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput))
-				i.remove()
+	fun removeRecipe(resultItem: ItemStack) =
+		(CraftingManager.getInstance().recipeList as ArrayList<IRecipe>).removeAll {
+			ItemStack.areItemStacksEqual(resultItem, it.recipeOutput)
 		}
-	}
 	
 	/**
 	 * Checks whether `e1` is in FOV of `e2`
@@ -834,8 +819,8 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun say(player: EntityPlayer?, message: String) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message).replace('&', '\u00a7')))
+	fun say(player: EntityPlayer?, message: String, vararg format: Any) {
+		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')))
 	}
 	
 	@JvmStatic

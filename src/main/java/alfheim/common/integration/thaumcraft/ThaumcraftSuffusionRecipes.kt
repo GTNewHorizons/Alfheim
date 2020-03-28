@@ -3,6 +3,7 @@ package alfheim.common.integration.thaumcraft
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.api.lib.LibOreDict.LEAVES
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.util.toBlock
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
@@ -35,10 +36,10 @@ object ThaumcraftSuffusionRecipes {
 		
 		recipesLoaded = true
 		
-		greatwoodRecipe = ShadowFoxAPI.addTreeRecipe(10000, plantBlock, 0, 70, ELEMENTIUM, ELEMENTIUM, ELEMENTIUM, RUNE[4]/*Spring*/, LEAVES[13], LEAVES[13], LEAVES[13]/*Green*/, "shardEarth")
-		silverwoodRecipe = ShadowFoxAPI.addTreeRecipe(30000, plantBlock, 1, 210, ELEMENTIUM, ELEMENTIUM, ELEMENTIUM, RUNE[7]/*Winter*/, LEAVES[3], LEAVES[3], LEAVES[3]/*Light Blue*/, balanceShard)
-		shimmerleafRecipe = ShadowFoxAPI.addTreeRecipe(5000, plantBlock, 2, 100, silverwoodLeaves, "shardOrder", PIXIE_DUST)
-		cinderpearlRecipe = ShadowFoxAPI.addTreeRecipe(5000, plantBlock, 3, 100, "powderBlaze", "shardFire", PIXIE_DUST)
-		vishroomRecipe = ShadowFoxAPI.addTreeRecipe(5000, plantBlock, 5, 100, ItemStack(Blocks.brown_mushroom), ItemStack(Blocks.red_mushroom), PIXIE_DUST)
+		greatwoodRecipe = ShadowFoxAPI.addTreeRecipe(10000, ItemStack(plantBlock), ItemStack(AlfheimBlocks.irisSapling), 70, ELEMENTIUM, ELEMENTIUM, ELEMENTIUM, RUNE[4]/*Spring*/, LEAVES[13], LEAVES[13], LEAVES[13]/*Green*/, "shardEarth")
+		silverwoodRecipe = ShadowFoxAPI.addTreeRecipe(30000, ItemStack(plantBlock, 1, 1), ItemStack(AlfheimBlocks.irisSapling), 210, ELEMENTIUM, ELEMENTIUM, ELEMENTIUM, RUNE[7]/*Winter*/, LEAVES[3], LEAVES[3], LEAVES[3]/*Light Blue*/, balanceShard)
+		shimmerleafRecipe = ShadowFoxAPI.addTreeRecipe(5000, ItemStack(plantBlock, 1, 2), ItemStack(AlfheimBlocks.irisSapling), 100, silverwoodLeaves, "shardOrder", PIXIE_DUST)
+		cinderpearlRecipe = ShadowFoxAPI.addTreeRecipe(5000, ItemStack(plantBlock, 1, 3), ItemStack(AlfheimBlocks.irisSapling), 100, "powderBlaze", "shardFire", PIXIE_DUST)
+		vishroomRecipe = ShadowFoxAPI.addTreeRecipe(5000, ItemStack(plantBlock, 1, 5), ItemStack(AlfheimBlocks.irisSapling), 100, ItemStack(Blocks.brown_mushroom), ItemStack(Blocks.red_mushroom), PIXIE_DUST)
 	}
 }

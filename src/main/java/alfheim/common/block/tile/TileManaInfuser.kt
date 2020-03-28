@@ -1,8 +1,6 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.ASJUtilities
-import alexsocol.asjlib.ASJUtilities.getTrueDamage
-import alexsocol.asjlib.ASJUtilities.isItemStackTrueEqual
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
@@ -81,13 +79,17 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 				}
 				
 				if (mana >= manaRequest && !worldObj.isRemote) {
-					val item = items[0]
-					for (otherItem in items)
-						if (otherItem !== item)
-							otherItem.setDead()
-						else
+					var first = true
+					for (item in items) {
+						if (first) {
 							item.setEntityItemStack(ItemStack(result!!.item, max(result!!.stackSize, 1), result!!.meta))
-					item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
+							item.entityItem.readFromNBT(result!!.writeToNBT(NBTTagCompound()))
+							item.worldObj.playSoundAtEntity(item, "botania:terrasteelCraft", 1f, 1f)
+							first = false
+						} else
+							worldObj.removeEntity(item)
+					}
+					
 					mana -= manaRequest
 					worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
 					worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
@@ -204,24 +206,25 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 					var flag = false
 					if (ing is ItemStack) {
 						val cing = ing.copy()
-						if (getTrueDamage(cing) == OreDictionary.WILDCARD_VALUE) { // Cause some shit clamps values to maxDamage
-							cing.meta = getTrueDamage(stack)
-						}
-						flag = isItemStackTrueEqual(stack, cing)
-					} else
 						
-						if (ing is String) {
-							val ores = OreDictionary.getOres(ing)
-							for (ore in ores) {
-								val core = ore.copy()
-								if (getTrueDamage(core) == OreDictionary.WILDCARD_VALUE) core.meta = getTrueDamage(stack)
-								
-								if (isItemStackTrueEqual(stack, ItemStack(core.item, 1, core.meta))) {
-									flag = true
-									break
-								}
+						if (cing.meta == OreDictionary.WILDCARD_VALUE)
+							cing.meta = stack.meta
+						
+						flag = ASJUtilities.isItemStackEqualCrafting(cing, stack)
+					} else if (ing is String) {
+						val ores = OreDictionary.getOres(ing)
+						for (ore in ores) {
+							val core = ore.copy()
+							
+							if (core.meta == OreDictionary.WILDCARD_VALUE)
+								core.meta = stack.meta
+							
+							if (ItemStack.areItemStacksEqual(stack, ItemStack(core.item, 1, core.meta))) {
+								flag = true
+								break
 							}
 						}
+					}
 					
 					if (flag) {
 						if (DEBUG) println("Entity stack matches ingredient stack ($stack == $ing) Continuing scanning.")

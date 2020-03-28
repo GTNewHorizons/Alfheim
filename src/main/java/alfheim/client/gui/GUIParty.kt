@@ -137,6 +137,8 @@ class GUIParty: Gui() {
 					}
 				}
 				
+				totalMaxMana = max(totalMana, totalMaxMana)
+				
 				val col = Color(Color.HSBtoRGB(0.55f, if (anyRequest) min(1.0, sin(System.currentTimeMillis() / 1000.0) * 0.25 + 1.0).F else 1f, 1f))
 				glColor4ub(col.red.toByte(), col.green.toByte(), col.blue.toByte(), 255.toByte())
 				

@@ -80,6 +80,7 @@ object AlfheimConfigHandler {
 	var schemaArray				= IntArray(17) { -1 + it }
 	var storyLines				= 4
 	var tradePortalRate			= 1200
+	var triquetrumMaxDiagonal	= -1.0
 	var uberSpreaderCapacity	= 24000
 	var uberSpreaderSpeed		= 2400
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
@@ -225,6 +226,7 @@ object AlfheimConfigHandler {
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated", false)
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
+		triquetrumMaxDiagonal = loadProp(CATEGORY_GENERAL, "triquetrumMaxDiagonal", triquetrumMaxDiagonal, false, "Change this to limit triquetrum area")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader max mana cap")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers", false)

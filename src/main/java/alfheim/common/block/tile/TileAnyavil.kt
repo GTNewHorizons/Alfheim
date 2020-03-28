@@ -33,7 +33,7 @@ class TileAnyavil: TileItemContainer(), ISidedInventory {
 		val item = item
 		if (burst.isFake) return
 		if (item == null) return
-		if (GameRegistry.findUniqueIdentifierFor(item.item).toString() in AlfheimConfigHandler.anyavilBL) return
+		if (GameRegistry.findUniqueIdentifierFor(item.item)?.toString() ?: "null:null" in AlfheimConfigHandler.anyavilBL) return
 		if (burst.color != -0xd7f5a) return
 		
 		val eitems = world.getEntitiesWithinAABB(EntityItem::class.java, AxisAlignedBB.getBoundingBox((xCoord - 1).D, yCoord.D, (zCoord - 1).D, (xCoord + 2).D, (yCoord + 2).D, (zCoord + 2).D).expand(5.0, 3.0, 5.0))

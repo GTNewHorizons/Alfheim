@@ -78,7 +78,7 @@ object AlfheimAPI {
 	
 	fun getPinkness(item: ItemStack) =
 		pinkness.keys
-			.firstOrNull { it.item === item.item && it.meta == item.meta }
+			.firstOrNull { ASJUtilities.isItemStackEqualCrafting(it, item) }
 			?.let { pinkness[it]!! } ?: 0
 	
 	/**

@@ -1,7 +1,9 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.ASJUtilities
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.*
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.*
@@ -57,6 +59,11 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 				val I = max(first.posX, x)
 				val J = max(first.posY, y)
 				val K = max(first.posZ, z)
+				
+				if (AlfheimConfigHandler.triquetrumMaxDiagonal != -1.0 && Vector3.pointDistanceSpace(i, j, k, I, J, K) > AlfheimConfigHandler.triquetrumMaxDiagonal) {
+					ASJUtilities.say(player, "item.Triquetrum.tooLarge", AlfheimConfigHandler.triquetrumMaxDiagonal)
+					return false
+				}
 				
 				setFirstPosition(stack, i, j, k)
 				setSecondPosition(stack, I, J, K)

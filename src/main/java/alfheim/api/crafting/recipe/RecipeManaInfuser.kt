@@ -13,8 +13,7 @@ class RecipeManaInfuser(val manaUsage: Int, out: ItemStack, vararg recipe: Any):
 	
 	override fun equals(other: Any?): Boolean {
 		if (other is RecipeManaInfuser) {
-			val r = other as RecipeManaInfuser?
-			return r!!.manaUsage == manaUsage && ItemStack.areItemStacksEqual(output, r.output) && inputs.containsAll(r.inputs) && r.inputs.containsAll(inputs)
+			return other.manaUsage == manaUsage && ItemStack.areItemStacksEqual(output, other.output) && inputs.containsAll(other.inputs) && other.inputs.containsAll(inputs)
 		}
 		return false
 	}

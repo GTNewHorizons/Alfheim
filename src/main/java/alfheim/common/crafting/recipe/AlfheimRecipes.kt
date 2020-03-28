@@ -123,6 +123,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.block.ModFluffBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
@@ -926,7 +927,7 @@ object AlfheimRecipes {
 		
 		recipeManaStoneGreater = addInfuserRecipe(ItemStack(manaStoneGreater, 1, 1000),
 												  TilePool.MAX_MANA * 4,
-												  ItemStack(manaStone, 1, WILDCARD_VALUE),
+												  ItemStack(manaStone, 1, WILDCARD_VALUE).also { ItemNBTHelper.setBoolean(it, ASJUtilities.TAG_ASJIGNORENBT, true) },
 												  ItemStack(manaResource, 4, 5),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence))

@@ -22,5 +22,5 @@ class BlockPowerStone: BlockModContainerMeta(Material.rock, 5, ModInfo.MODID, "P
 	override fun getRenderType() = LibRenderIDs.idPowerStone
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.shrines
 	override fun registerBlockIcons(reg: IIconRegister) = Unit
-	override fun getIcon(side: Int, meta: Int): IIcon? = null
+	override fun getIcon(side: Int, meta: Int) = AlfheimBlocks.manaInfuser.getIcon(0, 2)
 }

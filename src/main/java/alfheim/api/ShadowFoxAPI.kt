@@ -30,27 +30,35 @@ object ShadowFoxAPI {
 	/**
 	 * Adds a tree crafting recipe with the specified parameters to the registry.
 	 *
-	 * @param mana        - The mana cost for the recipe.
-	 * @param outputBlock - The block that is created from the recipe.
-	 * @param meta        - The metadata of the created block.
-	 * @param inputs      - The items used in the infusion.
+	 * @param mana   - The mana cost for the recipe.
+	 * @param out    - The block that is created from the recipe.
+	 * @param core   - The core block in center that will be changed.
+	 * @param inputs - The items used in the infusion.
 	 * @return The recipe that was added to the registry.
 	 */
-	fun addTreeRecipe(mana: Int, outputBlock: Block, meta: Int, vararg inputs: Any) =
-		addTreeRecipe(RecipeTreeCrafting(mana, outputBlock, meta, *inputs))
+	fun addTreeRecipe(mana: Int, out: ItemStack, core: ItemStack, vararg inputs: Any) =
+		addTreeRecipe(RecipeTreeCrafting(mana, out, core, *inputs))
 	
 	/**
 	 * Adds a tree crafting recipe with the specified parameters to the registry.
 	 *
-	 * @param mana        - The mana cost for the recipe.
-	 * @param outputBlock - The block that is created from the recipe.
-	 * @param meta        - The metadata of the created block.
-	 * @param inputs      - The items used in the infusion.
-	 * @param throttle    - The maximum mana that can be absorbed per tick for this recipe.
+	 * @param mana     - The mana cost for the recipe.
+	 * @param out      - The block that is created from the recipe.
+	 * @param core     - The core block in center that will be changed.
+	 * @param inputs   - The items used in the infusion.
+	 * @param throttle - The maximum mana that can be absorbed per tick for this recipe.
 	 * @return The recipe that was added to the registry.
 	 */
-	fun addTreeRecipe(mana: Int, outputBlock: Block, meta: Int, throttle: Int, vararg inputs: Any) =
-		addTreeRecipe(RecipeTreeCrafting(mana, outputBlock, meta, throttle, *inputs))
+	fun addTreeRecipe(mana: Int, out: ItemStack, core: ItemStack, throttle: Int, vararg inputs: Any) =
+		addTreeRecipe(RecipeTreeCrafting(mana, out, core, throttle, *inputs))
+	
+	fun removeTreeRecipe(rec: RecipeTreeCrafting?): RecipeTreeCrafting? =
+		if (rec != null && treeRecipes.remove(rec)) rec else null
+	
+	fun removeTreeRecipe(result: ItemStack): RecipeTreeCrafting? =
+		treeRecipes.indices
+			.firstOrNull { ItemStack.areItemStacksEqual(treeRecipes[it].output, result) }
+			?.let { treeRecipes.removeAt(it) }
 	
 	/**
 	 * Adds an Iridescent Sapling variant to the registry.

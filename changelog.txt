@@ -1,5 +1,10 @@
 Innovations:
  --
 
+Integration:
+ MineTweaker:
+  NBT sensitivity for mana infusion recipes and anyavil PP values
+  Tree suffusion recipes supportd, also with NBT
+
 Fixes:
  --

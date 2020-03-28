@@ -1,6 +1,7 @@
 package alfheim.common.item.block
 
 import alfheim.api.ModInfo
+import alfheim.common.block.base.BlockLeavesMod
 import alfheim.common.block.colored.BlockAuroraDirt
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -8,6 +9,11 @@ import net.minecraft.item.*
 import net.minecraft.util.StatCollector
 
 class ItemBlockAurora(block: Block): ItemBlock(block) {
+	
+	override fun getMetadata(meta: Int): Int {
+		if (field_150939_a is BlockLeavesMod) return meta or field_150939_a.decayBit()
+		return meta
+	}
 	
 	override fun getColorFromItemStack(stack: ItemStack, pass: Int) = BlockAuroraDirt.getItemColor()
 	

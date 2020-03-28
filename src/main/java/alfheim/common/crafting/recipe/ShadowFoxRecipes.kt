@@ -514,7 +514,8 @@ object ShadowFoxRecipes {
 		recipesItemDisplayElven = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesLightningTree = ShadowFoxAPI.addTreeRecipe(50000,
-														  lightningSapling, 0,
+														  ItemStack(lightningSapling),
+														  ItemStack(irisSapling),
 														  350,
 														  MANA_STEEL, MANA_STEEL, MANA_STEEL,
 														  RUNE[13], // Wrath
@@ -553,7 +554,8 @@ object ShadowFoxRecipes {
 		recipesLivingwoodFunnel = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesInfernalTree = ShadowFoxAPI.addTreeRecipe(10000,
-														 netherSapling, 0,
+														 ItemStack(netherSapling),
+														 ItemStack(irisSapling),
 														 70,
 														 "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
 														 RUNE[1], // Fire
@@ -577,7 +579,8 @@ object ShadowFoxRecipes {
 		recipesInfernalStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(50000,
-													   calicoSapling, 0,
+													   ItemStack(calicoSapling),
+													   ItemStack(irisSapling),
 													   70,
 													   ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand),
 													   RUNE[11], // Greed
@@ -601,7 +604,8 @@ object ShadowFoxRecipes {
 		recipesCalicoStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000,
-														circuitSapling, 0,
+														ItemStack(circuitSapling),
+														ItemStack(irisSapling),
 														70,
 														ItemStack(Items.repeater), ItemStack(Items.comparator), ItemStack(Items.repeater),
 														RUNE[9], // Lust
@@ -686,7 +690,8 @@ object ShadowFoxRecipes {
 		}
 		
 		recipesSealingTree = ShadowFoxAPI.addTreeRecipe(50000,
-														sealingSapling, 0,
+														ItemStack(sealingSapling),
+														ItemStack(irisSapling),
 														350,
 														ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
 														RUNE[7], // Winter

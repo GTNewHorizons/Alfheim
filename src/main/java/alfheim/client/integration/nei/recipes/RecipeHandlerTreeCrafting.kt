@@ -102,7 +102,7 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
             setIngredients(recipe.inputs)
             output = PositionedStack(recipe.output, 111, 21)
             manaUsage = recipe.manaUsage
-            inputs.add(PositionedStack(ItemStack(AlfheimBlocks.irisSapling), 73, 55))
+            inputs.add(PositionedStack(recipe.core, 73, 55))
         }
 
         fun setIngredients(inputs: List<Any>) {

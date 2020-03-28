@@ -4,6 +4,7 @@ import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.core.helper.IconHelper
+import alfheim.common.core.util.safeGet
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -30,18 +31,27 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileManaInfuser()
 	override fun registerBlockIcons(reg: IIconRegister) {
-		textures = arrayOf(IconHelper.forBlock(reg, this, "Bottom"),
-						   IconHelper.forBlock(reg, this, "Top"),
-						   IconHelper.forBlock(reg, this, "Top_Active"),
-						   IconHelper.forBlock(reg, this, "Side"),
-						   IconHelper.forBlock(reg, this, "BottomDark"),
-						   IconHelper.forBlock(reg, this, "TopDark"),
-						   IconHelper.forBlock(reg, this, "SideDark")
+		val def = arrayOf(IconHelper.forBlock(reg, this, "Bottom"),
+						  IconHelper.forBlock(reg, this, "Top"),
+						  IconHelper.forBlock(reg, this, "Side")
+		)
+		
+		textures = arrayOf(
+			def,
+			arrayOf(
+				def[0],
+				IconHelper.forBlock(reg, this, "Top_Active"),
+				def[2]
+			),
+			arrayOf(
+				IconHelper.forBlock(reg, this, "BottomDark"),
+				IconHelper.forBlock(reg, this, "TopDark"),
+				IconHelper.forBlock(reg, this, "SideDark")
+			)
 		)
 	}
 	
-	override fun getIcon(side: Int, meta: Int) =
-		if (side == 0) if (meta == 2) textures[4] else textures[0] else if (side == 1) if (meta == 2) textures[5] else if (meta == 1) textures[2] else textures[1] else if (meta == 2) textures[6] else textures[3]
+	override fun getIcon(side: Int, meta: Int) = textures.safeGet(meta).safeGet(side)
 	
 	override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, placer: EntityLivingBase?, stack: ItemStack?) {
 		super.onBlockPlacedBy(world, x, y, z, placer, stack)
@@ -71,6 +81,6 @@ class BlockManaInfuser: BlockContainerMod(Material.rock), ILexiconable, IWandHUD
 	}
 	
 	companion object {
-		lateinit var textures: Array<IIcon>
+		lateinit var textures: Array<Array<IIcon>>
 	}
 }

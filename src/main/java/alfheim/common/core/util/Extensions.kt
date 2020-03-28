@@ -111,6 +111,7 @@ var ItemStack.meta
 
 fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
+val ItemStack.block: Block? get() = item.toBlock()
 
 fun <T> T.eventForge() = MinecraftForge.EVENT_BUS.register(this)
 fun <T> T.eventFML() = FMLCommonHandler.instance().bus().register(this)

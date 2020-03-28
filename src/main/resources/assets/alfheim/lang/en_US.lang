@@ -277,6 +277,7 @@ item.Transferer.name=Destructurizer
 item.alfheim:Triquetrum.name=Worldshaper's Triquetrum
 item.Triquetrum.blocks=%s blocks selected
 item.Triquetrum.rotation=Rotation %s degrees counterclockwise
+item.Triquetrum.tooLarge=Selected region is too large. Maximal main diagonal length - %s
 
 ##########################################################___OTHER___###########################################################
 
