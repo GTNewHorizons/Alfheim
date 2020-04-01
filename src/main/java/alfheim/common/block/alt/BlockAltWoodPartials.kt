@@ -39,7 +39,7 @@ class BlockAltWoodSlab(full: Boolean, source: Block = AlfheimBlocks.altPlanks):
 	
 	override fun getSingleBlock() = AlfheimBlocks.altSlabs as BlockSlab
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 8 else 150 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 8 else if (field_150004_a) 300 else 150 else 0
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
 }
@@ -72,5 +72,5 @@ class BlockYggStairs: BlockAltWoodStairs(BlockAltLeaves.yggMeta), IFuelHandler {
 	
 	override fun getHarvestTool(metadata: Int) = "Odin"
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) Int.MAX_VALUE / 8 * 3 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) Int.MAX_VALUE / 13 / 8 * 3 else 0
 }

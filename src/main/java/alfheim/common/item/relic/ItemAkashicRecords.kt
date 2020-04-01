@@ -102,11 +102,6 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		return true
 	}
 	
-	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, tooltip: MutableList<Any?>, adv: Boolean) {
-		tooltip.add("${EnumChatFormatting.DARK_RED}[WIP]")
-		super.addInformation(stack, player, tooltip, adv)
-	}
-	
 	companion object {
 		
 		const val TAG_ROTATION = "rotation"

@@ -34,7 +34,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		if (!ContributorsPrivacyHelper.isCorrect(mc.session.username, "AlexSocol"))
 			API.hideItem(ItemStack(AlfheimItems.royalStaff))
 		
-		API.hideItem(ItemStack(AlfheimBlocks.anomalyHarvester)) // FIXME back!
+		API.hideItem(ItemStack(AlfheimBlocks.anomalyHarvester)) // BACK
 	}
 	
 	override fun getName() = AlfheimCore.meta.name!!

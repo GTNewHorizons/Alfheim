@@ -37,7 +37,7 @@ import kotlin.math.*
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
  * @author AlexSocol
  */
-@Suppress("unused", "MemberVisibilityCanBePrivate")
+@Suppress("unused", "MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 object ASJUtilities {
 	
 	init {
@@ -49,7 +49,7 @@ object ASJUtilities {
 				if (GuiScreen.isShiftKeyDown()) {
 					val stack = e.itemStack
 					
-					if(stack.hasTagCompound() && e.showAdvancedItemTooltips) {
+					if (stack.hasTagCompound() && e.showAdvancedItemTooltips) {
 						e.toolTip.add("")
 						e.toolTip.add("NBT Data:")
 						e.toolTip.addAll(listOf(*toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
@@ -142,7 +142,7 @@ object ASJUtilities {
 	 * @author Vazkii
 	 */
 	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
-		world.getTileEntity(x, y, z)?.let{ dispatchTEToNearbyPlayers(it) }
+		world.getTileEntity(x, y, z)?.let { dispatchTEToNearbyPlayers(it) }
 	}
 	
 	@JvmStatic
@@ -212,7 +212,8 @@ object ASJUtilities {
 	fun isItemStackEqualCrafting(ingredient: ItemStack, input: ItemStack): Boolean {
 		return ingredient.isItemEqual(input) && when {
 			ingredient.tagCompound?.getBoolean(TAG_ASJIGNORENBT) == true -> true
-			ingredient.tagCompound?.getBoolean(TAG_ASJONLYNBT) == true -> {
+			
+			ingredient.tagCompound?.getBoolean(TAG_ASJONLYNBT) == true   -> {
 				val tags = input.tagCompound ?: return false
 				val itags = ingredient.tagCompound.copy() as NBTTagCompound
 				itags.removeTag(TAG_ASJONLYNBT)
@@ -224,7 +225,8 @@ object ASJUtilities {
 				
 				true
 			}
-			else -> ItemStack.areItemStackTagsEqual(ingredient, input)
+			
+			else                                                         -> ItemStack.areItemStackTagsEqual(ingredient, input)
 		}
 	}
 	
@@ -872,7 +874,7 @@ object ASJUtilities {
 	fun toString(nbt: NBTTagCompound): String {
 		val sb = StringBuilder("{\n")
 		for (o in nbt.tagMap.entries) {
-			val e = o as Map.Entry<*, *>
+			val e = o as Map.Entry<String, NBTBase>
 			val v = e.value
 			if (v is NBTTagList || v is NBTTagCompound) {
 				val arr = if (v is NBTTagList)

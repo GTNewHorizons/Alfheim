@@ -29,7 +29,7 @@ object SpellDispel: SpellBase("dispel", EnumRace.SALAMANDER, 1000, 600, 25) {
 		
 		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
 		
-		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		if (!tg.isParty && !InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

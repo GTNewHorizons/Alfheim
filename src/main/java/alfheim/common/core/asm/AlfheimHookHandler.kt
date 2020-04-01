@@ -2,15 +2,18 @@ package alfheim.common.core.asm
 
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
+import alfheim.api.AlfheimAPI
 import alfheim.api.block.IHourglassTrigger
 import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
 import alfheim.api.lib.LibResourceLocations
+import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
+import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
@@ -29,13 +32,15 @@ import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
+import net.minecraft.entity.boss.EntityDragon
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
+import net.minecraft.network.*
 import net.minecraft.potion.*
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.tileentity.*
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraft.world.biome.*
@@ -91,6 +96,13 @@ object AlfheimHookHandler {
 	private const val TRIPWIRE = 23
 	
 	@JvmStatic
+	@Hook(returnCondition = ON_TRUE, isMandatory = true)
+	fun registerSpell(api: AlfheimAPI, spell: SpellBase) =
+		AlfheimConfigHandler.disabledSpells.contains(spell.name).also {
+			ASJUtilities.log("${spell.name} was blacklisted in configs. Skipping registration")
+		}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
 		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
@@ -133,6 +145,15 @@ object AlfheimHookHandler {
 			}
 		
 		return pe
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun attackEntityFrom(dragon: EntityDragon, src: DamageSource, dmg: Float): Boolean {
+		if (src is DamageSourceSpell)
+			dragon.attackEntityFromPart(dragon.dragonPartHead, src, dmg)
+		
+		return false
 	}
 	
 	@JvmStatic
@@ -429,6 +450,20 @@ object AlfheimHookHandler {
 	fun getIcon(pylon: BlockPylon, side: Int, meta: Int) =
 		(if (meta == 0 || meta == 1) ModBlocks.storage.getIcon(side, meta) else Blocks.diamond_block.getIcon(side, 0))!!
 	
+	var sendToClient = true
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet): Boolean {
+		if (!sendToClient) {
+			sendToClient = true
+			
+			return true
+		}
+		
+		return false
+	}
+	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
 	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
@@ -579,6 +614,17 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getBurnTimeRemainingScaled(furnace: TileEntityFurnace, mod: Int): Int {
+		if (furnace.currentItemBurnTime == 0) {
+			furnace.currentItemBurnTime = 200
+		}
+		
+		return (furnace.furnaceBurnTime.D / furnace.currentItemBurnTime * mod).I
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun getItemIconName(block: BlockGaiaHead) = "${LibResources.PREFIX_MOD}gaiaHead"
 	
@@ -596,6 +642,32 @@ object AlfheimHookHandler {
 		val tile = world.getTileEntity(coords.posX, coords.posY, coords.posZ)
 		
 		return if (tile is IManaPool) coords else null
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getDamage(item: ItemManaMirror, stack: ItemStack, @ReturnValue result: Int) = result.clamp(0, item.maxDamage)
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, returnCondition = ALWAYS)
+	fun getManaFractionForDisplay(item: ItemManaMirror, stack: ItemStack, @ReturnValue result: Float) = result.clamp(0f, 1f - Float.MIN_VALUE)
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun getColorFromItemStack(item: ItemManaMirror, stack: ItemStack, pass: Int): Int {
+		val mana = item.getMana(stack).F
+		return if (pass == 1) Color.HSBtoRGB(0.528f, (mana / TilePool.MAX_MANA).clamp(0f, 1f), 1f) else 0xFFFFFF
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun renderManaInvBar(hh: HUDHandler, res: ScaledResolution, hasCreative: Boolean, totalMana: Int, totalMaxMana: Int): Boolean {
+		if (totalMana > totalMaxMana) {
+			hh.renderManaInvBar(res, hasCreative, totalMana, totalMana)
+			return true
+		}
+		
+		return false
 	}
 	
 	var moveText = false

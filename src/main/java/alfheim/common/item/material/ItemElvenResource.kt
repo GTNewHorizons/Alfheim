@@ -7,8 +7,11 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.BlockRainbowGrass
 import alfheim.common.core.helper.*
 import alfheim.common.item.*
+import alfheim.common.item.material.ElvenResourcesMetas.InfusedDreamwoodTwig
+import alfheim.common.item.material.ElvenResourcesMetas.MuspelheimEssence
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodCoal
 import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodSplinters
+import alfheim.common.item.material.ElvenResourcesMetas.NetherwoodTwig
 import alfheim.common.item.material.ElvenResourcesMetas.RainbowDust
 import alfheim.common.item.material.ElvenResourcesMetas.RainbowPetal
 import alfheim.common.item.material.ElvenResourcesMetas.RainbowQuartz
@@ -122,33 +125,37 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 			return true
 		} else
 		// Rainbow flower
-		if (block == ModBlocks.flower && stack.meta == RainbowDust) {
-			world.setBlock(x, y, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.FLOWER, 3)
-			for (i in 0..40) {
-				val color = Color.getHSBColor(Math.random().F + 1f / 2f, 1f, 1f)
-				Botania.proxy.wispFX(world,
-									 x.D + Math.random(), y.D + Math.random(), z.D + Math.random(),
-									 color.red / 255f, color.green / 255f, color.blue / 255f,
-									 0.5f, 0f, 0.125f, 0f)
-			}
-			world.playSoundEffect(x.D, y.D, z.D, "botania:enchanterEnchant", 1f, 1f)
-			stack.stackSize--
-			return true
-		} else
-		// Burying petal
-		if (side == 1 && AlfheimBlocks.rainbowGrass.canBlockStay(world, x, y + 1, z) && stack.meta == RainbowPetal) {
-			world.setBlock(x, y + 1, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.BURIED, 3)
-			stack.stackSize--
-			return true
-		}
+			if (block == ModBlocks.flower && stack.meta == RainbowDust) {
+				world.setBlock(x, y, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.FLOWER, 3)
+				for (i in 0..40) {
+					val color = Color.getHSBColor(Math.random().F + 1f / 2f, 1f, 1f)
+					Botania.proxy.wispFX(world,
+										 x.D + Math.random(), y.D + Math.random(), z.D + Math.random(),
+										 color.red / 255f, color.green / 255f, color.blue / 255f,
+										 0.5f, 0f, 0.125f, 0f)
+				}
+				world.playSoundEffect(x.D, y.D, z.D, "botania:enchanterEnchant", 1f, 1f)
+				stack.stackSize--
+				return true
+			} else
+			// Burying petal
+				if (side == 1 && AlfheimBlocks.rainbowGrass.canBlockStay(world, x, y + 1, z) && stack.meta == RainbowPetal) {
+					world.setBlock(x, y + 1, z, AlfheimBlocks.rainbowGrass, BlockRainbowGrass.BURIED, 3)
+					stack.stackSize--
+					return true
+				}
 		return false
 	}
 	
 	override fun getBurnTime(fuel: ItemStack): Int {
 		if (fuel.item === AlfheimItems.elvenResource) {
-			when (fuel.meta) {
-				NetherwoodSplinters, ThunderwoodSplinters -> return 100 // Splinters smelt half an item.
-				NetherwoodCoal                            -> return 2400 // Flame-Laced Coal smelts 12 items.
+			return when (fuel.meta) {
+				InfusedDreamwoodTwig, ThunderwoodTwig     -> 600 // 2
+				NetherwoodTwig                            -> 4000 // 20
+				MuspelheimEssence                         -> 12800 // 64
+				NetherwoodSplinters, ThunderwoodSplinters -> 100 // 0.5
+				NetherwoodCoal                            -> 2400 // 12
+				else                                      -> 0
 			}
 		}
 		return 0

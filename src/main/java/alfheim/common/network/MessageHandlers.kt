@@ -119,7 +119,7 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 				
 				// yes, you are. Welcome!
 				if (passMatch) {
-					// TODO proceed
+					// --> proceed
 				} else {
 					// no, you not. Get out!
 					player.playerNetServerHandler.kickPlayerFromServer("Incorrect credentials for your contributor username")
@@ -134,7 +134,7 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 				
 				// ok, your new identity will be set
 				if (passMatch) {
-					// TODO proceed
+					// --> proceed
 				} else {
 					// incorrect password for identity
 					player.playerNetServerHandler.kickPlayerFromServer("Incorrect contributor credentials")
@@ -236,7 +236,7 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 			ATTACK  -> KeyBindingHandler.atack(player)
 			CORN    -> EntityLolicorn.call(player)
 			FLIGHT  -> KeyBindingHandler.enableFlight(player, message.state)
-			ESMABIL -> CardinalSystem.forPlayer(player).toggleESMAbility()
+			ESMABIL -> KeyBindingHandler.toggleESMAbility(player)
 			CAST    -> KeyBindingHandler.cast(player, message.state, message.data)
 			UNCAST  -> KeyBindingHandler.unCast(player)
 			SEL     -> KeyBindingHandler.select(player, message.state, message.data)

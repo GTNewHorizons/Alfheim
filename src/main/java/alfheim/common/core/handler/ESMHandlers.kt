@@ -285,7 +285,7 @@ object ESMHandler {
 			!PlayerSegmentClient.esmAbility
 }
 
-object ElvenFlightHandler {
+object 	ElvenFlightHandler {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
@@ -330,7 +330,7 @@ object ElvenFlightHandler {
 		if (e.phase == TickPhase.START) return
 		val player = e.player
 		
-		if (AlfheimCore.enableElvenStory && player.race != HUMAN) {
+		if (AlfheimCore.enableElvenStory && player.race != HUMAN && !ESMHandler.isAbilityDisabled(player)) {
 			if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
 				if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 					if (player.capabilities.isFlying) {

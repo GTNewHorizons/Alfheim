@@ -11,12 +11,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.util.ForgeDirection
 
-class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodSlab(full, source), IFuelHandler {
+class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodSlab(full, source) {
 	
 	init {
 		setLightLevel(0.5f)
-		
-		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun getFullBlock() = AlfheimBlocks.netherSlabsFull as BlockSlab
@@ -31,7 +29,7 @@ class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPla
 	
 	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1000 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (field_150004_a) 2000 else 1000 else 0
 }
 
 class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodStairs(source), IFuelHandler  {

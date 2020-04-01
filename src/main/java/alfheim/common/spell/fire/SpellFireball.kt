@@ -1,9 +1,14 @@
 package alfheim.common.spell.fire
 
+import alexsocol.asjlib.*
+import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
+import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.entity.spell.EntitySpellFireball
+import alfheim.common.network.Message2d
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
 
 object SpellFireball: SpellBase("fireball", EnumRace.SALAMANDER, 1000, 50, 5) {
 	
@@ -16,8 +21,20 @@ object SpellFireball: SpellBase("fireball", EnumRace.SALAMANDER, 1000, 50, 5) {
 		get() = arrayOf(damage, duration, efficiency, radius)
 	
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
+		val target = (caster as? EntityPlayer)?.let { CardinalSystem.TargetingSystem.getTarget(it) }?.let { if (it.isParty) null else it.target }
+		
+		if (target !== caster && target != null && ASJUtilities.isNotInFieldOfVision(target, caster)) return SpellCastResult.NOTSEEING
+		
 		val result = checkCastOver(caster)
-		if (result == SpellCastResult.OK) caster.worldObj.spawnEntityInWorld(EntitySpellFireball(caster.worldObj, caster))
+		if (result == SpellCastResult.OK) {
+			val fireball = EntitySpellFireball(caster.worldObj, caster)
+			fireball.target = target
+			caster.worldObj.spawnEntityInWorld(fireball)
+			
+			if (fireball.target != null)
+				AlfheimCore.network.sendToDimension(Message2d(Message2d.m2d.FIREBALLSYNC, fireball.entityId.D, fireball.target!!.entityId.D), caster.dimension)
+		}
+		
 		return result
 	}
 }

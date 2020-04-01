@@ -54,9 +54,10 @@ object AlfheimConfigHandler {
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
 	var elvesSpawn				= intArrayOf(10, 2, 4)
-	var sheepSpawn				= intArrayOf(12, 4, 4)
 	var pigSpawn				= intArrayOf(10, 4, 4)
 	var pixieSpawn				= intArrayOf(10, 1, 2)
+	var sheepSpawn				= intArrayOf(12, 4, 4)
+	var voidCreeper				= intArrayOf(4, 1, 3)
 	
 	// OHTER
 	var anyavilBL				= emptyArray<String>()
@@ -134,6 +135,7 @@ object AlfheimConfigHandler {
 	
 	// MMO
 	var deathScreenAddTime		= 1200
+	var disabledSpells			= emptyArray<String>()
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
@@ -204,6 +206,7 @@ object AlfheimConfigHandler {
 		pigSpawn = loadProp(CATEGORY_SPAWNRATE, "pigSpawn", pigSpawn, false, "Pig spawn weight (chance), min and max group count")
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
+		voidCreeper = loadProp(CATEGORY_SPAWNRATE, "voidCreeper", voidCreeper, false, "Manaseal Creeper spawn weight (chance), min and max group count")
 		
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
@@ -272,6 +275,7 @@ object AlfheimConfigHandler {
 		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)", false)
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
+		disabledSpells = loadProp(CATEGORY_MMO, "disabledSpells", disabledSpells, true, "List of spell name IDs that won't be registered", false)
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")

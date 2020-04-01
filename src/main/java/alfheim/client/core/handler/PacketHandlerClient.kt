@@ -16,6 +16,7 @@ import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.*
+import alfheim.common.entity.spell.EntitySpellFireball
 import alfheim.common.item.relic.record.GinnungagapHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
@@ -24,6 +25,7 @@ import alfheim.common.network.Message1l.m1l
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
 import alfheim.common.network.MessageNI.mni
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.*
 
 object PacketHandlerClient {
@@ -101,6 +103,10 @@ object PacketHandlerClient {
 			m2d.MODES     -> {
 				if (packet.data1 > 0) ClientProxy.enableESM() else ClientProxy.disableESM()
 				if (packet.data2 > 0) ClientProxy.enableMMO() else ClientProxy.disableMMO()
+			}
+			
+			m2d.FIREBALLSYNC -> {
+				(mc.theWorld.getEntityByID(packet.data1.I) as? EntitySpellFireball)?.target = mc.theWorld.getEntityByID(packet.data2.I) as? EntityLivingBase
 			}
 		}
 	}

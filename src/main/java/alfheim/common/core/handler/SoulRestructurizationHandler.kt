@@ -1,6 +1,6 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.core.util.DamageSourceSpell
@@ -38,6 +38,9 @@ object SoulRestructurizationHandler {
 	@SubscribeEvent
 	fun onGaiaUpdate(e: LivingUpdateEvent) {
 		val gaia = e.entity as? EntityDoppleganger ?: return
+		
+		noWaterCheat(gaia)
+		
 		val world = gaia.worldObj
 		val infuser = world.getTileEntity(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ) as? TileManaInfuser ?: return
 		
@@ -101,11 +104,13 @@ object SoulRestructurizationHandler {
 		
 		run exp@{
 			if (!world.isRemote) {
-				if (brewer.getStackInSlot(0)?.item === AlfheimItems.flugelSoul) {
-					if (ItemFlugelSoul.getBlocked(brewer.getStackInSlot(0)) > 0) {
+				val soul = brewer.getStackInSlot(0)
+				
+				if (soul?.item === AlfheimItems.flugelSoul) {
+					if (ItemFlugelSoul.getBlocked(soul) > 0) {
 						if (gaia.isHardMode || Math.random() > 0.5) {
 							world.setBlockMetadataWithNotify(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ, 0, 3)
-							ItemFlugelSoul.setDisabled(brewer.getStackInSlot(0), ItemFlugelSoul.getBlocked(brewer.getStackInSlot(0)), false)
+							ItemFlugelSoul.setDisabled(soul, ItemFlugelSoul.getBlocked(soul), false)
 							return@exp
 						}
 					}
@@ -130,6 +135,21 @@ object SoulRestructurizationHandler {
 			gaia.dead = true
 			gaia.func_110142_aN().func_94549_h()
 			gaia.worldObj.setEntityState(gaia, 3.toByte())
+		}
+	}
+	
+	private fun noWaterCheat(gaia: EntityDoppleganger) {
+		val world = gaia.worldObj
+		val (x, y, z) = alexsocol.asjlib.math.Vector3.fromEntity(gaia)
+		val range = -3..3
+		
+		for (i in range) {
+			for (j in range) {
+				for (k in range) {
+					if (world.getBlock(x.mfloor() + i, y.mfloor() + j, z.mfloor() + k).material.isLiquid)
+						world.setBlockToAir(x.mfloor() + i, y.mfloor() + j, z.mfloor() + k)
+				}
+			}
 		}
 	}
 }

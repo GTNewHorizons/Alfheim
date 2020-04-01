@@ -102,5 +102,5 @@ class BlockAltPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 			else                       -> ShadowFoxLexiconData.irisSapling
 		}
 	}
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 4 else 300 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 4 else 300 else 0
 }

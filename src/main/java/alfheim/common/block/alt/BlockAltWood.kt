@@ -106,5 +106,5 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), IFuelHan
 		}
 	}
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (set == 1 && fuel.meta % 8 == BlockAltLeaves.yggMeta - 4) Int.MAX_VALUE else 300 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (set == 1 && fuel.meta % 8 == BlockAltLeaves.yggMeta - 4) Int.MAX_VALUE / 13 else 300 else 0
 }

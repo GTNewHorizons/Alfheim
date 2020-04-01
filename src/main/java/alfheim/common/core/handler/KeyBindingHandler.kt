@@ -22,10 +22,22 @@ object KeyBindingHandler {
 			ASJUtilities.say(player, "mes.flight.unavailable")
 		} else {
 			if (!AlfheimCore.enableElvenStory || player.race == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
+			if (!CardinalSystem.forPlayer(player).esmAbility) return
+			
 			player.capabilities.allowFlying = true
 			player.capabilities.isFlying = !player.capabilities.isFlying
 			player.sendPlayerAbilities()
 			if (boost) ElvenFlightHelper.sub(player, 300)
+		}
+	}
+	
+	fun toggleESMAbility(player: EntityPlayerMP) {
+		val seg = CardinalSystem.forPlayer(player)
+		seg.toggleESMAbility()
+		
+		if (!seg.esmAbility) {
+			player.capabilities.isFlying = false
+			player.capabilities.allowFlying = false
 		}
 	}
 	

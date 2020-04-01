@@ -22,8 +22,8 @@ class BlockRainbowWood: BlockModRotatedPillar(Material.wood) {
 		setBlockName(name)
 	}
 	
-	override fun register(par1Str: String) {
-		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, par1Str)
+	override fun register(name: String) {
+		GameRegistry.registerBlock(this, ItemIridescentBlockMod::class.java, name)
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, fortune: Int) {

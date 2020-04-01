@@ -49,7 +49,7 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 		world.setBlock(x, y+1, z, fire, 0, 1 or 2)
 	}
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 3200 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1200 else 0
 	
 	override fun isFireSource(world: World?, x: Int, y: Int, z: Int, side: ForgeDirection) = side == ForgeDirection.UP
 	

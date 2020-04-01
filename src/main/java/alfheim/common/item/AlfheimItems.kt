@@ -3,6 +3,7 @@ package alfheim.common.item
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.WorkInProgressItemsHandler.WIP
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.*
 import alfheim.common.item.creator.*
@@ -110,7 +111,7 @@ object AlfheimItems {
 	val royalStaff: Item
 
 	init {
-		akashicRecords = ItemAkashicRecords()
+		akashicRecords = ItemAkashicRecords().WIP()
 		aesirEmblem = ItemAesirEmblem()
 		astrolabe = ItemAstrolabe()
 		attributionBauble = ItemAttributionBauble()

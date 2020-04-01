@@ -7,6 +7,7 @@ import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import java.util.*
@@ -41,6 +42,6 @@ class BlockHeadFlugel: BlockSkull() {
 	override fun getDamageValue(world: World, x: Int, y: Int, z: Int) = 0
 	override fun damageDropped(meta: Int) = 0
 	override fun createNewTileEntity(world: World, meta: Int) = TileHeadFlugel()
-	override fun getIcon(side: Int, meta: Int) = AlfheimItems.flugelHead.getIconFromDamage(0)
+	override fun getIcon(side: Int, meta: Int) = Blocks.wool.getIcon(0, 6)
 	override fun getItemIconName() = "${ModInfo.MODID}:FlugelHead"
 }

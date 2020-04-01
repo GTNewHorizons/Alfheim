@@ -4,7 +4,7 @@ import alexsocol.asjlib.I
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.inn
+import alexsocol.asjlib.inn
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.block.*
 import net.minecraft.init.Blocks
