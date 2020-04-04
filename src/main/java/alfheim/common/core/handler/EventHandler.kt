@@ -28,6 +28,7 @@ import net.minecraft.enchantment.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
@@ -41,6 +42,7 @@ import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.EntityInteractEvent
 import net.minecraftforge.event.world.BlockEvent
+import ru.vamig.worldengine.WE_Biome
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
@@ -91,6 +93,9 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		if (e.entity is IMob && e.world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && e.world.getBiomeGenForCoords(e.entity.posX.mfloor(), e.entity.posZ.mfloor()) is WE_Biome)
+			e.isCanceled = true
+		
 		val player = e.entity as? EntityPlayerMP ?: return
 		val seed = player.worldObj.seed
 		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)

@@ -2,7 +2,7 @@ Innovations:
  Seal creeper spawnrate config (for all worlds)
  Gaia now deletes all liquid blocks around
  More PP values
- [MMO] New spells: Liquification places water block, ...
+ [MMO] New spells: Liquification - places water block, ...
  [MMO] Call, Join, Noclip, True Sight spells now can be used on any target
  [MMO] Spell blacklist (won't be registered)
  [MMO] Ender Dragon now can be attacked with spells
@@ -12,7 +12,8 @@ Innovations:
 Integration:
  MineTweaker:
   NBT sensitivity for mana infusion recipes and anyavil PP values
-  Tree suffusion recipes supportd, also with NBT
+  Tree suffusion recipes supported, also with NBT
 
 Fixes:
+ [ESM] Spriggan undisableable ability
  [MMO] Dispell not working on party members in not your regions

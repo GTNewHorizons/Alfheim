@@ -454,7 +454,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
-	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet): Boolean {
+	fun sendPacket(handler: NetHandlerPlayServer, packet: Packet?): Boolean {
 		if (!sendToClient) {
 			sendToClient = true
 			

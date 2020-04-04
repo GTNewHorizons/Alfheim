@@ -118,7 +118,8 @@ object ESMHandler {
 			doRaceAbility(e.player)
 		}
 		
-		if (!ASJUtilities.isServer) fixSpriggan()
+		if (!ASJUtilities.isServer)
+			fixSpriggan()
 	}
 	
 	fun doRaceAbility(player: EntityPlayer) {
@@ -261,13 +262,8 @@ object ESMHandler {
 	}
 	
 	fun fixSpriggan() {
-		if (AlfheimCore.enableElvenStory) {
-			if (mc.thePlayer.race !== SPRIGGAN) {
-				mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
-			}
-		} else {
-			mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
-		}
+		if (AlfheimCore.enableElvenStory && mc.thePlayer.race == SPRIGGAN && !isAbilityDisabled(mc.thePlayer)) return
+		mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
 	}
 	
 	fun doUndine(player: EntityPlayer) {

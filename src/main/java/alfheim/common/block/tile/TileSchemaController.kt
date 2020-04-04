@@ -3,6 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.core.handler.AlfheimConfigHandler
 import codechicken.core.CommonUtils
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
@@ -36,7 +37,7 @@ open class TileSchemaController: TileMod() {
 	var pos_xyx: Pos? = null
 	var pos_zyz: Pos? = null
 	var pos_xyz: Pos? = null
-	var range: Int = 64
+	val range get() = AlfheimConfigHandler.schemaMaxSize
 	
 	var validDir: MutableList<ForgeDirection> = ForgeDirection.VALID_DIRECTIONS.toMutableList()
 	
