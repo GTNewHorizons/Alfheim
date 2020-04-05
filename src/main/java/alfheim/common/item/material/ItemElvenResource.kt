@@ -18,6 +18,7 @@ import alfheim.common.item.material.ElvenResourcesMetas.RainbowPetal
 import alfheim.common.item.material.ElvenResourcesMetas.RainbowQuartz
 import alfheim.common.item.material.ElvenResourcesMetas.ThunderwoodSplinters
 import alfheim.common.item.material.ElvenResourcesMetas.ThunderwoodTwig
+import alfheim.common.item.material.ElvenResourcesMetas.displayBlackList
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -193,7 +194,6 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	companion object {
 		
-		val displayBlackList = arrayOf(ElvenWeed)
 		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed"/*, "Transferer" BACK*/)
 		
 		lateinit var amulet: IIcon
@@ -263,6 +263,8 @@ object ElvenResourcesMetas {
 	val ElvenWeed: Int
 	//val Transferer: Int BACK
 	
+	val displayBlackList: Array<Int>
+	
 	init {
 		val items = ItemElvenResource.subItems
 		InterdimensionalGatewayCore = items.indexOf("InterdimensionalGatewayCore")
@@ -291,5 +293,7 @@ object ElvenResourcesMetas {
 		NetherwoodCoal = items.indexOf("NetherwoodCoal")
 		ElvenWeed = items.indexOf("ElvenWeed")
 		//Transferer = items.indexOf("Transferer"); BACK
+		
+		displayBlackList = arrayOf(ElvenWeed)
 	}
 }

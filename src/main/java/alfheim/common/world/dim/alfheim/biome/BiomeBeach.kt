@@ -30,8 +30,5 @@ object BiomeBeach: BiomeAlfheim() {
 		standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.bedrock, 0.toByte(), 0, 0, 0, 0, true)
 		createChunkGen_InXZ_List.add(standardBiomeLayers)
-		
-		val r = WorldGenReedAlfheim(48)
-		decorateChunkGen_List.add(r)
 	}
 }

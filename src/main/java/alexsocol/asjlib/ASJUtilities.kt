@@ -226,7 +226,7 @@ object ASJUtilities {
 				true
 			}
 			
-			else                                                         -> ItemStack.areItemStackTagsEqual(ingredient, input)
+			else                                                         -> ingredient.areItemStackTagsEqual(input)
 		}
 	}
 	

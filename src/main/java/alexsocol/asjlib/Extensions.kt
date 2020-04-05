@@ -110,6 +110,16 @@ fun ItemStack.itemEquals(ingredient: Any): Boolean {
 	}
 }
 
+fun ItemStack.areItemStackTagsEqual(stack: ItemStack): Boolean {
+	return when {
+		stackTagCompound == null           -> stack.stackTagCompound == null || stack.stackTagCompound.hasNoTags()
+		stackTagCompound.hasNoTags()       -> stack.stackTagCompound == null || stack.stackTagCompound.hasNoTags()
+		stack.stackTagCompound == null     -> stackTagCompound == null || stackTagCompound.hasNoTags()
+		stack.stackTagCompound.hasNoTags() -> stackTagCompound == null || stackTagCompound.hasNoTags()
+		else                               -> stackTagCompound == stack.stackTagCompound
+	}
+}
+
 var ItemStack.meta
 	get() = itemDamage
 	set(meta) {
