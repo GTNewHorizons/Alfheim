@@ -381,9 +381,11 @@ object AlfheimLexiconData {
 	}
 	
 	fun initRelics() {
-		soul.setLexiconPages(PageText("0"), PageText("1"), PageText("3"),
-							 PageMultiblock("4", AlfheimMultiblocks.soul),
-							 PageText("5")).icon = ItemStack(AlfheimItems.flugelSoul)
+		soul.setLexiconPages(PageText("0"), PageText("1"), PageText("2"),
+							 PageText("3"), PageText("4"), PageText("5"),
+							 PageText("6"), PageText("7"), PageText("8"),
+							 PageMultiblock("9", AlfheimMultiblocks.soul),
+							 PageText("10")).icon = ItemStack(AlfheimItems.flugelSoul)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.flugelSoul), soul, 1)
 		
 		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)

@@ -80,8 +80,6 @@ class MessageNIHandler:  IMessageHandler<MessageNI, IMessage?> {
 class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> {
 	
 	override fun onMessage(message: MessageContributor, ctx: MessageContext): IMessage? {
-		println("Message!")
-		
 		if (ctx.side.isClient) {
 			// we are on client
 			

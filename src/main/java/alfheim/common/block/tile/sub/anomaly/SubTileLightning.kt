@@ -11,7 +11,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.player.*
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
+import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.helper.Vector3
@@ -48,10 +50,39 @@ class SubTileLightning: SubTileAnomalyBase() {
 	override val rarity: EnumAnomalityRarity
 		get() = EnumAnomalityRarity.COMMON
 	
+	var transfer = 0
+	var side = ForgeDirection.UNKNOWN
+	
 	public override fun update() {
 		if (inWG()) return
 		
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
+		
+		if (transfer > 0) {
+			transfer--
+			
+			if (side === ForgeDirection.UNKNOWN || worldObj.getBlock(x() + side.offsetX, y() + side.offsetY, z() + side.offsetZ) !== ModBlocks.pylon || worldObj.getBlockMetadata(x() + side.offsetX, y() + side.offsetY, z() + side.offsetZ) != 2) {
+				transfer = 0
+				worldObj.newExplosion(null, x().D, y().D, z().D, 10f, false, true)
+				return
+			}
+			
+			if (transfer == 1) {
+				worldObj.playSoundEffect(x().D, y().D, z().D, "botania:runeAltarCraft", 1f, 1f)
+				
+				for (i in 0..7) {
+					ve.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
+					vt.add(ve.x / 2.25, ve.y / 2.25, ve.z / 2.25)
+					ve.multiply(1.5).add(x() + side.offsetX + 0.5, y() + side.offsetY + 0.5, z() + side.offsetZ + 0.5)
+					Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
+				}
+				
+				worldObj.setBlock(x() + side.offsetX, y() + side.offsetY, z() + side.offsetZ, AlfheimBlocks.alfheimPylon, 2, 3)
+				worldObj.setBlockToAir(x(), y(), z())
+			}
+			
+			return
+		}
 		
 		if (worldObj.rand.nextInt(6000) == 0) {
 			val x = x() + Math.random() * 10 - 5
@@ -73,21 +104,17 @@ class SubTileLightning: SubTileAnomalyBase() {
 	}
 	
 	override fun onActivated(stack: ItemStack?, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Boolean {
-		if (player is EntityPlayerMP && stack != null && stack.item === ModItems.manaResource && stack.stackSize > 0 && stack.meta == 5) {
+		stack ?: return false
+		if (stack.item === ModItems.manaResource && stack.stackSize > 0 && stack.meta == 5) {
 			--stack.stackSize
 			
-			if (world.getBlock(x, y + 1, z) === ModBlocks.pylon && world.getBlockMetadata(x, y + 1, z) == 2)
-				world.setBlock(x, y + 1, z, AlfheimBlocks.alfheimPylon, 2, 3)
-			else if (world.getBlock(x, y - 1, z) === ModBlocks.pylon && world.getBlockMetadata(x, y - 1, z) == 2)
-				world.setBlock(x, y - 1, z, AlfheimBlocks.alfheimPylon, 2, 3)
-			else if (world.getBlock(x + 1, y, z) === ModBlocks.pylon && world.getBlockMetadata(x + 1, y, z) == 2)
-				world.setBlock(x + 1, y, z, AlfheimBlocks.alfheimPylon, 2, 3)
-			else if (world.getBlock(x - 1, y, z) === ModBlocks.pylon && world.getBlockMetadata(x - 1, y, z) == 2)
-				world.setBlock(x - 1, y, z, AlfheimBlocks.alfheimPylon, 2, 3)
-			else if (world.getBlock(x, y, z + 1) === ModBlocks.pylon && world.getBlockMetadata(x, y, z + 1) == 2)
-				world.setBlock(x, y, z + 1, AlfheimBlocks.alfheimPylon, 2, 3)
-			else if (world.getBlock(x, y, z - 1) === ModBlocks.pylon && world.getBlockMetadata(x, y, z - 1) == 2)
-				world.setBlock(x, y, z - 1, AlfheimBlocks.alfheimPylon, 2, 3)
+			for (d in ForgeDirection.VALID_DIRECTIONS) {
+				if (world.getBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ) === ModBlocks.pylon && world.getBlockMetadata(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == 2) {
+					transfer = 200
+					side = d
+					break
+				}
+			}
 			
 			world.playSoundEffect(x.D, y.D, z.D, "botania:runeAltarStart", 1f, 1f)
 			
@@ -98,12 +125,14 @@ class SubTileLightning: SubTileAnomalyBase() {
 				Botania.proxy.lightningFX(worldObj, vt, ve, 50f, worldObj.rand.nextLong(), 0, 0xFF0000)
 			}
 			
-			KnowledgeSystem.learn(player, Knowledge.PYLONS)
+			if (player is EntityPlayerMP)
+				KnowledgeSystem.learn(player, Knowledge.PYLONS)
 		}
 		return false
 	}
 	
 	override fun performEffect(target: Any) {
+		if (transfer > 0) return
 		if (ticks % 25 != 0) return
 		if (target !is EntityLivingBase) return
 		if (target is EntityPlayer && target.capabilities.disableDamage) return
@@ -120,7 +149,26 @@ class SubTileLightning: SubTileAnomalyBase() {
 	
 	override fun typeBits() = HEALTH
 	
+	override fun writeCustomNBT(cmp: NBTTagCompound) {
+		super.writeCustomNBT(cmp)
+		
+		cmp.setInteger(TAG_SIDE, side.ordinal)
+		if (side != ForgeDirection.UNKNOWN)
+			cmp.setInteger(TAG_TRANSFER, transfer)
+	}
+	
+	override fun readCustomNBT(cmp: NBTTagCompound) {
+		super.readCustomNBT(cmp)
+		
+		side = ForgeDirection.getOrientation(cmp.getInteger(TAG_SIDE))
+		if (side != ForgeDirection.UNKNOWN)
+			transfer = cmp.getInteger(TAG_TRANSFER)
+	}
+	
 	companion object {
 		const val radius = 12.0
+		
+		const val TAG_TRANSFER = "transfer"
+		const val TAG_SIDE = "side"
 	}
 }

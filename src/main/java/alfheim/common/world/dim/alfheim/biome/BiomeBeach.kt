@@ -1,6 +1,7 @@
 package alfheim.common.world.dim.alfheim.biome
 
 import alfheim.common.block.AlfheimBlocks
+import alfheim.common.world.dim.alfheim.customgens.WorldGenReedAlfheim
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
@@ -29,5 +30,8 @@ object BiomeBeach: BiomeAlfheim() {
 		standardBiomeLayers = WE_BiomeLayer()
 		standardBiomeLayers.add(Blocks.bedrock, 0.toByte(), 0, 0, 0, 0, true)
 		createChunkGen_InXZ_List.add(standardBiomeLayers)
+		
+		val r = WorldGenReedAlfheim(48)
+		decorateChunkGen_List.add(r)
 	}
 }

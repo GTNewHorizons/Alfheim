@@ -986,6 +986,7 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeEnhanceBucket())
 		RecipeSorter.register("${ModInfo.MODID}:enhanceBucket", RecipeEnhanceBucket::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeElvenWeed())
 	}
 	
 	fun postInit() {

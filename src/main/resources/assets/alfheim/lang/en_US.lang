@@ -176,6 +176,7 @@ item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
 item.ElementalArmor.desc4=Affined like a fish (§bWaterbreathin§7 + §bNightvision§7)
 item.ElementiumHoe.name=Elementium Hoe
 item.ElementiumHoe.desc=Sneak to hoe single block
+item.alfheim:ElvenWeed.name=Elven Weed
 item.ElvoriumBoots.name=Elvorium Boots
 item.ElvoriumChestplate.name=Elvorium Chestplate
 item.ElvoriumHelmet.name=Elvorium Helmet

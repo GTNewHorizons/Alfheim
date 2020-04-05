@@ -103,7 +103,7 @@ object AlfheimRegistry {
 		registerEntityEgg(EntityElf::class.java, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance)
-		registerEntityEgg(EntityLolicorn::class.java, "Lolicorn", 0xFFFFFF, 0xFF00FF, AlfheimCore.instance)
+		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance)
 		registerEntityEgg(EntityAlfheimPixie::class.java, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance)
 		
