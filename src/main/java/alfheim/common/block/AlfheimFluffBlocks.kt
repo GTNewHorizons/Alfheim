@@ -3,11 +3,11 @@ package alfheim.common.block
 import alexsocol.asjlib.extendables.block.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks.setHarvestLevelI
-import alfheim.common.block.base.*
+import alfheim.common.block.base.BlockStairsMod
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.block.*
+import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
@@ -64,7 +64,7 @@ object AlfheimFluffBlocks {
 		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "shrines/")
 		shrinePillar = BlockShrinePillar()
 		shrineRockWhiteStairs = object: BlockStairsMod(shrineRock, 0, "ShrineRockWhiteStairs") {
-			override fun register() { GameRegistry.registerBlock(this, ItemBlockMod::class.java, name) }
+			override fun register() { GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name) }
 			override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = null
 		}
 		shrineRockWhiteSlab = BlockRockShrineWhiteSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)

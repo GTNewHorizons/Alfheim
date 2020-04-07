@@ -1,7 +1,6 @@
 package alfmod.common.entity
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.entity.EntityAlfheimPixie
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas

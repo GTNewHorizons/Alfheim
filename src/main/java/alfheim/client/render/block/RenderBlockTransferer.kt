@@ -1,7 +1,7 @@
 package alfheim.client.render.block
 
+import alexsocol.asjlib.glTranslated
 import alfheim.api.lib.LibRenderIDs
-import alfheim.client.core.util.glTranslated
 import alfheim.common.block.tile.TileTransferer
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block

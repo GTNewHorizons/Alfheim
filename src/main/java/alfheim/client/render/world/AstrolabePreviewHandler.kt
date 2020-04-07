@@ -1,7 +1,7 @@
 package alfheim.client.render.world
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.client.core.util.*
 import alfheim.common.item.ItemAstrolabe
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block

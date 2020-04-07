@@ -1,6 +1,6 @@
 package alfheim.common.entity
 
-import alfheim.common.core.util.D
+import alexsocol.asjlib.D
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper
 import vazkii.botania.common.entity.EntityThrowableCopy

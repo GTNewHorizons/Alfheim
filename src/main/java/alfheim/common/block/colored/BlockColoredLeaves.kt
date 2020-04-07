@@ -1,9 +1,9 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.toItem
 import alfheim.api.lib.LibOreDict.LEAVES
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockLeavesMod
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemIridescentLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry

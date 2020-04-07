@@ -1,6 +1,6 @@
 package alfheim.common.crafting.recipe
 
-import alfheim.common.core.util.meta
+import alexsocol.asjlib.meta
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack

@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
+import alexsocol.asjlib.*
 import alfheim.common.block.BlockFunnel
-import alfheim.common.core.util.*
 import net.minecraft.block.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution

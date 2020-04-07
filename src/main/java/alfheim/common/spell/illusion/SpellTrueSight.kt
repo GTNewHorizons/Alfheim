@@ -1,19 +1,18 @@
 package alfheim.common.spell.illusion
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.core.handler.CardinalSystem.TargetingSystem
-import alfheim.common.core.util.*
 import alfheim.common.network.MessageVisualEffect
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
 
-object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
+object SpellTrueSight: SpellBase("truesight", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 	
 	override val usableParams
 		get() = emptyArray<Any>()
@@ -24,11 +23,11 @@ object SpellTrueSigh: SpellBase("truesigh", EnumRace.SPRIGGAN, 2000, 2500, 40) {
 		val tg = TargetingSystem.getTarget(caster as EntityPlayer)
 		val tgt = tg.target ?: return SpellCastResult.NOTARGET
 		
-		if (tg.isParty || tgt !is EntityPlayer) return SpellCastResult.WRONGTGT
+		if (tgt !is EntityPlayer) return SpellCastResult.WRONGTGT
 		
 		if (tgt !== caster && ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
 		
-		if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		if (!tg.isParty && !InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
 		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {

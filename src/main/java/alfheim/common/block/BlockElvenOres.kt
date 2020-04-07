@@ -1,8 +1,9 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.block.BlockModMeta
 import alfheim.api.ModInfo
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import alfheim.common.lexicon.AlfheimLexiconData
@@ -13,7 +14,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.item.ModItems
 import java.util.*
-import kotlin.math.*
+import kotlin.math.max
 
 class BlockElvenOres: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenOre", AlfheimTab, 2f, harvLvl = 2), ILexiconable {
 	

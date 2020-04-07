@@ -1,10 +1,9 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.api.ShadowFoxAPI
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.MultiblockComponentRainbow
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
@@ -14,6 +13,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import org.lwjgl.opengl.*
@@ -25,12 +25,15 @@ import vazkii.botania.client.core.helper.RenderHelper
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileMod
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.util.*
 import kotlin.math.*
 
 class TileTreeCrafter: TileMod(), ISparkAttachable {
 	
 	companion object {
+		const val TAG_SUFF_TILE = "SuffusedTile"
+		
 		val ITEMDISPLAY_LOCATIONS = arrayOf(Pos(-3, 1, 3), Pos(-4, 1, 0), Pos(0, 1, 4), Pos(-3, 1, -3), Pos(0, 1, -4), Pos(3, 1, -3), Pos(4, 1, 0), Pos(3, 1, 3))
 		val COLOREDWOOD_LOCATIONS = arrayOf(Pos(2, 0, 2), Pos(2, 0, 1), Pos(2, 0, -1), Pos(2, 0, -2), Pos(1, 0, 2), Pos(1, 0, -2), Pos(-1, 0, 2), Pos(-1, 0, -2), Pos(-2, 0, 2), Pos(-2, 0, 1), Pos(-2, 0, -1), Pos(-2, 0, -2))
 		val OBSIDIAN_LOCATIONS = arrayOf(Pos(3, 0, 2), Pos(3, 0, 1), Pos(3, 0, 0), Pos(3, 0, -1), Pos(3, 0, -2), Pos(2, 0, 3), Pos(2, 0, 0), Pos(2, 0, -3), Pos(1, 0, 3), Pos(1, 0, 0), Pos(1, 0, -3), Pos(0, 0, 3), Pos(0, 0, 2), Pos(0, 0, 1), Pos(0, 0, -1), Pos(0, 0, -2), Pos(0, 0, -3), Pos(-1, 0, 3), Pos(-1, 0, 0), Pos(-1, 0, -3), Pos(-2, 0, 3), Pos(-2, 0, 0), Pos(-2, 0, -3), Pos(-3, 0, 2), Pos(-3, 0, 1), Pos(-3, 0, 0), Pos(-3, 0, -1), Pos(-3, 0, -2), Pos(1, 0, 1), Pos(1, 0, -1), Pos(-1, 0, 1), Pos(-1, 0, -1))
@@ -127,10 +130,9 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 	override fun updateEntity() {
 		if (!canEnchanterExist(worldObj, xCoord, yCoord, zCoord)) {
 			val block = worldObj.getBlock(xCoord, yCoord, zCoord)
-			val meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord)
 			
 			when {
-				block === AlfheimBlocks.treeCrafterBlock   -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.irisPlanks, meta, 3)
+				block === AlfheimBlocks.treeCrafterBlock   -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.irisPlanks, worldObj.getBlockMetadata(xCoord, yCoord, zCoord), 3)
 				block === AlfheimBlocks.treeCrafterBlockRB -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.rainbowPlanks, 0, 3)
 				block === AlfheimBlocks.treeCrafterBlockAU -> worldObj.setBlock(xCoord, yCoord, zCoord, AlfheimBlocks.auroraPlanks, 0, 3)
 			}
@@ -147,7 +149,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			return //finishes execution just in case
 		}
 		
-		val recipe = getValidRecipe()
+		val recipe = getRecipe()
 		var recipeItems = ArrayList<Any?>()
 		if (recipe != null) recipeItems = ArrayList(recipe.inputs)
 		
@@ -173,7 +175,8 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			}
 		}
 		
-		if (getValidRecipe() == null) stage = 0
+		if (getRecipe() == null) stage = 0
+		
 		if (stage == 0) {
 			manaRequired = 0; mana = 0
 		}
@@ -207,7 +210,9 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			}
 			
 			2    -> {
-				forRecipe { craftingFanciness(it) }
+				forRecipe {
+					craftingFanciness(it)
+				}
 			}
 			
 			else -> {
@@ -229,17 +234,20 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		}
 	}
 	
-	fun getValidRecipe(): RecipeTreeCrafting? {
-		if (worldObj.getBlock(xCoord, yCoord - 3, zCoord) === AlfheimBlocks.irisSapling) {
-			return getRecipe()
-		}
-		return null
+	fun getCore(): ItemStack? {
+		val core = worldObj.getBlock(xCoord, yCoord - 3, zCoord)
+		if (core === Blocks.air) return null
+		
+		val stack = ItemStack(core, 1, worldObj.getBlockMetadata(xCoord, yCoord - 3, zCoord) )
+		val tile = worldObj.getTileEntity(xCoord, yCoord - 3, zCoord) ?: return stack
+		stack.tagCompound = NBTTagCompound().also { tile.writeToNBT(it); it.removeTag("x"); it.removeTag("y"); it.removeTag("z") }
+		return stack
 	}
 	
-	fun getRecipe() = ShadowFoxAPI.treeRecipes.firstOrNull { it.matches(getRecipeInputs()) }
+	fun getRecipe() = getCore()?.let { core -> ShadowFoxAPI.treeRecipes.firstOrNull { it.matches(getRecipeInputs(), core) } }
 	
 	fun forRecipe(action: (RecipeTreeCrafting) -> Unit) {
-		val recipe = getValidRecipe()
+		val recipe = getRecipe()
 		if (recipe != null) {
 			action.invoke(recipe)
 		}
@@ -268,19 +276,18 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		val recipe = getRecipe()
 		val items = getRecipeInputs()
 		if (recipe != null && (mana == 0 || manaRequired > 0)) {
-			val sapling = worldObj.getBlock(xCoord, yCoord - 3, zCoord) == AlfheimBlocks.irisSapling
 			GL11.glEnable(GL11.GL_BLEND)
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL)
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 			val progress = mana.F / manaRequired.F
 			mc.renderEngine.bindTexture(HUDHandler.manaBar)
 			GL11.glColor4f(1f, 1f, 1f, 1f)
-			RenderHelper.drawTexturedModalRect(xc + radius + 9, yc - 8, 0f, if (sapling) 0 else 22, 8, 22, 15)
+			RenderHelper.drawTexturedModalRect(xc + radius + 9, yc - 8, 0f, 0, 8, 22, 15)
 			net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting()
-			if (!sapling) RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, ItemStack(AlfheimBlocks.irisSapling), xc + radius + 16, yc + 8)
-			RenderHelper.renderProgressPie(xc + radius + 32, yc - 8, progress, recipe.output)
+			RenderItem.getInstance().renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, recipe.core, xc + radius + 16, yc + 8)
+			RenderHelper.renderProgressPie(xc + radius + 32, yc - 8, progress, recipe.out)
 			net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting()
-			if (!sapling) mc.fontRenderer.drawStringWithShadow("+", xc + radius + 14, yc + 12, 0xFFFFFF)
+			mc.fontRenderer.drawStringWithShadow("+", xc + radius + 14, yc + 12, 0xFFFFFF)
 		}
 		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting()
 		val anglePer = 360f / items.size
@@ -340,7 +347,20 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		stage = 0
 		
 		worldObj.setBlockToAir(xCoord, yCoord - 3, zCoord)
-		worldObj.setBlock(xCoord, yCoord - 3, zCoord, recipe.outputBlock, recipe.meta, 3)
+		worldObj.setBlock(xCoord, yCoord - 3, zCoord, recipe.out.block, recipe.out.meta, 3)
+		
+		if (ItemNBTHelper.getBoolean(recipe.out, TAG_SUFF_TILE, false)) {
+			val copy = recipe.out.copy()
+			copy.tagCompound.removeTag(TAG_SUFF_TILE)
+			
+			val tile = TileEntity.createAndLoadEntity(copy.tagCompound)
+			
+			tile.xCoord = xCoord
+			tile.yCoord = yCoord - 3
+			tile.zCoord = zCoord
+			
+			worldObj.setTileEntity(xCoord, yCoord - 3, zCoord, tile)
+		}
 		
 		worldObj.playSoundEffect(xCoord.D, yCoord.D, zCoord.D, "botania:enchanterEnchant", 1f, 1f)
 		

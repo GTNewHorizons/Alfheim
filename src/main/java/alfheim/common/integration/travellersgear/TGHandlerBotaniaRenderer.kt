@@ -1,6 +1,6 @@
 package alfheim.common.integration.travellersgear
 
-import alfheim.common.core.util.getActivePotionEffect
+import alexsocol.asjlib.getActivePotionEffect
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent

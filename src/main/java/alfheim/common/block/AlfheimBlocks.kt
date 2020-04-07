@@ -17,6 +17,7 @@ import alfheim.common.block.mana.*
 import alfheim.common.block.schema.*
 import alfheim.common.block.tile.*
 import alfheim.common.block.tile.sub.flower.*
+import alfheim.common.core.handler.WorkInProgressItemsHandler.WIP
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
@@ -76,6 +77,7 @@ object AlfheimBlocks {
 	val kindling: Block
 	val manaAccelerator: Block
 	val manaInfuser: Block
+	val manaTuner: Block
 	val poisonIce: Block
 	val powerStone: Block
 	val raceSelector: Block
@@ -171,7 +173,7 @@ object AlfheimBlocks {
 		amplifier = BlockAmplifier()
 		animatedTorch = BlockAnimatedTorch()
 		anomaly = BlockAnomaly()
-		anomalyHarvester = BlockAnomalyHarvester()
+		anomalyHarvester = BlockAnomalyHarvester().WIP()
 		anyavil = BlockAnyavil()
 		auroraDirt = BlockAuroraDirt()
 		auroraLeaves = BlockAuroraLeaves()
@@ -219,6 +221,7 @@ object AlfheimBlocks {
 		livingwoodFunnel = BlockFunnel()
 		manaAccelerator = BlockManaAccelerator()
 		manaInfuser = BlockManaInfuser()
+		manaTuner = BlockManaTuner()
 		poisonIce = BlockPoisonIce()
 		powerStone = BlockPowerStone()
 		raceSelector = BlockRaceSelector()

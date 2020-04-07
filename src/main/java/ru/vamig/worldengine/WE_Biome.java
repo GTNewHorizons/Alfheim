@@ -42,7 +42,7 @@ public class WE_Biome extends BiomeGenBase {
 	
 	public WE_Biome(int ID_FOR_ALL_WE_BIOMES, boolean r) {
 		super(ID_FOR_ALL_WE_BIOMES, r);
-		setBiomeName("Alfheim");
+		setBiomeName("-=|World-Engine|=-");
 		
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL);
 		

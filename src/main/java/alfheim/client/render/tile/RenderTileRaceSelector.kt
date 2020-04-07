@@ -1,12 +1,11 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelBipedNew
 import alfheim.client.render.entity.RenderWings
 import alfheim.common.block.tile.TileRaceSelector
-import alfheim.common.core.util.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity
@@ -39,7 +38,7 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 			glPushMatrix()
 			glTranslated(cx + 0.5, cy + 0.5, cz + 0.5)
 			glRotatef(180f, 1f, 0f, 0f)
-			glScalef(1f/16)
+			glScalef(1f / 16)
 			
 			font.drawString("\u2642", -5, -3, 0x0000FF)
 			font.drawString("\u2640", 2, -3, 0xFF00FF)

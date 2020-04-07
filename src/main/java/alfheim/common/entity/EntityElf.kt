@@ -1,6 +1,6 @@
 package alfheim.common.entity
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.*
 import net.minecraft.entity.monster.IMob

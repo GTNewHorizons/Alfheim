@@ -1,9 +1,8 @@
 package alfheim.common.item
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -12,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.ChunkCoordinates
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
@@ -53,7 +52,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 	
 	override fun getDamage(stack: ItemStack): Int {
 		val mana = getMana(stack).F
-		return 1000 - (mana / TilePool.MAX_MANA * 1000).I
+		return MathHelper.clamp_int(1000 - (mana / TilePool.MAX_MANA * 1000).I, 0, maxDamage)
 	}
 	
 	override fun getDisplayDamage(stack: ItemStack) = getDamage(stack)
@@ -183,7 +182,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		return if (tile is IManaPool) coords else null
 	}
 	
-	override fun getManaFractionForDisplay(stack: ItemStack) = getMana(stack).F / getMaxMana(stack).F
+	override fun getManaFractionForDisplay(stack: ItemStack) = (getMana(stack).F / getMaxMana(stack).F).clamp(0f, 1f - Float.MIN_VALUE)
 }
 
 private object DummyPool: IManaPool {

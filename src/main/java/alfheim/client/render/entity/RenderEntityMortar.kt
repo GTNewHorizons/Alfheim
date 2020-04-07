@@ -1,7 +1,6 @@
 package alfheim.client.render.entity
 
-import alfheim.client.core.util.renderBlocks
-import alfheim.common.core.util.mfloor
+import alexsocol.asjlib.*
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.Entity

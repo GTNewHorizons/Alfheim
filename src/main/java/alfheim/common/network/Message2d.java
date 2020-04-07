@@ -14,6 +14,6 @@ public class Message2d extends ASJPacket {
 	}
 	
 	public enum m2d {
-		UUID, COOLDOWN, ATTRIBUTE, MODES
+		UUID, COOLDOWN, ATTRIBUTE, MODES, FIREBALLSYNC
 	}
 }

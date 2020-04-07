@@ -1,14 +1,13 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.tile.TileItemDisplay
-import alfheim.common.core.util.*
 import alfheim.common.crafting.recipe.ShadowFoxRecipes
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*

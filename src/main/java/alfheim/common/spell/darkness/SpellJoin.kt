@@ -17,14 +17,22 @@ object SpellJoin: SpellBase("join", EnumRace.IMP, 10000, 1800, 30) {
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
-		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
 		val tg = CardinalSystem.TargetingSystem.getTarget(caster)
 		
-		if (!tg.isParty) return SpellCastResult.WRONGTGT
+		val tgt: EntityLivingBase
 		
-		val tgt = pt[tg.partyIndex] ?: return SpellCastResult.WRONGTGT
+		if (tg.isParty) {
+			val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
+			tgt = pt[tg.partyIndex] ?: return SpellCastResult.WRONGTGT
+		} else {
+			tgt = tg.target ?: return SpellCastResult.NOTARGET
+			if (ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+			if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		}
 		
 		if (tgt === caster) return SpellCastResult.WRONGTGT
+		
+		if (tgt !is EntityPlayer && tgt.dimension != caster.dimension) return SpellCastResult.WRONGTGT
 		
 		val (tx, ty, tz) = Vector3.fromEntity(tgt)
 		if (!InteractionSecurity.canDoSomethingHere(caster, tx, ty, tz, tgt.worldObj)) return SpellCastResult.NOTALLOW

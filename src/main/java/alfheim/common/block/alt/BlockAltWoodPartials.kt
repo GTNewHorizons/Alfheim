@@ -1,9 +1,9 @@
 package alfheim.common.block.alt
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
-import alfheim.common.core.util.*
 import alfheim.common.item.block.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
@@ -12,7 +12,7 @@ import net.minecraft.block.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
-import net.minecraft.util.*
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
 
 class BlockAltWoodSlab(full: Boolean, source: Block = AlfheimBlocks.altPlanks):
@@ -39,7 +39,7 @@ class BlockAltWoodSlab(full: Boolean, source: Block = AlfheimBlocks.altPlanks):
 	
 	override fun getSingleBlock() = AlfheimBlocks.altSlabs as BlockSlab
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 8 else 150 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (fuel.meta == BlockAltLeaves.yggMeta) Int.MAX_VALUE / 13 / 8 else if (field_150004_a) 300 else 150 else 0
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
 }
@@ -52,7 +52,7 @@ open class BlockAltWoodStairs(meta: Int, source: Block = AlfheimBlocks.altPlanks
 	}
 	
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = if (world.getBlockMetadata(x, y, z) == BlockAltLeaves.yggMeta) null else ShadowFoxLexiconData.irisSapling
@@ -72,5 +72,5 @@ class BlockYggStairs: BlockAltWoodStairs(BlockAltLeaves.yggMeta), IFuelHandler {
 	
 	override fun getHarvestTool(metadata: Int) = "Odin"
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) Int.MAX_VALUE / 8 * 3 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) Int.MAX_VALUE / 13 / 8 * 3 else 0
 }

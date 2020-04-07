@@ -1,10 +1,9 @@
 package alfheim.common.lexicon.page
 
+import alexsocol.asjlib.*
 import alfheim.api.crafting.recipe.RecipeManaInfuser
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.item.ItemStack

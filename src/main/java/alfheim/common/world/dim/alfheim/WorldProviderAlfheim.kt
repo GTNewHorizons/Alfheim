@@ -1,9 +1,9 @@
 package alfheim.common.world.dim.alfheim
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import alfheim.common.world.dim.alfheim.biome.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre
 import ru.vamig.worldengine.*

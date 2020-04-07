@@ -2,7 +2,7 @@ package alfheim.common.block
 
 import alfheim.api.ModInfo
 import alfheim.common.block.base.BlockModRotatedPillar
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -21,7 +21,7 @@ class BlockShrinePillar: BlockModRotatedPillar(Material.rock) {
 	}
 	
 	override fun register(name: String) {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {

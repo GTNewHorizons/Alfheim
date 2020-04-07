@@ -1,9 +1,8 @@
 package alfheim.common.integration.etfuturum
 
-import alexsocol.asjlib.*
+import alexsocol.asjlib.ASJUtilities
 import alfheim.api.ModInfo
 import alfheim.common.item.AlfheimItems.coatOfArms
-import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
 

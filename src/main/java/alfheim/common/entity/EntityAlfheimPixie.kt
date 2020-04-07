@@ -1,7 +1,6 @@
 package alfheim.common.entity
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.world.dim.alfheim.biome.BiomeField
 import baubles.common.lib.PlayerHandler

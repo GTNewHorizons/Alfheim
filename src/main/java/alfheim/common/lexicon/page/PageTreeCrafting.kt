@@ -1,7 +1,7 @@
 package vazkii.botania.common.lexicon.page
 
+import alexsocol.asjlib.mc
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import alfheim.client.core.util.mc
 import alfheim.common.block.AlfheimBlocks
 import cpw.mods.fml.relauncher.*
 import net.minecraft.item.ItemStack

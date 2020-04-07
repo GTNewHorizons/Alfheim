@@ -1,7 +1,8 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier

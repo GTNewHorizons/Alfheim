@@ -1,7 +1,6 @@
 package alfheim.common.entity.boss.ai.flugel
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.F
+import alexsocol.asjlib.*
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemFlugelSoul.Companion.TAG_ATTACKER_ID

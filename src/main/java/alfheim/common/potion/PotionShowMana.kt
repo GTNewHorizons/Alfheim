@@ -1,10 +1,9 @@
 package alfheim.common.potion
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import net.minecraft.entity.EntityLivingBase
 import kotlin.math.sqrt
 

@@ -1,10 +1,10 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
 import alfheim.common.achievement.AlfheimAchievements
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.*
 import alfheim.common.item.relic.ShootHelper.isLookingAtMoon
 import com.google.common.collect.Multimap

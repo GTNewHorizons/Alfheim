@@ -1,8 +1,7 @@
 package alfheim.client.render.particle
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.client.core.util.*
-import alfheim.common.core.util.mfloor
 import net.minecraft.block.BlockLiquid
 import net.minecraft.client.particle.EntityFX
 import net.minecraft.client.renderer.Tessellator

@@ -1,9 +1,9 @@
 package alfheim.common.block.colored.rainbow
 
+import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemIridescentBlockMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry

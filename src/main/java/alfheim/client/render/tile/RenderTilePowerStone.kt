@@ -1,8 +1,8 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.mc
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.common.block.tile.TilePowerStone
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.tileentity.TileEntity

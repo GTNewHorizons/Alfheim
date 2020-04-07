@@ -1,16 +1,12 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
-import alfheim.common.core.util.*
-import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ItemElvenResource
-import alfheim.common.item.relic.ItemTankMask
-import baubles.common.lib.PlayerHandler
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -63,25 +59,25 @@ object RenderContributors {
 		glColor4f(1f, 1f, 1f, 1f)
 		
 		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
-			run {
-				// jojo's mask
-				if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
-					val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
-					val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
-					val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
-					
-					glPushMatrix()
-					glRotatef(yawOffset, 0f, -1f, 0f)
-					glRotatef(yaw - 270, 0f, 1f, 0f)
-					glRotatef(pitch, 0f, 0f, 1f)
-					glColor4f(0.375f, 0f, 0f, 1f)
-					val mask = ItemStack(AlfheimItems.mask)
-					mask.setStackDisplayName("kono dio da")
-					(AlfheimItems.mask as ItemTankMask).onPlayerBaubleRender(mask, e, IBaubleRender.RenderType.HEAD)
-					
-					glPopMatrix()
-				}
-			}
+			//run {
+			//	// jojo's mask
+			//	if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
+			//		val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
+			//		val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
+			//		val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
+			//
+			//		glPushMatrix()
+			//		glRotatef(yawOffset, 0f, -1f, 0f)
+			//		glRotatef(yaw - 270, 0f, 1f, 0f)
+			//		glRotatef(pitch, 0f, 0f, 1f)
+			//		glColor4f(0.375f, 0f, 0f, 1f)
+			//		val mask = ItemStack(AlfheimItems.mask)
+			//		mask.setStackDisplayName("kono dio da")
+			//		(AlfheimItems.mask as ItemTankMask).onPlayerBaubleRender(mask, e, IBaubleRender.RenderType.HEAD)
+			//
+			//		glPopMatrix()
+			//	}
+			//}
 			
 			run {
 				// devil wings

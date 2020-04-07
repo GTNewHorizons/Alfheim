@@ -8,7 +8,6 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.api.security.ISecurityManager
 import alfheim.api.spell.SpellBase
 import alfheim.common.block.tile.TileAnomalyHarvester
-import alfheim.common.core.util.meta
 import com.google.common.collect.Lists
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
@@ -78,26 +77,27 @@ object AlfheimAPI {
 	
 	fun getPinkness(item: ItemStack) =
 		pinkness.keys
-			.firstOrNull { it.item === item.item && it.meta == item.meta }
+			.firstOrNull { ASJUtilities.isItemStackEqualCrafting(it, item) }
 			?.let { pinkness[it]!! } ?: 0
 	
 	/**
 	 * Registers spell for some race by affinity
-	 * <br></br>
-	 * Note:<br></br>
-	 * Salamander - Fire<br></br>
-	 * Sylph - Wind<br></br>
-	 * Cait Sith - Nature<br></br>
-	 * Pooka - Sound<br></br>
-	 * Gnome - Earth<br></br>
-	 * Leprechaun - Tech<br></br>
-	 * Spriggan - Illusion<br></br>
-	 * Undine - Water<br></br>
-	 * Imp - Darkness<br></br>
+	 * 
+	 * Note:
+	 * Salamander - Fire
+	 * Sylph - Wind
+	 * Cait Sith - Nature
+	 * Pooka - Sound
+	 * Gnome - Earth
+	 * Leprechaun - Tech
+	 * Spriggan - Illusion
+	 * Undine - Water
+	 * Imp - Darkness
 	 */
 	fun registerSpell(spell: SpellBase) {
-		require(spell.race != EnumRace.HUMAN) { "Spell race must be one of the elements" }
-		require(spell.race != EnumRace.ALV) { "This race is currently not supported" }
+		// here goes hook to disable spell in configs
+		require(spell.race != EnumRace.HUMAN) { "Spell race must not be human (spell ${spell.name})" }
+		require(spell.race != EnumRace.ALV) { "Alv race is currently not supported (spell ${spell.name})" }
 		
 		if (spells.add(spell)) {
 			checkGet(spell.race).add(spell)
@@ -138,16 +138,16 @@ object AlfheimAPI {
 		throw IllegalArgumentException("Client-server spells desynchronization. Not found ID for " + spell.name)
 	}
 	
-	/** Register anomaly subtile with unique [name] and [behavior] */
-	fun registerAnomaly(name: String, behavior: Class<out SubTileAnomalyBase>) {
+	/** Register anomaly [subtile] with unique [name] */
+	fun registerAnomaly(name: String, subtile: Class<out SubTileAnomalyBase>) {
 		if (anomalies.containsKey(name)) throw IllegalArgumentException("Anomaly \"$name\" is already registered")
-		anomalies[name] = behavior
+		anomalies[name] = subtile
 		
 		try {
-			anomalyInstances[name] = behavior.newInstance()
+			anomalyInstances[name] = subtile.newInstance()
 		} catch (e: Throwable) {
-			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, e, "Cannot instantiate anomaly subtile for ${behavior.canonicalName}")
-			throw IllegalArgumentException("Uninstantiatable anomaly subtile.")
+			FMLRelaunchLog.log(Loader.instance().activeModContainer().modId.toUpperCase(), Level.ERROR, e, "Cannot instantiate anomaly subtile for ${subtile.canonicalName}")
+			throw IllegalArgumentException("Uninstantiatable anomaly subtile $subtile")
 		}
 	}
 	

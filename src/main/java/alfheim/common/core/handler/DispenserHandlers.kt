@@ -1,7 +1,7 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.entity.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas

@@ -1,8 +1,8 @@
 package alfheim.client.gui
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator
 import org.lwjgl.opengl.GL11.*

@@ -1,8 +1,8 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileEntityStar
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemStarPlacer
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.Optional

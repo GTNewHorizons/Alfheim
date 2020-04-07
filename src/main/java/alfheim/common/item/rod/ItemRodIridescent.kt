@@ -1,8 +1,8 @@
 package alfheim.common.item.rod
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.item.ItemIridescent
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import net.minecraft.block.Block

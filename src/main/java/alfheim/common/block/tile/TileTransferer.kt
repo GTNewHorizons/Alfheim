@@ -1,9 +1,8 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.core.util.*
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution

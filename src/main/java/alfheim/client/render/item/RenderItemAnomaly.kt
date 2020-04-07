@@ -1,15 +1,14 @@
 package alfheim.client.render.item
 
+import alexsocol.asjlib.*
 import alfheim.api.AlfheimAPI
 import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import alfheim.common.item.block.ItemBlockAnomaly
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.IItemRenderer.ItemRenderType
 import org.lwjgl.opengl.GL11.*

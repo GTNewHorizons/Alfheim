@@ -1,9 +1,8 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.block.BlockTradePortal
 import alfheim.common.block.tile.TileTradePortal
-import alfheim.common.core.util.D
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.texture.TextureMap

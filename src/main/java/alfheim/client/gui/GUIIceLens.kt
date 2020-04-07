@@ -1,10 +1,9 @@
 package alfheim.client.gui
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.Tessellator

@@ -1,8 +1,7 @@
 package alfheim.common.core.helper
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
-import alfheim.common.core.util.*
 import alfheim.common.network.MessageContributor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent
@@ -13,7 +12,6 @@ import java.nio.charset.Charset
 import java.security.*
 import java.util.*
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.experimental.xor
 

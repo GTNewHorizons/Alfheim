@@ -1,8 +1,8 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.colored.BlockColoredLamp
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -10,7 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.ILexiconable
@@ -49,7 +49,7 @@ class BlockKindling: BlockMod(Material.cloth), IFuelHandler, ILexiconable {
 		world.setBlock(x, y+1, z, fire, 0, 1 or 2)
 	}
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 3200 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1200 else 0
 	
 	override fun isFireSource(world: World?, x: Int, y: Int, z: Int, side: ForgeDirection) = side == ForgeDirection.UP
 	

@@ -37,6 +37,7 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.dwardTrapDoor
 import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
 import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
@@ -62,7 +63,6 @@ import alfheim.common.block.AlfheimFluffBlocks.shrinePillar
 import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
-import alfheim.common.block.AlfheimFluffBlocks.dwardTrapDoor
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
@@ -123,6 +123,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks.*
 import vazkii.botania.common.block.ModFluffBlocks.*
 import vazkii.botania.common.block.tile.mana.TilePool
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
@@ -926,7 +927,7 @@ object AlfheimRecipes {
 		
 		recipeManaStoneGreater = addInfuserRecipe(ItemStack(manaStoneGreater, 1, 1000),
 												  TilePool.MAX_MANA * 4,
-												  ItemStack(manaStone, 1, WILDCARD_VALUE),
+												  ItemStack(manaStone, 1, WILDCARD_VALUE).also { ItemNBTHelper.setBoolean(it, ASJUtilities.TAG_ASJIGNORENBT, true) },
 												  ItemStack(manaResource, 4, 5),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.MuspelheimEssence),
 												  ItemStack(elvenResource, 1, ElvenResourcesMetas.NiflheimEssence))
@@ -985,6 +986,7 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeEnhanceBucket())
 		RecipeSorter.register("${ModInfo.MODID}:enhanceBucket", RecipeEnhanceBucket::class.java, RecipeSorter.Category.SHAPELESS, "")
+		addRecipe(RecipeElvenWeed())
 	}
 	
 	fun postInit() {

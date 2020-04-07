@@ -1,10 +1,10 @@
 package alfheim.common.block.mana
 
 import alexsocol.asjlib.extendables.TileItemContainer
+import alexsocol.asjlib.mfloor
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileManaAccelerator
-import alfheim.common.core.util.mfloor
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block

@@ -1,8 +1,8 @@
 package alfheim.client.render.block
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.IDoublePlant
-import alfheim.common.core.util.*
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*

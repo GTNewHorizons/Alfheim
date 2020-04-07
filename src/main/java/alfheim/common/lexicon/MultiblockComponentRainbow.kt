@@ -1,9 +1,9 @@
 package alfheim.common.lexicon
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.FMLLaunchHandler
 import net.minecraft.block.Block
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.World
 import vazkii.botania.api.BotaniaAPI

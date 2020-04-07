@@ -9,10 +9,10 @@ import kotlin.math.*
  */
 class Quaternion {
 	
-	var x: Double = 0.toDouble()
-	var y: Double = 0.toDouble()
-	var z: Double = 0.toDouble()
-	var s: Double = 0.toDouble()
+	var x = 0.0
+	var y = 0.0
+	var z = 0.0
+	var s = 0.0
 	
 	constructor() {
 		s = 1.0

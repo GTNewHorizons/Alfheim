@@ -1,5 +1,6 @@
 package alexsocol.asjlib.render
 
+import alexsocol.asjlib.I
 import cpw.mods.fml.common.Loader
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
@@ -26,7 +27,7 @@ object ASJShaderHelper {
 		
 		if (shaderID != 0) {
 			if (Minecraft.getMinecraft().theWorld != null) {
-				glUniform1i(glGetUniformLocation(shaderID, "time"), (Minecraft.getMinecraft().theWorld.totalWorldTime / 20).toInt())
+				glUniform1i(glGetUniformLocation(shaderID, "time"), (Minecraft.getMinecraft().theWorld.totalWorldTime / 20).I)
 				glUniform1f(glGetUniformLocation(shaderID, "ftime"), Minecraft.getMinecraft().theWorld.totalWorldTime / 20f)
 			}
 			

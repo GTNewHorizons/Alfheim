@@ -1,14 +1,12 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.entity.EnumRace.*
 import alfheim.api.event.PlayerChangedRaceEvent
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
-import alfheim.client.core.util.mc
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
 import alfheim.common.network.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.*
@@ -120,7 +118,8 @@ object ESMHandler {
 			doRaceAbility(e.player)
 		}
 		
-		if (!ASJUtilities.isServer) fixSpriggan()
+		if (!ASJUtilities.isServer)
+			fixSpriggan()
 	}
 	
 	fun doRaceAbility(player: EntityPlayer) {
@@ -263,13 +262,8 @@ object ESMHandler {
 	}
 	
 	fun fixSpriggan() {
-		if (AlfheimCore.enableElvenStory) {
-			if (mc.thePlayer.race !== SPRIGGAN) {
-				mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
-			}
-		} else {
-			mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
-		}
+		if (AlfheimCore.enableElvenStory && mc.thePlayer.race == SPRIGGAN && !isAbilityDisabled(mc.thePlayer)) return
+		mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
 	}
 	
 	fun doUndine(player: EntityPlayer) {
@@ -287,7 +281,7 @@ object ESMHandler {
 			!PlayerSegmentClient.esmAbility
 }
 
-object ElvenFlightHandler {
+object 	ElvenFlightHandler {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
@@ -332,7 +326,7 @@ object ElvenFlightHandler {
 		if (e.phase == TickPhase.START) return
 		val player = e.player
 		
-		if (AlfheimCore.enableElvenStory && player.race != HUMAN) {
+		if (AlfheimCore.enableElvenStory && player.race != HUMAN && !ESMHandler.isAbilityDisabled(player)) {
 			if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
 				if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 					if (player.capabilities.isFlying) {

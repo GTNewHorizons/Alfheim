@@ -1,7 +1,8 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.getActivePotionEffect
 import alfheim.AlfheimCore
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional

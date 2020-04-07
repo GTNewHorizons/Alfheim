@@ -1,6 +1,6 @@
 package alexsocol.asjlib.command
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.event.FMLServerStartingEvent
 import net.minecraft.command.*
 import net.minecraft.entity.player.EntityPlayer
@@ -28,7 +28,7 @@ class CommandDimTP private constructor(): CommandBase() {
 					var s: ChunkCoordinates? = sender.getBedLocation(id)
 					// stupid minecraft returns overworld coordinates in ANY dimension
 					if (s == null) s = w.spawnPoint
-					ASJUtilities.sendToDimensionWithoutPortal(sender, id, s!!.posX.toDouble(), s.posY.toDouble(), s.posZ.toDouble())
+					ASJUtilities.sendToDimensionWithoutPortal(sender, id, s!!.posX.D, s.posY.D, s.posZ.D)
 				} catch (e: Throwable) {
 					throw WrongUsageException("alfheim.commands.tpdim.worlderr")
 				}

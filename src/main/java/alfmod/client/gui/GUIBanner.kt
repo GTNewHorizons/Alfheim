@@ -1,6 +1,6 @@
 package alfmod.client.gui
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.mc
 import alfmod.AlfheimModularCore
 import alfmod.common.core.handler.WRATH_OF_THE_WINTER
 import cpw.mods.fml.common.FMLCommonHandler

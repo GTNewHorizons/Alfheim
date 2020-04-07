@@ -1,8 +1,9 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.I
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
@@ -20,7 +21,7 @@ class BlockModTrapDoor(material: Material, val name: String): BlockTrapDoor(mate
 	
 	override fun setBlockName(name: String): Block {
 		if (shouldRegisterInNameSet())
-			GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+			GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

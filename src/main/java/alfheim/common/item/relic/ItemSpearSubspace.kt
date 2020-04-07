@@ -1,8 +1,9 @@
 package alfheim.common.item.relic
 
+import alexsocol.asjlib.D
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.*
 import com.google.common.collect.Multimap
 import cpw.mods.fml.common.FMLCommonHandler

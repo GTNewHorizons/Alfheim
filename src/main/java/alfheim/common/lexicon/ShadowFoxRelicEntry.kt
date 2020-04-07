@@ -1,6 +1,6 @@
 package alfheim.common.lexicon
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.mc
 import net.minecraft.block.Block
 import net.minecraft.item.*
 import vazkii.botania.api.lexicon.LexiconCategory

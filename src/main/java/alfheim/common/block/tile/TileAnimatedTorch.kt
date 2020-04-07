@@ -1,8 +1,7 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution

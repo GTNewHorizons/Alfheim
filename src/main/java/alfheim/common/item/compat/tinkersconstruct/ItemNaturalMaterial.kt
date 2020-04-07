@@ -1,6 +1,6 @@
 package alfheim.common.item.compat.tinkersconstruct
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.item.ItemMod
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs

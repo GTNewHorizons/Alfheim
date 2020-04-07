@@ -22,7 +22,6 @@ import cpw.mods.fml.common.event.*
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
 import cpw.mods.fml.relauncher.Side
-import net.minecraft.potion.Potion
 import vazkii.botania.common.Botania
 import java.util.*
 
@@ -72,11 +71,6 @@ class AlfheimCore {
 			jingleTheBells = (month == 12 && date >= 16 || month == 1 && date <= 8)
 			winter = month in arrayOf(1, 2, 12)
 		}
-	}
-	
-	@EventHandler
-	fun constructing(e: FMLConstructionEvent) {
-		Potion.potionTypes = Potion.potionTypes.copyOf(AlfheimConfigHandler.potionSlots)
 	}
 	
 	@EventHandler

@@ -202,8 +202,8 @@ open class OrientedBB() {
 	fun intersectsWith(obb: OrientedBB) = intersectsWith(this, obb)
 	
 	class Interval {
-		var min: Double = 0.toDouble()
-		var max: Double = 0.toDouble()
+		var min = 0.0
+		var max = 0.0
 	}
 	
 	/**

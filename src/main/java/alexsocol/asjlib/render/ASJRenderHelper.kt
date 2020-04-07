@@ -1,5 +1,6 @@
 package alexsocol.asjlib.render
 
+import alexsocol.asjlib.D
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.Entity
@@ -115,7 +116,7 @@ object ASJRenderHelper {
 		Tessellator.instance.draw()
 		Tessellator.instance.setTranslation(0.0, 0.0, 0.0)
 		glPushMatrix()
-		glTranslated(X.toDouble(), 0.0, Z.toDouble())
+		glTranslated(X.D, 0.0, Z.D)
 	}
 	
 	/**
@@ -129,6 +130,6 @@ object ASJRenderHelper {
 		val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
 		glPopMatrix()
 		Tessellator.instance.startDrawingQuads()
-		Tessellator.instance.setTranslation(X.toDouble(), 0.0, Z.toDouble())
+		Tessellator.instance.setTranslation(X.D, 0.0, Z.D)
 	}
 }

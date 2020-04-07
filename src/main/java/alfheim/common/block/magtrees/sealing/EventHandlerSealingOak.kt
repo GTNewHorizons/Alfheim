@@ -1,7 +1,6 @@
 package alfheim.common.block.magtrees.sealing
 
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.I
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.client.audio.*
 import net.minecraft.util.ResourceLocation

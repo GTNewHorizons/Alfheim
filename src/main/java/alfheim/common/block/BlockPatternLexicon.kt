@@ -1,8 +1,7 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alexsocol.asjlib.*
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
@@ -14,7 +13,7 @@ import net.minecraft.world.*
 import vazkii.botania.api.lexicon.*
 import java.util.*
 
-open class BlockPatternLexicon(modid: String, material: Material, name: String, tab: CreativeTabs? = null, lightlvl: Float = 0f, lightOpacity: Int = 255, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resistance: Float = 5f, sound: SoundType? = ASJUtilities.soundFromMaterial(material), private val isOpaque: Boolean = false, private val isBeacon: Boolean = false, private val isFalling: Boolean = false, private val entry: LexiconEntry? = null): BlockFalling(material), ILexiconable {
+open class BlockPatternLexicon(modid: String, material: Material, name: String, tab: CreativeTabs? = null, lightlvl: Float = 0f, lightOpacity: Int = 255, hardness: Float = 1f, harvTool: String = "pickaxe", harvLvl: Int = 1, resistance: Float = 5f, sound: SoundType? = ASJUtilities.soundFromMaterial(material), private val isOpaque: Boolean = true, private val isBeacon: Boolean = false, private val isFalling: Boolean = false, private val entry: LexiconEntry? = null): BlockFalling(material), ILexiconable {
 	
 	init {
 		setBlockName(name)
@@ -29,7 +28,7 @@ open class BlockPatternLexicon(modid: String, material: Material, name: String, 
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

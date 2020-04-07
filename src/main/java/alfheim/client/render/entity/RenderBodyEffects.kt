@@ -1,9 +1,8 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.getActivePotionEffect
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render

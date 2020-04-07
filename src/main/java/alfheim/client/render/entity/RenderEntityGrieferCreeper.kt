@@ -1,7 +1,7 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.F
 import alfheim.api.ModInfo
-import alfheim.common.core.util.F
 import net.minecraft.client.model.ModelCreeper
 import net.minecraft.client.renderer.entity.RenderCreeper
 import net.minecraft.entity.Entity

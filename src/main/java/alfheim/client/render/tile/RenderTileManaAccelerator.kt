@@ -1,13 +1,12 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.client.model.block.ModelSimpleItemHolder
 import alfheim.common.block.tile.TileManaAccelerator
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.F
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.tileentity.TileEntity

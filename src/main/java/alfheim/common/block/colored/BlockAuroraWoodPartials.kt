@@ -1,22 +1,23 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.toBlock
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.*
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.ItemColoredSlabMod
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 
-class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17") {
+class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auroraPlanks): BlockSlabMod(full, 0, source, source.unlocalizedName.replace("tile.".toRegex(), "") + "Slab" + (if (full) "Full" else "") + "17"), IFuelHandler {
     
     init {
         setResistance(10f)
+		GameRegistry.registerFuelHandler(this)
     }
 	
 	override fun register() {
@@ -35,6 +36,8 @@ class BlockAuroraWoodSlab(full: Boolean, source: Block = AlfheimBlocks.auroraPla
     override fun getSingleBlock() = AlfheimBlocks.auroraSlab as BlockSlab
     
     override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = (source as ILexiconable).getEntry(world, x, y, z, player, lexicon)!!
+	
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item.toBlock() === this) if (field_150004_a) 300 else 150 else 0
 }
 
 class BlockAuroraWoodStairs(source: Block = AlfheimBlocks.auroraPlanks):

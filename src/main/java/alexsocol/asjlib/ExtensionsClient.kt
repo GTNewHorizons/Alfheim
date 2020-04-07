@@ -1,4 +1,4 @@
-package alfheim.client.core.util
+package alexsocol.asjlib
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityClientPlayerMP

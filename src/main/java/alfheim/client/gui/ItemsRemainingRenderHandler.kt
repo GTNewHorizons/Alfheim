@@ -1,14 +1,13 @@
 package alfheim.client.gui
 
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL

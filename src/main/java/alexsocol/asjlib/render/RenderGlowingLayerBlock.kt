@@ -1,5 +1,6 @@
 package alexsocol.asjlib.render
 
+import alexsocol.asjlib.*
 import cpw.mods.fml.client.registry.*
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
@@ -54,13 +55,13 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		fun renderAllSides(world: IBlockAccess, x: Int, y: Int, z: Int, block: Block, renderer: RenderBlocks, allsides: Boolean, getIcon: (Int, Int) -> IIcon?) {
 			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex())
 				if (allsides || block.shouldSideBeRendered(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ, i))
-					getIcon.invoke(i, world.getBlockMetadata(x, y, z))?.let { renderers[i].invoke(renderer, block, x.toDouble(), y.toDouble(), z.toDouble(), it) }
+					getIcon.invoke(i, world.getBlockMetadata(x, y, z))?.let { renderers[i].invoke(renderer, block, x.D, y.D, z.D, it) }
 		}
 		
 		fun drawFaces(renderblocks: RenderBlocks, block: Block, getIcon: (Int) -> IIcon?) {
 			for ((i, d) in ForgeDirection.VALID_DIRECTIONS.withIndex()) {
 				Tessellator.instance.startDrawingQuads()
-				Tessellator.instance.setNormal(d.offsetX.toFloat(), d.offsetY.toFloat(), d.offsetZ.toFloat())
+				Tessellator.instance.setNormal(d.offsetX.F, d.offsetY.F, d.offsetZ.F)
 				getIcon.invoke(i)?.let { renderers[i].invoke(renderblocks, block, -0.5, -0.5, -0.5, it) }
 				Tessellator.instance.draw()
 			}

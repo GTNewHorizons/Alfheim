@@ -1,8 +1,9 @@
 package alfheim.common.block.colored.rainbow
 
+import alexsocol.asjlib.*
 import alfheim.common.core.helper.InterpolatedIconHelper
-import alfheim.common.core.util.*
-import alfheim.common.item.block.ItemBlockMod
+import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.Optional.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.registry.GameRegistry
@@ -60,7 +61,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 		return super.setBlockName(name)
 	}
 	

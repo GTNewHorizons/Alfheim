@@ -1,8 +1,9 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
-import alfheim.common.core.util.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
@@ -58,6 +59,11 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 				val J = max(first.posY, y)
 				val K = max(first.posZ, z)
 				
+				if (AlfheimConfigHandler.triquetrumMaxDiagonal != -1.0 && Vector3.pointDistanceSpace(i, j, k, I, J, K) > AlfheimConfigHandler.triquetrumMaxDiagonal) {
+					ASJUtilities.say(player, "item.Triquetrum.tooLarge", AlfheimConfigHandler.triquetrumMaxDiagonal)
+					return false
+				}
+				
 				setFirstPosition(stack, i, j, k)
 				setSecondPosition(stack, I, J, K)
 			}
@@ -86,8 +92,10 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 							if (!InteractionSecurity.canDoSomethingHere(player, i, j, k, world)) continue
 							
 							val block = world.getBlock(i, j, k) // block to be moved
+							if (block.getBlockHardness(world, i, j, k) == -1f && !player.capabilities.isCreativeMode) continue
+							
 							val meta = world.getBlockMetadata(i, j, k)
-							var flag = false
+							
 							val nbt = NBTTagCompound()
 							
 							if (block is ITileEntityProvider) world.getTileEntity(i, j, k)?.writeToNBT(nbt)
@@ -117,7 +125,7 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 								return false
 							}
 							
-							flag = when (rotation) {
+							val flag = when (rotation) {
 								0    -> setBlockTile(world, x + xOff + dir.offsetX, y + yOff + dir.offsetY, z + zOff + dir.offsetZ, block, meta, nbt)
 								1    -> setBlockTile(world, x + zOff + dir.offsetX, y + yOff + dir.offsetY, z - xOff + dir.offsetZ, block, meta, nbt)
 								2    -> setBlockTile(world, x - xOff + dir.offsetX, y + yOff + dir.offsetY, z - zOff + dir.offsetZ, block, meta, nbt)

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package alfheim.common.core.util
+package alexsocol.asjlib
 
 /**
  * Checks if element reference is in array

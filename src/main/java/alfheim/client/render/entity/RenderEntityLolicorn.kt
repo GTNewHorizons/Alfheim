@@ -1,7 +1,7 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.mc
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.client.model.entity.ModelEntityLolicorn
 import alfheim.common.entity.EntityLolicorn
 import net.minecraft.client.renderer.entity.RenderLiving

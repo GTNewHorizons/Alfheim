@@ -1,8 +1,8 @@
 package alfheim.api.entity
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.event.PlayerChangedRaceEvent
-import alfheim.common.core.util.*
 import net.minecraft.entity.ai.attributes.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.*

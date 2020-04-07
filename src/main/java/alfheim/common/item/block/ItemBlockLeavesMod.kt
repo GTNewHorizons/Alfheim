@@ -5,9 +5,9 @@ import alfheim.common.block.base.BlockLeavesMod
 import net.minecraft.block.Block
 import net.minecraft.item.*
 
-open class ItemBlockMod(block: Block): ItemBlock(block) {
- 
-	override fun setUnlocalizedName(name: String?): ItemBlock? {
+open class ItemBlockLeavesMod(block: Block): ItemBlock(block) {
+	
+	override fun setUnlocalizedName(name: String): ItemBlock? {
 		(this as Item).unlocalizedName = name
 		return this
 	}
@@ -17,8 +17,8 @@ open class ItemBlockMod(block: Block): ItemBlock(block) {
 		return meta
 	}
 	
-	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		getUnlocalizedNameInefficiently_(par1ItemStack).replace("tile.", "tile.${ModInfo.MODID}:")
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		getUnlocalizedNameInefficiently_(stack).replace("tile.", "tile.${ModInfo.MODID}:")
 	
 	fun getUnlocalizedNameInefficiently_(stack: ItemStack) = super.getUnlocalizedNameInefficiently(stack)!!
 }

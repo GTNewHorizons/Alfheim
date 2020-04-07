@@ -1,11 +1,11 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnyavil
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*

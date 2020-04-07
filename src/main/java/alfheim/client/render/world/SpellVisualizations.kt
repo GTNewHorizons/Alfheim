@@ -1,10 +1,9 @@
 package alfheim.client.render.world
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibShaderIDs
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
 import alfheim.common.spell.tech.SpellTimeStop
 import net.minecraft.client.renderer.Tessellator
 import org.lwjgl.opengl.GL11.*

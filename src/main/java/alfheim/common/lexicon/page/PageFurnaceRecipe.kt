@@ -1,7 +1,7 @@
 package alfheim.common.lexicon.page
 
+import alexsocol.asjlib.mc
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.init.Blocks

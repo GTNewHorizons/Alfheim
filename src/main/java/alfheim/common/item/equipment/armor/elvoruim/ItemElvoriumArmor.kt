@@ -1,8 +1,9 @@
 package alfheim.common.item.equipment.armor.elvoruim
 
+import alexsocol.asjlib.*
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import com.google.common.collect.*

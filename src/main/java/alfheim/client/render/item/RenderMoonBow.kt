@@ -1,7 +1,6 @@
 package alfheim.client.render.item
 
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.meta
+import alexsocol.asjlib.*
 import cpw.mods.fml.relauncher.ReflectionHelper
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.player.EntityPlayer

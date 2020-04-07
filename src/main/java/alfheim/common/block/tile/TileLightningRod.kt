@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.entity.FakeLightning
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.init.Blocks

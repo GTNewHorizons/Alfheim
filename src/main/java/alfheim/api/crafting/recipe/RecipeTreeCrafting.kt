@@ -1,29 +1,31 @@
 package alfheim.api.crafting.recipe
 
-import alfheim.common.core.util.meta
-import net.minecraft.block.Block
+import alexsocol.asjlib.*
 import net.minecraft.item.ItemStack
-import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.recipe.RecipePetals
 import java.util.*
 
 /**
  * A recipe for the Dendric Suffuser.
  */
-class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: Int, vararg inputs: Any): RecipePetals(ItemStack(outputBlock, 1, meta), *inputs) {
+class RecipeTreeCrafting(val manaUsage: Int, val out: ItemStack, val core: ItemStack, vararg inputs: Any): RecipePetals(out, *inputs) {
 	
 	private val inputs: List<Any>
 	var throttle = -1
 	
-	init {
-		this.inputs = ArrayList(listOf(*inputs))
-	}
-	
-	constructor(mana: Int, outputBlock: Block, meta: Int, throttle: Int, vararg inputs: Any): this(mana, outputBlock, meta, *inputs) {
+	constructor(mana: Int, out: ItemStack, core: ItemStack, throttle: Int, vararg inputs: Any): this(mana, out, core, *inputs) {
 		this.throttle = throttle
 	}
 	
-	fun matches(items: List<ItemStack>): Boolean {
+	init {
+		if (inputs.size > 8) throw IllegalArgumentException("Maximal suffusion inputs size is 8")
+		
+		this.inputs = ArrayList(listOf(*inputs))
+	}
+	
+	fun matches(items: List<ItemStack>, mid: ItemStack): Boolean {
+		if (!ASJUtilities.isItemStackEqualCrafting(core, mid)) return false
+		
 		val inputsMissing = ArrayList(inputs)
 		
 		for (i in items) {
@@ -31,7 +33,8 @@ class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: I
 				val inp = inputsMissing[j]
 				if (inp is ItemStack && inp.meta == 32767)
 					inp.meta = i.meta
-				if (itemEquals(i, inp)) {
+				
+				if (i.itemEquals(inp)) {
 					inputsMissing.removeAt(j)
 					break
 				}
@@ -42,21 +45,16 @@ class RecipeTreeCrafting(val manaUsage: Int, val outputBlock: Block, val meta: I
 	
 	override fun getInputs() = this.inputs
 	
-	private fun itemEquals(stack: ItemStack, stack2: Any): Boolean {
-		if (stack2 is String) {
-			
-			for (orestack in OreDictionary.getOres(stack2)) {
-				val cstack = orestack.copy()
-				
-				if (cstack.meta == 32767) cstack.meta = stack.meta
-				if (stack.isItemEqual(cstack)) return true
-			}
-			
-		} else
-			return stack2 is ItemStack && simpleAreStacksEqual(stack, stack2)
-		return false
+	override fun toString(): String {
+		val s = StringBuilder()
+		for (ing in inputs) s.append("$ing + ")
+		return "Recipe: ($s + mana*$manaUsage) -> $core => $output"
 	}
 	
-	private fun simpleAreStacksEqual(stack: ItemStack, stack2: ItemStack) =
-		stack.item === stack2.item && stack.meta == stack2.meta
+	override fun equals(other: Any?): Boolean {
+		if (other is RecipeTreeCrafting)
+			return other.manaUsage == manaUsage && ItemStack.areItemStacksEqual(output, other.output) && inputs.containsAll(other.inputs) && other.inputs.containsAll(inputs)
+		
+		return false
+	}
 }

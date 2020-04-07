@@ -1,6 +1,6 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.entity.*
@@ -10,7 +10,7 @@ import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.achievement.AlfheimAchievements
 import alfheim.common.core.handler.CardinalSystem.playerSegments
-import alfheim.common.core.helper.ElvenFlightHelper
+import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.EntityLolicorn
 import alfheim.common.entity.boss.EntityFlugel
@@ -28,7 +28,9 @@ import net.minecraft.enchantment.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.*
+import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
@@ -38,7 +40,9 @@ import net.minecraftforge.event.FuelBurnTimeEvent
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.*
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
+import net.minecraftforge.event.entity.player.EntityInteractEvent
 import net.minecraftforge.event.world.BlockEvent
+import ru.vamig.worldengine.WE_Biome
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
@@ -89,6 +93,9 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityJoinWorld(e: EntityJoinWorldEvent) {
+		if (e.entity is IMob && e.world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim && e.world.getBiomeGenForCoords(e.entity.posX.mfloor(), e.entity.posZ.mfloor()) is WE_Biome)
+			e.isCanceled = true
+		
 		val player = e.entity as? EntityPlayerMP ?: return
 		val seed = player.worldObj.seed
 		AlfheimCore.network.sendTo(Message1l(Message1l.m1l.SEED, seed), player)
@@ -264,8 +271,12 @@ object EventHandler {
 	fun onEntityDeath(e: LivingDeathEvent) {
 		if (AlfheimCore.enableMMO) {
 			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
-				e.entityLiving.clearActivePotions()
-				e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
+				
+				if (!e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
+					e.entityLiving.clearActivePotions()
+					e.entityLiving.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDLeftFlame, AlfheimConfigHandler.deathScreenAddTime, 0, true))
+				}
+				
 				e.entityLiving.dataWatcher.updateObject(6, 1f)
 				
 				e.isCanceled = true
@@ -377,5 +388,12 @@ object EventHandler {
 			e.player.capabilities.isFlying = false
 			e.player.sendPlayerAbilities()
 		}
+	}
+	
+	@SubscribeEvent
+	fun onInteract(e: EntityInteractEvent) {
+		if (!e.entityPlayer.isSneaking && e.entityPlayer.heldItem?.item === Items.stick && ContributorsPrivacyHelper.contributors.values.contains(e.entityPlayer.commandSenderName))
+			if (e.target !== e.entityPlayer.riddenByEntity)
+				e.entityPlayer.mountEntity(e.target)
 	}
 }

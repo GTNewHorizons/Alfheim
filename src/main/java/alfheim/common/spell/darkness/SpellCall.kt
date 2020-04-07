@@ -18,11 +18,17 @@ object SpellCall: SpellBase("call", EnumRace.IMP, 10000, 1800, 30) {
 		if (caster !is EntityPlayer) return SpellCastResult.NOTARGET // TODO add targets for mobs
 		
 		val tg = CardinalSystem.TargetingSystem.getTarget(caster)
-		val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
 		
-		if (!tg.isParty) return SpellCastResult.WRONGTGT
+		val tgt: EntityLivingBase
 		
-		val tgt = pt[tg.partyIndex] ?: return SpellCastResult.WRONGTGT
+		if (tg.isParty) {
+			val pt = CardinalSystem.PartySystem.getMobParty(caster) ?: return SpellCastResult.NOTARGET
+			tgt = pt[tg.partyIndex] ?: return SpellCastResult.WRONGTGT
+		} else {
+			tgt = tg.target ?: return SpellCastResult.NOTARGET
+			if (ASJUtilities.isNotInFieldOfVision(tgt, caster)) return SpellCastResult.NOTSEEING
+			if (!InteractionSecurity.canDoSomethingWithEntity(caster, tgt)) return SpellCastResult.NOTALLOW
+		}
 		
 		if (tgt === caster) return SpellCastResult.WRONGTGT
 		

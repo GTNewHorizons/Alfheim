@@ -1,9 +1,9 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.D
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockMod
 import alfheim.common.block.tile.TileTreeCrafter
-import alfheim.common.core.util.D
 import alfheim.common.item.block.ItemBlockAurora
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry

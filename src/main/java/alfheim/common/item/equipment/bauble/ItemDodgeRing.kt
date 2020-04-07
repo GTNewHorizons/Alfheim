@@ -1,8 +1,8 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
 import baubles.api.BaubleType

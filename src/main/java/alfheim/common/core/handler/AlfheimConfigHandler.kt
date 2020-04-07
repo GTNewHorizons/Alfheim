@@ -1,9 +1,8 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.common.core.util.*
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.common.config.Configuration.*
 import java.io.*
@@ -55,9 +54,10 @@ object AlfheimConfigHandler {
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
 	var elvesSpawn				= intArrayOf(10, 2, 4)
-	var sheepSpawn				= intArrayOf(12, 4, 4)
 	var pigSpawn				= intArrayOf(10, 4, 4)
 	var pixieSpawn				= intArrayOf(10, 1, 2)
+	var sheepSpawn				= intArrayOf(12, 4, 4)
+	var voidCreeper				= intArrayOf(4, 1, 3)
 	
 	// OHTER
 	var anyavilBL				= emptyArray<String>()
@@ -78,8 +78,10 @@ object AlfheimConfigHandler {
 	var searchTabAlfheim		= true
 	var searchTabBotania		= true
 	var schemaArray				= IntArray(17) { -1 + it }
+	var schemaMaxSize			= 64
 	var storyLines				= 4
 	var tradePortalRate			= 1200
+	var triquetrumMaxDiagonal	= -1.0
 	var uberSpreaderCapacity	= 24000
 	var uberSpreaderSpeed		= 2400
 	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
@@ -100,7 +102,6 @@ object AlfheimConfigHandler {
 	var modifierIDs				= intArrayOf(20)
 	
 	// POTIONS
-	var potionSlots				= 1024
 	var potionID___COUNTER		= 30
 	var potionIDBerserk			= potionID___COUNTER++
 	var potionIDBleeding		= potionID___COUNTER++
@@ -135,10 +136,11 @@ object AlfheimConfigHandler {
 	
 	// MMO
 	var deathScreenAddTime		= 1200
+	var disabledSpells			= emptyArray<String>()
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
-
+	
 	// MMO HUD
 	var partyHUDScale			= 1.0
 	var selfHealthUI			= true
@@ -205,6 +207,7 @@ object AlfheimConfigHandler {
 		pigSpawn = loadProp(CATEGORY_SPAWNRATE, "pigSpawn", pigSpawn, false, "Pig spawn weight (chance), min and max group count")
 		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
+		voidCreeper = loadProp(CATEGORY_SPAWNRATE, "voidCreeper", voidCreeper, false, "Manaseal Creeper spawn weight (chance), min and max group count")
 		
 		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
@@ -223,9 +226,11 @@ object AlfheimConfigHandler {
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
 		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
-		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, true, "Which schemas are allowed to be generated", false)
+		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, false, "Which schemas are allowed to be generated", false)
+		schemaMaxSize = loadProp(CATEGORY_GENERAL, "schemaMaxSize", schemaMaxSize, false, "Max schema cuboid side length")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
+		triquetrumMaxDiagonal = loadProp(CATEGORY_GENERAL, "triquetrumMaxDiagonal", triquetrumMaxDiagonal, false, "Change this to limit triquetrum area")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader max mana cap")
 		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers", false)
@@ -242,7 +247,6 @@ object AlfheimConfigHandler {
 		materialIDs = loadProp(CATEGORY_INT_TiC, "TiC.materialIDs", materialIDs, true, "[TiC] IDs for Elementium, Elvorium, Manasteel, Mauftrium, Terrasteel, Livingwood, Dreamwood, Redstring, Manastring materials respectively")
 		modifierIDs = loadProp(CATEGORY_INT_TiC, "TiC.modifierIDs", modifierIDs, true, "[TiC] IDs for ManaCore modifiers respectively")
 		
-		potionSlots = loadProp(CATEGORY_POTIONS, "potionSlots", potionSlots, true, "Available potions ids in range [0-potionSlots)")
 		potionIDBerserk = loadProp(CATEGORY_POTIONS, "potionIDBerserk", potionIDBerserk, true, "Potion id for Berserk")
 		potionIDBleeding = loadProp(CATEGORY_MMOP, "potionIDBleeding", potionIDBleeding, true, "Potion id for Bleeding")
 		potionIDButterShield = loadProp(CATEGORY_MMOP, "potionIDButterShield", potionIDButterShield, true, "Potion id for Butterfly Shield")
@@ -253,7 +257,7 @@ object AlfheimConfigHandler {
 		potionIDIceLens = loadProp(CATEGORY_MMOP, "potionIDIceLens", potionIDIceLens, true, "Potion id for Ice Lense")
 		potionIDLeftFlame = loadProp(CATEGORY_MMOP, "potionIDLeftFlame", potionIDLeftFlame, true, "Potion id for Leftover Flame")
 		potionIDManaVoid = loadProp(CATEGORY_POTIONS, "potionIDManaVoid", potionIDManaVoid, true, "Potion id for Mana Void")
-		potionIDNineLifes = loadProp(CATEGORY_POTIONS, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
+		potionIDNineLifes = loadProp(CATEGORY_MMOP, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
 		potionIDNinja = loadProp(CATEGORY_POTIONS, "potionIDNinja", potionIDNinja, true, "Potion id for Ninja")
 		potionIDNoclip = loadProp(CATEGORY_MMOP, "potionIDNoclip", potionIDNoclip, true, "Potion id for Noclip")
 		potionIDOvermage = loadProp(CATEGORY_POTIONS, "potionIDOvermage", potionIDOvermage, true, "Potion id for Overmage")
@@ -273,6 +277,7 @@ object AlfheimConfigHandler {
 		wingsBlackList = loadProp(CATEGORY_ESMODE, "wingsBlackList", wingsBlackList, false, "Wings will be unavailable in this dimension(s)", false)
 		
 		deathScreenAddTime = loadProp(CATEGORY_MMO, "deathScreenAdditionalTime", deathScreenAddTime, false, "Duration of death screen timer (in ticks)")
+		disabledSpells = loadProp(CATEGORY_MMO, "disabledSpells", disabledSpells, true, "List of spell name IDs that won't be registered", false)
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")

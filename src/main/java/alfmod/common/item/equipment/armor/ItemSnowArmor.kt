@@ -1,6 +1,6 @@
 package alfmod.common.item.equipment.armor
 
-import alfheim.common.core.util.mfloor
+import alexsocol.asjlib.mfloor
 import alfheim.common.security.InteractionSecurity
 import alfmod.AlfheimModularCore
 import alfmod.client.render.model.ModelSnowArmor

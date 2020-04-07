@@ -1,6 +1,6 @@
 package alfheim.common.item
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer

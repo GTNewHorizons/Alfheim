@@ -1,10 +1,9 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.mc
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.F
 import alfheim.common.item.material.ItemElvenResource
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render

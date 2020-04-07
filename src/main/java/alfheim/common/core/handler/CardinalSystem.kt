@@ -1,6 +1,6 @@
 package alfheim.common.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.*
@@ -9,9 +9,7 @@ import alfheim.api.event.*
 import alfheim.api.event.TimeStopCheckEvent.TimeStopEntityCheckEvent
 import alfheim.api.spell.*
 import alfheim.api.spell.SpellBase.SpellCastResult.*
-import alfheim.client.core.util.mc
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
-import alfheim.common.core.util.*
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d.COOLDOWN
 import alfheim.common.network.Message3d.m3d.PARTY_STATUS
@@ -500,7 +498,7 @@ object CardinalSystem {
 					}
 				} else {
 					val e = mc.theWorld.getEntityByID(members[i]?.uuid?.mostSignificantBits?.I
-																			?: 0)
+																						  ?: 0)
 					return if (e is EntityLivingBase) e else null
 				}
 				return null

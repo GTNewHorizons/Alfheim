@@ -1,7 +1,7 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.mc
 import alfheim.api.ModInfo
-import alfheim.client.core.util.mc
 import alfheim.client.model.entity.ModelSubspaceSpear
 import alfheim.common.entity.EntitySubspaceSpear
 import net.minecraft.client.renderer.entity.Render

@@ -1,5 +1,6 @@
 package alexsocol.asjlib.render
 
+import alexsocol.asjlib.F
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.*
@@ -67,19 +68,19 @@ abstract class AdvancedArmorModel: ModelBiped() {
 		super.render(entity, x, y, z, yaw, pitch, parTicks)
 		
 		if (entity is EntityZombie || entity is EntitySkeleton || entity is EntityGiantZombie) {
-			val f6 = MathHelper.sin(onGround * Math.PI.toFloat())
-			val f7 = MathHelper.sin((1f - (1f - onGround) * (1f - onGround)) * Math.PI.toFloat())
+			val f6 = MathHelper.sin(onGround * Math.PI.F)
+			val f7 = MathHelper.sin((1f - (1f - onGround) * (1f - onGround)) * Math.PI.F)
 			
 			bipedRightArm.rotateAngleZ = 0f
 			bipedRightArm.rotateAngleY = -(0.1f - f6 * 0.6f)
-			bipedRightArm.rotateAngleX = -(Math.PI.toFloat() / 2f)
+			bipedRightArm.rotateAngleX = -(Math.PI.F / 2f)
 			bipedRightArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
 			bipedRightArm.rotateAngleZ += MathHelper.cos(z * 0.09f) * 0.05f + 0.05f
 			bipedRightArm.rotateAngleX += MathHelper.sin(z * 0.067f) * 0.05f
 			
 			bipedLeftArm.rotateAngleZ = 0f
 			bipedLeftArm.rotateAngleY = 0.1f - f6 * 0.6f
-			bipedLeftArm.rotateAngleX = -(Math.PI.toFloat() / 2f)
+			bipedLeftArm.rotateAngleX = -(Math.PI.F / 2f)
 			bipedLeftArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
 			bipedLeftArm.rotateAngleZ -= MathHelper.cos(z * 0.09f) * 0.05f + 0.05f
 			bipedLeftArm.rotateAngleX -= MathHelper.sin(z * 0.067f) * 0.05f
@@ -92,9 +93,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 		}
 		
 		if (color != -1) {
-			val red = (color shr 16 and 255).toFloat() / 255f
-			val blue = (color shr 8 and 255).toFloat() / 255f
-			val green = (color and 255).toFloat() / 255f
+			val red = (color shr 16 and 255).F / 255f
+			val blue = (color shr 8 and 255).F / 255f
+			val green = (color and 255).F / 255f
 			glColor3f(red, blue, green)
 		}
 		
@@ -110,9 +111,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 				glTranslatef(0f, 16f * parTicks, 0f)
 			}
 			glTranslatef(bipedHead.rotationPointX * parTicks, bipedHead.rotationPointY * parTicks, bipedHead.rotationPointZ * parTicks)
-			glRotatef(bipedHead.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedHead.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedHead.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedHead.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedHead.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedHead.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partHead(entity)
 			glPopMatrix()
@@ -128,9 +129,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			//partBody
 			glPushMatrix()
 			glTranslatef(bipedBody.rotationPointX * parTicks, bipedBody.rotationPointY * parTicks, bipedBody.rotationPointZ * parTicks)
-			glRotatef(bipedBody.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedBody.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedBody.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedBody.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedBody.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedBody.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partBody(entity)
 			glPopMatrix()
@@ -140,9 +141,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			//partRightArm
 			glPushMatrix()
 			glTranslatef(bipedRightArm.rotationPointX * parTicks, bipedRightArm.rotationPointY * parTicks, bipedRightArm.rotationPointZ * parTicks)
-			glRotatef(bipedRightArm.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedRightArm.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedRightArm.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedRightArm.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedRightArm.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedRightArm.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partRightArm(entity)
 			glPopMatrix()
@@ -152,9 +153,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			//partLeftArm
 			glPushMatrix()
 			glTranslatef(bipedLeftArm.rotationPointX * parTicks, bipedLeftArm.rotationPointY * parTicks, bipedLeftArm.rotationPointZ * parTicks)
-			glRotatef(bipedLeftArm.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedLeftArm.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedLeftArm.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedLeftArm.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedLeftArm.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedLeftArm.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partLeftArm(entity)
 			glPopMatrix()
@@ -164,9 +165,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			//partRightLeg
 			glPushMatrix()
 			glTranslatef(bipedRightLeg.rotationPointX * parTicks, bipedRightLeg.rotationPointY * parTicks, bipedRightLeg.rotationPointZ * parTicks)
-			glRotatef(bipedRightLeg.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedRightLeg.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedRightLeg.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedRightLeg.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedRightLeg.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedRightLeg.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partRightLeg(entity)
 			glPopMatrix()
@@ -176,9 +177,9 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			//partLeftLeg
 			glPushMatrix()
 			glTranslatef(bipedLeftLeg.rotationPointX * parTicks, bipedLeftLeg.rotationPointY * parTicks, bipedLeftLeg.rotationPointZ * parTicks)
-			glRotatef(bipedLeftLeg.rotateAngleZ * (180f / Math.PI.toFloat()), 0f, 0f, 1f)
-			glRotatef(bipedLeftLeg.rotateAngleY * (180f / Math.PI.toFloat()), 0f, 1f, 0f)
-			glRotatef(bipedLeftLeg.rotateAngleX * (180f / Math.PI.toFloat()), 1f, 0f, 0f)
+			glRotatef(bipedLeftLeg.rotateAngleZ * (180f / Math.PI.F), 0f, 0f, 1f)
+			glRotatef(bipedLeftLeg.rotateAngleY * (180f / Math.PI.F), 0f, 1f, 0f)
+			glRotatef(bipedLeftLeg.rotateAngleX * (180f / Math.PI.F), 1f, 0f, 0f)
 			glRotatef(180f, 1f, 0f, 0f)
 			partLeftLeg(entity)
 			glPopMatrix()

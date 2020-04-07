@@ -1,10 +1,9 @@
 package alfheim.common.spell.sound
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.common.core.util.*
 import alfheim.common.entity.spell.EntitySpellHarp
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition.MovingObjectType

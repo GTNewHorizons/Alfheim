@@ -64,7 +64,7 @@ tile.alfheim:DreamwoodBarkFenceGate.name=Dreamwood Bark Fence Gate
 tile.alfheim:DreamwoodFence.name=Dreamwood Planks Fence
 tile.alfheim:DreamwoodFenceGate.name=Dreamwood Planks Fence Gate
 tile.alfheim:DwarfLantern.name=Livingrock Lantern
-tile.DwarfPlanks0.name=Dwarf Planks
+tile.DwarfPlanks.name=Dwarf Planks
 tile.alfheim:DwarfTrapDoor.name=Dwarf Trapdoor
 tile.ElvenOre0.name=Dragonstone Ore
 tile.ElvenOre1.name=Elementium Ore
@@ -176,6 +176,7 @@ item.ElementalArmor.desc3=Hard as a rock (§aResistance +2§7)
 item.ElementalArmor.desc4=Affined like a fish (§bWaterbreathin§7 + §bNightvision§7)
 item.ElementiumHoe.name=Elementium Hoe
 item.ElementiumHoe.desc=Sneak to hoe single block
+item.alfheim:ElvenWeed.name=Elven Weed
 item.ElvoriumBoots.name=Elvorium Boots
 item.ElvoriumChestplate.name=Elvorium Chestplate
 item.ElvoriumHelmet.name=Elvorium Helmet
@@ -277,6 +278,7 @@ item.Transferer.name=Destructurizer
 item.alfheim:Triquetrum.name=Worldshaper's Triquetrum
 item.Triquetrum.blocks=%s blocks selected
 item.Triquetrum.rotation=Rotation %s degrees counterclockwise
+item.Triquetrum.tooLarge=Selected region is too large. Maximal main diagonal length - %s
 
 ##########################################################___OTHER___###########################################################
 
@@ -628,6 +630,7 @@ spell.icelens.name=Ice Lens
 spell.ignition.name=Ignition
 spell.isaacstorm.name=Isaac's Epic Missile Storm
 spell.join.name=Join
+spell.liquification.name=Liquification
 spell.mortar.name=Mortar
 spell.night.name=Night
 spell.nightvision.name=Night Vision
@@ -647,7 +650,7 @@ spell.sun.name=Sun
 spell.thor.name=Thor
 spell.throw.name=Wind Flows
 spell.thunder.name=Thunder
-spell.truesigh.name=True Sigh
+spell.truesight.name=True Sight
 spell.titanhit.name=Titan Hit
 spell.timestop.name=Time Stop
 spell.uphealth.name=Uphealth
@@ -683,9 +686,10 @@ spell.harp.mtinfo=Name: harp | damage (healing) %s duration (lifetime) %s effici
 spell.healing.mtinfo=Name: healing | damage (healing) %s
 spell.hollowbody.mtinfo=Name: hollowbody | duration %s
 spell.icelens.mtinfo=Name: icelens | duration %s
-spell.ignition.mtinfo=Name: ignition | radius %s
+spell.ignition.mtinfo=Name: ignition | efficiency (burn time) %s radius %s
 spell.isaacstorm.mtinfo=Name: isaacstorm | damage %s duration (lifetime) %s efficiency (rockets count) %s radius %s
 spell.join.mtinfo=Name: join
+spell.liquification.mtinfo=Name: liquification | radius %s
 spell.mortar.mtinfo=Name: mortar | damage %s duration (lifetime) %s efficiency (speed) %s radius (AoE) %s
 spell.night.mtinfo=Name: night
 spell.nightvision.mtinfo=Name: nightvision | duration %s
@@ -705,7 +709,7 @@ spell.sun.mtinfo=Name: sun
 spell.thor.mtinfo=Name: thor | radius %s
 spell.throw.mtinfo=Name: throw | damage %s duration %s efficiency %s radius (AoE) %s
 spell.thunder.mtinfo=Name: thunder
-spell.truesigh.mtinfo=Name: truesigh
+spell.truesight.mtinfo=Name: truesight
 spell.titanhit.mtinfo=Name: titanhit | radius %s
 spell.timestop.mtinfo=Name: timestop | duration %s radius %s
 spell.uphealth.mtinfo=Name: uphealth | duration %s efficiency %s
@@ -714,84 +718,6 @@ spell.warhood.mtinfo=Name: warhood
 spell.waterbreathing.mtinfo=Name: waterbreathing | duration %s
 spell.wellolife.mtinfo=Name: wellolife | damage (healing) %s duration %s efficiency %s
 spell.windblades.mtinfo=Name: windblades | damage %s duration (lifetime) %s efficiency (speed) %s
-
-##
-#spell.acidmyst.words=§bAcid Myst
-#spell.aquabind.words=§bBind my enemies, water fetters!
-#spell.aquastream.words=§bI direct the flow of water into the §bchannel of the enemy death!
-#spell.battlehorn.words=§eFill them with shining courage to defeat §ethe many evils!
-##
-#spell.blink.words=§7Blink
-#spell.bunnyhop.words=§aGive him the power of a bunny to jump §ahigh!
-#spell.butterflyshield.words=§6Wrap him in a shield of goddesses, and §6keep away flames and irons!
-#spell.confusion.words=§8I'm inspiring false illusion, let them §8serve as death in confusion!
-#spell.day.words=§6I replace the night with day, replace §6darkness with light!
-##
-#spell.deathmark.words=§5Deathmark
-##
-#spell.decay.words=§5Decay
-##
-#spell.dispel.words=§4Dispel
-##
-#spell.dragongrowl.words=§eDragon Growl
-##
-#spell.driftingmine.words=§7Drifting Mine
-##
-#spell.echo.words=§eEcholocation
-#spell.fenrirstorm.words=§aI turn the wrath of Fenrir, directing §aon our enemies!
-#spell.fireball.words=§4I throw the flame of a demon, call the §4exploding death, to throw down the army of the forest!
-#spell.firewall.words=§4I command fire, rise above the enemies §4with a flaming wall!
-#spell.gravitytrap.words=§7I obey the laws of the universe, I §7command gravity: increase your power!
-##
-#spell.goldrush.words=§2Gold Rush
-##
-#spell.hammerfall.words=§2Hammerfall
-##
-#spell.harp.words=§eHarp
-#spell.healing.words=§bHeal thou, healing water!
-#spell.hollowbody.words=§8Give him a hollow body, grant invisibility!
-##
-#spell.icelens.words=§bIce Lens
-#spell.ignition.words=§4I invoke the energy of entropy, flush with a bright flame!
-##
-#spell.isaacstorm.words=§eIsaac's Epic Missile Storm
-##
-#spell.mortar.words=§2Mortar
-#spell.night.words=§5I replace the day with night, replace §5the light with darkness!
-#spell.nightvision.words=§8Give us eyes that illuminate the night!
-##
-#spell.ninelifes.words=§6Nine Lifes
-##
-#spell.noclip.words=§2Noclip
-##
-#spell.outdare.words=§eOutdare
-##
-#spell.poisonroots.words=§5Poison Roots
-#spell.purifyingsurface.words=§bI call out a clean fountain, cease the §bbreath of flame and poison!
-#spell.rain.words=§bI submit to the forces of nature, shed §bin a rain!
-##
-#spell.resurrect.words=§bRevive
-#spell.sacrifice.words=§5I call the §lBlack Destroyer§r§5! Make the §5heavens fall! Cast away the gods! Open the gates of §lHell§r§5!
-#spell.smokescreen.words=§8Hide us from the enemies in your arms, §8smoke screen!
-#spell.stoneskin.words=§2Protect us, great land, from now on §2our skin is as hard as a rock!
-#spell.sun.words=§4I submit to the forces of nature, §4shine, the Sun!
-#spell.thor.words=§aI invoke the power of the god Thor: §aput your hammer on my enemies!
-##
-#spell.throw.words=§aWind Flows
-#spell.thunder.words=§aI submit to the forces of nature, pour §arain and outline the sky with sparkling lightning!
-##
-#spell.truesigh.words=§8True Sigh
-##
-#spell.titanhit.words=§2Titan Hit
-##
-#spell.timestop.words=§7Time Stop
-#spell.uphealth.words=§6Give him the life of gods, to overthrow §6the wicked giants!
-#spell.wallwarp.words=§2I warp the walls, making a passage §2where was none!
-#spell.waterbreathing.words=§aGive us the life of fish, and allow us to §aendure the cold water!
-##
-#spell.wellolife.words=§bWell of Life
-##
-#spell.windblades.words=§aWind Blades
 
 ################################################################################################################################
 ########################################################___IRIDESCENCE___#######################################################

@@ -1,17 +1,16 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alexsocol.asjlib.render.*
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.raceID
 import alfheim.api.event.EntityUpdateEvent
-import alfheim.api.lib.*
+import alfheim.api.lib.LibResourceLocations
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
-import alfheim.client.core.util.*
 import alfheim.client.gui.ItemsRemainingRenderHandler
 import alfheim.client.render.entity.*
 import alfheim.client.render.item.RenderItemFlugelHead
@@ -20,7 +19,6 @@ import alfheim.client.render.world.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.helper.ContributorsPrivacyHelper
-import alfheim.common.core.util.*
 import alfheim.common.network.MessageKeyBindS
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -28,7 +26,6 @@ import cpw.mods.fml.common.gameevent.TickEvent.*
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.entity.AbstractClientPlayer
-import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraftforge.client.event.*
@@ -36,7 +33,7 @@ import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
-import net.minecraftforge.event.entity.player.*
+import net.minecraftforge.event.entity.player.PlayerEvent
 import org.lwjgl.opengl.GL11.*
 
 object EventHandlerClient {
@@ -256,20 +253,6 @@ object EventHandlerClient {
 	fun onClonePlayer(e: PlayerEvent.Clone) {
 		if (AlfheimCore.enableElvenStory) {
 			e.entityPlayer.raceID = e.original.raceID
-		}
-	}
-	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	fun onItemTooltip(e: ItemTooltipEvent) {
-		if (GuiScreen.isShiftKeyDown()) {
-			val stack = e.itemStack
-			
-			if(stack.hasTagCompound() && e.showAdvancedItemTooltips) {
-				e.toolTip.add("")
-				e.toolTip.add("NBT Data:")
-				e.toolTip.addAll(listOf(*ASJUtilities.toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
-			}
 		}
 	}
 	

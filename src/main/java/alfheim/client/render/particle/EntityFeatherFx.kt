@@ -1,8 +1,7 @@
 package alfheim.client.render.particle
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
-import alfheim.client.core.util.*
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.particle.EntityFX
 import net.minecraft.client.renderer.Tessellator
@@ -36,15 +35,15 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 		prevPosZ = z
 		particleScale = size
 		val c = Color(colour)
-		val red = c.red.toFloat() / 255
-		val green = c.green.toFloat() / 255
-		val blue = c.blue.toFloat() / 255
+		val red = c.red.F / 255
+		val green = c.green.F / 255
+		val blue = c.blue.F / 255
 		particleRed = red
 		particleGreen = green
 		particleBlue = blue
-		particleMaxAge = (50 * lifetime).toInt()
-		motionX = (rand.nextFloat() - 0.5f) * 0.01f.toDouble()
-		motionZ = (rand.nextFloat() - 0.5f) * 0.01f.toDouble()
+		particleMaxAge = (50 * lifetime).I
+		motionX = (rand.nextDouble() - 0.5) * 0.01
+		motionZ = (rand.nextDouble() - 0.5) * 0.01
 		motionY = -0.03
 		rotationSpeed = 2.0f + rand.nextFloat()
 		rotationPitch = rand.nextFloat() * 20 - 10
@@ -67,7 +66,7 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 			rotationPitch -= 360f
 		}
 		if (particleMaxAge - particleAge < 50) {
-			particleAlpha = 1 + -((particleAge - particleMaxAge + 50).toFloat() / 50)
+			particleAlpha = 1 + -((particleAge - particleMaxAge + 50).F / 50)
 		}
 	}
 	
@@ -99,7 +98,7 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 	
 	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) { // FIXME size
 		val scale = 0.05f
-		glTranslatef(x.toFloat(), y.toFloat(), z.toFloat())
+		glTranslatef(x.F, y.F, z.F)
 		glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)
 		glRotatef(RenderManager.instance.playerViewX, 1.0f, 0.0f, 0.0f)
 		glRotatef(180f, 0f, 0f, 1f)

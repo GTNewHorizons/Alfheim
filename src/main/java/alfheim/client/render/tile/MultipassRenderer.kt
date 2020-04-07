@@ -1,9 +1,8 @@
 package alfheim.client.render.tile
 
+import alexsocol.asjlib.F
 import alfheim.api.lib.LibRenderIDs
-import alfheim.client.core.util.*
 import alfheim.common.block.base.IMultipassRenderer
-import alfheim.common.core.util.F
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.*
@@ -48,11 +47,11 @@ object MultipassRenderer : ISimpleBlockRenderingHandler {
         block.setBlockBoundsForItemRender()
         renderer.setRenderBoundsFromBlock(block)
         glRotatef(90f, 0f, 1f, 0f)
-        glTranslatef(-0.5f)
+		alexsocol.asjlib.glTranslatef(-0.5f)
 
         val zf = stage.F / 200f
-        glTranslatef(-zf)
-        glScalef(1f + zf * 2f)
+		alexsocol.asjlib.glTranslatef(-zf)
+		alexsocol.asjlib.glScalef(1f + zf * 2f)
         tessellator.startDrawingQuads()
         tessellator.setNormal(0f, -1f, 0f)
         renderer.renderFaceYNeg(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 0, meta))
@@ -77,7 +76,7 @@ object MultipassRenderer : ISimpleBlockRenderingHandler {
         tessellator.setNormal(1f, 0f, 0f)
         renderer.renderFaceXPos(block, 0.0, 0.0, 0.0, renderer.getBlockIconFromSideAndMetadata(block, 5, meta))
         tessellator.draw()
-        glTranslatef(0.5f + zf)
+		alexsocol.asjlib.glTranslatef(0.5f + zf)
         glPopMatrix()
     }
 }

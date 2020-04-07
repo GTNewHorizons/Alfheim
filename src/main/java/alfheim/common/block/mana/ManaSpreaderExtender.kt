@@ -1,8 +1,8 @@
 package alfheim.common.block.mana
 
+import alexsocol.asjlib.mc
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
-import alfheim.client.core.util.*
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
@@ -199,10 +199,10 @@ object ManaSpreaderExtender {
 			var s = 1.15f
 			val t = s - 1
 			glTranslatef(0f, -t, 0f)
-			glScalef(s)
+			alexsocol.asjlib.glScalef(s)
 			ModelSpreaderFrame.render()
 			s = 1 / s
-			glScalef(s)
+			alexsocol.asjlib.glScalef(s)
 			glTranslatef(0f, t, 0f)
 			
 			modelHook = false

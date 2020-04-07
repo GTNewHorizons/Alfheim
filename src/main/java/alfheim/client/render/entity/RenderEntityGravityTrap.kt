@@ -1,8 +1,8 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.glScaled
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.*
-import alfheim.client.core.util.glScaled
 import alfheim.common.spell.tech.SpellGravityTrap
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render

@@ -1,8 +1,9 @@
 package alfheim.common.item.equipment.armor.elemental
 
+import alexsocol.asjlib.meta
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElementalArmor
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped

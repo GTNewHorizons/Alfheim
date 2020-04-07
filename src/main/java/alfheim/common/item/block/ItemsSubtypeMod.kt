@@ -1,9 +1,9 @@
 package alfheim.common.item.block
 
+import alexsocol.asjlib.meta
 import alfheim.api.ModInfo
 import alfheim.common.block.base.*
-import alfheim.common.core.util.meta
-import net.minecraft.block.*
+import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.StatCollector

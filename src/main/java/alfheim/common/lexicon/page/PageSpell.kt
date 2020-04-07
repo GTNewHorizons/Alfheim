@@ -1,13 +1,12 @@
 package alfheim.common.lexicon.page
 
+import alexsocol.asjlib.*
 import alfheim.api.entity.race
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
-import alfheim.client.core.util.mc
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.asm.AlfheimHookHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*

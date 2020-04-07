@@ -1,6 +1,6 @@
 package alfheim.common.item.compat.tinkersconstruct
 
-import alfheim.common.core.util.*
+import alexsocol.asjlib.*
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimModule
 import alfheim.common.item.ItemMod
 import cpw.mods.fml.common.eventhandler.*

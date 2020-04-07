@@ -1,22 +1,20 @@
 package alfheim.common.block.magtrees.nether
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.rainbow.*
-import alfheim.common.core.util.toItem
 import alfheim.common.item.block.*
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.item.ItemStack
-import net.minecraft.world.*
+import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.util.ForgeDirection
 
-class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodSlab(full, source), IFuelHandler {
+class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodSlab(full, source) {
 	
 	init {
 		setLightLevel(0.5f)
-		
-		GameRegistry.registerFuelHandler(this)
 	}
 	
 	override fun getFullBlock() = AlfheimBlocks.netherSlabsFull as BlockSlab
@@ -31,7 +29,7 @@ class BlockNetherWoodSlab(full: Boolean, source: Block = AlfheimBlocks.netherPla
 	
 	override fun getFireSpreadSpeed(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = 0
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 1000 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (field_150004_a) 2000 else 1000 else 0
 }
 
 class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRainbowWoodStairs(source), IFuelHandler  {
@@ -43,7 +41,7 @@ class BlockNetherWoodStairs(source: Block = AlfheimBlocks.netherPlanks): BlockRa
 	}
 	
 	override fun register() {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name)
 	}
 	
 	override fun isFlammable(world: IBlockAccess?, x: Int, y: Int, z: Int, face: ForgeDirection?) = false

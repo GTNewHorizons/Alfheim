@@ -1,8 +1,8 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.gui.ItemsRemainingRenderHandler
-import alfheim.common.core.util.*
 import alfheim.common.security.InteractionSecurity
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block

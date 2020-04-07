@@ -1,8 +1,7 @@
 package alfheim.client.render.tile
 
-import alfheim.client.core.util.mc
+import alexsocol.asjlib.*
 import alfheim.common.block.tile.TileAnomaly
-import alfheim.common.core.util.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.player.EntityPlayer

@@ -1,10 +1,10 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.IPriestColorOverride
-import alfheim.client.core.util.*
 import alfheim.common.core.helper.IconHelper
-import alfheim.common.core.util.*
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.ItemIridescent
 import baubles.api.BaubleType
 import net.minecraft.client.renderer.*

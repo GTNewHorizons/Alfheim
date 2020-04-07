@@ -1,7 +1,7 @@
 package alfheim.client.integration.nei
 
+import alexsocol.asjlib.mc
 import alfheim.AlfheimCore
-import alfheim.client.core.util.mc
 import alfheim.client.integration.nei.recipes.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.ContributorsPrivacyHelper
@@ -34,7 +34,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		if (!ContributorsPrivacyHelper.isCorrect(mc.session.username, "AlexSocol"))
 			API.hideItem(ItemStack(AlfheimItems.royalStaff))
 		
-		API.hideItem(ItemStack(AlfheimBlocks.anomalyHarvester)) // FIXME back!
+		API.hideItem(ItemStack(AlfheimBlocks.anomalyHarvester)) // BACK
 	}
 	
 	override fun getName() = AlfheimCore.meta.name!!

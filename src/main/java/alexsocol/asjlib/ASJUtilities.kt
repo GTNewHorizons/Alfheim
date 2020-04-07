@@ -2,12 +2,14 @@ package alexsocol.asjlib
 
 import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.*
+import cpw.mods.fml.common.eventhandler.*
 import cpw.mods.fml.common.registry.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.Material.*
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiScreen
 import net.minecraft.entity.*
 import net.minecraft.entity.player.*
 import net.minecraft.init.Blocks
@@ -22,8 +24,9 @@ import net.minecraft.util.*
 import net.minecraft.world.*
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.gen.feature.WorldGenMinable
-import net.minecraftforge.common.DimensionManager
+import net.minecraftforge.common.*
 import net.minecraftforge.event.entity.living.*
+import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.oredict.*
 import org.apache.logging.log4j.Level
 import java.text.DecimalFormat
@@ -34,8 +37,27 @@ import kotlin.math.*
  * Small utility lib to help with some tricks. Feel free to use it in your mods.
  * @author AlexSocol
  */
-@Suppress("unused", "MemberVisibilityCanBePrivate")
+@Suppress("unused", "MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 object ASJUtilities {
+	
+	init {
+		MinecraftForge.EVENT_BUS.register(object {
+			
+			@SideOnly(Side.CLIENT)
+			@SubscribeEvent(priority = EventPriority.LOWEST)
+			fun onItemTooltip(e: ItemTooltipEvent) {
+				if (GuiScreen.isShiftKeyDown()) {
+					val stack = e.itemStack
+					
+					if (stack.hasTagCompound() && e.showAdvancedItemTooltips) {
+						e.toolTip.add("")
+						e.toolTip.add("NBT Data:")
+						e.toolTip.addAll(listOf(*toString(stack.tagCompound).split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
+					}
+				}
+			}
+		})
+	}
 	
 	/**
 	 * Returns the name of the block
@@ -120,7 +142,7 @@ object ASJUtilities {
 	 * @author Vazkii
 	 */
 	fun dispatchTEToNearbyPlayers(world: World, x: Int, y: Int, z: Int) {
-		world.getTileEntity(x, y, z)?.let{ dispatchTEToNearbyPlayers(it) }
+		world.getTileEntity(x, y, z)?.let { dispatchTEToNearbyPlayers(it) }
 	}
 	
 	@JvmStatic
@@ -147,6 +169,8 @@ object ASJUtilities {
 		return ceil(amount) >= floor(living.health)
 	}
 	
+	// ################################ STACKS ################################
+	
 	/**
 	 * Returns the number of the slot with item matching to item passed in
 	 * @param item The item to compare
@@ -157,28 +181,53 @@ object ASJUtilities {
 		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it)?.item === item } ?: -1
 	
 	/**
-	 * Removes itemstack from inventory
-	 * @param inventory Inventory
-	 * @param stack ItemStack to remove
-	 * @return If the stack was removed
+	 * Checks if two itemstacks has same ID, metadata and NBT
+	 * @param stack1 First itemstack
+	 * @param stack2 Second itemstack
 	 */
 	@JvmStatic
-	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
-		if (getAmount(inventory, stack) >= stack.stackSize) {
-			for (i in 0 until inventory.sizeInventory) {
-				if (isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
-					val amount = min(stack.stackSize, inventory.getStackInSlot(i).stackSize)
-					if (amount > 0) {
-						inventory.decrStackSize(i, amount)
-						stack.stackSize -= amount
-					}
-					if (stack.stackSize <= 0) {
-						return true
-					}
+	fun isItemStackEqualData(stack1: ItemStack, stack2: ItemStack): Boolean {
+		return stack1.isItemEqual(stack2) && ItemStack.areItemStackTagsEqual(stack1, stack2)
+	}
+	
+	/**
+	 * Boolean tag label for ingredient to ignore nbt on crafting
+	 */
+	const val TAG_ASJIGNORENBT = "ASJIGNORENBT"
+	
+	/**
+	 * Boolean tag label for ingredient to check only tags presented in it
+	 */
+	const val TAG_ASJONLYNBT = "ASJONLYNBT"
+	
+	/**
+	 * Checks if two itemstacks has same ID, metadata and NBT]
+	 *
+	 * @param ingredient stack from recipe
+	 * @param input stack from crafting input
+	 * @see [TAG_ASJIGNORENBT]
+	 * @see [TAG_ASJONLYNBT]
+	 */
+	@JvmStatic
+	fun isItemStackEqualCrafting(ingredient: ItemStack, input: ItemStack): Boolean {
+		return ingredient.isItemEqual(input) && when {
+			ingredient.tagCompound?.getBoolean(TAG_ASJIGNORENBT) == true -> true
+			
+			ingredient.tagCompound?.getBoolean(TAG_ASJONLYNBT) == true   -> {
+				val tags = input.tagCompound ?: return false
+				val itags = ingredient.tagCompound.copy() as NBTTagCompound
+				itags.removeTag(TAG_ASJONLYNBT)
+				
+				for (key in itags.func_150296_c()) {
+					if (!tags.hasKey(key as String)) return false
+					if (itags.getTag(key) != tags.getTag(key)) return false
 				}
+				
+				true
 			}
+			
+			else                                                         -> ingredient.areItemStackTagsEqual(input)
 		}
-		return false
 	}
 	
 	/**
@@ -191,60 +240,43 @@ object ASJUtilities {
 	fun getAmount(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			if (isItemStackEqualData(inventory.getStackInSlot(i), stack)) {
-				amount += inventory.getStackInSlot(i).stackSize
-			}
+			val slot = inventory.getStackInSlot(i) ?: continue
+			if (stack.isItemEqual(slot))
+				amount += slot.stackSize
 		}
 		return amount
 	}
 	
 	/**
-	 * @return damage from stack itself, not through item
+	 * Returns the amount of items in stack with NBT from inventory
+	 * @param inventory Inventory
+	 * @param stack Stack to compare item
+	 * @return Amount
 	 */
 	@JvmStatic
-	fun getTrueDamage(stack: ItemStack) =
-		"$stack".split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1].toInt()
+	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
+		var amount = 0
+		for (i in 0 until inventory.sizeInventory) {
+			val slot = inventory.getStackInSlot(i) ?: continue
+			if (isItemStackEqualData(slot, stack))
+				amount += slot.stackSize
+		}
+		return amount
+	}
 	
 	/**
-	 * Checks if two itemstacks has same ID, size and metadata
-	 */
-	@JvmStatic
-	fun isItemStackEqual(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && stack1.itemDamage == stack2.itemDamage
-	
-	/**
-	 * Checks if two itemstacks has same ID and metadata
-	 */
-	@JvmStatic
-	fun isItemStackEqualData(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.itemDamage == stack2.itemDamage
-	
-	/**
-	 * Checks if two itemstacks has same ID, size and metadata (from stack itself)
-	 */
-	@JvmStatic
-	fun isItemStackTrueEqual(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && stack1.stackSize == stack2.stackSize && getTrueDamage(stack1) == getTrueDamage(stack2)
-	
-	/**
-	 * Checks if two itemstacks has same ID and metadata (from stack itself)
-	 */
-	@JvmStatic
-	fun isItemStackTrueEqualData(stack1: ItemStack?, stack2: ItemStack?) =
-		stack1 != null && stack2 != null && stack1.item === stack2.item && getTrueDamage(stack1) == getTrueDamage(stack2)
-	
-	/**
-	 * Removes itemstack with NBT from inventory
+	 * Removes itemstack from inventory
 	 * @param inventory Inventory
 	 * @param stack ItemStack to remove
 	 * @return If the stack was removed
 	 */
 	@JvmStatic
-	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
-		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
+	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
+		if (getAmount(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack)) {
-					val amount = min(stack.stackSize, inventory.getStackInSlot(i).stackSize)
+				val slot = inventory.getStackInSlot(i) ?: continue
+				if (stack.isItemEqual(slot)) {
+					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
 						inventory.decrStackSize(i, amount)
 						stack.stackSize -= amount
@@ -259,47 +291,29 @@ object ASJUtilities {
 	}
 	
 	/**
-	 * Returns the amount of items in stack with NBT from inventory
+	 * Removes itemstack with NBT from inventory
 	 * @param inventory Inventory
-	 * @param stack Stack to compare item
-	 * @return Amount
+	 * @param stack ItemStack to remove
+	 * @return If the stack was removed
 	 */
 	@JvmStatic
-	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
-		var amount = 0
-		for (i in 0 until inventory.sizeInventory) {
-			if (isItemStackEqualNBT(inventory.getStackInSlot(i), stack))
-				amount += inventory.getStackInSlot(i).stackSize
-		}
-		return amount
-	}
-	
-	/**
-	 * Checks if two itemstacks has same ID, metadata and NBT
-	 * @param stack1 First itemstack
-	 * @param stack2 Second itemstack
-	 */
-	@JvmStatic
-	fun isItemStackEqualNBT(stack1: ItemStack?, stack2: ItemStack?): Boolean {
-		return if (isItemStackEqualData(stack1, stack2)) {
-			when {
-				!stack1!!.hasTagCompound() and !stack2!!.hasTagCompound() -> true
-				stack1.hasTagCompound() != stack2.hasTagCompound()        -> false
-				else                                                      -> stack1.stackTagCompound == stack2.stackTagCompound
+	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
+		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
+			for (i in 0 until inventory.sizeInventory) {
+				val slot = inventory.getStackInSlot(i) ?: continue
+				if (isItemStackEqualData(slot, stack)) {
+					val amount = min(stack.stackSize, slot.stackSize)
+					if (amount > 0) {
+						inventory.decrStackSize(i, amount)
+						stack.stackSize -= amount
+					}
+					if (stack.stackSize <= 0) {
+						return true
+					}
+				}
 			}
-		} else false
-	}
-	
-	/**
-	 * Changes itemstack's item
-	 * @param stack Stack to change its item
-	 * @param item Item to set in `stack`
-	 */
-	@JvmStatic
-	fun changeStackItem(stack: ItemStack, item: Item): ItemStack {
-		val newStack = ItemStack(item, stack.stackSize, stack.itemDamage)
-		newStack.stackTagCompound = stack.stackTagCompound
-		return newStack
+		}
+		return false
 	}
 	
 	// Removes <b>block</b> from GameRegistry
@@ -359,17 +373,12 @@ object ASJUtilities {
 	/**
 	 * Removes recipe of [resultItem]. Note: stackSize and meta sensitive
 	 * @param resultItem Stack to remove recipe
-	 * @author Code by yope_fried, inspired by pigalot, provided by Develance on forum.mcmodding.ru
 	 */
 	@JvmStatic
-	fun removeRecipe(resultItem: ItemStack) {
-		val i = CraftingManager.getInstance().recipeList.iterator()
-		while (i.hasNext()) {
-			val r = i.next() as IRecipe
-			if (ItemStack.areItemStacksEqual(resultItem, r.recipeOutput))
-				i.remove()
+	fun removeRecipe(resultItem: ItemStack) =
+		(CraftingManager.getInstance().recipeList as ArrayList<IRecipe>).removeAll {
+			ItemStack.areItemStacksEqual(resultItem, it.recipeOutput)
 		}
-	}
 	
 	/**
 	 * Checks whether `e1` is in FOV of `e2`
@@ -408,14 +417,14 @@ object ASJUtilities {
 		val d0 = e2.posX - e1.posX
 		val d2 = e2.posZ - e1.posZ
 		val d1 = if (e2 is EntityLivingBase) {
-			e2.posY + e2.eyeHeight.toDouble() - (e1.posY + e1.eyeHeight.toDouble())
+			e2.posY + e2.eyeHeight.D - (e1.posY + e1.eyeHeight.D)
 		} else {
-			(e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0 - (e1.posY + e1.eyeHeight.toDouble())
+			(e2.boundingBox.minY + e2.boundingBox.maxY) / 2.0 - (e1.posY + e1.eyeHeight.D)
 		}
 		
-		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).toDouble()
-		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).toFloat() - 90f
-		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).toFloat()
+		val d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2).D
+		val f2 = (atan2(d2, d0) * 180.0 / Math.PI).F - 90f
+		val f3 = (-(atan2(d1, d3) * 180.0 / Math.PI)).F
 		e1.rotationPitch = updateRotation(e1.rotationPitch, f3, pitch)
 		e1.rotationYaw = updateRotation(e1.rotationYaw, f2, yaw)
 	}
@@ -452,14 +461,14 @@ object ASJUtilities {
 		}
 		
 		val f1 = 1f
-		val list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist).expand(f1.toDouble(), f1.toDouble(), f1.toDouble()))
+		val list = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.addCoord(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist).expand(f1.D, f1.D, f1.D))
 		var d2 = d1
 		
 		for (e in list) {
 			e as Entity
 			if (e.canBeCollidedWith() || interact) {
 				val f2 = e.collisionBorderSize
-				val axisalignedbb = e.boundingBox.expand(f2.toDouble(), f2.toDouble(), f2.toDouble())
+				val axisalignedbb = e.boundingBox.expand(f2.D, f2.D, f2.D)
 				val movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32)
 				
 				if (axisalignedbb.isVecInside(vec3)) {
@@ -512,7 +521,7 @@ object ASJUtilities {
 	@JvmStatic
 	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
 		val vec3 = getPosition(entity, 1f)
-		vec3.yCoord += entity.eyeHeight.toDouble()
+		vec3.yCoord += entity.eyeHeight.D
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		return entity.worldObj.rayTraceBlocks(vec3, vec32, interact)
@@ -527,20 +536,20 @@ object ASJUtilities {
 		return if (par1 == 1f) {
 			Vec3.createVectorHelper(living.posX, living.posY + (living.eyeHeight - i), living.posZ)
 		} else {
-			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.toDouble()
-			val d1 = living.prevPosY + (living.posY - living.prevPosY) * par1.toDouble() + (living.eyeHeight - i).toDouble()
-			val d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * par1.toDouble()
+			val d0 = living.prevPosX + (living.posX - living.prevPosX) * par1.D
+			val d1 = living.prevPosY + (living.posY - living.prevPosY) * par1.D + (living.eyeHeight - i).D
+			val d2 = living.prevPosZ + (living.posZ - living.prevPosZ) * par1.D
 			Vec3.createVectorHelper(d0, d1, d2)
 		}
 	}
 	
 	@JvmStatic
 	fun getLookVec(e: Entity): Vec3 {
-		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.toFloat())
-		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.toFloat())
+		val f1 = MathHelper.cos(-e.rotationYaw * 0.017453292f - PI.F)
+		val f2 = MathHelper.sin(-e.rotationYaw * 0.017453292f - PI.F)
 		val f3 = -MathHelper.cos(-e.rotationPitch * 0.017453292f)
 		val f4 = MathHelper.sin(-e.rotationPitch * 0.017453292f)
-		return Vec3.createVectorHelper((f2 * f3).toDouble(), f4.toDouble(), (f1 * f3).toDouble())
+		return Vec3.createVectorHelper((f2 * f3).D, f4.D, (f1 * f3).D)
 	}
 	
 	/**
@@ -627,13 +636,13 @@ object ASJUtilities {
 	 * @return random value in range [[min], [max]] (inclusive)
 	 */
 	@JvmStatic
-	fun randInBounds(min: Int, max: Int) = randInBounds(Random(), min, max)
+	fun randInBounds(min: Int, max: Int, rand: Random = Random()) = rand.nextInt(max - min + 1) + min
 	
 	/**
-	 * @return random value in range [[min], [max]] (inclusive)
+	 * @return true with [percent]% chance
 	 */
 	@JvmStatic
-	fun randInBounds(rand: Random, min: Int, max: Int) = rand.nextInt(max - min + 1) + min
+	fun chance(percent: Number) = Math.random() * 100 < percent.D
 	
 	/**
 	 * @return String which tolds you to hold shift-key
@@ -707,7 +716,8 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun generateOre(ore: Block, meta: Int, replace: Block, world: World, rand: Random, blockXPos: Int, blockZPos: Int, minVeinSize: Int, maxVeinSize: Int, minVeinsPerChunk: Int, maxVeinsPerChunk: Int, chanceToSpawn: Int, minY: Int, maxY: Int) {
-		if (rand.nextInt(101) > chanceToSpawn) return
+		if (!chance(chanceToSpawn)) return
+		
 		val veins = rand.nextInt(maxVeinsPerChunk - minVeinsPerChunk + 1) + minVeinsPerChunk
 		for (i in 0 until veins) {
 			val posX = blockXPos + rand.nextInt(16) + 8
@@ -729,7 +739,7 @@ object ASJUtilities {
 			for (k in zmn..zmx) {
 				var j = ystart - 1
 				while (j >= 0 && isBlockReplaceable(world.getBlock(i, j, k))) {
-					if (radius != 0) if (sqrt(((xmx - xmn) / 2 + xmn - i).toDouble().pow(2.0) + ((zmx - zmn) / 2 + zmn - k).toDouble().pow(2.0)) > radius) {
+					if (radius != 0) if (sqrt(((xmx - xmn) / 2 + xmn - i).D.pow(2.0) + ((zmx - zmn) / 2 + zmn - k).D.pow(2.0)) > radius) {
 						j--
 						continue
 					}
@@ -834,8 +844,8 @@ object ASJUtilities {
 	}
 	
 	@JvmStatic
-	fun say(player: EntityPlayer?, message: String) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocal(message).replace('&', '\u00a7')))
+	fun say(player: EntityPlayer?, message: String, vararg format: Any) {
+		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')))
 	}
 	
 	@JvmStatic
@@ -864,7 +874,7 @@ object ASJUtilities {
 	fun toString(nbt: NBTTagCompound): String {
 		val sb = StringBuilder("{\n")
 		for (o in nbt.tagMap.entries) {
-			val e = o as Map.Entry<*, *>
+			val e = o as Map.Entry<String, NBTBase>
 			val v = e.value
 			if (v is NBTTagList || v is NBTTagCompound) {
 				val arr = if (v is NBTTagList)

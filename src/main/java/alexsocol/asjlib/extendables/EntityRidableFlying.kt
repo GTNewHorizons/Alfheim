@@ -1,5 +1,6 @@
 package alexsocol.asjlib.extendables
 
+import alexsocol.asjlib.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
@@ -31,16 +32,16 @@ abstract class EntityRidableFlying(world: World): EntityRidable(world) {
 				aiMoveSpeed = flySpeed
 				if (!worldObj.isRemote) {
 					if (isJumping) {
-						motionY = (0.5f * flySpeed).toDouble()
+						motionY = flySpeed * 0.5
 					} else if (!onGround) {
 						motionY = 0.0
 					}
 					
 					if (par2 != 0f && !isJumping) {
-						val rad = Math.toRadians(rider!!.rotationPitch.toDouble())
+						val rad = Math.toRadians(rider!!.rotationPitch.D)
 						motionY = -sin(rad) * flySpeed
 						
-						par2 = abs(cos(rad)).toFloat() * flySpeed
+						par2 = abs(cos(rad)).F * flySpeed
 						if (par2 < 0.05) par2 = 0f
 					}
 					
@@ -48,9 +49,9 @@ abstract class EntityRidableFlying(world: World): EntityRidable(world) {
 					val f3 = 0.1627714f / (f2 * f2 * f2)
 					moveFlying(0f, par2, if (onGround) 0.1f * f3 else 0.085f)
 					moveEntity(motionX, motionY, motionZ)
-					motionX *= f2.toDouble()
-					motionY *= f2.toDouble()
-					motionZ *= f2.toDouble()
+					motionX *= f2
+					motionY *= f2
+					motionZ *= f2
 				}
 			}
 		} else if (!worldObj.isRemote) {

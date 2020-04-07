@@ -1,9 +1,9 @@
 package alfheim.common.spell.water
 
+import alexsocol.asjlib.D
 import alfheim.AlfheimCore
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
-import alfheim.common.core.util.D
 import alfheim.common.network.Message3d
 import alfheim.common.network.Message3d.m3d
 import net.minecraft.entity.EntityLivingBase

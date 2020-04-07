@@ -1,10 +1,8 @@
 package alfheim.common.block.tile.sub.anomaly
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.block.tile.SubTileAnomalyBase
-import alfheim.client.core.util.mc
-import alfheim.common.core.util.F
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound

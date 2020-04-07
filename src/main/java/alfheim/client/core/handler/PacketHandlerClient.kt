@@ -1,6 +1,6 @@
 package alfheim.client.core.handler
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.TileItemContainer
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
@@ -9,7 +9,6 @@ import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
 import alfheim.client.core.handler.CardinalSystemClient.SpellCastingSystemClient
 import alfheim.client.core.handler.CardinalSystemClient.TimeStopSystemClient
 import alfheim.client.core.proxy.ClientProxy
-import alfheim.client.core.util.mc
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -17,8 +16,8 @@ import alfheim.common.core.handler.CardinalSystem.KnowledgeSystem.Knowledge
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party.PartyStatus
 import alfheim.common.core.helper.*
-import alfheim.common.core.util.*
-import alfheim.common.item.relic.record.*
+import alfheim.common.entity.spell.EntitySpellFireball
+import alfheim.common.item.relic.record.GinnungagapHandler
 import alfheim.common.network.*
 import alfheim.common.network.Message0dC.m0dc
 import alfheim.common.network.Message1d.m1d
@@ -26,6 +25,7 @@ import alfheim.common.network.Message1l.m1l
 import alfheim.common.network.Message2d.m2d
 import alfheim.common.network.Message3d.m3d
 import alfheim.common.network.MessageNI.mni
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.*
 
 object PacketHandlerClient {
@@ -103,6 +103,10 @@ object PacketHandlerClient {
 			m2d.MODES     -> {
 				if (packet.data1 > 0) ClientProxy.enableESM() else ClientProxy.disableESM()
 				if (packet.data2 > 0) ClientProxy.enableMMO() else ClientProxy.disableMMO()
+			}
+			
+			m2d.FIREBALLSYNC -> {
+				(mc.theWorld.getEntityByID(packet.data1.I) as? EntitySpellFireball)?.target = mc.theWorld.getEntityByID(packet.data2.I) as? EntityLivingBase
 			}
 		}
 	}

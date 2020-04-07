@@ -1,6 +1,6 @@
 package alfheim.common.entity.boss.ai.flugel
 
-import alfheim.common.core.util.D
+import alexsocol.asjlib.D
 import alfheim.common.entity.EntityCharge
 import alfheim.common.entity.boss.EntityFlugel
 import vazkii.botania.common.core.helper.Vector3

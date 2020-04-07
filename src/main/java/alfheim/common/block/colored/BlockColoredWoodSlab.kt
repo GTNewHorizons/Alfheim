@@ -1,8 +1,8 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.toItem
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.BlockSlabMod
-import alfheim.common.core.util.toItem
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.IFuelHandler
 import cpw.mods.fml.common.registry.GameRegistry
@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.entity.passive.EntitySheep
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.*
+import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
 import java.awt.Color
@@ -45,5 +45,5 @@ class BlockColoredWoodSlab(full: Boolean, meta: Int, source: Block = AlfheimBloc
 	
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, lexicon: ItemStack?) = ShadowFoxLexiconData.irisSapling
 	
-	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) 150 else 0
+	override fun getBurnTime(fuel: ItemStack) = if (fuel.item === this.toItem()) if (field_150004_a) 300 else 150 else 0
 }

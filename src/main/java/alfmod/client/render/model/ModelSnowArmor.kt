@@ -1,6 +1,6 @@
 package alfmod.client.render.model
 
-import alfheim.client.core.util.glScaled
+import alexsocol.asjlib.glScaled
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.monster.*

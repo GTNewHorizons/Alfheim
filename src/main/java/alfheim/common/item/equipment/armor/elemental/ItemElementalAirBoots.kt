@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.armor.elemental
 
-import alfheim.common.core.util.F
+import alexsocol.asjlib.F
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*

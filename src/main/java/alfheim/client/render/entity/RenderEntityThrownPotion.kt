@@ -1,8 +1,7 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.*
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.client.core.util.glScaled
-import alfheim.common.core.util.*
 import alfheim.common.entity.EntityThrownPotion
 import alfheim.common.item.AlfheimItems
 import net.minecraft.client.renderer.Tessellator
@@ -24,8 +23,8 @@ object RenderEntityThrownPotion: Render() {
             glEnable(GL_RESCALE_NORMAL)
             glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			
-            glScaled(0.5)
+	
+			glScaled(0.5)
             bindEntityTexture(p_76986_1_)
             val tessellator = Tessellator.instance
 			func_77026_a(tessellator, iicon, -1)

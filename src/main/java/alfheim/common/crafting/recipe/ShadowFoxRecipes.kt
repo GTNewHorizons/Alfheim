@@ -514,7 +514,8 @@ object ShadowFoxRecipes {
 		recipesItemDisplayElven = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesLightningTree = ShadowFoxAPI.addTreeRecipe(50000,
-														  lightningSapling, 0,
+														  ItemStack(lightningSapling),
+														  ItemStack(irisSapling),
 														  350,
 														  MANA_STEEL, MANA_STEEL, MANA_STEEL,
 														  RUNE[13], // Wrath
@@ -553,7 +554,8 @@ object ShadowFoxRecipes {
 		recipesLivingwoodFunnel = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesInfernalTree = ShadowFoxAPI.addTreeRecipe(10000,
-														 netherSapling, 0,
+														 ItemStack(netherSapling),
+														 ItemStack(irisSapling),
 														 70,
 														 "ingotBrickNether", "ingotBrickNether", "ingotBrickNether",
 														 RUNE[1], // Fire
@@ -577,7 +579,8 @@ object ShadowFoxRecipes {
 		recipesInfernalStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCalicoTree = ShadowFoxAPI.addTreeRecipe(50000,
-													   calicoSapling, 0,
+													   ItemStack(calicoSapling),
+													   ItemStack(irisSapling),
 													   70,
 													   ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand), ItemStack(Blocks.soul_sand),
 													   RUNE[11], // Greed
@@ -601,7 +604,8 @@ object ShadowFoxRecipes {
 		recipesCalicoStairs = BotaniaAPI.getLatestAddedRecipe()
 		
 		recipesCircuitTree = ShadowFoxAPI.addTreeRecipe(10000,
-														circuitSapling, 0,
+														ItemStack(circuitSapling),
+														ItemStack(irisSapling),
 														70,
 														ItemStack(Items.repeater), ItemStack(Items.comparator), ItemStack(Items.repeater),
 														RUNE[9], // Lust
@@ -642,8 +646,8 @@ object ShadowFoxRecipes {
 		for (i in 0..3)
 			addShapelessOreDictRecipe(ItemStack(altPlanks, 4, i), ItemStack(altWood0, 1, i))
 		
-		addShapelessOreDictRecipe(ItemStack(altPlanks, 4, 4), ItemStack(altWood1, 1, 0))
-		addShapelessOreDictRecipe(ItemStack(altPlanks, 4, 5), ItemStack(altWood1, 1, 1))
+		for (i in 0..2)
+			addShapelessOreDictRecipe(ItemStack(altPlanks, 4, i + 4), ItemStack(altWood1, 1, i))
 		
 		recipesAltPlanks = BotaniaAPI.getLatestAddedRecipes(6)
 		
@@ -686,7 +690,8 @@ object ShadowFoxRecipes {
 		}
 		
 		recipesSealingTree = ShadowFoxAPI.addTreeRecipe(50000,
-														sealingSapling, 0,
+														ItemStack(sealingSapling),
+														ItemStack(irisSapling),
 														350,
 														ELEMENTIUM, ELEMENTIUM, ELEMENTIUM,
 														RUNE[7], // Winter
@@ -802,7 +807,11 @@ object ShadowFoxRecipes {
 															 RUNE[7], // Winter
 															 RUNE[5]) // Summer
 		
-		GameRegistry.addSmelting(ItemStack(altWood1, 1, 3), ItemStack(Items.coal, 1, 1), 0.15F)
+		for (i in 0..3) {
+			GameRegistry.addSmelting(ItemStack(altWood0, 1, i), ItemStack(Items.coal, 1, 1), 0.15F)
+			
+			if (i != 2) GameRegistry.addSmelting(ItemStack(altWood1, 1, i), ItemStack(Items.coal, 1, 1), 0.15F)
+		}
 		GameRegistry.addSmelting(irisWood0, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(irisWood2, ItemStack(Items.coal, 1, 1), 0.15F)
@@ -810,8 +819,6 @@ object ShadowFoxRecipes {
 		GameRegistry.addSmelting(rainbowWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(auroraWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(lightningWood, ItemStack(Items.coal, 1, 1), 0.15F)
-		GameRegistry.addSmelting(altWood0, ItemStack(Items.coal, 1, 1), 0.15F)
-		GameRegistry.addSmelting(altWood1, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(sealingWood, ItemStack(Items.coal, 1, 1), 0.15F)
 		GameRegistry.addSmelting(netherWood, ItemStack(elvenResource, 1, ElvenResourcesMetas.NetherwoodCoal), 0.15F)
 		GameRegistry.addSmelting(calicoWood, ItemStack(Items.coal, 1, 1), 0.15F)

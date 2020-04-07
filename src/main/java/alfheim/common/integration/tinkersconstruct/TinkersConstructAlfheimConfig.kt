@@ -1,10 +1,10 @@
 package alfheim.common.integration.tinkersconstruct
 
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.core.util.*
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimModule.liquidMauftrium
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas

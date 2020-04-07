@@ -2,10 +2,10 @@ package alfheim.common.item
 
 // import vazkii.botania.common.block.decor.IFloatingFlower
 // import vazkii.botania.common.item.IFloatingFlowerVariant
+import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
-import alfheim.common.core.util.*
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent

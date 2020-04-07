@@ -1,9 +1,9 @@
 package alexsocol.asjlib.extendables.block
 
-import alfheim.common.item.block.ItemBlockMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
+import net.minecraft.item.ItemBlock
 import net.minecraft.world.IBlockAccess
 
 class BlockModFence(texture: String, mat: Material, val gate: Block): BlockFence(texture, mat) {
@@ -18,7 +18,7 @@ class BlockModFence(texture: String, mat: Material, val gate: Block): BlockFence
 	}
 
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemBlockMod::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlock::class.java, name)
 		return super.setBlockName(name)
 	}
 }
