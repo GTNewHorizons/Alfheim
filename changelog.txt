@@ -4,7 +4,7 @@ Innovations:
  More PP values
  Finished anti-pylons lore and slightly changed recipe mechanics.
  Worldgen for sugar canes
- [MMO] New spells: Liquification - places water block, ...
+ [MMO] New spell: Liquification - places water block
  [MMO] Call, Join, Noclip, True Sight spells now can be used on any target
  [MMO] Spell blacklist (won't be registered)
  [MMO] Ender Dragon now can be attacked with spells
