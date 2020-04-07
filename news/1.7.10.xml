@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-29</val>
+		<val>BETA-30</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -12,7 +12,7 @@
 		<val> </val>
 	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/749f423ed181bdd6daa2e0f38695768db1b19cbc/modular/Alfheim-Modular-5.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/303d8b4aca2d1636eaad2890adee55aa5469bc25/modular/Alfheim-Modular-6.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -85,5 +85,8 @@
 	</version>
 	<version id="BETA-28">
 		<val>New decor; fixes and improvements were made</val>
+	</version>
+	<version id="BETA-29">
+		<val>More MT support and some MMO mode updates</val>
 	</version>
 </news>
