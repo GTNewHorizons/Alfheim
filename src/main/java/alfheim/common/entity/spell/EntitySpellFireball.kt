@@ -81,7 +81,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
+		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead/* || !worldObj.blockExists(posX.I, posY.I, posZ.I)*/)) {
 			setDead()
 		} else {
 			//if (!ASJUtilities.isServer()) return;
@@ -102,7 +102,7 @@ class EntitySpellFireball(world: World): Entity(world), ITimeStopSpecific {
 					}
 			}
 			
-			if (!noClip && (movingobjectposition != null || ticksExisted == SpellFireball.duration))
+			if (!noClip && (movingobjectposition != null || (ticksExisted >= SpellFireball.duration && riddenByEntity == null))) // a meme for fun
 				return onImpact(movingobjectposition)
 			
 			val target = target

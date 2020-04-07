@@ -287,6 +287,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.aesirRing), 3000)
 		addPink(ItemStack(ModItems.baubleBox), 5)
 		addPink(ItemStack(ModItems.blackHoleTalisman), 36)
+		addPink(ItemStack(ModItems.corporeaSpark), 9)
 		addPink(ItemStack(ModItems.cosmetic, 1, 8), 4) // was 8
 		addPink(ItemStack(ModItems.cosmetic, 1, 30), 1)
 		addPink(ItemStack(ModItems.dye, 1, 6), 1)
@@ -318,7 +319,6 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModItems.rune, 1, 4), 10)
 		addPink(ItemStack(ModItems.spawnerMover), 63)
 		addPink(ItemStack(ModItems.slimeBottle), 45)
-		addPink(ItemStack(ModItems.corporeaSpark), 9)
 		addPink(ItemStack(ModItems.starSword), 20)
 		addPink(ItemStack(ModItems.superTravelBelt), 27) // was 38
 		addPink(ItemStack(ModItems.thorRing), 1000)
