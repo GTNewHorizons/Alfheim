@@ -22,8 +22,7 @@ class CommandDimTP private constructor(): CommandBase() {
 			try {
 				val id = Integer.valueOf(args[0])
 				try {
-					val w = MinecraftServer.getServer().worldServerForDimension(id)
-							?: throw NullPointerException("Loaded dimension is null")
+					val w = MinecraftServer.getServer().worldServerForDimension(id) ?: throw NullPointerException("Loaded dimension is null")
 					
 					var s: ChunkCoordinates? = sender.getBedLocation(id)
 					// stupid minecraft returns overworld coordinates in ANY dimension

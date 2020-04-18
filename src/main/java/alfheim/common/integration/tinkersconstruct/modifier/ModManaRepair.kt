@@ -68,7 +68,9 @@ object AModNatural: ActiveToolMod() {
 		val item = stack.item as? IModifyable ?: return false
 		if (item.traits.contains("ammo")) return false
 		val tag = ItemNBTHelper.getCompound(stack, item.baseTagName, true) ?: return false
-		return ManaItemHandler.requestManaExactForTool(stack, player, getRepairCost(tag), true)
+		val mana = getRepairCost(tag)
+		if (mana == 0) return false
+		return ManaItemHandler.requestManaExactForTool(stack, player, mana, true)
 	}
 	
 	fun getRepairCost(tag: NBTTagCompound): Int {

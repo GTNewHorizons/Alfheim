@@ -40,6 +40,7 @@ class ItemIridescentWoodMod(par2Block: Block): ItemIridescentBlockMod(par2Block)
 }
 
 class ItemIridescentLeavesMod(par2Block: Block): ItemIridescentBlockMod(par2Block) {
+	
 	override fun getMetadata(meta: Int): Int {
 		if (field_150939_a is BlockLeavesMod) return meta or field_150939_a.decayBit()
 		return meta

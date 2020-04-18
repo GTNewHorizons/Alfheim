@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBook
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.entity.RenderManager
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -101,6 +102,8 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		
 		return true
 	}
+	
+	override fun registerIcons(reg: IIconRegister) = Unit
 	
 	companion object {
 		

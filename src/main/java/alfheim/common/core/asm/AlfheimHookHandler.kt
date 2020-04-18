@@ -99,7 +99,7 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
 	fun registerSpell(api: AlfheimAPI, spell: SpellBase) =
 		AlfheimConfigHandler.disabledSpells.contains(spell.name).also {
-			ASJUtilities.log("${spell.name} was blacklisted in configs. Skipping registration")
+			if (it) ASJUtilities.log("${spell.name} was blacklisted in configs. Skipping registration")
 		}
 	
 	@JvmStatic
@@ -172,6 +172,39 @@ object AlfheimHookHandler {
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
 		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
+	}
+	
+	var stoneHook = false
+	var cobbleHook = false
+	
+	@JvmStatic
+	@Hook
+	fun updateTick(block: BlockDynamicLiquid, world: World, x: Int, y: Int, z: Int, rand: Random) {
+		stoneHook = world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
+	}
+	
+	@JvmStatic
+	@Hook
+	fun func_149805_n(block: BlockLiquid, world: World, x: Int, y: Int, z: Int) {
+		cobbleHook = world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
+		var newBlock = block
+		
+		if (cobbleHook && block === Blocks.cobblestone) {
+			cobbleHook = false
+			newBlock = AlfheimBlocks.livingcobble
+		}
+		
+		if (stoneHook && block === Blocks.stone) {
+			stoneHook = false
+			newBlock = ModBlocks.livingrock
+		}
+		
+		return world.setBlock(x, y, z, newBlock, 0, 3)
 	}
 	
 	@JvmStatic
@@ -607,8 +640,7 @@ object AlfheimHookHandler {
 			val biome = WE_Biome.getBiomeAt((cm as? WE_WorldChunkManager ?: return oldBiome).cp, chunkCoors.first.toLong(), chunkCoors.second.toLong())
 			chunkCoors = Int.MAX_VALUE to Int.MAX_VALUE
 			return biome
-		}
-		else
+		} else
 			return oldBiome
 	}
 	
@@ -858,7 +890,7 @@ object AlfheimHookHandler {
 	fun translateToLocal(sc: StatCollector?, text: String?): String? {
 		if (text == "botaniamisc.manaUsage")
 			moveText = true
-			
+		
 		return text
 	}
 	

@@ -16,7 +16,7 @@ import kotlin.math.sin
 
 object RenderEntityHarp: Render() {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Arfa.obj"))
+	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Harp.obj"))
 	
 	init {
 		shadowSize = 0f

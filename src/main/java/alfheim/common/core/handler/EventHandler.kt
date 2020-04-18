@@ -64,7 +64,7 @@ object EventHandler {
 			InfoLoader.triedToWarnPlayer = true
 			for (s in InfoLoader.info) {
 				if (s.startsWith("\$json"))
-					e.player.addChatComponentMessage(IChatComponent.Serializer.func_150699_a(s.replace("\$json", "")))
+					e.player.addChatMessage(IChatComponent.Serializer.func_150699_a(s.replace("\$json", "")))
 				else
 					e.player.addChatMessage(ChatComponentText(s))
 			}
@@ -82,8 +82,8 @@ object EventHandler {
 					e.player.rotationYaw = 180f
 					e.player.rotationPitch = 0f
 					e.player.triggerAchievement(AlfheimAchievements.alfheim)
-					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome0"))
-					e.player.addChatComponentMessage(ChatComponentTranslation("elvenstory.welcome1"))
+					e.player.addChatMessage(ChatComponentTranslation("elvenstory.welcome0"))
+					e.player.addChatMessage(ChatComponentTranslation("elvenstory.welcome1"))
 					e.player.inventory.addItemStackToInventory(ItemStack(ModItems.lexicon))
 					e.player.setSpawnChunk(ChunkCoordinates(0, 250, 0), true, AlfheimConfigHandler.dimensionIDAlfheim)
 				}

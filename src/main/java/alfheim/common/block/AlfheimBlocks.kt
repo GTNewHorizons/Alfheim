@@ -345,6 +345,9 @@ object AlfheimBlocks {
 		registerOre("sand", ItemStack(elvenSand))
 		
 		registerOre(LibOreDict.DREAM_WOOD_LOG, ItemStack(altWood1, 1, 3))
+		registerOre(LibOreDict.DREAM_WOOD_LOG, ItemStack(altWood1, 1, 7))
+		registerOre(LibOreDict.DREAM_WOOD_LOG, ItemStack(altWood1, 1, 11))
+		registerOre(LibOreDict.DREAM_WOOD_LOG, ItemStack(altWood1, 1, 15))
 		
 		// ################
 		
@@ -355,11 +358,6 @@ object AlfheimBlocks {
 		registerOre(LibOreDict.MUSHROOM, ItemStack(rainbowMushroom))
 		
 		registerOre("treeSapling", irisSapling)
-		
-		var t: ItemStack
-		
-		registerOre(LibOreDict.WOOD[16], ItemStack(rainbowWood))
-		registerOre(LibOreDict.WOOD[17], ItemStack(auroraWood))
 		
 		registerOre(LibOreDict.DIRT[16], ItemStack(rainbowDirt))
 		registerOre(LibOreDict.IRIS_DIRT, ItemStack(rainbowDirt))
@@ -401,7 +399,6 @@ object AlfheimBlocks {
 		registerOre("slabWood", ItemStack(sealingSlabs))
 		registerOre("stairWood", ItemStack(sealingStairs))
 		
-		
 		for (i in 0..3) {
 			registerOre(LibOreDict.WOOD[i], ItemStack(irisWood0, 1, i))
 			
@@ -411,6 +408,9 @@ object AlfheimBlocks {
 			
 			registerOre(LibOreDict.WOOD[i + 12], ItemStack(irisWood3, 1, i))
 		}
+		
+		registerOre(LibOreDict.WOOD[16], ItemStack(rainbowWood))
+		registerOre(LibOreDict.WOOD[17], ItemStack(auroraWood))
 		
 		for (i in 0..7) {
 			registerOre(LibOreDict.LEAVES[i], ItemStack(irisLeaves0, 1, i))
@@ -429,6 +429,8 @@ object AlfheimBlocks {
 			registerOre("slabWood", ItemStack(altSlabsFull, 1, i))
 		}
 		
+		var t: ItemStack
+		
 		for (i in 0..15) {
 			registerOre(LibOreDict.IRIS_DIRT, ItemStack(irisDirt, 1, i))
 			registerOre(LibOreDict.DIRT[i], ItemStack(irisDirt, 1, i))
@@ -438,10 +440,6 @@ object AlfheimBlocks {
 			registerOre("logWood", ItemStack(sealingWood, 1, i))
 			registerOre("logWood", ItemStack(calicoWood, 1, i))
 			registerOre("logWood", ItemStack(circuitWood, 1, i))
-			
-			t = ItemStack(rainbowWood, 1, i)
-			registerOre("logWood", t)
-			registerOre(LibOreDict.IRIS_WOOD, t)
 			
 			t = ItemStack(irisWood0, 1, i)
 			registerOre("logWood", t)
@@ -459,10 +457,19 @@ object AlfheimBlocks {
 			registerOre("logWood", t)
 			registerOre(LibOreDict.IRIS_WOOD, t)
 			
+			t = ItemStack(rainbowWood, 1, i)
+			registerOre("logWood", t)
+			registerOre(LibOreDict.IRIS_WOOD, t)
+			
+			t = ItemStack(auroraWood, 1, i)
+			registerOre("logWood", t)
+			registerOre(LibOreDict.IRIS_WOOD, t)
+			
 			t = ItemStack(altWood0, 1, i)
 			registerOre("logWood", t)
 			
 			t = ItemStack(altWood1, 1, i)
+			if (i != BlockAltLeaves.yggMeta)
 			registerOre("logWood", t)
 			
 			t = ItemStack(irisLeaves0, 1, i)
@@ -472,6 +479,18 @@ object AlfheimBlocks {
 			t = ItemStack(irisLeaves1, 1, i)
 			registerOre("treeLeaves", t)
 			registerOre(LibOreDict.IRIS_LEAVES, t)
+			
+			t = ItemStack(rainbowLeaves, 1, i)
+			registerOre("treeLeaves", t)
+			registerOre(LibOreDict.IRIS_LEAVES, t)
+			
+			t = ItemStack(auroraLeaves, 1, i)
+			registerOre("treeLeaves", t)
+			registerOre(LibOreDict.IRIS_LEAVES, t)
+			
+			t = ItemStack(altLeaves, 1, i)
+			if (i != BlockAltLeaves.yggMeta)
+			registerOre("treeLeaves", t)
 			
 			t = ItemStack(irisPlanks, 1, i)
 			registerOre("plankWood", t)
