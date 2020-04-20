@@ -349,11 +349,11 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		worldObj.setBlockToAir(xCoord, yCoord - 3, zCoord)
 		worldObj.setBlock(xCoord, yCoord - 3, zCoord, recipe.out.block, recipe.out.meta, 3)
 		
-		if (ItemNBTHelper.getBoolean(recipe.out, TAG_SUFF_TILE, false)) {
+		if (ItemNBTHelper.getBoolean(recipe.out, TAG_SUFF_TILE, false)) run tile@ {
 			val copy = recipe.out.copy()
 			copy.tagCompound.removeTag(TAG_SUFF_TILE)
 			
-			val tile = TileEntity.createAndLoadEntity(copy.tagCompound)
+			val tile = TileEntity.createAndLoadEntity(copy.tagCompound) ?: return@tile
 			
 			tile.xCoord = xCoord
 			tile.yCoord = yCoord - 3

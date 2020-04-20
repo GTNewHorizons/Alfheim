@@ -172,7 +172,8 @@ class ItemAkashicRecords: ItemRelic("AkashicRecords") {
 		fun nextRecord(player: EntityPlayer, stack: ItemStack) {
 			val contains = getInt(stack, TAG_RECORD_COUNT, 0)
 			if (contains <= 0) return
-			if (contains > MAX_RECORDS) throw IllegalArgumentException("Records count in Akashik Records cannot be greater than $MAX_RECORDS. Holder: ${player.commandSenderName}")
+			if (contains > MAX_RECORDS)
+				throw IllegalArgumentException("Records count in Akashik Records cannot be greater than $MAX_RECORDS. Holder: ${player.commandSenderName}")
 			
 			val startedAt = getInt(stack, TAG_RECORD_SELECT, 0)
 			var cycle = startedAt

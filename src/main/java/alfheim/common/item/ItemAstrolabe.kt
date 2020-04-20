@@ -55,7 +55,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			val size = getSize(stack)
 			val newSize = if (size == 11) 3 else size + 2
 			setSize(stack, newSize)
-			ItemsRemainingRenderHandler[stack] = newSize.toString() + "x" + newSize
+			ItemsRemainingRenderHandler[stack] = "${newSize}x$newSize"
 			
 			world!!.playSoundAtEntity(player, "random.orb", 0.1f, 0.5f * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1.8f))
 		}
@@ -127,12 +127,12 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun addInformation(par1ItemStack: ItemStack?, player: EntityPlayer?, par3List: MutableList<Any?>, flags: Boolean) {
-		val block = getBlock(par1ItemStack)
-		val size = getSize(par1ItemStack)
+	override fun addInformation(stack: ItemStack?, player: EntityPlayer?, tooltip: MutableList<Any?>, adv: Boolean) {
+		val block = getBlock(stack)
+		val size = getSize(stack)
 		
-		par3List.add("$size x $size")
-		if (block != null && block !== Blocks.air) par3List.add(ItemStack(block, 1, getBlockMeta(par1ItemStack)).displayName)
+		tooltip.add("$size x $size")
+		if (block != null && block !== Blocks.air) tooltip.add(ItemStack(block, 1, getBlockMeta(stack)).displayName)
 	}
 	
 	companion object {

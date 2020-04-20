@@ -22,6 +22,7 @@ import alfheim.api.lib.LibOreDict.MUSPELHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.MUSPELHEIM_POWER_INGOT
 import alfheim.api.lib.LibOreDict.NIFLHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.NIFLHEIM_POWER_INGOT
+import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -850,6 +851,11 @@ object AlfheimRecipes {
 		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 0), *Array(9) { ELVORIUM_INGOT } )
 		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 1), *Array(9) { MAUFTRIUM_INGOT } )
 		
+		for (i in 0..5) {
+			val enh: Any = if (i < 3) MAUFTRIUM_INGOT else ItemStack(alfStorage, 1, 1)
+			addShapelessOreDictRecipe(ItemStack(hyperBucket, 1, i + 1), ItemStack(hyperBucket, 1, i), enh)
+		}
+		
 		addShapelessOreDictRecipe(ItemStack(lens, 1, 23), ItemStack(lens, 1, 0), tripwire_hook, ELEMENTIUM)
 		recipeLensTripwire = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -984,8 +990,6 @@ object AlfheimRecipes {
 		RecipeSorter.register("${ModInfo.MODID}:looterclean", RecipeLootInterceptorClear::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeCleanRelic())
 		RecipeSorter.register("${ModInfo.MODID}:cleanrelic", RecipeCleanRelic::class.java, RecipeSorter.Category.SHAPELESS, "")
-		addRecipe(RecipeEnhanceBucket())
-		RecipeSorter.register("${ModInfo.MODID}:enhanceBucket", RecipeEnhanceBucket::class.java, RecipeSorter.Category.SHAPELESS, "")
 		addRecipe(RecipeElvenWeed())
 	}
 	
