@@ -107,6 +107,7 @@ import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
@@ -114,7 +115,9 @@ import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
-import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
@@ -390,8 +393,11 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addBlock(livingcobble)
 		addBlock(livingcobbleStairs)
+		addBlock(livingcobbleStairs1)
+		addBlock(livingcobbleStairs2)
 		addBlock(livingcobbleSlab)
-		addBlock(livingrockTileSlab)
+		addBlock(livingcobbleSlab1)
+		addBlock(livingcobbleSlab2)
 		addBlock(livingcobbleWall)
 		addBlock(livingrockBrickWall)
 		

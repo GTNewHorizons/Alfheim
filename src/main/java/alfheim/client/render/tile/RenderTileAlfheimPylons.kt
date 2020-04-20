@@ -101,6 +101,9 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		
 		glColor4f(1f, 1f, 1f, a)
 		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
+		
 		if (!ShaderHelper.useShaders() || hand) {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 			val alpha = ((sin((ClientTickHandler.ticksInGame + ticks) / 20.0) / 2.0 + 0.5) / if (ConfigHandler.oldPylonModel) 1.0 else 2.0).F
@@ -137,6 +140,8 @@ object RenderTileAlfheimPylons: TileEntitySpecialRenderer() {
 		glDisable(GL_BLEND)
 		glEnable(GL_RESCALE_NORMAL)
 		glPopMatrix()
+		
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		
 		hand = false
 	}

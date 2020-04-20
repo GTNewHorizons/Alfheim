@@ -26,10 +26,17 @@ object RenderEntityFlugel: RenderLiving(ModelEntityFlugel(), 0.25f) {
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.halo) {
 		
+		var lastX = 0f
+		var lastY = 0f
+		
 		override fun preRender() {
 			GL11.glEnable(GL11.GL_BLEND)
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 			GL11.glShadeModel(GL11.GL_SMOOTH)
+			
+			lastX = OpenGlHelper.lastBrightnessX
+			lastY = OpenGlHelper.lastBrightnessY
+			
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 			GL11.glDisable(GL11.GL_LIGHTING)
 			GL11.glDisable(GL11.GL_CULL_FACE)
@@ -48,9 +55,11 @@ object RenderEntityFlugel: RenderLiving(ModelEntityFlugel(), 0.25f) {
 		
 		override fun postRender() {
 			GL11.glEnable(GL11.GL_CULL_FACE)
-			//glEnable(GL_LIGHTING); breaks some other stuuf, urgh -_-
+			//glEnable(GL_LIGHTING); breaks some other stuff, urgh -_-
 			GL11.glShadeModel(GL11.GL_FLAT)
 			GL11.glDisable(GL11.GL_BLEND)
+			
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		}
 	}.also { RenderPostShaders.registerShadedObject(it) }
 }

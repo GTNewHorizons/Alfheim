@@ -24,8 +24,10 @@ class ModelBipedEyes: ModelBiped() {
 		mc.renderEngine.bindTexture(textureEyes)
 		
 		glDisable(GL_LIGHTING)
-		val prevX = OpenGlHelper.lastBrightnessX
-		val prevY = OpenGlHelper.lastBrightnessY
+		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
+		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		
 		if (isChild) {
@@ -38,7 +40,7 @@ class ModelBipedEyes: ModelBiped() {
 			bipedEyes.render(f5)
 		}
 		
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, prevX, prevY)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
 	}
 	

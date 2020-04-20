@@ -24,10 +24,15 @@ object RenderEntitySnowSprite: RenderLiving(ModelSnowSprite(), 0.25f) {
 	override fun doRender(entity: Entity, x: Double, y: Double, z: Double, yaw: Float, pitch: Float) {
 		if (entity.isInvisible) return
 		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
+		
 		glPushMatrix()
 		glTranslatef(0f, -0.25f, 0f)
 		super.doRender(entity, x, y, z, yaw, pitch)
 		glPopMatrix()
+		
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 	}
 	
 	private fun setPixieBrightness(pixie: EntitySnowSprite, pass: Int, ticks: Float): Int {

@@ -3,6 +3,7 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -26,6 +27,7 @@ object RenderWings {
 		player.sendPlayerAbilities()
 		
 		if (player.commandSenderName != "MonoShiki") {
+			if (!AlfheimCore.enableElvenStory) return
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
 			if (ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol")) return
@@ -42,6 +44,9 @@ object RenderWings {
 			glAlphaFunc(GL_GREATER, 0.003921569f)
 		}
 		glDisable(GL_LIGHTING)
+		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
@@ -89,7 +94,7 @@ object RenderWings {
 		glPopMatrix()
 		
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
 		if (player.commandSenderName != "MonoShiki") {
 			glAlphaFunc(GL_GREATER, 0.1f)

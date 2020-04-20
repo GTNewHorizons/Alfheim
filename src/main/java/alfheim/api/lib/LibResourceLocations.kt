@@ -6,11 +6,11 @@ import java.util.*
 
 object LibResourceLocations {
 	
-	val akashicBox = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicBox.png");
-	val akashicCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png");
-	val akashicCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png");
-	val akashicCyl = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCyl.png");
-	val altar9 = ResourceLocation(ModInfo.MODID, "textures/model/block/altar9.png");
+	val akashicBox = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicBox.png")
+	val akashicCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png")
+	val akashicCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png")
+	val akashicCyl = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCyl.png")
+	val altar9 = ResourceLocation(ModInfo.MODID, "textures/model/block/altar9.png")
 	val anomalies = ResourceLocation(ModInfo.MODID, "textures/misc/anomalies.png")
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")
 	val antiPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png")
@@ -54,6 +54,7 @@ object LibResourceLocations {
 	val mine1 = ResourceLocation(ModInfo.MODID, "textures/model/entity/1.png")
 	val mine2 = ResourceLocation(ModInfo.MODID, "textures/model/entity/2.png")
 	val mine3 = ResourceLocation(ModInfo.MODID, "textures/model/entity/3.png")
+	val palette = ResourceLocation(ModInfo.MODID, "textures/misc/pal.png")
 	var petalOverlay = ResourceLocation("botania:textures/gui/petalOverlay.png")
 	var pixie = ResourceLocation("botania:textures/model/pixie.png")
 	val poolBlue = ResourceLocation(ModInfo.MODID, "textures/blocks/PoolBlue.png")

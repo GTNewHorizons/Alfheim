@@ -28,24 +28,32 @@ class BlockLivingCobbleSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.
 	override fun getSingleBlock() = AlfheimFluffBlocks.livingcobbleSlab as BlockSlab
 }
 
-class BlockLivingrockDarkSlab(full: Boolean, val meta: Int): BlockLivingSlab(full, AlfheimFluffBlocks.livingrockDark, meta) {
+class BlockLivingCobbleSlab1(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 1) {
 	
-	override fun getFullBlock() = AlfheimFluffBlocks.livingrockDarkSlabsFull.safeGet(meta) as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.livingcobbleSlabFull1 as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimFluffBlocks.livingrockDarkSlabs.safeGet(meta) as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingcobbleSlab1 as BlockSlab
 }
 
-class BlockLivingRockTileSlab(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 2) {
+class BlockLivingCobbleSlab2(full: Boolean): BlockLivingSlab(full, AlfheimBlocks.livingcobble, 2) {
 	
 	lateinit var sideIcon: IIcon
 	
-	override fun getFullBlock() = AlfheimFluffBlocks.livingrockTileSlabFull as BlockSlab
+	override fun getFullBlock() = AlfheimFluffBlocks.livingcobbleSlabFull2 as BlockSlab
 	
-	override fun getSingleBlock() = AlfheimFluffBlocks.livingrockTileSlab as BlockSlab
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingcobbleSlab2 as BlockSlab
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
 		sideIcon = IconHelper.forName(reg, "LivingCobble2Slab")
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = if (side > 1) sideIcon else super.getIcon(side, meta)!!
+	
+}
+
+class BlockLivingrockDarkSlab(full: Boolean, val meta: Int): BlockLivingSlab(full, AlfheimFluffBlocks.livingrockDark, meta) {
+	
+	override fun getFullBlock() = AlfheimFluffBlocks.livingrockDarkSlabsFull.safeGet(meta) as BlockSlab
+	
+	override fun getSingleBlock() = AlfheimFluffBlocks.livingrockDarkSlabs.safeGet(meta) as BlockSlab
 }

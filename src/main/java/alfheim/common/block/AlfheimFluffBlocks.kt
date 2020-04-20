@@ -35,8 +35,14 @@ object AlfheimFluffBlocks {
 	val elvenSandstoneSlab: Block
 	val elvenSandstoneSlabFull: Block
 	val livingcobbleStairs: Block
+	val livingcobbleStairs1: Block
+	val livingcobbleStairs2: Block
 	val livingcobbleSlab: Block
 	val livingcobbleSlabFull: Block
+	val livingcobbleSlab1: Block
+	val livingcobbleSlabFull1: Block
+	val livingcobbleSlab2: Block
+	val livingcobbleSlabFull2: Block
 	val livingcobbleWall: Block
 	val livingrockBrickWall: Block
 	val livingrockDark: Block
@@ -44,8 +50,6 @@ object AlfheimFluffBlocks {
 	val livingrockDarkSlabs: Array<Block>
 	val livingrockDarkSlabsFull: Array<Block>
 	val livingrockDarkWalls: Array<Block>
-	val livingrockTileSlab: Block
-	val livingrockTileSlabFull: Block
 	val livingwoodFence: Block
 	val livingwoodFenceGate: Block
 	val livingwoodBarkFence: Block
@@ -116,15 +120,23 @@ object AlfheimFluffBlocks {
 		(elvenSandstoneSlabFull as BlockModSlab).register()
 		
 		livingcobbleStairs = BlockModStairs(AlfheimBlocks.livingcobble, 0, "LivingCobbleStairs").setCreativeTab(AlfheimTab)
+		livingcobbleStairs1 = BlockModStairs(AlfheimBlocks.livingcobble, 1, "LivingCobbleStairs1").setCreativeTab(AlfheimTab)
+		livingcobbleStairs2 = BlockModStairs(AlfheimBlocks.livingcobble, 2, "LivingCobbleStairs2").setCreativeTab(AlfheimTab)
+		
 		livingcobbleSlab = BlockLivingCobbleSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
 		livingcobbleSlabFull = BlockLivingCobbleSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(livingcobbleSlab as BlockModSlab).register()
 		(livingcobbleSlabFull as BlockModSlab).register()
 		
-		livingrockTileSlab = BlockLivingRockTileSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
-		livingrockTileSlabFull = BlockLivingRockTileSlab(true).setCreativeTab(null).setHardness(1.5f)
-		(livingrockTileSlab as BlockModSlab).register()
-		(livingrockTileSlabFull as BlockModSlab).register()
+		livingcobbleSlab1 = BlockLivingCobbleSlab1(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		livingcobbleSlabFull1 = BlockLivingCobbleSlab1(true).setCreativeTab(null).setHardness(1.5f)
+		(livingcobbleSlab1 as BlockModSlab).register()
+		(livingcobbleSlabFull1 as BlockModSlab).register()
+		
+		livingcobbleSlab2 = BlockLivingCobbleSlab2(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		livingcobbleSlabFull2 = BlockLivingCobbleSlab2(true).setCreativeTab(null).setHardness(1.5f)
+		(livingcobbleSlab2 as BlockModSlab).register()
+		(livingcobbleSlabFull2 as BlockModSlab).register()
 		
 		livingcobbleWall = BlockModWall(AlfheimBlocks.livingcobble, 0)
 			.setCreativeTab(AlfheimTab)

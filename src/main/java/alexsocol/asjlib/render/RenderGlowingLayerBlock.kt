@@ -28,9 +28,11 @@ class RenderGlowingLayerBlock: ISimpleBlockRenderingHandler {
 		drawFaces(renderer, block) { block.getIcon(it, meta) }
 		
 		glDisable(GL_LIGHTING)
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		drawFaces(renderer, block) { block.getGlowIcon(it, meta) }
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
 	}
 	

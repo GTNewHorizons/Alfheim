@@ -60,6 +60,9 @@ object ModelCreatorStaff: ModelBase() {
 			
 			glTranslated(0.0, 0.2, 0.0)
 			
+			val lastX = OpenGlHelper.lastBrightnessX
+			val lastY = OpenGlHelper.lastBrightnessY
+			
 			glPushMatrix()
 			var i = (200f + MathHelper.sin(player.ticksExisted.F) * 5f + 5f).I
 			var j = i % 65536
@@ -182,6 +185,8 @@ object ModelCreatorStaff: ModelBase() {
 			
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glPopMatrix()
+			
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 			
 			glPopMatrix()
 		}

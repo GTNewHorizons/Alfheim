@@ -39,7 +39,10 @@ object RenderEntityFenrirStorm: Render() {
 		
 		glDisable(GL_TEXTURE_2D)
 		glDisable(GL_LIGHTING)
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
+		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
+		
 		glColor4d(0.65, 1.0, 1.0, 1.0)
 		
 		rand.setSeed((e.entityId + e.ticksExisted / 3).toLong())
@@ -51,6 +54,8 @@ object RenderEntityFenrirStorm: Render() {
 		
 		glEnable(GL_LIGHTING)
 		glEnable(GL_TEXTURE_2D)
+		
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		
 		glPopMatrix()
 	}

@@ -94,6 +94,9 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glRotatef(180f, 1f, 0f, 0f)
 				glTranslatef(0f, 0f, -2.4f)
 				
+				val lastX = OpenGlHelper.lastBrightnessX
+				val lastY = OpenGlHelper.lastBrightnessY
+				
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 				val spd = 0.5
 				EnumRace[tile.rotation + 1].glColorA(1.0)
@@ -131,6 +134,8 @@ object RenderTileRaceSelector: TileEntitySpecialRenderer() {
 				glRotated((-ry).D, 0.0, 1.0, 0.0)
 				LibResourceLocations.wings[tile.rotation + 1]?.let { RenderWings.drawRect(it, -1) }
 				glPopMatrix()
+				
+				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 				
 				//glColor4d(1, 1, 1, 1); for some reason it cleans color
 				glAlphaFunc(GL_GREATER, 0.1f)

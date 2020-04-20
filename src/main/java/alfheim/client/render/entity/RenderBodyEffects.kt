@@ -42,12 +42,17 @@ object RenderButterflies {
 	}
 }
 
+private var lastX = 0f
+private var lastY = 0f
+
 private fun setupGlowingRender() {
 	glPushMatrix()
 	glEnable(GL_BLEND)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	glDisable(GL_CULL_FACE)
 	glDisable(GL_LIGHTING)
+	lastX = OpenGlHelper.lastBrightnessX
+	lastY = OpenGlHelper.lastBrightnessY
 	OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 	glColor4d(1.0, 1.0, 1.0, 1.0)
 }
@@ -65,5 +70,6 @@ private fun unsetGlowingRender() {
 	glEnable(GL_LIGHTING)
 	glEnable(GL_CULL_FACE)
 	glDisable(GL_BLEND)
+	OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 	glPopMatrix()
 }

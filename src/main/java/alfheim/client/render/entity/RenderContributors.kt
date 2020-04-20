@@ -2,6 +2,7 @@ package alfheim.client.render.entity
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.render.*
+import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -13,7 +14,9 @@ import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.RenderPlayerEvent
+import net.minecraftforge.client.model.AdvancedModelLoader
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.item.IBaubleRender.Helper
@@ -25,6 +28,8 @@ import java.awt.Color
 import kotlin.math.sin
 
 object RenderContributors {
+	
+	val book = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.babylon) {
 		
@@ -54,7 +59,7 @@ object RenderContributors {
 	
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		if (player.isInvisible || player.isInvisibleToPlayer(mc.thePlayer) || player.isPotionActive(Potion.invisibility)) return
-		if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0 || !AlfheimConfigHandler.fancies) return
+		if (!AlfheimConfigHandler.fancies) return
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
@@ -116,6 +121,10 @@ object RenderContributors {
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
+				
+				val lastX = OpenGlHelper.lastBrightnessX
+				val lastY = OpenGlHelper.lastBrightnessY
+				
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 				
 				val f = icon.minU
@@ -145,13 +154,15 @@ object RenderContributors {
 				glRotatef(-rz, 0f, 0f, 1f)
 				
 				glDisable(GL_BLEND)
-				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
+				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 				glColor4d(1.0, 1.0, 1.0, 1.0)
 				glPopMatrix()
 			}
 		}
 		
-		if (player.commandSenderName == "DmitryWS") {
+		if (player.commandSenderName == "DmitryWS") run dws@ {
+			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@dws
+			
 			glPushMatrix()
 			glEnable(GL_CULL_FACE)
 			val t = sin((mc.theWorld.totalWorldTime + mc.timer.renderPartialTicks) / 10.0)
@@ -166,12 +177,18 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")) {
+		if (ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")) run kak@ {
+			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@kak
+			
 			glPushMatrix()
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDisable(GL_CULL_FACE)
 			glDisable(GL_LIGHTING)
+			
+			val lastX = OpenGlHelper.lastBrightnessX
+			val lastY = OpenGlHelper.lastBrightnessY
+			
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 			glShadeModel(GL_SMOOTH)
 			
@@ -191,7 +208,7 @@ object RenderContributors {
 			glColor4f(1f, 1f, 1f, 1f)
 			
 			glShadeModel(GL_FLAT)
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 			glEnable(GL_LIGHTING)
 			glEnable(GL_CULL_FACE)
 			glDisable(GL_BLEND)
@@ -202,6 +219,8 @@ object RenderContributors {
 			glPushMatrix()
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
+			glEnable(GL_LIGHTING)
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
 			if (player.isSneaking) glTranslatef(0f, 0f, -0.25f)
 			mc.renderEngine.bindTexture(LibResourceLocations.miko1)
 			ModelEntityFlugel.model1.renderAll()
@@ -234,6 +253,22 @@ object RenderContributors {
 			glScaled(0.5)
 			val icon = ItemElvenResource.amulet
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 32f)
+			glPopMatrix()
+		}
+		
+		if (player.commandSenderName == "Mudresistor") {
+			glPushMatrix()
+			glColor4f(1f, 1f, 1f, 1f)
+			
+			glRotatef(180f, 1f, 0f, 0f)
+			glTranslated(-0.5, 1.0, 0.5)
+			glRotatef(mc.theWorld.totalWorldTime % 360f, 0f, 1f, 0f)
+			// glTranslatef(0f, sin(mc.theWorld.totalWorldTime / 16f % 360f) / 10, 0f)
+			glTranslated(-0.45, -0.55, 0.4)
+			
+			glScaled(0.1)
+			mc.renderEngine.bindTexture(LibResourceLocations.palette)
+			book.renderAll()
 			glPopMatrix()
 		}
 		

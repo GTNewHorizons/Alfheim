@@ -3,6 +3,8 @@
 tile.alfheim:AlfheimPortal.name=Ядро портала в Альфхейм
 tile.alfStorage0.name=Блок эльвория
 tile.alfStorage1.name=§6Блок мауфтрия
+tile.alfStorage2.name=Блок силы Муспельхейма
+tile.alfStorage3.name=Блок силы Нифльхейма
 tile.botania:altar9.name=Живой лепестковый аптекарь
 tile.alfheim:AnimatedTorch.name=Подвижный факел
 tile.AnimatedTorch.desc.random=Случайно

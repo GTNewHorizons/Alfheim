@@ -167,7 +167,7 @@ object AlfheimBlocks {
 	init {
 		alfheimPortal = BlockAlfheimPortal()
 		alfheimPylon = BlockAlfheimPylon()
-		alfStorage = object: BlockModMeta(Material.iron, 2, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
+		alfStorage = object: BlockModMeta(Material.iron, 4, ModInfo.MODID, "alfStorage", AlfheimTab, 5f, resist = 60f) {
 			override fun isBeaconBase(worldObj: IBlockAccess?, x: Int, y: Int, z: Int, beaconX: Int, beaconY: Int, beaconZ: Int) = true
 		}
 		amplifier = BlockAmplifier()

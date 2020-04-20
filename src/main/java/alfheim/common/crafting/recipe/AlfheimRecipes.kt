@@ -22,7 +22,6 @@ import alfheim.api.lib.LibOreDict.MUSPELHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.MUSPELHEIM_POWER_INGOT
 import alfheim.api.lib.LibOreDict.NIFLHEIM_ESSENCE
 import alfheim.api.lib.LibOreDict.NIFLHEIM_POWER_INGOT
-import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.AlfheimBlocks.alfStorage
 import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
@@ -45,6 +44,7 @@ import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
@@ -52,7 +52,9 @@ import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
-import alfheim.common.block.AlfheimFluffBlocks.livingrockTileSlab
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
@@ -657,9 +659,21 @@ object AlfheimRecipes {
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
+		addOreDictRecipe(ItemStack(livingcobbleStairs1, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble, 1, 1))
+		
+		addOreDictRecipe(ItemStack(livingcobbleStairs2, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble, 1, 2))
+		
 		addShapedRecipe(ItemStack(livingcobbleSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 0))
 		
-		addShapedRecipe(ItemStack(livingrockTileSlab, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
+		addShapedRecipe(ItemStack(livingcobbleSlab1, 6), "LLL", 'L', ItemStack(livingcobble, 1, 1))
+		
+		addShapedRecipe(ItemStack(livingcobbleSlab2, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
+		
+		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab))
+		
+		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab1))
+		
+		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab2))
 		
 		addShapedRecipe(ItemStack(livingcobbleWall, 6), "LLL", "LLL", 'L', ItemStack(livingcobble))
 		
@@ -843,13 +857,19 @@ object AlfheimRecipes {
 		
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumNugget), ELVORIUM_INGOT)
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumNugget), MAUFTRIUM_INGOT)
+		
 		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.ElvoriumIngot), ItemStack(alfStorage, 1, 0))
 		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MauftriumIngot), ItemStack(alfStorage, 1, 1))
+		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.MuspelheimPowerIngot), ItemStack(alfStorage, 1, 2))
+		addShapelessRecipe(ItemStack(elvenResource, 9, ElvenResourcesMetas.NiflheimPowerIngot), ItemStack(alfStorage, 1, 3))
 		
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.ElvoriumIngot), *Array(9) { ELVORIUM_NUGGET } )
 		addShapelessOreDictRecipe(ItemStack(elvenResource, 1, ElvenResourcesMetas.MauftriumIngot), *Array(9) { MAUFTRIUM_NUGGET } )
+		
 		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 0), *Array(9) { ELVORIUM_INGOT } )
 		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 1), *Array(9) { MAUFTRIUM_INGOT } )
+		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 2), *Array(9) { MUSPELHEIM_POWER_INGOT } )
+		addShapelessOreDictRecipe(ItemStack(alfStorage, 1, 3), *Array(9) { NIFLHEIM_POWER_INGOT } )
 		
 		for (i in 0..5) {
 			val enh: Any = if (i < 3) MAUFTRIUM_INGOT else ItemStack(alfStorage, 1, 1)

@@ -136,6 +136,10 @@ object RenderItemAkashicRecords: IItemRenderer {
 		
 		glPushMatrix()
 		glDisable(GL_LIGHTING)
+		
+		val lastX = OpenGlHelper.lastBrightnessX
+		val lastY = OpenGlHelper.lastBrightnessY
+		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val a = (sin(Botania.proxy.worldElapsedTicks / 4f) / 2 + 0.5f)
 		val m = a * 0.2f
@@ -147,7 +151,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 			model.renderPart("core")
 		}
 		glColor4f(1f, 1f, 1f, 1f)
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY)
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
 		glPopMatrix()
 		
