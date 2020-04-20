@@ -1,5 +1,6 @@
 package alfheim.client.render.entity
 
+import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.entity.ModelEntityFlugel
@@ -18,7 +19,8 @@ object RenderEntityFlugel: RenderLiving(ModelEntityFlugel(), 0.25f) {
 		if (entity is EntityFlugel) getEntityTexture(entity) else LibResourceLocations.jibril
 	
 	fun getEntityTexture(flugel: EntityFlugel): ResourceLocation {
-		BossBarHandler.setCurrentBoss(flugel)
+		if (Vector3.fromEntity(flugel) != Vector3.zero) BossBarHandler.setCurrentBoss(flugel)
+		
 		return if (flugel.isUltraMode) LibResourceLocations.jibrilDark else LibResourceLocations.jibril
 	}
 	
