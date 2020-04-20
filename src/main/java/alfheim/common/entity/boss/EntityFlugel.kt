@@ -46,7 +46,6 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.*
 
-@Suppress("UNCHECKED_CAST")
 class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { // EntityDoppleganger
 	
 	val playersDamage: HashMap<String, Float> = HashMap()
@@ -58,7 +57,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		get() {
 			val source = source
 			val range = RANGE + 3
-			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, alexsocol.asjlib.getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
+			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
 			list.removeAll { Vector3.pointDistanceSpace(it.posX, it.posY, it.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= range }
 			return list
 		}
@@ -245,6 +244,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						
 						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false) {
 							relic = ItemStack(AlfheimItems.mask)
+							worldObj.getPlayerEntityByName(name)?.triggerAchievement(AlfheimAchievements.mask)
 						} else if (ultra) {
 							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
 							if (player != null) {
@@ -258,7 +258,6 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							}
 						}
 						
-						worldObj.getPlayerEntityByName(name)?.addStat(AlfheimAchievements.mask, 1)
 						ItemRelic.bindToUsernameS(name, relic)
 						entityDropItem(relic, 1f)
 						lot = false
@@ -424,9 +423,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val tiara = baubles.getStackInSlot(0)
 			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.meta == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
-			else {
+			else if (!player.capabilities.isCreativeMode) {
 				if (!worldObj.isRemote) {
-					ASJUtilities.say(player, "alfheimmisc.notallowed")
+					ASJUtilities.say(player, "alfheimmisc.flugel.notallowed")
 					
 					fun isTooNear(bed: ChunkCoordinates?) =
 						if (bed == null) true
@@ -875,12 +874,12 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			if (world.getTileEntity(x, y, z) is TileEntityBeacon) {
 				if (isTruePlayer(player)) {
 					if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.peacefulNoob")
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.peacefulNoob")
 						return false
 					}
 					
 					if ((world.getTileEntity(x, y, z) as TileEntityBeacon).levels < 1) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.inactive")
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.inactive")
 						return false
 					}
 					
@@ -892,14 +891,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						val blockat = world.getBlock(i, j, k)
 						val meta = world.getBlockMetadata(i, j, k)
 						if (blockat !== ModBlocks.pylon || meta != 2) {
-							if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.needsCatalysts")
+							if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.needsCatalysts")
 							return false
 						}
 						
 					}
 					
 					if (!hasProperArena(world, x, y, z)) {
-						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.badArena")
+						if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.flugel.badArena")
 						return false
 					}
 					
@@ -948,11 +947,11 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					world.spawnEntityInWorld(e)
 					return true
 				}
-				ASJUtilities.say(player, "alfheimmisc.fakeplayer")
+				ASJUtilities.say(player, "alfheimmisc.flugel.fakeplayer")
 				return false
 			}
 			
-			ASJUtilities.say(player, "alfheimmisc.notbeacon")
+			ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
 			return false
 		}
 		
@@ -990,7 +989,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			return CHEATY_BLOCKS.contains(name)
 		}
 		
-		val FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$")
+		val FAKE_PLAYER_PATTERN: Pattern = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$")
 		
 		fun isTruePlayer(e: Entity): Boolean {
 			if (e !is EntityPlayer) return false

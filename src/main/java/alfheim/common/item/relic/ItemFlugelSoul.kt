@@ -136,6 +136,49 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 	}
 	
+	override fun doParticles(burst: IManaBurst?, stack: ItemStack?) = true
+	
+	override fun collideBurst(burst: IManaBurst?, pos: MovingObjectPosition?, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?) = dead
+	
+	override fun apply(stack: ItemStack?, props: BurstProperties?) = Unit
+	
+	override fun updateBurst(burst: IManaBurst?, stack: ItemStack) {
+		val entity = burst as EntityThrowable
+		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0)
+		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
+		val attacker = ItemNBTHelper.getInt(burst.sourceLens, TAG_ATTACKER_ID, -1)
+		
+		for (living in entities) {
+			if (living.entityId == attacker) continue
+			
+			if (living.hurtTime == 0) {
+				if (!burst.isFake && !entity.worldObj.isRemote) {
+					living.attackEntityFrom(DamageSource.magic, if (stack.meta > 0) 10f else 8f)
+					entity.setDead()
+					break
+				}
+			}
+		}
+	}
+	
+	override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+		val horn: EntityItem? = (entity.worldObj.getEntitiesWithinAABB(EntityItem::class.java, entity.boundingBox(0.5)) as List<EntityItem>).firstOrNull { it.entityItem?.item === AlfheimItems.soulHorn }
+		
+		if (horn != null && horn.entityItem.meta == 0 && getBlocked(entity.entityItem) == 0) {
+			for (i in 0 until SEGMENTS) setDisabled(entity.entityItem, i, true)
+			horn.entityItem.meta = 1
+			
+			val v = Vector3()
+			for (i in 0 until 360 step 5) {
+				val c = Color.getHSBColor(i.F / 360f, 1f, 1f)
+				v.rand().sub(0.5).normalize().mul(Math.random() * 0.5)
+				Botania.proxy.sparkleFX(entity.worldObj, entity.posX + v.x, entity.posY + v.y, entity.posZ + v.z, c.red / 255f, c.green / 255f, c.blue / 255f, 1.5f, 1000)
+			}
+		}
+		
+		return super.onEntityItemUpdate(entity)
+	}
+	
 	companion object {
 		
 		const val SEGMENTS = 12
@@ -423,48 +466,5 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0
 			return (Vector3.pointDistanceSpace(x, y, z, player.posX, player.posY - 1.6, player.posZ) * mod).mfloor() * 10
 		}
-	}
-	
-	override fun doParticles(burst: IManaBurst?, stack: ItemStack?) = true
-	
-	override fun collideBurst(burst: IManaBurst?, pos: MovingObjectPosition?, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?) = dead
-	
-	override fun apply(stack: ItemStack?, props: BurstProperties?) = Unit
-	
-	override fun updateBurst(burst: IManaBurst?, stack: ItemStack) {
-		val entity = burst as EntityThrowable
-		val axis = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(1.0)
-		val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
-		val attacker = ItemNBTHelper.getInt(burst.sourceLens, TAG_ATTACKER_ID, -1)
-		
-		for (living in entities) {
-			if (living.entityId == attacker) continue
-			
-			if (living.hurtTime == 0) {
-				if (!burst.isFake && !entity.worldObj.isRemote) {
-					living.attackEntityFrom(DamageSource.magic, if (stack.meta > 0) 10f else 8f)
-					entity.setDead()
-					break
-				}
-			}
-		}
-	}
-	
-	override fun onEntityItemUpdate(entity: EntityItem): Boolean {
-		val horn: EntityItem? = (entity.worldObj.getEntitiesWithinAABB(EntityItem::class.java, entity.boundingBox(0.5)) as List<EntityItem>).firstOrNull { it.entityItem?.item === AlfheimItems.soulHorn }
-		
-		if (horn != null && horn.entityItem.meta == 0 && getBlocked(entity.entityItem) == 0) {
-			for (i in 0 until SEGMENTS) setDisabled(entity.entityItem, i, true)
-			horn.entityItem.meta = 1
-			
-			val v = Vector3()
-			for (i in 0 until 360 step 5) {
-				val c = Color.getHSBColor(i.F / 360f, 1f, 1f)
-				v.rand().sub(0.5).normalize().mul(Math.random() * 0.5)
-				Botania.proxy.sparkleFX(entity.worldObj, entity.posX + v.x, entity.posY + v.y, entity.posZ + v.z, c.red.F, c.green.F, c.blue.F, 1.5f, 10)
-			}
-		}
-		
-		return super.onEntityItemUpdate(entity)
 	}
 }
