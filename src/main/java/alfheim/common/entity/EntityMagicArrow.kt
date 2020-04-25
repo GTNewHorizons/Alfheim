@@ -23,6 +23,10 @@ import kotlin.math.*
 @Suppress("UNCHECKED_CAST")
 class EntityMagicArrow: EntityThrowableCopy {
 	
+	var banana: Boolean
+		get() = dataWatcher.getWatchableObjectInt(27) != 0
+		set(banana) = dataWatcher.updateObject(27, if (banana) 1 else 0)
+	
 	var damage: Float
 		get() = dataWatcher.getWatchableObjectFloat(28)
 		set(dmg) = dataWatcher.updateObject(28, dmg)
@@ -44,6 +48,7 @@ class EntityMagicArrow: EntityThrowableCopy {
 	
 	override fun entityInit() {
 		super.entityInit()
+		dataWatcher.addObject(27, 0)
 		dataWatcher.addObject(28, 0f)
 		dataWatcher.addObject(29, 0)
 		dataWatcher.addObject(30, 0f)
@@ -65,14 +70,17 @@ class EntityMagicArrow: EntityThrowableCopy {
 		
 		val toMoon = damage == -1f
 		val fromMoon = damage < 0f
+		val banana = !fromMoon && banana
 		
 		run {
 			var r = 0.1f
 			var g = 0.85f
 			var b = 0.1f
-			val or = r * if (fromMoon) 3 else 1
-			val og = g
-			val ob = if (fromMoon) g else b
+			
+			val or = if (banana) 0.95f else r * if (fromMoon) 3 else 1
+			val og = if (banana) 0.95f else g
+			val ob = if (banana) 0.1f else if (fromMoon) g else b
+			
 			var size = (damage / (AlfheimItems.moonlightBow as ItemMoonlightBow).maxDmg) * 0.75f
 			if (!toMoon && fromMoon) size *= 50
 			val life = if (fromMoon) 3f else 1f

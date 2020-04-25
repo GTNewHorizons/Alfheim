@@ -163,11 +163,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		fun onEntityDeath(e: LivingDeathEvent) {
-			val player: EntityPlayer
-			if (e.entityLiving is EntityPlayer)
-				player = e.entityLiving as EntityPlayer
-			else
-				return
+			val player = e.entityLiving as? EntityPlayer ?: return
 			
 			if (e.source.damageType == DamageSourceSpell.possession.damageType) {
 				val baubles = PlayerHandler.getPlayerBaubles(player)

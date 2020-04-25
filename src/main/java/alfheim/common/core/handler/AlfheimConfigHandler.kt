@@ -72,6 +72,8 @@ object AlfheimConfigHandler {
 	var lolicornLife			= 600
 	var looniumOverseed			= false
 	var minimalGraphics			= false
+	var moonbowMaxDmg			= 20
+	var moonbowVelocity			= 0.5f
 	var numericalMana			= true
 	var realLightning			= false
 	var searchTabAlfheim		= true
@@ -220,6 +222,8 @@ object AlfheimConfigHandler {
 		lolicornLife = loadProp(CATEGORY_GENERAL, "lolicornLife", lolicornLife, false, "How many ticks lolicorn can stay unmounted")
 		looniumOverseed = loadProp(CATEGORY_GENERAL, "looniumOverseed", looniumOverseed, true, "Set this to true to make loonium spawn overgrowth seeds (for servers with limited dungeons so all players can craft Gaia pylons)")
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
+		moonbowMaxDmg = loadProp(CATEGORY_GENERAL, "moonbowMaxDmg", moonbowMaxDmg, false, "Max base damage for Phoebus Catastrophe")
+		moonbowVelocity = loadProp(CATEGORY_GENERAL, "moonbowVelocity", moonbowVelocity.D, false, "Phoebus Catastrophe charge speed").F
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
 		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")

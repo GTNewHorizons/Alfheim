@@ -7,7 +7,6 @@ import alfheim.common.spell.sound.SpellIsaacStorm
 import net.minecraft.block.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.IMob
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import net.minecraft.world.World
@@ -19,58 +18,70 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 	
 	internal var time = 0
 	
-	var isEvil: Boolean
-		get() = dataWatcher.getWatchableObjectByte(25).I == 1
-		set(evil) = dataWatcher.updateObject(25, (if (evil) 1 else 0).toByte())
+	var userSelected: Boolean
+		get() = dataWatcher.getWatchableObjectInt(25) != 0
+		set(value) = dataWatcher.updateObject(25, if(value) 1 else 0)
 	
-	val targetEntity: EntityLivingBase?
+	var targetEntity: EntityLivingBase?
 		get() {
 			val id = dataWatcher.getWatchableObjectInt(26)
 			val e = worldObj.getEntityByID(id)
 			return if (e is EntityLivingBase) e else null
 		}
+		set(entity) {
+			dataWatcher.updateObject(26, entity?.entityId ?: -1)
+		}
 	
-	// Just in case...
-	val target: Boolean
+	var targetClass: Class<*>?
 		get() {
-			var target = targetEntity
-			if (target != null && target.health > 0 && !target.isDead && worldObj.loadedEntityList.contains(target))
-				return true
-			if (target != null)
-				setTarget(null)
-			
-			val entities = worldObj.getEntitiesWithinAABB(if (isEvil) EntityPlayer::class.java else IMob::class.java, alexsocol.asjlib.getBoundingBox(posX, posY, posZ).expand(SpellIsaacStorm.radius))
-			while (entities.size > 0) {
-				val e = entities[worldObj.rand.nextInt(entities.size)] as Entity
-				if (e !is EntityLivingBase || e.isDead) {
-					entities.remove(e)
-					continue
-				}
-				
-				target = e
-				setTarget(target)
-				break
+			val name = dataWatcher.getWatchableObjectString(27)
+			if (name.isNullOrBlank()) return null
+			val cached =  Class.forName(name) ?: return null
+			return if (EntityLivingBase::class.java.isAssignableFrom(cached)) cached else null
+		}
+		set(clazz) {
+			clazz?.also { dataWatcher.updateObject(27, it.name) }
+		}
+	
+	fun findTarget(): Boolean {
+		var target = targetEntity
+		
+		if (target != null && target.health > 0 && !target.isDead && worldObj.loadedEntityList.contains(target))
+			return true
+		
+		if (userSelected) {
+			setDead()
+			return false
+		}
+		
+		val entities = worldObj.getEntitiesWithinAABB(targetClass ?: IMob::class.java, getBoundingBox(posX, posY, posZ).expand(SpellIsaacStorm.radius))
+		while (entities.size > 0) {
+			val e = entities[worldObj.rand.nextInt(entities.size)] as Entity
+			if (e !is EntityLivingBase || e.isDead) {
+				entities.remove(e)
+				continue
 			}
 			
-			return target != null
+			target = e
+			targetEntity = target
+			break
 		}
+		
+		return target != null
+	}
 	
 	init {
 		setSize(0f, 0f)
 	}
 	
-	constructor(thrower: EntityLivingBase, evil: Boolean): this(thrower.worldObj) {
+	constructor(thrower: EntityLivingBase): this(thrower.worldObj) {
 		this.thrower = thrower
-		isEvil = evil
 	}
 	
 	override fun entityInit() {
-		dataWatcher.addObject(25, 0.toByte())
+		dataWatcher.addObject(25, 0)
 		dataWatcher.addObject(26, 0)
-	}
-	
-	fun setTarget(e: EntityLivingBase?) {
-		dataWatcher.updateObject(26, e?.entityId ?: -1)
+		dataWatcher.addObject(27, "")
 	}
 	
 	override fun onUpdate() {
@@ -80,7 +91,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 		
 		super.onUpdate()
 		
-		if (!worldObj.isRemote && (!target || time > SpellIsaacStorm.duration)) {
+		if (!worldObj.isRemote && (!findTarget() || time > SpellIsaacStorm.duration)) {
 			setDead()
 			return
 		}
@@ -111,7 +122,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 				motionY = abs(motionY)
 			motionZ = motionVec.z
 			
-			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, alexsocol.asjlib.getBoundingBox(posX, posY, posZ).expand(0.5))
+			val targetList = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(posX, posY, posZ).expand(0.5))
 			if (targetList.contains(target)) {
 				val thrower = thrower
 				if (thrower != null)

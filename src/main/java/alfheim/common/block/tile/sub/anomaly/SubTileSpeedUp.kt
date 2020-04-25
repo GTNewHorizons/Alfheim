@@ -15,6 +15,8 @@ class SubTileSpeedUp: SubTileAnomalyBase() {
 			if (inWG()) return EMPTY_LIST
 			
 			val l = allAroundRaw(Entity::class.java, 8.0)
+			l.removeAll { (it as Entity).isDead }
+			
 			for (x in -radius..radius)
 				for (z in -radius..radius)
 					for (y in -radius..radius) {

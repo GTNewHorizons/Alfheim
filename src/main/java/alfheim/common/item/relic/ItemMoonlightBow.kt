@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.*
 import alfheim.common.item.relic.ShootHelper.isLookingAtMoon
@@ -60,7 +61,9 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 		return stack
 	}
 	
-	override fun getMaxItemUseDuration(stack: ItemStack?) = 72000
+	override fun isItemTool(stack: ItemStack) = true
+	
+	override fun getMaxItemUseDuration(stack: ItemStack) = 72000
 	
 	override fun getItemUseAction(stack: ItemStack) = EnumAction.bow
 	
@@ -76,7 +79,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			var g = 0.85f
 			var b = if (moon) g else 0.1f
 			
-			if (stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana") {
+			if (!moon && stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana") {
 				r = 0.95f
 				g = 0.95f
 				b = 0.1f
@@ -120,6 +123,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			arrow.damage = dmg
 			arrow.rotationYaw = player.rotationYaw
 			arrow.rotation = MathHelper.wrapAngleTo180_float(-player.rotationYaw + 180)
+			arrow.banana = dmg != -1f && stack.displayName.toLowerCase().trim { it <= ' ' } == "i'm a banana"
 			
 			if (dmg != -1f) {
 				val j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)
@@ -137,10 +141,10 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 	}
 	
 	val chargeVelocityMultiplier: Float
-		get() = 0.5f
+		get() = AlfheimConfigHandler.moonbowVelocity
 	
 	val maxDmg: Int
-		get() = 20
+		get() = AlfheimConfigHandler.moonbowMaxDmg
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, adv: Boolean) {
 //		list.add(StatCollector.translateToLocalFormatted("${getUnlocalizedNameInefficiently(stack)}.desc", 2 * EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack)))
