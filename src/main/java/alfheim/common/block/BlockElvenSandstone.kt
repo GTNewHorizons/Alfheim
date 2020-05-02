@@ -24,10 +24,10 @@ class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenS
 		if (meta == names.size + 1) return bottom
 		if (meta == names.size) return top
 		
-		val id = if (meta in 0 until names.size) meta else 0
+		val id = if (meta in names.indices) meta else 0
 		
 		return when (side) {
-			0       -> bottom
+			0       -> if (meta in 1..2) top else bottom
 			1       -> top
 			in 2..5 -> sides[id]
 			else    -> top

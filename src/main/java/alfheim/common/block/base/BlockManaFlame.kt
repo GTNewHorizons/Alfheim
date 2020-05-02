@@ -19,6 +19,7 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
         setBlockName(name)
         val f = 0.25f
         setBlockBounds(f, f, f, 1f - f, 1f - f, 1f - f)
+        setCreativeTab(null)
         setLightLevel(1f)
         setStepSound(soundTypeCloth)
     }
@@ -27,7 +28,7 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
     override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) =
         Tile.cast(world.getTileEntity(x, y, z)).getLightColor()
 
-    override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
+    override fun registerBlockIcons(reg: IIconRegister) = Unit
 
     override fun getRenderType(): Int = -1
 
@@ -45,7 +46,7 @@ class BlockManaFlame(val name: String, val Tile: Class<out TileManaFlame>) : Blo
 
     override fun getDrops(world: World, x: Int, y: Int, z: Int, metadata: Int, fortune: Int) = ArrayList<ItemStack>()
 
-    override fun createTileEntity(world: World?, meta: Int) = Tile.newInstance()!!
+    override fun createTileEntity(world: World?, meta: Int) = Tile.newInstance()
 
     override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?): LexiconEntry? {
         return when (name) {

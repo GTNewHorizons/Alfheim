@@ -52,7 +52,6 @@ import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
-import vazkii.botania.api.item.IDyablePool
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -71,11 +70,12 @@ import vazkii.botania.common.block.tile.mana.TilePool
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
-import vazkii.botania.common.entity.EntityDoppleganger
+import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 import vazkii.botania.common.item.lens.ItemLens
 import vazkii.botania.common.item.relic.ItemFlugelEye
+import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
 import java.awt.Color
 import java.nio.FloatBuffer
@@ -391,6 +391,18 @@ object AlfheimHookHandler {
 		if (!res) return res
 		par1World.getTileEntity(par2, par3, par4)?.markDirty()
 		return res
+	}
+	
+	// dupe fix
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun setDead(spark: EntitySpark) = spark.isDead
+	
+	// dupe fix
+	@JvmStatic
+	@Hook(targetMethod = "<init>")
+	fun `ItemRainbowRod$init`(item: ItemRainbowRod) {
+		item.setNoRepair()
 	}
 	
 	@JvmStatic

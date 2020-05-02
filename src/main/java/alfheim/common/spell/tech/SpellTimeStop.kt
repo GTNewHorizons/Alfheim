@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase
 
 object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 100, true) {
 	
-	override var duration = 1200
+	override var duration = 100
 	
 	override val usableParams: Array<Any>
 		get() = arrayOf(duration, radius)

@@ -34,6 +34,7 @@ object AlfheimFluffBlocks {
 	val elvenSandstoneStairs: Block
 	val elvenSandstoneSlab: Block
 	val elvenSandstoneSlabFull: Block
+	val elvenSandstoneWalls: Array<Block>
 	val livingcobbleStairs: Block
 	val livingcobbleStairs1: Block
 	val livingcobbleStairs2: Block
@@ -86,7 +87,8 @@ object AlfheimFluffBlocks {
 		livingrockDarkSlabsFull.forEach { (it as BlockModSlab).register() }
 		
 		livingrockDarkWalls = (0..1).map {
-			BlockModWall(livingrockDark, it).setCreativeTab(AlfheimTab)
+			BlockModWall(livingrockDark, it)
+				.setCreativeTab(AlfheimTab)
 				.setHardness(5f)
 				.setResistance(8000f)
 				.setStepSound(Block.soundTypeStone)
@@ -118,6 +120,12 @@ object AlfheimFluffBlocks {
 		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(elvenSandstoneSlab as BlockModSlab).register()
 		(elvenSandstoneSlabFull as BlockModSlab).register()
+		
+		elvenSandstoneWalls = arrayOf(0, 2).map {
+			BlockModWall(elvenSandstone, it)
+				.setCreativeTab(AlfheimTab)
+				.setStepSound(Block.soundTypeStone)
+		}.toTypedArray()
 		
 		livingcobbleStairs = BlockModStairs(AlfheimBlocks.livingcobble, 0, "LivingCobbleStairs").setCreativeTab(AlfheimTab)
 		livingcobbleStairs1 = BlockModStairs(AlfheimBlocks.livingcobble, 1, "LivingCobbleStairs1").setCreativeTab(AlfheimTab)

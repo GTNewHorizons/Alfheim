@@ -20,6 +20,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.registerRecipeHandler(RecipeHandlerTreeCrafting())
 		API.registerUsageHandler(RecipeHandlerTreeCrafting())
 		
+		API.hideItem(ItemStack(ModBlocks.manaFlame))
 		API.hideItem(ItemStack(ModBlocks.gaiaHead))
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHeadBlock))

@@ -106,6 +106,7 @@ import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
@@ -405,6 +406,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(elvenSandstone)
 		addBlock(elvenSandstoneStairs)
 		addBlock(elvenSandstoneSlab)
+		elvenSandstoneWalls.forEach { addBlock(it) }
 		
 		addBlock(livingwoodBarkFence)
 		addBlock(livingwoodFence)

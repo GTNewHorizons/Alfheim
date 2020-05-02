@@ -40,7 +40,7 @@ object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 1
 						it.targetEntity = tgt
 						it.userSelected = true
 					}
-					
+					it.noClip = true
 					caster.worldObj.spawnEntityInWorld(it)
 				}
 			}

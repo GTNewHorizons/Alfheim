@@ -97,6 +97,7 @@ object LibResourceLocations {
 	)
 	
 	val auraBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/auraBird.png")
+	val auraDemonic = ResourceLocation(ModInfo.MODID, "textures/model/entity/auraDemonic.png")
 	val auraGreece = ResourceLocation(ModInfo.MODID, "textures/model/entity/auraGreece.png")
 	
 	val wingsButterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Butterfly.png")

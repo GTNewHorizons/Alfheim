@@ -29,8 +29,8 @@ import kotlin.math.sin
 
 object RenderContributors {
 	
-	val customAura =		arrayOf("KAIIIAK",						"1_Lucifer_9"					)
-	val customTextures =	arrayOf(LibResourceLocations.auraBird,	LibResourceLocations.auraGreece	)
+	val customAura =		arrayOf("KAIIIAK",						"1_Lucifer_9",						"lie4me")
+	val customTextures =	arrayOf(LibResourceLocations.auraBird,	LibResourceLocations.auraGreece,	LibResourceLocations.auraDemonic)
 	val auraMap = customAura.zip(customTextures).toMap()
 	
 	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
