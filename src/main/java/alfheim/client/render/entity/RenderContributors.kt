@@ -33,7 +33,7 @@ object RenderContributors {
 	val customTextures =	arrayOf(LibResourceLocations.auraBird,	LibResourceLocations.auraGreece,	LibResourceLocations.auraDemonic)
 	val auraMap = customAura.zip(customTextures).toMap()
 	
-	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
+//	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
 	val book = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.babylon) {
@@ -286,17 +286,17 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (player.commandSenderName == "ne1deal") {
-			glPushMatrix()
-			glColor4f(0.2f, 0.2f, 0.2f, 1f)
-			glDisable(GL_TEXTURE_2D)
-			glRotatef(180f, 1f, 0f, 0f)
-			glRotatef(90f, 0f, 1f, 0f)
-			glTranslatef(0f, -1.5f, 0f)
-			balls.renderAll()
-			glEnable(GL_TEXTURE_2D)
-			glPopMatrix()
-		}
+//		if (player.commandSenderName == "ne1deal") {
+//			glPushMatrix()
+//			glColor4f(0.2f, 0.2f, 0.2f, 1f)
+//			glDisable(GL_TEXTURE_2D)
+//			glRotatef(180f, 1f, 0f, 0f)
+//			glRotatef(90f, 0f, 1f, 0f)
+//			glTranslatef(0f, -1.5f, 0f)
+//			balls.renderAll()
+//			glEnable(GL_TEXTURE_2D)
+//			glPopMatrix()
+//		}
 		
 		glColor4f(1f, 1f, 1f, 1f)
 	}

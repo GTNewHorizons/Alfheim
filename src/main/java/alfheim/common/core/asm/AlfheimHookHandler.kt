@@ -380,7 +380,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
-	fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, @ReturnValue result: Boolean): Boolean {
+	fun onItemUse(floral: ItemDye, stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, @ReturnValue result: Boolean): Boolean {
 		if (result) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
 		return result
 	}
