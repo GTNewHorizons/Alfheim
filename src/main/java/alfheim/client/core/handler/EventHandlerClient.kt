@@ -217,7 +217,7 @@ object EventHandlerClient {
 				glPushMatrix()
 				glDisable(GL_CULL_FACE)
 				//glDisable(GL_ALPHA_TEST);
-				glAlphaFunc(GL_GREATER, 0.003921569f)
+				glAlphaFunc(GL_GREATER, 1/255f)
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				if (target != mc.thePlayer) {

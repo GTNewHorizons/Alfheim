@@ -130,5 +130,12 @@ fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
 val ItemStack.block: Block? get() = item.toBlock()
 
-fun <T> T.eventForge() = MinecraftForge.EVENT_BUS.register(this)
-fun <T> T.eventFML() = FMLCommonHandler.instance().bus().register(this)
+fun <T> T.eventForge(): T {
+	MinecraftForge.EVENT_BUS.register(this)
+	return this
+}
+
+fun <T> T.eventFML(): T {
+	FMLCommonHandler.instance().bus().register(this)
+	return this
+}

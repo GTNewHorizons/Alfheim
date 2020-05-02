@@ -29,6 +29,11 @@ import kotlin.math.sin
 
 object RenderContributors {
 	
+	val customAura =		arrayOf("KAIIIAK",						"1_Lucifer_9"					)
+	val customTextures =	arrayOf(LibResourceLocations.auraBird,	LibResourceLocations.auraGreece	)
+	val auraMap = customAura.zip(customTextures).toMap()
+	
+	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
 	val book = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.babylon) {
@@ -177,14 +182,17 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")) run kak@ {
-			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@kak
+		val kak = ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")
+		
+		if (kak || player.commandSenderName in customAura) run aura@ {
+			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@aura
 			
 			glPushMatrix()
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDisable(GL_CULL_FACE)
 			glDisable(GL_LIGHTING)
+			glAlphaFunc(GL_GREATER, 1/255f)
 			
 			val lastX = OpenGlHelper.lastBrightnessX
 			val lastY = OpenGlHelper.lastBrightnessY
@@ -196,8 +204,13 @@ object RenderContributors {
 			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScalef(player.width * 10 / 3)
 			
-			ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
-			mc.renderEngine.bindTexture(LibResourceLocations.aura)
+			if (kak)
+				ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
+			else
+				glColor4f(1f, 1f, 1f, 1f)
+			mc.renderEngine.bindTexture(auraMap[player.commandSenderName])
+			
+			if (!kak) glScaled(0.5)
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()
 			tes.addVertexWithUV(-1.0, 0.0, -1.0, 0.0, 0.0)
@@ -207,6 +220,7 @@ object RenderContributors {
 			tes.draw()
 			glColor4f(1f, 1f, 1f, 1f)
 			
+			glAlphaFunc(GL_GREATER, 0.1f)
 			glShadeModel(GL_FLAT)
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 			glEnable(GL_LIGHTING)
@@ -269,6 +283,18 @@ object RenderContributors {
 			glScaled(0.1)
 			mc.renderEngine.bindTexture(LibResourceLocations.palette)
 			book.renderAll()
+			glPopMatrix()
+		}
+		
+		if (player.commandSenderName == "ne1deal") {
+			glPushMatrix()
+			glColor4f(0.2f, 0.2f, 0.2f, 1f)
+			glDisable(GL_TEXTURE_2D)
+			glRotatef(180f, 1f, 0f, 0f)
+			glRotatef(90f, 0f, 1f, 0f)
+			glTranslatef(0f, -1.5f, 0f)
+			balls.renderAll()
+			glEnable(GL_TEXTURE_2D)
 			glPopMatrix()
 		}
 		

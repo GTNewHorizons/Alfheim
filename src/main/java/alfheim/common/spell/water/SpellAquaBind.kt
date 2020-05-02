@@ -61,7 +61,7 @@ object SpellAquaBind: SpellBase("aquabind", EnumRace.UNDINE, 4000, 600, 15) {
 		val y = if (mop.typeOfHit == MovingObjectType.BLOCK) 0.1 * (if (mop.sideHit == 0) -1.0 else 1.0) else 0.0
 		glDisable(GL_CULL_FACE)
 		//glDisable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.003921569f)
+		glAlphaFunc(GL_GREATER, 1/255f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		mc.renderEngine.bindTexture(LibResourceLocations.target)

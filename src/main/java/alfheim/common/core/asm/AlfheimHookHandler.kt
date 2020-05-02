@@ -52,6 +52,7 @@ import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
+import vazkii.botania.api.item.IDyablePool
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -373,6 +374,13 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true)
 	fun onBlockActivated(block: BlockAvatar, world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float, @ReturnValue result: Boolean): Boolean {
+		if (result) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
+		return result
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, @ReturnValue result: Boolean): Boolean {
 		if (result) ASJUtilities.dispatchTEToNearbyPlayers(world, x, y, z)
 		return result
 	}

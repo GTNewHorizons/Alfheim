@@ -27,7 +27,7 @@ object RenderEntityWindBlade: Render() {
 		glPushMatrix()
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		glAlphaFunc(GL_GREATER, 0.003921569f)
+		glAlphaFunc(GL_GREATER, 1/255f)
 		glTranslated(x, y + 0.05, z)
 		glRotated(((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 5).D, 0.0, 1.0, 0.0)
 		if (AlfheimConfigHandler.minimalGraphics) {

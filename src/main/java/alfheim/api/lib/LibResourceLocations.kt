@@ -15,7 +15,6 @@ object LibResourceLocations {
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")
 	val antiPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png")
 	val anyavil = ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png")
-	val aura = ResourceLocation(ModInfo.MODID, "textures/model/entity/KAIIIAK.png")
 	var babylon = ResourceLocation("botania:textures/misc/babylon.png")
 	val balanceCloak = ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png")
 	val butterfly = ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png")
@@ -97,7 +96,13 @@ object LibResourceLocations {
 		ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/ALV_wing.png")
 	)
 	
+	val auraBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/auraBird.png")
+	val auraGreece = ResourceLocation(ModInfo.MODID, "textures/model/entity/auraGreece.png")
+	
 	val wingsButterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Butterfly.png")
+	val wingsDarkPhoenix = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/DarkPhoenix.png")
+	val wingsHeavenBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/HeavenBird.png")
+	val wingsSprite = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/HeavenSprite.png")
 	
 	const val MOB = 11
 	const val NPC = 12

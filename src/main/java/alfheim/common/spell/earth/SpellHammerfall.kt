@@ -56,7 +56,7 @@ object SpellHammerfall: SpellBase("hammerfall", EnumRace.GNOME, 10000, 200, 20) 
 	
 	override fun render(caster: EntityLivingBase) {
 		glDisable(GL_CULL_FACE)
-		glAlphaFunc(GL_GREATER, 0.003921569f)
+		glAlphaFunc(GL_GREATER, 1/255f)
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glTranslated(0.0, -1.61, 0.0)

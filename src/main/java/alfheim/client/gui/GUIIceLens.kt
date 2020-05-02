@@ -23,7 +23,7 @@ class GUIIceLens: Gui() {
 		glDisable(GL_DEPTH_TEST)
 		glDepthMask(false)
 		//glDisable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.003921569f)
+		glAlphaFunc(GL_GREATER, 1/255f)
 		
 		mc.renderEngine.bindTexture(LibResourceLocations.iceLens)
 		val res = ScaledResolution(mc, mc.displayWidth, mc.displayHeight)

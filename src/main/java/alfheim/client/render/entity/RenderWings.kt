@@ -22,11 +22,15 @@ import kotlin.math.*
 
 object RenderWings {
 	
+	val customWings =		arrayOf("MonoShiki",							"lie4me",								"DemnaGvasalia",						"KAIIIAK"							)
+	val customTextures =	arrayOf(LibResourceLocations.wingsButterfly,	LibResourceLocations.wingsHeavenBird,	LibResourceLocations.wingsDarkPhoenix,	LibResourceLocations.wingsSprite	)
+	val wingMap = customWings.zip(customTextures).toMap()
+	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		player.sendPlayerAbilities()
 		
-		if (player.commandSenderName != "MonoShiki") {
+		if (player.commandSenderName !in customWings) {
 			if (!AlfheimCore.enableElvenStory) return
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
@@ -37,11 +41,11 @@ object RenderWings {
 		
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
-		if (player.commandSenderName != "MonoShiki") {
+		if (player.commandSenderName !in customWings) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDepthMask(false)
-			glAlphaFunc(GL_GREATER, 0.003921569f)
+			glAlphaFunc(GL_GREATER, 1/255f)
 		}
 		glDisable(GL_LIGHTING)
 		
@@ -50,16 +54,19 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		if (player.commandSenderName == "MonoShiki")
-			ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
-		else
+		if (player.commandSenderName in customWings) {
+			if (player.commandSenderName == "MonoShiki")
+				ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
+			else
+				glColor4f(1f, 1f, 1f, 1f)
+		} else
 			player.race.glColorA(if (player.flight / ElvenFlightHelper.max < 0.05) min(0.75 + cos((player.ticksExisted + mc.timer.renderPartialTicks).D * spd * 0.3).F * 0.2, 1.0) else 1.0)
 		
 		Helper.rotateIfSneaking(player)
 		glTranslated(0.0, -0.15, 0.0)
 		
 		// Icon
-		if (player.commandSenderName != "MonoShiki") {
+		if (player.commandSenderName !in customWings || player.race != EnumRace.HUMAN) {
 			glPushMatrix()
 			glTranslated(-0.25, 0.25, 0.15)
 			val si = 0.5
@@ -96,7 +103,7 @@ object RenderWings {
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
-		if (player.commandSenderName != "MonoShiki") {
+		if (player.commandSenderName !in customWings) {
 			glAlphaFunc(GL_GREATER, 0.1f)
 			glDepthMask(true)
 			glDisable(GL_BLEND)
@@ -122,7 +129,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer) = if (player.commandSenderName == "MonoShiki") LibResourceLocations.wingsButterfly else LibResourceLocations.wings[player.raceID]
+	fun getPlayerWingTexture(player: EntityPlayer) = wingMap[player.commandSenderName] ?: LibResourceLocations.wings[player.raceID]
 	
 	fun getPlayerIconTexture(player: EntityPlayer) = LibResourceLocations.icons[player.raceID]
 }
