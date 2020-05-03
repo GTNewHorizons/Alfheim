@@ -3,7 +3,7 @@ Innovations:
  Improved hyperpolated bucket craft, added radius switch
  Excaliber sharpness sensitivity
  Phoebus Catastrophe configs and enchantibility
- Elven sandstone walls
+ More Elven sandstone blocks
  Power ingots blocks
  [MMO] Isaac Storm targetting
 

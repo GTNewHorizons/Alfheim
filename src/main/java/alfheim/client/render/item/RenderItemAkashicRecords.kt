@@ -130,7 +130,6 @@ object RenderItemAkashicRecords: IItemRenderer {
 				}
 			}
 		}
-		glEnable(GL_CULL_FACE)
 		
 		if (ConfigHandler.useShaders) ASJShaderHelper.releaseShader()
 		

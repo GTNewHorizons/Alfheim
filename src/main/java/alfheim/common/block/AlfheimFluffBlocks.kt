@@ -31,9 +31,11 @@ object AlfheimFluffBlocks {
 	val dwarfPlanks: Block
 	val dwarfLantern: Block
 	val elvenSandstone: Block
-	val elvenSandstoneStairs: Block
+	val elvenSandstoneStairs: Array<Block>
 	val elvenSandstoneSlab: Block
 	val elvenSandstoneSlabFull: Block
+	val elvenSandstoneSlab2: Block
+	val elvenSandstoneSlab2Full: Block
 	val elvenSandstoneWalls: Array<Block>
 	val livingcobbleStairs: Block
 	val livingcobbleStairs1: Block
@@ -81,6 +83,7 @@ object AlfheimFluffBlocks {
 		
 		livingrockDark = BlockModMeta(Material.rock, 4, ModInfo.MODID, "DarkLivingRock", AlfheimTab, 2f, resist = 10f, folder = "shrines/")
 		livingrockDarkStairs = metas.map { BlockModStairs(livingrockDark, it, "DarkLivingRockStairs$it").setCreativeTab(AlfheimTab) }.toTypedArray()
+		
 		livingrockDarkSlabs = metas.map { BlockLivingrockDarkSlab(false, it).setCreativeTab(AlfheimTab) }.toTypedArray()
 		livingrockDarkSlabsFull = metas.map { BlockLivingrockDarkSlab(true, it).setCreativeTab(AlfheimTab) }.toTypedArray()
 		livingrockDarkSlabs.forEach { (it as BlockModSlab).register() }
@@ -115,11 +118,20 @@ object AlfheimFluffBlocks {
 		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "shrines/")
 		
 		elvenSandstone = BlockElvenSandstone()
-		elvenSandstoneStairs = BlockModStairs(elvenSandstone, 0, "ElvenSandstoneStairs").setCreativeTab(AlfheimTab)
+		elvenSandstoneStairs = arrayOf(0, 2).map {
+			BlockModStairs(elvenSandstone, it, "ElvenSandstoneStairs$it")
+				.setCreativeTab(AlfheimTab)
+		}.toTypedArray()
+		
 		elvenSandstoneSlab = BlockElvenSandstoneSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
 		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true).setCreativeTab(null).setHardness(1.5f)
 		(elvenSandstoneSlab as BlockModSlab).register()
 		(elvenSandstoneSlabFull as BlockModSlab).register()
+		
+		elvenSandstoneSlab2 = BlockElvenSandstoneSlab2(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
+		elvenSandstoneSlab2Full = BlockElvenSandstoneSlab2(true).setCreativeTab(null).setHardness(1.5f)
+		(elvenSandstoneSlab2 as BlockModSlab).register()
+		(elvenSandstoneSlab2Full as BlockModSlab).register()
 		
 		elvenSandstoneWalls = arrayOf(0, 2).map {
 			BlockModWall(elvenSandstone, it)

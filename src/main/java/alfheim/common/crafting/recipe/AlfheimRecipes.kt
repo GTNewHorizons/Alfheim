@@ -42,7 +42,9 @@ import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
 import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab2
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
+import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
@@ -647,15 +649,27 @@ object AlfheimRecipes {
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 1, 0), "SS", "SS", 'S', elvenSand)
 		
-		addShapedRecipe(ItemStack(elvenSandstone, 1, 1), "S", "S", 'S', elvenSandstoneSlab)
+		//addShapedRecipe(ItemStack(elvenSandstone, 1, 0), "S", "S", 'S', elvenSandstoneSlab)
+		
+		addShapedRecipe(ItemStack(elvenSandstone, 2, 1), "S", "S", 'S', elvenSandstoneSlab)
+		
+		//addShapedRecipe(ItemStack(elvenSandstone, 1, 2), "S", "S", 'S', elvenSandstoneSlab2)
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 4, 2), "SS", "SS", 'S', ItemStack(elvenSandstone, 1, 0))
 		
 		addShapedRecipe(ItemStack(elvenSandstone, 4, 3), "SS", "SS", 'S', ItemStack(elvenSandstone, 1, 2))
 		
-		addOreDictRecipe(ItemStack(elvenSandstoneStairs, 4), true, "S  ", "SS ", "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
+		addOreDictRecipe(ItemStack(elvenSandstoneStairs[0], 4), true, "S  ", "SS ", "SSS", 'S', ItemStack(elvenSandstone, 1, 0))
 		
-		addOreDictRecipe(ItemStack(elvenSandstoneSlab, 6), "SSS", 'S', ItemStack(elvenSandstone, 1, WILDCARD_VALUE))
+		addOreDictRecipe(ItemStack(elvenSandstoneStairs[1], 4), true, "S  ", "SS ", "SSS", 'S', ItemStack(elvenSandstone, 1, 2))
+		
+		addOreDictRecipe(ItemStack(elvenSandstoneSlab, 6), "SSS", 'S', ItemStack(elvenSandstone, 1, 0))
+		
+		addOreDictRecipe(ItemStack(elvenSandstoneSlab2, 6), "SSS", 'S', ItemStack(elvenSandstone, 1, 2))
+		
+		addOreDictRecipe(ItemStack(elvenSandstoneWalls[0], 6), "SSS", "SSS", 'S', ItemStack(elvenSandstone, 1, 0))
+		
+		addOreDictRecipe(ItemStack(elvenSandstoneWalls[1], 6), "SSS", "SSS", 'S', ItemStack(elvenSandstone, 1, 2))
 		
 		addOreDictRecipe(ItemStack(livingcobbleStairs, 4), true, "L  ", "LL ", "LLL", 'L', ItemStack(livingcobble))
 		
