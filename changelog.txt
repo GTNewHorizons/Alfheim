@@ -1,17 +1,5 @@
 Innovations:
- Livingcobble and livingstone on lava+water collision (#159)
- Improved hyperpolated bucket craft, added radius switch
- Excaliber sharpness sensitivity
- Phoebus Catastrophe configs and enchantibility
- More Elven sandstone blocks
- Power ingots blocks
- [MMO] Isaac Storm targetting
+ --
 
 Fixes:
- Some (3) dupes
- Anyavil model
- Suffuser crash
- Phoebus Catastrophe color improvements
- Bad dreamwood log purification (#157)
- Bossbar from [NEI] spawners bug (#163)
- [TiC] Infinite item repair (#160)
+ --
