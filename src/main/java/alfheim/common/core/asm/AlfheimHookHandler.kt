@@ -569,12 +569,11 @@ object AlfheimHookHandler {
 		if (side == 3) ++z
 		if (side == 4) --x
 		if (side == 5) ++x
-		val b = world.getBlock(x, y, z)
+		val block = world.getBlock(x, y, z)
 		
-		var f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f
+		val breakable = if (player != null) block.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f || player.capabilities.isCreativeMode else true
 		
-		if (player != null) f = f || player.capabilities.isCreativeMode
-		if (b.material === Material.fire && f) {
+		if (block.material === Material.fire && breakable) {
 			world.playAuxSFXAtEntity(player, 1004, x, y, z, 0)
 			world.setBlockToAir(x, y, z)
 			return true
