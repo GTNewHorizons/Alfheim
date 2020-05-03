@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-30</val>
+		<val>BETA-31</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -86,5 +86,8 @@
 	</version>
 	<version id="BETA-29">
 		<val>More MT support and some MMO mode updates</val>
+	</version>
+	<version id="BETA-30">
+		<val>Severe dupes were fixed, you should get new version asap! :3</val>
 	</version>
 </news>
