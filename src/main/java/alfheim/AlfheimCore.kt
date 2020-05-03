@@ -90,7 +90,7 @@ class AlfheimCore {
 		
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID)
 		
-		if (AlfheimConfigHandler.info) InfoLoader.start()
+		if (AlfheimConfigHandler.notifications) InfoLoader.start()
 		
 		registerPackets()
 		
