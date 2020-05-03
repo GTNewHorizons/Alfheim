@@ -8,9 +8,7 @@
 	</version>
 	<!-- New tag for ALL versions, now supports json - start with "$json" -->
 	<version id="UNIVERSAL">
-		<!--val>$json["Join Alfheim info channel for dev info and more: [",{"text":"EN","color":"blue","hoverEvent":{"action":"show_text","value":{"text":"Click to open English channel","color":"blue"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimOfficial"}},"|",{"text":"RU","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click to open Russian Channel","color":"red"}},"clickEvent":{"action":"open_url","value":"http://t.me/AlfheimForBotania"}},"]"]</val-->
-		<val> </val>
-	</version>
+		<val>$json["Official Alfheim Discord server is here! *",{"text":"click","color":"gold","hoverEvent":{"action":"show_text","value":{"text":"Join discord server","color":"gold"}},"clickEvent":{"action":"open_url","value":"https://discord.gg/dqQXZHq"}},"*"]</val>	</version>
 	<version id="MODULAR">
 		<val>https://bitbucket.org/AlexSocol/alfheim/raw/303d8b4aca2d1636eaad2890adee55aa5469bc25/modular/Alfheim-Modular-6.jar</val>
 	</version>
