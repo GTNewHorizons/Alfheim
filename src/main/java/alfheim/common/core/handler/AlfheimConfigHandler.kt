@@ -65,7 +65,6 @@ object AlfheimConfigHandler {
 	var fancies					= true
 	var floatingTrapDoors		= true
 	var flugelSwapBL			= emptyArray<String>()
-	var info					= true
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
 	var lolicornCost			= 1000
@@ -74,6 +73,7 @@ object AlfheimConfigHandler {
 	var minimalGraphics			= false
 	var moonbowMaxDmg			= 20
 	var moonbowVelocity			= 0.5f
+	var notifications			= true
 	var numericalMana			= true
 	var realLightning			= false
 	var searchTabAlfheim		= true
@@ -215,7 +215,6 @@ object AlfheimConfigHandler {
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
 		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]", false)
-		info = loadProp(CATEGORY_GENERAL, "info", info, false, "Set this to false to disable loading news and version check")
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
 		lolicornCost = loadProp(CATEGORY_GENERAL, "lolicornCost", lolicornCost, false, "How much mana lolicorn consumes on summoning (not teleporting)")
@@ -224,6 +223,7 @@ object AlfheimConfigHandler {
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, false, "Set this to true to disable .obj models and shaders")
 		moonbowMaxDmg = loadProp(CATEGORY_GENERAL, "moonbowMaxDmg", moonbowMaxDmg, false, "Max base damage for Phoebus Catastrophe")
 		moonbowVelocity = loadProp(CATEGORY_GENERAL, "moonbowVelocity", moonbowVelocity.D, false, "Phoebus Catastrophe charge speed").F
+		notifications = loadProp(CATEGORY_GENERAL, "notifications", notifications, false, "Set this to false to disable custom notifications and version check")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
 		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
