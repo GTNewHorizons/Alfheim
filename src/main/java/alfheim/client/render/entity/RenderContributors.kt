@@ -68,7 +68,7 @@ object RenderContributors {
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
+		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocoll")) {
 			//run {
 			//	// jojo's mask
 			//	if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
@@ -165,7 +165,7 @@ object RenderContributors {
 			}
 		}
 		
-		if (player.commandSenderName == "DmitryWS") run dws@ {
+		if (ContributorsPrivacyHelper.isCorrect(player, "DmitryWS")) run dws@ {
 			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@dws
 			
 			glPushMatrix()
@@ -182,9 +182,9 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		val kak = ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")
+		val match = customAura.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
 		
-		if (kak || player.commandSenderName in customAura) run aura@ {
+		if (match != -1) run aura@ {
 			if (player == mc.thePlayer && mc.gameSettings.thirdPersonView == 0) return@aura
 			
 			glPushMatrix()
@@ -204,13 +204,14 @@ object RenderContributors {
 			glRotated(mc.theWorld.totalWorldTime / 2.0 + mc.timer.renderPartialTicks, 0.0, 1.0, 0.0)
 			glScalef(player.width * 10 / 3)
 			
-			if (kak)
+			if (match == 0)
 				ASJRenderHelper.glColor1u(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 1f, 1f))
 			else
 				glColor4f(1f, 1f, 1f, 1f)
-			mc.renderEngine.bindTexture(auraMap[player.commandSenderName])
+			mc.renderEngine.bindTexture(auraMap[customAura[match]])
 			
-			if (!kak) glScaled(0.5)
+			if (match != 0) glScaled(0.5)
+			
 			val tes = Tessellator.instance
 			tes.startDrawingQuads()
 			tes.addVertexWithUV(-1.0, 0.0, -1.0, 0.0, 0.0)
@@ -229,7 +230,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (player.commandSenderName == "Hyper_Miko") {
+		if (ContributorsPrivacyHelper.isCorrect(player, "Hyper_Miko")) {
 			glPushMatrix()
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
@@ -256,7 +257,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (player.commandSenderName == "MonoShiki") {
+		if (ContributorsPrivacyHelper.isCorrect(player, "MonoShiki")) {
 			glPushMatrix()
 			glColor4f(1f, 1f, 1f, 1f)
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
@@ -270,7 +271,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (player.commandSenderName == "Mudresistor") {
+		if (ContributorsPrivacyHelper.isCorrect(player, "Mudresistor")) {
 			glPushMatrix()
 			glColor4f(1f, 1f, 1f, 1f)
 			

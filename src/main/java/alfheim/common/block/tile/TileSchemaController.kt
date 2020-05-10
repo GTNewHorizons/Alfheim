@@ -4,10 +4,9 @@ import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import codechicken.core.CommonUtils
 import com.google.gson.*
 import cpw.mods.fml.common.registry.*
-import cpw.mods.fml.relauncher.FMLLaunchHandler
+import cpw.mods.fml.relauncher.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -139,7 +138,7 @@ open class TileSchemaController: TileMod() {
 				}
 				
 				for (dir in validDir)
-					for (i in 0..64) {
+					for (i in 0..range) {
 						Botania.proxy.wispFX(worldObj,
 											 xCoord + (dir.offsetX * i) + .5,
 											 yCoord + (dir.offsetY * i) + .5,
@@ -332,7 +331,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	fun getNewFile(file: Int = 0): File {
-		val e = File(CommonUtils.getMinecraftDir(), "dumps/" + getFileName("schema_dump_$file"))
+		val e = File(FMLInjectionData.data()[6] as File, "dumps/" + getFileName("schema_dump_$file"))
 		if (!e.parentFile.exists()) e.parentFile.mkdirs()
 		
 		if (!e.exists()) e.createNewFile()

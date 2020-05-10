@@ -17,9 +17,11 @@ import kotlin.experimental.xor
 
 object ContributorsPrivacyHelper {
 	
-	// contributor - username alias
+			//  contributor - username alias
 			val contributors = HashMap<String, String>()
 	private	val authCredits = HashMap<String, String>()
+	
+	val shields = HashMap<String, Int>()
 	
 	init {
 		this.eventFML()
@@ -29,12 +31,18 @@ object ContributorsPrivacyHelper {
 	private fun download() {
 		try {
 			URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/hashes.txt").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().paired().forEach { (k, v) -> register(k, v) }
-		} catch (ignore: Throwable) {
+		} catch (e: Throwable) {
 			ASJUtilities.error("Failed to register contributors, using default parameters")
 			// default username:password pairs just in case
 			register("AlexSocol", "C483AC3FF3031172FD8D1EB5A727B186C4059B927C38C0A19C202D748D2D0428")
 			register("GedeonGrays", "B2612EA4C009B2C3FDDCAA7D6C1FFB8DD6C9C7ECFFD785DCD1A08BB41CAD47C0")
 			register("KAIIIAK", "D761FAABD0C7F4042189C0CE308FDAD79566B198416BFDE23361EBA8DCB0BB96")
+		}
+		
+		try {
+			URL("https://bitbucket.org/AlexSocol/alfheim/raw/master/patrons.txt").openConnection().also { it.connectTimeout = 5000; it.readTimeout = 5000 }.getInputStream().bufferedReader().readLines().forEach { it.split(":").also { (k, v) -> shields[k] = v.toIntOrNull() ?: -1 } }
+		} catch (e: Throwable) {
+			ASJUtilities.error("Failed to register patrons")
 		}
 	}
 	
@@ -48,6 +56,7 @@ object ContributorsPrivacyHelper {
 	fun getPassHash(login: String) = authCredits[login]
 	
 	fun isCorrect(user: EntityPlayer, contributor: String) = isCorrect(user.commandSenderName, contributor)
+	
 	fun isCorrect(user: String, contributor: String) = contributors[contributor] == user
 	
 	@SubscribeEvent

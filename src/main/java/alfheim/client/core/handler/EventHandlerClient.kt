@@ -132,8 +132,7 @@ object EventHandlerClient {
 			}
 		}
 		
-		
-		RenderEntitysLeftHand.render(e)
+		RenderEntityLeftHand.render(e)
 	}
 	
 	@SubscribeEvent

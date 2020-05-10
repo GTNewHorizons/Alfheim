@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems
@@ -9,22 +10,21 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
+import sun.audio.AudioPlayer.player
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 
-object RenderEntitysLeftHand {
+object RenderEntityLeftHand {
 	
 	fun render(e: RenderPlayerEvent.Specials.Pre) {
 		if (e.entityPlayer.isInvisible || e.entityPlayer.isInvisibleToPlayer(mc.thePlayer) || e.entityPlayer.isPotionActive(Potion.invisibility)) return
 		
 		val name = e.entityPlayer.commandSenderName
 		
-		renderLeftArm(e) {
-			when {
-				ContributorsPrivacyHelper.isCorrect(name, "AlexSocol") -> renderRoyalStaff(e)
-				name == "Kirito"                                       -> renderDualSwords(e)
-			}
-		}
+		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol")) renderLeftArm(e) { renderRoyalStaff(e) }
+		if (name == "Kirito") renderLeftArm(e) { renderDualSwords(e) }
+		if (name in ContributorsPrivacyHelper.shields) renderLeftArm(e) { renderShield(e) }
+		
 	}
 	
 	private fun renderLeftArm(e: RenderPlayerEvent.Specials.Pre, render: (RenderPlayerEvent.Specials.Pre) -> Unit) {
@@ -59,6 +59,19 @@ object RenderEntitysLeftHand {
 		render.invoke(e)
 		glPopMatrix()
 		
+		glPopMatrix()
+	}
+	
+	private fun renderShield(e: RenderPlayerEvent.Specials.Pre) {
+		val meta = ContributorsPrivacyHelper.shields[e.entityPlayer.commandSenderName] ?: return
+		val shield = ItemStack(AlfheimItems.coatOfArms, 1, meta)
+		
+		glPushMatrix()
+		glRotatef(100f, 1f, 0f, 1f)
+		glRotatef(-5f, 0f, 1f, 0f)
+		glTranslated(0.74, -0.45, -0.1)
+		glScaled(1.1)
+		RenderManager.instance.itemRenderer.renderItem(e.entityPlayer, shield, 0)
 		glPopMatrix()
 	}
 	
