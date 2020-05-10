@@ -98,36 +98,39 @@ object AlfheimRegistry {
 		PotionWellOLife()
 	}
 	
+	var id = 0
+		get() = field.also { field++ }
+	
 	private fun registerEntities() {
-		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance)
+		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntityEgg(EntityElf::class.java, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance)
-		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance)
-		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance)
-		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance)
+		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
+		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
+		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
 		registerEntityEgg(EntityAlfheimPixie::class.java, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance)
-		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance)
+		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance, id)
 		
 		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
 		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
 		
-		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance)
-		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance)
+		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance, id)
+		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance, id)
 		
-		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance)
-		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance)
-		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance)
+		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance, id)
+		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance, id)
+		registerEntity(EntitySubspaceSpear::class.java, "SubspaceSpear", AlfheimCore.instance, id)
 		
-		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance)
-		registerEntity(EntitySpellAquaStream::class.java, "SpellAquaStream", AlfheimCore.instance)
-		registerEntity(EntitySpellDriftingMine::class.java, "SpellDriftingMine", AlfheimCore.instance)
-		registerEntity(EntitySpellFenrirStorm::class.java, "SpellFenrirStorm", AlfheimCore.instance)
-		registerEntity(EntitySpellFireball::class.java, "SpellFireball", AlfheimCore.instance)
-		registerEntity(EntitySpellFirewall::class.java, "SpellFirewall", AlfheimCore.instance)
-		registerEntity(EntitySpellGravityTrap::class.java, "SpellGravityTrap", AlfheimCore.instance)
-		registerEntity(EntitySpellHarp::class.java, "SpellHarp", AlfheimCore.instance)
-		registerEntity(EntitySpellIsaacMissile::class.java, "SpellIsaacMissile", AlfheimCore.instance)
-		registerEntity(EntitySpellMortar::class.java, "SpellMortar", AlfheimCore.instance)
-		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlade", AlfheimCore.instance)
+		registerEntity(EntitySpellAcidMyst::class.java, "SpellAcidMyst", AlfheimCore.instance, id)
+		registerEntity(EntitySpellAquaStream::class.java, "SpellAquaStream", AlfheimCore.instance, id)
+		registerEntity(EntitySpellDriftingMine::class.java, "SpellDriftingMine", AlfheimCore.instance, id)
+		registerEntity(EntitySpellFenrirStorm::class.java, "SpellFenrirStorm", AlfheimCore.instance, id)
+		registerEntity(EntitySpellFireball::class.java, "SpellFireball", AlfheimCore.instance, id)
+		registerEntity(EntitySpellFirewall::class.java, "SpellFirewall", AlfheimCore.instance, id)
+		registerEntity(EntitySpellGravityTrap::class.java, "SpellGravityTrap", AlfheimCore.instance, id)
+		registerEntity(EntitySpellHarp::class.java, "SpellHarp", AlfheimCore.instance, id)
+		registerEntity(EntitySpellIsaacMissile::class.java, "SpellIsaacMissile", AlfheimCore.instance, id)
+		registerEntity(EntitySpellMortar::class.java, "SpellMortar", AlfheimCore.instance, id)
+		registerEntity(EntitySpellWindBlade::class.java, "SpellWindBlade", AlfheimCore.instance, id)
 	}
 	
 	private fun registerTileEntities() {

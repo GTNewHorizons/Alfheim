@@ -14,6 +14,7 @@ object AlfheimConfigHandler {
 	
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
+	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
 	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
@@ -61,6 +62,7 @@ object AlfheimConfigHandler {
 	
 	// OHTER
 	var anyavilBL				= emptyArray<String>()
+	var blacklistWither			= true
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
 	var floatingTrapDoors		= true
@@ -241,6 +243,8 @@ object AlfheimConfigHandler {
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
 		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity (for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools)")
+		
+		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "[NEI] Set this to false to make Wither spawner visible")
 		
 		addAspectsToBotania = loadProp(CATEGORY_INT_TC, "TC.botaniaAspects", addAspectsToBotania, true, "[TC] Set this to false to disable adding aspects to Botania")
 		addTincturemAspect = loadProp(CATEGORY_INT_TC, "TC.tincturem", addTincturemAspect, true, "[TC] Set this to false to use Sensus instead of Color aspect")

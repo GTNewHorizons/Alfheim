@@ -2,4 +2,5 @@ Innovations:
  --
 
 Fixes:
- --
+ Silktouch on leaves wrong meta dropped
+ Fixed bossbar fix

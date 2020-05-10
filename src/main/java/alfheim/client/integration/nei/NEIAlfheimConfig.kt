@@ -7,6 +7,7 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems
 import codechicken.nei.api.*
+import gloomyfolken.hooklib.asm.Hook
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.block.ModBlocks
 
@@ -32,6 +33,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.starBlock2))
 		API.hideItem(ItemStack(AlfheimItems.flugelDisc2))
 		API.hideItem(ItemStack(AlfheimItems.flugelHead2))
+		
 		if (!ContributorsPrivacyHelper.isCorrect(mc.session.username, "AlexSocol"))
 			API.hideItem(ItemStack(AlfheimItems.royalStaff))
 		
