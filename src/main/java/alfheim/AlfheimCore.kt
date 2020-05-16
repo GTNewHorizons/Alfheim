@@ -45,8 +45,6 @@ class AlfheimCore {
 		
 		var save = ""
 		
-		var enableElvenStory = true
-		var enableMMO = true
 		var MineTweakerLoaded = false
 		var NEILoaded = false
 		var stupidMode = false
@@ -77,9 +75,6 @@ class AlfheimCore {
 	fun preInit(e: FMLPreInitializationEvent) {
 		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod"))
 			throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
-		
-		if (!AlfheimConfigHandler.readModes())
-			AlfheimConfigHandler.writeModes()
 		
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
@@ -124,7 +119,7 @@ class AlfheimCore {
 	@EventHandler
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
-		if (enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
+		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())

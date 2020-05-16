@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJShaderHelper
 import alfheim.api.ModInfo
 import alfheim.api.lib.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.relic.ItemAkashicRecords
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.item.ItemStack
@@ -20,9 +21,11 @@ import kotlin.math.*
 
 object RenderItemAkashicRecords: IItemRenderer {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/AkashicRecords.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/AkashicRecords.obj"))
 	
 	override fun renderItem(type: IItemRenderer.ItemRenderType, stack: ItemStack, vararg data: Any?) {
+		if (model == null) return
+		
 		glEnable(GL_BLEND)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glAlphaFunc(GL_GREATER, 0f)

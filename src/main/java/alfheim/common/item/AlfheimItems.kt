@@ -25,6 +25,7 @@ import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak
 import vazkii.botania.common.item.record.ItemModRecord
+import vazkii.botania.common.item.relic.ItemDice
 
 object AlfheimItems {
 	
@@ -168,9 +169,9 @@ object AlfheimItems {
 		pixieAttractor = ItemPendant("PixieAttractor")
 		realitySword = ItemRealitySword()
 		rodColorfulSkyDirt = ItemRodIridescent()
-		rodFire = ItemRodElemental("MuspelheimRod", AlfheimBlocks.redFlame)
+		rodFire = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }
 		rodFlameStar = ItemRodFlameStar()
-		rodIce = ItemRodElemental("NiflheimRod", AlfheimBlocks.poisonIce)
+		rodIce = ItemRodElemental("NiflheimRod") { AlfheimBlocks.poisonIce }
 		rodInterdiction = ItemRodInterdiction()
 		rodLightning = ItemRodLightning()
 		rodPrismatic = ItemRodPrismatic()
@@ -191,6 +192,15 @@ object AlfheimItems {
 		
 		royalStaff = ItemRoyalStaff()
 		`DEV-NULL` = if (ModInfo.DEV) TheRodOfTheDebug() else null
+		
+		
+		
+		ItemDice.relicStacks += arrayOf(ItemStack(flugelSoul),
+										ItemStack(mask),
+										ItemStack(excaliber),
+										ItemStack(subspaceSpear),
+										ItemStack(moonlightBow),
+										ItemStack(akashicRecords))
 	}
 	
 	fun regOreDict() {

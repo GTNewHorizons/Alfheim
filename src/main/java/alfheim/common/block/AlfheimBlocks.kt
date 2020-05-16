@@ -50,7 +50,7 @@ object AlfheimBlocks {
 	val auroraWood: Block
 	val barrier: Block
 	val dreamSapling: Block
-	val elvenOres: Block
+	val elvenOre: Block
 	val elvenSand: Block
 	val flugelHeadBlock: Block
 	val flugelHead2Block: Block
@@ -186,7 +186,7 @@ object AlfheimBlocks {
 		auroraWood = BlockAuroraWood()
 		barrier = BlockBarrier()
 		dreamSapling = BlockDreamSapling()
-		elvenOres = BlockElvenOres()
+		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
 			override fun canSustainPlant(world: IBlockAccess, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable) = when (plantable.getPlantType(world, x, y, z)) {
 				EnumPlantType.Desert -> true
@@ -329,11 +329,12 @@ object AlfheimBlocks {
 	}
 	
 	fun regOreDict() {
-		registerOre(LibOreDict.DRAGON_ORE, ItemStack(elvenOres))
-		registerOre(LibOreDict.ELEMENTIUM_ORE, ItemStack(elvenOres, 1, 1))
-		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, ItemStack(elvenOres, 1, 2))
-		registerOre(LibOreDict.GOLD_ORE, ItemStack(elvenOres, 1, 3))
-		registerOre(LibOreDict.IFFESAL_ORE, ItemStack(elvenOres, 1, 4))
+		registerOre(LibOreDict.DRAGON_ORE, ItemStack(elvenOre))
+		registerOre(LibOreDict.ELEMENTIUM_ORE, ItemStack(elvenOre, 1, 1))
+		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, ItemStack(elvenOre, 1, 2))
+		registerOre(LibOreDict.GOLD_ORE, ItemStack(elvenOre, 1, 3))
+		registerOre(LibOreDict.IFFESAL_ORE, ItemStack(elvenOre, 1, 4))
+		registerOre(LibOreDict.LAPIS_ORE, ItemStack(elvenOre, 1, 5))
 		
 		val quartzs = arrayOf(ModFluffBlocks.darkQuartz, ModFluffBlocks.manaQuartz, ModFluffBlocks.blazeQuartz, ModFluffBlocks.lavenderQuartz, ModFluffBlocks.redQuartz, ModFluffBlocks.elfQuartz, ModFluffBlocks.sunnyQuartz)
 		

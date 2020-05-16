@@ -34,7 +34,7 @@ object RenderContributors {
 	val auraMap = customAura.zip(customTextures).toMap()
 	
 //	val balls = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/balls.obj"))
-	val book = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
+	val book = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mudrbook.obj"))
 	
 	val so: ShadedObject = object: ShadedObject(ShaderHelper.halo, RenderPostShaders.nextAvailableRenderObjectMaterialID, LibResourceLocations.babylon) {
 		
@@ -230,7 +230,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "Hyper_Miko")) {
+		if (ModelEntityFlugel.model1!= null && ModelEntityFlugel.model2 != null && ContributorsPrivacyHelper.isCorrect(player, "Hyper_Miko")) {
 			glPushMatrix()
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
@@ -271,7 +271,7 @@ object RenderContributors {
 			glPopMatrix()
 		}
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "Mudresistor")) {
+		if (book != null && ContributorsPrivacyHelper.isCorrect(player, "Mudresistor")) {
 			glPushMatrix()
 			glColor4f(1f, 1f, 1f, 1f)
 			

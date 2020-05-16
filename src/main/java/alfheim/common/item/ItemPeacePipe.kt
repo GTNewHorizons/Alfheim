@@ -16,7 +16,7 @@ class ItemPeacePipe: ItemMod("PeacePipe") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack? {
-		if (!AlfheimCore.enableMMO) return stack
+		if (!AlfheimConfigHandler.enableMMO) return stack
 		
 		if (!world.isRemote) {
 			if (!verifyExistance(stack, TAG_LEAD)) {

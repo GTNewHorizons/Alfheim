@@ -41,7 +41,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPre(event: RenderGameOverlayEvent.Pre) {
-		if (event.type === ElementType.BOSSHEALTH && AlfheimCore.enableMMO)
+		if (event.type === ElementType.BOSSHEALTH && AlfheimConfigHandler.enableMMO)
 			event.isCanceled = true
 	}
 	
@@ -99,7 +99,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onPlayerPreRender(e: RenderPlayerEvent.Pre) {
-		if (AlfheimCore.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
+		if (AlfheimConfigHandler.enableMMO && e.entityPlayer.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.isCanceled = true
 			return
 		}
@@ -179,14 +179,14 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onBlockOverlay(e: RenderBlockOverlayEvent) {
-		if (AlfheimCore.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimConfigHandler.potionIDNoclip)
+		if (AlfheimConfigHandler.enableMMO && e.overlayType != OverlayType.FIRE) e.isCanceled = e.player.isPotionActive(AlfheimConfigHandler.potionIDNoclip)
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onWorldLastRender(e: RenderWorldLastEvent) {
 		AstrolabePreviewHandler.onWorldRenderLast(e)
-		if (AlfheimCore.enableMMO) renderMMO()
+		if (AlfheimConfigHandler.enableMMO) renderMMO()
 
 //		glPushMatrix()
 //		ASJRenderHelper.interpolatedTranslationReverse(mc.thePlayer)
@@ -250,7 +250,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onClonePlayer(e: PlayerEvent.Clone) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			e.entityPlayer.raceID = e.original.raceID
 		}
 	}
@@ -258,7 +258,7 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onFOV(e: FOVUpdateEvent) {
-		if (AlfheimCore.enableMMO && e.entity.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) != null) e.newfov = 0.1f
+		if (AlfheimConfigHandler.enableMMO && e.entity.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) != null) e.newfov = 0.1f
 	}
 	
 	@SubscribeEvent

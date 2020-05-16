@@ -1,16 +1,19 @@
 package alfheim.client.render.entity
 
 import alexsocol.asjlib.*
-import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.client.model.item.ModelCreatorStaff
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.material.ItemElvenResource
+import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderManager
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Potion
+import net.minecraft.util.IIcon
 import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
-import sun.audio.AudioPlayer.player
+import org.lwjgl.opengl.GL12
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 
@@ -24,7 +27,6 @@ object RenderEntityLeftHand {
 		if (ContributorsPrivacyHelper.isCorrect(name, "AlexSocol")) renderLeftArm(e) { renderRoyalStaff(e) }
 		if (name == "Kirito") renderLeftArm(e) { renderDualSwords(e) }
 		if (name in ContributorsPrivacyHelper.shields) renderLeftArm(e) { renderShield(e) }
-		
 	}
 	
 	private fun renderLeftArm(e: RenderPlayerEvent.Specials.Pre, render: (RenderPlayerEvent.Specials.Pre) -> Unit) {
@@ -71,7 +73,7 @@ object RenderEntityLeftHand {
 		glRotatef(-5f, 0f, 1f, 0f)
 		glTranslated(0.74, -0.45, -0.1)
 		glScaled(1.1)
-		RenderManager.instance.itemRenderer.renderItem(e.entityPlayer, shield, 0)
+		renderItem(if (meta == -1) ItemElvenResource.harp else shield.item.getIcon(shield, 0))
 		glPopMatrix()
 	}
 	
@@ -106,4 +108,34 @@ object RenderEntityLeftHand {
 			glPopMatrix()
 		}
 	}
+	
+	fun renderItem(iicon: IIcon) {
+		glPushMatrix()
+		val texturemanager: TextureManager = mc.textureManager
+		
+		texturemanager.bindTexture(texturemanager.getResourceLocation(1))
+		TextureUtil.func_152777_a(false, false, 1.0f)
+		val tessellator = Tessellator.instance
+		val f = iicon.minU
+		val f1 = iicon.maxU
+		val f2 = iicon.minV
+		val f3 = iicon.maxV
+		val f4 = 0.0f
+		val f5 = 0.3f
+		
+		glEnable(GL12.GL_RESCALE_NORMAL)
+		glTranslatef(-f4, -f5, 0.0f)
+		val f6 = 1.5f
+		glScalef(f6, f6, f6)
+		glRotatef(50.0f, 0.0f, 1.0f, 0.0f)
+		glRotatef(335.0f, 0.0f, 0.0f, 1.0f)
+		glTranslatef(-0.9375f, -0.0625f, 0.0f)
+		ItemRenderer.renderItemIn2D(tessellator, f1, f2, f, f3, iicon.iconWidth, iicon.iconHeight, 0.0625f)
+		
+		glDisable(GL12.GL_RESCALE_NORMAL)
+		texturemanager.bindTexture(texturemanager.getResourceLocation(1))
+		TextureUtil.func_147945_b()
+		glPopMatrix()
+	}
+	
 }

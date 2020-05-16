@@ -67,11 +67,11 @@ object CardinalSystem {
 	fun transfer(player: EntityPlayerMP) {
 		KnowledgeSystem.transfer(player)
 		
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ESMABIL, if (forPlayer(player).esmAbility) 1.0 else 0.0), player)
 			ElvenSkinSystem.transfer(player)
 			
-			if (AlfheimCore.enableMMO) {
+			if (AlfheimConfigHandler.enableMMO) {
 				SpellCastingSystem.transfer(player)
 				HotSpellsSystem.transfer(player)
 				PartySystem.transfer(player)
@@ -192,7 +192,7 @@ object CardinalSystem {
 		}
 		
 		fun performCast(caster: EntityPlayerMP, raceID: Int, spellID: Int): Int {
-			if (!AlfheimCore.enableMMO) return -NOTALLOW.ordinal
+			if (!AlfheimConfigHandler.enableMMO) return -NOTALLOW.ordinal
 			if (caster.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) return -NOTALLOW.ordinal
 			val spell = AlfheimAPI.getSpellByIDs(raceID, spellID) ?: return -DESYNC.ordinal
 			if (getCoolDown(caster, spell) > 0) return -NOTREADY.ordinal
@@ -295,7 +295,7 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun addQuadDamageEffect(e: EntityStruckByLightningEvent) {
-				if (AlfheimCore.enableMMO) {
+				if (AlfheimConfigHandler.enableMMO) {
 					if (e.entity !is EntityPlayer) return
 					val player = e.entity as EntityPlayer
 					val seg = forPlayer(player)
@@ -366,7 +366,7 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun onLivingUpdate(e: LivingUpdateEvent) {
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && e.entityLiving is EntityPlayer) {
+				if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer && e.entityLiving is EntityPlayer) {
 					val player = e.entityLiving as EntityPlayer
 					if (player.worldObj.totalWorldTime % 20 == 0L) handleManaChange(player)
 				}
@@ -428,7 +428,7 @@ object CardinalSystem {
 			playerSegments.values.any { it.party.isMember(e1) && it.party.isMember(e2) }
 		
 		fun friendlyFire(entityLiving: EntityLivingBase, source: DamageSource): Boolean {
-			if (!AlfheimCore.enableMMO || source.damageType.contains("_FF")) return false
+			if (!AlfheimConfigHandler.enableMMO || source.damageType.contains("_FF")) return false
 			
 			if (!ASJUtilities.isServer) return false
 			if (source.entity != null && source.entity is EntityPlayer) {
@@ -846,12 +846,12 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun onClonePlayer(e: PlayerEvent.Clone) {
-				if (AlfheimCore.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false)
+				if (AlfheimConfigHandler.enableMMO && e.wasDeath) getParty(e.entityPlayer).setDead(e.entityPlayer, false)
 			}
 			
 			@SubscribeEvent
 			fun onPlayerRespawn(e: PlayerRespawnEvent) {
-				if (AlfheimCore.enableMMO) getParty(e.player).setDead(e.player, false)
+				if (AlfheimConfigHandler.enableMMO) getParty(e.player).setDead(e.player, false)
 			}
 		}
 	}
@@ -957,28 +957,28 @@ object CardinalSystem {
 			
 			@SubscribeEvent
 			fun onPlayerChangedDimension(e: PlayerChangedDimensionEvent) {
-				if (AlfheimCore.enableMMO && e.player is EntityPlayerMP) transfer(e.player as EntityPlayerMP, e.fromDim)
+				if (AlfheimConfigHandler.enableMMO && e.player is EntityPlayerMP) transfer(e.player as EntityPlayerMP, e.fromDim)
 			}
 			
 			@SubscribeEvent
 			fun onEntityUpdate(e: EntityUpdateEvent) {
 				if (!e.entity.isEntityAlive) return
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
+				if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
 			}
 			
 			@SubscribeEvent
 			fun onLivingUpdate(e: LivingUpdateEvent) {
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
+				if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer && affected(e.entity)) e.isCanceled = true
 			}
 			
 			@SubscribeEvent
 			fun onChatEvent(e: ServerChatEvent) {
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && affected(e.player)) e.isCanceled = true
+				if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer && affected(e.player)) e.isCanceled = true
 			}
 			
 			@SubscribeEvent
 			fun onCommandEvent(e: CommandEvent) {
-				if (AlfheimCore.enableMMO && ASJUtilities.isServer && e.sender is EntityPlayer && affected(e.sender as EntityPlayer)) e.isCanceled = true
+				if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer && e.sender is EntityPlayer && affected(e.sender as EntityPlayer)) e.isCanceled = true
 			}
 		}
 	}

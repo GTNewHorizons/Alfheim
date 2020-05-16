@@ -3,7 +3,6 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -33,7 +32,7 @@ object RenderWings {
 		val match = customWings.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
 		
 		if (match == -1) {
-			if (!AlfheimCore.enableElvenStory) return
+			if (!AlfheimConfigHandler.enableElvenStory) return
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
 			if (ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol")) return

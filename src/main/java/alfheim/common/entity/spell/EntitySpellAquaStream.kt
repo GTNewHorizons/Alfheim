@@ -5,7 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
-import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.water.SpellAquaStream
@@ -33,7 +33,7 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || caster == null || caster!!.isDead || caster!!.posX != posX || caster!!.posY != posY || caster!!.posZ != posZ || ticksExisted > SpellAquaStream.duration) {
+		if (!AlfheimConfigHandler.enableMMO || caster == null || caster!!.isDead || caster!!.posX != posX || caster!!.posY != posY || caster!!.posZ != posZ || ticksExisted > SpellAquaStream.duration) {
 			setDead()
 			return
 		}

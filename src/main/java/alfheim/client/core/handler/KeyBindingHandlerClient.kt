@@ -71,7 +71,7 @@ object KeyBindingHandlerClient {
 			toggleCorn = false
 		}
 		
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (safeKeyDown(ClientProxy.keyFlight.keyCode)) {
 				if (!toggleFlight) {
 					toggleFlight = true
@@ -84,7 +84,7 @@ object KeyBindingHandlerClient {
 			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode)) {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
-					if (AlfheimCore.enableElvenStory) {
+					if (AlfheimConfigHandler.enableElvenStory) {
 						PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
 						ASJUtilities.say(mc.thePlayer, "alfheimmisc.elvenAbility.${PlayerSegmentClient.esmAbility}")
 						AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
@@ -109,7 +109,7 @@ object KeyBindingHandlerClient {
 			}
 		}
 		
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (prevHotSlot != mc.thePlayer.inventory.currentItem && safeKeyDown(Keyboard.KEY_LCONTROL)) {
 				val flag = PlayerSegmentClient.hotSpells.indices.any { safeKeyDown(it + 2) }
 				

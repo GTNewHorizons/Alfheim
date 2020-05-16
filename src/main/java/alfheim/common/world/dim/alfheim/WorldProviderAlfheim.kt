@@ -1,7 +1,6 @@
 package alfheim.common.world.dim.alfheim
 
 import alexsocol.asjlib.*
-import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.biome.*
@@ -34,7 +33,7 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		return f1
 	}
 	
-	override fun canRespawnHere() = AlfheimCore.enableElvenStory xor AlfheimConfigHandler.enableAlfheimRespawn
+	override fun canRespawnHere() = AlfheimConfigHandler.enableElvenStory xor AlfheimConfigHandler.enableAlfheimRespawn
 	
 	override fun getDimensionName() = "Alfheim"
 	
@@ -69,11 +68,12 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		
 		val ores = WE_OreGen()
 		for (i in 0 until AlfheimConfigHandler.oregenMultiplier) {
-			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75, 1, 16)
-			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 1, 1, 8, 3, 6, 100, 1, 64)
-			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 2, 4, 8, 1, 1, 100, 1, 48)
-			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32)
-			ores.add(AlfheimBlocks.elvenOres, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50, 1, 16)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 0, 1, 8, 1, 2, 75, 1, 16)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 1, 1, 8, 3, 6, 100, 1, 64)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 2, 4, 8, 1, 1, 100, 1, 48)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 3, 1, 8, 2, 3, 100, 1, 32)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 4, 1, 4, 1, 1, 50, 1, 16)
+			ores.add(AlfheimBlocks.elvenOre, ModBlocks.livingrock, 5, 4, 8, 1, 1, 100, 1, 48)
 		}
 		
 		cp.decorateChunkGen_List.add(ores)

@@ -38,8 +38,8 @@ object AlfheimAchievements {
 	val outstander: Achievement // live 3 minutes in mask		O
 	
 	// ---------------> X
-	// |
-	// |    W I    D N
+	// |    W
+	// |      I    D N
 	// |          B K
 	// |     A S M
 	// |        F U E
@@ -68,7 +68,7 @@ object AlfheimAchievements {
 		rosaBomb = AlfheimAchievement("rosaBomb", 6, 2, Blocks.red_flower, subspace).setSpecial()
 		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
-		wingedHussar = AlfheimAchievement("wingedHussaurs", -1, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -2, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
 		
 		AchievementPage.registerAchievementPage(AchievementPage(ModInfo.MODID.capitalize(), *achievements.toTypedArray()))
 		

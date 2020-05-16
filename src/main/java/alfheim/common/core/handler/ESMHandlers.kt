@@ -44,7 +44,7 @@ object ESMHandler {
 	}
 	
 	fun checkAddAttrs() {
-		if (!AlfheimCore.enableElvenStory) return
+		if (!AlfheimConfigHandler.enableElvenStory) return
 		for (o in MinecraftServer.getServer().configurationManager.playerEntityList) {
 			val player = o as EntityPlayerMP
 			EnumRace.ensureExistance(player)
@@ -57,7 +57,7 @@ object ESMHandler {
 	@SubscribeEvent
 	fun getWaterBowl(event: PlayerInteractEvent) {
 		val player = event.entityPlayer
-		if (AlfheimCore.enableElvenStory && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+		if (AlfheimConfigHandler.enableElvenStory && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			val equipped = player.currentEquippedItem ?: return
 			
 			val mop = ToolCommons.raytraceFromEntity(event.world, player, true, (player as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 4.5) ?: return
@@ -114,7 +114,7 @@ object ESMHandler {
 	
 	@SubscribeEvent
 	fun onPlayerUpdate(e: PlayerTickEvent) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			doRaceAbility(e.player)
 		}
 		
@@ -180,7 +180,7 @@ object ESMHandler {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	fun doCaitSith1(e: EntityInteractEvent) {
-		if (AlfheimCore.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith2(e.entityPlayer, e.target)
+		if (AlfheimConfigHandler.enableElvenStory && e.entityPlayer.race === CAITSITH) doCaitSith2(e.entityPlayer, e.target)
 	}
 	
 	fun doCaitSith2(player: EntityPlayer, tg: Entity) {
@@ -244,7 +244,7 @@ object ESMHandler {
 	fun doLeprechaun(e: LivingHurtEvent) {
 		val player = e.source.entity as? EntityPlayer ?: return
 		
-		if (AlfheimCore.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
+		if (AlfheimConfigHandler.enableElvenStory && player.race === LEPRECHAUN && e.source.damageType == "player" && !isAbilityDisabled(player))
 			e.ammount *= 1.1f
 	}
 	
@@ -262,7 +262,7 @@ object ESMHandler {
 	}
 	
 	fun fixSpriggan() {
-		if (AlfheimCore.enableElvenStory && mc.thePlayer.race == SPRIGGAN && !isAbilityDisabled(mc.thePlayer)) return
+		if (AlfheimConfigHandler.enableElvenStory && mc.thePlayer.race == SPRIGGAN && !isAbilityDisabled(mc.thePlayer)) return
 		mc.gameSettings.gammaSetting = min(1f, mc.gameSettings.gammaSetting)
 	}
 	
@@ -290,7 +290,7 @@ object 	ElvenFlightHandler {
 	
 	@SubscribeEvent
 	fun onEntityConstructing(e: EntityConstructing) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (e.entity is EntityPlayer) {
 				ElvenFlightHelper.ensureExistence(e.entity as EntityPlayer)
 			}
@@ -299,14 +299,14 @@ object 	ElvenFlightHandler {
 	
 	@SubscribeEvent
 	fun onClonePlayer(e: PlayerEvent.Clone) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			e.entityPlayer.flight = if (e.wasDeath) 0.0 else e.original.flight
 		}
 	}
 	
 	@SubscribeEvent
 	fun onPlayerRespawn(e: PlayerRespawnEvent) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (AlfheimConfigHandler.wingsBlackList.contains(e.player.worldObj.provider.dimensionId)) return
 			e.player.capabilities.allowFlying = e.player.race != HUMAN
 		}
@@ -314,7 +314,7 @@ object 	ElvenFlightHandler {
 	
 	@SubscribeEvent
 	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
 				AlfheimCore.network.sendTo(Message2d(Message2d.m2d.ATTRIBUTE, 1.0, e.player.flight), e.player as EntityPlayerMP)
 			}
@@ -326,7 +326,7 @@ object 	ElvenFlightHandler {
 		if (e.phase == TickPhase.START) return
 		val player = e.player
 		
-		if (AlfheimCore.enableElvenStory && player.race != HUMAN && !ESMHandler.isAbilityDisabled(player)) {
+		if (AlfheimConfigHandler.enableElvenStory && player.race != HUMAN && !ESMHandler.isAbilityDisabled(player)) {
 			if (!(ModItems.flightTiara as ItemFlightTiara).shouldPlayerHaveFlight(player)) {
 				if (player.flight >= 0 && player.flight <= ElvenFlightHelper.max) {
 					if (player.capabilities.isFlying) {
@@ -344,7 +344,7 @@ object 	ElvenFlightHandler {
 	
 	@SubscribeEvent
 	fun onPlayerSleeped(e: PlayerWakeUpEvent) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			e.entityPlayer.flight = ElvenFlightHelper.max
 		}
 	}
@@ -359,7 +359,7 @@ object ElvenRaceHandler {
 	
 	@SubscribeEvent
 	fun onEntityConstructing(e: EntityConstructing) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (e.entity is EntityPlayer) {
 				EnumRace.ensureExistance(e.entity as EntityPlayer)
 			}
@@ -368,14 +368,14 @@ object ElvenRaceHandler {
 	
 	@SubscribeEvent
 	fun onClonePlayer(e: PlayerEvent.Clone) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			e.entityPlayer.raceID = e.original.raceID
 		}
 	}
 	
 	@SubscribeEvent
 	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (e.player is EntityPlayerMP) {
 				AlfheimCore.network.sendTo(Message2d(Message2d.m2d.ATTRIBUTE, 0.0, e.player.raceID.D), e.player as EntityPlayerMP)
 			}
@@ -384,7 +384,7 @@ object ElvenRaceHandler {
 	
 	@SubscribeEvent
 	fun onPlayerChangedRace(e: PlayerChangedRaceEvent) {
-		if (ASJUtilities.isServer && AlfheimCore.enableMMO) {
+		if (ASJUtilities.isServer && AlfheimConfigHandler.enableMMO) {
 			val pt = CardinalSystem.forPlayer(e.entityPlayer).party
 			pt.setType(pt.indexOf(e.entityPlayer), e.raceTo.ordinal)
 		}

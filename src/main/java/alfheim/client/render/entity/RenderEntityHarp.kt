@@ -16,7 +16,7 @@ import kotlin.math.sin
 
 object RenderEntityHarp: Render() {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Harp.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Harp.obj"))
 	
 	init {
 		shadowSize = 0f
@@ -29,7 +29,7 @@ object RenderEntityHarp: Render() {
 		glTranslated(x, y + 0.2 + sin((mc.theWorld.totalWorldTime.F + entity.ticksExisted.F + mc.timer.renderPartialTicks) / 50.0) / 10.0, z)
 		glRotated((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 0.5, 0.0, 1.0, 0.0)
 		
-		if (AlfheimConfigHandler.minimalGraphics) {
+		if (model == null) {
 			glTranslated(-0.5, 0.0, 0.0)
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.harp.maxU, ItemElvenResource.harp.minV, ItemElvenResource.harp.minU, ItemElvenResource.harp.maxV, ItemElvenResource.harp.iconWidth, ItemElvenResource.harp.iconHeight, 1f / 16f)

@@ -11,6 +11,6 @@ class PotionDeathMark: PotionAlfheim(AlfheimConfigHandler.potionIDDeathMark, "de
 	override fun isReady(time: Int, ampl: Int) = time == 1
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
-		if (AlfheimCore.enableMMO) living.attackEntityFrom(DamageSourceSpell.mark, SpellDeathMark.damage)
+		if (AlfheimConfigHandler.enableMMO) living.attackEntityFrom(DamageSourceSpell.mark, SpellDeathMark.damage)
 	}
 }

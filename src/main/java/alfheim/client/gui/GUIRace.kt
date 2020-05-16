@@ -18,7 +18,7 @@ class GUIRace: Gui() {
 	
 	@SubscribeEvent
 	fun onOverlayRendering(e: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableElvenStory || (AlfheimCore.enableMMO && AlfheimConfigHandler.selfHealthUI)) return
+		if (!AlfheimConfigHandler.enableElvenStory || (AlfheimConfigHandler.enableMMO && AlfheimConfigHandler.selfHealthUI)) return
 		if (e.type != ElementType.HOTBAR || mc.thePlayer.race == EnumRace.HUMAN) return
 		
 		glPushMatrix()

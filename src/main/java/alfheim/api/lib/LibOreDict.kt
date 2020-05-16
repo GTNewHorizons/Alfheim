@@ -9,6 +9,7 @@ object LibOreDict {
 	const val ELVEN_QUARTZ_ORE = "oreQuartzElven"
 	const val GOLD_ORE = "oreGold"
 	const val IFFESAL_ORE = "oreIffesal"
+	const val LAPIS_ORE = "oreLapis"
 	const val ELVORIUM_INGOT = "ingotElvorium"
 	const val MAUFTRIUM_INGOT = "ingotMauftrium"
 	const val MUSPELHEIM_POWER_INGOT = "ingotMuspelheimPower"

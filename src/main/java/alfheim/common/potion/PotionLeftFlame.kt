@@ -23,7 +23,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.applyAttributesModifiersToEntity(target, attributes, ampl)
-		if (AlfheimCore.enableMMO && target is EntityPlayer) {
+		if (AlfheimConfigHandler.enableMMO && target is EntityPlayer) {
 			target.capabilities.allowEdit = false
 			target.capabilities.allowFlying = true
 			target.capabilities.disableDamage = true
@@ -36,7 +36,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl)
-		if (AlfheimCore.enableMMO && target is EntityPlayer) {
+		if (AlfheimConfigHandler.enableMMO && target is EntityPlayer) {
 			target.capabilities.allowEdit = true
 			target.capabilities.allowFlying = false
 			target.capabilities.disableDamage = false
@@ -99,5 +99,5 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 		if (check(e.sender as? EntityLivingBase)) e.isCanceled = true
 	}
 	
-	fun check(e: EntityLivingBase?) = AlfheimCore.enableMMO && e?.isPotionActive(this) == true
+	fun check(e: EntityLivingBase?) = AlfheimConfigHandler.enableMMO && e?.isPotionActive(this) == true
 }

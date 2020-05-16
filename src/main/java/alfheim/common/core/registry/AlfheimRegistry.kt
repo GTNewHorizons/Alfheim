@@ -330,8 +330,8 @@ object AlfheimRegistry {
 		
 		addPink(ItemStack(AlfheimBlocks.anyavil), 297)
 		addPink(ItemStack(AlfheimBlocks.alfheimPylon), 45)
-		addPink(ItemStack(AlfheimBlocks.elvenOres), 9)
-		addPink(ItemStack(AlfheimBlocks.elvenOres, 1, 1), 9)
+		addPink(ItemStack(AlfheimBlocks.elvenOre), 9)
+		addPink(ItemStack(AlfheimBlocks.elvenOre, 1, 1), 9)
 		addPink(ItemStack(AlfheimBlocks.irisDirt, 1, 6), 2)
 		addPink(ItemStack(AlfheimBlocks.irisTallGrass0, 1, 6), 2)
 		addPink(ItemStack(AlfheimBlocks.irisGrass, 1, 6), 1)

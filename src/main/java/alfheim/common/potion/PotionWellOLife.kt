@@ -7,10 +7,10 @@ import net.minecraft.entity.EntityLivingBase
 
 class PotionWellOLife: PotionAlfheim(AlfheimConfigHandler.potionIDWellOLife, "wellolife", false, 0x00FFFF) {
 	
-	override fun isReady(time: Int, ampl: Int) = AlfheimCore.enableMMO && time % 10 == 0
+	override fun isReady(time: Int, ampl: Int) = AlfheimConfigHandler.enableMMO && time % 10 == 0
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		if (living.isInWater) living.heal(SpellWellOLife.damage * (ampl+1))
 	}
 }

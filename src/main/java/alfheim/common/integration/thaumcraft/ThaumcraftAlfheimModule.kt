@@ -2,7 +2,6 @@ package alfheim.common.integration.thaumcraft
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.ASJUtilities.register
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict.ELEMENTIUM_ORE
 import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
@@ -147,7 +146,7 @@ object ThaumcraftAlfheimModule {
 		}
 
 		addSpecialMiningResult(ItemStack(alfheimThaumOre, 1, 0), ItemStack(ConfigItems.itemNugget, 1, 21), 0.9f)
-		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1f)
+		addSpecialMiningResult(ItemStack(AlfheimBlocks.elvenOre, 1, 1), ItemStack(ConfigItems.itemNugget, 1, AlfheimConfigHandler.elementiumClusterMeta), 1f)
 	}
 	
 	fun registerRecipes() {
@@ -260,7 +259,7 @@ object ThaumcraftAlfheimModule {
 												  'N', ELEMENTIUM_NUGGET,
 												  'I', IFFESAL_DUST)
 		
-		if (AlfheimCore.enableElvenStory) addESMRecipes()
+		if (AlfheimConfigHandler.enableElvenStory) addESMRecipes()
 		
 		addSmelting(ItemStack(alfheimThaumOre, 1, 0),
 					ItemStack(ConfigItems.itemResource, 1, 3), // Cinnabar

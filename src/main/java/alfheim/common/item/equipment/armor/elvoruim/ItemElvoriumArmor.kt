@@ -3,6 +3,7 @@ package alfheim.common.item.equipment.armor.elvoruim
 import alexsocol.asjlib.*
 import alfheim.api.*
 import alfheim.client.model.armor.ModelElvoriumArmor
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -36,12 +37,12 @@ open class ItemElvoriumArmor(type: Int, name: String): ItemManasteelArmor(type, 
 	
 	@SideOnly(Side.CLIENT)
 	override fun provideArmorModelForSlot(stack: ItemStack?, slot: Int): ModelBiped {
-		models[slot] = ModelElvoriumArmor(slot)
+		models[slot] = if (AlfheimConfigHandler.minimalGraphics) ModelBiped() else ModelElvoriumArmor(slot)
 		return models[slot]
 	}
 	
 	override fun getArmorTextureAfterInk(stack: ItemStack?, slot: Int): String {
-		return if (ConfigHandler.enableArmorModels) ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png" else if (slot == 2) ModInfo.MODID + ":textures/model/armor/ElvoriumArmor1.png" else ModInfo.MODID + ":textures/model/armor/ElvoriumArmor0.png"
+		return if (ConfigHandler.enableArmorModels && !AlfheimConfigHandler.minimalGraphics) ModInfo.MODID + ":textures/model/armor/ElvoriumArmor.png" else if (slot == 2) ModInfo.MODID + ":textures/model/armor/ElvoriumArmor1.png" else ModInfo.MODID + ":textures/model/armor/ElvoriumArmor0.png"
 	}
 	
 	override fun getIsRepairable(armor: ItemStack?, material: ItemStack): Boolean {

@@ -1,6 +1,7 @@
 package alfmod.client.render.item
 
 import alexsocol.asjlib.mc
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfmod.AlfheimModularCore
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.texture.TextureMap
@@ -15,12 +16,16 @@ import org.lwjgl.opengl.GL11.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemIcePendant
 
+val katana = ResourceLocation(AlfheimModularCore.MODID, "textures/model/item/Katana.png")
+
 object RenderItemSnowSword: IItemRenderer {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(AlfheimModularCore.MODID, "model/Katana.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(AlfheimModularCore.MODID, "model/Katana.obj"))
 	val texture = ResourceLocation(AlfheimModularCore.MODID, "textures/model/item/SnowKatana.png")
 	
-	override fun renderItem(type: ItemRenderType, item: ItemStack, vararg data: Any?) {
+	override fun renderItem(type: ItemRenderType, stack: ItemStack, vararg data: Any?) {
+		if (model == null) return // renderer won't be registered at all
+		
 		glPushMatrix()
 		
 		if (type == EQUIPPED_FIRST_PERSON || type == EQUIPPED) {
@@ -29,7 +34,10 @@ object RenderItemSnowSword: IItemRenderer {
 			glRotatef(if (type == EQUIPPED_FIRST_PERSON) -5f else -15f, 1f, 0f, 0f)
 			
 			data.firstOrNull { it is EntityPlayer }?.let { it as EntityPlayer
-				if (it.isBlocking) glRotatef(-90f, 0f, 1f, 0f)
+				if (it.isBlocking) {
+					glRotatef(-90f, 0f, 1f, 0f)
+					glTranslated(-0.1, -0.2, -0.15)
+				}
 			}
 		}
 		
@@ -39,20 +47,32 @@ object RenderItemSnowSword: IItemRenderer {
 			alexsocol.asjlib.glScaled(0.75)
 		}
 		
-		mc.renderEngine.bindTexture(texture)
+		val maru = stack.displayName.trim().equals("chunchunmaru", true)
+		
+		mc.renderEngine.bindTexture(if (maru) katana else texture)
+		
+		if (maru) {
+			glPushMatrix()
+			glScalef(1f, 0.75f, 1f)
+			glTranslatef(0f, 0.15f, 0f)
+		}
 		model.renderAll()
+		if (maru) glPopMatrix()
 		
 		glRotatef(90f, 1f, 0f, 0f)
 		glRotatef(45f, 0f, 0f, 1f)
 		glTranslated(-0.5, -0.5, -0.4 + 1/16f)
 		
-		if (type == INVENTORY) glEnable(GL_BLEND)
+		if (!maru) {
+			if (type == INVENTORY) glEnable(GL_BLEND)
+			
+			val icon = (ModItems.icePendant as ItemIcePendant).gemIcon
+			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
+			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)
+			
+			if (type == INVENTORY) glDisable(GL_BLEND)
+		}
 		
-		val icon = (ModItems.icePendant as ItemIcePendant).gemIcon
-		mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
-		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)
-		
-		if (type == INVENTORY) glDisable(GL_BLEND)
 		glPopMatrix()
 	}
 	

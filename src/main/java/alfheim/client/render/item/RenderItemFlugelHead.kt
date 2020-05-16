@@ -49,8 +49,11 @@ object RenderItemFlugelHead {
 				is ItemHeadMiku		-> {
 					mc.renderEngine.bindTexture(LibResourceLocations.miku0)
 					ModelBipedNew.model.head.render(0.0625f)
-					mc.renderEngine.bindTexture(LibResourceLocations.miku2)
-					ModelEntityFlugel.model2.renderAll()
+					
+					if (ModelEntityFlugel.model2 != null) {
+						mc.renderEngine.bindTexture(LibResourceLocations.miku2)
+						ModelEntityFlugel.model2.renderAll()
+					}
 				}
 				
 				is ItemGaiaHead		-> {

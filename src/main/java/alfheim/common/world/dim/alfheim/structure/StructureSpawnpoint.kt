@@ -12,8 +12,8 @@ import net.minecraft.world.World
 object StructureSpawnpoint {
 	
 	fun generate(world: World) {
-		if (!AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateSpawnCastle(world, 0, world.getTopSolidOrLiquidBlock(0, 0) + 10, 0)
-		if (AlfheimCore.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateStartBox(world, 0, 248, 0)
+		if (!AlfheimConfigHandler.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateSpawnCastle(world, 0, world.getTopSolidOrLiquidBlock(0, 0) + 10, 0)
+		if (AlfheimConfigHandler.enableElvenStory || AlfheimConfigHandler.bothSpawnStructures) generateStartBox(world, 0, 248, 0)
 		
 		ASJUtilities.log("Spawn created")
 	}

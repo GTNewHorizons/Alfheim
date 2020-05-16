@@ -94,7 +94,7 @@ class TileAlfheimPortal: TileMod() {
 							
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.D, coords.posY.D, coords.posZ.D)
 						} else {
-							if (AlfheimCore.enableElvenStory) {
+							if (AlfheimConfigHandler.enableElvenStory) {
 								val race = player.raceID - 1 // for array length
 								if (race in 0..8)
 									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, AlfheimConfigHandler.zones[race].x, AlfheimConfigHandler.zones[race].y, AlfheimConfigHandler.zones[race].z)

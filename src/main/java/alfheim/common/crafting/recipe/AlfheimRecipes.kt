@@ -27,7 +27,7 @@ import alfheim.common.block.AlfheimBlocks.alfheimPortal
 import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
-import alfheim.common.block.AlfheimBlocks.elvenOres
+import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.manaAccelerator
@@ -47,16 +47,16 @@ import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
@@ -132,6 +132,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.crafting.*
 import vazkii.botania.common.item.ModItems.*
 import vazkii.botania.common.lib.LibOreDict.*
+import net.minecraft.init.Items.dye as justDye
 import vazkii.botania.common.item.ModItems.quartz as manaquartz
 
 object AlfheimRecipes {
@@ -152,6 +153,7 @@ object AlfheimRecipes {
 	lateinit var recipeAuraRingElven: IRecipe
 	lateinit var recipeAuraRingGod: IRecipe
 	lateinit var recipeBalanceCloak: IRecipe
+	lateinit var recipeCleanPylon: IRecipe
 	lateinit var recipeCloudPendant: IRecipe
 	lateinit var recipeCloudPendantSuper: IRecipe
 	lateinit var recipeCrescentAmulet: IRecipe
@@ -225,6 +227,8 @@ object AlfheimRecipes {
 	}
 	
 	private fun registerCraftingRecipes() {
+		ASJUtilities.removeRecipe(ModCraftingRecipes.recipeGaiaPylon.recipeOutput)
+		
 		addOreDictRecipe(ItemStack(alfheimPortal, 1),
 						 "DPD", "GSG", "DTD",
 						 'D', DREAM_WOOD,
@@ -287,6 +291,12 @@ object AlfheimRecipes {
 						 'E', EMERALD,
 						 'S', LIFE_ESSENCE)
 		recipeBalanceCloak = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(pylon, 1, 2),
+						 "EEE", "EPE", "EEE",
+						 'E', LIFE_ESSENCE,
+						 'P', ItemStack(alfheimPylon, 1, 2))
+		recipeCleanPylon = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(cloudPendant),
 						 "US ", "S S", "MSA",
@@ -541,7 +551,7 @@ object AlfheimRecipes {
 										  'D', DYES[1],
 										  'P', ItemStack(planks, 1, 5))
 		
-		if (AlfheimCore.enableMMO) addMMORecipes()
+		if (AlfheimConfigHandler.enableMMO) addMMORecipes()
 		
 		addOreDictRecipe(ItemStack(pixieAttractor),
 						 "EDE", "EPE", " S ",
@@ -551,7 +561,6 @@ object AlfheimRecipes {
 						 'S', RUNE[2])
 		recipePixieAttractor = BotaniaAPI.getLatestAddedRecipe()
 		
-		ASJUtilities.removeRecipe(ModCraftingRecipes.recipeGaiaPylon.recipeOutput)
 		addOreDictRecipe(ItemStack(pylon, 1, 2),
 						 " E ", "TPT", " E ",
 						 'T', TERRASTEEL_NUGGET,
@@ -920,8 +929,13 @@ object AlfheimRecipes {
 	}
 	
 	private fun registerSmeltingRecipes() {
-		addSmelting(ItemStack(elvenOres, 1, 1), ItemStack(manaResource, 1, 7), 1f)
-		addSmelting(ItemStack(elvenOres, 1, 3), ItemStack(gold_ingot, 1, 0), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 0), ItemStack(manaResource, 1, 9), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 1), ItemStack(manaResource, 1, 7), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 2), ItemStack(manaquartz, 1, 5), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 3), ItemStack(gold_ingot, 1, 0), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 4), ItemStack(elvenResource, 1, ElvenResourcesMetas.IffesalDust), 1f)
+		addSmelting(ItemStack(elvenOre, 1, 5), ItemStack(justDye, 1, 4), 0.2f)
+		
 		addSmelting(elvenSand, ItemStack(elfGlass), 1f)
 		addSmelting(elvenSandstone, ItemStack(elvenSandstone, 1, 4), 1f)
 		addSmelting(manaGlass, ItemStack(glass), 0f)

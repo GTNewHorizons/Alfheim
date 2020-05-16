@@ -1,6 +1,9 @@
 Innovations:
- --
+ Lapis Lazuli ore
+ Modes configs are now with others
 
 Fixes:
  Silktouch on leaves wrong meta dropped
  Fixed bossbar fix
+ Schematic Controller crash on dump w/o Codechicken Core
+ Improved minimal graphics setting

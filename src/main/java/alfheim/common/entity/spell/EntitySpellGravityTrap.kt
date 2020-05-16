@@ -28,7 +28,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || ticksExisted > SpellGravityTrap.duration) {
+		if (!AlfheimConfigHandler.enableMMO || ticksExisted > SpellGravityTrap.duration) {
 			setDead()
 			return
 		}

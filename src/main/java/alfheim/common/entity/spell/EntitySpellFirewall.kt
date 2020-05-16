@@ -44,7 +44,7 @@ class EntitySpellFirewall(world: World): Entity(world), ITimeStopSpecific {
 	override fun attackEntityFrom(source: DamageSource?, damage: Float) = false
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && caster != null && caster!!.isDead) {
+		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && caster != null && caster!!.isDead) {
 			setDead()
 		} else {
 			//if (!ASJUtilities.isServer()) return;

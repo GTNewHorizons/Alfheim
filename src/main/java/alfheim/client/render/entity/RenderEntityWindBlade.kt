@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11.*
 
 object RenderEntityWindBlade: Render() {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/tor.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/tor.obj"))
 	
 	init {
 		shadowSize = 0f
@@ -30,7 +30,7 @@ object RenderEntityWindBlade: Render() {
 		glAlphaFunc(GL_GREATER, 1/255f)
 		glTranslated(x, y + 0.05, z)
 		glRotated(((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 5).D, 0.0, 1.0, 0.0)
-		if (AlfheimConfigHandler.minimalGraphics) {
+		if (model == null) {
 			glScaled(3.0, 0.5, 3.0)
 			glRotated(90.0, 1.0, 0.0, 0.0)
 			glTranslated(-0.5, -0.5, 0.03125)

@@ -171,7 +171,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
-		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
+		return if (AlfheimConfigHandler.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
 	}
 	
@@ -209,6 +209,13 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "<init>")
+	fun `BlockSpreader$init`(spreader: BlockSpreader) {
+		val f = 1/16f
+		spreader.setBlockBounds(f, f, f, 1-f, 1-f, 1-f)
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
@@ -227,7 +234,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun moveFlying(e: Entity, x: Float, y: Float, z: Float) {
-		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
+		if (AlfheimConfigHandler.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.motionZ = 0.0
 			e.motionY = e.motionZ
 			e.motionX = e.motionY
@@ -555,7 +562,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase) =
-		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
+		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimConfigHandler.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
@@ -748,7 +755,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
-		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
+		if (AlfheimConfigHandler.enableMMO) if (entity is EntityLivingBase) {
 			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, mc.timer.renderPartialTicks)
 		}
 	}
@@ -831,14 +838,14 @@ object AlfheimHookHandler {
 			} else if (block.material === Material.water) {
 				glFogi(GL_FOG_MODE, GL_EXP)
 				
-				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
+				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
 					glFogf(GL_FOG_DENSITY, 0.05f)
 				} else {
 					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
+				glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
 			} else {
 				f1 = renderer.farPlaneDistance
 				
@@ -894,7 +901,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
-		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
+		BossBarHandler.currentBoss = if (AlfheimConfigHandler.enableMMO) null else status
 	}
 	
 	@JvmStatic
@@ -970,7 +977,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun isInvisibleToPlayer(player: EntityPlayer, thePlayer: EntityPlayer, @ReturnValue result: Boolean): Boolean {
-		if (result && AlfheimCore.enableMMO) {
+		if (result && AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(player) == true) return false
 		}
 		
@@ -981,7 +988,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun isInvisibleToPlayer(entity: EntityLivingBase, thePlayer: EntityPlayer): Boolean {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(entity) == true) return false
 		}
 		

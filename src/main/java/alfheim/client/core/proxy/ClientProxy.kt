@@ -120,8 +120,8 @@ class ClientProxy: CommonProxy() {
 	}
 	
 	override fun registerKeyBinds() {
-		if (AlfheimCore.enableElvenStory) addESMKeyBinds()
-		if (AlfheimCore.enableMMO) addMMOKeyBinds()
+		if (AlfheimConfigHandler.enableElvenStory) addESMKeyBinds()
+		if (AlfheimConfigHandler.enableMMO) addMMOKeyBinds()
 	}
 	
 	override fun initializeAndRegisterHandlers() {
@@ -130,8 +130,8 @@ class ClientProxy: CommonProxy() {
 		FMLCommonHandler.instance().bus().register(EventHandlerClient)
 		if (ConfigHandler.boundBlockWireframe) MinecraftForge.EVENT_BUS.register(DoubleBoundItemRender)
 		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
-		if (AlfheimCore.enableElvenStory) enableESMGUIs()
-		if (AlfheimCore.enableMMO) enableMMOGUIs()
+		if (AlfheimConfigHandler.enableElvenStory) enableESMGUIs()
+		if (AlfheimConfigHandler.enableMMO) enableMMOGUIs()
 		
 		RenderPostShaders.allowShaders = !AlfheimConfigHandler.minimalGraphics
 	}
@@ -213,8 +213,8 @@ class ClientProxy: CommonProxy() {
 		}
 		
 		fun enableESM() {
-			if (AlfheimCore.enableElvenStory) return
-			AlfheimCore.enableElvenStory = true
+			if (AlfheimConfigHandler.enableElvenStory) return
+			AlfheimConfigHandler.enableElvenStory = true
 			AlfheimLexiconData.reEnableESM()
 			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			enableESMGUIs()
@@ -223,8 +223,8 @@ class ClientProxy: CommonProxy() {
 		}
 		
 		fun disableESM() {
-			if (!AlfheimCore.enableElvenStory) return
-			AlfheimCore.enableElvenStory = false
+			if (!AlfheimConfigHandler.enableElvenStory) return
+			AlfheimConfigHandler.enableElvenStory = false
 			AlfheimLexiconData.disableESM()
 			if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
 			disableESMGUIs()
@@ -233,8 +233,8 @@ class ClientProxy: CommonProxy() {
 		}
 		
 		fun enableMMO() {
-			if (AlfheimCore.enableMMO) return
-			AlfheimCore.enableMMO = true
+			if (AlfheimConfigHandler.enableMMO) return
+			AlfheimConfigHandler.enableMMO = true
 			AlfheimLexiconData.reEnableMMO()
 			AlfheimRecipes.addMMORecipes()
 			enableMMOGUIs()
@@ -243,8 +243,8 @@ class ClientProxy: CommonProxy() {
 		}
 		
 		fun disableMMO() {
-			if (!AlfheimCore.enableMMO) return
-			AlfheimCore.enableMMO = false
+			if (!AlfheimConfigHandler.enableMMO) return
+			AlfheimConfigHandler.enableMMO = false
 			AlfheimLexiconData.disableMMO()
 			AlfheimRecipes.removeMMORecipes()
 			disableMMOGUIs()
@@ -254,7 +254,7 @@ class ClientProxy: CommonProxy() {
 		
 		private fun toggleESM(esm: Boolean, mmo: Boolean, esmOld: Boolean, mmoOld: Boolean) {
 			if (esmOld == esm) return
-			AlfheimCore.enableElvenStory = esm
+			AlfheimConfigHandler.enableElvenStory = esm
 			
 			if (esm) {
 				AlfheimLexiconData.reEnableESM()
@@ -268,7 +268,7 @@ class ClientProxy: CommonProxy() {
 		
 		private fun toggleMMO(esm: Boolean, mmo: Boolean, esmOld: Boolean, mmoOld: Boolean) {
 			if (mmoOld == mmo) return
-			AlfheimCore.enableMMO = mmo
+			AlfheimConfigHandler.enableMMO = mmo
 			
 			if (mmo) {
 				AlfheimLexiconData.reEnableMMO()

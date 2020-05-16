@@ -47,7 +47,6 @@ import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
 import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.equipment.tool.elementium.ItemElementiumAxe
 import kotlin.math.max
 
 @Suppress("unused")
@@ -71,9 +70,9 @@ object EventHandler {
 		}
 		
 		if (e.player is EntityPlayerMP) {
-			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimCore.enableElvenStory) 1 else 0).D, (if (AlfheimCore.enableMMO) 1 else 0).D), e.player as EntityPlayerMP)
+			AlfheimCore.network.sendTo(Message2d(m2d.MODES, (if (AlfheimConfigHandler.enableElvenStory) 1 else 0).D, (if (AlfheimConfigHandler.enableMMO) 1 else 0).D), e.player as EntityPlayerMP)
 			CardinalSystem.transfer(e.player as EntityPlayerMP)
-			if (AlfheimCore.enableElvenStory) {
+			if (AlfheimConfigHandler.enableElvenStory) {
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.DEATH_TIMER, AlfheimConfigHandler.deathScreenAddTime.D), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(Message1d(Message1d.m1d.ELVEN_FLIGHT_MAX, ElvenFlightHelper.max), e.player as EntityPlayerMP)
 				AlfheimCore.network.sendTo(MessageNI(MessageNI.mni.WINGS_BL, AlfheimConfigHandler.wingsBlackList), e.player as EntityPlayerMP)
@@ -111,12 +110,14 @@ object EventHandler {
 		if (e.portalTile.worldObj.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && (e.portalTile as TileAlfPortal).ticksOpen >= 0) (e.portalTile as TileAlfPortal).ticksOpen = 0
 	}
 	
+	val beheadItems = arrayOf(ModItems.elementiumAxe, AlfheimItems.wireAxe)
+	
 	@SubscribeEvent
 	fun onEntityDrops(event: LivingDropsEvent) {
 		if (event.recentlyHit && event.source.entity is EntityPlayer) {
 			val weapon = (event.source.entity as EntityPlayer).currentEquippedItem
 			val target = event.entityLiving
-			if (weapon != null && weapon.item is ItemElementiumAxe && target is EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
+			if (weapon != null && weapon.item in beheadItems && target is EntityFlugel && event.entity.worldObj.rand.nextInt(13) < 1 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, weapon)) {
 				val entityitem = EntityItem(target.worldObj, target.posX, target.posY, target.posZ, ItemStack(if (target.customNameTag == "Hatsune Miku") AlfheimItems.flugelHead2 else AlfheimItems.flugelHead))
 				entityitem.delayBeforeCanPickup = 10
 				event.drops.add(entityitem)
@@ -156,7 +157,7 @@ object EventHandler {
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			amount *= 0.8f
 		
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
 				e.isCanceled = true
 				return
@@ -174,7 +175,7 @@ object EventHandler {
 			}
 		}
 		
-		if (AlfheimCore.enableElvenStory && e.source.damageType == DamageSource.fall.damageType && target is EntityPlayer && target.race != EnumRace.HUMAN) {
+		if (AlfheimConfigHandler.enableElvenStory && e.source.damageType == DamageSource.fall.damageType && target is EntityPlayer && target.race != EnumRace.HUMAN) {
 			e.isCanceled = true
 			return
 		}
@@ -186,7 +187,7 @@ object EventHandler {
 		
 		// ################################################################ NOT CANCELING ################################################################
 		
-		if (AlfheimCore.enableMMO && target.isPotionActive(AlfheimConfigHandler.potionIDDecay) && !e.source.isFireDamage && !e.source.isMagical && e.source.damageType != DamageSourceSpell.bleeding.damageType)
+		if (AlfheimConfigHandler.enableMMO && target.isPotionActive(AlfheimConfigHandler.potionIDDecay) && !e.source.isFireDamage && !e.source.isMagical && e.source.damageType != DamageSourceSpell.bleeding.damageType)
 			target.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDBleeding, SpellDecay.duration / 5, SpellDecay.efficiency.I, true))
 	}
 	
@@ -202,7 +203,7 @@ object EventHandler {
 		if ((attacker as? EntityLivingBase)?.isPotionActive(AlfheimConfigHandler.potionIDNinja) == true)
 			e.ammount *= 0.8f
 		
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystem.PartySystem.friendlyFire(target, e.source)) {
 				e.isCanceled = true
 				return
@@ -269,7 +270,7 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onEntityDeath(e: LivingDeathEvent) {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				
 				if (!e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
@@ -290,7 +291,7 @@ object EventHandler {
 	fun onServerTick(e: ServerTickEvent) {
 		EntityLolicorn.tick()
 		
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (e.phase == Phase.START) {
 				CardinalSystem.SpellCastingSystem.tick()
 				CardinalSystem.TimeStopSystem.tick()
@@ -322,7 +323,7 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onLivingUpdate(e: LivingUpdateEvent) {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 				val pe = e.entityLiving.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
 				pe.duration--
@@ -348,7 +349,7 @@ object EventHandler {
 //		player.rotationYaw = 0f
 //		player.rotationPitch = 0f
 		
-		if (AlfheimCore.enableElvenStory && e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
+		if (AlfheimConfigHandler.enableElvenStory && e.player.race == EnumRace.POOKA && !e.player.worldObj.isRemote) {
 			val seg = CardinalSystem.forPlayer(e.player)
 			val pos = Vector3.fromEntity(e.player)
 			
@@ -383,7 +384,7 @@ object EventHandler {
 	
 	@SubscribeEvent
 	fun onPlayerChangeDimension(e: PlayerEvent.PlayerChangedDimensionEvent) {
-		if (AlfheimCore.enableElvenStory && !e.player.capabilities.isCreativeMode) {
+		if (AlfheimConfigHandler.enableElvenStory && !e.player.capabilities.isCreativeMode) {
 			e.player.capabilities.allowFlying = false
 			e.player.capabilities.isFlying = false
 			e.player.sendPlayerAbilities()

@@ -15,7 +15,7 @@ import net.minecraft.util.*
 class TileRaceSelector: ASJTile() {
 	
 	fun giveRaceAndReset(player: EntityPlayer): Boolean {
-		if (!AlfheimCore.enableElvenStory) return false
+		if (!AlfheimConfigHandler.enableElvenStory) return false
 		if (!ModInfo.DEV && player.race != EnumRace.HUMAN) return false
 		
 		val race = EnumRace[rotation+1]

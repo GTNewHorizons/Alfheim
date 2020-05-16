@@ -12,7 +12,7 @@ class PotionShowMana: PotionAlfheim(AlfheimConfigHandler.potionIDShowMana, "show
 	override fun isReady(time: Int, ampl: Int) = true
 	
 	override fun performEffect(living: EntityLivingBase, ampl: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		val pe = living.getActivePotionEffect(id) ?: return
 		
 		if (ASJUtilities.isServer || pe.amplifier <= 0) {
