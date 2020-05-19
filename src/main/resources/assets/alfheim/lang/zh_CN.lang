@@ -595,7 +595,7 @@ key.uncast.desc=取消施法
 key.flight.desc=精灵之翼
 key.selmob.desc=选择目标
 key.selteam.desc=选择盟友
-mes.flight.unavailable=精灵之翼无法外艾尔夫海姆之外汲取能量
+mes.flight.unavailable=精灵之翼无法在艾尔夫海姆之外汲取能量
 
 race.SALAMANDER.name=SALAMANDER
 race.SYLPH.name=SYLPH
