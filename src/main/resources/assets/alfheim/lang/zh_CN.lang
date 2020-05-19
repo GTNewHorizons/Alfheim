@@ -299,6 +299,8 @@ achievement.divineMarksman=好枪法
 achievement.divineMarksman.desc=战斗专精
 achievement.excaliber=流动之心
 achievement.excaliber.desc=荣耀与胜利
+# firework
+# don't translate
 achievement.flugelSoul=神圣之魂
 achievement.flugelSoul.desc=永世不朽之魂
 achievement.flugelKill=弑神者
@@ -317,8 +319,8 @@ achievement.rosaBomb=残忍的血玫瑰
 achievement.rosaBomb.desc=杀戮
 achievement.subspace=夜空之光
 achievement.subspace.desc=撕碎空间的壁垒
-achievement.wingedHussaurs=背生双翼的游骑兵
-achievement.wingedHussaurs.desc=冲下山脊
+# winged hussars
+# don't translate
 
 alfheim.armorset.elemental.name=元素掌控者
 alfheim.armorset.elvorium.name=皇家精灵守卫
