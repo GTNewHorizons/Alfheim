@@ -1,0 +1,37 @@
+tile.fluid.molten.elementium.name=熔融源质钢
+tile.fluid.molten.elvorium.name=熔融魔灵钢
+tile.fluid.molten.manasteel.name=熔融魔力钢
+tile.fluid.molten.mauftrium.name=熔融始源魂灵合金
+tile.fluid.molten.terrasteel.name=熔融泰拉钢
+
+item.alfheim:NaturalBucket.Elementium.name=熔融源质钢桶
+item.alfheim:NaturalBucket.Elvorium.name=熔融魔灵钢桶
+item.alfheim:NaturalBucket.Manasteel.name=熔融魔力钢桶
+item.alfheim:NaturalBucket.Mauftrium.name=熔融始源魂灵合金桶
+item.alfheim:NaturalBucket.Terrasteel.name=熔融泰拉钢桶
+
+item.alfheim:RedBowstring.name=赤红弓弦
+item.alfheim:ManaBowstring.name=魔力弓弦
+
+fluid.elementium.molten=熔融源质钢
+fluid.elvorium.molten=熔融魔灵钢
+fluid.manasteel.molten=熔融魔力钢
+fluid.mauftrium.molten=熔融始源魂灵合金
+fluid.terrasteel.molten=熔融泰拉钢
+
+material.Elementium=源质钢
+material.Elvorium=魔灵钢
+material.Manasteel=魔力钢
+material.Mauftrium=始源魂灵合金
+material.Terrasteel=泰拉钢
+material.Dreamwood=梦之木
+material.Livingwood=活木
+
+material.Elementium.ability=魔力修复 | 精灵召唤
+material.Elvorium.ability=魔力修复 | 魔力回复
+material.Manasteel.ability=魔力修复
+material.Mauftrium.ability=魔力修复 | 魔力回复
+material.Terrasteel.ability=魔力修复 | 魔力回复
+
+modifier.tool.manacore=魔力修复
+modifier.toolstation.ManaCore=魔力核心

@@ -1,0 +1,36 @@
+tile.AiryVirus0.name=艾利病毒
+tile.AiryVirus1.name=艾利病毒解药
+
+item.alfheim:SnowRelic.name=冰霜遗物
+item.botania:SnowSword.name=冰霜武士刀
+item.botania:SnowHelmet.name=冰霜头盔
+item.botania:SnowHelmetRevealing.name=冰霜揭示头盔
+item.botania:SnowChest.name=冰霜胸甲
+item.botania:SnowLeggings.name=冰霜护腿
+item.botania:SnowBoots.name=冰霜靴子
+
+entity.alfmod:DedMoroz.name=冬将军
+entity.alfmod:SnowSprite.name=血精灵
+entity.alfmod:SniceBall.name=小雪球
+
+death.attack.alfmod:frost=%s 被 %s 用冰寒刺骨的冷气杀死
+
+itemGroup.AlfheimModular=艾尔夫海姆-传闻记
+
+alfmod.armorset.snow.name=冬将军装甲
+alfmod.armorset.snow.desc=使用法杖和工具时增加20%的魔力消耗
+
+alfmodmisc.ded.awakening=&b你唤起了复仇的凛冬之魂
+alfmodmisc.ded.icebound=你感觉冬将军冰冷的目光将你冻在地上动弹不得
+
+alfmodmisc.WIP=&4[WIP]&7 未来可能会添加新东西,请至少保留一件
+
+################ LEXICON ################
+
+alfmod.category.AlfMod=艾尔夫海姆-传闻记
+
+alfmod.entry.WOTW=凛冬之怒
+alfmod.tagline.WOTW=寒冬将至(美好世界)
+alfmod.page.WOTW0=寒冬...一方面,这是孩子们 在雪地里玩游戏和堆雪人的 绝佳时机,但是另一方面,暴 风雪会摧毁不够坚固的建筑 和作物,并带来刺骨的霜冻
+alfmod.page.WOTW1=也许每个人,无论是人还是精 灵,一生中至少堆过一个雪人 尽管对精灵来说那是一个长 着翅膀的雪球. 但是仍有少数经验丰富的探 险家,他们仍然有着无畏的精 神,他们梦想着战胜残酷的凛 冬
+alfmod.page.WOTW2=但不幸的是,有关冬将军所有 的传闻和故事都会让所有人 对此望而却步. 尽管,,,没有人知道,凛冬的 怒火随时可能降临到不 对寒冬生物"雪精灵"保持敬 畏的人身上. <br><br><br>和真!你在干什么呀和真!!

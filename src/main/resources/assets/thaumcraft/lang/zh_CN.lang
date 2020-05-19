@@ -1,0 +1,70 @@
+##########################################################___ITEMS___###########################################################
+
+# item..name=
+item.ItemNugget.22.name=源质矿簇
+item.AlfheimCap.0.name=魔力钢杖端
+item.AlfheimCap.1.name=泰拉钢杖端
+item.AlfheimCap.2.name=源质钢杖端
+item.AlfheimCap.3.name=魔灵钢杖端
+item.AlfheimCap.4.name=始源魂灵杖端
+item.AlfheimRod.0.name=活木杖柄
+item.AlfheimRod.1.name=梦之木杖柄
+item.AlfheimRod.2.name=大地之魂杖芯
+
+item.Wand.alfheimManasteel.cap=魔力钢杖端
+item.Wand.alfheimTerrasteel.cap=泰拉钢杖端
+item.Wand.alfheimElementium.cap=源质钢杖端
+item.Wand.alfheimElvorium.cap=魔灵钢杖端
+item.Wand.alfheimMauftrium.cap=始源魂灵杖端
+item.Wand.alfheimLivingwood.rod=活木
+item.Wand.alfheimDreamwood.rod=梦之木
+item.Wand.alfheimSpiritual.rod=大地之魂
+
+##########################################################___OTHER___###########################################################
+
+itemGroup.NTC=自然神秘学
+
+######################################################___THAUMONOMICON___#######################################################
+
+#tc.research_name.=
+#tc.research_text.=
+#tc.research_page..=
+tc.research_name.CAP_alfheimManasteel=魔力钢杖端
+tc.research_text.CAP_alfheimManasteel=[ALF] 少量的自然之力
+tc.research_page.CAP_alfheimManasteel.1=众所周知,魔力钢是注入了魔力的铁元素,在传导魔法的时候要比黄金更好. 但是这并不是最好的.
+
+tc.research_name.CAP_alfheimTerrasteel=泰拉钢杖端
+tc.research_text.CAP_alfheimTerrasteel=[ALF] 尘世之力
+tc.research_page.CAP_alfheimTerrasteel.1=泰拉钢-神奇的合金,尘世中最为精粹的元素集合而成的金属. 用它制造的法杖拥有超越神秘锭的引导效率.
+
+tc.research_name.CAP_alfheimElementium=源质钢杖端
+tc.research_text.CAP_alfheimElementium=[ALF] 用可爱终结你的敌人
+tc.research_page.CAP_alfheimElementium.1=通过注入来自艾尔夫海姆的神奇魔力,源质钢拥有和魔力钢一样(甚至更好)的via传导效率. 而且它闪烁的奇异光辉为它增添了一丝神秘
+
+tc.research_name.CAP_alfheimElvorium=魔灵钢杖端
+tc.research_text.CAP_alfheimElvorium=[ALF] 艾尔夫海姆之力
+tc.research_page.CAP_alfheimElvorium.1=精灵们所使用的奇特合金,用它制造出的杖端拥有和泰拉钢一样的性能.
+
+tc.research_name.CAP_alfheimMauftrium=始源魂灵杖端
+tc.research_text.CAP_alfheimMauftrium=[ALF] 众神之力
+tc.research_page.CAP_alfheimMauftrium.1=也许你早就有了这个想法. 始源魂灵是众神所使用的合金,它是制造杖端的绝佳材料,甚至比神秘的虚空金属要更强. 高效,闪亮,强大....但注意别把家炸了.
+
+tc.research_name.ROD_alfheimLivingwood=活木杖柄
+tc.research_text.ROD_alfheimLivingwood=[ALF] 存储着魔力的生命
+tc.research_page.ROD_alfheimLivingwood.1=活木本身的特性让它成为了宏伟之木的上位替代品. 相对于宏伟之木来说,用它制造的杖端可以额外存储40%的vis.
+
+tc.research_name.ROD_alfheimDreamwood=梦之木杖柄
+tc.research_text.ROD_alfheimDreamwood=[ALF] 梦中的法杖
+tc.research_page.ROD_alfheimDreamwood.1=梦之木本身不稳定的特性让它不是很适合制造杖柄,所以你需要向其注入一些魔力以稳定其架构. 使用强化过的梦之木棍制造出的杖端可以存储每种vis各65点
+
+tc.research_name.ROD_alfheimSpiritual_staff=大地之魂杖芯
+tc.research_text.ROD_alfheimSpiritual_staff=[ALF] 彩虹再生装置
+tc.research_page.ROD_alfheimSpiritual_staff.1=盖亚守护者在被杀死后,其灵魂将会被凝聚成实体形式. 利用这些实体灵魂制作杖芯会产生意想不到的效果,盖亚的灵魂在主动的收集周围的元素,并将其存储在杖芯内. <BR>该杖芯可以存储每种vis各85点,事实上这个数量有点低于预期,但是目前也没有什么好办法将它的潜力完全发挥.
+
+tc.research_name.alfheimTransElementium=嬗变术:源质
+tc.research_text.alfheimTransElementium=将金属炼化为源质钢
+tc.research_page.alfheimTransElementium.1=你已经找到了一种提取&5Metallum&0并将其转变为源质钢的方法
+
+tc.research_name.alfheimPureElementium=晶簇化:源质
+tc.research_text.alfheimPureElementium=将源质矿结晶为原矿簇
+tc.research_page.alfheimPureElementium.1=原矿簇是最稀有且纯净的聚合物,你发现一种方法能提纯并聚合源质矿从而得到源质晶簇.<BR>冶炼这些矿簇的时候可以得到两倍的源质钢
