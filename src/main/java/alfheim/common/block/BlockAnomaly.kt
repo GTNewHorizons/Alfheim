@@ -4,6 +4,7 @@ import alexsocol.asjlib.extendables.MaterialPublic
 import alfheim.api.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileAnomaly
+import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockAnomaly
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
@@ -25,7 +26,7 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 		setBlockBounds(0.25f, 0.25f, 0.25f, 0.75f, 0.75f, 0.75f)
 		setBlockName("Anomaly")
 		setBlockUnbreakable()
-		setCreativeTab(null)
+		setCreativeTab(AlfheimTab)
 		setLightLevel(1f)
 		setLightOpacity(0)
 		setResistance(java.lang.Float.MAX_VALUE / 3f)
@@ -33,6 +34,7 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 	}
 	
 	override fun shouldRegisterInNameSet() = false
+	
 	override fun setBlockName(name: String): Block {
 		GameRegistry.registerBlock(this, ItemBlockAnomaly::class.java, name)
 		return super.setBlockName(name)

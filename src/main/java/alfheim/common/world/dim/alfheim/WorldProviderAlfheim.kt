@@ -47,6 +47,7 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		
 		val terrainGenerator = WE_TerrainGenerator()
 		terrainGenerator.worldStoneBlock = ModBlocks.livingrock
+		terrainGenerator.worldSeaGenMaxY += BiomeAlfheim.offset
 		cp.createChunkGen_List.add(terrainGenerator)
 		val cg = WE_CaveGen()
 		cg.replaceBlocksList.clear()

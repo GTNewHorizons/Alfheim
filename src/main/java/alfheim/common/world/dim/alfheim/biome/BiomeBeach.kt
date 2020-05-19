@@ -1,7 +1,6 @@
 package alfheim.common.world.dim.alfheim.biome
 
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.world.dim.alfheim.customgens.WorldGenReedAlfheim
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
@@ -21,7 +20,7 @@ object BiomeBeach: BiomeAlfheim() {
 		biomeNumberOfOctaves = 3
 		biomeScaleX = 250.0
 		biomeScaleY = 1.4
-		biomeSurfaceHeight = 65
+		biomeSurfaceHeight = 65 - offset
 		biomeInterpolateQuality = 4
 		
 		var standardBiomeLayers = WE_BiomeLayer()

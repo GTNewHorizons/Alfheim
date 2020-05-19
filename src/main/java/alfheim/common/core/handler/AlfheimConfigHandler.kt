@@ -94,6 +94,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var notifications			= true
 	var numericalMana			= true
 	var realLightning			= false
+	var rocketRide				= 2
 	var searchTabAlfheim		= true
 	var searchTabBotania		= true
 	var schemaArray				= IntArray(17) { -1 + it }
@@ -230,6 +231,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		notifications = loadProp(CATEGORY_GENERAL, "notifications", notifications, false, "Set this to false to disable custom notifications and version check")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
+		rocketRide = loadProp(CATEGORY_GENERAL, "rocketRide", rocketRide, false, "Rocket ride [-1 - not players, 0 - none, 1 - players, 2 - anyone]")
 		searchTabAlfheim = loadProp(CATEGORY_GENERAL, "searchTabAlfheim", searchTabAlfheim, false, "Set this to false to disable searchbar in Alfheim Tab")
 		searchTabBotania = loadProp(CATEGORY_GENERAL, "searchTabBotania", searchTabBotania, false, "Set this to false to disable searchbar in Botania Tab")
 		schemaArray = loadProp(CATEGORY_GENERAL, "schemaArray", schemaArray, false, "Which schemas are allowed to be generated", false)

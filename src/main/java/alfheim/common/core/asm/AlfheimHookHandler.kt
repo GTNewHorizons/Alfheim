@@ -33,9 +33,11 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.EntityDragon
+import net.minecraft.entity.item.EntityFireworkRocket
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.network.*
@@ -52,6 +54,7 @@ import org.lwjgl.opengl.GLContext
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
+import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -73,7 +76,7 @@ import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
-import vazkii.botania.common.item.lens.ItemLens
+import vazkii.botania.common.item.lens.*
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
@@ -211,8 +214,8 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `BlockSpreader$init`(spreader: BlockSpreader) {
-		val f = 1/16f
-		spreader.setBlockBounds(f, f, f, 1-f, 1-f, 1-f)
+		val f = 1 / 16f
+		spreader.setBlockBounds(f, f, f, 1 - f, 1 - f, 1 - f)
 	}
 	
 	@JvmStatic
@@ -319,6 +322,29 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, targetMethod = "onLivingUpdate")
 	fun onLivingUpdatePost(e: EntityDoppleganger) {
 		updatingEntity = false
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun collideBurst(lens: LensFirework, burst: IManaBurst, entity: EntityThrowable, pos: MovingObjectPosition, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?): Boolean {
+		if (burst.isFake || dead) return false
+		
+		val allow = when (AlfheimConfigHandler.rocketRide) {
+			-1 -> pos.entityHit !is EntityPlayer && pos.entityHit != null
+			1 -> pos.entityHit is EntityPlayer
+			2 -> pos.entityHit != null
+			else -> false
+		} && pos.entityHit?.isSneaking == false
+		
+		if (!entity.worldObj.isRemote && allow) {
+			val fireworkStack: ItemStack = lens.generateFirework(burst.color)
+			val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
+			entity.worldObj.spawnEntityInWorld(rocket)
+			pos.entityHit.mountEntity(rocket)
+			return true
+		}
+		
+		return false
 	}
 	
 	@JvmStatic

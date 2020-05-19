@@ -25,7 +25,7 @@ object BiomeField: BiomeAlfheim() {
 		biomeNumberOfOctaves = 3
 		biomeScaleX = 250.0
 		biomeScaleY = 2.0
-		biomeSurfaceHeight = 71
+		biomeSurfaceHeight = 71 + offset
 		biomeInterpolateQuality = 2
 		
 		var standardBiomeLayers = WE_BiomeLayer()

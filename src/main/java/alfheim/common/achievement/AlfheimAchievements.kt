@@ -30,12 +30,14 @@ object AlfheimAchievements {
 	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
 	
-	val divineMarksman: Achievement //							D
-	val newChance: Achievement // gain race nullifier			N
-	val rosaBomb: Achievement //								R
+	val divineMarksman: Achievement // show your marksman skill D
+	val newChance: Achievement // remove race with akashic		N
+	val rosaBomb: Achievement // bomb 'em all					R
 	
-	val flugelKill: Achievement // kill hardmode flugel			F
-	val outstander: Achievement // live 3 minutes in mask		O
+	val flugelHardKill: Achievement // 							F
+	val outstander: Achievement // 								O
+	
+	val firework: Achievement //								Y
 	
 	// ---------------> X
 	// |    W
@@ -44,17 +46,20 @@ object AlfheimAchievements {
 	// |     A S M
 	// |        F U E
 	// |           R
-	// |         O
+	// |  Y      O
 	// Y
 	
 	init {
 		alfheim = AlfheimAchievement("alfheim", 0, 0, ItemStack(AlfheimBlocks.alfheimPortal, 1, 1), null)
 		infuser = AlfheimAchievement("infuser", 1, -2, AlfheimBlocks.manaInfuser, alfheim)
 		
+		wingedHussar = AlfheimAchievement("wingedHussaurs", -2, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
+		
 		flugelSoul = AlfheimAchievement("flugelSoul", 2, 0, AlfheimItems.flugelSoul, null)
 		
+		flugelHardKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
 		mask = AlfheimAchievement("mask", 4, 0, AlfheimItems.mask, flugelSoul)
-		flugelKill = AlfheimAchievement("flugelKill", 3, 1, ModItems.flightTiara, flugelSoul)
+		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
@@ -63,12 +68,10 @@ object AlfheimAchievements {
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
 		newChance = AlfheimAchievement("newChance", 8, -2, Items.spawn_egg, akashic)
-		
 		divineMarksman = AlfheimAchievement("divineMarksman", 6, -2, ItemStack(Blocks.red_flower, 1, 2), moonlightBow).setSpecial()
 		rosaBomb = AlfheimAchievement("rosaBomb", 6, 2, Blocks.red_flower, subspace).setSpecial()
-		outstander = AlfheimAchievement("outstander", 4, 3, Items.diamond_chestplate, mask).setSpecial()
 		
-		wingedHussar = AlfheimAchievement("wingedHussaurs", -2, -2, AlfheimItems.elvoriumHelmet, infuser).setSpecial()
+		firework = AlfheimAchievement("firework", -3, 3, Items.fireworks, null).setSpecial()
 		
 		AchievementPage.registerAchievementPage(AchievementPage(ModInfo.MODID.capitalize(), *achievements.toTypedArray()))
 		

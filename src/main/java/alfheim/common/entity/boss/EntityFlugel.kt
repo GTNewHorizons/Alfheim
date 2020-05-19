@@ -201,7 +201,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		worldObj.spawnParticle("hugeexplosion", posX, posY, posZ, 1.0, 0.0, 0.0)
 		
 		if (isHardMode) {
-			for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelKill)
+			for (player in playersAround) player.triggerAchievement(AlfheimAchievements.flugelHardKill)
 			
 			if (worldObj.isRemote) return
 			

@@ -163,7 +163,7 @@ object AlfheimLexiconData {
 		soul = RLexiconEntry("soul", categoryAlfheim, AlfheimAchievements.flugelSoul)
 		subspear = RLexiconEntry("subspear", categoryAlfheim, AlfheimAchievements.subspace)
 		
-		soulHorn = RLexiconEntry("soulHorn", categoryAlfheim, AlfheimAchievements.flugelKill)
+		soulHorn = RLexiconEntry("soulHorn", categoryAlfheim, AlfheimAchievements.flugelHardKill)
 	}
 	
 	// In progress order
@@ -271,7 +271,7 @@ object AlfheimLexiconData {
 		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPowerIngot)
 		powerRecipes.add(AlfheimRecipes.recipeNiflheimPowerIngot)
 		essences.setLexiconPages(PageText("0"),
-								 PageTextLearnableAchievement("2", AlfheimAchievements.flugelKill),
+								 PageTextLearnableAchievement("2", AlfheimAchievements.flugelHardKill),
 								 PageText("4"), PageText("5"), PageCraftingRecipe("6", powerRecipes),
 								 PageText("7"), PageManaInfusorRecipe("8", AlfheimRecipes.recipeMauftrium)).icon = ItemStack(ModItems.manaResource, 1, 5)
 		essences.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot))

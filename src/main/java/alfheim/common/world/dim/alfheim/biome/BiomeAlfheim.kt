@@ -43,6 +43,8 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 	}
 	
 	companion object {
+		const val offset = -7
+		
 		val dreamTree = StructureDreamsTree(AlfheimBlocks.altWood1, AlfheimBlocks.altLeaves, 3, 7, 11, 15)
 		val sadOak = StructureDreamsTree(Blocks.log, Blocks.leaves, 0, 4, 8, 4)
 	}
