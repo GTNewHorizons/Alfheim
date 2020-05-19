@@ -2,274 +2,657 @@ botania.category.Alfheim=艾尔夫海姆
 
 botania.entry.alfheim=精灵乡-艾尔夫海姆
 botania.tagline.alfheim=新视界!
-botania.page.alfheim0=艾尔夫海姆...一个美丽的世界.. 魔法永存与此 这里居住者一群light-alves, 也被称之为精灵. 但..他们是谁? 这些长期居住于此的生命, 形似人类,他们似乎是不朽的, 恒古长存,生存至今. 他们被第一主神所创造, 生活在这个充满了奇妙魔力, 如此美丽无瑕的世界. 但 就算是代表了美丽 与奇妙的艾尔夫海姆 也有它可怕的一面
-botania.page.alfheim1=时光！ 即使是艾尔夫海姆本身, 时间也是扭曲的, 有些关于精灵乡的可怕传说: 到达了精灵乡的旅人, 几十年后重新回归故乡 尽管时间早已在他们身上 刻下了不可磨灭之痕! 但对于他们来说 这仅仅只是几天而已 愿上帝的光辉照耀着 死于时光之人的灵魂
+botania.page.alfheim0=艾尔夫海姆...一个美丽的世界, 魔法永存与此 这里居住者一群light-alves, 也被称之为精灵.  §l他们是谁?§r这些长期居住于 此的生命,形似人类,他们似乎 是不朽的,自恒古来生存至今. 他们被第一主神所创造, 生活在这个充满了奇妙魔力, 如此美丽无瑕的世界. 但,就算是代表了美丽与奇妙 的艾尔夫海姆,也有它可怕的 一面
+botania.page.alfheim1=时光... 时光的长河并非是永远风平 浪静的 尘世中流传着一些关于精灵 乡的可怕传说: 一些幸运的旅人们成功的找 到了连接两个世界的通道而 有幸进入了精灵乡,并在几十 年后后重返尘世, 但时光似乎在他们的身上定 格了,对于他们来说的几天, 对于尘世来说,却是数十年 愿上帝的光辉照耀着 死于时光之人的灵魂
+
+botania.entry.anomaly=异常
+botania.tagline.anomaly=危险之地
+botania.page.anomaly0=&o大崩裂, 一种所有世界都经历过的 §m一场浩劫 即便早已消失不见 但是它仍然在这个世界上 留下了很多的"异常"&0
+botania.page.anomalyManaVoid.t=&1魔力旋涡&0
+botania.page.anomalyManaVoid.d=这个旋涡状的异常会从附近 的生物身上抽取&4魔力&0. 这份情报来自于一个无畏的 勇士和他的伙伴 那位勇士携带了庞大的魔力 并且靠近了那个旋涡 在大约一分钟之后,旋涡中涌 出了狂暴的魔力风暴,一瞬间 杀死了那名勇者并消失不见
+botania.page.anomalySpeedUp.t=&1加速旋涡&0
+botania.page.anomalySpeedUp.d=这是一种非常罕见的异常,能 够让周围的所有生物和某些 特殊的存在的时间以两倍的 速度流逝:例如熔炉等 一些幸运的人发现了它们, 在旁边建造房屋,又或者种 植花朵,这是大自然给予子 民们的馈赠
+botania.page.anomalyWarp.t=&1扭曲&0
+botania.page.anomalyWarp.d=这或许是最容易被发现的异 常,如果你看到一堆杂乱的方 块凭空的出现在空中,请务必 不要靠近 &1扭曲&0是一种极为危险的异常, 在它作用范围内的一切物体 都会被随机交换位置,不管是 什么,若非必要,请勿独自靠近, 异常也许会将你和某些非活 物交换位置 不过如果万不得已,请一定要 找一位伙伴,这样你们被互换 位置的时候就不会那么危险 
+botania.page.anomalyAntigrav.t=&1反重力旋涡&0
+botania.page.anomalyAntigrav.d=相对安全的异常,通常被用于 跨过地形或者当做电梯使用, 如果旁边有足够大面积的水 流,则可以安全的利用这个异 常从而不用担心摔伤的风险, 不过,精灵们的羽翼拥有对抗 该异常的能力,即使在影响范 围内也可以做到自由的控制 高度 幸运的是,该异常不具备足够 将方块移动的力量
+botania.page.anomalyLightning.t=&1暗能量旋涡&0
+botania.page.anomalyLightning.du=这个异常会对周围所有靠近 的生物放出电流并造成伤害, 距离该异常越近,伤害越高, 似乎它对靠近的&1盖亚之魂&0会 有奇怪的反应,也许你可以用 它来做点什么?
+botania.page.anomalyLightning.d=这个异常会对周围所有靠近 的生物放出电流并造成伤害, 距离该异常越近,伤害越高, 可以用于制造御灵水晶
+botania.page.anomalyManaTornado.t=&1失控魔力旋涡&0
+botania.page.anomalyManaTornado.d=每隔几秒钟时间,会向某一个 方向射出带有随机效果的 &1魔力射线&0,有时,不稳定的魔 力射线甚至可能撞击地面从 而导致爆炸
+botania.page.anomalyGravity.t=&1重力漩涡&0
+botania.page.anomalyGravity.d=如果你被它的名字迷惑,认为 它是一个和反重力旋涡相反 效果的异常(增加你的重力 让你更难离开地面),那你也 许就永远离不开那里了 重力漩涡会将一切进入影响 范围的实体拉像自身,你唯一 的逃脱方法就是在被拉住的 一瞬间立刻反方向逃跑,这 样才有逃走的概率
 
 botania.entry.elves=精灵
 botania.tagline.elves=艾尔夫海姆的原住民
-botania.page.elves0=正如之前所说, 精灵是一种美丽的生物, 巧妙地使用着奇妙的魔法, 有一位主神定居于此. 一位在精灵乡出生的伟大巫师 Mastray 他是唯一能够从自己五指中, 知道精灵乡的异常的精灵 
-botania.page.elves1=他最伟大的发明 -艾尔夫海姆之门, 位于世界树Yggdrasil中部的, 一个被遗忘的世界-尘世. 这个世界并不像艾尔夫海姆. 从尘世日历中了解这个世界, 并且遇到了一些尘世之人. 那些只听说精灵王国之名, 但现在... 他们急于赶往那里...
-botania.page.elves2=Mastray警告他们 跨越世界之人必将承受... 时光长河的惩罚 精灵乡中7小时, 尘世已过30年. 他们肆意的嘲笑着 将致命的警告抛之脑后, 他们必将为自己的行为 付出代价!!!
-botania.page.elves3=事件发生之后, 精灵急于寻找王国中 最为稳定的地方. 对他们来说, 当尘世的1小时, 精灵乡的1秒过后. 精灵和人类的伟大贸易 开始了.......
-botania.page.elves4=他们发现这些人类中的法师, 同样使用着来自鲜花的魔力, 神奇的魔法和精灵无比相似. 在研究了来自尘世的矿石后 (铁, 钻石,或是其他类似宝石), 这些精灵明白了一个道理 与人类交易是有利可图的. 无论如何,尘世看上去 并没有和精灵乡一样的魔法, 所以他们缔结了一份契约 精灵-贸易-人类...
+botania.page.elves0=正如神话所书,艾尔夫海姆中 居住着一群被称为精灵的生 物,拥有美丽的面庞与神奇的 魔法,&4第一主神&0是将他们带入 这个世界的人. &6Mastray&0 一位出生在艾尔夫海姆的伟 大巫师,他是唯一能够从五指 之间发现世界异常的人 <br> 译者注:五指之间在俚语中有 一定"轻松""轻易"的含义, 即为轻松发现世界的异常
+botania.page.elves1=他最伟大的发明:一扇通往 &4尘世&0的门户,一个位于世界树 &4Yggdrasil&0 中的世界,也是一个和艾尔夫 海姆完全不一样的世界. Mastray在尘世中游历了七天, 在此期间他遇到了一些人类 中的探险者,那些因精灵王国 的传说而踏上旅途的旅者们.
+botania.page.elves2=Mastray警告了他们: 时间会对试图跨越世界边界 的人予以惩罚,几乎每一位旅 者都听到了他的警告,但有些 旅者们并未放弃他们的想法 <br>§l精灵乡的七小时,在尘世却 长达三十年之久
+botania.page.elves3=在这件事发生之后,精灵们找 到了他们王国之中最为稳定 的地方,开展了一场人与精灵 之间的伟大合作.
+botania.page.elves4=在人类中,有些术士们学会了 如何使用鲜花当中蕴含的自 然的力量,与精灵使用的魔力 类似. 在精灵们研究了&4尘世&0中的各 种矿物(铁,钻石等)之后, 精灵们认为与人类交易是有 利可图的,为此,他们与人类 签下了一份契约.
 
 botania.entry.pylons=新水晶
 botania.tagline.pylons=我将指挥游行
-botania.page.pylons0=你需要的水晶有些改动<br>在精灵乡中,所有尘世的水晶 都有它的对应水晶: 精灵水晶和魔法水晶相似, 泰拉就像尘世水晶;<br>盖亚水晶仍然是最顶尖的, 但是他的合成配方变了
+botania.page.pylons0=由于世界规则的不同 尘世的水晶也需要一些改动 才能在精灵乡中生效<br>在精灵乡中,所有尘世的水晶 都有它的对应水晶: 精灵水晶和魔法水晶相似, 泰拉就像尘世水晶;<br>盖亚水晶仍然是最顶尖的, 但是他的合成配方变了
 botania.page.pylons1=制造 &1精灵水晶&0
 botania.page.pylons2=制造 &1盖亚水晶&0
 
 botania.entry.portal=艾尔夫海姆之门
 botania.tagline.portal=我们需要更加的深入!
-botania.page.portal0=Mastray... 他是精灵乡的本地居民, 他创建了和尘世的贸易之门, 为一个伟大的联盟奠定了基础 然而,贸易之门本身 似乎给他带来了很大的麻烦. 为了建立尘世之门 需要来自尘世的资源... 多么讽刺... Freyr居住在精灵乡是件好事 因为他是Vans一族的 另一种神明....
-botania.page.portal1=他明白Mastray的想法, 并给他带来了泰拉钢-- 尘世的巨大合金. 他很快完成了门户并启动了它 显然, 如果你在尘世中构建它, 它也可以工作.
+botania.page.portal0=&6Mastray&0... 一个出生在艾尔夫海姆的精 灵法师,他创建了通往&4尘世&0的 门户,这为伟大的联盟奠定了 基础,但是,门户本身缺带来 了一些麻烦,为了构建这座门 户,需要一些来自于&4尘世&0的 资源... <br>&m具有讽刺意味的是&6Freyr&0住 在&4艾尔夫海姆&0是一件好事,因 为他是来自&4Vanir&0的另一种 神明
+botania.page.portal1=他很了解&6Mastray&0, 并带来了&1泰拉钢&0-一种来自 &4尘世&0中的绝佳合金. 之后,Mastray迅速做好了门户 并将其激活. 当然,这个门户也可以在&4尘世&0 中工作
 botania.page.portal2=门户的核心是Bifröst -阿斯加德和其他世界的通道 一座传奇般的彩虹桥
-botania.page.portal3=接下来你需要一座门户, 将人类和精灵完美连接的门户. 精灵永远不会说出这个秘密: 如何和人类连接起来 因为它的制造需要下界之星 - 炽热魔灵的神器. 它正确的建立了这座门户 并且它已经准备就绪!
-botania.page.portal4=制造 &1艾尔夫海姆之门核心&0
-botania.page.portal5=制造 &1精灵乡核心-尘世&0
+botania.page.portal3=制造 &1艾尔夫海姆之门核心&0
+botania.page.portal4=接下来,你需要建立一个链接, 这个链接可以在&4艾尔夫海姆&0 和&4尘世&0之间建立一个完美的 通道. 精灵们永远不会告诉人类制 造这种链接的秘诀,因为制造 这种链接需要&1下界之星&0-一种 来自&4炽热&0的产物.
+botania.page.portal5=制造 &1超维度核心-尘世&0
 botania.page.portal6=艾尔夫海姆之门
-botania.page.portal7=要激活这座门户, 你只需要在门户上使用核心, 工作方式和精灵传送门一样. 唯一不同的是, 在精灵乡它不需要魔力来源 因为他的能量来源于整个世界
-botania.page.portal8=不幸的是, 即使是Mastray, 也不可能创造一个稳定, 且功能齐全的门户 这个版本不能再传送死物, 只会和高等生物- 玩家产生精神连接 但是, 如果它不在世界的中心, 就能以稀少的代价 补偿精灵乡的时间异常
-botania.page.portal8s=不幸的是, 即使是Mastray, 也不可能创造一个稳定, 且功能齐全的门户 这个版本不能再传送死物, 只会和高等生物- 玩家产生精神连接 但是它成功的弥补了 精灵乡的时间异常
+botania.page.portal7=要激活这扇门户,你需要在门 户上放置一个&2核心&0, 和精灵传送门相似. 不过有一点需要注意, 在精灵乡中的艾尔夫海姆之 门并不需要魔力来源,但是在 尘世中,世界里的魔力并不是 那么充足,所以需要想办法为 它供给足够的魔力
+botania.page.portal8=不幸的是,即使是Mastray, 也不可能创造一个稳定且功 能齐全的门户这个版本不能 再传送死物,只会和高等 生物产生精神连接 但是,世界的中心蕴含的能量, 能够以稀少的代价填补精灵 乡的时间异常
+botania.page.portal8s=不幸的是,即使是Mastray, 也不可能创造一个稳定且功 能齐全的门户这个版本不能 再传送死物,只会和高等 生物产生精神连接 但是它成功的弥补了精灵乡 的时间异常
 
 botania.entry.worldgen=世界生成
 botania.tagline.worldgen=更多奇怪的小玩意儿
-botania.page.worldgen0=艾尔夫海姆本身就是一个美丽的 引人注目的美丽景观 前提是 我们能忘掉时间带来的危险 <br>将木头净化为活木 这种神奇的能力也适用于 将这些树木变成梦之木; 在和龙石结合发生反应后 它们的树叶似乎闪烁着光芒 即使在黑暗中也是如此
-botania.page.worldgen0u=艾尔夫海姆本身就是一个美丽的 引人注目的美丽景观 前提是 我们能忘掉时间带来的危险 <br>将木头净化为活木 这种神奇的能力也适用于 将这些树木变成梦之木; 它们的树叶会在黑暗中发光 不知为何 它们也会和龙石发生反应 
+botania.page.worldgen0=如果我们能忘记世界本身所 存在的危险,艾尔夫海姆确实 是一个美丽的世界 <br>可以通过和清理普通原木相 同的方式清理梦之木原木从 而获取梦之木
+botania.page.worldgen0u=如果我们能忘记世界本身所 存在的危险,艾尔夫海姆确实 是一个美丽的世界 <br>可以通过和清理普通原木相 同的方式清理梦之木原木从 而获取梦之木
 botania.page.worldgen1=净化 &1梦之木&0
 botania.page.worldgen2=制造 &1萤石粉&0
-botania.page.worldgen3=在这个世界上也有很多遗迹, 例如盖亚守护者留下的遗迹, 精灵们吸收着她的精华... <br>他们也有特殊的沙子, 通过融化这些沙子 可以制造出完美无暇的 通透如水晶的玻璃 这种仅存于精灵乡的神奇材料 吸引了无数尘世之人
+botania.page.worldgen3=在这个世界上,有一些远古时 期留下的遗迹,例如和盖亚守 护者战斗的地方... <br>这个世界的沙子和尘世的沙 子不太一样.. 也许它会让事情变得更有趣 一些
 botania.page.worldgen4=制造 &1活性鹅卵石&0
 botania.page.worldgen5=制造 &1活石镐&0
 botania.page.worldgen6=制造 &1熔炉&0
 
-botania.entry.greenRod=青山权杖
-botania.tagline.greenRod=翠绿! 春意盎然!
-botania.page.greenRod0=自然的恢复速度并不是很快 即使是自然生长出一块草地 也往往需要太长的时间. 但这一切都不会再发生了! &1青山权杖!&0 会将所有暴露在空气中的 &1泥土&0-&1菌丝&0和&1灰化土&0 都转化为&1草地&0 这个过程需要一些&4Mana&0. 如果这些方块在地下, 则需要更多Mana来完成转化.
-botania.page.greenRod1=&a原谅! &a原谅! &a原谅!&a原谅!
+botania.entry.shrines=权能神殿
+botania.tagline.shrines=赞美太阳!
+botania.page.shrines0=在艾尔夫海姆各地遍布着不 同的小型遗迹,这些遗迹看上 去像是特殊的神殿. 这些遗迹被称为权能神殿,每 一座不同的神殿都可以用于 向不同的神明祈祷-&1权能之石&0. 通过对神明的祈祷,人们可以 在一定时间内获取来自神明 的祝福,代价则是一些&4魔力&0, 通过减少一方面的能力从而 强化另一方面的能力,并且这 些效果无法叠加
+botania.page.shrines1=&4战神的祝福&0- 以丧失一定生命的代价换取 强大的力量<br>&4元素的眷顾&0- 可以强化你使用的魔法 代价是施法消耗更多的魔力<br>&4行走于狂风&0- 以丧失力量的代价 增加的你速度<br>&4承载于浩土&0- 以降低速度的代价 增强你的防御力
 
 botania.entry.ores=矿石
 botania.tagline.ores=制造更多筛子...
-botania.page.ores0=每个人都知道, 尘世的大地充满了矿石. 当矿工得到铁,黄金或钻石时 这一点就非常清晰的体现出来 但是,艾尔夫海姆呢? 他们用自己特有的矿石, 和尘世之人交易.<br>源质钢矿石是一种神奇的, 纯净的,美丽的金属矿石... 如此令人惊叹!
-botania.page.ores1=龙石矿石 -珍贵的粉红色精灵宝石. 很遗憾,它们不能被做成工具.<br>金矿石 -看来精灵也拥有神灵的金属.<br>精灵石英矿石 -它就像来自地狱的石英, 美丽无瑕的的翠绿色, 就像美丽的艾尔夫海姆....
+botania.page.ores0=所有人都知道尘世中充满了 各种矿物,但艾尔夫海姆呢? 他们拥有自己自己独特的矿 物,并与尘世的人进行交易. <br>源质矿石是一种神奇的,纯净 而又美丽的矿物,如此令人惊 叹
+botania.page.ores1=龙石矿石-一种珍贵的粉红色 精灵宝石,遗憾的是它们不能 用来制造工具.<br>金矿石-看起来精灵们也拥有 神灵的金属...<br>精灵石英矿石-就像来自下届 的石英一样,颜色则是跟艾尔 夫海姆一样美丽的翠绿色
 botania.page.ores2=魔灵矿石 - 只有少数人知道它的存在. 而精灵最伟大的发明就是基于 它那拥有强大力量的尘埃. 精灵非常清晰的意识到 人类对力量和利润的贪婪, 所以精灵们并不想和人类交易 这些强大的力量之源.
 
 botania.entry.mobs=实体
 botania.tagline.mobs=最后,生活!
-botania.page.mobs0=与尘世不同, 精灵乡并不是个被遗忘的世界. 毕竟, 这里仍然居住这一些精灵. 他们没有失去理智是件好事, 否则我们将会见到 尘世的前原住民-僵尸. 精灵是伟大的法师, 他们受到每个人的尊敬. 直到他们感染了那可怕的病毒 不知为何,他们不倾向于和你说话
-botania.page.mobs1=奇特的紫色小生物飞舞在空中 它们叫做小精灵,除此之外 -仙女,善良,有价值的 因为它们身上的的尘埃, 经常被用于各种合成. 有些时候 也许精灵需要一些魔力珍珠, 是的 尘世之人就拥有这些珍珠
+botania.page.mobs0=与尘世不同,艾尔夫海姆并不 是一个被遗忘的世界. 毕竟,精灵这种在此居住的魅 力生物就可以证明. 他们没有失去理智是一件好 事,不然他们将会变得和尘世 曾经的居民一样:僵尸. 精灵是最伟大的巫师,并且受 到所有人的尊敬.直到他们感 染了这种可怕的病毒,他们才 变得........ 不管怎么样,现在他们并不是 很想和外人交流
+botania.page.mobs1=在这个世界上还有些飞舞这 的紫色小生物,他们被称为小 精灵,善良-正确,有价值 -完全正确,这可能非常残忍 但是他们身上的粉末可以用 来制造各种珍贵的东西,精 灵们也用它来和尘世的人交 换魔力珍珠
 
 botania.entry.pixie=精灵吸引吊坠
-botania.tagline.pixie=论如何诱拐精灵
-botania.page.pixie0=使用魔力驱动这个吊坠, 由尘世与精灵乡的材料制成, 每一个小精灵都想看到它.
+botania.tagline.pixie=快到这里来!
+botania.page.pixie0=将艾尔夫海姆原生的资源和 大地符文结合在一起,使用魔 力驱动这个美丽的护身符,每 一个小精灵都抵挡不住它的 吸引力
 botania.page.pixie1=制造 &1精灵吸引吊坠&0
 
 botania.entry.anyavil=源质钢砧
 botania.tagline.anyavil=粉色的本质
 botania.page.anyavil0=使用植物魔法,艾尔夫海姆 或者原版的粉色物品修复工具. 将工具放置在源质钢砧上, 将粉红色的物品丢在附近 并且向其发射粉色的魔力脉冲
-botania.page.anyavil1=&d哇! 卡哇伊!&0
+botania.page.anyavil1=&dNya! 卡哇伊!&0
+
+botania.entry.itemHold=魔力加速器
+botania.tagline.itemHold=不只是一个架子
+botania.page.itemHold0=厌倦了等待你的&1泰拉粉碎者&0 漫长的充能过程?你担心有人 带走你的&1魔力石板&0又或者只 是太久没有取走而因为某种 神奇的力量而消失? 那么&1魔力加速器&0将会是你最 好的选择,一个简单而优雅的 装置可以让你安全的将物品 放在魔力池上,不仅可以保护 它们不被取走或者消失,还可 以将魔力传输速度增加两倍 左右,并且你也可以跟你个人 喜好改变颜色
+botania.page.itemHold1=制造 &1魔力加速器&0
+
+botania.entry.greenRod=青山权杖
+botania.tagline.greenRod=翠绿! 春意盎然!
+botania.page.greenRod0=有时候等待草地的自然生长 太过漫长,但这早已经是过去 的事情了! &1青山权杖&0将会把所有的&1泥土&0, &1菌丝&0,&1灰化土&0替换为&1草方块&0. 这个过程只需要一些&4魔力&0. 如果这些方块被其他方块盖 住了,则会消耗更多的魔力.
+botania.page.greenRod1=&a原谅! &a原谅! &a原谅!&a原谅!
+
+botania.entry.lootInt=杂物粉碎器
+botania.tagline.lootInt=让你背包里的杂物统统粉碎吧!
+botania.page.lootInt0=通过使用一些&1魔灵粉末&0来对 &1黑洞护符&0进行升级,可以创建 一种便携式的物质粉碎机,可 以将方块和物品粉碎成一定 数量的&4魔力&0. 将不需要的物品和&1粉碎器&0一 起放进合成栏内,以设置粉碎 器的目标 (仅可分辨&4ID&0和&4Metadata&0). 将其放在空白的合成栏内以 清除设定的目标
+botania.page.lootInt1=制造 &1虚空粉碎器&0
+
+botania.entry.anomaRing=时空锚定之戒
+botania.tagline.anomaRing=保护你免受异常的影响
+botania.page.anomaRing0=在两个世界顶尖的魔导师们 的不懈努力下,一种可以保护 使用者不受异常影响的法术 终于出现了,魔导师们将这些 法术刻画在戒指上,以一些 &4魔力&0的代价保护佩戴者的安 全,你也可以手持它并右键以 切换活动模式.可以通过下蹲 来使戒指停止工作
+botania.page.anomaRing1=&o我恨门户...&0
+
+botania.entry.triquetrum=世界塑造者的三角仪
+botania.tagline.triquetrum=切割空间并移动
+botania.page.triquetrum0=&1世界塑造者的三角仪&0-尘世的 魔导师们为不成功的建筑师 而准备的新式工具,它可以通 过使用一定数量的&4魔力&0来将 一定范围内的物体从一个地 方转移到另一个位置. <br>要选择想要移动的区域,你需 要选择两个方块,位于立方体 对角线的两端
+botania.page.triquetrum1=接下来,框选出你需要移动的 位置,这个工具会把区域的选 取状态和旋转状态投射到你 的瞳孔里.你可以通过对着空 中右键以切换旋转方式.蹲下 可以启动安全模式,如果你所 选的目标移动位置是在空中 则不会移动 <br>&l&4警告&r&0! 目标移动位置不得位于已选 取区域!!!
+botania.page.triquetrum2=制造 &1三角仪&0
 
 botania.entry.infuser=注魔
 botania.tagline.infuser=神秘时代躺枪
-botania.page.infuser0=魔力灌注是植物魔法的基础. 想要填满一件物品的魔力? 所有人都会立刻说:"Easy" 单纯的丢进魔力池即可 然而,精灵在这上面做得更好. 他们想要创造一种特殊的装置 可以将物品的属性和魔力值 注入另一件物品. 就像尘世的注魔矩阵..
-botania.page.infuser1=尽管如此, 这需要最有价值的尘埃 -魔灵粉末. 它不仅仅代表着力量 -它即是力量, 但一吹即散的粉尘并不稳定 一种结晶的形式才是我们需要的. 为什么不试试精灵尘呢? 这是魔术注入器核心的基础
+botania.page.infuser0=基本的魔力传输是一切植物 魔法的基础.仅仅将一个物品 扔进魔力池中填满它难吗? 所有魔法师都会表示这根本 没有难度.但是显然精灵们在 这上面有着更深的造诣.他们 的目标是创造一种特殊的设 备,可以将各种属性的魔力和 各种其他物品的属性注入一 个物体当中,就像是尘世中的 神秘使们一样
+botania.page.infuser1=然而,这需要一种最有价值的 粉尘-魔灵粉末.它并不象征 着力量-它就是力量.但是我 们也需要一种结晶形式的物 质来制作一个足够稳定的核 心,那么精灵尘呢?没有什么 东西比它更合适了.
 botania.page.infuser2=制造 &1魔元核心&0
 botania.page.infuser3=制造 &1魔力注入器核心&0
-botania.page.infuser4=事实证明这很完美 但这还不够 将这个珍贵的物品放在地上 并以此为基础 建立一个魔力注入矩阵.......<br>魔力注入器已就绪 它将是植物魔法研究的延续 并且被用于各种高级的合成
+botania.page.infuser4=事实证明这些原料非常完美 的完成了它们的工作,但这还 不够.现在,我们需要一个能 够发挥这个设备力量的结构! 尝试使用不同的艾尔夫海姆 材料以完成结构. <br>这将成为植物学研究的未来, 并且在各种高级的魔法中有 所应用 译者注:结构并不是由黑白羊 毛构成,而是需要你解锁了正 确的结构之后才会显示出来
 botania.page.infuser5=魔力注入器
-botania.page.infuser5u=§o近似结构§r
+botania.page.infuser5u=§o模拟结构§r
 
 botania.entry.elvorium=魔灵钢
 botania.tagline.elvorium=比泰拉钢更好
-botania.page.elvorium0=Mastray从Freyr那里, 借来了泰拉钢的配方 所以精灵们母庸置疑的学会了 然而, 早在那之前, 精灵就知道如何制作一种合金 由精灵乡的资源制造而成. 从属性上来看, 它类似于泰拉钢, 但是更加强大... 源质钢,龙石,精灵尘 和一些魔力. 精灵们的珍贵合金!-魔灵钢!
+botania.page.elvorium0=Mastray从Freyr从那里借来 了泰拉钢的配方,并且传授给了 精灵们,但是,在更早前,精灵 们就已经知道如何利用艾尔 夫海姆的资源制造一种合金, 从性质上来讲,它类似于泰拉 钢,但是远比泰拉钢坚固... 你需要的仅仅只是源质钢,一 块龙石,一些精灵尘和魔力
 botania.page.elvorium1=制造 &1魔灵钢&0
 
-botania.entry.trade=反向交换
+botania.entry.trade=逆向交易
 botania.tagline.trade=所以,这意味着什么?
-botania.page.trade0=有些时候, 精灵乡的异常令人印象深刻, 但正因如此,才有可能 在这个世界创立一个门户. 热衷于和尘世交易的精灵们, 以特殊的方式建立了一座门户 这些门户因为世界的差异, 所以不能在尘世运行. 但是Mastray并没有失去它.
-botania.page.trade1=尘世之门和精灵门相似, 但是仍然有些不同:<br>门户的建造材料不是活木, 而是活石, 尘世水晶本身含有魔灵粉末, 所以它可以在不需要魔力, 永远维持着门户的稳定运行. 愿伟大的Mastray, 世界的连接者永远荣耀
-botania.page.trade2=Creating &1尘世水晶&0
-botania.page.trade3=Creating &1尘世之门核心&0
+botania.page.trade0=艾尔夫海姆的异常令人印象 深刻,但正是这些异常对空间 的扰动,才让人们有可能制造 出通往这个世界的门户.在尘 世中所使用的门户需要做出 一些修改才可以在艾尔夫海 姆建造,因为这些异常使门户 无法像在尘世(主世界)一样 按照计划运行. 但作为充满智慧的精灵,Mastray 仍然找到了让门户在艾尔夫 海姆运行的办法
+botania.page.trade1=尘世之门的结构设计和精灵 传送门类似,只要做出一些微 小的改动就可以让它正常运 行: 首先,这个门的结构材料不是 活木,而是活石.水晶则是变 成使用魔灵钢和魔灵粉末制 作而成的尘世水晶 <br>荣耀将永远属于伟大的精灵 贤者-世界桥梁的缔造者 Mastray!
+botania.page.trade2=制造 &1尘世水晶&0
+botania.page.trade3=制造 &1尘世之门核心&0
 botania.page.trade4=尘世之门
 
 botania.entry.essences=元素
 botania.tagline.essences=它看起来像珊瑚
-botania.page.essences0=地狱仅仅只是"炽热"的一部分 也许你已经意识到了这一点 在你前往地狱的时候. 古老的精灵传说告诉了你 地狱之门为何存在: 一扇通往"炽热"的门户 同时这也意味着 "炽热"已经接近尘世.<br>但是事情似乎没有这么简单 曾读过关于宇宙的传说的你 清晰的记得"极寒" 一个由冰霜和大雪组成的世界 与"炽热"共同占据"始源"之位
-botania.page.essences2=一切都不是那么微不足道 显然 世界精华的唯一来源是不朽 在"Great War"期间 它收集了很多世界精华
-botania.page.essences2u=&o但是如何获取他们的力量?&r
-botania.page.essences4=泰拉钢和魔灵钢, 两种完美的合金, 象征着尘世和精灵乡的力量. 但他们还远远没有到达极限! 我们都知道,将盖亚之魂 和泰拉钢结合将会发生什么 -盖亚魂锭. 看起来似乎是种无用之物, 但是精灵考虑的和人类不同.
-botania.page.essences5=阿斯加德有一个传说: 神灵所使用的武器, 由一种特殊的金属制成, 它结合了四个世界的力量. 精灵们想到了这个传说, 并且试图制造出这样的武器 他们将"始源"注入盖亚之魂 将它们与魔灵钢结合, 就像盖亚魂锭一样, 结合了"炽热"与"极寒", 强大,完美无缺的合金
+botania.page.essences0=也许你已经意识到了 下界(地狱)仅仅只是"炽热" 的一部分.在精灵尘封的远古 知识中,解释了为什么下界之 门能够将生物送入下界: "当炽热"靠近尘世的时候. <br>但是,在有关宇宙的远古知识 中,不仅仅只有"炽热",还有一 个与之对立的世界:"极寒", 一个属于暴雪和寒冰的世界, 和"炽热"并称为"始源"
+botania.page.essences2=这并不繁琐,但同时这个过程 也不简单.很显然,不朽是世 界精华的唯一来源,它在那场 "Great War"中窃取了很多的世 界精华 <br>愿众神们指引你
+botania.page.essences2u=&o但是如何获取他们的力量呢?&r
+botania.page.essences4=泰拉钢和魔灵钢是两种坚硬 无比的合金,象征着尘世和艾 尔夫海姆的力量,但这远远不 是一切的重点.所有人都知道 将盖亚之魂和泰拉钢结合起 来制造出的似乎是一个无用 之物.但是精灵们在这上面走 的更远
+botania.page.essences5=在阿斯加德的古传说中有所 提到:诸神的武器是用一种特 殊的金属制造而成,将四个世 界的力量融为一体. 精灵贤者们决定向神灵的方 向迈出那一步.他们将始源世 界的精华融入了魔灵钢,就像 盖亚魂锭一样:炽热魔灵钢和 极寒魔灵钢.
 botania.page.essences6=制造 &1拥有世界之力的合金&1
-botania.page.essences7=但是他们并没有止步于此! 将这些合金的精华,属性, 与魔力一同注入盖亚魂锭内. 拥有无垠之力的神之金属 -始源魂灵锭!!!!!
+botania.page.essences7=但精灵们并不满足于此,利用 他们独特的注魔技术,将拥有 世界之力的合金和盖亚魂锭 结合在一起. 最终!他们得到了传说中神灵 所使用的的合金,集合了四个 世界中最纯粹,最强大的力量 的合金:"始源魂灵钢"!
 botania.page.essences8=制造 &6始源魂灵锭&0
 
 botania.entry.runes=符文
 botania.tagline.runes=只有一点新物品(真的)
-botania.page.runes0=看起来这些主要元素的符文, 季节,罪恶,魔法本身就足够了... 错!这还远远不够 当研究元素的本质时, 你或许可以将其注入符文? 事实证明确实如此, 并且获得拥有更强力量的符文
+botania.page.runes0=看上去那些常见的符文已经 足够了?季节,罪恶,魔力? 不存在的. 当你在试图研究那些世界精 华的时候,你发现你可以将它 们注入符文中加以改进.
 botania.page.runes1=制造 &1新符文&0
-botania.page.runes2=新符文包裹着他们的力量 "炽热"与"极寒" 两大始源之力流淌其中 这使得制造更加强大的, 带有"炽热"与"极寒"的, 令人惊叹的武器变为可能 也许始源世界中沉睡的, 浩瀚无垠的力量, 终将被唤醒!
-botania.page.runes3=但是除了这些世界的符文, 还有五个元素的符文, 也被称为原始符文: 风,火,水,土和魔法 这些符文包含了原始之力, 等等 在接触到始源的力量之前 你或许得花点时间思考 "极寒"与"炽热" 居然不是最为古老的力量? 它们曾经并不存在? 谁知道呢...
+botania.page.runes2="极寒"和"炽热"这两种始源 之力让制造拥有强大力量的 武器成为可能 <br>&m不知沉睡的巨人们何时苏醒
+botania.page.runes3=但除了这些拥有始源世界之 的符文之外,我们还需要一个 能够容纳五大元素的符文: 水,地,风,火,魔力 也被称之为"始源符文"这个 符文里拥有的力量甚至远比 两大"始源"世界古老. 也许,在古老的过去,极寒和 炽热并不存在?谁知道呢. <br>&m也许那是一段古老到无法追 溯的历史吧
 botania.page.runes4=制造 &5始源符文&0
 
 botania.entry.elvenSet=魔灵铠甲
 botania.tagline.elvenSet=更强的铠甲!
-botania.page.elvenSet0=尘世的法师们, 使用着自然界赋予的力量, 来完成他们的目标, 他们创造了泰拉钢和符文 为了什么? 为了更完美的铠甲, 泰拉钢铠甲. 精灵们在魔灵钢的帮助下, 将其加以改进, 获得了强大的,稀少的, 只有精灵皇族才能使用的铠甲
+botania.page.elvenSet0=居住于尘世的法师们利用大 自然赋予的力量创造了泰拉 钢和符文,并用它们制作出了 源自自然的完美盔甲-泰拉钢 盔甲. 精灵们同样拥有着一套自己 的完美盔甲,利用魔灵钢制作 而成的盔甲,只有最精英的皇 家守卫才有权利佩戴.
 botania.page.elvenSet1=制造 &1魔灵头盔&0
 botania.page.elvenSet2=制造 &1魔灵盔甲&0
 botania.page.elvenSet3=制造 &1魔灵护腿&0
 botania.page.elvenSet4=制造 &1魔灵战靴&0
 
 botania.entry.elemSet=元素铠甲
-botania.tagline.elemSet=只有四种元素的掌控者...
-botania.page.elemSet0=精灵从未向人类出售魔灵粉末 不仅是因为它含有的强大力量 而是因为,魔灵粉末, 能够强化,改进源质钢铠甲- 一种元素装甲, 他给予了穿戴者更多的能力, 而不仅仅是简单的元素防御.
+botania.tagline.elemSet=只有阿凡达能掌控四种元素...
+botania.page.elemSet0=精灵们永远不会将魔灵粉末 交给别人,不仅仅是因为它含 有即为强大的力量,还因为它 可以对源质钢护甲进行强化. 通过魔灵粉末内部的强大魔 力和符文的帮助,精灵们成功 将元素的力量注入了盔甲之 中,不仅仅是更强的防御力, 元素还会赋予穿戴者不同的 特殊增益
 botania.page.elemSet1=&1潮汐&0
 botania.page.elemSet2=&2浩土&0
 botania.page.elemSet3=&4炽焰&0
 botania.page.elemSet4=&e风暴&0
 
 botania.entry.advMana=注魔宝石
-botania.tagline.advMana=存储魔力的新定义
-botania.page.advMana0=正如我们所知道的, 就算是最简单的魔力存储核心 也必须包含魔力钻石, 当然魔力珍珠也是可行的. 但是这些资源不存在于精灵乡 那么,精灵如何存储魔力呢, 他们拥有自己的独特的能力, 能够将魔力存储在便携物品里
-botania.page.advMana1=事实证明, 龙石能够吸收魔力, 但是随着时间的流逝, 内部的魔力也会逐渐消失, 伟大的精灵法师们, 利用宝贵的魔灵粉末强化了它 并且制造了一块魔力石 这块小小的石头内, 拥有比魔力石碑多4倍的容量 随着对始源元素的发掘, 精灵们将其二次强化, 使其能够存储更多的魔力.
+botania.tagline.advMana=魔力容器的新定义
+botania.page.advMana0=众所周知,即使是最简单的魔 力石板,也需要一个魔力钻石 或者魔力珍珠来保存魔力. 但是这些物品在艾尔夫海姆 却无法获取,那么精灵们是如 何将魔力存储起来的呢？
+botania.page.advMana1=事实证明,即使龙石具备吸收 并保存魔力的功能,可它不具 备长时间存储魔力的能力,魔 力会随着时间流逝逐渐逸散. 但是魔灵粉末可以很好地解 决这个问题,精灵们利用魔灵 粉末强化了龙石,并最终造出 了拥有普通魔力石板4倍容 量的魔力石,并且随着对世界 之力的研究,精灵们使魔力石 可以将魔力更加紧密的聚合 在一起,也意味着更大的容量.
 botania.page.advMana2=制造 &1注魔宝石&0
 botania.page.advMana3=&c强化 &1注魔宝石&0
-botania.page.advMana4=而如果将它们和魔灵钢, 或者始源魂灵锭这些 完美的魔力导体结合起来呢? 你的手中多出了一枚戒指, 方便的魔力来源, 极致纯粹的美丽.
+botania.page.advMana4=而如果将魔灵钢或始源魂灵 锭打造成完美的魔力导体,并 将注魔宝石安放在上面会怎 么样呢?精灵中最伟大的工匠 们制造出了指环状的魔力容 器,不仅美观又方便,而且由于 魔灵钢和始源魂灵合金对于 魔力的亲和,这些戒指的存储 效率又有了进一步的提升.
 botania.page.advMana5=制造 &1魔灵魔力之戒&0
 botania.page.advMana6=制造 &1始源魂灵魔力之戒&0
 
 botania.entry.auraAlf=光环之戒
 botania.tagline.auraAlf=一切都可以变得更好
-# this is a joke don't remove this please :3
-botania.page.auraAlf0=&o//Gedeon, write something smart here cause I have no ideas//&r
+botania.page.auraAlf0=对于尘世当中的魔法师们来 说,经过了泰拉合金的强化后 的&1光环之戒&0已经完全足够. 然而,精通使用始源世界之力 的魔法天才-精灵们可不这么 认为,他们完全能够做的更好. <br>&m此外,这些戒指的颜值也非常 不错
 botania.page.auraAlf1=升级至 &2精灵级光环之戒&0 级
 botania.page.auraAlf2=升级至 &6神灵级光环之戒&0 级
 
 botania.entry.ruling=始源世界之力
 botania.tagline.ruling=吾乃全知全能的神灵(←中二晚期)
-botania.page.ruling0="炽热"与"极寒"... 两座神奇的始源世界. 我们可以从中得到什么? 力量! 更多的力量! 一切都源于那些元素和符文, 但我们现在可以得到什么? 权杖! 护身符! 能力!
-botania.page.ruling1=使用始源魂灵之力, 精灵能够集中符文的力量. 两种拥有强大力量的始源权杖 能够创造出坚不可摧的防御 -来自"炽热"的赤红火焰 -来自"极寒"的剧毒冰块 不幸的是,精灵乡的材料, 无法在短暂的时间内 承受并使用大量始源之力, 但幸运的是, 始源魂灵锭含有的强大力量 能够快速的修复自身.
+botania.page.ruling0=极寒和炽热的力量是母庸质 疑的.我们可以从它们那里得 到什么呢?力量,更强大的力 量!这一切都基于那些精粹和 符文. 但总有些奇思妙想的天才们 不满足于此,他们希望得到更 多更好的力量.所以我们现在 能得到什么?法杖!护身符! 力量!
+botania.page.ruling1=精灵们通过使用始源魂灵合 金和烈焰棒,可以将符文中蕴 含的始源之力集中,并且加以 利用.这两个使用对立始源之 力的法杖都具有制造圆形的 保护圈的能力. 极寒的力量会制造出带有剧 毒的凛冰 炽热的力量会制造出永不熄 灭的火焰. 但由于精灵们制造出的载体 无法完全承受始源的力量, 每次使用之后法杖都需要一 段时间来自我修复,不过好在 始源之力也会同时帮助修复 法杖,所以修复速度极快.
 botania.page.ruling2=Feuer Frei!-自由之焰!
 botania.page.ruling3=水晶之城!
-botania.page.ruling4=然而, 始源之力的强大和高傲, 使它们无法被任何人所掌控, 即使能够使用它们, 也无法和它们建立从属关系 所有的生物都会被其所伤害. 为了保证自身的安全, 不被自己释放的魔法伤害, 精灵们制造了一些护身符, 可以将不受控制的始源之力 送回始源世界中
+botania.page.ruling4=但是,即使能够召唤始源的力 量,也不代表单靠一根法杖就 能驾驭住高傲的始源之力-所 有生物都会受到它的无差别 攻击.为了保证使用者自己不 会受到来自始源之力的伤害, 精灵们创造了一种护身符, 可以将不受控制的能量传送 回始源世界.
 botania.page.ruling5=制造 &1始源护身符&0
+
+botania.entry.crescent=新月护身符
+botania.tagline.crescent=独特的物品
+botania.page.crescent0=&1新月护身符&0可以利用&4魔力&0来 抵消穿戴者受到的所有&l非魔 &l法&r伤害的10%,同时,护符可以 为玩家抵挡10点魔法伤害,但 是在抵挡了魔法伤害之后,护 身符需要短暂的充能时间来 重新发挥作用.
+botania.page.crescent1=制造 &1护身符&0
 
 botania.entry.reality=始源之剑-现实
 botania.tagline.reality=存在 即真实!!!
-botania.page.reality0=元素精灵铠甲 母庸质疑,是一个好主意... 但是对于真正的战士来说, 他们还需要一把趁手的武器 看上去剑是一个不错的注意. 利用神之金属-始源魂灵! 这个问题可以非常轻松的解决 利用神之金属制造而成的剑 不仅有绝世的锋锐, 更是可以从原始元素中 获取强大的力量
-botania.page.reality1=但是我们必须考虑到, 当它调用原始元素的力量时, 源源不断的魔力被消耗掉了 虽说这些元素之力物超所值, 但是无缘无故的浪费 似乎并不是一个好主意 所以也许,你应该 把更多的注意力放在它上面. 但这并不是很重要, 毕竟你为了制造这把剑, 肯定消耗了更多的魔力 来制作始源魂灵, 所以你并不是很缺魔力, 对吧?
+botania.page.reality0=精灵族的铠甲固然已经非常 强大,但是对于拥有这种盔甲 的战士来说,一把太弱的武器 配不上他们的盔甲.幸运的 是,诸神所使用的合金也可以 用于制作武器,比方说一把剑. 剑本身可以作为一个战斗武 器,但是精灵族顶尖的魔法赋 予了这把剑使用始源之力的 能力,而不仅仅只是一把普通 的兵器.
+botania.page.reality1=但是,使用强大的力量是有代 价的,当这把剑开始使用4种 始源之力当中的任意一种的 时候,即使不在使用也会消耗 魔力以控制住始源之力,因此 请考虑到身上魔力储备是否 充足. 不过说实话,能够耗费如此高 昂的代价来制作用始源魂灵 合金锻造而成的武器,这点魔 力对于使用者来说应该只是 九牛一毛,或许吧...
 botania.page.reality2=制造 &6始源之剑-现实&0
 
+botania.entry.manaImba=超空间魔力传输器
+botania.tagline.manaImba=超级魔力手镜
+botania.page.manaImba0=如你所见,&4魔力&0几乎是无所不 能的,即使扭曲空间也不是不 可能,只要魔法师们愿意. 可以在多个维度之间穿梭的 门户就是一个很好的例子. 但是在实际操作中,人们往往 需要传输的不是物品和生物, 而是数量庞大的魔力.如果某 人需要将魔力从一个容器中 传输到很远的另一个容器中 呢?魔力发射器和火花都很难 胜任这个工作,手动使用石板 传输也太过麻烦.
+botania.page.manaImba1=在维度间传输魔力,人类的魔 法师们都将这种想法视为无 稽之谈. 但精灵们可不这么认为,因为 艾尔夫海姆的地下埋藏着无 数的魔灵粉末,这些深蓝色宝 藏是解决魔力相关的问题的 万能钥匙:利用魔灵粉末制作 的装置无与伦比的扭曲空间 能力可以让它将魔力传输到 世界树中任何的分支世界,甚 至到更远的地方.
+botania.page.manaImba2=要选择任何魔力池作为传输 目标,只需要在潜行的时候右 键单击魔力池就可以将其绑 定. 接下来,在任意一个别的魔力 池上放上一个&1魔力加速器&0,接 着将传输器放在加速器上,然 后使用法杖更改魔力池的传 输模式,注意,必须要相反的 传输模式才能够传输魔力
+botania.page.manaImba3=制造 &1传输器&0
+
+botania.entry.hyperBuk=超空间流体清理器
+botania.tagline.hyperBuk=魔法洗衣机?
+botania.page.hyperBuk0=也许一个无底桶对大部分人 来说已经足够了,但是对建筑 师们和某些魔法师们来说,这 还远远不够,他们需要一次清 理更多的流体. 精灵法师们为他们准备了一 个无底桶的强化版,可以一次 清理27份流体,并且这个清理 器可以进一步使用始源魂灵 合金强化.
+botania.page.hyperBuk1=超级-超级-超级无底桶
+
+botania.entry.uberSpreader=始源魔力发射器
+botania.tagline.uberSpreader=更难,更好,更快,更强
+botania.page.uberSpreader0=在&6始源魂灵&0的所有优点中, 很难不注意到它极强的强度 和出色的法力传导性. 在帮助导师进行研究的时候, Mastray的一位学生成功发掘 并利用了这个特性.他认为, 既然使用盖亚之魂能够显著 增加魔力发射器的效率,那么 使用始源魂灵进行二次强化, 会发生什么呢?
+botania.page.uberSpreader1=经过一系列实验并与Dwarven 进行了几次磋商,得出的结论 是:&1始源魔力发射器&0比前身的 传输效率要高几倍. 但是Mastray并不欣赏他学生 的作品,他认为这个魔力发射 器完全就是在浪费时间和材 料,从那时起,即使仍有很多 人尝试制造这种装置,但并未 得到公众的认可和广泛使用.
+botania.page.uberSpreader2=制造 &1始源魔力发射器&0
+botania.page.uberSpreader2s=&o下地狱去吧,木大的平衡性&0
+botania.page.uberSpreader2t=想要制造一个&1始源魔力发射 &1器&0,你需要将&1盖亚魔力发射器&0 放入&4浇铸盆&0,然后倒入8份&6熔 &6融始源魂灵锭&0
+
 botania.entry.flugel=不朽
-botania.tagline.flugel=神灵的武器
-botania.page.flugel0=关于不朽的故事不多 任性,残忍,几乎不朽 被称为死亡天使 它们撕裂空间的能力 被无数人羡慕着 但不是所有人 都能打败盖亚守护者 并拿到不朽的眼睛
-botania.page.flugel1=不朽们非常讨厌守护者 因为他们将不朽的眼睛 从死去的不朽身上夺走 这也许可以成为你的优势 在高空中建立一个祭坛 召唤守护者的祭坛 并把不朽之眼放入信标 就像对用于祭奠的金属 即可召唤出一位不朽 并且,试图击败它
-botania.page.flugel2=但是小心 不朽们非常高傲 无法独自飞行的人 没有资格和它们战斗 因此你需要: 和它们一样的翅膀 坚不可摧的盔甲 削铁如泥的利剑 与一些强大的药水 没有它们你将无所作为 并且 一个好奇和灵活的脑袋 也可以帮助你
+botania.tagline.flugel=神之兵器
+botania.page.flugel0=关于不朽的传说非常多,他们 也因为任性,残忍和不朽被称 为死亡天使. 他们拥有撕裂空间而来到曾 经去过的地方的能力让无数 人梦寐以求,但并不是每一个 人都能下定决心去挑战盖亚 守护者来拿到不朽的眼睛
+botania.page.flugel1=不朽们非常憎恨盖亚守护者, 因为盖亚守护者夺走了死去 不朽的眼睛,不朽们会尽可能 将那些被夺走的眼睛夺回来. 这给人们提供了一个找到不 朽并尝试击杀他们的方法. 在空中制造一个类似盖亚召 唤仪式的祭坛,献祭一个天翼 族之眼,这将会吸引一个不朽 来到这里.
+botania.page.flugel2=但是要注意的是,高傲的不朽 们不屑于和无法飞行的人战 斗,因此你需要能够像他们一 样飞行. 同时,坚固的盔甲,锋利的武 器,和强大的药水,没有这些 东西你没有丝毫可能击败不 朽. 不过,也许一些奇妙和灵活的 想法也可以帮你完成目标
 
 botania.entry.soul=不朽之魂
 botania.tagline.soul=弑神者
-botania.page.soul0=每一个击败不朽的人 都将得到一个不朽之魂 可以标记12处空间坐标 就像曾经的那颗眼睛一样 但这不是一切的重点 灵魂可以再次召唤出另不朽 比之前的更加强大 不朽之魂的力量是有限的 每个只能支撑12次召唤 
-botania.page.soul1=&o//Lore stuff here//&r
-botania.page.soul2=制造 &4御灵水晶&0
-botania.page.soul3=灵魂重组者
-botania.page.soul4=为了将不朽之魂回复完全 需要将它放在酿造台上方 并且召唤盖亚守护者即可 御灵水晶将完成剩下的工作 为确保成功 请召唤困难形态的守护者 但如果你相信你自己的运气 那么试试召唤普通的形态吧 就像抛硬币一样 有时成功-有时失败
+botania.page.soul0=战胜不朽的勇士将会得到最 具价值的战利品-&1不朽之魂&0, 不朽之魂最多可以记录下 12个持有者曾经去过的地 方,就像是一个强化版的天翼 族之眼. 但似乎少了点什么对吧?不朽 似乎并没有携带在那场战争 中所掠夺的世界精华?你需要 做的是利用不朽之魂再次召 唤不朽,这会召唤出一个更加 愤怒,也更加强大的不朽,击 败这些更强的不朽将获得一 些稀有的资源,但不知为何, 每一次召唤都会将不朽之魂 的一部分污染.
+botania.page.soul1=最终,不可避免的,一些人彻 底污染了他们的不朽之魂,这 意味着他们无法获取更多的 稀有资源,于是他们找到了贤 者Mastray,希望这位伟大的圣 人能够想到办法清理不朽之 魂上的污染. 这位贤者在图书馆内查阅了 许多尘封的古老历史,并开始 研究不朽之魂的结构. 最终,Mastray将不朽之魂还给 了他们,并且向他们讲述了一 个古老的故事
+botania.page.soul2=&o千年前,一场被称为"Great-War" 的战争在无数个世界里燃起 了烽火,几乎无人能够独善其 身. 毫无疑问的,不朽作为完美的 杀戮机器,在这场战斗中屠杀 了无数超出人类和精灵们想 象的强大生物. 但是,在战争即将结束,所有 势力都遭到重创的时候,一件 可怕的事情发生了-大崩裂&r
+botania.page.soul3=&o大崩裂的详情早已无可考究, 就目前拥有的资料来看,其发 生原因是因为某些来自宇宙 之外的"东西"穿透了人们所 认知的"现实"的边界,污染了 那些"看着"他们的人的思想 这些"东西"的来处被称为 "虚无" 即使是存在或者不存在的概 念在那里也是扭曲的,虚无无 法阻止宇宙的诞生,那么它就 想将一切毁灭,化为虚无&r
+botania.page.soul4=&o资料里并没有记载他们是如 何做到的,但是他们控制了不 朽们,以完成他们毁灭一切的 目标. 幸运的是,尽管&4虚无&0&o很强大, 但它并不属于这个宇宙,也不 了解这个宇宙的法则,这使得 神灵们组成的联盟在与和虚 无控制的傀儡的战斗中占据 了上风&r
+botania.page.soul5=&o但是还有一个问题,由于&4虚无&0 &o的入侵扭曲了现世的法则,异 常开始出现在这个世界上,由 于即使连存在的概念都被扭 曲,宇宙的法则无法抹平这些 异常. 其中有一种异常,一团黑色的 混沌能量攻击着靠近它们的 一切,这些异常是被虚无控制 的不朽们死后形成的.&r
+botania.page.soul6=&o直到前段时间,我才能确认那 些异常的本质-灵魂,那是些 被污染的不朽灵魂,无法回到 虚无,也不被宇宙所接纳. 这些带有强烈怨恨和愤怒的 黑暗灵魂根本无法被任何人 所使用的,即使是靠近也是一 个愚蠢的主意&r
+botania.page.soul7=&o当你使用击败了使用不朽之 魂召唤而来的不朽之后,他们 被污染的灵魂将会永远保存 在你所使用的,纯净的不朽之 魂里. 不过,我发现通过使用大自然 的力量,可以做到将这些被污 染的能量封闭起来,也许这可 以净化被污染的不朽之魂&r
+botania.page.soul8=通过在盖亚仪式旁放上&4御灵 &4水晶&0,和盖亚水晶共同一个封 印环,然后将魔力注入器和植 物酿造台放在信标上面. 来自水晶的能量将会集中在 魔力注入器中,并将被污染的 力量封印起来.
+botania.page.soul9=灵魂净化装置
+botania.page.soul10=为了恢复不朽之魂的纯净,你 需要将其放在酿造台的上方 并且召唤盖亚守护者即可,御 灵水晶会帮你压制盖亚守护 者的力量. 为了确保能量足以封印不朽 之魂中的污染,召唤较为强大 的盖亚守护者将会比较稳妥. 如果你相信自己的运气,召唤 较弱的守护者也可以,就像掷 硬币一样. 但小心,如果能量不足以封印 污染,那么为防止产生严重的 后果,积累的能量将会以爆炸 的形式释放到空中.
+
+botania.entry.soulHorn=灵魂号角
+botania.tagline.soulHorn=不朽:终极形态开启
+botania.page.soulHorn0=即使是由一个不朽之魂十二 分之一的力量所召唤出的不 朽就已经如此强大,但你还是 忍不住胡思乱想,如果,如果 尝试一次性用不朽之魂更多 的力量来召唤,会发生什么, 又或者一次性使用整个灵魂 的力量?
+botania.page.soulHorn1=通过使用&1始源魂灵&0和&1魔灵钢&0, 你创造出了一个&1灵魂号角&0.他 的原理非常简单,就像漏斗一 样,将不朽之魂零散的力量合 并起来成为单个能量团,并用 它来召唤出一个难以理解的 强大生物,在使用了一次之后 号角会失去所有存储的能量, 但是仍然可以用于下一次能 量聚集
+botania.page.soulHorn2=制造 &1灵魂号角&0
+botania.page.soulHorn3=要将不朽之魂的力量注入号 角,你只需要将它们都扔在地 上即可,逸散出的粒子会告诉 你这个过程是否顺利
 
 botania.entry.mask=诡秘之面
 botania.tagline.mask=我似乎见过它...
-botania.page.mask0=从来没有这么诡异的东西 无论怎样努力的戴上它 它总会从你脸上滑落 就仿佛你从未这样做过 它在排斥你的生命 也许你应该顺从它 自杀?他杀?无所谓 你需要一次死亡, 就像这个面具给你的感觉 ----疯狂---- ----诡异---- ----愤怒----
+botania.page.mask0=从这个面具里散发出来的危 险和愤怒仿佛凝结成了实体, 不管你怎样努力都无法戴上 这个面具,它像是在抗拒你的 生命,但当你濒临死亡生命力 无比虚弱的时候,它将会自动 戴到你的脸上,为你提供无与 伦比的力量和坚不可摧的防 御,但是请不要佩戴太久,这份 力量的代价是以你的精神被 污染为代价的.
 
 botania.entry.excaliber=代表荣耀与胜利的圣剑
 botania.tagline.excaliber=亚瑟王的金色圣剑!!!(某呆毛:??)
-botania.page.excaliber0=嗯.... 那很尴尬......
-botania.page.excaliber0u=&o很久以前, 这把代表胜利的神剑, 消失在了世人眼中, 从那时开始, 再也没有出现在世人眼前....&r
+botania.page.excaliber0=&o很久以前,这把代表荣耀和胜 利的圣剑就已不知所踪... 就像传说中所说的那样,这把 剑坚不可摧,内部的魔力不仅 可以增加你的速度,还可以以 射线的形式自动寻找周围的 生物,造成和被圣剑砍过一样 的伤害.
+
+botania.entry.stories=Token of Banter
+botania.tagline.stories=Yet knowledge can be bought
+botania.page.stories0=Centuries have passed since the inhabitants of &4Alfheim&0 and &4Midgard&0 established close trade relations. Midgard adventurers, researchers and sages, like &6Mastrei&0, sought to learn all elven secrets in order to improve their own technologies, to become rich and famous. The most zealous of them was alchemist &6Tywin&0, who invented &1Token of Banter&0 - a symbol of knowledge accumulated over decades of his life.
+botania.page.stories1=He managed to negotiate with the elven elders on mutually beneficial exchange of information: &6Tywin&0 provides a piece of his alchemical research, sealed in a coin, and the elves - the secrets and teachings of his people. So, why would the wisest elders need the knowledge of the Midgard alchemist?
+botania.page.stories2=Everything is simpler than it might seem at first glance. Elves have always sought to rise above other sentient beings, and the straight road to this is knowledge, not only their own, but also foreign to them before. So, through the centuries, there was an exchange of accumulated knowledge between the worlds of humans and elves.
+botania.page.stories3=Until something unimaginable happened on one rather ordinary day: a student of &6Tywin&0 betrayed his mentor, distributing &1Tokens of banter&0 over &4Midgard&0. As a result of this foolish act they were all lost over time.
+
+################################################################ BACKPORT ################################################################
+
+botania.page.cosmeticBaubles34=真正的思考
+
+botania.page.lens38=&1信使透镜&0大大减少了每束&4魔 &4力射线&0携带的&4魔力&0,但大幅度 增加了射线的速度和最远射 程. <br>在和&1魔力检测器&0,&1浮动火把&0等 物品的交互之中非常有用
+botania.page.lens39=信使透镜
+
+botania.page.elvenLenses11=&1拌线透镜&0可以检测前方是否 有生物经过,只有在发射器射 出的魔力射线的轨道里有生 物经过的时候才会发射&4魔力 &4射线&0
+botania.page.elvenLenses12=拌线透镜
+
+botania.entry.amulCirs=触空护符
+botania.tagline.amulCirs=二 段 跳
+botania.page.amulCirs0=&1触空护符&0可以赋予佩戴者&4二 &4段跳&0的能力,在第二次跳跃的 时候所有累积的下落动能和 伤害都会被重置
+botania.page.amulCirs1=向云朵祈祷
+
+botania.entry.amulNimb=雷云护符
+botania.tagline.amulNimb=三 段 跳
+botania.page.amulNimb0=&1雷云护符&0是&1触空护符&0的升级 版,通过使用&1盖亚之魂&0的力量 它能让佩戴者&4三段跳&0
+botania.page.amulNimb1=魔法 > 物理
+
+botania.entry.aniTorch=浮动火炬
+botania.tagline.aniTorch=紧凑式逻辑带浮动红石火把
+botania.page.aniTorch0=&1浮动火炬&0是一个利用魔力浮 起来的红石火把,放置的时候 将面对水平方向,向指向的方 向提供能量. 摁住Shift并右键可以让火 炬旋转90度从而将能量输出 更改为新的方向
+botania.page.aniTorch1=默认情况下,每次被激活的时 候,火炬会水平旋转180度 <br>想要激活火炬,可以使用魔力 射线或者悬浮沙漏来向其输 出信号.
+botania.page.aniTorch2=用森林法杖可以更改火炬的 模式,默认模式是&4翻转&0,已经 在上一页里进行了说明 <br>其他两种模式分别是&4旋转&0 (每次激活火炬旋转90度)和 &4随机&0(每次激活火炬会向随机 方向旋转)
+botania.page.aniTorch3=它跌倒了 而且没办法再立起来了
+
+botania.entry.astrolab=创世星盘
+botania.tagline.astrolab=一个用来制造板子的工具
+botania.page.astrolab0=&1创世星盘&0可以为使用者节省 非常多的时间,一次性可以放 下非常多的方块. <br>首先,手持创世星盘并蹲下右 键目标方块.<br>将视角移到空中并蹲下右键 以更改单次放置的方块数量.
+botania.page.astrolab1=当你设定好了要放置的方块 之后,星盘就会将虚拟影像投 影到你的瞳孔里,你可以看到 方块将会放置的位置. <br>要制造你看到的墙或者地板, 你需要使用&4魔力&0将方块从你 的背包,或者是一些可以提供 方块的物品中提取出来.
+botania.page.astrolab2=建造墙壁 创造世界
+
+botania.entry.cloakInv=隐形斗篷
+botania.tagline.cloakInv=看上去跟锡一样
+botania.page.cloakInv0=&1隐形斗篷&0不需要太多的解释.<br>这个小道具会利用&4魔力&0来将 佩戴者和身上的饰品隐藏,只 要有足够的魔力
+botania.page.cloakInv1=大法师史蒂夫
+
+botania.entry.dodgRing=灵动之戒
+botania.tagline.dodgRing=跳到一旁以躲避攻击
+botania.page.dodgRing0=&1灵动之戒&0可以在佩戴者需要 的时候让他快速向左/右移动 一小段距离,可以躲避战斗中 的一些攻击. 通过快速摁下两次左移键或 者右移键来快速向一旁并闪 避袭来的攻击. 使用后将会有一小段的冷却 时间,并且会消耗一些饥饿值
+botania.page.dodgRing1=敏捷的奖励
+
+botania.page.judgementCloaks1n=&1神圣斗篷&0可以完全抵挡佩戴 者受到的伤害<br>&1罪恶斗篷&0会让周围生物和佩 戴者承受一样的伤害.<br>&1均衡斗篷&0可以将佩戴者受到 伤害的一半返还给攻击者,同 时它也可以防止佩戴者死亡.
+botania.page.judgementCloaks4=疼痛分配
+
+################################################################ EBT ################################################################
+
+botania.entry.subspear=亚空之矛
+botania.tagline.subspear=这不符合常规的认知
+botania.page.subspear0=&1亚空之矛&0可以撕裂现实的边 界,从亚空间召唤致命的能量 射线攻击敌人,也可以通过扭 曲现实从而做到使使用者向 前快速移动的效果.
+
+botania.entry.moonbow=太阳神的惩戒
+botania.tagline.moonbow=比太阳更为纯净
+botania.page.moonbow0=&1太阳神的惩戒&0会使用&4魔力&0射 出可以穿透一切的魔法箭矢. 拉弓的时间越强,更多的魔力 就会进入这把长弓,射出的魔 法箭矢就更具威力(容纳的魔 力是有限的,伤害也不是可以 无限增加的)
+#botania.page.moonbow1=一百次射击 一百次靶心
+
+botania.entry.dasGold=莱茵的黄金
+botania.tagline.dasGold=遗物解绑者
+botania.page.dasGold0=&1莱茵的黄金&0可以清除遗物的 灵魂绑定,只需要将它和遗物 放在一起即可. 如果你想让遗物灵魂绑定到 某人,只需要手持&1莱茵的黄金&0 并右键想要绑定到的人,即可 完成绑定
+botania.page.dasGold1=我们需要更多的黄金
+
+botania.entry.multbaub=精灵王之戒
+botania.tagline.multbaub=同时使用七种戒指
+botania.page.multbaub0=&1精灵王之戒&0可以将六个戒指 的效果融为一体,只需要携带 一个&1饰品盒子&0,然后将你想要 的戒指放在最上面那一行. 当然,并不是所有的戒指都可 以被使用,就像遗物一样
+botania.page.multbaub1=不要欺骗我
 
 ################################################################ ESM ################################################################
 
 botania.entry.es= 精灵传说
 botania.tagline.es=新的挑战！
-botania.page.es0=看上去 你似乎选择了精灵传说模式, 也许你是无意的? 管他呢,你现在是精灵了 选择一个你喜欢的种族. 你的目标是什么? 第一:活下去, 第二:建立通往尘世之门, 所有的信息都在手册之中, 对,你现在看的这本.
+botania.page.es0=恭喜,你选择了&4精灵传说&0模式! 现在你是一名出生在艾尔夫 海姆的精灵. 你首先需要做的是确保能够 活下来,接下来,你需要找到 通往尘世的门户. 所有需要的信息都在你的&1植 &1物魔法手册&0当中,愿众神的祝 福助你走向成功!
 
 botania.entry.races=种族
-botania.tagline.races=这其实并不是种族
-botania.page.races0=即使是Hel本人 也没有破坏精灵乡的和谐. 这个世界居住着九个种族: Salamanders, Sylphes, Cait Sith, Pookas, Gnomes, Leprechauns, Spriggans, Undines and Imps.
-botania.page.races1=每个种族都有其独特的颜色, 翅膀的形状和标志 并且生来就能飞舞在空中
-botania.page.races2=默认情况下 摁下[F]键即可激活飞行, 如果你想飞的更快 摁下加速按钮 即可获得-25%的速度提升, 如果你突然被一群敌人包围 摁下跳跃按钮和ALT 即可加速直线向上飞 但请记住: 精灵的力量有限, 移动速度越快, 体内存储的能量消耗的越快
+botania.tagline.races=这并不是传统意义上的种族
+botania.page.races0=即使是&4海拉&0都没有摧毁精灵 乡的美好生活. 这个世界是精灵族的家园,九 个种族居住在距离世界中心 相等的位置: &2Salamanders&0, &2Sylphes&0, &2Cait Sith&0, &2Pookas&0, &2Gnomes&0, &2Leprechauns&0, &2Spriggans&0, &2Undines&0, &2Imps&0.
+botania.page.races1=每个种族都有自己独特的翅 膀,翅膀的形状和颜色也各不 相同. 同时每个种族都有自己的图 腾,还有一些与生俱来的能力, 如果需要,可以摁下能力切换 键将其关闭(默认为"m")
+botania.page.races2=默认情况下,可以通过摁下 "F"键来激活飞行能力,如果 想要飞的更快,可以摁下加速 键以增加25%的飞行速度. 但是请记住,精灵的体能是有 限的,飞行的越快,可以飞行 的时间就越少
+botania.page.races3=能力<br>Salamander: 在承受debuff的时候,他们有 概率可以将其削弱(例如中 毒等).<br>Sylphs: 飞行和飞行时间的回复速度 提升20%.<br>Cait Sith: 可以徒手驯服生物,并且赋予 被驯服的生物更强的生命力.
+botania.page.races4=Pookas: 可以模仿猫的大叫声以吓跑 爬行者.还可以在站立不动的 时候回复生命力和饱腹度.<br>Gnomes: 可以感知以自身为中心半径 八格范围内的矿石,但仅有在 蹲下的时候才有用.<br>Leprechauns: 近战造成的伤害增加10%.
+botania.page.races5=Spriggans: 完美的夜视能力,并且免疫失 明.<br>Undines: 可以在水下进行呼吸,且可以 缓慢吸取水中的魔力.<br>Imps: 修理盔甲和工具以及使用魔 法时的法力消耗降低了20%, 在使用法杖的时候也仍然有 效.
 
 ################################################################ MMO ################################################################
 
-botania.entry.parties= 契约
-botania.tagline.parties=狂欢的派对时间!
-botania.page.parties0=游戏中添加了创建阵营的功能 默认情况下 每个阵营最多可以有5个玩家 并且默认关闭友军伤害 你还可以及时得知盟友的状态 生命与魔力值 并且可以及时得知负面状态
-botania.page.parties1=在和别的玩家缔结盟约之前 你需要创建一个和平烟斗 (它在逗我？↑） 这将允许你们缔结精神契约 以便防止盟友间的误伤  首先 它必须由领导者首先吸烟 然后由新成员吸烟 之后,管子破碎
+botania.entry.parties= 盟约
+botania.tagline.parties=是时候来一场派对了!
+botania.page.parties0=创建&4同盟&0的功能已经添加到 游戏中,在默认情况下,一同 盟阵营最多可以容纳五名成 员,并且不会受到来自盟友的 伤害. 它还可以让你看到盟友的生 命值,魔力和各种负面影响.
+botania.page.parties1=如果想让一名新成员加入盟 约,你需要制造一张&1和平烟斗&0, 这将使你和盟友们签下灵魂 契约以防止来自盟友的误伤, 同时也可以使你观察到他们 的生命力和魔力. 首先,由同盟领袖使用该烟斗, 然后由新的成员使用,之后, 烟斗会破碎,同时新成员进入 盟约
 botania.page.parties2=制造 &1和平烟斗&0
-botania.page.parties3=如果你需要离开盟约 又或者要开除某人 (-因为某种原因) 只需要在羊皮纸上写下名字 并且烧了它吧 (Right-Mouse-Button) 但是有一个条件 你必须是领导者(红名) 并且目标成员必须在视线内
+botania.page.parties3=如果出于某种原因你需要离 开盟约或者踢出某人-只需要 在&1盟约羊皮纸&0上写下他的名 字并且将其烧毁(右键即可). 唯一的条件是使用者必须是 该盟约的领袖(红色名称),并 且踢出的成员必须在使用者 的视线内.
 botania.page.parties4=制造 &1盟约羊皮纸&0
 
-botania.entry.spells= 魔法
-botania.tagline.spells=霍格沃茨外再无魔法！
-botania.page.spells0=每个种族都有其独有的魔法 且对于某种元素带有亲和力 Salamanders-炽焰法师 Sylphes-风暴掌控者  Cait·Sith-自然征服者 Pookas-乐章编织者 Gnomes-浩土行者 Leprechauns-科技主宰 Spriggans-幻想之主 Undines-潮汐使者 Imps-黑暗从者
-botania.page.spells1=在使用魔法之前 你需要等待一段时间 让能量聚集在你的手上 以保证你的能量保持平衡
-botania.page.spells2=使用箭头选择咒语 当你按下V时进行施法 此外 在同时按住ctrl和shift时 你能在12个快捷施法槽 设置咒语 并使用1到=作为编号 同时需要摁住ctrl
-botania.page.spells3=对于你的种族来说 魔法所需的法力并不会变高 但是如果使用了别的魔法 (例如Sylphes用火) 则所需的法力会高出25% 
-botania.page.spells3u=对于你的种族来说 魔法所需的法力并不会变高 但是如果使用了别的魔法 (例如Sylphes用火) 则所需的法力会高出25% 此外 一些种族具有顶级魔法 需要的魔力不会改变 但是没有一定知识则无法使用
-botania.page.acidmyst=毒素喷射: 对9个方块内的生物造成 &a毒素伤害
-botania.page.aquabind=对直径为7个区块中的生物 施加&7缓慢效果
-botania.page.aquastream=沿着视野方向释放水流 造成轻微的&9水属性伤害 &0移动则会打断
-botania.page.battlehorn=为盟友施加 &c力量 &b加速 &a跳跃强化 &8抗性提升
-botania.page.blink=允许释放者向前传送 最多&c8个方块
-botania.page.bunnyhop=对目标施加 &a跳跃效果
-botania.page.butterflyshield=向目标施加三层护盾 可完全抵免&5魔法伤害 &0并且抵免一半其他伤害
-botania.page.confusion=对目标施加&2反胃效果
-botania.page.day=将世界时间变为 白天
-botania.page.deathmark=在目标身上施加标记 如果没有及时清除 则会造成巨额的 &8诅咒伤害
-botania.page.decay=大量削弱目标的免疫力 任何对目标的伤害都会造成 &c出血效果
-botania.page.dispel=清除盟友所有的负面影响 来自对手的增益效果 如果没有&2反胃 &0则会造成&2反胃
-botania.page.dragongrowl=在半径16格的范围内 &0恐吓对手 造成&0失明 &7虚弱 &8缓慢
-botania.page.driftingmine=发射(摁下shift设置)一枚炸弹 撞击到敌人或地面会爆炸 造成&c范围性伤害
-botania.page.echo=检测半径16格内的物品和生物 
-botania.page.fenrirstorm=对视线上的的目标造成 高额的&9雷击伤害 &0最大范围为16格
-botania.page.fireball=发射一枚火球 在半径为2格的范围内 造成范围性&c火焰伤害
-botania.page.firewall=在施法者面前制造火焰墙 限制敌人行动并使其着火 造成轻微的&c火焰伤害
-botania.page.goldrush=在开采矿石时 提高了阵营内(所有玩家)的 &e挖掘速度&0和&9时运
-botania.page.gravitytrap=创建一个引力奇点 吸取半径4格 高度16格内的所有物品 并且造成轻微的&8重力伤害
-botania.page.hammerfall=对半径19格内的敌人 造成极大的&8窒息伤害 &0不要站在过硬的方块上
-botania.page.harp=召唤一个竖琴 它可以治疗盟友 并且逐渐消除负面影响 最大范围为半径16格
-botania.page.healing=对所有的盟友提供平均治疗
-botania.page.hollowbody=对目标施加&8隐身效果
-botania.page.icelens=通过生成冰镜 使得施法者获取 &210倍视野
-botania.page.ignition=点燃十字准星所指方块 最大距离为16格
-botania.page.mortar=发射一块岩石 对直接击中的目标造成巨大的 &8坠落伤害 &0同时打破护甲 并且在半径2格内造成 范围中等伤害
-botania.page.night=将世界时间变为夜晚
-botania.page.nightvision=对阵营(所有玩家)内施加 &9夜视效果
-botania.page.ninelifes=对目标施加免死效果 使目标在死亡中幸存 免疫类型为: 坠落-溺水-凋零(50%概率) 燃烧和中毒
-botania.page.noclip=对目标施加穿墙效果 允许目标穿过方块墙壁 为了有效操作 目标需要可以进行飞行
-botania.page.outdare=施法者会吸引敌人的仇恨 范围为半径32格 使施法者成为主要攻击目标 (注意:请谨慎使用)
-botania.page.poisonroots=将减速效果施加给敌方联盟 最大范围为16格 
-botania.page.purifyingsurface=消除盟友的中毒和燃烧效果 并且提供&c抗火效果
-botania.page.rain=使世界开始暴风雨
-botania.page.resurrect=在盟友死亡的敌方复活他 并且恢复10点生命值
-botania.page.sacrifice=施法者将自己献祭给黑暗 对半径32格内的 所有人(包括盟友) 造成巨大的&0黑暗伤害 同时施法者也会死亡 
-botania.page.sharedhp=将所有的生命聚集在一起 此效果影响整个阵营 每位玩家都拥有所有的生命 同时生命力将同步
-botania.page.smokescreen=创建一个烟雾云 对半径16格内的敌人造成 &8失明效果
-botania.page.stoneskin=需要选定一个目标 释放该法术 施法者可以完全吸收 下一次&6任意伤害 &0并且获取一些额外的抗性
-botania.page.sun=使世界停止暴风雨
-botania.page.thor=在十字准星所指位置召唤闪电 最大范围为32格
-botania.page.throw=施术者将自己向前推进 对任何触碰的敌人造成 &3 标准伤害
-botania.page.thunder=引起雷雨/增加雨水
-botania.page.timestop=将半径16格内的时间停止
-botania.page.titanhit=在3x3的区域内打破方块 方块硬度越高 魔力消耗越多
-botania.page.truesigh=让你大致了解目标所有魔力值 越明亮的火焰表示魔力越多
-botania.page.uphealth=对目标施加&d生命恢复
-botania.page.wallwarp=使施法者穿过不是很厚的墙壁
-botania.page.waterbreathing=对阵营施加水下呼吸效果
-botania.page.wellolife=如果目标在水中 则对目标施加治疗效果
-botania.page.windblades=发射一枚空气弹 对触碰敌人造成 &b空气伤害
+botania.entry.spells=法术
+botania.tagline.spells=霍格沃茨之外再无魔法
+botania.page.spells0=每个精灵种族都有自己的专 属&1法术&0,且和种族有一定关 联: &2Salamanders&0-&4火焰&0 &2Sylphs&0-&4风暴&0 &2Kait Sith&0-&4自然&0 &2Pookas&0-&4乐曲&0 &2Gnomes&0-&4浩土&0 &2Leprechauns&0-&4机械&0 &2Spriggans&0-&4幻象&0 &2Undines&0-&4坎水&0 &2Imps&0-&4黑暗&0
+botania.page.spells1=在使用了&1法术&0之后,你需要等 待一段时间以保证体内的魔 力回归平衡
+botania.page.spells2=使用方向键更改要释放的&4法 &4术&0,然后摁下[C]进行释放. 另外,可以通过摁住Ctrl+Shift 的同时点按数字键以设置快 捷法术,通过摁下Ctrl和 [1]-[=]中对应的按键即可释 放. 也可以通过[X]来取消释放
+botania.page.spells3=释放&1法术&0所需的魔力和手册 中所记载的相同,但如果你的 种族对&1法术&0所使用的元素具 备亲和力,释放法术所需的法 力将会减少. 另外,某些种族具有&4禁忌魔法&0, 魔力消耗不会改变.
+botania.page.spells3u=释放&1法术&0所需的魔力和手册 中所记载的相同,但如果你的 种族对&1法术&0所使用的元素具 备亲和力,释放法术所需的法 力将会减少. 另外,某些种族具有&4禁忌魔法&0, 魔力消耗不会改变,但是在没 有某些知识的情况下无法使 用
+botania.page.acidmyst=聚集空气中的&2毒素&0,对以自身 为中心直径九格的范围内所 有生物造成持续的&2毒素&0伤害
+botania.page.aquabind=利用空气中的水元素束缚直 径七格范围内的所有生物,使 他们的移动速度减慢
+botania.page.aquastream=沿视野方向释放水元素冲击 造成持续伤害,但是如果施法 者移动那么法术将会被打断
+botania.page.battlehorn=鼓舞周围盟友的士气,增加他 们的速度力量和抗性
+botania.page.blink=让您向前传送最多八格
+botania.page.bunnyhop=为目标施加跳跃提升的效果
+botania.page.butterflyshield=为目标增加魔法护盾,可以完 全吸收三次魔法伤害,并且吸 收其他类型伤害的一半
+botania.page.call=将目标传送到自己身边,如果 目标是玩家,则忽略维度强行 传送
+botania.page.confusion=对目标施加反胃效果
+botania.page.day=扭曲时间,将时间强行更改为 白昼
+botania.page.deathmark=对目标造成巨大的诅咒伤害, 如果没有及时清除印记
+botania.page.decay=大大降低目标的自愈能力,因 此任何伤害都会使目标流血
+botania.page.dispel=去除盟友所有的负面效果和 敌人的正面效果; 目标会感到反胃如果身上并 没有任何buff
+botania.page.dragongrowl=恐吓以自身为中心16格半径 的范围内的所有敌人,使敌人 失明,虚弱并且行动不便
+botania.page.driftingmine=发射(摁下[shift]则会在原地 留下)一颗炸弹,在撞到实体 或者方块的时候爆炸,造成范 围伤害
+botania.page.echo=寻找以自身为中心半径16格 范围内所有的物品和生物
+botania.page.fenrirstorm=对目视方向以自身为半径最 多16格范围内的敌人造成高 额的雷电伤害
+botania.page.fireball=发射一枚火球,在撞到实体或 方块的时候爆炸,对以爆心为 中心半径两格范围内的敌人 造成火焰伤害
+botania.page.firewall=在施法者面前制造一堵火墙, 用于阻挡敌人,会点燃过于靠 近的实体并造成火焰伤害
+botania.page.goldrush=可以提高盟友在采矿时的速 度和运气
+botania.page.gravitytrap=创造一个重力奇点,该奇点会 将以自身为中心4格半径内的 范围内,以及上方16格内的所 有敌人拉入中心并持续造成 重力伤害
+botania.page.hammerfall=用魔力锤击地面,对以自身为 中心半径10格范围内所有敌 人造成窒息伤害
+botania.page.harp=召唤仙琴,使以其为中心16格 范围内所有的盟友获得恢复 效果,同时清除debuff
+botania.page.healing=为所有盟友提供一定的回复 和饱腹度
+botania.page.hollowbody=对目标施加隐身buff
+botania.page.icelens=在面前召唤一面冰镜,使视力 极大地提升
+botania.page.ignition=在以自身为中心半径16格范 围内任意一个方块上点火
+botania.page.isaacstorm=发射大批魔法导弹,每个飞弹 都会选择一个目标进行攻击 (下蹲时则只会攻击选定的目 标),并在击中敌人的时候造 成高额的伤害.<br>我杀你三千
+botania.page.join=将你传送到所选目标身边,甚 至允许跨越维度
+botania.page.liquification=在以自身为中心半径16格范 围内任意一个方块生成水源, 也可以用来补充炼药锅
+botania.page.mortar=发射一块土元素聚集而成的 岩石,对命中的目标造成坠落 伤害,同时会额外破坏其装甲 并在半径2格内的生物造成一 定的伤害
+botania.page.night=将时间设定为夜晚
+botania.page.nightvision=对选定的盟友施加夜视效果
+botania.page.ninelifes=对目标施加可以在受到某些 致命伤害后复活的buff. 可以让被施术者在受到坠落: 溺水,凋零(50%概率),燃烧 或者毒素伤害造成的致命伤 之后复活
+botania.page.noclip=对目标施加可以穿过方块的 buff,但注意,目标需要能够 飞行并且处于空中.
+botania.page.outdare=挑衅目标,使施法者成为其主 要攻击目标
+botania.page.poisonroots=将己方的负面效果转移给在 以自身为中心半径16格范围 内的敌人,同时进一步施加减 速效果
+botania.page.purifyingsurface=将半径五格内的盟友身上的 中毒效果清除,并赋予其防火 效果.
+botania.page.rain=将天气更改为降雨
+botania.page.resurrect=在一个盟友死后一段时间内 复活他,回复10点生命值
+botania.page.sacrifice=施法者将自己献祭给黑暗,对 半径32格范围内的所有人 (包括盟友),造成巨大的伤害 同时施法者自身也会死亡
+botania.page.shadowvortex=将周围的所有生物传送到随 机位置,并用暗能量造成伤害
+botania.page.smokescreen=制造一片烟雾,使半径16格范 围内的敌人失明
+botania.page.stoneskin=对目标施加防护buff,可以使 目标完全吸收一次伤害,并将 伤害转化为额外的生命值
+botania.page.sun=停止下雨/雷暴
+botania.page.swap=交换施法者和其目标,如果是 敌对目标则施加伤害,如果是 盟友则治疗 如果目标是玩家,则忽略距离 甚至是维度.
+botania.page.thor=在以自身为中心32格范围内 任意面朝的方块上召唤闪电
+botania.page.throw=将施法者向面朝的方向推出, 同时对路径上的敌人造成一 定伤害
+botania.page.thunder=制造雷暴/增加降雨级别
+botania.page.timestop=在半径16格范围内停止时间<br><br>砸,瓦鲁多! toki-wo-tomare!<br>译者注:此段是作者恶趣味, 本人并不明白这是什么意思
+botania.page.titanhit=破坏前方3x3范围内的方块, 方块硬度越高,耗魔越高
+botania.page.truesight=使你可以大致知道目标所拥 有的魔力值,&1灵魂之火&0越高越 亮,则魔力值越高
+botania.page.uphealth=提升目标的生命上限
+botania.page.wallwarp=允许施法者穿过不厚的墙壁
+botania.page.warhood=召唤所有盟约里的盟友到你 的身边,即使在不同维度
+botania.page.waterbreathing=为盟约里的盟友施加水下呼 吸效果
+botania.page.wellolife=对目标施加可以在水中回复 生命值的buff
+botania.page.windblades=向施法者面朝的方向发射空 气圆刃,对触碰到的敌人造成 一定伤害
 
-botania.entry.targets= 选定目标
-botania.tagline.targets=无所遁形
-botania.page.targets0=目标系统可以使玩家 更方便的使用法术 若要选择一个敌人 则用十字准星瞄准目标 并摁下选择按钮(默认为R) 现在你可以在目标身上施法
-botania.page.targets1=要选择一个盟友 只需要摁下T循环选择 所选成员的名称将会变绿 目标选择键-R 不允许选择盟友 以免意外的攻击 范围-盟主为128格 其余32格
+botania.entry.targets= 标记目标
+botania.tagline.targets=你将无所遁形
+botania.page.targets0=为了更方便的使用&1法术系统&0, 施法者还需要学会使用&1锁敌&0 系统,将视线对准目标并且摁 住锁定按钮(默认为R). 现在,你可以更好地施展法术, 有些法术也会多出一些效果.
+botania.page.targets1=要选择一个盟友,请摁下T键. 多次摁下将会循环选择盟友, 所选成员的名称将以绿色高 亮显示. 同时使用锁定键无法选择盟 友以避免误伤. boss的可锁定距离是128格, 其他所有生物的可追踪距离 是32格
 
-lexicon.time=吟唱时间: %.2f
+lexicon.time=消耗: %.2f
 lexicon.cd=冷却: %.2f
-lexicon.seconds=s
-lexicon.mana=魔力消耗:
+lexicon.seconds=秒
+lexicon.mana=魔力:
+
+################################################################ IRI ################################################################
+
+alfheim.entry.rainbowFlora=彩虹桥生态
+alfheim.tagline.rainbowFlora=海姆达尔的礼物
+alfheim.entry.coloredDirt=虹彩泥土 [IRI]
+alfheim.tagline.coloredDirt=满足一切装饰需求的彩虹土
+alfheim.entry.aurora=极光土壤
+alfheim.tagline.aurora=多个颜色一次满足
+alfheim.entry.rodTechnicolor=虹彩平原法杖[IRI]
+alfheim.tagline.rodTechnicolor=空气中浮现的虹彩土壤
+alfheim.entry.rodLightning=雷霆之巅法杖[IRI]
+alfheim.tagline.rodLightning=用恐惧和雷暴击溃敌人
+alfheim.entry.rodFlameStar=星火之杖[IRI]
+alfheim.tagline.rodFlameStar=精确的火焰释放器
+alfheim.entry.rodInterdiction=暴风之海法杖 [IRI]
+alfheim.tagline.rodInterdiction=让敌人离开你的
+alfheim.entry.rodPrismatic=棱彩湖之杖IRI]
+alfheim.tagline.rodPrismatic=虹彩色的闪光
+alfheim.entry.irisSapling=虹彩树木
+alfheim.tagline.irisSapling=让风染上虹彩的颜色
+alfheim.entry.treeCrafting=命状定序装置
+alfheim.tagline.treeCrafting=向树苗中注入魔力和材料
+alfheim.entry.irisSeeds=虹彩草[IRI]
+alfheim.tagline.irisSeeds=用虹彩草装饰你的家
+alfheim.entry.coatOfArms=盾章[IRI]
+alfheim.tagline.coatOfArms=宣誓你的效忠
+alfheim.entry.colorOverride=染彩戒指 [IRI]
+alfheim.tagline.colorOverride=多彩的魔法
+alfheim.entry.attribution=神圣勋章[IRI]
+alfheim.tagline.attribution=伟大力量之门的钥匙
+alfheim.entry.sealCreepers=魔源爬行者[IRI]
+alfheim.tagline.sealCreepers=一场魔源风暴
+alfheim.entry.kindling=源火方块[IRI]
+alfheim.tagline.kindling=野火燎原
+alfheim.entry.itemDisplay=物品托盘[IRI]
+alfheim.tagline.itemDisplay=展示物品
+alfheim.entry.lightningSapling=雷击木
+alfheim.tagline.lightningSapling=可以吸收雷霆的木头
+alfheim.entry.infernalSapling=炎狱木
+alfheim.tagline.infernalSapling=不惧火焰
+alfheim.entry.circuitSapling=通量木
+alfheim.tagline.circuitSapling=红石信号出产地
+alfheim.entry.calicoSapling=防爆木
+alfheim.tagline.calicoSapling=爆炸吸收者
+alfheim.entry.livingwoodFunnel=活木漏斗[IRI]
+alfheim.tagline.livingwoodFunnel=仅容纳一件物品的可过滤漏斗
+alfheim.entry.toolbelt=植物学家的工具腰带[IRI]
+alfheim.tagline.toolbelt=12个准备好的额外格子
+alfheim.entry.lamp=虹彩灯[IRI]
+alfheim.tagline.lamp=红石信号强度测试仪
+alfheim.entry.tctrees=神秘花园
+alfheim.tagline.tctrees=虚空来客
+alfheim.entry.silencer=寂静木
+alfheim.tagline.silencer=更柔和的声音
+alfheim.entry.amplifier=声波增强器[IRI]
+alfheim.tagline.amplifier=更响的声音
+alfheim.entry.crysanthermum=双子水晶花[IRI]
+alfheim.tagline.crysanthermum=温度带来的魔力
+alfheim.entry.andmyaxe=圣刃启示者[IRI]
+alfheim.tagline.andmyaxe=第一位弑神者的武器
+alfheim.entry.starBlock=冰封之星[IRI]
+alfheim.tagline.starBlock=末路的之光
+alfheim.entry.dagger=叛魂之匕[IRI]
+alfheim.tagline.dagger=叛逆者的匕首
+alfheim.entry.shimmer=虹彩石英[IRI]
+alfheim.tagline.shimmer=像彩虹一样的石英
+alfheim.entry.throwablePotions=可投掷药水[IRI]
+alfheim.tagline.throwablePotions=支持远距离使用药水
+
+alfheim.category.dendrology=树木学
+
+alfheim.page.rainbowFlora0=在艾尔夫海姆,有一些独特的 &1虹彩之花&0和&1蘑菇&0,据说这些植 物只能在特定世界里存在,其 他维度里则不可存活. 他们和普通的神秘花没什么 不同,只是颜色会不停地变换 也可以像神秘花一样使用. 可以通过将&1虹彩之花粉末&0涂 抹在&1神秘花&0上获得新的虹彩 之花.
+alfheim.page.rainbowFlora1=采下花瓣
+alfheim.page.rainbowFlora2=磨制成粉
+alfheim.page.rainbowFlora3=打包成为方块使用
+
+alfheim.page.coloredDirt0=&1神秘花&0中所蕴含的潜能可以 改变土壤的颜色. 同时这种神秘的土壤可以在 没有水和锄头的情况下种植 树木和植物. 但是如果将其放在&1白雏菊&0旁, 它将恢复成原来的泥土
+alfheim.page.coloredDirt1=息壤之美
+
+alfheim.page.aurora0=通过将泥土和&魔力珍珠&0进行 混合,可以制造出一种能够捕 获空气中肉眼不可见的魔力 射线的土壤,根据位置的不同 土壤会显示不同的颜色,同时 这种土壤也可以在没有水和 锄头的情况下种植树木和植 物. 同样可以通过&1白雏菊&0将其转 化为普通的土壤
+alfheim.page.aurora1=在寂静的森林中寻找暮色之时
+alfheim.page.aurora2=木板
+alfheim.page.aurora3=楼梯
+alfheim.page.aurora4=半砖
+alfheim.page.aurora5=重新变为木板
+
+alfheim.page.rodTechnicolor0=&1虹彩平原法杖&0,和&1高原法杖&0一 样,可以消耗一定的&4魔力&0来将 虹彩土壤放置在空中,下蹲并 右键单击可以切换想要用的 颜色,同样此法杖可以被活木 化身使用.
+alfheim.page.rodTechnicolor1=简单的将整个世界涂上颜色
+alfheim.page.rodTechnicolor2=并且,将灵魂和大地之神&1希芙&0 建立链接可以进一步提升使 用者运用大地的力量. 通过佩戴&1祭祀勋章:希芙&0,你 的实际放置范围将会比默认 要远. 同时,佩戴&1触物指环&0可以进一 步提升范围
+alfheim.page.rodTechnicolor3=现在欢迎来到这里, 也请带上水晶杯
+
+alfheim.page.rodLightning0=&1雷霆之巅法杖&0就像&1召雷者&0一 样,可以通过召唤闪电来攻击 敌人,闪电会在敌人之间传播, 一个接一个依次杀死所有敌 人.<br>同时,&1活木化身&0也可以使用该 法杖
+alfheim.page.rodLightning1=实验的结果令人震惊
+alfheim.page.rodLightning2=并且,将灵魂和雷霆之神&4托尔&0 建立链接可以进一步提升使 用者掌控雷霆的能力. 通过佩戴&1祭祀勋章:托尔&0就可 以更好的使用雷霆. 似乎魔源套装会进一步提升 使用的效率. <br>在这个法杖中似乎还存在着 更多潜藏的能量,但是只有神 灵才能够进一步运用这股力 量
+alfheim.page.rodLightning3=在愤怒中轰击大地
+
+alfheim.page.rodFlameStar0=&1星火之杖&0可以将任何使用者 所指的生物点燃,同时,目标 生物旁小范围内的敌人也会 被点燃,并且受到伤害
+alfheim.page.rodFlameStar1=炽热射击
+alfheim.page.rodFlameStar2=使用者可以更好地使用火焰 的力量,如果他的灵魂和烈焰 之神&1洛基&0建立了链接的话. 通过佩戴&1祭祀勋章:洛基&0就可 以更熟练地操纵火焰的力量. 似乎魔源套装也可以提升你 的效率
+alfheim.page.rodFlameStar3=绕开敌人的防御
+
+alfheim.page.rodInterdiction0=&1暴风之海法杖&0可以在周围制 造出一圈暴风以将周围的生 物推开,可以通过消耗魔力来 阻止试图进入的生物.
+alfheim.page.rodInterdiction1=我真的不喜欢人多的地方 所以离我远点
+alfheim.page.rodInterdiction2=通过将灵魂和暴风与海洋之 神&1尼约德&0建立链接可以让使 用者更好的操纵飓风的力量. 通过佩戴&1祭祀勋章:尼约德&0就 可以更熟练地掌控暴风的力 量. 似乎魔源套装也可以提升该 法杖的效果,但提升较小.
+alfheim.page.rodInterdiction3=厄运会使他重新回归
+
+alfheim.page.rodPrismatic0=&1魔力透镜:闪光&0一个非常不好 的一点,需要在制造的时候确 定发射出的魔力的颜色. 即使制造一个彩虹色的透镜, 制造出的魔力闪光也仅仅只 是单色的. 但是通过使用&棱彩湖之杖&0,就 可以制造出一个彩虹般的魔 力闪光.<br>也可以通过幻影墨水将法杖 染色以制造出透明的闪光
+alfheim.page.rodPrismatic1=风中的彩虹
+
+alfheim.page.irisSapling0=受到彩虹女神的祝福,这些可 以像彩虹一样变换颜色的神 奇树苗,通过白雏菊净化树苗 即可获得. 这些树苗只会在虹彩泥土上 生长,并且会呈现出它们扎根 的土壤的颜色.<br><br>他们只是&o真实存在&0的巨大康 乃馨
+alfheim.page.irisSapling1=模板
+alfheim.page.irisSapling2=楼梯
+alfheim.page.irisSapling3=半砖
+alfheim.page.irisSapling4=重新变为木板
+alfheim.page.irisSapling5=将树叶碾碎成粉
+
+alfheim.page.treeCrafting0=通过影响一个生命来让其具 备某种特性远比制造一个拥 有该特性的新生命要简单得 多.&虹彩树苗&0缺少常规的生命 力,因此将很容易制造出精美 的木材. 但&1命状定序装置&0可以使用&4魔 &4力&0来更改树苗的生命形式,通 过使用&1黑曜石&0和&1虹彩&0材料制 作的装置可以制造出有趣的 新生命.
+alfheim.page.treeCrafting1=在完成了结构搭建之后,用&1森 &1林法杖&0点击结构顶端的模板, 装置将会进入预备状态. 要制作一个新的生命,使用者 必须将一个虹彩树苗放在结 构中心的虹彩土壤,然后将魔 力注入顶端的定序方块. 剩下所需的材料必须放在&1物 &1品托盘&0上. 如果一切正确,定序装置会自 行开始工作
+alfheim.page.treeCrafting2=命状定序装置
+
+alfheim.page.irisSeeds0=如果在&1虹彩土壤&0上使用&1骨粉&0, 将会生成&1虹彩草&0和&1虹彩高草&0. 可以通过将其放入&4魔力池&0的 方式得到&1虹彩之种&0,只需要右 键单击即可将泥土转化为&1虹 &1彩土壤&0
+alfheim.page.irisSeeds1=/etc/sudoers
+alfheim.page.irisSeeds2=如何单一增殖虎兰花
+
+alfheim.page.coatOfArms0=与&1饰品小件&0相似,&1盾章&0可以让 玩家在配戴饰品的时候更有 风格,它们可以戴在项链栏,也 可以和&1饰品&0一起合成.
+alfheim.page.coatOfArms1=论文,请
+
+alfheim.page.colorOverride0=&1染彩戒指&0会影响一切规律性 运动的魔力,以改变其颜色. 他们可以和另一个&1饰品&0一起 制作,就像是&1饰品小件&0一样, 同时他们也可以用花粉来染 色,要去除颜色只需要放在空 白的合成台即可.
+alfheim.page.colorOverride1=谨防黑暗牧师
+
+alfheim.page.attribution0=&1神圣勋章&0是一个潜藏着巨大 潜力的工艺品. 尽管使用的材料非常简单,但 是它却具有很强的潜力,可以 通过别的材料来强化它. <br>似乎尘世中并没有办法将它 的潜力发挥出来,&4下界&0和&1末地&0 里也没有任何线索,也许你需 要在一些&2其他地方&0中寻找
+alfheim.page.attribution1=时尚的祭司
+
+alfheim.page.sealCreepers0=&4魔源&0遍布于全世界,但是就像 河流一样,总有地方湍急或者 颠簸. &1魔源爬行者&0是&4魔力长河&0中的 一道裂痕. 如果你被它的爆炸波及到,你 会发现你被卷入了&4魔源风暴&0, 它将吞噬你身上的魔力,建议 尽可能的远离它们
+alfheim.page.sealCreepers1Drop=但是,它们有一个有趣的小特 性. 它们的身体内部会有一些魔 力凝聚物,偶尔可以在它们的 尸体上发现一些&1黑莲花&0. 当魔源风暴和黑莲花接触的 时候,它将破坏黑莲花内部的 平衡,并且将黑莲花变得枯萎 &1枯萎的莲花&0也是一种珍惜的 魔法资源
+alfheim.page.sealCreepers1NoDrop=但是,它们有一个有趣的小特 性.它们的身体内部会有一些魔 力凝聚物,偶尔可以在它们的 尸体上发现一些&1黑莲花&0. 当魔源风暴和黑莲花接触的 时候,它将破坏黑莲花内部的 平衡,并且将黑莲花变得枯萎 &1枯萎的莲花&0也是一种珍惜的 魔法资源
+
+alfheim.page.kindling0=&1源火方块&0和地狱岩一样,不仅 可以防止火焰熄灭,还可以空 手右键切换熄灭和燃烧. <br>它也可以用红石来操作,但只 能做到点燃而无法熄灭
+alfheim.page.kindling1=赶紧把这火灭了
+
+alfheim.page.livingwoodFunnel0=对于某些人来说&1漏斗&0非常难 以控制,有时会让不该移动的 物品通过,有时速度太快. 相比之下&1活木漏斗&0要严谨的 多. 它一次只允许一种物品通过, 并且可以通过在旁边放置&1物 &1品展示框&0来进行过滤
+alfheim.page.livingwoodFunnel1=一次只能过一个
+
+alfheim.page.itemDisplay0=&1物品托盘&0是那些想要立体的 展示一个物品而不想将其丢 出或者放下的人的好帮手. 通过右击或者漏斗给它一个 物品,这个物品将会漂浮在托 盘上.<br>&m这是一个炫耀的好机会
+alfheim.page.itemDisplay1=往托盘上放一点泰拉钢来炫富
+
+alfheim.page.lightningSapling0=&1雷击木&0就像一根天然的避雷 针,它会将周围的闪电吸引到 它的树冠以吸收闪电. 吸引闪电的过程中有时会导 致周围小范围内的生物和方 块被闪电波及. 由于周围橡木存在,雷击木的 效果或许会被削弱
+alfheim.page.lightningSapling1=托尔会记住你的
+alfheim.page.lightningSapling2=木板
+alfheim.page.lightningSapling3=楼梯
+alfheim.page.lightningSapling4=半砖
+alfheim.page.lightningSapling5=树枝
+alfheim.page.lightningSapling6=碎片
+
+alfheim.page.infernalSapling0=&1炎狱木&0就像是一个固态的熔 岩池,内部常年肆虐的地狱炎 火让它可以对常规的凡火视 若无睹.
+alfheim.page.infernalSapling1=无论火焰多么凶猛 它始终毫发无伤
+alfheim.page.infernalSapling2=木板
+alfheim.page.infernalSapling3=楼梯
+alfheim.page.infernalSapling4=半砖
+alfheim.page.infernalSapling5=树枝
+alfheim.page.infernalSapling6=煤炭
+alfheim.page.infernalSapling7=碎片
+
+alfheim.page.circuitSapling0=&1通量木&0可以发出的红石信号 强度等同于其上方所连接的 &1通量木&0方块数量,&1通量木&0中的 任何方块都可以被计算,包括 其树苗.
+alfheim.page.circuitSapling1=我对双关语表示抱歉
+alfheim.page.circuitSapling2=木板
+alfheim.page.circuitSapling3=楼梯
+alfheim.page.circuitSapling4=半砖
+
+alfheim.page.calicoSapling0=&1防爆木&0拥有非常像猫的花纹, 可以吸收一切周围可能发生 的爆炸的能量,包括苦力怕. &1防爆木&0中的任何方块都可以 用于吸收爆炸
+alfheim.page.calicoSapling1=不像猫一样挠人
+alfheim.page.calicoSapling2=木板
+alfheim.page.calicoSapling3=楼梯
+alfheim.page.calicoSapling4=半砖
+
+alfheim.page.toolbelt0=&1植物学家的工具腰带&0可以让 玩家获取额外的存储空间. 在下蹲的时候玩家会多出12 个存储格,他们会出现在周围 的空气中,可以用于交互. 其中任何的方块和物品都可 以被移壳杆使用.
+alfheim.page.toolbelt1=空间不大,但用处不小
+
+alfheim.page.lamp0=&1虹彩灯笼&0会发出像彩虹一样 的颜色. 在未被激活的时候外观是黑 色的,但是一个红石信号将会 让其的颜色改变. 信号越强,可变换的颜色就更 多.<br>如果接收到了最强的信号,它 将会像彩虹桥一样闪烁
+alfheim.page.lamp1=你的猪猪跑了!
+
+alfheim.page.tctrees0=&1水晶花园&0中的确是空空如也 的. 缺少神秘学所需的一切自然 生命. 但是,&1凝矿兰&0偶尔产生的魔法 碎片可能可以帮助你制造出 这些所需的植物.
+alfheim.page.tctrees1=这就是她所说的
+alfheim.page.tctrees2=一些独特的树木
+alfheim.page.tctrees3=在不使用树叶,金属等可以强 化木材本质的材料时,似乎有 可能可以创造出一些本质并 非木材的东西,例如使用&1精灵 &1尘&0.
+alfheim.page.tctrees4=可控制的神圣能量
+alfheim.page.tctrees5=我猜你不想烧起来
+alfheim.page.tctrees6=孩子们,不要吸毒
+
+alfheim.page.silencer0=&1寂静木&0是一种天然的阻尼器, 任何寂静木块八格以内的任 何声音听起来都是正常的一 半
+alfheim.page.silencer1=更多实用工具:)
+alfheim.page.silencer2=木板
+alfheim.page.silencer3=楼梯
+alfheim.page.silencer4=半砖
+
+alfheim.page.amplifier0=通过减少&1音符盒&0内的空气,&1声 &1波放大器&0,可以让一到两格内 的声音变响得多,并且这个效 果可以相互叠加
+alfheim.page.amplifier1=声音+增幅器+号角=愤怒
+
+alfheim.page.crysanthermum0=&1双子水晶花&0是能够在任何极 端环境下生存的花朵,通过让 其吞噬&1变质石头&0来产出魔力, 变质石头所处的生物群系的 温度和常温差别越大,魔力出 产越高
+alfheim.page.crysanthermum1=石头的温度取决于它们所处 的生物群系,使双子水晶花温 度变动的程度也不同,但是还 是要注意,吞噬变质菌丝石头 后水晶花受到的影响是随机 的,可能变冷也可能变热
+alfheim.page.crysanthermum2=如果花变得太冷或者太热,它 将停止工作直到温度不再极 端. 如果水晶花吞噬的变质石头 和过去吞噬过的八块石头中 有重叠,那么你接下来八块石 头的收益也会受到削减.
+alfheim.page.crysanthermum3=被Fortanono留下了
+
+alfheim.page.andmyaxe0=虽然&1源质钢&0锻造出的武器和 装备并不是最顶尖的,但是它 拥有极强的可塑性. 似乎可以进一步强化它的力 量,用不同寻常的方式. 通过使用六种不同的力量,你 成功锻造出了一把传奇级别 的武器&1圣刃启示者&0. 它攻击的不是身体,而是灵魂 当它击中那些不朽的存在的 时候会非常有趣. 译者注:此处不朽并非单指 "不朽",而是类似神灵的这些 不朽存在.
+alfheim.page.andmyaxe1=&1圣刃启示者&0具有两个主要功 能. 它可以像剑一样挥击,也可以 像常规斧头一样砍树. 不过要注意的是它无法获得 任何工具类的附魔. 另一个能力则是吸取敌人的 法力值,吸取那些进入范围内 的敌人身上的魔力. 范围随着使用时间的延长而 变长.
+
+alfheim.page.starBlock0=&1冰封之星&0是被困在大地上恒 星之光. 它们是相对便宜的稳定光源, 并且可以发出和&1萤石&0强度一 样的光. 由于本身不稳定的特性,它们 只能由玩家收集.
+alfheim.page.starBlock1=北极星将指引你的道路
+alfheim.page.starBlock2=&1裂纹星&0是被困在大地上虹彩 一般的星光. 它们看起来像一个光球,可以 通过森林法杖将它们的质量 共享. 它们可以发出与&1萤石&0相同强 度的光,并且可以制作成虹彩 中包含的所有颜色.
+alfheim.page.starBlock3=裂网框架
+
+alfheim.page.dagger0=&1叛魂之匕&0是一个极为矛盾的 武器,在防守的时候远比进攻 要强. 作为武器,它甚至比一把木剑 还要弱. 但是在防守的时候它绝对是 最顶尖的盾牌,每次格挡的时 候剑刃上都会附着一些魔力, 如果攻击在魔力耗尽前击中 使用者,那么攻击会被完全回 弹给攻击者.
+
+alfheim.page.shimmer0=将&1下界之星&0和&1虹彩&0的能量结 合在一起,将会制造出&1虹彩石 &1英&0,一种石英的变种. 和普通的石英一样,&1虹彩石英&0 可以制造成块以供装饰. 但是因为某些原因,它无法和 天翼族之冠相结合
+alfheim.page.shimmer1=为什么不试试呢
+
+alfheim.page.throwablePotions0=将任意一个&1精灵之酿&0和火药 一起合成就可以让其变成投 掷型药水,在与地面或是实体 接触的时候爆炸,通过减少使 用次数可以提高爆炸范围和 持续时间.
+alfheim.page.throwablePotions1=要来了!
