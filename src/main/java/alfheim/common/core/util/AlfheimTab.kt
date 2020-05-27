@@ -124,6 +124,9 @@ import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.roofTile
+import alfheim.common.block.AlfheimFluffBlocks.roofTileSlabs
+import alfheim.common.block.AlfheimFluffBlocks.roofTileStairs
 import alfheim.common.block.AlfheimFluffBlocks.shrineGlass
 import alfheim.common.block.AlfheimFluffBlocks.shrineLight
 import alfheim.common.block.AlfheimFluffBlocks.shrinePanel
@@ -380,6 +383,11 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
 		addBlock(shrineRock)
+		
+		addBlock(roofTile)
+		roofTileStairs.forEach { addBlock(it) }
+		roofTileSlabs.forEach { addBlock(it) }
+		
 		addBlock(livingrockDark)
 		livingrockDarkStairs.forEach { addBlock(it) }
 		livingrockDarkSlabs.forEach { addBlock(it) }

@@ -14,6 +14,13 @@ class BlockRockShrineWhiteSlab(full: Boolean): BlockLivingSlab(full, AlfheimFluf
 	override fun getSingleBlock() = AlfheimFluffBlocks.shrineRockWhiteSlab as BlockSlab
 }
 
+class BlockRoofTileSlab(full: Boolean, val meta: Int): BlockLivingSlab(full, AlfheimFluffBlocks.roofTile, meta) {
+	
+	override fun getFullBlock() = AlfheimFluffBlocks.roofTileSlabs[meta] as BlockSlab
+	
+	override fun getSingleBlock() = AlfheimFluffBlocks.roofTileSlabsFull[meta] as BlockSlab
+}
+
 class BlockElvenSandstoneSlab(full: Boolean): BlockLivingSlab(full, AlfheimFluffBlocks.elvenSandstone, 0) {
 	
 	override fun getFullBlock() = AlfheimFluffBlocks.elvenSandstoneSlabFull as BlockSlab

@@ -1,6 +1,7 @@
 Innovations:
  Alfheim sky rework
  New quartz variations
+ New roof tiles
  Lapis Lazuli ore
  Modes configs are now with others
 
