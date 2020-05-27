@@ -35,6 +35,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.*
+import net.minecraft.world.storage.DerivedWorldInfo
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.FuelBurnTimeEvent
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
@@ -396,5 +397,13 @@ object EventHandler {
 		if (!e.entityPlayer.isSneaking && e.entityPlayer.heldItem?.item === Items.stick && ContributorsPrivacyHelper.contributors.values.contains(e.entityPlayer.commandSenderName))
 			if (e.target !== e.entityPlayer.riddenByEntity)
 				e.entityPlayer.mountEntity(e.target)
+	}
+	
+	@SubscribeEvent
+	fun onPlayerWakeUp(e: ServerWakeUpEvent) { // because there is some bug in sleeping
+		if (AlfheimConfigHandler.alfheimSleepExtraCheck && e.world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && e.world.worldInfo is DerivedWorldInfo && e.world.gameRules.getGameRuleBooleanValue("doDaylightCycle")) {
+			val i = e.world.worldInfo.worldTime + 24000L
+			(e.world.worldInfo as DerivedWorldInfo).theWorldInfo.worldTime = i - i % 24000L
+		}
 	}
 }

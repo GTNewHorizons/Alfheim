@@ -12,6 +12,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
+	const val CATEGORY_INT_OF		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "optifine"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
 	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
@@ -77,12 +78,12 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var voidCreeper				= intArrayOf(4, 1, 3)
 	
 	// OHTER
-	var anyavilBL				= emptyArray<String>()
-	var blacklistWither			= true
+	var alfheimSleepExtraCheck	= true
+	var anyavilBlackList		= emptyArray<String>()
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
 	var floatingTrapDoors		= true
-	var flugelSwapBL			= emptyArray<String>()
+	var flugelSwapBlackList		= emptyArray<String>()
 	var lightningsSpeed			= 20
 	var lolicornAlfheimOnly		= true
 	var lolicornCost			= 1000
@@ -101,16 +102,24 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var schemaMaxSize			= 64
 	var storyLines				= 4
 	var tradePortalRate			= 1200
+	var triquetrumBlackList		= emptyArray<String>()
 	var triquetrumMaxDiagonal	= -1.0
 	var uberSpreaderCapacity	= 24000
 	var uberSpreaderSpeed		= 2400
-	var voidCreepersBiomeBL		= intArrayOf(8, 9, 14, 15)
+	var voidCreepBiomeBlackList	= intArrayOf(8, 9, 14, 15)
 	var wireoverpowered			= true
 	
 	// INTEGRATION
 	var chatLimiters			= "%s"
 	var interactionSecurity 	= "default"
 	var poolRainbowCapacity		= 1000000 // TilePool.MAX_MANA
+	
+	// NEI
+	var blacklistWither			= true
+	
+	// OptiFine override
+	var clearWater				= false
+	var voidFog					= true
 	
 	// TC INTEGRATION
 	var addAspectsToBotania		= true
@@ -215,11 +224,12 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
 		voidCreeper = loadProp(CATEGORY_SPAWNRATE, "voidCreeper", voidCreeper, false, "Manaseal Creeper spawn weight (chance), min and max group count")
 		
-		anyavilBL = loadProp(CATEGORY_GENERAL, "anyavilBL", anyavilBL, false, "Blacklist of items anyavil can accept [modid:name]", false)
+		alfheimSleepExtraCheck = loadProp(CATEGORY_GENERAL, "alfheimSleepExtraCheck", alfheimSleepExtraCheck, false, "Set this to false if you are skipping whole day while sleeping")
+		anyavilBlackList = loadProp(CATEGORY_GENERAL, "anyavilBlackList", anyavilBlackList, false, "Blacklist of items anyavil can accept [modid:name]", false)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")
-		flugelSwapBL = loadProp(CATEGORY_GENERAL, "flugelSwapBL", flugelSwapBL, false, "Blacklist for items that flugel can't swap [modid:name]", false)
+		flugelSwapBlackList = loadProp(CATEGORY_GENERAL, "flugelSwapBlackList", flugelSwapBlackList, false, "Blacklist for items that flugel can't swap [modid:name]", false)
 		lightningsSpeed = loadProp(CATEGORY_GENERAL, "lightningsSpeed", lightningsSpeed, false, "How many ticks it takes between two lightings are spawned in Lightning Anomaly render")
 		lolicornAlfheimOnly = loadProp(CATEGORY_GENERAL, "lolicornAlfheimOnly", lolicornAlfheimOnly, false, "Set this to false to make lolicorn summonable in any dimension")
 		lolicornCost = loadProp(CATEGORY_GENERAL, "lolicornCost", lolicornCost, false, "How much mana lolicorn consumes on summoning (not teleporting)")
@@ -238,15 +248,19 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		schemaMaxSize = loadProp(CATEGORY_GENERAL, "schemaMaxSize", schemaMaxSize, false, "Max schema cuboid side length")
 		storyLines = loadProp(CATEGORY_GENERAL, "storyLines", storyLines, false, "Number of lines for story token")
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
+		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)
 		triquetrumMaxDiagonal = loadProp(CATEGORY_GENERAL, "triquetrumMaxDiagonal", triquetrumMaxDiagonal, false, "Change this to limit triquetrum area")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader mana per shot")
-		voidCreepersBiomeBL = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBL", voidCreepersBiomeBL, true, "Biome blacklist for Manaseal Creepers", false)
+		voidCreepBiomeBlackList = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBlackList", voidCreepBiomeBlackList, true, "Biome blacklist for Manaseal Creepers", false)
 		wireoverpowered = loadProp(CATEGORY_GENERAL, "wire.overpowered", wireoverpowered, false, "Allow WireSegal far more power than any one person should have")
 		
 		chatLimiters = loadProp(CATEGORY_INTEGRATION, "chatLimiters", chatLimiters, false, "Chat limiters for formtatting special chat lines when using chat plugins")
 		interactionSecurity = loadProp(CATEGORY_INTEGRATION, "interactionSecurity", interactionSecurity, false, "Region security manager. Visit Alfheim wiki for more info")
 		poolRainbowCapacity = loadProp(CATEGORY_INTEGRATION, "poolRainbowCapacity", poolRainbowCapacity, false, "Fabulous manapool capacity (for custom modpacks with A LOT of mana usage. Can be applied only to NEW pools)")
+		
+		clearWater = loadProp(CATEGORY_INT_OF, "clearWater", clearWater, false, "[OF override] Set this to true for clear, transparent water")
+		voidFog = loadProp(CATEGORY_INT_OF, "voidFog", voidFog, false, "[OF override] Set this to false to disable void fog")
 		
 		blacklistWither = loadProp(CATEGORY_INT_NEI, "NEI.blacklistWither", blacklistWither, true, "[NEI] Set this to false to make Wither spawner visible")
 		

@@ -67,7 +67,7 @@ object AlfheimRegistry {
 		val (w, n, x) = AlfheimConfigHandler.voidCreeper
 		
 		for (i in BiomeGenBase.getBiomeGenArray()) {
-			if (i != null && !AlfheimConfigHandler.voidCreepersBiomeBL.contains(i.biomeID))
+			if (i != null && !AlfheimConfigHandler.voidCreepBiomeBlackList.contains(i.biomeID))
 				EntityRegistry.addSpawn(EntityVoidCreeper::class.java, w, n, x, EnumCreatureType.monster, i)
 		}
 	}

@@ -42,11 +42,11 @@ class BlockElvenSandstone: BlockModMeta(Material.rock, 5, ModInfo.MODID, "ElvenS
 	@SideOnly(Side.CLIENT)
 	override fun registerBlockIcons(reg: IIconRegister) {
 		sides = Array(names.size) {
-			reg.registerIcon("${ModInfo.MODID}:ElvenSandstone${names[it]}")
+			reg.registerIcon("${ModInfo.MODID}:decor/ElvenSandstone${names[it]}")
 		}
 		
-		top = reg.registerIcon("${ModInfo.MODID}:ElvenSandstoneTop")
-		bottom = reg.registerIcon("${ModInfo.MODID}:ElvenSandstoneBottom")
+		top = reg.registerIcon("${ModInfo.MODID}:decor/ElvenSandstoneTop")
+		bottom = reg.registerIcon("${ModInfo.MODID}:decor/ElvenSandstoneBottom")
 	}
 	
 	val names = arrayOf("Normal", "Carved", "Smooth")

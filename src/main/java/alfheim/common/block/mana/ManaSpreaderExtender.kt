@@ -219,7 +219,7 @@ object ManaSpreaderExtender {
 	}
 	
 	fun isGolden(): Boolean {
-		val bakasobaka = ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
+		val bakasobaka = mc.thePlayer?.let { ContributorsPrivacyHelper.isCorrect(it, "GedeonGrays") } ?: false
 		val casting = AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1
 		
 		return bakasobaka || casting

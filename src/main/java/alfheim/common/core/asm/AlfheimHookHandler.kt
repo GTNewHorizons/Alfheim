@@ -44,13 +44,14 @@ import net.minecraft.network.*
 import net.minecraft.potion.*
 import net.minecraft.tileentity.*
 import net.minecraft.util.*
-import net.minecraft.world.World
+import net.minecraft.world.*
 import net.minecraft.world.biome.*
 import net.minecraft.world.chunk.Chunk
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
+import org.lwjgl.opengl.NVFogDistance.*
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
@@ -110,6 +111,12 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
 		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun wakeAllPlayers(world: WorldServer) {
+		MinecraftForge.EVENT_BUS.post(ServerWakeUpEvent(world))
 	}
 	
 	@JvmStatic
@@ -802,11 +809,7 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS)
 	fun setupFog(renderer: EntityRenderer, fogMode: Int, renderPartialTicks: Float) {
 		val entitylivingbase = renderer.mc.renderViewEntity
-		var flag = false
-		
-		if (entitylivingbase is EntityPlayer) {
-			flag = entitylivingbase.capabilities.isCreativeMode
-		}
+		val creative = if (entitylivingbase is EntityPlayer) entitylivingbase.capabilities.isCreativeMode else false
 		
 		fun setFogColorBuffer(p_78469_1_: Float, p_78469_2_: Float, p_78469_3_: Float, p_78469_4_: Float): FloatBuffer {
 			renderer.fogColorBuffer.clear()
@@ -822,7 +825,7 @@ object AlfheimHookHandler {
 			glFogf(GL_FOG_END, 8f)
 			
 			if (GLContext.getCapabilities().GL_NV_fog_distance) {
-				glFogi(34138, 34139)
+				glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 			}
 			
 			glFogf(GL_FOG_START, 0f)
@@ -837,7 +840,7 @@ object AlfheimHookHandler {
 			
 			if (MinecraftForge.EVENT_BUS.post(event)) {
 				glFogf(GL_FOG_DENSITY, event.density)
-			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
+			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !creative) {
 				f1 = 5f
 				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
 				
@@ -856,7 +859,7 @@ object AlfheimHookHandler {
 				}
 				
 				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(34138, 34139) // wtf magic numbers
+					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 				}
 			} else if (renderer.cloudFog) {
 				glFogi(GL_FOG_MODE, GL_EXP)
@@ -865,9 +868,9 @@ object AlfheimHookHandler {
 				glFogi(GL_FOG_MODE, GL_EXP)
 				
 				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
-					glFogf(GL_FOG_DENSITY, 0.05f)
+					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.05f)
 				} else {
-					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
+					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				glFogi(GL_FOG_MODE, GL_EXP)
@@ -875,7 +878,7 @@ object AlfheimHookHandler {
 			} else {
 				f1 = renderer.farPlaneDistance
 				
-				if (renderer.mc.theWorld.provider.worldHasVoidParticles && !flag) {
+				if (renderer.mc.theWorld.provider.worldHasVoidParticles && AlfheimConfigHandler.voidFog && !creative) {
 					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).D / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.D + 4.0) / 32.0
 					
 					if (d0 < 1.0) {
@@ -907,7 +910,7 @@ object AlfheimHookHandler {
 				}
 				
 				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(34138, 34139)
+					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 				}
 				
 				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.I, entitylivingbase.posZ.I)) {

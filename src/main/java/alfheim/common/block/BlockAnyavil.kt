@@ -65,7 +65,7 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 			}
 			te.item = null
 		}
-		if (stack != null && stack.stackSize == 1 && stack.item.isDamageable && GameRegistry.findUniqueIdentifierFor(stack.item).toString() !in AlfheimConfigHandler.anyavilBL) {
+		if (stack != null && stack.stackSize == 1 && stack.item.isDamageable && GameRegistry.findUniqueIdentifierFor(stack.item).toString() !in AlfheimConfigHandler.anyavilBlackList) {
 			te.item = stack.copy()
 			te.item!!.stackSize = stack.stackSize
 			stack.stackSize = 0
@@ -92,11 +92,13 @@ class BlockAnyavil: BlockContainerMod(Material.iron), IManaTrigger, IWandable, I
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block?, meta: Int) {
-		val te = world.getTileEntity(x, y, z) as TileItemContainer
-		if (te.item != null) {
-			val entityitem = EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!)
-			world.spawnEntityInWorld(entityitem)
-			te.item = null
+		run {
+			val te = world.getTileEntity(x, y, z) as? TileItemContainer ?: return@run
+			if (te.item != null) {
+				val entityitem = EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!)
+				world.spawnEntityInWorld(entityitem)
+				te.item = null
+			}
 		}
 		
 		super.breakBlock(world, x, y, z, block, meta)

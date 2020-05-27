@@ -25,8 +25,8 @@ class BlockShrinePillar: BlockModRotatedPillar(Material.rock) {
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		iconTop = reg.registerIcon(ModInfo.MODID + ":shrines/ShrinePillarTop")
-		iconSide = reg.registerIcon(ModInfo.MODID + ":shrines/ShrinePillar")
+		iconTop = reg.registerIcon(ModInfo.MODID + ":decor/ShrinePillarTop")
+		iconSide = reg.registerIcon(ModInfo.MODID + ":decor/ShrinePillar")
 	}
 
 	override fun getEntry(world: World?, x: Int, y: Int, z: Int, player: EntityPlayer?, stack: ItemStack?) = null

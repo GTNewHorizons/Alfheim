@@ -1,9 +1,16 @@
 Innovations:
+ Alfheim sky rework
+ New quartz variations
  Lapis Lazuli ore
  Modes configs are now with others
 
 Fixes:
  Silktouch on leaves wrong meta dropped
- Fixed bossbar fix
+ Bossbar fix
  Schematic Controller crash on dump w/o Codechicken Core
  Improved minimal graphics setting
+ Alfheim winterish water color
+ Bed explosion in Alfheim
+ Time not changed after slleping in Alfheim
+ Triquetrum chaotic behaviour
+ [OptiFine] Clear water and Void fog settings fixed and moved to Alfheim configs

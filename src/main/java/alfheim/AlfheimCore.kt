@@ -7,10 +7,8 @@ import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
-import alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
-import alfheim.common.integration.thaumcraft.thaumictinkerer.ThaumicTinkererAlfheimConfig
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
@@ -109,8 +107,6 @@ class AlfheimCore {
 			ThaumcraftAlfheimConfig.loadConfig()
 			ThaumcraftAlfheimModule.postInit()
 		}
-		if (Loader.isModLoaded("AWWayofTime")) BloodMagicAlfheimConfig
-		if (Loader.isModLoaded("ThaumicTinkerer")) ThaumicTinkererAlfheimConfig
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig()
 		if (TiCLoaded) TinkersConstructAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("Waila")) WAILAAlfheimConfig.loadConfig()

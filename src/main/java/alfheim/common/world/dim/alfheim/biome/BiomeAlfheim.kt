@@ -19,8 +19,9 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
 		clearSpawn()
-		setColor(0xA67C00)
-		waterColorMultiplier = 0x1D1D4E
+		setColor(getBiomeGrassColor(0, 0, 0))
+		waterColorMultiplier = if (AlfheimCore.winter) 0x1D1D4E else 0x00FFFF
+		temperature = if (AlfheimCore.winter) 0f else 0.5f
 		
 		createChunkGen_InXZ_List.clear()
 		createChunkGen_InXYZ_List.clear()
@@ -38,9 +39,7 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 		spawnableCreatureList.add(SpawnListEntry(clazz, w, i, x))
 	}
 	
-	override fun getFloatTemperature(x: Int, y: Int, z: Int): Float {
-		return if (AlfheimCore.winter) 0f else 0.5f
-	}
+	override fun getSkyColorByTemp(temp: Float) = if (AlfheimCore.winter) 0x576cd9 else 0x266eff
 	
 	companion object {
 		const val offset = -7

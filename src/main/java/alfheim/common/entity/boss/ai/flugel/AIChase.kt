@@ -32,7 +32,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 					if (flagStack1) {
 						val id = GameRegistry.findUniqueIdentifierFor(stack1.item)
 						flagStack1 = if (id != null)
-							flagStack1 && AlfheimConfigHandler.flugelSwapBL.contains(id.toString())
+							flagStack1 && AlfheimConfigHandler.flugelSwapBlackList.contains(id.toString())
 						else
 							false
 					}
@@ -41,7 +41,7 @@ class AIChase(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 					if (flagStack2) {
 						val id = GameRegistry.findUniqueIdentifierFor(stack2.item)
 						flagStack2 = if (id != null)
-							flagStack2 && AlfheimConfigHandler.flugelSwapBL.contains(id.toString())
+							flagStack2 && AlfheimConfigHandler.flugelSwapBlackList.contains(id.toString())
 						else
 							false
 					}

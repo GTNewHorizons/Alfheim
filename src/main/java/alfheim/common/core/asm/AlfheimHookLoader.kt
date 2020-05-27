@@ -3,7 +3,6 @@ package alfheim.common.core.asm
 import alexsocol.asjlib.ASJReflectionHelper
 import alexsocol.asjlib.asm.*
 import alfheim.api.ModInfo
-import alfheim.client.core.asm.BotaniaGlowingRenderFixes
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
@@ -34,6 +33,7 @@ class AlfheimHookLoader: HookLoader() {
 		
 		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
 		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
+		registerHookContainer("alfheim.common.block.QuartzExtender")
 		registerHookContainer("alfheim.common.block.mana.ManaSpreaderExtender")
 		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
 		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")

@@ -30,8 +30,38 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		ResourceLocation(LibResources.MISC_PLANET + "5.png")
 	)
 	
+	var glSkyList = -1
+	
+	init {
+		val tessellator = Tessellator.instance
+		glSkyList = GLAllocation.generateDisplayLists(1)
+		glNewList(glSkyList, GL_COMPILE)
+		val b2: Byte = 32
+		val i = 256 / b2 + 2
+		val f = 4.0
+		var j: Int
+		var k: Int
+		
+		j = -b2 * i
+		while (j <= b2 * i) {
+			k = -b2 * i
+			while (k <= b2 * i) {
+				tessellator.startDrawingQuads()
+				tessellator.addVertex((j + 0).D, f, (k + 0).D)
+				tessellator.addVertex((j + b2).D, f, (k + 0).D)
+				tessellator.addVertex((j + b2).D, f, (k + b2).D)
+				tessellator.addVertex((j + 0).D, f, (k + b2).D)
+				tessellator.draw()
+				k += b2.toInt()
+			}
+			j += b2.toInt()
+		}
+		
+		glEndList()
+	}
+	
 	override fun render(partialTicks: Float, world: WorldClient, mc: Minecraft) {
-		val glSkyList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.GL_SKY_LIST)
+		// FIXME NO REFLECTION IN MY MOD!!!
 		val starGLCallList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.STAR_GL_CALL_LIST)
 		glDisable(GL_TEXTURE_2D)
 		val vec3 = world.getSkyColor(mc.renderViewEntity, partialTicks)
@@ -58,6 +88,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		var f7: Float
 		var f8: Float
 		var f10: Float
+		
 		// === Sunset
 		if (afloat != null) {
 			glDisable(GL_TEXTURE_2D)
@@ -92,15 +123,19 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val celAng = world.getCelestialAngle(partialTicks)
 		var effCelAng = celAng
 		if (celAng > 0.5) effCelAng = 0.5f - (celAng - 0.5f)
+		
+		
+		
 		// === Planets
 		f10 = 20f
 		val lowA = max(0f, effCelAng - 0.3f) * f6
 		var a = max(0.1f, lowA)
+		val alphaMods = arrayOf(8, 4, 4, 6, 8, 10)
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
 		glPushMatrix()
-		glColor4f(1f, 1f, 1f, a * 4 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
 		glRotatef(90f, 0.5f, 0.5f, 0f)
 		for (p in planetTextures.indices) {
+			glColor4f(1f, 1f, 1f, a * alphaMods[p] * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
 			mc.renderEngine.bindTexture(planetTextures[p])
 			drawObject(tessellator1, f10)
 			when (p) {
@@ -132,6 +167,9 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		}
 		glColor4f(1f, 1f, 1f, 1f)
 		glPopMatrix()
+		
+		
+		
 		// === Rays
 		mc.renderEngine.bindTexture(textureSkybox)
 		f10 = 20f
@@ -141,7 +179,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		glTranslatef(0f, -1f, 0f)
 		glRotatef(220f, 1f, 0f, 0f)
 		glColor4f(1f, 1f, 1f, a * (1f - mc.theWorld.rainingStrength))
-		val angles = 90
+		val angles = 360 // TODO config
 		val y = 2f
 		val y0 = 0f
 		val uPer = 1f / 360f
@@ -187,6 +225,8 @@ object AlfheimSkyRenderer: IRenderHandler() {
 			}
 		}
 		glPopMatrix()
+		
+		
 		// === Rainbow
 		glPushMatrix()
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
@@ -224,17 +264,23 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		glPopMatrix()
 		glColor4f(1f, 1f, 1f, (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE, 1, 0)
+		
+		
+		
 		// === Sun
 		glRotatef(world.getCelestialAngle(partialTicks) * 360f, 1f, 0f, 0f)
 		f10 = 60f
 		mc.renderEngine.bindTexture(textureSun)
 		drawObject(tessellator1, f10)
+		
+		
+		
 		// === Moon
 		f10 = 60f
 		mc.renderEngine.bindTexture(textureMoonPhases)
-		val k = world.moonPhase
-		val l = k % 4
-		val i1 = k / 4 % 2
+		val p = world.moonPhase
+		val l = p % 4
+		val i1 = p / 4 % 2
 		val f14 = l.F / 4f
 		val f15 = i1.F / 2f
 		val f16 = (l + 1) / 4f
@@ -245,8 +291,11 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		tessellator1.addVertexWithUV(f10.D, -100.0, -f10.D, f14.D, f15.D)
 		tessellator1.addVertexWithUV(-f10.D, -100.0, -f10.D, f16.D, f15.D)
 		tessellator1.draw()
+		
+		
+		
 		// === Stars
-		f6 *= max(0.1f, effCelAng * 2)
+		f6 = max(0.0025f, effCelAng - 0.25f) * 20
 		val t = (ClientTickHandler.ticksInGame + partialTicks + 2000) * 0.005f
 		glPushMatrix()
 		glDisable(GL_TEXTURE_2D)

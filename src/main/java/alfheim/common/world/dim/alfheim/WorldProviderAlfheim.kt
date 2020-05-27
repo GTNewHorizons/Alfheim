@@ -5,14 +5,16 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.biome.*
 import alfheim.common.world.dim.alfheim.customgens.WorldGenAlfheimThaumOre
+import net.minecraft.util.Vec3
 import ru.vamig.worldengine.*
 import ru.vamig.worldengine.standardcustomgen.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
+import kotlin.math.cos
 
 class WorldProviderAlfheim: WE_WorldProvider() {
 	
-	override fun getCloudHeight() = 180f
+	override fun getCloudHeight() = 164f
 	override fun isSurfaceWorld() = true
 	
 	override fun calculateCelestialAngle(var1: Long, var3: Float): Float {
@@ -28,12 +30,12 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		}
 		
 		val f2 = f1
-		f1 = 1f - ((Math.cos(f1.D * Math.PI) + 1.0) / 2.0).F
+		f1 = 1f - ((cos(f1.D * Math.PI) + 1.0) / 2.0).F
 		f1 = f2 + (f1 - f2) / 3f
 		return f1
 	}
 	
-	override fun canRespawnHere() = AlfheimConfigHandler.enableElvenStory xor AlfheimConfigHandler.enableAlfheimRespawn
+	override fun canRespawnHere() = AlfheimConfigHandler.enableElvenStory || AlfheimConfigHandler.enableAlfheimRespawn
 	
 	override fun getDimensionName() = "Alfheim"
 	
@@ -96,4 +98,28 @@ class WorldProviderAlfheim: WE_WorldProvider() {
 		WE_Biome.addBiomeToGeneration(cp, BiomeForest)
 		WE_Biome.addBiomeToGeneration(cp, BiomeForest2)
 	}
+	
+	override fun getFogColor(sunAngle: Float, partialTicks: Float): Vec3 {
+		val current = super.getFogColor(sunAngle, partialTicks)
+		
+		return current
+		
+		// val oldr = 0.7529411911964417
+		// val oldg = 0.8470588326454163
+		// val oldb = 1.0
+		//
+		// val newr = 0.25098039215686274
+		// val newg = 0.5019607843137255
+		// val newb = 1.0
+		//
+		// return Vec3.createVectorHelper(newr * current.xCoord / oldr, newg * current.yCoord / oldg, newb * current.zCoord / oldb)
+	}
 }
+
+// fun main() {
+// 	val color = Color(0x4080ff)
+//
+// 	color.red.also{ println(it / 255.0) }
+// 	color.green.also{ println(it / 255.0) }
+// 	color.blue.also{ println(it / 255.0) }
+// }

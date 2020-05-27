@@ -692,11 +692,11 @@ object AlfheimRecipes {
 		
 		addShapedRecipe(ItemStack(livingcobbleSlab2, 6), "LLL", 'L', ItemStack(livingcobble, 1, 2))
 		
-		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab))
+		addShapedRecipe(ItemStack(livingcobble, 1, 0), "L", "L", 'L', ItemStack(livingcobbleSlab))
 		
-		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab1))
+		addShapedRecipe(ItemStack(livingcobble, 1, 1), "L", "L", 'L', ItemStack(livingcobbleSlab1))
 		
-		addShapedRecipe(ItemStack(livingcobble, 1), "L", "L", 'L', ItemStack(livingcobbleSlab2))
+		addShapedRecipe(ItemStack(livingcobble, 1, 2), "L", "L", 'L', ItemStack(livingcobbleSlab2))
 		
 		addShapedRecipe(ItemStack(livingcobbleWall, 6), "LLL", "LLL", 'L', ItemStack(livingcobble))
 		

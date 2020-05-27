@@ -133,7 +133,7 @@ object ASJUtilities {
 		for (player in players)
 			if (player is EntityPlayerMP) {
 				if (Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
-					player.playerNetServerHandler.sendPacket(tile.descriptionPacket)
+					tile.descriptionPacket?.let { player.playerNetServerHandler.sendPacket(it) }
 			}
 	}
 	
