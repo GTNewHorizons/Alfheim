@@ -1,22 +1,5 @@
-IMPORTANT: Removed admin testing mode because of security breach, update mod IMMEDIATELY!
-(otherwise nerf vaniall op permissions with LuckPerms or similar)
-
 Innovations:
- Alfheim sky rework
- New quartz variations
- New roof tiles
- Lapis Lazuli ore
- Modes configs are now with others
+ --
 
 Fixes:
- Silktouch on leaves wrong meta dropped
- Bossbar fix
- Schematic Controller crash on dump w/o Codechicken Core
- Improved minimal graphics setting
- Alfheim winterish water color
- Bed explosion in Alfheim
- Time not changed after sleeping in Alfheim
- Triquetrum chaotic behaviour
- Improved contributors security
- Packet security fixes
- [OptiFine] Clear water and Void fog settings fixed and moved to Alfheim configs
+ --
