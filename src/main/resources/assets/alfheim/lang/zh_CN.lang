@@ -996,9 +996,9 @@ tile.alfheim:irisLamp.name=棱彩灯笼
 tile.alfheim:quartzStairsShimmer.name=棱彩石英楼梯
 tile.alfheim:quartzSlabShimmerHalf.name=棱彩石英半砖
 tile.alfheim:quartzSlabShimmerFull.name=棱彩石英半砖
-tile.alfheim:blockShimmerQuartz.name=棱彩石英块
-tile.alfheim:chiseledShimmerQuartz.name=錾制棱彩石英块
-tile.alfheim:pillarShimmerQuartz.name=棱彩石英支柱
+tile.botania:blockShimmerQuartz.name=棱彩石英块
+tile.botania:chiseledShimmerQuartz.name=錾制棱彩石英块
+tile.botania:pillarShimmerQuartz.name=棱彩石英支柱
 
 tile.alfheim:crysanthermum.name=双子水晶花
 tile.botania:flower.crysanthermum.name=双子水晶花
