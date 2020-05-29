@@ -10,7 +10,7 @@
 	<version id="UNIVERSAL">
 		<val>$json["Official Alfheim Discord server is here! *",{"text":"click","color":"gold","hoverEvent":{"action":"show_text","value":{"text":"Join discord server","color":"gold"}},"clickEvent":{"action":"open_url","value":"https://discord.gg/dqQXZHq"}},"*"]</val>	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/70ee81b709a48f3bc789e21cf8166717017d7e17/modular/Alfheim-Modular-7.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/5ef8e04f89de57072180cb303f3387133d7c09f5/modular/Alfheim-Modular-7.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
