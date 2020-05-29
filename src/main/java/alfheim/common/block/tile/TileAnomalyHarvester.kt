@@ -31,8 +31,12 @@ class TileAnomalyHarvester: TileMod() {
 		if (worldObj.totalWorldTime == tick) return
 		tick = worldObj.totalWorldTime
 		
+		if (worldObj.isBlockDirectlyGettingPowered(xCoord, yCoord, zCoord) || power <= 0.0) return
+		
 		for (st in subTiles)
 			AlfheimAPI.anomalyBehaviors[st]?.invoke(this)
+		
+		if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) return
 		
 		renderBoundBox()
 	}

@@ -7,6 +7,7 @@ import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.entity.RenderEntityFlugel
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.material.ItemElvenResource
 import cpw.mods.fml.relauncher.*
@@ -26,14 +27,17 @@ class ModelEntityFlugel: ModelBipedNew() {
 			val font = mc.fontRenderer
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			glPushMatrix()
-			glRotated(180.0, 1.0, 0.0, 0.0)
-			glTranslated(0.0, -1.5, 0.0)
-			mc.renderEngine.bindTexture(LibResourceLocations.miku1)
-			model1.renderAll()
-			glPopMatrix()
 			
-			if (entity is EntityLivingBase) {
+			if (model1 != null) {
+				glPushMatrix()
+				glRotated(180.0, 1.0, 0.0, 0.0)
+				glTranslated(0.0, -1.5, 0.0)
+				mc.renderEngine.bindTexture(LibResourceLocations.miku1)
+				model1.renderAll()
+				glPopMatrix()
+			}
+			
+			if (entity is EntityLivingBase && model2 != null) {
 				glPushMatrix()
 				glRotated(ASJRenderHelper.interpolate(entity.prevRenderYawOffset.D, entity.renderYawOffset.D), 0.0, -1.0, 0.0)
 				glRotated(ASJRenderHelper.interpolate(entity.prevRotationYawHead.D, entity.rotationYawHead.D) - 270, 0.0, 1.0, 0.0)
@@ -203,7 +207,7 @@ class ModelEntityFlugel: ModelBipedNew() {
 	}
 	
 	companion object {
-		val model1 = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
-		val model2 = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
+		val model1 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku1.obj"))!!
+		val model2 = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Miku2.obj"))!!
 	}
 }

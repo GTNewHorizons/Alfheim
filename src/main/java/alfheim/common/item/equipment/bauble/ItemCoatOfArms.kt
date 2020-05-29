@@ -96,7 +96,7 @@ class ItemCoatOfArms: ItemBauble("coatOfArms"), ICosmeticBauble, IPriestColorOve
 			if (stack.meta == 16) {
 				glEnable(GL_BLEND)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-				glAlphaFunc(GL_EQUAL, 1F)
+				glAlphaFunc(GL_GREATER, 0.9F)
 				ShaderHelper.useShader(ShaderHelper.halo)
 			}
 			renderIcon(stack.meta)

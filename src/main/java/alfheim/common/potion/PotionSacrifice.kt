@@ -20,11 +20,11 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	
 	override fun isReady(time: Int, mod: Int): Boolean {
 		timeQueued = time
-		return AlfheimCore.enableMMO && timeQueued <= 32
+		return AlfheimConfigHandler.enableMMO && timeQueued <= 32
 	}
 	
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		if (timeQueued == 32)
 			for (i in 0..7)
 				target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, ModInfo.MODID + ":redexp", 10000f, 0.8f + target.worldObj.rand.nextFloat() * 0.2f)
@@ -34,7 +34,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.removeAttributesModifiersFromEntity(target, attributes, ampl)
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(SpellSacrifice.radius)) as List<EntityLivingBase>
 		var dmg: DamageSource
 		for (e in l) {

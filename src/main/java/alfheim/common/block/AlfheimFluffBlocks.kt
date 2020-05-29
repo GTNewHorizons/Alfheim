@@ -4,11 +4,13 @@ import alexsocol.asjlib.extendables.block.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks.setHarvestLevelI
 import alfheim.common.block.base.BlockStairsMod
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -28,15 +30,16 @@ object AlfheimFluffBlocks {
 	val dreamwoodFenceGate: Block
 	val dreamwoodBarkFence: Block
 	val dreamwoodBarkFenceGate: Block
-	val dwarfPlanks: Block
 	val dwarfLantern: Block
+	val dwarfPlanks: Block
+	val dwardTrapDoor: Block
 	val elvenSandstone: Block
-	val elvenSandstoneStairs: Array<Block>
+	val elvenSandstoneStairs: List<Block>
 	val elvenSandstoneSlab: Block
 	val elvenSandstoneSlabFull: Block
 	val elvenSandstoneSlab2: Block
 	val elvenSandstoneSlab2Full: Block
-	val elvenSandstoneWalls: Array<Block>
+	val elvenSandstoneWalls: List<Block>
 	val livingcobbleStairs: Block
 	val livingcobbleStairs1: Block
 	val livingcobbleStairs2: Block
@@ -49,14 +52,18 @@ object AlfheimFluffBlocks {
 	val livingcobbleWall: Block
 	val livingrockBrickWall: Block
 	val livingrockDark: Block
-	val livingrockDarkStairs: Array<Block>
-	val livingrockDarkSlabs: Array<Block>
-	val livingrockDarkSlabsFull: Array<Block>
-	val livingrockDarkWalls: Array<Block>
+	val livingrockDarkStairs: List<Block>
+	val livingrockDarkSlabs: List<Block>
+	val livingrockDarkSlabsFull: List<Block>
+	val livingrockDarkWalls: List<Block>
 	val livingwoodFence: Block
 	val livingwoodFenceGate: Block
 	val livingwoodBarkFence: Block
 	val livingwoodBarkFenceGate: Block
+	val roofTile: Block
+	val roofTileSlabs: List<Block>
+	val roofTileSlabsFull: List<Block>
+	val roofTileStairs: List<Block>
 	val shrineLight: Block
 	val shrineGlass: Block
 	val shrinePanel: Block
@@ -65,10 +72,9 @@ object AlfheimFluffBlocks {
 	val shrineRockWhiteSlab: Block
 	val shrineRockWhiteSlabFull: Block
 	val shrineRockWhiteStairs: Block
-	val dwardTrapDoor: Block
 	
 	init {
-		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "shrines/")
+		shrineRock = BlockModMeta(Material.rock, 16, ModInfo.MODID, "ShrineRock", AlfheimTab, 10f, harvLvl = 2, resist = 10000f, folder = "decor/")
 		shrinePillar = BlockShrinePillar()
 		shrineRockWhiteStairs = object: BlockStairsMod(shrineRock, 0, "ShrineRockWhiteStairs") {
 			override fun register() { GameRegistry.registerBlock(this, ItemBlockLeavesMod::class.java, name) }
@@ -79,13 +85,20 @@ object AlfheimFluffBlocks {
 		(shrineRockWhiteSlab as BlockModSlab).register()
 		(shrineRockWhiteSlabFull as BlockModSlab).register()
 		
-		val metas = ((0..3) - 2)
+		val roofs = 3
+		roofTile = BlockModMeta(Material.rock, 3, ModInfo.MODID, "CustomRoof", AlfheimTab, 2f, resist = 5f, folder = "decor/").setStepSound(Block.soundTypeStone)
+		roofTileSlabs = (0 until roofs).map { BlockRoofTileSlab(false, it).setCreativeTab(AlfheimTab) }
+		roofTileSlabsFull = (0 until roofs).map { BlockRoofTileSlab(true, it).setCreativeTab(AlfheimTab) }
+		roofTileSlabs.forEach { (it as BlockModSlab).register() }
+		roofTileSlabsFull.forEach { (it as BlockModSlab).register() }
+		roofTileStairs = (0 until roofs).map { BlockModStairs(roofTile, it, "CustomRoofStairs$it").setCreativeTab(AlfheimTab) }
 		
-		livingrockDark = BlockModMeta(Material.rock, 4, ModInfo.MODID, "DarkLivingRock", AlfheimTab, 2f, resist = 10f, folder = "shrines/")
-		livingrockDarkStairs = metas.map { BlockModStairs(livingrockDark, it, "DarkLivingRockStairs$it").setCreativeTab(AlfheimTab) }.toTypedArray()
+		val metas = (0..3) - 2
+		livingrockDark = BlockModMeta(Material.rock, 4, ModInfo.MODID, "DarkLivingRock", AlfheimTab, 2f, resist = 10f, folder = "decor/")
+		livingrockDarkStairs = metas.map { BlockModStairs(livingrockDark, it, "DarkLivingRockStairs$it").setCreativeTab(AlfheimTab) }
 		
-		livingrockDarkSlabs = metas.map { BlockLivingrockDarkSlab(false, it).setCreativeTab(AlfheimTab) }.toTypedArray()
-		livingrockDarkSlabsFull = metas.map { BlockLivingrockDarkSlab(true, it).setCreativeTab(AlfheimTab) }.toTypedArray()
+		livingrockDarkSlabs = metas.map { BlockLivingrockDarkSlab(false, it).setCreativeTab(AlfheimTab) }
+		livingrockDarkSlabsFull = metas.map { BlockLivingrockDarkSlab(true, it).setCreativeTab(AlfheimTab) }
 		livingrockDarkSlabs.forEach { (it as BlockModSlab).register() }
 		livingrockDarkSlabsFull.forEach { (it as BlockModSlab).register() }
 		
@@ -96,13 +109,13 @@ object AlfheimFluffBlocks {
 				.setResistance(8000f)
 				.setStepSound(Block.soundTypeStone)
 				.setHarvestLevelI("pickaxe", 2)
-		}.toTypedArray()
+		}
 		
 		dwarfLantern = BlockDwarfLantern()
 		
-		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "shrines/").setLightLevel(1f).setLightOpacity(0)
+		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "decor/").setLightLevel(1f).setLightOpacity(0)
 		shrineGlass = BlockShrineGlass()
-		shrinePanel = object: BlockPaneMeta(Material.glass, 4, "ShrinePanel", "shrines/") {
+		shrinePanel = object: BlockPaneMeta(Material.glass, 4, "ShrinePanel", "decor/") {
 			override fun getRenderBlockPass() = 1
 			override fun canPaneConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, dir: ForgeDirection) = super.canPaneConnectTo(world, x, y, z, dir) || world.getBlock(x, y, z) == shrineGlass
 		}	.setBlockName("ShrinePanel")
@@ -115,13 +128,13 @@ object AlfheimFluffBlocks {
 		
 		Blocks.planks
 		
-		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "shrines/")
+		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "decor/")
 		
 		elvenSandstone = BlockElvenSandstone()
 		elvenSandstoneStairs = arrayOf(0, 2).map {
 			BlockModStairs(elvenSandstone, it, "ElvenSandstoneStairs$it")
 				.setCreativeTab(AlfheimTab)
-		}.toTypedArray()
+		}
 		
 		elvenSandstoneSlab = BlockElvenSandstoneSlab(false).setCreativeTab(AlfheimTab).setHardness(1.5f)
 		elvenSandstoneSlabFull = BlockElvenSandstoneSlab(true).setCreativeTab(null).setHardness(1.5f)
@@ -137,7 +150,7 @@ object AlfheimFluffBlocks {
 			BlockModWall(elvenSandstone, it)
 				.setCreativeTab(AlfheimTab)
 				.setStepSound(Block.soundTypeStone)
-		}.toTypedArray()
+		}
 		
 		livingcobbleStairs = BlockModStairs(AlfheimBlocks.livingcobble, 0, "LivingCobbleStairs").setCreativeTab(AlfheimTab)
 		livingcobbleStairs1 = BlockModStairs(AlfheimBlocks.livingcobble, 1, "LivingCobbleStairs1").setCreativeTab(AlfheimTab)
@@ -228,7 +241,11 @@ object AlfheimFluffBlocks {
 			.setResistance(5f)
 			.setStepSound(Block.soundTypeWood)
 		
-		dwardTrapDoor = BlockModTrapDoor(Material.wood, "DwarfTrapDoor")
+		dwardTrapDoor = object: BlockModTrapDoor(Material.wood, "DwarfTrapDoor") {
+			override fun registerBlockIcons(reg: IIconRegister) {
+				blockIcon = IconHelper.forBlock(reg, this, "", "decor")
+			}
+		}
 			.setCreativeTab(CreativeTabs.tabRedstone)
 			.setHardness(3f)
 			.setStepSound(Block.soundTypeWood)

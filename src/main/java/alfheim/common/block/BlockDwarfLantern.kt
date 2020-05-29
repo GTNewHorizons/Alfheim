@@ -27,14 +27,14 @@ class BlockDwarfLantern: BlockMod(Material.rock) {
 	}
 	
 	override fun registerBlockIcons(reg: IIconRegister) {
-		blockIcon = IconHelper.forBlock(reg, this, "Top", "shrines")
+		blockIcon = IconHelper.forBlock(reg, this, "Top", "decor")
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	override fun loadTextures(event: TextureStitchEvent.Pre) {
 		if (event.map.textureType == 0)
-			iconSide = InterpolatedIconHelper.forBlock(event.map, this, "", "shrines")!!
+			iconSide = InterpolatedIconHelper.forBlock(event.map, this, "", "decor")!!
 	}
 	
 	override fun getIcon(side: Int, meta: Int) = (if (meta != 1) { if (side < 2) blockIcon else iconSide } else blockIcon)!!

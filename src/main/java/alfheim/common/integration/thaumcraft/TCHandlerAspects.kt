@@ -14,7 +14,7 @@ import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anomaly
 import alfheim.common.block.AlfheimBlocks.anyavil
 import alfheim.common.block.AlfheimBlocks.dreamSapling
-import alfheim.common.block.AlfheimBlocks.elvenOres
+import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.manaAccelerator
@@ -94,11 +94,11 @@ object TCHandlerAlfheimAspects {
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 5), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("ordo"), 3).add(Aspect.getAspect("vitreus"), 2))
 		ThaumcraftApi.registerObjectTag(ItemStack(alfheimThaumOre, 1, 6), AspectList().add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("perditio"), 3).add(Aspect.getAspect("vitreus"), 2))
 
-		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 0), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("vitreus"), 3))    // dragonstone
-		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 1), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("metallum"), 3))                                                // elementium
-		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 2), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("vitreus"), 3))                                                // quartz
-		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 3), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 1).add(Aspect.getAspect("metallum"), 2))    // gold
-		ThaumcraftApi.registerObjectTag(ItemStack(elvenOres, 1, 4), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("sensus"), 3))                                                // iffesal
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 0), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 3).add(Aspect.getAspect("vitreus"), 3))    // dragonstone
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 1), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("metallum"), 3))                                                // elementium
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 2), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("vitreus"), 3))                                                // quartz
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 3), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("lucrum"), 1).add(Aspect.getAspect("metallum"), 2))    // gold
+		ThaumcraftApi.registerObjectTag(ItemStack(elvenOre, 1, 4), AspectList().add(Aspect.getAspect("praecantatio"), 1).add(Aspect.getAspect("terra"), 1).add(Aspect.getAspect("sensus"), 3))                                                // iffesal
 		ThaumcraftApi.registerObjectTag(ItemStack(livingcobble), AspectList().add(Aspect.getAspect("perditio"), 1).add(Aspect.getAspect("terra"), 1))
 		ThaumcraftApi.registerObjectTag(ItemStack(elvenSand), AspectList().add(Aspect.getAspect("perditio"), 1).add(Aspect.getAspect("terra"), 1))
 		ThaumcraftApi.registerObjectTag(ItemStack(altWood1, 1, 3), AspectList().add(Aspect.getAspect("arbor"), 4).add(Aspect.getAspect("herba"), 4))

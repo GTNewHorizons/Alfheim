@@ -103,7 +103,7 @@ object LibResourceLocations {
 	val wingsButterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Butterfly.png")
 	val wingsDarkPhoenix = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/DarkPhoenix.png")
 	val wingsHeavenBird = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/HeavenBird.png")
-	val wingsSprite = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/HeavenSprite.png")
+	val wingsSprite = ResourceLocation(ModInfo.MODID, "textures/model/entity/wings/Sprite.png")
 	
 	const val MOB = 11
 	const val NPC = 12

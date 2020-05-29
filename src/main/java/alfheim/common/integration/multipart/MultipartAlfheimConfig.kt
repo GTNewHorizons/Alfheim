@@ -69,11 +69,11 @@ object MPHandler {
     }
 
     fun registerMultipart(block: Block, meta: Int) {
-        MicroMaterialRegistry.registerMaterial(BlockMicroMaterial(block, meta), block.unlocalizedName + if (meta == 0) "" else "_" + meta)
+        MicroMaterialRegistry.registerMaterial(BlockMicroMaterial(block, meta), block.unlocalizedName + if (meta == 0) "" else "_$meta")
     }
 
     fun registerOverlaidMultipart(block: Block, meta: Int) {
-        MicroMaterialRegistry.registerMaterial(ColoredMicroMaterial(block, meta), block.unlocalizedName + if (meta == 0) "" else "_" + meta)
+        MicroMaterialRegistry.registerMaterial(ColoredMicroMaterial(block, meta), block.unlocalizedName + if (meta == 0) "" else "_$meta")
     }
 }
 

@@ -10,14 +10,14 @@ import net.minecraft.entity.player.EntityPlayer
 
 class PotionNoclip: PotionAlfheim(AlfheimConfigHandler.potionIDNoclip, "noclip", false, 0xAAAAAA) {
 	
-	override fun isReady(time: Int, amp: Int) = AlfheimCore.enableMMO
+	override fun isReady(time: Int, amp: Int) = AlfheimConfigHandler.enableMMO
 	
 	override fun performEffect(target: EntityLivingBase, time: Int) {
-		if (AlfheimCore.enableMMO) target.noClip = true
+		if (AlfheimConfigHandler.enableMMO) target.noClip = true
 	}
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase, attributes: BaseAttributeMap, amp: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		if (target is EntityPlayer) {
 			target.capabilities.allowFlying = true
 			target.capabilities.isFlying = true
@@ -28,7 +28,7 @@ class PotionNoclip: PotionAlfheim(AlfheimConfigHandler.potionIDNoclip, "noclip",
 	}
 	
 	override fun removeAttributesModifiersFromEntity(target: EntityLivingBase, attributes: BaseAttributeMap, amp: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		target.noClip = false
 		if (ASJUtilities.isServer) AlfheimCore.network.sendToAll(MessageEffect(target.entityId, this.id, 0, 0))
 	}

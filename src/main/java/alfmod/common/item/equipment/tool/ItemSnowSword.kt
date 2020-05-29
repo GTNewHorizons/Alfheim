@@ -7,13 +7,18 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
+import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.EnumHelper
 import vazkii.botania.common.item.equipment.tool.manasteel.ItemManasteelSword
 
 class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	
+	lateinit var katanaIcon: IIcon
+	
 	companion object {
 		val snow = EnumHelper.addToolMaterial("Snow", 0, 860, 15f, 4f, 16)!!
+		
+		lateinit var snice: IIcon
 	}
 	
 	init {
@@ -28,6 +33,11 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
-		itemIcon = IconHelper.forItem(reg, this)
+		itemIcon = IconHelper.forName(reg, "SnowKatana")
+		katanaIcon = IconHelper.forName(reg, "Katana")
+		
+		snice = IconHelper.forName(reg, "misc/Snice")
 	}
+	
+	override fun getIconIndex(stack: ItemStack) = if (stack.displayName.trim().equals("chunchunmaru", true)) katanaIcon else itemIcon
 }

@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.util.Facing
 import net.minecraft.world.IBlockAccess
 
-class BlockShrineGlass: BlockModMeta(Material.glass, 5, ModInfo.MODID, "ShrineGlass", AlfheimTab, resist = 600f, folder = "shrines/") {
+class BlockShrineGlass: BlockModMeta(Material.glass, 5, ModInfo.MODID, "ShrineGlass", AlfheimTab, resist = 600f, folder = "decor/") {
 	
 	init {
 		setLightOpacity(0)

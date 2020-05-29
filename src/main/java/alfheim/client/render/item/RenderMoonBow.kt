@@ -52,6 +52,7 @@ object RenderMoonBow: IItemRenderer {
 		val dmg = item.meta
 		var icon = item.item.getIconFromDamageForRenderPass(dmg, 0)
 		if (player != null) {
+			// FIXME NO REFLECTION IN MY MOD!!!
 			val using = ReflectionHelper.getPrivateValue<ItemStack, EntityPlayer>(EntityPlayer::class.java, player, *LibObfuscation.ITEM_IN_USE)
 			val time = ReflectionHelper.getPrivateValue<Int, EntityPlayer>(EntityPlayer::class.java, player, *LibObfuscation.ITEM_IN_USE_COUNT)
 			icon = item.item.getIcon(item, 0, player, using, time)

@@ -2,7 +2,6 @@ package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.entity.raceID
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -29,13 +28,10 @@ import kotlin.math.*
 
 class TileAlfheimPortal: TileMod() {
 	
+	var activated = false
 	var ticksOpen = 0
 	private var closeNow = false
 	private var hasUnloadedParts = false
-	
-	var posX = 0
-	var posY = -1
-	var posZ = 0
 	
 	val portalAABB: AxisAlignedBB
 		get() {
@@ -94,7 +90,7 @@ class TileAlfheimPortal: TileMod() {
 							
 							ASJUtilities.sendToDimensionWithoutPortal(player, 0, coords.posX.D, coords.posY.D, coords.posZ.D)
 						} else {
-							if (AlfheimCore.enableElvenStory) {
+							if (AlfheimConfigHandler.enableElvenStory) {
 								val race = player.raceID - 1 // for array length
 								if (race in 0..8)
 									ASJUtilities.sendToDimensionWithoutPortal(player, AlfheimConfigHandler.dimensionIDAlfheim, AlfheimConfigHandler.zones[race].x, AlfheimConfigHandler.zones[race].y, AlfheimConfigHandler.zones[race].z)
@@ -115,15 +111,19 @@ class TileAlfheimPortal: TileMod() {
 		
 		if (closeNow) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3)
-			if (!worldObj.isRemote && posX == xCoord && posY == yCoord && posZ == zCoord && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+			if (!worldObj.isRemote && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim)
+				worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 			for (i in 0..35)
 				blockParticle(meta)
 			closeNow = false
+			activated = false
 		} else if (newMeta != meta) {
 			if (newMeta == 0) {
-				if (!worldObj.isRemote && posX == xCoord && posY == yCoord && posZ == zCoord && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
+				if (!worldObj.isRemote && worldObj.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim)
+					worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.InterdimensionalGatewayCore)))
 				for (i in 0..35)
 					blockParticle(meta)
+				activated = false
 			}
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3)
 		}
@@ -159,9 +159,7 @@ class TileAlfheimPortal: TileMod() {
 		val meta = getBlockMetadata()
 		if (meta == 0 && newMeta != 0) {
 			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, newMeta, 3)
-			posX = xCoord
-			posY = yCoord
-			posZ = zCoord
+			activated = true
 			return true
 		}
 		
@@ -170,16 +168,12 @@ class TileAlfheimPortal: TileMod() {
 	
 	override fun writeCustomNBT(cmp: NBTTagCompound) {
 		cmp.setInteger(TAG_TICKS_OPEN, ticksOpen)
-		cmp.setInteger(TAG_POS_X, posX)
-		cmp.setInteger(TAG_POS_Y, posY)
-		cmp.setInteger(TAG_POS_Z, posZ)
+		cmp.setBoolean(TAG_ACTIVATED, activated)
 	}
 	
 	override fun readCustomNBT(cmp: NBTTagCompound) {
 		ticksOpen = cmp.getInteger(TAG_TICKS_OPEN)
-		posX = cmp.getInteger(TAG_POS_X)
-		posY = cmp.getInteger(TAG_POS_Y)
-		posZ = cmp.getInteger(TAG_POS_Z)
+		activated = cmp.getBoolean(TAG_ACTIVATED)
 	}
 	
 	private fun checkConverter(baseConverter: Function<IntArray, IntArray>?) =
@@ -293,9 +287,7 @@ class TileAlfheimPortal: TileMod() {
 		private val AIR_POSITIONS = arrayOf(intArrayOf(-1, 1, 0), intArrayOf(0, 1, 0), intArrayOf(1, 1, 0), intArrayOf(-1, 2, 0), intArrayOf(0, 2, 0), intArrayOf(1, 2, 0), intArrayOf(-1, 3, 0), intArrayOf(0, 3, 0), intArrayOf(1, 3, 0))
 		
 		private const val TAG_TICKS_OPEN = "ticksOpen"
-		private const val TAG_POS_X = "posX"
-		private const val TAG_POS_Y = "posY"
-		private const val TAG_POS_Z = "posZ"
+		private const val TAG_ACTIVATED = "activated"
 		
 		private const val activation = 75000
 		private const val idle = 2

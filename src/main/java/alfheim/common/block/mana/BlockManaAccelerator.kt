@@ -65,10 +65,12 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 	}
 	
 	override fun breakBlock(world: World, x: Int, y: Int, z: Int, block: Block?, meta: Int) {
-		val te = world.getTileEntity(x, y, z) as TileItemContainer
-		if (te.item != null) {
-			world.spawnEntityInWorld(EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!))
-			te.item = null
+		run {
+			val te = world.getTileEntity(x, y, z) as? TileItemContainer ?: return@run
+			if (te.item != null) {
+				world.spawnEntityInWorld(EntityItem(world, x + 0.5, y + 0.5, z + 0.5, te.item!!))
+				te.item = null
+			}
 		}
 		
 		super.breakBlock(world, x, y, z, block, meta)
@@ -87,6 +89,7 @@ class BlockManaAccelerator: BlockContainerMod(Material.rock), ILexiconable {
 			return if (mana.getMana(stack) == 0) 0 else min(max(0.0, mana.getMana(stack) * 15.0 / mana.getMaxMana(stack)), 15.0).mfloor()
 			
 		}
+		
 		return 0
 	}
 	

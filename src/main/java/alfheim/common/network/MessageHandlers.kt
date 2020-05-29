@@ -1,6 +1,7 @@
 package alfheim.common.network
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
@@ -16,8 +17,8 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.Vector3
 import java.io.File
+import vazkii.botania.common.core.helper.Vector3 as BVector3
 
 class Message0dSHandler: IMessageHandler<Message0dS, IMessage?> {
 		
@@ -106,7 +107,7 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 			val player = ctx.serverHandler.playerEntity
 			val username = player.commandSenderName
 			
-			val passMatch = HashHelper.hash(message.value) == ContributorsPrivacyHelper.getPassHash(message.key)
+			val passMatch = ContributorsPrivacyHelper.getPassHash(message.key)?.let { if (it.isBlank()) true else it == HashHelper.hash(message.value) } ?: false
 			
 			// are you the person you are saying you are ?
 			if (ContributorsPrivacyHelper.isRegistered(username)) {
@@ -151,6 +152,9 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 			
 			// send all aliases to new player
 			ContributorsPrivacyHelper.contributors.forEach { (k, v) -> AlfheimCore.network.sendTo(MessageContributor(k, v), player) }
+			
+			// auth succeeded, no kick on timeout
+			ContributorsPrivacyHelper.authTimeout[player.commandSenderName] = -1
 		}
 		
 		return null
@@ -204,7 +208,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage?> {
 	
 	override fun onMessage(message: MessageEffectLightning, ctx: MessageContext): IMessage? {
-		Botania.proxy.lightningFX(mc.theWorld, Vector3(message.x1, message.y1, message.z1), Vector3(message.x2, message.y2, message.z2), message.ticksPerMeter, message.colorOuter, message.colorInner)
+		Botania.proxy.lightningFX(mc.theWorld, BVector3(message.x1, message.y1, message.z1), BVector3(message.x2, message.y2, message.z2), message.ticksPerMeter, message.colorOuter, message.colorInner)
 		return null
 	}
 }
@@ -252,25 +256,6 @@ class MessagePartyHandler: IMessageHandler<MessageParty, IMessage?> {
 	}
 }
 
-class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage?> {
-	
-	override fun onMessage(message: MessagePlayerItemS, ctx: MessageContext): IMessage? {
-		if (message.item != null && ctx.side.isServer) {
-			val player = ctx.serverHandler.playerEntity
-			
-			val heldItem = player.currentEquippedItem
-			
-			if (heldItem == null) {
-				player.setCurrentItemOrArmor(0, message.item!!.copy())
-			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
-				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
-			}
-		}
-		
-		return null
-	}
-}
-
 class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage?> {
 	
 	override fun onMessage(message: MessageSkinInfo, ctx: MessageContext): IMessage? {
@@ -296,6 +281,8 @@ class MessageSpellParamsHandler: IMessageHandler<MessageSpellParams, IMessage?> 
 class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage?> {
 	
 	override fun onMessage(message: MessageRaceSelection, ctx: MessageContext): IMessage? {
+		if (Vector3.vecEntityDistance(Vector3(message.x, message.y, message.z), ctx.serverHandler.playerEntity) > 5) return null
+		
 		val world = MinecraftServer.getServer().worldServerForDimension(message.dim) ?: return null
 		val tile = world.getTileEntity(message.x, message.y, message.z) as? TileRaceSelector ?: return null
 		

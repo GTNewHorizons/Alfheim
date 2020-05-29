@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11.*
 
 object RenderEntityDriftingMine: Render() {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/mine.obj"))
 	
 	init {
 		shadowSize = 0f
@@ -27,7 +27,7 @@ object RenderEntityDriftingMine: Render() {
 		glPushMatrix()
 		glTranslated(x, y + 0.5, z)
 		glRotated((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 0.5, 1.0, 1.0, 1.0)
-		if (AlfheimConfigHandler.minimalGraphics) {
+		if (model == null) {
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			glTranslated(-0.5, -0.5, 0.03125)
 			ItemRenderer.renderItemIn2D(Tessellator.instance, ItemElvenResource.mine.maxU, ItemElvenResource.mine.minV, ItemElvenResource.mine.minU, ItemElvenResource.mine.maxV, ItemElvenResource.mine.iconWidth, ItemElvenResource.mine.iconHeight, 1f / 16f)

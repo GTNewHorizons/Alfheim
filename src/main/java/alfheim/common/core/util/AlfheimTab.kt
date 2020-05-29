@@ -33,7 +33,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
 import alfheim.common.block.AlfheimBlocks.dreamSapling
-import alfheim.common.block.AlfheimBlocks.elvenOres
+import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.irisDirt
 import alfheim.common.block.AlfheimBlocks.irisGrass
@@ -110,20 +110,23 @@ import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
+import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockBrickWall
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDark
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkSlabs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkStairs
 import alfheim.common.block.AlfheimFluffBlocks.livingrockDarkWalls
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs1
-import alfheim.common.block.AlfheimFluffBlocks.livingcobbleStairs2
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.roofTile
+import alfheim.common.block.AlfheimFluffBlocks.roofTileSlabs
+import alfheim.common.block.AlfheimFluffBlocks.roofTileStairs
 import alfheim.common.block.AlfheimFluffBlocks.shrineGlass
 import alfheim.common.block.AlfheimFluffBlocks.shrineLight
 import alfheim.common.block.AlfheimFluffBlocks.shrinePanel
@@ -365,8 +368,8 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(sealingSapling)
 		addBlock(dreamSapling)
 		
-		if (AlfheimCore.enableMMO) addItem (paperBreak)
-		if (AlfheimCore.enableMMO) addItem (peacePipe)
+		if (AlfheimConfigHandler.enableMMO) addItem (paperBreak)
+		if (AlfheimConfigHandler.enableMMO) addItem (peacePipe)
 		
 		addItem (splashPotion)
 		addItem (fireGrenade)
@@ -380,6 +383,11 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(shrineRockWhiteStairs)
 		addBlock(shrineRockWhiteSlab)
 		addBlock(shrineRock)
+		
+		addBlock(roofTile)
+		roofTileStairs.forEach { addBlock(it) }
+		roofTileSlabs.forEach { addBlock(it) }
+		
 		addBlock(livingrockDark)
 		livingrockDarkStairs.forEach { addBlock(it) }
 		livingrockDarkSlabs.forEach { addBlock(it) }
@@ -391,7 +399,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(shrineGlass)
 		addBlock(shrinePanel)
 		
-		addBlock(elvenOres)
+		addBlock(elvenOre)
 		
 		addBlock(livingcobble)
 		addBlock(livingcobbleStairs)

@@ -10,7 +10,7 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 
-class BlockModTrapDoor(material: Material, val name: String): BlockTrapDoor(material) {
+open class BlockModTrapDoor(material: Material, val name: String): BlockTrapDoor(material) {
 	
 	var originalLight: Int = 0
 	

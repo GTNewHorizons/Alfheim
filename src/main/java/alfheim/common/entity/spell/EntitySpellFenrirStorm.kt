@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.*
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.wind.SpellFenrirStorm
@@ -42,7 +43,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster == null || area == null || ticksExisted > 12)) {
+		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster == null || area == null || ticksExisted > 12)) {
 			setDead()
 			return
 		}

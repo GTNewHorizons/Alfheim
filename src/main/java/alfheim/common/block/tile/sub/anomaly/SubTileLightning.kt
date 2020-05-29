@@ -59,7 +59,19 @@ class SubTileLightning: SubTileAnomalyBase() {
 		vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
 		
 		if (transfer > 0) {
-			transfer--
+			--transfer
+			
+			if (transfer % 10 == 0) {
+				
+				val yOff = if (transfer % 20 == 0) 1.5 else 0.0
+				
+				vt.set(x() + 0.5, y() + 0.5, z() + 0.5)
+				ve.set(x() + side.offsetX + 0.5, y() + side.offsetY + yOff, z() + side.offsetZ + 0.5).normalize()
+				vt.add(ve.x / 2, ve.y / 2, ve.z / 2)
+				ve.set(x() + side.offsetX + 0.5, y() + side.offsetY + yOff, z() + side.offsetZ + 0.5)
+				
+				Botania.proxy.lightningFX(worldObj, vt, ve, 1f, worldObj.rand.nextLong(), 0, 0xFF0000)
+			}
 			
 			if (side === ForgeDirection.UNKNOWN || worldObj.getBlock(x() + side.offsetX, y() + side.offsetY, z() + side.offsetZ) !== ModBlocks.pylon || worldObj.getBlockMetadata(x() + side.offsetX, y() + side.offsetY, z() + side.offsetZ) != 2) {
 				transfer = 0

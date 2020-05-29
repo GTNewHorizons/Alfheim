@@ -3,7 +3,6 @@ package alfheim.client.render.entity
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alexsocol.asjlib.render.ASJRenderHelper
-import alfheim.AlfheimCore
 import alfheim.api.entity.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -30,8 +29,10 @@ object RenderWings {
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
 		player.sendPlayerAbilities()
 		
-		if (player.commandSenderName !in customWings) {
-			if (!AlfheimCore.enableElvenStory) return
+		val match = customWings.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
+		
+		if (match == -1) {
+			if (!AlfheimConfigHandler.enableElvenStory) return
 			if (AlfheimConfigHandler.wingsBlackList.contains(mc.theWorld?.provider?.dimensionId ?: Int.MAX_VALUE)) return
 			if (player.race == EnumRace.HUMAN) return
 			if (ContributorsPrivacyHelper.isCorrect(player.commandSenderName, "AlexSocol")) return
@@ -41,7 +42,8 @@ object RenderWings {
 		
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
-		if (player.commandSenderName !in customWings) {
+		
+		if (match == -1) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDepthMask(false)
@@ -54,8 +56,9 @@ object RenderWings {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
 		val spd = 0.5
-		if (player.commandSenderName in customWings) {
-			if (player.commandSenderName == "MonoShiki")
+		
+		if (match != -1) {
+			if (match == 0)
 				ASJRenderHelper.glColor1u(ASJRenderHelper.addAlpha(Color.HSBtoRGB(Botania.proxy.worldElapsedTicks % 360 / 360f, 1f, 1f), 255))
 			else
 				glColor4f(1f, 1f, 1f, 1f)
@@ -66,7 +69,7 @@ object RenderWings {
 		glTranslated(0.0, -0.15, 0.0)
 		
 		// Icon
-		if (player.commandSenderName !in customWings || player.race != EnumRace.HUMAN) {
+		if (match == -1 && player.race != EnumRace.HUMAN) {
 			glPushMatrix()
 			glTranslated(-0.25, 0.25, 0.15)
 			val si = 0.5
@@ -103,7 +106,7 @@ object RenderWings {
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
-		if (player.commandSenderName !in customWings) {
+		if (match == -1) {
 			glAlphaFunc(GL_GREATER, 0.1f)
 			glDepthMask(true)
 			glDisable(GL_BLEND)
@@ -129,7 +132,7 @@ object RenderWings {
 		Tessellator.instance.draw()
 	}
 	
-	fun getPlayerWingTexture(player: EntityPlayer) = wingMap[player.commandSenderName] ?: LibResourceLocations.wings[player.raceID]
+	fun getPlayerWingTexture(player: EntityPlayer) = wingMap[customWings.firstOrNull { ContributorsPrivacyHelper.isCorrect(player, it) } ?: ""] ?: LibResourceLocations.wings[player.raceID]
 	
 	fun getPlayerIconTexture(player: EntityPlayer) = LibResourceLocations.icons[player.raceID]
 }

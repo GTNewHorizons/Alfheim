@@ -5,8 +5,8 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.spell.sound.SpellHarp
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
@@ -32,7 +32,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster == null || caster!!.isDead)) {
+		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster == null || caster!!.isDead)) {
 			setDead()
 		} else {
 			if (!ASJUtilities.isServer) return

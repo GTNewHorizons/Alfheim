@@ -55,6 +55,8 @@ class BlockColoredLeaves(val colorSet: Int): BlockLeavesMod() {
 	
 	override fun getItemDropped(meta: Int, random: Random, fortune: Int) = AlfheimBlocks.irisSapling.toItem()
 	
+	override fun createStackedBlock(meta: Int) = ItemStack(this, 1, meta % 8)
+	
 	override fun func_150125_e() = LEAVES.sliceArray(colorSet * 8 until (colorSet + 1) * 8)
 	
 	override fun decayBit(): Int = 0x8

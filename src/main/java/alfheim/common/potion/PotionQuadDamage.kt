@@ -10,6 +10,6 @@ class PotionQuadDamage: PotionAlfheim(AlfheimConfigHandler.potionIDQuadDamage, "
 	
 	override fun applyAttributesModifiersToEntity(target: EntityLivingBase?, attributes: BaseAttributeMap, ampl: Int) {
 		super.applyAttributesModifiersToEntity(target, attributes, ampl)
-		if (AlfheimCore.enableMMO) VisualEffectHandler.sendPacket(VisualEffects.QUAD, target!!)
+		if (AlfheimConfigHandler.enableMMO) VisualEffectHandler.sendPacket(VisualEffects.QUAD, target!!)
 	}
 }

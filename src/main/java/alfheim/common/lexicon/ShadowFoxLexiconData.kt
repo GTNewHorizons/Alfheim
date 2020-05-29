@@ -361,6 +361,7 @@ object ShadowFoxLexiconData {
 			LexiconRecipeMappings.map(ItemStack(AlfheimItems.irisSeeds, 1, i), pastoralSeeds, 2)
 			LexiconRecipeMappings.map(ItemStack(AlfheimItems.coatOfArms, 1, i), coatOfArms, 1)
 		}
+		LexiconRecipeMappings.map(ItemStack(AlfheimItems.coatOfArms, 1, 18), coatOfArms, 1)
 		for (i in 0..7) {
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisLeaves0, 1, i), irisSapling, 0)
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.irisLeaves1, 1, i), irisSapling, 0)
@@ -374,6 +375,8 @@ object ShadowFoxLexiconData {
 			LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.rainbowTallGrass, 1, i), pastoralSeeds, 0)
 		
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.invisibleFlameLens), LexiconData.lenses, 0)
+		
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.rainbowMushroom), LexiconData.mushrooms, 1)
 	}
 	
 	fun setKnowledgeTypes(kt: KnowledgeType) {

@@ -18,6 +18,7 @@ import ru.vamig.worldengine.standardcustomgen.*;
 import java.util.*;
 
 public class WE_ChunkProvider extends ChunkProviderGenerate {
+	
 	public final World worldObj;
 	public final Random rand;
 	

@@ -6,6 +6,7 @@ import alfheim.common.item.AlfheimItems
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import net.minecraft.entity.item.EntityFireworkRocket
 import net.minecraft.entity.passive.EntityHorse
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.*
@@ -21,9 +22,18 @@ object AlfheimAchievementHandler {
 	}
 	
 	@SubscribeEvent
-	fun wingedHussars(e: LivingUpdateEvent) {
+	fun onLivingUpdate(e: LivingUpdateEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
+		firework(player)
+		wingedHussars(player)
+	}
+	
+	fun firework(player: EntityPlayer) {
+		if (player.ridingEntity is EntityFireworkRocket) player.triggerAchievement(AlfheimAchievements.firework)
+	}
+	
+	fun wingedHussars(player: EntityPlayer) {
 		val armorFlag = (0..4).all {
 			player.getEquipmentInSlot(it)?.item == when (it) {
 				0    -> AlfheimItems.realitySword

@@ -13,10 +13,10 @@ import net.minecraft.util.DamageSource
 
 class PotionThrow: PotionAlfheim(AlfheimConfigHandler.potionIDThrow, "throw", false, 0xAAFFFF) {
 	
-	override fun isReady(time: Int, mod: Int) = AlfheimCore.enableMMO
+	override fun isReady(time: Int, mod: Int) = AlfheimConfigHandler.enableMMO
 	
 	override fun performEffect(target: EntityLivingBase, mod: Int) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		
 		val v = Vector3(target.lookVec).mul((mod + 1).D)
 		target.motionX = v.x

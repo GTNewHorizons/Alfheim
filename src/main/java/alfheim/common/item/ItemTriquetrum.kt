@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.security.InteractionSecurity
+import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -91,8 +92,12 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 						for ((zOff, k) in (fz..fZ).withIndex()) {
 							if (!InteractionSecurity.canDoSomethingHere(player, i, j, k, world)) continue
 							
+							val survival = !player.capabilities.isCreativeMode
+							
 							val block = world.getBlock(i, j, k) // block to be moved
-							if (block.getBlockHardness(world, i, j, k) == -1f && !player.capabilities.isCreativeMode) continue
+							if (block.getBlockHardness(world, i, j, k) == -1f && survival) continue
+							
+							if (survival && GameRegistry.findUniqueIdentifierFor(block).toString() in AlfheimConfigHandler.triquetrumBlackList) continue
 							
 							val meta = world.getBlockMetadata(i, j, k)
 							
@@ -100,15 +105,17 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 							
 							if (block is ITileEntityProvider) world.getTileEntity(i, j, k)?.writeToNBT(nbt)
 							
-							if (!ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, false)) break@outer
+							if (survival && !ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, false)) break@outer
 							
 							fun setBlockTile(world: World, x: Int, y: Int, z: Int, block: Block, meta: Int, cmp: NBTTagCompound): Boolean {
 								if (!InteractionSecurity.canDoSomethingHere(player, x, y, z, world)) return false
 								
 								val airOnTarget = world.isAirBlock(x, y, z)
-								if (player.isSneaking && !airOnTarget) return false
+								if (!airOnTarget) return false // do not replace blocks
 								
 								if (airOnTarget && world.isAirBlock(i, j, k)) return false // no sense in moving air
+								
+								if (!block.canPlaceBlockAt(world, x, y, z)) return false // no more cactus on bedrock
 								
 								if (world.setBlock(x, y, z, block, meta, 3)) {
 									if (block is ITileEntityProvider) {

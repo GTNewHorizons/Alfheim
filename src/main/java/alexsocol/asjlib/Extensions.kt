@@ -9,6 +9,7 @@ import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
+import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
 import kotlin.math.*
@@ -139,3 +140,5 @@ fun <T> T.eventFML(): T {
 	FMLCommonHandler.instance().bus().register(this)
 	return this
 }
+
+fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0

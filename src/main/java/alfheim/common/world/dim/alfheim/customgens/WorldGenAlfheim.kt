@@ -35,9 +35,7 @@ class WorldGenAlfheim: IWorldGenerator {
 		}
 		
 		private fun generateAlfheim(rand: Random, chunkX: Int, chunkZ: Int, world: World) {
-			if (chunkX == 0 && chunkZ == 0 && !world.isRemote) {
-				Thread(Runnable { StructureSpawnpoint.generate(world) }, "Alf Spawn Gen").start()
-			}
+			if (chunkX == 0 && chunkZ == 0 && !world.isRemote) StructureSpawnpoint.generate(world)
 			
 			if (AlfheimConfigHandler.anomaliesDispersion <= 0) return
 			

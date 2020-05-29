@@ -28,29 +28,30 @@ class CommandAlfheim: CommandBase() {
 	
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		if (args.size == 1) {
-			val esmOld = AlfheimCore.enableElvenStory
-			val mmoOld = AlfheimCore.enableMMO
+			val esmOld = AlfheimConfigHandler.enableElvenStory
+			val mmoOld = AlfheimConfigHandler.enableMMO
 			when {
-				args[0].equals("ESM", ignoreCase = true)	-> {
-					AlfheimCore.enableElvenStory = !AlfheimCore.enableElvenStory
-					toggleESM(AlfheimCore.enableElvenStory)
+				args[0].equals("ESM", ignoreCase = true) -> {
+					AlfheimConfigHandler.enableElvenStory = !AlfheimConfigHandler.enableElvenStory
+					toggleESM(AlfheimConfigHandler.enableElvenStory)
 				}
-				args[0].equals("MMO", ignoreCase = true)	-> {
-					AlfheimCore.enableMMO = !AlfheimCore.enableMMO
-					toggleMMO(AlfheimCore.enableMMO)
+				
+				args[0].equals("MMO", ignoreCase = true) -> {
+					AlfheimConfigHandler.enableMMO = !AlfheimConfigHandler.enableMMO
+					toggleMMO(AlfheimConfigHandler.enableMMO)
 				}
-				else											-> throw WrongUsageException("alfheim.commands.alfheim.wrong")
+				
+				else                                     -> throw WrongUsageException("alfheim.commands.alfheim.wrong")
 			}
-			AlfheimConfigHandler.writeModes()
 			
 			ASJUtilities.sayToAllOnline(String.format(StatCollector.translateToLocal("alfheim.commands.alfheim.done"),
 													  sender.commandSenderName,
-													  if (AlfheimCore.enableElvenStory) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED,
+													  if (AlfheimConfigHandler.enableElvenStory) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED,
 													  EnumChatFormatting.RESET,
-													  if (AlfheimCore.enableMMO) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED,
+													  if (AlfheimConfigHandler.enableMMO) EnumChatFormatting.GREEN else EnumChatFormatting.DARK_RED,
 													  EnumChatFormatting.RESET))
 			
-			AlfheimCore.network.sendToAll(Message3d(m3d.TOGGLER, (if (args[0].equals("ESM", ignoreCase = true)) 1 else 0).D, ((if (esmOld) 1 else 0) shl 1 or if (AlfheimCore.enableElvenStory) 1 else 0).D, ((if (mmoOld) 1 else 0) shl 1 or if (AlfheimCore.enableMMO) 1 else 0).D))
+			AlfheimCore.network.sendToAll(Message3d(m3d.TOGGLER, (if (args[0].equals("ESM", ignoreCase = true)) 1 else 0).D, ((if (esmOld) 1 else 0) shl 1 or if (AlfheimConfigHandler.enableElvenStory) 1 else 0).D, ((if (mmoOld) 1 else 0) shl 1 or if (AlfheimConfigHandler.enableMMO) 1 else 0).D))
 		} else
 			throw WrongUsageException("alfheim.commands.alfheim.wrong")
 	}
@@ -67,8 +68,8 @@ class CommandAlfheim: CommandBase() {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.addESMRecipes()
 			} else {
 				if (Botania.thaumcraftLoaded) ThaumcraftAlfheimModule.removeESMRecipes()
-				AlfheimCore.enableMMO = false
-				toggleMMO(AlfheimCore.enableMMO)
+				AlfheimConfigHandler.enableMMO = false
+				toggleMMO(AlfheimConfigHandler.enableMMO)
 				AchievementPage.getAchievementPage(ModInfo.MODID.capitalize()).achievements.remove(AlfheimAchievements.newChance)
 			}
 		}
@@ -77,8 +78,8 @@ class CommandAlfheim: CommandBase() {
 			if (on) {
 				CardinalSystem.load(AlfheimCore.save)
 				AlfheimRecipes.addMMORecipes()
-				AlfheimCore.enableElvenStory = true
-				toggleESM(AlfheimCore.enableElvenStory)
+				AlfheimConfigHandler.enableElvenStory = true
+				toggleESM(AlfheimConfigHandler.enableElvenStory)
 				for (o in MinecraftServer.getServer().configurationManager.playerEntityList) CardinalSystem.transfer(o as EntityPlayerMP)
 			} else {
 				CardinalSystem.save(AlfheimCore.save)

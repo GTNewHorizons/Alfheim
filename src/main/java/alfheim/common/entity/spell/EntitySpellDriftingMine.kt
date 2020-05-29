@@ -5,8 +5,8 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
+import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.PartySystem
-import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.tech.SpellDriftingMine
@@ -62,7 +62,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onUpdate() {
-		if (!AlfheimCore.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
+		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
 			setDead()
 		} else {
 			moveEntity(motionX, motionY, motionZ)

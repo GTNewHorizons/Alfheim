@@ -15,7 +15,7 @@ class GUIIceLens: Gui() {
 	
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	fun onOverlayRendering(event: RenderGameOverlayEvent.Post) {
-		if (!AlfheimCore.enableMMO || event.type != ElementType.HELMET || mc.thePlayer.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) == null) return
+		if (!AlfheimConfigHandler.enableMMO || event.type != ElementType.HELMET || mc.thePlayer.getActivePotionEffect(AlfheimConfigHandler.potionIDIceLens) == null) return
 		
 		glPushMatrix()
 		glEnable(GL_BLEND)

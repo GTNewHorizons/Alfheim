@@ -1,7 +1,7 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
 import alfheim.common.core.helper.IconHelper
 import cpw.mods.fml.relauncher.*
@@ -24,7 +24,7 @@ class ItemPaperBreak: ItemMod("PaperBreak") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		if (!AlfheimCore.enableMMO) return stack
+		if (!AlfheimConfigHandler.enableMMO) return stack
 		
 		if (!world.isRemote) {
 			val name = getCompound(stack, "display", false).getString("Name")

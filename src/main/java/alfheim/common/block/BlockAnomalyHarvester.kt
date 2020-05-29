@@ -1,10 +1,10 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.ASJUtilities
-import alfheim.api.ModInfo
+import alexsocol.asjlib.*
+import alfheim.api.AlfheimAPI
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
-import alfheim.common.block.tile.TileAnomalyHarvester
+import alfheim.common.block.tile.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
@@ -13,6 +13,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.wand.IWandable
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import kotlin.math.max
 
@@ -34,13 +35,21 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.currentEquippedItem?.item === ModItems.twigWand) return player.currentEquippedItem.item.onItemUse(player.currentEquippedItem, player, world, x, y, z, side, hitX, hitY, hitZ)
+		
 		// somehow insert anomaly...
 		val tile = world.getTileEntity(x, y, z) as? TileAnomalyHarvester ?: return false
 		
+		if (player.currentEquippedItem?.item === AlfheimBlocks.anomaly.toItem()) {
+			val main = ItemNBTHelper.getString(player.currentEquippedItem, TileAnomaly.TAG_SUBTILE_MAIN, "")
+			if (!AlfheimAPI.anomalyBehaviors.containsKey(main)) return false
+			tile.subTiles.add(main)
+			return true
+		}
+		
 		if (player.isSneaking)
-			tile.power = max(1.0, tile.power + 1)
+			tile.power = max(0.0, tile.power + 1)
 		else
-			tile.power = max(1.0, tile.power - 1)
+			tile.power = max(0.0, tile.power - 1)
 		
 		if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.power")}: ${tile.power}"))
 		

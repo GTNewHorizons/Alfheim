@@ -1,22 +1,29 @@
 Credits:
-yrsegal, L0neKitsune    -	Botanical Addons and Natural Pledge content (Iridescence tab)
-DmitryWS                -	lore and most of textures
-Vamig Aliev             -	worldgen
-ExtraMeteorP, CKATEPTb  -	ExtraBotany content (Spear, Bow, Multibauble ring and relic cleaner)
-pandorarose22           -	wings textures
-anonymous..es           -	sylph(m), salamander(m), cait-sith(m,f), Jibril skins
-lie_mander's friend     -	gnome(m,f) base skins
-Inga Akuma              -	spriggan(m), salamander(f) base skins
-noppes                  -	lolicorn base code
-riskyken                -   feather particle
-Xinzhou Hong            -	chinese translation
-vidar90                 -	black dots shader on gravity spell
-Azanor                  -	textures of anomalies
+yrsegal, L0neKitsune    -    Botanical Addons and Natural Pledge content (Iridescence tab)
+DmitryWS                -    lore and most of textures
+Vamig Aliev             -    worldgen
+ExtraMeteorP, CKATEPTb  -    ExtraBotany content (Spear, Bow, Multibauble ring and relic cleaner)
+pandorarose22           -    wings textures
+anonymous..es           -    sylph(m), salamander(m), cait-sith(m,f), Jibril skins
+AdovayaBaba             -    gnome(m,f) base skins
+Inga Akuma              -    spriggan(m), salamander(f) base skins
+InsaneTriangle          -    pooka(m,f), leprechaun(m,f), imp(f), rorycorn sckins
+noppes                  -    lolicorn base code
+riskyken                -    feather particle
+Austen (Xinzhou) Hong   -    chinese translation
+vidar90                 -    black dots shader on gravity spell
+Azanor                  -    textures of anomalies
 
 Thanks:
-GedeonGrays             -	for testing and material support
-KAIIIAK                 -	for testing
-zasheibirgerhid			-	for making shrines of power
-GloomyFolken            -	for awesome hooklib wich allowed me to change Botania so flexible
-JustAGod                -	for ObjectWeb ASM tutorial and explaining some features
-Vazkii                  -	for making Botania, 'cause without it Alfheim would never have existed
+GedeonGrays             -    for testing and material support
+KAIIIAK                 -    for testing
+zasheibirgerhid         -    for making shrines of power
+GloomyFolken            -    for awesome hooklib wich allowed me to change Botania so flexible
+JustAGod                -    for ObjectWeb ASM tutorial and explaining some features
+Vazkii                  -    for making Botania, 'cause without it Alfheim would never have existed
+
+Donators:
+1_Lucifer_9
+DemnaGvasalia
+dudas
+lie4me

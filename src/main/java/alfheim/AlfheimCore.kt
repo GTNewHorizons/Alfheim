@@ -7,10 +7,8 @@ import alfheim.common.core.command.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.core.util.*
-import alfheim.common.integration.bloodmagic.BloodMagicAlfheimConfig
 import alfheim.common.integration.minetweaker.MinetweakerAlfheimConfig
 import alfheim.common.integration.thaumcraft.*
-import alfheim.common.integration.thaumcraft.thaumictinkerer.ThaumicTinkererAlfheimConfig
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.travellersgear.TravellersGearAlfheimConfig
 import alfheim.common.integration.waila.WAILAAlfheimConfig
@@ -45,8 +43,6 @@ class AlfheimCore {
 		
 		var save = ""
 		
-		var enableElvenStory = true
-		var enableMMO = true
 		var MineTweakerLoaded = false
 		var NEILoaded = false
 		var stupidMode = false
@@ -77,9 +73,6 @@ class AlfheimCore {
 	fun preInit(e: FMLPreInitializationEvent) {
 		if (AlfheimModularLoader.linkSpecified && !Loader.isModLoaded("alfmod"))
 			throw IllegalStateException("Alfheim Modular was not loaded, please, relaunch your game.")
-		
-		if (!AlfheimConfigHandler.readModes())
-			AlfheimConfigHandler.writeModes()
 		
 		MineTweakerLoaded = Loader.isModLoaded("MineTweaker3")
 		NEILoaded = Loader.isModLoaded("NotEnoughItems")
@@ -114,8 +107,6 @@ class AlfheimCore {
 			ThaumcraftAlfheimConfig.loadConfig()
 			ThaumcraftAlfheimModule.postInit()
 		}
-		if (Loader.isModLoaded("AWWayofTime")) BloodMagicAlfheimConfig
-		if (Loader.isModLoaded("ThaumicTinkerer")) ThaumicTinkererAlfheimConfig
 		if (TravellersGearLoaded) TravellersGearAlfheimConfig.loadConfig()
 		if (TiCLoaded) TinkersConstructAlfheimConfig.loadConfig()
 		if (Loader.isModLoaded("Waila")) WAILAAlfheimConfig.loadConfig()
@@ -124,7 +115,7 @@ class AlfheimCore {
 	@EventHandler
 	fun starting(e: FMLServerStartingEvent) {
 		save = e.server.entityWorld.saveHandler.worldDirectory.absolutePath
-		if (enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
+		if (AlfheimConfigHandler.enableElvenStory) AlfheimConfigHandler.initWorldCoordsForElvenStory(save)
 		AlfheimConfigHandler.syncConfig()
 		CardinalSystem.load(save)
 		e.registerServerCommand(CommandAlfheim())
@@ -141,7 +132,6 @@ class AlfheimCore {
 		network.registerMessage(Message0dSHandler::class.java, Message0dS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageHotSpellSHandler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBindS::class.java, nextPacketID++, Side.SERVER)
-		network.registerMessage(MessagePlayerItemHandler::class.java, MessagePlayerItemS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageRaceSelectionHandler::class.java, MessageRaceSelection::class.java, nextPacketID++, Side.SERVER)
 		
 		network.registerMessage(MessageContributorHandler::class.java, MessageContributor::class.java, nextPacketID++, Side.SERVER)

@@ -14,8 +14,9 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.client.renderer.texture.*
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
@@ -57,6 +58,12 @@ object ManaSpreaderExtender {
 		4    -> if (isGolden()) iconGolden else ModBlocks.dreamwood.getIcon(side, 0)
 		2, 3 -> ModBlocks.dreamwood.getIcon(side, 0)
 		else -> ModBlocks.livingwood.getIcon(side, 0)
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun getSubBlocks(spreader: BlockSpreader, item: Item?, tabs: CreativeTabs?, list: MutableList<Any>) {
+		list.add(ItemStack(item, 1, 4))
 	}
 	
 	@JvmStatic
@@ -212,7 +219,7 @@ object ManaSpreaderExtender {
 	}
 	
 	fun isGolden(): Boolean {
-		val bakasobaka = ContributorsPrivacyHelper.isCorrect(mc.thePlayer, "GedeonGrays")
+		val bakasobaka = mc.thePlayer?.let { ContributorsPrivacyHelper.isCorrect(it, "GedeonGrays") } ?: false
 		val casting = AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1
 		
 		return bakasobaka || casting

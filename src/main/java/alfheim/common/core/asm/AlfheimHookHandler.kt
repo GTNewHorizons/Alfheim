@@ -33,25 +33,29 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.EntityDragon
+import net.minecraft.entity.item.EntityFireworkRocket
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import net.minecraft.network.*
 import net.minecraft.potion.*
 import net.minecraft.tileentity.*
 import net.minecraft.util.*
-import net.minecraft.world.World
+import net.minecraft.world.*
 import net.minecraft.world.biome.*
 import net.minecraft.world.chunk.Chunk
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.ForgeDirection
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GLContext
+import org.lwjgl.opengl.NVFogDistance.*
 import ru.vamig.worldengine.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.boss.IBotaniaBoss
+import vazkii.botania.api.internal.IManaBurst
 import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
@@ -73,7 +77,7 @@ import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
-import vazkii.botania.common.item.lens.ItemLens
+import vazkii.botania.common.item.lens.*
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
@@ -107,6 +111,12 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
 		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun wakeAllPlayers(world: WorldServer) {
+		MinecraftForge.EVENT_BUS.post(ServerWakeUpEvent(world))
 	}
 	
 	@JvmStatic
@@ -171,7 +181,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
-		return if (AlfheimCore.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
+		return if (AlfheimConfigHandler.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
 		else dis
 	}
 	
@@ -209,6 +219,13 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "<init>")
+	fun `BlockSpreader$init`(spreader: BlockSpreader) {
+		val f = 1 / 16f
+		spreader.setBlockBounds(f, f, f, 1 - f, 1 - f, 1 - f)
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getStackItemTime(tile: TileHourglass?, stack: ItemStack?, @ReturnValue time: Int) =
 		if (stack != null && time == 0) {
@@ -227,7 +244,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, isMandatory = true)
 	fun moveFlying(e: Entity, x: Float, y: Float, z: Float) {
-		if (AlfheimCore.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
+		if (AlfheimConfigHandler.enableMMO && e is EntityLivingBase && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 			e.motionZ = 0.0
 			e.motionY = e.motionZ
 			e.motionX = e.motionY
@@ -312,6 +329,29 @@ object AlfheimHookHandler {
 	@Hook(injectOnExit = true, targetMethod = "onLivingUpdate")
 	fun onLivingUpdatePost(e: EntityDoppleganger) {
 		updatingEntity = false
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun collideBurst(lens: LensFirework, burst: IManaBurst, entity: EntityThrowable, pos: MovingObjectPosition, isManaBlock: Boolean, dead: Boolean, stack: ItemStack?): Boolean {
+		if (burst.isFake || dead) return false
+		
+		val allow = when (AlfheimConfigHandler.rocketRide) {
+			-1 -> pos.entityHit !is EntityPlayer && pos.entityHit != null
+			1 -> pos.entityHit is EntityPlayer
+			2 -> pos.entityHit != null
+			else -> false
+		} && pos.entityHit?.isSneaking == false
+		
+		if (!entity.worldObj.isRemote && allow) {
+			val fireworkStack: ItemStack = lens.generateFirework(burst.color)
+			val rocket = EntityFireworkRocket(entity.worldObj, entity.posX, entity.posY, entity.posZ, fireworkStack)
+			entity.worldObj.spawnEntityInWorld(rocket)
+			pos.entityHit.mountEntity(rocket)
+			return true
+		}
+		
+		return false
 	}
 	
 	@JvmStatic
@@ -555,7 +595,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true, returnCondition = ALWAYS)
 	fun getFortuneModifier(h: EnchantmentHelper?, e: EntityLivingBase) =
-		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimCore.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
+		EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, e.heldItem) + if (AlfheimConfigHandler.enableMMO && e.isPotionActive(AlfheimConfigHandler.potionIDGoldRush)) 2 else 0
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, isMandatory = true)
@@ -569,12 +609,11 @@ object AlfheimHookHandler {
 		if (side == 3) ++z
 		if (side == 4) --x
 		if (side == 5) ++x
-		val b = world.getBlock(x, y, z)
+		val block = world.getBlock(x, y, z)
 		
-		var f = b.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f
+		val breakable = if (player != null) block.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0f || player.capabilities.isCreativeMode else true
 		
-		if (player != null) f = f || player.capabilities.isCreativeMode
-		if (b.material === Material.fire && f) {
+		if (block.material === Material.fire && breakable) {
 			world.playAuxSFXAtEntity(player, 1004, x, y, z, 0)
 			world.setBlockToAir(x, y, z)
 			return true
@@ -749,7 +788,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(isMandatory = true)
 	fun doRenderShadowAndFire(render: Render, entity: Entity, x: Double, y: Double, z: Double, yaw: Float, partialTickTime: Float) {
-		if (AlfheimCore.enableMMO) if (entity is EntityLivingBase) {
+		if (AlfheimConfigHandler.enableMMO) if (entity is EntityLivingBase) {
 			if (entity.isPotionActive(AlfheimConfigHandler.potionIDButterShield)) RenderButterflies.render(render, entity, x, y, z, mc.timer.renderPartialTicks)
 		}
 	}
@@ -770,11 +809,7 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS)
 	fun setupFog(renderer: EntityRenderer, fogMode: Int, renderPartialTicks: Float) {
 		val entitylivingbase = renderer.mc.renderViewEntity
-		var flag = false
-		
-		if (entitylivingbase is EntityPlayer) {
-			flag = entitylivingbase.capabilities.isCreativeMode
-		}
+		val creative = if (entitylivingbase is EntityPlayer) entitylivingbase.capabilities.isCreativeMode else false
 		
 		fun setFogColorBuffer(p_78469_1_: Float, p_78469_2_: Float, p_78469_3_: Float, p_78469_4_: Float): FloatBuffer {
 			renderer.fogColorBuffer.clear()
@@ -790,7 +825,7 @@ object AlfheimHookHandler {
 			glFogf(GL_FOG_END, 8f)
 			
 			if (GLContext.getCapabilities().GL_NV_fog_distance) {
-				glFogi(34138, 34139)
+				glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 			}
 			
 			glFogf(GL_FOG_START, 0f)
@@ -805,7 +840,7 @@ object AlfheimHookHandler {
 			
 			if (MinecraftForge.EVENT_BUS.post(event)) {
 				glFogf(GL_FOG_DENSITY, event.density)
-			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !flag) {
+			} else if (entitylivingbase.isPotionActive(Potion.blindness) && !creative) {
 				f1 = 5f
 				val j = entitylivingbase.getActivePotionEffect(Potion.blindness.id)!!.getDuration()
 				
@@ -824,7 +859,7 @@ object AlfheimHookHandler {
 				}
 				
 				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(34138, 34139) // wtf magic numbers
+					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 				}
 			} else if (renderer.cloudFog) {
 				glFogi(GL_FOG_MODE, GL_EXP)
@@ -832,18 +867,18 @@ object AlfheimHookHandler {
 			} else if (block.material === Material.water) {
 				glFogi(GL_FOG_MODE, GL_EXP)
 				
-				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
-					glFogf(GL_FOG_DENSITY, 0.05f)
+				if (entitylivingbase.isPotionActive(Potion.waterBreathing) || (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip))) {
+					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.05f)
 				} else {
-					glFogf(GL_FOG_DENSITY, 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
+					glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.clearWater) 0.01f else 0.1f - EnchantmentHelper.getRespiration(entitylivingbase).F * 0.03f)
 				}
 			} else if (block.material === Material.lava) {
 				glFogi(GL_FOG_MODE, GL_EXP)
-				glFogf(GL_FOG_DENSITY, if (AlfheimCore.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
+				glFogf(GL_FOG_DENSITY, if (AlfheimConfigHandler.enableMMO && entitylivingbase.isPotionActive(AlfheimConfigHandler.potionIDNoclip)) 0.05f else 2f)
 			} else {
 				f1 = renderer.farPlaneDistance
 				
-				if (renderer.mc.theWorld.provider.worldHasVoidParticles && !flag) {
+				if (renderer.mc.theWorld.provider.worldHasVoidParticles && AlfheimConfigHandler.voidFog && !creative) {
 					var d0 = (entitylivingbase.getBrightnessForRender(renderPartialTicks) and 15728640 shr 20).D / 16.0 + (entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * renderPartialTicks.D + 4.0) / 32.0
 					
 					if (d0 < 1.0) {
@@ -875,7 +910,7 @@ object AlfheimHookHandler {
 				}
 				
 				if (GLContext.getCapabilities().GL_NV_fog_distance) {
-					glFogi(34138, 34139)
+					glFogi(GL_FOG_DISTANCE_MODE_NV, GL_EYE_RADIAL_NV)
 				}
 				
 				if (renderer.mc.theWorld.provider.doesXZShowFog(entitylivingbase.posX.I, entitylivingbase.posZ.I)) {
@@ -895,7 +930,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun setCurrentBoss(handler: BossBarHandler?, status: IBotaniaBoss?) {
-		BossBarHandler.currentBoss = if (AlfheimCore.enableMMO) null else status
+		BossBarHandler.currentBoss = if (AlfheimConfigHandler.enableMMO) null else status
 	}
 	
 	@JvmStatic
@@ -971,7 +1006,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun isInvisibleToPlayer(player: EntityPlayer, thePlayer: EntityPlayer, @ReturnValue result: Boolean): Boolean {
-		if (result && AlfheimCore.enableMMO) {
+		if (result && AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(player) == true) return false
 		}
 		
@@ -982,7 +1017,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun isInvisibleToPlayer(entity: EntityLivingBase, thePlayer: EntityPlayer): Boolean {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(entity) == true) return false
 		}
 		

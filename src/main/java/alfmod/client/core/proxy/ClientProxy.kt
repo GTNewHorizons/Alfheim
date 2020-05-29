@@ -1,5 +1,6 @@
 package alfmod.client.core.proxy
 
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfmod.client.core.handler.EventHandlerClient
 import alfmod.client.gui.GUIBanner
 import alfmod.client.render.entity.*
@@ -27,6 +28,7 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySniceBall::class.java, RenderEntitySniceBall)
 		RenderingRegistry.registerEntityRenderingHandler(EntitySnowSprite::class.java, RenderEntitySnowSprite)
 		
-		MinecraftForgeClient.registerItemRenderer(AlfheimModularItems.snowSword, RenderItemSnowSword)
+		if (!AlfheimConfigHandler.minimalGraphics)
+			MinecraftForgeClient.registerItemRenderer(AlfheimModularItems.snowSword, RenderItemSnowSword)
 	}
 }

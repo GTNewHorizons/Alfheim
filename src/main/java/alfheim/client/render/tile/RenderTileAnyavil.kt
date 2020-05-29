@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11.*
 
 object RenderTileAnyavil: TileEntitySpecialRenderer() {
 	
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Anyavil.obj"))
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/Anyavil.obj"))
 	val modelSimple = ModelSimpleAnyavil()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
@@ -25,7 +25,7 @@ object RenderTileAnyavil: TileEntitySpecialRenderer() {
 		glTranslated(x + 0.5, y, z + 0.5)
 		glRotated((90 * (tile.blockMetadata + 1)).D, 0.0, 1.0, 0.0)
 		
-		if (AlfheimConfigHandler.minimalGraphics) {
+		if (model == null) {
 			glPushMatrix()
 			glTranslated(0.0, 1.5, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)

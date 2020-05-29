@@ -25,7 +25,7 @@ import java.util.*
 
 object AlfheimLexiconData {
 	
-	var kt = (if (AlfheimCore.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge)!!
+	var kt = (if (AlfheimConfigHandler.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge)!!
 	
 	lateinit var categoryAlfheim: LexiconCategory
 	
@@ -139,14 +139,14 @@ object AlfheimLexiconData {
 		uberSpreader = BLexiconEntry("uberSpreader", categoryAlfheim)
 		worldgen = BLexiconEntry("worldgen", categoryAlfheim)
 		
-		if (AlfheimCore.enableElvenStory) preInitElvenStory()
+		if (AlfheimConfigHandler.enableElvenStory) preInitElvenStory()
 	}
 	
 	private fun preInitElvenStory() {
 		if (es == null) es = BLexiconEntry("es", categoryAlfheim)
 		if (races == null) races = BLexiconEntry("races", categoryAlfheim)
 		
-		if (AlfheimCore.enableMMO) preInitMMO()
+		if (AlfheimConfigHandler.enableMMO) preInitMMO()
 	}
 	
 	private fun preInitMMO() {
@@ -163,7 +163,7 @@ object AlfheimLexiconData {
 		soul = RLexiconEntry("soul", categoryAlfheim, AlfheimAchievements.flugelSoul)
 		subspear = RLexiconEntry("subspear", categoryAlfheim, AlfheimAchievements.subspace)
 		
-		soulHorn = RLexiconEntry("soulHorn", categoryAlfheim, AlfheimAchievements.flugelKill)
+		soulHorn = RLexiconEntry("soulHorn", categoryAlfheim, AlfheimAchievements.flugelHardKill)
 	}
 	
 	// In progress order
@@ -232,15 +232,16 @@ object AlfheimLexiconData {
 		
 		lootInt.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeLootInterceptor))
 		
-		ores.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(AlfheimBlocks.elvenOres, 1, 4)
-		for (i in 0 until (AlfheimBlocks.elvenOres as BlockModMeta).subtypes)
-			ores.addExtraDisplayedRecipe(ItemStack(AlfheimBlocks.elvenOres, 1, i))
+		ores.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(AlfheimBlocks.elvenOre, 1, 4)
+		for (i in 0 until (AlfheimBlocks.elvenOre as BlockModMeta).subtypes)
+			ores.addExtraDisplayedRecipe(ItemStack(AlfheimBlocks.elvenOre, 1, i))
 		
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 1), ores, 1)
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 0), ores, 2)
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 2), ores, 2)
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 3), ores, 2)
-		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOres, 1, 4), ores, 3)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 1), ores, 1)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 0), ores, 2)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 2), ores, 2)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 3), ores, 2)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 4), ores, 3)
+		LexiconRecipeMappings.map(ItemStack(AlfheimBlocks.elvenOre, 1, 5), ores, 2)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.IffesalDust), ores, 3)
 		
 		mobs.setLexiconPages(PageText("0"), PageText("1")).icon = ItemStack(ModItems.manaResource, 1, 8)
@@ -270,7 +271,7 @@ object AlfheimLexiconData {
 		powerRecipes.add(AlfheimRecipes.recipeMuspelheimPowerIngot)
 		powerRecipes.add(AlfheimRecipes.recipeNiflheimPowerIngot)
 		essences.setLexiconPages(PageText("0"),
-								 PageTextLearnableAchievement("2", AlfheimAchievements.flugelKill),
+								 PageTextLearnableAchievement("2", AlfheimAchievements.flugelHardKill),
 								 PageText("4"), PageText("5"), PageCraftingRecipe("6", powerRecipes),
 								 PageText("7"), PageManaInfusorRecipe("8", AlfheimRecipes.recipeMauftrium)).icon = ItemStack(ModItems.manaResource, 1, 5)
 		essences.addExtraDisplayedRecipe(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.NiflheimPowerIngot))
@@ -340,7 +341,7 @@ object AlfheimLexiconData {
 		
 		soulHorn.setLexiconPages(PageText("0"), PageText("1"), PageCraftingRecipe("2", AlfheimRecipes.recipeSoulHorn), PageText("3")).icon = ItemStack(AlfheimItems.soulHorn)
 		
-		if (AlfheimCore.enableElvenStory) initElvenStory()
+		if (AlfheimConfigHandler.enableElvenStory) initElvenStory()
 		
 		LexiconData.gaiaRitual.pages.clear()
 		LexiconData.gaiaRitual.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeGaiaPylon),
@@ -385,7 +386,7 @@ object AlfheimLexiconData {
 							 PageText("3"), PageText("4"), PageText("5"),
 							 PageText("6"), PageText("7"), PageText("8"),
 							 PageMultiblock("9", AlfheimMultiblocks.soul),
-							 PageText("10")).icon = ItemStack(AlfheimItems.flugelSoul)
+							 PageText("10"), PageCraftingRecipe("11", AlfheimRecipes.recipeCleanPylon)).icon = ItemStack(AlfheimItems.flugelSoul)
 		LexiconRecipeMappings.map(ItemStack(AlfheimItems.flugelSoul), soul, 1)
 		
 		mask.setLexiconPages(PageText("0")).icon = ItemStack(AlfheimItems.mask)
@@ -419,7 +420,7 @@ object AlfheimLexiconData {
 			races!!.setPriority()
 				.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"), PageText("4"), PageText("5"))
 		
-		if (AlfheimCore.enableMMO) initMMO()
+		if (AlfheimConfigHandler.enableMMO) initMMO()
 	}
 	
 	private fun initMMO() {
@@ -441,7 +442,7 @@ object AlfheimLexiconData {
 	}
 	
 	/*fun postInit() {
-		if (AlfheimCore.enableMMO) postInitMMO()
+		if (AlfheimConfigHandler.enableMMO) postInitMMO()
 	}*/
 	
 	private fun postInitMMO() {
@@ -492,11 +493,11 @@ object AlfheimLexiconData {
 		uberSpreader.knowledgeType = kt
 		flugel.knowledgeType = kt
 		
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			es!!.knowledgeType = BotaniaAPI.basicKnowledge
 			races!!.knowledgeType = BotaniaAPI.basicKnowledge
 			
-			if (AlfheimCore.enableMMO) {
+			if (AlfheimConfigHandler.enableMMO) {
 				parties!!.knowledgeType = BotaniaAPI.basicKnowledge
 				spells!!.knowledgeType = BotaniaAPI.basicKnowledge
 				targets!!.knowledgeType = BotaniaAPI.basicKnowledge
@@ -582,11 +583,11 @@ object AlfheimLexiconData {
 	}
 	
 	fun reEnableESM() {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			preInitElvenStory()
 			initElvenStory()
 		}
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			preInitMMO()
 			initMMO()
 		}
@@ -606,11 +607,11 @@ object AlfheimLexiconData {
 	}
 	
 	fun reEnableMMO() {
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			preInitElvenStory()
 			initElvenStory()
 		}
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			preInitMMO()
 			initMMO()
 		}
@@ -628,7 +629,7 @@ object AlfheimLexiconData {
 	}
 	
 	private fun kt() {
-		kt = if (AlfheimCore.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge
+		kt = if (AlfheimConfigHandler.enableElvenStory) BotaniaAPI.basicKnowledge else BotaniaAPI.elvenKnowledge
 	}
 }
 

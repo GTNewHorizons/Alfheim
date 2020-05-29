@@ -29,7 +29,7 @@ object VisualEffectHandlerClient {
 	val v = Vector3()
 	
 	fun select(s: VisualEffects, d: DoubleArray) {
-		//if (AlfheimCore.enableMMO) {
+		//if (AlfheimConfigHandler.enableMMO) {
 		when (s) {
 			ACID              -> spawnAcid(d[0], d[1], d[2])
 			AQUABIND          -> spawnAquaBind(d[0], d[1], d[2])
@@ -310,7 +310,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun onDeath(target: EntityLivingBase) {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			target.hurtTime = 0
 			target.deathTime = 0
 			target.attackTime = 0
@@ -323,7 +323,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun onDeathTick(target: EntityLivingBase) {
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (target === mc.thePlayer && mc.currentScreen !is GUIDeathTimer)
 				mc.displayGuiScreen(GUIDeathTimer())
 			

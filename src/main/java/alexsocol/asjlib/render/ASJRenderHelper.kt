@@ -4,8 +4,9 @@ import alexsocol.asjlib.D
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.Entity
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.*
 import org.lwjgl.opengl.GL11.*
+import java.awt.Color
 
 object ASJRenderHelper {
 	
@@ -61,6 +62,8 @@ object ASJRenderHelper {
 			colorCode[i] = k and 255 shl 16 or (l and 255 shl 8) or (i1 and 255)
 		}
 	}
+	
+	fun Color.toVec3() = Vec3.createVectorHelper(red.D, green.D, blue.D)
 	
 	/**
 	 * @return enum color packed in uInt with max alpha

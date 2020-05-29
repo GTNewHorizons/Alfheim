@@ -18,7 +18,6 @@ import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import baubles.api.BaublesApi
-import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.player.EntityPlayer
@@ -56,7 +55,7 @@ object KeyBindingHandlerClient {
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true
-			if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).item is ItemCreativeReachPendant)
+			if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item is ItemCreativeReachPendant)
 				AlfheimCore.network.sendToServer(MessageKeyBindS(ATTACK.ordinal, false, 0))
 		} else if (toggleLMB) {
 			toggleLMB = false
@@ -71,7 +70,7 @@ object KeyBindingHandlerClient {
 			toggleCorn = false
 		}
 		
-		if (AlfheimCore.enableElvenStory) {
+		if (AlfheimConfigHandler.enableElvenStory) {
 			if (safeKeyDown(ClientProxy.keyFlight.keyCode)) {
 				if (!toggleFlight) {
 					toggleFlight = true
@@ -84,7 +83,7 @@ object KeyBindingHandlerClient {
 			if (safeKeyDown(ClientProxy.keyESMAbility.keyCode)) {
 				if (!toggleESMAbility) {
 					toggleESMAbility = true
-					if (AlfheimCore.enableElvenStory) {
+					if (AlfheimConfigHandler.enableElvenStory) {
 						PlayerSegmentClient.esmAbility = !PlayerSegmentClient.esmAbility
 						ASJUtilities.say(mc.thePlayer, "alfheimmisc.elvenAbility.${PlayerSegmentClient.esmAbility}")
 						AlfheimCore.network.sendToServer(MessageKeyBindS(ESMABIL.ordinal, false, 0))
@@ -109,7 +108,7 @@ object KeyBindingHandlerClient {
 			}
 		}
 		
-		if (AlfheimCore.enableMMO) {
+		if (AlfheimConfigHandler.enableMMO) {
 			if (prevHotSlot != mc.thePlayer.inventory.currentItem && safeKeyDown(Keyboard.KEY_LCONTROL)) {
 				val flag = PlayerSegmentClient.hotSpells.indices.any { safeKeyDown(it + 2) }
 				

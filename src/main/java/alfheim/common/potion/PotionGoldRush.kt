@@ -16,6 +16,6 @@ class PotionGoldRush: PotionAlfheim(AlfheimConfigHandler.potionIDGoldRush, "gold
 	
 	@SubscribeEvent
 	fun onBreakSpeed(e: BreakSpeed) {
-		if (AlfheimCore.enableMMO && e.entityLiving.isPotionActive(this.id)) e.newSpeed *= SpellGoldRush.efficiency.F
+		if (AlfheimConfigHandler.enableMMO && e.entityLiving.isPotionActive(this.id)) e.newSpeed *= SpellGoldRush.efficiency.F
 	}
 }

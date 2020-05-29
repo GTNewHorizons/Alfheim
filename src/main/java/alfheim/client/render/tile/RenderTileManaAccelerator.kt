@@ -21,7 +21,7 @@ import java.util.*
 object RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 	
 	val rand = Random()
-	val model = AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))!!
+	val model = if (AlfheimConfigHandler.minimalGraphics) null else AdvancedModelLoader.loadModel(ResourceLocation(ModInfo.MODID, "model/holder.obj"))!!
 	val modelSimple = ModelSimpleItemHolder()
 	
 	override fun renderTileEntityAt(tile: TileEntity, x: Double, y: Double, z: Double, partialTicks: Float) {
@@ -59,7 +59,7 @@ object RenderTileManaAccelerator: TileEntitySpecialRenderer() {
 			glColor4f(acolor[0], acolor[1], acolor[2], if (MultiblockRenderHandler.rendering) 0.6f else 1f)
 		}
 		
-		if (AlfheimConfigHandler.minimalGraphics) {
+		if (model == null) {
 			glPushMatrix()
 			glTranslated(0.0, 1.0, 0.0)
 			glRotated(180.0, 1.0, 0.0, 0.0)

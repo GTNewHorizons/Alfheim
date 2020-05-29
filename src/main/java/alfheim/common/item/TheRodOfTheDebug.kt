@@ -1,6 +1,7 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
@@ -19,6 +20,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (ModInfo.OBF) return stack
+		
 		try {
 			if (!player.isSneaking) {
 				if (!world.isRemote) {
@@ -26,25 +29,7 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 					CardinalSystem.PartySystem.getParty(player).add(CardinalSystem.TargetingSystem.getTarget(player).target)
 				}
 				
-				/*val mop = ASJUtilities.getMouseOver(player, 16.0, true)
-				if (mop?.entityHit != null) {
-					player.ridingEntity = mop.entityHit
-					mop.entityHit.riddenByEntity = player
-					mop.entityHit.updateRiderPosition()
-				}*/
-				
 				// for (o in world.loadedEntityList) if (o is Entity && o !is EntityPlayer) o.setDead()
-				
-				//					int r = 12;
-				//					for (int x = -r; x < r; x++) {
-				//						for (int z = -r; z < r; z++) {
-				//							for (int y = 1; y < 4; y++) {
-				//								world.setBlock(x, y, z + 50, Blocks.grass);
-				//							}
-				//						}
-				//					}
-				
-				//					ASJUtilities.sendToDimensionWithoutPortal(player, 0, player.posX, 228, player.posZ);
 			} else {
 				player.raceID = (player.race.ordinal + 1) % 11
 				ASJUtilities.chatLog("${player.race.ordinal} - ${player.race}", player)
@@ -58,6 +43,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		if (ModInfo.OBF) return false
+		
 		try {
 			// if (!world.isRemote) return false
 			

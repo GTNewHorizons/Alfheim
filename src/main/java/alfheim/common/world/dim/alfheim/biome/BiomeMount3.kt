@@ -23,7 +23,7 @@ object BiomeMount3: BiomeAlfheim() {
 		biomeNumberOfOctaves = 3
 		biomeScaleX = 250.0
 		biomeScaleY = 2.4
-		biomeSurfaceHeight = 144
+		biomeSurfaceHeight = 144 + offset
 		biomeInterpolateQuality = 1
 		
 		var standardBiomeLayers = WE_BiomeLayer()

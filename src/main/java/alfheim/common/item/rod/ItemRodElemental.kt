@@ -17,7 +17,7 @@ import vazkii.botania.common.Botania
 import java.awt.Color
 import kotlin.math.*
 
-class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name), IManaUsingItem {
+class ItemRodElemental(name: String, private val barrier: () -> Block): ItemMod(name), IManaUsingItem {
 	
 	private var rubyIcon: IIcon? = null
 	private var sapphireIcon: IIcon? = null
@@ -56,8 +56,8 @@ class ItemRodElemental(name: String, private val barrier: Block): ItemMod(name),
 							val j = player.posY.mfloor() + y
 							val k = player.posZ.mfloor() + z
 							val c = Color(if (this === AlfheimItems.rodFire) 0x880000 else 0x0055AA)
-							if (world.isAirBlock(i, j, k) && barrier.canPlaceBlockAt(world, i, j, k)) {
-								cd = cd or place(stack, player, world, i, j, k, 0, 0.5f, 0.5f, 0.5f, barrier, if (player.capabilities.isCreativeMode) 0 else 150, c.red.F, c.green.F, c.blue.F)
+							if (world.isAirBlock(i, j, k) && barrier().canPlaceBlockAt(world, i, j, k)) {
+								cd = cd or place(stack, player, world, i, j, k, 0, 0.5f, 0.5f, 0.5f, barrier(), if (player.capabilities.isCreativeMode) 0 else 150, c.red.F, c.green.F, c.blue.F)
 							}
 						}
 			if (cd) stack.meta = maxDamage

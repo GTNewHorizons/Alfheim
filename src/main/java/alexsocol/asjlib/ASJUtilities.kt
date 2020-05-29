@@ -133,7 +133,7 @@ object ASJUtilities {
 		for (player in players)
 			if (player is EntityPlayerMP) {
 				if (Vector3.pointDistancePlane(player.posX, player.posZ, tile.xCoord + 0.5, tile.zCoord + 0.5) < 64)
-					player.playerNetServerHandler.sendPacket(tile.descriptionPacket)
+					tile.descriptionPacket?.let { player.playerNetServerHandler.sendPacket(it) }
 			}
 	}
 	
@@ -593,11 +593,8 @@ object ASJUtilities {
 	 * @param name The name of this entity
 	 */
 	@JvmStatic
-	fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any) {
-		val id = EntityRegistry.findGlobalUniqueEntityId()
-		val nama = "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name"
-		EntityRegistry.registerGlobalEntityID(entityClass, nama, id)
-		EntityRegistry.registerModEntity(entityClass, nama, id, instance, 128, 1, true)
+	fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any, id: Int) {
+		EntityRegistry.registerModEntity(entityClass, "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name", id, instance, 128, 1, true)
 	}
 	
 	/**

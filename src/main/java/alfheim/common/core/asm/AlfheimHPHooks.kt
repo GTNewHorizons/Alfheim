@@ -14,13 +14,13 @@ object AlfheimHPHooks {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun getHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
-		return if (AlfheimCore.enableMMO && e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.123f else hp
+		return if (AlfheimConfigHandler.enableMMO && e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.123f else hp
 	}
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun getMaxHealth(e: EntityLivingBase, @ReturnValue hp: Float): Float {
-		return if (AlfheimCore.enableMMO && ASJUtilities.isServer) {
+		return if (AlfheimConfigHandler.enableMMO && ASJUtilities.isServer) {
 			val ret = if (e.activePotionsMap != null && e.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) 0.123f else hp
 			
 			val pt = PartySystem.getMobParty(e)
@@ -37,7 +37,7 @@ object AlfheimHPHooks {
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true, isMandatory = true)
 	fun setHealth(e: EntityLivingBase, hp: Float) {
-		if (!AlfheimCore.enableMMO) return
+		if (!AlfheimConfigHandler.enableMMO) return
 		
 		val pt = PartySystem.getMobParty(e)
 		var new = hp

@@ -1,17 +1,22 @@
+IMPORTANT: Removed admin testing mode because of security breach, update mod IMMEDIATELY!
+(otherwise nerf vaniall op permissions with LuckPerms or similar)
+
 Innovations:
- Livingcobble and livingstone on lava+water collision (#159)
- Improved hyperpolated bucket craft, added radius switch
- Excaliber sharpness sensitivity
- Phoebus Catastrophe configs and enchantibility
- More Elven sandstone blocks
- Power ingots blocks
- [MMO] Isaac Storm targetting
+ Alfheim sky rework
+ New quartz variations
+ New roof tiles
+ Lapis Lazuli ore
+ Modes configs are now with others
 
 Fixes:
- Some (3) dupes
- Anyavil model
- Suffuser crash
- Phoebus Catastrophe color improvements
- Bad dreamwood log purification (#157)
- Bossbar from [NEI] spawners bug (#163)
- [TiC] Infinite item repair (#160)
+ Silktouch on leaves wrong meta dropped
+ Bossbar fix
+ Schematic Controller crash on dump w/o Codechicken Core
+ Improved minimal graphics setting
+ Alfheim winterish water color
+ Bed explosion in Alfheim
+ Time not changed after sleeping in Alfheim
+ Triquetrum chaotic behaviour
+ Improved contributors security
+ Packet security fixes
+ [OptiFine] Clear water and Void fog settings fixed and moved to Alfheim configs
