@@ -18,7 +18,6 @@ import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
 import baubles.api.BaublesApi
-import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.player.EntityPlayer
@@ -56,7 +55,7 @@ object KeyBindingHandlerClient {
 		
 		if (Mouse.isButtonDown(0) && !toggleLMB) {
 			toggleLMB = true
-			if (PlayerHandler.getPlayerBaubles(player).getStackInSlot(0) != null && BaublesApi.getBaubles(player).getStackInSlot(0).item is ItemCreativeReachPendant)
+			if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item is ItemCreativeReachPendant)
 				AlfheimCore.network.sendToServer(MessageKeyBindS(ATTACK.ordinal, false, 0))
 		} else if (toggleLMB) {
 			toggleLMB = false

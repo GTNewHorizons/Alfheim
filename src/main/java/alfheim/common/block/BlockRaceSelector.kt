@@ -3,6 +3,7 @@ package alfheim.common.block
 import alexsocol.asjlib.ASJUtilities
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockContainerMod
+import alfheim.common.block.container.ContainerRaceSelector
 import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.network.MessageRaceSelection
@@ -24,10 +25,15 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (!world.isRemote) return false
-		
 		val tile = world.getTileEntity(x, y, z) as? TileRaceSelector ?: return false
+		
+		if (!world.isRemote) {
+			player.openContainer = ContainerRaceSelector(tile)
+			return false
+		}
+		
 		val res = onBlockActivated2(world, x, y, z, player, side, hitX, hitZ, tile)
+		
 		if (res.first) {
 			tile.activeRotation = res.second.actRot
 			tile.rotation = res.second.rotation
@@ -35,7 +41,7 @@ class BlockRaceSelector: BlockContainerMod(Material.glass) {
 			tile.female = res.second.female
 			tile.timer = res.second.timer
 			
-			AlfheimCore.network.sendToServer(MessageRaceSelection(res.second.meta.first, res.second.custom, res.second.female, res.second.giveRace, res.second.meta.second, res.second.rotation, res.second.actRot, res.second.timer, x, y, z, world.provider.dimensionId))
+			AlfheimCore.network.sendToServer(MessageRaceSelection(res.second.meta.first, res.second.custom, res.second.female, res.second.giveRace, res.second.meta.second, res.second.rotation, res.second.actRot, res.second.timer, world.provider.dimensionId))
 		}
 		
 		return res.first

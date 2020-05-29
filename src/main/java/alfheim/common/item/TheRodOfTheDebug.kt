@@ -1,6 +1,7 @@
 package alfheim.common.item
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.api.ModInfo
 import alfheim.api.entity.*
 import alfheim.common.core.handler.CardinalSystem
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
@@ -19,6 +20,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (ModInfo.OBF) return stack
+		
 		try {
 			if (!player.isSneaking) {
 				if (!world.isRemote) {
@@ -40,6 +43,8 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 	}
 	
 	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		if (ModInfo.OBF) return false
+		
 		try {
 			// if (!world.isRemote) return false
 			

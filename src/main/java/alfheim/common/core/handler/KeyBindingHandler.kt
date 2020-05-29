@@ -7,7 +7,9 @@ import alfheim.api.entity.*
 import alfheim.api.spell.SpellBase.SpellCastResult.DESYNC
 import alfheim.common.core.helper.*
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.Message2d
+import baubles.api.BaublesApi
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Items
@@ -41,6 +43,8 @@ object KeyBindingHandler {
 	}
 	
 	fun atack(player: EntityPlayerMP) {
+		if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item !is ItemCreativeReachPendant) return
+		
 		val mop = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, true)
 		if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null) {
 			player.attackTargetEntityWithCurrentItem(mop.entityHit)

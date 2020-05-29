@@ -5,7 +5,7 @@ import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
-import alfheim.common.block.tile.TileRaceSelector
+import alfheim.common.block.container.ContainerRaceSelector
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.helper.*
@@ -16,8 +16,8 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.potion.*
 import net.minecraft.server.MinecraftServer
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.Vector3
 import java.io.File
+import vazkii.botania.common.core.helper.Vector3 as BVector3
 
 class Message0dSHandler: IMessageHandler<Message0dS, IMessage?> {
 		
@@ -207,7 +207,7 @@ class MessageEffectHandler: IMessageHandler<MessageEffect, IMessage?> {
 class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMessage?> {
 	
 	override fun onMessage(message: MessageEffectLightning, ctx: MessageContext): IMessage? {
-		Botania.proxy.lightningFX(mc.theWorld, Vector3(message.x1, message.y1, message.z1), Vector3(message.x2, message.y2, message.z2), message.ticksPerMeter, message.colorOuter, message.colorInner)
+		Botania.proxy.lightningFX(mc.theWorld, BVector3(message.x1, message.y1, message.z1), BVector3(message.x2, message.y2, message.z2), message.ticksPerMeter, message.colorOuter, message.colorInner)
 		return null
 	}
 }
@@ -255,25 +255,6 @@ class MessagePartyHandler: IMessageHandler<MessageParty, IMessage?> {
 	}
 }
 
-class MessagePlayerItemHandler: IMessageHandler<MessagePlayerItemS, IMessage?> {
-	
-	override fun onMessage(message: MessagePlayerItemS, ctx: MessageContext): IMessage? {
-		if (message.item != null && ctx.side.isServer) {
-			val player = ctx.serverHandler.playerEntity
-			
-			val heldItem = player.currentEquippedItem
-			
-			if (heldItem == null) {
-				player.setCurrentItemOrArmor(0, message.item!!.copy())
-			} else if (!player.inventory.addItemStackToInventory(message.item!!.copy())) {
-				player.dropPlayerItemWithRandomChoice(message.item!!.copy(), false)
-			}
-		}
-		
-		return null
-	}
-}
-
 class MessageSkinInfoHandler: IMessageHandler<MessageSkinInfo, IMessage?> {
 	
 	override fun onMessage(message: MessageSkinInfo, ctx: MessageContext): IMessage? {
@@ -300,9 +281,11 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 	
 	override fun onMessage(message: MessageRaceSelection, ctx: MessageContext): IMessage? {
 		val world = MinecraftServer.getServer().worldServerForDimension(message.dim) ?: return null
-		val tile = world.getTileEntity(message.x, message.y, message.z) as? TileRaceSelector ?: return null
 		
-		if (message.doMeta) world.setBlockMetadataWithNotify(message.x, message.y, message.z, message.meta, 3)
+		val tile = (ctx.serverHandler.playerEntity.openContainer as? ContainerRaceSelector)?.tile ?: return null
+		
+		if (message.doMeta)
+			world.setBlockMetadataWithNotify(tile.xCoord, tile.yCoord, tile.zCoord, message.meta, 3)
 		
 		tile.activeRotation = message.arot
 		tile.rotation = message.rot
@@ -311,6 +294,8 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 		tile.timer = message.timer
 		
 		if (message.give) tile.giveRaceAndReset(ctx.serverHandler.playerEntity)
+		
+		ctx.serverHandler.playerEntity.openContainer
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		

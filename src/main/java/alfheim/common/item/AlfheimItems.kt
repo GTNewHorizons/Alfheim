@@ -191,7 +191,7 @@ object AlfheimItems {
 		wiltedLotus = ItemWiltedLotus()
 		
 		royalStaff = ItemRoyalStaff()
-		`DEV-NULL` = if (ModInfo.DEV) TheRodOfTheDebug() else null
+		`DEV-NULL` = if (ModInfo.DEV && !ModInfo.OBF) TheRodOfTheDebug() else null
 		
 		
 		

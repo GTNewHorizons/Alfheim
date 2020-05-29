@@ -132,7 +132,6 @@ class AlfheimCore {
 		network.registerMessage(Message0dSHandler::class.java, Message0dS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageHotSpellSHandler::class.java, MessageHotSpellS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageKeyBindHandler::class.java, MessageKeyBindS::class.java, nextPacketID++, Side.SERVER)
-		network.registerMessage(MessagePlayerItemHandler::class.java, MessagePlayerItemS::class.java, nextPacketID++, Side.SERVER)
 		network.registerMessage(MessageRaceSelectionHandler::class.java, MessageRaceSelection::class.java, nextPacketID++, Side.SERVER)
 		
 		network.registerMessage(MessageContributorHandler::class.java, MessageContributor::class.java, nextPacketID++, Side.SERVER)
