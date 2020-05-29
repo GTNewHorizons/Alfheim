@@ -1,11 +1,12 @@
 package alfheim.common.network
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.client.core.handler.KeyBindingHandlerClient.KeyBindingIDs.*
 import alfheim.client.core.handler.PacketHandlerClient
-import alfheim.common.block.container.ContainerRaceSelector
+import alfheim.common.block.tile.TileRaceSelector
 import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.helper.*
@@ -280,12 +281,12 @@ class MessageSpellParamsHandler: IMessageHandler<MessageSpellParams, IMessage?> 
 class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessage?> {
 	
 	override fun onMessage(message: MessageRaceSelection, ctx: MessageContext): IMessage? {
+		if (Vector3.vecEntityDistance(Vector3(message.x, message.y, message.z), ctx.serverHandler.playerEntity) > 5) return null
+		
 		val world = MinecraftServer.getServer().worldServerForDimension(message.dim) ?: return null
+		val tile = world.getTileEntity(message.x, message.y, message.z) as? TileRaceSelector ?: return null
 		
-		val tile = (ctx.serverHandler.playerEntity.openContainer as? ContainerRaceSelector)?.tile ?: return null
-		
-		if (message.doMeta)
-			world.setBlockMetadataWithNotify(tile.xCoord, tile.yCoord, tile.zCoord, message.meta, 3)
+		if (message.doMeta) world.setBlockMetadataWithNotify(message.x, message.y, message.z, message.meta, 3)
 		
 		tile.activeRotation = message.arot
 		tile.rotation = message.rot
@@ -295,7 +296,7 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 		
 		if (message.give) tile.giveRaceAndReset(ctx.serverHandler.playerEntity)
 		
-		ctx.serverHandler.playerEntity.closeContainer()
+		ctx.serverHandler.playerEntity.openContainer
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
