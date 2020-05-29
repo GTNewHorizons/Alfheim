@@ -47,9 +47,9 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 		}
 		
 		if (player.isSneaking)
-			tile.power = max(1.0, tile.power + 1)
+			tile.power = max(0.0, tile.power + 1)
 		else
-			tile.power = max(1.0, tile.power - 1)
+			tile.power = max(0.0, tile.power - 1)
 		
 		if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.power")}: ${tile.power}"))
 		

@@ -19,7 +19,7 @@ open class BiomeAlfheim @JvmOverloads constructor(r: Boolean = false): WE_Biome(
 		BiomeDictionary.registerBiomeType(this, Type.MAGICAL)
 		
 		clearSpawn()
-		setColor(getBiomeGrassColor(0, 0, 0))
+		setColor(grassColor)
 		waterColorMultiplier = if (AlfheimCore.winter) 0x1D1D4E else 0x00FFFF
 		temperature = if (AlfheimCore.winter) 0f else 0.5f
 		

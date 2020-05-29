@@ -12,6 +12,7 @@ Fixes:
  Improved minimal graphics setting
  Alfheim winterish water color
  Bed explosion in Alfheim
- Time not changed after slleping in Alfheim
+ Time not changed after sleeping in Alfheim
  Triquetrum chaotic behaviour
+ Improved contributors security
  [OptiFine] Clear water and Void fog settings fixed and moved to Alfheim configs

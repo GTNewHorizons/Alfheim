@@ -19,7 +19,7 @@ class AlfheimSyntheticMethodsInjector: IClassTransformer {
 		try {
 			cr = ClassReader(basicClass)
 			cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-			cv = ClassVisitorPotionMethodPublicizer(cw, String.format("%s (%s)", name, transformedName))
+			cv = ClassVisitorPotionMethodPublicizer(cw, "$name ($transformedName)")
 			cr.accept(cv, ClassReader.EXPAND_FRAMES)
 			basicClass = cw.toByteArray()
 		} catch (e: Throwable) {

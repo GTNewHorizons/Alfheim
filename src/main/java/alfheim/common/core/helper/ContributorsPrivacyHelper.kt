@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.network.MessageContributor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import cpw.mods.fml.common.gameevent.PlayerEvent
+import cpw.mods.fml.common.gameevent.*
 import net.minecraft.entity.player.*
 import net.minecraft.server.MinecraftServer
 import java.net.URL
@@ -59,6 +59,21 @@ object ContributorsPrivacyHelper {
 	
 	fun isCorrect(user: String, contributor: String) = contributors[contributor] == user
 	
+	val authTimeout = HashMap<String, Int>()
+	
+	@SubscribeEvent
+	fun onServerTick(e: TickEvent.ServerTickEvent) {
+		for (name in authTimeout.keys) {
+			val timeLeft = authTimeout[name]!!
+			if (timeLeft == -1) continue
+			
+			authTimeout[name] = timeLeft - 1
+			// no response in 5 seconds - kick
+			if (timeLeft == 0)
+				MinecraftServer.getServer().configurationManager.func_152612_a(name).playerNetServerHandler.kickPlayerFromServer("Authentication request timed out")
+		}
+	}
+	
 	@SubscribeEvent
 	fun onPlayerLogin(e: PlayerEvent.PlayerLoggedInEvent) {
 		val player = e.player as? EntityPlayerMP ?: return
@@ -66,6 +81,8 @@ object ContributorsPrivacyHelper {
 		if (MinecraftServer.getServer()?.isSinglePlayer == true) return
 		
 		AlfheimCore.network.sendTo(MessageContributor(true), player)
+		
+		authTimeout[player.commandSenderName] = 100
 	}
 	
 	@SubscribeEvent

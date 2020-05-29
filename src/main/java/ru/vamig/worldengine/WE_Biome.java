@@ -4,7 +4,6 @@
 package ru.vamig.worldengine;
 
 import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.relauncher.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -28,6 +27,8 @@ public class WE_Biome extends BiomeGenBase {
 	public int biomeNumberOfOctaves = 1,
 		biomeSurfaceHeight = 63,
 		biomeInterpolateQuality = 16;
+	
+	public int grassColor = 0x08F500;
 	
 	//////////////////
 	//- Generators -//
@@ -158,15 +159,13 @@ public class WE_Biome extends BiomeGenBase {
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
 	public int getBiomeFoliageColor(int R, int G, int B) {
-		return 0x08F500;
+		return grassColor;
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
 	public int getBiomeGrassColor(int R, int G, int B) {
-		return 0x08F500;
+		return grassColor;
 	}
 	
 	@Override

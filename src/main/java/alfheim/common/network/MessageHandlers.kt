@@ -151,6 +151,9 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 			
 			// send all aliases to new player
 			ContributorsPrivacyHelper.contributors.forEach { (k, v) -> AlfheimCore.network.sendTo(MessageContributor(k, v), player) }
+			
+			// auth succeeded, no kick on timeout
+			ContributorsPrivacyHelper.authTimeout[player.commandSenderName] = -1
 		}
 		
 		return null

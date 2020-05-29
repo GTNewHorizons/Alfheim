@@ -29,7 +29,7 @@ object QuartzExtender {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(injectOnExit = true)
 	fun registerBlockIcons(block: BlockQuartz, reg: IIconRegister) {
 		iconInsertNether = IconHelper.forName(reg, "blockInsertNetherQuartz", "decor")
 		iconSmoothNether = IconHelper.forName(reg, "blockSmoothNetherQuartz", "decor")
@@ -37,7 +37,7 @@ object QuartzExtender {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(returnCondition = ON_NOT_NULL, isMandatory = true)
+	@Hook(returnCondition = ON_NOT_NULL)
 	fun getIcon(block: BlockQuartz, side: Int, meta: Int): IIcon? {
 		return when (meta) {
 			5 -> iconInsertNether
@@ -48,7 +48,7 @@ object QuartzExtender {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(injectOnExit = true)
 	fun getSubBlocks(block: BlockQuartz, item: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
 		list.add(ItemStack(block, 1, 5))
 		list.add(ItemStack(block, 1, 6))
@@ -74,14 +74,14 @@ object QuartzExtender {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(returnCondition = ON_NOT_NULL, isMandatory = true)
+	@Hook(returnCondition = ON_NOT_NULL)
 	fun getIcon(block: BlockSpecialQuartz, side: Int, meta: Int): IIcon? {
 		return if (meta in 5..6) block.specialQuartzIcons[meta] else null
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true)
+	@Hook(injectOnExit = true)
 	fun getSubBlocks(block: BlockSpecialQuartz, item: Item?, tab: CreativeTabs?, list: MutableList<Any?>) {
 		list.add(ItemStack(block, 1, 5))
 		list.add(ItemStack(block, 1, 6))
