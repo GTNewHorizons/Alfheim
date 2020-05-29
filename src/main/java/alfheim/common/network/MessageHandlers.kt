@@ -295,7 +295,7 @@ class MessageRaceSelectionHandler: IMessageHandler<MessageRaceSelection, IMessag
 		
 		if (message.give) tile.giveRaceAndReset(ctx.serverHandler.playerEntity)
 		
-		ctx.serverHandler.playerEntity.openContainer
+		ctx.serverHandler.playerEntity.closeContainer()
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
