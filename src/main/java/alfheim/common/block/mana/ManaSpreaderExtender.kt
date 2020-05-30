@@ -6,6 +6,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSpreaderFrame
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.*
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.lexicon.AlfheimLexiconData
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
@@ -220,7 +221,7 @@ object ManaSpreaderExtender {
 	
 	fun isGolden(): Boolean {
 		val bakasobaka = mc.thePlayer?.let { ContributorsPrivacyHelper.isCorrect(it, "GedeonGrays") } ?: false
-		val casting = AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[3] != -1
+		val casting = AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[TinkersConstructAlfheimConfig.MAUFTRIUM] != -1
 		
 		return bakasobaka || casting
 	}

@@ -1,5 +1,9 @@
 Innovations:
  --
 
+Integration:
+ TConstruct:
+  Livingrock tool material (add 59th ID in configs after 58th)
+
 Fixes:
- --
+ [TiC] fairy trait wasn't efficient

@@ -2,6 +2,7 @@ package alfheim.common.core.helper
 
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.network.MessageContributor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.*
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter
 import kotlin.collections.HashMap
 import kotlin.experimental.xor
 
-object ContributorsPrivacyHelper {
+	object ContributorsPrivacyHelper {
 	
 			//  contributor - username alias
 			val contributors = HashMap<String, String>()
@@ -64,13 +65,13 @@ object ContributorsPrivacyHelper {
 	@SubscribeEvent
 	fun onServerTick(e: TickEvent.ServerTickEvent) {
 		for (name in authTimeout.keys) {
-			val timeLeft = authTimeout[name]!!
+			val timeLeft = authTimeout[name] ?: continue
 			if (timeLeft == -1) continue
 			
 			authTimeout[name] = timeLeft - 1
-			// no response in 5 seconds - kick
+			// no response in N seconds - kick
 			if (timeLeft == 0)
-				MinecraftServer.getServer().configurationManager.func_152612_a(name).playerNetServerHandler.kickPlayerFromServer("Authentication request timed out")
+				MinecraftServer.getServer()?.configurationManager?.func_152612_a(name)?.playerNetServerHandler?.kickPlayerFromServer("Authentication request timed out")
 		}
 	}
 	
@@ -82,7 +83,8 @@ object ContributorsPrivacyHelper {
 		
 		AlfheimCore.network.sendTo(MessageContributor(true), player)
 		
-		authTimeout[player.commandSenderName] = 100
+		if (isRegistered(player.commandSenderName))
+			authTimeout[player.commandSenderName] = AlfheimConfigHandler.authTimeout
 	}
 	
 	@SubscribeEvent

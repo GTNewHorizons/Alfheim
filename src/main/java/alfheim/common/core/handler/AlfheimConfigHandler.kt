@@ -80,6 +80,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	// OHTER
 	var alfheimSleepExtraCheck	= true
 	var anyavilBlackList		= emptyArray<String>()
+	var authTimeout				= 100
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
 	var floatingTrapDoors		= true
@@ -127,7 +128,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var thaumTreeSuffusion		= true
 	
 	// TiC INTEGRATION
-	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 3, 4)
+	var materialIDs				= intArrayOf(50, 51, 52, 53, 54, 55, 56, 57, 3, 4)
 	var modifierIDs				= intArrayOf(20)
 	
 	// POTIONS
@@ -226,6 +227,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		
 		alfheimSleepExtraCheck = loadProp(CATEGORY_GENERAL, "alfheimSleepExtraCheck", alfheimSleepExtraCheck, false, "Set this to false if you are skipping whole day while sleeping")
 		anyavilBlackList = loadProp(CATEGORY_GENERAL, "anyavilBlackList", anyavilBlackList, false, "Blacklist of items anyavil can accept [modid:name]", false)
+		authTimeout = loadProp(CATEGORY_GENERAL, "authTimeout", authTimeout, false, "Time limit for client to send authentication credentials", 100, 600)
 		blackLotusDropRate = loadProp(CATEGORY_GENERAL, "blackLotusDropRate", blackLotusDropRate, false, "Rate of black loti dropping from Manaseal Creepers")
 		fancies = loadProp(CATEGORY_GENERAL, "fancies", fancies, false, "Set this to false to locally disable fancies rendering on you (for contributors only)")
 		floatingTrapDoors = loadProp(CATEGORY_GENERAL, "floatingTrapDoors", floatingTrapDoors, false, "Set this to false forbid trapdoors to remain free-floating (as in vanilla, may break some world structures)")

@@ -69,6 +69,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -642,7 +643,7 @@ object AlfheimRecipes {
 		val s = AlfheimCore.stupidMode
 		
 		// if no TiC || if Avaritia loaded || if molten Mauftrium is disabled
-		if (!AlfheimCore.TiCLoaded || s || AlfheimConfigHandler.materialIDs[3] == -1) {
+		if (!AlfheimCore.TiCLoaded || s || AlfheimConfigHandler.materialIDs[TinkersConstructAlfheimConfig.MAUFTRIUM] == -1) {
 			addOreDictRecipe(ItemStack(spreader, 1, 4),
 							 "MMM", "ESI", "MMM",
 							 'M', if (s) ItemStack(alfStorage, 1, 1) else MAUFTRIUM_INGOT,
