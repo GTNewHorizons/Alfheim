@@ -33,12 +33,12 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
 import net.minecraft.entity.boss.EntityDragon
-import net.minecraft.entity.item.EntityFireworkRocket
+import net.minecraft.entity.item.*
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
-import net.minecraft.init.Blocks
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.network.*
 import net.minecraft.potion.*
@@ -219,6 +219,25 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
+	@Hook
+	fun collideEntityItem(tile: TileAltar, item: EntityItem): Boolean {
+		val stack = item.entityItem
+		if (stack == null || item.isDead) return false
+		
+		if (tile.hasWater() || tile.hasLava()) return false
+		
+		if (stack.item === ModItems.waterBowl && !tile.worldObj.isRemote) {
+			tile.setWater(true)
+			tile.worldObj.func_147453_f(tile.xCoord, tile.yCoord, tile.zCoord, tile.worldObj.getBlock(tile.xCoord, tile.yCoord, tile.zCoord))
+			stack.func_150996_a(Items.bowl)
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `BlockSpreader$init`(spreader: BlockSpreader) {
 		val f = 1 / 16f
@@ -337,11 +356,11 @@ object AlfheimHookHandler {
 		if (burst.isFake || dead) return false
 		
 		val allow = when (AlfheimConfigHandler.rocketRide) {
-			-1 -> pos.entityHit !is EntityPlayer && pos.entityHit != null
-			1 -> pos.entityHit is EntityPlayer
-			2 -> pos.entityHit != null
-			else -> false
-		} && pos.entityHit?.isSneaking == false
+						-1   -> pos.entityHit !is EntityPlayer && pos.entityHit != null
+						1    -> pos.entityHit is EntityPlayer
+						2    -> pos.entityHit != null
+						else -> false
+					} && pos.entityHit?.isSneaking == false
 		
 		if (!entity.worldObj.isRemote && allow) {
 			val fireworkStack: ItemStack = lens.generateFirework(burst.color)

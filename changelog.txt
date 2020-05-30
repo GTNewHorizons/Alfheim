@@ -1,9 +1,11 @@
 Innovations:
  Auth timeout config; users unaffected if not registered
+ Water bowl dispenser fill, apothecary fill by drop
 
 Integration:
  TConstruct:
   Livingrock tool material (add 59th ID in configs after 58th)
 
 Fixes:
+ Water bowl weird water placing
  [TiC] fairy trait wasn't efficient

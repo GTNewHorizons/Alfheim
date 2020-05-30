@@ -6,7 +6,7 @@ import cpw.mods.fml.common.*
 import cpw.mods.fml.common.Mod.*
 import cpw.mods.fml.common.event.*
 
-@Mod(modid = AlfheimModularCore.MODID, version = "5", useMetadata = true)
+@Mod(modid = AlfheimModularCore.MODID, version = "modular", useMetadata = true)
 class AlfheimModularCore {
 
 	companion object {

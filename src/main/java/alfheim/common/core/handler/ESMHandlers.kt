@@ -27,9 +27,11 @@ import net.minecraftforge.event.entity.player.*
 import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
+import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.equipment.bauble.ItemFlightTiara
 import vazkii.botania.common.item.equipment.tool.ToolCommons
+import vazkii.botania.common.world.WorldTypeSkyblock
 import kotlin.math.*
 import cpw.mods.fml.common.gameevent.TickEvent.Phase as TickPhase
 
@@ -57,57 +59,60 @@ object ESMHandler {
 	@SubscribeEvent
 	fun getWaterBowl(event: PlayerInteractEvent) {
 		val player = event.entityPlayer
-		if (AlfheimConfigHandler.enableElvenStory && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-			val equipped = player.currentEquippedItem ?: return
+		
+		if (!(AlfheimConfigHandler.enableElvenStory && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)) return
+		
+		val equipped = player.currentEquippedItem ?: return
+		
+		val mop = ToolCommons.raytraceFromEntity(event.world, player, true, (player as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 4.5) ?: return
+		
+		if (mop.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return
+		
+		var i = mop.blockX
+		var j = mop.blockY
+		var k = mop.blockZ
+		
+		if (equipped.item === Items.bowl) run {
+			if (Botania.gardenOfGlassLoaded && WorldTypeSkyblock.isWorldSkyblock(event.world)) return@run
 			
-			val mop = ToolCommons.raytraceFromEntity(event.world, player, true, (player as? EntityPlayerMP)?.theItemInWorldManager?.blockReachDistance ?: 4.5) ?: return
+			if (event.world.getBlock(i, j, k) !== Blocks.water) return@run
 			
-			if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-				var i = mop.blockX
-				var j = mop.blockY
-				var k = mop.blockZ
-				
-				if (!Botania.gardenOfGlassLoaded) {
-					if (equipped.item === Items.bowl) {
-						if (event.world.getBlock(i, j, k) === Blocks.water) {
-							--equipped.stackSize
-							
-							val bowl = ItemStack(ModItems.waterBowl)
-							
-							if (equipped.stackSize <= 0)
-								player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
-							else {
-								if (!player.inventory.addItemStackToInventory(bowl))
-									player.dropPlayerItemWithRandomChoice(bowl, false)
-							}
-						}
-					} else if (equipped.item === ModItems.waterBowl && ASJUtilities.getAmount(player.inventory, ItemStack(ModItems.waterBowl)) >= 4) {
-						when (mop.sideHit) {
-							0 -> j--
-							1 -> j++
-							2 -> k--
-							3 -> k++
-							4 -> i--
-							5 -> i++
-						}
-						
-						if (event.world.isAirBlock(i, j, k)) {
-							--equipped.stackSize
-							ASJUtilities.consumeItemStack(player.inventory, ItemStack(ModItems.waterBowl, 3))
-							
-							event.world.setBlock(i, j, k, Blocks.water)
-							
-							val bowl = ItemStack(Items.bowl, 4)
-							
-							if (equipped.stackSize <= 0)
-								player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
-							else {
-								if (!player.inventory.addItemStackToInventory(bowl))
-									player.dropPlayerItemWithRandomChoice(bowl, false)
-							}
-						}
-					}
-				}
+			--equipped.stackSize
+			
+			val bowl = ItemStack(ModItems.waterBowl)
+			
+			if (equipped.stackSize <= 0)
+				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+			else {
+				if (!player.inventory.addItemStackToInventory(bowl))
+					player.dropPlayerItemWithRandomChoice(bowl, false)
+			}
+		} else if (equipped.item === ModItems.waterBowl && ASJUtilities.getAmount(player.inventory, ItemStack(ModItems.waterBowl)) >= 4) run {
+			if (event.world.getBlock(i, j, k) === ModBlocks.altar) return@run
+			
+			when (mop.sideHit) {
+				0 -> j--
+				1 -> j++
+				2 -> k--
+				3 -> k++
+				4 -> i--
+				5 -> i++
+			}
+			
+			if (!event.world.isAirBlock(i, j, k)) return@run
+			
+			--equipped.stackSize
+			ASJUtilities.consumeItemStack(player.inventory, ItemStack(ModItems.waterBowl, 3))
+			
+			event.world.setBlock(i, j, k, Blocks.flowing_water)
+			
+			val bowl = ItemStack(Items.bowl, 4)
+			
+			if (equipped.stackSize <= 0)
+				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+			else {
+				if (!player.inventory.addItemStackToInventory(bowl))
+					player.dropPlayerItemWithRandomChoice(bowl, false)
 			}
 		}
 	}
@@ -141,8 +146,8 @@ object ESMHandler {
 		if (isAbilityDisabled(player)) return
 		
 		if (checkRemove(player, Potion.blindness.id)
-		||  checkRemove(player, Potion.poison.id)
-		||  checkRemove(player, Potion.confusion.id)) return
+			|| checkRemove(player, Potion.poison.id)
+			|| checkRemove(player, Potion.confusion.id)) return
 	}
 	
 	fun checkRemove(player: EntityPlayer, id: Int): Boolean {
@@ -150,7 +155,7 @@ object ESMHandler {
 		var dur = effect.duration
 		var amp = effect.amplifier
 		
-		if (player.rng.nextInt(max(1, dur*(amp+1)*5)) == 0) {
+		if (player.rng.nextInt(max(1, dur * (amp + 1) * 5)) == 0) {
 			--amp
 			if (amp < 0) {
 				amp = 0
@@ -224,9 +229,9 @@ object ESMHandler {
 		
 		Botania.proxy.setWispFXDepthTest(false)
 		
-		for (i in x until (x+16)) {
+		for (i in x until (x + 16)) {
 			val j = y + player.ticksExisted % 17
-			for (k in z until (z+16)) {
+			for (k in z until (z + 16)) {
 				val block = player.worldObj.getBlock(i, j, k)
 				if (block === Blocks.air) continue
 				
@@ -281,7 +286,7 @@ object ESMHandler {
 			!PlayerSegmentClient.esmAbility
 }
 
-object 	ElvenFlightHandler {
+object ElvenFlightHandler {
 	
 	init {
 		MinecraftForge.EVENT_BUS.register(this)
