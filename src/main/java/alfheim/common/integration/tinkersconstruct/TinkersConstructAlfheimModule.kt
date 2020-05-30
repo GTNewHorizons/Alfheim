@@ -11,7 +11,6 @@ import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.TERRASTEEL
 import alfheim.common.integration.tinkersconstruct.modifier.*
 import alfheim.common.item.compat.tinkersconstruct.*
-import cpw.mods.fml.common.registry.GameRegistry
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

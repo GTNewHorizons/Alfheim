@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter
 import kotlin.collections.HashMap
 import kotlin.experimental.xor
 
-	object ContributorsPrivacyHelper {
+object ContributorsPrivacyHelper {
 	
 			//  contributor - username alias
 			val contributors = HashMap<String, String>()

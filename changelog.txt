@@ -1,5 +1,5 @@
 Innovations:
- --
+ Auth timeout config; users unaffected if not registered
 
 Integration:
  TConstruct:

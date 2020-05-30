@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.IIcon
@@ -23,13 +24,14 @@ import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
 import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.common.Botania
+import vazkii.botania.common.achievement.*
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.lexicon.LexiconData
 import java.awt.Color
 import java.util.*
 
-class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
+class BlockRainbowGrass: BlockTallGrass(), ILexiconable, IPickupAchievement {
 	
 	var flowerIcon: IIcon? = null
 	var glowingIcon: IIcon? = null
@@ -185,4 +187,6 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable {
 			GLIMMER        -> LexiconData.shinyFlowers
 			else           -> null
 		}
+	
+	override fun getAchievementOnPickup(stack: ItemStack, player: EntityPlayer?, item: EntityItem?) = if (stack.meta == FLOWER) ModAchievements.flowerPickup else null
 }
