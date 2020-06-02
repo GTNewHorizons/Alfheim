@@ -18,7 +18,6 @@ class ItemHeadMiku: ItemMod("MikuHead") {
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
-		Blocks.pumpkin
 		if (player.getCurrentArmor(3) == null) player.setCurrentItemOrArmor(4, stack.splitStack(1))
 		return stack
 	}

@@ -594,7 +594,8 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun registerEntity(entityClass: Class<out Entity>, name: String, instance: Any, id: Int) {
-		EntityRegistry.registerModEntity(entityClass, "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name", id, instance, 128, 1, true)
+		//val modid = FMLCommonHandler.instance().findContainerFor(instance).modId
+		EntityRegistry.registerModEntity(entityClass, name, id, instance, 128, 1, true)
 	}
 	
 	/**
@@ -607,9 +608,9 @@ object ASJUtilities {
 	@JvmStatic
 	fun registerEntityEgg(entityClass: Class<out Entity>, name: String, backColor: Int, frontColor: Int, instance: Any) {
 		val id = EntityRegistry.findGlobalUniqueEntityId()
-		val nama = "${FMLCommonHandler.instance().findContainerFor(instance).modId}:$name"
-		EntityRegistry.registerGlobalEntityID(entityClass, nama, id)
-		EntityRegistry.registerModEntity(entityClass, nama, id, instance, 128, 1, true)
+//		val modid = FMLCommonHandler.instance().findContainerFor(instance).modId
+		EntityRegistry.registerGlobalEntityID(entityClass, name, id)
+		EntityRegistry.registerModEntity(entityClass, name, id, instance, 128, 1, true)
 		EntityList.entityEggs[id] = EntityList.EntityEggInfo(id, backColor, frontColor)
 	}
 	

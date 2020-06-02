@@ -161,7 +161,7 @@ object AlfheimItems {
 		manaStone = ItemManaStorage("ManaStone", 3.0)
 		manaStoneGreater = ItemManaStorage("ManaStoneGreater", 8.0)
 		mask = ItemTankMask()
-		//mjolnir = new ItemMjolnir();
+		//mjolnir = ItemMjolnir()
 		moonlightBow = ItemMoonlightBow()
 		multibauble = ItemMultibauble()
 		paperBreak = ItemPaperBreak()

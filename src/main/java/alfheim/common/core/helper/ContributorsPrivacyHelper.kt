@@ -2,6 +2,7 @@ package alfheim.common.core.helper
 
 import alexsocol.asjlib.*
 import alfheim.AlfheimCore
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.network.MessageContributor
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.*
@@ -48,7 +49,9 @@ object ContributorsPrivacyHelper {
 	
 	private fun register(contributor: String, passwordHash: String) {
 		authCredits[contributor] = passwordHash
-		contributors[contributor] = contributor
+		
+		if (MinecraftServer.getServer()?.isSinglePlayer != false)
+			contributors[contributor] = contributor // no power on server if no response
 	}
 	
 	fun isRegistered(login: String) = authCredits.contains(login)
@@ -64,13 +67,13 @@ object ContributorsPrivacyHelper {
 	@SubscribeEvent
 	fun onServerTick(e: TickEvent.ServerTickEvent) {
 		for (name in authTimeout.keys) {
-			val timeLeft = authTimeout[name]!!
+			val timeLeft = authTimeout[name] ?: continue
 			if (timeLeft == -1) continue
 			
 			authTimeout[name] = timeLeft - 1
-			// no response in 5 seconds - kick
+			// no response in N seconds - kick
 			if (timeLeft == 0)
-				MinecraftServer.getServer().configurationManager.func_152612_a(name).playerNetServerHandler.kickPlayerFromServer("Authentication request timed out")
+				MinecraftServer.getServer()?.configurationManager?.func_152612_a(name)?.playerNetServerHandler?.kickPlayerFromServer("Authentication request timed out")
 		}
 	}
 	
@@ -82,14 +85,15 @@ object ContributorsPrivacyHelper {
 		
 		AlfheimCore.network.sendTo(MessageContributor(true), player)
 		
-		authTimeout[player.commandSenderName] = 100
+		if (isRegistered(player.commandSenderName))
+			authTimeout[player.commandSenderName] = AlfheimConfigHandler.authTimeout
 	}
 	
 	@SubscribeEvent
 	fun onPlayerLogout(e: PlayerEvent.PlayerLoggedOutEvent) {
 		if (MinecraftServer.getServer()?.isSinglePlayer == true) return
 		
-		ASJUtilities.mapGetKey(contributors, e.player.commandSenderName)?.let { contributors.remove(it) }
+		contributors.values.removeAll { it == e.player.commandSenderName }
 	}
 }
 

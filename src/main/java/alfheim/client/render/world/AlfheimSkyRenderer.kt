@@ -295,7 +295,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		
 		
 		// === Stars
-		f6 = max(0.0025f, effCelAng - 0.25f) * 20
+		f6 = max(0.0025f, effCelAng - 0.25f - world.getRainStrength(partialTicks)) * 20 * (1f - insideVoid)
 		val t = (ClientTickHandler.ticksInGame + partialTicks + 2000) * 0.005f
 		glPushMatrix()
 		glDisable(GL_TEXTURE_2D)

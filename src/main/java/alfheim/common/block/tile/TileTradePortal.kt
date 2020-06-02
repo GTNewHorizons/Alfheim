@@ -1,7 +1,7 @@
 package alfheim.common.block.tile
 
 import alexsocol.asjlib.*
-import alfheim.api.AlfheimAPI
+import alfheim.api.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import com.google.common.base.Function
@@ -118,6 +118,9 @@ class TileTradePortal: TileMod() {
 				return true
 			}
 		}
+		
+		if (ModInfo.DEV && getBlockMetadata () != 0) setRandomRecipe()
+		
 		return false
 	}
 	

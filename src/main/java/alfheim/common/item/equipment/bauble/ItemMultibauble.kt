@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.*
 import net.minecraft.entity.EntityLivingBase
@@ -31,7 +32,7 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 		
 		baubles.forEachIndexed {
 			i, bauble ->
-			if (i < 6 && bauble != null) {
+			if (i < AlfheimConfigHandler.multibaubleCount && bauble != null) {
 				val item = bauble.item
 				if (item is IBauble && item !is ItemMultibauble && item !is IRelic) {
 					if (ManaItemHandler.requestManaExact(stack, player, 2, !player.worldObj.isRemote))

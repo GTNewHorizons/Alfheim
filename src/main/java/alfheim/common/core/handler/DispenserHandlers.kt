@@ -7,10 +7,13 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import net.minecraft.block.BlockDispenser
 import net.minecraft.dispenser.*
+import net.minecraft.init.*
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntityDispenser
 import net.minecraft.util.MathHelper
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.item.ModItems
 
 /**
  * @author WireSegal
@@ -32,12 +35,13 @@ object BifrostFlowerDispenserHandler: IBehaviorDispenseItem {
 		val y = block.yInt + facing.offsetY
 		val z = block.zInt + facing.offsetZ
 		
-		if (block.world.getBlock(x, y, z) == ModBlocks.flower) {
+		if (block.world.getBlock(x, y, z) === ModBlocks.flower) {
 			block.world.setBlock(x, y, z, AlfheimBlocks.rainbowGrass, 2, 3)
 			block.world.playSoundEffect(x.D, y.D, z.D, "botania:enchanterEnchant", 1f, 1f)
 			stack.stackSize--
 			return stack
 		}
+		
 		return stack
 	}
 }
@@ -137,6 +141,39 @@ object ThrownItemDispenserHandler: IBehaviorDispenseItem {
 		potion.setThrowableHeading(potion.motionX, potion.motionY, potion.motionZ, potion.func_70182_d(), 1f)
 		
 		block.world.spawnEntityInWorld(potion)
+		
+		return stack
+	}
+}
+
+object WaterBowlDispenserHandler: BehaviorDefaultDispenseItem() {
+	
+	private val field_150840_b = BehaviorDefaultDispenseItem()
+	
+	init {
+		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.bowl, this)
+	}
+	
+	override fun dispenseStack(block: IBlockSource, stack: ItemStack): ItemStack {
+		val enumfacing = BlockDispenser.func_149937_b(block.blockMetadata)
+		val world = block.world
+		val i = block.xInt + enumfacing.frontOffsetX
+		val j = block.yInt + enumfacing.frontOffsetY
+		val k = block.zInt + enumfacing.frontOffsetZ
+		val target = world.getBlock(i, j, k)
+		val l = world.getBlockMetadata(i, j, k)
+		val item = if (target === Blocks.flowing_water && l == 0) { // no need in check for static water because of block update
+			ModItems.waterBowl
+		} else {
+			return super.dispenseStack(block, stack)
+		}
+		
+		if (--stack.stackSize == 0) {
+			stack.func_150996_a(item)
+			stack.stackSize = 1
+		} else if ((block.blockTileEntity as TileEntityDispenser).func_146019_a(ItemStack(item)) < 0) {
+			this.field_150840_b.dispense(block, ItemStack(item))
+		}
 		
 		return stack
 	}

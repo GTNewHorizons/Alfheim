@@ -5,6 +5,7 @@ import alexsocol.asjlib.render.AdvancedArmorModel
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
@@ -21,16 +22,16 @@ class ModelElvoriumArmor
 	
 	override fun pre(entity: Entity) {
 		mc.renderEngine.bindTexture(LibResourceLocations.elvoriumArmor)
-		if (entity is EntityPlayer && entity.getCommandSenderName() in sobakaSutula) {
+		if (entity is EntityPlayer && ContributorsPrivacyHelper.isCorrect(entity.commandSenderName, "GedeonGrays")) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-			if (mc.thePlayer.commandSenderName in sobakaSutula && !AlfheimConfigHandler.fancies) return
+			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer.commandSenderName, "GedeonGrays") && !AlfheimConfigHandler.fancies) return
 			ShaderHelper.useShader(ShaderHelper.halo)
 		}
 	}
 	
 	override fun post(entity: Entity) {
-		if (entity is EntityPlayer && entity.getCommandSenderName() in sobakaSutula) {
+		if (entity is EntityPlayer && ContributorsPrivacyHelper.isCorrect(entity.commandSenderName, "GedeonGrays")) {
 			glDisable(GL_BLEND)
 			ShaderHelper.releaseShader()
 		}

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import vazkii.botania.api.lexicon.ILexiconable
+import vazkii.botania.common.item.ModItems
 
 class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	
@@ -33,7 +34,7 @@ class BlockTradePortal: BlockContainerMod(Material.rock), ILexiconable {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, side: Int, hitX: Float, hitY: Float, hitZ: Float) =
-		if (!world.isRemote) (world.getTileEntity(x, y, z) as TileTradePortal).onWanded() else false
+		if (!world.isRemote && player?.heldItem?.item === ModItems.twigWand) (world.getTileEntity(x, y, z) as TileTradePortal).onWanded() else false
 	override fun isInterpolated() = true
 	override fun getIcon(side: Int, meta: Int) = if (meta == 0) blockIcon else textures[0]
 	override fun createNewTileEntity(world: World, meta: Int) = TileTradePortal()

@@ -11,14 +11,12 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.client.lib.LibResources
-import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.block.*
 import vazkii.botania.common.block.decor.slabs.BlockModSlab
 import vazkii.botania.common.block.decor.stairs.BlockModStairs
 import vazkii.botania.common.block.decor.walls.BlockModWall
@@ -32,7 +30,8 @@ object AlfheimFluffBlocks {
 	val dreamwoodBarkFenceGate: Block
 	val dwarfLantern: Block
 	val dwarfPlanks: Block
-	val dwardTrapDoor: Block
+	val dwarfTrapDoor: Block
+	val elfQuartzWall: Block
 	val elvenSandstone: Block
 	val elvenSandstoneStairs: List<Block>
 	val elvenSandstoneSlab: Block
@@ -50,6 +49,7 @@ object AlfheimFluffBlocks {
 	val livingcobbleSlab2: Block
 	val livingcobbleSlabFull2: Block
 	val livingcobbleWall: Block
+	val livingMountain: Block
 	val livingrockBrickWall: Block
 	val livingrockDark: Block
 	val livingrockDarkStairs: List<Block>
@@ -93,6 +93,8 @@ object AlfheimFluffBlocks {
 		roofTileSlabsFull.forEach { (it as BlockModSlab).register() }
 		roofTileStairs = (0 until roofs).map { BlockModStairs(roofTile, it, "CustomRoofStairs$it").setCreativeTab(AlfheimTab) }
 		
+		livingMountain = BlockLivingMountain()
+		
 		val metas = (0..3) - 2
 		livingrockDark = BlockModMeta(Material.rock, 4, ModInfo.MODID, "DarkLivingRock", AlfheimTab, 2f, resist = 10f, folder = "decor/")
 		livingrockDarkStairs = metas.map { BlockModStairs(livingrockDark, it, "DarkLivingRockStairs$it").setCreativeTab(AlfheimTab) }
@@ -105,15 +107,12 @@ object AlfheimFluffBlocks {
 		livingrockDarkWalls = (0..1).map {
 			BlockModWall(livingrockDark, it)
 				.setCreativeTab(AlfheimTab)
-				.setHardness(5f)
-				.setResistance(8000f)
-				.setStepSound(Block.soundTypeStone)
 				.setHarvestLevelI("pickaxe", 2)
 		}
 		
 		dwarfLantern = BlockDwarfLantern()
 		
-		shrineLight = BlockModMeta(Material.glass, 4, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "decor/").setLightLevel(1f).setLightOpacity(0)
+		shrineLight = BlockModMeta(Material.glass, 6, ModInfo.MODID, "ShrineLight", AlfheimTab, resist = 6000f, folder = "decor/").setLightLevel(1f).setLightOpacity(0)
 		shrineGlass = BlockShrineGlass()
 		shrinePanel = object: BlockPaneMeta(Material.glass, 4, "ShrinePanel", "decor/") {
 			override fun getRenderBlockPass() = 1
@@ -126,7 +125,9 @@ object AlfheimFluffBlocks {
 			.setResistance(600f)
 			.setStepSound(Block.soundTypeGlass)
 		
-		Blocks.planks
+		elfQuartzWall = BlockModWall(ModFluffBlocks.elfQuartz, 0)
+			.setCreativeTab(AlfheimTab)
+			.setHarvestLevelI("pickaxe", 2)
 		
 		dwarfPlanks = BlockModMeta(Material.wood, 1, ModInfo.MODID, "DwarfPlanks", AlfheimTab, 3f, "axe", 1, 100f, "decor/")
 		
@@ -149,7 +150,6 @@ object AlfheimFluffBlocks {
 		elvenSandstoneWalls = arrayOf(0, 2).map {
 			BlockModWall(elvenSandstone, it)
 				.setCreativeTab(AlfheimTab)
-				.setStepSound(Block.soundTypeStone)
 		}
 		
 		livingcobbleStairs = BlockModStairs(AlfheimBlocks.livingcobble, 0, "LivingCobbleStairs").setCreativeTab(AlfheimTab)
@@ -173,16 +173,10 @@ object AlfheimFluffBlocks {
 		
 		livingcobbleWall = BlockModWall(AlfheimBlocks.livingcobble, 0)
 			.setCreativeTab(AlfheimTab)
-			.setHardness(5f)
-			.setResistance(8000f)
-			.setStepSound(Block.soundTypeStone)
 			.setHarvestLevelI("pickaxe", 2)
 		
 		livingrockBrickWall = BlockModWall(ModBlocks.livingrock, 1)
 			.setCreativeTab(AlfheimTab)
-			.setHardness(5f)
-			.setResistance(8000f)
-			.setStepSound(Block.soundTypeStone)
 			.setHarvestLevelI("pickaxe", 2)
 		
 		livingwoodBarkFenceGate = BlockModFenceGate(ModBlocks.livingwood, 0)
@@ -241,12 +235,11 @@ object AlfheimFluffBlocks {
 			.setResistance(5f)
 			.setStepSound(Block.soundTypeWood)
 		
-		dwardTrapDoor = object: BlockModTrapDoor(Material.wood, "DwarfTrapDoor") {
+		dwarfTrapDoor = object: BlockModTrapDoor(Material.wood, "DwarfTrapDoor") {
 			override fun registerBlockIcons(reg: IIconRegister) {
 				blockIcon = IconHelper.forBlock(reg, this, "", "decor")
 			}
 		}
-			.setCreativeTab(CreativeTabs.tabRedstone)
 			.setHardness(3f)
 			.setStepSound(Block.soundTypeWood)
 	}

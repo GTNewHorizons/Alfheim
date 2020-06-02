@@ -34,6 +34,10 @@ fun <T> Iterable<T>.paired(last: T? = null): List<Pair<T, T>> {
 	return pairs
 }
 
+fun <T> MutableCollection<T>.removeRandom(): T {
+	return this.random().also { remove(it) }
+}
+
 fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
@@ -88,6 +92,8 @@ fun AxisAlignedBB.offset(d: Number) = this.offset(d.D, d.D, d.D)!!
 fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 	worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
+
+fun Entity.setPosition(e: Entity) = setPosition(e.posX, e.posY, e.posZ)
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 

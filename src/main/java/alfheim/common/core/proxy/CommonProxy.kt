@@ -41,6 +41,7 @@ open class CommonProxy {
 		BifrostFlowerDispenserHandler
 		ThrownPotionDispenserHandler
 		ThrownItemDispenserHandler
+		WaterBowlDispenserHandler
 		if (Botania.thaumcraftLoaded) TCHandlerShadowFoxAspects.initAspects()
 		AlfheimMultiblocks
 		

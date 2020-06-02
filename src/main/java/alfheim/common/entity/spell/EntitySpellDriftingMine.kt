@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -70,7 +69,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 			if (!ASJUtilities.isServer) return
 			super.onUpdate()
 			
-			if (ticksExisted == SpellDriftingMine.duration) onImpact(null)
+			if (ticksExisted == SpellDriftingMine.duration || isBurning) onImpact(null)
 			
 			val vec3 = Vec3.createVectorHelper(posX, posY, posZ)
 			val vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)

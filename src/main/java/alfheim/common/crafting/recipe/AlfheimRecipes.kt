@@ -32,19 +32,22 @@ import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.livingcobble
 import alfheim.common.block.AlfheimBlocks.manaAccelerator
 import alfheim.common.block.AlfheimBlocks.manaInfuser
+import alfheim.common.block.AlfheimBlocks.shimmerQuartz
 import alfheim.common.block.AlfheimBlocks.tradePortal
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
-import alfheim.common.block.AlfheimFluffBlocks.dwardTrapDoor
 import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
 import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
+import alfheim.common.block.AlfheimFluffBlocks.dwarfTrapDoor
+import alfheim.common.block.AlfheimFluffBlocks.elfQuartzWall
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab2
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
+import alfheim.common.block.AlfheimFluffBlocks.livingMountain
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
@@ -61,6 +64,9 @@ import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFenceGate
+import alfheim.common.block.AlfheimFluffBlocks.roofTile
+import alfheim.common.block.AlfheimFluffBlocks.roofTileSlabs
+import alfheim.common.block.AlfheimFluffBlocks.roofTileStairs
 import alfheim.common.block.AlfheimFluffBlocks.shrineGlass
 import alfheim.common.block.AlfheimFluffBlocks.shrineLight
 import alfheim.common.block.AlfheimFluffBlocks.shrinePanel
@@ -69,6 +75,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRock
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteSlab
 import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig
 import alfheim.common.item.AlfheimItems.astrolabe
 import alfheim.common.item.AlfheimItems.auraRingElven
 import alfheim.common.item.AlfheimItems.auraRingGod
@@ -642,7 +649,7 @@ object AlfheimRecipes {
 		val s = AlfheimCore.stupidMode
 		
 		// if no TiC || if Avaritia loaded || if molten Mauftrium is disabled
-		if (!AlfheimCore.TiCLoaded || s || AlfheimConfigHandler.materialIDs[3] == -1) {
+		if (!AlfheimCore.TiCLoaded || s || AlfheimConfigHandler.materialIDs[TinkersConstructAlfheimConfig.MAUFTRIUM] == -1) {
 			addOreDictRecipe(ItemStack(spreader, 1, 4),
 							 "MMM", "ESI", "MMM",
 							 'M', if (s) ItemStack(alfStorage, 1, 1) else MAUFTRIUM_INGOT,
@@ -825,7 +832,7 @@ object AlfheimRecipes {
 						 "LLL",
 						 'L', ItemStack(shrineRock, 1, 0))
 		
-		for (i in 0..3) {
+		for (i in 0..5) {
 			addOreDictRecipe(ItemStack(shrineLight, 8, i),
 							 "LLL", "LDL", "LLL",
 							 'L', "glowstone",
@@ -844,6 +851,21 @@ object AlfheimRecipes {
 						 'G', elfGlass,
 						 'D', DYES[14])
 		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 2),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[9])
+		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 3),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[5])
+		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 4),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[14])
+		
 		addShapedRecipe(ItemStack(livingcobble, 4, 1),
 						"LL", "LL",
 						'L', ItemStack(livingcobble, 1, 2))
@@ -851,6 +873,26 @@ object AlfheimRecipes {
 		addOreDictRecipe(ItemStack(livingcobble, 8, 2),
 						 "LLL", "L L", "LLL",
 						 'L', LIVING_ROCK)
+		
+		addShapelessOreDictRecipe(ItemStack(livingcobble, 1, 3), ItemStack(livingcobble), vineBall)
+		
+		addShapedRecipe(ItemStack(livingMountain, 9),
+						"CRC", "RCR", "CRC",
+						'C', ItemStack(livingcobble),
+						'R', ItemStack(livingrock))
+		
+		addShapelessOreDictRecipe(ItemStack(roofTile), ItemStack(customBrick, 1, 3), DYES[10], DYES[7])
+		addShapelessOreDictRecipe(ItemStack(roofTile, 1, 1), ItemStack(customBrick, 1, 3), DYES[13], DYES[11], DYES[7])
+		addShapelessOreDictRecipe(ItemStack(roofTile, 1, 2), ItemStack(customBrick, 1, 3), DYES[13])
+		
+		roofTileSlabs.forEachIndexed { meta, slab ->
+			addShapedRecipe(ItemStack(slab, 6), "RRR", 'R', ItemStack(roofTile, 1, meta))
+			addShapedRecipe(ItemStack(roofTile, 1, meta), "R", "R", 'R', ItemStack(slab))
+		}
+		
+		roofTileStairs.forEachIndexed { meta, stair ->
+			addShapedRecipe(ItemStack(stair, 4), "R  ", "RR ", "RRR", 'R', ItemStack(roofTile, 1, meta))
+		}
 		
 		val dyes = arrayOf(4, 1, 14, 11)
 		for (i in 0..3) {
@@ -860,9 +902,23 @@ object AlfheimRecipes {
 							 'D', DYES[dyes[i]])
 		}
 		
-		addShapedRecipe(ItemStack(dwardTrapDoor),
+		addShapedRecipe(ItemStack(dwarfTrapDoor),
 						"WWW", "WWW",
 						'W', ItemStack(dwarfPlanks))
+		
+		val quartzs = arrayOf(quartz_block, blazeQuartz, darkQuartz, elfQuartz, lavenderQuartz, manaQuartz, redQuartz, sunnyQuartz, shimmerQuartz)
+		
+		for (q in quartzs) {
+			addShapelessOreDictRecipe(ItemStack(q, 1, 5), ItemStack (q), if (q === darkQuartz) DYES[0] else DYES[15])
+			addOreDictRecipe(ItemStack(q, 4, 6), "QQ", "QQ", 'Q', ItemStack(q))
+		}
+		
+		addShapelessOreDictRecipe(ItemStack(elfQuartz, 1, 1), ItemStack(elfQuartz, 1, 7))
+		addShapelessOreDictRecipe(ItemStack(elfQuartz, 1, 7), ItemStack(elfQuartz, 1, 1))
+		addOreDictRecipe(ItemStack(elfQuartz, 2, 8), "S", "P", "S", 'S', elfQuartzSlab, 'P', ItemStack(elfQuartz, 1, 9))
+		addShapelessOreDictRecipe(ItemStack(elfQuartz, 1, 9), ItemStack(elfQuartz))
+		addOreDictRecipe(ItemStack(elfQuartz, 1, 10), "PP", "PP", 'P', ItemStack(elfQuartz, 1, 9))
+		addOreDictRecipe(ItemStack(elfQuartzWall, 16), "QQQ", "QQQ", 'Q', ItemStack(elfQuartz))
 	}
 	
 	private fun registerShapelessRecipes() {

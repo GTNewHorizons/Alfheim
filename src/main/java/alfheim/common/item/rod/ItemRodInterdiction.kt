@@ -5,6 +5,8 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
@@ -124,7 +126,7 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			val r = color.red.F / 255f
 			val g = color.green.F / 255f
 			val b = color.blue.F / 255f
-			if (count % 5 == 0) particleRing(world, x, y, z, range, r, g, b)
+			if (count % 5 == 0) VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.SEAROD, world.provider.dimensionId, x, y, z, range.D, r.D, g.D, b.D)
 			
 			val exclude: EntityLivingBase = player
 			val entities = world.getEntitiesWithinAABBExcludingEntity(exclude, AxisAlignedBB.getBoundingBox(x - range, y - range, z - range, x + range, y + range, z + range), PLAYER_SELECTOR) as List<Entity>

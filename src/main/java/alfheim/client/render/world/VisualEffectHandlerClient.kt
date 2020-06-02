@@ -2,7 +2,6 @@ package alfheim.client.render.world
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.entity.race
 import alfheim.client.gui.GUIDeathTimer
@@ -11,6 +10,7 @@ import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.block.tile.sub.anomaly.SubTileManaVoid
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.rod.ItemRodInterdiction
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*
 import net.minecraft.block.Block
@@ -60,6 +60,7 @@ object VisualEffectHandlerClient {
 			PURE_AREA         -> spawnPure(d[0], d[1], d[2])
 			QUAD              -> quadDamage()
 			QUADH             -> quadHurt()
+			SEAROD            -> (AlfheimItems.rodInterdiction as ItemRodInterdiction).particleRing(mc.theWorld, d[0], d[1], d[2], d[3].I, d[4].F, d[5].F, d[6].F)
 			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
 			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
 			SPLASH            -> spawnSplash(d[0], d[1], d[2])
@@ -306,7 +307,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

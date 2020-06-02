@@ -36,7 +36,7 @@ class ItemSnowSword: ItemManasteelSword(snow, "SnowSword") {
 		itemIcon = IconHelper.forName(reg, "SnowKatana")
 		katanaIcon = IconHelper.forName(reg, "Katana")
 		
-		snice = IconHelper.forName(reg, "misc/Snice")
+		snice = IconHelper.forName(reg, "misc/snice")
 	}
 	
 	override fun getIconIndex(stack: ItemStack) = if (stack.displayName.trim().equals("chunchunmaru", true)) katanaIcon else itemIcon

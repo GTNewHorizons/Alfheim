@@ -1,8 +1,14 @@
 package alfheim.common.integration.tinkersconstruct
 
 import alexsocol.asjlib.ASJUtilities
+import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.ELEMENTIUM
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.ELVORIUM
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.MANASTEEL
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.MAUFTRIUM
+import alfheim.common.integration.tinkersconstruct.TinkersConstructAlfheimConfig.TERRASTEEL
 import alfheim.common.integration.tinkersconstruct.modifier.*
 import alfheim.common.item.compat.tinkersconstruct.*
 import gloomyfolken.hooklib.asm.*
@@ -22,6 +28,7 @@ import tconstruct.modifiers.tools.ModInteger
 import tconstruct.smeltery.TinkerSmeltery
 import tconstruct.tools.TinkerTools
 import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.core.handler.PixieHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.lib.LibOreDict
@@ -49,7 +56,7 @@ object TinkersConstructAlfheimModule {
 	val naturalBucket: Item
 	val naturalMaterial: Item
 	
-	val manaGenMaterials = intArrayOf(AlfheimConfigHandler.materialIDs[1], AlfheimConfigHandler.materialIDs[3], AlfheimConfigHandler.materialIDs[4])
+	val manaGenMaterials = intArrayOf(AlfheimConfigHandler.materialIDs[ELVORIUM], AlfheimConfigHandler.materialIDs[MAUFTRIUM], AlfheimConfigHandler.materialIDs[TERRASTEEL])
 	val manaGenDelay = hashMapOf(manaGenMaterials[0] to 10, manaGenMaterials[1] to 5, manaGenMaterials[2] to 12)
 	
 	val manaRepairMaterials = IntArray(5) { AlfheimConfigHandler.materialIDs[it] }
@@ -61,7 +68,7 @@ object TinkersConstructAlfheimModule {
 		val nfs = ArrayList<Fluid>()
 		val nfbs = ArrayList<Block>()
 		
-		if (AlfheimConfigHandler.materialIDs[0] != -1) {
+		if (AlfheimConfigHandler.materialIDs[ELEMENTIUM] != -1) {
 			liquidElementium = registerSmelteryFluid("elementium", ModBlocks.storage, 2).also { nfs.add(it) }
 			liquidElementiumBlock = liquidElementium.block.also { nfbs.add(it) }
 		} else {
@@ -69,7 +76,7 @@ object TinkersConstructAlfheimModule {
 			nfbs.add(Blocks.flowing_water)
 		}
 		
-		if (AlfheimConfigHandler.materialIDs[1] != -1) {
+		if (AlfheimConfigHandler.materialIDs[ELVORIUM] != -1) {
 			liquidElvorium = registerSmelteryFluid("elvorium", AlfheimBlocks.alfStorage, 0).also { nfs.add(it) }
 			liquidElvoriumBlock = liquidElvorium.block.also { nfbs.add(it) }
 		} else {
@@ -77,7 +84,7 @@ object TinkersConstructAlfheimModule {
 			nfbs.add(Blocks.flowing_water)
 		}
 		
-		if (AlfheimConfigHandler.materialIDs[2] != -1) {
+		if (AlfheimConfigHandler.materialIDs[MANASTEEL] != -1) {
 			liquidManasteel = registerSmelteryFluid("manasteel", ModBlocks.storage, 0).also { nfs.add(it) }
 			liquidManasteelBlock = liquidManasteel.block.also { nfbs.add(it) }
 		} else {
@@ -85,7 +92,7 @@ object TinkersConstructAlfheimModule {
 			nfbs.add(Blocks.flowing_water)
 		}
 		
-		if (AlfheimConfigHandler.materialIDs[3] != -1) {
+		if (AlfheimConfigHandler.materialIDs[MAUFTRIUM] != -1) {
 			liquidMauftrium = registerSmelteryFluid("mauftrium", AlfheimBlocks.alfStorage, 1).also { nfs.add(it) }
 			liquidMauftriumBlock = liquidMauftrium.block.also { nfbs.add(it) }
 		} else {
@@ -93,7 +100,7 @@ object TinkersConstructAlfheimModule {
 			nfbs.add(Blocks.flowing_water)
 		}
 		
-		if (AlfheimConfigHandler.materialIDs[4] != -1) {
+		if (AlfheimConfigHandler.materialIDs[TERRASTEEL] != -1) {
 			liquidTerrasteel = registerSmelteryFluid("terrasteel", ModBlocks.storage, 1).also { nfs.add(it) }
 			liquidTerrasteelBlock = liquidTerrasteel.block.also { nfbs.add(it) }
 		} else {
@@ -141,13 +148,16 @@ object ModifiersExtender {
 
 object TraitFairySpawner {
 	
-	@Hook(returnCondition = ReturnCondition.ON_NOT_NULL)
-	fun getChance(stack: ItemStack?): Float? {
-		if (stack == null) return null
-		val tool = stack.item as? IModifyable ?: return null
-		val tag = ItemNBTHelper.getCompound(stack, tool.baseTagName, true) ?: return null
+	@JvmStatic
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, floatReturnConstant = 0.1f)
+	fun getChance(handler: PixieHandler, stack: ItemStack?): Boolean {
+		if (!AlfheimCore.TiCLoaded) return false
+		
+		if (stack == null) return false
+		val tool = stack.item as? IModifyable ?: return false
+		val tag = ItemNBTHelper.getCompound(stack, tool.baseTagName, true) ?: return false
 		val headMaterial = tag.getInteger("Head")
-		if (headMaterial == AlfheimConfigHandler.materialIDs[0]) return 0.1f
-		return null
+		if (headMaterial == AlfheimConfigHandler.materialIDs[ELEMENTIUM]) return true
+		return false
 	}
 }
