@@ -16,7 +16,6 @@ import vazkii.botania.api.wand.IWandable
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import kotlin.math.max
-
 class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 	
 	init {
@@ -33,6 +32,16 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileAnomalyHarvester()
 	
+	override fun onBlockPlaced(world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, meta: Int) = ForgeDirection.VALID_DIRECTIONS.safeGet(side).ordinal
+	
+	override fun onBlockClicked(world: World, x: Int, y: Int, z: Int, player: EntityPlayer?) {
+		if (player?.heldItem?.item !== ModItems.twigWand)
+			return super.onBlockClicked(world, x, y, z, player)
+		
+		var meta = world.getBlockMetadata(x, y, z)
+		world.setBlockMetadataWithNotify(x, y, z, ++meta % 6, 3)
+	}
+	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (player.currentEquippedItem?.item === ModItems.twigWand) return player.currentEquippedItem.item.onItemUse(player.currentEquippedItem, player, world, x, y, z, side, hitX, hitY, hitZ)
 		
@@ -42,14 +51,13 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 		if (player.currentEquippedItem?.item === AlfheimBlocks.anomaly.toItem()) {
 			val main = ItemNBTHelper.getString(player.currentEquippedItem, TileAnomaly.TAG_SUBTILE_MAIN, "")
 			if (!AlfheimAPI.anomalyBehaviors.containsKey(main)) return false
-			tile.subTiles.add(main)
+			tile.addSubTile(main)
 			return true
 		}
 		
-		if (player.isSneaking)
-			tile.power = max(0.0, tile.power + 1)
-		else
-			tile.power = max(0.0, tile.power - 1)
+		if (player.currentEquippedItem != null) return false
+		
+		tile.power = max(0.0, tile.power + if (player.isSneaking) -1 else 1)
 		
 		if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.power")}: ${tile.power}"))
 		

@@ -35,7 +35,7 @@ class WorldGenAlfheim: IWorldGenerator {
 		}
 		
 		private fun generateAlfheim(rand: Random, chunkX: Int, chunkZ: Int, world: World) {
-			if (chunkX == 0 && chunkZ == 0 && !world.isRemote) StructureSpawnpoint.generate(world)
+			if (chunkX == 0 && chunkZ == 0 && !world.isRemote) StructureSpawnpoint.generate(world, rand)
 			
 			if (AlfheimConfigHandler.anomaliesDispersion <= 0) return
 			

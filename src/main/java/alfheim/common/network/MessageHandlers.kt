@@ -107,6 +107,9 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 			val player = ctx.serverHandler.playerEntity
 			val username = player.commandSenderName
 			
+			// auth packet received - no hacking (probably)
+			ContributorsPrivacyHelper.authTimeout.remove(player.commandSenderName)
+			
 			val passMatch = ContributorsPrivacyHelper.getPassHash(message.key)?.let { if (it.isBlank()) true else it == HashHelper.hash(message.value) } ?: false
 			
 			// are you the person you are saying you are ?
@@ -141,6 +144,8 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 				}
 			}
 			
+			// --> proceeding here:
+			
 			// set contributor name alias to current username
 			ContributorsPrivacyHelper.contributors[message.key] = username
 			
@@ -152,9 +157,6 @@ class MessageContributorHandler: IMessageHandler<MessageContributor, IMessage?> 
 			
 			// send all aliases to new player
 			ContributorsPrivacyHelper.contributors.forEach { (k, v) -> AlfheimCore.network.sendTo(MessageContributor(k, v), player) }
-			
-			// auth succeeded, no kick on timeout
-			ContributorsPrivacyHelper.authTimeout[player.commandSenderName] = -1
 		}
 		
 		return null

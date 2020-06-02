@@ -103,11 +103,13 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
 import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
+import alfheim.common.block.AlfheimFluffBlocks.dwarfTrapDoor
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneSlab2
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneStairs
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstoneWalls
+import alfheim.common.block.AlfheimFluffBlocks.livingMountain
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab1
 import alfheim.common.block.AlfheimFluffBlocks.livingcobbleSlab2
@@ -378,6 +380,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		list.removeAt(list.size-5)
 		
 		addBlock(dwarfLantern)
+		addBlock(dwarfTrapDoor)
 		
 		addBlock(shrinePillar)
 		addBlock(shrineRockWhiteStairs)
@@ -401,6 +404,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addBlock(elvenOre)
 		
+		addBlock(livingMountain)
 		addBlock(livingcobble)
 		addBlock(livingcobbleStairs)
 		addBlock(livingcobbleStairs1)

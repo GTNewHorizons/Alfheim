@@ -17,7 +17,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
 	const val CATEGORY_WORLDGEN		= CATEGORY_DIMENSION	+ CATEGORY_SPLITTER + "worldgen"
-	const val CATEGORY_SPAWNRATE	= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "spawnrate"
+	const val CATEGORY_ENTITIES		= CATEGORY_WORLDGEN		+ CATEGORY_SPLITTER + "entities"
 	const val CATEGORY_POTIONS		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "potions"
 	const val CATEGORY_ESMODE		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "elvenstory"
 	const val CATEGORY_MMO			= CATEGORY_ESMODE		+ CATEGORY_SPLITTER + "mmo"
@@ -28,7 +28,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		get() = _enableElvenStory
 		set(value) {
 			_enableElvenStory = value
-			config.get(CATEGORY_PRELOAD, "enableElvenStory", value).set(value)
+			config.get(CATEGORY_PRELOAD, "enableElvenStory", value, "Set this to false to disable ESM and MMO").set(value)
 			config.save()
 		}
 	
@@ -36,7 +36,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		get() = _enableMMO
 		set(value) {
 			_enableMMO = value
-			config.get(CATEGORY_PRELOAD, "enableMMO", value).set(value)
+			config.get(CATEGORY_PRELOAD, "enableMMO", value, "Set this to false to disable MMO").set(value)
 			config.save()
 		}
 	
@@ -68,7 +68,8 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var oregenMultiplier		= 3
 	var winterGrassReadyGen		= true
 	
-	// SPAWNRATE
+	// ENTITIES
+	var globalEntityIDs			= true
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
 	var elvesSpawn				= intArrayOf(10, 2, 4)
@@ -80,7 +81,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	// OHTER
 	var alfheimSleepExtraCheck	= true
 	var anyavilBlackList		= emptyArray<String>()
-	var authTimeout				= 100
+	var authTimeout				= 200
 	var blackLotusDropRate		= 0.05
 	var fancies					= true
 	var floatingTrapDoors		= true
@@ -93,6 +94,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var minimalGraphics			= false
 	var moonbowMaxDmg			= 20
 	var moonbowVelocity			= 0.5f
+	var multibaubleCount		= 6
 	var notifications			= true
 	var numericalMana			= true
 	var realLightning			= false
@@ -158,6 +160,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var potionIDWellOLife		= potionID___COUNTER++
 	
 	// Elven Story
+	var bonusChest				= false
 	var bothSpawnStructures		= false
 	var flightTime				= 12000
 	var flightRecover			= 1.0
@@ -181,7 +184,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")
 		addCategory(CATEGORY_DIMENSION, "Alfheim dimension settings")
 		addCategory(CATEGORY_WORLDGEN, "Alfheim worldgen settings")
-		addCategory(CATEGORY_SPAWNRATE, "Alfheim mobs spawnrate settings")
+		addCategory(CATEGORY_ENTITIES, "Alfheim mobs spawnrate settings")
 		addCategory(CATEGORY_POTIONS, "Potion IDs")
 		addCategory(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
 		addCategory(CATEGORY_INT_TC, "Thaumcraft integration")
@@ -217,13 +220,14 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		oregenMultiplier = loadProp(CATEGORY_WORLDGEN, "oregenMultiplier", oregenMultiplier, true, "Multiplier for Alfheim oregen")
 		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
-		cowSpawn = loadProp(CATEGORY_SPAWNRATE, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
-		chickSpawn = loadProp(CATEGORY_SPAWNRATE, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
-		elvesSpawn = loadProp(CATEGORY_SPAWNRATE, "elvesSpawn", elvesSpawn, false, "Elves spawn weight (chance), min and max group count")
-		pigSpawn = loadProp(CATEGORY_SPAWNRATE, "pigSpawn", pigSpawn, false, "Pig spawn weight (chance), min and max group count")
-		pixieSpawn = loadProp(CATEGORY_SPAWNRATE, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
-		sheepSpawn = loadProp(CATEGORY_SPAWNRATE, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
-		voidCreeper = loadProp(CATEGORY_SPAWNRATE, "voidCreeper", voidCreeper, false, "Manaseal Creeper spawn weight (chance), min and max group count")
+		globalEntityIDs = loadProp(CATEGORY_ENTITIES, "globalEntityIDs", globalEntityIDs, true, "Set this to false to use local mod entity IDs")
+		cowSpawn = loadProp(CATEGORY_ENTITIES, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
+		chickSpawn = loadProp(CATEGORY_ENTITIES, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
+		elvesSpawn = loadProp(CATEGORY_ENTITIES, "elvesSpawn", elvesSpawn, false, "Elves spawn weight (chance), min and max group count")
+		pigSpawn = loadProp(CATEGORY_ENTITIES, "pigSpawn", pigSpawn, false, "Pig spawn weight (chance), min and max group count")
+		pixieSpawn = loadProp(CATEGORY_ENTITIES, "pixieSpawn", pixieSpawn, false, "Pixie spawn weight (chance), min and max group count")
+		sheepSpawn = loadProp(CATEGORY_ENTITIES, "sheepSpawn", sheepSpawn, false, "Sheep spawn weight (chance), min and max group count")
+		voidCreeper = loadProp(CATEGORY_ENTITIES, "voidCreeper", voidCreeper, false, "Manaseal Creeper spawn weight (chance), min and max group count")
 		
 		alfheimSleepExtraCheck = loadProp(CATEGORY_GENERAL, "alfheimSleepExtraCheck", alfheimSleepExtraCheck, false, "Set this to false if you are skipping whole day while sleeping")
 		anyavilBlackList = loadProp(CATEGORY_GENERAL, "anyavilBlackList", anyavilBlackList, false, "Blacklist of items anyavil can accept [modid:name]", false)
@@ -240,6 +244,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		minimalGraphics = loadProp(CATEGORY_GENERAL, "minimalGraphics", minimalGraphics, true, "Set this to true to disable .obj models and shaders")
 		moonbowMaxDmg = loadProp(CATEGORY_GENERAL, "moonbowMaxDmg", moonbowMaxDmg, false, "Max base damage for Phoebus Catastrophe")
 		moonbowVelocity = loadProp(CATEGORY_GENERAL, "moonbowVelocity", moonbowVelocity.D, false, "Phoebus Catastrophe charge speed").F
+		multibaubleCount = loadProp(CATEGORY_GENERAL, "multibaubleCount", multibaubleCount, false, "How many bauble box slots will be activated by Ring of Elven King")
 		notifications = loadProp(CATEGORY_GENERAL, "notifications", notifications, false, "Set this to false to disable custom notifications and version check")
 		numericalMana = loadProp(CATEGORY_GENERAL, "numericalMana", numericalMana, false, "Set this to false to disable numerical mana representation")
 		realLightning = loadProp(CATEGORY_GENERAL, "realLightning", realLightning, false, "Set this to true to make lightning rod summon real (weather) lightning")
@@ -297,6 +302,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		potionIDThrow = loadProp(CATEGORY_MMOP, "potionIDThrow", potionIDThrow, true, "Potion id for Throw")
 		potionIDWellOLife = loadProp(CATEGORY_MMOP, "potionIDWellOLife", potionIDWellOLife, true, "Potion id for Well'o'Life")
 		
+		bonusChest = loadProp(CATEGORY_WORLDGEN, "bonusChest", bonusChest, false, "Set this to true to generate bonus chest in ESM sky box")
 		bothSpawnStructures = loadProp(CATEGORY_ESMODE, "bothSpawnStructures", bothSpawnStructures, false, "Set this to true to generate both room in the skies and castle below (!contains portal!) on zero coords of Alfheim")
 		flightTime = loadProp(CATEGORY_ESMODE, "flightTime", flightTime, false, "Elven flight fly points (faster you move - more you spend)")
 		flightRecover = loadProp(CATEGORY_ESMODE, "flightRecover", flightRecover, false, "Flight recover efficiency")

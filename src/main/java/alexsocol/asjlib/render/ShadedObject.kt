@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Matrix4f
 import java.util.*
 
 abstract class ShadedObject(val shaderID: Int, val materialID: Int, val texture: ResourceLocation?): Comparable<ShadedObject> {
+	
 	val translations = ArrayList<Matrix4f>()
 	
 	abstract fun preRender()

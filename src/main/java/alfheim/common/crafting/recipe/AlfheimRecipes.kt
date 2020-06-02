@@ -37,7 +37,7 @@ import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.dreamwoodFenceGate
-import alfheim.common.block.AlfheimFluffBlocks.dwardTrapDoor
+import alfheim.common.block.AlfheimFluffBlocks.dwarfTrapDoor
 import alfheim.common.block.AlfheimFluffBlocks.dwarfLantern
 import alfheim.common.block.AlfheimFluffBlocks.dwarfPlanks
 import alfheim.common.block.AlfheimFluffBlocks.elvenSandstone
@@ -861,7 +861,7 @@ object AlfheimRecipes {
 							 'D', DYES[dyes[i]])
 		}
 		
-		addShapedRecipe(ItemStack(dwardTrapDoor),
+		addShapedRecipe(ItemStack(dwarfTrapDoor),
 						"WWW", "WWW",
 						'W', ItemStack(dwarfPlanks))
 	}

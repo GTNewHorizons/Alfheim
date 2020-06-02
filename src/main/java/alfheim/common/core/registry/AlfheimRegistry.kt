@@ -1,7 +1,6 @@
 package alfheim.common.core.registry
 
 import alexsocol.asjlib.ASJUtilities.registerEntity
-import alexsocol.asjlib.ASJUtilities.registerEntityEgg
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI.addPink
 import alfheim.api.AlfheimAPI.registerAnomaly
@@ -103,15 +102,15 @@ object AlfheimRegistry {
 	
 	private fun registerEntities() {
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
-		registerEntityEgg(EntityElf::class.java, "Elf", 0x1A660A, 0x4D3422, AlfheimCore.instance)
+		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
-		registerEntityEgg(EntityAlfheimPixie::class.java, "Pixie", 0xFF76D6, 0xFFE3FF, AlfheimCore.instance)
+		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)
 		registerEntity(EntityRook::class.java, "Rook", AlfheimCore.instance, id)
 		
-		registerEntityEgg(EntityGrieferCreeper::class.java, "GrieferCreeper", 0xFFFFFF, 0x000000, AlfheimCore.instance)
-		registerEntityEgg(EntityVoidCreeper::class.java, "VoidCreeper", 0xcc11d3, 0xfb9bff, AlfheimCore.instance)
+		registerEntity(EntityGrieferCreeper::class.java, "GrieferCreeper", AlfheimCore.instance, id)
+		registerEntity(EntityVoidCreeper::class.java, "VoidCreeper", AlfheimCore.instance, id)
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance, id)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance, id)

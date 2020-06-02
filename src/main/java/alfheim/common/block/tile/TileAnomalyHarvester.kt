@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.AxisAlignedBB
+import net.minecraftforge.common.util.ForgeDirection.VALID_DIRECTIONS
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.tile.TileMod
 import vazkii.botania.common.core.helper.Vector3 as VVec3
@@ -22,10 +23,19 @@ class TileAnomalyHarvester: TileMod() {
 	
 	// Protection from speeding up
 	var tick = -1L
-	var subTiles = ArrayList<String>()
+	
+	private var subTiles = HashSet<String>()
+	
+	fun addSubTile(sub: String) {
+		if (subTiles.contains(sub)) return
+		
+		subTiles.add(sub)
+	}
 	
 	// omg Forge seriously null worldObj when calling this?
 	override fun canUpdate() = worldObj?.totalWorldTime != tick
+	
+	val tunnels = setOf("Antigrav", "Gravity")
 	
 	override fun updateEntity() {
 		if (worldObj.totalWorldTime == tick) return
@@ -33,8 +43,14 @@ class TileAnomalyHarvester: TileMod() {
 		
 		if (worldObj.isBlockDirectlyGettingPowered(xCoord, yCoord, zCoord) || power <= 0.0) return
 		
-		for (st in subTiles)
+		val tunnel = subTiles.containsAll(tunnels)
+		
+		if (tunnel) AlfheimAPI.anomalyBehaviors["Tunnel"]!!(this)
+		
+		for (st in subTiles) {
+			if (tunnel && st in tunnels) continue
 			AlfheimAPI.anomalyBehaviors[st]?.invoke(this)
+		}
 		
 		if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) return
 		
@@ -122,8 +138,7 @@ class TileAnomalyHarvester: TileMod() {
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
 		nbt.setInteger("subtiles", subTiles.size)
-		for (i in 0 until subTiles.size)
-			nbt.setString("subtile$i", subTiles[i])
+		subTiles.forEachIndexed { i, s -> nbt.setString("subtile$i", s) }
 		
 		nbt.setDouble("rX", radius.x)
 		nbt.setDouble("rY", radius.y)
@@ -139,7 +154,7 @@ class TileAnomalyHarvester: TileMod() {
 		AnomalyHarvesterBehaviors
 		
 		val size = nbt.getInteger("subtiles")
-		subTiles = ArrayList(size) // fuck you, ArrayList author, for your stupid limits -_-
+		subTiles.clear()
 		
 		for (i in 0 until size)
 			subTiles.add(nbt.getString("subtile$i"))
@@ -155,12 +170,14 @@ object AnomalyHarvesterBehaviors {
 	
 	val antigrav = { tile: TileAnomalyHarvester -> doAntigrav(tile) }
 	val gravity = { tile: TileAnomalyHarvester -> doGravity(tile) }
+	val tunnel = { tile: TileAnomalyHarvester -> doTunnel(tile) }
 	val lightning = { tile: TileAnomalyHarvester -> doLightning(tile) }
 	val speedUp = { tile: TileAnomalyHarvester -> doSpeedUp(tile) }
 	
 	init {
 		AlfheimAPI.anomalyBehaviors["Antigrav"] = antigrav
 		AlfheimAPI.anomalyBehaviors["Gravity"] = gravity
+		AlfheimAPI.anomalyBehaviors["Tunnel"] = tunnel
 		AlfheimAPI.anomalyBehaviors["Lightning"] = lightning
 		AlfheimAPI.anomalyBehaviors["SpeedUp"] = speedUp
 	}
@@ -199,6 +216,42 @@ object AnomalyHarvesterBehaviors {
 		}
 		
 		Botania.proxy.sparkleFX(tile.worldObj, x, y, z, 0.5f, 0.75f, 1f, 1f, 10, true)
+	}
+	
+	fun doTunnel(tile: TileAnomalyHarvester) {
+		val dir = VALID_DIRECTIONS.safeGet(tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord))
+		
+		val mX = dir.offsetX / 10f
+		val mY = dir.offsetY / 10f
+		val mZ = dir.offsetZ / 10f
+		
+		val aabb = tile.getAoE()
+		tile.worldObj.getEntitiesWithinAABB(Entity::class.java, aabb).forEach { it as Entity
+			it.motionX = mX * tile.power / 2f
+			it.motionY = mY * tile.power / 2f
+			it.motionZ = mZ * tile.power / 2f
+			it.fallDistance = 0f
+			
+//			if (it !is EntityPlayer) return@forEach
+//			
+//			val rotations = arrayOf(it.rotationYaw, it.rotationYaw, 180f, 0f, 90f, -90f)
+//			
+//			if (it.rotationYaw != rotations[dir.ordinal]) {
+//				it.cameraYaw += (rotations[dir.ordinal] - it.cameraYaw) % 5f
+//			}
+		}
+		
+		AlfheimHookHandler.wispNoclip = false
+		
+		for (c in 0..3) {
+			val x = (Math.random() - 0.5) * tile.radius.x + tile.offset.x
+			val y = (Math.random() - 0.5) * tile.radius.y + tile.offset.y
+			val z = (Math.random() - 0.5) * tile.radius.z + tile.offset.z
+			
+			Botania.proxy.wispFX(tile.worldObj, tile.xCoord + x + 0.5 - mX * 10, tile.yCoord + y + 0.5 - mY * 10, tile.zCoord + z + 0.5 - mZ * 10, 0.3f, 0.9f, 0.8f, 0.1f, mX, mY, mZ, 1f)
+		}
+		
+		AlfheimHookHandler.wispNoclip = true
 	}
 	
 	fun doLightning(tile: TileAnomalyHarvester) {

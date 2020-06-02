@@ -217,7 +217,7 @@ object AlfheimBlocks {
 		irisWood2 = BlockColoredWood(2)
 		irisWood3 = BlockColoredWood(3)
 		kindling = BlockKindling()
-		livingcobble = BlockModMeta(Material.rock, 3, ModInfo.MODID, "LivingCobble", AlfheimTab, 2f, resist = 60f)
+		livingcobble = BlockModMeta(Material.rock, 4, ModInfo.MODID, "LivingCobble", AlfheimTab, 2f, resist = 60f)
 		livingwoodFunnel = BlockFunnel()
 		manaAccelerator = BlockManaAccelerator()
 		manaInfuser = BlockManaInfuser()

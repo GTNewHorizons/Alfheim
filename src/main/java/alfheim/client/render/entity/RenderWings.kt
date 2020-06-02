@@ -43,12 +43,12 @@ object RenderWings {
 		glPushMatrix()
 		glDisable(GL_CULL_FACE)
 		
-		if (match == -1) {
+		//if (match == -1) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glDepthMask(false)
 			glAlphaFunc(GL_GREATER, 1/255f)
-		}
+		//}
 		glDisable(GL_LIGHTING)
 		
 		val lastX = OpenGlHelper.lastBrightnessX
@@ -106,11 +106,11 @@ object RenderWings {
 		//glColor4d(1, 1, 1, 1); for some reason it cleans color
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastX, lastY)
 		glEnable(GL_LIGHTING)
-		if (match == -1) {
+		//if (match == -1) {
 			glAlphaFunc(GL_GREATER, 0.1f)
 			glDepthMask(true)
 			glDisable(GL_BLEND)
-		}
+		//}
 		glEnable(GL_CULL_FACE)
 		glPopMatrix()
 		

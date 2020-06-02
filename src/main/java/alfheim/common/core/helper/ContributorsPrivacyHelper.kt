@@ -49,7 +49,9 @@ object ContributorsPrivacyHelper {
 	
 	private fun register(contributor: String, passwordHash: String) {
 		authCredits[contributor] = passwordHash
-		contributors[contributor] = contributor
+		
+		if (MinecraftServer.getServer()?.isSinglePlayer != false)
+			contributors[contributor] = contributor // no power on server if no response
 	}
 	
 	fun isRegistered(login: String) = authCredits.contains(login)
@@ -91,7 +93,7 @@ object ContributorsPrivacyHelper {
 	fun onPlayerLogout(e: PlayerEvent.PlayerLoggedOutEvent) {
 		if (MinecraftServer.getServer()?.isSinglePlayer == true) return
 		
-		ASJUtilities.mapGetKey(contributors, e.player.commandSenderName)?.let { contributors.remove(it) }
+		contributors.values.removeAll { it == e.player.commandSenderName }
 	}
 }
 

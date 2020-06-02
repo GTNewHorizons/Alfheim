@@ -108,6 +108,14 @@ object AlfheimHookHandler {
 		}
 	
 	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun createBonusChest(world: WorldServer): Boolean {
+		if (!AlfheimConfigHandler.enableElvenStory) return false
+		
+		return true
+	}
+	
+	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `EntityCreeper$init`(e: EntityCreeper, world: World?) {
 		e.tasks.addTask(3, EntityAICreeperAvoidPooka(e))
@@ -216,25 +224,6 @@ object AlfheimHookHandler {
 		}
 		
 		return world.setBlock(x, y, z, newBlock, 0, 3)
-	}
-	
-	@JvmStatic
-	@Hook
-	fun collideEntityItem(tile: TileAltar, item: EntityItem): Boolean {
-		val stack = item.entityItem
-		if (stack == null || item.isDead) return false
-		
-		if (tile.hasWater() || tile.hasLava()) return false
-		
-		if (stack.item === ModItems.waterBowl && !tile.worldObj.isRemote) {
-			tile.setWater(true)
-			tile.worldObj.func_147453_f(tile.xCoord, tile.yCoord, tile.zCoord, tile.worldObj.getBlock(tile.xCoord, tile.yCoord, tile.zCoord))
-			stack.func_150996_a(Items.bowl)
-			
-			return false
-		}
-		
-		return true
 	}
 	
 	@JvmStatic
@@ -655,6 +644,33 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ALWAYS)
 	fun getIcon(block: BlockAltar, side: Int, meta: Int): IIcon =
 		if (meta == 9) AlfheimBlocks.livingcobble.getIcon(0, 0) else if (meta in 1..8) ModFluffBlocks.biomeStoneA.getIcon(side, meta + 7) else Blocks.cobblestone.getIcon(side, meta)
+	
+	@JvmStatic
+	@Hook(targetMethod = "collideEntityItem")
+	fun collideEntityItemPre(tile: TileAltar, item: EntityItem): Boolean {
+		val stack = item.entityItem
+		if (stack == null || item.isDead) return false
+		
+		if (tile.hasWater() || tile.hasLava()) return false
+		
+		if (stack.item === ModItems.waterBowl && !tile.worldObj.isRemote) {
+			tile.setWater(true)
+			tile.worldObj.func_147453_f(tile.xCoord, tile.yCoord, tile.zCoord, tile.worldObj.getBlock(tile.xCoord, tile.yCoord, tile.zCoord))
+			stack.func_150996_a(Items.bowl)
+			
+			return false
+		}
+		
+		return true
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "collideEntityItem")
+	fun collideEntityItemPost(tile: TileAltar, item: EntityItem, @ReturnValue res: Boolean): Boolean {
+		item.setEntityItemStack(item.entityItem)
+		
+		return res
+	}
 	
 	private var renderingTile = false
 	

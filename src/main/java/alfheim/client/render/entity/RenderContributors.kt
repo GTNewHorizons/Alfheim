@@ -68,7 +68,7 @@ object RenderContributors {
 		
 		glColor4f(1f, 1f, 1f, 1f)
 		
-		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocoll")) {
+		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
 			//run {
 			//	// jojo's mask
 			//	if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
