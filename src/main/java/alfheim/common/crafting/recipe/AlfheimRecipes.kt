@@ -65,6 +65,8 @@ import alfheim.common.block.AlfheimFluffBlocks.livingwoodBarkFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFence
 import alfheim.common.block.AlfheimFluffBlocks.livingwoodFenceGate
 import alfheim.common.block.AlfheimFluffBlocks.roofTile
+import alfheim.common.block.AlfheimFluffBlocks.roofTileSlabs
+import alfheim.common.block.AlfheimFluffBlocks.roofTileStairs
 import alfheim.common.block.AlfheimFluffBlocks.shrineGlass
 import alfheim.common.block.AlfheimFluffBlocks.shrineLight
 import alfheim.common.block.AlfheimFluffBlocks.shrinePanel
@@ -849,6 +851,21 @@ object AlfheimRecipes {
 						 'G', elfGlass,
 						 'D', DYES[14])
 		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 2),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[9])
+		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 3),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[5])
+		
+		addOreDictRecipe(ItemStack(shrineGlass, 8, 4),
+						 "GGG", "GDG", "GGG",
+						 'G', ItemStack(shrineGlass, 8, 0),
+						 'D', DYES[14])
+		
 		addShapedRecipe(ItemStack(livingcobble, 4, 1),
 						"LL", "LL",
 						'L', ItemStack(livingcobble, 1, 2))
@@ -859,7 +876,7 @@ object AlfheimRecipes {
 		
 		addShapelessOreDictRecipe(ItemStack(livingcobble, 1, 3), ItemStack(livingcobble), vineBall)
 		
-		addOreDictRecipe(ItemStack(livingMountain, 9),
+		addShapedRecipe(ItemStack(livingMountain, 9),
 						"CRC", "RCR", "CRC",
 						'C', ItemStack(livingcobble),
 						'R', ItemStack(livingrock))
@@ -867,6 +884,15 @@ object AlfheimRecipes {
 		addShapelessOreDictRecipe(ItemStack(roofTile), ItemStack(customBrick, 1, 3), DYES[10], DYES[7])
 		addShapelessOreDictRecipe(ItemStack(roofTile, 1, 1), ItemStack(customBrick, 1, 3), DYES[13], DYES[11], DYES[7])
 		addShapelessOreDictRecipe(ItemStack(roofTile, 1, 2), ItemStack(customBrick, 1, 3), DYES[13])
+		
+		roofTileSlabs.forEachIndexed { meta, slab ->
+			addShapedRecipe(ItemStack(slab, 6), "RRR", 'R', ItemStack(roofTile, 1, meta))
+			addShapedRecipe(ItemStack(roofTile, 1, meta), "R", "R", 'R', ItemStack(slab))
+		}
+		
+		roofTileStairs.forEachIndexed { meta, stair ->
+			addShapedRecipe(ItemStack(stair, 4), "R  ", "RR ", "RRR", 'R', ItemStack(roofTile, 1, meta))
+		}
 		
 		val dyes = arrayOf(4, 1, 14, 11)
 		for (i in 0..3) {

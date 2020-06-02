@@ -380,7 +380,6 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		list.removeAt(list.size-5)
 		
 		addBlock(dwarfLantern)
-		addBlock(dwarfTrapDoor)
 		
 		addBlock(shrinePillar)
 		addBlock(shrineRockWhiteStairs)
@@ -433,6 +432,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(dreamwoodFenceGate)
 		
 		addBlock(dwarfPlanks)
+		addBlock(dwarfTrapDoor)
 		
 		addBlock(irisDirt)
 		addBlock(rainbowDirt)

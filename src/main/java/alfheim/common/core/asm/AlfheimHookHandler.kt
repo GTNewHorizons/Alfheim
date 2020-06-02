@@ -11,7 +11,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderButterflies
-import alfheim.common.block.AlfheimBlocks
+import alfheim.common.block.*
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
@@ -228,8 +228,15 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
-	fun `BlockModWall$init`(wall: BlockModWall) {
+	fun `BlockModWall$init`(wall: BlockModWall, block: Block, meta: Int) {
 		wall.setCreativeTab(BotaniaCreativeTab.INSTANCE)
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true)
+	fun addBlock(tab: BotaniaCreativeTab, block: Block) {
+		if (block === ModFluffBlocks.elfQuartzStairs)
+			tab.addBlock(AlfheimFluffBlocks.elfQuartzWall)
 	}
 	
 	@JvmStatic
@@ -526,12 +533,6 @@ object AlfheimHookHandler {
 		
 		ItemLens.setLens(MESSANGER, LensMessanger())
 		ItemLens.setLens(TRIPWIRE, LensTripwire())
-	}
-	
-	@JvmStatic
-	@Hook(targetMethod = "<init>")
-	fun `BlockModWall$init`(wall: BlockModWall, block: Block, meta: Int) {
-		block.setCreativeTab(BotaniaCreativeTab.INSTANCE)
 	}
 	
 	@JvmStatic

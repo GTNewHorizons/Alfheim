@@ -20,7 +20,7 @@ object BiomeBeach: BiomeAlfheim() {
 		biomeNumberOfOctaves = 3
 		biomeScaleX = 250.0
 		biomeScaleY = 1.4
-		biomeSurfaceHeight = 65 - offset
+		biomeSurfaceHeight = 65 + offset
 		biomeInterpolateQuality = 4
 		
 		var standardBiomeLayers = WE_BiomeLayer()

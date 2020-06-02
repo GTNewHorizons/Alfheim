@@ -12,6 +12,8 @@ Integration:
 Fixes:
  Water bowl weird water placing
  Apothecary bucket desync
- Rod of the Stormy Sea particles sync\
+ Rod of the Stormy Sea particles sync
+ BeachBiome height
+ Mod walls are no longer in vanilla blocks tab
  [ESM] Glowstone recipe is back
  [TiC] fairy trait wasn't efficient
