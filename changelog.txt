@@ -2,6 +2,7 @@ Innovations:
  Auth timeout config; users unaffected if not registered
  Water bowl dispenser fill, apothecary fill by drop
  New blocks: more elven quartz variations; living mountain; mossy livigncobble
+ Ring of Elven King active baubles count config
  [ESM] Bonus chest (change in configs, vanilla one won't generate in overworld)
 
 Integration:
