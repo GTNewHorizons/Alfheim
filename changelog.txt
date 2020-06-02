@@ -1,19 +1,5 @@
 Innovations:
- Auth timeout config; users unaffected if not registered
- Water bowl dispenser fill, apothecary fill by drop
- New blocks: more elven quartz variations; living mountain; mossy livigncobble
- Ring of Elven King active baubles count config
- [ESM] Bonus chest (change in configs, vanilla one won't generate in overworld)
-
-Integration:
- TConstruct:
-  Livingrock tool material (add 59th ID in configs after 58th)
+ --
 
 Fixes:
- Water bowl weird water placing
- Apothecary bucket desync
- Rod of the Stormy Sea particles sync
- BeachBiome height
- Mod walls are no longer in vanilla blocks tab
- [ESM] Glowstone recipe is back
- [TiC] fairy trait wasn't efficient
+ --
