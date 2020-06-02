@@ -228,6 +228,12 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "<init>")
+	fun `BlockModWall$init`(wall: BlockModWall) {
+		wall.setCreativeTab(BotaniaCreativeTab.INSTANCE)
+	}
+	
+	@JvmStatic
+	@Hook(injectOnExit = true, targetMethod = "<init>")
 	fun `BlockSpreader$init`(spreader: BlockSpreader) {
 		val f = 1 / 16f
 		spreader.setBlockBounds(f, f, f, 1 - f, 1 - f, 1 - f)
