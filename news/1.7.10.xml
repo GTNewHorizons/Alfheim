@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-32</val>
+		<val>BETA-33</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -92,5 +92,8 @@
 	</version>
 	<version id="BETA-31">
 		<val>Portal core dupe and !severe! security issues were eliminated, update IMMEDIATELY</val>
+	</version>
+	<version id="BETA-32">
+		<val>Server login issue fixed (and some more innovations)</val>
 	</version>
 </news>

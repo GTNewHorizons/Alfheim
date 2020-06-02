@@ -27,14 +27,8 @@ open class CommonProxy {
 	open fun init() {
 		AlfheimModularRecipes
 		
-		if (WRATH_OF_THE_WINTER) {
-			ASJUtilities.registerEntityEgg(EntityDedMoroz::class.java, "DedMoroz", 0xBBBBBB, 0x44FFFF, AlfheimModularCore.instance)
-			ASJUtilities.registerEntityEgg(EntitySnowSprite::class.java, "SnowSprite", 0xFFFFFF, 0x88FFFF, AlfheimModularCore.instance)
-		} else {
-			ASJUtilities.registerEntity(EntityDedMoroz::class.java, "DedMoroz", AlfheimModularCore.instance, AlfheimRegistry.id)
-			ASJUtilities.registerEntity(EntitySnowSprite::class.java, "SnowSprite", AlfheimModularCore.instance, AlfheimRegistry.id)
-		}
-		
+		ASJUtilities.registerEntity(EntityDedMoroz::class.java, "DedMoroz", AlfheimModularCore.instance, AlfheimRegistry.id)
+		ASJUtilities.registerEntity(EntitySnowSprite::class.java, "SnowSprite", AlfheimModularCore.instance, AlfheimRegistry.id)
 		ASJUtilities.registerEntity(EntitySniceBall::class.java, "SniceBall", AlfheimModularCore.instance, AlfheimRegistry.id)
 	}
 	
