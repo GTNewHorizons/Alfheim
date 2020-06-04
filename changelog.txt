@@ -7,7 +7,7 @@ Innovations:
 
 Integration:
  TConstruct:
-  Livingrock tool material (add 59th ID in configs after 58th)
+  Livingrock tool material (add 57th ID in configs after 56th)
 
 Fixes:
  Water bowl weird water placing
