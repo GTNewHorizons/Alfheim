@@ -605,6 +605,7 @@ object ASJUtilities {
 	 * @param backColor Background egg color
 	 * @param frontColor The color of dots
 	 */
+	@Deprecated("Use local registrations instead", ReplaceWith("registerEntity(entityClass, name, instance, id)"), DeprecationLevel.ERROR)
 	@JvmStatic
 	fun registerEntityEgg(entityClass: Class<out Entity>, name: String, backColor: Int, frontColor: Int, instance: Any) {
 		val id = EntityRegistry.findGlobalUniqueEntityId()

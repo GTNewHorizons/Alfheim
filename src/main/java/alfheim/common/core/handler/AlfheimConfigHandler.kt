@@ -173,6 +173,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
+	var superSpellBosses		= false
 	
 	// MMO HUD
 	var partyHUDScale			= 1.0
@@ -313,6 +314,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
+		superSpellBosses = loadProp(CATEGORY_MMO, "superSpellBoss", superSpellBosses, false, "Set this to true to make bosses vulnerable to legendary spells")
 		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")

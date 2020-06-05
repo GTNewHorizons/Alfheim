@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import com.google.common.collect.*
 import net.minecraft.enchantment.EnchantmentHelper
@@ -116,7 +117,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 			val axis1 = AxisAlignedBB.getBoundingBox(entity.posX, entity.posY, entity.posZ, entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).expand(5.0, 5.0, 5.0)
 			val entities = entity.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis1) as List<EntityLivingBase>
 			for (living in entities) {
-				if (living !is EntityPlayer && living !is IBossDisplayData && living is IMob && living.hurtTime == 0) {
+				if (living !is EntityPlayer && (living !is IBossDisplayData || AlfheimConfigHandler.superSpellBosses) && living is IMob && living.hurtTime == 0) {
 					homeID = living.entityId
 					ItemNBTHelper.setInt(stack, TAG_HOME_ID, homeID)
 				}

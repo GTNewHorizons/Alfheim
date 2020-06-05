@@ -63,7 +63,7 @@ object AlfheimAchievements {
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
-		//mjolnir = new AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)
+		//mjolnir = AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
