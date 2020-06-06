@@ -1047,10 +1047,9 @@ object AlfheimHookHandler {
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun isInvisibleToPlayer(player: EntityPlayer, thePlayer: EntityPlayer, @ReturnValue result: Boolean): Boolean {
-		if (result && AlfheimConfigHandler.enableMMO) {
-			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(player) == true) return false
-		}
+	fun isInvisibleToPlayer(player: EntityPlayer, thePlayer: EntityPlayer?, @ReturnValue result: Boolean): Boolean {
+		if (result && AlfheimConfigHandler.enableMMO && CardinalSystemClient.PlayerSegmentClient.party?.isMember(player) == true)
+			return false
 		
 		return result
 	}
@@ -1058,10 +1057,9 @@ object AlfheimHookHandler {
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
 	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun isInvisibleToPlayer(entity: EntityLivingBase, thePlayer: EntityPlayer): Boolean {
-		if (AlfheimConfigHandler.enableMMO) {
-			if (CardinalSystemClient.PlayerSegmentClient.party?.isMember(entity) == true) return false
-		}
+	fun isInvisibleToPlayer(entity: EntityLivingBase, thePlayer: EntityPlayer?): Boolean {
+		if (AlfheimConfigHandler.enableMMO && CardinalSystemClient.PlayerSegmentClient.party?.isMember(entity) == true)
+			return false
 		
 		return entity.isInvisible
 	}
