@@ -17,6 +17,7 @@ object LibResourceLocations {
 	val anyavil = ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png")
 	var babylon = ResourceLocation("botania:textures/misc/babylon.png")
 	val balanceCloak = ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png")
+	var barrel = ResourceLocation(ModInfo.MODID, "textures/model/block/Barrel.png")
 	val butterfly = ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png")
 	val cross = ResourceLocation(ModInfo.MODID, "textures/misc/crosshair.png")
 	val deathTimer = ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimer.png")

@@ -48,6 +48,7 @@ object AlfheimBlocks {
 	val auroraSlabFull: Block
 	val auroraStairs: Block
 	val auroraWood: Block
+	val barrel: Block
 	val barrier: Block
 	val dreamSapling: Block
 	val elvenOre: Block
@@ -184,6 +185,7 @@ object AlfheimBlocks {
 		auroraSlabFull.register()
 		auroraStairs = BlockAuroraWoodStairs()
 		auroraWood = BlockAuroraWood()
+		barrel = BlockBarrel()
 		barrier = BlockBarrier()
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()

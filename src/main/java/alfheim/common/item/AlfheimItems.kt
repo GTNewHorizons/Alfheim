@@ -53,6 +53,7 @@ object AlfheimItems {
 	val elementiumHoe: Item
 	val elfFirePendant: Item
 	val elfIcePendant: Item
+	val elvenFood: Item
 	val elvenResource: Item
 	val elvoriumBoots: Item
 	val elvoriumChestplate: Item
@@ -135,6 +136,7 @@ object AlfheimItems {
 		elementiumHoe = ItemElementiumHoe()
 		elfFirePendant = ItemPendant("FirePendant")
 		elfIcePendant = ItemPendant("IcePendant")
+		elvenFood = ItemElvenFood()
 		elvenResource = ItemElvenResource()
 		elvoriumHelmet = ItemElvoriumHelmet()
 		elvoriumHelmetRevealing = if (Botania.thaumcraftLoaded) ItemElvoriumHelmetRevealing() else null

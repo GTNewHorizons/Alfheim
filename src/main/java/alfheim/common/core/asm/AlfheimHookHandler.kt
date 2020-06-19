@@ -166,6 +166,62 @@ object AlfheimHookHandler {
 		return pe
 	}
 	
+	// #### BlockWall fix ####
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS, createMethod = true)
+	fun isSideSolid(wall: BlockWall, world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
+		when (side) {
+			ForgeDirection.DOWN -> true
+			ForgeDirection.UP   -> wall.blockBoundsMaxY == 1.0
+			else                -> false
+	}
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun renderBlockWall(render: RenderBlocks, block: BlockWall, x: Int, y: Int, z: Int): Boolean {
+		val flag = block.canConnectWallTo(render.blockAccess, x - 1, y, z)
+		val flag1 = block.canConnectWallTo(render.blockAccess, x + 1, y, z)
+		val flag2 = block.canConnectWallTo(render.blockAccess, x, y, z - 1)
+		val flag3 = block.canConnectWallTo(render.blockAccess, x, y, z + 1)
+		val flag4 = flag2 && flag3 && !flag && !flag1
+		val flag5 = !flag2 && !flag3 && flag && flag1
+		val doNotRenderPost = render.blockAccess.getBlock(x, y + 1, z) !is BlockWall && render.blockAccess.getBlock(x, y + 1, z) !is BlockSkull && render.blockAccess.getBlock(x, y - 1, z) !is BlockWall
+		
+		if ((flag4 || flag5) && doNotRenderPost) {
+			if (flag4) {
+				render.setRenderBounds(0.3125, 0.0, 0.0, 0.6875, 0.8125, 1.0)
+				render.renderStandardBlock(block, x, y, z)
+			} else {
+				render.setRenderBounds(0.0, 0.0, 0.3125, 1.0, 0.8125, 0.6875)
+				render.renderStandardBlock(block, x, y, z)
+			}
+		} else {
+			render.setRenderBounds(0.25, 0.0, 0.25, 0.75, 1.0, 0.75)
+			render.renderStandardBlock(block, x, y, z)
+			if (flag) {
+				render.setRenderBounds(0.0, 0.0, 0.3125, 0.25, 0.8125, 0.6875)
+				render.renderStandardBlock(block, x, y, z)
+			}
+			if (flag1) {
+				render.setRenderBounds(0.75, 0.0, 0.3125, 1.0, 0.8125, 0.6875)
+				render.renderStandardBlock(block, x, y, z)
+			}
+			if (flag2) {
+				render.setRenderBounds(0.3125, 0.0, 0.0, 0.6875, 0.8125, 0.25)
+				render.renderStandardBlock(block, x, y, z)
+			}
+			if (flag3) {
+				render.setRenderBounds(0.3125, 0.0, 0.75, 0.6875, 0.8125, 1.0)
+				render.renderStandardBlock(block, x, y, z)
+			}
+		}
+		block.setBlockBoundsBasedOnState(render.blockAccess, x, y, z)
+		return true
+	}
+	
+	// #### BlockWall fix end ####
+	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
 	fun attackEntityFrom(dragon: EntityDragon, src: DamageSource, dmg: Float): Boolean {

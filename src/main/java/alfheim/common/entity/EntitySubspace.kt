@@ -92,7 +92,7 @@ class EntitySubspace: EntityThrowableCopy {
 					
 					val player = getThrower() as EntityPlayer
 					
-					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName == "Rose") player.triggerAchievement(AlfheimAchievements.rosaBomb)
+					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName.trim().equals("rosa", true)) player.triggerAchievement(AlfheimAchievements.rosaBomb)
 					
 					val burst = (AlfheimItems.subspaceSpear as ItemSpearSubspace).getBurst(player, ItemStack(AlfheimItems.subspaceSpear))
 					burst.setPosition(posX, posY, posZ)

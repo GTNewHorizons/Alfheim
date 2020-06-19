@@ -20,6 +20,7 @@ import alfheim.common.block.AlfheimBlocks.auroraPlanks
 import alfheim.common.block.AlfheimBlocks.auroraSlab
 import alfheim.common.block.AlfheimBlocks.auroraStairs
 import alfheim.common.block.AlfheimBlocks.auroraWood
+import alfheim.common.block.AlfheimBlocks.barrel
 import alfheim.common.block.AlfheimBlocks.calicoLeaves
 import alfheim.common.block.AlfheimBlocks.calicoPlanks
 import alfheim.common.block.AlfheimBlocks.calicoSapling
@@ -160,6 +161,7 @@ import alfheim.common.item.AlfheimItems.elementalLeggings
 import alfheim.common.item.AlfheimItems.elementiumHoe
 import alfheim.common.item.AlfheimItems.elfFirePendant
 import alfheim.common.item.AlfheimItems.elfIcePendant
+import alfheim.common.item.AlfheimItems.elvenFood
 import alfheim.common.item.AlfheimItems.elvenResource
 import alfheim.common.item.AlfheimItems.elvoriumBoots
 import alfheim.common.item.AlfheimItems.elvoriumChestplate
@@ -248,13 +250,15 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(kindling)
 		addBlock(alfStorage)
 		addBlock(rainbowPetalBlock)
+		addBlock(barrel)
 		
-		if (AlfheimCore.jingleTheBells) {
+		if (AlfheimCore.winter) {
 			addBlock(snowGrass)
 			addBlock(snowLayer)
 		}
 		
 		addItem (elvenResource)
+		addItem (elvenFood)
 		addItem (wiltedLotus)
 		addItem (flugelHead)
 		addItem (flugelDisc)

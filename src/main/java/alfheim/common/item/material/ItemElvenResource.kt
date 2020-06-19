@@ -194,7 +194,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	companion object {
 		
-		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed"/*, "Transferer" BACK*/)
+		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "GrapeLeaf" /*, "Transferer" BACK*/)
 		
 		lateinit var amulet: IIcon
 		lateinit var candy: IIcon
@@ -261,6 +261,7 @@ object ElvenResourcesMetas {
 	val NetherwoodSplinters: Int
 	val NetherwoodCoal: Int
 	val ElvenWeed: Int
+	val GrapeLeaf: Int
 	//val Transferer: Int BACK
 	
 	val displayBlackList: Array<Int>
@@ -292,6 +293,7 @@ object ElvenResourcesMetas {
 		NetherwoodSplinters = items.indexOf("NetherwoodSplinters")
 		NetherwoodCoal = items.indexOf("NetherwoodCoal")
 		ElvenWeed = items.indexOf("ElvenWeed")
+		GrapeLeaf = items.indexOf("GrapeLeaf")
 		//Transferer = items.indexOf("Transferer"); BACK
 		
 		displayBlackList = arrayOf(ElvenWeed)

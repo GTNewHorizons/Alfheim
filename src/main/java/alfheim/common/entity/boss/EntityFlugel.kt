@@ -234,28 +234,31 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			var lot = true
 			// For everyone
 			for (name in playersDamage.keys) {
-				if (worldObj.getPlayerEntityByName(name) == null) continue
+				val player = worldObj.getPlayerEntityByName(name) as? EntityPlayerMP ?: continue
 				var droppedRecord = false
 				
 				if (hard) {
 					if (ConfigHandler.relicsEnabled && name == summoner) {
-						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
-						
-						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false) {
-							relic = ItemStack(AlfheimItems.mask)
-							worldObj.getPlayerEntityByName(name)?.triggerAchievement(AlfheimAchievements.mask)
-						} else if (ultra) {
-							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
-							if (player != null) {
-								relic = when {
-									!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-									!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-									!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-									!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
-									else                                                     -> relic
+						val relic =
+							
+							when {
+								ultra                                                                                                        -> {
+									when {
+										!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+										!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
+										!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+										!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
+										else                                                     -> ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand), ElvenResourcesMetas.IffesalDust)
+									}
+								}
+								(worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false -> {
+									worldObj.getPlayerEntityByName(name)?.triggerAchievement(AlfheimAchievements.mask)
+									ItemStack(AlfheimItems.mask)
+								}
+								else                                                                                                         -> {
+									ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(2, 3, rand), ElvenResourcesMetas.IffesalDust)
 								}
 							}
-						}
 						
 						ItemRelic.bindToUsernameS(name, relic)
 						entityDropItem(relic, 1f)
