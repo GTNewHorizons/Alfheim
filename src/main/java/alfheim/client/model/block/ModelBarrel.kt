@@ -50,8 +50,8 @@ class ModelBarrel: ModelBase() {
 	var handle: ModelRenderer
 	var redMash: ModelRenderer
 	var greenMash: ModelRenderer
-	var redVine: ModelRenderer
-	var greenVine: ModelRenderer
+	var redWine: ModelRenderer
+	var greenWine: ModelRenderer
 	
 	init {
 		val h = 25
@@ -331,19 +331,19 @@ class ModelBarrel: ModelBase() {
 		greenMash.mirror = true
 		setRotation(greenMash, 0f, 0f, 0f)
 		
-		redVine = ModelRenderer(this, 42, 10)
-		redVine.addBox(-7f, 13f, -7f, 14, 1, 14)
-		redVine.setRotationPoint(0f, 0f, 0f)
-		redVine.setTextureSize(84, h)
-		redVine.mirror = true
-		setRotation(redVine, 0f, 0f, 0f)
+		redWine = ModelRenderer(this, 42, 10)
+		redWine.addBox(-7f, 13f, -7f, 14, 1, 14)
+		redWine.setRotationPoint(0f, 0f, 0f)
+		redWine.setTextureSize(84, h)
+		redWine.mirror = true
+		setRotation(redWine, 0f, 0f, 0f)
 		
-		greenVine = ModelRenderer(this, 56, 10)
-		greenVine.addBox(-7f, 13f, -7f, 14, 1, 14)
-		greenVine.setRotationPoint(0f, 0f, 0f)
-		greenVine.setTextureSize(84, h)
-		greenVine.mirror = true
-		setRotation(greenVine, 0f, 0f, 0f)
+		greenWine = ModelRenderer(this, 56, 10)
+		greenWine.addBox(-7f, 13f, -7f, 14, 1, 14)
+		greenWine.setRotationPoint(0f, 0f, 0f)
+		greenWine.setTextureSize(84, h)
+		greenWine.mirror = true
+		setRotation(greenWine, 0f, 0f, 0f)
 	}
 	
 	fun render(f5: Float) {

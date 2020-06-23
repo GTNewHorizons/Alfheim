@@ -89,6 +89,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer)
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie)
+		RenderingRegistry.registerEntityRenderingHandler(EntityButterfly::class.java, RenderEntityButterfly)
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel)
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark)

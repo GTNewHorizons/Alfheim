@@ -168,18 +168,12 @@ class TileAnomalyHarvester: TileMod() {
 
 object AnomalyHarvesterBehaviors {
 	
-	val antigrav = { tile: TileAnomalyHarvester -> doAntigrav(tile) }
-	val gravity = { tile: TileAnomalyHarvester -> doGravity(tile) }
-	val tunnel = { tile: TileAnomalyHarvester -> doTunnel(tile) }
-	val lightning = { tile: TileAnomalyHarvester -> doLightning(tile) }
-	val speedUp = { tile: TileAnomalyHarvester -> doSpeedUp(tile) }
-	
 	init {
-		AlfheimAPI.anomalyBehaviors["Antigrav"] = antigrav
-		AlfheimAPI.anomalyBehaviors["Gravity"] = gravity
-		AlfheimAPI.anomalyBehaviors["Tunnel"] = tunnel
-		AlfheimAPI.anomalyBehaviors["Lightning"] = lightning
-		AlfheimAPI.anomalyBehaviors["SpeedUp"] = speedUp
+		AlfheimAPI.anomalyBehaviors["Antigrav"] = { tile: TileAnomalyHarvester -> doAntigrav(tile) }
+		AlfheimAPI.anomalyBehaviors["Gravity"] = { tile: TileAnomalyHarvester -> doGravity(tile) }
+		AlfheimAPI.anomalyBehaviors["Tunnel"] = { tile: TileAnomalyHarvester -> doTunnel(tile) }
+		AlfheimAPI.anomalyBehaviors["Lightning"] = { tile: TileAnomalyHarvester -> doLightning(tile) }
+		AlfheimAPI.anomalyBehaviors["SpeedUp"] = { tile: TileAnomalyHarvester -> doSpeedUp(tile) }
 	}
 	
 	private fun doAntigrav(tile: TileAnomalyHarvester) {

@@ -1,26 +1,43 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileBarrel
+import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.*
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
+import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.*
+import net.minecraftforge.event.entity.living.LivingFallEvent
 
 class BlockBarrel: BlockContainerMod(Material.wood) {
 	
 	init {
 		setBlockName("barrel")
+		setHardness(1f)
 		setLightOpacity(0)
 		setStepSound(Block.soundTypeWood)
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		val ret = onBlockActivated2(world, x, y, z, player, side, hitX, hitY, hitZ)
+		
+		if (ret && !world.isRemote) {
+			world.getTileEntity(x, y, z)?.let { ASJUtilities.dispatchTEToNearbyPlayers(it) }
+		}
+		
+		return ret
+	}
+	
+	fun onBlockActivated2(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		val tile = world.getTileEntity(x, y, z) as? TileBarrel ?: return false
 		val stack = player.heldItem
 		
@@ -33,15 +50,52 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 			return false
 		}
 		
-		if (!tile.closed && stack.item is ItemElvenFood && (stack.meta == ElvenFoodMetas.GreenGrapes || stack.meta == ElvenFoodMetas.RedGrapes)) {
-			if (tile.vineStage == 0 && tile.vineType == TileBarrel.VINE_TYPE_NONE) {
-				tile.vineStage = TileBarrel.VINE_STAGE_GRAPE
-				tile.vineType = stack.meta
-			} else if (!(tile.vineStage == TileBarrel.VINE_STAGE_GRAPE && tile.vineType == stack.meta && tile.vineLevel < TileBarrel.MAX_VINE_LEVEL))
-				return false
+		if (!tile.closed) {
 			
-			tile.vineLevel++
-			stack.stackSize--
+			when (tile.wineStage) {
+				0                           -> { // nothing
+					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.GreenGrapes || stack.meta == ElvenFoodMetas.RedGrapes) {
+						tile.wineStage = TileBarrel.WINE_STAGE_GRAPE
+						tile.wineType = stack.meta
+						tile.wineLevel++
+						stack.stackSize--
+					}
+				}
+				
+				TileBarrel.WINE_STAGE_GRAPE -> {
+					if (stack.item is ItemElvenFood && tile.wineType == stack.meta && tile.wineLevel < TileBarrel.MAX_WINE_LEVEL) {
+						tile.wineLevel++
+						stack.stackSize--
+					}
+				}
+				
+				TileBarrel.WINE_STAGE_MASH  -> {
+					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.Honey) {
+						tile.wineStage = TileBarrel.WINE_STAGE_LIQUID
+						tile.timer = 1200
+						stack.stackSize--
+					}
+				}
+				
+				TileBarrel.WINE_STAGE_READY -> {
+					if (stack.item is ItemElvenResource && stack.meta == ElvenResourcesMetas.Jug && tile.wineLevel >= 4) {
+						--stack.stackSize
+						
+						val jug = ItemStack(AlfheimItems.elvenFood, 1, if (tile.wineType == TileBarrel.WINE_TYPE_RED) ElvenFoodMetas.RedWine else ElvenFoodMetas.WhiteWine)
+						if (player.inventory.addItemStackToInventory(jug)) {
+							player.dropPlayerItemWithRandomChoice(jug, true)
+						}
+						
+						tile.wineLevel -= 4
+						
+						if (tile.wineLevel == 0) {
+							tile.reset()
+						}
+					}
+				}
+				
+				else                        -> return false
+			}
 			
 			return true
 		}
@@ -50,7 +104,8 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 	}
 	
 	override fun createNewTileEntity(world: World, meta: Int) = TileBarrel()
-	
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
+	override fun getIcon(side: Int, meta: Int) = Blocks.planks.getIcon(side, meta)!!
 	override fun renderAsNormalBlock() = false
 	override fun isOpaqueCube() = false
 	override fun getRenderType() = LibRenderIDs.idBarrel
@@ -84,5 +139,24 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 		
 		setBlockBounds(0f, 0f, 1 - f, 1f, 1f, 1f)
 		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity)
+	}
+	
+	companion object {
+		
+		init {
+			this.eventFML().eventForge()
+		}
+		
+		@SubscribeEvent
+		fun onEntityFall(e: LivingFallEvent) {
+			val tile = e.entity.worldObj.getTileEntity(e.entity) as? TileBarrel ?: return
+			
+			if (!tile.closed && tile.wineStage == TileBarrel.WINE_STAGE_GRAPE && tile.wineLevel == TileBarrel.MAX_WINE_LEVEL) {
+				if (++tile.stomps == 8) {
+					tile.wineStage = TileBarrel.WINE_STAGE_MASH
+					ASJUtilities.dispatchTEToNearbyPlayers(tile)
+				}
+			}
+		}
 	}
 }

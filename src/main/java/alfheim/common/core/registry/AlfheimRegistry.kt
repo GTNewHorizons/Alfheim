@@ -101,6 +101,7 @@ object AlfheimRegistry {
 		get() = field.also { field++ }
 	
 	private fun registerEntities() {
+		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)

@@ -119,7 +119,8 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 								
 								if (world.setBlock(x, y, z, block, meta, 3)) {
 									if (block is ITileEntityProvider) {
-										val tile = TileEntity.createAndLoadEntity(cmp)
+										val tile = TileEntity.createAndLoadEntity(cmp) ?: return true
+										
 										tile.xCoord = x
 										tile.yCoord = y
 										tile.zCoord = z

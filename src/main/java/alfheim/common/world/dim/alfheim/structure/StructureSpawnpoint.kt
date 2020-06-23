@@ -57,8 +57,8 @@ object StructureSpawnpoint {
 			}
 			
 			--count
-																						// fuck you deprecation!
-			tile.setInventorySlotContents(slots.removeRandom(), ItemStack(item.item, min(item.item.itemStackLimit, ASJUtilities.randInBounds(item.countMin, item.countMax, rand)), if (item.maxMeta == -1) item.meta else ASJUtilities.randInBounds(item.meta, item.maxMeta, rand)))
+			val meta = if (item.maxMeta == -1) item.meta else ASJUtilities.randInBounds(item.meta, item.maxMeta, rand)
+			tile.setInventorySlotContents(slots.removeRandom(), ItemStack(item.item, min(item.item.getItemStackLimit(ItemStack(item.item, 1, meta)), ASJUtilities.randInBounds(item.countMin, item.countMax, rand)), meta))
 		}
 	}
 	

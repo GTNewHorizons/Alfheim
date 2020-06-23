@@ -70,6 +70,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	
 	// ENTITIES
 	var globalEntityIDs			= true
+	var butterflySpawn			= intArrayOf(10, 1, 2)
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
 	var elvesSpawn				= intArrayOf(10, 2, 4)
@@ -222,6 +223,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
 		globalEntityIDs = loadProp(CATEGORY_ENTITIES, "globalEntityIDs", globalEntityIDs, true, "Set this to false to use local mod entity IDs")
+		butterflySpawn = loadProp(CATEGORY_ENTITIES, "butterflySpawn", butterflySpawn, false, "Butterfly spawn weight (chance), min and max group count")
 		cowSpawn = loadProp(CATEGORY_ENTITIES, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_ENTITIES, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
 		elvesSpawn = loadProp(CATEGORY_ENTITIES, "elvesSpawn", elvesSpawn, false, "Elves spawn weight (chance), min and max group count")

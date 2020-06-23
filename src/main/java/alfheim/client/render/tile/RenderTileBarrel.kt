@@ -30,35 +30,35 @@ object RenderTileBarrel: TileEntitySpecialRenderer() {
 		if (tile.closed)
 			model.renderCover(f5)
 		
-		glTranslatef(0f, (tile.vineLevel - 2) / -16f - 0.01f, 0f)
+		glTranslatef(0f, (tile.wineLevel - 2) / -16f - 0.01f, 0f)
 		
-		 if (tile.vineStage <= TileBarrel.VINE_STAGE_MASH) {
-		 	if (tile.vineType == TileBarrel.VINE_TYPE_RED)
+		 if (tile.wineStage <= TileBarrel.WINE_STAGE_MASH) {
+		 	if (tile.wineType == TileBarrel.WINE_TYPE_RED)
 		 		model.redMash.render(f5)
 
-		 	if (tile.vineType == TileBarrel.VINE_TYPE_WHITE)
+		 	if (tile.wineType == TileBarrel.WINE_TYPE_WHITE)
 		 		model.greenMash.render(f5)
 		 }
 		
-		if (tile.vineStage >= TileBarrel.VINE_STAGE_MASH) {
+		if (tile.wineStage >= TileBarrel.WINE_STAGE_MASH) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 			glTranslatef(0f, -1/64f, 0f)
 			
-			val a = when (tile.vineStage) {
-				TileBarrel.VINE_STAGE_MASH -> 0.5f
-				TileBarrel.VINE_STAGE_LIQUID -> 1f
-				TileBarrel.VINE_STAGE_READY -> 0.9f
-				else -> -1f
+			val a = when (tile.wineStage) {
+				TileBarrel.WINE_STAGE_MASH   -> 0.5f
+				TileBarrel.WINE_STAGE_LIQUID -> 1f
+				TileBarrel.WINE_STAGE_READY  -> 0.9f
+				else                         -> -1f
 			}
 			
 			glColor4f(1f, 1f, 1f, a)
 			
-			if (tile.vineType == TileBarrel.VINE_TYPE_RED)
-				model.redVine.render(f5)
+			if (tile.wineType == TileBarrel.WINE_TYPE_RED)
+				model.redWine.render(f5)
 			
-			if (tile.vineType == TileBarrel.VINE_TYPE_WHITE)
-				model.greenVine.render(f5)
+			if (tile.wineType == TileBarrel.WINE_TYPE_WHITE)
+				model.greenWine.render(f5)
 			
 			glDisable(GL_BLEND)
 			

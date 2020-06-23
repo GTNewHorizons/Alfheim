@@ -239,6 +239,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				
 				if (hard) {
 					if (ConfigHandler.relicsEnabled && name == summoner) {
+						var bind = true
 						val relic =
 							
 							when {
@@ -256,11 +257,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 									ItemStack(AlfheimItems.mask)
 								}
 								else                                                                                                         -> {
+									bind = false
 									ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(2, 3, rand), ElvenResourcesMetas.IffesalDust)
 								}
 							}
 						
-						ItemRelic.bindToUsernameS(name, relic)
+						if (bind)
+							ItemRelic.bindToUsernameS(name, relic)
+						
 						entityDropItem(relic, 1f)
 						lot = false
 					}
