@@ -1,6 +1,5 @@
 package alfheim.common.block.base
 
-import alexsocol.asjlib.I
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
@@ -16,8 +15,6 @@ import net.minecraftforge.common.MinecraftForge
 @Suppress("LeakingThis")
 open class BlockMod(material: Material): Block(material) {
 	
-	var originalLight: Int = 0
-	
 	init {
 		setCreativeTab(AlfheimTab)
 		if (FMLLaunchHandler.side().isClient && isInterpolated())
@@ -31,11 +28,6 @@ open class BlockMod(material: Material): Block(material) {
 	}
 	
 	protected open fun shouldRegisterInNameSet() = true
-	
-	override fun setLightLevel(level: Float): Block {
-		originalLight = (level * 15).I
-		return super.setLightLevel(level)
-	}
 	
 	open fun isInterpolated() = false
 	

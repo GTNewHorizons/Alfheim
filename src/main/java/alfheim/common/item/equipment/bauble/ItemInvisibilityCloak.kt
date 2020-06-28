@@ -3,7 +3,7 @@ package alfheim.common.item.equipment.bauble
 import alexsocol.asjlib.getActivePotionEffect
 import alfheim.AlfheimCore
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter
+import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapterHooks
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional
 import net.minecraft.entity.EntityLivingBase
@@ -69,24 +69,24 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 	override fun addHiddenTooltip(stack: ItemStack, player: EntityPlayer?, tooltip: MutableList<Any?>, adv: Boolean) {
 		tooltip as MutableList<String>
 		if (AlfheimCore.TravellersGearLoaded) {
-			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
+			TGHandlerBotaniaAdapterHooks.addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
 			val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
 			if (key != null)
-				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
+				TGHandlerBotaniaAdapterHooks.addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
 		} else {
 			val type = getBaubleType(stack)
-			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type!!.name.toLowerCase()), tooltip)
+			TGHandlerBotaniaAdapterHooks.addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type!!.name.toLowerCase()), tooltip)
 			val key = RenderHelper.getKeyDisplayString("Baubles Inventory")
 			if (key != null)
-				TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
+				TGHandlerBotaniaAdapterHooks.addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
 		}
 		
 		val cosmetic = getCosmeticItem(stack)
 		if (cosmetic != null)
-			TGHandlerBotaniaAdapter.addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.displayName), tooltip)
+			TGHandlerBotaniaAdapterHooks.addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.displayName), tooltip)
 		
 		if (hasPhantomInk(stack))
-			TGHandlerBotaniaAdapter.addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
+			TGHandlerBotaniaAdapterHooks.addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
 	}
 	
 	companion object {

@@ -57,6 +57,15 @@ object ESMHandler {
 	// EVENTS
 	
 	@SubscribeEvent
+	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
+		if (AlfheimConfigHandler.enableElvenStory && !e.player.capabilities.isCreativeMode && e.toDim in AlfheimConfigHandler.wingsBlackList) {
+			e.player.capabilities.allowFlying = false
+			e.player.capabilities.isFlying = false
+			e.player.sendPlayerAbilities()
+		}
+	}
+	
+	@SubscribeEvent
 	fun getWaterBowl(event: PlayerInteractEvent) {
 		val player = event.entityPlayer
 		

@@ -8,6 +8,7 @@ import net.minecraft.util.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.subtile.*
 import vazkii.botania.api.subtile.signature.*
+import vazkii.botania.common.block.tile.TileSpecialFlower
 
 class ShadowFoxSignature(val name: String): SubTileSignature() {
 	
@@ -34,3 +35,6 @@ class ShadowFoxSignature(val name: String): SubTileSignature() {
 		return if (SubTileFunctional::class.java.isAssignableFrom(clazz)) "botania.flowerType.functional" else "botania.flowerType.misc"
 	}
 }
+
+val SubTileEntity.isOnSpecialSoil
+get() = (supertile as? TileSpecialFlower)?.isOnSpecialSoil == true

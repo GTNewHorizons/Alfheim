@@ -186,6 +186,7 @@ import alfheim.common.item.AlfheimItems.manaStone
 import alfheim.common.item.AlfheimItems.manaStoneGreater
 import alfheim.common.item.AlfheimItems.manasteelHoe
 import alfheim.common.item.AlfheimItems.mask
+import alfheim.common.item.AlfheimItems.mjolnir
 import alfheim.common.item.AlfheimItems.moonlightBow
 import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
@@ -213,6 +214,7 @@ import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import vazkii.botania.common.block.ModBlocks
 
@@ -237,6 +239,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(manaInfuser)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
+		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
 		// addBlock(anomalyHarvester) // FIXME back!
 		addBlock(anyavil)
@@ -322,6 +325,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		//addItem (storyToken)
 		
+		addItem (mjolnir)
 		addItem (excaliber)
 		addItem (subspaceSpear)
 		addItem (moonlightBow)

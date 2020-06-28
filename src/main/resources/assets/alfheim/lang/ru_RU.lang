@@ -103,6 +103,7 @@ tile.botania:ElvenSandstoneStairs2.name=Ступеньки из гладкого
 tile.botania:ElvenSandstone0Wall.name=Ограда из эльфийского песчаника
 tile.botania:ElvenSandstone2Wall.name=Ограда из гладкого эльфийского песчаника
 tile.alfheim:FlugelHeadBlock.name=Голова Флюгеля
+tile.furnace_living.name=Печь из жизнебулыжника
 tile.LivingCobble0.name=Жизнебулыжник
 tile.LivingCobble1.name=Полированный жизнекамень
 tile.LivingCobble2.name=Прессованный жизнекамень

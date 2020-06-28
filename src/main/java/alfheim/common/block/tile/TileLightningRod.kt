@@ -11,7 +11,7 @@ import java.util.*
 
 class TileLightningRod: TileEntity() {
 	
-	override fun updateEntity() {
+	override fun updateEntity() { // FIXME dupes lightnings
 		if (worldObj != null) {
 			for (e in getBoltsWithinAABB(worldObj, boundingBox(48))) {
 				worldObj.removeEntity(e)

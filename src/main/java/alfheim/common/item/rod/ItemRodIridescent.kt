@@ -2,6 +2,7 @@ package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
+import alfheim.api.lib.LibResourceLocations
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.item.ItemIridescent
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
@@ -21,8 +22,6 @@ import vazkii.botania.common.core.helper.Vector3
 import java.awt.Color
 
 class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(name), IAvatarWieldable, IManaUsingItem, IBlockProvider {
-	
-	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarDirtRainbow.png")
 	
 	val COST = 150
 	
@@ -158,7 +157,7 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 		}
 	}
 	
-	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = avatarOverlay
+	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = LibResourceLocations.avatarColorDirt
 	
 	override fun isFull3D() = true
 	

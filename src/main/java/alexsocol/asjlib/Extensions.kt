@@ -51,8 +51,6 @@ fun Float.clamp(min: Float, max: Float) = MathHelper.clamp_float(this, min, max)
 fun Double.clamp(min: Double, max: Double) = MathHelper.clamp_double(this, min, max)
 fun Double.mfloor() = MathHelper.floor_double(this)
 
-fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
-
 fun Entity.setSize(wid: Double, hei: Double) {
 	var f2: Float
 	val w = wid.F
@@ -81,9 +79,11 @@ fun Entity.setSize(wid: Double, hei: Double) {
 	}
 }
 
-fun TileEntity.boundingBox(range: Number = 1) = getBoundingBox(xCoord.D, yCoord.D, zCoord).expand(range)
-
 fun getBoundingBox(x: Number, y: Number, z: Number) = AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, x.D, y.D, z.D)!!
+
+fun TileEntity.boundingBox(range: Number = 0) = AxisAlignedBB.getBoundingBox(xCoord.D, yCoord.D, zCoord.D, xCoord.D + 1, yCoord.D + 1, zCoord.D + 1).expand(range)
+
+fun Entity.boundingBox(range: Number = 0) = AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX + width, posY + height, posZ + width).expand(range)
 
 fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 

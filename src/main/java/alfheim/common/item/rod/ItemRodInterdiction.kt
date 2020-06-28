@@ -5,6 +5,7 @@ package alfheim.common.item.rod
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
@@ -19,7 +20,7 @@ import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.*
+import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.World
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.common.MinecraftForge
@@ -32,8 +33,6 @@ import java.awt.Color
 import kotlin.math.*
 
 open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
-	
-	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarInterdiction.png")
 	
 	init {
 		maxStackSize = 1
@@ -185,5 +184,5 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 		}
 	}
 	
-	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = avatarOverlay
+	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = LibResourceLocations.avatarInterdiction
 }

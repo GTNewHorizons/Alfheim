@@ -95,10 +95,13 @@ class EntitySubspace: EntityThrowableCopy {
 					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName.trim().equals("rosa", true)) player.triggerAchievement(AlfheimAchievements.rosaBomb)
 					
 					val burst = (AlfheimItems.subspaceSpear as ItemSpearSubspace).getBurst(player, ItemStack(AlfheimItems.subspaceSpear))
-					burst.setPosition(posX, posY, posZ)
-					burst.color = 0XFFAF00
-					player.worldObj.spawnEntityInWorld(burst)
-					count++
+					
+					if (burst != null) {
+						burst.setPosition(posX, posY, posZ)
+						burst.color = 0XFFAF00
+						player.worldObj.spawnEntityInWorld(burst)
+						count++
+					}
 				}
 			} else if (type == 1) {
 				if (ticksExisted > delay + 8 && count < 1) {

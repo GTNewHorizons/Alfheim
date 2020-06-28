@@ -5,7 +5,7 @@ import alfheim.api.entity.race
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.gui.GUISpells
-import alfheim.common.core.asm.AlfheimHookHandler
+import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import net.minecraft.util.*

@@ -120,7 +120,7 @@ import alfheim.common.item.AlfheimItems.soulHorn
 import alfheim.common.item.AlfheimItems.spatiotemporalRing
 import alfheim.common.item.AlfheimItems.thinkingHand
 import alfheim.common.item.AlfheimItems.triquetrum
-import alfheim.common.item.equipment.tool.ItemTwigWandExtender
+import alfheim.common.core.asm.hook.extender.ItemTwigWandExtender
 import alfheim.common.item.material.ElvenResourcesMetas
 import cpw.mods.fml.common.registry.GameRegistry.*
 import net.minecraft.init.Blocks.*
@@ -467,7 +467,7 @@ object AlfheimRecipes {
 						 'M', MAUFTRIUM_INGOT)
 		recipeElvoriumBoots = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(furnace),
+		addOreDictRecipe(ItemStack(furnace, 1, 8),
 						 "SSS", "S S", "SSS",
 						 'S', ItemStack(livingcobble, 1, 0))
 		recipeFurnace = BotaniaAPI.getLatestAddedRecipe()

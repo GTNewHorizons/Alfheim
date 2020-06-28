@@ -28,16 +28,18 @@ class AlfheimHookLoader: HookLoader() {
 	override fun registerHooks() {
 		FMLRelaunchLog.info("[${ModInfo.MODID.toUpperCase()}] Loaded coremod. Registering hooks...")
 		
-		registerHookContainer("alfheim.client.core.asm.BotaniaGlowingRenderFixes")
+		registerHookContainer("alfheim.common.core.asm.hook.fixes.BotaniaGlowingRenderFixes")
 		registerHookContainer("alfheim.client.integration.nei.NEINoBossHook")
 		
-		registerHookContainer("alfheim.common.core.asm.AlfheimHookHandler")
-		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.AlfheimHPHooks")
-		registerHookContainer("alfheim.common.block.QuartzExtender")
-		registerHookContainer("alfheim.common.block.mana.ManaSpreaderExtender")
-		registerHookContainer("alfheim.common.crafting.recipe.RecipeAncientWillsFix")
-		registerHookContainer("alfheim.common.item.equipment.tool.ItemTwigWandExtender")
-		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapter")
+		registerHookContainer("alfheim.common.core.asm.hook.AlfheimHookHandler")
+		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.hook.AlfheimHPHooks")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.FurnaceExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.QuartzExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.ManaSpreaderExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.RosaArcanaExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.fixes.RecipeAncientWillsFix")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.ItemTwigWandExtender")
+		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapterHooks")
 		registerHookContainer("alfheim.common.integration.tinkersconstruct.TraitFairySpawner")
 		
 		

@@ -62,7 +62,7 @@ class EntityButterfly(world: World): EntityFlyingCreature(world) {
 	override fun onEntityUpdate() {
 		if (worldObj.isRemote) {
 			//for (i in 0..3) {
-			val color = Color(Color.HSBtoRGB((ClientTickHandler.ticksInGame + entityId) % 360 / 360f, 1f, 1f))
+			val color = Color(Color.HSBtoRGB((ClientTickHandler.ticksInGame * entityId) % 360 / 360f, 1f, 1f))
 			Botania.proxy.sparkleFX(worldObj, posX + (Math.random() - 0.5) * 0.5, posY + (Math.random() - 0.5) * 0.5, posZ + (Math.random() - 0.5) * 0.5, color.red.F, color.green.F, color.blue.F, 0.1f + Math.random().F * 0.25f, 12)
 			//}
 		}

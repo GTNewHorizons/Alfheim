@@ -8,7 +8,7 @@ import net.minecraft.entity.EntityLivingBase
 object SpellWindBlades: SpellBase("windblades", EnumRace.SYLPH, 8000, 120, 10) {
 	
 	override var damage = 6f
-	override var duration = 20
+	override var duration = 50
 	override var efficiency = 1.0
 	
 	override val usableParams

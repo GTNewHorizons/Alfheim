@@ -30,7 +30,7 @@ object RenderEntityButterfly: RenderLiving(ModelButterfly(), 0.25f) {
 		glAlphaFunc(GL_GREATER, 0f)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		
-		ASJRenderHelper.glColor1u(Color.HSBtoRGB((ClientTickHandler.ticksInGame + entity.entityId) % 360 / 360f, 1f, 1f))
+		ASJRenderHelper.glColor1u(Color.HSBtoRGB((ClientTickHandler.ticksInGame * entity.entityId) % 360 / 360f, 1f, 1f))
 		
 		glPushMatrix()
 		glTranslatef(0f, -0.25f, 0f)

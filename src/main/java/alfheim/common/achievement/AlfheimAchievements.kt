@@ -26,7 +26,7 @@ object AlfheimAchievements {
 	val excaliber: Achievement //								E
 	val flugelSoul: Achievement //								S
 	val mask: Achievement //									M
-	//val mjolnir: Achievement
+	val mjolnir: Achievement // 								J
 	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
 	
@@ -43,7 +43,7 @@ object AlfheimAchievements {
 	// |    W
 	// |      I    D N
 	// |          B K
-	// |     A S M
+	// |     A S M J
 	// |        F U E
 	// |           R
 	// |  Y      O
@@ -63,7 +63,7 @@ object AlfheimAchievements {
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
-		//mjolnir = AlfheimAchievement("mjolnir", 0, -2, AlfheimItems.mjolnir, mask)
+		mjolnir = AlfheimAchievement("mjolnir", 6, 0, AlfheimItems.mjolnir, mask)
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		

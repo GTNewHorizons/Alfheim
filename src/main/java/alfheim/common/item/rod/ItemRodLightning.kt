@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.item.ItemMod
@@ -36,7 +37,6 @@ import vazkii.botania.common.core.helper.Vector3 as Bector3
 
 open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IManaUsingItem, IAvatarWieldable {
 	
-	private val avatarOverlay = ResourceLocation("${ModInfo.MODID}:textures/model/avatar/avatarLightning.png")
 	private val COST_AVATAR = 150
 	
 	val COST = 300
@@ -319,5 +319,5 @@ open class ItemRodLightning(name: String = "rodLightning"): ItemMod(name), IMana
 		}
 	}
 	
-	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = avatarOverlay
+	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = LibResourceLocations.avatarLightning
 }

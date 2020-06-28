@@ -81,7 +81,7 @@ object AlfheimItems {
 	val manaStone: Item
 	val manaStoneGreater: Item
 	val mask: Item
-	//val mjolnir: Item
+	val mjolnir: Item
 	val moonlightBow: Item
 	val multibauble: Item
 	val paperBreak: Item
@@ -89,6 +89,7 @@ object AlfheimItems {
 	val pixieAttractor: Item
 	val realitySword: Item
 	val rodColorfulSkyDirt: Item
+	val rodClicker: Item
 	val rodFire: Item
 	val rodFlameStar: Item
 	val rodGrass: Item
@@ -163,7 +164,7 @@ object AlfheimItems {
 		manaStone = ItemManaStorage("ManaStone", 3.0)
 		manaStoneGreater = ItemManaStorage("ManaStoneGreater", 8.0)
 		mask = ItemTankMask()
-		//mjolnir = ItemMjolnir()
+		mjolnir = ItemMjolnir()
 		moonlightBow = ItemMoonlightBow()
 		multibauble = ItemMultibauble()
 		paperBreak = ItemPaperBreak()
@@ -171,6 +172,7 @@ object AlfheimItems {
 		pixieAttractor = ItemPendant("PixieAttractor")
 		realitySword = ItemRealitySword()
 		rodColorfulSkyDirt = ItemRodIridescent()
+		rodClicker = ItemRodClicker()
 		rodFire = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }
 		rodFlameStar = ItemRodFlameStar()
 		rodIce = ItemRodElemental("NiflheimRod") { AlfheimBlocks.poisonIce }

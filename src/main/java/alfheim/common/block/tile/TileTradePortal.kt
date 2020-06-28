@@ -119,7 +119,7 @@ class TileTradePortal: TileMod() {
 			}
 		}
 		
-		if (ModInfo.DEV && getBlockMetadata () != 0) setRandomRecipe()
+		if (ModInfo.DEV && getBlockMetadata() != 0) setRandomRecipe()
 		
 		return false
 	}

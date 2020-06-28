@@ -1,13 +1,13 @@
 package alfheim.common.potion
 
 import alexsocol.asjlib.ASJUtilities
-import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.eventhandler.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.BaseAttributeMap
 import net.minecraft.entity.player.*
+import net.minecraft.util.DamageSource
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.*
 import net.minecraftforge.event.entity.item.ItemTossEvent
@@ -43,6 +43,11 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			target.capabilities.isFlying = false
 			target.sendPlayerAbilities()
 			if (target is EntityPlayerMP) target.theItemInWorldManager.blockReachDistance = 5.0
+		}
+		
+		target?.let {
+			it.dataWatcher.updateObject(6, 0f)
+			it.onDeath(DamageSource("Respawn"))
 		}
 	}
 	

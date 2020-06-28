@@ -3,7 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.asm.AlfheimHookHandler
+import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -57,7 +57,7 @@ class TileAnomalyHarvester: TileMod() {
 		renderBoundBox()
 	}
 	
-	fun getAoE(): AxisAlignedBB = boundingBox(0).expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
+	fun getAoE(): AxisAlignedBB = boundingBox().expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
 	
 	fun renderBoundBox() {
 		val aabb = getAoE()

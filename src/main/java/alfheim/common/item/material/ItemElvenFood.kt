@@ -75,7 +75,8 @@ class ItemElvenFood: ItemFood(0, 0f, false) {
 	override fun getItemUseAction(stack: ItemStack) = if (stack.meta == ElvenFoodMetas.RedWine || stack.meta == ElvenFoodMetas.WhiteWine) EnumAction.drink else EnumAction.eat
 	
 	override fun onEaten(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {
-		return if (stack.meta in drinkables) ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.Jug) else super.onEaten(stack, world, player)
+		val res = super.onEaten(stack, world, player)
+		return if (stack.meta in drinkables) ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.Jug) else res
 	}
 	
 	// #### Item ####

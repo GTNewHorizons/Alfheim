@@ -1,6 +1,7 @@
 package alfheim.client.render.entity
 
-import alexsocol.asjlib.*
+import alexsocol.asjlib.mc
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -29,7 +30,8 @@ object RenderEntityWindBlade: Render() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		glAlphaFunc(GL_GREATER, 1/255f)
 		glTranslated(x, y + 0.05, z)
-		glRotated(((mc.theWorld.totalWorldTime + entity.ticksExisted + mc.timer.renderPartialTicks) * 5).D, 0.0, 1.0, 0.0)
+		val time = mc.theWorld.totalWorldTime + entity.ticksExisted - 1.0
+		glRotated(ASJRenderHelper.interpolate(time, time + 1), 0.0, 1.0, 0.0)
 		if (model == null) {
 			glScaled(3.0, 0.5, 3.0)
 			glRotated(90.0, 1.0, 0.0, 0.0)
