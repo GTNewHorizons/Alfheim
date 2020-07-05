@@ -441,7 +441,7 @@ object ASJUtilities {
 	 * Returns MOP with block and entity
 	 * @param entity Entity to calculate vector from
 	 * @param dist Max distance for use
-	 * @param interact Whether to get uncollidable entities
+	 * @param interact Whether to get uncollidable entities / stop on hitting water
 	 * @author timaxa007
 	 */
 	@JvmStatic
@@ -516,15 +516,15 @@ object ASJUtilities {
 	 * Returns MOP with only blocks.
 	 * @param entity Player to calculate vector from
 	 * @param dist Max distance for use
-	 * @param interact Can player interact with blocks (not sure)
+	 * @param stopOnWater Whether to stop raytrace when hitting liquid
 	 */
 	@JvmStatic
-	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
+	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, stopOnWater: Boolean): MovingObjectPosition? {
 		val vec3 = getPosition(entity, 1f)
 		vec3.yCoord += entity.eyeHeight.D
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
-		return entity.worldObj.rayTraceBlocks(vec3, vec32, interact)
+		return entity.worldObj.rayTraceBlocks(vec3, vec32, stopOnWater)
 	}
 	
 	/**

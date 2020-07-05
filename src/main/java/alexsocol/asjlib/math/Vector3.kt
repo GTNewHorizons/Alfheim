@@ -115,6 +115,7 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	@JvmOverloads
 	fun add(d: Number, d1: Number = d, d2: Number = d): Vector3 {
 		x += d.D
 		y += d1.D
@@ -179,6 +180,7 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	@JvmOverloads
 	fun mul(d: Number, d1: Number = d, d2: Number = d): Vector3 {
 		x *= d.D
 		y *= d1.D

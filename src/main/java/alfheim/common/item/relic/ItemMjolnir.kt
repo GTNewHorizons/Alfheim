@@ -40,7 +40,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	fun isWorthy(player: EntityLivingBase): Boolean {
 		if (player !is EntityPlayer) return false
 		val inv = PlayerHandler.getPlayerBaubles(player)
-		return (inv.getStackInSlot(1)?.item === ModItems.thorRing || inv.getStackInSlot(2)?.item === ModItems.thorRing) && inv.getStackInSlot(0)?.let { it.item === AlfheimItems.emblem && it.meta == 0 } == true
+		return (inv.getStackInSlot(1)?.item === ModItems.thorRing || inv.getStackInSlot(2)?.item === ModItems.thorRing) && inv.getStackInSlot(0)?.let { it.item === AlfheimItems.priestEmblem && it.meta == 0 } == true
 	}
 	
 	// ################ Left-click ################

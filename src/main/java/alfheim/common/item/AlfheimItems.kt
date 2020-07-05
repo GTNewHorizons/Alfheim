@@ -23,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak
+import alfheim.common.item.equipment.bauble.ItemBalanceCloak
 import vazkii.botania.common.item.record.ItemModRecord
 import vazkii.botania.common.item.relic.ItemDice
 
@@ -60,7 +60,7 @@ object AlfheimItems {
 	val elvoriumHelmet: Item
 	val elvoriumHelmetRevealing: Item?
 	val elvoriumLeggings: Item
-	val emblem: Item
+	val enlighter: Item
 	val excaliber: Item
 	val fireGrenade: Item
 	val flugelDisc: Item
@@ -86,8 +86,13 @@ object AlfheimItems {
 	val multibauble: Item
 	val paperBreak: Item
 	val peacePipe: Item
+	val pendantSuperIce: Item
 	val pixieAttractor: Item
+	val priestCloak: Item
+	val priestEmblem: Item
 	val realitySword: Item
+	val ringFeedFlower: Item
+	val ringSpider: Item
 	val rodColorfulSkyDirt: Item
 	val rodClicker: Item
 	val rodFire: Item
@@ -144,7 +149,7 @@ object AlfheimItems {
 		elvoriumChestplate = ItemElvoriumArmor(1, "ElvoriumChestplate")
 		elvoriumLeggings = ItemElvoriumArmor(2, "ElvoriumLeggings")
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")
-		emblem = ItemPriestEmblem()
+		enlighter = ItemEnlighter()
 		excaliber = ItemExcaliber()
 		flugelDisc = ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimTab)
 		flugelDisc2 = ItemModRecord("miku", "MikuDisc").setCreativeTab(null)
@@ -169,8 +174,13 @@ object AlfheimItems {
 		multibauble = ItemMultibauble()
 		paperBreak = ItemPaperBreak()
 		peacePipe = ItemPeacePipe()
+		pendantSuperIce = ItemSuperIcePendant()
 		pixieAttractor = ItemPendant("PixieAttractor")
+		priestCloak = ItemPriestCloak()
+		priestEmblem = ItemPriestEmblem()
 		realitySword = ItemRealitySword()
+		ringFeedFlower = ItemFeedFlowerRing()
+		ringSpider = ItemSpiderRing()
 		rodColorfulSkyDirt = ItemRodIridescent()
 		rodClicker = ItemRodClicker()
 		rodFire = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }

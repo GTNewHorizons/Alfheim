@@ -2,12 +2,14 @@ package alfheim.common.core.asm
 
 import alexsocol.asjlib.ASJReflectionHelper
 import alexsocol.asjlib.asm.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.relauncher.*
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion
 import gloomyfolken.hooklib.minecraft.*
 import java.io.File
+import kotlin.system.exitProcess
 
 @MCVersion(value = "1.7.10")
 class AlfheimHookLoader: HookLoader() {
@@ -34,11 +36,13 @@ class AlfheimHookLoader: HookLoader() {
 		registerHookContainer("alfheim.common.core.asm.hook.AlfheimHookHandler")
 		if (AlfheimConfigHandler.hpHooks) registerHookContainer("alfheim.common.core.asm.hook.AlfheimHPHooks")
 		registerHookContainer("alfheim.common.core.asm.hook.extender.FurnaceExtender")
-		registerHookContainer("alfheim.common.core.asm.hook.extender.QuartzExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.ItemLensExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.ItemTwigWandExtender")
 		registerHookContainer("alfheim.common.core.asm.hook.extender.ManaSpreaderExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.PureDaisyExtender")
+		registerHookContainer("alfheim.common.core.asm.hook.extender.QuartzExtender")
 		registerHookContainer("alfheim.common.core.asm.hook.extender.RosaArcanaExtender")
 		registerHookContainer("alfheim.common.core.asm.hook.fixes.RecipeAncientWillsFix")
-		registerHookContainer("alfheim.common.core.asm.hook.extender.ItemTwigWandExtender")
 		registerHookContainer("alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapterHooks")
 		registerHookContainer("alfheim.common.integration.tinkersconstruct.TraitFairySpawner")
 		

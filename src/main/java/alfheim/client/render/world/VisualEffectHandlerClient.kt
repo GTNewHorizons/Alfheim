@@ -25,7 +25,7 @@ import vazkii.botania.common.core.helper.Vector3 as VVec3
 
 object VisualEffectHandlerClient {
 	
-	val activeAmblems = HashMap<Int, Boolean>()
+	val activeEmblems = HashMap<Int, Boolean>()
 	val v = Vector3()
 	
 	fun select(s: VisualEffects, d: DoubleArray) {
@@ -72,7 +72,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun activateEmblem(eID: Double, active: Double) {
-		activeAmblems[eID.I] = active != 0.0
+		activeEmblems[eID.I] = active != 0.0
 	}
 	
 	fun addIceLens() {

@@ -13,6 +13,8 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		val anomaly = DamageSource("anomaly").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		/** Decay Spell */
 		val bleeding = DamageSourceSpell("bleeding").setDamageBypassesArmor().setDamageIsAbsolute()!!
+		/** Priest emblem damage */
+		val faith = DamageSource("lackOfFaith").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		/** Death Mark Spell */
 		val mark = DamageSourceSpell("mark").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage()!!
 		/** Regular poison */
@@ -34,6 +36,9 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		fun firewall(fw: EntitySpellFirewall, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("firewall", caster, fw).setFireDamage()!!
+		
+		fun frost(caster: EntityLivingBase?) =
+			EntityDamageSource("frost", caster).setDamageBypassesArmor().setMagicDamage()!!
 		
 		fun gravity(gt: EntitySpellGravityTrap, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("gravity", caster, gt).setDamageBypassesArmor()!!

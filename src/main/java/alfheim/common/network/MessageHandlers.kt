@@ -11,6 +11,7 @@ import alfheim.common.core.handler.*
 import alfheim.common.core.handler.CardinalSystem.HotSpellsSystem
 import alfheim.common.core.helper.*
 import alfheim.common.entity.EntityLolicorn
+import alfheim.common.item.equipment.bauble.ItemPriestCloak
 import cpw.mods.fml.common.network.simpleimpl.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
@@ -215,6 +216,27 @@ class MessageEffectLightningHandler: IMessageHandler<MessageEffectLightning, IMe
 	}
 }
 
+class MessageHeimdallBlinkHandler: IMessageHandler<MessageHeimdallBlink, IMessage?> {
+	
+	override fun onMessage(message: MessageHeimdallBlink?, ctx: MessageContext): IMessage? {
+		val player = ctx.serverHandler.playerEntity
+		if (ItemPriestCloak.getCloak(4, player) != null) {
+			val look = player.lookVec
+			val dist = 6.0
+			val (x, y, z) = Vector3.fromEntity(player).add(Vector3(look).mul(dist))
+			
+			if (!player.worldObj.getBlock(x.I, y.I, z.I).isNormalCube && !player.worldObj.getBlock(x.I, y.I + 1, z.I).isNormalCube) {
+				ctx.serverHandler.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch)
+				// ctx.serverHandler.func_184342_d() captureCurrentPosition ???
+				player.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1f, 1f)
+				player.playSound("mob.endermen.portal", 1f, 1f)
+			}
+		}
+		
+		return null
+	}
+}
+
 class MessageHotSpellCHandler: IMessageHandler<MessageHotSpellC, IMessage?> {
 
 	override fun onMessage(message: MessageHotSpellC, ctx: MessageContext): IMessage? {
@@ -237,7 +259,8 @@ class MessageKeyBindHandler: IMessageHandler<MessageKeyBindS, IMessage?> {
 		val player = ctx.serverHandler.playerEntity
 		
 		when (values()[message.action]) {
-			ATTACK  -> KeyBindingHandler.atack(player)
+			HIT     -> KeyBindingHandler.hit(player)
+			USE     -> KeyBindingHandler.use(player)
 			CORN    -> EntityLolicorn.call(player)
 			FLIGHT  -> KeyBindingHandler.enableFlight(player, message.state)
 			ESMABIL -> KeyBindingHandler.toggleESMAbility(player)

@@ -8,6 +8,7 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
+import alfheim.common.block.corporea.BlockCorporeaAutocrafter
 import alfheim.common.block.magtrees.calico.*
 import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
@@ -51,6 +52,7 @@ object AlfheimBlocks {
 	val auroraWood: Block
 	val barrel: Block
 	val barrier: Block
+//	val corporeaAutocrafter: Block BACK
 	val dreamSapling: Block
 	val elvenOre: Block
 	val elvenSand: Block
@@ -189,6 +191,7 @@ object AlfheimBlocks {
 		auroraWood = BlockAuroraWood()
 		barrel = BlockBarrel()
 		barrier = BlockBarrier()
+//		corporeaAutocrafter = BlockCorporeaAutocrafter() BACK
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
@@ -605,9 +608,12 @@ object AlfheimBlocks {
 	
 	fun registerFlora() {
 		addSubFlower(SubTileCrysanthermum::class.java, "crysanthermum")
+		addSubFlower(SubTileOrechidEndium::class.java, "orechidEnduim")
+		addSubFlower(SubTilePetronia::class.java, "petronia")
 		addSubFlower(SubTileRainFlower::class.java, "rainFlower")
 		addSubFlower(SubTileSnowFlower::class.java, "snowFlower")
 		addSubFlower(SubTileStormFlower::class.java, "stormFlower")
+		addSubFlower(SubTileWindFlower::class.java, "windFlower")
 		
 		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood0, irisLeaves0, 0, 3)
 		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood1, irisLeaves0, 4, 7)

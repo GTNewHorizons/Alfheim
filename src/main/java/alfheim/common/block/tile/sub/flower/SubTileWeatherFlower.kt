@@ -1,26 +1,20 @@
 package alfheim.common.block.tile.sub.flower
 
+import alexsocol.asjlib.I
 import net.minecraft.world.World
 import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
 
 abstract class SubTileWeatherFlower: SubTilePassiveGenerating() {
 	
-	override fun getDelayBetweenPassiveGeneration(): Int {
-		return if (isOnSpecialSoil) 1 else 2
-	}
+	override fun getDelayBetweenPassiveGeneration() = if (isOnSpecialSoil) 1 else 2
 	
-	override fun getValueForPassiveGeneration(): Int {
-		return if (isOnSpecialSoil) 2 else 1
-	}
+	override fun getValueForPassiveGeneration() = if (isOnSpecialSoil) 2 else 1
 	
-	override fun getMaxMana(): Int {
-		return if (isOnSpecialSoil) 400 else 200
-	}
+	override fun getMaxMana() = if (isOnSpecialSoil) 400 else 200
 	
-	override fun getColor(): Int {
-		return 0x9CFFFF
-	}
+	override fun getColor() = 0x9CFFFF
 	
 	override fun canGeneratePassively(): Boolean {
 		return canGenerate(supertile.worldObj, supertile.xCoord, supertile.yCoord, supertile.zCoord)
@@ -31,6 +25,7 @@ abstract class SubTileWeatherFlower: SubTilePassiveGenerating() {
 	abstract override fun getEntry(): LexiconEntry?
 }
 
+@PassiveFlower
 class SubTileRainFlower: SubTileWeatherFlower() {
 	
 	override fun canGenerate(world: World, x: Int, y: Int, z: Int): Boolean {
@@ -42,6 +37,7 @@ class SubTileRainFlower: SubTileWeatherFlower() {
 	}
 }
 
+@PassiveFlower
 class SubTileSnowFlower: SubTileWeatherFlower() {
 	
 	override fun canGenerate(world: World, x: Int, y: Int, z: Int): Boolean {
@@ -51,4 +47,28 @@ class SubTileSnowFlower: SubTileWeatherFlower() {
 	override fun getEntry(): LexiconEntry? {
 		return null // FIXME entry
 	}
+}
+
+@PassiveFlower
+class SubTileWindFlower: SubTileWeatherFlower() {
+	
+	var newMana = -1
+	
+	override fun canGenerate(world: World, x: Int, y: Int, z: Int): Boolean {
+		val ret = y > 127 && world.canBlockSeeTheSky(x, y + 1, z)
+		
+		newMana = (if (ret) y / 100 * if (world.canLightningStrikeAt(x, y, z)) 1.5 else 0.75 else 0.0).I
+		
+		return ret
+	}
+	
+	override fun getValueForPassiveGeneration(): Int {
+		return newMana
+	}
+	
+	override fun getEntry(): LexiconEntry? {
+		return null // FIXME entry
+	}
+	
+	override fun getMaxMana() = 300
 }

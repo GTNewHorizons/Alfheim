@@ -20,8 +20,6 @@ import kotlin.properties.Delegates
 
 class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInkable {
 	
-	val COST = 100
-	
 	init {
 		maxStackSize = 1
 	}
@@ -31,9 +29,9 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 	override fun requiresMultipleRenderPasses() = true
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = IconHelper.forItem(par1IconRegister, this)
-		overlayIcon = IconHelper.forItem(par1IconRegister, this, "Overlay")
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forItem(reg, this)
+		overlayIcon = IconHelper.forItem(reg, this, "Overlay")
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -43,24 +41,23 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 	override fun getColorFromItemStack(par1ItemStack: ItemStack, pass: Int) =
         if (pass > 0) 0xFFFFFF else ItemIridescent.rainbowColor()
 	
-	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World,
-						   x: Int, y: Int, z: Int, direction: Int, par8: Float, par9: Float, par10: Float): Boolean {
-		if (par3World.getBlock(x, y, z) == AlfheimBlocks.rainbowFlame) {
-			par3World.setBlock(x, y, z, Blocks.air)
-			par3World.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "random.fizz", 0.3F, Math.random().F * 0.4F + 0.8F)
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+		if (world.getBlock(x, y, z) == AlfheimBlocks.rainbowFlame) {
+			world.setBlock(x, y, z, Blocks.air)
+			world.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "random.fizz", 0.3F, Math.random().F * 0.4F + 0.8F)
 			return true
 		}
 		val toPlace = ItemStack(AlfheimBlocks.rainbowFlame)
-		if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, COST, false)) {
-			val dir = ForgeDirection.getOrientation(direction)
-			if (par3World.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(par3World, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
-				toPlace.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, x, y, z, direction, par8, par9, par10)
+		if (ManaItemHandler.requestManaExactForTool(stack, player, COST, false)) {
+			val dir = ForgeDirection.getOrientation(side)
+			if (world.getBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ).isAir(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)) {
+				toPlace.tryPlaceItemIntoWorld(player, world, x, y, z, side, hitX, hitY, hitZ)
 				if (toPlace.stackSize == 0) {
-					par3World.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "fire.ignite", 0.3F, Math.random().F * 0.4F + 0.8F)
-					ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, COST, true)
-					val tile = par3World.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)
+					world.playSoundEffect(x.D + 0.5, y.D + 0.5, z.D + 0.5, "fire.ignite", 0.3F, Math.random().F * 0.4F + 0.8F)
+					ManaItemHandler.requestManaExactForTool(stack, player, COST, true)
+					val tile = world.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ)
 					if (tile is TileRainbowManaFlame) {
-						tile.invisible = hasPhantomInk(par1ItemStack)
+						tile.invisible = hasPhantomInk(stack)
 					}
 				}
 				return true
@@ -88,4 +85,8 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 	}
 	
 	override fun isFull3D() = true
+	
+	companion object {
+		val COST = 100
+	}
 }

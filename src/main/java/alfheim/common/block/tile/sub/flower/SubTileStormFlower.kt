@@ -6,8 +6,10 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
 
+@PassiveFlower
 class SubTileStormFlower: SubTilePassiveGenerating() {
 	
 	var cooldown = 0

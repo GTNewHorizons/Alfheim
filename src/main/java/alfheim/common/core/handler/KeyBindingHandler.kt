@@ -4,17 +4,19 @@ import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
+import alfheim.api.event.PlayerInteractAdequateEvent.*
+import alfheim.api.event.PlayerInteractAdequateEvent.LeftClick.Action.*
+import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.spell.SpellBase.SpellCastResult.DESYNC
 import alfheim.common.core.helper.*
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.Message2d
-import baubles.api.BaublesApi
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
+import net.minecraftforge.common.MinecraftForge
 
 object KeyBindingHandler {
 	
@@ -42,13 +44,38 @@ object KeyBindingHandler {
 		}
 	}
 	
-	fun atack(player: EntityPlayerMP) {
-		if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item !is ItemCreativeReachPendant) return
+	fun hit(player: EntityPlayerMP) {
+		val mopEntity = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, true)
+		val mopNoEntity = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, false)
 		
-		val mop = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, true)
-		if (mop != null && mop.typeOfHit == MovingObjectType.ENTITY && mop.entityHit != null) {
-			player.attackTargetEntityWithCurrentItem(mop.entityHit)
-		}
+		if (mopNoEntity == null || mopNoEntity.typeOfHit == MovingObjectType.MISS) {
+			when (mopEntity?.typeOfHit) {
+				MovingObjectType.BLOCK  ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_LIQUID, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				MovingObjectType.ENTITY ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_ENTIY, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				else                    ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
+			}
+		} else if (mopNoEntity.typeOfHit == MovingObjectType.BLOCK)
+			MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_AIR, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
+	}
+	
+	fun use(player: EntityPlayerMP) {
+		val mopEntity = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, true)
+		val mopNoEntity = ASJUtilities.getMouseOver(player, player.theItemInWorldManager.blockReachDistance, false)
+		
+		if (mopNoEntity == null || mopNoEntity.typeOfHit == MovingObjectType.MISS) {
+			when (mopEntity?.typeOfHit) {
+				MovingObjectType.BLOCK  ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_LIQUID, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				MovingObjectType.ENTITY ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_ENTIY, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				else                    ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
+			}
+		} else if (mopNoEntity.typeOfHit == MovingObjectType.BLOCK)
+			MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_AIR, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
 	}
 	
 	fun cast(player: EntityPlayerMP, hotSpell: Boolean, id: Int) {

@@ -1,6 +1,7 @@
 package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.ModInfo
+import alfheim.common.core.helper.IconHelper
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -15,7 +16,7 @@ class ShadowFoxSignature(val name: String): SubTileSignature() {
 	var icon: IIcon? = null
 	
 	override fun registerIcons(reg: IIconRegister) {
-		icon = reg.registerIcon("${ModInfo.MODID}:$name")
+		icon = IconHelper.forName(reg, "flower_$name")
 	}
 	
 	override fun getIconForStack(item: ItemStack?): IIcon? = icon

@@ -3,35 +3,32 @@ package alfheim.common.item.equipment.bauble
 import alexsocol.asjlib.getActivePotionEffect
 import alfheim.AlfheimCore
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.integration.travellersgear.TGHandlerBotaniaAdapterHooks
+import alfheim.common.integration.travellersgear.*
 import baubles.api.BaubleType
 import cpw.mods.fml.common.Optional
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
 import net.minecraft.util.StatCollector
-import travellersgear.api.ITravellersGear
 import vazkii.botania.api.mana.*
-import vazkii.botania.client.core.helper.RenderHelper
-import vazkii.botania.common.core.helper.ItemNBTHelper
+import vazkii.botania.client.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
-@Optional.Interface(modid = "TravellersGear", iface = "travellersgear.api.ITravellersGear", striprefs = true)
-class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, ITravellersGear {
+@Optional.Interface(modid = "TravellersGear", iface = "alfheim.common.integration.travellersgear.ITravellersGearSynced", striprefs = true)
+class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, ITravellersGearSynced {
 	
 	init {
 		creativeTab = AlfheimTab
 	}
 	
+	override fun registerIcons(reg: IIconRegister?) {
+		itemIcon = IconHelper.forName(reg, "cloak_invisibility")
+	}
+	
 	override fun getBaubleType(arg0: ItemStack) =
 		if (AlfheimCore.TravellersGearLoaded) null else BaubleType.BELT
-	
-	override fun onUnequipped(stack: ItemStack?, player: EntityLivingBase) {
-		val effect = player.getActivePotionEffect(Potion.invisibility.id)
-		if (effect != null && player is EntityPlayer && effect.amplifier == -42)
-			player.removePotionEffect(Potion.invisibility.id)
-	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		if (player is EntityPlayer && !player.worldObj.isRemote) {
@@ -48,21 +45,22 @@ class ItemInvisibilityCloak: ItemBauble("InvisibilityCloak"), IManaUsingItem, IT
 		}
 	}
 	
+	override fun onUnequipped(stack: ItemStack?, player: EntityLivingBase) {
+		val effect = player.getActivePotionEffect(Potion.invisibility.id)
+		if (effect != null && player is EntityPlayer && effect.amplifier == -42)
+			player.removePotionEffect(Potion.invisibility.id)
+	}
+	
 	override fun usesMana(stack: ItemStack) = true
 	
 	override fun getSlot(stack: ItemStack) = 0
 	
-	override fun onTravelGearTick(player: EntityPlayer, stack: ItemStack) {
-		// because for some reason it gots called AFTER unequip :/
-		if (ItemNBTHelper.getBoolean(stack, TAG_EQUIPPED, false)) onWornTick(stack, player)
-	}
-	
-	override fun onTravelGearEquip(player: EntityPlayer, stack: ItemStack) {
-		ItemNBTHelper.setBoolean(stack, TAG_EQUIPPED, true)
+	override fun onTravelGearTickSynced(player: EntityPlayer, stack: ItemStack) {
+		onWornTick(stack, player)
 	}
 	
 	override fun onTravelGearUnequip(player: EntityPlayer, stack: ItemStack) {
-		ItemNBTHelper.setBoolean(stack, TAG_EQUIPPED, false)
+		super.onTravelGearUnequip(player, stack)
 		onUnequipped(stack, player)
 	}
 	

@@ -88,7 +88,7 @@ import alfheim.common.item.AlfheimItems.attributionBauble
 import alfheim.common.item.AlfheimItems.coatOfArms
 import alfheim.common.item.AlfheimItems.colorOverride
 import alfheim.common.item.AlfheimItems.elvenResource
-import alfheim.common.item.AlfheimItems.emblem
+import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
@@ -342,7 +342,7 @@ object ShadowFoxRecipes {
 		
 		recipesFlameRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 0),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 0),
 						 "EGE",
 						 "TAT",
 						 " W ",
@@ -354,7 +354,7 @@ object ShadowFoxRecipes {
 		
 		recipesPriestOfThor = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 1),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 1),
 						 "DGD",
 						 "NAN",
 						 " P ",
@@ -366,7 +366,7 @@ object ShadowFoxRecipes {
 		
 		recipesPriestOfSif = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 3),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 3),
 						 "WGO",
 						 "NAN",
 						 " P ",
@@ -423,7 +423,7 @@ object ShadowFoxRecipes {
 		
 		recipesInterdictionRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 2),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 2),
 						 "RGR",
 						 "NAN",
 						 " P ",

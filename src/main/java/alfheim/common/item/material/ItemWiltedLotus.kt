@@ -13,7 +13,6 @@ import vazkii.botania.api.internal.VanillaPacketDispatcher
 import vazkii.botania.api.item.IManaDissolvable
 import vazkii.botania.api.mana.IManaPool
 import vazkii.botania.common.Botania
-import vazkii.botania.common.item.ItemBlackLotus
 
 class ItemWiltedLotus : ItemMod("wiltedLotus"), IManaDissolvable {
 
@@ -40,7 +39,7 @@ class ItemWiltedLotus : ItemMod("wiltedLotus"), IManaDissolvable {
         val tile = pool as TileEntity
         val t2 = stack.getItemDamage() > 0
     
-        val mult = if (item.worldObj.rand.nextInt(5) == 0) 2 else -1
+        val mult = if (item.worldObj.rand.nextBoolean()) 2 else -1
         val mana = if (t2) MANA_PER_T2 else MANA_PER
     
         if (mult < -1 && pool.currentMana < mana)

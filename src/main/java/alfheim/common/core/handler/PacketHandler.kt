@@ -1,7 +1,7 @@
 package alfheim.common.core.handler
 
 import alfheim.common.item.equipment.bauble.*
-import alfheim.common.network.Message0dS
+import alfheim.common.network.*
 import alfheim.common.network.Message0dS.m0ds
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.network.simpleimpl.MessageContext

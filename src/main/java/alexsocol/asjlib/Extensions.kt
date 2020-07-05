@@ -95,6 +95,18 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 
 fun Entity.setPosition(e: Entity) = setPosition(e.posX, e.posY, e.posZ)
 
+fun Entity.setPosition(c: ChunkCoordinates) = setPosition(c.posX.D, c.posY.D, c.posZ.D)
+
+fun Entity.setMotion(x: Double, y: Double = x, z: Double = y) {
+	motionX = x
+	motionY = y
+	motionZ = z
+}
+
+operator fun ChunkCoordinates.component1() = this.posX
+operator fun ChunkCoordinates.component2() = this.posY
+operator fun ChunkCoordinates.component3() = this.posZ
+
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
 fun EntityPlayerMP.hasAchievement(a: Achievement?) = if (a == null) false else func_147099_x().hasAchievementUnlocked(a)

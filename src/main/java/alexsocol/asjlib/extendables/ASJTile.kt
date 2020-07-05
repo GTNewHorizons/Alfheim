@@ -17,13 +17,9 @@ open class ASJTile: TileEntity() {
 		readCustomNBT(nbt)
 	}
 	
-	open fun writeCustomNBT(nbt: NBTTagCompound) {
+	open fun writeCustomNBT(nbt: NBTTagCompound) = Unit
 	
-	}
-	
-	open fun readCustomNBT(nbt: NBTTagCompound) {
-	
-	}
+	open fun readCustomNBT(nbt: NBTTagCompound) = Unit
 	
 	override fun getDescriptionPacket(): Packet {
 		val nbt = NBTTagCompound()

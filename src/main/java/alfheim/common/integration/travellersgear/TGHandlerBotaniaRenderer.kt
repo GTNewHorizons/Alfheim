@@ -19,32 +19,24 @@ object TGHandlerBotaniaRenderer {
 		val tgInv = TravellersGearAPI.getExtendedInventory(player)
 		
 		for (stack in tgInv) {
-			if (stack != null) {
-				val item = stack.item
-				
-				if (item is IPhantomInkable) {
-					val inkable = item as IPhantomInkable
-					if (inkable.hasPhantomInk(stack)) continue
-				}
-				
-				if (item is ICosmeticAttachable) {
-					val attachable = item as ICosmeticAttachable
-					val cosmetic = attachable.getCosmeticItem(stack)
-					if (cosmetic != null) {
-						glPushMatrix()
-						glColor4f(1f, 1f, 1f, 1f)
-						(cosmetic.item as IBaubleRender).onPlayerBaubleRender(cosmetic, event, RenderType.BODY)
-						glPopMatrix()
-						continue
-					}
-				}
-				
-				if (item is IBaubleRender) {
-					glPushMatrix()
-					glColor4f(1f, 1f, 1f, 1f)
-					(stack.item as IBaubleRender).onPlayerBaubleRender(stack, event, RenderType.BODY)
-					glPopMatrix()
-				}
+			val item = stack?.item ?: continue
+			
+			if (item is IPhantomInkable && item.hasPhantomInk(stack)) continue
+			
+			if (item is ICosmeticAttachable) {
+				val cosmetic = item.getCosmeticItem(stack)
+				glPushMatrix()
+				glColor4f(1f, 1f, 1f, 1f)
+				(cosmetic?.item as? IBaubleRender)?.onPlayerBaubleRender(cosmetic, event, RenderType.BODY)
+				glPopMatrix()
+				continue
+			}
+			
+			if (item is IBaubleRender) {
+				glPushMatrix()
+				glColor4f(1f, 1f, 1f, 1f)
+				item.onPlayerBaubleRender(stack, event, RenderType.BODY)
+				glPopMatrix()
 			}
 		}
 	}

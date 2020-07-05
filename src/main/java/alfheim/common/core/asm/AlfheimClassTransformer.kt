@@ -812,7 +812,7 @@ class AlfheimClassTransformer: IClassTransformer {
 		override fun visitField(access: Int, name: String, desc: String, signature: String?, value: Any?): FieldVisitor {
 			var value = value
 			if (name == "SUBTYPES") {
-				value = 24
+				value = 22 + moreLenses
 			}
 			return super.visitField(access, name, desc, signature, value)
 		}
@@ -834,10 +834,10 @@ class AlfheimClassTransformer: IClassTransformer {
 				var operand = operand
 				if (opcode == BIPUSH) {
 					if (operand == 22) {        // 4 injections for #SUBTYPES
-						operand = 24
+						operand += moreLenses
 					} else if (operand == 21) { // 2 injections for #SUBTYPES-1
 						if (left-- > 0) {       // 4 injections total
-							operand = 23
+							operand += moreLenses
 						}
 					}
 				}
@@ -942,7 +942,7 @@ class AlfheimClassTransformer: IClassTransformer {
 					if (operand == 22) {
 						if (twotwo_twofour) {
 							twotwo_twofour = false
-							operand = 24
+							operand += moreLenses
 						}
 					}
 					
@@ -970,6 +970,22 @@ class AlfheimClassTransformer: IClassTransformer {
 						mv.visitInsn(DUP)
 						mv.visitIntInsn(BIPUSH, 23)
 						mv.visitLdcInsn("lensTripwire")
+						mv.visitInsn(AASTORE)
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 24)
+						mv.visitLdcInsn("lensPush")
+						mv.visitInsn(AASTORE)
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 25)
+						mv.visitLdcInsn("lensSmelt")
+						mv.visitInsn(AASTORE)
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 26)
+						mv.visitLdcInsn("lensSuperconductor")
+						mv.visitInsn(AASTORE)
+						mv.visitInsn(DUP)
+						mv.visitIntInsn(BIPUSH, 27)
+						mv.visitLdcInsn("lensTrack")
 						mv.visitInsn(AASTORE)
 					}
 				}
@@ -1002,5 +1018,9 @@ class AlfheimClassTransformer: IClassTransformer {
 				super.visitInsn(if (opcode == ICONST_1) ICONST_0 else opcode)
 			}
 		}
+	}
+	
+	companion object {
+		val moreLenses = 6
 	}
 }

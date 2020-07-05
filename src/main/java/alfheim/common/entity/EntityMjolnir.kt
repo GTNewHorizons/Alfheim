@@ -79,12 +79,8 @@ class EntityMjolnir: EntityThrowable {
 	}
 	
 	override fun onImpact(pos: MovingObjectPosition) {
-		if (noClip) return
-		
-		val block = worldObj.getBlock(pos.blockX, pos.blockY, pos.blockZ)
-		if (block is BlockBush || block is BlockLeaves) return
-		
 		val thrower = thrower
+		
 		if (pos.entityHit != null && pos.entityHit is EntityLivingBase && pos.entityHit !== thrower) {
 			pos.entityHit.attackEntityFrom(
 				when (thrower) {
@@ -93,6 +89,11 @@ class EntityMjolnir: EntityThrowable {
 					else            -> DamageSource.causeMobDamage(thrower)
 				}, 12f)
 		} else {
+			if (noClip) return
+			
+			val block = worldObj.getBlock(pos.blockX, pos.blockY, pos.blockZ)
+			if (block is BlockBush || block is BlockLeaves) return
+			
 			val bounces = timesBounced
 			if (bounces < MAX_BOUNCES) {
 				val currentMovementVec = Vector3(motionX, motionY, motionZ)

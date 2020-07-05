@@ -18,7 +18,8 @@ import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.lens.*
+import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.item.rod.ItemRodClicker
 import alfheim.common.potion.PotionSoulburn
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
@@ -29,7 +30,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
-import net.minecraft.client.renderer.texture.TextureManager
+import net.minecraft.client.renderer.texture.*
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -61,6 +62,7 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.*
+import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.fx.FXWisp
 import vazkii.botania.client.lib.LibResources
@@ -78,7 +80,8 @@ import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
-import vazkii.botania.common.item.lens.*
+import vazkii.botania.common.item.equipment.bauble.*
+import vazkii.botania.common.item.lens.LensFirework
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.item.rod.ItemRainbowRod
 import vazkii.botania.common.lib.LibBlockNames
@@ -97,9 +100,6 @@ object AlfheimHookHandler {
 	var rt = 0f
 	var gt = 0f
 	private var bt = 0f
-	
-	private const val MESSANGER = 22
-	private const val TRIPWIRE = 23
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)
@@ -176,7 +176,7 @@ object AlfheimHookHandler {
 			ForgeDirection.DOWN -> true
 			ForgeDirection.UP   -> wall.blockBoundsMaxY == 1.0
 			else                -> false
-	}
+		}
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
@@ -518,6 +518,11 @@ object AlfheimHookHandler {
 	
 	// dupe fix
 	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun setDead(spark: EntityCorporeaSpark) = spark.isDead
+	
+	// dupe fix
+	@JvmStatic
 	@Hook(targetMethod = "<init>")
 	fun `ItemRainbowRod$init`(item: ItemRainbowRod) {
 		item.setNoRepair()
@@ -525,8 +530,8 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS)
-	fun onBlockActivated(block: BlockBellows, world: World, x: Int, y: Int, z: Int, player: EntityPlayer?, s: Int, xs: Float, ys: Float, zs: Float): Boolean {
-		// if (EntityDoppleganger.isTruePlayer(player)) maybe check only for avatar clicker
+	fun onBlockActivated(block: BlockBellows, world: World, x: Int, y: Int, z: Int, player: EntityPlayer, s: Int, xs: Float, ys: Float, zs: Float): Boolean {
+		if (!ItemRodClicker.isFakeNotAvatar(player))
 			(world.getTileEntity(x, y, z) as TileBellows).interact()
 		return true
 	}
@@ -589,16 +594,6 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(returnCondition = ALWAYS, createMethod = true)
 	fun isValidArmor(item: ItemGaiaHead, stack: ItemStack, armorType: Int, entity: Entity) = armorType == 0
-	
-	@JvmStatic
-	@Hook(injectOnExit = true, isMandatory = true, targetMethod = "<clinit>")
-	fun `ItemLens$clinit`(lens: ItemLens?) {
-		ItemLens.setProps(MESSANGER, 1)
-		ItemLens.setProps(TRIPWIRE, 1 shl 5)
-		
-		ItemLens.setLens(MESSANGER, LensMessanger())
-		ItemLens.setLens(TRIPWIRE, LensTripwire())
-	}
 	
 	@JvmStatic
 	@Hook(injectOnExit = true)
@@ -759,7 +754,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE)
-	fun bindTexture(tm: TextureManager, loc: ResourceLocation): Boolean {
+	fun bindTexture(tm: TextureManager, loc: ResourceLocation?): Boolean {
 		if (renderingTile) {
 			renderingTile = false
 			tm.bindTexture(LibResourceLocations.altar9)
@@ -1127,5 +1122,54 @@ object AlfheimHookHandler {
 			return false
 		
 		return entity.isInvisible
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true)
+	fun registerIcons(cloak: ItemHolyCloak, reg: IIconRegister) {
+		cloak.itemIcon = IconHelper.forName(reg, "cloak_holy")
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@JvmStatic
+	@Hook(createMethod = true)
+	fun registerIcons(cloak: ItemUnholyCloak, reg: IIconRegister) {
+		cloak.itemIcon = IconHelper.forName(reg, "cloak_unholy")
+	}
+	
+	// FaithHandlerNjord:
+	
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun addCollisionBoxesToList(liquid: BlockLiquid, world: World, x: Int, y: Int, z: Int, entitysBox: AxisAlignedBB, list: MutableList<Any?>, player: Entity?) {
+		var aabb = liquid.getCollisionBoundingBoxFromPool(world, x, y, z)
+		
+		if (player is EntityPlayer && !player.capabilities.isFlying) {
+			val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
+			
+			var take = false
+			val shouldCost = world.totalWorldTime % 10 == 0L
+			if (!ManaItemHandler.requestManaExact(emblem, player, 1, false)) return
+			
+			val fullBB = getBoundingBox(x, y, z).offset(0.5).expand(0.5)
+			
+			if (entitysBox.intersectsWith(fullBB)) {
+				player.motionY = if (!player.isSneaking) max(player.motionY, 0.5) else min(player.motionY, -0.5)
+				take = true
+			}
+			
+			if (!player.isSneaking && world.getBlock(x, y + 1, z).isAir(world, x, y, z) && (player.posY - if (mc.thePlayer === player) 1.62 else 0.0) >= y + 1) {
+				aabb = fullBB
+				take = true
+			}
+			
+			if (shouldCost && take)
+				ManaItemHandler.requestManaExact(emblem, player, 1, true)
+		}
+		
+		if (aabb != null && entitysBox.intersectsWith(aabb)) {
+			list.add(aabb)
+		}
 	}
 }

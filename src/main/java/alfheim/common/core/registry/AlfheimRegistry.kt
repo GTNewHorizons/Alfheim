@@ -61,7 +61,8 @@ object AlfheimRegistry {
 	}
 	
 	fun postInit() {
-		if (AlfheimConfigHandler.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
+		if (AlfheimConfigHandler.looniumOverseed)
+			BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
 		
 		val (w, n, x) = AlfheimConfigHandler.voidCreeper
 		
@@ -104,6 +105,7 @@ object AlfheimRegistry {
 		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
+		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
@@ -143,6 +145,7 @@ object AlfheimRegistry {
 		registerTile(TileAnomalyHarvester::class.java, "AnomalyHarvester")
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileBarrel::class.java, "Barrel")
+//		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter") BACK
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileManaAccelerator::class.java, "ItemHolder")
@@ -361,7 +364,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.elementiumHoe), 18)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvenWeed), 8)
-		addPink(ItemStack(AlfheimItems.emblem, 1, 3), 18)
+		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
 		addPink(ItemStack(AlfheimItems.flugelDisc), 13)
 		addPink(ItemStack(AlfheimItems.flugelHead), 5)
 		for (i in 0..6) addPink(ItemStack(AlfheimItems.hyperBucket, 1, i), 27)

@@ -25,8 +25,7 @@ import kotlin.properties.Delegates
 
 class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	
-	// private val kitsuneTexture = ResourceLocation("${ModInfo.MODID}:textures/items/kitsunesTail.png")
-	private lateinit var potatoTexture: ResourceLocation
+	lateinit var potatoTexture: ResourceLocation
 	
 	var defaultIcon: IIcon by Delegates.notNull()
 	var wireIcon: IIcon by Delegates.notNull()
@@ -61,8 +60,8 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 		super.addHiddenTooltip(par1ItemStack, par2EntityPlayer, par3List, par4)
 	}
 	
-	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>?) {
-		tooltip!!.add(s.replace("&".toRegex(), "\u00a7"))
+	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>) {
+		tooltip.add(s.replace("&".toRegex(), "\u00a7"))
 	}
 	
 	override fun getIconFromDamage(dmg: Int) = itemIcon!!
@@ -90,42 +89,6 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 			stack.tagCompound.removeTag("display")
 		}
 	}
-	
-	//    @SideOnly(Side.CLIENT)
-	//    fun renderTail(event: RenderPlayerEvent) {
-	//        GL11.glEnable(GL11.GL_BLEND)
-	//        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-	//        GL11.glShadeModel(GL11.GL_SMOOTH)
-	//        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f)
-	//        GL11.glDisable(GL11.GL_LIGHTING)
-	//        GL11.glDisable(GL11.GL_CULL_FACE)
-	//
-	//        mc.renderEngine.bindTexture(kitsuneTexture)
-	//
-	//        IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
-	//        chestTranslate()
-	//
-	//        GL11.glRotatef(-90F, 1F, 0F, 0F)
-	//
-	//        //        GL11.glTranslatef(-1F, -0.2F, -.50F)
-	////        GL11.glRotatef(180F, 0F, 1F, 1F)
-	////        GL11.glRotatef(-90F, 0F, 1F, 0F)
-	//        //        GL11.glScalef(1F, 1F, 1F)
-	//
-	//        val tes = Tessellator.instance
-	//        ShaderHelper.useShader(ShaderHelper.halo)
-	//        tes.startDrawingQuads()
-	//        tes.addVertexWithUV(-0.75, 0.0, -0.75, 0.0, 0.0)
-	//        tes.addVertexWithUV(-0.75, 0.0, 0.75, 0.0, 1.0)
-	//        tes.addVertexWithUV(0.75, 0.0, 0.75, 1.0, 1.0)
-	//        tes.addVertexWithUV(0.75, 0.0, -0.75, 1.0, 0.0)
-	//        tes.draw()
-	//        ShaderHelper.releaseShader()
-	//
-	//        GL11.glEnable(GL11.GL_LIGHTING)
-	//        GL11.glShadeModel(GL11.GL_FLAT)
-	//        GL11.glEnable(GL11.GL_CULL_FACE)
-	//    }
 	
 	@SideOnly(Side.CLIENT)
 	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {

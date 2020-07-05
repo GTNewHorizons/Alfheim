@@ -781,7 +781,7 @@ spell.windblades.mtinfo=Name: windblades | damage %s duration (lifetime) %s effi
 ########################################################___IRIDESCENCE___#######################################################
 ################################################################################################################################
 
-death.attack.alfheim.lackOfFaith=%1$s has suffered a crisis of faith
+death.attack.lackOfFaith=%1$s has suffered a crisis of faith
 misc.alfheim.lackOfFaith=&cUnequipping this bauble can be bad for your health.&r
 misc.alfheim.crisisOfFaith=&4Unequipping this bauble could be a death sentence.&r
 misc.alfheim.healthWarning=&cLosing faith in the gods can be deadly...&r

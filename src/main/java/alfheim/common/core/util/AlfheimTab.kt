@@ -167,7 +167,6 @@ import alfheim.common.item.AlfheimItems.elvoriumBoots
 import alfheim.common.item.AlfheimItems.elvoriumChestplate
 import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
-import alfheim.common.item.AlfheimItems.emblem
 import alfheim.common.item.AlfheimItems.excaliber
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
@@ -192,6 +191,8 @@ import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
 import alfheim.common.item.AlfheimItems.pixieAttractor
+import alfheim.common.item.AlfheimItems.priestCloak
+import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.realitySword
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFire
@@ -237,6 +238,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		`DEV-NULL`?.let { addItem(it) }
 		
 		addBlock(manaInfuser)
+//		addBlock(corporeaAutocrafter) BACK
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
 		addBlock(Blocks.furnace, 8)
@@ -266,6 +268,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (flugelHead)
 		addItem (flugelDisc)
 		
+		addItem (priestCloak)
 		addItem (balanceCloak)
 		addItem (invisibilityCloak)
 		//addItem (toolbelt)
@@ -280,7 +283,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (multibauble)
 		addItem (spatiotemporalRing)
 		addItem (attributionBauble)
-		addItem (emblem)
+		addItem (priestEmblem)
 		addItem (aesirEmblem)
 		addItem (creativeReachPendant)
 		addItem (elfFirePendant)

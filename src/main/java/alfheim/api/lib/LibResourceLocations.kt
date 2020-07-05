@@ -20,7 +20,7 @@ object LibResourceLocations {
 	val avatarInterdiction = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarInterdiction.png")
 	val avatarLightning = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarLightning.png")
 	var babylon = ResourceLocation("botania:textures/misc/babylon.png")
-	val balanceCloak = ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png")
+	val balanceCloak = ResourceLocation(ModInfo.MODID, "textures/model/armor/CloakBalance.png")
 	var barrel = ResourceLocation(ModInfo.MODID, "textures/model/block/Barrel.png")
 	val butterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/Butterfly.png")
 	val butterflyFlat = ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png")
@@ -87,6 +87,8 @@ object LibResourceLocations {
 	val obelisk = Array(5) {
 		ResourceLocation(ModInfo.MODID, "textures/model/block/Obelisc$it.png")
 	}
+	
+	var godCloak = emptyArray<ResourceLocation>()
 	
 	val wings = arrayOf(
 		null,

@@ -1,5 +1,6 @@
 package alfheim.client.lib
 
+import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import net.minecraft.util.ResourceLocation
 import vazkii.botania.client.lib.LibResources
@@ -17,5 +18,9 @@ object LibResourceLocationsActual {
 		LibResourceLocations.petalOverlay = ResourceLocation(LibResources.GUI_PETAL_OVERLAY)
 		LibResourceLocations.pixie = ResourceLocation(LibResources.MODEL_PIXIE)
 		LibResourceLocations.spreader = ResourceLocation(LibResources.MODEL_SPREADER)
+		
+		LibResourceLocations.godCloak = Array(5) {
+			ResourceLocation(ModInfo.MODID, "textures/model/armor/CloakGod$it.png")
+		}
 	}
 }

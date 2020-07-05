@@ -16,6 +16,7 @@ class AITeleport(flugel: EntityFlugel, task: AITask): AIBase(flugel, task) {
 	}
 
 	companion object {
+		
 		fun tryToTP(flugel: EntityFlugel) {
 			var tries = 0
 			while (!flugel.teleportRandomly() && tries < 50) tries++
