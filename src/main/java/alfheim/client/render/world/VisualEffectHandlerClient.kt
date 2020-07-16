@@ -20,21 +20,25 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.potion.PotionEffect
 import vazkii.botania.common.Botania
+import vazkii.botania.common.entity.EntityManaBurst
+import java.awt.Color
 import kotlin.math.*
-import vazkii.botania.common.core.helper.Vector3 as VVec3
+import vazkii.botania.common.core.helper.Vector3 as Bector3
 
 object VisualEffectHandlerClient {
 	
 	val activeEmblems = HashMap<Int, Boolean>()
 	val v = Vector3()
+	val b = Bector3()
 	
 	fun select(s: VisualEffects, d: DoubleArray) {
-		//if (AlfheimConfigHandler.enableMMO) {
 		when (s) {
 			ACID              -> spawnAcid(d[0], d[1], d[2])
 			AQUABIND          -> spawnAquaBind(d[0], d[1], d[2])
-			AQUASTREAM        -> spawnAquaStream(d[0], d[1], d[2], d[3], d[4], d[5])
+			AQUASTREAM        -> spawnAquaStream(d[0], d[1], d[2], d[3], d[4], d[5], d[6].F, d[7].F, d[8].F)
 			AQUASTREAM_HIT    -> spawnAquaStreamHit(d[0], d[1], d[2])
+			BIFROST           -> spawnBifrost(d[0], d[1], d[2])
+			BIFROST_DONE      -> spawnBifrostFinish(d[0], d[1], d[2], d[3].I)
 			DISPEL            -> spawnBurst(d[0], d[1], d[2], 1f, 0f, 0f)
 			ECHO              -> spawnEcho(d[0], d[1], d[2])
 			ECHO_ENTITY       -> spawnEchoEntity(d[0], d[1], d[2])
@@ -46,9 +50,11 @@ object VisualEffectHandlerClient {
 			FLAMESTAR         -> spawnFlameStar(d[0], d[1], d[2], d[3], d[4], d[5])
 			GAIA_SOUL         -> spawnGaiaSoul(d[0], d[1], d[2])
 			GRAVITY           -> spawnGravity(d[0], d[1], d[2], d[3], d[4], d[5])
+			GUNGNIR           -> spawnGungnir(d[0].I)
 			HEAL              -> spawnBurst(d[0], d[1], d[2], 0f, 1f, 0f)
 			HORN              -> horn(d[0], d[1], d[2])
 			ICELENS           -> addIceLens()
+			LIGHTNING         -> spawnLightning(d[0], d[1], d[2], d[3], d[4], d[5], d[6].F, d[7].I, d[8].I, d.getOrElse(9) { 1.0 }.I)
 			MANA              -> addMana(d[0], d[1].I)
 			MANABURST         -> spawnManaburst(d[0], d[1], d[2])
 			MANAVOID          -> spawnManaVoid(d[0], d[1], d[2], d[3], d[4], d[5])
@@ -64,6 +70,7 @@ object VisualEffectHandlerClient {
 			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
 			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
 			SPLASH            -> spawnSplash(d[0], d[1], d[2])
+			STREAM            -> particleStream(Vector3(d[0], d[1], d[2]), Vector3(d[3], d[4], d[5]), d[6].I)
 			THROW             -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
 			TREMORS           -> spawnTremors(d[0], d[1], d[2])
 			UPHEAL            -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
@@ -103,6 +110,17 @@ object VisualEffectHandlerClient {
 		}
 	}
 	
+	fun particleStream(from: Vector3, to: Vector3, color: Int) {
+		val motionVec = to.sub(from).mul(0.04)
+		val c = Color(color)
+		
+		val r = c.red / 255f
+		val g = c.green / 255f
+		val b = c.blue / 255f
+		
+		Botania.proxy.wispFX(mc.theWorld, from.x, from.y, from.z, r, g, b, 0.4f, motionVec.x.F, motionVec.y.F, motionVec.z.F)
+	}
+	
 	fun quadDamage() {
 		mc.thePlayer.playSound(ModInfo.MODID + ":quad", 10f, 1f)
 	}
@@ -128,12 +146,29 @@ object VisualEffectHandlerClient {
 		}
 	}
 	
-	fun spawnAquaStream(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
-		Botania.proxy.wispFX(mc.theWorld, x, y, z, 0.5f, 0.5f, 1f, 1f, x2.F, y2.F, z2.F, 0.5f)
+	fun spawnAquaStream(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double, red: Float, green: Float, blue: Float) {
+		Botania.proxy.wispFX(mc.theWorld, x, y, z, red, green, blue, 1f, x2.F, y2.F, z2.F, 0.5f)
 	}
 	
 	fun spawnAquaStreamHit(x: Double, y: Double, z: Double) {
 		Botania.proxy.wispFX(mc.theWorld, x, y, z, 0f, 0.5f, 1f, 0.5f)
+	}
+	
+	fun spawnBifrost(x: Double, y: Double, z: Double) {
+		for (a in 0..15) {
+			val color = Color(Color.HSBtoRGB(mc.theWorld.rand.nextFloat(), 1F, 1F))
+			Botania.proxy.wispFX(mc.theWorld, x + Math.random() * 3 - 1, y + Math.random(), z + Math.random() * 3 - 1, color.red / 255f, color.green / 255f, color.blue / 255f, 1f, -1f, 2f)
+		}
+	}
+	
+	fun spawnBifrostFinish(x: Double, y: Double, z: Double, id: Int) {
+		mc.theWorld.getEntityByID(id)?.let { it.motionY += 5.0 }
+		
+		for (a in 0..64) {
+			v.rand().normalize().mul(0.1)
+			val color = Color(Color.HSBtoRGB(mc.theWorld.rand.nextFloat(), 1F, 1F))
+			Botania.proxy.wispFX(mc.theWorld, x, y, z, color.red / 255f, color.green / 255f, color.blue / 255f, 1f, v.x.F, v.y.F, v.z.F, 2f)
+		}
 	}
 	
 	fun spawnBurst(x: Double, y: Double, z: Double, r: Float, g: Float, b: Float) {
@@ -190,6 +225,25 @@ object VisualEffectHandlerClient {
 	
 	fun spawnGravity(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double) {
 		mc.theWorld.spawnParticle("smoke", x, y, z, x2, y2, z2)
+	}
+	
+	fun spawnGungnir(id: Int) {
+		val player = mc.theWorld.getEntityByID(id) as? EntityPlayer ?: return
+		mc.theWorld.spawnEntityInWorld(EntityManaBurst(player).also {
+			val motionModifier = 32
+			it.color = 0xFFD400
+			it.mana = 1
+			it.startingMana = 1
+			it.minManaLoss = 200
+			it.manaLossPerTick = 1f
+			it.gravity = 0f
+			it.setMotion(it.motionX * motionModifier, it.motionY * motionModifier, it.motionZ * motionModifier)
+		})
+	}
+	
+	fun spawnLightning(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double, speed: Float, color: Int, color2: Int, count: Int) {
+		for (i in 0 until count)
+			Botania.proxy.lightningFX(mc.theWorld, b.set(x, y, z), Bector3(x2, y2, z2), speed, color, color2)
 	}
 	
 	fun spawnMana(living: EntityLivingBase, mana: Double) {
@@ -293,21 +347,20 @@ object VisualEffectHandlerClient {
 	}
 	
 	fun spawnWire(x: Double, y: Double, z: Double, range: Double) {
-		val v = VVec3(x, y, z)
-		for (var11 in 0..20) {
-			Botania.proxy.lightningFX(mc.theWorld, v, v.copy().add(randomVec(range)), (range * 0.01).F, 255 shl 16, 0)
+		for (i in 0..20) {
+			Botania.proxy.lightningFX(mc.theWorld, b.set(x, y, z), b.add(randomVec(range)), (range * 0.01).F, 255 shl 16, 0)
 		}
 	}
 	
 	private fun randomVec(length: Double): vazkii.botania.common.core.helper.Vector3 {
-		val vec = VVec3(0.0, Math.random() * length, 0.0)
-		vec.rotate(Math.random() * Math.PI * 2, VVec3(1.0, 0.0, 0.0))
-		vec.rotate(Math.random() * Math.PI * 2, VVec3(0.0, 0.0, 1.0))
+		val vec = Bector3(0.0, Math.random() * length, 0.0)
+		vec.rotate(Math.random() * Math.PI * 2, Bector3(1.0, 0.0, 0.0))
+		vec.rotate(Math.random() * Math.PI * 2, Bector3(0.0, 0.0, 1.0))
 		return vec
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, HEAL, HORN, ICELENS, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, STREAM, THROW, TREMORS, WIRE, UPHEAL
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

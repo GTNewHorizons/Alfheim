@@ -59,7 +59,7 @@ public class WE_Biome extends BiomeGenBase {
 		//-//
 		WE_WorldTreeGen treeGen = new WE_WorldTreeGen();
 		treeGen.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 8, 1, 8, 4, false,
-			(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1, 1, 12, 4, 0.618D, 0.381D, 1.0D, 1.0D);
+			false, (byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1, 1, 12, 4, 0.618D, 0.381D, 1.0D, 1.0D);
 		decorateChunkGen_List.add(treeGen);
 		//-//
 		WE_GrassGen grassGen = new WE_GrassGen();

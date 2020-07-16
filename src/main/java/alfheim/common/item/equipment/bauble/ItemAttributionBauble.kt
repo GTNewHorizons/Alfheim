@@ -27,10 +27,10 @@ class ItemAttributionBauble: ItemBauble("attributionBauble"), ICosmeticBauble {
 	
 	lateinit var potatoTexture: ResourceLocation
 	
-	var defaultIcon: IIcon by Delegates.notNull()
-	var wireIcon: IIcon by Delegates.notNull()
-	var kitsuneIcon: IIcon by Delegates.notNull()
-	var trisIcon: IIcon by Delegates.notNull()
+	lateinit var defaultIcon: IIcon
+	lateinit var wireIcon: IIcon
+	lateinit var kitsuneIcon: IIcon
+	lateinit var trisIcon: IIcon
 	
 	init {
 		creativeTab = AlfheimTab

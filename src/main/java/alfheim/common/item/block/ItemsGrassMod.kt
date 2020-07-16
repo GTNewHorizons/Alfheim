@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.*
 import java.awt.Color
-import kotlin.properties.Delegates
 
 class ItemIridescentGrassMod(par2Block: Block): ItemSubtypedBlockMod(par2Block) {
 	override fun getColorFromItemStack(par1ItemStack: ItemStack, pass: Int): Int {
@@ -28,7 +27,7 @@ class ItemIridescentGrassMod(par2Block: Block): ItemSubtypedBlockMod(par2Block) 
 open class ItemIridescentTallGrassMod0(par2Block: Block): ItemSubtypedBlockMod(par2Block) {
 	
 	open val colorSet = 0
-	var topIcon: IIcon by Delegates.notNull()
+	lateinit var topIcon: IIcon
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(par1IconRegister: IIconRegister) {

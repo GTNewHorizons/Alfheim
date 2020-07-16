@@ -17,6 +17,7 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
+import alfheim.common.core.asm.hook.extender.FurnaceTooltipHandler
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
@@ -30,7 +31,6 @@ import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
-import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.world.World
 import net.minecraftforge.client.MinecraftForgeClient
@@ -66,6 +66,7 @@ class ClientProxy: CommonProxy() {
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idBarrel, RenderBlockBarrel)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idGrapeWhite, RenderBlockGrapeGreen)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idHarvester, RenderBlockAnomalyHarvester)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPowerStone, RenderBlockPowerStone)
@@ -131,10 +132,11 @@ class ClientProxy: CommonProxy() {
 	
 	override fun initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers()
-		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
-		FMLCommonHandler.instance().bus().register(EventHandlerClient)
-		if (ConfigHandler.boundBlockWireframe) MinecraftForge.EVENT_BUS.register(DoubleBoundItemRender)
-		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
+		EventHandlerClient
+		FurnaceTooltipHandler
+		GUIAggro().eventForge()
+		if (ConfigHandler.boundBlockWireframe) DoubleBoundItemRender
+		if (AlfheimCore.TravellersGearLoaded) TGHandlerBotaniaRenderer
 		if (AlfheimConfigHandler.enableElvenStory) enableESMGUIs()
 		if (AlfheimConfigHandler.enableMMO) enableMMOGUIs()
 		

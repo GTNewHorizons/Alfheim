@@ -2,11 +2,9 @@ package alfheim.common.world.dim.alfheim.customgens
 
 import alfheim.common.core.handler.AlfheimConfigHandler
 import cpw.mods.fml.common.IWorldGenerator
-import net.minecraft.block.BlockReed
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
-import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
 class WorldGenReedAlfheim(val perChunk: Int): IWorldGenerator {
@@ -29,9 +27,5 @@ class WorldGenReedAlfheim(val perChunk: Int): IWorldGenerator {
 				}
 			}
 		}
-	}
-	
-	fun generate(world: World, random: Random, x: Int, y: Int, z: Int): Boolean {
-		return true
 	}
 }

@@ -19,27 +19,32 @@ interface IFaithHandler {
 	@SideOnly(Side.CLIENT)
 	fun doParticles(stack: ItemStack, player: EntityPlayer)
 	
-	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
-		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
-		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
-	}
-	
 	companion object {
-		fun getFaithHandler(stack: ItemStack): IFaithHandler {
-			return when (stack.meta) {
+		
+		fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
+			val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+			val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
+			val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
+			val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
+			return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
+		}
+		
+		fun getFaithHandler(stack: ItemStack) = getFaithHandler(stack.meta)
+		
+		fun getFaithHandler(meta: Int): IFaithHandler {
+			return when (meta) {
 				0    -> FaithHandlerThor
 				1    -> FaithHandlerSif
 				2    -> FaithHandlerNjord
 				3    -> FaithHandlerLoki
 				4    -> FaithHandlerHeimdall
+				5    -> FaithHandlerOdin
 				else -> DummyFaithHandler
 			}
 		}
 	}
 	
+	// if want to add more types, modify when expressions in IFaithHandler's
 	enum class FaithBauble {
 		EMBLEM, CLOAK
 	}

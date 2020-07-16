@@ -1,6 +1,5 @@
 package alfheim.common.entity
 
-import alfheim.common.security.InteractionSecurity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -13,7 +12,7 @@ import vazkii.botania.common.entity.EntityThrowableCopy
  */
 class EntitySubspaceSpear: EntityThrowableCopy {
 	
-	var liveTicks: Int
+	var type: Int
 		get() = dataWatcher.getWatchableObjectInt(26)
 		set(ticks) = dataWatcher.updateObject(26, ticks)
 	
@@ -46,8 +45,9 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 		dataWatcher.addObject(28, 0f)
 		dataWatcher.addObject(29, 0)
 		dataWatcher.addObject(30, 0f)
-		dataWatcher.setObjectWatched(30)
 	}
+	
+	override fun onImpact(mop: MovingObjectPosition?) = Unit
 	
 	override fun getGravityVelocity() = 0f
 	
@@ -67,8 +67,6 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 				if (living === thrower)
 					continue
 				
-				// FIXME WTF DAMAGE
-				dealTrueDamage(thrower, living, damage * 0.4f)
 				attackedFrom(living, thrower, damage * 1.5f)
 			}
 		}
@@ -78,16 +76,9 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 			setDead()
 	}
 	
-	override fun onImpact(pos: MovingObjectPosition) {
-		val thrower = thrower
-		if (pos.entityHit == null || pos.entityHit !== thrower) {
-			// TODO ???
-		}
-	}
-	
 	override fun writeEntityToNBT(cmp: NBTTagCompound) {
 		super.writeEntityToNBT(cmp)
-		cmp.setInteger(TAG_LIVE_TICKS, liveTicks)
+		cmp.setInteger(TAG_type, type)
 		cmp.setFloat(TAG_ROTATION, rotation)
 		cmp.setInteger(TAG_LIFE, life)
 		cmp.setFloat(TAG_DAMAGE, damage)
@@ -96,7 +87,7 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 	
 	override fun readEntityFromNBT(cmp: NBTTagCompound) {
 		super.readEntityFromNBT(cmp)
-		liveTicks = cmp.getInteger(TAG_LIVE_TICKS)
+		type = cmp.getInteger(TAG_type)
 		rotation = cmp.getFloat(TAG_ROTATION)
 		life = cmp.getInteger(TAG_LIFE)
 		damage = cmp.getFloat(TAG_DAMAGE)
@@ -105,35 +96,11 @@ class EntitySubspaceSpear: EntityThrowableCopy {
 	
 	companion object {
 		
-		const val TAG_LIVE_TICKS = "liveTicks"
+		const val TAG_type = "type"
 		const val TAG_ROTATION = "rotation"
 		const val TAG_DAMAGE = "damage"
 		const val TAG_LIFE = "life"
 		const val TAG_PITCH = "pitch"
-		
-		fun dealTrueDamage(player: EntityLivingBase, target: EntityLivingBase?, amount: Float): Float {
-			val result = 0f
-			
-			if (target == null)
-				return result
-			if (!target.isEntityAlive)
-				return result
-			if (amount < 0)
-				return result
-			
-			// target.attackEntityFrom(DamageSource.magic.setDamageIsAbsolute().setDamageBypassesArmor(), 0.01f)
-			if (target is EntityPlayer)
-				if (target.capabilities.isCreativeMode)
-					return result
-			
-			if (InteractionSecurity.canHurtEntity(player, target))
-				target.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, player), amount)
-			
-			/*target.hurtTime = 0
-			target.hurtResistantTime = 0*/
-			
-			return result
-		}
 		
 		fun attackedFrom(target: EntityLivingBase, player: EntityLivingBase, i: Float) {
 			if (player is EntityPlayer)

@@ -2,6 +2,7 @@ package alfheim.client.lib
 
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
+import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import net.minecraft.util.ResourceLocation
 import vazkii.botania.client.lib.LibResources
 
@@ -19,8 +20,12 @@ object LibResourceLocationsActual {
 		LibResourceLocations.pixie = ResourceLocation(LibResources.MODEL_PIXIE)
 		LibResourceLocations.spreader = ResourceLocation(LibResources.MODEL_SPREADER)
 		
-		LibResourceLocations.godCloak = Array(5) {
-			ResourceLocation(ModInfo.MODID, "textures/model/armor/CloakGod$it.png")
+		LibResourceLocations.godCloak = Array(ItemPriestEmblem.TYPES) {
+			ResourceLocation(ModInfo.MODID, "textures/model/armor/cloak/God$it.png")
+		}
+		
+		LibResourceLocations.godCloakGlow = Array(ItemPriestEmblem.TYPES) {
+			ResourceLocation(ModInfo.MODID, "textures/model/armor/cloak/God${it}_glow.png")
 		}
 	}
 }

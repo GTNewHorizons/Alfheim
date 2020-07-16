@@ -3,13 +3,16 @@ package alfheim.common.item.equipment.bauble.faith
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
-import alfheim.common.item.equipment.bauble.ItemPriestEmblem
+import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
+import alfheim.common.item.relic.ItemHeimdallRing
 import alfheim.common.network.MessageHeimdallBlink
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
+import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.fluids.IFluidBlock
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.block.ModBlocks
@@ -31,10 +34,11 @@ object FaithHandlerHeimdall: IFaithHandler {
 	}
 	
 	fun onEmblemWornTick(stack: ItemStack, player: EntityPlayer) {
-		if (!player.worldObj.isRemote && ManaItemHandler.requestManaExact(stack, player, 1, true))
+		if (!player.worldObj.isRemote && ManaItemHandler.requestManaExact(stack, player, 1, !player.worldObj.isRemote)) {
 			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 610, 0))
+			player.removePotionEffect(Potion.blindness.id)
+		}
 		
-		// TODO test sync
 		bifrostPlatform(player, stack)
 	}
 	
@@ -61,7 +65,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 		
 		return Vector3(e.motionX, e.motionY, e.motionZ)
 	}
-	
+
 //	@SubscribeEvent
 //	fun bifrostPlatform(e: LivingUpdateEvent) {
 	
@@ -73,26 +77,26 @@ object FaithHandlerHeimdall: IFaithHandler {
 		if (player.heldItem?.item === ModItems.rainbowRod) {
 			if (ManaItemHandler.requestManaExact(emblem, player, 10, false)) {
 				val motVec = getMotionVec(player)
-				val pos = Vector3(player.posX + motVec.x, (player.posY + if (player.isSneaking) -2.99 else -0.99).mfloor(), player.posZ + motVec.z - 1)
+				val (x, y, z) = Vector3(player.posX + motVec.x, (player.posY + if (player.isSneaking) -2.99 else -0.99).mfloor(), player.posZ + motVec.z).mf()
 				
-				if (pos.y < 0 || pos.y >= 256) return
+				if (y < 0 || y >= 256) return
 				
 				for (i in -2..2)
 					for (k in -2..2) {
 						if (abs(i) == 2 && abs(k) == 2) continue
 						
-						val block = world.getBlock(pos.x.I + i, pos.y.I, pos.z.I + k)
+						val block = world.getBlock(x + i, y, z + k)
 						
-						if (block.isAir(world, pos.x.I + i, pos.y.I, pos.z.I + k) || block.isReplaceable(world, pos.x.I + i, pos.y.I, pos.z.I + k) || block is IFluidBlock) {
-							world.setBlock(pos.x.I + i, pos.y.I, pos.z.I + k, ModBlocks.bifrost)
+						if (block.isAir(world, x + i, y, z + k) || block.isReplaceable(world, x + i, y, z + k) || block is IFluidBlock) {
+							world.setBlock(x + i, y, z + k, ModBlocks.bifrost)
 							
-							val tileBifrost = world.getTileEntity(pos.x.I + i, pos.y.I, pos.z.I + k) as TileBifrost
+							val tileBifrost = world.getTileEntity(x + i, y, z + k) as TileBifrost
 							
 							tileBifrost.ticks = 5
 							player.fallDistance = 0f
 							ManaItemHandler.requestManaExact(emblem, player, 10, true)
 						} else if (block == ModBlocks.bifrost) {
-							val tileBifrost = world.getTileEntity(pos.x.I + i, pos.y.I, pos.z.I + k) as TileBifrost
+							val tileBifrost = world.getTileEntity(x + i, y, z + k) as TileBifrost
 							
 							if (tileBifrost.ticks < 2) {
 								tileBifrost.ticks = 5
@@ -104,12 +108,21 @@ object FaithHandlerHeimdall: IFaithHandler {
 		}
 	}
 	
+	@SubscribeEvent
+	fun onLivingHurt(e: LivingHurtEvent) {
+		if (e.source.damageType != "player" || Math.random() > 0.1) return
+		val player = e.source.entity as? EntityPlayer ?: return
+		if (ItemPriestEmblem.getEmblem(4, player) == null) return
+		val lvl = getGodPowerLevel(player)
+		e.ammount *= (lvl * 0.1f / 7) + 1.05f
+	}
+	
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
-		// if (ItemPriestCloak.getCloak(4, player) != null) lvl += 3 TODO
+		if (ItemPriestCloak.getCloak(4, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(4, player) != null) lvl += 2
-		// if (ItemLokiRing.getLokiRing(player) != null) lvl += 1
+		if (ItemHeimdallRing.getHeimdallRing(player) != null) lvl += 1
 		if (player.inventory.hasItemStack(ItemStack(ModItems.rainbowRod))) lvl += 1
 		
 		return lvl

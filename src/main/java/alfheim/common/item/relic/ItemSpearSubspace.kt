@@ -4,7 +4,7 @@ import alexsocol.asjlib.D
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.entity.*
+import alfheim.common.entity.EntitySubspace
 import com.google.common.collect.Multimap
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.*
@@ -160,7 +160,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 			
 			if (living is EntityPlayer && (flag1 || flag2)) continue
 			
-			EntitySubspaceSpear.dealTrueDamage(living, living, 6f)
+			living.attackEntityFrom(DamageSource.causeIndirectMagicDamage(burst, burst.thrower), 6f)
 		}
 	}
 	

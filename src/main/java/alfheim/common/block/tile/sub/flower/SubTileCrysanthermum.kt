@@ -57,8 +57,10 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	var lastBlocks = LinkedList(IntArray(8) { -1 }.toList())
 	
 	fun getTemp(meta: Int): Int = if (meta % 8 == 3) supertile.worldObj.rand.nextInt(9) - 4 else TYPES[meta]
+	
 	val biomeTemp
-		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).D.mfloor()	
+		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).D.mfloor()
+	
 	override fun onUpdate() {
 		super.onUpdate()
 		

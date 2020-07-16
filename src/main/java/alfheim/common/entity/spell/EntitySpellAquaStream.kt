@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -44,7 +43,7 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 		
 		val look = Vector3(caster!!.lookVec)
 		val d = 0.75
-		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.D, look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d)
+		VisualEffectHandler.sendPacket(VisualEffects.AQUASTREAM, dimension, look.x + caster!!.posX, look.y + caster!!.posY + caster!!.eyeHeight.D, look.z + caster!!.posZ, look.x / d, look.y / d, look.z / d, 0.5, 0.5, 1.0)
 		
 		val hp: Vector3
 		if (mop?.hitVec != null) {

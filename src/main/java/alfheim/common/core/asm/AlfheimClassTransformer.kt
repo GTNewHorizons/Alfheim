@@ -885,6 +885,12 @@ class AlfheimClassTransformer: IClassTransformer {
 				println("Visiting ItemTerraformRod#<clinit>: $name$desc")
 				return `ItemTerraformRod$clinit$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
+			
+			if (name == "terraform") {
+				println("Visiting ItemTerraformRod#terraform: $name$desc")
+				return `ItemTerraformRod$terraform$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
@@ -915,6 +921,28 @@ class AlfheimClassTransformer: IClassTransformer {
 					super.visitIntInsn(BIPUSH, 20)
 					super.visitLdcInsn("livingrock")
 					super.visitInsn(AASTORE)
+				}
+			}
+		}
+		
+		internal class `ItemTerraformRod$terraform$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			var put = true
+			
+			override fun visitVarInsn(opcode: Int, `var`: Int) {
+				super.visitVarInsn(opcode, `var`)
+				
+				if (opcode == ISTORE && `var` == 4 && put) {
+					put = false
+					
+					val l3 = Label()
+					mv.visitLabel(l3)
+					mv.visitLineNumber(100, l3)
+					mv.visitFieldInsn(GETSTATIC, "alfheim/common/core/asm/hook/fixes/GodAttributesHooks", "INSTANCE", "Lalfheim/common/core/asm/hook/fixes/GodAttributesHooks;")
+					mv.visitVarInsn(ALOAD, 3)
+					mv.visitVarInsn(ILOAD, 4)
+					mv.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/core/asm/hook/fixes/GodAttributesHooks", "getRange", "(Lnet/minecraft/entity/player/EntityPlayer;I)I", false)
+					mv.visitVarInsn(ISTORE, 4)
 				}
 			}
 		}

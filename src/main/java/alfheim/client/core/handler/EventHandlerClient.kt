@@ -38,6 +38,10 @@ import org.lwjgl.opengl.GL11.*
 
 object EventHandlerClient {
 	
+	init {
+		eventForge().eventFML()
+	}
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onDrawScreenPre(event: RenderGameOverlayEvent.Pre) {

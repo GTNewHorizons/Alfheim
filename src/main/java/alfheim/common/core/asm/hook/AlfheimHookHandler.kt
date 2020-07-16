@@ -7,6 +7,7 @@ import alfheim.api.block.IHourglassTrigger
 import alfheim.api.boss.*
 import alfheim.api.entity.*
 import alfheim.api.event.*
+import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.api.lib.LibResourceLocations
 import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.CardinalSystemClient
@@ -18,9 +19,9 @@ import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.entity.ai.EntityAICreeperAvoidPooka
 import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.item.rod.ItemRodClicker
 import alfheim.common.potion.PotionSoulburn
+import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.relauncher.*
 import gloomyfolken.hooklib.asm.Hook
 import gloomyfolken.hooklib.asm.Hook.ReturnValue
@@ -245,9 +246,19 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
-	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue dis: Float): Float {
-		return if (AlfheimConfigHandler.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) dis + 0.2f
-		else dis
+	fun getFullDiscountForTools(handler: ManaItemHandler?, player: EntityPlayer, @ReturnValue discount: Float): Float {
+		var ret = discount + getBaublesDiscountForTools(player)
+		if (AlfheimConfigHandler.enableElvenStory && player.race === EnumRace.IMP && !ESMHandler.isAbilityDisabled(player)) ret += 0.2f
+		return ret
+	}
+	
+	/**
+	 * Gets the sum of all the discounts on IManaDiscountBauble items equipped
+	 * on the player passed in.
+	 */
+	fun getBaublesDiscountForTools(player: EntityPlayer): Float {
+		val baubles = PlayerHandler.getPlayerBaubles(player) ?: return 0f
+		return (0 until baubles.sizeInventory).sumByDouble { i -> (baubles.getStackInSlot(i)?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
 	}
 	
 	var stoneHook = false
@@ -1126,50 +1137,15 @@ object AlfheimHookHandler {
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(createMethod = true)
+	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun registerIcons(cloak: ItemHolyCloak, reg: IIconRegister) {
 		cloak.itemIcon = IconHelper.forName(reg, "cloak_holy")
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@JvmStatic
-	@Hook(createMethod = true)
+	@Hook(createMethod = true, returnCondition = ALWAYS)
 	fun registerIcons(cloak: ItemUnholyCloak, reg: IIconRegister) {
 		cloak.itemIcon = IconHelper.forName(reg, "cloak_unholy")
-	}
-	
-	// FaithHandlerNjord:
-	
-	@JvmStatic
-	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun addCollisionBoxesToList(liquid: BlockLiquid, world: World, x: Int, y: Int, z: Int, entitysBox: AxisAlignedBB, list: MutableList<Any?>, player: Entity?) {
-		var aabb = liquid.getCollisionBoundingBoxFromPool(world, x, y, z)
-		
-		if (player is EntityPlayer && !player.capabilities.isFlying) {
-			val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
-			
-			var take = false
-			val shouldCost = world.totalWorldTime % 10 == 0L
-			if (!ManaItemHandler.requestManaExact(emblem, player, 1, false)) return
-			
-			val fullBB = getBoundingBox(x, y, z).offset(0.5).expand(0.5)
-			
-			if (entitysBox.intersectsWith(fullBB)) {
-				player.motionY = if (!player.isSneaking) max(player.motionY, 0.5) else min(player.motionY, -0.5)
-				take = true
-			}
-			
-			if (!player.isSneaking && world.getBlock(x, y + 1, z).isAir(world, x, y, z) && (player.posY - if (mc.thePlayer === player) 1.62 else 0.0) >= y + 1) {
-				aabb = fullBB
-				take = true
-			}
-			
-			if (shouldCost && take)
-				ManaItemHandler.requestManaExact(emblem, player, 1, true)
-		}
-		
-		if (aabb != null && entitysBox.intersectsWith(aabb)) {
-			list.add(aabb)
-		}
 	}
 }

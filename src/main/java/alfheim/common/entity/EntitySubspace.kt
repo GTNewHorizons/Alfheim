@@ -109,8 +109,9 @@ class EntitySubspace: EntityThrowableCopy {
 					
 					spear.damage = 8f
 					spear.life = 100
-					spear.rotationYaw = thrower.rotationYaw
+					spear.type = 0
 					spear.pitch = -thrower.rotationPitch
+					spear.rotationYaw = thrower.rotationYaw
 					spear.rotation = MathHelper.wrapAngleTo180_float(-thrower.rotationYaw + 180)
 					spear.shoot(thrower, thrower.rotationPitch, thrower.rotationYaw, 0f, 1.45f, 1f)
 					spear.setPosition(posX, posY, posZ)

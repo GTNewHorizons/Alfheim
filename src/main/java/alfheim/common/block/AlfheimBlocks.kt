@@ -8,7 +8,6 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
-import alfheim.common.block.corporea.BlockCorporeaAutocrafter
 import alfheim.common.block.magtrees.calico.*
 import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
@@ -56,9 +55,11 @@ object AlfheimBlocks {
 	val dreamSapling: Block
 	val elvenOre: Block
 	val elvenSand: Block
+	val enderActuator: Block
 	val flugelHeadBlock: Block
 	val flugelHead2Block: Block
-	val grape: Block
+	val grapesRed: Array<Block>
+	val grapesWhite: Block
 	val itemDisplay: Block
 	val invisibleFlame: Block
 	val irisDirt: Block
@@ -201,9 +202,11 @@ object AlfheimBlocks {
 				else -> super.canSustainPlant(world, x, y, z, direction, plantable)
 			}
 		}
+		enderActuator = BlockEnderActuator()
 		flugelHeadBlock = BlockHeadFlugel()
 		flugelHead2Block = BlockHeadMiku()
-		grape = BlockGrape()
+		grapesRed = Array(3) { BlockGrapeRed(it) }
+		grapesWhite = BlockGrapeWhite()
 		itemDisplay = BlockItemDisplay()
 		invisibleFlame = BlockManaFlame("invisibleFlame", TileInvisibleManaFlame::class.java)
 		irisDirt = BlockColoredDirt()
@@ -608,7 +611,7 @@ object AlfheimBlocks {
 	
 	fun registerFlora() {
 		addSubFlower(SubTileCrysanthermum::class.java, "crysanthermum")
-		addSubFlower(SubTileOrechidEndium::class.java, "orechidEnduim")
+		addSubFlower(SubTileOrechidEndium::class.java, "orechidEndium")
 		addSubFlower(SubTilePetronia::class.java, "petronia")
 		addSubFlower(SubTileRainFlower::class.java, "rainFlower")
 		addSubFlower(SubTileSnowFlower::class.java, "snowFlower")

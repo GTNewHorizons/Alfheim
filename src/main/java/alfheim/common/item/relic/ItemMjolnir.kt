@@ -2,6 +2,7 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.entity.EntityMjolnir
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
@@ -74,7 +75,10 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 				else
 					target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)
 				
-				Botania.proxy.lightningFX(entity.worldObj, Bector3.fromEntityCenter(lightningSource), Bector3.fromEntityCenter(target), 1f, 0x0179C4, 0xAADFFF)
+				var color = 0x0079C4
+				if (attacker is EntityPlayer) color = ColorOverrideHelper.getColor(attacker, color)
+				
+				Botania.proxy.lightningFX(entity.worldObj, Bector3.fromEntityCenter(lightningSource), Bector3.fromEntityCenter(target), 1f, color, Color(color).brighter().brighter().rgb)
 				alreadyTargetedEntities.add(target)
 				lightningSource = target
 				dmg--
@@ -94,9 +98,10 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	override fun getItemUseAction(stack: ItemStack) = EnumAction.bow
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (stack.cooldown > 0) return stack
+		
 		if (isWorthy(player) && getInt(stack, TAG_SHAKE_TIMER, 0) <= 0) {
 			player.setItemInUse(stack, getMaxItemUseDuration(stack))
-			setBoolean(stack, TAG_SHIFTED, player.isSneaking)
 		}
 		
 		return stack
@@ -105,29 +110,26 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	override fun onUsingTick(stack: ItemStack, player: EntityPlayer, coitemInUseCountunt: Int) {
 		if (player.worldObj.isRemote) return
 		
-		val div = if (getBoolean(stack, TAG_SHIFTED, false)) 10 else 1
-		if (getCharge(stack) < MAX_CHARGE / div) {
-			val req = min(MAX_CHARGE / div - getCharge(stack), CHARGE_PER_TICK / div)
+		if (getCharge(stack) < MAX_CHARGE) {
+			val req = min(MAX_CHARGE - getCharge(stack), CHARGE_PER_TICK)
 			addCharge(stack, ManaItemHandler.requestMana(stack, player, req, true))
 		}
 	}
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUseCount: Int) {
-		val div = if (getBoolean(stack, TAG_SHIFTED, false)) 10 else 1
-		
-		if (getCharge(stack) >= MAX_CHARGE / div) {
-			
-			if (getBoolean(stack, TAG_SHIFTED, false)) {
+		if (getCharge(stack) >= MAX_CHARGE) {
+			if (player.isSneaking) {
 				setCharge(stack, 0)
 				if (!world.isRemote)
 					world.spawnEntityInWorld(EntityMjolnir(world, player, stack.copy()))
 				
-				ASJUtilities.consumeItemStack(player.inventory, stack)
+				stack.cooldown = 600
 				return
 			} else if (player is EntityPlayerMP) {
 				val mop = ASJUtilities.getSelectedBlock(player, player.theItemInWorldManager.blockReachDistance, true)
+				
 				if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-					setInt(stack, TAG_SHAKE_TIMER, timer + 16)
+					setInt(stack, TAG_SHAKE_TIMER, 16)
 					setInt(stack, TAG_SHAKE_X, mop.blockX)
 					setInt(stack, TAG_SHAKE_Y, mop.blockY)
 					setInt(stack, TAG_SHAKE_Z, mop.blockZ)
@@ -136,11 +138,11 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 					val end = Bector3()
 					val oY = Bector3(0.0, 1.0, 0.0)
 					
-					val color = Color(0x0079C4)
+					val color = ColorOverrideHelper.getColor(player, 0x0079C4)
 					
 					for (i in 0 until 360 step 5) {
 						end.set(5.0, 1.0, 0.0).rotate(i.D, oY).add(start)
-						Botania.proxy.lightningFX(world, start, end, 3f, color.rgb, color.brighter().brighter().rgb)
+						Botania.proxy.lightningFX(world, start, end, 3f, color, Color(color).brighter().brighter().rgb)
 					}
 				}
 			}
@@ -150,16 +152,18 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World, entity: Entity, slot: Int, inHand: Boolean) {
+		if (stack.cooldown > 0) stack.cooldown--
+		
 		if (entity !is EntityLivingBase) return
 		
 		val timer = getInt(stack, TAG_SHAKE_TIMER, 0)
 		
-		if (timer > alfheim.common.item.relic.timer && timer % 3 == 0) {
+		if (timer > 0 && timer % 3 == 0) {
 			val x = getInt(stack, TAG_SHAKE_X, 0)
 			val y = getInt(stack, TAG_SHAKE_Y, 0)
 			val z = getInt(stack, TAG_SHAKE_Z, 0)
 			
-			val radius = 5 - (timer - alfheim.common.item.relic.timer) / 3 + 1.0
+			val radius = 5 - timer / 3 + 1.0
 			
 			val center = Vector3(x + 0.5, y, z + 0.5)
 			val list = world.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(x, y + 1, z).offset(0.5).expand(radius)) as MutableList<EntityLivingBase>
@@ -202,8 +206,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	@SideOnly(Side.CLIENT)
 	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
-		val div = if (getBoolean(stack, TAG_SHIFTED, false)) 10 else 1
-		return if (pass == 1 && getCharge(stack) >= MAX_CHARGE / div) Color.HSBtoRGB((200 + (sin(Botania.proxy.worldElapsedTicks / 10.0 % 20) * 20).F) / 360f, 0.5f, 1f) else -0x1
+		return if (pass == 1 && getCharge(stack) >= MAX_CHARGE) Color.HSBtoRGB((200 + (sin(Botania.proxy.worldElapsedTicks / 10.0 % 20) * 20).F) / 360f, 0.5f, 1f) else -0x1
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -218,13 +221,18 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	override fun getRenderPasses(meta: Int) = 2
 	
+	private var ItemStack.cooldown
+		get() = getInt(this, TAG_COOLDOWN, 0)
+		set(value) = setInt(this, TAG_COOLDOWN, value)
+	
 	companion object {
 		
 		const val CHARGE_PER_TICK = 1000
 		const val MAX_CHARGE = 10000
 		
+		const val TAG_COOLDOWN = "cooldown"
+		
 		const val TAG_CHARGE = "charge"
-		const val TAG_SHIFTED = "shifted"
 		const val TAG_LIGHTNING_SEED = "lightningSeed"
 		
 		const val TAG_SHAKE_TIMER = "shakeTimer"
@@ -245,6 +253,3 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		fun getCharge(stack: ItemStack?) = getInt(stack, TAG_CHARGE, 0)
 	}
 }
-
-val timer
-get() = 0

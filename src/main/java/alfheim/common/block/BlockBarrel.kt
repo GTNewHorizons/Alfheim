@@ -54,7 +54,7 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 			
 			when (tile.wineStage) {
 				0                           -> { // nothing
-					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.GreenGrapes || stack.meta == ElvenFoodMetas.RedGrapes) {
+					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.WhiteGrapes || stack.meta == ElvenFoodMetas.RedGrapes) {
 						tile.wineStage = TileBarrel.WINE_STAGE_GRAPE
 						tile.wineType = stack.meta
 						tile.wineLevel++

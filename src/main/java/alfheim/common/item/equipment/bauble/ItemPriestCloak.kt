@@ -6,37 +6,25 @@ import alfheim.api.ModInfo
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.integration.travellersgear.ITravellersGearSynced
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.Optional
-import cpw.mods.fml.relauncher.*
-import net.minecraft.client.Minecraft
-import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.util.*
-import net.minecraftforge.client.event.RenderPlayerEvent
-import org.lwjgl.opengl.GL11
 import travellersgear.api.TravellersGearAPI
-import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.IManaUsingItem
 import vazkii.botania.client.core.helper.RenderHelper
-import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
 @Optional.Interface(modid = "TravellersGear", iface = "alfheim.common.integration.travellersgear.ITravellersGearSynced", striprefs = true)
-class ItemPriestCloak: ItemBauble("priestCloak"), IBaubleRender, IManaUsingItem, ITravellersGearSynced {
+class ItemPriestCloak: ItemBaubleCloak("priestCloak"), IManaUsingItem {
 	
 	companion object {
-		
-		@SideOnly(Side.CLIENT)
-		var model: ModelBiped? = null
-		
 		lateinit var icons: Array<IIcon>
 		
 		fun getCloak(meta: Int, player: EntityPlayer): ItemStack? {
@@ -139,19 +127,7 @@ class ItemPriestCloak: ItemBauble("priestCloak"), IBaubleRender, IManaUsingItem,
 		tooltip.add(s.replace("&".toRegex(), "\u00a7"))
 	}
 	
-	@SideOnly(Side.CLIENT)
-	override fun onPlayerBaubleRender(stack: ItemStack, event: RenderPlayerEvent, type: IBaubleRender.RenderType) {
-		if (type == IBaubleRender.RenderType.BODY) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(LibResourceLocations.godCloak.safeGet(stack.meta))
-			IBaubleRender.Helper.rotateIfSneaking(event.entityPlayer)
-			val armor = event.entityPlayer.getCurrentArmor(2) != null
-			GL11.glTranslatef(0.0f, if (armor) -0.07f else -0.01f, 0.0f)
-			val s = 0.1f
-			GL11.glScalef(s, s, s)
-			if (model == null)
-				model = ModelBiped()
-			
-			model!!.bipedBody.render(1.0f)
-		}
-	}
+	override fun getCloakTexture(stack: ItemStack) = LibResourceLocations.godCloak.safeGet(stack.meta)
+	
+	override fun getCloakGlowTexture(stack: ItemStack) = LibResourceLocations.godCloakGlow.safeGet(stack.meta)
 }

@@ -2,6 +2,7 @@ package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
+import alfheim.api.item.equipment.bauble.IManaDiscountBauble
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.IconHelper
@@ -28,32 +29,28 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 
-class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingItem {
+class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingItem, IManaDiscountBauble {
 	
 	companion object {
 		
 		const val COST = 2
-		const val TYPES = 5
+		const val TYPES = 6
 		lateinit var icons: Array<IIcon>
 		lateinit var baubleIcons: Array<IIcon>
 		
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			val stack = baubles.getStackInSlot(0)
-			return if (stack != null && ((stack.item == AlfheimItems.priestEmblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
+			return if (stack != null && ((stack.item === AlfheimItems.priestEmblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		
-		fun isActive(stack: ItemStack) = ItemNBTHelper.getByte(stack, "active", 0) == 1.toByte()
+		fun isActive(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, "active", false)
 		
-		fun setActive(stack: ItemStack, state: Boolean) {
-			ItemNBTHelper.setByte(stack, "active", if (state) 1.toByte() else 0.toByte())
-		}
+		fun setActive(stack: ItemStack, state: Boolean) = ItemNBTHelper.setBoolean(stack, "active", state)
 		
-		fun isDangerous(stack: ItemStack) = ItemNBTHelper.getByte(stack, "dangerous", 0) == 1.toByte()
+		fun isDangerous(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, "dangerous", false)
 		
-		fun setDangerous(stack: ItemStack, state: Boolean) {
-			ItemNBTHelper.setByte(stack, "dangerous", if (state) 1.toByte() else 0.toByte())
-		}
+		fun setDangerous(stack: ItemStack, state: Boolean) = ItemNBTHelper.setBoolean(stack, "dangerous", state)
 	}
 	
 	init {
@@ -61,15 +58,15 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		setHasSubtypes(true)
 	}
 	
-	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
-		super.getUnlocalizedNameInefficiently(par1ItemStack).replace("item\\.botania:".toRegex(), "item.${ModInfo.MODID}:")
+	override fun getUnlocalizedNameInefficiently(stack: ItemStack) =
+		super.getUnlocalizedNameInefficiently(stack).replace("item\\.botania:".toRegex(), "item.${ModInfo.MODID}:")
 	
 	override fun getItemStackDisplayName(stack: ItemStack) =
 		super.getItemStackDisplayName(stack).replace("&".toRegex(), "\u00a7")
 	
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		icons = Array(TYPES) { IconHelper.forItem(par1IconRegister, this, it) }
-		baubleIcons = Array(TYPES) { IconHelper.forItem(par1IconRegister, this, "Render$it") }
+	override fun registerIcons(reg: IIconRegister) {
+		icons = Array(TYPES) { IconHelper.forItem(reg, this, it) }
+		baubleIcons = Array(TYPES) { IconHelper.forItem(reg, this, "Render$it") }
 	}
 	
 	override fun getIconFromDamage(meta: Int) = icons.safeGet(meta)
@@ -119,20 +116,6 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 			getFaithHandler(stack).onEquipped(stack, player, EMBLEM)
 	}
 	
-	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase) {
-		if (!(!isDangerous(stack) || (player is EntityPlayer && player.capabilities.isCreativeMode))) {
-			player.attackEntityFrom(DamageSourceSpell.faith, 6f)
-			player.addPotionEffect(PotionEffect(Potion.blindness.id, 150, 0))
-			player.addPotionEffect(PotionEffect(Potion.confusion.id, 150, 2))
-			player.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 300, 2))
-			player.addPotionEffect(PotionEffect(Potion.weakness.id, 300, 2))
-		}
-		setDangerous(stack, false)
-		
-		if (player is EntityPlayer)
-			getFaithHandler(stack).onUnequipped(stack, player, EMBLEM)
-	}
-	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
 		if (player is EntityPlayer) {
 			getFaithHandler(stack).onWornTick(stack, player, EMBLEM)
@@ -145,6 +128,20 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.EMBLEM_ACTIVATION, player.dimension, player.entityId.D, if (flag) 1.0 else 0.0)
 			}
 		}
+	}
+	
+	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase) {
+		if (!(!isDangerous(stack) || (player is EntityPlayer && player.capabilities.isCreativeMode))) {
+			player.attackEntityFrom(DamageSourceSpell.faith, 6f)
+			player.addPotionEffect(PotionEffect(Potion.blindness.id, 150, 0))
+			player.addPotionEffect(PotionEffect(Potion.confusion.id, 150, 2))
+			player.addPotionEffect(PotionEffect(Potion.moveSlowdown.id, 300, 2))
+			player.addPotionEffect(PotionEffect(Potion.weakness.id, 300, 2))
+		}
+		setDangerous(stack, false)
+		
+		if (player is EntityPlayer)
+			getFaithHandler(stack).onUnequipped(stack, player, EMBLEM)
 	}
 	
 	override fun usesMana(stack: ItemStack) = true
@@ -168,4 +165,6 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1F / 32F)
 		}
 	}
+	
+	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer) = if (stack.meta == 5) 0.1f else 0f
 }

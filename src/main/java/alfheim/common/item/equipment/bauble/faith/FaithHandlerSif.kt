@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
+import alfheim.common.item.relic.ItemSifRing
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.*
 import net.minecraft.entity.EntityLivingBase
@@ -122,7 +123,7 @@ object FaithHandlerSif: IFaithHandler {
 		
 		if (ItemPriestCloak.getCloak(1, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(1, player) != null) lvl += 2
-		// if (ItemThorRing.getThorRing(player) != null) lvl += 1
+		if (ItemSifRing.getSifRing(player) != null) lvl += 1
 		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.rodColorfulSkyDirt))) lvl += 1
 		
 		return lvl

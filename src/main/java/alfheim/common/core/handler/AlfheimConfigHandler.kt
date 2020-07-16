@@ -145,6 +145,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var potionIDGoldRush		= potionID___COUNTER++
 	var potionIDIceLens			= potionID___COUNTER++
 	var potionIDLeftFlame		= potionID___COUNTER++
+	var potionIDLightningShield	= potionID___COUNTER++
 	var potionIDManaVoid		= potionID___COUNTER++
 	var potionIDNineLifes		= potionID___COUNTER++
 	var potionIDNinja			= potionID___COUNTER++
@@ -290,6 +291,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		potionIDGoldRush = loadProp(CATEGORY_MMOP, "potionIDGoldRush", potionIDGoldRush, true, "Potion id for Gold Rush")
 		potionIDIceLens = loadProp(CATEGORY_MMOP, "potionIDIceLens", potionIDIceLens, true, "Potion id for Ice Lense")
 		potionIDLeftFlame = loadProp(CATEGORY_MMOP, "potionIDLeftFlame", potionIDLeftFlame, true, "Potion id for Leftover Flame")
+		potionIDLightningShield = loadProp(CATEGORY_POTIONS, "potionIDLightningShield", potionIDLightningShield, true, "Potion id for Lightning Shield")
 		potionIDManaVoid = loadProp(CATEGORY_POTIONS, "potionIDManaVoid", potionIDManaVoid, true, "Potion id for Mana Void")
 		potionIDNineLifes = loadProp(CATEGORY_MMOP, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
 		potionIDNinja = loadProp(CATEGORY_POTIONS, "potionIDNinja", potionIDNinja, true, "Potion id for Ninja")

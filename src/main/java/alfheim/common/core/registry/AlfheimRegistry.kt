@@ -82,6 +82,7 @@ object AlfheimRegistry {
 		PotionGoldRush()
 		PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
 		PotionLeftFlame()
+		PotionLightningShield()
 		PotionManaVoid()
 		PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
 		PotionNinja()

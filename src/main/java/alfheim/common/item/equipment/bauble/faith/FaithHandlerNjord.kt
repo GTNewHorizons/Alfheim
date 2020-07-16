@@ -6,6 +6,7 @@ import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.item.ColorOverrideHelper
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
+import alfheim.common.item.relic.ItemNjordRing
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -130,7 +131,7 @@ object FaithHandlerNjord: IFaithHandler {
 		
 		if (ItemPriestCloak.getCloak(2, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(2, player) != null) lvl += 2
-		// if (ItemThorRing.getThorRing(player) != null) lvl += 1
+		if (ItemNjordRing.getNjordRing(player) != null) lvl += 1
 		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.rodInterdiction))) lvl += 1
 		
 		return lvl
@@ -139,7 +140,7 @@ object FaithHandlerNjord: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			for (i in 0..6) {
-				val vec = getHeadOrientation(player).multiply(0.52)
+				val vec = IFaithHandler.getHeadOrientation(player).multiply(0.52)
 				val color = Color(ColorOverrideHelper.getColor(player, 0x0101FF))
 				val r = color.red.F / 255F
 				val g = color.green.F / 255F

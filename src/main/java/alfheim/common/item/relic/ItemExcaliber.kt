@@ -91,7 +91,7 @@ class ItemExcaliber: ItemManasteelSword(toolMaterial, "Excaliber"), IRelic, ILen
 		
 		burst.color = 0xFFFF20
 		burst.mana = 1
-		burst.startingMana = 100
+		burst.startingMana = 1
 		burst.minManaLoss = 200
 		burst.manaLossPerTick = 1f
 		burst.gravity = 0f

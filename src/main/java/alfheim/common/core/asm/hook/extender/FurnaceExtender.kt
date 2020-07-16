@@ -75,8 +75,6 @@ object FurnaceExtender {
 		iconFrontUnlit = reg.registerIcon("furnace_front_off_living")
 		iconSide = reg.registerIcon("furnace_side_living")
 		iconTop = reg.registerIcon("furnace_top_living")
-		
-		this.eventFML().eventForge()
 	}
 	
 	@JvmStatic
@@ -106,6 +104,13 @@ object FurnaceExtender {
 			if (result > 7) result - 8 else result
 		} else
 			result
+	}
+}
+
+object FurnaceTooltipHandler {
+	
+	init {
+		eventForge()
 	}
 	
 	// Instead of icon because minecraft is shitcoded

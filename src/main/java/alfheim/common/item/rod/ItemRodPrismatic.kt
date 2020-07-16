@@ -16,7 +16,6 @@ import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.item.IPhantomInkable
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
-import kotlin.properties.Delegates
 
 class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInkable {
 	
@@ -24,7 +23,7 @@ class ItemRodPrismatic: ItemMod("rodRainbowLight"), IManaUsingItem, IPhantomInka
 		maxStackSize = 1
 	}
 	
-	var overlayIcon: IIcon by Delegates.notNull()
+	lateinit var overlayIcon: IIcon
 	
 	override fun requiresMultipleRenderPasses() = true
 	

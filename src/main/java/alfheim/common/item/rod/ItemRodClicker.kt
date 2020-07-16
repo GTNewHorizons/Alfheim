@@ -15,7 +15,7 @@ import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.IIcon
+import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.*
 import net.minecraftforge.event.ForgeEventFactory
@@ -41,7 +41,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	override fun getIcon(stack: ItemStack, pass: Int) = getIconIndex(stack)
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer?, list: MutableList<Any?>, adv: Boolean) {
-		list.add("${this.unlocalizedName}.leftclick.${stack.isLeftClick()}")
+		list.add(StatCollector.translateToLocal("${this.unlocalizedName}.leftclick.${stack.isLeftClick()}"))
 	}
 	
 	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer?): ItemStack {

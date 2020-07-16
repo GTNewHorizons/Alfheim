@@ -2,6 +2,8 @@ package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.AlfheimAPI
 import net.minecraft.init.Blocks
+import net.minecraft.util.IIcon
+import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.common.block.subtile.functional.SubTileOrechid
 
@@ -30,4 +32,6 @@ class SubTileOrechidEndium: SubTileOrechid() {
 	override fun getEntry(): LexiconEntry? {
 		return null // OrechidEndiumAPI.orechidEndiumLexiconEntry TODO
 	}
+	
+	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("orechidEndium").getIconForStack(null)
 }

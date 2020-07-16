@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityLargeFireball
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.util.DamageSource
+import net.minecraft.util.DamageSource.*
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
@@ -49,7 +49,7 @@ object FaithHandlerLoki: IFaithHandler {
 			
 			if (!player.worldObj.isRemote)
 				player.worldObj.spawnEntityInWorld(aura)
-				
+			
 			for (i in 0..5)
 				player.worldObj.playAuxSFXAtEntity(null, 1008, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor(), 0)
 		} else if (stack.item === Items.fire_charge) {
@@ -80,13 +80,22 @@ object FaithHandlerLoki: IFaithHandler {
 			--stack.stackSize
 	}
 	
+	val avoidableDamage = arrayOf(generic.damageType, anvil.damageType, fallingBlock.damageType, "mob", "player", "arrow", "fireball", "thrown", /* spells: */ "mortar", "windblade")
+	
 	@SubscribeEvent
 	fun onPlayerHurt(e: LivingAttackEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
+		if (ItemPriestCloak.getCloak(3, player) != null)
+			if (e.source.isExplosion || (Math.random() <= 0.1 && e.source.damageType in avoidableDamage)) {
+				e.isCanceled = true
+				
+				return
+			}
+		
 		val awakened = getGodPowerLevel(player) >= 6
 		
-		if ((e.source.isFireDamage && (e.source != DamageSource.lava || awakened) && ItemPriestEmblem.getEmblem(3, player) != null) || (e.source.isExplosion && ItemPriestCloak.getCloak(3, player) != null)) {
+		if ((e.source.isFireDamage && (e.source != lava || awakened) && ItemPriestEmblem.getEmblem(3, player) != null)) {
 			e.isCanceled = true
 			
 			if (awakened)
@@ -97,7 +106,7 @@ object FaithHandlerLoki: IFaithHandler {
 	override fun getGodPowerLevel(player: EntityPlayer): Int {
 		var lvl = 0
 		
-		// if (ItemPriestCloak.getCloak(3, player) != null) lvl += 3 TODO
+		if (ItemPriestCloak.getCloak(3, player) != null) lvl += 3
 		if (ItemPriestEmblem.getEmblem(3, player) != null) lvl += 2
 		if (ItemLokiRing.getLokiRing(player) != null) lvl += 1
 		if (player.inventory.hasItemStack(ItemStack(AlfheimItems.rodFlameStar))) lvl += 1

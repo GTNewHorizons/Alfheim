@@ -161,6 +161,7 @@ fun <T> T.eventFML(): T {
 
 fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0
 
-fun World.getBlock(e: Entity, xOff: Int = 0, yOff: Int = 0, zOff: Int = 0) = getBlock(e.posX.mfloor() + xOff, e.posY.mfloor() + yOff, e.posZ.mfloor() + zOff)
+fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0) = getBlock(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z)
+fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0) = getTileEntity(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z)
 
-fun World.getTileEntity(e: Entity, xOff: Int = 0, yOff: Int = 0, zOff: Int = 0) = getTileEntity(e.posX.mfloor() + xOff, e.posY.mfloor() + yOff, e.posZ.mfloor() + zOff)
+fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0) = setBlock(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z, block, meta, 3)

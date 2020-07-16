@@ -12,7 +12,7 @@ interface ITravellersGearSynced: ITravellersGear {
 	}
 	
 	override fun onTravelGearTick(player: EntityPlayer, stack: ItemStack) {
-		// because for some reason it gots called AFTER unequip :/
+		// because for some reason it gets called AFTER unequip :/
 		if (ItemNBTHelper.getBoolean(stack, TAG_EQUIPPED, false))
 			onTravelGearTickSynced(player, stack)
 	}

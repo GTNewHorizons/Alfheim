@@ -1,6 +1,6 @@
 package alfheim.common.integration.travellersgear
 
-import alexsocol.asjlib.getActivePotionEffect
+import alexsocol.asjlib.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.potion.Potion
 import net.minecraftforge.client.event.RenderPlayerEvent
@@ -10,6 +10,10 @@ import vazkii.botania.api.item.*
 import vazkii.botania.api.item.IBaubleRender.RenderType
 
 object TGHandlerBotaniaRenderer {
+	
+	init {
+		eventForge()
+	}
 	
 	@SubscribeEvent
 	fun onPlayerRenderPost(event: RenderPlayerEvent.Specials.Post) {
@@ -29,7 +33,6 @@ object TGHandlerBotaniaRenderer {
 				glColor4f(1f, 1f, 1f, 1f)
 				(cosmetic?.item as? IBaubleRender)?.onPlayerBaubleRender(cosmetic, event, RenderType.BODY)
 				glPopMatrix()
-				continue
 			}
 			
 			if (item is IBaubleRender) {

@@ -47,5 +47,5 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 		return false
 	}
 	
-	override fun getRenderTexture() = LibResourceLocations.balanceCloak
+	override fun getRenderTexture() = LibResourceLocations.cloakBalance
 }

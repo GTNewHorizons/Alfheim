@@ -1,7 +1,9 @@
 package alfheim.common.block.tile.sub.flower
 
 import alexsocol.asjlib.I
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
+import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
@@ -35,6 +37,8 @@ class SubTileRainFlower: SubTileWeatherFlower() {
 	override fun getEntry(): LexiconEntry? {
 		return null // FIXME entry
 	}
+	
+	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("rainFlower").getIconForStack(null)
 }
 
 @PassiveFlower
@@ -47,6 +51,8 @@ class SubTileSnowFlower: SubTileWeatherFlower() {
 	override fun getEntry(): LexiconEntry? {
 		return null // FIXME entry
 	}
+	
+	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("snowFlower").getIconForStack(null)
 }
 
 @PassiveFlower
@@ -66,9 +72,11 @@ class SubTileWindFlower: SubTileWeatherFlower() {
 		return newMana
 	}
 	
+	override fun getMaxMana() = 300
+	
 	override fun getEntry(): LexiconEntry? {
 		return null // FIXME entry
 	}
 	
-	override fun getMaxMana() = 300
+	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("windFlower").getIconForStack(null)
 }

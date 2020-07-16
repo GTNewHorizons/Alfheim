@@ -1,11 +1,11 @@
 package alfheim.common.entity
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.relic.ItemMjolnir
 import net.minecraft.block.*
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.ItemStack
@@ -13,8 +13,9 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.awt.Color
-import vazkii.botania.common.core.helper.Vector3 as Bectro3
+import vazkii.botania.common.core.helper.Vector3 as Bector3
 
 class EntityMjolnir: EntityThrowable {
 	
@@ -42,24 +43,28 @@ class EntityMjolnir: EntityThrowable {
 		
 		super.onUpdate()
 		
-		Botania.proxy.lightningFX(worldObj, Bectro3.fromEntity(this), Bectro3.fromEntity(this).sub(Bectro3(mx, my, mz).multiply(1.25)), 1f, color, colorB)
-		
+		Botania.proxy.lightningFX(worldObj, Bector3.fromEntity(this), Bector3.fromEntity(this).sub(Bector3(mx, my, mz).multiply(1.25)), 1f, color, colorB)
+
 		val bounces = timesBounced
 		if (bounces >= MAX_BOUNCES || ticksExisted > 30) {
 			val thrower = thrower
 			noClip = true
 			if (thrower == null)
-				dropAndKill()
+				setDead()
 			else {
 				val motion = Vector3.fromEntityCenter(thrower).sub(Vector3.fromEntityCenter(this)).normalize()
 				motionX = motion.x
 				motionY = motion.y
 				motionZ = motion.z
-				if (Vector3.pointDistanceSpace(posX, posY, posZ, thrower.posX, thrower.posY, thrower.posZ) < 1)
-					if (!(thrower is EntityPlayer && thrower.inventory.addItemStackToInventory(stack.copy())))
-						dropAndKill()
-					else if (!worldObj.isRemote)
-						setDead()
+				if (Vector3.pointDistanceSpace(posX, posY, posZ, thrower.posX, thrower.posY, thrower.posZ) < 1) {
+					if (thrower is EntityPlayer) {
+						val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mjolnir, thrower.inventory)
+						
+						if (slot != -1)
+							thrower.inventory.getStackInSlot(slot)?.let { if (it.item === AlfheimItems.mjolnir) ItemNBTHelper.setInt(it, ItemMjolnir.TAG_COOLDOWN, 0) }
+					}
+					setDead()
+				}
 			}
 		} else {
 			if (!bounced) {
@@ -69,11 +74,14 @@ class EntityMjolnir: EntityThrowable {
 			}
 			bounced = false
 		}
+		
+//		motionX = 0.0
+//		motionY = 0.0
+//		motionZ = 0.0
 	}
 	
 	private fun dropAndKill() {
 		if (!worldObj.isRemote) {
-			worldObj.spawnEntityInWorld(EntityItem(worldObj, posX, posY, posZ, stack.copy()))
 			setDead()
 		}
 	}

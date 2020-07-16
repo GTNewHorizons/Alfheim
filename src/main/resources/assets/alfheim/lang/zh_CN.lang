@@ -497,7 +497,11 @@ entity.alfheim.Charge.name=暗能量
 entity.alfheim.Elf.name=精灵
 entity.alfheim.Flugel.name=不朽
 entity.alfheim.Lolicorn.name=独角兽
+# It's not a Unicorn (google translated 的独角兽 as Unicorn), it's Lolicorn (that's important) = loli + unicorn (+ pegasus + centaur, but those not included in the name)
 entity.alfheim.Lolicorn.desc=%s 的独角兽
+# Rorycorn - same, but with Rory Mercury skin, so change first two words (symbols) ???
+entity.alfheim.Lolicorn.desc.KAIIIAK=%s 的独角兽
+entity.alfheim.Lolicorn.desc.Odin=%s 斯雷普尼爾
 entity.alfheim.LightningMark.name=雷电印记
 entity.alfheim.MagicArrow.name=魔法箭矢
 entity.alfheim.Pixie.name=小精灵

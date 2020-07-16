@@ -5,6 +5,8 @@ import alfheim.common.entity.FakeLightning
 import net.minecraft.entity.Entity
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.IIcon
+import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.signature.PassiveFlower
 import vazkii.botania.common.block.subtile.generating.SubTilePassiveGenerating
@@ -59,6 +61,8 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 	override fun getEntry(): LexiconEntry? {
 		return null // FIXME entry
 	}
+	
+	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("stormFlower").getIconForStack(null)
 	
 	companion object {
 		const val TAG_COOLDOWN = "cooldown"

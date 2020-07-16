@@ -7,7 +7,6 @@ import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems
 import codechicken.nei.api.*
-import gloomyfolken.hooklib.asm.Hook
 import net.minecraft.item.ItemStack
 import vazkii.botania.common.block.ModBlocks
 
@@ -26,6 +25,8 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.anomaly))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHeadBlock))
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2Block))
+		API.hideItem(ItemStack(AlfheimBlocks.grapesRed[1]))
+		API.hideItem(ItemStack(AlfheimBlocks.grapesRed[2]))
 		API.hideItem(ItemStack(AlfheimBlocks.invisibleFlame))
 		API.hideItem(ItemStack(AlfheimBlocks.powerStone, 1, 0))
 		API.hideItem(ItemStack(AlfheimBlocks.rainbowFlame))

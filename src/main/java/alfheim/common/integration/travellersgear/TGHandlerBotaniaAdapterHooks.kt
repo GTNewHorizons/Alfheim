@@ -5,10 +5,8 @@ import baubles.api.BaubleType
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.StatCollector
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import travellersgear.api.TravellersGearAPI
-import vazkii.botania.client.core.helper.RenderHelper
 import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak
 
 object TGHandlerBotaniaAdapterHooks {
@@ -59,33 +57,7 @@ object TGHandlerBotaniaAdapterHooks {
 	
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, createMethod = true, isMandatory = true)
-	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<String>, adv: Boolean) {
-		try {
-			if (AlfheimCore.TravellersGearLoaded) {
-				addStringToTooltip(StatCollector.translateToLocal("TG.desc.gearSlot.tg.0"), tooltip)
-				val key = RenderHelper.getKeyDisplayString("TG.keybind.openInv")
-				if (key != null)
-					addStringToTooltip(StatCollector.translateToLocal("alfheimmisc.tgtooltip").replace("%key%".toRegex(), key), tooltip)
-			} else {
-				val type = cloak.getBaubleType(stack)
-				addStringToTooltip(StatCollector.translateToLocal("botania.baubletype." + type.name.toLowerCase()), tooltip)
-				val key = RenderHelper.getKeyDisplayString("Baubles Inventory")
-				if (key != null)
-					addStringToTooltip(StatCollector.translateToLocal("botania.baubletooltip").replace("%key%".toRegex(), key), tooltip)
-			}
-		} catch (ignore: Throwable) {}
-		
-		val cosmetic = cloak.getCosmeticItem(stack)
-		if (cosmetic != null)
-			addStringToTooltip(String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.displayName), tooltip)
-		
-		if (cloak.hasPhantomInk(stack))
-			addStringToTooltip(StatCollector.translateToLocal("botaniamisc.hasPhantomInk"), tooltip)
-	}
-	
-	// --------------------------------
-	
-	fun addStringToTooltip(s: String, tooltip: MutableList<String>) {
-		tooltip.add(s.replace("&".toRegex(), "\u00a7"))
+	fun addHiddenTooltip(cloak: ItemHolyCloak, stack: ItemStack, player: EntityPlayer, tooltip: MutableList<Any?>, adv: Boolean) {
+		TravellerBaubleTooltipHandler.addHiddenTooltip(cloak, stack, player, tooltip, adv)
 	}
 }

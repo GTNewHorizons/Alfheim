@@ -488,7 +488,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			} else {
 				val range = 3
 				players = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)) as List<EntityPlayer>
-				if (players.isNotEmpty()) attackEntityFrom(DamageSource.causePlayerDamage(players[0]), 0f)
+				if (players.any { !it.capabilities.isCreativeMode }) attackEntityFrom(DamageSource.causePlayerDamage(players[0]), 0f)
 			}
 		}
 		

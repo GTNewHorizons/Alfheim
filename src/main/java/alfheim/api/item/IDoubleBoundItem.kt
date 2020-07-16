@@ -34,6 +34,10 @@ interface IRotationDisplay {
 
 object DoubleBoundItemRender {
 	
+	init {
+		eventForge()
+	}
+	
 	@SubscribeEvent
 	fun renderWorldLast(e: RenderWorldLastEvent) {
 		val player = mc.thePlayer
