@@ -1,4 +1,4 @@
-package alfmod.client.render.model
+package alfmod.client.model.entity
 
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity

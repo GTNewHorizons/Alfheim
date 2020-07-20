@@ -164,8 +164,8 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 					if (rItem != null)
 						if (stack.itemEquals(rItem)) {
 							if (mana > 0) {
-								if (stack.item is ItemBlock) worldObj.spawnParticle("blockcrack_${Item.getIdFromItem(stack.item)}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) * 8.0, 0.1, (zCoord.D - it.zCoord.D) * 8.0)
-								else worldObj.spawnParticle("iconcrack_${Item.getIdFromItem(stack.item)}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) / 8.0, 0.1, (zCoord.D - it.zCoord.D) / 8.0)
+								if (stack.item is ItemBlock) worldObj.spawnParticle("blockcrack_${stack.item.id}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) * 8.0, 0.1, (zCoord.D - it.zCoord.D) * 8.0)
+								else worldObj.spawnParticle("iconcrack_${stack.item.id}_${stack.meta}", it.xCoord.D + .5, it.yCoord + 1.0, it.zCoord.D + .5, (xCoord.D - it.xCoord.D) / 8.0, 0.1, (zCoord.D - it.zCoord.D) / 8.0)
 								Botania.proxy.wispFX(worldObj, it.xCoord.D + .5, it.yCoord + 3.D + .5, it.zCoord.D + .5, 1f, 1f, 1f, s, -m)
 							}
 							recipeItems.remove(rItem)

@@ -59,6 +59,7 @@ object AlfheimBlocks {
 	val flugelHeadBlock: Block
 	val flugelHead2Block: Block
 	val grapesRed: Array<Block>
+	val grapesRedPlanted: Block
 	val grapesWhite: Block
 	val itemDisplay: Block
 	val invisibleFlame: Block
@@ -206,6 +207,7 @@ object AlfheimBlocks {
 		flugelHeadBlock = BlockHeadFlugel()
 		flugelHead2Block = BlockHeadMiku()
 		grapesRed = Array(3) { BlockGrapeRed(it) }
+		grapesRedPlanted = BlockGrapeRedPlanted()
 		grapesWhite = BlockGrapeWhite()
 		itemDisplay = BlockItemDisplay()
 		invisibleFlame = BlockManaFlame("invisibleFlame", TileInvisibleManaFlame::class.java)

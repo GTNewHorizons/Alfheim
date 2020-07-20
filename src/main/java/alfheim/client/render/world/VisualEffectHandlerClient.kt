@@ -13,11 +13,9 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.rod.ItemRodInterdiction
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*
-import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderGlobal
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
 import net.minecraft.potion.PotionEffect
 import vazkii.botania.common.Botania
 import vazkii.botania.common.entity.EntityManaBurst
@@ -35,7 +33,6 @@ object VisualEffectHandlerClient {
 		when (s) {
 			ACID              -> spawnAcid(d[0], d[1], d[2])
 			AQUABIND          -> spawnAquaBind(d[0], d[1], d[2])
-			AQUASTREAM        -> spawnAquaStream(d[0], d[1], d[2], d[3], d[4], d[5], d[6].F, d[7].F, d[8].F)
 			AQUASTREAM_HIT    -> spawnAquaStreamHit(d[0], d[1], d[2])
 			BIFROST           -> spawnBifrost(d[0], d[1], d[2])
 			BIFROST_DONE      -> spawnBifrostFinish(d[0], d[1], d[2], d[3].I)
@@ -70,11 +67,11 @@ object VisualEffectHandlerClient {
 			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
 			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
 			SPLASH            -> spawnSplash(d[0], d[1], d[2])
-			STREAM            -> particleStream(Vector3(d[0], d[1], d[2]), Vector3(d[3], d[4], d[5]), d[6].I)
 			THROW             -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
 			TREMORS           -> spawnTremors(d[0], d[1], d[2])
 			UPHEAL            -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
 			WIRE              -> spawnWire(d[0], d[1], d[2], d[3])
+			WISP              -> spawnWisp(d[0], d[1], d[2], d[3].F, d[4].F, d[5].F, d[6].F, d[7].F, d[8].F, d[9].F, d[10].F, d.getOrNull(11) == null)
 		}
 	}
 	
@@ -110,17 +107,6 @@ object VisualEffectHandlerClient {
 		}
 	}
 	
-	fun particleStream(from: Vector3, to: Vector3, color: Int) {
-		val motionVec = to.sub(from).mul(0.04)
-		val c = Color(color)
-		
-		val r = c.red / 255f
-		val g = c.green / 255f
-		val b = c.blue / 255f
-		
-		Botania.proxy.wispFX(mc.theWorld, from.x, from.y, from.z, r, g, b, 0.4f, motionVec.x.F, motionVec.y.F, motionVec.z.F)
-	}
-	
 	fun quadDamage() {
 		mc.thePlayer.playSound(ModInfo.MODID + ":quad", 10f, 1f)
 	}
@@ -146,8 +132,10 @@ object VisualEffectHandlerClient {
 		}
 	}
 	
-	fun spawnAquaStream(x: Double, y: Double, z: Double, x2: Double, y2: Double, z2: Double, red: Float, green: Float, blue: Float) {
-		Botania.proxy.wispFX(mc.theWorld, x, y, z, red, green, blue, 1f, x2.F, y2.F, z2.F, 0.5f)
+	fun spawnWisp(x: Double, y: Double, z: Double, red: Float, green: Float, blue: Float, size: Float, mx: Float, my: Float, mz: Float, age: Float, depth: Boolean) {
+		Botania.proxy.setWispFXDepthTest(depth)
+		Botania.proxy.wispFX(mc.theWorld, x, y, z, red, green, blue, size, mx, my, mz, age)
+		Botania.proxy.setWispFXDepthTest(true)
 	}
 	
 	fun spawnAquaStreamHit(x: Double, y: Double, z: Double) {
@@ -279,7 +267,7 @@ object VisualEffectHandlerClient {
 			for (acc in worldObj.worldAccesses) {
 				if (acc !is RenderGlobal) continue
 				
-				val s = "iconcrack_${Item.getIdFromItem(AlfheimItems.splashPotion)}_0"
+				val s = "iconcrack_${AlfheimItems.splashPotion.id}_0"
 				
 				for (i in 0..8) {
 					worldObj.spawnParticle(s, x, y, z, rand.nextGaussian() * 0.15, rand.nextDouble() * 0.2, rand.nextGaussian() * 0.15)
@@ -342,7 +330,7 @@ object VisualEffectHandlerClient {
 		val meta = mc.theWorld.getBlockMetadata(x.mfloor(), y.mfloor() - 1, z.mfloor())
 		for (i in 0..511) {
 			v.set(Math.random() - 0.5, 0.0, Math.random() - 0.5).normalize().mul(Math.random() * 1.5 + 0.5).set(v.x, Math.random() * 0.25, v.z)
-			mc.theWorld.spawnParticle("blockdust_" + Block.getIdFromBlock(block) + "_" + meta, x, y + 0.25, z, v.x, v.y, v.z)
+			mc.theWorld.spawnParticle("blockdust_${block.id}_$meta", x, y + 0.25, z, v.x, v.y, v.z)
 		}
 	}
 	
@@ -360,7 +348,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, STREAM, THROW, TREMORS, WIRE, UPHEAL
+		ACID, AQUABIND, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, THROW, TREMORS, UPHEAL, WIRE, WISP
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

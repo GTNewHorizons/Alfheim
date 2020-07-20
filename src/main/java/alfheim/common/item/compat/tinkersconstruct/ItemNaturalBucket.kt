@@ -65,7 +65,7 @@ class ItemNaturalBucket: ItemMod("NaturalBucket") {
 			if (!player.canPlayerEdit(clickX, clickY, clickZ, position.sideHit, stack))
 				return stack
 			
-			if (tryPlaceContainedLiquid(world, clickX, clickY, clickZ, stack.itemDamage) && !player.capabilities.isCreativeMode)
+			if (tryPlaceContainedLiquid(world, clickX, clickY, clickZ, stack.meta) && !player.capabilities.isCreativeMode)
 				return ItemStack(Items.bucket)
 			
 		}

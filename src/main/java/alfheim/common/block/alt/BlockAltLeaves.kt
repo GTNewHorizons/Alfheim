@@ -40,7 +40,7 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 		
 		val meta = world.getBlockMetadata(x, y, z)
 		
-		if (stack.item === ModItems.manaResource && stack.itemDamage == 9 && meta % 8 == yggMeta + 1) {
+		if (stack.item === ModItems.manaResource && stack.meta == 9 && meta % 8 == yggMeta + 1) {
 			var eat = 2
 			val sides = BooleanArray(6)
 			

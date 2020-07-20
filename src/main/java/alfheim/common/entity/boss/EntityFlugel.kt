@@ -296,8 +296,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					if (Math.random() < 0.2) entityDropItem(ItemStack(ModItems.pinkinator), 1f)
 					
 					if (Math.random() < 0.3) {
-						val i = Item.getIdFromItem(Items.record_13)
-						val j = Item.getIdFromItem(Items.record_wait)
+						val i = Items.record_13.id
+						val j = Items.record_wait.id
 						val k = i + rand.nextInt(j - i + 1)
 						entityDropItem(ItemStack(Item.getItemById(k)), 1f)
 						droppedRecord = true
@@ -357,7 +357,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							val block = worldObj.getBlock(xp, yp, zp)
 							val items = block.getDrops(worldObj, xp, yp, zp, 0, 0)
 							for (stack in items) {
-								if (ConfigHandler.blockBreakParticles) worldObj.playAuxSFX(2001, xp, yp, zp, Block.getIdFromBlock(block) + (worldObj.getBlockMetadata(xp, yp, zp) shl 12))
+								if (ConfigHandler.blockBreakParticles) worldObj.playAuxSFX(2001, xp, yp, zp, block.id + (worldObj.getBlockMetadata(xp, yp, zp) shl 12))
 								worldObj.spawnEntityInWorld(EntityItem(worldObj, xp + 0.5, yp + 0.5, zp + 0.5, stack))
 							}
 							worldObj.setBlockToAir(xp, yp, zp)

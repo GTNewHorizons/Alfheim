@@ -1,6 +1,6 @@
 package alfheim.common.item.lens
 
-import alexsocol.asjlib.I
+import alexsocol.asjlib.*
 import net.minecraft.block.Block
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.item.ItemStack
@@ -47,7 +47,7 @@ class LensSmelt: Lens() {
 							entity.entityDropItem(itemstack, 0f)
 						} else {
 							if (ConfigHandler.blockBreakParticles) {
-								world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta shl 12))
+								world.playAuxSFX(2001, x, y, z, block.id + (meta shl 12))
 								for (i in 0..2) entity.worldObj.spawnParticle("flame", x + Math.random() - 0.5f, y + Math.random() - 0.5f, z + Math.random() - 0.5f, 0.0, 0.0, 0.0)
 							}
 						}

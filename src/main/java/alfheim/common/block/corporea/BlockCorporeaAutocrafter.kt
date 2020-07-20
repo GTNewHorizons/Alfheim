@@ -56,7 +56,7 @@ class BlockCorporeaAutocrafter: BlockModContainer(Material.iron), IWandable {
 					if (k1 > itemstack.stackSize) k1 = itemstack.stackSize
 					
 					itemstack.stackSize -= k1
-					entityitem = EntityItem(world, (x + f).D, (y + f1).D, (z + f2).D, ItemStack(itemstack.item, k1, itemstack.getItemDamage()))
+					entityitem = EntityItem(world, (x + f).D, (y + f1).D, (z + f2).D, ItemStack(itemstack.item, k1, itemstack.meta))
 					
 					val f3 = 0.05
 					entityitem.motionX = world.rand.nextGaussian() * f3

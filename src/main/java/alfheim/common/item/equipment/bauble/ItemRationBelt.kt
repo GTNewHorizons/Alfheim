@@ -50,8 +50,8 @@ class ItemRationBelt: ItemBauble("RationBelt"), IBaubleRender {
 			}
 			
 			val food = foods.entries.maxBy {
-				when (it.value.item) {
-					is ItemFood            -> (it.value.item as ItemFood).func_150906_h(it.value) * (it.value.item as ItemFood).func_150905_g(it.value)
+				when (val item = it.value.item) {
+					is ItemFood            -> item.func_150906_h(it.value) * item.func_150905_g(it.value)
 					ModItems.infiniteFruit -> Float.MAX_VALUE
 					else                   -> 0f
 				}

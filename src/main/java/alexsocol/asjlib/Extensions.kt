@@ -17,6 +17,7 @@ import kotlin.math.*
 fun safeIndex(id: Int, size: Int) = max(0, min(id, size - 1))
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+fun <T> Array<T>.shuffled(): MutableList<T> = toMutableList().apply { shuffle() }
 
 /**
  * Makes a list of [Pair]s from original [Iterable] (zero to first, second to third, etc)
@@ -93,7 +94,7 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 	worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
 
-fun Entity.setPosition(e: Entity) = setPosition(e.posX, e.posY, e.posZ)
+fun Entity.setPosition(e: Entity, oX: Double = 0.0, oY: Double = 0.0, oZ: Double = 0.0) = setPosition(e.posX + oX, e.posY + oY, e.posZ + oZ)
 
 fun Entity.setPosition(c: ChunkCoordinates) = setPosition(c.posX.D, c.posY.D, c.posZ.D)
 
@@ -147,6 +148,8 @@ var ItemStack.meta
 
 fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
+val Block.id get() = Block.getIdFromBlock(this)
+val Item.id get() = Item.getIdFromItem(this)
 val ItemStack.block: Block? get() = item.toBlock()
 
 fun <T> T.eventForge(): T {

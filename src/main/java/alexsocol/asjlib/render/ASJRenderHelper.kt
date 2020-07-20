@@ -135,4 +135,17 @@ object ASJRenderHelper {
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.setTranslation(X.D, 0.0, Z.D)
 	}
+	
+	@JvmStatic
+	fun drawTexturedModalRect(x: Int, y: Int, z: Int, u: Int, v: Int, w: Int, h: Int) {
+		val f = 0.00390625
+		val f1 = 0.00390625
+		val tessellator = Tessellator.instance
+		tessellator.startDrawingQuads()
+		tessellator.addVertexWithUV(x.D, y.D + h, z.D, u * f, (v + h) * f1)
+		tessellator.addVertexWithUV(x.D + w, y.D + h, z.D, (u + w) * f, (v + h) * f1)
+		tessellator.addVertexWithUV(x.D + w, y.D, z.D, (u + w) * f, v * f1)
+		tessellator.addVertexWithUV(x.D, y.D, z.D, u * f, v * f1)
+		tessellator.draw()
+	}
 }

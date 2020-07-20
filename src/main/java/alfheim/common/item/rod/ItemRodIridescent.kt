@@ -26,25 +26,25 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 	val COST = 150
 	
 	companion object {
-		fun place(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World,
+		fun place(stack: ItemStack, player: EntityPlayer, world: World,
 				  par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float,
 				  par10: Float, toPlace: ItemStack?, cost: Int, r: Float, g: Float, b: Float): Boolean {
 			
-			if (ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, false)) {
+			if (ManaItemHandler.requestManaExactForTool(stack, player, cost, false)) {
 				val dir = ForgeDirection.getOrientation(par7)
 				
 				val aabb = AxisAlignedBB.getBoundingBox((par4 + dir.offsetX).D,
 														(par5 + dir.offsetY).D, (par6 + dir.offsetZ).D,
 														(par4 + dir.offsetX + 1).D, (par5 + dir.offsetY + 1).D, (par6 + dir.offsetZ + 1).D)
-				val entities = par3World.getEntitiesWithinAABB(EntityLivingBase::class.java, aabb).size
+				val entities = world.getEntitiesWithinAABB(EntityLivingBase::class.java, aabb).size
 				
 				if (entities == 0) {
-					toPlace!!.tryPlaceItemIntoWorld(par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10)
+					toPlace!!.tryPlaceItemIntoWorld(player, world, par4, par5, par6, par7, par8, par9, par10)
 					
 					if (toPlace.stackSize == 0) {
-						ManaItemHandler.requestManaExactForTool(par1ItemStack, par2EntityPlayer, cost, true)
+						ManaItemHandler.requestManaExactForTool(stack, player, cost, true)
 						for (i in 0..6)
-							Botania.proxy.sparkleFX(par3World, par4 + dir.offsetX + Math.random(), par5 + dir.offsetY + Math.random(), par6 + dir.offsetZ + Math.random(), r, g, b, 1F, 5)
+							Botania.proxy.sparkleFX(world, par4 + dir.offsetX + Math.random(), par5 + dir.offsetY + Math.random(), par6 + dir.offsetZ + Math.random(), r, g, b, 1F, 5)
 					}
 				}
 			}
@@ -57,8 +57,8 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 		maxStackSize = 1
 	}
 	
-	override fun onItemUse(par1ItemStack: ItemStack, par2EntityPlayer: EntityPlayer, par3World: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float) =
-		place(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, dirtStack(par1ItemStack.meta), COST, 0.35F, 0.2F, 0.05F)
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, par4: Int, par5: Int, par6: Int, par7: Int, par8: Float, par9: Float, par10: Float) =
+		place(stack, player, world, par4, par5, par6, par7, par8, par9, par10, dirtStack(stack.meta), COST, 0.35F, 0.2F, 0.05F)
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		var blockstack = dirtStack(stack.meta)
@@ -150,9 +150,9 @@ class ItemRodIridescent(name: String = "rodColorfulSkyDirt"): ItemIridescent(nam
 				Botania.proxy.sparkleFX(world, x + xl + Math.random(), y + Math.random(), z + zl + Math.random(),
 										r, g, b, 1F, 5)
 			if (stack.meta == TYPES)
-				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.rainbowDirt))
+				world.playAuxSFX(2001, x + xl, y, z + zl, AlfheimBlocks.rainbowDirt.id)
 			else
-				world.playAuxSFX(2001, x + xl, y, z + zl, Block.getIdFromBlock(AlfheimBlocks.irisDirt) + (stack.meta shl 12))
+				world.playAuxSFX(2001, x + xl, y, z + zl, AlfheimBlocks.irisDirt.id + (stack.meta shl 12))
 			
 		}
 	}

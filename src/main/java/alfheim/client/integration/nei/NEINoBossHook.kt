@@ -1,7 +1,6 @@
 package alfheim.client.integration.nei
 
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.entity.boss.*
 import codechicken.nei.ItemMobSpawner
 import codechicken.nei.api.ItemInfo
 import gloomyfolken.hooklib.asm.Hook

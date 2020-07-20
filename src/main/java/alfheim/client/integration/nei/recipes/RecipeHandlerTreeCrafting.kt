@@ -1,9 +1,10 @@
 package alfheim.client.integration.nei.recipes
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.render.ASJRenderHelper
 import alfheim.api.*
 import alfheim.api.crafting.recipe.RecipeTreeCrafting
-import codechicken.lib.gui.GuiDraw
+import alfheim.api.lib.LibResourceLocations
 import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler
 import net.minecraft.item.ItemStack
@@ -25,8 +26,8 @@ open class RecipeHandlerTreeCrafting : TemplateRecipeHandler() {
         super.drawBackground(recipe)
         GL11.glEnable(GL11.GL_BLEND)
         GL11.glColor4f(1f, 1f, 1f, 0.5F)
-        GuiDraw.changeTexture(LibResources.GUI_PETAL_OVERLAY)
-        GuiDraw.drawTexturedModalRect(45, 10, 38, 7, 92, 92)
+        mc.renderEngine.bindTexture(LibResourceLocations.petalOverlay)
+        ASJRenderHelper.drawTexturedModalRect(45, 10, 0, 38, 7, 92, 92)
         HUDHandler.renderManaBar(32, 113, 0x0000FF, 0.75F, (arecipes[recipe] as CachedTreeRecipe).manaUsage, TilePool.MAX_MANA / 10)
     }
 

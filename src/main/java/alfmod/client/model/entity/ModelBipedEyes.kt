@@ -1,21 +1,17 @@
-package alfmod.client.render.model
+package alfmod.client.model.entity
 
 import alexsocol.asjlib.mc
-import alfmod.AlfheimModularCore
 import net.minecraft.client.model.*
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 
-class ModelBipedEyes: ModelBiped() {
+class ModelBipedEyes(val textureEyes: ResourceLocation): ModelBiped() {
 	
-	val bipedEyes: ModelRenderer = ModelRenderer(this, 0, 0)
-	val textureEyes = ResourceLocation(AlfheimModularCore.MODID, "textures/model/entity/DedMorozEyes.png")
-	
-	init {
-		bipedEyes.addBox(-4f, -8f, -4f, 8, 8, 8, 0f)
-		bipedEyes.setRotationPoint(0f, 0f, 0f)
+	val bipedEyes = ModelRenderer(this, 0, 0).apply {
+		addBox(-4f, -8f, -4f, 8, 8, 8, 0f)
+		setRotationPoint(0f, 0f, 0f)
 	}
 	
 	override fun render(entity: Entity?, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {

@@ -66,6 +66,7 @@ class ClientProxy: CommonProxy() {
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idBarrel, RenderBlockBarrel)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idGrapeRedPlanted, RenderBlockGrapeRedPlanted)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idGrapeWhite, RenderBlockGrapeGreen)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idHarvester, RenderBlockAnomalyHarvester)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder)

@@ -51,10 +51,11 @@ class EntityElf(world: World): EntityCreature(world), IMerchant, INpc {
 		return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (3 + rand.nextInt(5)).F)
 	}
 	
-	override fun setCustomer(p_70932_1_: EntityPlayer)  = Unit
+	override fun setCustomer(player: EntityPlayer)  = Unit
 	override fun getCustomer() = null
-	override fun getRecipes(p_70934_1_: EntityPlayer) = null
-	override fun setRecipes(p_70930_1_: MerchantRecipeList) = Unit
-	override fun useRecipe(p_70933_1_: MerchantRecipe) = Unit
-	override fun func_110297_a_(p_110297_1_: ItemStack) = Unit
+	override fun getRecipes(player: EntityPlayer) = null
+	override fun setRecipes(recipeList: MerchantRecipeList) = Unit
+	override fun useRecipe(recipe: MerchantRecipe) = Unit
+	// verifySellingItem
+	override fun func_110297_a_(stack: ItemStack?) = Unit
 }

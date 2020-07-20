@@ -32,7 +32,7 @@ class BlockPattern(modid: String, material: Material, name: String, tab: Creativ
 		if (!world.isRemote && isFalling) func_149830_m(world, x, y, z)
 	}
 	
-	private fun func_149830_m(world: World, x: Int, ay: Int, z: Int) {
+	fun func_149830_m(world: World, x: Int, ay: Int, z: Int) {
 		var y = ay
 		if (func_149831_e(world, x, y - 1, z) && y >= 0) {
 			val b0: Byte = 32

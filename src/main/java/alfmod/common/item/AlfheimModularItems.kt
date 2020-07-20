@@ -1,8 +1,8 @@
 package alfmod.common.item
 
-import alfmod.common.item.equipment.armor.ItemSnowArmor
-import alfmod.common.item.equipment.tool.ItemSnowSword
-import alfmod.common.item.interaction.thaumcraft.ItemSnowHelmetRevealing
+import alfmod.common.item.equipment.armor.*
+import alfmod.common.item.equipment.tool.*
+import alfmod.common.item.interaction.thaumcraft.*
 import alfmod.common.item.material.ItemEventResource
 import net.minecraft.item.Item
 import vazkii.botania.common.Botania
@@ -18,6 +18,13 @@ object AlfheimModularItems {
 	val snowLeggings: Item
 	val snowBoots: Item
 	
+	val volcanoMace: Item
+	val volcanoHelmet: Item
+	val volcanoHelmetRevealing: Item?
+	val volcanoChest: Item
+	val volcanoLeggings: Item
+	val volcanoBoots: Item
+	
 	init {
 		eventResource = ItemEventResource()
 		
@@ -27,5 +34,12 @@ object AlfheimModularItems {
 		snowChest = ItemSnowArmor(1, "SnowChest")
 		snowLeggings = ItemSnowArmor(2, "SnowLeggings")
 		snowBoots = ItemSnowArmor(3, "SnowBoots")
+		
+		volcanoMace = ItemVolcanoMace()
+		volcanoHelmet = ItemVolcanoArmor(0, "VolcanoHelmet")
+		volcanoHelmetRevealing = if (Botania.thaumcraftLoaded) ItemVolcanoHelmetRevealing() else null
+		volcanoChest = ItemVolcanoArmor(1, "VolcanoChest")
+		volcanoLeggings = ItemVolcanoArmor(2, "VolcanoLeggings")
+		volcanoBoots = ItemVolcanoArmor(3, "VolcanoBoots")
 	}
 }

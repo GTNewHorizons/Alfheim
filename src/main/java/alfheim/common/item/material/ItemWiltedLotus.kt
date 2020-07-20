@@ -37,7 +37,7 @@ class ItemWiltedLotus : ItemMod("wiltedLotus"), IManaDissolvable {
         if (pool.isFull || pool.currentMana == 0) return
         
         val tile = pool as TileEntity
-        val t2 = stack.getItemDamage() > 0
+        val t2 = stack.meta > 0
     
         val mult = if (item.worldObj.rand.nextBoolean()) 2 else -1
         val mana = if (t2) MANA_PER_T2 else MANA_PER

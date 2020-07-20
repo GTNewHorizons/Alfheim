@@ -3,6 +3,7 @@ package alfheim.common.block
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.block.ItemBlockGrapeRed
 import alfheim.common.item.material.*
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -28,7 +29,7 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
 	override fun damageDropped(meta: Int) = ElvenResourcesMetas.GrapeLeaf
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, name)
+		GameRegistry.registerBlock(this, ItemBlockGrapeRed::class.java, name)
 		return super.setBlockName(name)
 	}
 	

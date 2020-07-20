@@ -38,11 +38,11 @@ class EntityFireAura: EntityThrowableCopy {
 	override fun onImpact(pos: MovingObjectPosition) {
 		if (thrower != null && thrower is EntityPlayer) {
 			val player = thrower as EntityPlayer
-			val attribute = player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue
+			val attack = player.getEntityAttribute(SharedMonsterAttributes.attackDamage).attributeValue
 			
 			if (pos.entityHit != null || pos.entityHit !== thrower) {
 				if (pos.entityHit is EntityLivingBase) {
-					val dmg = (4 + attribute).toFloat()
+					val dmg = (4 + attack).toFloat()
 					(pos.entityHit as EntityLivingBase).attackEntityFrom(DamageSource.causePlayerDamage(player), dmg)
 					player.absorptionAmount = min(10f, player.absorptionAmount + 1f)
 					setDead()

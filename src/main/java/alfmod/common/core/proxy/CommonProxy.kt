@@ -1,6 +1,6 @@
 package alfmod.common.core.proxy
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
 import alfheim.common.world.dim.alfheim.biome.BiomeField
@@ -21,7 +21,8 @@ open class CommonProxy {
 		
 		AlfheimModularLexiconData
 		
-		EventHandler
+		EventHandlerWinter.eventFML()
+		EventHandlerSummer.eventForge()
 	}
 	
 	open fun init() {
@@ -30,6 +31,10 @@ open class CommonProxy {
 		ASJUtilities.registerEntity(EntityDedMoroz::class.java, "DedMoroz", AlfheimModularCore.instance, AlfheimRegistry.id)
 		ASJUtilities.registerEntity(EntitySnowSprite::class.java, "SnowSprite", AlfheimModularCore.instance, AlfheimRegistry.id)
 		ASJUtilities.registerEntity(EntitySniceBall::class.java, "SniceBall", AlfheimModularCore.instance, AlfheimRegistry.id)
+		
+		ASJUtilities.registerEntity(EntityFirespirit::class.java, "FireSpirit", AlfheimModularCore.instance, AlfheimRegistry.id)
+		ASJUtilities.registerEntity(EntityMuspellsun::class.java, "Muspellsun", AlfheimModularCore.instance, AlfheimRegistry.id)
+		ASJUtilities.registerEntity(EntityRollingMelon::class.java, "RollingMelon", AlfheimModularCore.instance, AlfheimRegistry.id)
 	}
 	
 	open fun registerHandlers() {

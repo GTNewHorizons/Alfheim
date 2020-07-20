@@ -1,4 +1,4 @@
-package alfmod.client.render.model
+package alfmod.client.model.armor
 
 import alexsocol.asjlib.glScaled
 import net.minecraft.client.model.*

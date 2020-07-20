@@ -81,6 +81,7 @@ object LibResourceLocations {
 	val spearSubspace = ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/spearsubspace.png")
 	val target = ResourceLocation(ModInfo.MODID, "textures/misc/target.png")
 	val targetq = ResourceLocation(ModInfo.MODID, "textures/misc/targetq.png")
+	val tradePortalOverlay = ResourceLocation(ModInfo.MODID, "textures/gui/TradePortalOverlay.png")
 	val uberSpreader = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreader.png")
 	val uberSpreaderFrame = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderFrame.png")
 	val uberSpreaderGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGolden.png")

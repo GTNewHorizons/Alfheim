@@ -28,8 +28,8 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	var rainbowIcon: IIcon? = null
 	
 	init {
-        setBlockName("irisLamp")
-        setStepSound(soundTypeGlass)
+		setBlockName("irisLamp")
+		setStepSound(soundTypeGlass)
 		setHardness(0.3f)
 		if (FMLLaunchHandler.side().isClient)
 			MinecraftForge.EVENT_BUS.register(this)

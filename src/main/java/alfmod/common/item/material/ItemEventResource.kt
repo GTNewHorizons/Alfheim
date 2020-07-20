@@ -26,14 +26,15 @@ class ItemEventResource: ItemMod("EventResource") {
 	
 	override fun getIconFromDamage(meta: Int) = texture[max(0, min(meta, texture.size - 1))]
 	
-	override fun getUnlocalizedName(stack: ItemStack) = "item.${subItems[max(0, min(stack.itemDamage, subItems.size - 1))]}"
+	override fun getUnlocalizedName(stack: ItemStack) = "item.${subItems[max(0, min(stack.meta, subItems.size - 1))]}"
 	
 	override fun getSubItems(item: Item, tab: CreativeTabs?, list: MutableList<Any?>) {
 		for (i in subItems.indices) list.add(ItemStack(item, 1, i))
 	}
 	
 	override fun addInformation(stack: ItemStack, player: EntityPlayer, list: MutableList<Any?>, extra: Boolean) {
-		if (stack.meta == EventResourcesMetas.SnowRelic) addStringToTooltip(StatCollector.translateToLocal("alfmodmisc.WIP"), list as MutableList<String?>)
+		// if (stack.meta == EventResourcesMetas.SnowRelic)
+		addStringToTooltip(StatCollector.translateToLocal("alfmodmisc.WIP"), list as MutableList<String?>)
 	}
 	
 	fun addStringToTooltip(s: String, tooltip: MutableList<String?>) {
@@ -41,16 +42,18 @@ class ItemEventResource: ItemMod("EventResource") {
 	}
 	
 	companion object {
-		val subItems = arrayOf("SnowRelic")
+		val subItems = arrayOf("SnowRelic", "SunRelic")
 	}
 }
 
 object EventResourcesMetas {
 	
 	val SnowRelic: Int
+	val SunRelic: Int
 	
 	init {
 		val items = ItemEventResource.subItems
 		SnowRelic = items.indexOf("SnowRelic")
+		SunRelic = items.indexOf("SunRelic")
 	}
 }

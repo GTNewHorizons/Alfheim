@@ -43,7 +43,6 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, true))
 		
 		addRandomArmor()
-		equipmentDropChances.fill(0f)
 	}
 	
 	constructor(world: World, x: Double, y: Double, z: Double): this(world) {
@@ -102,13 +101,12 @@ class EntityDedMoroz(world: World): EntityMob(world), IBotaniaBossWithName {
 	}
 	
 	override fun addRandomArmor() {
-		equipmentDropChances.fill(0f)
-		
 		setCurrentItemOrArmor(0, ItemStack(AlfheimModularItems.snowSword))
 		setCurrentItemOrArmor(1, ItemStack(AlfheimModularItems.snowBoots))
 		setCurrentItemOrArmor(2, ItemStack(AlfheimModularItems.snowLeggings))
 		setCurrentItemOrArmor(3, ItemStack(AlfheimModularItems.snowChest))
 		setCurrentItemOrArmor(4, ItemStack(AlfheimModularItems.snowHelmet))
+		equipmentDropChances.fill(0f)
 	}
 	
 	override fun onLivingUpdate() {

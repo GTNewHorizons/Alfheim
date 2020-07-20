@@ -15,7 +15,7 @@ class WAILAHandlerAnyavil: IWailaDataProvider {
 		if (tile is TileAnyavil) {
 			val stack = tile.item
 			if (stack != null)
-				result.setString(TAG_ITEM, String.format("%s (%d/%d)", stack.displayName, stack.maxDamage - stack.meta, stack.maxDamage))
+				result.setString(TAG_ITEM, "${stack.displayName} (${stack.maxDurability - stack.meta}/${stack.maxDurability})")
 			else
 				result.removeTag(TAG_ITEM)
 		}

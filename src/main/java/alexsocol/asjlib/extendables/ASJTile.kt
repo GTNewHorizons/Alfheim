@@ -27,8 +27,8 @@ open class ASJTile: TileEntity() {
 		return S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, blockMetadata, nbt)
 	}
 	
-	override fun onDataPacket(net: NetworkManager?, packet: S35PacketUpdateTileEntity?) {
+	override fun onDataPacket(net: NetworkManager?, packet: S35PacketUpdateTileEntity) {
 		super.onDataPacket(net, packet)
-		readCustomNBT(packet!!.func_148857_g())
+		readCustomNBT(packet.func_148857_g())
 	}
 }

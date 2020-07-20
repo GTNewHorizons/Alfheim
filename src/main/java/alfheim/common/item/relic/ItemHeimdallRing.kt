@@ -46,7 +46,7 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 			val m = Vector3(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ).sub(player.posX, player.posY, player.posZ).normalize()
 			
 			val color = Color(ItemIridescent.rainbowColor())
-			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.AQUASTREAM, player.dimension, player.posX, player.posY, player.posZ, m.x, m.y, m.z, color.red / 255.0, color.green / 255.0, color.blue / 255.0)
+			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, player.dimension, player.posX, player.posY, player.posZ, color.red / 255.0, color.green / 255.0, color.blue / 255.0, 1.0, m.x, m.y, m.z, 1.0)
 		}
 	}
 	

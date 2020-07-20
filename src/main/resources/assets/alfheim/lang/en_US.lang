@@ -164,6 +164,10 @@ tile.alfheim:insertSunnyQuartz.name=Darkened Sunny Quartz Block
 tile.alfheim:smoothSunnyQuartz.name=Smooth Sunny Quartz Block
 tile.alfheim:RaceSelector.name=Race Panel
 tile.alfheim:rainFlower.name=Rain Flower
+tile.RedGrape1.name=Red Grape
+tile.RedGrape2.name=Red Grape
+tile.RedGrape3.name=Red Grape
+tile.RedGrapePlanted.name=Red Grape
 tile.alfheim:schemaController.name=Schematic Controller
 tile.alfheim:schemaFiller.name=Schematic Filler Block
 tile.alfheim:schemaMarker.name=Schematic Marker
@@ -211,6 +215,7 @@ tile.botania:spreader4.name=Mauftrium Mana Spreader
 tile.alfheim:stormFlower.name=Storm Flower
 tile.alfheim:TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
+tile.WhiteGrape.name=White Grape
 tile.alfheim:windFlower.name=Wind Flower
 
 ##########################################################___ITEMS___###########################################################

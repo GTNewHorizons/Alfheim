@@ -30,7 +30,7 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 				slot = player.inventory.getStackInSlot(i)
 				
 				if (slot != null) {
-					val cid = getIdFromItem(slot.item)
+					val cid = slot.item.id
 					var pos = -1
 					
 					for (id in ids) {

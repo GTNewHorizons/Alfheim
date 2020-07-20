@@ -10,7 +10,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.*
 import net.minecraftforge.event.ForgeEventFactory
 
-class ItemGrapeWhite(block: Block): ItemBlock(block) {
+class ItemBlockGrapeWhite(block: Block): ItemBlock(block) {
 	
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		val mop = getMovingObjectPositionFromPlayer(world, player, true) ?: return stack

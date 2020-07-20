@@ -28,6 +28,9 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySniceBall::class.java, RenderEntitySniceBall)
 		RenderingRegistry.registerEntityRenderingHandler(EntitySnowSprite::class.java, RenderEntitySnowSprite)
 		
+		RenderingRegistry.registerEntityRenderingHandler(EntityMuspellsun::class.java, RenderEntityMuspellsun)
+		RenderingRegistry.registerEntityRenderingHandler(EntityRollingMelon::class.java, RenderEntityRollingMelon)
+		
 		if (!AlfheimConfigHandler.minimalGraphics)
 			MinecraftForgeClient.registerItemRenderer(AlfheimModularItems.snowSword, RenderItemSnowSword)
 	}

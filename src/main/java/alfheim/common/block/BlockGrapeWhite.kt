@@ -1,11 +1,11 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.safeGet
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.block.ItemGrapeWhite
+import alfheim.common.item.block.ItemBlockGrapeWhite
 import alfheim.common.item.material.ElvenFoodMetas
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
@@ -36,7 +36,7 @@ class BlockGrapeWhite: BlockBush() {
 	}
 	
 	override fun setBlockName(name: String): Block {
-		GameRegistry.registerBlock(this, ItemGrapeWhite::class.java, name)
+		GameRegistry.registerBlock(this, ItemBlockGrapeWhite::class.java, name)
 		return super.setBlockName(name)
 	}
 	

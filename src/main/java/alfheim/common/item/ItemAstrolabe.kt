@@ -84,7 +84,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		val block = blockToPlace.item.toBlock()
 		val meta = blockToPlace.meta
 		player.worldObj.setBlock(x, y, z, block, meta, 3)
-		player.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block))
+		player.worldObj.playAuxSFX(2001, x, y, z, block?.id ?: 1)
 		
 		if (player.capabilities.isCreativeMode) return
 		

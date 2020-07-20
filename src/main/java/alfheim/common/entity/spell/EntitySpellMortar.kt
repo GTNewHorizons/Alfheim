@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
@@ -10,7 +9,6 @@ import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.security.InteractionSecurity
 import alfheim.common.spell.earth.SpellMortar
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
@@ -65,7 +63,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 			setDead()
 		} else {
 			if (!ASJUtilities.isServer) {
-				worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(ModBlocks.livingrock) + "_0", posX + Math.random() - 0.5, posY, posZ + Math.random() - 0.5, motionX / -10, -0.05, motionX / -10)
+				worldObj.spawnParticle("blockcrack_${ModBlocks.livingrock.id}_0", posX + Math.random() - 0.5, posY, posZ + Math.random() - 0.5, motionX / -10, -0.05, motionX / -10)
 				return
 			}
 			super.onUpdate()

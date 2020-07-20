@@ -168,6 +168,12 @@ object AlfheimHookHandler {
 		return pe
 	}
 	
+	// #### BlockFence connection fix ####
+	
+	@JvmStatic
+	@Hook(returnCondition = ON_TRUE)
+	fun canConnectFenceTo(fence: BlockFence, world: IBlockAccess, x: Int, y: Int, z: Int) = world.getBlock(x, y, z) is BlockFence
+	
 	// #### BlockWall fix ####
 	
 	@JvmStatic
@@ -645,7 +651,7 @@ object AlfheimHookHandler {
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, targetMethod = "func_150000_e", isMandatory = true)
-	fun onNetherPortalActivation(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
+	fun tryToCreatePortal(portal: BlockPortal, world: World, x: Int, y: Int, z: Int) =
 		MinecraftForge.EVENT_BUS.post(NetherPortalActivationEvent(world, x, y, z))
 	
 	@JvmStatic

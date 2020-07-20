@@ -27,6 +27,7 @@ class NEIAlfheimConfig: IConfigureNEI {
 		API.hideItem(ItemStack(AlfheimBlocks.flugelHead2Block))
 		API.hideItem(ItemStack(AlfheimBlocks.grapesRed[1]))
 		API.hideItem(ItemStack(AlfheimBlocks.grapesRed[2]))
+		API.hideItem(ItemStack(AlfheimBlocks.grapesRedPlanted))
 		API.hideItem(ItemStack(AlfheimBlocks.invisibleFlame))
 		API.hideItem(ItemStack(AlfheimBlocks.powerStone, 1, 0))
 		API.hideItem(ItemStack(AlfheimBlocks.rainbowFlame))

@@ -1,16 +1,9 @@
 package alfmod.common.core.handler
 
-import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
-import net.minecraftforge.common.MinecraftForge
 
-object EventHandler {
-	
-	init {
-		FMLCommonHandler.instance().bus().register(this)
-		MinecraftForge.EVENT_BUS.register(this)
-	}
+object EventHandlerWinter {
 	
 	var nextRain = 0
 	
