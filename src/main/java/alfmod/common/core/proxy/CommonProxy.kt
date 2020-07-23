@@ -3,7 +3,8 @@ package alfmod.common.core.proxy
 import alexsocol.asjlib.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.registry.AlfheimRegistry
-import alfheim.common.world.dim.alfheim.biome.BiomeField
+import alfheim.common.world.dim.alfheim.biome.*
+import alfheim.common.world.dim.alfheim.biome.BiomeAlfheim.Companion.addEntry
 import alfmod.AlfheimModularCore
 import alfmod.common.block.AlfheimModularBlocks
 import alfmod.common.core.handler.*
@@ -12,6 +13,7 @@ import alfmod.common.entity.*
 import alfmod.common.entity.boss.EntityDedMoroz
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.lexicon.AlfheimModularLexiconData
+import net.minecraft.world.biome.BiomeGenBase
 
 open class CommonProxy {
 	
@@ -42,8 +44,12 @@ open class CommonProxy {
 	}
 	
 	open fun postInit() {
-
 		if (WRATH_OF_THE_WINTER)
 			BiomeField.addEntry(EntitySnowSprite::class.java, AlfheimConfigHandler.pixieSpawn.map { it * 2 }.toIntArray())
+		
+		if (SUMMER_EVENT)
+			arrayOf(BiomeBeach, BiomeSandbank, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, BiomeGenBase.beach).forEach {
+				it.addEntry(EntityRollingMelon::class.java, AlfheimConfigHandler.pixieSpawn.map { v -> v * 4 }.toIntArray())
+			}
 	}
 }

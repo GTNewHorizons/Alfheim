@@ -85,10 +85,10 @@ abstract class AdvancedArmorModel: ModelBiped() {
 			bipedLeftArm.rotateAngleZ -= MathHelper.cos(z * 0.09f) * 0.05f + 0.05f
 			bipedLeftArm.rotateAngleX -= MathHelper.sin(z * 0.067f) * 0.05f
 			
-			if (entity is EntitySkeleton && entity.skeletonType == 1)
-				glScalef(1.2f, 1.2f, 1.2f)
-			else if (entity is EntityGiantZombie)
-				glScalef(6f, 6f, 6f)
+//			if (entity is EntitySkeleton && entity.skeletonType == 1)
+//				glScalef(1.2f, 1.2f, 1.2f)
+//			else if (entity is EntityGiantZombie)
+//				glScalef(6f, 6f, 6f)
 			
 		}
 		

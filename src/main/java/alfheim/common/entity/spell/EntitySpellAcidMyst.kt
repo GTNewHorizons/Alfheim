@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -38,7 +37,7 @@ class EntitySpellAcidMyst(world: World): Entity(world), ITimeStopSpecific {
 			setDead()
 			return
 		}
-		if (isDead || !ASJUtilities.isServer) return
+		if (isDead || ASJUtilities.isClient) return
 		
 		if (ticksExisted % 20 == 0) VisualEffectHandler.sendPacket(VisualEffects.ACID, this)
 		

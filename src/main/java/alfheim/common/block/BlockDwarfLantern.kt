@@ -1,5 +1,6 @@
 package alfheim.common.block
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.helper.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -22,7 +23,7 @@ class BlockDwarfLantern: BlockMod(Material.rock) {
 		setResistance(10000f)
 		setStepSound(soundTypeStone)
 		
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

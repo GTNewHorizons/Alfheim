@@ -1,5 +1,6 @@
 package alfheim.common.item
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.entity.EntityThrowableItem
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -14,7 +15,7 @@ import net.minecraftforge.common.MinecraftForge
 class ItemFireGrenade: ItemMod("fireGrenade") {
 	
 	init {
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

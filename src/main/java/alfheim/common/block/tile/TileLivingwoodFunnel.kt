@@ -199,7 +199,7 @@ class TileLivingwoodFunnel: TileMod(), IHopper {
 	
 	private fun getFacingInventory(): IInventory? {
 		val i = BlockFunnel.getDirectionFromMetadata(getBlockMetadata())
-		return getInventoryAt(getWorldObj(), (xCoord + Facing.offsetsXForSide[i]).D, (yCoord + Facing.offsetsYForSide[i]).D, (zCoord + Facing.offsetsZForSide[i]).D)
+		return getInventoryAt(worldObj, (xCoord + Facing.offsetsXForSide[i]).D, (yCoord + Facing.offsetsYForSide[i]).D, (zCoord + Facing.offsetsZForSide[i]).D)
 	}
 	
 	fun IInventory.addItemToSide(item: ItemStack?, side: Int): ItemStack? {

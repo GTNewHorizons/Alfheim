@@ -327,7 +327,7 @@ object EventHandler {
 			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 				val pe = e.entityLiving.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
 				pe.duration--
-				if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
+				if (ASJUtilities.isClient) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
 				if (pe.duration <= 0)
 					e.entityLiving.removePotionEffect(pe.potionID)
 				else

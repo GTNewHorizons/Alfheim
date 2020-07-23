@@ -536,7 +536,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaGenerator)
 		addBlock(schemaAnnihilator)
 		
-		if (!ASJUtilities.isServer) {
+		if (ASJUtilities.isClient) {
 			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
 				addItem(royalStaff)
 		}

@@ -77,7 +77,6 @@ object LibResourceLocations {
 	val spellFrameEpic = ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png")
 	val spellRace = ResourceLocation(ModInfo.MODID, "textures/gui/SpellRace.png")
 	var spreader = ResourceLocation("botania:textures/model/spreader.png")
-	val spearGungnir = ResourceLocation(ModInfo.MODID, "textures/model/entity/Gungnir.png")
 	val spearSubspace = ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/spearsubspace.png")
 	val target = ResourceLocation(ModInfo.MODID, "textures/misc/target.png")
 	val targetq = ResourceLocation(ModInfo.MODID, "textures/misc/targetq.png")

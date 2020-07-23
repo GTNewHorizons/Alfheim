@@ -3,10 +3,11 @@ package alfheim.common.item.equipment.bauble
 import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.AlfheimTab
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.DamageSource
+import net.minecraft.util.*
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
@@ -18,7 +19,10 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 		creativeTab = AlfheimTab
 	}
 	
+	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
+		iconHoly = IconHelper.forName(reg, "cloak_holy")
+		iconUnholy = IconHelper.forName(reg, "cloak_unholy")
 		itemIcon = IconHelper.forName(reg, "cloak_balance")
 	}
 	
@@ -47,5 +51,11 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 		return false
 	}
 	
+	@SideOnly(Side.CLIENT)
 	override fun getRenderTexture() = LibResourceLocations.cloakBalance
+	
+	companion object {
+		lateinit var iconHoly: IIcon
+		lateinit var iconUnholy: IIcon
+	}
 }

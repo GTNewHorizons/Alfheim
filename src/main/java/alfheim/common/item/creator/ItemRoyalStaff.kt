@@ -1,5 +1,6 @@
 package alfheim.common.item.creator
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.helper.*
 import alfheim.common.item.*
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -24,7 +25,7 @@ class ItemRoyalStaff: ItemMod("RoyalStaff") {
 		maxStackSize = 1
 		maxDamage = 0
 		
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

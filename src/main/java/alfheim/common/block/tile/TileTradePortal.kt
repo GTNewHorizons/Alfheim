@@ -104,7 +104,7 @@ class TileTradePortal: TileMod() {
 		if (meta == 2) pos = CONVERTER_X_Z_FP.apply(pos)
 		
 		val motionMul = 0.2f
-		Botania.proxy.wispFX(getWorldObj(), xCoord + pos!![0], yCoord + pos[1], zCoord + pos[2],
+		Botania.proxy.wispFX(worldObj, xCoord + pos!![0], yCoord + pos[1], zCoord + pos[2],
 							 (Math.random() * 0.5f + 0.5f).F, (Math.random() * 0.25f + 0.5f).F, (Math.random() * 0.25f).F,
 							 (Math.random() * 0.15f + 0.1f).F, (Math.random() - 0.5f).F * motionMul,
 							 (Math.random() - 0.5f).F * motionMul, (Math.random() - 0.5f).F * motionMul)

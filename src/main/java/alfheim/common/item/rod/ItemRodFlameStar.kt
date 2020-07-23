@@ -30,7 +30,7 @@ class ItemRodFlameStar(name: String = "rodFlameStar"): ItemMod(name), IManaUsing
 	
 	init {
 		maxStackSize = 1
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

@@ -19,7 +19,7 @@ public class MessageKeyBindS extends ASJPacket {
 	
 	@Override
 	public void fromBytes(@NotNull ByteBuf buf) {
-		if (!ASJUtilities.isServer()) return;
+		if (ASJUtilities.isClient()) return;
 		action = buf.readInt();
 		data = buf.readInt();
 		state = buf.readBoolean();

@@ -21,7 +21,7 @@ import kotlin.math.*
 class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null) {
 	
 	init {
-		setUnlocalizedName("GrapeRegPlanted")
+		setBlockName("GrapeRegPlanted")
 		setHardness(2.0F)
 		setLightOpacity(0)
 		setResistance(5.0F)
@@ -51,7 +51,7 @@ class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null) {
 		setBlockBounds(min(minX, blockBoundsMinX.F), 0f, min(minZ, blockBoundsMinZ.F), max(1 - maxX, blockBoundsMaxX.F), max(h, blockBoundsMaxY.F), max(1 - maxZ, blockBoundsMaxZ.F))
 	}
 	
-	override fun registerIcons(reg: IIconRegister) {
+	override fun registerBlockIcons(reg: IIconRegister) {
 		blockIcon = AlfheimBlocks.grapesRed[0].getIcon(0, 0)
 	}
 	

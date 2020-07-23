@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -32,7 +31,7 @@ class EntitySpellGravityTrap @JvmOverloads constructor(world: World, var caster:
 			setDead()
 			return
 		}
-		if (isDead || ticksExisted < 20 || !ASJUtilities.isServer) return
+		if (isDead || ticksExisted < 20 || ASJUtilities.isClient) return
 		
 		val l = worldObj.getEntitiesWithinAABB(Entity::class.java, AxisAlignedBB.getBoundingBox(posX, posY + 8, posZ, posX, posY + 8, posZ).expand(SpellGravityTrap.radius, 9.0, SpellGravityTrap.radius)) as List<Entity>
 		for (e in l) {

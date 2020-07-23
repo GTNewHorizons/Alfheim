@@ -13,7 +13,7 @@ entity.alfmod:DedMoroz.name=冬将军
 entity.alfmod:SnowSprite.name=血精灵
 entity.alfmod:SniceBall.name=小雪球
 
-death.attack.alfmod:frost=%s 被 %s 用冰寒刺骨的冷气杀死
+death.attack.frost=%s 被 %s 用冰寒刺骨的冷气杀死
 
 itemGroup.AlfheimModular=艾尔夫海姆-传闻记
 

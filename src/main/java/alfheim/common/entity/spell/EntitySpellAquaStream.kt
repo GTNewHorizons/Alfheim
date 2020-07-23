@@ -37,7 +37,7 @@ class EntitySpellAquaStream(world: World): Entity(world), ITimeStopSpecific {
 			setDead()
 			return
 		}
-		if (isDead || !ASJUtilities.isServer) return
+		if (isDead || ASJUtilities.isClient) return
 		
 		var mop = ASJUtilities.getMouseOver(caster, SpellAquaStream.radius, true)
 		if (mop == null) mop = ASJUtilities.getSelectedBlock(caster, SpellAquaStream.radius, true)

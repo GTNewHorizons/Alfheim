@@ -1,5 +1,6 @@
 package alfheim.common.block.base
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemBlockLeavesMod
@@ -17,7 +18,7 @@ open class BlockMod(material: Material): Block(material) {
 	
 	init {
 		setCreativeTab(AlfheimTab)
-		if (FMLLaunchHandler.side().isClient && isInterpolated())
+		if (ASJUtilities.isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

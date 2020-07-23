@@ -57,7 +57,7 @@ class EntityMuspellsun(world: World): EntityMob(world) {
 	override fun getLivingSound() = "mob.blaze.breathe"
 	override fun getHurtSound() = "mob.wither.hurt"
 	override fun getDeathSound() = "mob.blaze.death"
-	override fun playStepSound(x: Int, y: Int, z: Int, block: Block) = playSound("mob.irongolem.walk", 1f, 1f)
+	override fun func_145780_a(x: Int, y: Int, z: Int, block: Block) = playSound("mob.irongolem.walk", 1f, 1f)
 	
 	override fun attackEntityAsMob(entity: Entity): Boolean {
 		return if (super.attackEntityAsMob(entity)) {
@@ -88,13 +88,15 @@ class EntityMuspellsun(world: World): EntityMob(world) {
 		}
 	
 	override fun dropFewItems(gotHit: Boolean, looting: Int) {
+		if (!gotHit) return
+		
 		var item = dropItem
 		
 		val meta = when (item) {
 			AlfheimItems.elvenResource -> ElvenResourcesMetas.MuspelheimEssence
 			Items.coal                 -> ElvenResourcesMetas.NetherwoodCoal
 			Items.fire_charge          -> 0
-			else                       -> (item.maxDurability - 1) / (looting + 1)
+			else                       -> (item.maxDamage - 1) / (looting + 1)
 		}
 		
 		val size = 1 + when (item) {

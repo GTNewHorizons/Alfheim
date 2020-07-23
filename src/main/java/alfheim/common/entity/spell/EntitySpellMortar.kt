@@ -62,7 +62,7 @@ class EntitySpellMortar(world: World): Entity(world), ITimeStopSpecific {
 		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster != null && caster!!.isDead || !worldObj.blockExists(posX.I, posY.I, posZ.I))) {
 			setDead()
 		} else {
-			if (!ASJUtilities.isServer) {
+			if (ASJUtilities.isClient) {
 				worldObj.spawnParticle("blockcrack_${ModBlocks.livingrock.id}_0", posX + Math.random() - 0.5, posY, posZ + Math.random() - 0.5, motionX / -10, -0.05, motionX / -10)
 				return
 			}

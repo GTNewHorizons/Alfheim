@@ -53,8 +53,8 @@ class ItemElvenFood: ItemFood(0, 0f, false) {
 		return when (stack.meta) {
 			0    -> 20  // lembas
 			1, 2 -> 1 // grapes
-			3    -> 3 // honey
-			4, 5 -> 3 // vine
+			3    -> 1 // honey
+			4, 5 -> 6 // vine
 			else -> 0
 		}
 	}

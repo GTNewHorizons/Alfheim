@@ -1140,18 +1140,4 @@ object AlfheimHookHandler {
 		
 		return entity.isInvisible
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
-	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun registerIcons(cloak: ItemHolyCloak, reg: IIconRegister) {
-		cloak.itemIcon = IconHelper.forName(reg, "cloak_holy")
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@JvmStatic
-	@Hook(createMethod = true, returnCondition = ALWAYS)
-	fun registerIcons(cloak: ItemUnholyCloak, reg: IIconRegister) {
-		cloak.itemIcon = IconHelper.forName(reg, "cloak_unholy")
-	}
 }

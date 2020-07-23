@@ -1,10 +1,12 @@
 package alfheim.common.integration.travellersgear
 
+import cpw.mods.fml.common.Optional
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import travellersgear.api.ITravellersGear
 import vazkii.botania.common.core.helper.ItemNBTHelper
 
+@Optional.Interface(modid = "TravellersGear", iface = "travellersgear.api.ITravellersGear", striprefs = true)
 interface ITravellersGearSynced: ITravellersGear {
 	
 	override fun onTravelGearEquip(player: EntityPlayer, stack: ItemStack) {

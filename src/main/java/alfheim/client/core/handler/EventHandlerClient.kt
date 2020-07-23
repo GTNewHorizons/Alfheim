@@ -74,13 +74,13 @@ object EventHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onEntityUpdate(e: EntityUpdateEvent) {
-		if (!ASJUtilities.isServer && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
+		if (ASJUtilities.isClient && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
 	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	fun onEntityUpdate(e: LivingUpdateEvent) {
-		if (!ASJUtilities.isServer && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
+		if (ASJUtilities.isClient && TimeStopSystemClient.affected(e.entity)) e.isCanceled = true
 	}
 	
 	@SubscribeEvent

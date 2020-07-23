@@ -450,7 +450,7 @@ object ASJUtilities {
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
-		val vec3 = Vec3.createVectorHelper(entity.posX, if (!isServer) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
+		val vec3 = Vec3.createVectorHelper(entity.posX, if (isClient) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		var vec33: Vec3? = null
@@ -849,7 +849,7 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun sayToAllOnline(message: String) {
-		if (!isServer) return
+		if (isClient) return
 		
 		val list = MinecraftServer.getServer().configurationManager.playerEntityList
 		for (online in list) say(online as EntityPlayer, message)
@@ -868,6 +868,9 @@ object ASJUtilities {
 	@JvmStatic
 	val isServer: Boolean
 		get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
+	
+	@JvmStatic
+	val isClient get() = !isServer
 	
 	@JvmStatic
 	fun toString(nbt: NBTTagCompound): String {

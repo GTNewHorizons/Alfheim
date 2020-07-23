@@ -1,6 +1,7 @@
 package alfheim.common.entity
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.common.item.AlfheimItems
 import alfheim.common.world.dim.alfheim.biome.BiomeField
 import baubles.common.lib.PlayerHandler
@@ -65,9 +66,10 @@ class EntityAlfheimPixie(world: World): EntityFlyingCreature(world) {
 		if (player == null) {
 			setDead()
 			onDeath(DamageSource.outOfWorld)
+			return
 		}
 		
-		player = ASJUtilities.getClosestVulnerablePlayerToEntity(this, 16.0)
+		if (Vector3.entityDistance(this, player) > 16.0) player = null
 		if (player != null && PlayerHandler.getPlayerBaubles(player).getStackInSlot(0)?.item === AlfheimItems.pixieAttractor && ManaItemHandler.requestManaExact(PlayerHandler.getPlayerBaubles(player).getStackInSlot(0), player, 1, true)) {
 			val vec = player.getLook(1f)
 			motionX = (player.posX + vec.xCoord - posX) / 8f

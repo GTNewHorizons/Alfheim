@@ -5,6 +5,7 @@ import alfheim.api.lib.LibResourceLocations
 import baubles.api.BaubleType
 import com.mojang.authlib.GameProfile
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.relauncher.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.entity.EntityLivingBase
@@ -25,7 +26,15 @@ class ItemRationBelt: ItemBauble("RationBelt"), IBaubleRender {
 	
 	companion object {
 		
+		@field:SideOnly(Side.CLIENT)
 		var model: ModelBiped? = null
+			@SideOnly(Side.CLIENT)
+			get() = field
+			@SideOnly(Side.CLIENT)
+			set(value) {
+				field = value
+			}
+		
 		var captureSounds = false
 		
 		init {

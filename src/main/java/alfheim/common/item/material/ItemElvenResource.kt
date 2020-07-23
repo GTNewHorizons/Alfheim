@@ -42,12 +42,13 @@ import java.awt.Color
 
 class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IFuelHandler/*, ILensEffect*/ {
 	
-	private val texture = arrayOfNulls<IIcon>(subItems.size)
+	val texture = arrayOfNulls<IIcon>(subItems.size)
 	
 	init {
 		setHasSubtypes(true)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
+		
 		GameRegistry.registerFuelHandler(this)
 	}
 	

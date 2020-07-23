@@ -16,7 +16,7 @@ class ItemBlockGrapeRed(block: Block): ItemBlock(block) {
 		if (blockAt !== Blocks.fence) return false
 		
 		world.setBlock(x, y, z, AlfheimBlocks.grapesRedPlanted, 0, 3)
-		world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, blockInstance.stepSound.soundName, (blockInstance.stepSound.getVolume() + 1.0f) / 2.0f, blockInstance.stepSound.frequency * 0.8f)
+		world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, field_150939_a.stepSound.soundName, (field_150939_a.stepSound.volume + 1.0f) / 2.0f, field_150939_a.stepSound.pitch * 0.8f)
 		
 		if (!player.capabilities.isCreativeMode) --stack.stackSize
 		

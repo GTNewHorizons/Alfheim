@@ -12,6 +12,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.command.IEntitySelector
 import net.minecraft.entity.*
+import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.*
@@ -49,6 +50,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	override fun onEntitySwing(entity: EntityLivingBase, stack: ItemStack?): Boolean {
 		if (entity.isSneaking && isWorthy(entity))
 			entity.worldObj.spawnEntityInWorld(EntitySpellFenrirStorm(entity.worldObj, entity).also { it.mjolnir = true })
+		
 		return super.onEntitySwing(entity, stack)
 	}
 	
@@ -89,6 +91,10 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 		}
 		
 		return super.hitEntity(stack, entity, attacker)
+	}
+	
+	override fun getAttributeModifiers(stack: ItemStack?) = super.getAttributeModifiers(stack).apply {
+		put(SharedMonsterAttributes.attackDamage.attributeUnlocalizedName, AttributeModifier(Item.field_111210_e, "Weapon modifier", 8.0, 0))
 	}
 	
 	// ################ Right-click ################

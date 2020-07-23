@@ -12,7 +12,7 @@ import vazkii.botania.common.core.helper.ItemNBTHelper
 class GUIAggro: GUIIceLens() {
 	
 	override fun check(event: RenderGameOverlayEvent.Post): Boolean {
-		return event.type != RenderGameOverlayEvent.ElementType.HELMET || !(mc.thePlayer?.let { ItemHeimdallRing.getHeimdallRing(it) }?.let { ItemNBTHelper.getInt(it, ItemHeimdallRing.TAG_AGGRO, 0) > 0 } == true || lookForPlayer())
+		return event.type != RenderGameOverlayEvent.ElementType.HELMET || !(mc.thePlayer?.let { ItemHeimdallRing.getHeimdallRing(it) }?.let { ItemNBTHelper.getInt(it, ItemHeimdallRing.TAG_AGGRO, 0) > 0 || lookForPlayer() } == true)
 	}
 	
 	fun lookForPlayer(): Boolean {

@@ -17,8 +17,6 @@ object SpellTimeStop: SpellBase("timestop", EnumRace.LEPRECHAUN, 256000, 75000, 
 	override fun performCast(caster: EntityLivingBase): SpellCastResult {
 		if (!InteractionSecurity.canDoSomethingHere(caster)) return SpellCastResult.NOTALLOW
 		
-		duration = 12000
-		
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) TimeStopSystem.stop(caster)
 		return result

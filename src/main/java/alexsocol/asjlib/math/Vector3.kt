@@ -344,6 +344,6 @@ class Vector3: Serializable {
 		
 		fun pointDistanceSpace(x1: Number, y1: Number, z1: Number, x2: Number, y2: Number, z2: Number) = sqrt((x1.D - x2.D).pow(2) + (y1.D - y2.D).pow(2) + (z1.D - z2.D).pow(2))
 		
-		private val Entity.posYp get() = posY - if (!ASJUtilities.isServer && mc.thePlayer === this) 1.62 else 0.0
+		private val Entity.posYp get() = posY - if (ASJUtilities.isClient && mc.thePlayer === this) 1.62 else 0.0
 	}
 }

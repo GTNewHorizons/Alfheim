@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.core.handler.*
@@ -35,7 +34,7 @@ class EntitySpellHarp(world: World): Entity(world), ITimeStopSpecific {
 		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster == null || caster!!.isDead)) {
 			setDead()
 		} else {
-			if (!ASJUtilities.isServer) return
+			if (ASJUtilities.isClient) return
 			super.onUpdate()
 			
 			if (ticksExisted >= SpellHarp.duration) setDead()

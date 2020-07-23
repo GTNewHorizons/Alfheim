@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
 import alfheim.common.item.material.ElvenFoodMetas
 import net.minecraft.nbt.NBTTagCompound
@@ -57,6 +57,8 @@ class TileBarrel: ASJTile() {
 		nbt.setInteger(TAG_WINE_STAGE, wineStage)
 		nbt.setInteger(TAG_WINE_TYPE, wineType)
 	}
+	
+	override fun getRenderBoundingBox() = boundingBox(1)
 	
 	companion object {
 		

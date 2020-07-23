@@ -47,14 +47,13 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 			setDead()
 			return
 		}
-		if (isDead || !ASJUtilities.isServer) return
+		if (isDead || ASJUtilities.isClient) return
 		
 		val caster = caster
 		
 		if (mjolnir && caster != null) {
-			this.rotationYaw = caster.rotationYaw
-			this.rotationYawHead = caster.rotationYawHead
-			this.rotationPitch = caster.rotationPitch
+			rotationYaw = caster.rotationYaw
+			rotationPitch = caster.rotationPitch
 			
 			area.fromAABB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
 			area.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)

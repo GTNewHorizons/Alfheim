@@ -5,6 +5,7 @@ import alexsocol.asjlib.math.Vector3
 import alfmod.common.entity.EntityRollingMelon
 import net.minecraft.client.model.*
 import net.minecraft.entity.Entity
+import kotlin.math.PI
 
 class ModelRollingMelon: ModelBase() {
 	
@@ -21,8 +22,11 @@ class ModelRollingMelon: ModelBase() {
 	override fun setRotationAngles(f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float, entity: Entity?) {
 		if (entity !is EntityRollingMelon) return
 		
-		val ticks = mc.timer.renderPartialTicks
-		entity.rotation += Vector3(entity.motionX * ticks, 0, entity.motionZ * ticks).length().F
-		melon.rotateAngleY = entity.rotation
+		if (!mc.isGamePaused) {
+			val ticks = mc.timer.renderPartialTicks
+			entity.rotation += Vector3(entity.motionX * ticks, 0, entity.motionZ * ticks).length().F
+		}
+		
+		melon.rotateAngleX = entity.rotation * PI.F
 	}
 }

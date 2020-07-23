@@ -70,7 +70,7 @@ class BlockAnomaly: BlockContainerMod(anomaly), ILexiconable {
 	override fun getEntry(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, lexicon: ItemStack) = AlfheimLexiconData.anomaly
 	
 	companion object {
-		val anomaly = MaterialPublic(MapColor.airColor).setGrass().setNotOpaque().setImmovableMobility()
+		val anomaly = MaterialPublic(MapColor.airColor).setBlocksLight().setNotOpaque().setImmovableMobility()
 		lateinit var iconUndefined: IIcon
 	}
 }

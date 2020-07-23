@@ -98,7 +98,7 @@ object ThaumcraftAlfheimModule {
 		constructItems()
 		registerBlocks()
 		registerItems()
-		if (!ASJUtilities.isServer) registerRenders()
+		if (ASJUtilities.isClient) registerRenders()
 	}
 	
 	fun constructBlocks() {

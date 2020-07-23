@@ -19,8 +19,9 @@ import net.minecraft.init.*
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
-import net.minecraft.world.World
-import net.minecraftforge.event.entity.living.LivingAttackEvent
+import net.minecraft.world.*
+import net.minecraftforge.event.entity.living.*
+import vazkii.botania.common.Botania
 import vazkii.botania.common.item.ModItems
 import kotlin.math.*
 
@@ -58,8 +59,15 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		
 		super.onEntityUpdate()
 		
-		if (master && !checkStructure(worldObj, x, y - 1, z, false, null)) {
-			setDead()
+		if (if (master) {
+				!checkStructure(worldObj, x, y - 1, z, timer <= 0, null)
+			} else {
+				!(worldObj.getBlock(x, y, z) === AlfheimBlocks.alfheimPylon && worldObj.getBlockMetadata(x, y, z) == 1)
+			}) {
+			if (!worldObj.isRemote) {
+				health = 0f
+				setDead()
+			}
 			return
 		}
 		
@@ -95,13 +103,13 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		if (timer == 1) {
 			worldObj.setBlockToAir(x, y - 1, z)
 			if (!worldObj.isRemote)
-				worldObj.spawnEntityInWorld(EntityItem(worldObj, x + 0.5, y + 1.5, z + 0.5, ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.SunRelic)).apply { setMotion(0.0) })
+				worldObj.spawnEntityInWorld(EntityItem(worldObj, x + 0.5, y + 1.5, z + 0.5, ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.VolcanoRelic)).apply { setMotion(0.0) })
 			return
 		}
 		
 		if (timer % 50 == 0) {
 			if (!worldObj.isRemote) worldObj.spawnEntityInWorld(
-				@Suppress("IMPLICIT_CAST_TO_ANY") // this is not Any, this is EntityLiving you stupid plugin -_-
+				selectModded(this, x, y, z) ?: @Suppress("IMPLICIT_CAST_TO_ANY") // this is not Any, this is EntityLiving you stupid plugin -_-
 				(when (rand.nextInt(11)) {
 					0       -> {
 						EntityMuspellsun(worldObj).apply {
@@ -149,10 +157,8 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 					7       -> EntityGhast(worldObj).apply {
 						setRandomPos(x, y, z, true)
 						
-						if (rand.nextInt(3) == 0) {
-							targetedEntity = this@EntityFirespirit
-							aggroCooldown = this@EntityFirespirit.timer + 50
-						}
+						targetedEntity = this@EntityFirespirit
+						aggroCooldown = this@EntityFirespirit.timer + 50
 						
 						explosionStrength = rand.nextInt(3) + 2
 					}
@@ -196,24 +202,30 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		super.setDead()
 		
 		val (x, y, z) = position
+		val master = master
 		
 		if (health <= 0f || master) {
-			worldObj.playAuxSFX(2001, x, y, z, worldObj.getBlock(x, y, z).id + (worldObj.getBlockMetadata(x, y, z) shl 12))
-			worldObj.setBlockToAir(x, y, z)
+			for (i in 0..(if (master) 1 else 0)) {
+				worldObj.playAuxSFX(2001, x, y - i, z, worldObj.getBlock(x, y - i, z).id + (worldObj.getBlockMetadata(x, y - i, z) shl 12))
+				worldObj.setBlockToAir(x, y - i, z)
+			}
 		}
 		
-		if (!master) return
-		
 		for (c in PYLONS) {
-			worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + c[0] + 0.5, y + c[1] + 0.5, z + c[2] + 0.5).expand(0.5)).forEach {
-				(it as? EntityFirespirit)?.setDead()
+			worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + c[0] + 0.5, y + c[1] + if (master) 0.5 else -0.5, z + c[2] + 0.5).expand(0.5)).forEach {
+				it as EntityFirespirit
+				if (master) {
+					it.setDead()
+				} else if (it.master) {
+					it.timer += 500
+					val (ix, iy, iz) = it.position
+					if (!worldObj.isRemote && health <= 0f) getPlayersAround(it.worldObj, ix, iy, iz).forEach { player -> ASJUtilities.say(player, "alfmodmisc.spirit.pylondied") }
+				}
 			}
 		}
 	}
 	
-	override fun getCommandSenderName(): String {
-		return StatCollector.translateToLocal("${super.getCommandSenderName()}${if (master) ".greater" else ""}")
-	}
+	override fun getCommandSenderName() = StatCollector.translateToLocal("entity.${EntityList.getEntityString(this) ?: "generic"}${if (master) ".greater" else ""}.name")!!
 	
 	override fun canDespawn() = false
 	
@@ -291,11 +303,21 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 				return false
 			}
 			
+			if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
+				if (!world.isRemote)
+					if (!first) {
+						getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.peaceful") }
+					} else {
+						ASJUtilities.say(player, "alfmodmisc.spirit.peaceful")
+					}
+				return false
+			}
+			
 			if (first) {
 				for (c in PYLONS)
 					if (world.getBlock(x + c[0], y + c[1], z + c[2]) !== AlfheimBlocks.alfheimPylon || world.getBlockMetadata(x + c[0], y + c[1], z + c[2]) != 1) {
 						if (!world.isRemote) {
-							ASJUtilities.say(player, "alfmodmisc.spirit.nopylons.$first")
+							ASJUtilities.say(player, "alfmodmisc.spirit.nopylons")
 							VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, x + c[0] + 0.5, y + c[1] + 0.5, z + c[2] + 0.5, 1.0, 0.5, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
 						}
 						return false
@@ -370,10 +392,45 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 			setPosition(a, b, c)
 		}
 		
+		fun selectModded(spirit: EntityFirespirit, x: Int, y: Int, z: Int): EntityLivingBase? {
+			if (spirit.rand.nextInt(4) != 0) return null
+			
+			return when (spirit.rand.nextInt(10)) {
+				in 0..9 -> if (Botania.thaumcraftLoaded)
+					Class.forName("thaumcraft.common.entities.monster.EntityFireBat").getConstructor(World::class.java).newInstance(spirit.worldObj).apply {
+						this as EntityMob
+						setRandomPos(x, y, z, true)
+						
+						val devil = spirit.rand.nextBoolean()
+						val explosive = !devil
+						
+						ASJReflectionHelper.invoke<EntityMob, Unit>(this, arrayOf<Any>(devil), arrayOf<Any>("setIsDevil", arrayOf<Class<*>>(Boolean::class.java)))
+						ASJReflectionHelper.invoke<EntityMob, Unit>(this, arrayOf<Any>(explosive), arrayOf<Any>("setIsExplosive", arrayOf<Class<*>>(Boolean::class.java)))
+						
+						setTarget(spirit)
+						
+						if (devil)
+							getEntityAttribute(SharedMonsterAttributes.attackDamage).baseValue = 6.0
+						
+						getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = if (explosive) 12.0 else 24.0
+						health = maxHealth
+					} as EntityMob else null
+				
+				else    -> null
+			}
+		}
+		
 		// disable friendly-fire for ritual summoned entities
 		@SubscribeEvent
 		fun onLivingAttacked(e: LivingAttackEvent) {
-			e.isCanceled = e.entityLiving.entityData.getBoolean(TAG_RITUAL_SUMMONED) && e.source.entity?.entityData?.getBoolean(TAG_RITUAL_SUMMONED) == true
+			if (e.entityLiving.entityData.getBoolean(TAG_RITUAL_SUMMONED)) {
+				e.isCanceled = e.source.isExplosion || e.source.isFireDamage || e.source.damageType == "fall" || e.source.entity?.entityData?.getBoolean(TAG_RITUAL_SUMMONED) == true
+			}
+		}
+		
+		@SubscribeEvent
+		fun onDrops(e: LivingDropsEvent) {
+			if (e.entityLiving.entityData.getBoolean(TAG_RITUAL_SUMMONED)) e.isCanceled = true
 		}
 	}
 }

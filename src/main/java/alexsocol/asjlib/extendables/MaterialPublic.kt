@@ -6,7 +6,7 @@ import net.minecraft.block.material.*
 class MaterialPublic(color: MapColor): Material(color) {
 	
 	var blocker = true
-	var grass = true
+	var blocksLight = true
 	var liquid = false
 	var opaque = true
 	var solid = true
@@ -14,7 +14,7 @@ class MaterialPublic(color: MapColor): Material(color) {
 	// BLOCKS WATER
 	override fun blocksMovement() = blocker
 	
-	override fun getCanBlockGrass() = grass
+	override fun getCanBlockGrass() = blocksLight
 	
 	override fun isLiquid() = liquid
 	
@@ -34,8 +34,8 @@ class MaterialPublic(color: MapColor): Material(color) {
 		return this
 	}
 	
-	fun setGrass(): MaterialPublic {
-		grass = true
+	fun setBlocksLight(): MaterialPublic {
+		blocksLight = true
 		return this
 	}
 	

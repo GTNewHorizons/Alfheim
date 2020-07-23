@@ -4,7 +4,6 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.DamageSourceSpell
 import alfheim.common.spell.sound.SpellIsaacStorm
-import net.minecraft.block.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.IMob
 import net.minecraft.nbt.NBTTagCompound
@@ -149,12 +148,7 @@ class EntitySpellIsaacMissile(world: World): EntityThrowableCopy(world) {
 		time = cmp.getInteger(TAG_TIME)
 	}
 	
-	override fun onImpact(pos: MovingObjectPosition) {
-		val block = worldObj.getBlock(pos.blockX, pos.blockY, pos.blockZ)
-		
-		if (block !is BlockBush && block !is BlockLeaves && (pos.entityHit == null || targetEntity === pos.entityHit))
-			setDead()
-	}
+	override fun onImpact(pos: MovingObjectPosition) = Unit
 	
 	companion object {
 		private const val TAG_TIME = "time"

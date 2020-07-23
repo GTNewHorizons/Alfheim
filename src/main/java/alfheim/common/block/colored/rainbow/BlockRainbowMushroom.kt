@@ -41,7 +41,7 @@ class BlockRainbowMushroom: BlockMushroom(), IInfusionStabiliser, IHornHarvestab
 		setStepSound(Block.soundTypeGrass)
 		setBlockBounds(0.3f, 0f, 0.3f, 0.8f, 1f, 0.8f)
 		tickRandomly = false
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

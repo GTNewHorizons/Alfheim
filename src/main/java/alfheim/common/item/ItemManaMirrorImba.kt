@@ -37,7 +37,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 		maxDamage = 1000
 		setNoRepair()
 		
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
@@ -93,7 +93,7 @@ class ItemManaMirrorImba: ItemMod("manaMirrorImba"), IManaItem, ICoordBoundItem,
 	fun setManaBacklog(stack: ItemStack, backlog: Int) = ItemNBTHelper.setInt(stack, TAG_MANA_BACKLOG, backlog)
 	
 	override fun getMaxMana(stack: ItemStack): Int {
-		if (!ASJUtilities.isServer) return TilePool.MAX_MANA
+		if (ASJUtilities.isClient) return TilePool.MAX_MANA
 		
 		val pool = getManaPool(stack) ?: return 0
 		

@@ -36,7 +36,7 @@ class BlockAltPlanks: BlockMod(Material.wood), ILexiconable, IFuelHandler {
 		
 		setBlockName(name)
 		GameRegistry.registerFuelHandler(this)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

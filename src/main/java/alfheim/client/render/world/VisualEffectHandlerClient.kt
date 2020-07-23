@@ -153,7 +153,7 @@ object VisualEffectHandlerClient {
 		mc.theWorld.getEntityByID(id)?.let { it.motionY += 5.0 }
 		
 		for (a in 0..64) {
-			v.rand().normalize().mul(0.1)
+			v.rand().normalize().sub(0.5).mul(0.2)
 			val color = Color(Color.HSBtoRGB(mc.theWorld.rand.nextFloat(), 1F, 1F))
 			Botania.proxy.wispFX(mc.theWorld, x, y, z, color.red / 255f, color.green / 255f, color.blue / 255f, 1f, v.x.F, v.y.F, v.z.F, 2f)
 		}

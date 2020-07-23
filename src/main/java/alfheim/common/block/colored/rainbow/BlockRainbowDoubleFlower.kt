@@ -1,5 +1,6 @@
 package alfheim.common.block.colored.rainbow
 
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.base.IDoublePlant
 import alfheim.common.core.helper.InterpolatedIconHelper
@@ -35,7 +36,7 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 		setBlockNameSafe(name)
 		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	
@@ -93,7 +94,7 @@ class BlockRainbowDoubleFlower: BlockDoublePlant(), ILexiconable, IDoublePlant {
 	
 	// stupid private methods
 	fun superSuperHarvestBlock(world: World, player: EntityPlayer, x: Int, y: Int, z: Int, meta: Int) {
-		player.addStat(StatList.mineBlockStatArray[getIdFromBlock(this)], 1)
+		player.addStat(StatList.mineBlockStatArray[id], 1)
 		player.addExhaustion(0.025f)
 		
 		if (this.canSilkHarvest(world, player, x, y, z, meta) && EnchantmentHelper.getSilkTouchModifier(player)) {

@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem
@@ -40,7 +39,7 @@ class EntitySpellWindBlade(world: World): Entity(world), ITimeStopSpecific {
 			return
 		}
 		
-		if (!ASJUtilities.isServer) {
+		if (ASJUtilities.isClient) {
 			Botania.proxy.wispFX(worldObj, posX + Math.random() * 2 - 1, posY, posZ + Math.random() * 2 - 1, Math.random().F * 0.1f + 0.8f, Math.random().F * 0.1f + 0.9f, Math.random().F * 0.1f + 0.8f, Math.random().F * 0.3f + 0.2f, motionX.F / -10f, motionY.F / -10f, motionZ.F / -10f, 0.5f)
 			return
 		}

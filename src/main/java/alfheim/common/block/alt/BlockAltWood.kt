@@ -31,7 +31,7 @@ class BlockAltWood(val set: Int): BlockModRotatedPillar(Material.wood), IFuelHan
 		setBlockName("altWood$set")
 		isBlockContainer = true
 		blockHardness = 2F
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 		
 		GameRegistry.registerFuelHandler(this)

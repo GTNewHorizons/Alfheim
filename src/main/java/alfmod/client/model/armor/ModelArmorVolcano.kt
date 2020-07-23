@@ -1,9 +1,13 @@
 package alfmod.client.model.armor
 
+import alexsocol.asjlib.F
 import net.minecraft.client.model.*
 import net.minecraft.entity.*
+import net.minecraft.entity.monster.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.EnumAction
+import net.minecraft.util.MathHelper
+import org.lwjgl.opengl.GL11
 
 class ModelArmorVolcano(val slot: Int): ModelBiped() {
 	
@@ -423,25 +427,85 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		
 		bipedHeadwear.showModel = false
 		
-		prepareForRender(entity)
+		prepareForRender(entity, f2)
 		
-		super.render(entity, f, f1, f2, f3, f4, f5)
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity)
+		
+		if (entity is EntityZombie || entity is EntitySkeleton || entity is EntityGiantZombie) {
+			val f6 = MathHelper.sin(onGround * Math.PI.F)
+			val f7 = MathHelper.sin((1f - (1f - onGround) * (1f - onGround)) * Math.PI.F)
+			
+			bipedRightArm.rotateAngleZ = 0f
+			bipedRightArm.rotateAngleY = -(0.1f - f6 * 0.6f)
+			bipedRightArm.rotateAngleX = -(Math.PI.F / 2f)
+			bipedRightArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
+			bipedRightArm.rotateAngleZ += MathHelper.cos(f * 0.09f) * 0.05f + 0.05f
+			bipedRightArm.rotateAngleX += MathHelper.sin(f * 0.067f) * 0.05f
+			
+			bipedLeftArm.rotateAngleZ = 0f
+			bipedLeftArm.rotateAngleY = 0.1f - f6 * 0.6f
+			bipedLeftArm.rotateAngleX = -(Math.PI.F / 2f)
+			bipedLeftArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
+			bipedLeftArm.rotateAngleZ -= MathHelper.cos(f * 0.09f) * 0.05f + 0.05f
+			bipedLeftArm.rotateAngleX -= MathHelper.sin(f * 0.067f) * 0.05f
+
+//			if (entity is EntitySkeleton && entity.skeletonType == 1)
+//				GL11.glScalef(1.2f, 1.2f, 1.2f)
+//			else if (entity is EntityGiantZombie)
+//				GL11.glScalef(6f, 6f, 6f)
+			
+		}
+		
+		if (isChild) {
+			val f6 = 2.0f
+			GL11.glPushMatrix()
+			GL11.glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
+			GL11.glTranslatef(0.0f, 16.0f * f5, 0.0f)
+			bipedHead.render(f5)
+			GL11.glPopMatrix()
+			GL11.glPushMatrix()
+			GL11.glScalef(1.0f / f6, 1.0f / f6, 1.0f / f6)
+			GL11.glTranslatef(0.0f, 24.0f * f5, 0.0f)
+			bipedBody.render(f5)
+			bipedRightArm.render(f5)
+			bipedLeftArm.render(f5)
+			bipedRightLeg.render(f5)
+			bipedLeftLeg.render(f5)
+			bipedHeadwear.render(f5)
+			GL11.glPopMatrix()
+		} else {
+			bipedHead.render(f5)
+			bipedBody.render(f5)
+			bipedRightArm.render(f5)
+			bipedLeftArm.render(f5)
+			bipedRightLeg.render(f5)
+			bipedLeftLeg.render(f5)
+			bipedHeadwear.render(f5)
+		}
 	}
 	
-	fun prepareForRender(entity: Entity?) {
-		val living = entity as EntityLivingBase?
-		isSneak = living?.isSneaking ?: false
-		if (living is EntityPlayer) {
-			val itemstack = living.inventory.getCurrentItem()
-			heldItemRight = if (itemstack != null) 1 else 0
+	fun prepareForRender(entity: Entity?, f: Float) {
+		val living = entity as? EntityLivingBase ?: return
+		
+		isSneak = living.isSneaking
+		isChild = living.isChild
+		isRiding = living.isRiding
+		
+		val itemstack = living.heldItem
+		heldItemRight = if (itemstack != null) 1 else 0
+		heldItemLeft = 0
+		
+		if (entity is EntityPlayer) {
+			val player = entity as EntityPlayer?
+			
 			aimedBow = false
-			if (itemstack != null && living.getItemInUseCount() > 0) {
+			if (itemstack != null && player!!.itemInUseCount > 0) {
 				val enumaction = itemstack.itemUseAction
-				if (enumaction == EnumAction.block) {
+				
+				if (enumaction == EnumAction.block)
 					heldItemRight = 3
-				} else if (enumaction == EnumAction.bow) {
+				else if (enumaction == EnumAction.bow)
 					aimedBow = true
-				}
 			}
 		}
 	}

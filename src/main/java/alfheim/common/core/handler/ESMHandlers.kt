@@ -132,7 +132,7 @@ object ESMHandler {
 			doRaceAbility(e.player)
 		}
 		
-		if (!ASJUtilities.isServer)
+		if (ASJUtilities.isClient)
 			fixSpriggan()
 	}
 	

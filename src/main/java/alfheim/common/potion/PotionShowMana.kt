@@ -1,7 +1,6 @@
 package alfheim.common.potion
 
 import alexsocol.asjlib.*
-import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.entity.EntityLivingBase
@@ -23,7 +22,7 @@ class PotionShowMana: PotionAlfheim(AlfheimConfigHandler.potionIDShowMana, "show
 		if (pe.duration < Integer.MAX_VALUE) ++pe.duration
 		--pe.amplifier
 		
-		if (!ASJUtilities.isServer) {
+		if (ASJUtilities.isClient) {
 			var i = 0
 			while (i < sqrt(sqrt(sqrt(pe.duration.D)))) {
 				// looks like this "i < VALUE" is fine

@@ -460,7 +460,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
 		
 		internal val isValid: Boolean
-			get() = y > 0 && (!ASJUtilities.isServer || MinecraftServer.getServer().worldServerForDimension(dim) != null)
+			get() = y > 0 && (ASJUtilities.isClient || MinecraftServer.getServer().worldServerForDimension(dim) != null)
 		
 		internal fun mana(player: EntityPlayer): Int {
 			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0

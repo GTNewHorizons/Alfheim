@@ -1,34 +1,34 @@
 package alfmod.common.item.equipment.armor
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelArmorVolcano
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab
+import alfmod.common.entity.EntitySnowSprite
 import alfmod.common.item.AlfheimModularItems
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
+import net.minecraft.entity.monster.*
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.StatCollector
 import net.minecraft.world.World
 import net.minecraftforge.common.util.EnumHelper
-import vazkii.botania.api.mana.ManaItemHandler
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
+import net.minecraftforge.event.entity.living.LivingHurtEvent
+import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.handler.ConfigHandler
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
+import kotlin.math.min
 
-open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, name, volcano) {
-	
-	companion object {
-		private const val MANA_PER_DAMAGE = 70
-		
-		val volcano = EnumHelper.addArmorMaterial("Volcano", 26, intArrayOf(3, 7, 6, 3), 6)!!
-		
-		var model: ModelBiped? = null
-	}
+open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, name, volcano), IManaDiscountArmor {
 	
 	init {
 		creativeTab = AlfheimModularTab
@@ -90,5 +90,88 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 	override fun provideArmorModelForSlot(stack: ItemStack?, slot: Int): ModelBiped? {
 		models[slot] = ModelArmorVolcano(slot)
 		return models[slot]
+	}
+	
+	override fun getDiscount(stack: ItemStack?, slot: Int, player: EntityPlayer?) = 0.05f
+	
+	companion object {
+		
+		const val MAX_CHARGE = 1000f
+		const val MANA_PER_DAMAGE = 70
+		const val TAG_POWER = "firepower"
+		
+		val volcano = EnumHelper.addArmorMaterial("Volcano", 26, intArrayOf(3, 7, 6, 3), 6)!!
+		
+		@field:SideOnly(Side.CLIENT)
+		var model: ModelBiped? = null
+			@SideOnly(Side.CLIENT)
+			get() = field
+			@SideOnly(Side.CLIENT)
+			set(value) {
+				field = value
+			}
+		
+		init {
+			eventForge()
+		}
+		
+		fun hasSet(player: EntityPlayer) = (AlfheimModularItems.volcanoChest as ItemVolcanoArmor).hasArmorSet(player)
+		
+		fun getCharge(player: EntityPlayer): Float {
+			val stack = player.inventory.armorItemInSlot(2) ?: return 0f
+			if (stack.item !is ItemVolcanoArmor) return 0f
+			return ItemNBTHelper.getFloat(stack, TAG_POWER, 0f)
+		}
+		
+		fun addCharge(player: EntityPlayer, charge: Float) {
+			val stack = player.inventory.armorItemInSlot(2) ?: return
+			if (stack.item !is ItemVolcanoArmor) return
+			ItemNBTHelper.setFloat(stack, TAG_POWER, min(ItemNBTHelper.getFloat(stack, TAG_POWER, 0f) + charge, MAX_CHARGE))
+		}
+		
+		@SubscribeEvent
+		fun onPlayerHurt(e: LivingHurtEvent) {
+			val player = e.entityLiving as? EntityPlayer ?: return
+			if (!hasSet(player)) return
+			
+			if (e.source.damageType == "frost") {
+				e.ammount /= 2
+				return
+			}
+			
+			addCharge(player, e.ammount)
+			e.isCanceled = true
+		}
+		
+		@SubscribeEvent
+		fun onPlayerHurting(e: LivingHurtEvent) {
+			if (e.entityLiving !is EntitySlime || e.entityLiving !is EntitySnowSprite || e.entityLiving is EntityMagmaCube) return
+			if (!hasSet(e.source.entity as? EntityPlayer ?: return)) return
+			e.ammount *= 1.25f
+		}
+		
+		@SubscribeEvent
+		fun onLivingUpdate(e: LivingUpdateEvent) {
+			val player = e.entityLiving as? EntityPlayer ?: return
+			if (!hasSet(player)) return
+			
+			if (getCharge(player) <= 5f) return
+			
+			for (x in -1..1) {
+				for (y in -1..1) {
+					for (z in -1..1) {
+						val new = when (player.worldObj.getBlock(player, x, y, z)) {
+									  Blocks.obsidian                            -> Blocks.lava
+									  Blocks.web, Blocks.snow_layer              -> Blocks.air
+									  Blocks.ice, Blocks.packed_ice, Blocks.snow -> Blocks.water
+									  else                                       -> null
+								  } ?: continue
+						
+						if (player.worldObj.setBlock(player, new, x, y, z))
+							addCharge(player, -5f)
+					}
+				}
+			}
+		}
 	}
 }

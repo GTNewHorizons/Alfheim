@@ -48,10 +48,10 @@ open class DamageSourceSpell(type: String): DamageSource(type) {
 		
 		/** Fenrir Storm type of damage  */
 		fun lightning(st: EntitySpellFenrirStorm, caster: EntityLivingBase?) =
-			EntityDamageSourceIndirectSpell("lightning", caster, st).setDamageBypassesArmor().setFireDamage()!!
+			EntityDamageSourceIndirectSpell("lightning", caster, st).setDamageBypassesArmor()!!
 		
 		fun lightning(attacker: EntityLivingBase?) =
-			EntityDamageSource("lightning", attacker).setDamageBypassesArmor().setFireDamage()!!
+			EntityDamageSource("lightning", attacker).setDamageBypassesArmor()!!
 		
 		fun missile(im: EntitySpellIsaacMissile, caster: EntityLivingBase?) =
 			EntityDamageSourceIndirectSpell("missile", caster, im).setMagicDamage()!!

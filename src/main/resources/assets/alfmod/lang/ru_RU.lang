@@ -17,7 +17,7 @@ entity.alfmod:SniceBall.name=Снежулька
 entity.alfmod:FireSpirit.name=Дух огня
 entity.alfmod:FireSpirit.name.greater=Высший дух огня
 
-death.attack.alfmod:frost=%s был заморожен до костей %s
+death.attack.frost=%s был заморожен до костей %s
 
 itemGroup.AlfheimModular=Альфхейм модуляр
 

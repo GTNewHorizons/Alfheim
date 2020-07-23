@@ -14,7 +14,7 @@ import vazkii.botania.common.core.helper.Vector3
 import java.awt.Color
 import kotlin.math.min
 
-class PotionLightningShield: PotionAlfheim(AlfheimConfigHandler.potionIDLightningShield, "LightningShield", false, 0x0079C4) {
+class PotionLightningShield: PotionAlfheim(AlfheimConfigHandler.potionIDLightningShield, "lightningShield", false, 0x0079C4) {
 	
 	init {
 		eventForge()

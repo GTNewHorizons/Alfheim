@@ -30,7 +30,7 @@ class PotionLeftFlame: PotionAlfheim(AlfheimConfigHandler.potionIDLeftFlame, "le
 			target.capabilities.isFlying = true
 			target.sendPlayerAbilities()
 			if (target is EntityPlayerMP) target.theItemInWorldManager.blockReachDistance = 0.1
-			if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeath(target)
+			if (ASJUtilities.isClient) VisualEffectHandlerClient.onDeath(target)
 		}
 	}
 	

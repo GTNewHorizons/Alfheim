@@ -1,10 +1,10 @@
 package alfheim.common.block.magtrees.sealing
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.base.BlockModRotatedPillar
 import alfheim.common.item.block.ItemBlockLeavesMod
 import alfheim.common.lexicon.ShadowFoxLexiconData
 import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.FMLLaunchHandler
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
@@ -19,7 +19,7 @@ class BlockSealingWood: BlockModRotatedPillar(Material.wood), ISoundSilencer {
 		setBlockName("sealingWood")
 		blockHardness = 2f
 		setStepSound(soundTypeCloth)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
             EventHandlerSealingOak.register()
 	}
 	

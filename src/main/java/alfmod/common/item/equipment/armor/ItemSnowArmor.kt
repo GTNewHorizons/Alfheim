@@ -214,7 +214,14 @@ object SnowArmorAbilityHandler {
 	fun onLivingHurt(e: LivingHurtEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
-		if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player))
+		if (!(AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) return
+		
+		if (e.source.damageType == "frost") {
+			e.isCanceled = true
+			return
+		}
+		
+		if (e.source.isFireDamage)
 			e.ammount /= 2
 	}
 }

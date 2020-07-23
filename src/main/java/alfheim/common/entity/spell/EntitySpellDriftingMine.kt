@@ -66,7 +66,7 @@ class EntitySpellDriftingMine(world: World): Entity(world), ITimeStopSpecific {
 		} else {
 			moveEntity(motionX, motionY, motionZ)
 			
-			if (!ASJUtilities.isServer) return
+			if (ASJUtilities.isClient) return
 			super.onUpdate()
 			
 			if (ticksExisted == SpellDriftingMine.duration || isBurning) onImpact(null)
