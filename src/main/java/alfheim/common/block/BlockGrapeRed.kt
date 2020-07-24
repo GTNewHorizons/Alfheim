@@ -39,8 +39,8 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (stage == 2 && player.heldItem == null) {
-			player.inventory.addItemStackToInventory(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.RedGrapes))
+		if (!world.isRemote && stage == 2 && player.heldItem == null) {
+			player.dropPlayerItemWithRandomChoice(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.RedGrapes), true)?.delayBeforeCanPickup = 0
 			world.setBlock(x, y, z, AlfheimBlocks.grapesRed[0], world.getBlockMetadata(x, y, z), 3)
 			return true
 		}
@@ -55,7 +55,7 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
 	}
 	
 	// can be bonemealed at all? If true will consume one item
-	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = stage != 2
+	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = stage < 2
 	
 	// can "do bonemealing" function be called?
 	override fun func_149852_a(world: World?, random: Random, x: Int, y: Int, z: Int) = random.nextInt(3) == 0
@@ -66,4 +66,11 @@ class BlockGrapeRed(val stage: Int): BlockVine(), IGrowable {
 	}
 	
 	override fun onSheared(item: ItemStack?, world: IBlockAccess?, x: Int, y: Int, z: Int, fortune: Int) = arrayListOf(ItemStack(AlfheimBlocks.grapesRed[0]))
+	
+	@SideOnly(Side.CLIENT)
+	override fun getBlockColor() = 0xFFFFFF
+	@SideOnly(Side.CLIENT)
+	override fun getRenderColor(meta: Int) = 0xFFFFFF
+	@SideOnly(Side.CLIENT)
+	override fun colorMultiplier(world: IBlockAccess, x: Int, y: Int, z: Int) = 0xFFFFFF
 }

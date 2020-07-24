@@ -41,7 +41,7 @@ class EntityButterfly(world: World): EntityFlyingCreature(world) {
 	
 	override fun dropFewItems(hit: Boolean, looting: Int) {
 		if (rng.nextBoolean())
-			entityDropItem(ItemStack(AlfheimItems.elvenFood, 1, ElvenFoodMetas.Honey), 0f)
+			entityDropItem(ItemStack(AlfheimItems.elvenFood, 1, ElvenFoodMetas.Nectar), 0f)
 		else
 			entityDropItem(ItemStack(ModItems.dye, 1, ASJUtilities.randInBounds(0, 15, rng)), 0f)
 	}

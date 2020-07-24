@@ -844,7 +844,11 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun say(player: EntityPlayer?, message: String, vararg format: Any) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')))
+		player ?: return
+		
+		val text = StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')
+		player.addChatMessage(ChatComponentText(text))
+		log("[${player.commandSenderName}!] $text")
 	}
 	
 	@JvmStatic

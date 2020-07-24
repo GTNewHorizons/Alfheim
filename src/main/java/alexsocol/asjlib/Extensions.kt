@@ -47,6 +47,9 @@ val Number.I get() = this.toInt()
 
 // ################ MINECRAFT ####################
 
+/** Free fall acceleration */
+const val g = 0.08 * 0.9800000190734863
+
 fun Int.clamp(min: Int, max: Int) = MathHelper.clamp_int(this, min, max)
 fun Float.clamp(min: Float, max: Float) = MathHelper.clamp_float(this, min, max)
 fun Double.clamp(min: Double, max: Double) = MathHelper.clamp_double(this, min, max)

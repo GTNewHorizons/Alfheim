@@ -46,7 +46,7 @@ class TheRodOfTheDebug: ItemMod("TheRodOfTheDebug") {
 		if (ModInfo.OBF) return false
 		
 		try {
-			// if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
+			 if (!world.isRemote) world.getBlock(x, y, z).updateTick(world, x, y, z, world.rand)
 			
 			val te = world.getTileEntity(x, y, z)
 			if (te != null) {

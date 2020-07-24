@@ -4,7 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.block.AlfheimBlocks
-import alfheim.common.core.handler.VisualEffectHandler
+import alfheim.common.core.handler.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.faith.bidiRange
 import alfmod.common.item.AlfheimModularItems
@@ -47,6 +47,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 	
 	override fun onEntityUpdate() {
 		val (x, y, z) = position
+		val master = master
 		setPosition(x + 0.5, y + if (master) 0.5 else 1.5, z + 0.5)
 		setMotion(0.0)
 		clearActivePotions()
@@ -62,7 +63,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		if (if (master) {
 				!checkStructure(worldObj, x, y - 1, z, timer <= 0, null)
 			} else {
-				!(worldObj.getBlock(x, y, z) === AlfheimBlocks.alfheimPylon && worldObj.getBlockMetadata(x, y, z) == 1)
+				!(worldObj.getBlock(x, y, z) === AlfheimBlocks.redFlame)
 			}) {
 			if (!worldObj.isRemote) {
 				health = 0f
@@ -101,9 +102,11 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		}
 		
 		if (timer == 1) {
-			worldObj.setBlockToAir(x, y - 1, z)
-			if (!worldObj.isRemote)
+			if (!worldObj.isRemote) {
 				worldObj.spawnEntityInWorld(EntityItem(worldObj, x + 0.5, y + 1.5, z + 0.5, ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.VolcanoRelic)).apply { setMotion(0.0) })
+				getPlayersAround(worldObj, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.success") }
+			}
+			setDead()
 			return
 		}
 		
@@ -194,22 +197,26 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 	override fun attackEntityFrom(src: DamageSource?, amount: Float): Boolean {
 		// protecting spirit for being accidentally harmed by a player
 		if (src?.entity is EntityPlayer) return false
+		val (x, y, z) = position
 		
-		return super.attackEntityFrom(src, amount)
+		val cout = min(4, PYLONS.sumBy { min(1, worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + it[0] + 0.5, y + it[1] + if (master) 0.5 else -0.5, z + it[2] + 0.5).expand(0.5)).size) } )
+		return super.attackEntityFrom(src, amount * (1 - cout * 0.25f))
 	}
 	
 	override fun setDead() {
+		if (isDead) return
 		super.setDead()
 		
 		val (x, y, z) = position
 		val master = master
 		
-		if (health <= 0f || master) {
-			for (i in 0..(if (master) 1 else 0)) {
-				worldObj.playAuxSFX(2001, x, y - i, z, worldObj.getBlock(x, y - i, z).id + (worldObj.getBlockMetadata(x, y - i, z) shl 12))
-				worldObj.setBlockToAir(x, y - i, z)
-			}
+		for (i in 0..(if (master) 1 else 0)) {
+			worldObj.playAuxSFX(2001, x, y - i, z, worldObj.getBlock(x, y - i, z).id + (worldObj.getBlockMetadata(x, y - i, z) shl 12))
+			worldObj.setBlockToAir(x, y - i, z)
 		}
+		
+		if (!master && health > 0f)
+			worldObj.setBlock(x, y, z, AlfheimBlocks.alfheimPylon, 1, 3)
 		
 		for (c in PYLONS) {
 			worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + c[0] + 0.5, y + c[1] + if (master) 0.5 else -0.5, z + c[2] + 0.5).expand(0.5)).forEach {
@@ -238,6 +245,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		nbt.setInteger(TAG_POS_Z, z)
 		
 		nbt.setBoolean(TAG_MASTER, master)
+//		nbt.setInteger(TAG_TIMER, timer)
 	}
 	
 	override fun readEntityFromNBT(nbt: NBTTagCompound) {
@@ -250,6 +258,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		)
 		
 		master = nbt.getBoolean(TAG_MASTER)
+//		timer = nbt.getInteger(TAG_TIMER)
 	}
 	
 	companion object {
@@ -257,6 +266,8 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		const val TAG_RITUAL_SUMMONED = "firespiritsummoned"
 		
 		const val TAG_MASTER = "isMaster"
+//		const val TAG_TIMER = "timer"
+		
 		const val TAG_POS_X = "posX"
 		const val TAG_POS_Y = "posY"
 		const val TAG_POS_Z = "posZ"
@@ -292,24 +303,45 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 				master = false
 			}
 			
+			world.setBlock(x, y, z, Blocks.netherrack)
+			
+			for (c in PYLONS) {
+				world.setBlock(x + c[0], y + c[1], z + c[2], AlfheimBlocks.redFlame)
+				world.setBlock(x + c[0], y + c[1] - 1, z + c[2], Blocks.netherrack)
+			}
+			
 			if (!player.capabilities.isCreativeMode) --player.heldItem.stackSize
 			
 			return true
 		}
 		
 		fun checkStructure(world: World, x: Int, y: Int, z: Int, first: Boolean, player: EntityPlayer?): Boolean {
-			if (!first && world.getBlock(x, y + 1, z) !== AlfheimBlocks.redFlame) {
-				if (!world.isRemote) getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.flamedied") }
+			if (!(first || world.getBlock(x, y + 1, z) === AlfheimBlocks.redFlame)) {
+				if (!world.isRemote)
+					getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.flamedied") }
+				return false
+			}
+			
+			if (world.isRaining) {
+				if (!world.isRemote) {
+					if (first)
+						ASJUtilities.say(player, "alfmodmisc.spirit.rain.start")
+					else {
+						getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.rain.inmid") }
+					}
+				}
+				
 				return false
 			}
 			
 			if (world.difficultySetting == EnumDifficulty.PEACEFUL) {
-				if (!world.isRemote)
-					if (!first) {
+				if (!world.isRemote) {
+					if (!first)
 						getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.peaceful") }
-					} else {
+					else
 						ASJUtilities.say(player, "alfmodmisc.spirit.peaceful")
-					}
+				}
+				
 				return false
 			}
 			
@@ -329,9 +361,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 					if (first)
 						ASJUtilities.say(player, "alfmodmisc.spirit.badarena")
 					else
-						getPlayersAround(world, x, y, z).forEach {
-							ASJUtilities.say(it, "alfmodmisc.spirit.arenacorrupt")
-						}
+						getPlayersAround(world, x, y, z).forEach { ASJUtilities.say(it, "alfmodmisc.spirit.arenacorrupt") }
 				}
 				
 				return false
@@ -342,13 +372,12 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		
 		fun hasProperArena(world: World, x: Int, y: Int, z: Int): Boolean {
 			for (i in x.bidiRange(RADIUS + 3))
-				for (j in y..(RADIUS + 3))
+				for (j in y..(y + RADIUS + 3))
 					for (k in z.bidiRange(RADIUS + 3)) {
 						if (i == x && j == y + 1 && k == z) continue // ignore fire
 						if (abs(i - x) == 5 && abs(k - z) == 5 && j == y + 1 || Vector3.pointDistanceSpace(i, j, k, x, y, z) > RADIUS) continue  // Ignore pylons and out of circle
 						
 						if (world.getTileEntity(i, j, k) != null) {
-							VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
 							
 							return false
 						}
@@ -367,12 +396,14 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 								!block.renderAsNormalBlock() ||
 								!block.isOpaqueCube ||
 								!block.isNormalCube ||
-								block.blockBoundsMinX != 0.0 ||
-								block.blockBoundsMinY != 0.0 ||
-								block.blockBoundsMinZ != 0.0 ||
-								block.blockBoundsMaxX != 1.0 ||
-								block.blockBoundsMaxY != 1.0 ||
-								block.blockBoundsMaxZ != 1.0) {
+								block.getCollisionBoundingBoxFromPool(world, i, j, k).let {
+									it.minX != i.D ||
+									it.minY != j.D ||
+									it.minZ != k.D ||
+									it.maxX != i + 1.0 ||
+									it.maxY != j + 1.0 ||
+									it.maxZ != k + 1.0
+								}) {
 								
 								VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
 								
@@ -418,6 +449,12 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 				
 				else    -> null
 			}
+		}
+		
+		@SubscribeEvent
+		fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
+			if (e.entityLiving.entityData.getBoolean(TAG_RITUAL_SUMMONED))
+				e.entityLiving.activePotionsMap.keys.removeAll { it != AlfheimConfigHandler.potionIDSoulburn }
 		}
 		
 		// disable friendly-fire for ritual summoned entities

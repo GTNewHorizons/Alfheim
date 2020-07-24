@@ -24,15 +24,18 @@ object AlfheimAchievements {
 	// relics
 	val akashic: Achievement //									K
 	val excaliber: Achievement //								E
-	val flugelSoul: Achievement //								S
+	val flugelSoul: Achievement //								L
 	val gungnir: Achievement //									G
 	val mask: Achievement //									M
 	val mjolnir: Achievement // 								J
-	val subspace: Achievement //								U
 	val moonlightBow: Achievement //							B
+	val ringHeimdall: Achievement //							H
+	val ringNjord: Achievement //								N
+	val ringSif: Achievement //									S
+	val subspace: Achievement //								U
 	
 	val divineMarksman: Achievement // show your marksman skill D
-	val newChance: Achievement // remove race with akashic		N
+	val newChance: Achievement // remove race with akashic		C
 	val rosaBomb: Achievement // bomb 'em all					R
 	
 	val flugelHardKill: Achievement // 							F
@@ -41,10 +44,10 @@ object AlfheimAchievements {
 	val firework: Achievement //								Y
 	
 	// ---------------> X
-	// |    W
-	// |      I    D N
+	// |    W     H N S
+	// |      I    D C
 	// |          B K
-	// |     A S M J G
+	// |     A L M J G
 	// |        F U E
 	// |           R
 	// |  Y      O
@@ -64,9 +67,12 @@ object AlfheimAchievements {
 		
 		akashic = AlfheimAchievement("akashic", 7, -1, AlfheimItems.akashicRecords, mask)
 		excaliber = AlfheimAchievement("excaliber", 7, 1, AlfheimItems.excaliber, mask)
+		gungnir = AlfheimAchievement("gungnir", 8, 0, AlfheimItems.gungnir, mask)
 		mjolnir = AlfheimAchievement("mjolnir", 6, 0, AlfheimItems.mjolnir, mask)
-		gungnir = AlfheimAchievement("gungnir", 8, 0, AlfheimItems.gungnir, mjolnir)
 		moonlightBow = AlfheimAchievement("moonlightBow", 5, -1, AlfheimItems.moonlightBow, mask)
+		ringHeimdall = AlfheimAchievement("ringHeimdall", 5, -3, AlfheimItems.priestRingHeimdall, mask)
+		ringNjord = AlfheimAchievement("ringNjord", 7, -3, AlfheimItems.priestRingNjord, mask)
+		ringSif = AlfheimAchievement("ringSif", 9, -3, AlfheimItems.priestRingSif, mask)
 		subspace = AlfheimAchievement("subspace", 5, 1, AlfheimItems.subspaceSpear, mask)
 		
 		newChance = AlfheimAchievement("newChance", 8, -2, Items.spawn_egg, akashic)

@@ -1,7 +1,6 @@
 package alexsocol.asjlib.render
 
-import alexsocol.asjlib.D
-import net.minecraft.client.Minecraft
+import alexsocol.asjlib.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.Entity
 import net.minecraft.util.*
@@ -90,7 +89,7 @@ object ASJRenderHelper {
 	 * Interpolates values, e.g. for smoother render
 	 */
 	@JvmStatic
-	fun interpolate(last: Double, now: Double) = last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks
+	fun interpolate(last: Double, now: Double) = last + (now - last) * mc.timer.renderPartialTicks
 	
 	/**
 	 * Translates matrix to follow player (if something is bound to world's zero coords)
@@ -113,6 +112,7 @@ object ASJRenderHelper {
 	 * Use this before your render something in ISimpleBlockRenderingHandler
 	 */
 	@JvmStatic
+	@Deprecated("Do not use it")
 	fun preRenderISBRH(x: Int, z: Int) {
 		val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 		val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
@@ -128,6 +128,7 @@ object ASJRenderHelper {
 	 * Use this after your render something in ISimpleBlockRenderingHandler
 	 */
 	@JvmStatic
+	@Deprecated("Do not use it")
 	fun postRenderISBRH(x: Int, z: Int) {
 		val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 		val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16

@@ -222,12 +222,17 @@ object AlfheimItems {
 		
 		
 		
+		// that's ok because there is check on first 6 array elements in the dice
 		ItemDice.relicStacks += arrayOf(ItemStack(flugelSoul),
 										ItemStack(mask),
-										ItemStack(mjolnir),
 										ItemStack(excaliber),
 										ItemStack(subspaceSpear),
 										ItemStack(moonlightBow),
+										ItemStack(mjolnir),
+										ItemStack(gungnir),
+										ItemStack(priestRingHeimdall),
+										ItemStack(priestRingNjord),
+										ItemStack(priestRingSif),
 										ItemStack(akashicRecords))
 	}
 	

@@ -37,6 +37,8 @@ class ModelButterfly: ModelBase() {
 	}
 	
 	override fun render(entity: Entity, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity)
+		
 		shape2.render(f5)
 		shape3.render(f5)
 		shape1.render(f5)
@@ -54,7 +56,7 @@ class ModelButterfly: ModelBase() {
 	
 	override fun setRotationAngles(f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float, entity: Entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity)
-		shape2.rotateAngleZ = -(MathHelper.cos(f2 * 1.7f) * Math.PI.F * 0.5f)
-		shape3.rotateAngleZ = MathHelper.cos(f2 * 1.7f) * Math.PI.F * 0.5f
+		shape2.rotateAngleZ = MathHelper.cos(f2) * Math.PI.F * -0.25f
+		shape3.rotateAngleZ = MathHelper.cos(f2) * Math.PI.F * 0.25f
 	}
 }

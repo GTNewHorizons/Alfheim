@@ -70,7 +70,7 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 				}
 				
 				TileBarrel.WINE_STAGE_MASH  -> {
-					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.Honey) {
+					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.Nectar) {
 						tile.wineStage = TileBarrel.WINE_STAGE_LIQUID
 						tile.timer = 1200
 						stack.stackSize--

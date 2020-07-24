@@ -41,10 +41,13 @@ alfmodmisc.ded.icebound=You feel icy bounds of Winter Shogun's gaze pulling you 
 
 alfmodmisc.spirit.arenacorrupt=Grounds of the ritual are distourted.
 alfmodmisc.spirit.badarena=Grounds of the ritual are improper. Unable to start ritual.
-alfmodmisc.spirit.flamedied=Greater Fire spirit was eaten by Muspellz Synir. Ritual failed.
+alfmodmisc.spirit.flamedied=Greater Fire Spirit was eaten by Muspellz Synir. Ritual failed.
 alfmodmisc.spirit.nopylons=Looks like something is wrong with pylons. Check nearest.
 alfmodmisc.spirit.peaceful=The peaceful vibes of your world bring entropy to the ritual, interfering it's observance.
-alfmodmisc.spirit.pylondied=One of supporting Fire spirits died. The ritual may take longer.
+alfmodmisc.spirit.pylondied=One of supporting Fire Spirits died. The ritual may take longer.
+alfmodmisc.spirit.rain.start=The ritual cannot be performed in bad weather.
+alfmodmisc.spirit.rain.inmid=The sudden rain breakes the ritual.
+alfmodmisc.spirit.success=The ritual has finished.
 
 alfmodmisc.WIP=&4[WIP]&7 Future content, please, keep at least one item
 

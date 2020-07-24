@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.AlfheimItems
@@ -25,8 +25,6 @@ import java.util.*
 class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	
 	init {
-		val mod = 0.001f
-		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod)
 		setBlockName("NiflheimIce")
 		setCreativeTab(null)
 		setBlockUnbreakable()
@@ -36,6 +34,10 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		setStepSound(soundTypeGlass)
 		tickRandomly = true
 		slipperiness = 0.98f
+	}
+	
+	override fun getCollisionBoundingBoxFromPool(world: World?, x: Int, y: Int, z: Int): AxisAlignedBB {
+		return super.getCollisionBoundingBoxFromPool(world, x, y, z).expand(-0.01)
 	}
 	
 	override fun getPlayerRelativeBlockHardness(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Float {

@@ -5,10 +5,12 @@ import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.api.lib.LibOreDict.COAL_NETHERWOOD
 import alfheim.api.lib.LibOreDict.DYES
+import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
 import alfheim.api.lib.LibOreDict.HOLY_PENDANT
 import alfheim.api.lib.LibOreDict.IRIS_DIRT
 import alfheim.api.lib.LibOreDict.LEAVES
+import alfheim.api.lib.LibOreDict.MAUFTRIUM_NUGGET
 import alfheim.api.lib.LibOreDict.MUSHROOM
 import alfheim.api.lib.LibOreDict.PETAL
 import alfheim.api.lib.LibOreDict.RAINBOW_DOUBLE_FLOWER
@@ -88,10 +90,10 @@ import alfheim.common.item.AlfheimItems.attributionBauble
 import alfheim.common.item.AlfheimItems.coatOfArms
 import alfheim.common.item.AlfheimItems.colorOverride
 import alfheim.common.item.AlfheimItems.elvenResource
-import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
+import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFlameStar
 import alfheim.common.item.AlfheimItems.rodInterdiction
@@ -180,6 +182,9 @@ object ShadowFoxRecipes {
 	val recipesAmplifier: IRecipe
 	val recipesStar: List<IRecipe>
 	val recipesStar2: List<IRecipe>
+	
+	val recipesPriestOfHeimdall: IRecipe
+	val recipesPriestOfOdin: IRecipe
 	
 	val recipeShimmerQuartz: IRecipe
 	
@@ -434,6 +439,30 @@ object ShadowFoxRecipes {
 						 'A', HOLY_PENDANT)
 		
 		recipesPriestOfNjord = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 4),
+						 "BGB",
+						 "NAN",
+						 " P ",
+						 'B', BotaniaBlocks.bifrostPerm,
+						 'G', LIFE_ESSENCE,
+						 'N', ELVORIUM_NUGGET,
+						 'P', RUNE[14], // Envy
+						 'A', HOLY_PENDANT)
+		
+		recipesPriestOfHeimdall = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 5),
+						 "RGR",
+						 "NAN",
+						 " P ",
+						 'R', ItemStack(elvenResource, 1, ElvenResourcesMetas.DasRheingold),
+						 'G', LIFE_ESSENCE,
+						 'N', MAUFTRIUM_NUGGET,
+						 'P', RUNE[9], // Lust
+						 'A', HOLY_PENDANT)
+		
+		recipesPriestOfOdin = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(attributionBauble),
 						 "S S",

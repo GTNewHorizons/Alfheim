@@ -100,7 +100,7 @@ object ElvenFoodMetas {
 	val Lembas = m
 	val RedGrapes = m
 	val WhiteGrapes = m
-	val Honey = m
+	val Nectar = m
 	val RedWine = m
 	val WhiteWine = m
 }

@@ -17,7 +17,7 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
-import alfheim.common.core.asm.hook.extender.FurnaceTooltipHandler
+import alfheim.common.core.asm.hook.extender.FurnaceHandler
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
@@ -134,7 +134,7 @@ class ClientProxy: CommonProxy() {
 	override fun initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers()
 		EventHandlerClient
-		FurnaceTooltipHandler
+		FurnaceHandler
 		GUIAggro().eventForge()
 		if (ConfigHandler.boundBlockWireframe) DoubleBoundItemRender
 		if (AlfheimCore.TravellersGearLoaded) TGHandlerBotaniaRenderer

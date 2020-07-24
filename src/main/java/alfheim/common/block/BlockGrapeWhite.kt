@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.*
+import alexsocol.asjlib.safeGet
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
@@ -21,7 +21,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import java.util.*
 
-class BlockGrapeWhite: BlockBush() {
+class BlockGrapeWhite: BlockBush(), IGrowable {
 	
 	lateinit var iconsBush: Array<IIcon>
 	
@@ -61,12 +61,23 @@ class BlockGrapeWhite: BlockBush() {
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-		if (world.getBlockMetadata(x, y, z) >= 2 && player.heldItem == null) {
-			player.inventory.addItemStackToInventory(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.WhiteGrapes))
+		if (!world.isRemote && world.getBlockMetadata(x, y, z) >= 2 && player.heldItem == null) {
+			player.dropPlayerItemWithRandomChoice(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.WhiteGrapes), true)?.delayBeforeCanPickup = 0
 			world.setBlockMetadataWithNotify(x, y, z, 0, 3)
 			return true
 		}
 		
 		return false
+	}
+	
+	// can be bonemealed at all? If true will consume one item
+	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, isRemote: Boolean) = world.getBlockMetadata(x, y, z) < 2
+	
+	// can "do bonemealing" function be called?
+	override fun func_149852_a(world: World?, random: Random, x: Int, y: Int, z: Int) = random.nextInt(3) == 0
+	
+	// "do bonemealing" function
+	override fun func_149853_b(world: World, random: Random?, x: Int, y: Int, z: Int) {
+		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) + 1, 3)
 	}
 }

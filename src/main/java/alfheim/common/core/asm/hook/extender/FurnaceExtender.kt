@@ -15,6 +15,7 @@ import net.minecraft.world.World
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import java.util.*
 
+@Suppress("UNUSED_PARAMETER")
 object FurnaceExtender {
 	
 	lateinit var iconFrontLit: IIcon
@@ -107,7 +108,7 @@ object FurnaceExtender {
 	}
 }
 
-object FurnaceTooltipHandler {
+object FurnaceHandler {
 	
 	init {
 		eventForge()
@@ -116,9 +117,22 @@ object FurnaceTooltipHandler {
 	// Instead of icon because minecraft is shitcoded
 	
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
 	fun onTooltip(e: ItemTooltipEvent) {
 		if (e.itemStack.item.toBlock() === Blocks.furnace && e.itemStack.meta > 7)
 			e.toolTip[0] = e.toolTip[0].replace(StatCollector.translateToLocal("tile.furnace.name"), StatCollector.translateToLocal("tile.furnace_living.name"))
 	}
+	
+//	@SubscribeEvent
+//	fun onTextureStitch(e: TextureStitchEvent) {
+//		if (e.map.textureType == 0)
+//			FurnaceExtender.iconFrontLit = RenderBlocks.getInstance().getIconSafe(forName (e.map, "furnace_front_on_living"))
+//	}
+//
+//	private fun forName(map: TextureMap, name: String): IIcon? {
+//		val localIcon = InterpolatedIcon("minecraft:$name")
+//		if (map.setTextureEntry("minecraft:$name", localIcon)) {
+//			return localIcon
+//		}
+//		return null
+//	}
 }

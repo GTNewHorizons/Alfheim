@@ -31,7 +31,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.*
 import net.minecraft.client.renderer.entity.Render
-import net.minecraft.client.renderer.texture.*
+import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.*
 import net.minecraft.entity.*
@@ -63,7 +63,6 @@ import vazkii.botania.api.mana.*
 import vazkii.botania.api.recipe.RecipePureDaisy
 import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.client.core.handler.*
-import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.client.core.proxy.ClientProxy
 import vazkii.botania.client.fx.FXWisp
 import vazkii.botania.client.lib.LibResources
@@ -81,7 +80,6 @@ import vazkii.botania.common.core.proxy.CommonProxy
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
-import vazkii.botania.common.item.equipment.bauble.*
 import vazkii.botania.common.item.lens.LensFirework
 import vazkii.botania.common.item.relic.ItemFlugelEye
 import vazkii.botania.common.item.rod.ItemRainbowRod
@@ -283,8 +281,12 @@ object AlfheimHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ALWAYS)
+	@Hook(returnCondition = ON_TRUE, returnAnotherMethod = "replaceSetBlock")
 	fun setBlock(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
+		return (cobbleHook && block === Blocks.cobblestone) || (stoneHook && block === Blocks.stone)
+	}
+	
+	fun replaceSetBlock(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
 		var newBlock = block
 		
 		if (cobbleHook && block === Blocks.cobblestone) {

@@ -26,6 +26,8 @@ class ItemGungnir: ItemRelic("Gungnir") {
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World?, entity: Entity?, slot: Int, inHand: Boolean) {
+		super.onUpdate(stack, world, entity, slot, inHand)
+		
 		val player = entity as? EntityPlayer ?: return
 		if (stack.cooldown > 0 && ManaItemHandler.requestManaExact(stack, player, 50, true))
 			stack.cooldown -= 1

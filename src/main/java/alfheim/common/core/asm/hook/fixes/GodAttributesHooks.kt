@@ -41,7 +41,7 @@ object GodAttributesHooks {
 				take = true
 			}
 			
-			if (!player.isSneaking && world.getBlock(x, y + 1, z).isAir(world, x, y, z) && (player.posY - if (mc.thePlayer === player) 1.62 else 0.0) >= y + 1) {
+			if (!player.isSneaking && world.getBlock(x, y + 1, z).isAir(world, x, y, z) && (player.posY - if (ASJUtilities.isClient && mc.thePlayer === player) 1.62 else 0.0) >= y + 1) {
 				aabb = fullBB
 				take = true
 			}

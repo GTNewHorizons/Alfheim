@@ -5,6 +5,7 @@ import alexsocol.asjlib.extendables.block.BlockModFence
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenFoodMetas
+import net.minecraft.block.IGrowable
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.EntityLivingBase
@@ -18,7 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 import kotlin.math.*
 
-class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null) {
+class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null), IGrowable {
 	
 	init {
 		setBlockName("GrapeRegPlanted")
@@ -86,9 +87,9 @@ class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null) {
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hx: Float, hy: Float, hz: Float): Boolean {
 		if (world.getBlockMetadata(x, y, z) < 4) return false
-		if (player.heldItem != null) return false
+		if (world.isRemote || player.heldItem != null) return false
 		
-		player.inventory.addItemStackToInventory(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.RedGrapes))
+		player.dropPlayerItemWithRandomChoice(ItemStack(AlfheimItems.elvenFood, world.rand.nextInt(2) + 1, ElvenFoodMetas.RedGrapes), true)?.delayBeforeCanPickup = 0
 		world.setBlockMetadataWithNotify(x, y, z, 2, 3)
 		
 		world.markBlockRangeForRenderUpdate(x, y, z, x, y, z)
@@ -116,4 +117,15 @@ class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null) {
 	override fun renderAsNormalBlock() = false
 	
 	override fun isLadder(world: IBlockAccess?, x: Int, y: Int, z: Int, entity: EntityLivingBase?) = true
+	
+	// can be bonemealed at all? If true will consume one item
+	override fun func_149851_a(world: World, x: Int, y: Int, z: Int, isRemote: Boolean) = world.getBlockMetadata(x, y, z) < 4
+	
+	// can "do bonemealing" function be called?
+	override fun func_149852_a(world: World?, random: Random, x: Int, y: Int, z: Int) = random.nextInt(3) == 0
+	
+	// "do bonemealing" function
+	override fun func_149853_b(world: World, random: Random?, x: Int, y: Int, z: Int) {
+		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) + 1, 3)
+	}
 }
