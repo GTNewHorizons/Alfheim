@@ -3,34 +3,49 @@ package alfheim.common.item
 import alexsocol.asjlib.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.TileRainbowManaFlame
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.item.rod.ItemRodPrismatic
 import alfheim.common.security.InteractionSecurity
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import net.minecraftforge.fluids.BlockFluidClassic
 import vazkii.botania.api.mana.*
-import vazkii.botania.common.core.helper.ItemNBTHelper
 
 class ItemEnlighter: ItemMod("Enlighter"), IManaUsingItem {
+	
+	lateinit var iconLit: IIcon
 	
 	init {
 		maxStackSize = 1
 	}
 	
-	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
-		if (player.isSneaking)
-			ItemNBTHelper.setBoolean(stack, TAG_ACTIVE, !ItemNBTHelper.getBoolean(stack, TAG_ACTIVE, false))
-		
-		return super.onItemRightClick(stack, world, player)
+	override fun registerIcons(reg: IIconRegister) {
+		super.registerIcons(reg)
+		iconLit = IconHelper.forItem(reg, this, "Lit")
 	}
 	
-	override fun onUpdate(stack: ItemStack?, world: World, entity: Entity?, slot: Int, inHand: Boolean) {
-		super.onUpdate(stack, world, entity, slot, inHand)
+	override fun requiresMultipleRenderPasses() = true
+	
+	override fun getRenderPasses(meta: Int) = meta + 1
+	
+	override fun getIconFromDamageForRenderPass(meta: Int, pass: Int) = if (meta == 1 && pass == 1) iconLit else itemIcon!!
+	
+	override fun getColorFromItemStack(stack: ItemStack, pass: Int) = if (stack.meta == 1 && pass == 1) ItemIridescent.rainbowColor() else 0xFFFFFF
+	
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
+		if (player.isSneaking)
+			stack.meta = 1 - stack.meta
 		
-		if (!ItemNBTHelper.getBoolean(stack, TAG_ACTIVE, false)) return
+		return stack
+	}
+	
+	override fun onUpdate(stack: ItemStack, world: World, entity: Entity?, slot: Int, inHand: Boolean) {
+		if (!usesMana(stack)) return
 		
 		if (entity is EntityPlayer) {
 			val x = entity.posX.mfloor()
@@ -63,9 +78,5 @@ class ItemEnlighter: ItemMod("Enlighter"), IManaUsingItem {
 		}
 	}
 	
-	override fun usesMana(stack: ItemStack) = ItemNBTHelper.getBoolean(stack, TAG_ACTIVE, false)
-	
-	companion object {
-		const val TAG_ACTIVE = "active"
-	}
+	override fun usesMana(stack: ItemStack) = stack.meta == 1
 }

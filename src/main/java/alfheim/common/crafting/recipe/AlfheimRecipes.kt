@@ -745,7 +745,7 @@ object AlfheimRecipes {
 						 "TSN", "LHO",
 						 'T', ItemStack(priestCloak, 1, 0),
 						 'S', ItemStack(priestCloak, 1, 1),
-						 'N', ItemStack(priestCloak, 1, 2),
+						 'N', ItemStack(priestCloak, 1, 2), // TODO remove - not AEsir
 						 'L', ItemStack(priestCloak, 1, 3),
 						 'H', ItemStack(priestCloak, 1, 4),
 						 'O', ItemStack(priestCloak, 1, 5))

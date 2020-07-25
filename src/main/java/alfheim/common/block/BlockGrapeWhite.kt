@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.safeGet
+import alexsocol.asjlib.*
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
@@ -10,7 +10,6 @@ import alfheim.common.item.material.ElvenFoodMetas
 import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.*
 import net.minecraft.block.*
-import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityBoat
@@ -19,6 +18,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.world.World
+import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
 class BlockGrapeWhite: BlockBush(), IGrowable {
@@ -51,13 +51,23 @@ class BlockGrapeWhite: BlockBush(), IGrowable {
 	override fun addCollisionBoxesToList(world: World?, x: Int, y: Int, z: Int, aabb: AxisAlignedBB?, list: List<Any?>?, entity: Entity?) = if (entity !is EntityBoat) super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity) else Unit
 	override fun getCollisionBoundingBoxFromPool(world: World?, x: Int, y: Int, z: Int) = AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ)!!
 	override fun canPlaceBlockOn(block: Block) = block === Blocks.water
-	override fun canBlockStay(world: World, x: Int, y: Int, z: Int) = if (y in 0..255) world.getBlock(x, y - 1, z).material === Material.water && world.getBlockMetadata(x, y - 1, z) == 0 else false
+	override fun canBlockStay(world: World, x: Int, y: Int, z: Int) = if (y in 0..255) world.getBlock(x, y - 1, z) === Blocks.water && world.getBlockMetadata(x, y - 1, z) == 0 else false
 	
 	override fun updateTick(world: World, x: Int, y: Int, z: Int, random: Random) {
 		super.updateTick(world, x, y, z, random)
 		
 		val meta = world.getBlockMetadata(x, y, z)
-		if (meta < 2 && random.nextInt(if (meta == 0) 50 else 10) == 0) world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
+		if (meta < 2 && random.nextInt(if (meta == 0) 50 else 10) == 0) {
+			world.setBlockMetadataWithNotify(x, y, z, meta + 1, 3)
+			return
+		}
+		
+		if (random.nextInt(100) == 0) {
+			for (d in arrayOf(ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.NORTH, ForgeDirection.EAST).shuffled()) {
+				if (canBlockStay(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ))
+					world.setBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ, this, 0, 3)
+			}
+		}
 	}
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {

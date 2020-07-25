@@ -2,19 +2,24 @@ package alfheim.common.world.dim.alfheim.customgens
 
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import cpw.mods.fml.common.IWorldGenerator
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
+import ru.vamig.worldengine.*
 import java.util.*
 
 class WorldGenGrapesWhiteAlfheim(val perChunk: Int): IWorldGenerator {
 	
-	override fun generate(random: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkProvider?, chunkProvider: IChunkProvider?) {
+	override fun generate(random: Random, chunkX: Int, chunkZ: Int, world: World, prov: IChunkProvider?, chunkProvider: IChunkProvider?) {
 		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
 		
 		for (i in 0 until perChunk) {
 			val x = chunkX * 16 + random.nextInt(16) + 8
 			val z = chunkZ * 16 + random.nextInt(16) + 8
+			
+			if (prov is WE_ChunkProvider && WE_Biome.getBiomeAt(prov, x, z) === BiomeRiver) continue
+			
 			val y = world.getTopLiquidBlock(x, z)
 			
 			if (AlfheimBlocks.grapesWhite.canBlockStay(world, x, y, z))

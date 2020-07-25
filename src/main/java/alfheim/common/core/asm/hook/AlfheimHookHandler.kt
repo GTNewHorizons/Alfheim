@@ -42,6 +42,7 @@ import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.init.*
+import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.*
 import net.minecraft.network.*
 import net.minecraft.potion.*
@@ -77,6 +78,7 @@ import vazkii.botania.common.block.tile.mana.*
 import vazkii.botania.common.core.BotaniaCreativeTab
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.core.proxy.CommonProxy
+import vazkii.botania.common.crafting.recipe.AesirRingRecipe
 import vazkii.botania.common.entity.*
 import vazkii.botania.common.item.*
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower
@@ -260,6 +262,7 @@ object AlfheimHookHandler {
 	 * Gets the sum of all the discounts on IManaDiscountBauble items equipped
 	 * on the player passed in.
 	 */
+	@JvmStatic
 	fun getBaublesDiscountForTools(player: EntityPlayer): Float {
 		val baubles = PlayerHandler.getPlayerBaubles(player) ?: return 0f
 		return (0 until baubles.sizeInventory).sumByDouble { i -> (baubles.getStackInSlot(i)?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
@@ -286,6 +289,7 @@ object AlfheimHookHandler {
 		return (cobbleHook && block === Blocks.cobblestone) || (stoneHook && block === Blocks.stone)
 	}
 	
+	@JvmStatic
 	fun replaceSetBlock(world: World, x: Int, y: Int, z: Int, block: Block): Boolean {
 		var newBlock = block
 		
@@ -660,6 +664,30 @@ object AlfheimHookHandler {
 	@Hook(returnCondition = ON_TRUE, isMandatory = true, booleanReturnConstant = false)
 	fun matches(recipe: RecipePureDaisy, world: World, x: Int, y: Int, z: Int, pureDaisy: SubTileEntity, block: Block, meta: Int) =
 		recipe.output === ModBlocks.livingwood && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim
+	
+	@JvmStatic
+	@Hook(returnCondition = ALWAYS)
+	fun matches(recipe: AesirRingRecipe, inv: InventoryCrafting, world: World?): Boolean {
+		var foundThorRing		= false
+		var foundSifRing		= false
+		var foundNjordRing		= false // TODO remove - not AEsir
+		var foundLokiRing		= false
+		var foundHeimdallRing	= false
+		var foundOdinRing		= false
+		
+		for (i in 0 until inv.sizeInventory) {
+			val stack = inv.getStackInSlot(i) ?: continue
+			
+			if (stack.item === ModItems		.thorRing			&& !foundThorRing)		foundThorRing		= true else
+			if (stack.item === AlfheimItems	.priestRingSif		&& !foundSifRing)		foundSifRing		= true else
+			if (stack.item === AlfheimItems	.priestRingNjord	&& !foundNjordRing)		foundNjordRing		= true else
+			if (stack.item === ModItems		.lokiRing			&& !foundLokiRing)		foundLokiRing		= true else
+			if (stack.item === AlfheimItems	.priestRingHeimdall	&& !foundHeimdallRing)	foundHeimdallRing	= true else
+			if (stack.item === ModItems		.odinRing			&& !foundOdinRing)		foundOdinRing		= true else
+			return false // Found an invalid item, breaking the recipe
+		}
+		return foundThorRing && foundOdinRing && foundLokiRing
+	}
 	
 	@JvmStatic
 	@Hook(returnCondition = ON_TRUE, isMandatory = true)

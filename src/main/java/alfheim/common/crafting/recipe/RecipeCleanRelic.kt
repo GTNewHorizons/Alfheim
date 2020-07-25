@@ -51,7 +51,10 @@ class RecipeCleanRelic: IRecipe {
 		val copy = item.copy()
 		val nick = ItemNBTHelper.getString(cloth, "nick", "")
 		
-		ItemNBTHelper.setString(copy, "soulbind", if (nick.isNotEmpty()) nick else "")
+		if (nick.isNotEmpty())
+			ItemNBTHelper.setString(copy, "soulbind", nick)
+		else
+			copy.tagCompound.removeTag("soulbind")
 		
 		return copy
 	}

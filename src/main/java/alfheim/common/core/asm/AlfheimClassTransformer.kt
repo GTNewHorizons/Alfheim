@@ -168,6 +168,15 @@ class AlfheimClassTransformer: IClassTransformer {
 				cw.toByteArray()
 			}
 			
+			"vazkii.botania.common.item.relic.ItemAesirRing"                -> {
+				println("Transforming $transformedName")
+				val cr = ClassReader(basicClass)
+				val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+				val ct = `ItemAesirRing$ClassVisitor`(cw)
+				cr.accept(ct, ClassReader.SKIP_FRAMES)
+				cw.toByteArray()
+			}
+			
 			"vazkii.botania.common.item.relic.ItemRelic"                    -> {
 				println("Transforming $transformedName")
 				val cr = ClassReader(basicClass)
@@ -525,6 +534,7 @@ class AlfheimClassTransformer: IClassTransformer {
 			}
 		}
 	}
+	
 	internal class `RenderTileFloatingFlower$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
 		
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
@@ -843,6 +853,49 @@ class AlfheimClassTransformer: IClassTransformer {
 				}
 				
 				super.visitIntInsn(opcode, operand)
+			}
+		}
+	}
+	
+	internal class `ItemAesirRing$ClassVisitor`(cv: ClassVisitor): ClassVisitor(ASM5, cv) {
+		
+		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
+			if (name == "onDropped") {
+				println("Visiting ItemAesirRing#onDropped: $name$desc")
+				return `ItemAesirRing$addBindInfo$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+			}
+			return super.visitMethod(access, name, desc, signature, exceptions)
+		}
+		
+		internal class `ItemAesirRing$addBindInfo$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+			
+			override fun visitInsn(opcode: Int) {
+				if (opcode == ICONST_3)
+					super.visitIntInsn(BIPUSH, 6)
+				else
+					super.visitInsn(opcode)
+			}
+			
+			override fun visitVarInsn(opcode: Int, `var`: Int) {
+				if (opcode == ASTORE && `var` == 4) {
+					mv.visitInsn(DUP)
+					mv.visitInsn(ICONST_3)
+					mv.visitFieldInsn(GETSTATIC, "alfheim/common/item/AlfheimItems", "INSTANCE", "Lalfheim/common/item/AlfheimItems;")
+					mv.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/item/AlfheimItems", "getPriestRingSif", if (OBF) "()Ladb;" else "()Lnet/minecraft/item/Item;", false)
+					mv.visitInsn(AASTORE)
+					mv.visitInsn(DUP)
+					mv.visitInsn(ICONST_4)
+					mv.visitFieldInsn(GETSTATIC, "alfheim/common/item/AlfheimItems", "INSTANCE", "Lalfheim/common/item/AlfheimItems;")
+					mv.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/item/AlfheimItems", "getPriestRingNjord", if (OBF) "()Ladb;" else "()Lnet/minecraft/item/Item;", false)
+					mv.visitInsn(AASTORE)
+					mv.visitInsn(DUP)
+					mv.visitInsn(ICONST_5)
+					mv.visitFieldInsn(GETSTATIC, "alfheim/common/item/AlfheimItems", "INSTANCE", "Lalfheim/common/item/AlfheimItems;")
+					mv.visitMethodInsn(INVOKEVIRTUAL, "alfheim/common/item/AlfheimItems", "getPriestRingHeimdall", if (OBF) "()Ladb;" else "()Lnet/minecraft/item/Item;", false)
+					mv.visitInsn(AASTORE)
+				}
+				
+				super.visitVarInsn(opcode, `var`)
 			}
 		}
 	}

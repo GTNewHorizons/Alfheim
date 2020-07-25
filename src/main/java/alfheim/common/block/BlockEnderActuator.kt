@@ -3,19 +3,31 @@ package alfheim.common.block
 import alexsocol.asjlib.F
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
+import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
 import vazkii.botania.common.Botania
 
 class BlockEnderActuator: BlockContainerMod(Material.iron) {
+	
+	lateinit var iconSide: IIcon
 	
 	init {
 		setBlockName("EnderActuator")
 		setCreativeTab(AlfheimTab)
 		setHardness(5f)
 	}
+	
+	override fun registerBlockIcons(reg: IIconRegister) {
+		super.registerBlockIcons(reg)
+		iconSide = IconHelper.forBlock(reg, this, "Side")
+	}
+	
+	override fun getIcon(side: Int, meta: Int) = if (side in 0..1) blockIcon!! else iconSide
 	
 	override fun onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean {
 		if (!player.isSneaking) return false

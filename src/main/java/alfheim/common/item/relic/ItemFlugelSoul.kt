@@ -7,7 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
-import alfheim.common.item.AlfheimItems
+import alfheim.common.item.*
 import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -50,9 +50,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
-		return Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 0.75f, 1f)
-	}
+	override fun getColorFromItemStack(stack: ItemStack?, pass: Int) = ItemIridescent.rainbowColor()
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {

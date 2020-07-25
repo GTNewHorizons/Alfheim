@@ -147,6 +147,7 @@ object AlfheimRegistry {
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileBarrel::class.java, "Barrel")
 //		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter") BACK
+		registerTile(TileEnderActuator::class.java, "EnderActuator")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileManaAccelerator::class.java, "ItemHolder")
@@ -294,7 +295,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzSlab), 2)
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzStairs), 4)
 		
-		addPink(ItemStack(ModItems.aesirRing), 3000)
+		addPink(ItemStack(ModItems.aesirRing), 6000)
 		addPink(ItemStack(ModItems.baubleBox), 5)
 		addPink(ItemStack(ModItems.blackHoleTalisman), 36)
 		addPink(ItemStack(ModItems.corporeaSpark), 9)
@@ -353,8 +354,8 @@ object AlfheimRegistry {
 		
 		addPink(ItemStack(AlfheimFluffBlocks.shrineRock, 1, 6), 1)
 		
+		addPink(ItemStack(AlfheimItems.aesirEmblem), 18)
 		addPink(ItemStack(AlfheimItems.astrolabe), 54)
-		addPink(ItemStack(AlfheimItems.wireAxe), 81)
 		addPink(ItemStack(AlfheimItems.colorOverride), 54)
 		addPink(ItemStack(AlfheimItems.cloudPendantSuper), 18)
 		addPink(ItemStack(AlfheimItems.elementalBoots), 36)
@@ -365,15 +366,20 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.elementiumHoe), 18)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvenWeed), 8)
-		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
 		addPink(ItemStack(AlfheimItems.flugelDisc), 13)
 		addPink(ItemStack(AlfheimItems.flugelHead), 5)
 		for (i in 0..6) addPink(ItemStack(AlfheimItems.hyperBucket, 1, i), 27)
 		addPink(ItemStack(AlfheimItems.irisSeeds, 1, 6), 2)
 		addPink(ItemStack(AlfheimItems.multibauble), 18)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
+		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
+		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
+		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
+		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
+		addPink(ItemStack(AlfheimItems.rodClicker), 29)
 		addPink(ItemStack(AlfheimItems.rodColorfulSkyDirt), 27)
 		addPink(ItemStack(AlfheimItems.spatiotemporalRing), 54)
 		addPink(ItemStack(AlfheimItems.trisDagger), 36)
+		addPink(ItemStack(AlfheimItems.wireAxe), 81)
 	}
 }
