@@ -27,11 +27,11 @@ class ItemAesirCloak: ItemBaubleCloak("AesirCloak"), IManaUsingItem {
 	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase?) {
-		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onWornTick(stack, player, IFaithHandler.FaithBauble.EMBLEM)
+		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onWornTick(stack, player, IFaithHandler.FaithBauble.CLOAK)
 	}
 	
 	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase?) {
-		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onUnequipped(stack, player, IFaithHandler.FaithBauble.EMBLEM)
+		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onUnequipped(stack, player, IFaithHandler.FaithBauble.CLOAK)
 	}
 	
 	override fun usesMana(stack: ItemStack) = true

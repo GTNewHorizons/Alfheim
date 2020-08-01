@@ -2,17 +2,19 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
+import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.*
+import alfheim.common.network.MessageVisualEffect
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
-import net.minecraft.entity.*
+import net.minecraft.entity.INpc
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.passive.EntityAnimal
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.*
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraftforge.event.entity.living.*
@@ -30,13 +32,15 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	
 	override fun getBaubleType(stack: ItemStack?) = BaubleType.RING
 	
-	override fun onWornTick(stack: ItemStack?, player: EntityLivingBase?) {
-		super.onWornTick(stack, player)
-		if (player !is EntityPlayer) return
+	@SubscribeEvent
+	fun onWornTick(e: LivingEvent.LivingUpdateEvent) {
+		val player = e.entityLiving as? EntityPlayer ?: return
+		val ring = getHeimdallRing(player) ?: return
+		
 		leadToDungeon(player)
 		
-		ItemNBTHelper.getInt(stack, TAG_AGGRO, 0).also {
-			if (it > 0) ItemNBTHelper.setInt(stack, TAG_AGGRO, it - 1)
+		ItemNBTHelper.getInt(ring, TAG_AGGRO, 0).also {
+			if (it > 0) ItemNBTHelper.setInt(ring, TAG_AGGRO, it - 1)
 		}
 	}
 	
@@ -51,7 +55,7 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	}
 	
 	@SubscribeEvent
-	fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent) {
+	fun trackEntities(e: LivingEvent.LivingUpdateEvent) {
 		if (ASJUtilities.isServer) return
 		if (e.entity === mc.thePlayer) return
 		
@@ -73,10 +77,12 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	
 	@SubscribeEvent
 	fun onPlayerTargeted(e: LivingSetAttackTargetEvent) {
-		val player = e.target as? EntityPlayer ?: return
-		val ring = getHeimdallRing(player) ?: return
+		val player = e.target as? EntityPlayerMP ?: return
+		if (player.capabilities.isCreativeMode) return
 		
-		ItemNBTHelper.setInt(ring, TAG_AGGRO, 100)
+		getHeimdallRing(player) ?: return
+		
+		AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffectHandlerClient.VisualEffects.TARGETED.ordinal), player)
 	}
 	
 	@SubscribeEvent
@@ -93,8 +99,8 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 		
 		fun getHeimdallRing(player: EntityPlayer): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
-			val stack1 = baubles.getStackInSlot(1)
-			val stack2 = baubles.getStackInSlot(2)
+			val stack1 = baubles.get(1)
+			val stack2 = baubles.get(2)
 			return if (isHeimdallRing(stack1)) stack1 else if (isHeimdallRing(stack2)) stack2 else null
 		}
 		

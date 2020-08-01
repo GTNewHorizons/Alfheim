@@ -8,6 +8,7 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
+import alfheim.common.block.corporea.BlockCorporeaAutocrafter
 import alfheim.common.block.magtrees.calico.*
 import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
@@ -51,7 +52,7 @@ object AlfheimBlocks {
 	val auroraWood: Block
 	val barrel: Block
 	val barrier: Block
-//	val corporeaAutocrafter: Block BACK
+	val corporeaAutocrafter: Block
 	val dreamSapling: Block
 	val elvenOre: Block
 	val elvenSand: Block
@@ -193,7 +194,7 @@ object AlfheimBlocks {
 		auroraWood = BlockAuroraWood()
 		barrel = BlockBarrel()
 		barrier = BlockBarrier()
-//		corporeaAutocrafter = BlockCorporeaAutocrafter() BACK
+		corporeaAutocrafter = BlockCorporeaAutocrafter()
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
@@ -634,6 +635,7 @@ object AlfheimBlocks {
 		BotaniaAPI.registerSubTile(name, clazz)
 		BotaniaAPI.registerSubTileSignature(clazz, ShadowFoxSignature(name))
 		BotaniaAPI.addSubTileToCreativeMenu(name)
+		AlfheimTab.subtiles.add(name)
 	}
 	
 	fun Block.setHarvestLevelI(toolClass: String, level: Int) = also { it.setHarvestLevel(toolClass, level) }

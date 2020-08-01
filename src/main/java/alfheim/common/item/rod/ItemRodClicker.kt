@@ -14,13 +14,13 @@ import net.minecraft.init.Blocks
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.server.MinecraftServer
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.*
 import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import vazkii.botania.api.item.*
+import vazkii.botania.common.block.tile.TileAvatar
 import vazkii.botania.common.core.helper.*
 import java.util.*
 
@@ -52,7 +52,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	override fun onAvatarUpdate(avatar: IAvatarTile?, wand: ItemStack?) {
 		if (wand?.item !== this) return
 		
-		val tile = avatar as? TileEntity ?: return
+		val tile = avatar as? TileAvatar ?: return
 		val world = tile.worldObj ?: return
 		
 		val x = tile.xCoord
@@ -62,6 +62,8 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		val delay = (16 - world.getStrongestIndirectPower(x, y, z)) * 10
 		
 		if (world.isRemote || world.totalWorldTime % delay != 0L) return
+		
+		if (tile.currentMana < COST_AVATAR) return
 		
 		var xl = x
 		var yl = y
@@ -104,18 +106,25 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		
 		try {
 			// code from Thaumic Tinkerer by Vazkii
+			// TODO add events
 			if (leftClick && entities.isNotEmpty()) {
 				player.getAttributeMap().applyAttributeModifiers(player.heldItem.attributeModifiers)
-				entities.firstOrNull { it !is EntityItem && !it.isDead && if (it is EntityLivingBase) it.isEntityAlive else true }?.let { player.attackTargetEntityWithCurrentItem(it) }
+				entities.firstOrNull {
+					it !is EntityItem && !it.isDead && (it as? EntityLivingBase)?.isEntityAlive != false
+				}?.let {
+					player.attackTargetEntityWithCurrentItem(it)
+					tile.recieveMana(-COST_AVATAR)
+				}
 			} else {
 				ForgeEventFactory.onPlayerInteract(player, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, xl, yl, zl, s, world)
 				val entity = if (entities.isEmpty()) null else entities.random()
 				
 				var done = (entity != null && player.interactWith(entity))
-				if (!done) player.heldItem?.item?.onItemUseFirst(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f)
-				if (!done) done = block != null && block.onBlockActivated(world, xl, yl, zl, player, s, 0f, 0f, 0f)
+				if (!done) done = player.heldItem?.item?.onItemUseFirst(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f) == true
+				if (!done) done = block.onBlockActivated(world, xl, yl, zl, player, s, 0f, 0f, 0f)
 				if (!done) done = player.heldItem?.item?.onItemUse(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f) == true
 				if (!done) player.heldItem?.item?.onItemRightClick(player.heldItem, world, player)
+				tile.recieveMana(-COST_AVATAR)
 			}
 		} catch (ignore: Throwable) {
 			ignore.printStackTrace()
@@ -130,11 +139,11 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 		for (i in 0 until player.inventory.sizeInventory) {
 			if (i >= inv.sizeInventory) break
 			
-			var stack = inv.getStackInSlot(i)?.copy()
+			var stack = inv[i]?.copy()
 			if (stack == null || stack.stackSize <= 0) stack = null
-			inv.setInventorySlotContents(i, null)
+			inv[i] = null
 			
-			player.inventory.setInventorySlotContents(i, stack)
+			player.inventory[i] = stack
 			stack?.let { for (t in 0 until ticksSkipped) it.item.onUpdate(stack, player.worldObj, player, i, i == 0) }
 		}
 		
@@ -143,17 +152,17 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	
 	fun unequipPlayer(player: FakePlayer, inv: IInventory) {
 		for (i in 0 until player.inventory.sizeInventory) {
-			var stack = player.inventory.getStackInSlot(i)?.copy()
+			var stack = player.inventory[i]?.copy()
 			if (stack == null || stack.stackSize <= 0) stack = null
 			
-			player.inventory.setInventorySlotContents(i, null)
+			player.inventory[i] = null
 			if (i >= inv.sizeInventory) {
 				if (stack != null) player.dropPlayerItemWithRandomChoice(stack, true)
 				continue
 			}
 			
-			inv.setInventorySlotContents(i, stack)
-			player.inventory.setInventorySlotContents(i, null)
+			inv[i] = stack
+			player.inventory[i] = null
 		}
 	}
 	
@@ -166,6 +175,7 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 	companion object {
 		
 		const val TAG_MODE = "mode"
+		const val COST_AVATAR = 10
 		
 		lateinit var iconLeft: IIcon
 		

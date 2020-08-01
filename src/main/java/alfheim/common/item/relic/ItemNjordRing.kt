@@ -1,37 +1,45 @@
 package alfheim.common.item.relic
 
-import alexsocol.asjlib.getActivePotionEffect
+import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.material.Material
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.*
+import net.minecraftforge.event.entity.living.LivingEvent
 import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.ItemRelicBauble
 import kotlin.math.*
 
 class ItemNjordRing: ItemRelicBauble("NjordRing") {
 	
-	override fun getBaubleType(stack: ItemStack?) = BaubleType.RING
+	init {
+		eventForge()
+	}
 	
-	override fun onWornTick(stack: ItemStack, player: EntityLivingBase?) {
-		super.onWornTick(stack, player)
-		
-		if (player !is EntityPlayer) return
+	@SubscribeEvent
+	fun onPlayerTick(e: LivingEvent.LivingUpdateEvent) {
+		val player = e.entityLiving as? EntityPlayer ?: return
+		val ring = getNjordRing(player) ?: return
 		
 		if (player.isInWater) {
 			player.stepHeight = 1f
 			
-			heal(player, stack)
-			waterSpeed(player, stack)
-		} else {
+			heal(player, ring)
+			waterSpeed(player, ring)
+		} else if (ItemNBTHelper.getBoolean(ring, TAG_WAS_IN_WATER, false)) {
 			player.stepHeight = 0.5f
 		}
+		
+		ItemNBTHelper.setBoolean(ring, TAG_WAS_IN_WATER, player.isInWater)
 	}
+	
+	override fun getBaubleType(stack: ItemStack?) = BaubleType.RING
 	
 	fun heal(player: EntityPlayer, ring: ItemStack) {
 		if (player.ticksExisted % 100 == 0 && player.shouldHeal())
@@ -57,9 +65,8 @@ class ItemNjordRing: ItemRelicBauble("NjordRing") {
 		if (changeY) player.motionY = motionY
 		if (changeZ) player.motionZ = motionZ
 		
-		if (player.isInsideOfMaterial(Material.water) && player.getActivePotionEffect (Potion.nightVision.id) == null) {
-			val neweffect = PotionEffect(Potion.nightVision.id, 20, -42, true)
-			player.addPotionEffect(neweffect)
+		if (player.isInsideOfMaterial(Material.water)) {
+			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 20, 0, true))
 		}
 		
 		if (player.air <= 1) {
@@ -71,10 +78,12 @@ class ItemNjordRing: ItemRelicBauble("NjordRing") {
 	
 	companion object {
 		
+		const val TAG_WAS_IN_WATER = "wasInWater"
+		
 		fun getNjordRing(player: EntityPlayer): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
-			val stack1 = baubles.getStackInSlot(1)
-			val stack2 = baubles.getStackInSlot(2)
+			val stack1 = baubles[1]
+			val stack2 = baubles[2]
 			return if (isNjordRing(stack1)) stack1 else if (isNjordRing(stack2)) stack2 else null
 		}
 		

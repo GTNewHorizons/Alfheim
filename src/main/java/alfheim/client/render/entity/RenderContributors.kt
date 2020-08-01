@@ -71,7 +71,7 @@ object RenderContributors {
 		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
 			//run {
 			//	// jojo's mask
-			//	if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
+			//	if (PlayerHandler.getPlayerBaubles(player)?.get(0)?.item !== AlfheimItems.mask) {
 			//		val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
 			//		val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
 			//		val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick

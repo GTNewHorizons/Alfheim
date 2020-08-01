@@ -106,7 +106,7 @@ object HilarityHandler {
 							if (itemPair.flag) {
 								val te = itemPair.pos.getTileAt(player.worldObj, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor())
 								if (te is TileItemDisplay)
-									te.setInventorySlotContents(0, null)
+									te.set(0, null)
 							}
 						player.worldObj.playSoundAtEntity(player, "botania:enchanterEnchant", 1f, 1f)
 						return true
@@ -146,7 +146,7 @@ object HilarityHandler {
 			for (pos in platformPositions) {
 				val tile = pos.getTileAt(world, x, y, z)
 				if (tile is TileItemDisplay) {
-					val stack = tile.getStackInSlot(0)
+					val stack = tile.get(0)
 					if (stack != null) items.add(PosPair(pos, stack))
 				}
 			}

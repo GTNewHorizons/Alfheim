@@ -45,6 +45,5 @@ class ItemSpiderRing: ItemBauble("SpiderRing"), IManaUsingItem {
 	
 	companion object {
 		const val TAG_ACTIVE = "active"
-	
 	}
 }

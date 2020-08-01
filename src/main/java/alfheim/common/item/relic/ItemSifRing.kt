@@ -4,46 +4,53 @@ import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
-import net.minecraft.entity.EntityLivingBase
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ChunkCoordinates
 import net.minecraft.world.biome.BiomeGenBase
+import net.minecraftforge.event.entity.living.LivingEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.ItemRelicBauble
 
 class ItemSifRing: ItemRelicBauble("SifRing") {
 	
-	override fun getBaubleType(stack: ItemStack?) = BaubleType.RING
-	
 	val desertIDs = arrayOf(BiomeGenBase.desert.biomeID, BiomeGenBase.desertHills.biomeID, BiomeGenBase.desert.biomeID + 128, BiomeGenBase.desertHills.biomeID + 128)
 	
-	override fun onWornTick(stack: ItemStack, player: EntityLivingBase?) {
-		super.onWornTick(stack, player)
-		if (player !is EntityPlayer) return
-		
-		reviveCacti(stack, player)
-		supplyVineballs(stack, player)
+	init {
+		eventForge()
 	}
 	
-	fun reviveCacti(stack: ItemStack, player: EntityPlayer) {
-		val world = player.worldObj
+	@SubscribeEvent
+	fun onPlayerTick(e: LivingEvent.LivingUpdateEvent) {
+		val player = e.entityLiving as? EntityPlayer ?: return
+		val ring = getSifRing(player) ?: return
 		
+		reviveCacti(ring, player)
+		supplyVineballs(ring, player)
+	}
+	
+	val list = ArrayList<ChunkCoordinates>()
+	
+	fun reviveCacti(stack: ItemStack, player: EntityPlayer) {
 		if (!ManaItemHandler.requestManaExact(stack, player, 20, false)) return
+		
+		val world = player.worldObj
 		
 		for (i in -8..8)
 			for (j in -3..3)
-				for (k in -8..8) {
-					if (world.getBiomeGenForCoords(player.posX.mfloor() + i, player.posZ.mfloor() + k).biomeID in desertIDs) {
-						if (world.getBlock(player, i, j, k) === Blocks.deadbush) {
-							ManaItemHandler.requestManaExact(stack, player, 20, false)
-							
-							world.setBlock(player, Blocks.cactus, i, j, k)
-							return
-						}
-					}
-				}
+				for (k in -8..8)
+					if (world.getBiomeGenForCoords(player.posX.mfloor() + i, player.posZ.mfloor() + k).biomeID in desertIDs)
+						if (world.getBlock(player, i, j, k) === Blocks.deadbush)
+							list.add(ChunkCoordinates(i, j, k))
+		
+		if (list.isEmpty()) return
+		
+		val (i, j, k) = list.random()
+		world.setBlock(player, Blocks.cactus, i, j, k)
+		list.clear()
 	}
 	
 	fun supplyVineballs(stack: ItemStack, player: EntityPlayer) {
@@ -52,12 +59,14 @@ class ItemSifRing: ItemRelicBauble("SifRing") {
 		}
 	}
 	
+	override fun getBaubleType(stack: ItemStack?) = BaubleType.RING
+	
 	companion object {
 		
 		fun getSifRing(player: EntityPlayer): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null
-			val stack1 = baubles.getStackInSlot(1)
-			val stack2 = baubles.getStackInSlot(2)
+			val stack1 = baubles.get(1)
+			val stack2 = baubles.get(2)
 			return if (isSifRing(stack1)) stack1 else if (isSifRing(stack2)) stack2 else null
 		}
 		

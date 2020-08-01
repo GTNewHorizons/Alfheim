@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alexsocol.asjlib.extendables.ASJTile
 import net.minecraft.entity.player.*
 import net.minecraft.inventory.IInventory
@@ -12,7 +12,7 @@ class TileEnderActuator: ASJTile(), IInventory {
 	
 	var name = "Notch"
 	
-	override fun getStackInSlot(slot: Int) = getEnderChest()?.getStackInSlot(slot)
+	override fun getStackInSlot(slot: Int) = getEnderChest()?.get(slot)
 	
 	override fun decrStackSize(slot: Int, size: Int) = getEnderChest()?.decrStackSize(slot, size)
 	
@@ -34,7 +34,7 @@ class TileEnderActuator: ASJTile(), IInventory {
 	
 	override fun closeInventory() = getEnderChest()?.closeInventory() ?: Unit
 	
-	override fun setInventorySlotContents(slot: Int, stack: ItemStack?) = getEnderChest()?.setInventorySlotContents(slot, stack) ?: Unit
+	override fun setInventorySlotContents(slot: Int, stack: ItemStack?) = getEnderChest()?.set(slot, stack) ?: Unit
 	
 	fun getEnderChest() = if (ASJUtilities.isServer) (MinecraftServer.getServer().configurationManager.playerEntityList.firstOrNull { it is EntityPlayerMP } as? EntityPlayerMP)?.inventoryEnderChest else null
 	

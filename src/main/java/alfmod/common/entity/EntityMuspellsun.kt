@@ -19,13 +19,13 @@ class EntityMuspellsun(world: World): EntityMob(world) {
 	
 	init {
 		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityPlayer::class.java, 1.2, false))
-		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityFirespirit::class.java, 1.2, false))
+		tasks.addTask(4, EntityAIAttackOnCollide(this, EntityFireSpirit::class.java, 1.2, false))
 		tasks.addTask(5, EntityAIWander(this, 1.0))
 		tasks.addTask(6, EntityAIWatchClosest(this, EntityPlayer::class.java, 8f))
 		tasks.addTask(6, EntityAILookIdle(this))
 		targetTasks.addTask(1, EntityAIHurtByTarget(this, false))
 		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 0, true))
-		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityFirespirit::class.java, 0, true))
+		targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityFireSpirit::class.java, 0, true))
 		isImmuneToFire = true
 		addRandomArmor()
 		setSize(0.9f, 2.7f)

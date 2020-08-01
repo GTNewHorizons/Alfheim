@@ -62,7 +62,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		val block = world.getBlock(x, y, z)
 		if (block === ModBlocks.brewery) {
 			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew.setInventorySlotContents(0, stack.splitStack(1))
+			brew.set(0, stack.splitStack(1))
 		} else { // Stupid Et Futurum
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
@@ -126,7 +126,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 		
 		if (entity is EntityPlayer) {
-			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).getStackInSlot(0)
+			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).get(0)
 			if (tiara != null && tiara.item is ItemFlightTiara)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, MAX_FLY_TIME)
 			

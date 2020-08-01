@@ -90,7 +90,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		
 		val stacksToCheck = ArrayList<ItemStack>()
 		for (i in 0 until player.inventory.sizeInventory) {
-			val stackInSlot = player.inventory.getStackInSlot(i)
+			val stackInSlot = player.inventory.get(i)
 			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.meta == blockToPlace.meta) {
 				stackInSlot.stackSize--
 				return
@@ -153,7 +153,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			var current = 0
 			val stacksToCheck = ArrayList<ItemStack>()
 			for (i in 0 until player.inventory.sizeInventory) {
-				val stackInSlot = player.inventory.getStackInSlot(i)
+				val stackInSlot = player.inventory.get(i)
 				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.meta == reqStack.meta) {
 					current += stackInSlot.stackSize
 					if (current >= required)

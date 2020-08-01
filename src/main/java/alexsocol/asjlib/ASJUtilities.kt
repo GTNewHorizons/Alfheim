@@ -178,7 +178,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getSlotWithItem(item: Item, inventory: IInventory) =
-		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it)?.item === item } ?: -1
+		(0 until inventory.sizeInventory).firstOrNull { inventory[it]?.item === item } ?: -1
 	
 	/**
 	 * Checks if two itemstacks has same ID, metadata and NBT
@@ -240,7 +240,7 @@ object ASJUtilities {
 	fun getAmount(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			val slot = inventory.getStackInSlot(i) ?: continue
+			val slot = inventory[i] ?: continue
 			if (stack.isItemEqual(slot))
 				amount += slot.stackSize
 		}
@@ -257,7 +257,7 @@ object ASJUtilities {
 	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			val slot = inventory.getStackInSlot(i) ?: continue
+			val slot = inventory[i] ?: continue
 			if (isItemStackEqualData(slot, stack))
 				amount += slot.stackSize
 		}
@@ -274,7 +274,7 @@ object ASJUtilities {
 	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
 		if (getAmount(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				val slot = inventory.getStackInSlot(i) ?: continue
+				val slot = inventory[i] ?: continue
 				if (stack.isItemEqual(slot)) {
 					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
@@ -300,7 +300,7 @@ object ASJUtilities {
 	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
 		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				val slot = inventory.getStackInSlot(i) ?: continue
+				val slot = inventory[i] ?: continue
 				if (isItemStackEqualData(slot, stack)) {
 					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
@@ -787,7 +787,7 @@ object ASJUtilities {
 	@JvmStatic
 	fun chatLog(message: String) {
 		val world = if (isServer) MinecraftServer.getServer()?.entityWorld else Minecraft.getMinecraft()?.theWorld
-		val msg = "${time(world)} $message"
+		val msg = "${worldInfoForLog(world)} $message"
 		if (isServer)
 			sayToAllOnline(msg)
 		else

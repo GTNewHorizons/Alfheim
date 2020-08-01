@@ -1,6 +1,6 @@
 package alfheim.common.core.asm.hook.extender
 
-import alexsocol.asjlib.mc
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.lib.LibResourceLocations
 import alfheim.client.model.block.ModelSpreaderFrame
@@ -111,7 +111,7 @@ object ManaSpreaderExtender {
 		val name = StatCollector.translateToLocal(ItemStack(ModBlocks.spreader, 1, tile.getBlockMetadata()).unlocalizedName.replace("tile.".toRegex(), "tile." + LibResources.PREFIX_MOD) + ".name")
 		val color = if (isUBER_SPREADER(tile)) 0xFFD400 else if (tile.isRedstone) 0xFF0000 else if (tile.isDreamwood) 0xFF00AE else 0x00FF00
 		HUDHandler.drawSimpleManaHUD(color, tile.knownMana, tile.maxMana, name, res)
-		val lens: ItemStack? = tile.getStackInSlot(0)
+		val lens: ItemStack? = tile[0]
 		if (lens != null) {
 			glEnable(GL_BLEND)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -207,10 +207,10 @@ object ManaSpreaderExtender {
 			var s = 1.15f
 			val t = s - 1
 			glTranslatef(0f, -t, 0f)
-			alexsocol.asjlib.glScalef(s)
+			glScalef(s)
 			ModelSpreaderFrame.render()
 			s = 1 / s
-			alexsocol.asjlib.glScalef(s)
+			glScalef(s)
 			glTranslatef(0f, t, 0f)
 			
 			modelHook = false

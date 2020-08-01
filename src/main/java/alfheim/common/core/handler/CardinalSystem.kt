@@ -337,7 +337,7 @@ object CardinalSystem {
 			for (i in 0 until size) {
 				val useBaubles = i >= invSize
 				val inv = if (useBaubles) baublesInv else mainInv
-				val stack = inv.getStackInSlot(i - if (useBaubles) invSize else 0)
+				val stack = inv.get(i - if (useBaubles) invSize else 0)
 				
 				if (stack != null) {
 					val item = stack.item

@@ -45,7 +45,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		var hardness = getBlockHardness(world, x, y, z)
 		
 		val bbls = PlayerHandler.getPlayerBaubles(player)
-		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 5, true)) hardness = 2f
+		if (bbls[0]?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls[0], player, 5, true)) hardness = 2f
 		
 		if (hardness < 0f) return 0f
 		
@@ -69,7 +69,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	override fun dropBlockAsItem(w: World, x: Int, y: Int, z: Int, s: ItemStack) = Unit
 	
 	override fun onEntityWalking(w: World, x: Int, y: Int, z: Int, e: Entity) {
-		if (e is EntityPlayer && BaublesApi.getBaubles(e).getStackInSlot(0)?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e).getStackInSlot(0), e, 50, true)) return
+		if (e is EntityPlayer && BaublesApi.getBaubles(e)[0]?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e)[0], e, 50, true)) return
 		
 		e.setInWeb()
 		if (!w.isRemote && e is EntityLivingBase) {

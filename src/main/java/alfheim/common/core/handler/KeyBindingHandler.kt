@@ -58,7 +58,7 @@ object KeyBindingHandler {
 					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
 			}
 		} else if (mopNoEntity.typeOfHit == MovingObjectType.BLOCK)
-			MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_AIR, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
+			MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_BLOCK, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
 	}
 	
 	fun use(player: EntityPlayerMP) {
@@ -75,7 +75,7 @@ object KeyBindingHandler {
 					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
 			}
 		} else if (mopNoEntity.typeOfHit == MovingObjectType.BLOCK)
-			MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_AIR, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
+			MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_BLOCK, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
 	}
 	
 	fun cast(player: EntityPlayerMP, hotSpell: Boolean, id: Int) {

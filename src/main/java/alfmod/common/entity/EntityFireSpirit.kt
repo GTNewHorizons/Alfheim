@@ -6,7 +6,6 @@ import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.*
 import alfheim.common.item.AlfheimItems
-import alfheim.common.item.equipment.bauble.faith.bidiRange
 import alfmod.common.item.AlfheimModularItems
 import alfmod.common.item.material.EventResourcesMetas
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -25,7 +24,7 @@ import vazkii.botania.common.Botania
 import vazkii.botania.common.item.ModItems
 import kotlin.math.*
 
-class EntityFirespirit(world: World): EntityLiving(world) {
+class EntityFireSpirit(world: World): EntityLiving(world) {
 	
 	var timer = 0
 	
@@ -132,7 +131,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 					in 3..4 -> EntityBlaze(worldObj).apply {
 						setRandomPos(x, y, z, true)
 						
-						setTarget(this@EntityFirespirit)
+						setTarget(this@EntityFireSpirit)
 						
 						getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 50.0
 						health = maxHealth
@@ -154,14 +153,14 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 						getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 30.0
 						health = maxHealth
 						
-						setTarget(this@EntityFirespirit)
+						setTarget(this@EntityFireSpirit)
 					}
 					
 					7       -> EntityGhast(worldObj).apply {
 						setRandomPos(x, y, z, true)
 						
-						targetedEntity = this@EntityFirespirit
-						aggroCooldown = this@EntityFirespirit.timer + 50
+						targetedEntity = this@EntityFireSpirit
+						aggroCooldown = this@EntityFireSpirit.timer + 50
 						
 						explosionStrength = rand.nextInt(3) + 2
 					}
@@ -184,8 +183,8 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 						getEntityAttribute(SharedMonsterAttributes.maxHealth).baseValue = 40.0
 						health = maxHealth
 						
-						tasks.addTask(4, EntityAIAttackOnCollide(this, EntityFirespirit::class.java, 1.2, true))
-						targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityFirespirit::class.java, 0, true))
+						tasks.addTask(4, EntityAIAttackOnCollide(this, EntityFireSpirit::class.java, 1.2, true))
+						targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityFireSpirit::class.java, 0, true))
 					}
 				} as EntityLiving).apply {
 					entityData.setBoolean(TAG_RITUAL_SUMMONED, true)
@@ -199,7 +198,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 		if (src?.entity is EntityPlayer) return false
 		val (x, y, z) = position
 		
-		val cout = min(4, PYLONS.sumBy { min(1, worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + it[0] + 0.5, y + it[1] + if (master) 0.5 else -0.5, z + it[2] + 0.5).expand(0.5)).size) } )
+		val cout = min(4, PYLONS.sumBy { min(1, worldObj.getEntitiesWithinAABB(EntityFireSpirit::class.java, getBoundingBox(x + it[0] + 0.5, y + it[1] + if (master) 0.5 else -0.5, z + it[2] + 0.5).expand(0.5)).size) } )
 		return super.attackEntityFrom(src, amount * (1 - cout * 0.25f))
 	}
 	
@@ -219,8 +218,8 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 			worldObj.setBlock(x, y, z, AlfheimBlocks.alfheimPylon, 1, 3)
 		
 		for (c in PYLONS) {
-			worldObj.getEntitiesWithinAABB(EntityFirespirit::class.java, getBoundingBox(x + c[0] + 0.5, y + c[1] + if (master) 0.5 else -0.5, z + c[2] + 0.5).expand(0.5)).forEach {
-				it as EntityFirespirit
+			worldObj.getEntitiesWithinAABB(EntityFireSpirit::class.java, getBoundingBox(x + c[0] + 0.5, y + c[1] + if (master) 0.5 else -0.5, z + c[2] + 0.5).expand(0.5)).forEach {
+				it as EntityFireSpirit
 				if (master) {
 					it.setDead()
 				} else if (it.master) {
@@ -292,7 +291,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 			var master = true
 			
 			for (c in arrayOf(arrayOf(0, 1, 0), *PYLONS)) {
-				val spirit = EntityFirespirit(world)
+				val spirit = EntityFireSpirit(world)
 				spirit.master = master
 				spirit.setPosition(x + c[0] + 0.5, y + c[1] + if (master) 0.5 else 1.5, z + c[2] + 0.5)
 				spirit.position = ChunkCoordinates(x + c[0], y + c[1], z + c[2])
@@ -378,6 +377,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 						if (abs(i - x) == 5 && abs(k - z) == 5 && j == y + 1 || Vector3.pointDistanceSpace(i, j, k, x, y, z) > RADIUS) continue  // Ignore pylons and out of circle
 						
 						if (world.getTileEntity(i, j, k) != null) {
+							VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.WISP, world.provider.dimensionId, i + 0.5, j + 0.5, k + 0.5, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 5.0, 0.0)
 							
 							return false
 						}
@@ -423,7 +423,7 @@ class EntityFirespirit(world: World): EntityLiving(world) {
 			setPosition(a, b, c)
 		}
 		
-		fun selectModded(spirit: EntityFirespirit, x: Int, y: Int, z: Int): EntityLivingBase? {
+		fun selectModded(spirit: EntityFireSpirit, x: Int, y: Int, z: Int): EntityLivingBase? {
 			if (spirit.rand.nextInt(4) != 0) return null
 			
 			return when (spirit.rand.nextInt(10)) {

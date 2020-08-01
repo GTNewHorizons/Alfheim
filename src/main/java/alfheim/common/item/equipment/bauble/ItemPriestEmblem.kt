@@ -40,7 +40,7 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 		
 		fun getEmblem(meta: Int, player: EntityPlayer?): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val stack = baubles.getStackInSlot(0)
+			val stack = baubles.get(0)
 			return if (stack != null && ((stack.item === AlfheimItems.priestEmblem && stack.meta == meta) || stack.item == AlfheimItems.aesirEmblem) && isActive(stack)) stack else null
 		}
 		
@@ -152,7 +152,8 @@ class ItemPriestEmblem: ItemBauble("priestEmblem"), IBaubleRender, IManaUsingIte
 			val player = event.entityPlayer
 			
 			if (VisualEffectHandlerClient.activeEmblems.getOrDefault(player.entityId, false))
-				getFaithHandler(stack).doParticles(stack, player)
+				if (!(player === mc.thePlayer && mc.gameSettings.thirdPersonView == 0))
+					getFaithHandler(stack).doParticles(stack, player)
 			
 			mc.renderEngine.bindTexture(TextureMap.locationItemsTexture)
 			IBaubleRender.Helper.rotateIfSneaking(player)

@@ -61,7 +61,7 @@ class EntityMjolnir: EntityThrowable {
 						val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mjolnir, thrower.inventory)
 						
 						if (slot != -1)
-							thrower.inventory.getStackInSlot(slot)?.let { if (it.item === AlfheimItems.mjolnir) ItemNBTHelper.setInt(it, ItemMjolnir.TAG_COOLDOWN, 0) }
+							thrower.inventory.get(slot)?.let { if (it.item === AlfheimItems.mjolnir) ItemNBTHelper.setInt(it, ItemMjolnir.TAG_COOLDOWN, 0) }
 					}
 					setDead()
 				}

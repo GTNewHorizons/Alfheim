@@ -89,7 +89,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		val tileEntity = world.getTileEntity(x, y, z)
 		
 		if (tileEntity is TileItemDisplay) {
-			if (tileEntity.getStackInSlot(0) != null) {
+			if (tileEntity.get(0) != null) {
 				dropItemsAtEntity(world, x, y, z, player)
 				return true
 			}
@@ -97,7 +97,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 			if (player.currentEquippedItem != null) {
 				val item = player.currentEquippedItem.copy()
 				item.stackSize = 1
-				tileEntity.setInventorySlotContents(0, item)
+				tileEntity.set(0, item)
 				
 				--player.currentEquippedItem.stackSize
 				if (player.currentEquippedItem.stackSize == 0) {
@@ -116,11 +116,11 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		val tileEntity = world.getTileEntity(x, y, z)
 		if (tileEntity is IInventory) {
 			for (i in 0 until tileEntity.sizeInventory) {
-				val item = tileEntity.getStackInSlot(i)
+				val item = tileEntity.get(i)
 				if (item != null && item.stackSize > 0) {
 					val entityItem = EntityItem(world, entity.posX, entity.posY + (entity.eyeHeight / 2f).D, entity.posZ, item.copy())
 					world.spawnEntityInWorld(entityItem)
-					tileEntity.setInventorySlotContents(i, null)
+					tileEntity.set(i, null)
 				}
 			}
 		}
@@ -150,7 +150,7 @@ class BlockItemDisplay: BlockMod(Material.wood), ILexiconable, ITileEntityProvid
 		val tileEntity = world.getTileEntity(x, y, z)
 		if (tileEntity is IInventory) {
 			for (i in 0 until tileEntity.sizeInventory) {
-				val item = tileEntity.getStackInSlot(i)
+				val item = tileEntity.get(i)
 				if (item != null && item.stackSize > 0) {
 					val entityItem = EntityItem(world, x.D, y.D, z.D, item.copy())
 					world.spawnEntityInWorld(entityItem)

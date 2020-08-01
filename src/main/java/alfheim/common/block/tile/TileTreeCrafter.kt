@@ -154,7 +154,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		if (recipe != null) recipeItems = ArrayList(recipe.inputs)
 		
 		itemDisplays {
-			val stack = it.getStackInSlot(0)
+			val stack = it.get(0)
 			if (stack != null) {
 				
 				val s = 0.2f + Math.random().F * 0.1f
@@ -309,7 +309,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 			val block = worldObj.getTileEntity(i.x + xCoord, i.y + yCoord - 4, i.z + zCoord)
 			
 			if (block is TileItemDisplay) {
-				val item = block.getStackInSlot(0)
+				val item = block.get(0)
 				
 				if (item != null) items.add(item)
 			}
@@ -376,7 +376,7 @@ class TileTreeCrafter: TileMod(), ISparkAttachable {
 		itemDisplays {
 			for (rItem: Any? in recipeItems) {
 				if (rItem != null)
-					if (it.getStackInSlot(0)?.itemEquals(rItem) == true) {
+					if (it.get(0)?.itemEquals(rItem) == true) {
 						it.apply {
 							setInventorySlotContents(0, null)
 							invalidate()

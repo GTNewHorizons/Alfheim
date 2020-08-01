@@ -33,6 +33,7 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
+import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
@@ -234,8 +235,11 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 
 object AlfheimTab: CreativeTabs("Alfheim") {
+	
+	val subtiles = HashSet<String>()
 	
 	override fun getTabIconItem() = alfheimPortal.toItem()
 	
@@ -254,13 +258,13 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		`DEV-NULL`?.let { addItem(it) }
 		
 		addBlock(manaInfuser)
-//		addBlock(corporeaAutocrafter) BACK
+		addBlock(corporeaAutocrafter)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
 		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
 		addBlock(enderActuator)
-		// addBlock(anomalyHarvester) // FIXME back!
+		// addBlock(anomalyHarvester) // BACK
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
 		addBlock(manaAccelerator)
@@ -329,6 +333,11 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (hyperBucket)
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
+		
+		(22..27).mapTo(list) {
+			ItemStack(ModItems.lens, 1, it)
+		}
+		
 		addItem (soulHorn)
 		addItem (soulHorn, 1)
 		
@@ -416,6 +425,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		addBlock(grapesRed[0])
 		addBlock(grapesWhite)
+		
+		subtiles.mapTo(list) {
+			ItemBlockSpecialFlower.ofType(it)
+		}
 		
 		if (AlfheimConfigHandler.enableMMO) addItem (paperBreak)
 		if (AlfheimConfigHandler.enableMMO) addItem (peacePipe)

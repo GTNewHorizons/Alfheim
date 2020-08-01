@@ -92,14 +92,14 @@ class SubTilePetronia: SubTileGenerating() {
 	override fun writeToPacketNBT(cmp: NBTTagCompound) {
 		super.writeToPacketNBT(cmp)
 		cmp.setInteger(TAG_BURN_TIME, burnTime)
-		cmp.setInteger(TAG_COOL_DOWN, coolDown)
+		cmp.setInteger(TAG_COOLDOWN, coolDown)
 		cmp.setInteger(TAG_POWER, powerPerTick)
 	}
 	
 	override fun readFromPacketNBT(cmp: NBTTagCompound) {
 		super.readFromPacketNBT(cmp)
 		burnTime = cmp.getInteger(TAG_BURN_TIME)
-		coolDown = cmp.getInteger(TAG_COOL_DOWN)
+		coolDown = cmp.getInteger(TAG_COOLDOWN)
 		powerPerTick = cmp.getInteger(TAG_POWER)
 	}
 	
@@ -113,7 +113,7 @@ class SubTilePetronia: SubTileGenerating() {
 		
 		const val TAG_BURN_TIME = "burn_time"
 		const val TAG_POWER = "tick_power"
-		const val TAG_COOL_DOWN = "cool_down"
+		const val TAG_COOLDOWN = "cooldown"
 		
 		init {
 			AlfheimAPI.registerFuel("oil", 100, 50)

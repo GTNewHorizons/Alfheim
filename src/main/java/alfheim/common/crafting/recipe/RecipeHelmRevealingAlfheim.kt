@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alexsocol.asjlib.get
 import alfheim.common.item.AlfheimItems
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.*
@@ -15,7 +16,7 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		var foundGoggles = false
 		var foundHelm = false
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack != null) {
 				when {
 					checkHelm(stack)       -> foundHelm = true
@@ -31,7 +32,7 @@ class RecipeHelmRevealingAlfheim: IRecipe {
 		var helm: ItemStack? = null
 
 		for (i in 0 until var1.sizeInventory) {
-			val stack = var1.getStackInSlot(i)
+			val stack = var1[i]
 			if (stack != null && checkHelm(stack))
 				helm = stack
 		}

@@ -1,7 +1,7 @@
 package alfheim.client.render.world
 
 import alexsocol.asjlib.*
-import cpw.mods.fml.relauncher.ReflectionHelper
+import alfheim.common.core.handler.AlfheimConfigHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.client.renderer.*
@@ -10,7 +10,6 @@ import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.client.lib.LibResources
-import vazkii.botania.common.lib.LibObfuscation
 import java.util.*
 import kotlin.math.*
 
@@ -61,8 +60,6 @@ object AlfheimSkyRenderer: IRenderHandler() {
 	}
 	
 	override fun render(partialTicks: Float, world: WorldClient, mc: Minecraft) {
-		// FIXME NO REFLECTION IN MY MOD!!!
-		val starGLCallList = ReflectionHelper.getPrivateValue<Int, RenderGlobal>(RenderGlobal::class.java, mc.renderGlobal, *LibObfuscation.STAR_GL_CALL_LIST)
 		glDisable(GL_TEXTURE_2D)
 		val vec3 = world.getSkyColor(mc.renderViewEntity, partialTicks)
 		var f1 = vec3.xCoord.F
@@ -85,8 +82,8 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0)
 		RenderHelper.disableStandardItemLighting()
 		val afloat = world.provider.calcSunriseSunsetColors(world.getCelestialAngle(partialTicks), partialTicks)
-		var f7: Float
-		var f8: Float
+		val f7: Float
+		val f8: Float
 		var f10: Float
 		
 		// === Sunset
@@ -179,7 +176,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		glTranslatef(0f, -1f, 0f)
 		glRotatef(220f, 1f, 0f, 0f)
 		glColor4f(1f, 1f, 1f, a * (1f - mc.theWorld.rainingStrength))
-		val angles = 360 // TODO config
+		val angles = AlfheimConfigHandler.rainbowPolys
 		val y = 2f
 		val y0 = 0f
 		val uPer = 1f / 360f
@@ -240,7 +237,7 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		val rand = Random((day * 0xFF).toLong())
 		val angle1 = rand.nextFloat() * 360f
 		val angle2 = rand.nextFloat() * 360f
-		glColor4f(1f, 1f, 1f, effCelAng1 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength))
+		glColor4f(1f, 1f, 1f, effCelAng1 * (1f - insideVoid) * (1f - mc.theWorld.rainingStrength) * 2f)
 		glRotatef(angle1, 0f, 1f, 0f)
 		glRotatef(angle2, 0f, 0f, 1f)
 		tessellator1.startDrawingQuads()
@@ -302,32 +299,32 @@ object AlfheimSkyRenderer: IRenderHandler() {
 		glPushMatrix()
 		glRotatef(t * 3, 0f, 1f, 0f)
 		glColor4f(1f, 1f, 1f, f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glPushMatrix()
 		glRotatef(t, 0f, 1f, 0f)
 		glColor4f(0.5f, 1f, 1f, f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glPushMatrix()
 		glRotatef(t * 2, 0f, 1f, 0f)
 		glColor4f(1f, 0.75f, 0.75f, f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glPushMatrix()
 		glRotatef(t * 3, 0f, 0f, 1f)
 		glColor4f(1f, 1f, 1f, 0.25f * f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glPushMatrix()
 		glRotatef(t, 0f, 0f, 1f)
 		glColor4f(0.5f, 1f, 1f, 0.25f * f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glPushMatrix()
 		glRotatef(t * 2, 0f, 0f, 1f)
 		glColor4f(1f, 0.75f, 0.75f, 0.25f * f6)
-		glCallList(starGLCallList)
+		glCallList(mc.renderGlobal.starGLCallList)
 		glPopMatrix()
 		glEnable(GL_TEXTURE_2D)
 		glPopMatrix()

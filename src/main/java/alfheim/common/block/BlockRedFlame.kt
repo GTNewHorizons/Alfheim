@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
@@ -48,7 +48,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 		var hardness = getBlockHardness(world, x, y, z)
 		
 		val bbls = PlayerHandler.getPlayerBaubles(player)
-		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 300, true)) hardness = 2f
+		if (bbls[0]?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(bbls[0], player, 300, true)) hardness = 2f
 		
 		if (hardness < 0f) return 0f
 		
@@ -72,7 +72,7 @@ class BlockRedFlame: BlockFire(), ILexiconable {
 	override fun getIcon(p_149691_1_: Int, p_149691_2_: Int) = icons[0]
 	
 	override fun onEntityCollidedWithBlock(world: World, x: Int, y: Int, z: Int, entity: Entity) {
-		if (entity is EntityPlayer && BaublesApi.getBaubles(entity).getStackInSlot(0)?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity).getStackInSlot(0), entity, 50, true)) return
+		if (entity is EntityPlayer && BaublesApi.getBaubles(entity)[0]?.item === AlfheimItems.elfFirePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(entity)[0], entity, 50, true)) return
 		
 		if (entity is EntityLivingBase) {
 			val soulburn = PotionEffect(AlfheimConfigHandler.potionIDSoulburn, 200)

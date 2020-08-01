@@ -8,7 +8,7 @@ import alfmod.client.core.handler.EventHandlerClient
 import alfmod.client.gui.GUIBanner
 import alfmod.client.render.entity.*
 import alfmod.client.render.item.RenderItemSnowSword
-import alfmod.common.core.handler.SUMMER_EVENT
+import alfmod.common.core.handler.HELLISH_VACATION
 import alfmod.common.core.proxy.CommonProxy
 import alfmod.common.entity.*
 import alfmod.common.entity.boss.EntityDedMoroz
@@ -38,7 +38,7 @@ class ClientProxy: CommonProxy() {
 		if (!AlfheimConfigHandler.minimalGraphics)
 			MinecraftForgeClient.registerItemRenderer(AlfheimModularItems.snowSword, RenderItemSnowSword)
 		
-		if (SUMMER_EVENT) {
+		if (HELLISH_VACATION) {
 			(RenderEntityFlugel.mainModel as ModelEntityFlugel).apply {
 				rightglove.showModel = false
 				leftglove.showModel = false

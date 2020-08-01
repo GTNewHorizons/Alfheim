@@ -3,6 +3,8 @@ package alfheim.common.item.equipment.bauble.faith
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.AlfheimCore
+import alfheim.api.item.ColorOverrideHelper
+import alfheim.common.item.ItemIridescent
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.equipment.bauble.faith.IFaithHandler.FaithBauble.*
 import alfheim.common.item.relic.ItemHeimdallRing
@@ -15,9 +17,11 @@ import net.minecraft.potion.*
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.fluids.IFluidBlock
 import vazkii.botania.api.mana.ManaItemHandler
+import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.block.tile.TileBifrost
 import vazkii.botania.common.item.ModItems
+import java.awt.Color
 import kotlin.math.abs
 
 object FaithHandlerHeimdall: IFaithHandler {
@@ -35,7 +39,7 @@ object FaithHandlerHeimdall: IFaithHandler {
 	
 	fun onEmblemWornTick(stack: ItemStack, player: EntityPlayer) {
 		if (!player.worldObj.isRemote && ManaItemHandler.requestManaExact(stack, player, 1, !player.worldObj.isRemote)) {
-			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 610, 0))
+			player.addPotionEffect(PotionEffect(Potion.nightVision.id, 10, 0))
 			player.removePotionEffect(Potion.blindness.id)
 		}
 		
@@ -129,7 +133,17 @@ object FaithHandlerHeimdall: IFaithHandler {
 	}
 	
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
+		if (player.worldObj.getBlock(player, y = -1) inn arrayOf(ModBlocks.bifrost, ModBlocks.bifrostPerm)) return
 		
+		val color = Color(ColorOverrideHelper.getColor(player, ItemIridescent.rainbowColor()))
+		val r = color.red / 255f
+		val g = color.green / 255f
+		val b = color.blue / 255f
+		
+		val (x, y, z) = Vector3.fromEntity(player)
+		
+		for (i in -4..4)
+			for (k in -4..4)
+				Botania.proxy.sparkleFX(player.worldObj, x + i / 8.0, y - 0.1, z + k / 8.0, r, g, b, 1f, 1, true)
 	}
-	
 }

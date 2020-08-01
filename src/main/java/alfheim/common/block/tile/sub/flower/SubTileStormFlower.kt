@@ -59,7 +59,7 @@ class SubTileStormFlower: SubTilePassiveGenerating() {
 	}
 	
 	override fun getEntry(): LexiconEntry? {
-		return null // FIXME entry
+		return null // TODO entry
 	}
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("stormFlower").getIconForStack(null)

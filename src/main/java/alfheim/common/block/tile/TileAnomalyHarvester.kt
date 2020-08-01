@@ -57,7 +57,7 @@ class TileAnomalyHarvester: TileMod() {
 		renderBoundBox()
 	}
 	
-	fun getAoE(): AxisAlignedBB = boundingBox().expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
+	fun getAoE(): AxisAlignedBB = getBoundingBox(xCoord, yCoord, zCoord).expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
 	
 	fun renderBoundBox() {
 		val aabb = getAoE()

@@ -1,12 +1,16 @@
 package alfheim.common.core.helper
 
+import alexsocol.asjlib.*
+import net.minecraft.entity.item.EntityItemFrame
 import net.minecraft.inventory.*
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.corporea.*
 import vazkii.botania.common.core.helper.InventoryHelper
+import vazkii.botania.common.lib.LibMisc
 
-object CorporeaInsertHelper {
+object CorporeaAdvancedHelper {
 	
 	/**
 	 * @param spark Spark above current inventory to get connections from
@@ -49,7 +53,7 @@ object CorporeaInsertHelper {
 			
 			if (!isValidSlot(inv, i)) continue
 			
-			val stackAt = inv.getStackInSlot(i)
+			val stackAt = inv[i] ?: continue
 			
 			if (CorporeaHelper.stacksMatch(stack, stackAt, true)) {
 				val canPut = stackAt.maxStackSize - stackAt.stackSize
@@ -73,6 +77,31 @@ object CorporeaInsertHelper {
 	}
 	
 	fun isValidSlot(inv: IInventory, slot: Int): Boolean {
-		return inv !is ISidedInventory || slot in inv.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal) && inv.canInsertItem(slot, inv.getStackInSlot(slot), ForgeDirection.UP.ordinal)
+		return inv !is ISidedInventory || slot in inv.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal) && inv.canInsertItem(slot, inv[slot], ForgeDirection.UP.ordinal)
+	}
+	
+	fun TileEntity.getFilters(): List<ItemStack> {
+		val filter = ArrayList<ItemStack>()
+		
+		val orientationToDir = intArrayOf(3, 4, 2, 5)
+		
+		for (dir in LibMisc.CARDINAL_DIRECTIONS) {
+			val frames = worldObj.getEntitiesWithinAABB(EntityItemFrame::class.java, boundingBox().offset(dir.offsetX.D, dir.offsetY.D, dir.offsetZ.D)) as MutableList<EntityItemFrame>
+			for (frame in frames) {
+				val orientation = frame.hangingDirection
+				if (orientationToDir[orientation] == dir.ordinal)
+					filter.add(frame.displayedItem)
+			}
+		}
+		
+		return filter
+	}
+	
+	fun requestMatches(request: Any?, filter: ItemStack?): Boolean {
+		return if (filter == null) false else when (request) {
+			is ItemStack -> request.isItemEqual(filter) && ItemStack.areItemStackTagsEqual(filter, request)
+			is String    -> CorporeaHelper.stacksMatch(filter, request)
+			else         -> false
+		}
 	}
 }

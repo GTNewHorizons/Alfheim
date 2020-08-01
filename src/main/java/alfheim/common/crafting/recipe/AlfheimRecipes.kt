@@ -31,6 +31,7 @@ import alfheim.common.block.AlfheimBlocks.alfheimPylon
 import alfheim.common.block.AlfheimBlocks.animatedTorch
 import alfheim.common.block.AlfheimBlocks.anyavil
 import alfheim.common.block.AlfheimBlocks.barrel
+import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
 import alfheim.common.block.AlfheimBlocks.enderActuator
@@ -197,6 +198,7 @@ object AlfheimRecipes {
 	lateinit var recipeAstrolabe: IRecipe
 	lateinit var recipeAuraRingElven: IRecipe
 	lateinit var recipeAuraRingGod: IRecipe
+	lateinit var recipeAutocrafter: IRecipe
 	lateinit var recipeBalanceCloak: IRecipe
 	lateinit var recipeBarrel: IRecipe
 	lateinit var recipeCleanPylon: IRecipe
@@ -395,6 +397,15 @@ object AlfheimRecipes {
 						 'W', ItemStack(wool, 1, 0),
 						 'S', LIFE_ESSENCE)
 		recipeCloudPendantSuper = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(corporeaAutocrafter),
+						 " H ", "RSI", " F ",
+						 'H', hopper,
+						 'R', corporeaRetainer,
+						 'I', corporeaInterceptor,
+						 'F', corporeaFunnel,
+						 'S', corporeaSpark)
+		recipeAutocrafter = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(crescentMoonAmulet),
 						 "  M", "MS ", "RM ",

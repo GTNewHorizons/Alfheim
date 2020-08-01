@@ -100,7 +100,7 @@ object ItemsRemainingRenderHandler {
 	operator fun set(player: EntityPlayer, displayStack: ItemStack, pattern: Pattern) {
 		var count = 0
 		for (i in 0 until player.inventory.sizeInventory) {
-			val stack = player.inventory.getStackInSlot(i)
+			val stack = player.inventory[i] ?: continue
 			if (isNotEmpty(stack) && pattern.matcher(stack.displayName).find())
 				count += stack.stackSize
 		}

@@ -12,11 +12,13 @@ import net.minecraft.entity.projectile.EntitySnowball
 import net.minecraft.init.Blocks
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
+import net.minecraft.world.biome.BiomeGenBase
+import net.minecraft.world.gen.structure.MapGenNetherBridge
 import java.util.*
 
 object AlfheimModularHookHandler {
 	
-	// Wrath of the winter hooks
+	// Wrath of the Winter hooks
 	
 	@JvmStatic
 	@Hook(injectOnExit = true, targetMethod = "onImpact")
@@ -38,14 +40,14 @@ object AlfheimModularHookHandler {
 		return if (requester is EntityPlayer && !requester.isSneaking && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(requester)) 0.99f else block.slipperiness
 	}
 	
-	// summer event hooks
+	// Hellish Vacation hooks
 	
 	var replaceMelonWithMob = false
 	
 	@JvmStatic
 	@Hook(targetMethod = "updateTick")
 	fun replaceMelonWithMobPre(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
-		replaceMelonWithMob = SUMMER_EVENT && block === Blocks.melon_stem
+		replaceMelonWithMob = HELLISH_VACATION && block === Blocks.melon_stem
 	}
 	
 	@JvmStatic
@@ -63,5 +65,13 @@ object AlfheimModularHookHandler {
 	@Hook(targetMethod = "updateTick", injectOnExit = true)
 	fun replaceMelonWithMobPost(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
 		replaceMelonWithMob = false
+	}
+	
+	@JvmStatic
+	@Hook(targetMethod = "<init>", injectOnExit = true)
+	fun spawnMuspellsonsInNetherFortress(gen: MapGenNetherBridge) {
+		if (!HELLISH_VACATION) return
+		
+		gen.spawnList.add(BiomeGenBase.SpawnListEntry(EntityMuspellsun::class.java, 6, 2, 3))
 	}
 }

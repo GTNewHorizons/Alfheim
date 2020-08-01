@@ -43,7 +43,7 @@ object BiomeField: BiomeAlfheim() {
 		decorateChunkGen_List.add(g)
 		val r = WorldGenReedAlfheim(32)
 		decorateChunkGen_List.add(r)
-		val w = WorldGenGrapesWhiteAlfheim(4)
+		val w = WorldGenGrapesWhiteAlfheim(4, AlfheimBlocks.grapesWhite)
 		decorateChunkGen_List.add(w)
 		
 		addEntry(EntityAlfheimPixie::class.java, AlfheimConfigHandler.pixieSpawn)

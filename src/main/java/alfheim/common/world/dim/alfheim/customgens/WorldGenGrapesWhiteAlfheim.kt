@@ -1,15 +1,15 @@
 package alfheim.common.world.dim.alfheim.customgens
 
-import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.world.dim.alfheim.biome.BiomeRiver
 import cpw.mods.fml.common.IWorldGenerator
+import net.minecraft.block.Block
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import ru.vamig.worldengine.*
 import java.util.*
 
-class WorldGenGrapesWhiteAlfheim(val perChunk: Int): IWorldGenerator {
+class WorldGenGrapesWhiteAlfheim(val perChunk: Int, val block: Block): IWorldGenerator {
 	
 	override fun generate(random: Random, chunkX: Int, chunkZ: Int, world: World, prov: IChunkProvider?, chunkProvider: IChunkProvider?) {
 		if (world.provider.dimensionId != AlfheimConfigHandler.dimensionIDAlfheim) return
@@ -22,9 +22,9 @@ class WorldGenGrapesWhiteAlfheim(val perChunk: Int): IWorldGenerator {
 			
 			val y = world.getTopLiquidBlock(x, z)
 			
-			if (AlfheimBlocks.grapesWhite.canBlockStay(world, x, y, z))
+			if (block.canBlockStay(world, x, y, z))
  				if (world.isAirBlock(x, y, z)) {
-					world.setBlock(x, y, z, AlfheimBlocks.grapesWhite, random.nextInt(3), 3)
+					world.setBlock(x, y, z, block, 0, 3)
 				}
 		}
 	}

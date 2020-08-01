@@ -27,7 +27,7 @@ object FaithHandlerSif: IFaithHandler {
 	const val COOLDOWN_PLANT = 15
 	const val COOLDOWN_FLOWER = 200
 	const val RANGE = 5
-	const val TAG_COOLDOWN = "cooldown"
+	const val TAG_COOLDOWN = "growth_cooldown"
 	
 	init {
 		eventForge()
@@ -44,6 +44,8 @@ object FaithHandlerSif: IFaithHandler {
 			e.isCanceled = true
 	}
 	
+	val grow = ArrayList<Pair<ChunkCoordinates, IGrowable>>()
+	
 	override fun onWornTick(stack: ItemStack, player: EntityPlayer, type: IFaithHandler.FaithBauble) {
 		if (type != IFaithHandler.FaithBauble.EMBLEM) return
 		
@@ -57,7 +59,6 @@ object FaithHandlerSif: IFaithHandler {
 		if (getGodPowerLevel(player) < 4) return
 		
 		if (!ManaItemHandler.requestManaExact(stack, player, 10, false)) return
-		val grow = ArrayList<Pair<ChunkCoordinates, IGrowable>>()
 		
 		if (world.totalWorldTime % 40 == 0L)
 			for (x in 0.bidiRange(RANGE))
@@ -69,12 +70,13 @@ object FaithHandlerSif: IFaithHandler {
 							grow.add(ChunkCoordinates(player.posX.mfloor() + x, player.posY.mfloor() + y, player.posZ.mfloor() + z) to block)
 					}
 		
-		if (grow.size == 0) return
-		
-		val pair = grow[world.rand.nextInt(grow.size)]
-		
+		if (grow.isEmpty()) return
+		val pair = grow.random()
 		val (x, y, z) = pair.first
 		bonemeal(world, pair.second, x, y, z, player, stack, 10)
+		
+		grow.clear()
+		
 	}
 	
 	@SubscribeEvent
@@ -87,7 +89,7 @@ object FaithHandlerSif: IFaithHandler {
 		val lvl = getGodPowerLevel(player)
 		
 		val cooldown = getInt(emblem, TAG_COOLDOWN, 0)
-		if (cooldown != 0 || !e.entityPlayer.isSneaking || player.heldItem != null || !ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 50, false)) return
+		if (cooldown != 0 || e.entityPlayer.isSneaking || player.heldItem != null || !ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 50, false)) return
 		
 		val world = e.world
 		val block = world.getBlock(e.x, e.y, e.z)
@@ -98,7 +100,7 @@ object FaithHandlerSif: IFaithHandler {
 		
 		if (lvl >= 6) {
 			if (!world.isRemote && block === Blocks.grass && e.face == 1 && world.getBlock(e.x, e.y + 1, e.z).isAir(world, e.x, e.y + 1, e.z) &&
-				(!world.provider.hasNoSky || e.y < 255) && ModBlocks.flower.canBlockStay(world, e.x, e.y, e.z) && ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 500, true) &&
+				(!world.provider.hasNoSky || e.y < 255) && ModBlocks.flower.canBlockStay(world, e.x, e.y + 1, e.z) && ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 500, true) &&
 				world.setBlock(e.x, e.y + 1, e.z, ModBlocks.flower, world.rand.nextInt(16), 3))
 				
 				setInt(emblem, TAG_COOLDOWN, COOLDOWN_FLOWER)
@@ -132,21 +134,17 @@ object FaithHandlerSif: IFaithHandler {
 	override fun doParticles(stack: ItemStack, player: EntityPlayer) {
 		if (player.ticksExisted % 10 == 0) {
 			for (i in 0..6) {
-				val xmotion = (Math.random() - 0.5) * 0.15
-				val zmotion = (Math.random() - 0.5) * 0.15
 				val color = Color(ColorOverrideHelper.getColor(player, 0x964B00))
 				val r = color.red.F / 255F
 				val g = color.green.F / 255F
 				val b = color.blue.F / 255F
 				
-				spawnEmblem1(player.posX, player.posY - player.yOffset, player.posZ, r.D, g.D, b.D, xmotion, zmotion)
+				val (x, y, z) = Vector3.fromEntity(player)
+				val motionX = (Math.random() - 0.5) * 0.15
+				val motionZ = (Math.random() - 0.5) * 0.15
+				
+				Botania.proxy.wispFX(mc.theWorld, x, y, z, r, g, b, Math.random().F * 0.15f + 0.15f, motionX.F, 0.0075f, motionZ.F)
 			}
 		}
 	}
-	
-	fun spawnEmblem1(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double, motionX: Double, motionZ: Double) {
-		Botania.proxy.wispFX(mc.theWorld, x, y, z, r.F, g.F, b.F, Math.random().F * 0.15f + 0.15f, motionX.F, 0.0075f, motionZ.F)
-	}
 }
-
-fun Int.bidiRange(range: Int) = (this - range)..(this + range)

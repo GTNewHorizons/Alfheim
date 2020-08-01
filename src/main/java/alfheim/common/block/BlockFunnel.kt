@@ -126,7 +126,7 @@ class BlockFunnel: BlockContainerMod(Material.wood), IWandHUD, ILexiconable {
 		
 		if (tile != null && tile is TileLivingwoodFunnel) {
 			for (i1 in 0 until tile.sizeInventory) {
-				val itemstack = tile.getStackInSlot(i1)
+				val itemstack = tile.get(i1)
 				
 				if (itemstack != null) {
 					val f = this.random.nextFloat() * 0.8f + 0.1f

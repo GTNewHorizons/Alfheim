@@ -53,11 +53,11 @@ class ItemRationBelt: ItemBauble("RationBelt"), IBaubleRender {
 		
 		if (player.ticksExisted % 80 == 0 && stats.foodLevel < 20) {
 			for (i in 0..8) {
-				val slot = player.inventory.getStackInSlot(i) ?: continue
+				val slot = player.inventory.get(i) ?: continue
 				val item = slot.item
 				
 				if (item is ItemFood) {
-					player.inventory.setInventorySlotContents(i, item.onEaten(slot, player.worldObj, player))
+					player.inventory.set(i, item.onEaten(slot, player.worldObj, player))
 					return
 				} else if (item is ItemInfiniteFruit && ManaItemHandler.requestManaExactForTool(stack, player, 500, true)) {
 					stats.addStats(1, 1f)

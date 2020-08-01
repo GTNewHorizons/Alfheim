@@ -16,6 +16,7 @@ import net.minecraft.util.DamageSource.*
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.relic.ItemLokiRing
 import java.awt.Color
 
@@ -27,7 +28,7 @@ object FaithHandlerLoki: IFaithHandler {
 	
 	override fun onWornTick(stack: ItemStack, player: EntityPlayer, type: IFaithHandler.FaithBauble) {
 		if (type != IFaithHandler.FaithBauble.EMBLEM) return
-		
+		if (stack.cooldown > 0) --stack.cooldown
 		if (player.isBurning) player.extinguish()
 	}
 	
@@ -39,10 +40,11 @@ object FaithHandlerLoki: IFaithHandler {
 		val stack = player.heldItem
 		
 		val emblem = ItemPriestEmblem.getEmblem(3, player) ?: return
+		if (!ManaItemHandler.requestManaExact(emblem, player, 300, false)) return
+		if (emblem.cooldown > 0) return
 		
-		// TODO add cooldown
 		if (stack == null) {
-			if (!ManaItemHandler.requestManaExact(emblem, player, 300, true)) return
+			ManaItemHandler.requestManaExact(emblem, player, 300, true)
 			
 			val aura = EntityFireAura(player.worldObj, player)
 			aura.shoot(player, player.rotationPitch, player.rotationYaw, 0.0f, 0.8f, 1.0f)
@@ -52,8 +54,17 @@ object FaithHandlerLoki: IFaithHandler {
 			
 			for (i in 0..5)
 				player.worldObj.playAuxSFXAtEntity(null, 1008, player.posX.mfloor(), player.posY.mfloor(), player.posZ.mfloor(), 0)
+			
+			if (!player.capabilities.isCreativeMode)
+				emblem.cooldown = 50
 		} else if (stack.item === Items.fire_charge) {
-			shootFireball(player, stack)
+			ManaItemHandler.requestManaExact(emblem, player, 300, true)
+			
+			if (!player.worldObj.isRemote)
+				shootFireball(player, stack)
+			
+			if (!player.capabilities.isCreativeMode)
+				emblem.cooldown = 50
 		}
 	}
 	
@@ -120,15 +131,17 @@ object FaithHandlerLoki: IFaithHandler {
 		val g = color.green / 255f
 		val b = color.blue / 255f
 		
-		var (x, y, z) = Vector3.fromEntity(player)
-		y = if (mc.thePlayer == player) y - player.yOffset else y
-		spawnEmblem3(x, y, z, r.D, g.D, b.D)
-	}
-	
-	fun spawnEmblem3(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double) {
+		val (x, y, z) = Vector3.fromEntity(player)
+		
 		for (i in 1..9) {
-			val pos = Vector3(x, y, z).add(0.0, 0.25, 0.0).add(Vector3(0.0, 0.0, 0.5).rotate((Botania.proxy.worldElapsedTicks * 5 % 360 + i * 40.0), Vector3.oY))
-			Botania.proxy.sparkleFX(mc.theWorld, pos.x, pos.y, pos.z, r.F, g.F, b.F, 1f, 4)
+			val pos = Vector3(x, y + 0.25, z).add(Vector3(0.0, 0.0, 0.5).rotate(Botania.proxy.worldElapsedTicks * 5 % 360 + i * 40.0, Vector3.oY))
+			Botania.proxy.sparkleFX(mc.theWorld, pos.x, pos.y, pos.z, r, g, b, 1f, 4)
 		}
 	}
+	
+	private const val TAG_COOLDOWN = "shoot_cooldown"
+	
+	private var ItemStack.cooldown
+		get() = ItemNBTHelper.getInt(this, TAG_COOLDOWN, 0)
+		set(value) = ItemNBTHelper.setInt(this, TAG_COOLDOWN, value)
 }

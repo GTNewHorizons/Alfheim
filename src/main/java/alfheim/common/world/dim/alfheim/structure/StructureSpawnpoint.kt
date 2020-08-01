@@ -58,7 +58,7 @@ object StructureSpawnpoint {
 			
 			--count
 			val meta = if (item.maxMeta == -1) item.meta else ASJUtilities.randInBounds(item.meta, item.maxMeta, rand)
-			tile.setInventorySlotContents(slots.removeRandom(), ItemStack(item.item, min(item.item.getItemStackLimit(ItemStack(item.item, 1, meta)), ASJUtilities.randInBounds(item.countMin, item.countMax, rand)), meta))
+			tile.set(slots.removeRandom(), ItemStack(item.item, min(item.item.getItemStackLimit(ItemStack(item.item, 1, meta)), ASJUtilities.randInBounds(item.countMin, item.countMax, rand)), meta))
 		}
 	}
 	

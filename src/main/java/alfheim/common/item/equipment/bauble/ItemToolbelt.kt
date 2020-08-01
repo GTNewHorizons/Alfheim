@@ -125,7 +125,7 @@ package alfheim.common.item.equipment.bauble
 //			val inv = PlayerHandler.getPlayerBaubles(player)
 //			var beltStack: ItemStack? = null
 //			for (i in 0..inv.sizeInventory) {
-//				val stack = inv.getStackInSlot(i)
+//				val stack = inv.get(i)
 //				if (stack != null && stack.item is ItemToolbelt) {
 //					beltStack = stack
 //				}

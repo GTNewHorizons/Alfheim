@@ -46,7 +46,7 @@ object BiomeForest: BiomeAlfheim() {
 		decorateChunkGen_List.add(t)
 		val g = WorldGenGrass(true, false, false, false, 2.5)
 		decorateChunkGen_List.add(g)
-		val w = WorldGenGrapesWhiteAlfheim(2)
+		val w = WorldGenGrapesWhiteAlfheim(2, AlfheimBlocks.grapesWhite)
 		decorateChunkGen_List.add(w)
 	}
 }

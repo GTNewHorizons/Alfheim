@@ -64,7 +64,7 @@ class BlockGrapeWhite: BlockBush(), IGrowable {
 		
 		if (random.nextInt(100) == 0) {
 			for (d in arrayOf(ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.NORTH, ForgeDirection.EAST).shuffled()) {
-				if (canBlockStay(world, x + d.offsetX, y + d.offsetY, z + d.offsetZ))
+				if (world.getBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ) == Blocks.waterlily)
 					world.setBlock(x + d.offsetX, y + d.offsetY, z + d.offsetZ, this, 0, 3)
 			}
 		}

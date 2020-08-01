@@ -1,9 +1,11 @@
 package alexsocol.asjlib
 
+import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.inventory.IInventory
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
@@ -13,6 +15,8 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
 import kotlin.math.*
+
+fun Int.bidiRange(range: Int) = (this - range)..(this + range)
 
 fun safeIndex(id: Int, size: Int) = max(0, min(id, size - 1))
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
@@ -37,6 +41,13 @@ fun <T> Iterable<T>.paired(last: T? = null): List<Pair<T, T>> {
 
 fun <T> MutableCollection<T>.removeRandom(): T {
 	return this.random().also { remove(it) }
+}
+
+fun <T> Array<T?>.ensureCapacity(min: Int): Array<T?> {
+	if (size >= min) return this
+	val new = copyOf(min)
+	System.arraycopy(this, 0, new, 0, size)
+	return new
 }
 
 fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
@@ -149,6 +160,9 @@ var ItemStack.meta
 		itemDamage = meta
 	}
 
+operator fun IInventory.get(i: Int): ItemStack? = getStackInSlot(i)
+operator fun IInventory.set(i: Int, stack: ItemStack?) = setInventorySlotContents(i, stack)
+
 fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
 val Block.id get() = Block.getIdFromBlock(this)
@@ -167,7 +181,16 @@ fun <T> T.eventFML(): T {
 
 fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0
 
-fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0) = getBlock(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z)
-fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0) = getTileEntity(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z)
+fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Block {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return getBlock(i.I + x, j.I + y, k.I + z)
+}
+fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEntity? {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return getTileEntity(i.I + x, j.I + y, k.I + z)
+}
 
-fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0) = setBlock(e.posX.mfloor() + x, e.posY.mfloor() + y, e.posZ.mfloor() + z, block, meta, 3)
+fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0): Boolean {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return setBlock(i.I + x, j.I + y, k.I + z, block, meta, 3)
+}

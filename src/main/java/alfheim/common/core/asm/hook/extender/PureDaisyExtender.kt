@@ -1,6 +1,6 @@
 package alfheim.common.core.asm.hook.extender
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
@@ -22,7 +22,7 @@ object PureDaisyExtender {
 		val next = player.inventory.currentItem + 1
 		if (next == 9) return false // not a hotbar
 		
-		val stack = player.inventory.getStackInSlot(next) ?: return false
+		val stack = player.inventory[next] ?: return false
 		val itemBlock = stack.item as? ItemBlock ?: return false
 		val block = itemBlock.field_150939_a
 		

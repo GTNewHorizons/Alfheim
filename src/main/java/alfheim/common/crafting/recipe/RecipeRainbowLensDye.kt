@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alexsocol.asjlib.get
 import alfheim.api.lib.LibOreDict
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -23,7 +24,7 @@ class RecipeRainbowLensDye : IRecipe {
         var foundDye = false
 
         for (i in 0 until inv.sizeInventory) {
-            val stack = inv.getStackInSlot(i)
+            val stack = inv[i]
             if (stack != null) {
                 if (stack.item is ILens && !foundLens) {
                     foundLens = true
@@ -56,7 +57,7 @@ class RecipeRainbowLensDye : IRecipe {
         var lens: ItemStack? = null
 
         for (lensCopy in 0 until var1.sizeInventory) {
-            val stack = var1.getStackInSlot(lensCopy)
+            val stack = var1[lensCopy]
             if (stack != null) {
                 if (stack.item is ILens && lens == null) {
                     lens = stack

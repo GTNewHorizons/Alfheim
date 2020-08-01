@@ -37,7 +37,7 @@ object RenderTileItemDisplay: TileEntitySpecialRenderer() {
 			glTranslatef(0f, 0f, 0.5f)
 			glRotatef(90f, 0f, 1f, 0f)
 			glTranslated(0.0, 0.15 * sin(var27 / 7.5), 0.0)
-			val scale = tile.getStackInSlot(0)
+			val scale = tile.get(0)
 			
 			if (scale != null) {
 				mc.renderEngine.bindTexture(if (scale.item is ItemBlock) TextureMap.locationBlocksTexture else TextureMap.locationItemsTexture)

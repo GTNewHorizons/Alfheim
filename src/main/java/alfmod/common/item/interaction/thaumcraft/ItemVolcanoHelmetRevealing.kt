@@ -2,7 +2,7 @@ package alfmod.common.item.interaction.thaumcraft
 
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfmod.AlfheimModularCore
-import alfmod.common.item.equipment.armor.ItemSnowArmor
+import alfmod.common.item.equipment.armor.ItemVolcanoArmor
 import cpw.mods.fml.common.Optional
 import cpw.mods.fml.common.Optional.InterfaceList
 import net.minecraft.entity.EntityLivingBase
@@ -15,7 +15,7 @@ import vazkii.botania.common.core.handler.ConfigHandler
 	Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.IGoggles", striprefs = true),
 	Optional.Interface(modid = "Thaumcraft", iface = "thaumcraft.api.nodes.IRevealer", striprefs = true)
 )
-class ItemVolcanoHelmetRevealing: ItemSnowArmor(0, "VolcanoHelmetRevealing"), IGoggles, IRevealer {
+class ItemVolcanoHelmetRevealing: ItemVolcanoArmor(0, "VolcanoHelmetRevealing"), IGoggles, IRevealer {
 	
 	init {
 		creativeTab = ThaumcraftAlfheimModule.tcnTab

@@ -96,7 +96,7 @@ class EntityFeatherFx(world: World, x: Double, y: Double, z: Double, colour: Int
 		glPopMatrix()
 	}
 	
-	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) { // FIXME size
+	fun drawBillboard(x: Double, y: Double, z: Double, rotation: Float) {
 		val scale = 0.05f
 		glTranslatef(x.F, y.F, z.F)
 		glRotatef(-RenderManager.instance.playerViewY, 0.0f, 1.0f, 0.0f)

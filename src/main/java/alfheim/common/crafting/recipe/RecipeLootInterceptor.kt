@@ -13,7 +13,7 @@ class RecipeLootInterceptor: IRecipe {
 		var inter = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv.get(i)
 			if (stack != null) {
 				if (stack.item is ItemLootInterceptor)
 					inter = true
@@ -28,7 +28,7 @@ class RecipeLootInterceptor: IRecipe {
 		var inter: ItemStack? = null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv.get(i)
 			if (stack != null && stack.item is ItemLootInterceptor) {
 				if (inter == null)
 					inter = stack.copy()
@@ -40,7 +40,7 @@ class RecipeLootInterceptor: IRecipe {
 		if (inter == null) return null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv.get(i)
 			if (stack != null && stack.item !is ItemLootInterceptor)
 				ItemLootInterceptor.add(inter, stack.item.id, stack.meta)
 		}

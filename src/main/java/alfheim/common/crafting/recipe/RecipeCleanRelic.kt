@@ -1,6 +1,6 @@
 package alfheim.common.crafting.recipe
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
 import net.minecraft.inventory.InventoryCrafting
@@ -20,7 +20,7 @@ class RecipeCleanRelic: IRecipe {
 		var foundItem = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i) ?: continue
+			val stack = inv[i] ?: continue
 			if (stack.item is IRelic && !foundRelic)
 				foundRelic = true
 			else if (!foundItem) {
@@ -39,7 +39,7 @@ class RecipeCleanRelic: IRecipe {
 		var cloth: ItemStack? = null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i) ?: continue
+			val stack = inv[i] ?: continue
 			if (stack.item is IRelic)
 				item = stack
 			else if (stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.DasRheingold)

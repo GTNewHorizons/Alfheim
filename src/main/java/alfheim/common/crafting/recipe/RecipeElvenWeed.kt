@@ -17,7 +17,7 @@ class RecipeElvenWeed: IRecipe {
 		val founds = Array(4) { false }
 		
 		for (i in 0 until crafting.sizeInventory) {
-			val stack = crafting.getStackInSlot(i) ?: continue
+			val stack = crafting.get(i) ?: continue
 			
 			if (stack.item === AlfheimItems.elvenResource && stack.meta == ElvenResourcesMetas.IffesalDust) {
 				if (founds[0]) return false

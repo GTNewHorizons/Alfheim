@@ -1,5 +1,3 @@
-@file:Suppress("ClassName", "PropertyName")
-
 package alfheim.common.item.rod
 
 import alexsocol.asjlib.*
@@ -9,6 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.InterpolatedIconHelper
+import alfheim.common.entity.boss.EntityFlugel
 import alfheim.common.item.ItemMod
 import alfheim.common.item.equipment.bauble.ItemPriestEmblem
 import alfheim.common.security.InteractionSecurity
@@ -62,16 +61,6 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		player.setItemInUse(stack, getMaxItemUseDuration(stack))
 		return stack
-	}
-	
-	object PLAYER_SELECTOR: IEntitySelector {
-		override fun isEntityApplicable(e: Entity) =
-			(e is EntityLivingBase && e !is EntityDoppleganger) || (e is IProjectile && e !is IManaBurst)
-	}
-	
-	object AVATAR_SELECTOR: IEntitySelector {
-		override fun isEntityApplicable(e: Entity) =
-			e is EntityLivingBase && e !is EntityPlayer && e !is EntityDoppleganger
 	}
 	
 	fun particleRing(world: World, x: Double, y: Double, z: Double, range: Int, r: Float, g: Float, b: Float) {
@@ -136,29 +125,12 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 			}
 		}
 	}
-	
-	val COST = 5
-	val PROWESS_COST = -1
-	val PRIEST_COST = 2
-	val AVATAR_COST = 4
-	
-	val VELOCITY = 0.05
-	val PROWESS_VELOCTY = 0.02
-	val PRIEST_VELOCITY = 0.07
-	
-	val RANGE = 5
-	val PROWESS_RANGE = 0
-	val PRIEST_RANGE = 2
  
 	fun getCost(prowess: Boolean, priest: Boolean) =
         COST + if (prowess) PROWESS_COST else 0 + if (priest) PRIEST_COST else 0
 	
-	fun getVelocity(prowess: Boolean, priest: Boolean): Double {
-		var vel = VELOCITY
-		if (prowess) vel += PROWESS_VELOCTY
-		if (priest) vel += PRIEST_VELOCITY
-		return vel
-	}
+	fun getVelocity(prowess: Boolean, priest: Boolean) =
+		VELOCITY + if (prowess) PROWESS_VELOCITY else 0.0 + if (priest) PRIEST_VELOCITY else 0.0
 	
 	fun getRange(prowess: Boolean, priest: Boolean) =
         RANGE + if (prowess) PROWESS_RANGE else 0 + if (priest) PRIEST_RANGE else 0
@@ -185,4 +157,30 @@ open class ItemRodInterdiction(name: String = "rodInterdiction"): ItemMod(name),
 	}
 	
 	override fun getOverlayResource(tile: IAvatarTile, stack: ItemStack) = LibResourceLocations.avatarInterdiction
+	
+	companion object {
+		
+		const val COST = 5
+		const val PROWESS_COST = -1
+		const val PRIEST_COST = -2
+		const val AVATAR_COST = 4
+		
+		const val VELOCITY = 0.05
+		const val PROWESS_VELOCITY = 0.02
+		const val PRIEST_VELOCITY = 0.07
+		
+		const val RANGE = 5
+		const val PROWESS_RANGE = 1
+		const val PRIEST_RANGE = 2
+		
+		object PLAYER_SELECTOR: IEntitySelector {
+			override fun isEntityApplicable(e: Entity) =
+				(e is EntityLivingBase && (e !is EntityDoppleganger || e !is EntityFlugel)) || (e is IProjectile && e !is IManaBurst)
+		}
+		
+		object AVATAR_SELECTOR: IEntitySelector {
+			override fun isEntityApplicable(e: Entity) =
+				e is EntityLivingBase && e !is EntityPlayer && e !is EntityDoppleganger && e !is EntityFlugel
+		}
+	}
 }

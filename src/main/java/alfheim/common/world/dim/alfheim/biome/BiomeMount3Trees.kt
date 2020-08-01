@@ -3,7 +3,7 @@ package alfheim.common.world.dim.alfheim.biome
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
+import alfheim.common.world.dim.alfheim.customgens.*
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
@@ -49,5 +49,7 @@ object BiomeMount3Trees: BiomeAlfheim() {
 		decorateChunkGen_List.add(t)
 		val g = WorldGenGrass(true, true, true, true, 1.2)
 		decorateChunkGen_List.add(g)
+		val w = WorldGenGrapesWhiteAlfheim(4, Blocks.waterlily)
+		decorateChunkGen_List.add(w)
 	}
 }

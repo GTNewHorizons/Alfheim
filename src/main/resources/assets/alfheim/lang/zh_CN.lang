@@ -439,9 +439,9 @@ alfheimmisc.teamnotmob=盟友无法被选定为敌意目标
 alfheimmisc.tgtooltip=摁下&b%key%&7以打开旅行者工具栏
 alfheimmisc.update=看上去你正在使用一个过期的版本(%s). 也许你应该更新到 %s?
 
-alfheimmisc.offset=偏移
-alfheimmisc.power=力量
-alfheimmisc.radius=范围
+alfheimmisc.area=范围: %s x %s x %s
+alfheimmisc.offset=偏移: %s, %s, %s
+alfheimmisc.power=力量: %s
 
 alfheimmisc.cast.notarget=选择一个目标
 alfheimmisc.cast.notready=法术还未准备完毕

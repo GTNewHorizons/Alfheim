@@ -104,7 +104,7 @@ object SoulRestructurizationHandler {
 		
 		run exp@{
 			if (!world.isRemote) {
-				val soul = brewer.getStackInSlot(0)
+				val soul = brewer.get(0)
 				
 				if (soul?.item === AlfheimItems.flugelSoul) {
 					if (ItemFlugelSoul.getBlocked(soul) > 0) {

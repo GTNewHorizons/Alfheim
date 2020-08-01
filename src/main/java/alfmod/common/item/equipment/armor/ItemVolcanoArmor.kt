@@ -155,8 +155,6 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 			val player = e.entityLiving as? EntityPlayer ?: return
 			if (!hasSet(player)) return
 			
-			if (getCharge(player) <= 5f) return
-			
 			for (x in -1..1) {
 				for (y in -1..1) {
 					for (z in -1..1) {
@@ -166,6 +164,8 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 									  Blocks.ice, Blocks.packed_ice, Blocks.snow -> Blocks.water
 									  else                                       -> null
 								  } ?: continue
+						
+						if (getCharge(player) < 5f) return
 						
 						if (player.worldObj.setBlock(player, new, x, y, z))
 							addCharge(player, -5f)

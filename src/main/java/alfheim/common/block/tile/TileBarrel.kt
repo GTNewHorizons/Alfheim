@@ -24,7 +24,7 @@ class TileBarrel: ASJTile() {
 						ASJUtilities.dispatchTEToNearbyPlayers(this)
 				}
 			} else {
-				if (++timer >= 1500)
+				if (++timer >= MAX_OPEN_TIME)
 					reset()
 			}
 		}
@@ -62,16 +62,18 @@ class TileBarrel: ASJTile() {
 	
 	companion object {
 		
-		val WINE_STAGE_GRAPE = 1
-		val WINE_STAGE_MASH = 2
-		val WINE_STAGE_LIQUID = 3
-		val WINE_STAGE_READY = 4
+		const val WINE_STAGE_GRAPE = 1
+		const val WINE_STAGE_MASH = 2
+		const val WINE_STAGE_LIQUID = 3
+		const val WINE_STAGE_READY = 4
 		
 		val WINE_TYPE_NONE = 0
 		val WINE_TYPE_WHITE = ElvenFoodMetas.WhiteGrapes
 		val WINE_TYPE_RED = ElvenFoodMetas.RedGrapes
 		
 		const val MAX_WINE_LEVEL = 12
+		const val FERMENTATION_TIME = 6000
+		const val MAX_OPEN_TIME = FERMENTATION_TIME + 666
 		
 		const val TAG_CLOSED = "closed"
 		const val TAG_STOMPS = "stomps"

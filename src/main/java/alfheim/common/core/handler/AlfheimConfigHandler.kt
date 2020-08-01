@@ -9,7 +9,7 @@ import kotlin.math.*
 
 object AlfheimConfigHandler: ASJConfigHandler() {
 	
-	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
+	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
 	const val CATEGORY_INT_OF		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "optifine"
@@ -60,6 +60,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var destroyPortal			= true
 	var dimensionIDAlfheim		= -105
 	var enableAlfheimRespawn	= true
+	var rainbowPolys			= 360
 	
 	// WORLDGEN
 	var anomaliesDispersion		= 50
@@ -216,6 +217,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
 		enableAlfheimRespawn = loadProp(CATEGORY_DIMENSION, "enableAlfheimRespawn", enableAlfheimRespawn, false, "Set this to false to disable respawning in Alfheim")
+		rainbowPolys = loadProp(CATEGORY_DIMENSION, "rainbowPolys", rainbowPolys, false, "How smooth will rainbow and rays in Alfheim sky be (higher number - more polygons)")
 		
 		anomaliesDispersion = loadProp(CATEGORY_WORLDGEN, "anomaliesDispersion", anomaliesDispersion, false, "How rare anomalies are (lower numbers means higher chance)")
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")

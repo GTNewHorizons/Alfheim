@@ -425,13 +425,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		
 		for (player in players) {
 			// No beacon potions allowed!
-			(player.activePotionEffects as MutableCollection<PotionEffect>).removeIf {
-				it.getDuration() < 200 && it.getIsAmbient() && !Potion.potionTypes[it.getPotionID()].isBadEffect
+			(player.activePotionEffects as MutableCollection<PotionEffect>).filter {
+				it.duration < 200 && it.isAmbient && !Potion.potionTypes[it.potionID].isBadEffect
+			}.forEach {
+				if (worldObj.isRemote)
+					player.removePotionEffectClient(it.potionID)
+				else
+					player.removePotionEffect(it.potionID)
 			}
 			
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val tiara = baubles.getStackInSlot(0)
+			val tiara = baubles.get(0)
 			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.meta == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else if (!player.capabilities.isCreativeMode) {

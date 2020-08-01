@@ -1,6 +1,5 @@
 package alfmod.common.core.handler
 
-import alfheim.api.ModInfo
 import java.util.*
 
 private val calendar = Calendar.getInstance()!!
@@ -15,4 +14,4 @@ val WRATH_OF_THE_WINTER = (year == 2020 && month == 2)
 /**
  * August of 2020
  */
-val SUMMER_EVENT = ModInfo.DEV || (year == 2020 && month == 8)
+val HELLISH_VACATION = (year == 2020 && month == 8)

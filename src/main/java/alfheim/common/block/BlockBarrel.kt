@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.*
 import net.minecraftforge.event.entity.living.LivingFallEvent
+import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent
 
 class BlockBarrel: BlockContainerMod(Material.wood) {
 	
@@ -72,7 +73,7 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 				TileBarrel.WINE_STAGE_MASH  -> {
 					if (stack.item is ItemElvenFood && stack.meta == ElvenFoodMetas.Nectar) {
 						tile.wineStage = TileBarrel.WINE_STAGE_LIQUID
-						tile.timer = 1200
+						tile.timer = TileBarrel.FERMENTATION_TIME
 						stack.stackSize--
 					}
 				}
@@ -144,12 +145,21 @@ class BlockBarrel: BlockContainerMod(Material.wood) {
 	companion object {
 		
 		init {
-			this.eventFML().eventForge()
+			this.eventForge()
 		}
 		
 		@SubscribeEvent
 		fun onEntityFall(e: LivingFallEvent) {
-			val tile = e.entity.worldObj.getTileEntity(e.entity) as? TileBarrel ?: return
+			onSomeoneFall(e.entity)
+		}
+		
+		@SubscribeEvent
+		fun onPlayerFall(e: PlayerFlyableFallEvent) {
+			onSomeoneFall(e.entity)
+		}
+		
+		fun onSomeoneFall(entity: Entity) {
+			val tile = entity.worldObj.getTileEntity(entity) as? TileBarrel ?: return
 			
 			if (!tile.closed && tile.wineStage == TileBarrel.WINE_STAGE_GRAPE && tile.wineLevel == TileBarrel.MAX_WINE_LEVEL) {
 				if (++tile.stomps == 8) {

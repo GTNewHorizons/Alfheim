@@ -45,15 +45,15 @@ object AlfheimAchievementHandler {
 			}
 		}
 		
-		val tiaraStack = PlayerHandler.getPlayerBaubles(player).getStackInSlot(0)
+		val tiaraStack = PlayerHandler.getPlayerBaubles(player).get(0)
 		val baublesFlag = tiaraStack?.item == ModItems.flightTiara && tiaraStack?.meta == 4
 		
 		val horse = player.ridingEntity
 		val horseFlag = horse is EntityHorse &&
 						horse.horseType == 0 &&
 						horse.horseVariant and 255 == 1 &&
-						horse.horseChest.getStackInSlot(0)?.item == Items.saddle &&
-						horse.horseChest.getStackInSlot(1)?.item == Items.golden_horse_armor
+						horse.horseChest.get(0)?.item == Items.saddle &&
+						horse.horseChest.get(1)?.item == Items.golden_horse_armor
 		
 		if (armorFlag && baublesFlag && horseFlag) player.triggerAchievement(AlfheimAchievements.wingedHussar)
 	}

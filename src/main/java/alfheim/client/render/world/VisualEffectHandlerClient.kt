@@ -10,14 +10,17 @@ import alfheim.common.block.tile.TileManaInfuser
 import alfheim.common.block.tile.sub.anomaly.SubTileManaVoid
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
+import alfheim.common.item.relic.ItemHeimdallRing
 import alfheim.common.item.rod.ItemRodInterdiction
 import alfheim.common.spell.illusion.SpellSmokeScreen
 import alfheim.common.spell.water.*
 import net.minecraft.client.renderer.RenderGlobal
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.potion.PotionEffect
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.entity.EntityManaBurst
 import java.awt.Color
 import kotlin.math.*
@@ -44,6 +47,7 @@ object VisualEffectHandlerClient {
 			ECHO_PLAYER       -> spawnEchoPlayer(d[0], d[1], d[2])
 			EMBLEM_ACTIVATION -> activateEmblem(d[0], d[1])
 			EXPL              -> spawnExplosion(d[0], d[1], d[2])
+			FALLING           -> spawnFalling(d[0].I, d[1].I, d[2].I, d[3])
 			FLAMESTAR         -> spawnFlameStar(d[0], d[1], d[2], d[3], d[4], d[5])
 			GAIA_SOUL         -> spawnGaiaSoul(d[0], d[1], d[2])
 			GRAVITY           -> spawnGravity(d[0], d[1], d[2], d[3], d[4], d[5])
@@ -67,6 +71,7 @@ object VisualEffectHandlerClient {
 			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
 			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
 			SPLASH            -> spawnSplash(d[0], d[1], d[2])
+			TARGETED          -> markTargeted()
 			THROW             -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
 			TREMORS           -> spawnTremors(d[0], d[1], d[2])
 			UPHEAL            -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
@@ -98,6 +103,10 @@ object VisualEffectHandlerClient {
 	
 	fun horn(x: Double, y: Double, z: Double) {
 		mc.theWorld.playSound(x, y, z, ModInfo.MODID + ":horn.bhorn", 100f, 0.8f + mc.theWorld.rand.nextFloat() * 0.2f, false)
+	}
+	
+	fun markTargeted() {
+		ItemNBTHelper.setInt(ItemHeimdallRing.getHeimdallRing(mc.thePlayer) ?: return, ItemHeimdallRing.TAG_AGGRO, 100)
 	}
 	
 	fun moonBoom(x: Double, y: Double, z: Double) {
@@ -200,6 +209,23 @@ object VisualEffectHandlerClient {
 		for (i in 0..31) {
 			v.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize().mul(0.15)
 			Botania.proxy.wispFX(mc.theWorld, x, y, z, 1f, Math.random().F * 0.25f, Math.random().F * 0.075f, 0.25f + Math.random().F * 0.45f, v.x.F, v.y.F, v.z.F, 0.5f)
+		}
+	}
+	
+	fun spawnFalling(x: Int, y: Int, z: Int, radius: Double) {
+		val iradius = (radius + 1).I
+		for (i in 0 until iradius * 2 + 1) {
+			for (j in 0 until iradius * 2 + 1) {
+				val xp: Int = x + i - iradius
+				val zp: Int = z + j - iradius
+				
+				if (floor(Vector3.pointDistancePlane(xp.D, zp.D, x.D, z.D)).I == iradius - 1) {
+					val block = mc.theWorld.getBlock(xp, y, zp)
+					val meta = mc.theWorld.getBlockMetadata(xp, y, zp)
+					
+					mc.theWorld.spawnEntityInWorld(EntityFallingBlock(mc.theWorld, xp.D + 0.5, y.D, zp.D + 0.5, block, meta).also { it.motionY += 0.5; it.noClip = true })
+				}
+			}
 		}
 	}
 	
@@ -348,7 +374,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, THROW, TREMORS, UPHEAL, WIRE, WISP
+		ACID, AQUABIND, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FALLING, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, TARGETED, THROW, TREMORS, UPHEAL, WIRE, WISP;
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

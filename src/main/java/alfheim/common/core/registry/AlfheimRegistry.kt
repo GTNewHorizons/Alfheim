@@ -8,6 +8,7 @@ import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.common.block.*
 import alfheim.common.block.tile.*
+import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
@@ -146,7 +147,7 @@ object AlfheimRegistry {
 		registerTile(TileAnomalyHarvester::class.java, "AnomalyHarvester")
 		registerTile(TileAnyavil::class.java, "Anyavil")
 		registerTile(TileBarrel::class.java, "Barrel")
-//		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter") BACK
+		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter")
 		registerTile(TileEnderActuator::class.java, "EnderActuator")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")

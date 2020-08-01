@@ -1,6 +1,6 @@
 package alfheim.common.core.asm.hook.fixes
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -21,7 +21,7 @@ object RecipeAncientWillsFix {
 		var foundItem = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack != null) {
 				if (stack.item === ModItems.ancientWill) {
 					val meta = stack.meta
@@ -49,7 +49,7 @@ object RecipeAncientWillsFix {
 		
 		var stack: ItemStack?
 		for (i in 0 until inv.sizeInventory) {
-			stack = inv.getStackInSlot(i)
+			stack = inv[i]
 			if (stack != null) {
 				if (stack.item is IAncientWillContainer && item == null) {
 					item = stack

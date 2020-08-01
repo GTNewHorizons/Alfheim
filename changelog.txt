@@ -1,6 +1,5 @@
 Innovations:
- Winemaking mechanics
- New mob - Butterfly (rename later)
+ --
 
 Fixes:
- Improved walls render
+ --

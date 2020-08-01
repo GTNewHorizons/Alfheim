@@ -15,6 +15,7 @@ import net.minecraft.util.*
 import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.item.equipment.tool.terrasteel.ItemTerraAxe
+import vazkii.botania.common.item.relic.ItemAesirRing
 import kotlin.math.*
 
 object GodAttributesHooks {
@@ -93,7 +94,7 @@ object GodAttributesHooks {
 	}
 	
 	/**
-	 * Increases Luck of the Sea enchantment on player with Njord rod
+	 * Increases Luck of the Sea enchantment on player with Njord ring
 	 */
 	@JvmStatic
 	@Hook(returnCondition = ReturnCondition.ALWAYS, injectOnExit = true)
@@ -129,5 +130,11 @@ object GodAttributesHooks {
 	@Hook(createMethod = true, returnCondition = ReturnCondition.ALWAYS)
 	fun func_145778_a(boat: EntityBoat, item: Item?, count: Int, force: Float): EntityItem? {
 		return if (dontDie) null else boat.entityDropItem(ItemStack(item, count, 0), force)
+	}
+	
+	@JvmStatic // TODO remove - not AEsir
+	@Hook(injectOnExit = true)
+	fun onUnequipped(ring: ItemAesirRing, stack: ItemStack, player: EntityLivingBase) {
+		player.stepHeight = 0.5f
 	}
 }

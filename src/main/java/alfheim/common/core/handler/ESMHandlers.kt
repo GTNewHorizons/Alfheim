@@ -91,7 +91,7 @@ object ESMHandler {
 			val bowl = ItemStack(ModItems.waterBowl)
 			
 			if (equipped.stackSize <= 0)
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+				player.inventory.set(player.inventory.currentItem, bowl)
 			else {
 				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)
@@ -118,7 +118,7 @@ object ESMHandler {
 			val bowl = ItemStack(Items.bowl, 4)
 			
 			if (equipped.stackSize <= 0)
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+				player.inventory.set(player.inventory.currentItem, bowl)
 			else {
 				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)

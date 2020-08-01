@@ -448,9 +448,9 @@ alfheimmisc.teamnotmob=Член группы не может быть выдел
 alfheimmisc.tgtooltip=Нажмите &b%key%&7, чтобы открыть меню Traveller's Gear
 alfheimmisc.update=О-оу, кажется, Вы играете на устаревшей версии (%s). Возможно, Вам стоит обновиться до %s?
 
-alfheimmisc.offset=Смещение
-alfheimmisc.power=Мощность
-alfheimmisc.radius=Радиус
+alfheimmisc.area=Область: %s x %s x %s
+alfheimmisc.offset=Смещение: %s, %s, %s
+alfheimmisc.power=Мощность: %s
 
 alfheimmisc.cast.notarget=Выберите цель!
 alfheimmisc.cast.notready=Заклинание не готово!

@@ -35,7 +35,7 @@ class SubTileRainFlower: SubTileWeatherFlower() {
 	}
 	
 	override fun getEntry(): LexiconEntry? {
-		return null // FIXME entry
+		return null // TODO entry
 	}
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("rainFlower").getIconForStack(null)
@@ -49,7 +49,7 @@ class SubTileSnowFlower: SubTileWeatherFlower() {
 	}
 	
 	override fun getEntry(): LexiconEntry? {
-		return null // FIXME entry
+		return null // TODO entry
 	}
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("snowFlower").getIconForStack(null)
@@ -75,7 +75,7 @@ class SubTileWindFlower: SubTileWeatherFlower() {
 	override fun getMaxMana() = 300
 	
 	override fun getEntry(): LexiconEntry? {
-		return null // FIXME entry
+		return null // TODO entry
 	}
 	
 	override fun getIcon(): IIcon? = BotaniaAPI.getSignatureForName("windFlower").getIconForStack(null)

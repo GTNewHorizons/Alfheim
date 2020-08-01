@@ -31,10 +31,10 @@ class ItemPriestCloak: ItemBaubleCloak("priestCloak"), IManaUsingItem {
 			val stack = if (AlfheimCore.TravellersGearLoaded) {
 				TravellersGearAPI.getExtendedInventory(player)?.get(0)
 			} else {
-				PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(3)
+				PlayerHandler.getPlayerBaubles(player)?.get(3)
 			}
 			
-			return if (stack != null && stack.item == AlfheimItems.priestCloak && stack.meta == meta) stack else null
+			return if (stack != null && ((stack.item == AlfheimItems.priestCloak && stack.meta == meta) || (stack.item === AlfheimItems.aesirCloak))) stack else null
 		}
 	}
 	

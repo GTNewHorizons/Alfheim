@@ -25,12 +25,12 @@ import java.awt.Color
 import java.util.*
 import vazkii.botania.common.core.helper.Vector3 as Bector3
 
-object FaithHandlerThor: IFaithHandler {
+object 	FaithHandlerThor: IFaithHandler {
 	
 	val uuid = UUID.fromString("67d86aaf-e4c5-4f0e-af7e-7e56d1ec9fb0")
 	val mod = AttributeModifier(uuid, "Thor faith modifier", 0.2, 1)
 	
-	const val TAG_COOLDOWN = "lightning.cooldown"
+	private const val TAG_COOLDOWN = "lightning_cooldown"
 	
 	private var ItemStack.cooldown
 		get() = ItemNBTHelper.getInt(this, TAG_COOLDOWN, 0)
@@ -77,12 +77,14 @@ object FaithHandlerThor: IFaithHandler {
 		}
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(receiveCanceled = true)
 	fun fallhit(e: LivingHurtEvent) {
 		if (e.source.damageType != DamageSource.fall.damageType) return
 		val player = e.entityLiving as? EntityPlayer ?: return
-		if (ItemPriestCloak.getCloak(0, player) == null) return
+		val cloak = ItemPriestCloak.getCloak(0, player) ?: return
 		if (getGodPowerLevel(player) < 7) return
+		
+		if (ManaItemHandler.requestManaExact(cloak, player, e.ammount.I, true)) return
 		
 		val list = player.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, getBoundingBox(player.posX, player.posY + 1, player.posZ).expand(5.0, 1.5, 5.0)) as MutableList<EntityLivingBase>
 		list.remove(player)
@@ -112,12 +114,8 @@ object FaithHandlerThor: IFaithHandler {
 			val playerHead = Bector3.fromEntityCenter(player).add(0.0, 0.75, 0.0)
 			val playerShift = playerHead.copy().add(IFaithHandler.getHeadOrientation(player))
 			val color = ColorOverrideHelper.getColor(player, 0x0079C4)
-			val innerColor = Color(color).brighter().brighter().rgb
-			spawnEmblem0(playerHead.x, playerHead.y, playerHead.z, playerShift.x, playerShift.y, playerShift.z, color.D, innerColor.D)
+			
+			Botania.proxy.lightningFX(mc.theWorld, playerHead, playerShift, 2f, color, Color(color).brighter().brighter().rgb)
 		}
-	}
-	
-	fun spawnEmblem0(xs: Double, ys: Double, zs: Double, xe: Double, ye: Double, ze: Double, color: Double, innerColor: Double) {
-		Botania.proxy.lightningFX(mc.theWorld, Bector3(xs, ys, zs), Bector3(xe, ye, ze), 2f, color.I, innerColor.I)
 	}
 }

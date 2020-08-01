@@ -1,6 +1,7 @@
 package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
+import alexsocol.asjlib.math.Vector3
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick
 import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.item.ColorOverrideHelper
@@ -8,6 +9,7 @@ import alfheim.common.item.AlfheimItems
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.item.relic.ItemNjordRing
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -17,6 +19,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent
 import net.minecraftforge.event.entity.player.AttackEntityEvent
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
+import vazkii.botania.common.core.helper.ItemNBTHelper
 import java.awt.Color
 import kotlin.math.*
 
@@ -29,6 +32,8 @@ object FaithHandlerNjord: IFaithHandler {
 	
 	override fun onWornTick(stack: ItemStack, player: EntityPlayer, type: IFaithHandler.FaithBauble) {
 		if (type == IFaithHandler.FaithBauble.CLOAK) onCloakWornTick(player)
+		if (type == IFaithHandler.FaithBauble.EMBLEM)
+			if (stack.cooldown > 0) --stack.cooldown
 	}
 	
 	fun onCloakWornTick(player: EntityPlayer) {
@@ -51,7 +56,7 @@ object FaithHandlerNjord: IFaithHandler {
 		
 		ItemPriestEmblem.getEmblem(2, player) ?: return
 		if (getGodPowerLevel(player) < 3) return
-		if (player.isSneaking || player.isInWater) return
+		if (player.isSneaking || !player.isInsideOfMaterial(Material.air)) return
 
 		val state = player.worldObj.getBlock(e.x, e.y, e.z)
 		
@@ -71,27 +76,31 @@ object FaithHandlerNjord: IFaithHandler {
 		}
 	}
 	
-	// throw player
 	@SubscribeEvent
 	fun onPlayerClickAir(e: RightClick) {
 		if (e.action != RIGHT_CLICK_AIR) return
 		val player = e.player
 		
+		if (!player.onGround) return
+		
 		if (player.heldItem != null) return
 		
 		val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
 		
-		// TODO add cooldown
+		if (emblem.cooldown > 0) return
+		
 		if (ManaItemHandler.requestManaExactForTool(emblem, player, 50, true)) {
 			player.addExhaustion(0.2f)
+			
+			if (!player.capabilities.isCreativeMode) emblem.cooldown = 50
 			
 			player.isSprinting = true
 			val increase = min(0.07f * 200 + 0.67f, 0.9f)
 			
 			player.motionY += increase.D
 			val speed = min(0.12f * 200 + 1.1f, 1.825f)
-			player.motionX = (-MathHelper.sin(player.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.toFloat()) * speed).toDouble()
-			player.motionZ = (MathHelper.cos(player.rotationYaw / 180.0f * Math.PI.toFloat()) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.toFloat()) * speed).toDouble()
+			player.motionX = (-MathHelper.sin(player.rotationYaw / 180.0f * Math.PI.F) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.F) * speed).toDouble()
+			player.motionZ = (MathHelper.cos(player.rotationYaw / 180.0f * Math.PI.F) * MathHelper.cos(player.rotationPitch / 180.0f * Math.PI.F) * speed).toDouble()
 		}
 	}
 	
@@ -146,14 +155,16 @@ object FaithHandlerNjord: IFaithHandler {
 				val g = color.green.F / 255F
 				val b = color.blue.F / 255F
 				
-				if (mc.thePlayer !== player) vec.y += 1.62f
+				val (x, y, z) = Vector3.fromEntity(player)
 				
-				spawnEmblem2(player.posX + vec.x, player.posY + vec.y, player.posZ + vec.z, r.D, g.D, b.D)
+				Botania.proxy.sparkleFX(mc.theWorld, x + vec.x, y + vec.y, z + vec.z, r, g, b, 1f, 5)
 			}
 		}
 	}
 	
-	fun spawnEmblem2(x: Double, y: Double, z: Double, r: Double, g: Double, b: Double) {
-		Botania.proxy.sparkleFX(mc.theWorld, x, y, z, r.F, g.F, b.F, 1f, 5)
-	}
+	private const val TAG_COOLDOWN = "throw_cooldown"
+	
+	private var ItemStack.cooldown
+		get() = ItemNBTHelper.getInt(this, TAG_COOLDOWN, 0)
+		set(value) = ItemNBTHelper.setInt(this, TAG_COOLDOWN, value)
 }

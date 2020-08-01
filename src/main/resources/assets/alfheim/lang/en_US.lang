@@ -47,6 +47,7 @@ tile.alfheim:circuitPlanksStairs.name=Circuitree Planks Stairs
 tile.alfheim:circuitSapling.name=Circuitree Sapling
 tile.alfheim:circuitWood.name=Circuitree Wood
 tile.alfheim:cracklingStar.name=Crackling Star
+tile.alfheim:CorporeaAutocrafter.name=Corporea Sequencer
 tile.CustomRoof0.name=Roof Tile
 tile.CustomRoof1.name=Roof Tile
 tile.CustomRoof2.name=Roof Tile
@@ -214,7 +215,7 @@ tile.botania:spreader4.name=Mauftrium Mana Spreader
 tile.alfheim:stormFlower.name=Storm Flower
 tile.alfheim:TradePortal.name=Midgard Gateway Core
 tile.Transferer.name=Transferer
-tile.WhiteGrape.name=White Grape
+tile.WhiteGrape.name=Green Grape
 tile.alfheim:windFlower.name=Wind Flower
 
 ##########################################################___ITEMS___###########################################################
@@ -502,6 +503,8 @@ alfheimmisc.flugel.notallowed=Foolish mortal! You can't even fly without help! Y
 alfheimmisc.flugel.peacefulNoob=You try to offer your sacrifice, but the peaceful vibes of your world prevent you from doing so. Perhaps you should do something about that.
 alfheimmisc.flugel.notbeacon=This is wrong block, or it is corrupted (in the second case, contact server administrator).
 
+alfheimmisc.actuated=Ender Actuator has successfully synchronized with vibes of your soul!
+alfheimmisc.craftresult=Craft output count: %s
 alfheimmisc.invalidDodge=Invalid Dodge Packet
 alfheimmisc.skintoggle0=Skin will be your own
 alfheimmisc.skintoggle1=Skin will be set to elven
@@ -509,9 +512,9 @@ alfheimmisc.teamnotmob=Party member cannot be selected as enemy target.
 alfheimmisc.tgtooltip=Press &b%key%&7 to open the Traveller's Gear menu
 alfheimmisc.update=O-oh, it seems you are playing on an outdated version (%s). Perhaps you should update to %s?
 
-alfheimmisc.offset=Offset
-alfheimmisc.power=Power
-alfheimmisc.radius=Radius
+alfheimmisc.area=Area: %s x %s x %s
+alfheimmisc.offset=Offset: %s, %s, %s
+alfheimmisc.power=Power: %s
 
 alfheimmisc.cast.notarget=Select target
 alfheimmisc.cast.notready=Spell not ready

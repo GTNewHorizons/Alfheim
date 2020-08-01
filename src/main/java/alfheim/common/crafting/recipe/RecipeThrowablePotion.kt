@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alexsocol.asjlib.get
 import alfheim.common.item.AlfheimItems.splashPotion
 import alfheim.common.item.ItemSplashPotion
 import net.minecraft.init.Items
@@ -19,7 +20,7 @@ class RecipeThrowablePotion: IRecipe {
 		var foundVial = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack != null) {
 				when {
 					stack.item === Items.gunpowder   -> foundGunpowder = true
@@ -36,7 +37,7 @@ class RecipeThrowablePotion: IRecipe {
 		var vial: ItemStack? = null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack?.item === ModItems.brewVial)
 				vial = stack
 		}

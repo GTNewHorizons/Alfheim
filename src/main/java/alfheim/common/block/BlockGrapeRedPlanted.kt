@@ -22,7 +22,7 @@ import kotlin.math.*
 class BlockGrapeRedPlanted: BlockModFence("planks_oak", Material.wood, null), IGrowable {
 	
 	init {
-		setBlockName("GrapeRegPlanted")
+		setBlockName("GrapeRedPlanted")
 		setHardness(2.0F)
 		setLightOpacity(0)
 		setResistance(5.0F)

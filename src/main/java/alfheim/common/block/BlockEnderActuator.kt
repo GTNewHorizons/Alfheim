@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.F
+import alexsocol.asjlib.*
 import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEnderActuator
 import alfheim.common.core.helper.IconHelper
@@ -34,6 +34,8 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 		val tile = world.getTileEntity(x, y, z) as? TileEnderActuator ?: return false
 		
 		tile.name = player.commandSenderName
+		
+		ASJUtilities.say(player, "alfheimmisc.actuated")
 		
 		if (world.isRemote) {
 			for (i in 0 until 30) {

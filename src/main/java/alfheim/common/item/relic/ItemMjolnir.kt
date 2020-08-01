@@ -3,17 +3,17 @@ package alfheim.common.item.relic
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.entity.EntityMjolnir
 import alfheim.common.entity.spell.EntitySpellFenrirStorm
-import alfheim.common.item.AlfheimItems
-import baubles.common.lib.PlayerHandler
+import alfheim.common.item.equipment.bauble.*
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.command.IEntitySelector
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.attributes.AttributeModifier
-import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.player.*
 import net.minecraft.item.*
@@ -23,14 +23,13 @@ import net.minecraft.world.World
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper.*
-import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.relic.ItemRelic
+import vazkii.botania.common.item.relic.*
 import java.awt.Color
 import java.util.*
 import kotlin.math.*
 import vazkii.botania.common.core.helper.Vector3 as Bector3
 
-class ItemMjolnir: ItemRelic("Mjolnir") {
+class 	ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	init {
 		setHasSubtypes(true)
@@ -41,8 +40,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 	
 	fun isWorthy(player: EntityLivingBase): Boolean {
 		if (player !is EntityPlayer) return false
-		val inv = PlayerHandler.getPlayerBaubles(player)
-		return (inv.getStackInSlot(1)?.item === ModItems.thorRing || inv.getStackInSlot(2)?.item === ModItems.thorRing) && inv.getStackInSlot(0)?.let { it.item === AlfheimItems.priestEmblem && it.meta == 0 } == true
+		return ItemPriestCloak.getCloak(0, player) != null && ItemPriestEmblem.getEmblem(0, player) != null && ItemThorRing.getThorRing(player) != null
 	}
 	
 	// ################ Left-click ################
@@ -187,20 +185,7 @@ class ItemMjolnir: ItemRelic("Mjolnir") {
 				}
 			}
 			
-			val iradius = (radius + 1).I
-			for (i in 0 until iradius * 2 + 1) {
-				for (j in 0 until iradius * 2 + 1) {
-					val xp: Int = x + i - iradius
-					val zp: Int = z + j - iradius
-					
-					if (floor(Vector3.pointDistancePlane(xp.D, zp.D, x.D, z.D)).I == iradius - 1) {
-						val block = world.getBlock(xp, y, zp)
-						val meta = world.getBlockMetadata(xp, y, zp)
-						
-						if (world.isRemote) world.spawnEntityInWorld(EntityFallingBlock(world, xp.D + 0.5, y.D, zp.D + 0.5, block, meta).also { it.motionY += 0.5; it.noClip = true })
-					}
-				}
-			}
+			VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.FALLING, world.provider.dimensionId, x.D, y.D, z.D, radius)
 		}
 		
 		if (timer > 0) setInt(stack, TAG_SHAKE_TIMER, timer-1)

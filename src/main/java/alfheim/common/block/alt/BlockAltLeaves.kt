@@ -19,16 +19,11 @@ import net.minecraft.util.IIcon
 import net.minecraft.world.*
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.lexicon.LexiconEntry
+import vazkii.botania.common.Botania
 import vazkii.botania.common.item.ModItems
 import java.util.*
 
 class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
-	
-	companion object {
-		lateinit var textures: Array<Array<IIcon>>
-		lateinit var glowIcon: IIcon
-		val yggMeta = ALT_TYPES.indexOf("Wisdom")
-	}
 	
 	init {
 		setBlockName("altLeaves")
@@ -128,4 +123,34 @@ class BlockAltLeaves: BlockLeavesMod(), IGlowingLayerBlock {
 	override fun getRenderType() = RenderGlowingLayerBlock.glowBlockID
 	
 	override fun getGlowIcon(side: Int, meta: Int) = if (meta % 8 == 7) glowIcon else null
+	
+	override fun randomDisplayTick(world: World, x: Int, y: Int, z: Int, rand: Random) {
+		if (world.getBlockMetadata(x, y, z) % 8 == 7)
+			spawnRandomSpirit(world, x, y, z, rand, 0f, rand.nextFloat() * 0.25f + 0.5f, 1f)
+	}
+	
+	companion object {
+		lateinit var textures: Array<Array<IIcon>>
+		lateinit var glowIcon: IIcon
+	
+		val yggMeta = ALT_TYPES.indexOf("Wisdom")
+	
+		fun spawnRandomSpirit(world: World, x: Int, y: Int, z: Int, rand: Random, r: Float, g: Float, b: Float) {
+			if (world.worldTime % 24000 in 13333..22666 && rand.nextInt(512) == 0) {
+				val i = Math.random()
+				val j = Math.random()
+				val k = Math.random()
+				val s = Math.random()
+				val m = Math.random()
+				val n = Math.random()
+				val o = Math.random()
+				val l = Math.random()
+				
+				Botania.proxy.setWispFXDistanceLimit(false)
+				for (q in 0..4)
+					Botania.proxy.wispFX(world, x + i, y + j * 5 + 1, z + k, r, g, b, s.F * 0.25f + 0.1f, m.F * 0.1f - 0.05f, n.F * 0.01F, o.F * 0.1f - 0.05f, l.F * 20f + 5f)
+				Botania.proxy.setWispFXDistanceLimit(true)
+			}
+		}
+	}
 }

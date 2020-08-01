@@ -13,6 +13,7 @@ import alfheim.api.spell.SpellBase
 import alfheim.client.core.handler.CardinalSystemClient
 import alfheim.client.render.entity.RenderButterflies
 import alfheim.common.block.*
+import alfheim.common.block.alt.BlockAltLeaves
 import alfheim.common.core.asm.AlfheimSyntheticMethods
 import alfheim.common.core.handler.*
 import alfheim.common.core.util.DamageSourceSpell
@@ -265,7 +266,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	fun getBaublesDiscountForTools(player: EntityPlayer): Float {
 		val baubles = PlayerHandler.getPlayerBaubles(player) ?: return 0f
-		return (0 until baubles.sizeInventory).sumByDouble { i -> (baubles.getStackInSlot(i)?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
+		return (0 until baubles.sizeInventory).sumByDouble { i -> (baubles.get(i)?.let { (it.item as? IManaDiscountBauble)?.getDiscount(it, i, player) } ?: 0f).D }.F
 	}
 	
 	var stoneHook = false
@@ -336,7 +337,7 @@ object AlfheimHookHandler {
 	@JvmStatic
 	@Hook(injectOnExit = true, returnCondition = ALWAYS)
 	fun getColor(tile: TileHourglass, @ReturnValue color: Int): Int {
-		val stack = tile.getStackInSlot(0)
+		val stack = tile.get(0)
 		return if (stack != null && color == 0) {
 			if (stack.item === AlfheimBlocks.elvenSand.toItem()) 0xf7f5d9 else 0
 		} else color
@@ -492,6 +493,13 @@ object AlfheimHookHandler {
 		if (AlfheimCore.winter && world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim && world.rand.nextInt(20) == 0 && !world.isRemote && world.canBlockSeeTheSky(x, y + 1, z)) {
 			world.setBlock(x, y, z, AlfheimBlocks.snowGrass)
 		}
+	}
+	
+	@JvmStatic
+	@Hook(createMethod = true, returnCondition = ALWAYS)
+	fun randomDisplayTick(block: BlockGrass, world: World, x: Int, y: Int, z: Int, rand: Random) {
+		if (world.provider.dimensionId == AlfheimConfigHandler.dimensionIDAlfheim)
+			BlockAltLeaves.spawnRandomSpirit(world, x, y + 1 + rand.nextInt(5), z, rand, rand.nextFloat(), 1f, 0f)
 	}
 	
 	@JvmStatic
@@ -676,7 +684,7 @@ object AlfheimHookHandler {
 		var foundOdinRing		= false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i) ?: continue
+			val stack = inv.get(i) ?: continue
 			
 			if (stack.item === ModItems		.thorRing			&& !foundThorRing)		foundThorRing		= true else
 			if (stack.item === AlfheimItems	.priestRingSif		&& !foundSifRing)		foundSifRing		= true else
