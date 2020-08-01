@@ -25,6 +25,10 @@ class Vector3: Serializable {
 	operator fun component2() = y
 	operator fun component3() = z
 	
+	fun mf() = arrayOf(x.mfloor(), y.mfloor(), z.mfloor())
+	val I = arrayOf(x.I, y.I, z.I)
+	val F = arrayOf(x.F, y.F, z.F)
+	
 	val isZero: Boolean
 		get() = x == 0.0 && y == 0.0 && z == 0.0
 	
@@ -115,6 +119,7 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	@JvmOverloads
 	fun add(d: Number, d1: Number = d, d2: Number = d): Vector3 {
 		x += d.D
 		y += d1.D
@@ -179,6 +184,7 @@ class Vector3: Serializable {
 		return this
 	}
 	
+	@JvmOverloads
 	fun mul(d: Number, d1: Number = d, d2: Number = d): Vector3 {
 		x *= d.D
 		y *= d1.D
@@ -314,9 +320,9 @@ class Vector3: Serializable {
 		@Transient
 		val oZ = Vector3(0.0, 0.0, 1.0)
 		
-		fun fromEntity(e: Entity) = Vector3(e.posX, e.posY, e.posZ)
+		fun fromEntity(e: Entity) = Vector3(e.posX, e.posYp, e.posZ)
 		
-		fun fromEntityCenter(e: Entity) = Vector3(e.posX, e.posY - e.yOffset + e.height / 2, e.posZ)
+		fun fromEntityCenter(e: Entity) = Vector3(e.posX, e.posYp - e.yOffset + e.height / 2, e.posZ)
 		
 		fun fromTileEntity(e: TileEntity) = Vector3(e.xCoord.D, e.yCoord.D, e.zCoord.D)
 		
@@ -324,18 +330,20 @@ class Vector3: Serializable {
 		
 		fun vecDistance(v1: Vector3, v2: Vector3) = sqrt((v1.x - v2.x).pow(2.0) + (v1.y - v2.y).pow(2.0) + (v1.z - v2.z).pow(2.0))
 		
-		fun vecEntityDistance(v: Vector3, e: Entity) = sqrt((v.x - e.posX).pow(2.0) + (v.y - e.posY).pow(2.0) + (v.z - e.posZ).pow(2.0))
+		fun vecEntityDistance(v: Vector3, e: Entity) = sqrt((v.x - e.posX).pow(2.0) + (v.y - e.posYp).pow(2.0) + (v.z - e.posZ).pow(2.0))
 		
 		fun vecTileDistance(v: Vector3, te: TileEntity) = sqrt((v.x - te.xCoord).pow(2.0) + (v.y - te.yCoord).pow(2.0) + (v.z - te.zCoord).pow(2.0))
 		
-		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord).pow(2.0) + (e.posY - te.yCoord).pow(2.0) + (e.posZ - te.zCoord).pow(2.0))
+		fun entityTileDistance(e: Entity, te: TileEntity) = sqrt((e.posX - te.xCoord).pow(2.0) + (e.posYp - te.yCoord).pow(2.0) + (e.posZ - te.zCoord).pow(2.0))
 		
-		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2.0) + (e1.posY - e2.posY).pow(2.0) + (e1.posZ - e2.posZ).pow(2.0))
+		fun entityDistance(e1: Entity, e2: Entity) = sqrt((e1.posX - e2.posX).pow(2.0) + (e1.posYp - e2.posYp).pow(2.0) + (e1.posZ - e2.posZ).pow(2.0))
 		
 		fun entityDistancePlane(e1: Entity, e2: Entity) = hypot(e1.posX - e2.posX, e1.posZ - e2.posZ)
 		
 		fun pointDistancePlane(x1: Number, y1: Number, x2: Number, y2: Number) = hypot(x1.D - x2.D, y1.D - y2.D)
 		
 		fun pointDistanceSpace(x1: Number, y1: Number, z1: Number, x2: Number, y2: Number, z2: Number) = sqrt((x1.D - x2.D).pow(2) + (y1.D - y2.D).pow(2) + (z1.D - z2.D).pow(2))
+		
+		private val Entity.posYp get() = posY - if (ASJUtilities.isClient && mc.thePlayer === this) 1.62 else 0.0
 	}
 }

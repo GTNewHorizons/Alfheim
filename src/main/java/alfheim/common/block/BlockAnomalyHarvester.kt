@@ -9,7 +9,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import vazkii.botania.api.wand.IWandable
@@ -59,7 +58,8 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 		
 		tile.power = max(0.0, tile.power + if (player.isSneaking) -1 else 1)
 		
-		if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.power")}: ${tile.power}"))
+		if (!world.isRemote)
+			ASJUtilities.say(player, "alfheimmisc.power", tile.power)
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)
 		
@@ -73,11 +73,13 @@ class BlockAnomalyHarvester: BlockContainerMod(Material.iron), IWandable {
 		
 		if (player.isSneaking)
 			tile.radius.set(max(1.0, tile.radius.x + fd.offsetX), max(1.0, tile.radius.y + fd.offsetY), max(1.0, tile.radius.z + fd.offsetZ)).also {
-				if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.radius")}: [${it.x}, ${it.y}, ${it.z}]"))
+				if (!world.isRemote)
+					ASJUtilities.say(player, "alfheimmisc.area", it.x, it.y, it.z)
 			}
 		else
 			tile.offset.add(fd.offsetX * 0.5, fd.offsetY * 0.5, fd.offsetZ * 0.5).also {
-				if (!world.isRemote) player.addChatMessage(ChatComponentText("${StatCollector.translateToLocal("alfheimmisc.offset")}: [${it.x}, ${it.y}, ${it.z}]"))
+				if (!world.isRemote)
+					ASJUtilities.say(player, "alfheimmisc.offset", it.x, it.y, it.z)
 			}
 		
 		ASJUtilities.dispatchTEToNearbyPlayers(tile)

@@ -30,7 +30,7 @@ import vazkii.botania.common.item.relic.ItemRelicBauble
 import kotlin.math.*
 
 class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
-
+	
 	lateinit var jojocon: IIcon
 	
 	init {
@@ -55,7 +55,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		if (player.worldObj.isRemote || player !is EntityPlayer) return
 		
 		val baubles = PlayerHandler.getPlayerBaubles(player)
-		val inSlot: ItemStack? = baubles.getStackInSlot(0)
+		val inSlot: ItemStack? = baubles[0]
 		
 		// Multibauble exploit fix
 		if (inSlot?.item !is ItemTankMask) return
@@ -72,7 +72,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		if (time >= 3600) {
 			(inSlot.item as IBauble).onUnequipped(inSlot, player)
 			val copy = inSlot.copy()
-			baubles.setInventorySlotContents(0, null)
+			baubles[0] = null
 			
 			setInt(copy, TAG_COOLDOWN, MAX_COOLDOWN * 3)
 			player.triggerAchievement(AlfheimAchievements.outstander)
@@ -129,7 +129,7 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		glTranslated(0.0, (if (e.entityPlayer !== mc.thePlayer) 1.68 else 0.0) - e.entityPlayer.defaultEyeHeight + if (e.entityPlayer.isSneaking) 0.0625 else 0.0, 0.0)
 		glRotated(90.0, 0.0, 1.0, 0.0)
 		glRotated(180.0, 1.0, 0.0, 0.0)
-		glTranslated(-0.25 * 7.75/7 + if (stone) 0.1/6 else 0.0, -1/6.5, -0.2 * 8/7)
+		glTranslated(-0.25 * 7.75 / 7 + if (stone) 0.1 / 6 else 0.0, -1 / 6.5, -0.2 * 8 / 7)
 		glScaled(0.5 * 7.75 / 7)
 		
 		ItemRenderer.renderItemIn2D(Tessellator.instance, icon.maxU, icon.minV, icon.minU, icon.maxV, icon.iconWidth, icon.iconHeight, 1f / 16f)
@@ -167,12 +167,12 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 			
 			if (e.source.damageType == DamageSourceSpell.possession.damageType) {
 				val baubles = PlayerHandler.getPlayerBaubles(player)
-				if (baubles.getStackInSlot(0)?.item === AlfheimItems.mask) {
-					setInt(baubles.getStackInSlot(0), TAG_POSSESSION, 0)
-					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) {
-						player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+				if (baubles[0]?.item === AlfheimItems.mask) {
+					setInt(baubles[0], TAG_POSSESSION, 0)
+					if (!player.inventory.addItemStackToInventory(baubles[0]!!.copy())) {
+						player.dropPlayerItemWithRandomChoice(baubles[0]!!.copy(), false)
 					}
-					baubles.setInventorySlotContents(0, null)
+					baubles[0] = null
 				}
 			}
 			
@@ -182,13 +182,13 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 			if (canBeSaved(player)) {
 				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
 				val baubles = PlayerHandler.getPlayerBaubles(player)
-				if (baubles.getStackInSlot(0) != null)
-					if (!player.inventory.addItemStackToInventory(baubles.getStackInSlot(0).copy())) player.dropPlayerItemWithRandomChoice(baubles.getStackInSlot(0).copy(), false)
+				if (baubles[0] != null)
+					if (!player.inventory.addItemStackToInventory(baubles[0]!!.copy())) player.dropPlayerItemWithRandomChoice(baubles[0]!!.copy(), false)
 				
-				baubles.setInventorySlotContents(0, player.inventory.getStackInSlot(slot).copy())
+				baubles[0] = player.inventory[slot]!!.copy()
 				player.inventory.consumeInventoryItem(AlfheimItems.mask)
 				e.isCanceled = true
-				val h =  max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
+				val h = max(0f, min(max(e.entityLiving.health, e.entityLiving.maxHealth / 4f), e.entityLiving.maxHealth))
 				e.entityLiving.health = h
 			}
 		}
@@ -208,19 +208,17 @@ class ItemTankMask: ItemRelicBauble("TankMask"), IBaubleRender, IManaUsingItem {
 		}
 		
 		fun canBeSaved(player: EntityPlayer): Boolean {
-			if (player.inventory.hasItem(AlfheimItems.mask)) {
-				val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
-				if (!getBoolean(player.inventory.getStackInSlot(slot), TAG_ACTIVATED, false) || getInt(player.inventory.getStackInSlot(slot), TAG_COOLDOWN, 0) > 0) return false
-				
-				val baubles = PlayerHandler.getPlayerBaubles(player)
-				if (baubles.getStackInSlot(0) != null)
-					if (!(baubles.getStackInSlot(0).item as IBauble).canUnequip(baubles.getStackInSlot(0), player))
-						return false
-				
-				return true
-			}
+			val slot = ASJUtilities.getSlotWithItem(AlfheimItems.mask, player.inventory)
 			
-			return false
+			if (slot == -1) return false
+			
+			if (!getBoolean(player.inventory[slot], TAG_ACTIVATED, false) || getInt(player.inventory[slot], TAG_COOLDOWN, 0) > 0) return false
+			
+			val baubles = PlayerHandler.getPlayerBaubles(player)
+			if ((baubles[0]?.item as? IBauble)?.canUnequip(baubles[0], player) == false)
+				return false
+			
+			return true
 		}
 	}
 }

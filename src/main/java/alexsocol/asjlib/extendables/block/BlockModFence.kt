@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.item.ItemBlock
 import net.minecraft.world.IBlockAccess
 
-class BlockModFence(texture: String, mat: Material, val gate: Block): BlockFence(texture, mat) {
+open class BlockModFence(texture: String, mat: Material, val gate: Block?): BlockFence(texture, mat) {
 	
 	init {
 		setCreativeTab(null)
@@ -14,9 +14,10 @@ class BlockModFence(texture: String, mat: Material, val gate: Block): BlockFence
 	
 	override fun canConnectFenceTo(world: IBlockAccess, x: Int, y: Int, z: Int): Boolean {
 		val block = world.getBlock(x, y, z)
-		return if (block !== this && block !== gate) if (block.material.isOpaque && block.renderAsNormalBlock()) block.material !== Material.gourd else false else true
+		if (super.canConnectFenceTo(world, x, y, z)) return true
+		return if (block is BlockFence) true else if (block !== this && block !== gate) if (block.material.isOpaque && block.renderAsNormalBlock()) block.material !== Material.gourd else false else true
 	}
-
+	
 	override fun setBlockName(name: String): Block {
 		GameRegistry.registerBlock(this, ItemBlock::class.java, name)
 		return super.setBlockName(name)

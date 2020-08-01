@@ -55,10 +55,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	
 	val playersAround: List<EntityPlayer>
 		get() {
-			val source = source
+			val (sx, sy, sz) = source
 			val range = RANGE + 3
-			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(source.posX, source.posY, source.posZ).offset(0.5).expand(range)) as MutableList<EntityPlayer>
-			list.removeAll { Vector3.pointDistanceSpace(it.posX, it.posY, it.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= range }
+			val list = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, getBoundingBox(sx, sy, sz).offset(0.5).expand(range)) as MutableList<EntityPlayer>
+			list.removeAll { Vector3.pointDistanceSpace(it.posX, it.posY, it.posZ, sx + 0.5, sy + 0.5, sz + 0.5) >= range }
 			return list
 		}
 	
@@ -234,30 +234,41 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			var lot = true
 			// For everyone
 			for (name in playersDamage.keys) {
-				if (worldObj.getPlayerEntityByName(name) == null) continue
+				val player = worldObj.getPlayerEntityByName(name) as? EntityPlayerMP ?: continue
 				var droppedRecord = false
 				
 				if (hard) {
 					if (ConfigHandler.relicsEnabled && name == summoner) {
-						var relic = ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand) / if (ultra) 1 else 2, ElvenResourcesMetas.IffesalDust)
-						
-						if (!ultra && (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false) {
-							relic = ItemStack(AlfheimItems.mask)
-							worldObj.getPlayerEntityByName(name)?.triggerAchievement(AlfheimAchievements.mask)
-						} else if (ultra) {
-							val player = (worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)
-							if (player != null) {
-								relic = when {
-									!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
-									!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
-									!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
-									!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
-									else                                                     -> relic
+						var bind = true
+						val relic =
+							
+							when {
+								ultra                                                                                                        -> {
+									when {
+										!player.hasAchievement(AlfheimAchievements.excaliber)    -> ItemStack(AlfheimItems.excaliber).also { player.triggerAchievement(AlfheimAchievements.excaliber) }
+										!player.hasAchievement(AlfheimAchievements.subspace)     -> ItemStack(AlfheimItems.subspaceSpear).also { player.triggerAchievement(AlfheimAchievements.subspace) }
+										!player.hasAchievement(AlfheimAchievements.moonlightBow) -> ItemStack(AlfheimItems.moonlightBow).also { player.triggerAchievement(AlfheimAchievements.moonlightBow) }
+										!player.hasAchievement(AlfheimAchievements.mjolnir)      -> ItemStack(AlfheimItems.mjolnir).also { player.triggerAchievement(AlfheimAchievements.mjolnir) }
+										!player.hasAchievement(AlfheimAchievements.gungnir)      -> ItemStack(AlfheimItems.gungnir).also { player.triggerAchievement(AlfheimAchievements.gungnir) }
+										!player.hasAchievement(AlfheimAchievements.akashic)      -> ItemStack(AlfheimItems.akashicRecords).also { player.triggerAchievement(AlfheimAchievements.akashic) }
+										else                                                     -> ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(4, 6, rand), ElvenResourcesMetas.IffesalDust)
+									}
+								}
+								
+								(worldObj.getPlayerEntityByName(name) as? EntityPlayerMP)?.hasAchievement(AlfheimAchievements.mask) == false -> {
+									worldObj.getPlayerEntityByName(name)?.triggerAchievement(AlfheimAchievements.mask)
+									ItemStack(AlfheimItems.mask)
+								}
+								
+								else                                                                                                         -> {
+									bind = false
+									ItemStack(AlfheimItems.elvenResource, ASJUtilities.randInBounds(2, 3, rand), ElvenResourcesMetas.IffesalDust)
 								}
 							}
-						}
 						
-						ItemRelic.bindToUsernameS(name, relic)
+						if (bind)
+							ItemRelic.bindToUsernameS(name, relic)
+						
 						entityDropItem(relic, 1f)
 						lot = false
 					}
@@ -286,8 +297,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					if (Math.random() < 0.2) entityDropItem(ItemStack(ModItems.pinkinator), 1f)
 					
 					if (Math.random() < 0.3) {
-						val i = Item.getIdFromItem(Items.record_13)
-						val j = Item.getIdFromItem(Items.record_wait)
+						val i = Items.record_13.id
+						val j = Items.record_wait.id
 						val k = i + rand.nextInt(j - i + 1)
 						entityDropItem(ItemStack(Item.getItemById(k)), 1f)
 						droppedRecord = true
@@ -315,7 +326,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			AITeleport.tryToTP(this)
 			return
 		}
-		Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, null)
+		val (x, y, z) = source
+		Botania.proxy.playRecordClientSided(worldObj, x, y, z, null)
 		isPlayingMusic = false
 		
 		super.setDead()
@@ -346,7 +358,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 							val block = worldObj.getBlock(xp, yp, zp)
 							val items = block.getDrops(worldObj, xp, yp, zp, 0, 0)
 							for (stack in items) {
-								if (ConfigHandler.blockBreakParticles) worldObj.playAuxSFX(2001, xp, yp, zp, Block.getIdFromBlock(block) + (worldObj.getBlockMetadata(xp, yp, zp) shl 12))
+								if (ConfigHandler.blockBreakParticles) worldObj.playAuxSFX(2001, xp, yp, zp, block.id + (worldObj.getBlockMetadata(xp, yp, zp) shl 12))
 								worldObj.spawnEntityInWorld(EntityItem(worldObj, xp + 0.5, yp + 0.5, zp + 0.5, stack))
 							}
 							worldObj.setBlockToAir(xp, yp, zp)
@@ -355,14 +367,14 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		}
 		
 		if (playersDamage.isEmpty()) playersDamage[summoner] = 0.1f
-		val source = source
+		val (sx, sy, sz) = source
 		var players = playersAround
 		// if (players.isNotEmpty() && worldObj.isRemote && AlfheimConfigHandler.flugelBossBar)
 		
 		if (players.isEmpty() && aiTask != AITask.NONE) dropState()
 		
 		if (worldObj.isRemote && !isPlayingMusic && !isDead && players.isNotEmpty()) {
-			Botania.proxy.playRecordClientSided(worldObj, source.posX, source.posY, source.posZ, (if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc) as ItemRecord)
+			Botania.proxy.playRecordClientSided(worldObj, sx, sy, sz, (if (customNameTag == "Hatsune Miku") AlfheimItems.flugelDisc2 else AlfheimItems.flugelDisc) as ItemRecord)
 			isPlayingMusic = true
 		}
 		
@@ -379,9 +391,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 						val radP = pitch * PI.F / 180f
 						
 						// world coords
-						val wX = source.posX + 0.5
-						val wY = source.posY + 0.5
-						val wZ = source.posZ + 0.5
+						val wX = sx + 0.5
+						val wY = sy + 0.5
+						val wZ = sz + 0.5
 						
 						// local coords
 						val x = sin(radP.D) * cos(radY.D) * RANGE.D
@@ -413,13 +425,18 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		
 		for (player in players) {
 			// No beacon potions allowed!
-			(player.activePotionEffects as MutableCollection<PotionEffect>).removeIf {
-				it.getDuration() < 200 && it.getIsAmbient() && !Potion.potionTypes[it.getPotionID()].isBadEffect
+			(player.activePotionEffects as MutableCollection<PotionEffect>).filter {
+				it.duration < 200 && it.isAmbient && !Potion.potionTypes[it.potionID].isBadEffect
+			}.forEach {
+				if (worldObj.isRemote)
+					player.removePotionEffectClient(it.potionID)
+				else
+					player.removePotionEffect(it.potionID)
 			}
 			
 			// remove player
 			val baubles = PlayerHandler.getPlayerBaubles(player)
-			val tiara = baubles.getStackInSlot(0)
+			val tiara = baubles.get(0)
 			if (tiara != null && tiara.item == ModItems.flightTiara && tiara.meta == 1)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, 1200)
 			else if (!player.capabilities.isCreativeMode) {
@@ -428,7 +445,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					
 					fun isTooNear(bed: ChunkCoordinates?) =
 						if (bed == null) true
-						else Vector3.pointDistanceSpace(bed.posX.D, bed.posY.D, bed.posZ.D, source.posX.D, source.posY.D, source.posZ.D) <= RANGE + 3
+						else Vector3.pointDistanceSpace(bed.posX.D, bed.posY.D, bed.posZ.D, sx, sy, sz) <= RANGE + 3
 					
 					if (isTooNear(player.getBedLocation(player.dimension))) {
 						if (isTooNear(player.worldObj.spawnPoint)) {
@@ -448,12 +465,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			}
 			
 			// Get player back!
-			if (Vector3.pointDistanceSpace(player.posX, player.posY, player.posZ, source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5) >= RANGE) {
-				val motion = Vector3(source.posX + 0.5, source.posY + 0.5, source.posZ + 0.5).sub(Vector3.fromEntityCenter(player)).normalize()
+			if (Vector3.pointDistanceSpace(player.posX, player.posY, player.posZ, sx + 0.5, sy + 0.5, sz + 0.5) >= RANGE) {
+				val (mx, my, mz) = Vector3(sx + 0.5, sy + 0.5, sz + 0.5).sub(Vector3.fromEntityCenter(player)).normalize()
 				
-				player.motionX = motion.x
-				player.motionY = motion.y
-				player.motionZ = motion.z
+				player.setMotion(mx, my, mz)
 			}
 		}
 		
@@ -466,10 +481,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		if (invul > 10) spawnPatyklz(false)
 		
 		if (invul <= 0) {
-			if (Vector3.pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+			if (Vector3.pointDistanceSpace(posX, posY, posZ, sx, sy, sz) > RANGE) teleportTo(sx + 0.5, sy + 1.6, sz + 0.5)
 			if (isAggroed) {
-				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key
-											   ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
+				worldObj.getPlayerEntityByName(playersDamage.maxBy { it.value }?.key ?: "Notch")?.let { ASJUtilities.faceEntity(this, it, 360f, 360f) }
 				
 				if (aiTask == AITask.NONE) reUpdate()
 				if (aiTask != AITask.INVUL && health / maxHealth <= 0.6 && stage < STAGE_MAGIC) stage = STAGE_MAGIC
@@ -480,7 +494,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			} else {
 				val range = 3
 				players = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range, posY + range, posZ + range)) as List<EntityPlayer>
-				if (players.isNotEmpty()) attackEntityFrom(DamageSource.causePlayerDamage(players[0]), 0f)
+				if (players.any { !it.capabilities.isCreativeMode }) attackEntityFrom(DamageSource.causePlayerDamage(players[0]), 0f)
 			}
 		}
 		
@@ -489,7 +503,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	
 	// from pylons
 	fun spawnPatyklz(deathRay: Boolean) {
-		val source = source
+		val (sx, sy, sz) = source
 		val pos = Vector3.fromEntityCenter(this).sub(0.0, 0.2, 0.0)
 		
 		val miku = customNameTag == "Hatsune Miku"
@@ -499,7 +513,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val y = arr[1]
 			val z = arr[2]
 			
-			val pylonPos = Vector3((source.posX + x).D, (source.posY + y).D, (source.posZ + z).D)
+			val pylonPos = Vector3(sx + x, sy + y, sz + z)
 			var worldTime = ticksExisted.D
 			worldTime /= 5.0
 			
@@ -579,8 +593,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	
 	fun dropState() {
 		if (worldObj.isRemote) return
-		val source = source
-		teleportTo(source.posX + 0.5, source.posY + 1.6, source.posZ + 0.5)
+		val (x, y, z) = source
+		teleportTo(x + 0.5, y + 1.6, z + 0.5)
 		stage = 0
 		health = maxHealth
 		aiTask = AITask.NONE
@@ -616,10 +630,10 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 		nbt.setBoolean(TAG_HARDMODE, isHardMode)
 		nbt.setBoolean(TAG_ULTRAMODE, isUltraMode)
 		
-		val source = source
-		nbt.setInteger(TAG_SOURCE_X, source.posX)
-		nbt.setInteger(TAG_SOURCE_Y, source.posY)
-		nbt.setInteger(TAG_SOURCE_Z, source.posZ)
+		val (x, y, z) = source
+		nbt.setInteger(TAG_SOURCE_X, x)
+		nbt.setInteger(TAG_SOURCE_Y, y)
+		nbt.setInteger(TAG_SOURCE_Z, z)
 		
 		nbt.setInteger(TAG_PLAYER_COUNT, playerCount)
 		nbt.setInteger(TAG_AI_TASK, aiTask.ordinal)
@@ -706,8 +720,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			if (worldObj.getCollidingBoundingBoxes(this, boundingBox).isEmpty() && !worldObj.isAnyLiquid(boundingBox)) flag = true
 			
 			// Prevent out of bounds teleporting
-			val source = source
-			if (Vector3.pointDistanceSpace(posX, posY, posZ, source.posX.D, source.posY.D, source.posZ.D) > RANGE) flag = false
+			val (x, y, z) = source
+			if (Vector3.pointDistanceSpace(posX, posY, posZ, x, y, z) > RANGE) flag = false
 		}
 		
 		if (!flag) {

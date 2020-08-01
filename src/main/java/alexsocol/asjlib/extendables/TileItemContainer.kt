@@ -44,12 +44,12 @@ open class TileItemContainer: ASJTile() {
 			val itemstack = tile.item
 			if (itemstack != null) {
 				glDisable(GL_CULL_FACE)
-				val entityitem = EntityItem(tile.getWorldObj(), 0.0, 0.0, 0.0, itemstack)
+				val entityitem = EntityItem(tile.worldObj, 0.0, 0.0, 0.0, itemstack)
 				val item = entityitem.entityItem.item
 				entityitem.entityItem.stackSize = tile.item!!.stackSize
 				entityitem.hoverStart = 0f
 				glPushMatrix()
-				Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord))
+				Tessellator.instance.setBrightness(tile.getBlockType().getMixedBrightnessForBlock(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))
 				
 				if (item === Items.compass) {
 					val texturemanager = Minecraft.getMinecraft().textureManager
@@ -61,7 +61,7 @@ open class TileItemContainer: ASJTile() {
 						val d1 = textureatlassprite1.angleDelta
 						textureatlassprite1.currentAngle = 0.0
 						textureatlassprite1.angleDelta = 0.0
-						textureatlassprite1.updateCompass(tile.getWorldObj(), tile.xCoord.D, tile.zCoord.D, MathHelper.wrapAngleTo180_double(180 + tile.blockMetadata * 90.0), false, true)
+						textureatlassprite1.updateCompass(tile.worldObj, tile.xCoord.D, tile.zCoord.D, MathHelper.wrapAngleTo180_double(180 + tile.blockMetadata * 90.0), false, true)
 						textureatlassprite1.currentAngle = d0
 						textureatlassprite1.angleDelta = d1
 					}

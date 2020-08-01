@@ -4,6 +4,9 @@ import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.api.AlfheimAPI
 import alfheim.api.entity.*
+import alfheim.api.event.PlayerInteractAdequateEvent.*
+import alfheim.api.event.PlayerInteractAdequateEvent.LeftClick.Action.*
+import alfheim.api.event.PlayerInteractAdequateEvent.RightClick.Action.*
 import alfheim.api.spell.SpellBase
 import alfheim.api.spell.SpellBase.SpellCastResult.*
 import alfheim.client.core.handler.CardinalSystemClient.PlayerSegmentClient
@@ -14,13 +17,13 @@ import alfheim.client.core.proxy.ClientProxy
 import alfheim.client.gui.GUISpells
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.flight
-import alfheim.common.item.equipment.bauble.ItemCreativeReachPendant
 import alfheim.common.network.*
 import alfheim.common.network.Message2d.m2d
-import baubles.api.BaublesApi
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.MovingObjectPosition
+import net.minecraftforge.common.MinecraftForge
 import org.lwjgl.input.*
 
 @SideOnly(Side.CLIENT)
@@ -36,6 +39,7 @@ object KeyBindingHandlerClient {
 	var toggleSelMob = false
 	var toggleSelTeam = false
 	var toggleLMB = false
+	var toggleRMB = false
 	var toggleAlt = false
 	var toggleLeft = false
 	var toggleUp = false
@@ -53,12 +57,22 @@ object KeyBindingHandlerClient {
 		if (mc.currentScreen != null) return
 		if (TimeStopSystemClient.affected(player)) return
 		
-		if (Mouse.isButtonDown(0) && !toggleLMB) {
-			toggleLMB = true
-			if (BaublesApi.getBaubles(player).getStackInSlot(0)?.item is ItemCreativeReachPendant)
-				AlfheimCore.network.sendToServer(MessageKeyBindS(ATTACK.ordinal, false, 0))
+		if (Mouse.isButtonDown(0)) {
+			if (!toggleLMB) {
+				toggleLMB = true
+				hit()
+			}
 		} else if (toggleLMB) {
 			toggleLMB = false
+		}
+		
+		if (Mouse.isButtonDown(1)) {
+			if (!toggleRMB) {
+				toggleRMB = true
+				use()
+			}
+		} else if (toggleRMB) {
+			toggleRMB = false
 		}
 		
 		if (safeKeyDown(ClientProxy.keyLolicorn.keyCode)) {
@@ -259,7 +273,53 @@ object KeyBindingHandlerClient {
 		}
 	}
 	
-	fun safeKeyDown(id: Int) = try { Keyboard.isKeyDown(id) } catch (e: IndexOutOfBoundsException) { false }
+	fun safeKeyDown(id: Int) = try {
+		Keyboard.isKeyDown(id)
+	} catch (e: IndexOutOfBoundsException) {
+		false
+	}
+	
+	fun hit() {
+		val player = mc.thePlayer
+		
+		val mopEntity = ASJUtilities.getMouseOver(player, mc.playerController.blockReachDistance.D, true)
+		val mopNoEntity = ASJUtilities.getMouseOver(player, mc.playerController.blockReachDistance.D, false)
+		
+		if (mopNoEntity == null || mopNoEntity.typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {
+			when (mopEntity?.typeOfHit) {
+				MovingObjectPosition.MovingObjectType.BLOCK  ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_LIQUID, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				MovingObjectPosition.MovingObjectType.ENTITY ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_ENTIY, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				else                                         ->
+					MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
+			}
+		} else if (mopNoEntity.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			MinecraftForge.EVENT_BUS.post(LeftClick(player, LEFT_CLICK_BLOCK, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
+		
+		AlfheimCore.network.sendToServer(MessageKeyBindS(HIT.ordinal, false, 0))
+	}
+	
+	fun use() {
+		val player = mc.thePlayer
+		
+		val mopEntity = ASJUtilities.getMouseOver(player, mc.playerController.blockReachDistance.D, true)
+		val mopNoEntity = ASJUtilities.getMouseOver(player, mc.playerController.blockReachDistance.D, false)
+		
+		if (mopNoEntity == null || mopNoEntity.typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {
+			when (mopEntity?.typeOfHit) {
+				MovingObjectPosition.MovingObjectType.BLOCK  ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_LIQUID, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				MovingObjectPosition.MovingObjectType.ENTITY ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_ENTIY, mopEntity.blockX, mopEntity.blockY, mopEntity.blockZ, mopEntity.sideHit, mopEntity.entityHit))
+				else                                         ->
+					MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_AIR, mopNoEntity?.blockX ?: -1, mopNoEntity?.blockY ?: -1, mopNoEntity?.blockZ ?: -1, mopNoEntity?.sideHit ?: -1, mopNoEntity?.entityHit))
+			}
+		} else if (mopNoEntity.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			MinecraftForge.EVENT_BUS.post(RightClick(player, RIGHT_CLICK_BLOCK, mopNoEntity.blockX, mopNoEntity.blockY, mopNoEntity.blockZ, mopNoEntity.sideHit, mopNoEntity.entityHit))
+		
+		AlfheimCore.network.sendToServer(MessageKeyBindS(USE.ordinal, false, 0))
+	}
 	
 	fun toggleFlight(boost: Boolean) {
 		if (!PlayerSegmentClient.esmAbility) return
@@ -269,6 +329,6 @@ object KeyBindingHandlerClient {
 	}
 	
 	enum class KeyBindingIDs {
-		CORN, FLIGHT, ESMABIL, ATTACK, CAST, UNCAST, SEL, SECRET
+		CORN, FLIGHT, ESMABIL, HIT, USE, CAST, UNCAST, SEL, SECRET
 	}
 }

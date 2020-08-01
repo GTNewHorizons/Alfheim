@@ -12,87 +12,88 @@ import ru.vamig.worldengine.standardcustomgen.help.*;
 import java.util.*;
 
 public class WE_WorldTreeGen implements IWorldGenerator {
-	public final List<WE_TreeGen   > ug = new ArrayList();
-	public final List<WE_BigTreeGen> bg = new ArrayList();
-	//-//
-	public final List<Integer> cwt = new ArrayList();
-	public final List<Integer> tfc = new ArrayList();
-	public final List<Integer> tfb = new ArrayList();
 	
-	public void add(Block bWood, int mWood, Block bLeaves, int mLeaves, Block bSapling, Block bVine, Block bCocoa,
-		int v1, int v2, int v3,
-		int minHeight, boolean vines,
-		byte ocp1, byte ocp2, byte ocp3, byte ocp4, byte ocp5, byte ocp6, int ts, int hl, int ldl, double ha, double bs, double sw, double ld) {
-		ug.add(new WE_TreeGen   (false));
-		bg.add(new WE_BigTreeGen(false));
+	public final List<WE_TreeGen> smallTrees = new ArrayList();
+	public final List<WE_BigTreeGen> bigTrees = new ArrayList();
+	//-//
+	public final List<Integer> dispersions = new ArrayList();
+	public final List<Integer> treesPerChunkCounts = new ArrayList();
+	public final List<Integer> chanceForBigTree = new ArrayList();
+	
+	public void add(Block wood, int woodMeta, Block leaves, int leavesMeta, Block sapling, Block vines, Block cocoa,
+	                int dispersion, int perChunk, int chanceForBig,
+	                int minHeight, boolean doVinesLog, boolean doVinesLeaves,
+	                byte ocp1, byte ocp2, byte ocp3, byte ocp4, byte ocp5, byte ocp6, int ts, int hl, int ldl, double ha, double bs, double sw, double ld) {
+		smallTrees.add(new WE_TreeGen(false));
+		bigTrees.add(new WE_BigTreeGen(false));
 		//-//
-		cwt.add(v1);
-		tfc.add(v2);
-		tfb.add(v3);
+		dispersions.add(dispersion);
+		treesPerChunkCounts.add(perChunk);
+		chanceForBigTree.add(chanceForBig);
 		
-		ug.get(ug.size() - 1).bWood      =    bWood;
-		ug.get(ug.size() - 1).metaWood   =    mWood;
-		ug.get(ug.size() - 1).bLeaves    =  bLeaves;
-		ug.get(ug.size() - 1).metaLeaves =  mLeaves;
-		ug.get(ug.size() - 1).bSapling   = bSapling;
-		ug.get(ug.size() - 1).bVine      =    bVine;
-		ug.get(ug.size() - 1).bCocoa     =   bCocoa;
+		smallTrees.get(smallTrees.size() - 1).bWood = wood;
+		smallTrees.get(smallTrees.size() - 1).metaWood = woodMeta;
+		smallTrees.get(smallTrees.size() - 1).bLeaves = leaves;
+		smallTrees.get(smallTrees.size() - 1).metaLeaves = leavesMeta;
+		smallTrees.get(smallTrees.size() - 1).bSapling = sapling;
+		smallTrees.get(smallTrees.size() - 1).bVine = vines;
+		smallTrees.get(smallTrees.size() - 1).bCocoa = cocoa;
 		//-//
-		bg.get(bg.size() - 1).bWood      =    bWood;
-		bg.get(bg.size() - 1).metaWood   =    mWood;
-		bg.get(bg.size() - 1).bLeaves    =  bLeaves;
-		bg.get(bg.size() - 1).metaLeaves =  mLeaves;
-		bg.get(bg.size() - 1).bSapling   = bSapling;
+		bigTrees.get(bigTrees.size() - 1).bWood = wood;
+		bigTrees.get(bigTrees.size() - 1).metaWood = woodMeta;
+		bigTrees.get(bigTrees.size() - 1).bLeaves = leaves;
+		bigTrees.get(bigTrees.size() - 1).metaLeaves = leavesMeta;
+		bigTrees.get(bigTrees.size() - 1).bSapling = sapling;
 		
-		ug.get(ug.size() - 1).minTreeHeight = minHeight;
-		ug.get(ug.size() - 1).vinesGrow     =     vines;
+		smallTrees.get(smallTrees.size() - 1).minTreeHeight = minHeight;
+		smallTrees.get(smallTrees.size() - 1).vinesGrowLog = doVinesLog;
+		smallTrees.get(smallTrees.size() - 1).vinesGrowLeaves = doVinesLeaves;
 		//-//
-		bg.get(bg.size() - 1).otherCoordPairs = new byte[] {ocp1, ocp2, ocp3, ocp4, ocp5, ocp6};
-		bg.get(bg.size() - 1).trunkSize         =  ts;
-		bg.get(bg.size() - 1).heightLimitLimit  =  hl;
-		bg.get(bg.size() - 1).leafDistanceLimit = ldl;
-		bg.get(bg.size() - 1).heightAttenuation =  ha;
-		bg.get(bg.size() - 1).branchSlope       =  bs;
-		bg.get(bg.size() - 1).scaleWidth        =  sw;
-		bg.get(bg.size() - 1).leafDensity       =  ld;
+		bigTrees.get(bigTrees.size() - 1).otherCoordPairs = new byte[] { ocp1, ocp2, ocp3, ocp4, ocp5, ocp6 };
+		bigTrees.get(bigTrees.size() - 1).trunkSize = ts;
+		bigTrees.get(bigTrees.size() - 1).heightLimitLimit = hl;
+		bigTrees.get(bigTrees.size() - 1).leafDistanceLimit = ldl;
+		bigTrees.get(bigTrees.size() - 1).heightAttenuation = ha;
+		bigTrees.get(bigTrees.size() - 1).branchSlope = bs;
+		bigTrees.get(bigTrees.size() - 1).scaleWidth = sw;
+		bigTrees.get(bigTrees.size() - 1).leafDensity = ld;
 	}
 	
 	public void add(Block bWood, int mWood, Block bLeaves, int mLeaves, Block bSapling, Block bVine, Block bCocoa, int v1, int v2, int minHeight, boolean vines) {
-		ug.add(new WE_TreeGen(false));
-		bg.add(                 null);
+		smallTrees.add(new WE_TreeGen(false));
+		bigTrees.add(null);
 		//-//
-		cwt.add(v1);
-		tfc.add(v2);
-		tfb.add( 0);
+		dispersions.add(v1);
+		treesPerChunkCounts.add(v2);
+		chanceForBigTree.add(0);
 		
-		ug.get(ug.size() - 1).bWood      =    bWood;
-		ug.get(ug.size() - 1).metaWood   =    mWood;
-		ug.get(ug.size() - 1).bLeaves    =  bLeaves;
-		ug.get(ug.size() - 1).metaLeaves =  mLeaves;
-		ug.get(ug.size() - 1).bSapling   = bSapling;
-		ug.get(ug.size() - 1).bVine      =    bVine;
-		ug.get(ug.size() - 1).bCocoa     =   bCocoa;
+		smallTrees.get(smallTrees.size() - 1).bWood = bWood;
+		smallTrees.get(smallTrees.size() - 1).metaWood = mWood;
+		smallTrees.get(smallTrees.size() - 1).bLeaves = bLeaves;
+		smallTrees.get(smallTrees.size() - 1).metaLeaves = mLeaves;
+		smallTrees.get(smallTrees.size() - 1).bSapling = bSapling;
+		smallTrees.get(smallTrees.size() - 1).bVine = bVine;
+		smallTrees.get(smallTrees.size() - 1).bCocoa = bCocoa;
 		//-//
-		ug.get(ug.size() - 1).minTreeHeight = minHeight;
-		ug.get(ug.size() - 1).vinesGrow     =     vines;
+		smallTrees.get(smallTrees.size() - 1).minTreeHeight = minHeight;
+		smallTrees.get(smallTrees.size() - 1).vinesGrowLeaves = vines;
 	}
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for(int i = 0; i < ug.size(); i++)
-			if(random.nextInt(cwt.get(i)) == 0)
-				for(int i2 = 0; i2 < tfc.get(i); i2++) {
+		for (int i = 0; i < smallTrees.size(); i++)
+			if (random.nextInt(dispersions.get(i)) == 0)
+				for (int i2 = 0; i2 < treesPerChunkCounts.get(i); i2++) {
 					int x = chunkX * 16 + random.nextInt(16),
 						z = chunkZ * 16 + random.nextInt(16),
 						y = world.getHeightValue(x, z);
 					
-					if(tfb.get(i) <= 0)
-						ug.get(i).generate(world, random, x, y, z);
+					if (chanceForBigTree.get(i) <= 0)
+						smallTrees.get(i).generate(world, random, x, y, z);
+					else if (random.nextInt(chanceForBigTree.get(i)) == 0)
+						bigTrees.get(i).generate(world, random, x, y, z);
 					else
-						if(random.nextInt(tfb.get(i)) == 0)
-							bg.get(i).generate(world, random, x, y, z);
-						else
-							ug.get(i).generate(world, random, x, y, z);
+						smallTrees.get(i).generate(world, random, x, y, z);
 				}
 	}
 }

@@ -13,9 +13,11 @@ import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
+import net.minecraftforge.oredict.OreDictionary
 import org.apache.logging.log4j.Level
 import vazkii.botania.api.recipe.RecipeElvenTrade
 import java.util.*
+import kotlin.collections.HashMap
 
 object AlfheimAPI {
 	
@@ -42,6 +44,10 @@ object AlfheimAPI {
 	val anomalyInstances = HashMap<String, SubTileAnomalyBase>()
 	/** Map of security managers by name */
 	val securityManagers = HashMap<String, ISecurityManager>()
+	/** Petronia fuels map */
+	val fuelMap = HashMap<String, Pair<Int, Int>>()
+	/** Ores for Orechid Endium */
+	var oreWeightsEnd = HashMap<String, Int>()
 	
 	fun addInfuserRecipe(rec: RecipeManaInfuser?): RecipeManaInfuser? {
 		if (rec != null) manaInfuserRecipes.add(rec)
@@ -163,11 +169,65 @@ object AlfheimAPI {
 		securityManagers[name] = man
 	}
 	
+	fun registerFuel(name: String, burnTime: Int, manaPerTick: Int) {
+		fuelMap[name] = burnTime to manaPerTick
+	}
+	
+	/**
+	 * Maps an ore (ore dictionary key) to it's weight on the End world generation. This
+	 * is used for the Orechid Endium flower. Check the static block in the EndiumOrechidAPI class
+	 * to get the weights for the vanilla blocks.<br></br>
+	 * Alternatively get the values with the OreDetector mod:<br></br>
+	 * https://gist.github.com/Vazkii/9493322
+	 */
+	fun addOreWeightEnd(ore: String, weight: Int) {
+		addOreWeightEnd(ore, weight, false)
+	}
+	
+	fun addOreWeightEnd(ore: String, weight: Int, override: Boolean) {
+		if (!override && ore.contains("Ender") && OreDictionary.getOres(ore.replace("Ender", "")).size == 0) return
+		if (!override && ore.contains("End") && OreDictionary.getOres(ore.replace("End", "")).size == 0) return
+		
+		oreWeightsEnd[ore] = weight
+	}
+	
 	object FallbackAnomaly: SubTileAnomalyBase() {
 		override val targets: List<Any> = emptyList()
 		override val rarity = EnumAnomalityRarity.COMMON
 		override val strip = 31
 		override fun performEffect(target: Any) = Unit
 		override fun typeBits() = 0
+	}
+	
+	init {
+		addOreWeightEnd("oreEndCoal", 9000)
+		addOreWeightEnd("oreEndCopper", 4700)
+		addOreWeightEnd("oreEndDiamond", 500)
+		addOreWeightEnd("oreEndEmerald", 500)
+		addOreWeightEnd("oreEndGold", 3635)
+		addOreWeightEnd("oreEndIron", 5790)
+		addOreWeightEnd("oreEndLapis", 3250)
+		addOreWeightEnd("oreEndLead", 2790)
+		addOreWeightEnd("oreEndNickel", 1790)
+		addOreWeightEnd("oreEndPlatinum", 350)
+		addOreWeightEnd("oreEndRedstone", 5600)
+		addOreWeightEnd("oreEndSilver", 1550)
+		addOreWeightEnd("oreEndSteel", 1690)
+		addOreWeightEnd("oreEndMithril", 1000)
+		addOreWeightEnd("oreEndCertusQuartz", 2000)
+		addOreWeightEnd("oreEndChargedCertusQuartz", 950)
+		addOreWeightEnd("oreEndUranium", 2000)
+		addOreWeightEnd("oreEndArdite", 1000)
+		addOreWeightEnd("oreEndCobalt", 1000)
+		addOreWeightEnd("oreEndOsmium", 1000)
+		addOreWeightEnd("oreEndIridium", 850)
+		addOreWeightEnd("oreEndYellorite", 3000)
+		addOreWeightEnd("oreClathrateEnder", 800)
+		addOreWeightEnd("oreEndProsperity", 200)
+		addOreWeightEnd("oreEndTin", 3750)
+		addOreWeightEnd("oreEndInferium", 500)
+		addOreWeightEnd("oreEndBiotite", 500, true) // OreDictionary.registerOre("oreEndBiotite", Biotite.biotite_ore)
+		addOreWeightEnd("oreEndDraconium", 200) // OreDictionary.registerOre("oreEndDraconium", ItemStack(DEFeatures.draconiumOre, 1, 2))
+		addOreWeightEnd("oreDraconiumEnd", 200) // OreDictionary.registerOre("oreDraconiumEnd", ItemStack(DEFeatures.draconiumOre, 1, 2))
 	}
 }

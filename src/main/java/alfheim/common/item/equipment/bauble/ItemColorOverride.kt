@@ -15,11 +15,10 @@ import net.minecraftforge.client.event.RenderPlayerEvent
 import vazkii.botania.api.item.*
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
-import kotlin.properties.Delegates
 
 class ItemColorOverride: ItemBauble("colorOverride"), ICosmeticBauble, IPriestColorOverride {
 	
-	var overlayIcon: IIcon by Delegates.notNull()
+	lateinit var overlayIcon: IIcon
 	
 	init {
 		creativeTab = AlfheimTab

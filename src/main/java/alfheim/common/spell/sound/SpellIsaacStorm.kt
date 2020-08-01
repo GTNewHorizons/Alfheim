@@ -33,15 +33,15 @@ object SpellIsaacStorm: SpellBase("isaacstorm", EnumRace.POOKA, 256000, 72000, 1
 		val result = checkCast(caster)
 		if (result == SpellCastResult.OK) {
 			for (i in 1..efficiency.I) {
-				EntitySpellIsaacMissile(caster).also {
-					it.setPosition(caster.posX + (Math.random() - 0.5) * 0.1, caster.posY + 2.4 + (Math.random() - 0.5) * 0.1, caster.posZ + (Math.random() - 0.5) * 0.1)
-					if (tgc != null) it.targetClass = tgc
+				EntitySpellIsaacMissile(caster).apply {
+					setPosition(caster.posX + (Math.random() - 0.5) * 0.1, caster.posY + 2.4 + (Math.random() - 0.5) * 0.1, caster.posZ + (Math.random() - 0.5) * 0.1)
+					if (tgc != null) targetClass = tgc
 					else if (tgt != null) {
-						it.targetEntity = tgt
-						it.userSelected = true
+						targetEntity = tgt
+						userSelected = true
 					}
-					it.noClip = true
-					caster.worldObj.spawnEntityInWorld(it)
+					noClip = true
+					caster.worldObj.spawnEntityInWorld(this)
 				}
 			}
 			

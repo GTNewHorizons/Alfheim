@@ -71,7 +71,7 @@ object RenderContributors {
 		if (ContributorsPrivacyHelper.isCorrect(player, "AlexSocol")) {
 			//run {
 			//	// jojo's mask
-			//	if (PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(0)?.item !== AlfheimItems.mask) {
+			//	if (PlayerHandler.getPlayerBaubles(player)?.get(0)?.item !== AlfheimItems.mask) {
 			//		val yaw = player.prevRotationYawHead + (player.rotationYawHead - player.prevRotationYawHead) * e.partialRenderTick
 			//		val yawOffset = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * e.partialRenderTick
 			//		val pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * e.partialRenderTick
@@ -235,7 +235,7 @@ object RenderContributors {
 			glRotatef(180f, 1f, 0f, 0f)
 			glTranslatef(0f, -1.5f, 0f)
 			glEnable(GL_LIGHTING)
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
+			// OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0f, 0f)
 			if (player.isSneaking) glTranslatef(0f, 0f, -0.25f)
 			mc.renderEngine.bindTexture(LibResourceLocations.miko1)
 			ModelEntityFlugel.model1.renderAll()

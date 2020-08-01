@@ -7,7 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
-import alfheim.common.item.AlfheimItems
+import alfheim.common.item.*
 import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -50,9 +50,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	override fun getColorFromItemStack(stack: ItemStack?, pass: Int): Int {
-		return Color.HSBtoRGB(Botania.proxy.worldElapsedTicks * 2 % 360 / 360f, 0.75f, 1f)
-	}
+	override fun getColorFromItemStack(stack: ItemStack?, pass: Int) = ItemIridescent.rainbowColor()
 	
 	@SideOnly(Side.CLIENT)
 	override fun registerIcons(reg: IIconRegister) {
@@ -64,7 +62,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		val block = world.getBlock(x, y, z)
 		if (block === ModBlocks.brewery) {
 			val brew = world.getTileEntity(x, y, z) as TileBrewery
-			brew.setInventorySlotContents(0, stack.splitStack(1))
+			brew.set(0, stack.splitStack(1))
 		} else { // Stupid Et Futurum
 			if (player.isSneaking && getBlocked(stack) < SEGMENTS) {
 				val success = EntityFlugel.spawn(player, stack, world, x, y, z, true, false)
@@ -128,7 +126,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 		
 		if (entity is EntityPlayer) {
-			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).getStackInSlot(0)
+			val tiara = PlayerHandler.getPlayerBaubles((entity as EntityPlayer?)!!).get(0)
 			if (tiara != null && tiara.item is ItemFlightTiara)
 				ItemNBTHelper.setInt(tiara, TAG_TIME_LEFT, MAX_FLY_TIME)
 			
@@ -460,7 +458,7 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 	class MultiversePosition(val x: Double, val y: Double, val z: Double, val dim: Int) {
 		
 		internal val isValid: Boolean
-			get() = y > 0 && (!ASJUtilities.isServer || MinecraftServer.getServer().worldServerForDimension(dim) != null)
+			get() = y > 0 && (ASJUtilities.isClient || MinecraftServer.getServer().worldServerForDimension(dim) != null)
 		
 		internal fun mana(player: EntityPlayer): Int {
 			val mod = if (player.dimension != dim) player.worldObj.provider.movementFactor / MinecraftServer.getServer().worldServerForDimension(dim).provider.movementFactor * 4.0 else 1.0

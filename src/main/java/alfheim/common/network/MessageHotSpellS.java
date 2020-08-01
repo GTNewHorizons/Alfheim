@@ -16,7 +16,7 @@ public class MessageHotSpellS extends ASJPacket {
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		if (!ASJUtilities.isServer()) return;
+		if (ASJUtilities.isClient()) return;
 		slot = buf.readInt();
 		id = buf.readInt();
 	}

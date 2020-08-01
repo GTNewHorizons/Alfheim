@@ -20,7 +20,7 @@ class CommandDimTP private constructor(): CommandBase() {
 	override fun processCommand(sender: ICommandSender, args: Array<String>) {
 		if (args.size == 1 && args[0].matches("-?\\d+".toRegex()) && sender is EntityPlayer) {
 			try {
-				val id = Integer.valueOf(args[0])
+				val id = args[0].toInt()
 				try {
 					val w = MinecraftServer.getServer().worldServerForDimension(id) ?: throw NullPointerException("Loaded dimension is null")
 					
@@ -43,7 +43,7 @@ class CommandDimTP private constructor(): CommandBase() {
 	
 	companion object {
 		
-		private val instance = CommandDimTP()
+		val instance = CommandDimTP()
 		var registered = false
 		
 		fun register(event: FMLServerStartingEvent) {

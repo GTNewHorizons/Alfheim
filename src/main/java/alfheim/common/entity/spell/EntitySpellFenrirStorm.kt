@@ -2,7 +2,6 @@ package alfheim.common.entity.spell
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.*
-import alfheim.AlfheimCore
 import alfheim.api.spell.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
@@ -17,14 +16,15 @@ import java.util.*
 
 class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 	
-	val area: OrientedBB?
+	val area: OrientedBB
 	var caster: EntityLivingBase? = null
+	var mjolnir = false
 	
 	override val isImmune: Boolean
 		get() = false
 	
 	init {
-		setSize((SpellFenrirStorm.radius * 4).F, (SpellFenrirStorm.radius * 4).F)
+		setSize(0.25f, 0.25f)
 		area = OrientedBB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
 		renderDistanceWeight = SpellFenrirStorm.radius / 2
 	}
@@ -34,7 +34,7 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 		val l = Vector3(caster.lookVec).mul(0.1)
 		setPositionAndRotation(caster.posX + l.x, caster.posY + caster.eyeHeight.D + l.y, caster.posZ + l.z, caster.rotationYaw, caster.rotationPitch)
 		
-		area!!.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
+		area.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
 		area.rotateOX(-caster.rotationPitch.D)
 		area.rotateOY((caster.rotationYaw).D)
 		
@@ -43,15 +43,33 @@ class EntitySpellFenrirStorm(world: World): Entity(world), ITimeStopSpecific {
 	}
 	
 	override fun onEntityUpdate() {
-		if (!AlfheimConfigHandler.enableMMO || !worldObj.isRemote && (caster == null || area == null || ticksExisted > 12)) {
+		if ((!AlfheimConfigHandler.enableMMO && !mjolnir) || (!worldObj.isRemote && caster == null) || ticksExisted > 12) {
 			setDead()
 			return
 		}
-		if (isDead || !ASJUtilities.isServer) return
+		if (isDead || ASJUtilities.isClient) return
 		
-		if (ticksExisted == 4) {
-			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area!!.toAABB()) as List<EntityLivingBase>
-			for (e in l) if (e !== caster && area.intersectsWith(e.boundingBox) && InteractionSecurity.canHurtEntity(caster ?: continue, e)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
+		val caster = caster
+		
+		if (mjolnir && caster != null) {
+			rotationYaw = caster.rotationYaw
+			rotationPitch = caster.rotationPitch
+			
+			area.fromAABB(AxisAlignedBB.getBoundingBox(-0.5, -0.5, -SpellFenrirStorm.radius, 0.5, 0.5, SpellFenrirStorm.radius))
+			area.translate(caster.posX, caster.posY + caster.eyeHeight, caster.posZ)
+			area.rotateOX(-caster.rotationPitch.D)
+			area.rotateOY((caster.rotationYaw).D)
+			
+			val v = Vector3(caster.lookVec).mul(SpellFenrirStorm.radius + 0.5)
+			area.translate(v.x, v.y, v.z)
+		}
+		
+		boundingBox.setBB(area.toAABB())
+		
+		if (ticksExisted == 4 || mjolnir) {
+			val l = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, area.toAABB()) as List<EntityLivingBase>
+			for (e in l)
+				if (e !== caster && area.intersectsWith(e.boundingBox) && InteractionSecurity.canHurtEntity(caster ?: continue, e)) e.attackEntityFrom(DamageSourceSpell.lightning(this, caster), SpellBase.over(caster, SpellFenrirStorm.damage.D))
 		}
 	}
 	

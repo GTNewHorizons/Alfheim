@@ -103,7 +103,7 @@ class SubTileLightning: SubTileAnomalyBase() {
 			return
 		}
 		
-		if (!ASJUtilities.isServer) {
+		if (ASJUtilities.isClient) {
 			if (superTile != null && ASJVec3.entityTileDistance(mc.thePlayer, superTile!!) > 32) return
 			
 			if (AlfheimConfigHandler.lightningsSpeed > 0 && ticks % AlfheimConfigHandler.lightningsSpeed == 0) {

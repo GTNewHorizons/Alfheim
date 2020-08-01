@@ -10,6 +10,7 @@ object MinetweakerAlfheimConfig {
 	fun loadConfig() {
 		MineTweakerAPI.registerClass(MTHandlerAnyavil::class.java)
 		MineTweakerAPI.registerClass(MTHandlerManaInfuser::class.java)
+		MineTweakerAPI.registerClass(MTHandlerPetronia::class.java)
 		MineTweakerAPI.registerClass(MTHandlerSpells::class.java)
 		MineTweakerAPI.registerClass(MTHandlerSuffuser::class.java)
 		MineTweakerAPI.registerClass(MTHandlerTradePortal::class.java)

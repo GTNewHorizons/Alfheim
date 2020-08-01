@@ -180,13 +180,13 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 		}
 	}
 	
-	fun areItemsValid(items: List<EntityItem>): Boolean {
+	fun areItemsValid(entities: List<EntityItem>): Boolean {
 		//boolean DBG = !worldObj.isRemote;
-		if (items.isEmpty()) return false
+		if (entities.isEmpty()) return false
 		for (recipe in AlfheimAPI.manaInfuserRecipes) {
 			if (DEBUG) println("$recipe")
-			if (items.size != recipe.inputs.size) {
-				if (DEBUG) println("Incorrect items amount (" + items.size + "). Skipping this recipe.")
+			if (entities.size != recipe.inputs.size) {
+				if (DEBUG) println("Incorrect items amount (" + entities.size + "). Skipping this recipe.")
 				continue // Odd items will mess up the infusion, less means not enough materials
 			}
 			
@@ -194,8 +194,11 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 			
 			if (DEBUG) println("Scanning entities...")
 			
-			for (item in items) { // For every item in AABB
-				val stack = item.entityItem
+			for (entity in entities) { // For every item in AABB
+				val stack = entity.entityItem
+				
+				if (stack.tagCompound?.hasNoTags() == true) stack.tagCompound = null
+				
 				if (DEBUG) println("Entity stack: $stack")
 				if (DEBUG) println("Scanning recipe for stack...")
 				for (i in 0 until recipe.inputs.size) {
@@ -210,6 +213,8 @@ class TileManaInfuser: TileMod(), ISparkAttachable {
 							cing.meta = stack.meta
 						
 						flag = ASJUtilities.isItemStackEqualCrafting(cing, stack)
+						
+						flag = flag && cing.stackSize == stack.stackSize
 					} else if (ing is String) {
 						val ores = OreDictionary.getOres(ing)
 						for (ore in ores) {

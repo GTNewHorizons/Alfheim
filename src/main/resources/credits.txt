@@ -13,6 +13,7 @@ riskyken                -    feather particle
 Austen (Xinzhou) Hong   -    chinese translation
 vidar90                 -    black dots shader on gravity spell
 Azanor                  -    textures of anomalies
+oneandonlyflexo         -    clicker rod and avatar textures
 
 Thanks:
 GedeonGrays             -    for testing and material support

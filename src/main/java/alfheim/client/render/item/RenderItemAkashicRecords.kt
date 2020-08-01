@@ -122,7 +122,7 @@ object RenderItemAkashicRecords: IItemRenderer {
 					val v = Vector3(i, j, k).extend((frame - 50).coerceIn(0f, 10f) * 33).rotate(f, Vector3(1).rotate(f, Vector3.oY))
 					
 					if (ConfigHandler.useShaders) ASJShaderHelper.useShader(LibShaderIDs.idColor3d) {
-						GL20.glUniform3f(GL20.glGetUniformLocation(it, "translation"), v.x.F, v.y.F + 50, v.z.F) // FIXME use translation variable
+						GL20.glUniform3f(GL20.glGetUniformLocation(it, "translation"), v.x.F, v.y.F + 50, v.z.F)
 					}
 					
 					glPushMatrix()

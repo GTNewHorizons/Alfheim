@@ -1,7 +1,6 @@
 package alexsocol.asjlib.render
 
-import alexsocol.asjlib.D
-import net.minecraft.client.Minecraft
+import alexsocol.asjlib.*
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.Entity
 import net.minecraft.util.*
@@ -90,7 +89,7 @@ object ASJRenderHelper {
 	 * Interpolates values, e.g. for smoother render
 	 */
 	@JvmStatic
-	fun interpolate(last: Double, now: Double) = last + (now - last) * Minecraft.getMinecraft().timer.renderPartialTicks
+	fun interpolate(last: Double, now: Double) = last + (now - last) * mc.timer.renderPartialTicks
 	
 	/**
 	 * Translates matrix to follow player (if something is bound to world's zero coords)
@@ -113,6 +112,7 @@ object ASJRenderHelper {
 	 * Use this before your render something in ISimpleBlockRenderingHandler
 	 */
 	@JvmStatic
+	@Deprecated("Do not use it")
 	fun preRenderISBRH(x: Int, z: Int) {
 		val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 		val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
@@ -128,11 +128,25 @@ object ASJRenderHelper {
 	 * Use this after your render something in ISimpleBlockRenderingHandler
 	 */
 	@JvmStatic
+	@Deprecated("Do not use it")
 	fun postRenderISBRH(x: Int, z: Int) {
 		val X = (x / 16 - if (x < 0 && x % 16 != 0) 1 else 0) * -16
 		val Z = (z / 16 - if (z < 0 && z % 16 != 0) 1 else 0) * -16
 		glPopMatrix()
 		Tessellator.instance.startDrawingQuads()
 		Tessellator.instance.setTranslation(X.D, 0.0, Z.D)
+	}
+	
+	@JvmStatic
+	fun drawTexturedModalRect(x: Int, y: Int, z: Int, u: Int, v: Int, w: Int, h: Int) {
+		val f = 0.00390625
+		val f1 = 0.00390625
+		val tessellator = Tessellator.instance
+		tessellator.startDrawingQuads()
+		tessellator.addVertexWithUV(x.D, y.D + h, z.D, u * f, (v + h) * f1)
+		tessellator.addVertexWithUV(x.D + w, y.D + h, z.D, (u + w) * f, (v + h) * f1)
+		tessellator.addVertexWithUV(x.D + w, y.D, z.D, (u + w) * f, v * f1)
+		tessellator.addVertexWithUV(x.D, y.D, z.D, u * f, v * f1)
+		tessellator.draw()
 	}
 }

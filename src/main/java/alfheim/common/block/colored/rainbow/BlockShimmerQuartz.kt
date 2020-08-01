@@ -1,5 +1,6 @@
 package alfheim.common.block.colored.rainbow
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.core.util.AlfheimTab
@@ -25,7 +26,7 @@ class BlockShimmerQuartz: BlockSpecialQuartz("Shimmer") {
 	
 	init {
 		setCreativeTab(AlfheimTab)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

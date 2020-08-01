@@ -23,7 +23,6 @@ import net.minecraftforge.oredict.OreDictionary
 import vazkii.botania.common.Botania
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.item.ModItems
-import vazkii.botania.common.item.equipment.bauble.ItemBalanceCloak
 import vazkii.botania.common.item.record.ItemModRecord
 import vazkii.botania.common.item.relic.ItemDice
 
@@ -32,6 +31,7 @@ object AlfheimItems {
 	val `DEV-NULL`: Item?
 	
 	val akashicRecords: Item
+	val aesirCloak: Item
 	val aesirEmblem: Item
 	val astrolabe: Item
 	val attributionBauble: Item
@@ -53,13 +53,14 @@ object AlfheimItems {
 	val elementiumHoe: Item
 	val elfFirePendant: Item
 	val elfIcePendant: Item
+	val elvenFood: Item
 	val elvenResource: Item
 	val elvoriumBoots: Item
 	val elvoriumChestplate: Item
 	val elvoriumHelmet: Item
 	val elvoriumHelmetRevealing: Item?
 	val elvoriumLeggings: Item
-	val emblem: Item
+	val enlighter: Item
 	val excaliber: Item
 	val fireGrenade: Item
 	val flugelDisc: Item
@@ -67,6 +68,7 @@ object AlfheimItems {
 	val flugelHead: Item
 	val flugelHead2: Item
 	val flugelSoul: Item
+	val gungnir: Item
 	val hyperBucket: Item
 	val invisibilityCloak: Item
 	val invisibleFlameLens: Item
@@ -80,20 +82,31 @@ object AlfheimItems {
 	val manaStone: Item
 	val manaStoneGreater: Item
 	val mask: Item
-	//val mjolnir: Item
+	val mjolnir: Item
 	val moonlightBow: Item
 	val multibauble: Item
 	val paperBreak: Item
 	val peacePipe: Item
+	val pendantSuperIce: Item
 	val pixieAttractor: Item
+	val priestCloak: Item
+	val priestEmblem: Item
+	val priestRingHeimdall: Item
+	val priestRingNjord: Item
+	val priestRingSif: Item
+	val rationBelt: Item
 	val realitySword: Item
+	val ringFeedFlower: Item
+	val ringSpider: Item
 	val rodColorfulSkyDirt: Item
+	val rodClicker: Item
 	val rodFire: Item
 	val rodFlameStar: Item
 	val rodGrass: Item
 	val rodIce: Item
 	val rodInterdiction: Item
 	val rodLightning: Item
+	val rodPortal: Item
 	val rodPrismatic: Item
 	val soulHorn: Item
 	val spatiotemporalRing: Item
@@ -113,6 +126,7 @@ object AlfheimItems {
 
 	init {
 		akashicRecords = ItemAkashicRecords().WIP()
+		aesirCloak = ItemAesirCloak()
 		aesirEmblem = ItemAesirEmblem()
 		astrolabe = ItemAstrolabe()
 		attributionBauble = ItemAttributionBauble()
@@ -135,19 +149,21 @@ object AlfheimItems {
 		elementiumHoe = ItemElementiumHoe()
 		elfFirePendant = ItemPendant("FirePendant")
 		elfIcePendant = ItemPendant("IcePendant")
+		elvenFood = ItemElvenFood()
 		elvenResource = ItemElvenResource()
 		elvoriumHelmet = ItemElvoriumHelmet()
 		elvoriumHelmetRevealing = if (Botania.thaumcraftLoaded) ItemElvoriumHelmetRevealing() else null
 		elvoriumChestplate = ItemElvoriumArmor(1, "ElvoriumChestplate")
 		elvoriumLeggings = ItemElvoriumArmor(2, "ElvoriumLeggings")
 		elvoriumBoots = ItemElvoriumArmor(3, "ElvoriumBoots")
-		emblem = ItemPriestEmblem()
+		enlighter = ItemEnlighter()
 		excaliber = ItemExcaliber()
 		flugelDisc = ItemModRecord("flugel", "FlugelDisc").setCreativeTab(AlfheimTab)
 		flugelDisc2 = ItemModRecord("miku", "MikuDisc").setCreativeTab(null)
 		flugelHead = ItemHeadFlugel()
 		flugelHead2 = ItemHeadMiku()
 		flugelSoul = ItemFlugelSoul()
+		gungnir = ItemGungnir()
 		hyperBucket = ItemHyperBucket()
 		invisibilityCloak = ItemInvisibilityCloak()
 		invisibleFlameLens = ItemLensFlashInvisible()
@@ -161,19 +177,30 @@ object AlfheimItems {
 		manaStone = ItemManaStorage("ManaStone", 3.0)
 		manaStoneGreater = ItemManaStorage("ManaStoneGreater", 8.0)
 		mask = ItemTankMask()
-		//mjolnir = ItemMjolnir()
+		mjolnir = ItemMjolnir()
 		moonlightBow = ItemMoonlightBow()
 		multibauble = ItemMultibauble()
 		paperBreak = ItemPaperBreak()
 		peacePipe = ItemPeacePipe()
+		pendantSuperIce = ItemSuperIcePendant()
 		pixieAttractor = ItemPendant("PixieAttractor")
+		priestCloak = ItemPriestCloak()
+		priestEmblem = ItemPriestEmblem()
+		priestRingHeimdall = ItemHeimdallRing()
+		priestRingNjord = ItemNjordRing()
+		priestRingSif = ItemSifRing()
+		rationBelt = ItemRationBelt()
 		realitySword = ItemRealitySword()
+		ringFeedFlower = ItemFeedFlowerRing()
+		ringSpider = ItemSpiderRing()
 		rodColorfulSkyDirt = ItemRodIridescent()
+		rodClicker = ItemRodClicker()
 		rodFire = ItemRodElemental("MuspelheimRod") { AlfheimBlocks.redFlame }
 		rodFlameStar = ItemRodFlameStar()
 		rodIce = ItemRodElemental("NiflheimRod") { AlfheimBlocks.poisonIce }
 		rodInterdiction = ItemRodInterdiction()
 		rodLightning = ItemRodLightning()
+		rodPortal = ItemRodPortal()
 		rodPrismatic = ItemRodPrismatic()
 		rodGrass = ItemRodGrass()
 		soulHorn = ItemSoulHorn()
@@ -195,11 +222,17 @@ object AlfheimItems {
 		
 		
 		
+		// that's ok because there is check on first 6 array elements in the dice
 		ItemDice.relicStacks += arrayOf(ItemStack(flugelSoul),
 										ItemStack(mask),
 										ItemStack(excaliber),
 										ItemStack(subspaceSpear),
 										ItemStack(moonlightBow),
+										ItemStack(mjolnir),
+										ItemStack(gungnir),
+										ItemStack(priestRingHeimdall),
+										ItemStack(priestRingNjord),
+										ItemStack(priestRingSif),
 										ItemStack(akashicRecords))
 	}
 	

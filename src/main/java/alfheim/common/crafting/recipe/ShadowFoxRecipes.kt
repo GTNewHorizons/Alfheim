@@ -5,10 +5,12 @@ import alfheim.api.crafting.recipe.RecipeTreeCrafting
 import alfheim.api.lib.LibOreDict.ALT_TYPES
 import alfheim.api.lib.LibOreDict.COAL_NETHERWOOD
 import alfheim.api.lib.LibOreDict.DYES
+import alfheim.api.lib.LibOreDict.ELVORIUM_NUGGET
 import alfheim.api.lib.LibOreDict.FLORAL_POWDER
 import alfheim.api.lib.LibOreDict.HOLY_PENDANT
 import alfheim.api.lib.LibOreDict.IRIS_DIRT
 import alfheim.api.lib.LibOreDict.LEAVES
+import alfheim.api.lib.LibOreDict.MAUFTRIUM_NUGGET
 import alfheim.api.lib.LibOreDict.MUSHROOM
 import alfheim.api.lib.LibOreDict.PETAL
 import alfheim.api.lib.LibOreDict.RAINBOW_DOUBLE_FLOWER
@@ -84,14 +86,15 @@ import alfheim.common.block.AlfheimBlocks.shimmerQuartzSlab
 import alfheim.common.block.AlfheimBlocks.shimmerQuartzStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.integration.thaumcraft.ThaumcraftSuffusionRecipes
+import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.attributionBauble
 import alfheim.common.item.AlfheimItems.coatOfArms
 import alfheim.common.item.AlfheimItems.colorOverride
 import alfheim.common.item.AlfheimItems.elvenResource
-import alfheim.common.item.AlfheimItems.emblem
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.invisibleFlameLens
 import alfheim.common.item.AlfheimItems.irisSeeds
+import alfheim.common.item.AlfheimItems.priestEmblem
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFlameStar
 import alfheim.common.item.AlfheimItems.rodInterdiction
@@ -172,6 +175,7 @@ object ShadowFoxRecipes {
 	val recipesAltPlanks: List<IRecipe>
 	val recipesAltSlabs: List<IRecipe>
 	val recipesAltStairs: List<IRecipe>
+	
 	//val recipesToolbelt: IRecipe
 	val recipesLamp: IRecipe
 	val recipesSealingPlanks: IRecipe
@@ -180,6 +184,9 @@ object ShadowFoxRecipes {
 	val recipesAmplifier: IRecipe
 	val recipesStar: List<IRecipe>
 	val recipesStar2: List<IRecipe>
+	
+	val recipesPriestOfHeimdall: IRecipe
+	val recipesPriestOfOdin: IRecipe
 	
 	val recipeShimmerQuartz: IRecipe
 	
@@ -266,14 +273,14 @@ object ShadowFoxRecipes {
 							 'Q', ItemStack(irisPlanks, 1, i))
 		
 		addOreDictRecipe(ItemStack(rainbowStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(rainbowPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(rainbowPlanks))
 		
 		recipesStairs = BotaniaAPI.getLatestAddedRecipes(17)
 		
 		addOreDictRecipe(ItemStack(auroraStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(auroraPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(auroraPlanks))
 		
 		recipeAuroraStairs = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -342,7 +349,7 @@ object ShadowFoxRecipes {
 		
 		recipesFlameRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 0),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 0),
 						 "EGE",
 						 "TAT",
 						 " W ",
@@ -354,7 +361,7 @@ object ShadowFoxRecipes {
 		
 		recipesPriestOfThor = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 1),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 1),
 						 "DGD",
 						 "NAN",
 						 " P ",
@@ -366,7 +373,7 @@ object ShadowFoxRecipes {
 		
 		recipesPriestOfSif = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 3),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 3),
 						 "WGO",
 						 "NAN",
 						 " P ",
@@ -378,6 +385,15 @@ object ShadowFoxRecipes {
 						 'A', HOLY_PENDANT)
 		
 		recipesPriestOfLoki = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(aesirEmblem),
+						 "TSN", "LHO",
+						 'T', ItemStack(priestEmblem, 1, 0),
+						 'S', ItemStack(priestEmblem, 1, 1),
+						 'N', ItemStack(priestEmblem, 1, 2), // TODO remove - not AEsir
+						 'L', ItemStack(priestEmblem, 1, 3),
+						 'H', ItemStack(priestEmblem, 1, 4),
+						 'O', ItemStack(priestEmblem, 1, 5))
 		
 		for (i in 0..15)
 			addOreDictRecipe(ItemStack(coatOfArms, 1, i),
@@ -423,7 +439,7 @@ object ShadowFoxRecipes {
 		
 		recipesInterdictionRod = BotaniaAPI.getLatestAddedRecipe()
 		
-		addOreDictRecipe(ItemStack(emblem, 1, 2),
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 2),
 						 "RGR",
 						 "NAN",
 						 " P ",
@@ -434,6 +450,30 @@ object ShadowFoxRecipes {
 						 'A', HOLY_PENDANT)
 		
 		recipesPriestOfNjord = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 4),
+						 "BGB",
+						 "NAN",
+						 " P ",
+						 'B', BotaniaBlocks.bifrostPerm,
+						 'G', LIFE_ESSENCE,
+						 'N', ELVORIUM_NUGGET,
+						 'P', RUNE[14], // Envy
+						 'A', HOLY_PENDANT)
+		
+		recipesPriestOfHeimdall = BotaniaAPI.getLatestAddedRecipe()
+		
+		addOreDictRecipe(ItemStack(priestEmblem, 1, 5),
+						 "RGR",
+						 "NAN",
+						 " P ",
+						 'R', ItemStack(elvenResource, 1, ElvenResourcesMetas.DasRheingold),
+						 'G', LIFE_ESSENCE,
+						 'N', MAUFTRIUM_NUGGET,
+						 'P', RUNE[9], // Lust
+						 'A', HOLY_PENDANT)
+		
+		recipesPriestOfOdin = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(attributionBauble),
 						 "S S",
@@ -475,7 +515,7 @@ object ShadowFoxRecipes {
 		for (i in 0..15)
 			recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(irisSeeds, 1, i), ItemStack(irisGrass, 1, i), 2500))
 		for (i in 0..1)
-		recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(irisSeeds, 1, 16+i), ItemStack(rainbowGrass, 1, i), 2500))
+			recipesPastoralSeeds.add(BotaniaAPI.registerManaInfusionRecipe(ItemStack(irisSeeds, 1, 16 + i), ItemStack(rainbowGrass, 1, i), 2500))
 		
 		recipePlainDirt = BotaniaAPI.registerPureDaisyRecipe(IRIS_DIRT, Blocks.dirt, 0)
 		
@@ -533,8 +573,8 @@ object ShadowFoxRecipes {
 		recipesThunderousSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(lightningStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(lightningPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(lightningPlanks))
 		
 		recipesThunderousStairs = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -573,8 +613,8 @@ object ShadowFoxRecipes {
 		recipesInfernalSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(netherStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(netherPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(netherPlanks))
 		
 		recipesInfernalStairs = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -598,8 +638,8 @@ object ShadowFoxRecipes {
 		recipesCalicoSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(calicoStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(calicoPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(calicoPlanks))
 		
 		recipesCalicoStairs = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -623,8 +663,8 @@ object ShadowFoxRecipes {
 		recipesCircuitSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(circuitStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(circuitPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(circuitPlanks))
 		
 		recipesCircuitStairs = BotaniaAPI.getLatestAddedRecipe()
 		
@@ -660,8 +700,8 @@ object ShadowFoxRecipes {
 		
 		for (i in 0 until ALT_TYPES.size - 1)
 			addOreDictRecipe(ItemStack(altStairs[i], 4), true,
-								   "Q  ", "QQ ", "QQQ",
-								   'Q', ItemStack(altPlanks, 1, i))
+							 "Q  ", "QQ ", "QQQ",
+							 'Q', ItemStack(altPlanks, 1, i))
 		
 		recipesAltStairs = BotaniaAPI.getLatestAddedRecipes(6)
 		
@@ -709,8 +749,8 @@ object ShadowFoxRecipes {
 		recipesSealingSlabs = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(sealingStairs, 4), true,
-							   "Q  ", "QQ ", "QQQ",
-							   'Q', ItemStack(sealingPlanks))
+						 "Q  ", "QQ ", "QQQ",
+						 'Q', ItemStack(sealingPlanks))
 		
 		recipesSealingStairs = BotaniaAPI.getLatestAddedRecipe()
 		

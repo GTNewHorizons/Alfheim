@@ -1,6 +1,6 @@
 package alfheim.common.potion
 
-import alexsocol.asjlib.meta
+import alexsocol.asjlib.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.item.AlfheimItems
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -39,7 +39,7 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "mana
 					val inv = if (useBaubles) baublesInv else mainInv
 					
 					val slot = i - (if (useBaubles) invSize else 0)
-					val stackInSlot = (inv as IInventory).getStackInSlot(slot)
+					val stackInSlot = (inv as IInventory)[slot]
 					if (stackInSlot != null && stackInSlot.item is IManaItem) {
 						val manaItemSlot = stackInSlot.item as IManaItem
 						
@@ -72,11 +72,11 @@ class PotionManaVoid: PotionAlfheim(AlfheimConfigHandler.potionIDManaVoid, "mana
 				}
 				
 				for (slot in 0 until invSize) {
-					val stackInSlot = mainInv.getStackInSlot(slot)
+					val stackInSlot = mainInv[slot]
 					if (stackInSlot != null && stackInSlot.item == ModItems.blackLotus) {
 						val wiltStack = ItemStack(AlfheimItems.wiltedLotus, stackInSlot.stackSize, stackInSlot.meta)
 						wiltStack.stackTagCompound = stackInSlot.tagCompound
-						mainInv.setInventorySlotContents(slot, wiltStack)
+						mainInv[slot] = wiltStack
 					}
 				}
 			}

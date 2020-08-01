@@ -1,6 +1,7 @@
 package alfheim.common.block.tile.sub.flower
 
 import alfheim.api.ModInfo
+import alfheim.common.core.helper.IconHelper
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -8,13 +9,14 @@ import net.minecraft.util.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.subtile.*
 import vazkii.botania.api.subtile.signature.*
+import vazkii.botania.common.block.tile.TileSpecialFlower
 
 class ShadowFoxSignature(val name: String): SubTileSignature() {
 	
 	var icon: IIcon? = null
 	
 	override fun registerIcons(reg: IIconRegister) {
-		icon = reg.registerIcon("${ModInfo.MODID}:$name")
+		icon = IconHelper.forName(reg, "flower_$name")
 	}
 	
 	override fun getIconForStack(item: ItemStack?): IIcon? = icon
@@ -34,3 +36,6 @@ class ShadowFoxSignature(val name: String): SubTileSignature() {
 		return if (SubTileFunctional::class.java.isAssignableFrom(clazz)) "botania.flowerType.functional" else "botania.flowerType.misc"
 	}
 }
+
+val SubTileEntity.isOnSpecialSoil
+get() = (supertile as? TileSpecialFlower)?.isOnSpecialSoil == true

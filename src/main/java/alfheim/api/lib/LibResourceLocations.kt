@@ -6,6 +6,7 @@ import java.util.*
 
 object LibResourceLocations {
 	
+	val aggro = ResourceLocation(ModInfo.MODID, "textures/misc/redframe.png")
 	val akashicBox = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicBox.png")
 	val akashicCube = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube.png")
 	val akashicCube_ = ResourceLocation(ModInfo.MODID, "textures/model/item/AkashicRecordsCube_noShader.png")
@@ -15,9 +16,17 @@ object LibResourceLocations {
 	val antiPylon = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylon.png")
 	val antiPylonOld = ResourceLocation(ModInfo.MODID, "textures/model/block/AntiPylonOld.png")
 	val anyavil = ResourceLocation(ModInfo.MODID, "textures/model/block/Anyavil.png")
+	val avatarClicker = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarClicker.png")
+	val avatarColorDirt = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarDirtRainbow.png")
+	val avatarInterdiction = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarInterdiction.png")
+	val avatarLightning = ResourceLocation(ModInfo.MODID, "textures/model/avatar/avatarLightning.png")
 	var babylon = ResourceLocation("botania:textures/misc/babylon.png")
-	val balanceCloak = ResourceLocation(ModInfo.MODID, "textures/model/armor/BalanceCloak.png")
-	val butterfly = ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png")
+	var barrel = ResourceLocation(ModInfo.MODID, "textures/model/block/Barrel.png")
+	val butterfly = ResourceLocation(ModInfo.MODID, "textures/model/entity/Butterfly.png")
+	val butterflyFlat = ResourceLocation(ModInfo.MODID, "textures/misc/Butterfly.png")
+	val cloakAesir = ResourceLocation(ModInfo.MODID, "textures/model/armor/cloak/Aesir.png")
+	val cloakAesirGlow = ResourceLocation(ModInfo.MODID, "textures/model/armor/cloak/Aesir_glow.png")
+	val cloakBalance = ResourceLocation(ModInfo.MODID, "textures/model/armor/cloak/Balance.png")
 	val cross = ResourceLocation(ModInfo.MODID, "textures/misc/crosshair.png")
 	val deathTimer = ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimer.png")
 	val deathTimerBG = ResourceLocation(ModInfo.MODID, "textures/gui/DeathTimerBack.png")
@@ -59,16 +68,19 @@ object LibResourceLocations {
 	val poolBlue = ResourceLocation(ModInfo.MODID, "textures/blocks/PoolBlue.png")
 	val poolPink = ResourceLocation(ModInfo.MODID, "textures/blocks/PoolPink.png")
 	val potions = ResourceLocation(ModInfo.MODID, "textures/gui/Potions.png")
+	val rationBelt = ResourceLocation(ModInfo.MODID, "textures/model/armor/rationBelt.png")
 	val rook = ResourceLocation(ModInfo.MODID, "textures/model/entity/Rook.png")
 	val roricorn = ResourceLocation(ModInfo.MODID, "textures/model/entity/Roricorn.png")
-	val shavermik = ResourceLocation(ModInfo.MODID, "textures/model/entity/shavermik.png")
 	val skin = ResourceLocation(ModInfo.MODID, "textures/model/entity/AlexSocol.png")
+	val sleipnir = ResourceLocation(ModInfo.MODID, "textures/model/entity/Sleipnir.png")
 	val spellFrame = ResourceLocation(ModInfo.MODID, "textures/gui/spellframe.png")
 	val spellFrameEpic = ResourceLocation(ModInfo.MODID, "textures/gui/spellframeepic.png")
 	val spellRace = ResourceLocation(ModInfo.MODID, "textures/gui/SpellRace.png")
 	var spreader = ResourceLocation("botania:textures/model/spreader.png")
+	val spearSubspace = ResourceLocation(ModInfo.MODID, "textures/model/entity/subspace/spearsubspace.png")
 	val target = ResourceLocation(ModInfo.MODID, "textures/misc/target.png")
 	val targetq = ResourceLocation(ModInfo.MODID, "textures/misc/targetq.png")
+	val tradePortalOverlay = ResourceLocation(ModInfo.MODID, "textures/gui/TradePortalOverlay.png")
 	val uberSpreader = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreader.png")
 	val uberSpreaderFrame = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderFrame.png")
 	val uberSpreaderGolden = ResourceLocation(ModInfo.MODID, "textures/model/block/uberSpreaderGolden.png")
@@ -81,6 +93,9 @@ object LibResourceLocations {
 	val obelisk = Array(5) {
 		ResourceLocation(ModInfo.MODID, "textures/model/block/Obelisc$it.png")
 	}
+	
+	var godCloak = emptyArray<ResourceLocation>()
+	var godCloakGlow = emptyArray<ResourceLocation>()
 	
 	val wings = arrayOf(
 		null,

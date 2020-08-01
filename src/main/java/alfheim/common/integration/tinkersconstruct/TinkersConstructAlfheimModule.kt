@@ -119,7 +119,7 @@ object TinkersConstructAlfheimModule {
 		ModifyBuilder.registerModifier(ModManaRepair)
 		TConstructRegistry.registerActiveToolMod(AModNatural)
 		
-		if (!ASJUtilities.isServer)
+		if (ASJUtilities.isClient)
 			TConstructRegistry.getToolMapping().forEach {
 				if (it is IAmmo) return@forEach
 				

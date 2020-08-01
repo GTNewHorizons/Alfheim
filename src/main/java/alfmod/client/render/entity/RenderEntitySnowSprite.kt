@@ -2,7 +2,7 @@ package alfmod.client.render.entity
 
 import alexsocol.asjlib.glScaled
 import alfmod.AlfheimModularCore
-import alfmod.client.render.model.ModelSnowSprite
+import alfmod.client.model.entity.ModelSnowSprite
 import alfmod.common.entity.EntitySnowSprite
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.entity.RenderLiving

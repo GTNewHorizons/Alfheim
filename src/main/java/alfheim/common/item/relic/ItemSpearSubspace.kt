@@ -4,7 +4,7 @@ import alexsocol.asjlib.D
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
-import alfheim.common.entity.*
+import alfheim.common.entity.EntitySubspace
 import com.google.common.collect.Multimap
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.entity.*
@@ -46,7 +46,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 			updateRelic(stack, entity)
 			if (!isRightPlayer(entity, stack)) return
 			
-			if (icd(stack)) {
+			if (isCooledDown(stack)) {
 				if (entity.swingProgressInt == 1) {
 					if (entity.heldItem?.item === this && ManaItemHandler.requestManaExact(stack, entity, 500, true)) {
 						val sub = EntitySubspace(world, entity)
@@ -63,9 +63,9 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 							world.spawnEntityInWorld(sub)
 					}
 					
-					scd(stack, 25)
+					setCooldown(stack, 25)
 				}
-			} else scd(stack, gcd(stack) - 1)
+			} else setCooldown(stack, getCooldown(stack) - 1)
 		}
 	}
 	
@@ -79,7 +79,7 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.bow
 	
 	override fun onPlayerStoppedUsing(stack: ItemStack, world: World, player: EntityPlayer, itemInUse: Int) {
-		if (isRightPlayer(player, stack) && icd(stack)) {
+		if (isRightPlayer(player, stack) && isCooledDown(stack)) {
 			if (!ManaItemHandler.requestManaExactForTool(stack, player, 1000, true)) return
 			
 			player.isSprinting = true
@@ -120,15 +120,15 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 				}
 			player.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDEternity, 120, 0))
 			
-			scd(stack, 200)
+			setCooldown(stack, 200)
 		}
 		
 		super.onPlayerStoppedUsing(stack, world, player, itemInUse)
 	}
 	
-	fun gcd(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0)
-	fun icd(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) == 0
-	fun scd(stack: ItemStack, cd: Int) = ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd)
+	fun getCooldown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0)
+	fun isCooledDown(stack: ItemStack) = ItemNBTHelper.getInt(stack, TAG_COOLDOWN, 0) == 0
+	fun setCooldown(stack: ItemStack, cd: Int) = ItemNBTHelper.setInt(stack, TAG_COOLDOWN, cd)
 	
 	override fun usesMana(arg0: ItemStack) = true
 	
@@ -160,14 +160,16 @@ class ItemSpearSubspace: ItemRelic("SpearSubspace"), IManaUsingItem, ILensEffect
 			
 			if (living is EntityPlayer && (flag1 || flag2)) continue
 			
-			EntitySubspaceSpear.dealTrueDamage(living, living, 6f)
+			living.attackEntityFrom(DamageSource.causeIndirectMagicDamage(burst, burst.thrower), 6f)
 		}
 	}
 	
 	val TAG_ATTACKER_USERNAME = "attackerUsername"
 	val TAG_COOLDOWN = "cooldown"
 	
-	fun getBurst(player: EntityPlayer, stack: ItemStack): EntityManaBurst {
+	fun getBurst(player: EntityPlayer, stack: ItemStack): EntityManaBurst? {
+		if (!ManaItemHandler.requestManaExact(stack, player, MANA_PER_DAMAGE, true)) return null
+		
 		val burst = EntityManaBurst(player)
 		
 		val motionModifier = 9f

@@ -9,7 +9,7 @@ import kotlin.math.*
 
 object AlfheimConfigHandler: ASJConfigHandler() {
 	
-	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "preload"
+	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
 	const val CATEGORY_INT_OF		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "optifine"
@@ -60,6 +60,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var destroyPortal			= true
 	var dimensionIDAlfheim		= -105
 	var enableAlfheimRespawn	= true
+	var rainbowPolys			= 360
 	
 	// WORLDGEN
 	var anomaliesDispersion		= 50
@@ -70,6 +71,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	
 	// ENTITIES
 	var globalEntityIDs			= true
+	var butterflySpawn			= intArrayOf(10, 1, 2)
 	var chickSpawn				= intArrayOf(10, 4, 4)
 	var cowSpawn				= intArrayOf( 8, 4, 4)
 	var elvesSpawn				= intArrayOf(10, 2, 4)
@@ -144,6 +146,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var potionIDGoldRush		= potionID___COUNTER++
 	var potionIDIceLens			= potionID___COUNTER++
 	var potionIDLeftFlame		= potionID___COUNTER++
+	var potionIDLightningShield	= potionID___COUNTER++
 	var potionIDManaVoid		= potionID___COUNTER++
 	var potionIDNineLifes		= potionID___COUNTER++
 	var potionIDNinja			= potionID___COUNTER++
@@ -173,6 +176,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var frienldyFire			= false
 	var raceManaMult			= 2.toByte()
 	var maxPartyMembers			= 5
+	var superSpellBosses		= false
 	
 	// MMO HUD
 	var partyHUDScale			= 1.0
@@ -213,6 +217,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		destroyPortal = loadProp(CATEGORY_DIMENSION, "destroyPortal", destroyPortal, false, "Set this to false to disable destroying portals in non-zero coords in Alfheim")
 		dimensionIDAlfheim = loadProp(CATEGORY_DIMENSION, "dimensionIDAlfheim", dimensionIDAlfheim, true, "Dimension ID for Alfheim")
 		enableAlfheimRespawn = loadProp(CATEGORY_DIMENSION, "enableAlfheimRespawn", enableAlfheimRespawn, false, "Set this to false to disable respawning in Alfheim")
+		rainbowPolys = loadProp(CATEGORY_DIMENSION, "rainbowPolys", rainbowPolys, false, "How smooth will rainbow and rays in Alfheim sky be (higher number - more polygons)")
 		
 		anomaliesDispersion = loadProp(CATEGORY_WORLDGEN, "anomaliesDispersion", anomaliesDispersion, false, "How rare anomalies are (lower numbers means higher chance)")
 		anomaliesUpdate = loadProp(CATEGORY_WORLDGEN, "anomaliesUpdate", anomaliesUpdate, false, "How many times anomaly will simulate tick while being generated")
@@ -221,6 +226,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		winterGrassReadyGen = loadProp(CATEGORY_WORLDGEN, "winterGrassReadyGen", winterGrassReadyGen, false, "Set this to false to prevent ready generation snow grass instead of regular")
 		
 		globalEntityIDs = loadProp(CATEGORY_ENTITIES, "globalEntityIDs", globalEntityIDs, true, "Set this to false to use local mod entity IDs")
+		butterflySpawn = loadProp(CATEGORY_ENTITIES, "butterflySpawn", butterflySpawn, false, "Butterfly spawn weight (chance), min and max group count")
 		cowSpawn = loadProp(CATEGORY_ENTITIES, "cowSpawn", cowSpawn, false, "Cows spawn weight (chance), min and max group count")
 		chickSpawn = loadProp(CATEGORY_ENTITIES, "chickSpawn", chickSpawn, false, "Chicken spawn weight (chance), min and max group count")
 		elvesSpawn = loadProp(CATEGORY_ENTITIES, "elvesSpawn", elvesSpawn, false, "Elves spawn weight (chance), min and max group count")
@@ -287,6 +293,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		potionIDGoldRush = loadProp(CATEGORY_MMOP, "potionIDGoldRush", potionIDGoldRush, true, "Potion id for Gold Rush")
 		potionIDIceLens = loadProp(CATEGORY_MMOP, "potionIDIceLens", potionIDIceLens, true, "Potion id for Ice Lense")
 		potionIDLeftFlame = loadProp(CATEGORY_MMOP, "potionIDLeftFlame", potionIDLeftFlame, true, "Potion id for Leftover Flame")
+		potionIDLightningShield = loadProp(CATEGORY_POTIONS, "potionIDLightningShield", potionIDLightningShield, true, "Potion id for Lightning Shield")
 		potionIDManaVoid = loadProp(CATEGORY_POTIONS, "potionIDManaVoid", potionIDManaVoid, true, "Potion id for Mana Void")
 		potionIDNineLifes = loadProp(CATEGORY_MMOP, "potionIDNineLifes", potionIDNineLifes, true, "Potion id for Nine Lifes")
 		potionIDNinja = loadProp(CATEGORY_POTIONS, "potionIDNinja", potionIDNinja, true, "Potion id for Ninja")
@@ -313,6 +320,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		frienldyFire = loadProp(CATEGORY_MMO, "frienldyFire", frienldyFire, false, "Set this to true to enable damage to party members")
 		raceManaMult = loadProp(CATEGORY_MMO, "raceManaMult", raceManaMult.I, false, "Mana cost multiplier for spells with not your affinity").toByte()
 		maxPartyMembers = loadProp(CATEGORY_MMO, "maxPartyMembers", maxPartyMembers, false, "How many people can be in single party at the same time")
+		superSpellBosses = loadProp(CATEGORY_MMO, "superSpellBoss", superSpellBosses, false, "Set this to true to make bosses vulnerable to legendary spells")
 		
 		partyHUDScale = loadProp(CATEGORY_HUD, "partyHUDScale", partyHUDScale, false, "Party HUD Scale (1 < bigger; 1 > smaller)")
 		selfHealthUI = loadProp(CATEGORY_HUD, "selfHealthUI", selfHealthUI, false, "Set this to false to hide player's healthbar")

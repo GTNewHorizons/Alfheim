@@ -21,7 +21,6 @@ import alfheim.common.network.Message2d.m2d
 import alfheim.common.spell.darkness.SpellDecay
 import cpw.mods.fml.common.*
 import cpw.mods.fml.common.eventhandler.*
-import cpw.mods.fml.common.gameevent.PlayerEvent
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent
 import cpw.mods.fml.common.gameevent.TickEvent.*
 import net.minecraft.enchantment.*
@@ -269,10 +268,10 @@ object EventHandler {
 		}
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST) // if something can cancel death
 	fun onEntityDeath(e: LivingDeathEvent) {
 		if (AlfheimConfigHandler.enableMMO) {
-			if (e.entityLiving is EntityPlayer && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
+			if (e.entityLiving is EntityPlayer && e.source.damageType != "Respawn" && !MinecraftServer.getServer().isSinglePlayer && AlfheimConfigHandler.deathScreenAddTime > 0 && !ItemTankMask.canBeSaved(e.entityLiving as EntityPlayer)) {
 				
 				if (!e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 					e.entityLiving.clearActivePotions()
@@ -328,7 +327,7 @@ object EventHandler {
 			if (e.entityLiving.isPotionActive(AlfheimConfigHandler.potionIDLeftFlame)) {
 				val pe = e.entityLiving.getActivePotionEffect(AlfheimConfigHandler.potionIDLeftFlame)!!
 				pe.duration--
-				if (!ASJUtilities.isServer) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
+				if (ASJUtilities.isClient) VisualEffectHandlerClient.onDeathTick(e.entityLiving)
 				if (pe.duration <= 0)
 					e.entityLiving.removePotionEffect(pe.potionID)
 				else
@@ -381,15 +380,6 @@ object EventHandler {
 	@SubscribeEvent
 	fun onEntityUpdate(e: EntityUpdateEvent) {
 		if (!e.entity.isEntityAlive) return
-	}
-	
-	@SubscribeEvent
-	fun onPlayerChangeDimension(e: PlayerEvent.PlayerChangedDimensionEvent) {
-		if (AlfheimConfigHandler.enableElvenStory && !e.player.capabilities.isCreativeMode) {
-			e.player.capabilities.allowFlying = false
-			e.player.capabilities.isFlying = false
-			e.player.sendPlayerAbilities()
-		}
 	}
 	
 	@SubscribeEvent

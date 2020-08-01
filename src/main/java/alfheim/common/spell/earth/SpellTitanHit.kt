@@ -4,7 +4,6 @@ import alexsocol.asjlib.*
 import alfheim.api.entity.EnumRace
 import alfheim.api.spell.SpellBase
 import alfheim.common.security.InteractionSecurity
-import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.*
@@ -108,7 +107,7 @@ object SpellTitanHit: SpellBase("titanhit", EnumRace.GNOME, 1, 1, 1) {
 				Botania.proxy.setWispFXDepthTest(true)
 			}
 			
-			if (!world.isRemote && remove && ConfigHandler.blockBreakParticles && ConfigHandler.blockBreakParticlesTool) world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta shl 12))
+			if (!world.isRemote && remove && ConfigHandler.blockBreakParticles && ConfigHandler.blockBreakParticlesTool) world.playAuxSFX(2001, x, y, z, block.id + (meta shl 12))
 		}
 		
 		return mana

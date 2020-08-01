@@ -3,7 +3,7 @@ package alfheim.common.block.tile
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.AlfheimAPI
-import alfheim.common.core.asm.AlfheimHookHandler
+import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.util.DamageSourceSpell
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -57,7 +57,7 @@ class TileAnomalyHarvester: TileMod() {
 		renderBoundBox()
 	}
 	
-	fun getAoE(): AxisAlignedBB = boundingBox(0).expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
+	fun getAoE(): AxisAlignedBB = getBoundingBox(xCoord, yCoord, zCoord).expand(radius.x / 2, radius.y / 2, radius.z / 2).getOffsetBoundingBox(offset.x + 0.5, offset.y + 0.5, offset.z + 0.5)
 	
 	fun renderBoundBox() {
 		val aabb = getAoE()
@@ -168,18 +168,12 @@ class TileAnomalyHarvester: TileMod() {
 
 object AnomalyHarvesterBehaviors {
 	
-	val antigrav = { tile: TileAnomalyHarvester -> doAntigrav(tile) }
-	val gravity = { tile: TileAnomalyHarvester -> doGravity(tile) }
-	val tunnel = { tile: TileAnomalyHarvester -> doTunnel(tile) }
-	val lightning = { tile: TileAnomalyHarvester -> doLightning(tile) }
-	val speedUp = { tile: TileAnomalyHarvester -> doSpeedUp(tile) }
-	
 	init {
-		AlfheimAPI.anomalyBehaviors["Antigrav"] = antigrav
-		AlfheimAPI.anomalyBehaviors["Gravity"] = gravity
-		AlfheimAPI.anomalyBehaviors["Tunnel"] = tunnel
-		AlfheimAPI.anomalyBehaviors["Lightning"] = lightning
-		AlfheimAPI.anomalyBehaviors["SpeedUp"] = speedUp
+		AlfheimAPI.anomalyBehaviors["Antigrav"] = { tile: TileAnomalyHarvester -> doAntigrav(tile) }
+		AlfheimAPI.anomalyBehaviors["Gravity"] = { tile: TileAnomalyHarvester -> doGravity(tile) }
+		AlfheimAPI.anomalyBehaviors["Tunnel"] = { tile: TileAnomalyHarvester -> doTunnel(tile) }
+		AlfheimAPI.anomalyBehaviors["Lightning"] = { tile: TileAnomalyHarvester -> doLightning(tile) }
+		AlfheimAPI.anomalyBehaviors["SpeedUp"] = { tile: TileAnomalyHarvester -> doSpeedUp(tile) }
 	}
 	
 	private fun doAntigrav(tile: TileAnomalyHarvester) {

@@ -1,5 +1,6 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.ASJUtilities
 import alfheim.common.block.base.BlockMod
 import alfheim.common.core.helper.InterpolatedIconHelper
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -28,10 +29,10 @@ class BlockColoredLamp: BlockMod(Material.redstoneLight), ILexiconable {
 	var rainbowIcon: IIcon? = null
 	
 	init {
-        setBlockName("irisLamp")
-        setStepSound(soundTypeGlass)
+		setBlockName("irisLamp")
+		setStepSound(soundTypeGlass)
 		setHardness(0.3f)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 		
 	}

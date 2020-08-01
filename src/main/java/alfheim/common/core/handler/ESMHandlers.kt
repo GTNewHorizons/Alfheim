@@ -57,6 +57,15 @@ object ESMHandler {
 	// EVENTS
 	
 	@SubscribeEvent
+	fun onPlayerChangeDimension(e: PlayerChangedDimensionEvent) {
+		if (AlfheimConfigHandler.enableElvenStory && !e.player.capabilities.isCreativeMode && e.toDim in AlfheimConfigHandler.wingsBlackList) {
+			e.player.capabilities.allowFlying = false
+			e.player.capabilities.isFlying = false
+			e.player.sendPlayerAbilities()
+		}
+	}
+	
+	@SubscribeEvent
 	fun getWaterBowl(event: PlayerInteractEvent) {
 		val player = event.entityPlayer
 		
@@ -82,7 +91,7 @@ object ESMHandler {
 			val bowl = ItemStack(ModItems.waterBowl)
 			
 			if (equipped.stackSize <= 0)
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+				player.inventory.set(player.inventory.currentItem, bowl)
 			else {
 				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)
@@ -109,7 +118,7 @@ object ESMHandler {
 			val bowl = ItemStack(Items.bowl, 4)
 			
 			if (equipped.stackSize <= 0)
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, bowl)
+				player.inventory.set(player.inventory.currentItem, bowl)
 			else {
 				if (!player.inventory.addItemStackToInventory(bowl))
 					player.dropPlayerItemWithRandomChoice(bowl, false)
@@ -123,7 +132,7 @@ object ESMHandler {
 			doRaceAbility(e.player)
 		}
 		
-		if (!ASJUtilities.isServer)
+		if (ASJUtilities.isClient)
 			fixSpriggan()
 	}
 	

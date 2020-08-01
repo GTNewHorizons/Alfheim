@@ -25,7 +25,7 @@ object RenderButterflies {
 		glScaled(s)
 		
 		rand.setSeed(entity.getEntityId().toLong())
-		mc.renderEngine.bindTexture(LibResourceLocations.butterfly)
+		mc.renderEngine.bindTexture(LibResourceLocations.butterflyFlat)
 		
 		while (flies > 0) {
 			glPushMatrix()

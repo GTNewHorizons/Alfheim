@@ -48,7 +48,7 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable, IPickupAchievement {
 		setBlockName("rainbowGrass")
 		setCreativeTab(AlfheimTab)
 		setStepSound(Block.soundTypeGrass)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

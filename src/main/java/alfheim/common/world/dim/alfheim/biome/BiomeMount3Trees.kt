@@ -3,7 +3,7 @@ package alfheim.common.world.dim.alfheim.biome
 import alfheim.AlfheimCore
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.core.handler.AlfheimConfigHandler
-import alfheim.common.world.dim.alfheim.customgens.WorldGenGrass
+import alfheim.common.world.dim.alfheim.customgens.*
 import net.minecraft.init.Blocks
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.common.BiomeDictionary.Type
@@ -38,10 +38,10 @@ object BiomeMount3Trees: BiomeAlfheim() {
 		waterLakes.minY = 124
 		decorateChunkGen_List.add(waterLakes)
 		val b = WE_WorldTreeGen()
-		b.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 2, 1, 1, 4, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 1, 12, 4, 0.618, 0.381, 1.0, 1.0)
-		b.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, Blocks.vine, Blocks.cocoa, 2, 1, 1, 4, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 2, 12, 4, 0.618, 0.381, 1.0, 1.0)
-		b.add(Blocks.log2, 1, Blocks.leaves2, 1, Blocks.sapling, Blocks.vine, Blocks.cocoa, 2, 1, 1, 4, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 1, 12, 4, 0.618, 0.381, 1.0, 1.0)
-		b.add(Blocks.log2, 1, Blocks.leaves2, 1, Blocks.sapling, Blocks.vine, Blocks.cocoa, 2, 1, 1, 4, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 2, 12, 4, 0.618, 0.381, 1.0, 1.0)
+		b.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, null, null, 2, 1, 1, 4, false, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 1, 12, 4, 0.618, 0.381, 1.0, 1.0)
+		b.add(Blocks.log, 0, Blocks.leaves, 0, Blocks.sapling, null, null, 2, 1, 1, 4, false, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 2, 12, 4, 0.618, 0.381, 1.0, 1.0)
+		b.add(Blocks.log2, 1, Blocks.leaves2, 1, Blocks.sapling, null, null, 2, 1, 1, 4, false, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 1, 12, 4, 0.618, 0.381, 1.0, 1.0)
+		b.add(Blocks.log2, 1, Blocks.leaves2, 1, Blocks.sapling, null, null, 2, 1, 1, 4, false, false, 2.toByte(), 0.toByte(), 0.toByte(), 1.toByte(), 2.toByte(), 1.toByte(), 2, 12, 4, 0.618, 0.381, 1.0, 1.0)
 		decorateChunkGen_List.add(b)
 		val t = WE_StructureGen()
 		t.add(sadOak, 1)
@@ -49,5 +49,7 @@ object BiomeMount3Trees: BiomeAlfheim() {
 		decorateChunkGen_List.add(t)
 		val g = WorldGenGrass(true, true, true, true, 1.2)
 		decorateChunkGen_List.add(g)
+		val w = WorldGenGrapesWhiteAlfheim(4, Blocks.waterlily)
+		decorateChunkGen_List.add(w)
 	}
 }

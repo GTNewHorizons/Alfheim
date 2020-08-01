@@ -1,9 +1,9 @@
 package alfmod.common.item.equipment.armor
 
-import alexsocol.asjlib.mfloor
+import alexsocol.asjlib.*
 import alfheim.common.security.InteractionSecurity
 import alfmod.AlfheimModularCore
-import alfmod.client.render.model.ModelSnowArmor
+import alfmod.client.model.armor.ModelSnowArmor
 import alfmod.common.core.helper.IconHelper
 import alfmod.common.core.util.AlfheimModularTab
 import alfmod.common.item.AlfheimModularItems
@@ -50,8 +50,8 @@ open class ItemSnowArmor(type: Int, name: String): ItemManasteelArmor(type, name
 	}
 	
 	fun repair(stack: ItemStack, world: World, player: EntityPlayer) {
-		if (stack.itemDamage > 0 && ManaItemHandler.requestManaExact(stack, player, 140, world.isRemote))
-			stack.itemDamage = stack.itemDamage - 1
+		if (stack.meta > 0 && ManaItemHandler.requestManaExact(stack, player, MANA_PER_DAMAGE * 2, world.isRemote))
+			stack.meta = stack.meta - 1
 	}
 	
 	override fun onUpdate(stack: ItemStack, world: World, player: Entity, slot: Int, inHand: Boolean) {
@@ -214,7 +214,14 @@ object SnowArmorAbilityHandler {
 	fun onLivingHurt(e: LivingHurtEvent) {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		
-		if (e.source.isFireDamage && (AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player))
+		if (!(AlfheimModularItems.snowHelmet as ItemSnowArmor).hasArmorSet(player)) return
+		
+		if (e.source.damageType == "frost") {
+			e.isCanceled = true
+			return
+		}
+		
+		if (e.source.isFireDamage)
 			e.ammount /= 2
 	}
 }

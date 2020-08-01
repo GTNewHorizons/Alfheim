@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.client.render.world.VisualEffectHandlerClient.VisualEffects
 import alfheim.common.achievement.AlfheimAchievements
+import alfheim.common.core.asm.hook.AlfheimHookHandler
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemMoonlightBow
@@ -94,6 +95,8 @@ class EntityMagicArrow: EntityThrowableCopy {
 			val diffVecNorm = diffVec.copy().normalize()
 			val distance = 0.095
 			val rn = if (fromMoon) 0.1f else 0.25f
+			
+			AlfheimHookHandler.wispNoclip = true
 			
 			do {
 				r = or + (Math.random().F - 0.5f) * rn

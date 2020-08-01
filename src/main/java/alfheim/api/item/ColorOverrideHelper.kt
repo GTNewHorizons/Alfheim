@@ -1,5 +1,6 @@
 package alfheim.api.item
 
+import alexsocol.asjlib.get
 import baubles.common.lib.PlayerHandler
 import net.minecraft.entity.player.EntityPlayer
 import vazkii.botania.api.item.ICosmeticAttachable
@@ -15,7 +16,7 @@ object ColorOverrideHelper {
 		if (player != null) {
 			val baubles = PlayerHandler.getPlayerBaubles(player)
 			for (i in 0..3) {
-				val stack = baubles.getStackInSlot(i)
+				val stack = baubles[i]
 				if (stack != null && stack.item is IPriestColorOverride) {
 					val stackColor = (stack.item as IPriestColorOverride).colorOverride(stack)
 					if (stackColor != -1) {

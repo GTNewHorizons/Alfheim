@@ -41,7 +41,7 @@ object RenderTileTransferer: TileEntitySpecialRenderer() {
 		glColor3f(1f, 1f, 1f)
 		
 		glPushMatrix()
-		val worldTicks = if (tile.getWorldObj() == null) time else tile.getWorldObj().totalWorldTime.F
+		val worldTicks = if (tile.worldObj == null) time else tile.worldObj.totalWorldTime.F
 		glRotatef(worldTicks % 360, 0f, 1f, 0f)
 		glTranslatef(0f, sin(worldTicks / 20f) * 0.05f, 0f)
 		model.renderCube()

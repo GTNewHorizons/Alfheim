@@ -102,7 +102,7 @@ object CardinalSystem {
 	}
 	
 	fun forPlayer(player: EntityPlayer): PlayerSegment {
-		if (!ASJUtilities.isServer) throw RuntimeException("You shouldn't access this from client")
+		if (ASJUtilities.isClient) throw RuntimeException("You shouldn't access this from client")
 		ensureExistance(player)
 		return playerSegments[player.commandSenderName]!!
 	}
@@ -337,7 +337,7 @@ object CardinalSystem {
 			for (i in 0 until size) {
 				val useBaubles = i >= invSize
 				val inv = if (useBaubles) baublesInv else mainInv
-				val stack = inv.getStackInSlot(i - if (useBaubles) invSize else 0)
+				val stack = inv.get(i - if (useBaubles) invSize else 0)
 				
 				if (stack != null) {
 					val item = stack.item
@@ -430,7 +430,7 @@ object CardinalSystem {
 		fun friendlyFire(entityLiving: EntityLivingBase, source: DamageSource): Boolean {
 			if (!AlfheimConfigHandler.enableMMO || source.damageType.contains("_FF")) return false
 			
-			if (!ASJUtilities.isServer) return false
+			if (ASJUtilities.isClient) return false
 			if (source.entity != null && source.entity is EntityPlayer) {
 				if (getParty(source.entity as EntityPlayer).isMember(entityLiving))
 					return true
@@ -590,7 +590,7 @@ object CardinalSystem {
 			}
 			
 			fun setDead(i: Int, d: Boolean) {
-				if (!ASJUtilities.isServer) members[i]?.isDead = d
+				if (ASJUtilities.isClient) members[i]?.isDead = d
 			}
 			
 			fun setDead(mr: EntityLivingBase, d: Boolean) {

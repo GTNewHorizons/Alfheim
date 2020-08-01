@@ -1,6 +1,6 @@
 package alfheim.common.block
 
-import alexsocol.asjlib.D
+import alexsocol.asjlib.*
 import alfheim.AlfheimCore
 import alfheim.common.block.base.BlockMod
 import alfheim.common.item.AlfheimItems
@@ -25,8 +25,6 @@ import java.util.*
 class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	
 	init {
-		val mod = 0.001f
-		setBlockBounds(0 + mod, 0 + mod, 0 + mod, 1 - mod, 1 - mod, 1 - mod)
 		setBlockName("NiflheimIce")
 		setCreativeTab(null)
 		setBlockUnbreakable()
@@ -38,12 +36,16 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 		slipperiness = 0.98f
 	}
 	
+	override fun getCollisionBoundingBoxFromPool(world: World?, x: Int, y: Int, z: Int): AxisAlignedBB {
+		return super.getCollisionBoundingBoxFromPool(world, x, y, z).expand(-0.01)
+	}
+	
 	override fun getPlayerRelativeBlockHardness(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Float {
 		val metadata = world.getBlockMetadata(x, y, z)
 		var hardness = getBlockHardness(world, x, y, z)
 		
 		val bbls = PlayerHandler.getPlayerBaubles(player)
-		if (bbls.getStackInSlot(0) != null && bbls.getStackInSlot(0).item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls.getStackInSlot(0), player, 5, true)) hardness = 2f
+		if (bbls[0]?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(bbls[0], player, 5, true)) hardness = 2f
 		
 		if (hardness < 0f) return 0f
 		
@@ -67,7 +69,7 @@ class BlockPoisonIce: BlockMod(Material.packedIce), ILexiconable {
 	override fun dropBlockAsItem(w: World, x: Int, y: Int, z: Int, s: ItemStack) = Unit
 	
 	override fun onEntityWalking(w: World, x: Int, y: Int, z: Int, e: Entity) {
-		if (e is EntityPlayer && BaublesApi.getBaubles(e).getStackInSlot(0)?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e).getStackInSlot(0), e, 50, true)) return
+		if (e is EntityPlayer && BaublesApi.getBaubles(e)[0]?.item === AlfheimItems.elfIcePendant && ManaItemHandler.requestManaExact(BaublesApi.getBaubles(e)[0], e, 50, true)) return
 		
 		e.setInWeb()
 		if (!w.isRemote && e is EntityLivingBase) {

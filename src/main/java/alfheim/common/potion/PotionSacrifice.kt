@@ -2,7 +2,6 @@ package alfheim.common.potion
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.api.ModInfo
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.DamageSourceSpell
@@ -38,7 +37,7 @@ class PotionSacrifice: PotionAlfheim(AlfheimConfigHandler.potionIDSacrifice, "sa
 		val l = target!!.worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, target.boundingBox.copy().expand(SpellSacrifice.radius)) as List<EntityLivingBase>
 		var dmg: DamageSource
 		for (e in l) {
-			if (e is IBossDisplayData) continue
+			if (e is IBossDisplayData && !AlfheimConfigHandler.superSpellBosses) continue
 			if (!InteractionSecurity.canHurtEntity(target, e)) continue
 			
 			dmg = if (e === target) DamageSourceSpell.sacrifice else DamageSourceSpell.sacrifice(target)

@@ -22,7 +22,7 @@ object SpellIceLens: SpellBase("icelens", EnumRace.UNDINE, 6000, 1200, 30) {
 		if (result == SpellCastResult.OK) {
 			caster.addPotionEffect(PotionEffect(AlfheimConfigHandler.potionIDIceLens, duration, 0, true))
 			
-			if (caster is EntityPlayerMP) AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.ICELENS.ordinal, 0.0, 0.0, 0.0), caster)
+			if (caster is EntityPlayerMP) AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffects.ICELENS.ordinal), caster)
 		}
 		return result
 	}

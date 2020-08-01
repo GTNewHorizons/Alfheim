@@ -1,5 +1,6 @@
 package alfheim.common.crafting.recipe
 
+import alexsocol.asjlib.get
 import alfheim.common.item.ItemLootInterceptor
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
@@ -12,7 +13,7 @@ class RecipeLootInterceptorClear: IRecipe {
 		var inter = false
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack != null) {
 				if (stack.item is ItemLootInterceptor) {
 					if (!inter)
@@ -31,7 +32,7 @@ class RecipeLootInterceptorClear: IRecipe {
 		var inter: ItemStack? = null
 		
 		for (i in 0 until inv.sizeInventory) {
-			val stack = inv.getStackInSlot(i)
+			val stack = inv[i]
 			if (stack != null && stack.item is ItemLootInterceptor) {
 				if (inter == null)
 					inter = stack.copy()

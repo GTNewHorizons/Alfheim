@@ -1,6 +1,6 @@
 package alfheim.common.block.tile
 
-import cpw.mods.fml.relauncher.FMLLaunchHandler
+import alexsocol.asjlib.ASJUtilities
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.client.core.handler.ClientTickHandler
 import vazkii.botania.common.Botania
@@ -22,7 +22,7 @@ class TileRainbowManaFlame: TileManaFlame() {
 	}
 	
 	override fun getColor(): Int {
-		if (FMLLaunchHandler.side().isServer) return 0xFFFFFF
+		if (ASJUtilities.isServer) return 0xFFFFFF
 		var time = ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks
 		time += Random((xCoord xor yCoord xor zCoord).toLong()).nextInt(100000)
 		return Color.HSBtoRGB(time * 0.005F, 1F, 1F)

@@ -5,7 +5,6 @@ import alfheim.api.ModInfo
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.item.Item
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
@@ -57,8 +56,10 @@ class SubTileCrysanthermum: SubTileGenerating() {
 	var lastBlocks = LinkedList(IntArray(8) { -1 }.toList())
 	
 	fun getTemp(meta: Int): Int = if (meta % 8 == 3) supertile.worldObj.rand.nextInt(9) - 4 else TYPES[meta]
+	
 	val biomeTemp
-		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).D.mfloor()	
+		get() = supertile.worldObj.getBiomeGenForCoordsBody(supertile.xCoord, supertile.zCoord).getFloatTemperature(supertile.xCoord, supertile.yCoord, supertile.zCoord).D.mfloor()
+	
 	override fun onUpdate() {
 		super.onUpdate()
 		
@@ -94,7 +95,7 @@ class SubTileCrysanthermum: SubTileGenerating() {
 						val mx = (Math.random() - 0.5).F * m
 						val my = (Math.random() - 0.5).F * m
 						val mz = (Math.random() - 0.5).F * m
-						supertile.worldObj.spawnParticle("blockcrack_" + Item.getIdFromItem(stack.item) + "_" + meta, item.posX, item.posY, item.posZ, mx.D, my.D, mz.D)
+						supertile.worldObj.spawnParticle("blockcrack_${stack.item.id}_$meta", item.posX, item.posY, item.posZ, mx.D, my.D, mz.D)
 					}
 					--item.entityItem.stackSize
 					if (!remote && item.entityItem.stackSize <= 0)

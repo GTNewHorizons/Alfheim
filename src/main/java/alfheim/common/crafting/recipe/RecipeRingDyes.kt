@@ -21,7 +21,7 @@ class RecipeRingDyes : IRecipe {
         var colors = 0
 
         for (i in 0 until inventory.sizeInventory) {
-            val tempstack = inventory.getStackInSlot(i)
+            val tempstack = inventory.get(i)
 
             if (tempstack != null) {
                 if (tempstack.item is ItemColorOverride) {
@@ -53,7 +53,7 @@ class RecipeRingDyes : IRecipe {
         var b = 0
 
         for (k in 0 until inventory.sizeInventory) {
-            val tempstack = inventory.getStackInSlot(k)
+            val tempstack = inventory.get(k)
 
             if (tempstack != null) {
                 if (tempstack.item is ItemColorOverride) {

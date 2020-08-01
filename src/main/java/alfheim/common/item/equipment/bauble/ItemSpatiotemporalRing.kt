@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.get
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
@@ -42,7 +43,7 @@ class ItemSpatiotemporalRing: ItemBauble("spatiotemporalRing") {
 			// if (player.capabilities.isCreativeMode) return false
 			
 			for (i in 1..2) {
-				val stack = PlayerHandler.getPlayerBaubles(player)?.getStackInSlot(i) ?: continue
+				val stack = PlayerHandler.getPlayerBaubles(player)?.get(i) ?: continue
 				val item = stack.item as? ItemSpatiotemporalRing ?: continue
 				
 				return item.isActive(stack, player) && ManaItemHandler.requestManaExact(stack, player, 10, true)

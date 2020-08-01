@@ -27,10 +27,10 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 			val metas = getMetas(stack)
 			
 			for (i in 0 until player.inventory.sizeInventory) {
-				slot = player.inventory.getStackInSlot(i)
+				slot = player.inventory.get(i)
 				
 				if (slot != null) {
-					val cid = getIdFromItem(slot.item)
+					val cid = slot.item.id
 					var pos = -1
 					
 					for (id in ids) {
@@ -39,7 +39,7 @@ class ItemLootInterceptor: ItemMod("LootInterceptor"), IManaItem, IManaTooltipDi
 						if (id == cid) {
 							if (metas[pos] == slot.meta) {
 								val size = slot.stackSize
-								player.inventory.setInventorySlotContents(i, null)
+								player.inventory.set(i, null)
 								addMana(stack, PER_ITEM * size)
 							}
 						}

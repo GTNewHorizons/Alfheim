@@ -5,6 +5,7 @@ import alexsocol.asjlib.extendables.EntityRidableFlying
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.spell.ITimeStopSpecific
 import alfheim.common.core.handler.AlfheimConfigHandler
+import alfheim.common.core.helper.ContributorsPrivacyHelper
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.*
@@ -42,6 +43,10 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 		}
 		set(uuid) = dataWatcher.updateObject(16, "$uuid")
 	
+	var type: Int
+		get() = dataWatcher.getWatchableObjectInt(17)
+		set(type) = dataWatcher.updateObject(17, type)
+	
 	init {
 		stepHeight = 1.5f
 		flySpeed = 0.95f
@@ -59,6 +64,7 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 		super.entityInit()
 		dataWatcher.addObject(15, "")
 		dataWatcher.addObject(16, "")
+		dataWatcher.addObject(17, 0)
 	}
 	
 	override fun isAIEnabled() = true
@@ -212,7 +218,8 @@ class EntityLolicorn(world: World): EntityRidableFlying(world), ITimeStopSpecifi
 		
 		owner = player.commandSenderName
 		ownerUUID = player.uniqueID
-		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim:Lolicorn.desc", owner)
+		val custom = if (type == 1) ".Odin" else if (ContributorsPrivacyHelper.isCorrect(player, "KAIIIAK")) ".KAIIIAK" else ""
+		customNameTag = StatCollector.translateToLocalFormatted("entity.alfheim.Lolicorn.desc$custom", owner)
 	}
 	
 	var look = Vector3()

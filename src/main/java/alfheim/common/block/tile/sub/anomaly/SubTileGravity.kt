@@ -61,7 +61,7 @@ class SubTileGravity: SubTileAnomalyBase() {
 		val radius = power * 10
 		
 		ve.set(target)
-		if (!ASJUtilities.isServer) if (target === mc.thePlayer) ve.add(0.0, -1.62, 0.0)
+		if (ASJUtilities.isClient) if (target === mc.thePlayer) ve.add(0.0, -1.62, 0.0)
 		
 		val dist = sqrt((ve.x - x() + 0.5).pow(2.0) + (ve.y - y() + 0.5).pow(2.0) + (ve.z - z() + 0.5).pow(2.0))
 		if (dist > radius) return

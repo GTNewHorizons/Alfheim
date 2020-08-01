@@ -84,13 +84,13 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 		val block = blockToPlace.item.toBlock()
 		val meta = blockToPlace.meta
 		player.worldObj.setBlock(x, y, z, block, meta, 3)
-		player.worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block))
+		player.worldObj.playAuxSFX(2001, x, y, z, block?.id ?: 1)
 		
 		if (player.capabilities.isCreativeMode) return
 		
 		val stacksToCheck = ArrayList<ItemStack>()
 		for (i in 0 until player.inventory.sizeInventory) {
-			val stackInSlot = player.inventory.getStackInSlot(i)
+			val stackInSlot = player.inventory.get(i)
 			if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === blockToPlace.item && stackInSlot.meta == blockToPlace.meta) {
 				stackInSlot.stackSize--
 				return
@@ -153,7 +153,7 @@ class ItemAstrolabe: ItemMod("Astrolabe") {
 			var current = 0
 			val stacksToCheck = ArrayList<ItemStack>()
 			for (i in 0 until player.inventory.sizeInventory) {
-				val stackInSlot = player.inventory.getStackInSlot(i)
+				val stackInSlot = player.inventory.get(i)
 				if (stackInSlot != null && stackInSlot.stackSize > 0 && stackInSlot.item === reqStack.item && stackInSlot.meta == reqStack.meta) {
 					current += stackInSlot.stackSize
 					if (current >= required)

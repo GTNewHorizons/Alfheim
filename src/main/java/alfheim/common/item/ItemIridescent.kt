@@ -16,7 +16,6 @@ import net.minecraft.item.*
 import net.minecraft.util.*
 import vazkii.botania.common.Botania
 import java.awt.Color
-import kotlin.properties.Delegates
 
 open class ItemIridescent(name: String) : Item() {
 
@@ -65,7 +64,7 @@ open class ItemIridescent(name: String) : Item() {
         unlocalizedName = name
     }
 
-    var overlayIcon: IIcon by Delegates.notNull()
+    lateinit var overlayIcon: IIcon
 
     override fun requiresMultipleRenderPasses() = true
 

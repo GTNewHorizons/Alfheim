@@ -10,6 +10,7 @@ import net.minecraft.util.IIcon
 import kotlin.math.*
 
 class ItemAlfheimWandRod: Item() {
+	
 	init {
 		creativeTab = ThaumcraftAlfheimModule.tcnTab
 		setHasSubtypes(true)
@@ -38,7 +39,6 @@ class ItemAlfheimWandRod: Item() {
 	}
 	
 	companion object {
-		
 		val textures = arrayOfNulls<IIcon>(3)
 	}
 }

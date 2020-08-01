@@ -1,19 +1,29 @@
-// This is here since ItemHolyCloak#getRenderTexture is package-private
-package vazkii.botania.common.item.equipment.bauble
+package alfheim.common.item.equipment.bauble
 
 import alexsocol.asjlib.*
 import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.util.AlfheimTab
+import cpw.mods.fml.relauncher.*
+import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.DamageSource
+import net.minecraft.util.*
 import net.minecraftforge.event.entity.living.LivingHurtEvent
+import vazkii.botania.client.core.helper.IconHelper
 import vazkii.botania.common.Botania
+import vazkii.botania.common.item.equipment.bauble.ItemHolyCloak
 
 class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 	
 	init {
 		creativeTab = AlfheimTab
+	}
+	
+	@SideOnly(Side.CLIENT)
+	override fun registerIcons(reg: IIconRegister) {
+		iconHoly = IconHelper.forName(reg, "cloak_holy")
+		iconUnholy = IconHelper.forName(reg, "cloak_unholy")
+		itemIcon = IconHelper.forName(reg, "cloak_balance")
 	}
 	
 	override fun effectOnDamage(event: LivingHurtEvent, player: EntityPlayer, stack: ItemStack?): Boolean {
@@ -41,5 +51,11 @@ class ItemBalanceCloak: ItemHolyCloak("BalanceCloak") {
 		return false
 	}
 	
-	public override fun getRenderTexture() = LibResourceLocations.balanceCloak
+	@SideOnly(Side.CLIENT)
+	override fun getRenderTexture() = LibResourceLocations.cloakBalance
+	
+	companion object {
+		lateinit var iconHoly: IIcon
+		lateinit var iconUnholy: IIcon
+	}
 }

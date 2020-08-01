@@ -6,6 +6,7 @@ import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.colored.BlockAuroraDirt
+import alfheim.common.item.relic.ItemSifRing
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.gameevent.TickEvent
@@ -83,7 +84,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 			par3.add(ItemStack(par1, 1, i))
 	}
 	
-	override fun onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
+	override fun onItemUse(stack: ItemStack, player: EntityPlayer?, world: World, x: Int, y: Int, z: Int, side: Int, par8: Float, par9: Float, par10: Float): Boolean {
 		val block = world.getBlock(x, y, z)
 		val bmeta = world.getBlockMetadata(x, y, z)
 		val meta = stack.meta
@@ -99,7 +100,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		val velMul = 0.025f
 		
 		if ((block === Blocks.dirt || block === Blocks.grass) && bmeta == 0) {
-			val swapper = addBlockSwapper(world, x, y, z, meta)
+			val swapper = addBlockSwapper(world, player, x, y, z, meta)
 			world.setBlock(x, y, z, swapper.blockToSet, swapper.metaToSet, 3)
 			if (world.getBlock(x, y + 1, z) == Blocks.tallgrass && world.getBlockMetadata(x, y + 1, z) == 1) {
 				if (meta >= 16)
@@ -145,8 +146,8 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		}
 	}
 	
-	private fun addBlockSwapper(world: World, x: Int, y: Int, z: Int, meta: Int): BlockSwapper {
-		val swapper = swapperFromMeta(world, x, y, z, meta)
+	private fun addBlockSwapper(world: World, player: EntityPlayer?, x: Int, y: Int, z: Int, meta: Int): BlockSwapper {
+		val swapper = swapperFromMeta(world, player, x, y, z, meta)
 		
 		val dim = world.provider.dimensionId
 		if (!blockSwappers.containsKey(dim))
@@ -156,10 +157,10 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		return swapper
 	}
 	
-	private fun swapperFromMeta(world: World, x: Int, y: Int, z: Int, meta: Int) =
-		BlockSwapper(world, ChunkCoordinates(x, y, z), meta)
+	private fun swapperFromMeta(world: World, player: EntityPlayer?, x: Int, y: Int, z: Int, meta: Int) =
+		BlockSwapper(world, player, ChunkCoordinates(x, y, z), meta)
 	
-	private class BlockSwapper(world: World, coords: ChunkCoordinates, meta: Int) {
+	private class BlockSwapper(world: World, player: EntityPlayer?, coords: ChunkCoordinates, meta: Int) {
 		
 		var world: World
 		var rand: Random
@@ -174,7 +175,7 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 		var startCoords: ChunkCoordinates
 		var ticksExisted = 0
 		
-		val RANGE = 3
+		val range: Int
 		val TICK_RANGE = 1
 		
 		init {
@@ -189,12 +190,14 @@ class ItemColorSeeds: ItemIridescent("irisSeeds"), IFlowerComponent, IFloatingFl
 			grassBlock = if (rainbow) AlfheimBlocks.rainbowGrass else AlfheimBlocks.irisGrass
 			tallGrassMeta = metaToSet % 8
 			tallGrassBlock = if (rainbow) AlfheimBlocks.rainbowTallGrass else (if (meta > 8) AlfheimBlocks.irisTallGrass1 else AlfheimBlocks.irisTallGrass0)
+			
+			range = if (player != null && ItemSifRing.getSifRing(player) != null) 6 else 3
 		}
 		
 		fun tick(): Boolean {
 			ticksExisted++
-			for (i in -RANGE..RANGE) {
-				for (j in -RANGE..RANGE) {
+			for (i in -range..range) {
+				for (j in -range..range) {
 					val x = startCoords.posX + i
 					val y = startCoords.posY
 					val z = startCoords.posZ + j

@@ -440,9 +440,9 @@ alfheimmisc.teamnotmob=盟友无法被选定为敌意目标
 alfheimmisc.tgtooltip=摁下&b%key%&7以打开旅行者工具栏
 alfheimmisc.update=看上去你正在使用一个过期的版本(%s). 也许你应该更新到 %s?
 
-alfheimmisc.offset=偏移
-alfheimmisc.power=力量
-alfheimmisc.radius=范围
+alfheimmisc.area=范围: %s x %s x %s
+alfheimmisc.offset=偏移: %s, %s, %s
+alfheimmisc.power=力量: %s
 
 alfheimmisc.cast.notarget=选择一个目标
 alfheimmisc.cast.notready=法术还未准备完毕
@@ -498,7 +498,11 @@ entity.alfheim.Charge.name=暗能量
 entity.alfheim.Elf.name=精灵
 entity.alfheim.Flugel.name=不朽
 entity.alfheim.Lolicorn.name=独角兽
+# It's not a Unicorn (google translated 的独角兽 as Unicorn), it's Lolicorn (that's important) = loli + unicorn (+ pegasus + centaur, but those not included in the name)
 entity.alfheim.Lolicorn.desc=%s 的独角兽
+# Rorycorn - same, but with Rory Mercury skin, so change first two words (symbols) ???
+entity.alfheim.Lolicorn.desc.KAIIIAK=%s 的独角兽
+entity.alfheim.Lolicorn.desc.Odin=%s 斯雷普尼爾
 entity.alfheim.LightningMark.name=雷电印记
 entity.alfheim.MagicArrow.name=魔法箭矢
 entity.alfheim.Pixie.name=小精灵
@@ -771,7 +775,7 @@ spell.windblades.mtinfo=名称: 风暴利刃 | 伤害 %s 持续时间 (存在时
 ########################################################___IRIDESCENCE___#######################################################
 ################################################################################################################################
 
-death.attack.alfheim.lackOfFaith=%1$s 因为背弃信仰而被神灵处死
+death.attack.lackOfFaith=%1$s 因为背弃信仰而被神灵处死
 misc.alfheim.lackOfFaith=&c卸下这个勋章将会发生一些不好的事情.&r
 misc.alfheim.crisisOfFaith=&4卸下这个勋章可能会被处死.&r
 misc.alfheim.healthWarning=&c失去对神明的信仰是致命的&r

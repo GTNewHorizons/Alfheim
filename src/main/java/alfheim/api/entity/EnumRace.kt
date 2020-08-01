@@ -34,29 +34,33 @@ enum class EnumRace {
 		private val RACE: IAttribute = RangedAttribute(ModInfo.MODID.toUpperCase() + ":RACE", 0.0, 0.0, values().size.D.minus(1)).setShouldWatch(true)
 		
 		fun getRGBColor(id: Double): Int {
-			//return ASJUtilities.enumColorToRGB(getEnumColor(id));
-			
-			if (id == 1.0) return 0xb61f24
-			if (id == 2.0) return 0x5ee52e
-			if (id == 3.0) return 0xcdb878
-			if (id == 4.0) return 0x99cb3b
-			if (id == 5.0) return 0x816b57
-			if (id == 6.0) return 0x6d6b7b
-			if (id == 7.0) return 0x282739
-			if (id == 8.0) return 0x40c0a4
-			return if (id == 9.0) 0x786a89 else 0xffffff
+			return when (getByID(id)) {
+				SALAMANDER -> 0xb61f24
+				SYLPH      -> 0x5ee52e
+				CAITSITH   -> 0xcdb878
+				POOKA      -> 0x99cb3b
+				GNOME      -> 0x816b57
+				LEPRECHAUN -> 0x6d6b7b
+				SPRIGGAN   -> 0x282739
+				UNDINE     -> 0x40c0a4
+				IMP        -> 0x786a89
+				else       -> 0xffffff
+			}
 		}
 		
 		fun getEnumColor(id: Double): EnumChatFormatting {
-			if (id == 1.0) return EnumChatFormatting.DARK_RED
-			if (id == 2.0) return EnumChatFormatting.GREEN
-			if (id == 3.0) return EnumChatFormatting.YELLOW
-			if (id == 4.0) return EnumChatFormatting.GOLD
-			if (id == 5.0) return EnumChatFormatting.DARK_GREEN
-			if (id == 6.0) return EnumChatFormatting.GRAY
-			if (id == 7.0) return EnumChatFormatting.WHITE
-			if (id == 8.0) return EnumChatFormatting.AQUA
-			return if (id == 9.0) EnumChatFormatting.LIGHT_PURPLE else EnumChatFormatting.WHITE
+			return when (getByID(id)) {
+				SALAMANDER -> EnumChatFormatting.DARK_RED
+				SYLPH      -> EnumChatFormatting.GREEN
+				CAITSITH   -> EnumChatFormatting.YELLOW
+				POOKA      -> EnumChatFormatting.GOLD
+				GNOME      -> EnumChatFormatting.DARK_GREEN
+				LEPRECHAUN -> EnumChatFormatting.GRAY
+				SPRIGGAN   -> EnumChatFormatting.WHITE
+				UNDINE     -> EnumChatFormatting.AQUA
+				IMP        -> EnumChatFormatting.LIGHT_PURPLE
+				else       -> EnumChatFormatting.WHITE
+			}
 		}
 		
 		fun glColor(id: Double) {
@@ -78,7 +82,7 @@ enum class EnumRace {
 			if (0 > id || id > values().size) HUMAN else values()[id.I]
 		
 		fun ensureExistance(player: EntityPlayer) {
-			if (player.getAttributeMap().getAttributeInstance(RACE) == null) registerRace(player)
+			if (player.getAttributeMap().getAttributeInstanceByName(RACE.attributeUnlocalizedName) == null) registerRace(player)
 		}
 		
 		private fun registerRace(player: EntityPlayer) {

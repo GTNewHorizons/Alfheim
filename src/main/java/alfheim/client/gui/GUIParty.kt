@@ -115,7 +115,7 @@ class GUIParty: Gui() {
 				for (i in 0 until size) {
 					val useBaubles = i >= invSize
 					val inv = if (useBaubles) baublesInv else mainInv
-					val stack = inv.getStackInSlot(i - if (useBaubles) invSize else 0)
+					val stack = inv[i - if (useBaubles) invSize else 0]
 					
 					if (stack != null) {
 						val item = stack.item
@@ -237,23 +237,27 @@ class GUIParty: Gui() {
 					hpm = pt.getMaxHealth(i)
 					hp = min(pt.getHealth(i), hpm)
 				} else {
-					if (l is EntityPlayer) col = (l as EntityPlayer).race.rgbColor		// Player
-					else if (l is INpc) {												// NPC
-						color = -0xff5501
-						col = color
+					when (l) {
+						is EntityPlayer     -> col = (l as EntityPlayer).race.rgbColor
+						is INpc             -> {
+							color = -0xff5501
+							col = color
+						}
+						
+						is IBossDisplayData -> {
+							color = 0xA2018C
+							col = color
+						}
 					}
-					else if (l is IBossDisplayData) {									// Boss
-						color = 0xA2018C
-						col = color
-					}
-					if (PlayerSegmentClient.target === l) color = 0x00FF00				// selected target
-					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC		// out of reach
-					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888		// other dim
+					
+					if (PlayerSegmentClient.target === l) color = 0x00FF00                // selected target
+					if (Vector3.entityDistance(player, l!!) > 32) color = 0xCCCCCC        // out of reach
+					//if (mc.thePlayer.dimension != l.dimension) color = 0x888888		  // other dim
 					hpm = l!!.maxHealth
 					hp = min(l!!.health, hpm)
 				}
 				
-				if (pt.isDead(i)) {														// dead
+				if (pt.isDead(i)) {                                                        // dead
 					color = 0x444444
 					hpm = 0f
 					hp = hpm

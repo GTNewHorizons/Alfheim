@@ -8,6 +8,7 @@ import alfheim.api.AlfheimAPI.registerSpell
 import alfheim.api.ModInfo
 import alfheim.common.block.*
 import alfheim.common.block.tile.*
+import alfheim.common.block.tile.corporea.TileCorporeaAutocrafter
 import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
@@ -61,7 +62,8 @@ object AlfheimRegistry {
 	}
 	
 	fun postInit() {
-		if (AlfheimConfigHandler.looniumOverseed) BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
+		if (AlfheimConfigHandler.looniumOverseed)
+			BotaniaAPI.looniumBlacklist.remove(ModItems.overgrowthSeed)
 		
 		val (w, n, x) = AlfheimConfigHandler.voidCreeper
 		
@@ -81,6 +83,7 @@ object AlfheimRegistry {
 		PotionGoldRush()
 		PotionAlfheim(AlfheimConfigHandler.potionIDIceLens, "icelens", false, 0xDDFFFF)
 		PotionLeftFlame()
+		PotionLightningShield()
 		PotionManaVoid()
 		PotionAlfheim(AlfheimConfigHandler.potionIDNineLifes, "nineLifes", false, 0xDD2222)
 		PotionNinja()
@@ -101,8 +104,10 @@ object AlfheimRegistry {
 		get() = field.also { field++ }
 	
 	private fun registerEntities() {
+		registerEntity(EntityButterfly::class.java, "Butterfly", AlfheimCore.instance, id)
 		registerEntity(EntityCharge::class.java, "Charge", AlfheimCore.instance, id)
 		registerEntity(EntityElf::class.java, "Elf", AlfheimCore.instance, id)
+		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
@@ -114,6 +119,8 @@ object AlfheimRegistry {
 		
 		registerEntity(EntityThrowableItem::class.java, "ThrownItem", AlfheimCore.instance, id)
 		registerEntity(EntityThrownPotion::class.java, "ThrownPotion", AlfheimCore.instance, id)
+		
+		registerEntity(EntityMjolnir::class.java, "Mjolnir", AlfheimCore.instance, id)
 		
 		registerEntity(EntityMagicArrow::class.java, "MagicArrow", AlfheimCore.instance, id)
 		registerEntity(EntitySubspace::class.java, "Subspace", AlfheimCore.instance, id)
@@ -139,6 +146,9 @@ object AlfheimRegistry {
 		registerTile(TileAnomaly::class.java, "Anomaly")
 		registerTile(TileAnomalyHarvester::class.java, "AnomalyHarvester")
 		registerTile(TileAnyavil::class.java, "Anyavil")
+		registerTile(TileBarrel::class.java, "Barrel")
+		registerTile(TileCorporeaAutocrafter::class.java, "CorporeaAutocrafter")
+		registerTile(TileEnderActuator::class.java, "EnderActuator")
 		registerTile(TileHeadFlugel::class.java, "HeadFlugel")
 		registerTile(TileHeadMiku::class.java, "HeadMiku")
 		registerTile(TileManaAccelerator::class.java, "ItemHolder")
@@ -286,7 +296,7 @@ object AlfheimRegistry {
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzSlab), 2)
 		addPink(ItemStack(ModFluffBlocks.lavenderQuartzStairs), 4)
 		
-		addPink(ItemStack(ModItems.aesirRing), 3000)
+		addPink(ItemStack(ModItems.aesirRing), 6000)
 		addPink(ItemStack(ModItems.baubleBox), 5)
 		addPink(ItemStack(ModItems.blackHoleTalisman), 36)
 		addPink(ItemStack(ModItems.corporeaSpark), 9)
@@ -345,8 +355,8 @@ object AlfheimRegistry {
 		
 		addPink(ItemStack(AlfheimFluffBlocks.shrineRock, 1, 6), 1)
 		
+		addPink(ItemStack(AlfheimItems.aesirEmblem), 18)
 		addPink(ItemStack(AlfheimItems.astrolabe), 54)
-		addPink(ItemStack(AlfheimItems.wireAxe), 81)
 		addPink(ItemStack(AlfheimItems.colorOverride), 54)
 		addPink(ItemStack(AlfheimItems.cloudPendantSuper), 18)
 		addPink(ItemStack(AlfheimItems.elementalBoots), 36)
@@ -357,15 +367,20 @@ object AlfheimRegistry {
 		addPink(ItemStack(AlfheimItems.elementiumHoe), 18)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ManaInfusionCore), 9)
 		addPink(ItemStack(AlfheimItems.elvenResource, 1, ElvenResourcesMetas.ElvenWeed), 8)
-		addPink(ItemStack(AlfheimItems.emblem, 1, 3), 18)
 		addPink(ItemStack(AlfheimItems.flugelDisc), 13)
 		addPink(ItemStack(AlfheimItems.flugelHead), 5)
 		for (i in 0..6) addPink(ItemStack(AlfheimItems.hyperBucket, 1, i), 27)
 		addPink(ItemStack(AlfheimItems.irisSeeds, 1, 6), 2)
 		addPink(ItemStack(AlfheimItems.multibauble), 18)
 		addPink(ItemStack(AlfheimItems.pixieAttractor), 54)
+		addPink(ItemStack(AlfheimItems.priestEmblem, 1, 3), 18)
+		addPink(ItemStack(AlfheimItems.priestRingHeimdall), 1000)
+		addPink(ItemStack(AlfheimItems.priestRingNjord), 1000)
+		addPink(ItemStack(AlfheimItems.priestRingSif), 1000)
+		addPink(ItemStack(AlfheimItems.rodClicker), 29)
 		addPink(ItemStack(AlfheimItems.rodColorfulSkyDirt), 27)
 		addPink(ItemStack(AlfheimItems.spatiotemporalRing), 54)
 		addPink(ItemStack(AlfheimItems.trisDagger), 36)
+		addPink(ItemStack(AlfheimItems.wireAxe), 81)
 	}
 }

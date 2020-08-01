@@ -1,14 +1,12 @@
 package alfheim.client.render.item
 
 import alexsocol.asjlib.*
-import cpw.mods.fml.relauncher.ReflectionHelper
 import net.minecraft.client.renderer.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.IItemRenderer.ItemRenderType
 import org.lwjgl.opengl.GL11.*
-import vazkii.botania.common.lib.LibObfuscation
 
 object RenderMoonBow: IItemRenderer {
 	
@@ -52,10 +50,7 @@ object RenderMoonBow: IItemRenderer {
 		val dmg = item.meta
 		var icon = item.item.getIconFromDamageForRenderPass(dmg, 0)
 		if (player != null) {
-			// FIXME NO REFLECTION IN MY MOD!!!
-			val using = ReflectionHelper.getPrivateValue<ItemStack, EntityPlayer>(EntityPlayer::class.java, player, *LibObfuscation.ITEM_IN_USE)
-			val time = ReflectionHelper.getPrivateValue<Int, EntityPlayer>(EntityPlayer::class.java, player, *LibObfuscation.ITEM_IN_USE_COUNT)
-			icon = item.item.getIcon(item, 0, player, using, time)
+			icon = item.item.getIcon(item, 0, player, player.itemInUse, player.itemInUseCount)
 			if (transform) {
 				glTranslatef(0.2f, -0.3f, 0.1f)
 				//GL11.glRotatef(20f, 0f, 1f, 0f);

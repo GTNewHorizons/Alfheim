@@ -42,12 +42,13 @@ import java.awt.Color
 
 class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IFuelHandler/*, ILensEffect*/ {
 	
-	private val texture = arrayOfNulls<IIcon>(subItems.size)
+	val texture = arrayOfNulls<IIcon>(subItems.size)
 	
 	init {
 		setHasSubtypes(true)
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
+		
 		GameRegistry.registerFuelHandler(this)
 	}
 	
@@ -137,7 +138,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	val ids = arrayOf(Potion.moveSpeed.id, Potion.regeneration.id, Potion.jump.id, Potion.hunger.id, Potion.confusion.id)
 	
-	override fun onItemRightClick(stack: ItemStack, world: World?, player: EntityPlayer): ItemStack {
+	override fun onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		if (stack.meta != ElvenWeed) return stack
 		
 		for (i in ids)
@@ -194,7 +195,7 @@ class ItemElvenResource: ItemMod("ElvenItems"), IElvenItem, IFlowerComponent, IF
 	
 	companion object {
 		
-		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed"/*, "Transferer" BACK*/)
+		val subItems = arrayOf("InterdimensionalGatewayCore", "ManaInfusionCore", "DasRheingold", "ElvoriumIngot", "MauftriumIngot", "MuspelheimPowerIngot", "NiflheimPowerIngot", "ElvoriumNugget", "MauftriumNugget", "MuspelheimEssence", "NiflheimEssence", "RainbowQuartz", "RainbowPetal", "RainbowDust", "IffesalDust", "PrimalRune", "MuspelheimRune", "NiflheimRune", "InfusedDreamwoodTwig", "ThunderwoodTwig", "NetherwoodTwig", "ThunderwoodSplinters", "NetherwoodSplinters", "NetherwoodCoal", "ElvenWeed", "Jug", "GrapeLeaf" /*, "Transferer" BACK*/)
 		
 		lateinit var amulet: IIcon
 		lateinit var candy: IIcon
@@ -261,6 +262,8 @@ object ElvenResourcesMetas {
 	val NetherwoodSplinters: Int
 	val NetherwoodCoal: Int
 	val ElvenWeed: Int
+	val Jug: Int
+	val GrapeLeaf: Int
 	//val Transferer: Int BACK
 	
 	val displayBlackList: Array<Int>
@@ -292,6 +295,8 @@ object ElvenResourcesMetas {
 		NetherwoodSplinters = items.indexOf("NetherwoodSplinters")
 		NetherwoodCoal = items.indexOf("NetherwoodCoal")
 		ElvenWeed = items.indexOf("ElvenWeed")
+		Jug = items.indexOf("Jug")
+		GrapeLeaf = items.indexOf("GrapeLeaf")
 		//Transferer = items.indexOf("Transferer"); BACK
 		
 		displayBlackList = arrayOf(ElvenWeed)

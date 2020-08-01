@@ -92,13 +92,16 @@ class EntitySubspace: EntityThrowableCopy {
 					
 					val player = getThrower() as EntityPlayer
 					
-					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName == "Rose") player.triggerAchievement(AlfheimAchievements.rosaBomb)
+					if (player.currentEquippedItem?.item === Blocks.red_flower.toItem() && player.currentEquippedItem.displayName.trim().equals("rosa", true)) player.triggerAchievement(AlfheimAchievements.rosaBomb)
 					
 					val burst = (AlfheimItems.subspaceSpear as ItemSpearSubspace).getBurst(player, ItemStack(AlfheimItems.subspaceSpear))
-					burst.setPosition(posX, posY, posZ)
-					burst.color = 0XFFAF00
-					player.worldObj.spawnEntityInWorld(burst)
-					count++
+					
+					if (burst != null) {
+						burst.setPosition(posX, posY, posZ)
+						burst.color = 0XFFAF00
+						player.worldObj.spawnEntityInWorld(burst)
+						count++
+					}
 				}
 			} else if (type == 1) {
 				if (ticksExisted > delay + 8 && count < 1) {
@@ -106,8 +109,9 @@ class EntitySubspace: EntityThrowableCopy {
 					
 					spear.damage = 8f
 					spear.life = 100
-					spear.rotationYaw = thrower.rotationYaw
+					spear.type = 0
 					spear.pitch = -thrower.rotationPitch
+					spear.rotationYaw = thrower.rotationYaw
 					spear.rotation = MathHelper.wrapAngleTo180_float(-thrower.rotationYaw + 180)
 					spear.shoot(thrower, thrower.rotationPitch, thrower.rotationYaw, 0f, 1.45f, 1f)
 					spear.setPosition(posX, posY, posZ)

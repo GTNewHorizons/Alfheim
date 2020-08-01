@@ -11,7 +11,7 @@ fun glTranslatef(f: Float) = GL11.glTranslatef(f, f, f)
 fun glScaled(d: Double) = GL11.glScaled(d, d, d)
 fun glScalef(f: Float) = GL11.glScalef(f, f, f)
 
-val mc: Minecraft = Minecraft.getMinecraft()
+val mc: Minecraft get() = Minecraft.getMinecraft()
 
 val renderBlocks = RenderBlocks()
 

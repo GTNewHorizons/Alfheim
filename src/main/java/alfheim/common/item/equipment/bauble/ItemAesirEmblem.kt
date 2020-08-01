@@ -3,8 +3,12 @@ package alfheim.common.item.equipment.bauble
 import alexsocol.asjlib.*
 import alfheim.api.ModInfo
 import alfheim.api.item.ColorOverrideHelper
+import alfheim.api.item.equipment.bauble.IManaDiscountBauble
+import alfheim.client.render.world.VisualEffectHandlerClient
+import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.core.helper.IconHelper
 import alfheim.common.core.util.AlfheimTab
+import alfheim.common.item.equipment.bauble.faith.IFaithHandler
 import baubles.api.BaubleType
 import cpw.mods.fml.relauncher.*
 import net.minecraft.client.renderer.*
@@ -12,36 +16,23 @@ import net.minecraft.client.renderer.texture.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
-import net.minecraft.util.MathHelper
+import net.minecraft.util.IIcon
 import net.minecraftforge.client.event.RenderPlayerEvent
 import org.lwjgl.opengl.GL11.*
 import vazkii.botania.api.item.IBaubleRender
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.*
 import vazkii.botania.common.item.equipment.bauble.ItemBauble
 import java.awt.Color
-import kotlin.properties.Delegates
 
-class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem {
+class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem, IManaDiscountBauble {
 	
 	val COST = 2 * ItemPriestEmblem.TYPES
-	var baubleIcon: IIcon by Delegates.notNull()
+	lateinit var baubleIcon: IIcon
 	
 	init {
 		creativeTab = AlfheimTab
 		setHasSubtypes(true)
-	}
-	
-	override fun addInformation(par1ItemStack: ItemStack?, par2EntityPlayer: EntityPlayer?, par3List: MutableList<Any?>?, par4: Boolean) {
-		if (par1ItemStack == null) return
-		this.addStringToTooltip("&7" + StatCollector.translateToLocal("misc.${ModInfo.MODID}.creative") + "&r", par3List)
-		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4)
-	}
-	
-	fun addStringToTooltip(s: String, tooltip: MutableList<Any?>?) {
-		tooltip!!.add(s.replace("&".toRegex(), "\u00a7"))
 	}
 	
 	override fun getUnlocalizedNameInefficiently(par1ItemStack: ItemStack) =
@@ -51,28 +42,31 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 		super.getItemStackDisplayName(stack).replace("&".toRegex(), "\u00a7")
 	
 	@SideOnly(Side.CLIENT)
-	override fun registerIcons(par1IconRegister: IIconRegister) {
-		itemIcon = IconHelper.forItem(par1IconRegister, this)
-		baubleIcon = IconHelper.forItem(par1IconRegister, this, "Render")
+	override fun registerIcons(reg: IIconRegister) {
+		itemIcon = IconHelper.forItem(reg, this)
+		baubleIcon = IconHelper.forItem(reg, this, "Render")
 	}
 	
 	override fun getBaubleType(stack: ItemStack) = BaubleType.AMULET
 	
-	fun getHeadOrientation(entity: EntityLivingBase): Vector3 {
-		val f1 = MathHelper.cos(-entity.rotationYaw * 0.017453292F - Math.PI.F)
-		val f2 = MathHelper.sin(-entity.rotationYaw * 0.017453292F - Math.PI.F)
-		val f3 = -MathHelper.cos(-(entity.rotationPitch - 90) * 0.017453292F)
-		val f4 = MathHelper.sin(-(entity.rotationPitch - 90) * 0.017453292F)
-		return Vector3((f2 * f3).D, f4.D, (f1 * f3).D)
+	override fun onEquippedOrLoadedIntoWorld(stack: ItemStack, player: EntityLivingBase) {
+		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onEquipped(stack, player, IFaithHandler.FaithBauble.EMBLEM)
 	}
 	
 	override fun onWornTick(stack: ItemStack, player: EntityLivingBase) {
-		if (player.ticksExisted % 10 == 0) {
-			if (player is EntityPlayer) {
-				if (ManaItemHandler.requestManaExact(stack, player, COST, true)) ItemNBTHelper.setByte(stack, "active", 1.toByte())
-				else ItemNBTHelper.setByte(stack, "active", 0.toByte())
+		if (player is EntityPlayer) {
+			if (player.ticksExisted % 10 == 0) {
+				val flag: Boolean
+				ItemPriestEmblem.setActive(stack, ManaItemHandler.requestManaExact(stack, player, COST, true).also { flag = it })
+				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.EMBLEM_ACTIVATION, player.dimension, player.entityId.D, if (flag) 1.0 else 0.0)
 			}
+			
+			for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onWornTick(stack, player, IFaithHandler.FaithBauble.EMBLEM)
 		}
+	}
+	
+	override fun onUnequipped(stack: ItemStack, player: EntityLivingBase) {
+		if (player is EntityPlayer) for (i in 0 until ItemPriestEmblem.TYPES) IFaithHandler.getFaithHandler(i).onUnequipped(stack, player, IFaithHandler.FaithBauble.EMBLEM)
 	}
 	
 	override fun usesMana(stack: ItemStack) = true
@@ -82,7 +76,7 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 		if (type == IBaubleRender.RenderType.BODY) {
 			val player = event.entityPlayer
 			if (player.ticksExisted % 10 == 0) {
-				val shift = getHeadOrientation(player)
+				val shift = IFaithHandler.getHeadOrientation(player)
 				val x = player.posX + shift.x * 0.25
 				val y = player.posY + shift.y * 0.25 + if (mc.thePlayer === player) 0f else 1.62f
 				val z = player.posZ + shift.z * 0.25
@@ -106,4 +100,6 @@ class ItemAesirEmblem: ItemBauble("aesirEmblem"), IBaubleRender, IManaUsingItem 
 			ItemRenderer.renderItemIn2D(Tessellator.instance, baubleIcon.maxU, baubleIcon.minV, baubleIcon.minU, baubleIcon.maxV, baubleIcon.iconWidth, baubleIcon.iconHeight, 1F / 32F)
 		}
 	}
+	
+	override fun getDiscount(stack: ItemStack, slot: Int, player: EntityPlayer) = 0.1f
 }

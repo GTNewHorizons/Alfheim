@@ -9,25 +9,62 @@ item.botania:SnowChest.name=Chest of the Blizzard
 item.botania:SnowLeggings.name=Leggings of the Blizzard
 item.botania:SnowBoots.name=Boots of the Blizzard
 
-entity.alfmod:DedMoroz.name=Winter Shogun
-entity.alfmod:SnowSprite.name=Snow Sprite
-entity.alfmod:SniceBall.name=Snice Ball
+item.alfheim:VolcanoRelic.name=Relic of the Volcano
+item.botania:VolcanoMace.name=Mace of the Volcano
+item.botania:VolcanoHelmet.name=Helmet of the Volcano
+item.botania:VolcanoHelmetRevealing.name=Revealing Helmet of the Volcano
+item.botania:VolcanoChest.name=Chest of the Volcano
+item.botania:VolcanoLeggings.name=Leggings of the Volcano
+item.botania:VolcanoBoots.name=Boots of the Volcano
 
-death.attack.alfmod:frost=%s was chilled to bones by %s
+item.alfheim:LavaMelon.name=Lavamelon
+
+entity.alfmod.DedMoroz.name=Winter Shogun
+entity.alfmod.SnowSprite.name=Snow Sprite
+entity.alfmod.SniceBall.name=Snice Ball
+
+entity.alfmod.FireSpirit.name=Fire Spirit
+entity.alfmod.FireSpirit.greater.name=Greater Fire Spirit
+entity.alfmod.Muspellsun.name=Muspellz Sonur
+entity.alfmod.RollingMelon.name=Rolling Watermelon
+entity.alfmod.RollingMelon.lava.name=Rolling Lavamelon
+
+death.attack.frost=%s was chilled to bones by %s
 
 itemGroup.AlfheimModular=Alfheim Modular
 
 alfmod.armorset.snow.name=Snow Shogun Panzer
 alfmod.armorset.snow.desc=20% more Mana cost on Mana Tools and Rods
 
+alfmod.armorset.volcano.name=Magma Elemental
+alfmod.armorset.volcano.desc=20% less Mana cost on Mana Tools and Rods
+
 alfmodmisc.ded.awakening=&bYou've awakened the vengeful Spirit of Winter!
 alfmodmisc.ded.icebound=You feel icy bounds of Winter Shogun's gaze pulling you to the ground
+
+alfmodmisc.spirit.arenacorrupt=Grounds of the ritual are distorted.
+alfmodmisc.spirit.badarena=Grounds of the ritual are improper. Unable to start ritual.
+alfmodmisc.spirit.flamedied=Greater Fire Spirit was eaten by Muspellz Synir. Ritual failed.
+alfmodmisc.spirit.nopylons=Looks like something is wrong with pylons. Check nearest.
+alfmodmisc.spirit.peaceful=The peaceful vibes of your world bring entropy to the ritual, interfering it's observance.
+alfmodmisc.spirit.pylondied=One of supporting Fire Spirits died. The ritual may take longer.
+alfmodmisc.spirit.rain.start=The ritual cannot be performed in bad weather.
+alfmodmisc.spirit.rain.inmid=The sudden rain breaks the ritual.
+alfmodmisc.spirit.success=The ritual has finished.
 
 alfmodmisc.WIP=&4[WIP]&7 Future content, please, keep at least one item
 
 ################ LEXICON ################
 
 alfmod.category.AlfMod=Alfheim Events
+
+alfmod.entry.HV=Hellish Vacation
+alfmod.tagline.HV=The best way to spend your vacation
+alfmod.page.HV0=Everyone loves to eat watermelons, and they are especially eaten during the hot summer, sitting on the veranda of your house or relaxing with friends on the beach. But the watermelons themselves are not delighted with such a rate of eating their congeners. Taking advantage of magical powers, they will try to escape from your garden.
+alfmod.page.HV1=However, summer is not only a time of fun and relaxation, but also a time when the world of fire and flames, &4Muspelheim&0, is temporarily moving closer to the rest of the worlds as it descends from its place after the Shattering. Because of this, the flame is able to penetrate into other worlds.
+alfmod.page.HV2=The favorite delicacy of the fire spirits living in Muspelheim are also melons, but not water ones, but lavamelons, into which ordinary watermelons can occasionally turn, being saturated with the energy of fire instead of water. If you offer them even more fiery energy, it is possible to make a deal with them.
+alfmod.page.HV3=Place the &1Block of Muspelheim Power&0 in the floor of the flat area and place a piece of &1Lavamelon&0 on it. Using &1Yordin Pylons&0 placed around the perimeter, fire spirits will come to the feast. However, other Muspelheim residents may follow them, so be careful and protect fire spirits. They will reward you after.
+alfmod.page.HV4=&oSometimes you may be unlucky and Greater Fire Spirit will turn out to be a masochist. Then, in order for it to do something, it will need to be hurt. Just don't kill it...&0<br><br><br><br>&oIt's not a bug, it's a feature&0
 
 alfmod.entry.WOTW=Wrath of the Winter
 alfmod.tagline.WOTW=The Winter is Coming...

@@ -27,7 +27,7 @@ object RenderWings {
 	
 	@SideOnly(Side.CLIENT)
 	fun render(e: RenderPlayerEvent.Specials.Post, player: EntityPlayer) {
-		player.sendPlayerAbilities()
+		// player.sendPlayerAbilities()
 		
 		val match = customWings.indexOfFirst { ContributorsPrivacyHelper.isCorrect(player, it) }
 		

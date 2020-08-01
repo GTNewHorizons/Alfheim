@@ -6,6 +6,7 @@ import alfheim.api.block.tile.SubTileAnomalyBase
 import alfheim.common.item.equipment.bauble.ItemSpatiotemporalRing
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import vazkii.botania.common.Botania
 import java.util.*
@@ -16,12 +17,13 @@ class SubTileWarp: SubTileAnomalyBase() {
 	
 	override val targets: List<Any>
 		get() {
-			if (!ASJUtilities.isServer) return EMPTY_LIST
+			if (ASJUtilities.isClient) return EMPTY_LIST
 			
 			var l: MutableList<Any>? = null
 			
 			if (ticks % 100 == 0 && !inWG()) {
 				l = allAroundRaw(EntityLivingBase::class.java, radius.D)
+				l.removeAll { it is EntityPlayer && it.capabilities.isCreativeMode }
 				if (l.size > 0) {
 					if (l.size == 1) {
 						l.add(LivingCoords(l.removeAt(0) as EntityLivingBase, x().D, y().D, z().D, radius))
@@ -140,7 +142,7 @@ class SubTileWarp: SubTileAnomalyBase() {
 	private fun rand(l: MutableList<Any>) = l.removeAt(worldObj.rand.nextInt(l.size)) as EntityLivingBase
 	
 	override fun performEffect(target: Any) {
-		if (!ASJUtilities.isServer) return
+		if (ASJUtilities.isClient) return
 		
 		if (!inWG()) {
 			if (target is LivingPair) {

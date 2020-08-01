@@ -8,6 +8,7 @@ import alfheim.common.block.alt.*
 import alfheim.common.block.base.*
 import alfheim.common.block.colored.*
 import alfheim.common.block.colored.rainbow.*
+import alfheim.common.block.corporea.BlockCorporeaAutocrafter
 import alfheim.common.block.magtrees.calico.*
 import alfheim.common.block.magtrees.circuit.*
 import alfheim.common.block.magtrees.lightning.*
@@ -29,6 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreDictionary.registerOre
 import vazkii.botania.api.BotaniaAPI
+import vazkii.botania.api.subtile.SubTileEntity
 import vazkii.botania.common.block.*
 
 object AlfheimBlocks {
@@ -48,12 +50,18 @@ object AlfheimBlocks {
 	val auroraSlabFull: Block
 	val auroraStairs: Block
 	val auroraWood: Block
+	val barrel: Block
 	val barrier: Block
+	val corporeaAutocrafter: Block
 	val dreamSapling: Block
 	val elvenOre: Block
 	val elvenSand: Block
+	val enderActuator: Block
 	val flugelHeadBlock: Block
 	val flugelHead2Block: Block
+	val grapesRed: Array<Block>
+	val grapesRedPlanted: Block
+	val grapesWhite: Block
 	val itemDisplay: Block
 	val invisibleFlame: Block
 	val irisDirt: Block
@@ -184,7 +192,9 @@ object AlfheimBlocks {
 		auroraSlabFull.register()
 		auroraStairs = BlockAuroraWoodStairs()
 		auroraWood = BlockAuroraWood()
+		barrel = BlockBarrel()
 		barrier = BlockBarrier()
+		corporeaAutocrafter = BlockCorporeaAutocrafter()
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {
@@ -194,8 +204,12 @@ object AlfheimBlocks {
 				else -> super.canSustainPlant(world, x, y, z, direction, plantable)
 			}
 		}
+		enderActuator = BlockEnderActuator()
 		flugelHeadBlock = BlockHeadFlugel()
 		flugelHead2Block = BlockHeadMiku()
+		grapesRed = Array(3) { BlockGrapeRed(it) }
+		grapesRedPlanted = BlockGrapeRedPlanted()
+		grapesWhite = BlockGrapeWhite()
 		itemDisplay = BlockItemDisplay()
 		invisibleFlame = BlockManaFlame("invisibleFlame", TileInvisibleManaFlame::class.java)
 		irisDirt = BlockColoredDirt()
@@ -599,11 +613,13 @@ object AlfheimBlocks {
 	}
 	
 	fun registerFlora() {
-		BotaniaAPI.registerSubTile("crysanthermum", SubTileCrysanthermum::class.java)
-		BotaniaAPI.registerSubTileSignature(SubTileCrysanthermum::class.java, ShadowFoxSignature("crysanthermum"))
-		
-		BotaniaAPI.subTileMods["crysanthermum"] = "Iridescense"
-		BotaniaAPI.addSubTileToCreativeMenu("crysanthermum")
+		addSubFlower(SubTileCrysanthermum::class.java, "crysanthermum")
+		addSubFlower(SubTileOrechidEndium::class.java, "orechidEndium")
+		addSubFlower(SubTilePetronia::class.java, "petronia")
+		addSubFlower(SubTileRainFlower::class.java, "rainFlower")
+		addSubFlower(SubTileSnowFlower::class.java, "snowFlower")
+		addSubFlower(SubTileStormFlower::class.java, "stormFlower")
+		addSubFlower(SubTileWindFlower::class.java, "windFlower")
 		
 		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood0, irisLeaves0, 0, 3)
 		ShadowFoxAPI.addTreeVariant(irisDirt, irisWood1, irisLeaves0, 4, 7)
@@ -613,6 +629,13 @@ object AlfheimBlocks {
 		ShadowFoxAPI.addTreeVariant(auroraDirt, auroraWood, auroraLeaves)
 		ShadowFoxAPI.addTreeVariant(ModBlocks.altGrass, altWood0, altLeaves, 0, 3)
 		ShadowFoxAPI.addTreeVariant(ModBlocks.altGrass, altWood1, altLeaves, 4, 5)
+	}
+	
+	fun addSubFlower(clazz: Class<out SubTileEntity>, name: String) {
+		BotaniaAPI.registerSubTile(name, clazz)
+		BotaniaAPI.registerSubTileSignature(clazz, ShadowFoxSignature(name))
+		BotaniaAPI.addSubTileToCreativeMenu(name)
+		AlfheimTab.subtiles.add(name)
 	}
 	
 	fun Block.setHarvestLevelI(toolClass: String, level: Int) = also { it.setHarvestLevel(toolClass, level) }

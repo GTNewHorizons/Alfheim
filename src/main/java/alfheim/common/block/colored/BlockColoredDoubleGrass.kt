@@ -1,5 +1,6 @@
 package alfheim.common.block.colored
 
+import alexsocol.asjlib.id
 import alfheim.api.lib.LibRenderIDs
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.base.IDoublePlant
@@ -106,7 +107,7 @@ class BlockColoredDoubleGrass(var colorSet: Int): BlockDoublePlant(), IDoublePla
 	
 	// stupid private methods
 	fun superSuperHarvestBlock(world: World, player: EntityPlayer, x: Int, y: Int, z: Int, meta: Int) {
-		player.addStat(StatList.mineBlockStatArray[getIdFromBlock(this)], 1)
+		player.addStat(StatList.mineBlockStatArray[id], 1)
 		player.addExhaustion(0.025f)
 		
 		if (this.canSilkHarvest(world, player, x, y, z, meta) && EnchantmentHelper.getSilkTouchModifier(player)) {

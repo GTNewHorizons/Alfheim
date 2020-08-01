@@ -30,6 +30,12 @@ object AlfheimModularTab: CreativeTabs("AlfheimModular") {
 		addItem(AlfheimModularItems.snowChest)
 		addItem(AlfheimModularItems.snowLeggings)
 		addItem(AlfheimModularItems.snowBoots)
+		
+		addItem(AlfheimModularItems.volcanoMace)
+		addItem(AlfheimModularItems.volcanoHelmet)
+		addItem(AlfheimModularItems.volcanoChest)
+		addItem(AlfheimModularItems.volcanoLeggings)
+		addItem(AlfheimModularItems.volcanoBoots)
 	}
 	
 	fun addBlock(block: Block) {

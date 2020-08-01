@@ -1,5 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
+import alexsocol.asjlib.get
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.entity.EntityLivingBase
@@ -29,14 +30,14 @@ class ItemCrescentMoonAmulet: ItemPendant("CrescentMoonAmulet"), IManaUsingItem 
 		if (!e.source.isDamageAbsolute && e.entityLiving is EntityPlayer) {
 			val player = e.entityLiving as EntityPlayer
 			val bbls = PlayerHandler.getPlayerBaubles(player)
-			if (bbls?.getStackInSlot(0)?.item is ItemCrescentMoonAmulet)
+			if (bbls?.get(0)?.item is ItemCrescentMoonAmulet)
 				if (e.source.isMagicDamage) {
-					if (ItemNBTHelper.getInt(bbls.getStackInSlot(0), TAG_COOLDOWN, 0) <= 0) {
-						ItemNBTHelper.setInt(bbls.getStackInSlot(0), TAG_COOLDOWN, 100)
+					if (ItemNBTHelper.getInt(bbls[0], TAG_COOLDOWN, 0) <= 0) {
+						ItemNBTHelper.setInt(bbls[0], TAG_COOLDOWN, 100)
 						e.ammount = max(0f, e.ammount - 10)
 					}
 				} else
-					e.ammount -= ManaItemHandler.requestMana(bbls.getStackInSlot(0), player, MathHelper.ceiling_float_int(e.ammount * MANA_PER_DAMAGE), true) / (MANA_PER_DAMAGE * 10f)
+					e.ammount -= ManaItemHandler.requestMana(bbls[0], player, MathHelper.ceiling_float_int(e.ammount * MANA_PER_DAMAGE), true) / (MANA_PER_DAMAGE * 10f)
 		}
 	}
 	

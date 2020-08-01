@@ -1,8 +1,10 @@
 package alfheim.client.integration.nei.recipes
 
-import alfheim.api.*
+import alexsocol.asjlib.mc
+import alexsocol.asjlib.render.ASJRenderHelper
+import alfheim.api.AlfheimAPI
+import alfheim.api.lib.LibResourceLocations
 import alfheim.common.block.BlockTradePortal
-import codechicken.lib.gui.GuiDraw
 import codechicken.nei.*
 import codechicken.nei.recipe.TemplateRecipeHandler
 import net.minecraft.client.renderer.entity.RenderItem
@@ -74,10 +76,10 @@ class RecipeHandlerTradePortal: TemplateRecipeHandler() {
 		super.drawBackground(recipe)
 		glEnable(GL_BLEND)
 		glColor4f(1f, 1f, 1f, 0.7f)
-		GuiDraw.changeTexture(ModInfo.MODID + ":textures/gui/TradePortalOverlay.png")
-		GuiDraw.drawTexturedModalRect(30, 10, 17, 17, 100, 80)
+		mc.renderEngine.bindTexture(LibResourceLocations.tradePortalOverlay)
+		ASJRenderHelper.drawTexturedModalRect(30, 10, 0, 17, 17, 100, 80)
 		glDisable(GL_BLEND)
-		GuiDraw.changeTexture(TextureMap.locationBlocksTexture)
+		mc.renderEngine.bindTexture(TextureMap.locationBlocksTexture)
 		RenderItem.getInstance().renderIcon(35, 29, BlockTradePortal.textures[1], 48, 48)
 	}
 	

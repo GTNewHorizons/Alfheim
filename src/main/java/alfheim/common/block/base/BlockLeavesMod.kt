@@ -1,6 +1,6 @@
 package alfheim.common.block.base
 
-import alexsocol.asjlib.mc
+import alexsocol.asjlib.*
 import alfheim.common.core.helper.*
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.item.block.ItemSubtypedBlockMod
@@ -27,7 +27,7 @@ abstract class BlockLeavesMod: BlockLeaves(), IShearable, ILexiconable {
 		setHardness(0.2f)
 		setLightOpacity(1)
 		setStepSound(Block.soundTypeGrass)
-		if (FMLLaunchHandler.side().isClient && isInterpolated())
+		if (ASJUtilities.isClient && isInterpolated())
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

@@ -4,7 +4,6 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.boss.IBotaniaBossWithName
 import cpw.mods.fml.relauncher.*
-import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.command.IEntitySelector
@@ -51,7 +50,7 @@ class EntityRook(world: World): EntityCreature(world), IBotaniaBossWithName { //
 			val k = posZ.mfloor()
 			val block = worldObj.getBlock(i, j, k)
 			
-			if (block.material !== Material.air) worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + worldObj.getBlockMetadata(i, j, k), posX + (rand.nextFloat().D - 0.5) * width.D, boundingBox.minY + 0.1, posZ + (rand.nextFloat().D - 0.5) * width.D, 4.0 * (rand.nextFloat().D - 0.5), 0.5, (rand.nextFloat().D - 0.5) * 4.0)
+			if (block.material !== Material.air) worldObj.spawnParticle("blockcrack_${block.id}_" + worldObj.getBlockMetadata(i, j, k), posX + (rand.nextFloat().D - 0.5) * width.D, boundingBox.minY + 0.1, posZ + (rand.nextFloat().D - 0.5) * width.D, 4.0 * (rand.nextFloat().D - 0.5), 0.5, (rand.nextFloat().D - 0.5) * 4.0)
 		}
 	}
 	

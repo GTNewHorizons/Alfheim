@@ -17,6 +17,7 @@ import alfheim.client.render.particle.*
 import alfheim.client.render.tile.*
 import alfheim.common.block.AlfheimBlocks
 import alfheim.common.block.tile.*
+import alfheim.common.core.asm.hook.extender.FurnaceHandler
 import alfheim.common.core.handler.*
 import alfheim.common.core.proxy.CommonProxy
 import alfheim.common.crafting.recipe.AlfheimRecipes
@@ -30,7 +31,6 @@ import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
 import alfheim.common.item.AlfheimItems
 import alfheim.common.lexicon.AlfheimLexiconData
 import cpw.mods.fml.client.registry.*
-import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.world.World
 import net.minecraftforge.client.MinecraftForgeClient
@@ -65,6 +65,9 @@ class ClientProxy: CommonProxy() {
 		MinecraftForgeClient.registerItemRenderer(AlfheimItems.royalStaff, RenderItemRoyalStaff)
 		
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idAnyavil, RenderBlockAnyavil)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idBarrel, RenderBlockBarrel)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idGrapeRedPlanted, RenderBlockGrapeRedPlanted)
+		RenderingRegistry.registerBlockHandler(LibRenderIDs.idGrapeWhite, RenderBlockGrapeGreen)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idHarvester, RenderBlockAnomalyHarvester)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idManaAccelerator, RenderBlockItemHolder)
 		RenderingRegistry.registerBlockHandler(LibRenderIDs.idPowerStone, RenderBlockPowerStone)
@@ -78,6 +81,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomaly::class.java, RenderTileAnomaly)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnomalyHarvester::class.java, RenderTileAnomalyHarvester)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileAnyavil::class.java, RenderTileAnyavil)
+		ClientRegistry.bindTileEntitySpecialRenderer(TileBarrel::class.java, RenderTileBarrel)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadFlugel::class.java, RenderTileHeadFlugel)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHeadMiku::class.java, RenderTileHeadMiku)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileManaAccelerator::class.java, RenderTileManaAccelerator)
@@ -87,6 +91,7 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTransferer::class.java, RenderTileTransferer)
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlfheimPixie::class.java, RenderEntityAlfheimPixie)
+		RenderingRegistry.registerEntityRenderingHandler(EntityButterfly::class.java, RenderEntityButterfly)
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel)
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark)
@@ -109,6 +114,8 @@ class ClientProxy: CommonProxy() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemDisplay::class.java, RenderTileItemDisplay)
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStar::class.java, RenderStar)
 		
+		RenderingRegistry.registerEntityRenderingHandler(EntityMjolnir::class.java, RenderEntityMjolnir())
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrownPotion::class.java, RenderEntityThrownPotion)
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrowableItem::class.java, RenderEntityThrownItem)
 		
@@ -126,10 +133,11 @@ class ClientProxy: CommonProxy() {
 	
 	override fun initializeAndRegisterHandlers() {
 		super.initializeAndRegisterHandlers()
-		MinecraftForge.EVENT_BUS.register(EventHandlerClient)
-		FMLCommonHandler.instance().bus().register(EventHandlerClient)
-		if (ConfigHandler.boundBlockWireframe) MinecraftForge.EVENT_BUS.register(DoubleBoundItemRender)
-		if (AlfheimCore.TravellersGearLoaded) MinecraftForge.EVENT_BUS.register(TGHandlerBotaniaRenderer)
+		EventHandlerClient
+		FurnaceHandler
+		GUIAggro().eventForge()
+		if (ConfigHandler.boundBlockWireframe) DoubleBoundItemRender
+		if (AlfheimCore.TravellersGearLoaded) TGHandlerBotaniaRenderer
 		if (AlfheimConfigHandler.enableElvenStory) enableESMGUIs()
 		if (AlfheimConfigHandler.enableMMO) enableMMOGUIs()
 		

@@ -35,7 +35,7 @@ class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexicona
 	override fun getLightValue(world: IBlockAccess, x: Int, y: Int, z: Int) =
 		(world.getTileEntity(x, y, z) as TileEntityStar).getLightColor()
 	
-	override fun registerBlockIcons(par1IconRegister: IIconRegister) = Unit
+	override fun registerBlockIcons(reg: IIconRegister) = Unit
 	
 	override fun getRenderType(): Int = -1
 	

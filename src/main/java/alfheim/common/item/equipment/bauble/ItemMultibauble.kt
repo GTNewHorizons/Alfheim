@@ -1,6 +1,6 @@
 package alfheim.common.item.equipment.bauble
 
-import alexsocol.asjlib.ASJUtilities
+import alexsocol.asjlib.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.util.AlfheimTab
 import baubles.api.*
@@ -28,7 +28,7 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 		val slot = ASJUtilities.getSlotWithItem(ModItems.baubleBox, player.inventory)
 		if (slot == -1) return
 		
-		val baubles = ItemBaubleBox.loadStacks(player.inventory.getStackInSlot(slot))
+		val baubles = ItemBaubleBox.loadStacks(player.inventory[slot])
 		
 		baubles.forEachIndexed {
 			i, bauble ->

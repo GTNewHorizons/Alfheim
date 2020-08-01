@@ -16,6 +16,7 @@ object AlfheimModularLexiconData {
 	
 	var categoryModular: LexiconCategory
 	
+	var HV: LexiconEntry
 	var WOTW: LexiconEntry
 	
 	init {
@@ -28,7 +29,12 @@ object AlfheimModularLexiconData {
 		
 		BotaniaAPI.addCategory(categoryModular)
 		
+		HV = AMLexiconEntry("HV", categoryModular)
 		WOTW = AMLexiconEntry("WOTW", categoryModular)
+		
+		HV.setLexiconPages(PageText("0"), PageText("1"), PageText("2"), PageText("3"), PageText("4"))
+			.setKnowledgeType(AlfheimLexiconData.kt)
+			.icon = ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.VolcanoRelic)
 		
 		WOTW.setLexiconPages(PageText("0"), PageText("1"), PageText("2"))
 			.setKnowledgeType(AlfheimLexiconData.kt)

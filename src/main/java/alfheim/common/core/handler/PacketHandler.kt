@@ -1,5 +1,6 @@
 package alfheim.common.core.handler
 
+import alexsocol.asjlib.get
 import alfheim.common.item.equipment.bauble.*
 import alfheim.common.network.Message0dS
 import alfheim.common.network.Message0dS.m0ds
@@ -27,10 +28,10 @@ object PacketHandler {
 		player.worldObj.playSoundAtEntity(player, "botania:dash", 1f, 1f)
 		
 		val baublesInv = PlayerHandler.getPlayerBaubles(player)
-		var ringStack: ItemStack? = baublesInv.getStackInSlot(1)
+		var ringStack: ItemStack? = baublesInv[1]
 		
 		if (ringStack == null || ringStack.item !is ItemDodgeRing) {
-			ringStack = baublesInv.getStackInSlot(2)
+			ringStack = baublesInv[2]
 			if (ringStack == null || ringStack.item !is ItemDodgeRing) {
 				sh.netManager.closeChannel(ChatComponentTranslation("alfheimmisc.invalidDodge"))
 				return
@@ -48,13 +49,13 @@ object PacketHandler {
 	
 	private fun jump(player: EntityPlayerMP) {
 		val baublesInv = PlayerHandler.getPlayerBaubles(player)
-		val amuletStack = baublesInv.getStackInSlot(0)
+		val amuletStack = baublesInv[0]
 		
 		if (amuletStack != null && amuletStack.item is ItemCloudPendant) {
 			player.addExhaustion(0.3f)
 			player.fallDistance = 0f
 			
-			val belt = baublesInv.getStackInSlot(3)
+			val belt = baublesInv[3]
 			
 			if (belt != null && belt.item is ItemTravelBelt) {
 				val fall = (belt.item as ItemTravelBelt).fallBuffer

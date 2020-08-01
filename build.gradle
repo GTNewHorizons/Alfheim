@@ -44,8 +44,8 @@ repositories {
 	mavenCentral()
 }
 
-version = mainMod ? "BETA-33" : "8"
-group= "main"
+version = mainMod ? "BETA-34" : "8"
+group = "main"
 archivesBaseName = mainMod ? "Alfheim" : "Alfheim-Modular"
 
 minecraft {
@@ -68,7 +68,7 @@ dependencies {
 	
 	compile name: "MineTweaker3", group: "minetweaker", version: "1.7.10-3.0.10B", classifier: "Dev-Full"
 	
-	// compile "mantle:Mantle:1.7.10-0.3.2.jenkins207:deobf"
+//	compile "mantle:Mantle:1.7.10-0.3.2.jenkins207:deobf"
 	compile "tconstruct:TConstruct:1.7.10-1.8.8.build991:deobf"
 	
 	compile fileTree(dir: 'lib', include: ['*.jar'])

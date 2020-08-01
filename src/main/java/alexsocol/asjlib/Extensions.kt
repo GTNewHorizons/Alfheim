@@ -1,9 +1,11 @@
 package alexsocol.asjlib
 
+import alexsocol.asjlib.math.Vector3
 import cpw.mods.fml.common.FMLCommonHandler
 import net.minecraft.block.Block
 import net.minecraft.entity.*
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.inventory.IInventory
 import net.minecraft.item.*
 import net.minecraft.potion.PotionEffect
 import net.minecraft.stats.Achievement
@@ -14,9 +16,12 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.oredict.OreDictionary
 import kotlin.math.*
 
+fun Int.bidiRange(range: Int) = (this - range)..(this + range)
+
 fun safeIndex(id: Int, size: Int) = max(0, min(id, size - 1))
 fun <T> List<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
 fun <T> Array<T>.safeGet(id: Int): T = this[safeIndex(id, size)]
+fun <T> Array<T>.shuffled(): MutableList<T> = toMutableList().apply { shuffle() }
 
 /**
  * Makes a list of [Pair]s from original [Iterable] (zero to first, second to third, etc)
@@ -38,6 +43,13 @@ fun <T> MutableCollection<T>.removeRandom(): T {
 	return this.random().also { remove(it) }
 }
 
+fun <T> Array<T?>.ensureCapacity(min: Int): Array<T?> {
+	if (size >= min) return this
+	val new = copyOf(min)
+	System.arraycopy(this, 0, new, 0, size)
+	return new
+}
+
 fun String.substringEnding(lastNChars: Int): String = this.substring(0, length - lastNChars)
 
 val Number.D get() = this.toDouble()
@@ -46,12 +58,13 @@ val Number.I get() = this.toInt()
 
 // ################ MINECRAFT ####################
 
+/** Free fall acceleration */
+const val g = 0.08 * 0.9800000190734863
+
 fun Int.clamp(min: Int, max: Int) = MathHelper.clamp_int(this, min, max)
 fun Float.clamp(min: Float, max: Float) = MathHelper.clamp_float(this, min, max)
 fun Double.clamp(min: Double, max: Double) = MathHelper.clamp_double(this, min, max)
 fun Double.mfloor() = MathHelper.floor_double(this)
-
-fun Entity.boundingBox(range: Number = 1) = getBoundingBox(posX, posY, posZ).expand(range)
 
 fun Entity.setSize(wid: Double, hei: Double) {
 	var f2: Float
@@ -81,9 +94,11 @@ fun Entity.setSize(wid: Double, hei: Double) {
 	}
 }
 
-fun TileEntity.boundingBox(range: Number = 1) = getBoundingBox(xCoord.D, yCoord.D, zCoord).expand(range)
-
 fun getBoundingBox(x: Number, y: Number, z: Number) = AxisAlignedBB.getBoundingBox(x.D, y.D, z.D, x.D, y.D, z.D)!!
+
+fun TileEntity.boundingBox(range: Number = 0) = AxisAlignedBB.getBoundingBox(xCoord.D, yCoord.D, zCoord.D, xCoord.D + 1, yCoord.D + 1, zCoord.D + 1).expand(range)
+
+fun Entity.boundingBox(range: Number = 0) = AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX + width, posY + height, posZ + width).expand(range)
 
 fun AxisAlignedBB.expand(d: Number) = this.expand(d.D, d.D, d.D)!!
 
@@ -93,7 +108,19 @@ fun Entity.playSoundAtEntity(sound: String, volume: Float, duration: Float) {
 	worldObj.playSoundEffect(posX, posY, posZ, sound, volume, duration)
 }
 
-fun Entity.setPosition(e: Entity) = setPosition(e.posX, e.posY, e.posZ)
+fun Entity.setPosition(e: Entity, oX: Double = 0.0, oY: Double = 0.0, oZ: Double = 0.0) = setPosition(e.posX + oX, e.posY + oY, e.posZ + oZ)
+
+fun Entity.setPosition(c: ChunkCoordinates) = setPosition(c.posX.D, c.posY.D, c.posZ.D)
+
+fun Entity.setMotion(x: Double, y: Double = x, z: Double = y) {
+	motionX = x
+	motionY = y
+	motionZ = z
+}
+
+operator fun ChunkCoordinates.component1() = this.posX
+operator fun ChunkCoordinates.component2() = this.posY
+operator fun ChunkCoordinates.component3() = this.posZ
 
 fun EntityLivingBase.getActivePotionEffect(id: Int) = activePotionsMap[id] as PotionEffect?
 
@@ -133,8 +160,13 @@ var ItemStack.meta
 		itemDamage = meta
 	}
 
+operator fun IInventory.get(i: Int): ItemStack? = getStackInSlot(i)
+operator fun IInventory.set(i: Int, stack: ItemStack?) = setInventorySlotContents(i, stack)
+
 fun Block.toItem(): Item? = Item.getItemFromBlock(this)
 fun Item.toBlock(): Block? = Block.getBlockFromItem(this)
+val Block.id get() = Block.getIdFromBlock(this)
+val Item.id get() = Item.getIdFromItem(this)
 val ItemStack.block: Block? get() = item.toBlock()
 
 fun <T> T.eventForge(): T {
@@ -148,3 +180,17 @@ fun <T> T.eventFML(): T {
 }
 
 fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0
+
+fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Block {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return getBlock(i.I + x, j.I + y, k.I + z)
+}
+fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEntity? {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return getTileEntity(i.I + x, j.I + y, k.I + z)
+}
+
+fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0): Boolean {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return setBlock(i.I + x, j.I + y, k.I + z, block, meta, 3)
+}

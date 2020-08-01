@@ -33,7 +33,7 @@ class BlockSnowGrass: BlockMod(Material.grass), IGrowable {
 	}!!
 	
 	override fun registerBlockIcons(reg: IIconRegister) = Unit
-	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, hz: Boolean) = true
+	override fun func_149851_a(world: World?, x: Int, y: Int, z: Int, isRemote: Boolean) = true
 	override fun func_149852_a(world: World?, random: Random?, x: Int, y: Int, z: Int) = true
 	override fun func_149853_b(world: World?, random: Random?, x: Int, y: Int, z: Int) = Unit
 	override fun canSustainPlant(world: IBlockAccess?, x: Int, y: Int, z: Int, direction: ForgeDirection?, plantable: IPlantable?) = true

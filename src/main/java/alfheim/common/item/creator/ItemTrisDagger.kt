@@ -47,7 +47,7 @@ class ItemTrisDagger(val name: String = "reactionDagger", val toolMaterial: Tool
 		maxStackSize = 1
 		unlocalizedName = name
 		DaggerEventHandler.register()
-		if (FMLLaunchHandler.side().isClient)
+		if (ASJUtilities.isClient)
 			MinecraftForge.EVENT_BUS.register(this)
 	}
 	

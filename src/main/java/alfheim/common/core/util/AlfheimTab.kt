@@ -20,6 +20,7 @@ import alfheim.common.block.AlfheimBlocks.auroraPlanks
 import alfheim.common.block.AlfheimBlocks.auroraSlab
 import alfheim.common.block.AlfheimBlocks.auroraStairs
 import alfheim.common.block.AlfheimBlocks.auroraWood
+import alfheim.common.block.AlfheimBlocks.barrel
 import alfheim.common.block.AlfheimBlocks.calicoLeaves
 import alfheim.common.block.AlfheimBlocks.calicoPlanks
 import alfheim.common.block.AlfheimBlocks.calicoSapling
@@ -32,9 +33,13 @@ import alfheim.common.block.AlfheimBlocks.circuitSapling
 import alfheim.common.block.AlfheimBlocks.circuitSlabs
 import alfheim.common.block.AlfheimBlocks.circuitStairs
 import alfheim.common.block.AlfheimBlocks.circuitWood
+import alfheim.common.block.AlfheimBlocks.corporeaAutocrafter
 import alfheim.common.block.AlfheimBlocks.dreamSapling
 import alfheim.common.block.AlfheimBlocks.elvenOre
 import alfheim.common.block.AlfheimBlocks.elvenSand
+import alfheim.common.block.AlfheimBlocks.enderActuator
+import alfheim.common.block.AlfheimBlocks.grapesRed
+import alfheim.common.block.AlfheimBlocks.grapesWhite
 import alfheim.common.block.AlfheimBlocks.irisDirt
 import alfheim.common.block.AlfheimBlocks.irisGrass
 import alfheim.common.block.AlfheimBlocks.irisLamp
@@ -139,6 +144,7 @@ import alfheim.common.block.AlfheimFluffBlocks.shrineRockWhiteStairs
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.helper.ContributorsPrivacyHelper
 import alfheim.common.item.AlfheimItems.`DEV-NULL`
+import alfheim.common.item.AlfheimItems.aesirCloak
 import alfheim.common.item.AlfheimItems.aesirEmblem
 import alfheim.common.item.AlfheimItems.akashicRecords
 import alfheim.common.item.AlfheimItems.astrolabe
@@ -160,17 +166,19 @@ import alfheim.common.item.AlfheimItems.elementalLeggings
 import alfheim.common.item.AlfheimItems.elementiumHoe
 import alfheim.common.item.AlfheimItems.elfFirePendant
 import alfheim.common.item.AlfheimItems.elfIcePendant
+import alfheim.common.item.AlfheimItems.elvenFood
 import alfheim.common.item.AlfheimItems.elvenResource
 import alfheim.common.item.AlfheimItems.elvoriumBoots
 import alfheim.common.item.AlfheimItems.elvoriumChestplate
 import alfheim.common.item.AlfheimItems.elvoriumHelmet
 import alfheim.common.item.AlfheimItems.elvoriumLeggings
-import alfheim.common.item.AlfheimItems.emblem
+import alfheim.common.item.AlfheimItems.enlighter
 import alfheim.common.item.AlfheimItems.excaliber
 import alfheim.common.item.AlfheimItems.fireGrenade
 import alfheim.common.item.AlfheimItems.flugelDisc
 import alfheim.common.item.AlfheimItems.flugelHead
 import alfheim.common.item.AlfheimItems.flugelSoul
+import alfheim.common.item.AlfheimItems.gungnir
 import alfheim.common.item.AlfheimItems.hyperBucket
 import alfheim.common.item.AlfheimItems.invisibilityCloak
 import alfheim.common.item.AlfheimItems.invisibleFlameLens
@@ -184,12 +192,23 @@ import alfheim.common.item.AlfheimItems.manaStone
 import alfheim.common.item.AlfheimItems.manaStoneGreater
 import alfheim.common.item.AlfheimItems.manasteelHoe
 import alfheim.common.item.AlfheimItems.mask
+import alfheim.common.item.AlfheimItems.mjolnir
 import alfheim.common.item.AlfheimItems.moonlightBow
 import alfheim.common.item.AlfheimItems.multibauble
 import alfheim.common.item.AlfheimItems.paperBreak
 import alfheim.common.item.AlfheimItems.peacePipe
+import alfheim.common.item.AlfheimItems.pendantSuperIce
 import alfheim.common.item.AlfheimItems.pixieAttractor
+import alfheim.common.item.AlfheimItems.priestCloak
+import alfheim.common.item.AlfheimItems.priestEmblem
+import alfheim.common.item.AlfheimItems.priestRingHeimdall
+import alfheim.common.item.AlfheimItems.priestRingNjord
+import alfheim.common.item.AlfheimItems.priestRingSif
+import alfheim.common.item.AlfheimItems.rationBelt
 import alfheim.common.item.AlfheimItems.realitySword
+import alfheim.common.item.AlfheimItems.ringFeedFlower
+import alfheim.common.item.AlfheimItems.ringSpider
+import alfheim.common.item.AlfheimItems.rodClicker
 import alfheim.common.item.AlfheimItems.rodColorfulSkyDirt
 import alfheim.common.item.AlfheimItems.rodFire
 import alfheim.common.item.AlfheimItems.rodFlameStar
@@ -197,6 +216,7 @@ import alfheim.common.item.AlfheimItems.rodGrass
 import alfheim.common.item.AlfheimItems.rodIce
 import alfheim.common.item.AlfheimItems.rodInterdiction
 import alfheim.common.item.AlfheimItems.rodLightning
+import alfheim.common.item.AlfheimItems.rodPortal
 import alfheim.common.item.AlfheimItems.rodPrismatic
 import alfheim.common.item.AlfheimItems.royalStaff
 import alfheim.common.item.AlfheimItems.soulHorn
@@ -211,10 +231,15 @@ import alfheim.common.item.AlfheimItems.wiltedLotus
 import alfheim.common.item.AlfheimItems.wireAxe
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.init.Blocks
 import net.minecraft.item.*
 import vazkii.botania.common.block.ModBlocks
+import vazkii.botania.common.item.ModItems
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower
 
 object AlfheimTab: CreativeTabs("Alfheim") {
+	
+	val subtiles = HashSet<String>()
 	
 	override fun getTabIconItem() = alfheimPortal.toItem()
 	
@@ -233,10 +258,13 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		`DEV-NULL`?.let { addItem(it) }
 		
 		addBlock(manaInfuser)
+		addBlock(corporeaAutocrafter)
 		addBlock(alfheimPortal)
 		addBlock(tradePortal)
+		addBlock(Blocks.furnace, 8)
 		addBlock(ModBlocks.spreader, 4)
-		// addBlock(anomalyHarvester) // FIXME back!
+		addBlock(enderActuator)
+		// addBlock(anomalyHarvester) // BACK
 		addBlock(anyavil)
 		addBlock(alfheimPylon)
 		addBlock(manaAccelerator)
@@ -248,17 +276,21 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(kindling)
 		addBlock(alfStorage)
 		addBlock(rainbowPetalBlock)
+		addBlock(barrel)
 		
-		if (AlfheimCore.jingleTheBells) {
+		if (AlfheimCore.winter) {
 			addBlock(snowGrass)
 			addBlock(snowLayer)
 		}
 		
 		addItem (elvenResource)
+		addItem (elvenFood)
 		addItem (wiltedLotus)
 		addItem (flugelHead)
 		addItem (flugelDisc)
 		
+		addItem (priestCloak)
+		addItem (aesirCloak)
 		addItem (balanceCloak)
 		addItem (invisibilityCloak)
 		//addItem (toolbelt)
@@ -269,36 +301,55 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addItem (manaRingGod)
 		addItem (auraRingGod)
 		addItem (dodgeRing)
+		addItem (ringSpider)
+		addItem (ringFeedFlower)
 		addItem (colorOverride)
 		addItem (multibauble)
 		addItem (spatiotemporalRing)
+		addItem (ModItems.thorRing)
+		addItem (priestRingSif)
+		addItem (priestRingNjord)
+		addItem (ModItems.lokiRing)
+		addItem (priestRingHeimdall)
+		addItem (ModItems.odinRing)
+		addItem (ModItems.aesirRing)
 		addItem (attributionBauble)
-		addItem (emblem)
+		addItem (priestEmblem)
 		addItem (aesirEmblem)
 		addItem (creativeReachPendant)
 		addItem (elfFirePendant)
 		addItem (elfIcePendant)
 		addItem (crescentMoonAmulet)
+		addItem (pendantSuperIce)
 		addItem (cloudPendant)
 		addItem (cloudPendantSuper)
 		addItem (pixieAttractor)
+		addItem (rationBelt)
 		
 		addItem (astrolabe)
 		addItem (triquetrum)
+		addItem (enlighter)
 		addItem (lootInterceptor)
 		addItem (hyperBucket)
 		addItem (manaMirrorImba)
 		addItem (invisibleFlameLens)
+		
+		(22..27).mapTo(list) {
+			ItemStack(ModItems.lens, 1, it)
+		}
+		
 		addItem (soulHorn)
 		addItem (soulHorn, 1)
 		
 		addItem (rodFire)
 		addItem (rodIce)
 		addItem (rodLightning)
+		addItem (rodColorfulSkyDirt)
 		addItem (rodInterdiction)
 		addItem (rodFlameStar)
 		addItem (rodPrismatic)
-		addItem (rodColorfulSkyDirt)
+		addItem (rodPortal)
+		addItem (rodClicker)
 		addItem (rodGrass)
 		addItem (livingrockPickaxe)
 		addItem (manasteelHoe)
@@ -318,8 +369,10 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		
 		//addItem (storyToken)
 		
+		addItem (mjolnir)
 		addItem (excaliber)
 		addItem (subspaceSpear)
+		addItem (gungnir)
 		addItem (moonlightBow)
 		addItem (mask)
 		addItem (flugelSoul)
@@ -369,6 +422,13 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(calicoSapling)
 		addBlock(sealingSapling)
 		addBlock(dreamSapling)
+		
+		addBlock(grapesRed[0])
+		addBlock(grapesWhite)
+		
+		subtiles.mapTo(list) {
+			ItemBlockSpecialFlower.ofType(it)
+		}
 		
 		if (AlfheimConfigHandler.enableMMO) addItem (paperBreak)
 		if (AlfheimConfigHandler.enableMMO) addItem (peacePipe)
@@ -489,7 +549,7 @@ object AlfheimTab: CreativeTabs("Alfheim") {
 		addBlock(schemaGenerator)
 		addBlock(schemaAnnihilator)
 		
-		if (!ASJUtilities.isServer) {
+		if (ASJUtilities.isClient) {
 			if (ContributorsPrivacyHelper.isCorrect(mc.thePlayer?.commandSenderName ?: "null", "AlexSocol"))
 				addItem(royalStaff)
 		}

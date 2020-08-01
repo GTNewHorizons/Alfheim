@@ -300,7 +300,7 @@ open class TileSchemaController: TileMod() {
 	}
 	
 	private fun getColor(): Int {
-		if (FMLLaunchHandler.side().isServer) return 0xFFFFFF
+		if (ASJUtilities.isServer) return 0xFFFFFF
 		var time = ClientTickHandler.ticksInGame + ClientTickHandler.partialTicks
 		time += Random((xCoord xor yCoord xor zCoord).toLong()).nextInt(100000)
 		return Color.HSBtoRGB(time * 0.005F, 1F, 1F)

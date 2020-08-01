@@ -3,7 +3,6 @@ package alfmod.common.entity
 import alexsocol.asjlib.F
 import alexsocol.asjlib.math.Vector3
 import alfheim.common.core.util.EntityDamageSourceIndirectSpell
-import alfmod.AlfheimModularCore
 import alfmod.common.entity.boss.EntityDedMoroz
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.monster.EntityBlaze
@@ -67,7 +66,7 @@ class EntitySniceBall: EntityThrowableCopy {
 	companion object {
 		
 		fun frost(ball: EntitySniceBall, thrower: EntityLivingBase?): DamageSource {
-			val src: DamageSource = EntityDamageSourceIndirectSpell("${AlfheimModularCore.MODID}:frost", thrower, ball)
+			val src: DamageSource = EntityDamageSourceIndirectSpell("frost", thrower, ball)
 			src.setDamageBypassesArmor().setProjectile()
 			return src
 		}

@@ -947,14 +947,14 @@ object TCHandlerShadowFoxAspects {
 		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.rodInterdiction), list)
 		
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.WEATHER, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 0), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.priestEmblem, 1, 0), list)
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.EARTH, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 1), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.priestEmblem, 1, 1), list)
 		list = if (forbidden) AspectList().add(Aspect.ELDRITCH, 5).add(PRIDE, 16)
 		else AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.AIR, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 2), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.priestEmblem, 1, 2), list)
 		list = AspectList().add(Aspect.ELDRITCH, 5).add(hellAspect, 16)
-		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.emblem, 1, 3), list)
+		ThaumcraftApi.registerObjectTag(ItemStack(AlfheimItems.priestEmblem, 1, 3), list)
 		
 		list = AspectList().add(Aspect.CLOTH, 4).add(colorAspect, 2)
 		ThaumcraftApi.registerObjectTag(wildStack(AlfheimItems.coatOfArms), list)

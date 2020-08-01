@@ -104,11 +104,11 @@ object SoulRestructurizationHandler {
 		
 		run exp@{
 			if (!world.isRemote) {
-				val soul = brewer.getStackInSlot(0)
+				val soul = brewer.get(0)
 				
 				if (soul?.item === AlfheimItems.flugelSoul) {
 					if (ItemFlugelSoul.getBlocked(soul) > 0) {
-						if (gaia.isHardMode || Math.random() > 0.5) {
+						if (gaia.isHardMode || gaia.rng.nextBoolean()) {
 							world.setBlockMetadataWithNotify(gaia.source.posX, gaia.source.posY + 2, gaia.source.posZ, 0, 3)
 							ItemFlugelSoul.setDisabled(soul, ItemFlugelSoul.getBlocked(soul), false)
 							return@exp

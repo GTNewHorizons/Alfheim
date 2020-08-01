@@ -40,11 +40,11 @@ object MTHandlerManaInfuser {
 		}
 		
 		override fun describe(): String {
-			return String.format("Adding Mana Infuser recipe %s", recipe)
+			return "Adding Mana Infuser recipe $recipe"
 		}
 		
 		override fun describeUndo(): String {
-			return String.format("Removing Mana Infuser recipe %s", recipe)
+			return "Removing Mana Infuser recipe $recipe"
 		}
 		
 		override fun getOverrideKey(): Any? {
@@ -72,11 +72,11 @@ object MTHandlerManaInfuser {
 		}
 		
 		override fun describe(): String {
-			return String.format("Removing all Mana Infuser recipes for %s", output.unlocalizedName)
+			return "Removing all Mana Infuser recipes for ${output.unlocalizedName}"
 		}
 		
 		override fun describeUndo(): String {
-			return String.format("Re-adding previously removed Mana Infuser recipes for %s", output.unlocalizedName)
+			return "Re-adding previously removed Mana Infuser recipes for ${output.unlocalizedName}"
 		}
 		
 		override fun getOverrideKey(): Any? {

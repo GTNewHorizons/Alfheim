@@ -178,7 +178,7 @@ object ASJUtilities {
 	 */
 	@JvmStatic
 	fun getSlotWithItem(item: Item, inventory: IInventory) =
-		(0 until inventory.sizeInventory).firstOrNull { inventory.getStackInSlot(it)?.item === item } ?: -1
+		(0 until inventory.sizeInventory).firstOrNull { inventory[it]?.item === item } ?: -1
 	
 	/**
 	 * Checks if two itemstacks has same ID, metadata and NBT
@@ -240,7 +240,7 @@ object ASJUtilities {
 	fun getAmount(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			val slot = inventory.getStackInSlot(i) ?: continue
+			val slot = inventory[i] ?: continue
 			if (stack.isItemEqual(slot))
 				amount += slot.stackSize
 		}
@@ -257,7 +257,7 @@ object ASJUtilities {
 	fun getAmountNBT(inventory: IInventory, stack: ItemStack): Int {
 		var amount = 0
 		for (i in 0 until inventory.sizeInventory) {
-			val slot = inventory.getStackInSlot(i) ?: continue
+			val slot = inventory[i] ?: continue
 			if (isItemStackEqualData(slot, stack))
 				amount += slot.stackSize
 		}
@@ -274,7 +274,7 @@ object ASJUtilities {
 	fun consumeItemStack(inventory: IInventory, stack: ItemStack): Boolean {
 		if (getAmount(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				val slot = inventory.getStackInSlot(i) ?: continue
+				val slot = inventory[i] ?: continue
 				if (stack.isItemEqual(slot)) {
 					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
@@ -300,7 +300,7 @@ object ASJUtilities {
 	fun consumeItemStackNBT(inventory: IInventory, stack: ItemStack): Boolean {
 		if (getAmountNBT(inventory, stack) >= stack.stackSize) {
 			for (i in 0 until inventory.sizeInventory) {
-				val slot = inventory.getStackInSlot(i) ?: continue
+				val slot = inventory[i] ?: continue
 				if (isItemStackEqualData(slot, stack)) {
 					val amount = min(stack.stackSize, slot.stackSize)
 					if (amount > 0) {
@@ -441,7 +441,7 @@ object ASJUtilities {
 	 * Returns MOP with block and entity
 	 * @param entity Entity to calculate vector from
 	 * @param dist Max distance for use
-	 * @param interact Whether to get uncollidable entities
+	 * @param interact Whether to get uncollidable entities / stop on hitting water
 	 * @author timaxa007
 	 */
 	@JvmStatic
@@ -450,7 +450,7 @@ object ASJUtilities {
 		
 		var pointedEntity: Entity? = null
 		var d1 = dist
-		val vec3 = Vec3.createVectorHelper(entity.posX, if (!isServer) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
+		val vec3 = Vec3.createVectorHelper(entity.posX, if (isClient) entity.posY else entity.posY + entity.eyeHeight, entity.posZ)
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
 		var vec33: Vec3? = null
@@ -516,15 +516,15 @@ object ASJUtilities {
 	 * Returns MOP with only blocks.
 	 * @param entity Player to calculate vector from
 	 * @param dist Max distance for use
-	 * @param interact Can player interact with blocks (not sure)
+	 * @param stopOnWater Whether to stop raytrace when hitting liquid
 	 */
 	@JvmStatic
-	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, interact: Boolean): MovingObjectPosition? {
+	fun getSelectedBlock(entity: EntityLivingBase, dist: Double, stopOnWater: Boolean): MovingObjectPosition? {
 		val vec3 = getPosition(entity, 1f)
 		vec3.yCoord += entity.eyeHeight.D
 		val vec31 = entity.lookVec
 		val vec32 = vec3.addVector(vec31.xCoord * dist, vec31.yCoord * dist, vec31.zCoord * dist)
-		return entity.worldObj.rayTraceBlocks(vec3, vec32, interact)
+		return entity.worldObj.rayTraceBlocks(vec3, vec32, stopOnWater)
 	}
 	
 	/**
@@ -605,6 +605,7 @@ object ASJUtilities {
 	 * @param backColor Background egg color
 	 * @param frontColor The color of dots
 	 */
+	@Deprecated("Use local registrations instead", ReplaceWith("registerEntity(entityClass, name, instance, id)"), DeprecationLevel.ERROR)
 	@JvmStatic
 	fun registerEntityEgg(entityClass: Class<out Entity>, name: String, backColor: Int, frontColor: Int, instance: Any) {
 		val id = EntityRegistry.findGlobalUniqueEntityId()
@@ -786,7 +787,7 @@ object ASJUtilities {
 	@JvmStatic
 	fun chatLog(message: String) {
 		val world = if (isServer) MinecraftServer.getServer()?.entityWorld else Minecraft.getMinecraft()?.theWorld
-		val msg = "${time(world)} $message"
+		val msg = "${worldInfoForLog(world)} $message"
 		if (isServer)
 			sayToAllOnline(msg)
 		else
@@ -843,12 +844,16 @@ object ASJUtilities {
 	
 	@JvmStatic
 	fun say(player: EntityPlayer?, message: String, vararg format: Any) {
-		player?.addChatMessage(ChatComponentText(StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')))
+		player ?: return
+		
+		val text = StatCollector.translateToLocalFormatted(message, *format).replace('&', '\u00a7')
+		player.addChatMessage(ChatComponentText(text))
+		log("[${player.commandSenderName}!] $text")
 	}
 	
 	@JvmStatic
 	fun sayToAllOnline(message: String) {
-		if (!isServer) return
+		if (isClient) return
 		
 		val list = MinecraftServer.getServer().configurationManager.playerEntityList
 		for (online in list) say(online as EntityPlayer, message)
@@ -867,6 +872,9 @@ object ASJUtilities {
 	@JvmStatic
 	val isServer: Boolean
 		get() = FMLCommonHandler.instance().effectiveSide == Side.SERVER
+	
+	@JvmStatic
+	val isClient get() = !isServer
 	
 	@JvmStatic
 	fun toString(nbt: NBTTagCompound): String {

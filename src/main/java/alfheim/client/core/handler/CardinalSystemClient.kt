@@ -4,6 +4,7 @@ import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
 import alfheim.api.spell.SpellBase
 import alfheim.client.render.world.SpellVisualizations
+import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.core.handler.CardinalSystem.PartySystem.Party
 import alfheim.common.spell.tech.SpellTimeStop
 import net.minecraft.entity.*
@@ -98,7 +99,7 @@ object CardinalSystemClient {
 		}
 		
 		fun affected(e: Entity?): Boolean {
-			if (e == null || e is IBossDisplayData) return false
+			if (e == null || (e is IBossDisplayData && !AlfheimConfigHandler.superSpellBosses)) return false
 			tsAreas
 				.filter { Vector3.vecEntityDistance(it.pos, e) < SpellTimeStop.radius }
 				.forEach {
