@@ -65,12 +65,13 @@ object AlfheimModularRecipes {
 						 'B', ItemStack(AlfheimBlocks.alfStorage, 1, 3))
 		
 		addOreDictRecipe(ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.SnowRelic),
-						 "HBC", "BSB", "LBT",
+						 "HBC", "USU", "LBT",
 						 'H', AlfheimModularItems.snowHelmet,
 						 'C', AlfheimModularItems.snowChest,
 						 'L', AlfheimModularItems.snowLeggings,
 						 'T', AlfheimModularItems.snowBoots,
 						 'S', AlfheimModularItems.snowSword,
+						 'U', ItemStack(AlfheimBlocks.alfStorage, 1, 1),
 						 'B', ItemStack(AlfheimBlocks.alfStorage, 1, 3))
 		
 		
@@ -97,12 +98,13 @@ object AlfheimModularRecipes {
 						 'B', ItemStack(AlfheimBlocks.alfStorage, 1, 2))
 		
 		addOreDictRecipe(ItemStack(AlfheimModularItems.eventResource, 1, EventResourcesMetas.VolcanoRelic),
-						 "HBC", "BMB", "LBT",
+						 "HBC", "UMU", "LBT",
 						 'H', AlfheimModularItems.volcanoHelmet,
 						 'C', AlfheimModularItems.volcanoChest,
 						 'L', AlfheimModularItems.volcanoLeggings,
 						 'T', AlfheimModularItems.volcanoBoots,
 						 'M', AlfheimModularItems.volcanoMace,
+						 'U', ItemStack(AlfheimBlocks.alfStorage, 1, 1),
 						 'B', ItemStack(AlfheimBlocks.alfStorage, 1, 2))
 	}
 }

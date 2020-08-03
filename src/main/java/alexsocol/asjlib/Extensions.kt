@@ -185,6 +185,12 @@ fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Block {
 	val (i, j, k) = Vector3.fromEntity(e)
 	return getBlock(i.I + x, j.I + y, k.I + z)
 }
+
+fun World.getBlockMeta(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Int {
+	val (i, j, k) = Vector3.fromEntity(e)
+	return getBlockMetadata(i.I + x, j.I + y, k.I + z)
+}
+
 fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEntity? {
 	val (i, j, k) = Vector3.fromEntity(e)
 	return getTileEntity(i.I + x, j.I + y, k.I + z)

@@ -31,6 +31,8 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	/** how many items will be produced from this autocrafter */
 	var craftResult = 1
 	
+	var prevRedstone = false
+	
 	val spark: ICorporeaSpark? get() = CorporeaHelper.getSparkForBlock(worldObj, xCoord, yCoord, zCoord)
 	
 	override fun interceptRequestLast(request: Any?, count: Int, thisSpark: ICorporeaSpark?, requestorSpark: ICorporeaSpark, allFoundStacks: MutableList<ItemStack>, allScannedInventories: MutableList<IInventory>?, doIt: Boolean) {
@@ -73,6 +75,8 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 	}
 	
 	override fun updateEntity() {
+		checkRedstone()
+		
 		if (!pendingRequest) return
 		
 		if (requestMissing > 0)
@@ -125,6 +129,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			buffer[i] = null
 			
 			if (down !is TileCorporeaFunnel && ret.stackSize == InventoryHelper.testInventoryInsertion(down, ret, ForgeDirection.UP)) {
+				// FIXME puts in the first slot instead of indexed
 				InventoryHelper.insertItemIntoInventory(down, ret)
 			} else {
 				ourSpark?.also { CorporeaAdvancedHelper.putToNetwork(it, ret) } ?: continue
@@ -173,6 +178,18 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		}
 		
 		return true
+	}
+	
+	fun checkRedstone() {
+		var redstone = false
+		
+		for (dir in ForgeDirection.VALID_DIRECTIONS)
+			redstone = redstone || worldObj.getIndirectPowerLevelTo(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ, dir.ordinal) > 0
+		
+		if (!prevRedstone && redstone)
+			waitingForIngredient = false
+		
+		prevRedstone = redstone
 	}
 	
 	override fun writeCustomNBT(nbt: NBTTagCompound) {
@@ -256,6 +273,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		const val TAG_REQUEST_Y = "requestY"
 		const val TAG_REQUEST_Z = "requestZ"
 		
+		const val TAG_REDSTONE = "redstone"
 		const val TAG_IS_WAITING = "waiting"
 		
 		const val REQUEST_NULL = 0

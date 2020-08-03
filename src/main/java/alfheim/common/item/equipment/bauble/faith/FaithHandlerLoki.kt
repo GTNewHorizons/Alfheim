@@ -35,6 +35,7 @@ object FaithHandlerLoki: IFaithHandler {
 	@SubscribeEvent
 	fun leftClick(e: PlayerInteractAdequateEvent.LeftClick) {
 		if (e.action == PlayerInteractAdequateEvent.LeftClick.Action.LEFT_CLICK_BLOCK) return
+		// FIXME not working close on entities
 		
 		val player = e.player
 		val stack = player.heldItem

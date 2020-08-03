@@ -112,6 +112,10 @@ class ItemRodPortal: ItemMod("rodPortal") {
 		VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.BIFROST, player.dimension, x.D, y.D, z.D)
 	}
 	
+	override fun onPlayerStoppedUsing(stack: ItemStack?, world: World?, player: EntityPlayer, left: Int) {
+		player.removePotionEffect(AlfheimConfigHandler.potionIDEternity)
+	}
+	
 	override fun onEaten(stack: ItemStack, world: World, player: EntityPlayer): ItemStack {
 		val block = world.getBlock(player, y = -1)
 		
@@ -120,6 +124,8 @@ class ItemRodPortal: ItemMod("rodPortal") {
 				
 				val (x, y, z) = Vector3.fromEntityCenter(player)
 				VisualEffectHandler.sendPacket(VisualEffectHandlerClient.VisualEffects.BIFROST_DONE, player.dimension, x, y, z, player.entityId.D)
+				
+				player.removePotionEffect(AlfheimConfigHandler.potionIDEternity)
 				
 				CommandDimTP.instance.processCommand(player, arrayOf(pair.first.second.toString()))
 				break

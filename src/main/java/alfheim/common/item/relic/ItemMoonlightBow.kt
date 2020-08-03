@@ -72,7 +72,7 @@ class ItemMoonlightBow: ItemBow(), IRelic {
 			val v = Vector3()
 			val l = player.lookVec
 			val look = Vector3()
-			val p = Vector3(0.0, if (player === mc.thePlayer) 0.0 else 1.62, 0.0).add(Vector3.fromEntity(player))
+			val p = Vector3.fromEntity(player).add(0, 1.62, 0)
 			val ds = arrayOf(0.3, 0.8)
 			val moon = isLookingAtMoon(player.entityWorld, player, mc.timer.renderPartialTicks, false)
 			var r = 0.1f * if (moon) 3 else 1

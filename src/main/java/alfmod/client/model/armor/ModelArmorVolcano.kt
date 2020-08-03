@@ -1,13 +1,14 @@
 package alfmod.client.model.armor
 
 import alexsocol.asjlib.F
+import alfmod.common.item.equipment.armor.ItemVolcanoArmor
 import net.minecraft.client.model.*
 import net.minecraft.entity.*
 import net.minecraft.entity.monster.*
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.EnumAction
 import net.minecraft.util.MathHelper
-import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL11.*
 
 class ModelArmorVolcano(val slot: Int): ModelBiped() {
 	
@@ -44,7 +45,8 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 	var LeftShoulder7: ModelRenderer
 	var LeftShoulder8: ModelRenderer
 	
-	var chest0: ModelRenderer
+	var chestGem: ModelRendererGem
+	
 	var chest1: ModelRenderer
 	var chest2: ModelRenderer
 	var chest3: ModelRenderer
@@ -88,10 +90,10 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		LeftShoulder2.setRotationPoint(0.0f, 0.0f, 0.0f)
 		LeftShoulder2.addBox(1.5f, -3.0f, -2.0f, 4, 1, 4, 0.0f)
 		setRotateAngle(LeftShoulder2, 0.0f, 0.0f, -0.2617993877991494f)
-		chest0 = ModelRenderer(this, 0, 61)
-		chest0.setRotationPoint(0.0f, 0.0f, 0.0f)
-		chest0.addBox(2.75f, 2.75f, -2.5f, 2, 2, 1, 0.0f)
-		setRotateAngle(chest0, 0.0f, 0.0f, 0.7853981633974483f)
+		chestGem = ModelRendererGem(this, 0, 61)
+		chestGem.setRotationPoint(0.0f, 0.0f, 0.0f)
+		chestGem.addBox(2.75f, 2.75f, -2.5f, 2, 2, 1, 0.0f)
+		setRotateAngle(chestGem, 0.0f, 0.0f, 0.7853981633974483f)
 		chest4 = ModelRenderer(this, 0, 32)
 		chest4.mirror = true
 		chest4.setRotationPoint(0.0f, 0.0f, 0.0f)
@@ -305,7 +307,6 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		rightLeggin2.setRotationPoint(0.0f, 0.0f, 0.0f)
 		rightLeggin2.addBox(-2.5f, 9.5f, -2.5f, 5, 3, 5, 0.0f)
 		bipedLeftArm.addChild(LeftShoulder2)
-		bipedBody.addChild(chest0)
 		bipedBody.addChild(chest4)
 		bipedBody.addChild(chest3)
 		bipedBody.addChild(chest17)
@@ -360,6 +361,7 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		bipedBody.addChild(chest2)
 		bipedRightArm.addChild(RightShoulder2)
 		bipedRightLeg.addChild(rightLeggin2)
+		bipedBody.addChild(chestGem)
 	}
 	
 	override fun render(entity: Entity?, f: Float, f1: Float, f2: Float, f3: Float, f4: Float, f5: Float) {
@@ -378,7 +380,8 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 		mask13.showModel = slot == 0
 		mask14.showModel = slot == 0
 		
-		chest0.showModel = slot == 1
+		chestGem.showModel = slot == 1
+		
 		chest1.showModel = slot == 1
 		chest2.showModel = slot == 1
 		chest3.showModel = slot == 1
@@ -448,39 +451,33 @@ class ModelArmorVolcano(val slot: Int): ModelBiped() {
 			bipedLeftArm.rotateAngleX -= f6 * 1.2f - f7 * 0.4f
 			bipedLeftArm.rotateAngleZ -= MathHelper.cos(f * 0.09f) * 0.05f + 0.05f
 			bipedLeftArm.rotateAngleX -= MathHelper.sin(f * 0.067f) * 0.05f
-
-//			if (entity is EntitySkeleton && entity.skeletonType == 1)
-//				GL11.glScalef(1.2f, 1.2f, 1.2f)
-//			else if (entity is EntityGiantZombie)
-//				GL11.glScalef(6f, 6f, 6f)
-			
 		}
+		
+		chestGem.charge = (entity as? EntityPlayer)?.let { ItemVolcanoArmor.getCharge(it) } ?: 0f
 		
 		if (isChild) {
 			val f6 = 2.0f
-			GL11.glPushMatrix()
-			GL11.glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
-			GL11.glTranslatef(0.0f, 16.0f * f5, 0.0f)
+			glPushMatrix()
+			glScalef(1.5f / f6, 1.5f / f6, 1.5f / f6)
+			glTranslatef(0.0f, 16.0f * f5, 0.0f)
 			bipedHead.render(f5)
-			GL11.glPopMatrix()
-			GL11.glPushMatrix()
-			GL11.glScalef(1.0f / f6, 1.0f / f6, 1.0f / f6)
-			GL11.glTranslatef(0.0f, 24.0f * f5, 0.0f)
-			bipedBody.render(f5)
+			glPopMatrix()
+			glPushMatrix()
+			glScalef(1.0f / f6, 1.0f / f6, 1.0f / f6)
+			glTranslatef(0.0f, 24.0f * f5, 0.0f)
 			bipedRightArm.render(f5)
 			bipedLeftArm.render(f5)
 			bipedRightLeg.render(f5)
 			bipedLeftLeg.render(f5)
-			bipedHeadwear.render(f5)
-			GL11.glPopMatrix()
+			bipedBody.render(f5)
+			glPopMatrix()
 		} else {
 			bipedHead.render(f5)
-			bipedBody.render(f5)
 			bipedRightArm.render(f5)
 			bipedLeftArm.render(f5)
 			bipedRightLeg.render(f5)
 			bipedLeftLeg.render(f5)
-			bipedHeadwear.render(f5)
+			bipedBody.render(f5)
 		}
 	}
 	

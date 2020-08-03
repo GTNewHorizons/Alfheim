@@ -17,8 +17,6 @@ class SubTileOrechidEndium: SubTileOrechid() {
 	
 	override fun getOreMap() = AlfheimAPI.oreWeightsEnd
 	
-	override fun getOreToPut() =  if (oreMap.isEmpty()) null else super.getOreToPut()
-	
 	override fun getSourceBlock() = Blocks.end_stone
 	
 	override fun getCost() = COST

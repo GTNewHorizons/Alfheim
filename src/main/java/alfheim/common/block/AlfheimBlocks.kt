@@ -194,7 +194,7 @@ object AlfheimBlocks {
 		auroraWood = BlockAuroraWood()
 		barrel = BlockBarrel()
 		barrier = BlockBarrier()
-		corporeaAutocrafter = BlockCorporeaAutocrafter()
+		corporeaAutocrafter = BlockCorporeaAutocrafter().WIP()
 		dreamSapling = BlockDreamSapling()
 		elvenOre = BlockElvenOre()
 		elvenSand = object: BlockPatternLexicon(ModInfo.MODID, Material.sand, "ElvenSand", AlfheimTab, harvTool = "shovel", harvLvl = 0, isFalling = true, entry = AlfheimLexiconData.worldgen) {

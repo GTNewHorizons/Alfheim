@@ -1,7 +1,6 @@
 package alfmod.client.core.proxy
 
 import alexsocol.asjlib.ASJReflectionHelper
-import alfheim.client.model.entity.ModelEntityFlugel
 import alfheim.client.render.entity.RenderEntityFlugel
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfmod.client.core.handler.EventHandlerClient
@@ -38,16 +37,7 @@ class ClientProxy: CommonProxy() {
 		if (!AlfheimConfigHandler.minimalGraphics)
 			MinecraftForgeClient.registerItemRenderer(AlfheimModularItems.snowSword, RenderItemSnowSword)
 		
-		if (HELLISH_VACATION) {
-			(RenderEntityFlugel.mainModel as ModelEntityFlugel).apply {
-				rightglove.showModel = false
-				leftglove.showModel = false
-				rightboot.showModel = false
-				leftboot.showModel = false
-				chest.showModel = false
-				
-				ASJReflectionHelper.setFinalValue(this, null, "model1")
-			}
-		}
+		if (HELLISH_VACATION)
+			ASJReflectionHelper.setFinalValue(RenderEntityFlugel.mainModel, null, "model1")
 	}
 }

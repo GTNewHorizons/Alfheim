@@ -1,5 +1,3 @@
 Innovations:
  --
-
-Fixes:
- --
+Fixes: --

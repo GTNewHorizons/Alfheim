@@ -1,4 +1,4 @@
-package alfheim.common.item.equipment.bauble.faith
+	package alfheim.common.item.equipment.bauble.faith
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
@@ -16,7 +16,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.*
 import net.minecraft.potion.*
 import net.minecraft.util.DamageSource
-import net.minecraftforge.event.entity.living.LivingHurtEvent
+import net.minecraftforge.event.entity.living.*
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.common.Botania
 import vazkii.botania.common.core.helper.ItemNBTHelper
@@ -78,7 +78,7 @@ object 	FaithHandlerThor: IFaithHandler {
 	}
 	
 	@SubscribeEvent(receiveCanceled = true)
-	fun fallhit(e: LivingHurtEvent) {
+	fun fallhit(e: LivingAttackEvent) {
 		if (e.source.damageType != DamageSource.fall.damageType) return
 		val player = e.entityLiving as? EntityPlayer ?: return
 		val cloak = ItemPriestCloak.getCloak(0, player) ?: return

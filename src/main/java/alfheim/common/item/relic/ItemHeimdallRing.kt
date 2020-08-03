@@ -2,11 +2,9 @@ package alfheim.common.item.relic
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.AlfheimCore
 import alfheim.client.render.world.VisualEffectHandlerClient
 import alfheim.common.core.handler.VisualEffectHandler
 import alfheim.common.item.*
-import alfheim.common.network.MessageVisualEffect
 import baubles.api.BaubleType
 import baubles.common.lib.PlayerHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
@@ -14,12 +12,11 @@ import net.minecraft.entity.INpc
 import net.minecraft.entity.boss.IBossDisplayData
 import net.minecraft.entity.monster.IMob
 import net.minecraft.entity.passive.EntityAnimal
-import net.minecraft.entity.player.*
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraftforge.event.entity.living.*
 import vazkii.botania.common.Botania
-import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.item.relic.ItemRelicBauble
 import java.awt.Color
@@ -38,10 +35,6 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 		val ring = getHeimdallRing(player) ?: return
 		
 		leadToDungeon(player)
-		
-		ItemNBTHelper.getInt(ring, TAG_AGGRO, 0).also {
-			if (it > 0) ItemNBTHelper.setInt(ring, TAG_AGGRO, it - 1)
-		}
 	}
 	
 	fun leadToDungeon(player: EntityPlayer) {
@@ -76,16 +69,6 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	}
 	
 	@SubscribeEvent
-	fun onPlayerTargeted(e: LivingSetAttackTargetEvent) {
-		val player = e.target as? EntityPlayerMP ?: return
-		if (player.capabilities.isCreativeMode) return
-		
-		getHeimdallRing(player) ?: return
-		
-		AlfheimCore.network.sendTo(MessageVisualEffect(VisualEffectHandlerClient.VisualEffects.TARGETED.ordinal), player)
-	}
-	
-	@SubscribeEvent
 	fun onEndermanTeleported(e: EnderTeleportEvent) {
 		if (e.entity !is EntityPlayer) {
 			if (e.entity.worldObj.playerEntities.any { Vector3.entityDistance(e.entity, it as EntityPlayer) < 16 && getHeimdallRing(it) != null })
@@ -94,8 +77,6 @@ class ItemHeimdallRing: ItemRelicBauble("HeimdallRing") {
 	}
 	
 	companion object {
-		
-		const val TAG_AGGRO = "someaggro"
 		
 		fun getHeimdallRing(player: EntityPlayer): ItemStack? {
 			val baubles = PlayerHandler.getPlayerBaubles(player) ?: return null

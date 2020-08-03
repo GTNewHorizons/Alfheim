@@ -127,7 +127,7 @@ object FaithHandlerNjord: IFaithHandler {
 		val player = e.entityLiving as? EntityPlayer ?: return
 		val emblem = ItemPriestEmblem.getEmblem(2, player) ?: return
 		
-		if (e.source == DamageSource.fall) {
+		if (e.source.damageType == DamageSource.fall.damageType) {
 			if (getGodPowerLevel(player) >= 6)
 				e.isCanceled = true
 			else if (ManaItemHandler.requestManaExact(emblem, player, 100, true))

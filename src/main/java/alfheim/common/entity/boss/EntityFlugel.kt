@@ -964,7 +964,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				return false
 			}
 			
-			ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
+			// ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
 			return false
 		}
 		
