@@ -1,6 +1,6 @@
 <news>
 	<version id="LATEST">
-		<val>BETA-34</val>
+		<val>BETA-35</val>
 	</version>
 	<!-- Deprecated, use UNIVERSAL instead, left for backward compatibility -->
 	<version id="ALL">
@@ -10,7 +10,7 @@
 	<version id="UNIVERSAL">
 		<val>$json["Official Alfheim Discord server is here! *",{"text":"click","color":"gold","hoverEvent":{"action":"show_text","value":{"text":"Join discord server","color":"gold"}},"clickEvent":{"action":"open_url","value":"https://discord.gg/dqQXZHq"}},"*"]</val>	</version>
 	<version id="MODULAR">
-		<val>https://bitbucket.org/AlexSocol/alfheim/raw/427bc524fd8023c03150a84006e5c92f1a89a01d/modular/Alfheim-Modular-8.jar</val>
+		<val>https://bitbucket.org/AlexSocol/alfheim/raw/385ca69f435fa2a1b16b2e6ebeac812b36ca6db3/modular/Alfheim-Modular-9.jar</val>
 	</version>
 	<version id="BETA-5">
 		<val>Important bugfixes were made, please update!</val>
@@ -98,5 +98,8 @@
 	</version>
 	<version id="BETA-33">
 		<val>New god attributes, winemaking and other fun stuff is in new update!</val>
+	</version>
+	<version id="BETA-34">
+		<val>Some bug-, dupe- and crashfixes, so go update :3</val>
 	</version>
 </news>
