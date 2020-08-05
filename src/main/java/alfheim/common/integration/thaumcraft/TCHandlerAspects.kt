@@ -2,6 +2,7 @@
 
 package alfheim.common.integration.thaumcraft
 
+import alexsocol.asjlib.toItem
 import alfheim.api.ModInfo
 import alfheim.api.lib.LibOreDict
 import alfheim.common.block.AlfheimBlocks
@@ -372,7 +373,7 @@ object BotaniaTCAspects {
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.ELDRITCH)
 		ThaumcraftApi.registerObjectTag(wildStack(elfGlass), list)
 		
-		list = AspectList(ItemStack(Blocks.brewing_stand)).a(Aspect.MAGIC, 2)
+		list = AspectList(ItemStack(Blocks.brewing_stand.toItem())).a(Aspect.MAGIC, 2)
 		ThaumcraftApi.registerObjectTag(wildStack(brewery), list)
 		
 		list = AspectList().a(Aspect.CRYSTAL).a(Aspect.MAGIC)

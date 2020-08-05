@@ -135,7 +135,6 @@ class ClientProxy: CommonProxy() {
 		super.initializeAndRegisterHandlers()
 		EventHandlerClient
 		FurnaceHandler
-		GUIAggro().eventForge()
 		if (ConfigHandler.boundBlockWireframe) DoubleBoundItemRender
 		if (AlfheimCore.TravellersGearLoaded) TGHandlerBotaniaRenderer
 		if (AlfheimConfigHandler.enableElvenStory) enableESMGUIs()

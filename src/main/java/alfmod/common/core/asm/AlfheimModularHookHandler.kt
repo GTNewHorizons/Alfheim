@@ -1,5 +1,6 @@
 package alfmod.common.core.asm
 
+import alfheim.client.model.entity.ModelEntityFlugel
 import alfmod.common.core.handler.*
 import alfmod.common.entity.*
 import alfmod.common.item.AlfheimModularItems
@@ -73,5 +74,17 @@ object AlfheimModularHookHandler {
 		if (!HELLISH_VACATION) return
 		
 		gen.spawnList.add(BiomeGenBase.SpawnListEntry(EntityMuspellsun::class.java, 6, 2, 3))
+	}
+	
+	@JvmStatic
+	@Hook
+	fun render(model: ModelEntityFlugel, entity: Entity, time: Float, amplitude: Float, ticksExisted: Float, yawHead: Float, pitchHead: Float, size: Float) {
+		(HELLISH_VACATION && entity.dataWatcher?.getWatchableObjectString(10) != "Hatsune Miku").also {
+			model.chest.showModel = it
+			model.rightglove.showModel = it
+			model.leftglove.showModel = it
+			model.rightboot.showModel = it
+			model.leftboot.showModel = it
+		}
 	}
 }

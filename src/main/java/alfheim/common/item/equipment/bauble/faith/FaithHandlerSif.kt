@@ -95,7 +95,7 @@ object FaithHandlerSif: IFaithHandler {
 		val block = world.getBlock(e.x, e.y, e.z)
 		
 		if (block is IGrowable && block !== Blocks.grass && block.func_149851_a(world, e.x, e.y, e.z, world.isRemote) && bonemeal(world, block, e.x, e.y, e.z, player, emblem, 50)) {
-			if (!world.isRemote) setInt(emblem, TAG_COOLDOWN, COOLDOWN_PLANT)
+			if (!world.isRemote && !player.capabilities.isCreativeMode) setInt(emblem, TAG_COOLDOWN, COOLDOWN_PLANT)
 		}
 		
 		if (lvl >= 6) {
@@ -103,7 +103,8 @@ object FaithHandlerSif: IFaithHandler {
 				(!world.provider.hasNoSky || e.y < 255) && ModBlocks.flower.canBlockStay(world, e.x, e.y + 1, e.z) && ManaItemHandler.requestManaExact(emblem, e.entityPlayer, 500, true) &&
 				world.setBlock(e.x, e.y + 1, e.z, ModBlocks.flower, world.rand.nextInt(16), 3))
 				
-				setInt(emblem, TAG_COOLDOWN, COOLDOWN_FLOWER)
+				if (!player.capabilities.isCreativeMode)
+					setInt(emblem, TAG_COOLDOWN, COOLDOWN_FLOWER)
 		}
 	}
 	

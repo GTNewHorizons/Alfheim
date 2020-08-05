@@ -109,6 +109,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	var tradePortalRate			= 1200
 	var triquetrumBlackList		= emptyArray<String>()
 	var triquetrumMaxDiagonal	= -1.0
+	var triquetrumTiles			= true
 	var uberSpreaderCapacity	= 24000
 	var uberSpreaderSpeed		= 2400
 	var voidCreepBiomeBlackList	= intArrayOf(8, 9, 14, 15)
@@ -263,6 +264,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		tradePortalRate = loadProp(CATEGORY_GENERAL, "tradePortalRate", tradePortalRate, false, "Portal updates every [N] ticks")
 		triquetrumBlackList = loadProp(CATEGORY_GENERAL, "triquetrumBlackList", triquetrumBlackList, false, "Blacklist for blocks that triquetrum can't swap [modid:name]", false)
 		triquetrumMaxDiagonal = loadProp(CATEGORY_GENERAL, "triquetrumMaxDiagonal", triquetrumMaxDiagonal, false, "Change this to limit triquetrum area")
+		triquetrumTiles = loadProp(CATEGORY_GENERAL, "triquetrumTiles", triquetrumTiles, false, "Set this to false to forbid triquetrum to move tiles")
 		uberSpreaderCapacity = loadProp(CATEGORY_GENERAL, "uberSpreaderCapacity", uberSpreaderCapacity, false, "Mauftrium Spreader max mana cap")
 		uberSpreaderSpeed = loadProp(CATEGORY_GENERAL, "uberSpreaderSpeed", uberSpreaderSpeed, false, "Mauftrium Spreader mana per shot")
 		voidCreepBiomeBlackList = loadProp(CATEGORY_GENERAL, "voidCreepersBiomeBlackList", voidCreepBiomeBlackList, true, "Biome blacklist for Manaseal Creepers", false)

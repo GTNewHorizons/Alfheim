@@ -13,7 +13,6 @@ import cpw.mods.fml.common.Loader
 import cpw.mods.fml.relauncher.FMLRelaunchLog
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.EnumHelper
-import net.minecraftforge.oredict.OreDictionary
 import org.apache.logging.log4j.Level
 import vazkii.botania.api.recipe.RecipeElvenTrade
 import java.util.*
@@ -179,17 +178,22 @@ object AlfheimAPI {
 	 * to get the weights for the vanilla blocks.<br></br>
 	 * Alternatively get the values with the OreDetector mod:<br></br>
 	 * https://gist.github.com/Vazkii/9493322
+	 *
+	 * Higher weight means higher chance
 	 */
 	fun addOreWeightEnd(ore: String, weight: Int) {
-		addOreWeightEnd(ore, weight, false)
-	}
-	
-	fun addOreWeightEnd(ore: String, weight: Int, override: Boolean) {
-		if (!override && ore.contains("Ender") && OreDictionary.getOres(ore.replace("Ender", "")).size == 0) return
-		if (!override && ore.contains("End") && OreDictionary.getOres(ore.replace("End", "")).size == 0) return
+//		addOreWeightEnd(ore, weight, false)
 		
 		oreWeightsEnd[ore] = weight
 	}
+	
+	// wtf was this
+//	fun addOreWeightEnd(ore: String, weight: Int, override: Boolean) {
+//		if (!override && ore.contains("Ender") && OreDictionary.getOres(ore.replace("Ender", "")).size == 0) return
+//		if (!override && ore.contains("End") && OreDictionary.getOres(ore.replace("End", "")).size == 0) return
+//
+//		oreWeightsEnd[ore] = weight
+//	}
 	
 	object FallbackAnomaly: SubTileAnomalyBase() {
 		override val targets: List<Any> = emptyList()
@@ -226,7 +230,7 @@ object AlfheimAPI {
 		addOreWeightEnd("oreEndProsperity", 200)
 		addOreWeightEnd("oreEndTin", 3750)
 		addOreWeightEnd("oreEndInferium", 500)
-		addOreWeightEnd("oreEndBiotite", 500, true) // OreDictionary.registerOre("oreEndBiotite", Biotite.biotite_ore)
+		addOreWeightEnd("oreEndBiotite", 500) // OreDictionary.registerOre("oreEndBiotite", Biotite.biotite_ore)
 		addOreWeightEnd("oreEndDraconium", 200) // OreDictionary.registerOre("oreEndDraconium", ItemStack(DEFeatures.draconiumOre, 1, 2))
 		addOreWeightEnd("oreDraconiumEnd", 200) // OreDictionary.registerOre("oreDraconiumEnd", ItemStack(DEFeatures.draconiumOre, 1, 2))
 	}

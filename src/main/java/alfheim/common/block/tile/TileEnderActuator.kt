@@ -36,7 +36,7 @@ class TileEnderActuator: ASJTile(), IInventory {
 	
 	override fun setInventorySlotContents(slot: Int, stack: ItemStack?) = getEnderChest()?.set(slot, stack) ?: Unit
 	
-	fun getEnderChest() = if (ASJUtilities.isServer) (MinecraftServer.getServer().configurationManager.playerEntityList.firstOrNull { it is EntityPlayerMP } as? EntityPlayerMP)?.inventoryEnderChest else null
+	fun getEnderChest() = if (ASJUtilities.isServer) (MinecraftServer.getServer().configurationManager.playerEntityList.firstOrNull { it is EntityPlayerMP && it.commandSenderName == name } as? EntityPlayerMP)?.inventoryEnderChest else null
 	
 	override fun writeToNBT(nbt: NBTTagCompound) {
 		super.writeToNBT(nbt)

@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.*
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
-import net.minecraftforge.fluids.IFluidHandler
+import net.minecraftforge.fluids.*
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.LexiconEntry
 import vazkii.botania.api.subtile.*
@@ -52,7 +52,7 @@ class SubTilePetronia: SubTileGenerating() {
 							val grabbedFluid = fluidHandler.drain(ForgeDirection.UP, 1000, false)
 							
 							if (grabbedFluid?.getFluid() != null && grabbedFluid.amount == 1000) {
-								val fuelInfo = AlfheimAPI.fuelMap[grabbedFluid.getFluid().name] ?: continue
+								val fuelInfo = AlfheimAPI.fuelMap[FluidRegistry.getFluidName(grabbedFluid.getFluid())] ?: continue
 								
 								foundFluid = true
 								burnTime = fuelInfo.first
@@ -116,10 +116,14 @@ class SubTilePetronia: SubTileGenerating() {
 		const val TAG_COOLDOWN = "cooldown"
 		
 		init {
+			AlfheimAPI.registerFuel("creosote", 50, 50)
 			AlfheimAPI.registerFuel("oil", 100, 50)
 			AlfheimAPI.registerFuel("fuel", 750, 50)
 			AlfheimAPI.registerFuel("diesel", 350, 50)
 			AlfheimAPI.registerFuel("biodiesel", 250, 50)
+			AlfheimAPI.registerFuel("ethanol", 150, 50)
+			AlfheimAPI.registerFuel("bioethanol", 250, 50)
+			AlfheimAPI.registerFuel("pyrotheum", 900, 50)
 		}
 	}
 }

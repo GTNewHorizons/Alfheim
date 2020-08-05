@@ -1,7 +1,7 @@
 package alfheim.common.block
 
 import alexsocol.asjlib.*
-import alfheim.common.block.base.BlockMod
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileEntityStar
 import alfheim.common.item.block.ItemStarPlacer
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -21,7 +21,7 @@ import java.util.*
  * @author WireSegal
  * Created at 9:23 PM on 2/6/16.
  */
-class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexiconable {
+class BlockStar(name: String = "starBlock"): BlockContainerMod(Material.cloth), ILexiconable {
 	
 	init {
 		setBlockName(name)
@@ -83,7 +83,7 @@ class BlockStar(name: String = "starBlock"): BlockMod(Material.cloth), ILexicona
 		return super.getPickBlock(target, world, x, y, z, player)
 	}
 	
-	override fun createTileEntity(world: World?, meta: Int) = TileEntityStar()
-	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.frozenStar
+	
+	override fun createNewTileEntity(world: World?, meta: Int) = TileEntityStar()
 }

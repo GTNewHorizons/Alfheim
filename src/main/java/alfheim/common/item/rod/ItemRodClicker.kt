@@ -123,8 +123,12 @@ class ItemRodClicker: ItemMod("RodClicker"), IAvatarWieldable {
 				if (!done) done = player.heldItem?.item?.onItemUseFirst(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f) == true
 				if (!done) done = block.onBlockActivated(world, xl, yl, zl, player, s, 0f, 0f, 0f)
 				if (!done) done = player.heldItem?.item?.onItemUse(player.heldItem, player, world, xl, yl, zl, s, 0f, 0f, 0f) == true
-				if (!done) player.heldItem?.item?.onItemRightClick(player.heldItem, world, player)
-				tile.recieveMana(-COST_AVATAR)
+				if (!done) player.heldItem?.let {
+					it.item.onItemRightClick(player.heldItem, world, player)
+					done = true
+				}
+				
+				if (done) tile.recieveMana(-COST_AVATAR)
 			}
 		} catch (ignore: Throwable) {
 			ignore.printStackTrace()

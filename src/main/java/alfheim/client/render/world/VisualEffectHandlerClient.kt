@@ -71,7 +71,6 @@ object VisualEffectHandlerClient {
 			SHADOW            -> spawnBurst(d[0], d[1], d[2], 0.75f, 0.75f, 0.75f)
 			SMOKE             -> spawnSmoke(d[0], d[1], d[2])
 			SPLASH            -> spawnSplash(d[0], d[1], d[2])
-			TARGETED          -> markTargeted()
 			THROW             -> spawnThrow(d[0], d[1], d[2], d[3], d[4], d[5])
 			TREMORS           -> spawnTremors(d[0], d[1], d[2])
 			UPHEAL            -> spawnBurst(d[0], d[1], d[2], 1f, 0.75f, 0f)
@@ -103,10 +102,6 @@ object VisualEffectHandlerClient {
 	
 	fun horn(x: Double, y: Double, z: Double) {
 		mc.theWorld.playSound(x, y, z, ModInfo.MODID + ":horn.bhorn", 100f, 0.8f + mc.theWorld.rand.nextFloat() * 0.2f, false)
-	}
-	
-	fun markTargeted() {
-		ItemNBTHelper.setInt(ItemHeimdallRing.getHeimdallRing(mc.thePlayer) ?: return, ItemHeimdallRing.TAG_AGGRO, 100)
 	}
 	
 	fun moonBoom(x: Double, y: Double, z: Double) {
@@ -374,7 +369,7 @@ object VisualEffectHandlerClient {
 	}
 	
 	enum class VisualEffects {
-		ACID, AQUABIND, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FALLING, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, TARGETED, THROW, TREMORS, UPHEAL, WIRE, WISP;
+		ACID, AQUABIND, AQUASTREAM_HIT, BIFROST, BIFROST_DONE, DISPEL, ECHO, ECHO_ENTITY, ECHO_ITEM, ECHO_MOB, ECHO_PLAYER, EMBLEM_ACTIVATION, EXPL, FALLING, FLAMESTAR, GAIA_SOUL, GRAVITY, GUNGNIR, HEAL, HORN, ICELENS, LIGHTNING, MANA, MANABURST, MANAVOID, MOON, NOTE, NVISION, POTION, PURE, PURE_AREA, QUAD, QUADH, SEAROD, SHADOW, SMOKE, SPLASH, THROW, TREMORS, UPHEAL, WIRE, WISP;
 	}
 	
 	fun onDeath(target: EntityLivingBase) {

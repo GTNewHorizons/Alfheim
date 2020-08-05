@@ -14,7 +14,7 @@ import alfheim.common.item.compat.tinkersconstruct.*
 import gloomyfolken.hooklib.asm.*
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
-import net.minecraft.init.Blocks
+import net.minecraft.init.*
 import net.minecraft.item.*
 import net.minecraft.util.StatCollector
 import net.minecraftforge.fluids.*
@@ -27,6 +27,7 @@ import tconstruct.library.weaponry.IAmmo
 import tconstruct.modifiers.tools.ModInteger
 import tconstruct.smeltery.TinkerSmeltery
 import tconstruct.tools.TinkerTools
+import thaumcraft.common.config.ConfigItems
 import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.PixieHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper

@@ -35,8 +35,6 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 		
 		tile.name = player.commandSenderName
 		
-		ASJUtilities.say(player, "alfheimmisc.actuated")
-		
 		if (world.isRemote) {
 			for (i in 0 until 30) {
 				val x1 = (x + Math.random())
@@ -44,6 +42,8 @@ class BlockEnderActuator: BlockContainerMod(Material.iron) {
 				val z1 = (z + Math.random())
 				Botania.proxy.wispFX(world, x1, y1, z1, 0.25f + Math.random().F * 0.25f, 0f, 1f, Math.random().toFloat() * 0.5f, -0.05f + Math.random().toFloat() * 0.05f)
 			}
+		} else {
+			ASJUtilities.say(player, "alfheimmisc.actuated")
 		}
 		
 		return true

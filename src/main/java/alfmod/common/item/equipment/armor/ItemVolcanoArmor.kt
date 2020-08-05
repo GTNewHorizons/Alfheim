@@ -1,6 +1,7 @@
 package alfmod.common.item.equipment.armor
 
 import alexsocol.asjlib.*
+import alfheim.common.block.AlfheimBlocks
 import alfmod.AlfheimModularCore
 import alfmod.client.model.armor.ModelArmorVolcano
 import alfmod.common.core.helper.IconHelper
@@ -23,6 +24,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living.LivingHurtEvent
 import vazkii.botania.api.mana.*
 import vazkii.botania.common.Botania
+import vazkii.botania.common.block.ModBlocks
 import vazkii.botania.common.core.handler.ConfigHandler
 import vazkii.botania.common.core.helper.ItemNBTHelper
 import vazkii.botania.common.item.equipment.armor.manasteel.ItemManasteelArmor
@@ -102,15 +104,6 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 		
 		val volcano = EnumHelper.addArmorMaterial("Volcano", 26, intArrayOf(3, 7, 6, 3), 6)!!
 		
-		@field:SideOnly(Side.CLIENT)
-		var model: ModelBiped? = null
-			@SideOnly(Side.CLIENT)
-			get() = field
-			@SideOnly(Side.CLIENT)
-			set(value) {
-				field = value
-			}
-		
 		init {
 			eventForge()
 		}
@@ -134,13 +127,26 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 			val player = e.entityLiving as? EntityPlayer ?: return
 			if (!hasSet(player)) return
 			
-			if (e.source.damageType == "frost") {
+			if (e.source.damageType.contains("frost", true) || e.source.damageType.contains("ice", true)) {
 				e.ammount /= 2
 				return
 			}
 			
-			addCharge(player, e.ammount)
-			e.isCanceled = true
+			if (e.source.isFireDamage) {
+				if (getCharge(player) + e.ammount > MAX_CHARGE)
+					return
+				
+				addCharge(player, e.ammount)
+				e.isCanceled = true
+				
+				val block = player.worldObj.getBlock(player)
+				val lava = block === Blocks.lava && player.worldObj.getBlockMeta(player) == 0
+				val add = if (lava) 10f else 1f
+				
+				if ((lava || block === Blocks.fire) && getCharge(player) + add <= MAX_CHARGE && player.worldObj.setBlock(player, Blocks.air)) {
+					addCharge(player, add)
+				}
+			}
 		}
 		
 		@SubscribeEvent
@@ -153,7 +159,7 @@ open class ItemVolcanoArmor(type: Int, name: String): ItemManasteelArmor(type, n
 		@SubscribeEvent
 		fun onLivingUpdate(e: LivingUpdateEvent) {
 			val player = e.entityLiving as? EntityPlayer ?: return
-			if (!hasSet(player)) return
+			if (!hasSet(player) || !player.isSneaking) return
 			
 			for (x in -1..1) {
 				for (y in -1..1) {

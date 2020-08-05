@@ -827,11 +827,12 @@ object AlfheimRecipes {
 		recipeNiflheimRod = BotaniaAPI.getLatestAddedRecipe()
 		
 		addOreDictRecipe(ItemStack(rodPortal),
-						 " ER", " FN", "B  ",
+						 "IER", " FN", "B I",
 						 'E', end_stone,
 						 'R', ARUNE[0],
 						 'F', rainbowRod,
 						 'N', netherrack,
+						 'I', IFFESAL_DUST,
 						 'B', blaze_rod)
 		recipeRodPortal = BotaniaAPI.getLatestAddedRecipe()
 		

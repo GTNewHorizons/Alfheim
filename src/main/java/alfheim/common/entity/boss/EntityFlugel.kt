@@ -51,6 +51,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	val playersDamage: HashMap<String, Float> = HashMap()
 	
 	var maxHit = 1f
+	var lastHit = 0f
 	var hurtTimeActual: Int = 0
 	
 	val playersAround: List<EntityPlayer>
@@ -140,26 +141,27 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 			val crit = player.fallDistance > 0f && !player.onGround && !player.isOnLadder && !player.isInWater && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null
 			
 			maxHit = if (player.capabilities.isCreativeMode) Float.MAX_VALUE else if (crit) 60f else 40f
-			var dmg = min(maxHit, damage) * if (isUltraMode) 0.3f else if (isHardMode) 0.6f else 1f
+			lastHit = min(maxHit, damage) * if (isUltraMode) 0.3f else if (isHardMode) 0.6f else 1f
 			
-			playersDamage[player.commandSenderName] = playersDamage.getOrDefault(player.commandSenderName, 0f) + dmg
+			playersDamage[player.commandSenderName] = playersDamage.getOrDefault(player.commandSenderName, 0f) + lastHit
 			
 			if (aiTask == AITask.REGEN || aiTask == AITask.TP) {
-				dmg /= 2f
+				lastHit /= 2f
 				if (aiTask == AITask.REGEN) {
 					aiTaskTimer = 0
-					e.attackEntityFrom(source, dmg / 2f)
+					lastHit /= 2f
+					e.attackEntityFrom(source, lastHit)
 				}
 			}
 			
 			reUpdate()
-			return super.attackEntityFrom(source, dmg)
+			return super.attackEntityFrom(source, lastHit)
 		}
 		return false
 	}
 	
 	override fun damageEntity(source: DamageSource, damage: Float) {
-		super.damageEntity(source, damage)
+		super.damageEntity(source, lastHit)
 		
 		if (source.entity != null && health > 0) {
 			val motionVector = Vector3.fromEntityCenter(this).sub(Vector3.fromEntityCenter(source.entity)).normalize().mul(0.25)
@@ -173,7 +175,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	override fun setHealth(set: Float) {
 		var hp = set
 		prevHealth = health
-		hp = max(prevHealth - maxHit * if (isUltraMode) 0.1f else if (isHardMode) 0.6f else 1f, hp)
+		hp = max(prevHealth - min(lastHit, maxHit), hp)
 		
 		if (aiTask != AITask.INVUL && hp < prevHealth) if (hurtTimeActual > 0) return
 		
@@ -964,7 +966,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 				return false
 			}
 			
-			ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
+			// ASJUtilities.say(player, "alfheimmisc.flugel.notbeacon")
 			return false
 		}
 		
