@@ -40,6 +40,8 @@ class ItemMultibauble: ItemBauble("multibauble"), IManaGivingItem {
 				}
 			}
 		}
+		
+		ItemBaubleBox.setStacks(player.inventory[slot], baubles)
 	}
 	
 	override fun getBaubleType(p0: ItemStack?) = BaubleType.RING

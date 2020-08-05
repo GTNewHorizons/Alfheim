@@ -2,7 +2,7 @@ package alfheim.common.block
 
 import alexsocol.asjlib.*
 import alexsocol.asjlib.math.Vector3
-import alfheim.common.block.base.BlockMod
+import alfheim.common.block.base.BlockContainerMod
 import alfheim.common.block.tile.TileCracklingStar
 import alfheim.common.item.block.ItemStarPlacer2
 import alfheim.common.lexicon.ShadowFoxLexiconData
@@ -19,7 +19,7 @@ import vazkii.botania.api.lexicon.ILexiconable
 import vazkii.botania.api.wand.IWandable
 import java.util.*
 
-class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
+class BlockCracklingStar: BlockContainerMod(Material.cloth), IWandable, ILexiconable {
 	
 	init {
 		setBlockName("cracklingStar")
@@ -42,8 +42,6 @@ class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 	override fun isOpaqueCube(): Boolean = false
 	
 	override fun renderAsNormalBlock(): Boolean = false
-	
-	override fun hasTileEntity(metadata: Int): Boolean = true
 	
 	override fun getBlocksMovement(world: IBlockAccess?, x: Int, y: Int, z: Int): Boolean = true
 	
@@ -81,7 +79,7 @@ class BlockCracklingStar: BlockMod(Material.cloth), IWandable, ILexiconable {
 		return super.getPickBlock(target, world, x, y, z, player)
 	}
 	
-	override fun createTileEntity(world: World?, meta: Int) = TileCracklingStar()
+	override fun createNewTileEntity(world: World?, meta: Int) = TileCracklingStar()
 	
 	override fun getEntry(p0: World?, p1: Int, p2: Int, p3: Int, p4: EntityPlayer?, p5: ItemStack?) = ShadowFoxLexiconData.frozenStar
 	

@@ -121,7 +121,7 @@ class SubTilePetronia: SubTileGenerating() {
 			AlfheimAPI.registerFuel("fuel", 750, 50)
 			AlfheimAPI.registerFuel("diesel", 350, 50)
 			AlfheimAPI.registerFuel("biodiesel", 250, 50)
-			AlfheimAPI.registerFuel("ethanol", 250, 50)
+			AlfheimAPI.registerFuel("ethanol", 150, 50)
 			AlfheimAPI.registerFuel("bioethanol", 250, 50)
 			AlfheimAPI.registerFuel("pyrotheum", 900, 50)
 		}

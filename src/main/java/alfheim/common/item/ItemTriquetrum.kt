@@ -87,7 +87,8 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 				val fz = min(first.posZ, second.posZ)
 				val fZ = max(first.posZ, second.posZ)
 				
-				outer@ for ((xOff, i) in (fx..fX).withIndex()) {
+				outer@
+				for ((xOff, i) in (fx..fX).withIndex()) {
 					for ((yOff, j) in (fy..fY).withIndex()) {
 						for ((zOff, k) in (fz..fZ).withIndex()) {
 							if (!InteractionSecurity.canDoSomethingHere(player, i, j, k, world)) continue
@@ -103,7 +104,7 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 							
 							val nbt = NBTTagCompound()
 							
-							if (block is ITileEntityProvider) world.getTileEntity(i, j, k)?.writeToNBT(nbt)
+							world.getTileEntity(i, j, k)?.writeToNBT(nbt)
 							
 							if (survival && !ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, false)) break@outer
 							

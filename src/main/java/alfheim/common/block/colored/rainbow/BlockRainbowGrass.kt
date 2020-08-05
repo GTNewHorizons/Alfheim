@@ -171,12 +171,11 @@ class BlockRainbowGrass: BlockTallGrass(), ILexiconable, IPickupAchievement {
 	@SideOnly(Side.CLIENT)
 	override fun getIcon(side: Int, meta: Int): IIcon? {
 		return when (meta) {
-			GRASS   -> blockIcon
 			AURORA  -> AlfheimBlocks.irisGrass.getIcon(side, 0)
 			FLOWER  -> flowerIcon
 			GLIMMER -> glowingIcon
 			BURIED  -> ModBlocks.buriedPetals.getIcon(side, 0)
-			else    -> null
+			else    -> blockIcon
 		}
 	}
 	

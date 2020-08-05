@@ -61,6 +61,11 @@ class TileAlfheimPortal: TileMod() {
 		}
 		val newMeta = validMetadata
 		
+		if (meta > 2 || newMeta > 2) {
+			worldObj.setBlockToAir(xCoord, yCoord, zCoord)
+			return
+		}
+		
 		if (!hasUnloadedParts) {
 			ticksOpen++
 			
