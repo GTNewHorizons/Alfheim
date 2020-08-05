@@ -183,17 +183,17 @@ class EntityMagicArrow: EntityThrowableCopy {
 		val axis = bb.expand(5.0, 5.0, 5.0)
 		val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, axis) as List<EntityLivingBase>
 		entities.forEach {
-			attackedFrom(it, thrower as? EntityPlayer, max(20.0, 20 / Vector3.entityDistance(this, it)).F)
+			attackedFrom(it, thrower, max(20.0, 20 / Vector3.entityDistance(this, it)).F)
 		}
 		
 		VisualEffectHandler.sendPacket(VisualEffects.MOON, this)
 	}
 	
-	fun attackedFrom(target: EntityLivingBase, player: EntityPlayer?, dmg: Float) {
-		if (player != null)
-			target.attackEntityFrom(DamageSource.causePlayerDamage(player), dmg)
-		else
-			target.attackEntityFrom(DamageSource.generic, dmg)
+	fun attackedFrom(target: EntityLivingBase, entity: EntityLivingBase?, dmg: Float) {
+		if (entity is EntityPlayer)
+			target.attackEntityFrom(DamageSource.causePlayerDamage(entity), dmg)
+		else if (entity != null)
+			target.attackEntityFrom(DamageSource.causeMobDamage(entity), dmg)
 	}
 	
 	override fun onImpact(pos: MovingObjectPosition) = Unit // NO-OP

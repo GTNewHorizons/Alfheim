@@ -36,7 +36,7 @@ class BlockAiryVirus: BlockModMeta(Material.wood, 2, AlfheimModularCore.MODID, "
 			if (meta == 0) {
 				if (world.isAirBlock(i, j, k))
 					world.setBlock(i, j, k, this, 0, 3)
-			} else {
+			} else if (meta == 1) {
 				for (a in (i - 1)..(i + 1))
 					for (b in (j - 1)..(j + 1))
 						for (c in (k - 1)..(k + 1)) {
@@ -46,6 +46,8 @@ class BlockAiryVirus: BlockModMeta(Material.wood, 2, AlfheimModularCore.MODID, "
 							if (block == this && smeta == 0)
 								world.setBlockMetadataWithNotify(a, b, c, 1, 3).also { none = false }
 						}
+			} else {
+				world.setBlockToAir(x, y, z)
 			}
 		}
 		

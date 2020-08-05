@@ -23,6 +23,7 @@ import alfheim.common.core.util.AlfheimTab
 import alfheim.common.lexicon.AlfheimLexiconData
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.*
@@ -343,6 +344,8 @@ object AlfheimBlocks {
 	}
 	
 	fun regOreDict() {
+		registerOre("endstone", ItemStack(Blocks.end_stone))
+		
 		registerOre(LibOreDict.DRAGON_ORE, ItemStack(elvenOre))
 		registerOre(LibOreDict.ELEMENTIUM_ORE, ItemStack(elvenOre, 1, 1))
 		registerOre(LibOreDict.ELVEN_QUARTZ_ORE, ItemStack(elvenOre, 1, 2))

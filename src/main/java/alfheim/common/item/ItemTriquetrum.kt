@@ -106,6 +106,8 @@ class ItemTriquetrum: ItemMod("Triquetrum"), IDoubleBoundItem, IRotationDisplay 
 							
 							world.getTileEntity(i, j, k)?.writeToNBT(nbt)
 							
+							if (!nbt.hasNoTags() && !AlfheimConfigHandler.triquetrumTiles) continue
+							
 							if (survival && !ManaItemHandler.requestManaExactForTool(stack, player, if (nbt.hasNoTags()) 60 else 100, false)) break@outer
 							
 							fun setBlockTile(world: World, x: Int, y: Int, z: Int, block: Block, meta: Int, cmp: NBTTagCompound): Boolean {
