@@ -274,6 +274,11 @@ object AnomalyHarvesterBehaviors {
 			}
 		}
 		
+		for (x in aabb.minX.I..aabb.maxX.I.minus(1))
+			for (y in aabb.minY.I..aabb.maxY.I.minus(1))
+				for (z in aabb.minZ.I..aabb.maxZ.I.minus(1))
+					tile.worldObj.getBlock(x, y, z).updateTick(tile.worldObj, x, y, z, tile.worldObj.rand)
+		
 		val x = (Math.random() - 0.5) * tile.radius.x + tile.offset.x + tile.xCoord + 0.5
 		val y = (Math.random() - 0.5) * tile.radius.y + tile.offset.y + tile.yCoord + 0.5
 		val z = (Math.random() - 0.5) * tile.radius.z + tile.offset.z + tile.zCoord + 0.5

@@ -862,12 +862,12 @@ class AlfheimClassTransformer: IClassTransformer {
 		override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<String>?): MethodVisitor {
 			if (name == "onDropped") {
 				println("Visiting ItemAesirRing#onDropped: $name$desc")
-				return `ItemAesirRing$addBindInfo$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
+				return `ItemAesirRing$onDropped$MethodVisitor`(super.visitMethod(access, name, desc, signature, exceptions))
 			}
 			return super.visitMethod(access, name, desc, signature, exceptions)
 		}
 		
-		internal class `ItemAesirRing$addBindInfo$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
+		internal class `ItemAesirRing$onDropped$MethodVisitor`(mv: MethodVisitor): MethodVisitor(ASM5, mv) {
 			
 			override fun visitInsn(opcode: Int) {
 				if (opcode == ICONST_3)

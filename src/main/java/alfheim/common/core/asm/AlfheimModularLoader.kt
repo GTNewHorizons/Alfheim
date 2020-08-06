@@ -125,21 +125,25 @@ object AlfheimModularLoader {
 		if (possibleMatch)
 			subModsDir.listFiles()?.forEach { mod ->
 				if (mod.extension == "jar")
-					ZipFile(mod).use { zip ->
-						val modInfo = zip.getEntry("mcmod.info") ?: return@use
-						
-						val info = loadJSon(zip.getInputStream(modInfo))
-						
-						if (!info.first) return@use
-						val versionLocal = info.second
-						
-						if (versionRemote != versionLocal) {
-							deleteMod(mod)
+					try {
+						ZipFile(mod).use { zip ->
+							val modInfo = zip.getEntry("mcmod.info") ?: return@use
 							
-							return url
+							val info = loadJSon(zip.getInputStream(modInfo))
+							
+							if (!info.first) return@use
+							val versionLocal = info.second
+							
+							if (versionRemote != versionLocal) {
+								deleteMod(mod)
+								
+								return url
+							}
+							
+							return ""
 						}
-						
-						return ""
+					} catch (e: Throwable) {
+						FMLRelaunchLog.log(Level.WARN, e, "[${ModInfo.MODID.toUpperCase()}] Error opening $mod")
 					}
 			}
 		

@@ -192,8 +192,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	override fun onDeath(source: DamageSource) {
 		if (isAlive) {
 			//ASJUtilities.sayToAllOPs(EnumChatFormatting.DARK_RED + "Alive onDeath. Check console.");
-			ASJUtilities.warn("Alive onDeath")
-			ASJUtilities.printStackTrace()
+//			ASJUtilities.warn("Alive onDeath")
+//			ASJUtilities.printStackTrace()
 			return
 		}
 		
@@ -225,8 +225,8 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	public override fun dropFewItems(byPlayer: Boolean, looting: Int) {
 		if (isAlive) {
 			// ASJUtilities.sayToAllOPs(EnumChatFormatting.DARK_RED + "Alive dropFewItems. Check console.");
-			ASJUtilities.warn("Alive dropFewItems")
-			ASJUtilities.printStackTrace()
+//			ASJUtilities.warn("Alive dropFewItems")
+//			ASJUtilities.printStackTrace()
 			return
 		}
 		if (worldObj.isRemote) return
@@ -322,9 +322,9 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 	override fun setDead() {
 		if (isAlive) {
 			// ASJUtilities.sayToAllOPs(EnumChatFormatting.DARK_RED + "Alive setDead. Check console");
-			ASJUtilities.warn("Someone tried to force flugel to die. They failed.")
-			ASJUtilities.printStackTrace()
-			ASJUtilities.warn("If the server'd crashed next tick - report this to mod author, ignore otherwise.")
+//			ASJUtilities.warn("Someone tried to force flugel to die. They failed.")
+//			ASJUtilities.printStackTrace()
+//			ASJUtilities.warn("If the server'd crashed next tick - report this to mod author, ignore otherwise.")
 			AITeleport.tryToTP(this)
 			return
 		}
@@ -935,9 +935,7 @@ class EntityFlugel(world: World): EntityCreature(world), IBotaniaBossWithName { 
 					e.setPosition(x + 0.5, (y + 3).D, z + 0.5)
 					e.aiTask = AITask.INVUL
 					e.aiTaskTimer = 0
-					do {
-						e.health = 1f
-					} while (e.health > 1f)
+					e.dataWatcher.updateObject(6, 1f)
 					e.setSource(x, y, z)
 					
 					if (hard) e.isHardMode = hard
