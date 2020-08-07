@@ -694,6 +694,7 @@ object AlfheimHookHandler {
 			if (stack.item === ModItems		.odinRing			&& !foundOdinRing)		foundOdinRing		= true else
 			return false // Found an invalid item, breaking the recipe
 		}
+		
 		return foundThorRing && foundSifRing && foundNjordRing && foundLokiRing && foundHeimdallRing && foundOdinRing
 	}
 	

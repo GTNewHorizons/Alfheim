@@ -46,16 +46,17 @@ object AlfheimModularHookHandler {
 	var replaceMelonWithMob = false
 	
 	@JvmStatic
-	@Hook(targetMethod = "updateTick")
+	@Hook(targetMethod = "updateTick", isMandatory = false)
 	fun replaceMelonWithMobPre(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
 		replaceMelonWithMob = HELLISH_VACATION && block === Blocks.melon_stem
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false, targetMethod = "setBlock")
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false, targetMethod = "setBlock", isMandatory = false)
 	fun replaceMelonWithMob(world: World, x: Int, y: Int, z: Int, block: Block?): Boolean {
-		if (replaceMelonWithMob && block === Blocks.melon_block && world.rand.nextInt(3) == 0) {
+		if (replaceMelonWithMob && block === Blocks.melon_block && world.rand.nextInt(10) == 0) {
 			replaceMelonWithMob = false
+			if (world.isRemote) return true
 			return world.spawnEntityInWorld(EntityRollingMelon(world).apply { setPosition(x + 0.5, y + 0.5, z + 0.5); onSpawnWithEgg(null) })
 		}
 		
@@ -63,7 +64,7 @@ object AlfheimModularHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(targetMethod = "updateTick", injectOnExit = true)
+	@Hook(targetMethod = "updateTick", injectOnExit = true, isMandatory = false)
 	fun replaceMelonWithMobPost(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
 		replaceMelonWithMob = false
 	}
