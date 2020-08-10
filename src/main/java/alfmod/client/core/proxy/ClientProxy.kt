@@ -14,13 +14,16 @@ import alfmod.common.entity.boss.EntityDedMoroz
 import alfmod.common.item.AlfheimModularItems
 import cpw.mods.fml.client.registry.RenderingRegistry
 import net.minecraftforge.client.MinecraftForgeClient
+import net.minecraftforge.common.config.Configuration
 
 class ClientProxy: CommonProxy() {
 	
 	override fun preInit() {
 		super.preInit()
 		
-		GUIBanner
+		if (AlfheimConfigHandler.loadProp(Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "modular", "displayBanner", false, true, "Set this to false to disable banner popup"))
+			GUIBanner
+		
 		EventHandlerClient
 	}
 	

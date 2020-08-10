@@ -42,7 +42,7 @@ class BlockCorporeaAutocrafter: BlockContainerMod(Material.iron), IWandable {
 	override fun onBlockClicked(world: World, x: Int, y: Int, z: Int, player: EntityPlayer) {
 		(world.getTileEntity(x, y, z) as? TileCorporeaAutocrafter)?.let {
 			it.craftResult = max(1, it.craftResult + if (player.isSneaking) -1 else 1)
-			ASJUtilities.say(player, "alfheimmisc.craftresult", it.craftResult)
+			if (!world.isRemote) ASJUtilities.say(player, "alfheimmisc.craftresult", it.craftResult)
 		}
 	}
 	

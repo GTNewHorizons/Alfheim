@@ -62,7 +62,7 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		pendingRequest = true
 		
 		request = req
-		requestCount = count
+		requestCount = missing // count
 		requestMissing = MathHelper.ceiling_float_int(missing / craftResult.F)
 		
 		requestX = x
@@ -70,11 +70,13 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 		requestZ = z
 		
 		worldObj.func_147453_f(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord))
-		
+
 //		ASJUtilities.chatLog("CAC at ${Vector3.fromTileEntity(this)} got request $count of $req (missing $missing) from $x $y $z. Need to craft $requestMissing times.")
 	}
 	
 	override fun updateEntity() {
+		if (worldObj.isRemote) return
+		
 		checkRedstone()
 		
 		if (!pendingRequest) return
@@ -128,10 +130,11 @@ class TileCorporeaAutocrafter: ASJTile(), ICorporeaInterceptor, IInventory {
 			val ret = buffer.getOrNull(i) ?: continue
 			buffer[i] = null
 			
-			if (down !is TileCorporeaFunnel && ret.stackSize == InventoryHelper.testInventoryInsertion(down, ret, ForgeDirection.UP)) {
-				// FIXME puts in the first slot instead of indexed
-				InventoryHelper.insertItemIntoInventory(down, ret)
-			} else {
+			if (down !is TileCorporeaFunnel) {
+				InventoryHelper.insertItemIntoInventory(down, ret, ForgeDirection.UP, i, true, true)
+			}
+			
+			if (ret.stackSize > 0) {
 				ourSpark?.also { CorporeaAdvancedHelper.putToNetwork(it, ret) } ?: continue
 				worldObj.spawnEntityInWorld(EntityItem(worldObj, xCoord + 0.5, yCoord + 2.5, zCoord + 0.5, ret).also { item -> item.setMotion(0.0) })
 			}

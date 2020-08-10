@@ -182,21 +182,21 @@ fun <T> T.eventFML(): T {
 fun World.isBlockDirectlyGettingPowered(x: Int, y: Int, z: Int) = getBlockPowerInput(x, y, z) > 0
 
 fun World.getBlock(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Block {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getBlock(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getBlock(i + x, j + y, k + z)
 }
 
 fun World.getBlockMeta(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): Int {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getBlockMetadata(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getBlockMetadata(i + x, j + y, k + z)
 }
 
 fun World.getTileEntity(e: Entity, x: Int = 0, y: Int = 0, z: Int = 0): TileEntity? {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return getTileEntity(i.I + x, j.I + y, k.I + z)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return getTileEntity(i + x, j + y, k + z)
 }
 
 fun World.setBlock(e: Entity, block: Block, x: Int = 0, y: Int = 0, z: Int = 0, meta: Int = 0): Boolean {
-	val (i, j, k) = Vector3.fromEntity(e)
-	return setBlock(i.I + x, j.I + y, k.I + z, block, meta, 3)
+	val (i, j, k) = Vector3.fromEntity(e).mf()
+	return setBlock(i + x, j + y, k + z, block, meta, 3)
 }

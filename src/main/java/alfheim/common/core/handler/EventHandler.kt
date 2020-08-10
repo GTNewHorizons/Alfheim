@@ -14,6 +14,7 @@ import alfheim.common.core.helper.*
 import alfheim.common.core.util.*
 import alfheim.common.entity.EntityLolicorn
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.entity.item.EntityItemImmortal
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.relic.ItemTankMask
 import alfheim.common.network.*
@@ -43,6 +44,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.player.EntityInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 import ru.vamig.worldengine.WE_Biome
+import vazkii.botania.api.item.IRelic
 import vazkii.botania.api.mana.ManaItemHandler
 import vazkii.botania.api.recipe.ElvenPortalUpdateEvent
 import vazkii.botania.common.block.tile.TileAlfPortal
@@ -359,6 +361,45 @@ object EventHandler {
 				seg.standingStill = 0
 			
 			seg.lastPos = pos
+		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	fun onRelicItemAppear(e: EntityJoinWorldEvent) {
+		val entity = e.entity as? EntityItem ?: return
+		
+		if (entity.isDead) return
+		
+		val stack = entity.dataWatcher.getWatchableObjectItemStack(10) ?: return
+		if (stack.stackSize < 1) return
+		
+		if (entity.entityItem.item is IRelic) {
+			e.isCanceled = true
+			entity.setDead()
+			e.world.spawnEntityInWorld(object: EntityItemImmortal(e.world, entity, entity.entityItem) {
+				override fun onUpdate() {
+					super.onUpdate()
+					
+					if (posY < 0) {
+						val owner = e.world.playerEntities.firstOrNull { (it as EntityPlayer).commandSenderName == getOwner() } as EntityPlayer?
+						
+						setMotion(0.0)
+						
+						if (owner == null)
+							setPosition(0.0, 256.0, 0.0)
+						else {
+							setPosition(owner)
+							delayBeforeCanPickup = 0
+						}
+					}
+				}
+				
+				override fun canBePickedByPlayer(player: EntityPlayer): Boolean {
+					return getOwner().isNullOrEmpty() || getOwner() == player.commandSenderName
+				}
+				
+				fun getOwner() = (this.stack?.item as? IRelic)?.getSoulbindUsername(this.stack)
+			})
 		}
 	}
 	

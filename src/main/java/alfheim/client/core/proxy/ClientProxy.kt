@@ -25,6 +25,7 @@ import alfheim.common.entity.*
 import alfheim.common.entity.EntitySubspace
 import alfheim.common.entity.EntitySubspaceSpear
 import alfheim.common.entity.boss.*
+import alfheim.common.entity.item.EntityItemImmortal
 import alfheim.common.entity.spell.*
 import alfheim.common.integration.thaumcraft.ThaumcraftAlfheimModule
 import alfheim.common.integration.travellersgear.TGHandlerBotaniaRenderer
@@ -94,6 +95,7 @@ class ClientProxy: CommonProxy() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityButterfly::class.java, RenderEntityButterfly)
 		RenderingRegistry.registerEntityRenderingHandler(EntityElf::class.java, RenderEntityElf)
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlugel::class.java, RenderEntityFlugel)
+		RenderingRegistry.registerEntityRenderingHandler(EntityItemImmortal::class.java, RenderEntityItemImmortal)
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningMark::class.java, RenderEntityLightningMark)
 		RenderingRegistry.registerEntityRenderingHandler(EntityLolicorn::class.java, RenderEntityLolicorn)
 		RenderingRegistry.registerEntityRenderingHandler(EntityRook::class.java, RenderEntityRook)

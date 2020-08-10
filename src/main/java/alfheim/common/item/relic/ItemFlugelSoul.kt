@@ -7,6 +7,7 @@ import alfheim.api.lib.LibResourceLocations
 import alfheim.common.core.helper.ElvenFlightHelper
 import alfheim.common.core.util.AlfheimTab
 import alfheim.common.entity.boss.EntityFlugel
+import alfheim.common.entity.item.*
 import alfheim.common.item.*
 import alfheim.common.security.InteractionSecurity
 import baubles.common.lib.PlayerHandler
@@ -43,7 +44,7 @@ import java.awt.Color
 import kotlin.math.*
 
 @Suppress("UNCHECKED_CAST")
-class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
+class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect, IImmortalHandledItem {
 	
 	init {
 		creativeTab = AlfheimTab
@@ -159,22 +160,26 @@ class ItemFlugelSoul: ItemRelic("FlugelSoul"), ILensEffect {
 		}
 	}
 	
-	override fun onEntityItemUpdate(entity: EntityItem): Boolean {
-		val horn: EntityItem? = (entity.worldObj.getEntitiesWithinAABB(EntityItem::class.java, entity.boundingBox(0.5)) as List<EntityItem>).firstOrNull { it.entityItem?.item === AlfheimItems.soulHorn }
+	override fun onEntityItemImmortalUpdate(entity: EntityItemImmortal): Boolean {
+		val stack = entity.stack ?: return false
+		val horn = (entity.worldObj.getEntitiesWithinAABB(EntityItem::class.java, entity.boundingBox(0.5)) as List<EntityItem>).firstOrNull { it.entityItem?.item === AlfheimItems.soulHorn } ?: return false
 		
-		if (horn != null && horn.entityItem.meta == 0 && getBlocked(entity.entityItem) == 0) {
-			for (i in 0 until SEGMENTS) setDisabled(entity.entityItem, i, true)
+		if (horn.entityItem.meta == 0 && getBlocked(stack) == 0) {
+			for (i in 0 until SEGMENTS)
+				setDisabled(stack, i, true)
+			
 			horn.entityItem.meta = 1
 			
 			val v = Vector3()
+			
 			for (i in 0 until 360 step 5) {
-				val c = Color.getHSBColor(i.F / 360f, 1f, 1f)
+				val c = Color.getHSBColor(i / 360f, 1f, 1f)
 				v.rand().sub(0.5).normalize().mul(Math.random() * 0.5)
 				Botania.proxy.sparkleFX(entity.worldObj, entity.posX + v.x, entity.posY + v.y, entity.posZ + v.z, c.red / 255f, c.green / 255f, c.blue / 255f, 1.5f, 5)
 			}
 		}
 		
-		return super.onEntityItemUpdate(entity)
+		return false
 	}
 	
 	companion object {

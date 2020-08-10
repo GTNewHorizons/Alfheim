@@ -157,7 +157,7 @@ object FaithHandlerNjord: IFaithHandler {
 				
 				val (x, y, z) = Vector3.fromEntity(player)
 				
-				Botania.proxy.sparkleFX(mc.theWorld, x + vec.x, y + vec.y, z + vec.z, r, g, b, 1f, 5)
+				Botania.proxy.sparkleFX(mc.theWorld, x + vec.x, y + vec.y + 1.62, z + vec.z, r, g, b, 1f, 5)
 			}
 		}
 	}

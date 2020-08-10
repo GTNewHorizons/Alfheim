@@ -12,7 +12,7 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 	const val CATEGORY_PRELOAD		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER + "preload"
 	const val CATEGORY_INTEGRATION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "integration"
 	const val CATEGORY_INT_NEI		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "notenoughitems"
-	const val CATEGORY_INT_OF		= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "optifine"
+	const val CATEGORY_INT_OF		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "optifine"
 	const val CATEGORY_INT_TC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "thaumcraft"
 	const val CATEGORY_INT_TiC		= CATEGORY_INTEGRATION	+ CATEGORY_SPLITTER	+ "tconstruct"
 	const val CATEGORY_DIMENSION	= CATEGORY_GENERAL		+ CATEGORY_SPLITTER	+ "alfheim"
@@ -189,10 +189,13 @@ object AlfheimConfigHandler: ASJConfigHandler() {
 		addCategory(CATEGORY_PRELOAD, "Alfheim coremod and preload settings")
 		addCategory(CATEGORY_DIMENSION, "Alfheim dimension settings")
 		addCategory(CATEGORY_WORLDGEN, "Alfheim worldgen settings")
-		addCategory(CATEGORY_ENTITIES, "Alfheim mobs spawnrate settings")
+		addCategory(CATEGORY_ENTITIES, "Alfheim entities settings")
 		addCategory(CATEGORY_POTIONS, "Potion IDs")
 		addCategory(CATEGORY_INTEGRATION, "Cross-mods and modpacks integration")
+		addCategory(CATEGORY_INT_NEI, "NEI integration")
+		addCategory(CATEGORY_INT_OF, "OptiFine integration")
 		addCategory(CATEGORY_INT_TC, "Thaumcraft integration")
+		addCategory(CATEGORY_INT_TiC, "Tinkers' Construct integration")
 		addCategory(CATEGORY_ESMODE, "Elvenstory Mode optional features")
 		addCategory(CATEGORY_MMO, "MMO Mode optional features")
 		addCategory(CATEGORY_HUD, "HUD elements customizations")

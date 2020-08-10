@@ -46,13 +46,13 @@ object AlfheimModularHookHandler {
 	var replaceMelonWithMob = false
 	
 	@JvmStatic
-	@Hook(targetMethod = "updateTick", isMandatory = false)
+	@Hook(targetMethod = "updateTick", isMandatory = true)
 	fun replaceMelonWithMobPre(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
 		replaceMelonWithMob = HELLISH_VACATION && block === Blocks.melon_stem
 	}
 	
 	@JvmStatic
-	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false, targetMethod = "setBlock", isMandatory = false)
+	@Hook(returnCondition = ReturnCondition.ON_TRUE, booleanReturnConstant = false, targetMethod = "setBlock", isMandatory = true)
 	fun replaceMelonWithMob(world: World, x: Int, y: Int, z: Int, block: Block?): Boolean {
 		if (replaceMelonWithMob && block === Blocks.melon_block && world.rand.nextInt(10) == 0) {
 			replaceMelonWithMob = false
@@ -64,7 +64,7 @@ object AlfheimModularHookHandler {
 	}
 	
 	@JvmStatic
-	@Hook(targetMethod = "updateTick", injectOnExit = true, isMandatory = false)
+	@Hook(targetMethod = "updateTick", injectOnExit = true, isMandatory = true)
 	fun replaceMelonWithMobPost(block: BlockStem, world: World?, x: Int, y: Int, z: Int, rand: Random?) {
 		replaceMelonWithMob = false
 	}
