@@ -18,7 +18,7 @@ import net.minecraft.item.crafting.IRecipe
 import vazkii.botania.api.BotaniaAPI
 import vazkii.botania.api.lexicon.*
 import vazkii.botania.api.recipe.RecipeRuneAltar
-import vazkii.botania.common.block.ModMultiblocks
+import vazkii.botania.common.block.*
 import vazkii.botania.common.item.ModItems
 import vazkii.botania.common.lexicon.*
 import vazkii.botania.common.lexicon.page.*
@@ -336,7 +336,9 @@ object AlfheimLexiconData {
 		
 		hyperBuk.setLexiconPages(PageText("0"), PageCraftingRecipe("1", AlfheimRecipes.recipeHyperBucket))
 		
-		uberSpreader.setLexiconPages(PageText("0"), PageText("1"), if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[TinkersConstructAlfheimConfig.MAUFTRIUM] != -1) PageText("2t") else PageCraftingRecipe(if (AlfheimCore.stupidMode) "2s" else "2", AlfheimRecipes.recipeUberSpreader))
+		uberSpreader.setLexiconPages(PageText("0"), PageText("1"),
+			if (AlfheimCore.TiCLoaded && !AlfheimCore.stupidMode && AlfheimConfigHandler.materialIDs[TinkersConstructAlfheimConfig.MAUFTRIUM] != -1) PageText("2t")
+			else PageCraftingRecipe(if (AlfheimCore.stupidMode) "2s" else "2", AlfheimRecipes.recipeUberSpreader)).icon = ItemStack(ModBlocks.spreader, 1, 4)
 		
 		flugel.setLexiconPages(PageText("0"), PageText("1"), PageText("2")).icon = ItemStack(ModItems.flightTiara, 1, 1)
 		

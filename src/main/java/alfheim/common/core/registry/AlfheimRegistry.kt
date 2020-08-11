@@ -13,7 +13,7 @@ import alfheim.common.block.tile.sub.anomaly.*
 import alfheim.common.core.handler.AlfheimConfigHandler
 import alfheim.common.entity.*
 import alfheim.common.entity.boss.*
-import alfheim.common.entity.item.EntityItemImmortal
+import alfheim.common.entity.item.*
 import alfheim.common.entity.spell.*
 import alfheim.common.item.AlfheimItems
 import alfheim.common.item.material.ElvenResourcesMetas
@@ -111,6 +111,7 @@ object AlfheimRegistry {
 		registerEntity(EntityFireAura::class.java, "FireAura", AlfheimCore.instance, id)
 		registerEntity(EntityFlugel::class.java, "Flugel", AlfheimCore.instance, id)
 		registerEntity(EntityItemImmortal::class.java, "ImmortalItem", AlfheimCore.instance, id)
+		registerEntity(EntityItemImmortalRelic::class.java, "ImmortalRelicItem", AlfheimCore.instance, id)
 		registerEntity(EntityLightningMark::class.java, "LightningMark", AlfheimCore.instance, id)
 		registerEntity(EntityLolicorn::class.java, "Lolicorn", AlfheimCore.instance, id)
 		registerEntity(EntityAlfheimPixie::class.java, "Pixie", AlfheimCore.instance, id)

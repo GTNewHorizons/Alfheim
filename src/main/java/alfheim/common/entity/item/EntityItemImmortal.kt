@@ -7,10 +7,9 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S0DPacketCollectItem
-import net.minecraft.util.*
+import net.minecraft.util.DamageSource
 import net.minecraft.world.*
 
-// FIXME saving not working
 open class EntityItemImmortal: Entity {
 	
 	var age = 0
@@ -38,6 +37,7 @@ open class EntityItemImmortal: Entity {
 		yOffset = height / 2f
 
 		rotationYaw = (Math.random() * 360.0).F
+		isImmuneToFire = true
 //		motionX = (Math.random() * 0.20000000298023224 - 0.10000000149011612)
 //		motionY = 0.20000000298023224
 //		motionZ = (Math.random() * 0.20000000298023224 - 0.10000000149011612)
@@ -125,6 +125,8 @@ open class EntityItemImmortal: Entity {
 	
 	override fun isEntityInvulnerable() = true
 	
+	override fun setFire(seconds: Int) = Unit
+	
 	override fun writeEntityToNBT(nbt: NBTTagCompound) {
 		nbt.setInteger("Age", age)
 		nbt.setInteger("Lifespan", lifespan)
@@ -177,7 +179,7 @@ open class EntityItemImmortal: Entity {
 	open fun canBePickedByPlayer(player: EntityPlayer) = true
 	
 	override fun getCommandSenderName(): String {
-		return StatCollector.translateToLocal("item.${stack?.unlocalizedName}")
+		return stack?.displayName ?: "-null-"
 	}
 	
 	var stack: ItemStack?
